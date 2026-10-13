@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+"""Reproducible loopback measurements, not an Internet-model speed claim."""
+import argparse
+import concurrent.futures
+import http.client
+import json
+import platform
+from pathlib import Path
+import statistics
+import tempfile
+import threading
+import time
+from smoke import Mock, ThreadingHTTPServer, start, stop, request
+
+
+def rss_kib(pid):
+    import subprocess
+    if platform.system() == 'Windows':
+        import ctypes
+        from ctypes import wintypes
+        class Memory(ctypes.Structure):
+            _fields_=[('cb',wintypes.DWORD),('PageFaultCount',wintypes.DWORD),
+                      ('PeakWorkingSetSize',ctypes.c_size_t),('WorkingSetSize',ctypes.c_size_t),
+                      ('QuotaPeakPagedPoolUsage',ctypes.c_size_t),('QuotaPagedPoolUsage',ctypes.c_size_t),
+                      ('QuotaPeakNonPagedPoolUsage',ctypes.c_size_t),('QuotaNonPagedPoolUsage',ctypes.c_size_t),
+                      ('PagefileUsage',ctypes.c_size_t),('PeakPagefileUsage',ctypes.c_size_t)]
+        kernel=ctypes.WinDLL('kernel32',use_last_error=True);psapi=ctypes.WinDLL('psapi',use_last_error=True)
+        kernel.OpenProcess.restype=wintypes.HANDLE
+        kernel.OpenProcess.argtypes=[wintypes.DWORD,wintypes.BOOL,wintypes.DWORD]
+        kernel.CloseHandle.argtypes=[wintypes.HANDLE]
+        psapi.GetProcessMemoryInfo.argtypes=[wintypes.HANDLE,ctypes.POINTER(Memory),wintypes.DWORD]
+        handle=kernel.OpenProcess(0x410,False,pid)
+        if not handle:raise OSError(ctypes.get_last_error())
+        try:
+            mem=Memory();mem.cb=ctypes.sizeof(mem)
+            if not psapi.GetProcessMemoryInfo(handle,ctypes.byref(mem),mem.cb):raise OSError(ctypes.get_last_error())
+            return mem.WorkingSetSize/1024
+        finally:kernel.CloseHandle(handle)
+    return float(subprocess.check_output(['ps','-o','rss=','-p',str(pid)],text=True).strip())
+
+
+def percentiles(values):
+    values=sorted(values);return {'p50':round(statistics.median(values),3),
+        'p95':round(values[min(len(values)-1,int(len(values)*.95))],3)}
+
+
+def main():
+    p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--output',required=True)
+    p.add_argument('--requests',type=int,default=200);p.add_argument('--gui',action='store_true');args=p.parse_args()
+    upstream=ThreadingHTTPServer(('127.0.0.1',0),Mock);threading.Thread(target=upstream.serve_forever,daemon=True).start()
+    # Do not retain test prompts in the mock while measuring memory.
+    class NullList:
+        def append(self,value): pass
+    Mock.received=NullList()
+    with tempfile.TemporaryDirectory(prefix='workbuddy-proxy-bench-') as folder:
+        process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream.server_port}/v1',args.gui)
+        try:
+            time.sleep(1);idle=rss_kib(process.pid);peak=[idle];done=threading.Event()
+            def sample():
+                while not done.wait(.15):
+                    try: peak.append(rss_kib(process.pid))
+                    except Exception: break
+            watcher=threading.Thread(target=sample,daemon=True);watcher.start()
+            payload=json.dumps({'model':'fixture-model','stream':True,'messages':[{'role':'user','content':'bench'}]}).encode()
+            def measured(proxy,payload):
+                started=time.perf_counter()
+                if proxy: conn,res=request(port,payload)
+                else:
+                    conn=http.client.HTTPConnection('127.0.0.1',upstream.server_port,timeout=5)
+                    conn.request('POST','/v1/chat/completions',payload,{'Content-Type':'application/json'});res=conn.getresponse()
+                assert res.status==200;res.read();conn.close();return (time.perf_counter()-started)*1000
+            for _ in range(10): measured(True,payload)
+            direct=[measured(False,payload) for _ in range(args.requests)]
+            proxied=[measured(True,payload) for _ in range(args.requests)]
+            large=json.dumps({'model':'fixture-model','stream':True,'messages':[{'role':'user','content':'x'*(1024*1024)}]}).encode()
+            # Four concurrent 1 MiB requests, repeated, while RSS is sampled.
+            start_time=time.perf_counter()
+            with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+                list(pool.map(lambda _:measured(True,large),range(80)))
+            large_seconds=time.perf_counter()-start_time
+            time.sleep(.5);settled=rss_kib(process.pid);done.set();watcher.join()
+            result={'platform':platform.platform(),'architecture':platform.machine(),'mode':'native GUI' if args.gui else 'headless',
+                'binary_bytes':Path(args.exe).stat().st_size,'idle_rss_mib':round(idle/1024,2),
+                'sampled_peak_rss_mib':round(max(peak)/1024,2),'post_load_rss_mib':round(settled/1024,2),
+                'small_request_count':args.requests,'direct_loopback_ms':percentiles(direct),
+                'proxied_loopback_ms':percentiles(proxied),
+                'median_proxy_overhead_ms':round(statistics.median(proxied)-statistics.median(direct),3),
+                'large_request_size_mib':1,'large_concurrency':4,'large_requests':80,'large_seconds':round(large_seconds,3),
+                'notes':'Sampled process RSS includes runtime/native UI and excludes mock/client processes. Loopback HTTP mock; no TLS or Internet/model latency. Each client request opens a new connection; upstream connections are pooled. No cross-platform ranking implied.'}
+            Path(args.output).parent.mkdir(parents=True,exist_ok=True);Path(args.output).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
+        finally: stop(process,port,folder,log)
+    upstream.shutdown();upstream.server_close()
+
+
+if __name__=='__main__':main()

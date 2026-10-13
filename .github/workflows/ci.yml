@@ -1,0 +1,59 @@
+name: Native build and executable checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows-x64
+            binary: target/release/workbuddy-proxy.exe
+          - os: macos-latest
+            platform: macos-arm64
+            binary: target/release/workbuddy-proxy
+          - os: macos-15-intel
+            platform: macos-x64
+            binary: target/release/workbuddy-proxy
+          - os: ubuntu-latest
+            platform: linux-x64
+            binary: target/release/workbuddy-proxy
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo test --locked
+      - run: cargo build --release --locked
+      - name: Real executable smoke checks
+        run: python scripts/smoke.py --exe "${{ matrix.binary }}"
+      - name: Native Windows window smoke checks
+        if: runner.os == 'Windows'
+        run: python scripts/smoke.py --exe "${{ matrix.binary }}" --gui
+      - name: Headless memory and latency benchmark
+        run: python scripts/benchmark.py --exe "${{ matrix.binary }}" --output "bench-results/${{ matrix.platform }}.json"
+      - name: Native Windows memory benchmark
+        if: runner.os == 'Windows'
+        run: python scripts/benchmark.py --exe "${{ matrix.binary }}" --gui --output "bench-results/${{ matrix.platform }}-native.json"
+      - name: Package native desktop executable
+        if: runner.os != 'Linux'
+        run: python scripts/package.py --exe "${{ matrix.binary }}" --platform "${{ matrix.platform }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: workbuddy-proxy-${{ matrix.platform }}
+          path: |
+            dist/
+            bench-results/
+

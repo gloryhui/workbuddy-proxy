@@ -1,0 +1,12 @@
+/target/
+/dist/
+/bench-results/
+*.log
+*.bak
+.DS_Store
+.env
+config.json
+instance.json
+*.go-bridge-backup-*
+__pycache__/
+*.pyc
