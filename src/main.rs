@@ -6,6 +6,7 @@ mod native;
 mod proxy;
 mod session;
 mod workbuddy;
+use axum::serve::ListenerExt;
 use fs2::FileExt;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -157,7 +158,7 @@ fn run() -> Result<(), String> {
         let runtime=tokio::runtime::Builder::new_current_thread().enable_all().max_blocking_threads(2).thread_keep_alive(Duration::from_secs(10)).thread_stack_size(512*1024).build().unwrap();
         ready_tx.send(runtime.handle().clone()).unwrap();
         runtime.block_on(async{
-            let listener=tokio::net::TcpListener::from_std(listener).unwrap();let server=axum::serve(listener,thread_a.routes());
+            let listener=tokio::net::TcpListener::from_std(listener).unwrap();let listener=listener.tap_io(|stream| { if let Err(e)=stream.set_nodelay(true) { eprintln!("Cannot disable local TCP buffering: {e}"); } });let server=axum::serve(listener,thread_a.routes());
             tokio::select!{result=server=>{if let Err(e)=result{eprintln!("Server stopped: {e}");}},_=stop_rx=>{},_=tokio::signal::ctrl_c()=>{}}
         });native::quit();
     }).map_err(|e|e.to_string())?;
