@@ -364,7 +364,7 @@ pub extern "C" fn wb_snapshot() -> *mut c_char {
         let zh = UI_ZH.load(Ordering::Relaxed);
         let mut text = if zh {
             format!(
-                "本地地址  {}\n供应商  {}    模型  {}\n累计请求  {}    运行  {} 秒\n\n",
+                "本地服务\n{}\n\n供应商  {}    模型  {}\n累计请求  {}    运行  {} 秒\n\n",
                 v["url"].as_str().unwrap_or(""),
                 v["providers"],
                 v["models"],
@@ -373,7 +373,7 @@ pub extern "C" fn wb_snapshot() -> *mut c_char {
             )
         } else {
             format!(
-                "Local URL  {}\nProviders  {}    Models  {}\nRequests  {}    Uptime  {} s\n\n",
+                "Local service\n{}\n\nProviders  {}    Models  {}\nRequests  {}    Uptime  {} s\n\n",
                 v["url"].as_str().unwrap_or(""),
                 v["providers"],
                 v["models"],

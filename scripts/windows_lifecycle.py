@@ -115,6 +115,8 @@ def main():
                     time.sleep(.025)
                 else:raise AssertionError('Native language switch did not apply')
             assert user.GetDlgItem(h,112),'Scrollable log panel is missing'
+            from windows_preview import capture
+            capture(h,'bench-results/native-windows-preview.png')
             listing=user.GetDlgItem(h,107);assert listing
             assert user.SendMessageW(listing,0x018B,0,0)==1 # LB_GETCOUNT
             user.PostMessageW(h,0x0111,207,0) # Duplicate the selected configured connection
