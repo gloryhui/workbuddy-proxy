@@ -97,6 +97,20 @@ impl Routes {
         }
         let in_scope = |r: &&Arc<Route>| scope.is_none_or(|id| r.provider_id == id);
         if let Some(r) = self.aliases.get(model).filter(in_scope) {
+            // A v0.1 alias can be identical to its raw model ID. It must not
+            // silently win over another account when a same-ID model is added.
+            if r.connection.model == model
+                && self
+                    .models
+                    .get(model)
+                    .into_iter()
+                    .flatten()
+                    .filter(in_scope)
+                    .count()
+                    > 1
+            {
+                return Err("Ambiguous model ID; use its independent model URL / 同名模型请使用独立模型 URL".into());
+            }
             return Ok(r.clone());
         }
         let mut matching = self
@@ -684,7 +698,12 @@ impl Bridge {
                     provider
                         .models
                         .iter()
-                        .map(|m| format!("{} | {}", m.alias, m.name))
+                        .map(|m| format!(
+                            "{} | {}\n  URL: {}",
+                            m.alias,
+                            m.name,
+                            self.connection_address(&m.id)
+                        ))
                         .collect::<Vec<_>>()
                         .join("\n")
                 ))
@@ -827,6 +846,22 @@ mod tests {
         assert!(routes.resolve(Some(&p.id), "same").is_err());
         assert!(routes.resolve(Some(&p.models[0].id), "other").is_err());
         assert!(routes.resolve(Some("unknown"), &p.models[0].alias).is_err());
+    }
+    #[test]
+    fn legacy_bare_alias_does_not_bypass_same_model_isolation() {
+        let mut cfg = Config::default();
+        cfg.providers[0]
+            .set_models("same | One\nsame | Two", "default")
+            .unwrap();
+        cfg.providers[0].models[0].alias = "same".into();
+        let routes = Routes::new(&cfg).unwrap();
+        assert!(routes.resolve(None, "same").is_err());
+        assert!(routes.resolve(Some(&cfg.providers[0].id), "same").is_err());
+        assert!(
+            routes
+                .resolve(Some(&cfg.providers[0].models[0].id), "same")
+                .is_ok()
+        );
     }
     #[test]
     fn end_to_end_headers_preserved_without_hop_fields_or_local_key() {
