@@ -107,7 +107,7 @@ def stop(process, port, directory, log):
                     user.PostMessageW.argtypes=[wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM]
                     def close(hwnd,param):
                         pid=wintypes.DWORD();user.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
-                        if pid.value==process.pid:user.PostMessageW(hwnd,0x0010,0,0)
+                        if pid.value==process.pid:user.PostMessageW(hwnd,0x8004,0,0)
                         return True
                     user.EnumWindows(cbtype(close),0)
                 else:
@@ -185,10 +185,26 @@ def main():
                 assert 'HTTP 200' in json.load(response)['message']
             with urllib.request.urlopen(control({'command':'copy'}),timeout=5) as response:
                 message=json.load(response)['message'];assert 'fixture-local-key' in message and 'fixture-upstream-key' not in message
-            print(json.dumps({'result':'PASS','streaming_first_bytes_ms':round(first_byte*1000,3),
+            # The saved setting must affect both actual forwarding and Test.
+            for effort in ['low','high','max','none','default']:
+                settings={'command':'save','model':'deepseek-v4.1-flash','upstream':f'http://127.0.0.1:{upstream.server_port}/v1','reasoning_effort':effort}
+                with urllib.request.urlopen(control(settings),timeout=5) as response:response.read()
+                assert json.loads(Path(folder,'config.json').read_text())['reasoning_effort']==effort
+                input_body=payload.replace(b'fixture-model',b'deepseek-v4.1-flash')[:-1]+b',"thinking":{"type":"disabled"},"reasoning_effort":"high","extra_field":{"keep":123}}'
+                conn,res=request(port,input_body);assert res.status==200;res.read();conn.close()
+                outgoing=json.loads(Mock.received[-1][0]);original=json.loads(input_body)
+                assert outgoing['messages']==original['messages'] and outgoing['tools']==original['tools'] and outgoing['extra_field']==original['extra_field']
+                if effort=='default':assert Mock.received[-1][0]==input_body
+                elif effort=='none':assert outgoing['thinking']=={'type':'disabled'} and 'reasoning_effort' not in outgoing
+                else:assert outgoing['thinking']=={'type':'enabled'} and outgoing['reasoning_effort']==effort
+                with urllib.request.urlopen(control({'command':'test'}),timeout=5) as response:assert 'HTTP 200' in json.load(response)['message']
+                tested=json.loads(Mock.received[-1][0])
+                if effort in ['low','high','max']:assert tested['reasoning_effort']==effort and tested['thinking']['type']=='enabled'
+                elif effort=='none':assert tested['thinking']['type']=='disabled' and 'reasoning_effort' not in tested
+            print(json.dumps({'result':'PASS' ,'streaming_first_bytes_ms':round(first_byte*1000,3),
                               'checks':['startup','byte-identical tool payload','auth','origin','upstream 429',
                                         'first SSE chunk before completion','bounded concurrent streams','cancellation releases slots',
-                                        '8 MiB request cap','single instance','shutdown']}))
+                                        '8 MiB request cap','single instance','persisted thinking levels affect forwarding and test','shutdown']}))
         finally:
             stop(process, port, folder, log)
     upstream.shutdown(); upstream.server_close()

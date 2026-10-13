@@ -94,7 +94,17 @@ impl Bridge {
                 previous: matches.first().map(|i| d.entries().unwrap()[*i].clone()),
             })
         }
-        let entry = json!({"id":cfg.model,"name":format!("WorkBuddy Proxy · {}",cfg.model),"vendor":"Custom","url":self.address(),"apiKey":cfg.local_key,"supportsToolCall":true,"supportsImages":false,"supportsReasoning":false,"useCustomProtocol":false});
+        let mut entry = json!({"id":cfg.model,"name":format!("WorkBuddy Proxy · {}",cfg.model),"vendor":"Custom","url":self.address(),"apiKey":cfg.local_key,"supportsToolCall":true,"supportsImages":false,"supportsReasoning":false,"useCustomProtocol":false});
+        // WorkBuddy reads these capability fields to show its own selectors.
+        // Use the Go catalog's V4.1 levels, rather than inventing more UI levels.
+        if cfg.model == "deepseek-v4.1-flash" {
+            entry["supportsReasoning"] = json!(true);
+            entry["onlyReasoning"] = json!(false);
+            entry["reasoning"] = json!({"defaultEffort":"high","supportedEfforts":["high","max"],"canDisableThinking":true});
+            entry["maxInputTokens"] = json!(1_000_000);
+            entry["contextWindow"] =
+                json!({"defaultLength":300_000,"supportedLengths":[128_000,300_000,1_000_000]});
+        }
         let list = d.entries_mut();
         if let Some(i) = matches.first() {
             list[*i] = entry
@@ -165,6 +175,16 @@ mod tests {
         let a = Bridge::new(c, dir.path().into()).unwrap();
         a.port.store(18080, std::sync::atomic::Ordering::Relaxed);
         a.configure_workbuddy(&p).unwrap();
+        let installed = Document::read(&p).unwrap();
+        assert_eq!(installed.entries().unwrap()[1]["supportsReasoning"], true);
+        assert_eq!(
+            installed.entries().unwrap()[1]["reasoning"]["supportedEfforts"],
+            json!(["high", "max"])
+        );
+        assert_eq!(
+            installed.entries().unwrap()[1]["contextWindow"]["supportedLengths"],
+            json!([128000, 300000, 1000000])
+        );
         let mut d = Document::read(&p).unwrap();
         d.entries_mut().push(json!({"id":"new","apiKey":"new"}));
         config::write_json(&p, &d.root).unwrap();

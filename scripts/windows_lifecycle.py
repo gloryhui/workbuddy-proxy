@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Close and reopen the real Win32 UI without restarting the proxy core."""
+"""Close/minimize to tray, restore, and exit the real Win32 application."""
 import argparse
 import ctypes
 from ctypes import wintypes
@@ -17,6 +17,10 @@ def main():
     cbtype=ctypes.WINFUNCTYPE(wintypes.BOOL,wintypes.HWND,wintypes.LPARAM)
     user.GetWindowThreadProcessId.argtypes=[wintypes.HWND,ctypes.POINTER(wintypes.DWORD)]
     user.IsWindowVisible.argtypes=[wintypes.HWND]
+    user.GetDlgItem.argtypes=[wintypes.HWND,ctypes.c_int]
+    user.GetDlgItem.restype=wintypes.HWND
+    user.SendMessageW.argtypes=[wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM]
+    user.SendMessageW.restype=wintypes.LPARAM
     user.PostMessageW.argtypes=[wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM]
     def window(pid):
         found=[]
@@ -40,12 +44,37 @@ def main():
         try:
             h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text())
             assert core['pid']!=first.pid
-            user.PostMessageW(h,0x0010,0,0);assert first.wait(timeout=5)==0
-            with urllib.request.urlopen(f"http://127.0.0.1:{core['port']}/health",timeout=3) as r:assert json.load(r)['ready']
-            second=subprocess.Popen(command);h=wait_window(second)
+            combo=user.GetDlgItem(h,104);assert combo
+            assert user.SendMessageW(combo,0x0146,0,0)==5, 'Thinking selector is missing choices'
+            user.SendMessageW(combo,0x014E,3,0) # select High
+            user.PostMessageW(h,0x0111,201,0) # Save through actual native UI / FFI
+            for _ in range(200):
+                if json.loads(Path(directory,'config.json').read_text()).get('reasoning_effort')=='high':break
+                time.sleep(.025)
+            else:raise AssertionError('Native Save did not persist thinking effort')
+            for message,wparam in [(0x0010,0),(0x0112,0xF020)]: # Close; minimize system command
+                user.PostMessageW(h,message,wparam,0)
+                for _ in range(200):
+                    assert first.poll() is None,'Closing the window terminated the tray process'
+                    if not user.IsWindowVisible(h):break
+                    time.sleep(.025)
+                else:raise AssertionError('Window did not hide to tray')
+                with urllib.request.urlopen(f"http://127.0.0.1:{core['port']}/health",timeout=3) as r:assert json.load(r)['ready']
+                user.PostMessageW(h,0x8001,1,0x0202) # tray left click
+                assert wait_window(first)==h
+            user.PostMessageW(h,0x0010,0,0)
+            time.sleep(.1)
+            second=subprocess.Popen(command);assert second.wait(timeout=5)==0
+            assert wait_window(first)==h, 'Second launch did not restore original tray window'
             assert json.loads(Path(directory,'instance.json').read_text())['pid']==core['pid']
-            user.PostMessageW(h,0x0010,0,0);assert second.wait(timeout=5)==0
-            print('PASS: native UI closes, core keeps running, reopened UI uses same core PID')
+            user.PostMessageW(h,0x0111,302,0) # same command as tray Quit
+            assert first.wait(timeout=5)==0
+            for _ in range(200):
+                if not Path(directory,'instance.json').exists():break
+                time.sleep(.025)
+            else:raise AssertionError('Tray Quit left the core running')
+            core=None
+            print('PASS: native effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
         finally:
             for process in [first,second]:
                 if process is not None and process.poll() is None:process.terminate();process.wait(timeout=5)

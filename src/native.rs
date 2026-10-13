@@ -84,6 +84,7 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
             match input(name).as_str() {
                 "model" => c.model,
                 "upstream" => c.upstream,
+                "reasoning_effort" => c.reasoning_effort,
                 "url" => ctx.bridge.address(),
                 "local_key" => c.local_key,
                 "status" => ctx.bridge.status.lock().unwrap().clone(),
@@ -106,6 +107,7 @@ pub extern "C" fn wb_save(
     key: *const c_char,
     model: *const c_char,
     upstream: *const c_char,
+    reasoning_effort: *const c_char,
 ) -> *mut c_char {
     ffi_result(|| {
         let ctx = CONTEXT.get().ok_or("Service is not ready")?;
@@ -117,6 +119,7 @@ pub extern "C" fn wb_save(
                 &input(key),
                 &input(model),
                 &input(upstream),
+                &input(reasoning_effort),
             ))?;
             *ctx.bridge.config.lock().unwrap() = crate::config::Config::load(&ctx.bridge.dir)?;
             return Ok(message);
@@ -129,6 +132,7 @@ pub extern "C" fn wb_save(
         }
         next.model = input(model).trim().to_owned();
         next.upstream = input(upstream).trim().to_owned();
+        next.reasoning_effort = input(reasoning_effort);
         next.validate()?;
         if next.api_key.is_empty() {
             return Err("Enter your upstream API Key / 请填写上游 API Key".into());
@@ -147,6 +151,7 @@ pub extern "C" fn wb_command(name: *const c_char) -> *mut c_char {
             return ctx.handle.block_on(remote.execute(
                 &ctx.bridge.client,
                 &input(name),
+                "",
                 "",
                 "",
                 "",

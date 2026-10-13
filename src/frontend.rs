@@ -1,5 +1,5 @@
 //! Native UI is an on-demand controller. The child core keeps serving when
-//! the settings window closes; all UI allocations disappear with this PID.
+//! the settings window closes. Windows keeps its controller for the tray.
 use crate::{Instance, config, native, proxy::Bridge};
 use fs2::FileExt;
 use serde_json::{Value, json};
@@ -23,11 +23,12 @@ impl Remote {
         key: &str,
         model: &str,
         upstream: &str,
+        reasoning_effort: &str,
     ) -> Result<String, String> {
         let res = client
             .post(format!("http://127.0.0.1:{}/_control/action", self.port))
             .bearer_auth(&self.key)
-            .json_body(command, key, model, upstream)
+            .json_body(command, key, model, upstream, reasoning_effort)
             .send()
             .await
             .map_err(|_| "Core is not responding / 后台核心未响应")?;
@@ -49,12 +50,26 @@ impl Remote {
 // Keep reqwest's JSON convenience feature disabled: serialize these tiny control
 // payloads explicitly, leaving the forwarding hot path byte-identical.
 trait ControlBody {
-    fn json_body(self, command: &str, key: &str, model: &str, upstream: &str) -> Self;
+    fn json_body(
+        self,
+        command: &str,
+        key: &str,
+        model: &str,
+        upstream: &str,
+        reasoning_effort: &str,
+    ) -> Self;
 }
 impl ControlBody for reqwest::RequestBuilder {
-    fn json_body(self, command: &str, key: &str, model: &str, upstream: &str) -> Self {
+    fn json_body(
+        self,
+        command: &str,
+        key: &str,
+        model: &str,
+        upstream: &str,
+        reasoning_effort: &str,
+    ) -> Self {
         self.header("Content-Type", "application/json").body(
-            json!({"command":command,"key":key,"model":model,"upstream":upstream}).to_string(),
+            json!({"command":command,"key":key,"model":model,"upstream":upstream,"reasoning_effort":reasoning_effort}).to_string(),
         )
     }
 }

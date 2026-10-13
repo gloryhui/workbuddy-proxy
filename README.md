@@ -10,7 +10,7 @@
 
 从 [Releases](https://github.com/gloryhui/workbuddy-proxy/releases) 下载与你的系统对应的包。测试与开发中的文件也会出现在 [Actions](https://github.com/gloryhui/workbuddy-proxy/actions) 的构建附件里。
 
-- Windows 10/11 x64：解压，双击 `workbuddy-proxy.exe`，直接显示原生设置窗口。窗口打开时提供托盘菜单；关闭窗口会退出界面进程，核心继续运行，再次双击打开设置。
+- Windows 10/11 x64：解压，双击 `workbuddy-proxy.exe`，直接显示原生设置窗口。关闭或最小化窗口时隐藏到任务栏托盘，转发继续。单击托盘或再次双击程序可恢复设置；右键托盘“退出”停止程序。Explorer 重启后会重新注册托盘。
 - macOS 12+：解压，将 `WorkBuddy Proxy.app` 拖到“应用程序”，双击启动。关闭设置窗口后界面进程退出，转发核心继续运行；再次双击可重新打开设置。
 - 无需安装 Rust、Python、Node 或额外 WebView 运行时。
 
@@ -19,9 +19,17 @@
 3. 点击“配置 WorkBuddy”。程序先备份 `models.json`，仅添加或替换同 ID 模型，保留其他配置。
 4. 重新打开 WorkBuddy 模型设置，必要时重启 WorkBuddy，在聊天中选择 `WorkBuddy Proxy · 模型名`。
 
-也可点击“复制配置”，手动向 WorkBuddy 添加自定义模型。接口地址默认 `http://127.0.0.1:18080/v1`，API Key 填本工具生成的**本地连接码**，不填上游订阅 Key。工具调用默认开启；图片和思考能力默认关闭，确认上游模型支持后再开启。
+也可点击“复制配置”，手动向 WorkBuddy 添加自定义模型。接口地址默认 `http://127.0.0.1:18080/v1`，API Key 填本工具生成的**本地连接码**，不填上游订阅 Key。工具调用默认开启，图片能力默认关闭。DeepSeek V4.1 Flash 会声明思考能力和档位，WorkBuddy 自己的模型列表可选择“高 / 极致”；允许关闭思考。上下文窗口可选择 128K / 300K / 1M，默认 300K。其他模型的能力以其真实支持范围为准。
 
 “恢复配置”只恢复本工具改动的模型。如果该模型后来被其他操作修改，程序拒绝覆盖，并保留备份供手动恢复。备份位于 WorkBuddy 配置旁，名称为 `models.json.workbuddy-proxy-时间戳.bak`。
+
+## 思考强度和 WorkBuddy 选择器
+
+WorkBuddy 的“思考强度”由 `supportsReasoning: true`、`reasoning.defaultEffort` 和 `reasoning.supportedEfforts` 控制；仅填模型 ID / URL / Key 不保证显示。`contextWindow.defaultLength` / `supportedLengths` 控制上下文窗口选择器。新版“配置 WorkBuddy”会为 `deepseek-v4.1-flash` 写入这些能力字段；已有用户需再次点击并重新打开模型设置，必要时重启 WorkBuddy。
+
+代理窗口的下拉框默认“跟随客户端”，此时 **WorkBuddy 选什么就传什么**，请求字节保持不变。只有明确选择关闭 / 低 / 高 / 最高并保存，才全局覆盖上游请求，优先级高于 WorkBuddy 当前选择。“测试”也使用已保存的同一档位。
+
+DeepSeek 的覆盖参数遵循 [官方说明](https://api-docs.deepseek.com/guides/thinking_mode/)：开启时发送 `thinking.type=enabled` 与 `reasoning_effort`；关闭时发送 `thinking.type=disabled` 并删除冲突的 `reasoning_effort`。代理提供 `low / high / max` 参数；WorkBuddy 的 Go 目录目前为 V4.1 声明 `high / max`，所以其列表只展示这两档。其他 OpenAI 兼容模型仅发送 `reasoning_effort`，不保证每家都支持全部档位，上游拒绝时原样返回错误。思考内容和工具历史仍由 WorkBuddy 管理，代理不伪造 `reasoning_content`。
 
 ## 轻量设计
 
@@ -32,13 +40,13 @@
 | Windows UI | Win32 标准控件和托盘 |
 | Mac UI | AppKit 标准控件和菜单栏 |
 | 响应 | 流式直通、背压、取消时释放上游流 |
-| 请求 | 原始 JSON 字节传递；借用字段，仅为会话识别读取必要信息 |
+| 请求 | 默认原始字节传递；显式覆盖思考时只重写顶层参数，消息 / 工具保持 RawValue |
 | 并发 | 4 个在途请求；忙时返回本地 HTTP 429，不排队堆积 |
 | 请求体 | 每个最多 8 MiB，输入读取最多 30 秒 |
 | 会话缓存 | 最多 64 个会话，每个最多 128 个消息哈希；24 小时不活跃后按需清理 |
 | 上游连接 | 每个主机最多保留 2 个空闲连接，60 秒空闲后清理 |
 
-没有内置浏览器、前端框架、数据库、自动更新器、遥测、聊天日志或响应重写。同一个可执行文件包含核心和设置界面：后台常驻 1 个核心进程，打开设置时暂时增加 1 个原生界面进程，关闭窗口释放整份 UI 内存。运行时不进行模型目录同步和后台余额轮询。
+没有内置浏览器、前端框架、数据库、自动更新器、遥测、聊天日志或响应重写。同一个可执行文件包含核心和设置界面：Mac 后台常驻 1 个核心进程，关闭设置会释放界面进程。Windows 为保持托盘，关闭窗口后仍保留核心和一个原生界面进程；需要最低常驻内存时可使用 `--headless`（无托盘）。运行时不进行模型目录同步和后台余额轮询。
 
 对于 OpenCode Go，发送本工具自己的 User-Agent，并补齐 `x-opencode-session`。优先读取客户端会话头，缺少时根据聊天历史前缀推断；不同会话不会共用一个全局固定值。相同开场历史的独立聊天可能被归为同一会话；超过缓存窗口、历史压缩和服务重启可能产生新的上游会话。这影响路由 / 缓存，不会混合或交换聊天内容。使用范围与额度以 [OpenCode Go 官方说明](https://opencode.ai/docs/go/) 为准。
 
@@ -46,7 +54,7 @@
 
 参见 [设计与性能边界](docs/ARCHITECTURE.md)。基准脚本测量进程 RSS、直接 / 代理的本地请求延迟、4 并发 1 MiB 输入的采样峰值。**本地 HTTP mock 数据不等于真实 TLS、互联网、模型响应或 Windows 人工验收。**
 
-[首版原始性能记录](docs/PERFORMANCE.md)：无界面核心空闲约 Mac 6.23 MiB / Windows 8.61 MiB；打开原生界面时的总占用另列，关闭窗口后释放界面进程。
+[首版原始性能记录](docs/PERFORMANCE.md)：无界面核心空闲约 Mac 6.23 MiB / Windows 8.61 MiB；这些是无界面核心的数据。Windows 托盘模式还保留 UI 进程，总占用以最新 CI 测量为准。
 
 ```sh
 cargo test --locked

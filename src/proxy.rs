@@ -66,6 +66,7 @@ impl Bridge {
             local_key: c.local_key.clone(),
             model: c.model.clone(),
             upstream: c.upstream.clone(),
+            reasoning_effort: c.reasoning_effort.clone(),
             port: c.port,
             installed: None,
         }
@@ -115,10 +116,11 @@ impl Bridge {
             return Err("Save your API key first / 请先保存 API Key".into());
         }
         let payload=serde_json::to_vec(&json!({"model":c.model,"stream":true,"max_tokens":1,"messages":[{"role":"user","content":"Reply with OK."}]})).unwrap();
+        let payload = apply_reasoning(payload.into(), &c.reasoning_effort)?;
         let started = std::time::Instant::now();
         let res = tokio::time::timeout(
             Duration::from_secs(45),
-            self.upstream(&c, payload.into(), &crate::config::token()),
+            self.upstream(&c, payload, &crate::config::token()),
         )
         .await
         .map_err(|_| "Connection timeout / 连接超时")?
@@ -280,6 +282,10 @@ async fn relay(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Response
         String::new()
     };
     drop(envelope);
+    let bytes = match apply_reasoning(bytes, &c.reasoning_effort) {
+        Ok(b) => b,
+        Err(e) => return fail(StatusCode::BAD_REQUEST, &e),
+    };
     let res = match a.upstream(&c, bytes, &session).await {
         Ok(r) => r,
         Err(_) => {
@@ -351,6 +357,8 @@ struct Control {
     model: String,
     #[serde(default)]
     upstream: String,
+    #[serde(default)]
+    reasoning_effort: Option<String>,
 }
 async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Response<Body> {
     let (parts, body) = request.into_parts();
@@ -376,6 +384,9 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
             }
             next.model = p.model.trim().into();
             next.upstream = p.upstream.trim().into();
+            if let Some(effort) = p.reasoning_effort {
+                next.reasoning_effort = effort;
+            }
             next.validate().and_then(|_| {
                 if next.api_key.is_empty() {
                     return Err("Enter upstream API key".into());
@@ -425,9 +436,68 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
         .unwrap()
 }
 
+// Borrow large messages/tools as RawValue; only serialize the small top-level
+// map when a user explicitly overrides thinking. Default retains exact Bytes.
+fn apply_reasoning(body: bytes::Bytes, effort: &str) -> Result<bytes::Bytes, String> {
+    if effort == "default" {
+        return Ok(body);
+    }
+    use serde_json::value::RawValue;
+    use std::collections::BTreeMap;
+    let mut fields: BTreeMap<String, &RawValue> =
+        serde_json::from_slice(&body).map_err(|_| "Invalid chat request")?;
+    let deepseek = fields
+        .get("model")
+        .and_then(|v| serde_json::from_str::<String>(v.get()).ok())
+        .is_some_and(|m| m.starts_with("deepseek-"));
+    let encoded_effort = serde_json::to_string(effort).map_err(|e| e.to_string())?;
+    let effort_value = RawValue::from_string(encoded_effort).map_err(|e| e.to_string())?;
+    let thinking_value = RawValue::from_string(if effort == "none" {
+        r#"{"type":"disabled"}"#.into()
+    } else {
+        r#"{"type":"enabled"}"#.into()
+    })
+    .map_err(|e| e.to_string())?;
+    if deepseek {
+        fields.insert("thinking".into(), &thinking_value);
+        if effort == "none" {
+            // DeepSeek rejects disabled thinking combined with reasoning_effort.
+            fields.remove("reasoning_effort");
+        } else {
+            fields.insert("reasoning_effort".into(), &effort_value);
+        }
+    } else {
+        fields.insert("reasoning_effort".into(), &effort_value);
+    }
+    serde_json::to_vec(&fields)
+        .map(bytes::Bytes::from)
+        .map_err(|e| e.to_string())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn thinking_override_preserves_large_raw_fields() {
+        let body = bytes::Bytes::from_static(br#"{ "model":"deepseek-v4.1-flash", "messages": [ {"role":"user","content":"test"} ], "tools":[{"type":"function"}], "reasoning_effort":"high" }"#);
+        assert_eq!(
+            apply_reasoning(body.clone(), "default").unwrap().as_ptr(),
+            body.as_ptr()
+        );
+        let high = apply_reasoning(body.clone(), "max").unwrap();
+        assert!(
+            std::str::from_utf8(&high)
+                .unwrap()
+                .contains(r#"[ {"role":"user","content":"test"} ]"#)
+        );
+        let parsed: serde_json::Value = serde_json::from_slice(&high).unwrap();
+        assert_eq!(parsed["reasoning_effort"], "max");
+        assert_eq!(parsed["thinking"]["type"], "enabled");
+        let off: serde_json::Value =
+            serde_json::from_slice(&apply_reasoning(body, "none").unwrap()).unwrap();
+        assert!(off.get("reasoning_effort").is_none());
+        assert_eq!(off["thinking"]["type"], "disabled");
+    }
     #[test]
     fn local_access_rules() {
         let mut h = HeaderMap::new();

@@ -47,7 +47,7 @@ jobs:
       - name: Native Windows memory benchmark
         if: runner.os == 'Windows'
         run: python scripts/benchmark.py --exe "${{ matrix.binary }}" --gui --output "bench-results/${{ matrix.platform }}-native.json"
-      - name: Close and reopen native UI without restarting core
+      - name: Windows tray lifecycle and native thinking controls
         if: runner.os == 'Windows'
         run: python scripts/windows_lifecycle.py --exe "${{ matrix.binary }}"
       - name: Settings process-group isolation

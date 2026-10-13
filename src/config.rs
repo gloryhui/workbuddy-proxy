@@ -17,6 +17,7 @@ pub struct Config {
     pub local_key: String,
     pub model: String,
     pub upstream: String,
+    pub reasoning_effort: String,
     pub port: u16,
     pub installed: Option<Installation>,
 }
@@ -32,6 +33,7 @@ impl Default for Config {
             local_key: token(),
             model: DEFAULT_MODEL.into(),
             upstream: DEFAULT_UPSTREAM.into(),
+            reasoning_effort: "default".into(),
             port: DEFAULT_PORT,
             installed: None,
         }
@@ -138,6 +140,12 @@ impl Config {
         {
             return Err("Invalid model name".into());
         }
+        if !matches!(
+            self.reasoning_effort.as_str(),
+            "default" | "none" | "low" | "high" | "max"
+        ) {
+            return Err("Invalid thinking effort / 无效的思考强度".into());
+        }
         if self.api_key.len() > 4096 || self.api_key.chars().any(char::is_control) {
             return Err("Invalid API key".into());
         }
@@ -190,6 +198,10 @@ mod tests {
         d.upstream = "http://127.0.0.1:1234/v1".into();
         assert!(d.validate().is_ok());
         d.upstream = "http://example.com/v1".into();
+        assert!(d.validate().is_err());
+        assert_eq!(c.reasoning_effort, "default");
+        d.upstream = DEFAULT_UPSTREAM.into();
+        d.reasoning_effort = "ultra".into();
         assert!(d.validate().is_err());
         assert_eq!(c.local_key, Config::load(dir.path()).unwrap().local_key);
     }
