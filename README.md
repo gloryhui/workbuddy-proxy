@@ -2,6 +2,8 @@
 
 专门给 WorkBuddy 使用的轻量模型代理。Rust 转发核心，Windows Win32 / macOS AppKit 原生界面，设置界面按需启动，后台只常驻转发核心。首版支持 OpenAI Chat Completions 与 OpenCode Go。
 
+![Mac 原生设置窗口](docs/native-mac-preview.png)
+
 目标是**更少的常驻内存、更低的转发开销**。本项目不声称在所有平台、所有负载下“全球最小 / 最快”；每次 CI 都构建真实可执行文件、运行冒烟测试并记录可复现的内存与延迟数据。
 
 ## 使用
@@ -43,6 +45,8 @@
 ## 验证和性能
 
 参见 [设计与性能边界](docs/ARCHITECTURE.md)。基准脚本测量进程 RSS、直接 / 代理的本地请求延迟、4 并发 1 MiB 输入的采样峰值。**本地 HTTP mock 数据不等于真实 TLS、互联网、模型响应或 Windows 人工验收。**
+
+[首版原始性能记录](docs/PERFORMANCE.md)：无界面核心空闲约 Mac 6.23 MiB / Windows 8.61 MiB；打开原生界面时的总占用另列，关闭窗口后释放界面进程。
 
 ```sh
 cargo test --locked

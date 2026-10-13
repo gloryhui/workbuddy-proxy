@@ -1,0 +1,26 @@
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit",
+  "architecture": "arm64",
+  "mode": "native GUI",
+  "binary_bytes": 2989696,
+  "idle_rss_mib": 78.22,
+  "core_idle_rss_mib": 6.22,
+  "measured_process_count": 2,
+  "sampled_peak_rss_mib": 112.8,
+  "post_load_rss_mib": 107.98,
+  "small_request_count": 200,
+  "direct_loopback_ms": {
+    "p50": 0.258,
+    "p95": 0.667
+  },
+  "proxied_loopback_ms": {
+    "p50": 0.213,
+    "p95": 0.852
+  },
+  "median_proxy_overhead_ms": -0.045,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.271,
+  "notes": "RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock, no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied."
+}
