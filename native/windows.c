@@ -104,4 +104,4 @@ void wb_native_run(void){SetProcessDPIAware();taskbarCreated=RegisterWindowMessa
 }
 void wb_native_show(void){HWND h=window?window:FindWindowW(L"WorkBuddyProxyWindow",NULL);if(h)PostMessageW(h,WM_SHOW,0,0);}
 void wb_native_quit(void){if(window)PostMessageW(window,WM_STOP,0,0);}
-void wb_native_error(const char *message){wchar_t *w=wide(message);MSGBOXPARAMSW box;memset(&box,0,sizeof(box));box.cbSize=sizeof(box);box.hInstance=GetModuleHandleW(NULL);box.lpszText=w?w:L"Startup failed";box.lpszCaption=L"WorkBuddy Proxy";box.dwStyle=MB_USERICON;box.lpszIcon=MAKEINTRESOURCEW(1);MessageBoxIndirectW(&box);free(w);}
+void wb_native_error(const char *message){wb_use_language(PRIMARYLANGID(GetUserDefaultUILanguage())==LANG_CHINESE);char *localized=wb_message(message);wchar_t *w=wide(localized);wb_free(localized);MSGBOXPARAMSW box;memset(&box,0,sizeof(box));box.cbSize=sizeof(box);box.hInstance=GetModuleHandleW(NULL);box.lpszText=w?w:L"Startup failed";box.lpszCaption=L"WorkBuddy Proxy";box.dwStyle=MB_USERICON;box.lpszIcon=MAKEINTRESOURCEW(1);MessageBoxIndirectW(&box);free(w);}

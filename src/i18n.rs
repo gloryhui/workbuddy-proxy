@@ -15,6 +15,7 @@ pub fn message(text: &str, zh: bool) -> String {
     }
     let translated = if zh {
         match text {
+            "WorkBuddy Proxy startup failed" => "WorkBuddy Proxy 启动失败",
             "Ready" => "就绪",
             "Saved" => "已保存",
             "Language saved" => "语言已保存",

@@ -400,3 +400,14 @@ pub extern "C" fn wb_snapshot() -> *mut c_char {
     })();
     output(result.unwrap_or_else(|e| crate::i18n::message(&e, UI_ZH.load(Ordering::Relaxed))))
 }
+
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_message(text: *const c_char) -> *mut c_char {
+    output(
+        input(text)
+            .lines()
+            .map(|line| crate::i18n::message(line, UI_ZH.load(Ordering::Relaxed)))
+            .collect::<Vec<_>>()
+            .join("\n"),
+    )
+}

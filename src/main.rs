@@ -27,7 +27,7 @@ struct Instance {
 }
 fn main() {
     if let Err(e) = run() {
-        native::error(&format!("WorkBuddy Proxy startup failed / 启动失败\n{e}"));
+        native::error(&format!("WorkBuddy Proxy startup failed\n{e}"));
         std::process::exit(1);
     }
 }
