@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import tempfile
 import threading
+import time
 import urllib.error
 import urllib.request
 from smoke import ThreadingHTTPServer, start, stop
@@ -37,6 +38,9 @@ def main():
                 try:
                     with urllib.request.urlopen(request,timeout=5) as r:return r.status,json.load(r)['message']
                 except urllib.error.HTTPError as e:return e.code,json.load(e)['message']
+            Path(directory,'update-cache.json').write_text(json.dumps({'checked_at':int(time.time()),'tag':'v99.0.0'}))
+            code,text=action({'command':'check_update','force':False});update=json.loads(text)
+            assert code==200 and update['available'] and update['cached'] and update['url']=='https://github.com/gloryhui/workbuddy-proxy/releases/tag/v99.0.0'
             code,text=action({'command':'fetch','upstream':base+'/v1','key':'draft-secret'})
             assert code==200 and json.loads(text)==['a-model','z-model']
             assert server.seen[-1]==('/v1/models','Bearer draft-secret')
@@ -63,7 +67,7 @@ def main():
             code,text=action({'command':'snapshot'});snapshot=json.loads(text)
             assert code==200 and len(snapshot['logs'])==100 and snapshot['requests']==1
             assert 'draft-secret' not in text and 'fixture-upstream-key' not in text and key not in text
-            print('PASS: draft discovery, saved-key fallback, invalid/401/oversized lists, editable/default names, stable route IDs, compact model aliases, persisted language, bounded secret-free system logs')
+            print('PASS: draft discovery, saved-key fallback, invalid/401/oversized lists, editable/default names, stable route IDs, compact model aliases, persisted language, bounded secret-free system logs, cached release check')
         finally:stop(process,port,directory,log)
     server.shutdown();server.server_close()
 if __name__=='__main__':main()

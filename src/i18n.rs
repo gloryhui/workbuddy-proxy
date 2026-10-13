@@ -16,6 +16,12 @@ pub fn message(text: &str, zh: bool) -> String {
     let translated = if zh {
         match text {
             "WorkBuddy Proxy startup failed" => "WorkBuddy Proxy 启动失败",
+            "Update check failed; check network" => "更新检查失败，请检查网络",
+            "Update check timed out" => "更新检查超时",
+            "Update check already running" => "正在检查更新",
+            "Invalid release response" => "更新服务返回无效响应",
+            "Invalid release version" => "发布版本号无效",
+            "Expected a stable release" => "未找到正式发布版本",
             "Ready" => "就绪",
             "Saved" => "已保存",
             "Language saved" => "语言已保存",
@@ -62,6 +68,9 @@ pub fn message(text: &str, zh: bool) -> String {
         text
     };
     if zh {
+        if let Some(code) = text.strip_prefix("Update check HTTP ") {
+            return format!("{prefix}更新检查返回 HTTP {code}");
+        }
         if let Some(code) = text.strip_prefix("Upstream HTTP ") {
             return format!("{prefix}上游返回 HTTP {code}");
         }

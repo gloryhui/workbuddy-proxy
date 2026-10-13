@@ -6,6 +6,7 @@ mod i18n;
 mod native;
 mod proxy;
 mod session;
+mod update;
 mod workbuddy;
 use axum::serve::ListenerExt;
 use fs2::FileExt;

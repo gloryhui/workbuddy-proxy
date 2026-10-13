@@ -15,7 +15,7 @@ use std::{
     path::PathBuf,
     sync::{
         Arc, Mutex,
-        atomic::{AtomicU16, AtomicU64, Ordering},
+        atomic::{AtomicBool, AtomicU16, AtomicU64, Ordering},
     },
     time::Duration,
 };
@@ -147,6 +147,7 @@ pub struct Bridge {
     pub logs: Mutex<std::collections::VecDeque<(u64, String)>>,
     started: std::time::Instant,
     pub management_key: String,
+    update_busy: AtomicBool,
     pub stop: Mutex<Option<oneshot::Sender<()>>>,
 }
 impl Bridge {
@@ -173,6 +174,7 @@ impl Bridge {
             logs: Mutex::new(std::collections::VecDeque::new()),
             started: std::time::Instant::now(),
             management_key: crate::config::token(),
+            update_busy: AtomicBool::new(false),
             stop: Mutex::new(None),
         })
     }
@@ -677,7 +679,10 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
 impl Bridge {
     pub async fn command(&self, p: &serde_json::Value) -> Result<String, String> {
         let result = self.command_inner(p).await;
-        if !matches!(p["command"].as_str(), Some("snapshot" | "copy" | "fetch")) {
+        if !matches!(
+            p["command"].as_str(),
+            Some("snapshot" | "copy" | "fetch" | "check_update")
+        ) {
             self.set_status(match &result {
                 Ok(s) => s.clone(),
                 Err(e) => format!("ERROR {e}"),
@@ -696,6 +701,24 @@ impl Bridge {
             .and_then(serde_json::Value::as_str)
             .unwrap_or("");
         match command {
+            "check_update" => {
+                if self.update_busy.swap(true, Ordering::Relaxed) {
+                    return Err("Update check already running".into());
+                }
+                struct Reset<'a>(&'a AtomicBool);
+                impl Drop for Reset<'_> {
+                    fn drop(&mut self) {
+                        self.0.store(false, Ordering::Relaxed);
+                    }
+                }
+                let _reset = Reset(&self.update_busy);
+                crate::update::check(
+                    &self.client,
+                    &self.dir,
+                    p["force"].as_bool().unwrap_or(false),
+                )
+                .await
+            }
             "snapshot" => {
                 let cfg = self.config.lock().unwrap();
                 let logs = self.logs.lock().unwrap();

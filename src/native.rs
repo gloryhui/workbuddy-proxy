@@ -127,6 +127,28 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
                 "status" => ctx.bridge.status.lock().unwrap().clone(),
                 "has_key" => if c.api_key.is_empty() { "0" } else { "1" }.into(),
                 "version" => env!("CARGO_PKG_VERSION").into(),
+                "update_url" => UPDATE.lock().unwrap()["url"].as_str().unwrap_or("").into(),
+                "update_available" => if UPDATE.lock().unwrap()["available"] == true {
+                    "1"
+                } else {
+                    "0"
+                }
+                .into(),
+                "update_label" => {
+                    let state = UPDATE.lock().unwrap();
+                    let zh = UI_ZH.load(Ordering::Relaxed);
+                    if state["available"] == true {
+                        format!(
+                            "{} {}",
+                            if zh { "下载" } else { "Get" },
+                            state["tag"].as_str().unwrap_or("")
+                        )
+                    } else if state["tag"].is_string() {
+                        if zh { "已是最新" } else { "Up to date" }.into()
+                    } else {
+                        if zh { "检查更新" } else { "Check updates" }.into()
+                    }
+                }
                 _ => String::new(),
             }
         }))
@@ -410,4 +432,36 @@ pub extern "C" fn wb_message(text: *const c_char) -> *mut c_char {
             .collect::<Vec<_>>()
             .join("\n"),
     )
+}
+
+static UPDATE: LazyLock<Mutex<serde_json::Value>> =
+    LazyLock::new(|| Mutex::new(serde_json::Value::Null));
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_check_update(force: i32) -> *mut c_char {
+    ffi_result(|| {
+        let raw = remote_call(serde_json::json!({"command":"check_update","force":force!=0}))?;
+        let state: serde_json::Value =
+            serde_json::from_str(&raw).map_err(|_| "Invalid release response")?;
+        let zh = UI_ZH.load(Ordering::Relaxed);
+        let message = if state["available"] == true {
+            format!(
+                "{} {}",
+                if zh {
+                    "发现新版本"
+                } else {
+                    "New version available:"
+                },
+                state["tag"].as_str().unwrap_or("")
+            )
+        } else {
+            if zh {
+                "当前已是最新版本"
+            } else {
+                "Already up to date"
+            }
+            .into()
+        };
+        *UPDATE.lock().unwrap() = state;
+        Ok(message)
+    })
 }

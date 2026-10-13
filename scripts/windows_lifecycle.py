@@ -4,6 +4,7 @@ import argparse
 import ctypes
 from ctypes import wintypes
 import json
+import tomllib
 from pathlib import Path
 import subprocess
 import tempfile
@@ -39,6 +40,8 @@ def main():
     with tempfile.TemporaryDirectory(prefix='workbuddy-lifecycle-') as directory:
         config={'api_key':'fixture-key','local_key':'fixture-local','upstream':'https://opencode.ai/zen/go/v1','model':'deepseek-v4.1-flash','port':free_port(),'installed':None}
         Path(directory,'config.json').write_text(json.dumps(config))
+        version=tomllib.loads(Path('Cargo.toml').read_text())['package']['version']
+        Path(directory,'update-cache.json').write_text(json.dumps({'tag':'v'+version,'checked_at':int(time.time())}))
         def profile():
             for attempt in range(20):
                 try:return json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))
@@ -115,6 +118,11 @@ def main():
                     time.sleep(.025)
                 else:raise AssertionError('Native language switch did not apply')
             assert user.GetDlgItem(h,112),'Scrollable log panel is missing'
+            update=user.GetDlgItem(h,113);assert update
+            for _ in range(200):
+                if caption(update)=='Up to date':break
+                time.sleep(.025)
+            else:raise AssertionError('Automatic Release check did not update the header button')
             from windows_preview import capture
             capture(h,'bench-results/native-windows-preview.png')
             listing=user.GetDlgItem(h,107);assert listing
