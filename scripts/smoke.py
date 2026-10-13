@@ -4,7 +4,7 @@ import argparse
 import concurrent.futures
 import hashlib
 import http.client
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer as HttpServer
 import json
 import os
 from pathlib import Path
@@ -13,8 +13,14 @@ import subprocess
 import tempfile
 import threading
 import time
+import sys
 import urllib.request
 
+
+class ThreadingHTTPServer(HttpServer):
+    def handle_error(self,request,address):
+        if isinstance(sys.exc_info()[1],(ConnectionResetError,BrokenPipeError)):return
+        super().handle_error(request,address)
 
 class Mock(BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.1'

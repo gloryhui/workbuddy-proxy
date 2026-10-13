@@ -47,6 +47,9 @@ jobs:
       - name: Native Windows memory benchmark
         if: runner.os == 'Windows'
         run: python scripts/benchmark.py --exe "${{ matrix.binary }}" --gui --output "bench-results/${{ matrix.platform }}-native.json"
+      - name: Close and reopen native UI without restarting core
+        if: runner.os == 'Windows'
+        run: python scripts/windows_lifecycle.py --exe "${{ matrix.binary }}"
       - name: Package native desktop executable
         if: runner.os != 'Linux'
         run: python scripts/package.py --exe "${{ matrix.binary }}" --platform "${{ matrix.platform }}"
