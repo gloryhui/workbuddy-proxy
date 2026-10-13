@@ -77,9 +77,12 @@ fn detach(cmd: &mut Command) {
         use std::os::windows::process::CommandExt;
         cmd.creation_flags(0x08000000);
     }
-    #[cfg(not(windows))]
+    #[cfg(unix)]
     {
-        let _ = cmd;
+        use std::os::unix::process::CommandExt;
+        // A launcher/terminal may clean up its process group when the window
+        // closes. Give the core its own group; stdin/out/err are already null.
+        cmd.process_group(0);
     }
 }
 fn instance(dir: &Path) -> Option<Instance> {

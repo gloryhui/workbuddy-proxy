@@ -50,6 +50,9 @@ jobs:
       - name: Close and reopen native UI without restarting core
         if: runner.os == 'Windows'
         run: python scripts/windows_lifecycle.py --exe "${{ matrix.binary }}"
+      - name: Settings process-group isolation
+        if: runner.os == 'macOS'
+        run: python scripts/unix_lifecycle.py --exe "${{ matrix.binary }}"
       - name: Package native desktop executable
         if: runner.os != 'Linux'
         run: python scripts/package.py --exe "${{ matrix.binary }}" --platform "${{ matrix.platform }}"
