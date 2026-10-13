@@ -35,3 +35,5 @@ FFI 字符串所有权由 Rust 分配，平台读取后调用 `wb_free`。FFI �
 GitHub Actions 在 Windows、Apple Silicon Mac、Intel Mac、Linux 上进行编译、lint、单元测试、执行实际二进制冒烟测试；Windows 另执行原生窗口模式。自动测试不代替用户在目标机上的人工 UI、WorkBuddy 真正对话和上游真实账号验收。
 
 发布包仅含二进制、许可证、说明和 Windows 诊断启动器。用户配置始终在发布目录外。Git 忽略规则排除密钥文件、构建目录、日志和基准中间文件。
+
+Windows 仅在实际转发请求存续期间调用 `timeBeginPeriod(1)`，结束、失败或取消时 RAII 配对 `timeEndPeriod(1)`；空闲期间不持有高精度计时，不添加轮询或忙等待。其进程范围与耗电取舍遵循 [Microsoft 官方说明](https://learn.microsoft.com/en-us/windows/win32/api/timeapi/nf-timeapi-timebeginperiod)：Windows 10 2004 起为进程请求，更旧 Windows 会影响全局计时精度；高精度可能增加活动期间耗电。

@@ -2,6 +2,7 @@
 mod config;
 #[cfg(any(windows, target_os = "macos"))]
 mod frontend;
+mod latency;
 mod native;
 mod proxy;
 mod session;

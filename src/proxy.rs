@@ -431,6 +431,7 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
             );
         }
     };
+    let active_request = crate::latency::ActiveRequest::new();
     // The deadline also prevents a caller with a valid key from holding an input slot forever.
     let bytes =
         match tokio::time::timeout(Duration::from_secs(30), to_bytes(body, BODY_LIMIT)).await {
@@ -513,8 +514,13 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
     // No SSE parsing, buffering, rewriting or extra response copies. The permit
     // travels with the stream and is released on completion OR client cancellation.
     let stream = stream::unfold(
-        (res.bytes_stream(), permit),
-        |(mut source, permit)| async move { source.next().await.map(|chunk| (chunk, (source, permit))) },
+        (res.bytes_stream(), permit, active_request),
+        |(mut source, permit, active_request)| async move {
+            source
+                .next()
+                .await
+                .map(|chunk| (chunk, (source, permit, active_request)))
+        },
     );
     response.body(Body::from_stream(stream)).unwrap()
 }
