@@ -70,17 +70,51 @@ def main():
                 if profile()['providers'][0]['models'][0].get('reasoning_effort')=='high':break
                 time.sleep(.025)
             else:raise AssertionError('Native Save did not persist thinking effort')
-            # Edit the actual Win32 multiline model control, then save through FFI.
-            model_edit=user.GetDlgItem(h,103);assert model_edit
-            model_text=ctypes.c_wchar_p('deepseek-v4.1-flash | Flash\r\nother-model | Other')
-            user.SendMessageW(model_edit,0x000C,0,ctypes.cast(model_text,ctypes.c_void_p).value)
+            # Edit the real table's first display name through its native cell editor.
+            table=user.GetDlgItem(h,103);assert table
+            user.FindWindowExW.argtypes=[wintypes.HWND,wintypes.HWND,wintypes.LPCWSTR,wintypes.LPCWSTR];user.FindWindowExW.restype=wintypes.HWND
+            def editor():
+                for _ in range(200):
+                    edit=user.FindWindowExW(table,None,'Edit',None)
+                    if edit:return edit
+                    time.sleep(.025)
+                raise AssertionError('Table cell editor did not open')
+            def enter(edit,text):
+                value=ctypes.c_wchar_p(text)
+                user.SendMessageW(edit,0x000C,0,ctypes.cast(value,ctypes.c_void_p).value)
+                user.PostMessageW(edit,0x0100,13,0)
+                for _ in range(200):
+                    if not user.FindWindowExW(table,None,'Edit',None):return
+                    time.sleep(.025)
+                raise AssertionError('Table edit did not commit')
+            # Header is followed by row 0; double-click its name column.
+            point=10 | (32<<16)
+            user.PostMessageW(table,0x0201,1,point);user.PostMessageW(table,0x0202,0,point)
+            user.PostMessageW(table,0x0203,1,point);user.PostMessageW(table,0x0202,0,point)
+            enter(editor(),'Flash')
+            user.PostMessageW(h,0x0111,210,0) # Add model and edit its ID.
+            enter(editor(),'other-model')
             user.PostMessageW(h,0x0111,201,0)
             for _ in range(200):
                 entries=profile()['providers'][0]['models']
                 if len(entries)==2:break
                 time.sleep(.025)
-            else:raise AssertionError('Native multiline model save failed')
-            assert entries[0]['name']=='Flash' and entries[1]['model']=='other-model'
+            else:raise AssertionError('Native model table save failed')
+            assert entries[0]['name']=='Flash' and entries[1]['name']=='other-model' and entries[1]['model']=='other-model'
+            # Switching languages persists a preference and uses one language per button.
+            language=user.GetDlgItem(h,110);assert language
+            def caption(control):
+                buffer=ctypes.create_unicode_buffer(256)
+                user.GetWindowTextW.argtypes=[wintypes.HWND,wintypes.LPWSTR,ctypes.c_int]
+                user.GetWindowTextW(control,buffer,256);return buffer.value
+            for index,code,title in [(0,'zh','保存'),(1,'en','Save')]:
+                user.SendMessageW(language,0x014E,index,0)
+                user.PostMessageW(h,0x0111,110 | (1<<16),0)
+                for _ in range(200):
+                    if profile().get('language')==code and caption(user.GetDlgItem(h,201))==title:break
+                    time.sleep(.025)
+                else:raise AssertionError('Native language switch did not apply')
+            assert user.GetDlgItem(h,112),'Scrollable log panel is missing'
             listing=user.GetDlgItem(h,107);assert listing
             assert user.SendMessageW(listing,0x018B,0,0)==1 # LB_GETCOUNT
             user.PostMessageW(h,0x0111,207,0) # Duplicate the selected configured connection
@@ -91,6 +125,18 @@ def main():
             else:raise AssertionError('Native Duplicate did not add a connection')
             assert saved[0]['api_key']==saved[1]['api_key'] and saved[0]['models'][0]['alias']!=saved[1]['models'][0]['alias']
             user.PostMessageW(h,0x0111,208,0) # Delete duplicate, leaves original configured connection
+            # Acknowledge the native delete dialog, then check the saved list.
+            for _ in range(200):
+                dialogs=[]
+                def find_dialog(hwnd,param):
+                    pid=wintypes.DWORD();user.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
+                    if pid.value==first.pid and hwnd!=h and user.IsWindowVisible(hwnd):dialogs.append(hwnd)
+                    return True
+                user.EnumWindows(cbtype(find_dialog),0)
+                if dialogs:
+                    user.PostMessageW(dialogs[0],0x0111,1,0);break
+                time.sleep(.025)
+            else:raise AssertionError('Delete confirmation did not open')
             for _ in range(200):
                 if len(profile()['providers'])==1:break
                 time.sleep(.025)
@@ -117,7 +163,7 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Tray Quit left the core running')
             core=None
-            print('PASS: embedded executable/window/header icons; native effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
+            print('PASS: embedded executable/window/header icons; native table editing, automatic display names, language switch and log panel; effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
         finally:
             for process in [first,second]:
                 if process is not None and process.poll() is None:process.terminate();process.wait(timeout=5)

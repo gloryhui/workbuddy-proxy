@@ -3,8 +3,8 @@ use std::{
     ffi::{CStr, CString, c_char},
     panic::{AssertUnwindSafe, catch_unwind},
     sync::{
-        Arc, OnceLock,
-        atomic::{AtomicUsize, Ordering},
+        Arc, LazyLock, Mutex, OnceLock,
+        atomic::{AtomicBool, AtomicUsize, Ordering},
     },
 };
 
@@ -102,10 +102,17 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
                 .min(cfg.providers.len().saturating_sub(1));
             let c = cfg.providers.get(index).cloned().unwrap_or_default();
             match input(name).as_str() {
+                "language" => cfg.language.clone(),
                 "connections" => cfg
                     .providers
                     .iter()
-                    .map(|c| c.label())
+                    .map(|c| {
+                        if UI_ZH.load(Ordering::Relaxed) {
+                            c.label()
+                        } else {
+                            format!("{} · {} models", c.name, c.models.len())
+                        }
+                    })
                     .collect::<Vec<_>>()
                     .join("\n"),
                 "selected" => index.to_string(),
@@ -172,12 +179,224 @@ pub extern "C" fn wb_save(
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_command(name: *const c_char) -> *mut c_char {
-    ffi_result(|| execute(serde_json::json!({"command":input(name)})))
+    let command = input(name);
+    if command == "copy" {
+        return output(
+            match catch_unwind(AssertUnwindSafe(|| {
+                execute(serde_json::json!({"command":"copy"}))
+            })) {
+                Ok(Ok(s)) => format!("OK {s}"),
+                Ok(Err(e)) => format!(
+                    "ERROR {}",
+                    crate::i18n::message(&e, UI_ZH.load(Ordering::Relaxed))
+                ),
+                Err(_) => "ERROR Internal error".into(),
+            },
+        );
+    }
+    ffi_result(|| execute(serde_json::json!({"command":command})))
 }
 fn ffi_result(f: impl FnOnce() -> Result<String, String>) -> *mut c_char {
     output(match catch_unwind(AssertUnwindSafe(f)) {
-        Ok(Ok(message)) => format!("OK {message}"),
-        Ok(Err(message)) => format!("ERROR {message}"),
+        Ok(Ok(message)) => format!(
+            "OK {}",
+            crate::i18n::message(&message, UI_ZH.load(Ordering::Relaxed))
+        ),
+        Ok(Err(message)) => format!(
+            "ERROR {}",
+            crate::i18n::message(&message, UI_ZH.load(Ordering::Relaxed))
+        ),
         Err(_) => "ERROR Internal error".into(),
     })
+}
+
+static UI_ZH: AtomicBool = AtomicBool::new(false);
+static DRAFT: LazyLock<Mutex<Vec<serde_json::Value>>> = LazyLock::new(|| Mutex::new(Vec::new()));
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_use_language(zh: i32) {
+    UI_ZH.store(zh != 0, Ordering::Relaxed);
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_ui_zh() -> i32 {
+    i32::from(UI_ZH.load(Ordering::Relaxed))
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_language(lang: *const c_char) -> *mut c_char {
+    ffi_result(|| execute(serde_json::json!({"command":"language","language":input(lang)})))
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_models_load() {
+    if let Some(ctx) = CONTEXT.get() {
+        let cfg = ctx.bridge.config.lock().unwrap();
+        let rows = cfg
+            .providers
+            .get(ctx.selected.load(Ordering::Relaxed))
+            .map(|p| {
+                p.models
+                    .iter()
+                    .map(|m| serde_json::json!({"id":m.id,"name":m.name,"model":m.model}))
+                    .collect()
+            })
+            .unwrap_or_default();
+        *DRAFT.lock().unwrap() = rows;
+    }
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_models_count() -> i32 {
+    DRAFT.lock().unwrap().len() as i32
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_model(row: i32, column: i32) -> *mut c_char {
+    let draft = DRAFT.lock().unwrap();
+    output(
+        draft
+            .get(row as usize)
+            .and_then(|m| m[if column == 0 { "name" } else { "model" }].as_str())
+            .unwrap_or("")
+            .into(),
+    )
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_model_set(row: i32, column: i32, text: *const c_char) {
+    if let Some(m) = DRAFT.lock().unwrap().get_mut(row as usize) {
+        let value = input(text);
+        if column == 1 && (m["name"] == m["model"] || m["name"] == "") {
+            m["name"] = serde_json::json!(value);
+        }
+        m[if column == 0 { "name" } else { "model" }] = serde_json::json!(value);
+    }
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_model_add() -> i32 {
+    let mut rows = DRAFT.lock().unwrap();
+    if rows.len() >= crate::config::MAX_MODELS {
+        return -1;
+    }
+    rows.push(serde_json::json!({"name":"","model":""}));
+    rows.len() as i32 - 1
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_model_remove(row: i32) {
+    let mut rows = DRAFT.lock().unwrap();
+    if row >= 0 && (row as usize) < rows.len() {
+        rows.remove(row as usize);
+    }
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_save_table(
+    name: *const c_char,
+    key: *const c_char,
+    upstream: *const c_char,
+    effort: *const c_char,
+) -> *mut c_char {
+    ffi_result(|| {
+        execute(
+            serde_json::json!({"command":"save","name":input(name),"key":input(key),"upstream":input(upstream),"reasoning_effort":input(effort),"models":DRAFT.lock().unwrap().clone()}),
+        )
+    })
+}
+fn remote_call(mut p: serde_json::Value) -> Result<String, String> {
+    let ctx = CONTEXT.get().ok_or("Service is not ready")?;
+    if let Some(c) = ctx
+        .bridge
+        .config
+        .lock()
+        .unwrap()
+        .providers
+        .get(ctx.selected.load(Ordering::Relaxed))
+    {
+        p["provider_id"] = serde_json::json!(c.id);
+    }
+    #[cfg(any(windows, target_os = "macos"))]
+    if let Some(remote) = &ctx.remote {
+        return ctx.handle.block_on(remote.execute(&ctx.bridge.client, &p));
+    }
+    ctx.handle.block_on(ctx.bridge.command(&p))
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch(upstream: *const c_char, key: *const c_char) -> *mut c_char {
+    ffi_result(|| {
+        let result = remote_call(
+            serde_json::json!({"command":"fetch","upstream":input(upstream),"key":input(key)}),
+        )?;
+        let models: Vec<String> =
+            serde_json::from_str(&result).map_err(|_| "Invalid model list")?;
+        let mut rows = DRAFT.lock().unwrap();
+        let missing: Vec<_> = models
+            .iter()
+            .filter(|id| !rows.iter().any(|m| m["model"].as_str() == Some(id)))
+            .collect();
+        let other = CONTEXT
+            .get()
+            .map(|ctx| {
+                let cfg = ctx.bridge.config.lock().unwrap();
+                cfg.providers
+                    .iter()
+                    .enumerate()
+                    .filter(|(i, _)| *i != ctx.selected.load(Ordering::Relaxed))
+                    .map(|(_, p)| p.models.len())
+                    .sum::<usize>()
+            })
+            .unwrap_or(0);
+        if rows.len() + missing.len() + other > crate::config::MAX_MODELS {
+            return Err("At most 256 models".into());
+        }
+        let count = missing.len();
+        for id in missing {
+            rows.push(serde_json::json!({"name":id,"model":id}));
+        }
+        Ok(if UI_ZH.load(Ordering::Relaxed) {
+            format!("获取 {} 个模型，新增 {count} 项；保存后生效", models.len())
+        } else {
+            format!(
+                "Fetched {} models, {count} added; save to apply",
+                models.len()
+            )
+        })
+    })
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_snapshot() -> *mut c_char {
+    let result = (|| -> Result<String, String> {
+        let data = remote_call(serde_json::json!({"command":"snapshot"}))?;
+        let v: serde_json::Value =
+            serde_json::from_str(&data).map_err(|_| "Invalid core response")?;
+        let zh = UI_ZH.load(Ordering::Relaxed);
+        let mut text = if zh {
+            format!(
+                "本地地址  {}\n供应商  {}    模型  {}\n累计请求  {}    运行  {} 秒\n\n",
+                v["url"].as_str().unwrap_or(""),
+                v["providers"],
+                v["models"],
+                v["requests"],
+                v["uptime"]
+            )
+        } else {
+            format!(
+                "Local URL  {}\nProviders  {}    Models  {}\nRequests  {}    Uptime  {} s\n\n",
+                v["url"].as_str().unwrap_or(""),
+                v["providers"],
+                v["models"],
+                v["requests"],
+                v["uptime"]
+            )
+        };
+        if let Some(logs) = v["logs"].as_array() {
+            for row in logs {
+                text.push_str(&format!(
+                    "[+{}s] {}\n",
+                    row["time"],
+                    crate::i18n::message(row["message"].as_str().unwrap_or(""), zh)
+                ));
+            }
+        }
+        if v["logs"].as_array().is_none_or(|l| l.is_empty()) {
+            text.push_str(&crate::i18n::message(
+                v["status"].as_str().unwrap_or("Ready"),
+                zh,
+            ));
+        }
+        Ok(text)
+    })();
+    output(result.unwrap_or_else(|e| crate::i18n::message(&e, UI_ZH.load(Ordering::Relaxed))))
 }

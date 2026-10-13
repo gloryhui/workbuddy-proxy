@@ -16,6 +16,7 @@ pub const MAX_MODELS: usize = 256;
 #[serde(default)]
 pub struct Config {
     pub local_key: String,
+    pub language: String,
     pub port: u16,
     pub providers: Vec<Provider>,
     pub installed: Vec<Installation>,
@@ -42,7 +43,7 @@ impl Default for Provider {
     fn default() -> Self {
         Self {
             id: token()[..12].into(),
-            name: "供应商 1".into(),
+            name: "Provider 1".into(),
             upstream: "https://api.openai.com/v1".into(),
             api_key: String::new(),
             models: Vec::new(),
@@ -72,12 +73,49 @@ impl Model {
         m
     }
     pub fn refresh_alias(&mut self) {
-        self.alias = format!("wbp-{}/{}", self.id, self.model);
+        self.alias = format!("wbp-{}", self.id);
     }
 }
 impl Provider {
     pub fn label(&self) -> String {
         format!("{} · {} 个模型", self.name, self.models.len())
+    }
+    pub fn set_model_rows(
+        &mut self,
+        rows: &[serde_json::Value],
+        effort: &str,
+    ) -> Result<(), String> {
+        if !matches!(effort, "keep" | "default" | "none" | "low" | "high" | "max") {
+            return Err("Invalid thinking effort".into());
+        }
+        if rows.len() > MAX_MODELS {
+            return Err("At most 256 models".into());
+        }
+        let mut old = self.models.clone();
+        let mut models = Vec::new();
+        for row in rows {
+            let id = row["model"].as_str().unwrap_or("").trim();
+            let name = row["name"].as_str().unwrap_or("").trim();
+            if id.is_empty() {
+                return Err("Model ID is required".into());
+            }
+            let name = if name.is_empty() { id } else { name };
+            let route = row["id"].as_str().unwrap_or("");
+            let found = old
+                .iter()
+                .position(|m| m.id == route)
+                .or_else(|| old.iter().position(|m| m.model == id && m.name == name))
+                .or_else(|| old.iter().position(|m| m.model == id));
+            let mut m = found.map_or_else(|| Model::new(id, name), |i| old.remove(i));
+            m.name = name.into();
+            m.model = id.into();
+            if effort != "keep" {
+                m.reasoning_effort = effort.into();
+            }
+            models.push(m);
+        }
+        self.models = models;
+        Ok(())
     }
     pub fn model_lines(&self) -> String {
         self.models
@@ -158,6 +196,7 @@ impl Default for Config {
     fn default() -> Self {
         Self {
             local_key: token(),
+            language: "auto".into(),
             port: DEFAULT_PORT,
             providers: vec![Provider::default()],
             installed: Vec::new(),
@@ -168,7 +207,7 @@ impl Default for Connection {
     fn default() -> Self {
         let id = token()[..12].to_owned();
         Self {
-            alias: format!("wbp-{id}/{DEFAULT_MODEL}"),
+            alias: format!("wbp-{id}"),
             id,
             name: "连接 1".into(),
             provider: "OpenCode Go".into(),
@@ -181,7 +220,7 @@ impl Default for Connection {
 }
 impl Connection {
     pub fn label(&self) -> String {
-        format!("{} · {} · {}", self.name, self.provider, self.model)
+        format!("{} · {}", self.name, self.provider)
     }
 }
 pub fn token() -> String {
@@ -322,6 +361,7 @@ impl Config {
             };
             Self {
                 local_key: old.local_key,
+                language: "auto".into(),
                 port: old.port,
                 providers: Self::group(vec![connection]),
                 installed: old.installed.into_iter().collect(),
@@ -339,6 +379,7 @@ impl Config {
                 .map_err(|_| "Invalid v0.2 config.json; no file was changed")?;
             Self {
                 local_key: old.local_key,
+                language: "auto".into(),
                 port: old.port,
                 providers: Self::group(old.connections),
                 installed: old.installed,
@@ -451,7 +492,9 @@ impl Config {
                 };
                 c.validate()?;
                 if !ids.insert(m.id.clone())
-                    || !aliases.insert(&m.alias)
+                    || !aliases.insert(m.alias.clone())
+                    || (m.alias != format!("wbp-{}", m.id)
+                        && !aliases.insert(format!("wbp-{}", m.id)))
                     || !model_names.insert(&m.name)
                 {
                     return Err("模型标识和同供应商内的显示名称不可重复 / Duplicate model".into());

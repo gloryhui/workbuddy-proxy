@@ -38,7 +38,7 @@ fn main() {
             .file("native/windows.c")
             .flag_if_supported("/utf-8")
             .compile("native_ui");
-        for lib in ["user32", "shell32", "gdi32"] {
+        for lib in ["user32", "shell32", "gdi32", "comctl32"] {
             println!("cargo:rustc-link-lib={lib}");
         }
     }

@@ -77,6 +77,9 @@ impl Routes {
                 routes.ids.insert(m.id.clone(), route.clone());
                 routes.aliases.insert(m.alias.clone(), route.clone());
                 routes
+                    .aliases
+                    .insert(format!("wbp-{}", m.id), route.clone());
+                routes
                     .models
                     .entry(m.model.clone())
                     .or_default()
@@ -89,7 +92,10 @@ impl Routes {
         if let Some(id) = scope
             && let Some(r) = self.ids.get(id)
         {
-            return if model == r.connection.alias || model == r.connection.model {
+            return if model == r.connection.alias
+                || model == r.connection.model
+                || model == format!("wbp-{}", r.connection.id)
+            {
                 Ok(r.clone())
             } else {
                 Err("Model does not belong to this connection".into())
@@ -138,6 +144,8 @@ pub struct Bridge {
     pub port: AtomicU16,
     pub calls: AtomicU64,
     pub status: Mutex<String>,
+    pub logs: Mutex<std::collections::VecDeque<(u64, String)>>,
+    started: std::time::Instant,
     pub management_key: String,
     pub stop: Mutex<Option<oneshot::Sender<()>>>,
 }
@@ -162,6 +170,8 @@ impl Bridge {
             port: AtomicU16::new(0),
             calls: AtomicU64::new(0),
             status: Mutex::new("Ready / 就绪".into()),
+            logs: Mutex::new(std::collections::VecDeque::new()),
+            started: std::time::Instant::now(),
             management_key: crate::config::token(),
             stop: Mutex::new(None),
         })
@@ -173,7 +183,12 @@ impl Bridge {
         )
     }
     pub fn set_status(&self, text: String) {
-        *self.status.lock().unwrap() = text;
+        *self.status.lock().unwrap() = text.clone();
+        let mut logs = self.logs.lock().unwrap();
+        if logs.len() == 100 {
+            logs.pop_front();
+        }
+        logs.push_back((self.started.elapsed().as_secs(), text));
     }
     pub fn address(&self) -> String {
         format!("http://127.0.0.1:{}/v1", self.port.load(Ordering::Relaxed))
@@ -217,6 +232,93 @@ impl Bridge {
             );
         }
         req.send().await
+    }
+    async fn discover(&self, id: &str, payload: &serde_json::Value) -> Result<String, String> {
+        let (base, key) = {
+            let cfg = self.config.lock().unwrap();
+            let provider = cfg.provider(id)?;
+            let base = payload["upstream"]
+                .as_str()
+                .unwrap_or(&provider.upstream)
+                .trim()
+                .to_owned();
+            let key = payload["key"]
+                .as_str()
+                .filter(|s| !s.trim().is_empty())
+                .unwrap_or(&provider.api_key)
+                .trim()
+                .to_owned();
+            (base, key)
+        };
+        if key.is_empty() {
+            return Err("Enter upstream API key".into());
+        }
+        let url = reqwest::Url::parse(&format!("{}/models", base.trim_end_matches('/')))
+            .map_err(|_| "Invalid upstream URL")?;
+        if !matches!(url.scheme(), "http" | "https")
+            || !url.username().is_empty()
+            || url.password().is_some()
+            || url.query().is_some()
+            || url.fragment().is_some()
+        {
+            return Err("Invalid upstream URL".into());
+        }
+        let _permit = self
+            .permits
+            .clone()
+            .try_acquire_owned()
+            .map_err(|_| "Four requests are already in flight")?;
+        let models = tokio::time::timeout(Duration::from_secs(30), async {
+            let response = self
+                .client
+                .get(url)
+                .bearer_auth(key)
+                .send()
+                .await
+                .map_err(|_| "Connection failed; check network and proxy")?;
+            if !response.status().is_success() {
+                return Err(format!("Upstream HTTP {}", response.status().as_u16()));
+            }
+            let mut bytes = Vec::new();
+            let mut stream = response.bytes_stream();
+            while let Some(chunk) = stream.next().await {
+                let chunk = chunk.map_err(|_| "Invalid model list")?;
+                if bytes.len() + chunk.len() > 1024 * 1024 {
+                    return Err("Model list exceeds 1 MiB".into());
+                }
+                bytes.extend_from_slice(&chunk);
+            }
+            let data: serde_json::Value =
+                serde_json::from_slice(&bytes).map_err(|_| "Invalid model list")?;
+            let rows = data["data"]
+                .as_array()
+                .ok_or("Expected OpenAI models data array")?;
+            let mut ids = std::collections::BTreeSet::new();
+            for row in rows {
+                if let Some(id) = row["id"].as_str().map(str::trim).filter(|s| !s.is_empty()) {
+                    if id.len() > 160 || id.chars().any(char::is_control) {
+                        return Err("Invalid model ID".into());
+                    }
+                    ids.insert(id.to_owned());
+                    if ids.len() > crate::config::MAX_MODELS {
+                        return Err("At most 256 models; upstream returned too many".into());
+                    }
+                } else {
+                    return Err("Invalid model list".into());
+                }
+            }
+            if ids.is_empty() {
+                return Err("No available models returned".into());
+            }
+            if ids.len() > crate::config::MAX_MODELS {
+                return Err("At most 256 models; upstream returned too many".into());
+            }
+            Ok(ids.into_iter().collect::<Vec<_>>())
+        })
+        .await
+        .map_err(|_| "Connection timeout")??;
+        self.set_status(format!("Fetched {} models", models.len()));
+        Ok(json!(models).to_string())
     }
     pub async fn test(&self, id: &str) -> Result<String, String> {
         let c = self.config.lock().unwrap().connection(id)?;
@@ -574,6 +676,16 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
 }
 impl Bridge {
     pub async fn command(&self, p: &serde_json::Value) -> Result<String, String> {
+        let result = self.command_inner(p).await;
+        if !matches!(p["command"].as_str(), Some("snapshot" | "copy" | "fetch")) {
+            self.set_status(match &result {
+                Ok(s) => s.clone(),
+                Err(e) => format!("ERROR {e}"),
+            });
+        }
+        result
+    }
+    async fn command_inner(&self, p: &serde_json::Value) -> Result<String, String> {
         let command = p
             .get("command")
             .and_then(serde_json::Value::as_str)
@@ -584,6 +696,27 @@ impl Bridge {
             .and_then(serde_json::Value::as_str)
             .unwrap_or("");
         match command {
+            "snapshot" => {
+                let cfg = self.config.lock().unwrap();
+                let logs = self.logs.lock().unwrap();
+                Ok(json!({"url":self.address(),"requests":self.calls.load(Ordering::Relaxed),
+                    "providers":cfg.providers.len(),"models":cfg.providers.iter().map(|p|p.models.len()).sum::<usize>(),
+                    "uptime":self.started.elapsed().as_secs(),"status":self.status.lock().unwrap().clone(),
+                    "logs":logs.iter().map(|(t,s)|json!({"time":t,"message":s})).collect::<Vec<_>>()}).to_string())
+            }
+            "fetch" => self.discover(id, p).await,
+            "language" => {
+                let lang = p["language"].as_str().unwrap_or("");
+                if !matches!(lang, "auto" | "zh" | "en") {
+                    return Err("Invalid language".into());
+                }
+                let mut cfg = self.config.lock().unwrap();
+                let mut next = cfg.clone();
+                next.language = lang.into();
+                crate::config::write_json(&self.dir.join("config.json"), &next)?;
+                *cfg = next;
+                Ok("Language saved".into())
+            }
             "save" | "add" | "duplicate" | "delete" => {
                 let mut cfg = self.config.lock().unwrap();
                 let mut next = cfg.clone();
@@ -600,9 +733,21 @@ impl Bridge {
                             m.refresh_alias();
                         }
                         let root = if command == "duplicate" {
-                            format!("{} 副本", c.name)
+                            format!(
+                                "{} {}",
+                                c.name,
+                                if cfg.language == "zh" {
+                                    "副本"
+                                } else {
+                                    "copy"
+                                }
+                            )
                         } else {
-                            "供应商".into()
+                            if cfg.language == "zh" {
+                                "供应商".into()
+                            } else {
+                                "Provider".into()
+                            }
                         };
                         c.name = root.clone();
                         let mut n = 1;
@@ -644,7 +789,11 @@ impl Bridge {
                             .get("reasoning_effort")
                             .and_then(serde_json::Value::as_str)
                             .unwrap_or("keep");
-                        if let Some(lines) = p.get("models").and_then(serde_json::Value::as_str) {
+                        if let Some(rows) = p.get("models").and_then(serde_json::Value::as_array) {
+                            c.set_model_rows(rows, effort)?;
+                        } else if let Some(lines) =
+                            p.get("models").and_then(serde_json::Value::as_str)
+                        {
                             c.set_models(lines, effort)?;
                         } else {
                             // Compatibility with v0.2 control clients: update a single model only.

@@ -1,73 +1,106 @@
 #import <AppKit/AppKit.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include "icon_png.h"
-extern char *wb_value(const char *name);
-extern char *wb_save(const char *name,const char *key,const char *model,const char *upstream,const char *effort);
-extern void wb_select(int index);
-extern char *wb_command(const char *name);
-extern void wb_free(char *value);
+#include "ui.h"
 static NSString *take(char *p){NSString *s=p?[NSString stringWithUTF8String:p]:@"Internal error";wb_free(p);return s?:@"Internal error";}
-static NSString *value(const char *name){return take(wb_value(name));}
+static NSString *value(const char *n){return take(wb_value(n));}
+static NSString *t(int n){return [NSString stringWithUTF8String:tr(n)];}
+static NSColor *color(unsigned c){return [NSColor colorWithCalibratedRed:((c>>16)&255)/255.0 green:((c>>8)&255)/255.0 blue:(c&255)/255.0 alpha:1];}
 static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;dispatch_once(&once,^{icon=[[NSImage alloc]initWithData:[NSData dataWithBytes:WB_ICON_PNG length:sizeof(WB_ICON_PNG)]];icon.accessibilityDescription=@"WorkBuddy Proxy";});return icon;}
-@interface ProxyUI:NSObject<NSApplicationDelegate,NSWindowDelegate,NSTableViewDataSource,NSTableViewDelegate>
+@interface ProxyUI:NSObject<NSApplicationDelegate,NSWindowDelegate,NSTableViewDataSource,NSTableViewDelegate,NSTextFieldDelegate>
 @property NSWindow *window;
 @property NSStatusItem *item;
-@property NSTableView *list;
+@property NSView *left,*center,*right;
+@property NSTableView *list,*models;
+@property NSScrollView *providerScroll,*modelScroll,*logScroll;
 @property NSArray<NSString *> *rows;
-@property BOOL refreshing;
-@property NSTextField *name;
+@property(nonatomic) BOOL refreshing,busy,polling,dirty;
+@property NSTextField *name,*upstream,*status;
 @property NSSecureTextField *key;
-@property NSTextView *model;
-@property NSTextField *upstream;
-@property NSPopUpButton *effort;
-@property NSTextField *status;
-@property NSMutableArray<NSButton *> *buttons;
+@property NSTextView *logs;
+@property NSPopUpButton *effort,*language;
+@property NSMutableArray<NSControl *> *controls;
+@property NSMutableArray<NSView *> *translated;
+@property NSMutableArray<NSString *> *events;
+@property NSString *systemText;
+@property NSTimer *timer;
 @end
 static ProxyUI *ui;
-static void stopUI(void){[NSApp stop:nil];NSEvent *event=[NSEvent otherEventWithType:NSEventTypeApplicationDefined location:NSZeroPoint modifierFlags:0 timestamp:0 windowNumber:0 context:nil subtype:0 data1:0 data2:0];[NSApp postEvent:event atStart:YES];}
+static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWithType:NSEventTypeApplicationDefined location:NSZeroPoint modifierFlags:0 timestamp:0 windowNumber:0 context:nil subtype:0 data1:0 data2:0] atStart:YES];}
 @implementation ProxyUI
-- (NSTextField *)label:(NSString *)text frame:(NSRect)frame{NSTextField *label=[NSTextField labelWithString:text];label.frame=frame;label.font=[NSFont systemFontOfSize:12];[self.window.contentView addSubview:label];return label;}
-- (NSTextField *)field:(NSString *)title y:(CGFloat)y{[self label:title frame:NSMakeRect(280,y+32,470,20)];NSTextField *f=[[NSTextField alloc]initWithFrame:NSMakeRect(280,y,470,26)];[self.window.contentView addSubview:f];return f;}
-- (NSButton *)button:(NSString *)title action:(SEL)action x:(CGFloat)x y:(CGFloat)y width:(CGFloat)width{NSButton *b=[NSButton buttonWithTitle:title target:self action:action];b.frame=NSMakeRect(x,y,width,32);[self.window.contentView addSubview:b];[self.buttons addObject:b];return b;}
-- (void)applicationDidFinishLaunching:(NSNotification *)notification{
-    (void)notification;self.buttons=[NSMutableArray array];self.rows=@[];
-    self.item=[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];NSImage *menuIcon=[appIcon() copy];menuIcon.size=NSMakeSize(18,18);menuIcon.template=NO;self.item.button.image=menuIcon;self.item.button.imageScaling=NSImageScaleProportionallyDown;
-    NSMenu *menu=[NSMenu new];NSMenuItem *settings=[[NSMenuItem alloc]initWithTitle:@"设置 / Settings" action:@selector(show) keyEquivalent:@""];settings.target=self;[menu addItem:settings];NSMenuItem *quit=[[NSMenuItem alloc]initWithTitle:@"退出 / Quit" action:@selector(quit) keyEquivalent:@"q"];quit.target=self;[menu addItem:quit];self.item.menu=menu;
-    self.window=[[NSWindow alloc]initWithContentRect:NSMakeRect(0,0,780,650) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable backing:NSBackingStoreBuffered defer:NO];self.window.title=@"WorkBuddy Proxy";self.window.delegate=self;self.window.releasedWhenClosed=NO;
-    NSImageView *logo=[[NSImageView alloc]initWithFrame:NSMakeRect(20,599,36,36)];logo.image=appIcon();logo.imageScaling=NSImageScaleProportionallyUpOrDown;[self.window.contentView addSubview:logo];
-    NSTextField *heading=[self label:@"WorkBuddy Proxy" frame:NSMakeRect(66,602,684,28)];heading.font=[NSFont boldSystemFontOfSize:20];
-    [self label:@"供应商 / Providers" frame:NSMakeRect(20,569,240,20)];
-    NSScrollView *scroll=[[NSScrollView alloc]initWithFrame:NSMakeRect(20,183,240,376)];scroll.hasVerticalScroller=YES;scroll.borderType=NSBezelBorder;
-    self.list=[[NSTableView alloc]initWithFrame:scroll.bounds];NSTableColumn *column=[[NSTableColumn alloc]initWithIdentifier:@"connection"];column.width=230;[self.list addTableColumn:column];self.list.headerView=nil;self.list.rowHeight=30;self.list.dataSource=self;self.list.delegate=self;self.list.allowsEmptySelection=NO;scroll.documentView=self.list;[self.window.contentView addSubview:scroll];
-    [self button:@"新增" action:@selector(add) x:20 y:133 width:74];[self button:@"复制" action:@selector(duplicate) x:100 y:133 width:74];[self button:@"删除" action:@selector(remove) x:180 y:133 width:74];
-    self.name=[self field:@"供应商名称 / Provider name" y:537];self.upstream=[self field:@"OpenAI 兼容地址 / Base URL" y:472];
-    [self label:@"API Key（留空保留已保存值）" frame:NSMakeRect(280,439,470,20)];self.key=[[NSSecureTextField alloc]initWithFrame:NSMakeRect(280,407,470,26)];[self.window.contentView addSubview:self.key];
-    [self label:@"模型列表：每行一个 ID，可填写 ID | 显示名称" frame:NSMakeRect(280,374,470,20)];
-    NSScrollView *models=[[NSScrollView alloc]initWithFrame:NSMakeRect(280,267,470,103)];models.hasVerticalScroller=YES;models.borderType=NSBezelBorder;
-    self.model=[[NSTextView alloc]initWithFrame:models.bounds];self.model.richText=NO;self.model.font=[NSFont monospacedSystemFontOfSize:12 weight:NSFontWeightRegular];self.model.automaticQuoteSubstitutionEnabled=NO;self.model.automaticDashSubstitutionEnabled=NO;self.model.automaticTextReplacementEnabled=NO;self.model.textContainer.widthTracksTextView=YES;self.model.verticallyResizable=YES;models.documentView=self.model;[self.window.contentView addSubview:models];
-    [self label:@"思考强度 / Thinking effort" frame:NSMakeRect(280,244,470,20)];self.effort=[[NSPopUpButton alloc]initWithFrame:NSMakeRect(280,207,470,30) pullsDown:NO];[self.effort addItemsWithTitles:@[@"跟随 WorkBuddy / Default",@"关闭思考 / Off",@"低 / Low",@"高 / High",@"最高 / Max",@"保留各模型设置 / Keep"]];[self.window.contentView addSubview:self.effort];
-    [self button:@"保存 / Save" action:@selector(save) x:280 y:161 width:120];[self button:@"测试首个模型 / Test" action:@selector(test) x:410 y:161 width:150];[self button:@"复制配置" action:@selector(copyConfiguration) x:570 y:161 width:180];
-    [self button:@"同步 WorkBuddy 列表" action:@selector(install) x:280 y:121 width:230];[self button:@"恢复原配置 / Restore" action:@selector(restore) x:520 y:121 width:230];
-    self.status=[self label:@"" frame:NSMakeRect(280,28,470,76)];self.status.lineBreakMode=NSLineBreakByWordWrapping;self.status.maximumNumberOfLines=4;
-    [self.window center];[self show];
+- (NSView *)card {NSView *v=[NSView new];v.wantsLayer=YES;v.layer.backgroundColor=color(0xffffff).CGColor;v.layer.cornerRadius=12;v.layer.borderWidth=1;v.layer.borderColor=color(0xe2e9f1).CGColor;[self.window.contentView addSubview:v];return v;}
+- (NSTextField *)label:(int)tag in:(NSView *)parent {NSTextField *v=[NSTextField labelWithString:t(tag)];v.tag=tag;v.font=[NSFont systemFontOfSize:12 weight:NSFontWeightMedium];v.textColor=color(0x526379);[parent addSubview:v];[self.translated addObject:v];return v;}
+- (NSTextField *)fieldIn:(NSView *)parent secure:(BOOL)secure {NSTextField *v=secure?[NSSecureTextField new]:[NSTextField new];v.font=[NSFont systemFontOfSize:13];v.delegate=self;v.bezelStyle=NSTextFieldRoundedBezel;[parent addSubview:v];[self.controls addObject:v];return v;}
+- (NSButton *)button:(int)tag action:(SEL)action in:(NSView *)parent {NSButton *v=[NSButton buttonWithTitle:t(tag) target:self action:action];v.tag=tag;v.bezelStyle=NSBezelStyleRounded;v.controlSize=NSControlSizeSmall;v.font=[NSFont systemFontOfSize:12];[parent addSubview:v];[self.controls addObject:v];[self.translated addObject:v];return v;}
+- (void)frame:(NSView *)v x:(CGFloat)x top:(CGFloat)top width:(CGFloat)w height:(CGFloat)h in:(NSView *)parent {v.frame=NSMakeRect(x,parent.bounds.size.height-top-h,w,h);}
+- (void)applicationDidFinishLaunching:(NSNotification *)note {
+    (void)note;NSString *language=value("language");wb_use_language([language isEqualToString:@"zh"]||([language isEqualToString:@"auto"]&&[NSLocale.preferredLanguages.firstObject hasPrefix:@"zh"]));
+    self.controls=[NSMutableArray array];self.translated=[NSMutableArray array];self.events=[NSMutableArray array];self.rows=@[];self.systemText=@"";
+    self.window=[[NSWindow alloc]initWithContentRect:NSMakeRect(0,0,1136,730) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable|NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:NO];self.window.minSize=NSMakeSize(1020,680);self.window.title=@"WorkBuddy Proxy";self.window.delegate=self;self.window.releasedWhenClosed=NO;self.window.appearance=[NSAppearance appearanceNamed:NSAppearanceNameAqua];self.window.backgroundColor=color(0xf3f6fb);
+    self.left=[self card];self.center=[self card];self.right=[self card];
+    NSImageView *logo=[[NSImageView alloc]initWithFrame:NSMakeRect(24,666,40,40)];logo.image=appIcon();logo.imageScaling=NSImageScaleProportionallyUpOrDown;logo.tag=100;[self.window.contentView addSubview:logo];
+    NSTextField *heading=[NSTextField labelWithString:@"WorkBuddy Proxy"];heading.font=[NSFont systemFontOfSize:21 weight:NSFontWeightSemibold];heading.textColor=color(0x142c48);heading.tag=101;[self.window.contentView addSubview:heading];[self label:T_SUBTITLE in:self.window.contentView];
+    self.language=[NSPopUpButton new];[self.language addItemsWithTitles:@[@"简体中文",@"English"]];[self.language selectItemAtIndex:wb_ui_zh()?0:1];self.language.target=self;self.language.action=@selector(changeLanguage);[self.window.contentView addSubview:self.language];[self.controls addObject:self.language];
+    [self label:T_PROVIDERS in:self.left];
+    self.providerScroll=[NSScrollView new];self.providerScroll.hasVerticalScroller=YES;self.list=[NSTableView new];NSTableColumn *col=[[NSTableColumn alloc]initWithIdentifier:@"provider"];[self.list addTableColumn:col];self.list.headerView=nil;self.list.rowHeight=40;self.list.dataSource=self;self.list.delegate=self;self.list.allowsEmptySelection=NO;self.list.style=NSTableViewStyleFullWidth;self.providerScroll.documentView=self.list;[self.left addSubview:self.providerScroll];
+    [self button:T_ADD action:@selector(add) in:self.left];[self button:T_DUPLICATE action:@selector(duplicate) in:self.left];[self button:T_DELETE action:@selector(remove) in:self.left];
+    [self label:T_NAME in:self.center];self.name=[self fieldIn:self.center secure:NO];
+    [self label:T_URL in:self.center];self.upstream=[self fieldIn:self.center secure:NO];self.upstream.placeholderString=@"https://example.com/v1";
+    [self label:T_KEY in:self.center];self.key=(NSSecureTextField *)[self fieldIn:self.center secure:YES];
+    [self label:T_MODELS in:self.center];[self button:T_FETCH action:@selector(fetch) in:self.center];[self button:T_ADD_MODEL action:@selector(addModel) in:self.center];[self button:T_REMOVE_MODEL action:@selector(removeModel) in:self.center];
+    self.modelScroll=[NSScrollView new];self.modelScroll.hasVerticalScroller=YES;self.modelScroll.borderType=NSBezelBorder;self.models=[NSTableView new];for(NSString *id in @[@"name",@"model"]){NSTableColumn *c=[[NSTableColumn alloc]initWithIdentifier:id];[self.models addTableColumn:c];}self.models.rowHeight=30;self.models.usesAlternatingRowBackgroundColors=YES;self.models.dataSource=self;self.models.delegate=self;self.models.columnAutoresizingStyle=NSTableViewUniformColumnAutoresizingStyle;self.modelScroll.documentView=self.models;[self.center addSubview:self.modelScroll];
+    [self label:T_MODEL_HINT in:self.center];[self label:T_EFFORT in:self.center];self.effort=[NSPopUpButton new];[self.center addSubview:self.effort];[self.controls addObject:self.effort];self.effort.target=self;self.effort.action=@selector(markDirty);
+    NSButton *save=[self button:T_SAVE action:@selector(save) in:self.center];save.contentTintColor=color(0x008bc1);save.keyEquivalent=@"s";save.keyEquivalentModifierMask=NSEventModifierFlagCommand;
+    [self button:T_TEST action:@selector(test) in:self.center];[self button:T_COPY action:@selector(copyConfiguration) in:self.center];[self button:T_SYNC action:@selector(install) in:self.center];[self button:T_RESTORE action:@selector(restore) in:self.center];
+    [self label:T_INFO in:self.right];self.logScroll=[NSScrollView new];self.logScroll.hasVerticalScroller=YES;self.logs=[[NSTextView alloc]initWithFrame:NSMakeRect(0,0,260,550)];self.logs.autoresizingMask=NSViewWidthSizable;self.logs.horizontallyResizable=NO;self.logs.editable=NO;self.logs.richText=NO;self.logs.font=[NSFont monospacedSystemFontOfSize:11 weight:NSFontWeightRegular];self.logs.textColor=color(0x465d75);self.logs.backgroundColor=color(0xf8fafd);self.logs.textContainerInset=NSMakeSize(12,12);self.logs.verticallyResizable=YES;self.logs.textContainer.widthTracksTextView=YES;self.logScroll.documentView=self.logs;[self.right addSubview:self.logScroll];
+    self.status=[NSTextField labelWithString:t(T_READY)];self.status.font=[NSFont systemFontOfSize:11];self.status.textColor=color(0x526379);self.status.lineBreakMode=NSLineBreakByTruncatingMiddle;[self.window.contentView addSubview:self.status];
+    self.item=[[NSStatusBar systemStatusBar]statusItemWithLength:NSSquareStatusItemLength];NSImage *menuIcon=[appIcon() copy];menuIcon.size=NSMakeSize(18,18);self.item.button.image=menuIcon;
+    [self translate];[self layout];[self.window center];[self show];[self poll];self.timer=[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(poll) userInfo:nil repeats:YES];
 }
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{(void)tableView;return self.rows.count;}
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)column row:(NSInteger)row{(void)tableView;(void)column;NSTextField *f=[NSTextField labelWithString:self.rows[row]];f.lineBreakMode=NSLineBreakByTruncatingTail;f.toolTip=self.rows[row];return f;}
-- (void)tableViewSelectionDidChange:(NSNotification *)notification{(void)notification;if(!self.refreshing&&self.list.selectedRow>=0){wb_select((int)self.list.selectedRow);[self fields];}}
-- (void)fields{self.name.stringValue=value("name");self.upstream.stringValue=value("upstream");self.model.string=value("model");self.key.stringValue=@"";NSArray *efforts=@[@"default",@"none",@"low",@"high",@"max",@"keep"];NSUInteger i=[efforts indexOfObject:value("reasoning_effort")];[self.effort selectItemAtIndex:i==NSNotFound?0:i];}
-- (void)refresh{self.refreshing=YES;NSString *rows=value("connections");self.rows=rows.length?[rows componentsSeparatedByString:@"\n"]:@[];[self.list reloadData];NSInteger index=[value("selected") integerValue];if(index>=0&&(NSUInteger)index<self.rows.count)[self.list selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];self.refreshing=NO;[self fields];}
-- (BOOL)windowShouldClose:(NSWindow *)sender{(void)sender;stopUI();return YES;}
-- (void)show{[self refresh];self.status.stringValue=value("status");[self.window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];}
-- (void)save{NSString *r=take(wb_save(self.name.stringValue.UTF8String,self.key.stringValue.UTF8String,self.model.string.UTF8String,self.upstream.stringValue.UTF8String,[@[@"default",@"none",@"low",@"high",@"max",@"keep"][self.effort.indexOfSelectedItem] UTF8String]));if([r hasPrefix:@"OK "])[self refresh];self.status.stringValue=r;}
-- (void)change:(const char *)command{NSString *r=take(wb_command(command));if([r hasPrefix:@"OK "])[self refresh];self.status.stringValue=r;}
-- (void)add{[self change:"add"];}- (void)duplicate{[self change:"duplicate"];}- (void)remove{[self change:"delete"];}
-- (void)execute:(const char *)command{for(NSButton *b in self.buttons)b.enabled=NO;self.list.enabled=NO;self.status.stringValue=@"正在处理 / Working…";dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(wb_command(command));dispatch_async(dispatch_get_main_queue(),^{for(NSButton *b in self.buttons)b.enabled=YES;self.list.enabled=YES;self.status.stringValue=r;});});}
-- (void)test{[self execute:"test"];}- (void)install{[self execute:"install"];}- (void)restore{[self execute:"restore"];}
-- (void)copyConfiguration{NSString *r=take(wb_command("copy"));if([r hasPrefix:@"OK "]){NSPasteboard *p=[NSPasteboard generalPasteboard];[p clearContents];[p setString:[r substringFromIndex:3] forType:NSPasteboardTypeString];self.status.stringValue=@"配置已复制 / Configuration copied";}else self.status.stringValue=r;}
-- (void)quit{wb_free(wb_command("quit"));stopUI();}
+- (NSView *)tag:(int)tag in:(NSView *)parent {for(NSView *v in parent.subviews)if([v isKindOfClass:NSControl.class]&&v.tag==tag)return v;return nil;}
+- (void)layout {
+    CGFloat w=self.window.contentView.bounds.size.width,h=self.window.contentView.bounds.size.height,left=190,right=280,gap=14,margin=20,center=w-2*margin-left-right-2*gap,ch=h-112;
+    self.left.frame=NSMakeRect(margin,40,left,ch);self.center.frame=NSMakeRect(margin+left+gap,40,center,ch);self.right.frame=NSMakeRect(w-margin-right,40,right,ch);
+    [self frame:[self tag:100 in:self.window.contentView] x:24 top:16 width:40 height:40 in:self.window.contentView];[self frame:[self tag:101 in:self.window.contentView] x:76 top:14 width:390 height:28 in:self.window.contentView];[self frame:[self tag:T_SUBTITLE in:self.window.contentView] x:77 top:44 width:500 height:18 in:self.window.contentView];[self frame:self.language x:w-150 top:26 width:126 height:28 in:self.window.contentView];
+    [self frame:[self tag:T_PROVIDERS in:self.left] x:16 top:16 width:left-32 height:20 in:self.left];[self frame:self.providerScroll x:8 top:48 width:left-16 height:ch-108 in:self.left];self.list.tableColumns[0].width=left-24;
+    int tags[]={T_ADD,T_DUPLICATE,T_DELETE};for(int i=0;i<3;i++)[self frame:[self tag:tags[i] in:self.left] x:10+i*57 top:ch-44 width:55 height:28 in:self.left];
+    NSTextField *fields[]={self.name,self.upstream,self.key};int labels[]={T_NAME,T_URL,T_KEY};for(int i=0;i<3;i++){[self frame:[self tag:labels[i] in:self.center] x:18 top:16+i*66 width:center-36 height:20 in:self.center];[self frame:fields[i] x:18 top:40+i*66 width:center-36 height:30 in:self.center];}
+    [self frame:[self tag:T_MODELS in:self.center] x:18 top:217 width:100 height:20 in:self.center];[self frame:[self tag:T_FETCH in:self.center] x:center-262 top:210 width:112 height:28 in:self.center];[self frame:[self tag:T_ADD_MODEL in:self.center] x:center-148 top:210 width:62 height:28 in:self.center];[self frame:[self tag:T_REMOVE_MODEL in:self.center] x:center-84 top:210 width:66 height:28 in:self.center];
+    [self frame:self.modelScroll x:18 top:246 width:center-36 height:ch-410 in:self.center];self.models.tableColumns[0].width=(center-38)*.40;self.models.tableColumns[1].width=(center-38)*.60;
+    [self frame:[self tag:T_MODEL_HINT in:self.center] x:18 top:ch-157 width:center-36 height:18 in:self.center];[self frame:[self tag:T_EFFORT in:self.center] x:18 top:ch-130 width:110 height:20 in:self.center];[self frame:self.effort x:128 top:ch-136 width:center-146 height:28 in:self.center];
+    int actions[]={T_SAVE,T_TEST,T_COPY};for(int i=0;i<3;i++)[self frame:[self tag:actions[i] in:self.center] x:16+i*110 top:ch-90 width:104 height:28 in:self.center];[self frame:[self tag:T_SYNC in:self.center] x:16 top:ch-48 width:148 height:28 in:self.center];[self frame:[self tag:T_RESTORE in:self.center] x:172 top:ch-48 width:116 height:28 in:self.center];
+    [self frame:[self tag:T_INFO in:self.right] x:16 top:16 width:right-32 height:20 in:self.right];[self frame:self.logScroll x:10 top:48 width:right-20 height:ch-60 in:self.right];self.logs.minSize=NSMakeSize(0,self.logScroll.contentSize.height);self.logs.maxSize=NSMakeSize(self.logScroll.contentSize.width,CGFLOAT_MAX);self.logs.frame=NSMakeRect(0,0,self.logScroll.contentSize.width,MAX(self.logs.bounds.size.height,self.logScroll.contentSize.height));self.status.frame=NSMakeRect(24,12,w-48,18);
+}
+- (void)windowDidResize:(NSNotification *)note{(void)note;[self layout];}
+- (void)translate {for(NSView *v in self.translated){if([v isKindOfClass:NSButton.class])[(NSButton *)v setTitle:t((int)v.tag)];else [(NSTextField *)v setStringValue:t((int)v.tag)];}NSInteger effort=MAX(0,self.effort.indexOfSelectedItem);[self.effort removeAllItems];for(int i=0;i<6;i++)[self.effort addItemWithTitle:t(T_DEFAULT+i)];[self.effort selectItemAtIndex:effort];self.key.placeholderString=t(T_KEY_HINT);self.key.toolTip=t(T_KEY_HINT);[self tag:T_FETCH in:self.center].toolTip=t(T_FETCH_HINT);self.models.tableColumns[0].title=t(T_DISPLAY);self.models.tableColumns[1].title=t(T_ID);self.language.accessibilityLabel=t(T_LANGUAGE);NSMenu *menu=[NSMenu new];for(int n=0;n<2;n++){NSMenuItem *m=[[NSMenuItem alloc]initWithTitle:t(n?T_QUIT:T_SETTINGS) action:n?@selector(quit):@selector(show) keyEquivalent:n?@"q":@""];m.target=self;[menu addItem:m];}self.item.menu=menu;}
+- (void)changeLanguage {wb_use_language(self.language.indexOfSelectedItem==0);NSString *r=take(wb_language(wb_ui_zh()?"zh":"en"));[self.events removeAllObjects];self.systemText=@"";[self translate];[self reloadProviders];[self report:r];[self poll];}
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)table {return table==self.list?self.rows.count:wb_models_count();}
+- (NSView *)tableView:(NSTableView *)table viewForTableColumn:(NSTableColumn *)column row:(NSInteger)row {NSTextField *v=[NSTextField labelWithString:@""];v.lineBreakMode=NSLineBreakByTruncatingTail;v.font=[NSFont systemFontOfSize:12];if(table==self.list){v.stringValue=self.rows[row];v.toolTip=v.stringValue;}else {int col=[column.identifier isEqualToString:@"name"]?0:1;v.stringValue=take(wb_model((int)row,col));v.editable=YES;v.selectable=YES;v.delegate=self;v.tag=1000+row*2+col;v.textColor=color(0x243b55);v.toolTip=v.stringValue;v.accessibilityLabel=[NSString stringWithFormat:@"%@ %ld",column.title,(long)row+1];}return v;}
+- (void)controlTextDidChange:(NSNotification *)note{if(!self.refreshing)self.dirty=YES;(void)note;}
+- (void)controlTextDidEndEditing:(NSNotification *)note {NSTextField *v=note.object;if(v.tag>=1000){int row=(int)(v.tag-1000)/2,col=(int)(v.tag-1000)%2;wb_model_set(row,col,v.stringValue.UTF8String);if(col==1){NSTextField *name=[self.models viewAtColumn:0 row:row makeIfNecessary:NO];name.stringValue=take(wb_model(row,0));}}}
+- (void)markDirty {self.dirty=YES;}
+- (void)tableViewSelectionDidChange:(NSNotification *)note{if(note.object!=self.list||self.refreshing||self.list.selectedRow<0)return;if(self.dirty){NSAlert *a=[NSAlert new];a.messageText=t(T_DISCARD);[a addButtonWithTitle:wb_ui_zh()?@"放弃修改":@"Discard"];[a addButtonWithTitle:wb_ui_zh()?@"取消":@"Cancel"];if([a runModal]!=NSAlertFirstButtonReturn){[self reloadProviders];return;}}wb_select((int)self.list.selectedRow);[self fields];}
+- (void)fields{self.refreshing=YES;self.name.stringValue=value("name");self.upstream.stringValue=value("upstream");self.key.stringValue=@"";wb_models_load();[self.models reloadData];NSString *e=value("reasoning_effort");for(int i=0;i<6;i++)if([e isEqualToString:[NSString stringWithUTF8String:efforts[i]]])[self.effort selectItemAtIndex:i];self.dirty=NO;self.refreshing=NO;}
+- (void)reloadProviders{self.refreshing=YES;NSString *rows=value("connections");self.rows=rows.length?[rows componentsSeparatedByString:@"\n"]:@[];[self.list reloadData];NSInteger i=[value("selected") integerValue];if(i>=0&&(NSUInteger)i<self.rows.count)[self.list selectRowIndexes:[NSIndexSet indexSetWithIndex:i] byExtendingSelection:NO];self.refreshing=NO;}
+- (void)refresh{[self reloadProviders];[self fields];}
+- (void)renderLog{NSPoint origin=self.logScroll.contentView.bounds.origin;BOOL bottom=NSMaxY(self.logScroll.documentVisibleRect)>=self.logs.bounds.size.height-35;self.logs.string=[self.systemText stringByAppendingFormat:@"\n\n%@\n%@",t(T_EVENTS),[self.events componentsJoinedByString:@"\n"]];if(bottom)[self.logs scrollRangeToVisible:NSMakeRange(self.logs.string.length,0)];else [self.logScroll.contentView scrollToPoint:origin];}
+- (void)report:(NSString *)s {self.status.stringValue=s;self.status.toolTip=s;if(self.events.count==20)[self.events removeObjectAtIndex:0];[self.events addObject:s];[self renderLog];}
+- (void)poll{if(self.polling||self.busy||!self.window.visible)return;self.polling=YES;int language=wb_ui_zh();dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY,0),^{NSString *s=take(wb_snapshot());dispatch_async(dispatch_get_main_queue(),^{self.polling=NO;if(language==wb_ui_zh()){self.systemText=s;[self renderLog];}else [self poll];});});}
+- (BOOL)windowShouldClose:(NSWindow *)sender{(void)sender;[self.timer invalidate];stopUI();return YES;}
+- (void)show{[self refresh];[self.window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];}
+- (void)save{[self.window makeFirstResponder:nil];NSString *r=take(wb_save_table(self.name.stringValue.UTF8String,self.key.stringValue.UTF8String,self.upstream.stringValue.UTF8String,efforts[MAX(0,self.effort.indexOfSelectedItem)]));if([r hasPrefix:@"OK "])[self refresh];[self report:r];[self poll];}
+- (void)change:(const char *)command{NSString *r=take(wb_command(command));if([r hasPrefix:@"OK "])[self refresh];[self report:r];[self poll];}
+- (void)add{[self change:"add"];}- (void)duplicate{[self change:"duplicate"];}
+- (void)remove{NSAlert *a=[NSAlert new];a.messageText=t(T_DELETE_QUESTION);[a addButtonWithTitle:t(T_DELETE)];[a addButtonWithTitle:wb_ui_zh()?@"取消":@"Cancel"];if([a runModal]==NSAlertFirstButtonReturn)[self change:"delete"];}
+- (void)addModel{[self.window makeFirstResponder:nil];int row=wb_model_add();if(row<0){[self report:t(T_LIMIT)];return;}self.dirty=YES;[self.models reloadData];[self.models selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];[self.models scrollRowToVisible:row];[self.models editColumn:1 row:row withEvent:nil select:YES];}
+- (void)removeModel{[self.window makeFirstResponder:nil];if(self.models.selectedRow>=0){wb_model_remove((int)self.models.selectedRow);[self.models reloadData];self.dirty=YES;}}
+- (void)setControlsBusy:(BOOL)busy{self.busy=busy;for(NSControl *c in self.controls)c.enabled=!busy;self.list.enabled=!busy;self.models.enabled=!busy;}
+- (void)execute:(const char *)command{if(self.busy)return;[self.window makeFirstResponder:nil];[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);NSString *url=self.upstream.stringValue,*key=self.key.stringValue;BOOL fetch=strcmp(command,"fetch")==0;dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(fetch?wb_fetch(url.UTF8String,key.UTF8String):wb_command(command));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if(fetch&&[r hasPrefix:@"OK "]){[self.models reloadData];self.dirty=YES;}[self report:r];[self poll];});});}
+- (void)fetch{[self execute:"fetch"];}- (void)test{[self execute:"test"];}- (void)install{[self execute:"install"];}- (void)restore{[self execute:"restore"];}
+- (void)copyConfiguration{NSString *r=take(wb_command("copy"));if([r hasPrefix:@"OK "]){NSPasteboard *p=[NSPasteboard generalPasteboard];[p clearContents];[p setString:[r substringFromIndex:3] forType:NSPasteboardTypeString];[self report:t(T_COPIED)];}else [self report:r];}
+- (void)quit{wb_free(wb_command("quit"));[self.timer invalidate];stopUI();}
 @end
 void wb_native_run(void){@autoreleasepool{[NSApplication sharedApplication];NSApp.applicationIconImage=appIcon();[NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];ui=[ProxyUI new];NSApp.delegate=ui;[NSApp run];ui=nil;}}
 void wb_native_show(void){if(ui){dispatch_async(dispatch_get_main_queue(),^{[ui show];});}else{for(NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:@"io.github.gloryhui.workbuddy-proxy"]){if(app.processIdentifier!=getpid())[app activateWithOptions:NSApplicationActivateIgnoringOtherApps];}}}
 void wb_native_quit(void){dispatch_async(dispatch_get_main_queue(),^{[ui quit];});}
-void wb_native_error(const char *message){@autoreleasepool{[NSApplication sharedApplication];NSAlert *alert=[NSAlert new];alert.icon=appIcon();alert.messageText=@"WorkBuddy Proxy";alert.informativeText=[NSString stringWithUTF8String:message]?:@"Startup failed";[alert runModal];}}
+void wb_native_error(const char *message){@autoreleasepool{[NSApplication sharedApplication];NSAlert *a=[NSAlert new];a.icon=appIcon();a.messageText=@"WorkBuddy Proxy";a.informativeText=[NSString stringWithUTF8String:message]?:@"Startup failed";[a runModal];}}

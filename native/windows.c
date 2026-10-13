@@ -3,85 +3,103 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <shellapi.h>
+#include <commctrl.h>
 #include <stdlib.h>
 #include <string.h>
-extern char *wb_value(const char *name);
-extern char *wb_save(const char *name,const char *key,const char *model,const char *upstream,const char *effort);
-extern void wb_select(int index);
-extern char *wb_command(const char *name);
-extern void wb_free(char *value);
-
+#include "ui.h"
 #define WM_TRAY (WM_APP+1)
 #define WM_RESULT (WM_APP+2)
 #define WM_SHOW (WM_APP+3)
 #define WM_STOP (WM_APP+4)
-static HWND window,connectionList,nameEdit,keyEdit,modelEdit,urlEdit,effortCombo,statusLabel,buttons[8];
-static HFONT font;
+#define WM_SNAPSHOT (WM_APP+5)
+static HWND window,connectionList,nameEdit,keyEdit,modelTable,urlEdit,effortCombo,languageCombo,statusLabel,logEdit,cellEdit,buttons[11],labels[T_COUNT];
+static HFONT font,headingFont,smallFont,monoFont;
+static HBRUSH whiteBrush,bgBrush,logBrush;
 static HICON appIcon,smallIcon;
-static BOOL busy=FALSE;
+static BOOL busy=FALSE,polling=FALSE,dirty=FALSE,refreshing=FALSE,trayAvailable=FALSE;
 static NOTIFYICONDATAW tray;
-static BOOL trayAvailable=FALSE;
 static UINT taskbarCreated;
-static const char *efforts[]={"default","none","low","high","max","keep"};
-
+static int dpi=96,editRow=-1,editCol=0;
+static WNDPROC oldEditProc;
+static wchar_t *systemText,*events;
+static const int buttonTags[]={T_SAVE,T_TEST,T_COPY,T_SYNC,T_RESTORE,T_ADD,T_DUPLICATE,T_DELETE,T_FETCH,T_ADD_MODEL,T_REMOVE_MODEL};
+static const int buttonIds[]={201,202,203,204,205,206,207,208,209,210,211};
 static wchar_t *wide(const char *s){int n=MultiByteToWideChar(CP_UTF8,0,s,-1,NULL,0);if(n<=0)n=1;wchar_t *v=(wchar_t *)calloc((size_t)n,sizeof(wchar_t));if(v)MultiByteToWideChar(CP_UTF8,0,s,-1,v,n);return v;}
-static void text(HWND h,const char *s){wchar_t *v=wide(s);if(v){SetWindowTextW(h,v);free(v);}}
 static char *editText(HWND h){int n=GetWindowTextLengthW(h)+1;wchar_t *w=(wchar_t *)calloc((size_t)n,sizeof(wchar_t));if(!w)return NULL;GetWindowTextW(h,w,n);int size=WideCharToMultiByte(CP_UTF8,0,w,-1,NULL,0,NULL,NULL);char *v=(char *)calloc((size_t)(size>0?size:1),1);if(v)WideCharToMultiByte(CP_UTF8,0,w,-1,v,size,NULL,NULL);free(w);return v;}
-static HWND control(const wchar_t *cls,const wchar_t *title,DWORD style,int x,int y,int width,int height,int id){HWND h=CreateWindowExW(0,cls,title,WS_CHILD|WS_VISIBLE|style,x,y,width,height,window,(HMENU)(INT_PTR)id,GetModuleHandleW(NULL),NULL);SendMessageW(h,WM_SETFONT,(WPARAM)font,TRUE);return h;}
-static void status(const char *s){text(statusLabel,s);}
-static void fields(void){const char *names[]={"name","model","upstream"};HWND controls[]={nameEdit,modelEdit,urlEdit};for(int i=0;i<3;i++){char *v=wb_value(names[i]);if(controls[i]==modelEdit){size_t n=strlen(v);char *lines=(char *)calloc(n*2+1,1);if(lines){size_t j=0;for(size_t k=0;k<n;k++){if(v[k]=='\n')lines[j++]='\r';lines[j++]=v[k];}text(modelEdit,lines);free(lines);}}else text(controls[i],v);wb_free(v);}SetWindowTextW(keyEdit,L"");char *e=wb_value("reasoning_effort");int index=0;for(int i=0;i<6;i++)if(strcmp(e,efforts[i])==0)index=i;SendMessageW(effortCombo,CB_SETCURSEL,index,0);wb_free(e);}
-static void refresh(void){char *list=wb_value("connections");SendMessageW(connectionList,LB_RESETCONTENT,0,0);char *row=list;while(*row){char *end=strchr(row,'\n');if(end)*end=0;wchar_t *w=wide(row);if(w){SendMessageW(connectionList,LB_ADDSTRING,0,(LPARAM)w);free(w);}if(!end)break;row=end+1;}char *selected=wb_value("selected");SendMessageW(connectionList,LB_SETCURSEL,atoi(selected),0);wb_free(selected);wb_free(list);fields();}
-static void show(void){ShowWindow(window,SW_RESTORE);SetForegroundWindow(window);refresh();}
-static void setBusy(BOOL value){busy=value;for(int i=0;i<8;i++)EnableWindow(buttons[i],!value);EnableWindow(connectionList,!value);}
-static DWORD WINAPI work(LPVOID command){char *result=wb_command((const char *)command);if(!PostMessageW(window,WM_RESULT,0,(LPARAM)result))wb_free(result);return 0;}
-static void execute(const char *command){if(busy)return;setBusy(TRUE);status("Working / 正在处理...");HANDLE thread=CreateThread(NULL,256*1024,work,(LPVOID)command,0,NULL);if(thread)CloseHandle(thread);else{setBusy(FALSE);status("Cannot start worker / 无法启动工作线程");}}
-static void copyConfiguration(void){char *value=wb_command("copy");if(strncmp(value,"OK ",3)==0){wchar_t *w=wide(value+3);if(w){SIZE_T size=(wcslen(w)+1)*sizeof(wchar_t);HGLOBAL data=GlobalAlloc(GMEM_MOVEABLE,size);if(data){void *p=GlobalLock(data);if(p){memcpy(p,w,size);GlobalUnlock(data);if(OpenClipboard(window)){EmptyClipboard();if(!SetClipboardData(CF_UNICODETEXT,data))GlobalFree(data);CloseClipboard();status("Copied / 配置已复制");}else{GlobalFree(data);status("Clipboard is busy / 剪贴板忙");}}else{GlobalFree(data);}}free(w);}}else status(value);wb_free(value);}
+static int px(int v){return MulDiv(v,dpi,96);}
+static void text(HWND h,const char *s){wchar_t *w=wide(s);if(w){SetWindowTextW(h,w);free(w);}}
+static void place(HWND h,int x,int y,int w,int height){MoveWindow(h,px(x),px(y),px(w),px(height),TRUE);}
+static HWND control(const wchar_t *cls,const wchar_t *title,DWORD style,int id){HWND h=CreateWindowExW(0,cls,title,WS_CHILD|WS_VISIBLE|style,0,0,1,1,window,(HMENU)(INT_PTR)id,GetModuleHandleW(NULL),NULL);SendMessageW(h,WM_SETFONT,(WPARAM)font,TRUE);return h;}
+static void label(int tag){labels[tag]=control(L"STATIC",L"",SS_LEFT,600+tag);SendMessageW(labels[tag],WM_SETFONT,(WPARAM)smallFont,TRUE);}
+static void modelsReload(void){int selected=ListView_GetNextItem(modelTable,-1,LVNI_SELECTED);ListView_DeleteAllItems(modelTable);int n=wb_models_count();for(int i=0;i<n;i++){char *name=wb_model(i,0),*id=wb_model(i,1);wchar_t *a=wide(name),*b=wide(id);LVITEMW row;memset(&row,0,sizeof(row));row.mask=LVIF_TEXT;row.iItem=i;row.pszText=a;ListView_InsertItem(modelTable,&row);ListView_SetItemText(modelTable,i,1,b);free(a);free(b);wb_free(name);wb_free(id);}if(selected>=0&&selected<n)ListView_SetItemState(modelTable,selected,LVIS_SELECTED|LVIS_FOCUSED,LVIS_SELECTED|LVIS_FOCUSED);}
+static void endEdit(BOOL commit){if(!cellEdit)return;HWND edit=cellEdit;cellEdit=NULL;if(commit){char *s=editText(edit);if(s){wb_model_set(editRow,editCol,s);free(s);dirty=TRUE;}}DestroyWindow(edit);if(commit)modelsReload();}
+static LRESULT CALLBACK cellProcedure(HWND h,UINT msg,WPARAM w,LPARAM l){if(msg==WM_KEYDOWN&&(w==VK_RETURN||w==VK_ESCAPE)){endEdit(w==VK_RETURN);SetFocus(modelTable);return 0;}if(msg==WM_KILLFOCUS&&cellEdit){endEdit(TRUE);return 0;}return CallWindowProcW(oldEditProc,h,msg,w,l);}
+static void beginEdit(int row,int column){endEdit(TRUE);if(row<0||row>=wb_models_count()||busy)return;RECT r;ListView_GetSubItemRect(modelTable,row,column,LVIR_BOUNDS,&r);if(column==0)r.right=r.left+ListView_GetColumnWidth(modelTable,0);editRow=row;editCol=column;cellEdit=CreateWindowExW(0,L"EDIT",L"",WS_CHILD|WS_VISIBLE|WS_BORDER|ES_AUTOHSCROLL,r.left,r.top,r.right-r.left,r.bottom-r.top,modelTable,NULL,GetModuleHandleW(NULL),NULL);SendMessageW(cellEdit,WM_SETFONT,(WPARAM)font,TRUE);char *s=wb_model(row,column);text(cellEdit,s);wb_free(s);oldEditProc=(WNDPROC)SetWindowLongPtrW(cellEdit,GWLP_WNDPROC,(LONG_PTR)cellProcedure);SetFocus(cellEdit);SendMessageW(cellEdit,EM_SETSEL,0,-1);SendMessageW(cellEdit,EM_SETLIMITTEXT,column?160:80,0);}
+static void providersReload(void){refreshing=TRUE;char *s=wb_value("connections"),*row=s;SendMessageW(connectionList,LB_RESETCONTENT,0,0);while(*row){char *end=strchr(row,'\n');if(end)*end=0;wchar_t *w=wide(row);if(w){SendMessageW(connectionList,LB_ADDSTRING,0,(LPARAM)w);free(w);}if(!end)break;row=end+1;}char *i=wb_value("selected");SendMessageW(connectionList,LB_SETCURSEL,atoi(i),0);wb_free(i);wb_free(s);refreshing=FALSE;}
+static void fields(void){refreshing=TRUE;char *n=wb_value("name"),*u=wb_value("upstream"),*e=wb_value("reasoning_effort");text(nameEdit,n);text(urlEdit,u);SetWindowTextW(keyEdit,L"");int i=0;for(int j=0;j<6;j++)if(strcmp(e,efforts[j])==0)i=j;SendMessageW(effortCombo,CB_SETCURSEL,i,0);wb_free(n);wb_free(u);wb_free(e);wb_models_load();modelsReload();dirty=FALSE;refreshing=FALSE;}
+static void refresh(void){providersReload();fields();}
+static void renderLog(void){const wchar_t *a=systemText?systemText:L"",*b=events?events:L"";wchar_t *title=wide(tr(T_EVENTS));size_t size=wcslen(a)+wcslen(b)+wcslen(title)+10;wchar_t *all=(wchar_t *)calloc(size,sizeof(wchar_t));if(!all){free(title);return;}wcscpy_s(all,size,a);wcscat_s(all,size,L"\r\n\r\n");wcscat_s(all,size,title);wcscat_s(all,size,L"\r\n");wcscat_s(all,size,b);int first=(int)SendMessageW(logEdit,EM_GETFIRSTVISIBLELINE,0,0);SCROLLINFO si;memset(&si,0,sizeof(si));si.cbSize=sizeof(si);si.fMask=SIF_ALL;GetScrollInfo(logEdit,SB_VERT,&si);BOOL bottom=si.nPos+(int)si.nPage>=si.nMax-2;SetWindowTextW(logEdit,all);if(bottom){SendMessageW(logEdit,EM_SETSEL,-1,-1);SendMessageW(logEdit,EM_SCROLLCARET,0,0);}else{SendMessageW(logEdit,EM_LINESCROLL,0,first);}free(all);free(title);}
+static void report(const char *s){text(statusLabel,s);wchar_t *w=wide(s);if(w){size_t old=events?wcslen(events):0,n=wcslen(w);if(old+n>6000){free(events);events=NULL;old=0;}wchar_t *next=(wchar_t *)calloc(old+n+3,sizeof(wchar_t));if(next){if(events)wcscpy_s(next,old+n+3,events);wcscat_s(next,old+n+3,w);wcscat_s(next,old+n+3,L"\r\n");free(events);events=next;}free(w);}renderLog();}
+static void translate(void){for(int i=0;i<T_COUNT;i++)if(labels[i])text(labels[i],tr(i));for(int i=0;i<11;i++)text(buttons[i],tr(buttonTags[i]));int selected=(int)SendMessageW(effortCombo,CB_GETCURSEL,0,0);SendMessageW(effortCombo,CB_RESETCONTENT,0,0);for(int i=0;i<6;i++){wchar_t *s=wide(tr(T_DEFAULT+i));SendMessageW(effortCombo,CB_ADDSTRING,0,(LPARAM)s);free(s);}SendMessageW(effortCombo,CB_SETCURSEL,selected>=0?selected:0,0);for(int i=0;i<2;i++){LVCOLUMNW c;memset(&c,0,sizeof(c));c.mask=LVCF_TEXT;wchar_t *s=wide(tr(i?T_ID:T_DISPLAY));c.pszText=s;ListView_SetColumn(modelTable,i,&c);free(s);}wchar_t *hint=wide(tr(T_KEY_HINT));SendMessageW(keyEdit,EM_SETCUEBANNER,FALSE,(LPARAM)hint);free(hint);InvalidateRect(window,NULL,TRUE);}
+static void layout(void){RECT r;GetClientRect(window,&r);int w=MulDiv(r.right,96,dpi),h=MulDiv(r.bottom,96,dpi),left=190,right=280,gap=14,x=20+left+gap,center=w-40-left-right-2*gap,ch=h-112;
+    place(GetDlgItem(window,108),24,20,40,40);place(GetDlgItem(window,109),76,14,450,28);place(labels[T_SUBTITLE],77,45,510,18);place(languageCombo,w-156,26,132,200);
+    place(labels[T_PROVIDERS],36,88,left-32,20);place(connectionList,28,120,left-16,ch-108);for(int i=0;i<3;i++)place(buttons[5+i],30+i*57,72+ch-44,55,28);
+    HWND edits[]={nameEdit,urlEdit,keyEdit};int tags[]={T_NAME,T_URL,T_KEY};for(int i=0;i<3;i++){place(labels[tags[i]],x+18,88+i*66,center-36,20);place(edits[i],x+18,112+i*66,center-36,30);}
+    place(labels[T_MODELS],x+18,289,100,20);place(buttons[8],x+center-262,282,112,28);place(buttons[9],x+center-148,282,62,28);place(buttons[10],x+center-84,282,66,28);place(modelTable,x+18,318,center-36,ch-410);ListView_SetColumnWidth(modelTable,0,px((center-38)*40/100));ListView_SetColumnWidth(modelTable,1,px((center-38)*60/100));
+    place(labels[T_MODEL_HINT],x+18,72+ch-157,center-36,18);place(labels[T_EFFORT],x+18,72+ch-130,110,20);place(effortCombo,x+128,72+ch-136,center-146,220);for(int i=0;i<3;i++)place(buttons[i],x+18+i*110,72+ch-90,104,28);place(buttons[3],x+18,72+ch-48,148,28);place(buttons[4],x+174,72+ch-48,116,28);
+    place(labels[T_INFO],w-20-right+16,88,right-32,20);place(logEdit,w-20-right+10,120,right-20,ch-60);place(statusLabel,24,h-30,w-48,18);InvalidateRect(window,NULL,TRUE);
+}
+static void setBusy(BOOL v){busy=v;for(int i=0;i<11;i++)EnableWindow(buttons[i],!v);HWND controls[]={connectionList,nameEdit,urlEdit,keyEdit,modelTable,effortCombo,languageCombo};for(int i=0;i<7;i++)EnableWindow(controls[i],!v);}
+struct Task{const char *command;char *url,*key;};
+static DWORD WINAPI work(LPVOID p){struct Task *task=(struct Task *)p;BOOL fetch=strcmp(task->command,"fetch")==0;char *r=fetch?wb_fetch(task->url,task->key):wb_command(task->command);free(task->url);free(task->key);free(task);if(!PostMessageW(window,WM_RESULT,fetch,(LPARAM)r))wb_free(r);return 0;}
+static DWORD WINAPI pollWork(LPVOID p){(void)p;int language=wb_ui_zh();char *r=wb_snapshot();if(!PostMessageW(window,WM_SNAPSHOT,language,(LPARAM)r))wb_free(r);return 0;}
+static void poll(void){if(polling||busy||!IsWindowVisible(window))return;polling=TRUE;HANDLE thread=CreateThread(NULL,256*1024,pollWork,NULL,0,NULL);if(thread)CloseHandle(thread);else polling=FALSE;}
+static void execute(const char *command){if(busy)return;endEdit(TRUE);struct Task *t=(struct Task *)calloc(1,sizeof(*t));if(!t)return;t->command=command;t->url=editText(urlEdit);t->key=editText(keyEdit);setBusy(TRUE);text(statusLabel,tr(T_WORKING));HANDLE thread=CreateThread(NULL,256*1024,work,t,0,NULL);if(thread)CloseHandle(thread);else{free(t->url);free(t->key);free(t);setBusy(FALSE);report(wb_ui_zh()?"无法启动工作线程":"Cannot start worker");}}
+static void show(void){ShowWindow(window,SW_RESTORE);SetForegroundWindow(window);poll();}
+static void copyConfiguration(void){char *r=wb_command("copy");if(strncmp(r,"OK ",3)==0){wchar_t *w=wide(r+3);if(w){SIZE_T size=(wcslen(w)+1)*sizeof(wchar_t);HGLOBAL data=GlobalAlloc(GMEM_MOVEABLE,size);if(data){void *p=GlobalLock(data);if(p){memcpy(p,w,size);GlobalUnlock(data);if(OpenClipboard(window)){EmptyClipboard();if(!SetClipboardData(CF_UNICODETEXT,data))GlobalFree(data);CloseClipboard();report(tr(T_COPIED));}else{GlobalFree(data);report(tr(T_CLIPBOARD));}}else GlobalFree(data);}free(w);}}else report(r);wb_free(r);}
+static void card(HDC dc,int x,int y,int w,int h){HBRUSH b=CreateSolidBrush(RGB(255,255,255));HPEN p=CreatePen(PS_SOLID,1,RGB(226,233,241));HGDIOBJ oldB=SelectObject(dc,b),oldP=SelectObject(dc,p);RoundRect(dc,px(x),px(y),px(x+w),px(y+h),px(14),px(14));SelectObject(dc,oldB);SelectObject(dc,oldP);DeleteObject(b);DeleteObject(p);}
 static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
     if(taskbarCreated&&msg==taskbarCreated){trayAvailable=Shell_NotifyIconW(NIM_ADD,&tray);if(!trayAvailable)show();return 0;}
     switch(msg){
-        case WM_CREATE:{
-            window=h;font=CreateFontW(-16,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,CLEARTYPE_QUALITY,DEFAULT_PITCH,L"Segoe UI");
-            HWND logo=control(L"STATIC",L"",SS_ICON,20,12,32,32,108);SendMessageW(logo,STM_SETICON,(WPARAM)appIcon,0);
-            control(L"STATIC",L"WorkBuddy Proxy",0,62,16,648,28,0);
-            control(L"STATIC",L"供应商 / Providers",0,20,48,230,22,0);
-            connectionList=control(L"LISTBOX",L"",WS_BORDER|LBS_NOTIFY|WS_VSCROLL|WS_TABSTOP,20,75,230,445,107);
-            buttons[5]=control(L"BUTTON",L"新增",WS_TABSTOP,20,530,70,32,206);buttons[6]=control(L"BUTTON",L"复制",WS_TABSTOP,100,530,70,32,207);buttons[7]=control(L"BUTTON",L"删除",WS_TABSTOP,180,530,70,32,208);
-            control(L"STATIC",L"供应商名称 / Provider name",0,270,48,440,22,0);nameEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,73,440,28,105);SendMessageW(nameEdit,EM_SETLIMITTEXT,80,0);
-            control(L"STATIC",L"OpenAI 兼容地址 / Base URL",0,270,113,440,22,0);urlEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,138,440,28,101);SendMessageW(urlEdit,EM_SETLIMITTEXT,2048,0);
-            control(L"STATIC",L"API Key（留空保留已保存值）",0,270,178,440,22,0);keyEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|ES_PASSWORD|WS_TABSTOP,270,203,440,28,102);SendMessageW(keyEdit,EM_SETLIMITTEXT,4096,0);
-            control(L"STATIC",L"模型列表：每行 ID，可填写 ID | 显示名称",0,270,243,440,22,0);modelEdit=control(L"EDIT",L"",WS_BORDER|ES_MULTILINE|ES_AUTOVSCROLL|ES_WANTRETURN|WS_VSCROLL|WS_TABSTOP,270,268,440,110,103);SendMessageW(modelEdit,EM_SETLIMITTEXT,60000,0);
-            control(L"STATIC",L"思考强度（默认透明透传）",0,270,388,440,22,0);
-            effortCombo=control(L"COMBOBOX",L"",CBS_DROPDOWNLIST|WS_VSCROLL|WS_TABSTOP,270,413,440,200,104);
-            const wchar_t *labels[]={L"跟随 WorkBuddy / Default",L"关闭思考 / Off",L"低 / Low",L"高 / High",L"最高 / Max",L"保留各模型设置 / Keep"};for(int i=0;i<6;i++)SendMessageW(effortCombo,CB_ADDSTRING,0,(LPARAM)labels[i]);
-            buttons[0]=control(L"BUTTON",L"保存 / Save",WS_TABSTOP,270,450,130,32,201);buttons[1]=control(L"BUTTON",L"测试首项 / Test",WS_TABSTOP,415,450,130,32,202);buttons[2]=control(L"BUTTON",L"复制配置",WS_TABSTOP,560,450,150,32,203);
-            buttons[3]=control(L"BUTTON",L"同步 WorkBuddy 列表",WS_TABSTOP,270,495,215,32,204);buttons[4]=control(L"BUTTON",L"恢复原配置 / Restore",WS_TABSTOP,500,495,210,32,205);
-            statusLabel=control(L"STATIC",L"",0,270,545,440,65,0);refresh();char *state=wb_value("status");status(state);wb_free(state);
-            memset(&tray,0,sizeof(tray));tray.cbSize=sizeof(tray);tray.hWnd=h;tray.uID=1;tray.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;tray.uCallbackMessage=WM_TRAY;tray.hIcon=smallIcon;lstrcpyW(tray.szTip,L"WorkBuddy Proxy");trayAvailable=Shell_NotifyIconW(NIM_ADD,&tray);return 0;
-        }
-        case WM_COMMAND:switch(LOWORD(w)){
-            case 107:if(HIWORD(w)==LBN_SELCHANGE){wb_select((int)SendMessageW(connectionList,LB_GETCURSEL,0,0));fields();}return 0;
-            case 201:{char *name=editText(nameEdit),*key=editText(keyEdit),*model=editText(modelEdit),*url=editText(urlEdit);LRESULT i=SendMessageW(effortCombo,CB_GETCURSEL,0,0);char *r=wb_save(name,key,model,url,efforts[i>=0&&i<6?i:0]);if(strncmp(r,"OK ",3)==0)refresh();status(r);free(name);free(key);free(model);free(url);wb_free(r);return 0;}
-            case 202:execute("test");return 0;case 203:copyConfiguration();return 0;case 204:execute("install");return 0;case 205:execute("restore");return 0;
-            case 206:case 207:case 208:{char *r=wb_command(LOWORD(w)==206?"add":LOWORD(w)==207?"duplicate":"delete");if(strncmp(r,"OK ",3)==0)refresh();status(r);wb_free(r);return 0;}
-            case 301:show();return 0;case 302:wb_free(wb_command("quit"));DestroyWindow(h);return 0;
-        }break;
-        case WM_RESULT:{char *r=(char *)l;status(r);wb_free(r);setBusy(FALSE);return 0;}
-        case WM_SHOW:show();return 0;
-        case WM_STOP:DestroyWindow(h);return 0;
-        case WM_CLOSE:ShowWindow(h,trayAvailable?SW_HIDE:SW_MINIMIZE);return 0;
-        case WM_SIZE:if(w==SIZE_MINIMIZED&&trayAvailable){ShowWindow(h,SW_HIDE);return 0;}break;
-        case WM_TRAY:
-            if(l==WM_LBUTTONUP||l==WM_LBUTTONDBLCLK){show();return 0;}
-            if(l==WM_RBUTTONUP){POINT p;GetCursorPos(&p);HMENU menu=CreatePopupMenu();AppendMenuW(menu,MF_STRING,301,L"设置 / Settings");AppendMenuW(menu,MF_STRING,302,L"退出 / Quit");SetForegroundWindow(h);TrackPopupMenu(menu,TPM_RIGHTBUTTON,p.x,p.y,0,h,NULL);DestroyMenu(menu);return 0;}break;
-        case WM_DESTROY:Shell_NotifyIconW(NIM_DELETE,&tray);if(font)DeleteObject(font);window=NULL;PostQuitMessage(0);return 0;
+    case WM_CREATE:{window=h;HDC dc=GetDC(h);dpi=GetDeviceCaps(dc,LOGPIXELSX);ReleaseDC(h,dc);font=CreateFontW(-px(13),0,0,0,FW_NORMAL,0,0,0,DEFAULT_CHARSET,0,0,CLEARTYPE_QUALITY,0,L"Segoe UI");smallFont=CreateFontW(-px(12),0,0,0,FW_NORMAL,0,0,0,DEFAULT_CHARSET,0,0,CLEARTYPE_QUALITY,0,L"Segoe UI");headingFont=CreateFontW(-px(21),0,0,0,FW_SEMIBOLD,0,0,0,DEFAULT_CHARSET,0,0,CLEARTYPE_QUALITY,0,L"Segoe UI");monoFont=CreateFontW(-px(11),0,0,0,FW_NORMAL,0,0,0,DEFAULT_CHARSET,0,0,CLEARTYPE_QUALITY,0,L"Consolas");whiteBrush=CreateSolidBrush(RGB(255,255,255));bgBrush=CreateSolidBrush(RGB(243,246,251));logBrush=CreateSolidBrush(RGB(248,250,253));
+        char *lang=wb_value("language");wb_use_language(strcmp(lang,"zh")==0||(strcmp(lang,"auto")==0&&PRIMARYLANGID(GetUserDefaultUILanguage())==LANG_CHINESE));wb_free(lang);
+        HWND logo=control(L"STATIC",L"",SS_ICON,108);SendMessageW(logo,STM_SETICON,(WPARAM)appIcon,0);HWND title=control(L"STATIC",L"WorkBuddy Proxy",0,109);SendMessageW(title,WM_SETFONT,(WPARAM)headingFont,TRUE);
+        int tags[]={T_SUBTITLE,T_PROVIDERS,T_NAME,T_URL,T_KEY,T_MODELS,T_MODEL_HINT,T_EFFORT,T_INFO};for(int i=0;i<9;i++)label(tags[i]);
+        connectionList=control(L"LISTBOX",L"",LBS_NOTIFY|LBS_OWNERDRAWFIXED|LBS_HASSTRINGS|WS_VSCROLL|WS_TABSTOP,107);SendMessageW(connectionList,LB_SETITEMHEIGHT,0,px(40));
+        nameEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,105);urlEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,101);keyEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|ES_PASSWORD|WS_TABSTOP,102);SendMessageW(nameEdit,EM_SETLIMITTEXT,80,0);SendMessageW(urlEdit,EM_SETLIMITTEXT,2048,0);SendMessageW(keyEdit,EM_SETLIMITTEXT,4096,0);
+        modelTable=control(WC_LISTVIEWW,L"",WS_BORDER|LVS_REPORT|LVS_SINGLESEL|LVS_SHOWSELALWAYS|WS_TABSTOP,103);ListView_SetExtendedListViewStyle(modelTable,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER);for(int i=0;i<2;i++){LVCOLUMNW c;memset(&c,0,sizeof(c));c.mask=LVCF_TEXT|LVCF_WIDTH;c.pszText=L"";c.cx=px(210);ListView_InsertColumn(modelTable,i,&c);}
+        effortCombo=control(L"COMBOBOX",L"",CBS_DROPDOWNLIST|WS_VSCROLL|WS_TABSTOP,104);languageCombo=control(L"COMBOBOX",L"",CBS_DROPDOWNLIST|WS_TABSTOP,110);SendMessageW(languageCombo,CB_ADDSTRING,0,(LPARAM)L"简体中文");SendMessageW(languageCombo,CB_ADDSTRING,0,(LPARAM)L"English");SendMessageW(languageCombo,CB_SETCURSEL,wb_ui_zh()?0:1,0);
+        for(int i=0;i<11;i++)buttons[i]=control(L"BUTTON",L"",BS_OWNERDRAW|WS_TABSTOP,buttonIds[i]);statusLabel=control(L"STATIC",L"",SS_LEFTNOWORDWRAP,111);SendMessageW(statusLabel,WM_SETFONT,(WPARAM)smallFont,TRUE);logEdit=control(L"EDIT",L"",ES_READONLY|ES_MULTILINE|ES_AUTOVSCROLL|WS_VSCROLL|WS_TABSTOP,112);SendMessageW(logEdit,WM_SETFONT,(WPARAM)monoFont,TRUE);SendMessageW(logEdit,EM_SETLIMITTEXT,50000,0);
+        translate();refresh();layout();report(tr(T_READY));memset(&tray,0,sizeof(tray));tray.cbSize=sizeof(tray);tray.hWnd=h;tray.uID=1;tray.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;tray.uCallbackMessage=WM_TRAY;tray.hIcon=smallIcon;lstrcpyW(tray.szTip,L"WorkBuddy Proxy");trayAvailable=Shell_NotifyIconW(NIM_ADD,&tray);SetTimer(h,1,2000,NULL);return 0;}
+    case WM_COMMAND:{int id=LOWORD(w),event=HIWORD(w);if((id==105||id==101||id==102)&&event==EN_CHANGE&&!refreshing)dirty=TRUE;if(id==104&&event==CBN_SELCHANGE)dirty=TRUE;
+        switch(id){case 107:if(event==LBN_SELCHANGE&&!refreshing){endEdit(TRUE);if(dirty){wchar_t *q=wide(tr(T_DISCARD));int r=MessageBoxW(h,q,L"WorkBuddy Proxy",MB_OKCANCEL|MB_ICONQUESTION);free(q);if(r!=IDOK){providersReload();return 0;}}wb_select((int)SendMessageW(connectionList,LB_GETCURSEL,0,0));fields();}return 0;
+        case 110:if(event==CBN_SELCHANGE){endEdit(TRUE);wb_use_language(SendMessageW(languageCombo,CB_GETCURSEL,0,0)==0);char *r=wb_language(wb_ui_zh()?"zh":"en");free(events);events=NULL;free(systemText);systemText=NULL;translate();providersReload();report(r);wb_free(r);poll();}return 0;
+        case 201:{endEdit(TRUE);char *n=editText(nameEdit),*k=editText(keyEdit),*u=editText(urlEdit);int i=(int)SendMessageW(effortCombo,CB_GETCURSEL,0,0);char *r=wb_save_table(n,k,u,efforts[i>=0&&i<6?i:0]);if(strncmp(r,"OK ",3)==0)refresh();report(r);free(n);free(k);free(u);wb_free(r);poll();return 0;}
+        case 202:execute("test");return 0;case 203:endEdit(TRUE);copyConfiguration();return 0;case 204:execute("install");return 0;case 205:execute("restore");return 0;case 209:execute("fetch");return 0;
+        case 210:{endEdit(TRUE);int i=wb_model_add();if(i<0){report(tr(T_LIMIT));return 0;}modelsReload();ListView_EnsureVisible(modelTable,i,FALSE);ListView_SetItemState(modelTable,i,LVIS_SELECTED|LVIS_FOCUSED,LVIS_SELECTED|LVIS_FOCUSED);dirty=TRUE;beginEdit(i,1);return 0;}
+        case 211:{endEdit(TRUE);int i=ListView_GetNextItem(modelTable,-1,LVNI_SELECTED);if(i>=0){wb_model_remove(i);modelsReload();dirty=TRUE;}return 0;}
+        case 206:case 207:case 208:{endEdit(TRUE);if(id==208){wchar_t *q=wide(tr(T_DELETE_QUESTION));int r=MessageBoxW(h,q,L"WorkBuddy Proxy",MB_OKCANCEL|MB_ICONQUESTION);free(q);if(r!=IDOK)return 0;}char *r=wb_command(id==206?"add":id==207?"duplicate":"delete");if(strncmp(r,"OK ",3)==0)refresh();report(r);wb_free(r);poll();return 0;}
+        case 301:show();return 0;case 302:wb_free(wb_command("quit"));DestroyWindow(h);return 0;}break;}
+    case WM_NOTIFY:{NMHDR *n=(NMHDR *)l;if(n->hwndFrom==modelTable&&n->code==NM_DBLCLK){NMITEMACTIVATE *a=(NMITEMACTIVATE *)l;beginEdit(a->iItem,a->iSubItem);}return 0;}
+    case WM_TIMER:poll();return 0;
+    case WM_RESULT:{char *r=(char *)l;if(w&&strncmp(r,"OK ",3)==0){modelsReload();dirty=TRUE;}report(r);wb_free(r);setBusy(FALSE);poll();return 0;}
+    case WM_SNAPSHOT:{char *r=(char *)l;if((int)w!=wb_ui_zh()){wb_free(r);polling=FALSE;poll();return 0;}size_t len=strlen(r);char *lines=(char *)calloc(len*2+1,1);if(lines){size_t j=0;for(size_t i=0;i<len;i++){if(r[i]=='\n')lines[j++]='\r';lines[j++]=r[i];}free(systemText);systemText=wide(lines);free(lines);renderLog();}wb_free(r);polling=FALSE;return 0;}
+    case WM_SHOW:show();return 0;case WM_STOP:DestroyWindow(h);return 0;
+    case WM_CLOSE:endEdit(TRUE);ShowWindow(h,trayAvailable?SW_HIDE:SW_MINIMIZE);return 0;
+    case WM_SIZE:if(w==SIZE_MINIMIZED&&trayAvailable){ShowWindow(h,SW_HIDE);return 0;}if(connectionList)layout();break;
+    case WM_GETMINMAXINFO:{MINMAXINFO *m=(MINMAXINFO *)l;m->ptMinTrackSize.x=px(1020);m->ptMinTrackSize.y=px(680);return 0;}
+    case WM_PAINT:{PAINTSTRUCT ps;HDC dc=BeginPaint(h,&ps);RECT r;GetClientRect(h,&r);FillRect(dc,&r,bgBrush?bgBrush:(HBRUSH)(COLOR_WINDOW+1));int width=MulDiv(r.right,96,dpi),height=MulDiv(r.bottom,96,dpi);card(dc,20,72,190,height-112);card(dc,224,72,width-538,height-112);card(dc,width-300,72,280,height-112);EndPaint(h,&ps);return 0;}
+    case WM_CTLCOLORSTATIC:case WM_CTLCOLOREDIT:{HDC dc=(HDC)w;HWND c=(HWND)l;SetTextColor(dc,RGB(45,65,87));if(c==logEdit){SetBkColor(dc,RGB(248,250,253));return (LRESULT)logBrush;}if(c==statusLabel||c==GetDlgItem(h,108)||c==GetDlgItem(h,109)||c==labels[T_SUBTITLE]){SetBkColor(dc,RGB(243,246,251));return (LRESULT)bgBrush;}SetBkColor(dc,RGB(255,255,255));return (LRESULT)whiteBrush;}
+    case WM_CTLCOLORLISTBOX:SetBkColor((HDC)w,RGB(255,255,255));return (LRESULT)whiteBrush;
+    case WM_MEASUREITEM:((MEASUREITEMSTRUCT *)l)->itemHeight=px(40);return TRUE;
+    case WM_DRAWITEM:{DRAWITEMSTRUCT *d=(DRAWITEMSTRUCT *)l;HDC dc=d->hDC;RECT r=d->rcItem;SetBkMode(dc,TRANSPARENT);SelectObject(dc,font);if(d->CtlID==107){if(d->itemID==(UINT)-1)return TRUE;BOOL selected=(d->itemState&ODS_SELECTED)!=0;HBRUSH b=CreateSolidBrush(selected?RGB(224,245,255):RGB(255,255,255));FillRect(dc,&r,b);DeleteObject(b);int n=(int)SendMessageW(connectionList,LB_GETTEXTLEN,d->itemID,0);wchar_t *s=(wchar_t *)calloc((size_t)n+1,sizeof(wchar_t));if(s){SendMessageW(connectionList,LB_GETTEXT,d->itemID,(LPARAM)s);SetTextColor(dc,selected?RGB(0,119,163):RGB(45,65,87));r.left+=px(10);r.right-=px(8);DrawTextW(dc,s,-1,&r,DT_SINGLELINE|DT_VCENTER|DT_END_ELLIPSIS);free(s);}return TRUE;}BOOL primary=d->CtlID==201,down=(d->itemState&ODS_SELECTED)!=0,disabled=(d->itemState&ODS_DISABLED)!=0;COLORREF fill=primary?(down?RGB(0,119,163):RGB(0,145,199)):(down?RGB(226,237,248):RGB(241,246,252));HBRUSH b=CreateSolidBrush(fill);HPEN p=CreatePen(PS_SOLID,1,primary?fill:RGB(221,232,242));HGDIOBJ oldB=SelectObject(dc,b),oldP=SelectObject(dc,p);RoundRect(dc,r.left,r.top,r.right,r.bottom,px(8),px(8));SelectObject(dc,oldB);SelectObject(dc,oldP);DeleteObject(b);DeleteObject(p);SetTextColor(dc,disabled?RGB(143,157,173):primary?RGB(255,255,255):RGB(45,65,87));wchar_t title[100];GetWindowTextW(d->hwndItem,title,100);DrawTextW(dc,title,-1,&r,DT_CENTER|DT_VCENTER|DT_SINGLELINE);if(d->itemState&ODS_FOCUS){InflateRect(&r,-3,-3);DrawFocusRect(dc,&r);}return TRUE;}
+    case WM_TRAY:if(l==WM_LBUTTONUP||l==WM_LBUTTONDBLCLK){show();return 0;}if(l==WM_RBUTTONUP){POINT p;GetCursorPos(&p);HMENU menu=CreatePopupMenu();wchar_t *s=wide(tr(T_SETTINGS)),*q=wide(tr(T_QUIT));AppendMenuW(menu,MF_STRING,301,s);AppendMenuW(menu,MF_STRING,302,q);free(s);free(q);SetForegroundWindow(h);TrackPopupMenu(menu,TPM_RIGHTBUTTON,p.x,p.y,0,h,NULL);DestroyMenu(menu);return 0;}break;
+    case WM_DESTROY:KillTimer(h,1);Shell_NotifyIconW(NIM_DELETE,&tray);window=NULL;PostQuitMessage(0);return 0;
     }return DefWindowProcW(h,msg,w,l);
 }
-void wb_native_run(void){
-    SetProcessDPIAware();taskbarCreated=RegisterWindowMessageW(L"TaskbarCreated");HINSTANCE instance=GetModuleHandleW(NULL);appIcon=(HICON)LoadImageW(instance,MAKEINTRESOURCEW(1),IMAGE_ICON,GetSystemMetrics(SM_CXICON),GetSystemMetrics(SM_CYICON),LR_SHARED);smallIcon=(HICON)LoadImageW(instance,MAKEINTRESOURCEW(1),IMAGE_ICON,GetSystemMetrics(SM_CXSMICON),GetSystemMetrics(SM_CYSMICON),LR_SHARED);WNDCLASSW cls;memset(&cls,0,sizeof(cls));cls.lpfnWndProc=procedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hCursor=LoadCursorW(NULL,IDC_ARROW);cls.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);cls.hIcon=appIcon;
-    if(!RegisterClassW(&cls)){MessageBoxW(NULL,L"Cannot register native window",L"WorkBuddy Proxy",MB_ICONERROR);return;}
-    HWND h=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,CW_USEDEFAULT,CW_USEDEFAULT,750,660,NULL,NULL,instance,NULL);
-    if(!h){MessageBoxW(NULL,L"Cannot create settings window",L"WorkBuddy Proxy",MB_ICONERROR);return;}SendMessageW(h,WM_SETICON,ICON_BIG,(LPARAM)appIcon);SendMessageW(h,WM_SETICON,ICON_SMALL,(LPARAM)smallIcon);ShowWindow(h,SW_SHOW);UpdateWindow(h);
-    MSG message;while(GetMessageW(&message,NULL,0,0)>0){if(!IsDialogMessageW(h,&message)){TranslateMessage(&message);DispatchMessageW(&message);}}
+void wb_native_run(void){SetProcessDPIAware();taskbarCreated=RegisterWindowMessageW(L"TaskbarCreated");INITCOMMONCONTROLSEX cc={sizeof(cc),ICC_LISTVIEW_CLASSES};InitCommonControlsEx(&cc);HINSTANCE instance=GetModuleHandleW(NULL);appIcon=(HICON)LoadImageW(instance,MAKEINTRESOURCEW(1),IMAGE_ICON,GetSystemMetrics(SM_CXICON),GetSystemMetrics(SM_CYICON),LR_SHARED);smallIcon=(HICON)LoadImageW(instance,MAKEINTRESOURCEW(1),IMAGE_ICON,GetSystemMetrics(SM_CXSMICON),GetSystemMetrics(SM_CYSMICON),LR_SHARED);WNDCLASSW cls;memset(&cls,0,sizeof(cls));cls.lpfnWndProc=procedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hCursor=LoadCursorW(NULL,IDC_ARROW);cls.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);cls.hIcon=appIcon;if(!RegisterClassW(&cls))return;
+    HDC dc=GetDC(NULL);dpi=GetDeviceCaps(dc,LOGPIXELSX);ReleaseDC(NULL,dc);RECT bounds={0,0,px(1136),px(730)};AdjustWindowRectEx(&bounds,WS_OVERLAPPEDWINDOW,FALSE,0);HWND h=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,bounds.right-bounds.left,bounds.bottom-bounds.top,NULL,NULL,instance,NULL);if(!h)return;SendMessageW(h,WM_SETICON,ICON_BIG,(LPARAM)appIcon);SendMessageW(h,WM_SETICON,ICON_SMALL,(LPARAM)smallIcon);ShowWindow(h,SW_SHOW);UpdateWindow(h);poll();MSG message;while(GetMessageW(&message,NULL,0,0)>0){if(cellEdit&&message.hwnd==cellEdit&&(message.message==WM_KEYDOWN)&&(message.wParam==VK_RETURN||message.wParam==VK_ESCAPE)){TranslateMessage(&message);DispatchMessageW(&message);continue;}if(!IsDialogMessageW(h,&message)){TranslateMessage(&message);DispatchMessageW(&message);}}
+    if(font)DeleteObject(font);if(smallFont)DeleteObject(smallFont);if(headingFont)DeleteObject(headingFont);if(monoFont)DeleteObject(monoFont);if(whiteBrush)DeleteObject(whiteBrush);if(bgBrush)DeleteObject(bgBrush);if(logBrush)DeleteObject(logBrush);free(systemText);free(events);
 }
 void wb_native_show(void){HWND h=window?window:FindWindowW(L"WorkBuddyProxyWindow",NULL);if(h)PostMessageW(h,WM_SHOW,0,0);}
 void wb_native_quit(void){if(window)PostMessageW(window,WM_STOP,0,0);}

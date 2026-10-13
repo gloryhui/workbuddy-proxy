@@ -41,6 +41,8 @@ jobs:
         run: python scripts/smoke.py --exe "${{ matrix.binary }}"
       - name: Independent providers, aliases, models and WorkBuddy list sync
         run: python scripts/multi_routing.py --exe "${{ matrix.binary }}"
+      - name: Model discovery, table rows, locale and bounded logs
+        run: python scripts/model_discovery.py --exe "${{ matrix.binary }}"
       - name: Native Windows window smoke checks
         if: runner.os == 'Windows'
         run: python scripts/smoke.py --exe "${{ matrix.binary }}" --gui

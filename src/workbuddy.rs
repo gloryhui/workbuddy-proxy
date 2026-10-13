@@ -103,7 +103,10 @@ impl Bridge {
     pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
         let mut cfg = self.config.lock().unwrap();
         let mut d = Document::read(path)?;
-        let connections = cfg.connections();
+        let mut connections = cfg.connections();
+        for c in &mut connections {
+            c.alias = format!("wbp-{}", c.id);
+        }
         let active: Vec<_> = connections
             .iter()
             .filter(|c| !c.api_key.is_empty())
