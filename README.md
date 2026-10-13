@@ -53,8 +53,8 @@
 | 系统 | 下载 | ZIP 大小 | 启动方式 |
 | --- | --- | ---: | --- |
 | Windows 10 / 11，x64 | [Windows 版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-windows-x64.zip) | 约 2 MB | 解压，双击 `workbuddy-proxy.exe` |
-| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.zip) | 约 3.6 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
-| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.zip) | 约 3.7 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.zip) | 约 4.1 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.zip) | 约 4.2 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
 
 Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP，每个人填写自己的 Key 即可。
 
@@ -206,14 +206,14 @@ flowchart LR
 
 | 平台 / 模式 | 空闲进程 RSS | 测量范围 |
 | --- | ---: | --- |
-| Windows x64，无界面 | **9.33 MiB** | 仅转发核心 |
-| Windows x64，原生界面 / 托盘 | **36.32 MiB** | 核心与界面进程的 RSS 合计 |
-| Mac Apple Silicon，无界面 | **11.81 MiB** | CI 环境中的转发核心 |
-| Mac Intel，无界面 | **4.37 MiB** | CI 环境中的转发核心 |
+| Windows x64，无界面 | **9.34 MiB** | 仅转发核心 |
+| Windows x64，原生界面 / 托盘 | **36.36 MiB** | 核心与界面进程的 RSS 合计 |
+| Mac Apple Silicon，无界面 | **11.86 MiB** | CI 环境中的转发核心 |
+| Mac Intel，无界面 | **4.35 MiB** | CI 环境中的转发核心 |
 
-小请求的直连 / 代理中位数差值：Windows 原生界面模式约 **0.075 ms**，Mac Apple Silicon 约 **0.102 ms**，Mac Intel 约 **0.268 ms**。这是本地 HTTP 模拟测试中的差值，包含连接复用和调度影响，不是上游模型的响应时间。
+小请求的直连 / 代理中位数差值：Windows 原生界面模式约 **0.039 ms**，Mac Apple Silicon 约 **0.079 ms**，Mac Intel 约 **0.258 ms**。这是本地 HTTP 模拟测试中的差值，包含连接复用和调度影响，不是上游模型的响应时间。
 
-不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38436398114)。
+不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38439397537)。
 
 ### 轻量实现
 
