@@ -27,6 +27,7 @@ def main():
             shutil.copy(args.exe,root/'workbuddy-proxy.exe')
             (root/'Diagnose.cmd').write_bytes(b'@echo off\r\ncd /d "%~dp0"\r\necho Starting headless diagnostics. Close any existing WorkBuddy Proxy first.\r\n"workbuddy-proxy.exe" --headless\r\necho Exit code: %errorlevel%\r\npause\r\n')
         shutil.copy('README.md',root/'README.md');shutil.copy('LICENSE',root/'LICENSE')
+        (root/'assets').mkdir();shutil.copy('assets/icon-128.png',root/'assets/icon-128.png')
         shutil.copytree('docs',root/'docs')
         archive=out/(name+'.zip')
         with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
