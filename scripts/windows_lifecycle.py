@@ -139,18 +139,23 @@ def main():
             kernel.VirtualFreeEx.argtypes=[wintypes.HANDLE,ctypes.c_void_p,ctypes.c_size_t,wintypes.DWORD]
             kernel.CloseHandle.argtypes=[wintypes.HANDLE]
             user.SetForegroundWindow.argtypes=[wintypes.HWND];user.SetForegroundWindow(h)
+            user.ClientToScreen.argtypes=[wintypes.HWND,ctypes.POINTER(wintypes.POINT)]
+            user.SetCursorPos.argtypes=[ctypes.c_int,ctypes.c_int]
             target=kernel.OpenProcess(0x438,False,first.pid);assert target
             memory=kernel.VirtualAllocEx(target,None,ctypes.sizeof(wintypes.RECT),0x3000,4);assert memory
             def click_row(index,modifier=None):
                 rect=wintypes.RECT();assert kernel.WriteProcessMemory(target,memory,ctypes.byref(rect),ctypes.sizeof(rect),None)
                 assert user.SendMessageW(table,0x100E,index,memory)
                 assert kernel.ReadProcessMemory(target,memory,ctypes.byref(rect),ctypes.sizeof(rect),None)
-                point=12|(((rect.top+rect.bottom)//2)<<16);flags=1
-                if modifier:
-                    user.keybd_event(modifier,0,0,0);time.sleep(.04);flags|=4 if modifier==16 else 8
-                user.SendMessageW(table,0x0201,flags,point);user.SendMessageW(table,0x0202,flags&~1,point)
-                time.sleep(.04)
-                if modifier:user.keybd_event(modifier,0,2,0);time.sleep(.04)
+                point=wintypes.POINT(12,(rect.top+rect.bottom)//2)
+                assert user.ClientToScreen(table,ctypes.byref(point))
+                assert user.SetCursorPos(point.x,point.y)
+                if modifier:user.keybd_event(modifier,0,0,0)
+                # Real input goes through the UI thread queue, including modifier state.
+                user.mouse_event(2,0,0,0,0);user.mouse_event(4,0,0,0,0)
+                time.sleep(.12)
+                if modifier:user.keybd_event(modifier,0,2,0)
+                time.sleep(.08)
             try:
                 click_row(0);click_row(2,16)
                 assert user.SendMessageW(table,0x1032,0,0)==3,'Shift-click did not select a range'
