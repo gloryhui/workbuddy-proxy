@@ -19,7 +19,7 @@ import urllib.request
 
 class ThreadingHTTPServer(HttpServer):
     def handle_error(self,request,address):
-        if isinstance(sys.exc_info()[1],(ConnectionResetError,BrokenPipeError)):return
+        if isinstance(sys.exc_info()[1],(ConnectionResetError,ConnectionAbortedError,BrokenPipeError)):return
         super().handle_error(request,address)
 
 class Mock(BaseHTTPRequestHandler):
@@ -70,7 +70,7 @@ def start(exe, directory, upstream, gui=False):
     process = subprocess.Popen(command, stdout=log, stderr=log)
     for _ in range(200):
         if process.poll() is not None:
-            log.close(); raise AssertionError('Process exited: ' + Path(directory, 'process.log').read_text(errors='replace'))
+            log.close(); raise AssertionError('Process exited: ' + Path(directory, 'process.log').read_text(encoding='utf-8',errors='replace'))
         try:
             with urllib.request.urlopen(f'http://127.0.0.1:{port}/health', timeout=.5) as r:
                 assert json.load(r)['ready']; return process, port, log
@@ -89,10 +89,10 @@ def request(port, payload, token='fixture-local-key', origin=None):
 def stop(process, port, directory, log):
     controller = False
     if Path(directory, 'instance.json').exists():
-        current=json.loads(Path(directory,'instance.json').read_text())
+        current=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
         controller=current.get('pid',process.pid)!=process.pid
     if process.poll() is None or controller:
-        instance = json.loads(Path(directory, 'instance.json').read_text())
+        instance = json.loads(Path(directory, 'instance.json').read_text(encoding='utf-8'))
         req = urllib.request.Request(f'http://127.0.0.1:{port}/_control/stop', data=b'',
                                      headers={'Authorization': 'Bearer '+instance['management_key']})
         try:
@@ -148,12 +148,12 @@ def main():
                     if visible_window():break
                     time.sleep(.02)
                 else:raise AssertionError('Native Windows settings window did not appear')
-            instance=json.loads(Path(folder,'instance.json').read_text())
+            instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
             control=lambda obj:urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps(obj).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
-            original_id=json.loads(Path(folder,'config.json').read_text())['connections'][0]['id']
+            original_id=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['connections'][0]['id']
             for model in ['quota-test','slow-test']:
                 with urllib.request.urlopen(control({'command':'add'}),timeout=5) as response:response.read()
-                route=json.loads(Path(folder,'config.json').read_text())['connections'][-1]['id']
+                route=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['connections'][-1]['id']
                 with urllib.request.urlopen(control({'command':'save','connection_id':route,'key':'fixture-upstream-key','model':model,'name':model,'upstream':f'http://127.0.0.1:{upstream.server_port}/v1'}),timeout=5) as response:response.read()
             payload = b'{"model":"fixture-model","stream":true,"messages":[{"role":"user","content":"test"}],"tools":[{"type":"function","function":{"name":"report","parameters":{"type":"object"}}}]}'
             conn, res = request(port, payload); received = res.read(); conn.close()
@@ -186,7 +186,7 @@ def main():
             second = subprocess.run([str(Path(args.exe).resolve()), '--headless','--config-dir',folder], capture_output=True, timeout=5)
             assert second.returncode == 0, second.stderr.decode(errors='replace')
             assert process.poll() is None
-            instance=json.loads(Path(folder,'instance.json').read_text())
+            instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
             control=lambda obj:urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps(obj).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
             with urllib.request.urlopen(control({'command':'test','connection_id':original_id}),timeout=5) as response:
                 assert 'HTTP 200' in json.load(response)['message']
@@ -196,7 +196,7 @@ def main():
             for effort in ['low','high','max','none','default']:
                 settings={'command':'save','connection_id':original_id,'model':'deepseek-v4.1-flash','upstream':f'http://127.0.0.1:{upstream.server_port}/v1','reasoning_effort':effort}
                 with urllib.request.urlopen(control(settings),timeout=5) as response:response.read()
-                assert json.loads(Path(folder,'config.json').read_text())['connections'][0]['reasoning_effort']==effort
+                assert json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['connections'][0]['reasoning_effort']==effort
                 input_body=payload.replace(b'fixture-model',b'deepseek-v4.1-flash')[:-1]+b',"thinking":{"type":"disabled"},"reasoning_effort":"high","extra_field":{"keep":123}}'
                 conn,res=request(port,input_body);assert res.status==200;res.read();conn.close()
                 outgoing=json.loads(Mock.received[-1][0]);original=json.loads(input_body)

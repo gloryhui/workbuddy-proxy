@@ -42,28 +42,28 @@ def main():
         command=[exe,'--config-dir',directory];first=subprocess.Popen(command)
         second=None;core=None
         try:
-            h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text())
+            h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
             assert core['pid']!=first.pid
             combo=user.GetDlgItem(h,104);assert combo
             assert user.SendMessageW(combo,0x0146,0,0)==5, 'Thinking selector is missing choices'
             user.SendMessageW(combo,0x014E,3,0) # select High
             user.PostMessageW(h,0x0111,201,0) # Save through actual native UI / FFI
             for _ in range(200):
-                if json.loads(Path(directory,'config.json').read_text())['connections'][0].get('reasoning_effort')=='high':break
+                if json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['connections'][0].get('reasoning_effort')=='high':break
                 time.sleep(.025)
             else:raise AssertionError('Native Save did not persist thinking effort')
             listing=user.GetDlgItem(h,107);assert listing
             assert user.SendMessageW(listing,0x018B,0,0)==1 # LB_GETCOUNT
             user.PostMessageW(h,0x0111,207,0) # Duplicate the selected configured connection
             for _ in range(200):
-                saved=json.loads(Path(directory,'config.json').read_text())['connections']
+                saved=json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['connections']
                 if len(saved)==2:break
                 time.sleep(.025)
             else:raise AssertionError('Native Duplicate did not add a connection')
             assert saved[0]['api_key']==saved[1]['api_key'] and saved[0]['alias']!=saved[1]['alias']
             user.PostMessageW(h,0x0111,208,0) # Delete duplicate, leaves original configured connection
             for _ in range(200):
-                if len(json.loads(Path(directory,'config.json').read_text())['connections'])==1:break
+                if len(json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['connections'])==1:break
                 time.sleep(.025)
             else:raise AssertionError('Native Delete failed')
             for message,wparam in [(0x0010,0),(0x0112,0xF020)]: # Close; minimize system command
@@ -80,7 +80,7 @@ def main():
             time.sleep(.1)
             second=subprocess.Popen(command);assert second.wait(timeout=5)==0
             assert wait_window(first)==h, 'Second launch did not restore original tray window'
-            assert json.loads(Path(directory,'instance.json').read_text())['pid']==core['pid']
+            assert json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))['pid']==core['pid']
             user.PostMessageW(h,0x0111,302,0) # same command as tray Quit
             assert first.wait(timeout=5)==0
             for _ in range(200):

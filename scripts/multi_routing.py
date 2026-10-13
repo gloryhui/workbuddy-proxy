@@ -53,7 +53,7 @@ def main():
                     break
                 except OSError:time.sleep(.025)
             else:raise AssertionError('Core did not start')
-            instance=json.loads((directory/'instance.json').read_text())
+            instance=json.loads((directory/'instance.json').read_text(encoding='utf-8'))
             def action(obj):
                 req=urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps(obj).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
                 with urllib.request.urlopen(req,timeout=5) as r:return json.load(r)['message']
@@ -73,11 +73,11 @@ def main():
                 req=urllib.request.Request(f'http://127.0.0.1:{port}'+path,headers={'Authorization':'Bearer local-fixture'})
                 with urllib.request.urlopen(req) as r:items=json.load(r)['data'];assert len(items)==(6 if path=='/v1/models' else 1)
                 assert all(item['id'].startswith('wbp-route-') for item in items)
-            assert '6' in action({'command':'install'});listed=json.loads(models.read_text());assert listed[0]==unrelated;assert len(listed)==7;assert len({m['id'] for m in listed})==7
+            assert '6' in action({'command':'install'});listed=json.loads(models.read_text(encoding='utf-8'));assert listed[0]==unrelated;assert len(listed)==7;assert len({m['id'] for m in listed})==7
             assert all(m['apiKey']=='local-fixture' for m in listed[1:])
             assert len({m['url'] for m in listed[1:]})==6
-            action({'command':'delete','connection_id':'route-1'});action({'command':'install'});assert len(json.loads(models.read_text()))==6
-            action({'command':'restore'});assert json.loads(models.read_text())==[unrelated]
+            action({'command':'delete','connection_id':'route-1'});action({'command':'install'});assert len(json.loads(models.read_text(encoding='utf-8')))==6
+            action({'command':'restore'});assert json.loads(models.read_text(encoding='utf-8'))==[unrelated]
             # A deleted/unknown/mismatched route must never silently select another upstream.
             for path,model in [('/v1/chat/completions','deepseek-v4.1-flash'),('/v1/chat/completions','unknown'),('/r/route-1/v1/chat/completions',connections[1]['alias']),('/r/route-0/v1/chat/completions','other-model')]:
                 req=urllib.request.Request(f'http://127.0.0.1:{port}'+path,data=json.dumps({'model':model,'messages':[{'role':'user','content':'fixture'}]}).encode(),headers={'Authorization':'Bearer local-fixture'})

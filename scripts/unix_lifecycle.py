@@ -21,7 +21,7 @@ def main():
         try:
             for _ in range(200):
                 try:
-                    core=json.loads(Path(directory,'instance.json').read_text())
+                    core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
                     with urllib.request.urlopen(f"http://127.0.0.1:{core['port']}/health",timeout=.5) as r:assert json.load(r)['ready']
                     break
                 except (OSError,ValueError):time.sleep(.025)
@@ -31,7 +31,7 @@ def main():
             with urllib.request.urlopen(f"http://127.0.0.1:{core['port']}/health",timeout=3) as r:assert json.load(r)['ready']
             second=subprocess.Popen(command,start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
             time.sleep(.5);assert second.poll() is None
-            assert json.loads(Path(directory,'instance.json').read_text())['pid']==core['pid']
+            assert json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))['pid']==core['pid']
             print('PASS: launcher/UI process-group termination leaves the same core running; reopened UI attaches')
         finally:
             for process in [first,second]:
