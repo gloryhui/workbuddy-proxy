@@ -6,7 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 extern char *wb_value(const char *name);
-extern char *wb_save(const char *key,const char *model,const char *upstream,const char *effort);
+extern char *wb_save(const char *name,const char *provider,const char *key,const char *model,const char *upstream,const char *effort);
+extern void wb_select(int index);
 extern char *wb_command(const char *name);
 extern void wb_free(char *value);
 
@@ -14,7 +15,7 @@ extern void wb_free(char *value);
 #define WM_RESULT (WM_APP+2)
 #define WM_SHOW (WM_APP+3)
 #define WM_STOP (WM_APP+4)
-static HWND window,keyEdit,modelEdit,urlEdit,effortCombo,statusLabel,buttons[5];
+static HWND window,connectionList,nameEdit,providerEdit,keyEdit,modelEdit,urlEdit,effortCombo,statusLabel,buttons[8];
 static HFONT font;
 static BOOL busy=FALSE;
 static NOTIFYICONDATAW tray;
@@ -27,9 +28,10 @@ static void text(HWND h,const char *s){wchar_t *v=wide(s);if(v){SetWindowTextW(h
 static char *editText(HWND h){int n=GetWindowTextLengthW(h)+1;wchar_t *w=(wchar_t *)calloc((size_t)n,sizeof(wchar_t));if(!w)return NULL;GetWindowTextW(h,w,n);int size=WideCharToMultiByte(CP_UTF8,0,w,-1,NULL,0,NULL,NULL);char *v=(char *)calloc((size_t)(size>0?size:1),1);if(v)WideCharToMultiByte(CP_UTF8,0,w,-1,v,size,NULL,NULL);free(w);return v;}
 static HWND control(const wchar_t *cls,const wchar_t *title,DWORD style,int x,int y,int width,int height,int id){HWND h=CreateWindowExW(0,cls,title,WS_CHILD|WS_VISIBLE|style,x,y,width,height,window,(HMENU)(INT_PTR)id,GetModuleHandleW(NULL),NULL);SendMessageW(h,WM_SETFONT,(WPARAM)font,TRUE);return h;}
 static void status(const char *s){text(statusLabel,s);}
-static void refresh(void){char *m=wb_value("model"),*u=wb_value("upstream"),*state=wb_value("status");text(modelEdit,m);text(urlEdit,u);status(state);char *e=wb_value("reasoning_effort");int index=0;for(int i=0;i<5;i++)if(strcmp(e,efforts[i])==0)index=i;SendMessageW(effortCombo,CB_SETCURSEL,index,0);wb_free(e);wb_free(m);wb_free(u);wb_free(state);}
+static void fields(void){const char *names[]={"name","provider","model","upstream"};HWND controls[]={nameEdit,providerEdit,modelEdit,urlEdit};for(int i=0;i<4;i++){char *v=wb_value(names[i]);text(controls[i],v);wb_free(v);}SetWindowTextW(keyEdit,L"");char *e=wb_value("reasoning_effort");int index=0;for(int i=0;i<5;i++)if(strcmp(e,efforts[i])==0)index=i;SendMessageW(effortCombo,CB_SETCURSEL,index,0);wb_free(e);}
+static void refresh(void){char *list=wb_value("connections");SendMessageW(connectionList,LB_RESETCONTENT,0,0);char *row=list;while(*row){char *end=strchr(row,'\n');if(end)*end=0;wchar_t *w=wide(row);if(w){SendMessageW(connectionList,LB_ADDSTRING,0,(LPARAM)w);free(w);}if(!end)break;row=end+1;}char *selected=wb_value("selected");SendMessageW(connectionList,LB_SETCURSEL,atoi(selected),0);wb_free(selected);wb_free(list);fields();}
 static void show(void){ShowWindow(window,SW_RESTORE);SetForegroundWindow(window);refresh();}
-static void setBusy(BOOL value){busy=value;for(int i=0;i<5;i++)EnableWindow(buttons[i],!value);}
+static void setBusy(BOOL value){busy=value;for(int i=0;i<8;i++)EnableWindow(buttons[i],!value);EnableWindow(connectionList,!value);}
 static DWORD WINAPI work(LPVOID command){char *result=wb_command((const char *)command);if(!PostMessageW(window,WM_RESULT,0,(LPARAM)result))wb_free(result);return 0;}
 static void execute(const char *command){if(busy)return;setBusy(TRUE);status("Working / 正在处理...");HANDLE thread=CreateThread(NULL,256*1024,work,(LPVOID)command,0,NULL);if(thread)CloseHandle(thread);else{setBusy(FALSE);status("Cannot start worker / 无法启动工作线程");}}
 static void copyConfiguration(void){char *value=wb_command("copy");if(strncmp(value,"OK ",3)==0){wchar_t *w=wide(value+3);if(w){SIZE_T size=(wcslen(w)+1)*sizeof(wchar_t);HGLOBAL data=GlobalAlloc(GMEM_MOVEABLE,size);if(data){void *p=GlobalLock(data);if(p){memcpy(p,w,size);GlobalUnlock(data);if(OpenClipboard(window)){EmptyClipboard();if(!SetClipboardData(CF_UNICODETEXT,data))GlobalFree(data);CloseClipboard();status("Copied / 配置已复制");}else{GlobalFree(data);status("Clipboard is busy / 剪贴板忙");}}else{GlobalFree(data);}}free(w);}}else status(value);wb_free(value);}
@@ -38,21 +40,28 @@ static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
     switch(msg){
         case WM_CREATE:{
             window=h;font=CreateFontW(-16,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,CLEARTYPE_QUALITY,DEFAULT_PITCH,L"Segoe UI");
-            control(L"STATIC",L"WorkBuddy Proxy",0,20,16,470,28,0);
-            control(L"STATIC",L"上游地址 / Upstream URL",0,20,55,470,22,0);urlEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,20,80,470,28,101);SendMessageW(urlEdit,EM_SETLIMITTEXT,2048,0);
-            control(L"STATIC",L"API Key（留空保留 / blank keeps saved key）",0,20,120,470,22,0);keyEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|ES_PASSWORD|WS_TABSTOP,20,145,470,28,102);SendMessageW(keyEdit,EM_SETLIMITTEXT,4096,0);
-            control(L"STATIC",L"模型名称 / Model ID",0,20,185,470,22,0);modelEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,20,210,470,28,103);SendMessageW(modelEdit,EM_SETLIMITTEXT,160,0);
-            control(L"STATIC",L"思考强度 / Thinking effort",0,20,250,470,22,0);
-            effortCombo=control(L"COMBOBOX",L"",CBS_DROPDOWNLIST|WS_VSCROLL|WS_TABSTOP,20,275,470,180,104);
-            const wchar_t *labels[]={L"跟随客户端 / Default",L"关闭思考 / Off",L"低 / Low",L"高 / High",L"最高 / Max"};for(int i=0;i<5;i++)SendMessageW(effortCombo,CB_ADDSTRING,0,(LPARAM)labels[i]);
-            buttons[0]=control(L"BUTTON",L"保存 / Save",WS_TABSTOP,20,325,130,32,201);buttons[1]=control(L"BUTTON",L"测试 / Test",WS_TABSTOP,165,325,130,32,202);buttons[2]=control(L"BUTTON",L"复制配置 / Copy",WS_TABSTOP,310,325,180,32,203);
-            buttons[3]=control(L"BUTTON",L"配置 WorkBuddy",WS_TABSTOP,20,370,225,32,204);buttons[4]=control(L"BUTTON",L"恢复配置 / Restore",WS_TABSTOP,260,370,230,32,205);
-            statusLabel=control(L"STATIC",L"",0,20,420,470,60,0);refresh();
+            control(L"STATIC",L"WorkBuddy Proxy",0,20,16,700,28,0);
+            control(L"STATIC",L"连接列表 / Connections",0,20,48,230,22,0);
+            connectionList=control(L"LISTBOX",L"",WS_BORDER|LBS_NOTIFY|WS_VSCROLL|WS_TABSTOP,20,75,230,445,107);
+            buttons[5]=control(L"BUTTON",L"新增",WS_TABSTOP,20,530,70,32,206);buttons[6]=control(L"BUTTON",L"复制",WS_TABSTOP,100,530,70,32,207);buttons[7]=control(L"BUTTON",L"删除",WS_TABSTOP,180,530,70,32,208);
+            control(L"STATIC",L"列表显示名称 / Display name",0,270,48,440,22,0);nameEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,73,440,28,105);SendMessageW(nameEdit,EM_SETLIMITTEXT,80,0);
+            control(L"STATIC",L"供应商 / Provider",0,270,113,440,22,0);providerEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,138,440,28,106);SendMessageW(providerEdit,EM_SETLIMITTEXT,80,0);
+            control(L"STATIC",L"上游地址 / Upstream URL",0,270,178,440,22,0);urlEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,203,440,28,101);SendMessageW(urlEdit,EM_SETLIMITTEXT,2048,0);
+            control(L"STATIC",L"API Key（留空保留已保存值）",0,270,243,440,22,0);keyEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|ES_PASSWORD|WS_TABSTOP,270,268,440,28,102);SendMessageW(keyEdit,EM_SETLIMITTEXT,4096,0);
+            control(L"STATIC",L"上游真实模型 ID / Model ID",0,270,308,440,22,0);modelEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,333,440,28,103);SendMessageW(modelEdit,EM_SETLIMITTEXT,160,0);
+            control(L"STATIC",L"思考强度 / Thinking effort",0,270,373,440,22,0);
+            effortCombo=control(L"COMBOBOX",L"",CBS_DROPDOWNLIST|WS_VSCROLL|WS_TABSTOP,270,398,440,180,104);
+            const wchar_t *labels[]={L"跟随 WorkBuddy / Default",L"关闭思考 / Off",L"低 / Low",L"高 / High",L"最高 / Max"};for(int i=0;i<5;i++)SendMessageW(effortCombo,CB_ADDSTRING,0,(LPARAM)labels[i]);
+            buttons[0]=control(L"BUTTON",L"保存 / Save",WS_TABSTOP,270,450,130,32,201);buttons[1]=control(L"BUTTON",L"测试此项 / Test",WS_TABSTOP,415,450,130,32,202);buttons[2]=control(L"BUTTON",L"复制配置",WS_TABSTOP,560,450,150,32,203);
+            buttons[3]=control(L"BUTTON",L"同步 WorkBuddy 列表",WS_TABSTOP,270,495,215,32,204);buttons[4]=control(L"BUTTON",L"恢复原配置 / Restore",WS_TABSTOP,500,495,210,32,205);
+            statusLabel=control(L"STATIC",L"",0,270,545,440,65,0);refresh();char *state=wb_value("status");status(state);wb_free(state);
             memset(&tray,0,sizeof(tray));tray.cbSize=sizeof(tray);tray.hWnd=h;tray.uID=1;tray.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;tray.uCallbackMessage=WM_TRAY;tray.hIcon=LoadIconW(NULL,IDI_APPLICATION);lstrcpyW(tray.szTip,L"WorkBuddy Proxy");trayAvailable=Shell_NotifyIconW(NIM_ADD,&tray);return 0;
         }
         case WM_COMMAND:switch(LOWORD(w)){
-            case 201:{char *key=editText(keyEdit),*model=editText(modelEdit),*url=editText(urlEdit);LRESULT i=SendMessageW(effortCombo,CB_GETCURSEL,0,0);char *r=wb_save(key,model,url,efforts[i>=0&&i<5?i:0]);status(r);if(strncmp(r,"OK ",3)==0)SetWindowTextW(keyEdit,L"");free(key);free(model);free(url);wb_free(r);return 0;}
+            case 107:if(HIWORD(w)==LBN_SELCHANGE){wb_select((int)SendMessageW(connectionList,LB_GETCURSEL,0,0));fields();}return 0;
+            case 201:{char *name=editText(nameEdit),*provider=editText(providerEdit),*key=editText(keyEdit),*model=editText(modelEdit),*url=editText(urlEdit);LRESULT i=SendMessageW(effortCombo,CB_GETCURSEL,0,0);char *r=wb_save(name,provider,key,model,url,efforts[i>=0&&i<5?i:0]);if(strncmp(r,"OK ",3)==0)refresh();status(r);free(name);free(provider);free(key);free(model);free(url);wb_free(r);return 0;}
             case 202:execute("test");return 0;case 203:copyConfiguration();return 0;case 204:execute("install");return 0;case 205:execute("restore");return 0;
+            case 206:case 207:case 208:{char *r=wb_command(LOWORD(w)==206?"add":LOWORD(w)==207?"duplicate":"delete");if(strncmp(r,"OK ",3)==0)refresh();status(r);wb_free(r);return 0;}
             case 301:show();return 0;case 302:wb_free(wb_command("quit"));DestroyWindow(h);return 0;
         }break;
         case WM_RESULT:{char *r=(char *)l;status(r);wb_free(r);setBusy(FALSE);return 0;}
@@ -69,7 +78,7 @@ static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
 void wb_native_run(void){
     SetProcessDPIAware();taskbarCreated=RegisterWindowMessageW(L"TaskbarCreated");HINSTANCE instance=GetModuleHandleW(NULL);WNDCLASSW cls;memset(&cls,0,sizeof(cls));cls.lpfnWndProc=procedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hCursor=LoadCursorW(NULL,IDC_ARROW);cls.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);cls.hIcon=LoadIconW(NULL,IDI_APPLICATION);
     if(!RegisterClassW(&cls)){MessageBoxW(NULL,L"Cannot register native window",L"WorkBuddy Proxy",MB_ICONERROR);return;}
-    HWND h=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,CW_USEDEFAULT,CW_USEDEFAULT,530,530,NULL,NULL,instance,NULL);
+    HWND h=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,CW_USEDEFAULT,CW_USEDEFAULT,750,660,NULL,NULL,instance,NULL);
     if(!h){MessageBoxW(NULL,L"Cannot create settings window",L"WorkBuddy Proxy",MB_ICONERROR);return;}ShowWindow(h,SW_SHOW);UpdateWindow(h);
     MSG message;while(GetMessageW(&message,NULL,0,0)>0){if(!IsDialogMessageW(h,&message)){TranslateMessage(&message);DispatchMessageW(&message);}}
 }

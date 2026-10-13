@@ -2,7 +2,7 @@
 //! the settings window closes. Windows keeps its controller for the tray.
 use crate::{Instance, config, native, proxy::Bridge};
 use fs2::FileExt;
-use serde_json::{Value, json};
+use serde_json::Value;
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -19,16 +19,13 @@ impl Remote {
     pub async fn execute(
         &self,
         client: &reqwest::Client,
-        command: &str,
-        key: &str,
-        model: &str,
-        upstream: &str,
-        reasoning_effort: &str,
+        payload: &Value,
     ) -> Result<String, String> {
         let res = client
             .post(format!("http://127.0.0.1:{}/_control/action", self.port))
             .bearer_auth(&self.key)
-            .json_body(command, key, model, upstream, reasoning_effort)
+            .header("Content-Type", "application/json")
+            .body(payload.to_string())
             .send()
             .await
             .map_err(|_| "Core is not responding / 后台核心未响应")?;
@@ -45,32 +42,6 @@ impl Remote {
         } else {
             Err(message)
         }
-    }
-}
-// Keep reqwest's JSON convenience feature disabled: serialize these tiny control
-// payloads explicitly, leaving the forwarding hot path byte-identical.
-trait ControlBody {
-    fn json_body(
-        self,
-        command: &str,
-        key: &str,
-        model: &str,
-        upstream: &str,
-        reasoning_effort: &str,
-    ) -> Self;
-}
-impl ControlBody for reqwest::RequestBuilder {
-    fn json_body(
-        self,
-        command: &str,
-        key: &str,
-        model: &str,
-        upstream: &str,
-        reasoning_effort: &str,
-    ) -> Self {
-        self.header("Content-Type", "application/json").body(
-            json!({"command":command,"key":key,"model":model,"upstream":upstream,"reasoning_effort":reasoning_effort}).to_string(),
-        )
     }
 }
 pub fn spawn(dir: &Path, port: u16) -> Result<(), String> {
@@ -123,6 +94,57 @@ fn alive(value: &Instance) -> bool {
             .is_ok_and(|r| r.status().is_success())
     })
 }
+fn version(value: &Instance) -> Result<String, String> {
+    let rt = tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .map_err(|e| e.to_string())?;
+    rt.block_on(async {
+        let c = reqwest::Client::builder()
+            .no_proxy()
+            .timeout(Duration::from_secs(2))
+            .build()
+            .map_err(|e| e.to_string())?;
+        let bytes = c
+            .get(format!("http://127.0.0.1:{}/health", value.port))
+            .send()
+            .await
+            .map_err(|e| e.to_string())?
+            .bytes()
+            .await
+            .map_err(|e| e.to_string())?;
+        let data: Value = serde_json::from_slice(&bytes).map_err(|e| e.to_string())?;
+        Ok(data["version"].as_str().unwrap_or("").to_owned())
+    })
+}
+fn stop_old(value: &Instance, dir: &Path) -> Result<(), String> {
+    let rt = tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .map_err(|e| e.to_string())?;
+    rt.block_on(async {
+        let c = reqwest::Client::builder()
+            .no_proxy()
+            .timeout(Duration::from_secs(3))
+            .build()
+            .map_err(|e| e.to_string())?;
+        c.post(format!("http://127.0.0.1:{}/_control/stop", value.port))
+            .bearer_auth(&value.management_key)
+            .send()
+            .await
+            .map_err(|e| e.to_string())?
+            .error_for_status()
+            .map_err(|e| e.to_string())?;
+        Ok::<_, String>(())
+    })?;
+    for _ in 0..100 {
+        if !dir.join("instance.json").exists() {
+            return Ok(());
+        }
+        std::thread::sleep(Duration::from_millis(30));
+    }
+    Err("Previous core did not stop / 旧版核心尚未退出".into())
+}
 pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
     let frontend_lock = fs::OpenOptions::new()
         .create(true)
@@ -131,11 +153,23 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
         .write(true)
         .open(dir.join("frontend.lock"))
         .map_err(|e| e.to_string())?;
+    let mut existing = instance(&dir).filter(alive);
+    let outdated = if let Some(i) = &existing {
+        version(i)? != env!("CARGO_PKG_VERSION")
+    } else {
+        false
+    };
     if frontend_lock.try_lock_exclusive().is_err() {
+        if outdated {
+            return Err("Quit the previous version from its tray/menu, then reopen / 请先从托盘或菜单栏退出旧版，再打开新版".into());
+        }
         native::show();
         return Ok(());
     }
-    let existing = instance(&dir).filter(alive);
+    if outdated {
+        stop_old(existing.as_ref().unwrap(), &dir)?;
+        existing = None;
+    }
     let mut child = None;
     let running = if let Some(i) = existing {
         i
@@ -207,6 +241,7 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
         .set(native::Context {
             bridge: a,
             handle,
+            selected: std::sync::atomic::AtomicUsize::new(0),
             remote: Some(Remote {
                 port: running.port,
                 key: running.management_key,

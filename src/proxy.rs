@@ -1,5 +1,5 @@
 use crate::{
-    config::Config,
+    config::{Config, Connection},
     session::{Envelope, Sessions},
 };
 use axum::{
@@ -59,17 +59,11 @@ impl Bridge {
             stop: Mutex::new(None),
         })
     }
-    pub fn settings(&self) -> Config {
-        let c = self.config.lock().unwrap();
-        Config {
-            api_key: c.api_key.clone(),
-            local_key: c.local_key.clone(),
-            model: c.model.clone(),
-            upstream: c.upstream.clone(),
-            reasoning_effort: c.reasoning_effort.clone(),
-            port: c.port,
-            installed: None,
-        }
+    pub fn connection_address(&self, id: &str) -> String {
+        format!(
+            "http://127.0.0.1:{}/r/{id}/v1",
+            self.port.load(Ordering::Relaxed)
+        )
     }
     pub fn set_status(&self, text: String) {
         *self.status.lock().unwrap() = text;
@@ -82,6 +76,8 @@ impl Bridge {
             .route("/health", get(health))
             .route("/v1/models", get(models))
             .route("/v1/chat/completions", post(relay))
+            .route("/r/{id}/v1/chat/completions", post(relay_connection))
+            .route("/r/{id}/v1/models", get(connection_models))
             .route("/_control/show", post(show))
             .route("/_control/ping", post(ping))
             .route("/_control/action", post(action))
@@ -90,7 +86,7 @@ impl Bridge {
     }
     pub async fn upstream(
         &self,
-        c: &Config,
+        c: &Connection,
         body: bytes::Bytes,
         session: &str,
     ) -> Result<reqwest::Response, reqwest::Error> {
@@ -110,8 +106,13 @@ impl Bridge {
         }
         req.send().await
     }
-    pub async fn test(&self) -> Result<String, String> {
-        let c = self.settings();
+    pub async fn test(&self, id: &str) -> Result<String, String> {
+        let c = self.config.lock().unwrap().connection(id)?.clone();
+        let _permit = self
+            .permits
+            .clone()
+            .try_acquire_owned()
+            .map_err(|_| "Four requests are already in flight")?;
         if c.api_key.is_empty() {
             return Err("Save your API key first / 请先保存 API Key".into());
         }
@@ -219,28 +220,55 @@ async fn health(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Bo
         .unwrap()
 }
 async fn models(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body> {
-    let c = a.settings();
-    if !local(&headers, a.port.load(Ordering::Relaxed)) || !authorized(&headers, &c.local_key) {
+    model_list(&a, &headers, None)
+}
+async fn connection_models(
+    State(a): State<Arc<Bridge>>,
+    axum::extract::Path(id): axum::extract::Path<String>,
+    headers: HeaderMap,
+) -> Response<Body> {
+    model_list(&a, &headers, Some(&id))
+}
+fn model_list(a: &Bridge, headers: &HeaderMap, id: Option<&str>) -> Response<Body> {
+    let cfg = a.config.lock().unwrap();
+    if !local(headers, a.port.load(Ordering::Relaxed)) || !authorized(headers, &cfg.local_key) {
         return fail(StatusCode::UNAUTHORIZED, "Invalid local API key");
-    };
-    Response::builder().header("Content-Type","application/json").body(Body::from(json!({"object":"list","data":[{"id":c.model,"object":"model","owned_by":"configured-upstream"}]}).to_string())).unwrap()
+    }
+    if id.is_some_and(|id| !cfg.connections.iter().any(|c| c.id == id)) {
+        return fail(StatusCode::NOT_FOUND, "Unknown connection");
+    }
+    let entries: Vec<_> = cfg
+        .connections
+        .iter()
+        .filter(|c| !c.api_key.is_empty() && id.is_none_or(|id| c.id == id))
+        .map(|c| json!({"id":c.alias,"object":"model","owned_by":c.provider,"name":c.label()}))
+        .collect();
+    Response::builder()
+        .header("Content-Type", "application/json")
+        .body(Body::from(
+            json!({"object":"list","data":entries}).to_string(),
+        ))
+        .unwrap()
 }
 async fn relay(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Response<Body> {
+    relay_to(a, request, None).await
+}
+async fn relay_connection(
+    State(a): State<Arc<Bridge>>,
+    axum::extract::Path(id): axum::extract::Path<String>,
+    request: Request<Body>,
+) -> Response<Body> {
+    relay_to(a, request, Some(id)).await
+}
+async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>) -> Response<Body> {
     let (parts, body) = request.into_parts();
     if !local(&parts.headers, a.port.load(Ordering::Relaxed)) {
         return fail(StatusCode::FORBIDDEN, "Invalid host or origin");
     }
-    let c = a.settings();
-    if !authorized(&parts.headers, &c.local_key) {
+    if !authorized(&parts.headers, &a.config.lock().unwrap().local_key) {
         return fail(
             StatusCode::UNAUTHORIZED,
             "Use the local API key from WorkBuddy Proxy settings",
-        );
-    }
-    if c.api_key.is_empty() {
-        return fail(
-            StatusCode::SERVICE_UNAVAILABLE,
-            "Save upstream API key in WorkBuddy Proxy first",
         );
     }
     let permit = match a.permits.clone().try_acquire_owned() {
@@ -273,16 +301,35 @@ async fn relay(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Response
             "model and messages must not be empty",
         );
     }
+    let c = match a
+        .config
+        .lock()
+        .unwrap()
+        .resolve(route.as_deref(), envelope.model)
+    {
+        Ok(c) => c,
+        Err(e) => return fail(StatusCode::BAD_REQUEST, &e),
+    };
+    if c.api_key.is_empty() {
+        return fail(
+            StatusCode::SERVICE_UNAVAILABLE,
+            "Save this connection's API key first",
+        );
+    }
     let session = if c.is_go() {
-        a.sessions
-            .lock()
-            .unwrap()
-            .resolve(&parts.headers, &envelope)
+        format!(
+            "{}-{}",
+            c.id,
+            a.sessions
+                .lock()
+                .unwrap()
+                .resolve(&parts.headers, &envelope)
+        )
     } else {
         String::new()
     };
     drop(envelope);
-    let bytes = match apply_reasoning(bytes, &c.reasoning_effort) {
+    let bytes = match prepare_request(bytes, &c) {
         Ok(b) => b,
         Err(e) => return fail(StatusCode::BAD_REQUEST, &e),
     };
@@ -348,18 +395,6 @@ async fn ping(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body
     }
     Response::new(Body::from("workbuddy-proxy"))
 }
-#[derive(serde::Deserialize)]
-struct Control {
-    command: String,
-    #[serde(default)]
-    key: String,
-    #[serde(default)]
-    model: String,
-    #[serde(default)]
-    upstream: String,
-    #[serde(default)]
-    reasoning_effort: Option<String>,
-}
 async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Response<Body> {
     let (parts, body) = request.into_parts();
     if !local(&parts.headers, a.port.load(Ordering::Relaxed))
@@ -367,64 +402,15 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
     {
         return fail(StatusCode::UNAUTHORIZED, "Unauthorized");
     }
-    let bytes = match to_bytes(body, 8192).await {
+    let bytes = match to_bytes(body, 16384).await {
         Ok(b) => b,
         Err(_) => return fail(StatusCode::PAYLOAD_TOO_LARGE, "Control payload too large"),
     };
-    let p: Control = match serde_json::from_slice(&bytes) {
+    let p: serde_json::Value = match serde_json::from_slice(&bytes) {
         Ok(p) => p,
         Err(_) => return fail(StatusCode::BAD_REQUEST, "Invalid control payload"),
     };
-    let result: Result<String, String> = match p.command.as_str() {
-        "save" => {
-            let mut cfg = a.config.lock().unwrap();
-            let mut next = cfg.clone();
-            if !p.key.trim().is_empty() {
-                next.api_key = p.key.trim().into();
-            }
-            next.model = p.model.trim().into();
-            next.upstream = p.upstream.trim().into();
-            if let Some(effort) = p.reasoning_effort {
-                next.reasoning_effort = effort;
-            }
-            next.validate().and_then(|_| {
-                if next.api_key.is_empty() {
-                    return Err("Enter upstream API key".into());
-                }
-                crate::config::write_json(&a.dir.join("config.json"), &next)?;
-                *cfg = next;
-                Ok("Saved / 已保存".into())
-            })
-        }
-        "test" => a.test().await,
-        "install" => crate::workbuddy::path()
-            .and_then(|p| a.configure_workbuddy(&p))
-            .map(|_| {
-                "WorkBuddy configured; reopen model settings / 已配置，请重新打开模型设置".into()
-            }),
-        "restore" => crate::workbuddy::path()
-            .and_then(|p| a.restore_workbuddy(&p))
-            .map(|_| "Previous model restored / 已恢复原配置".into()),
-        "copy" => {
-            let c = a.settings();
-            Ok(format!(
-                "URL: {}\nAPI Key: {}\nModel: {}",
-                a.address(),
-                c.local_key,
-                c.model
-            ))
-        }
-        "quit" => {
-            if let Some(tx) = a.stop.lock().unwrap().take() {
-                tokio::spawn(async move {
-                    tokio::time::sleep(Duration::from_millis(50)).await;
-                    let _ = tx.send(());
-                });
-            }
-            Ok("Stopping / 正在退出".into())
-        }
-        _ => Err("Unknown command".into()),
-    };
+    let result = a.command(&p).await;
     let (status, message) = match result {
         Ok(m) => (StatusCode::OK, m),
         Err(m) => (StatusCode::BAD_REQUEST, m),
@@ -435,39 +421,174 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
         .body(Body::from(json!({"message":message}).to_string()))
         .unwrap()
 }
-
-// Borrow large messages/tools as RawValue; only serialize the small top-level
-// map when a user explicitly overrides thinking. Default retains exact Bytes.
+impl Bridge {
+    pub async fn command(&self, p: &serde_json::Value) -> Result<String, String> {
+        let command = p
+            .get("command")
+            .and_then(serde_json::Value::as_str)
+            .ok_or("Missing command")?;
+        let id = p
+            .get("connection_id")
+            .and_then(serde_json::Value::as_str)
+            .unwrap_or("");
+        match command {
+            "save" | "add" | "duplicate" | "delete" => {
+                let mut cfg = self.config.lock().unwrap();
+                let mut next = cfg.clone();
+                match command {
+                    "add" | "duplicate" => {
+                        let mut c = if command == "duplicate" {
+                            cfg.connection(id)?.clone()
+                        } else {
+                            Connection::default()
+                        };
+                        c.id = crate::config::token()[..12].into();
+                        c.refresh_alias();
+                        let root = if command == "duplicate" {
+                            format!("{} 副本", c.name)
+                        } else {
+                            "连接".into()
+                        };
+                        c.name = root.clone();
+                        let mut n = 1;
+                        while next.connections.iter().any(|v| v.name == c.name) {
+                            c.name = format!("{root} {n}");
+                            n += 1;
+                        }
+                        next.connections.push(c);
+                    }
+                    "delete" => {
+                        let selected = cfg.connection(id)?.id.clone();
+                        next.connections.retain(|c| c.id != selected);
+                    }
+                    "save" => {
+                        let selected = cfg.connection(id)?.id.clone();
+                        let c = next
+                            .connections
+                            .iter_mut()
+                            .find(|c| c.id == selected)
+                            .unwrap();
+                        let old_model = c.model.clone();
+                        for (field, target) in [
+                            ("model", &mut c.model),
+                            ("upstream", &mut c.upstream),
+                            ("name", &mut c.name),
+                            ("provider", &mut c.provider),
+                            ("reasoning_effort", &mut c.reasoning_effort),
+                        ] {
+                            if let Some(s) = p.get(field).and_then(serde_json::Value::as_str) {
+                                *target = s.trim().into();
+                            }
+                        }
+                        if let Some(key) = p
+                            .get("key")
+                            .and_then(serde_json::Value::as_str)
+                            .filter(|s| !s.trim().is_empty())
+                        {
+                            c.api_key = key.trim().into();
+                        }
+                        if c.api_key.is_empty() {
+                            return Err("Enter upstream API key / 请填写上游 Key".into());
+                        }
+                        if c.alias != old_model || c.model != old_model {
+                            c.refresh_alias();
+                        }
+                    }
+                    _ => unreachable!(),
+                }
+                next.validate()?;
+                crate::config::write_json(&self.dir.join("config.json"), &next)?;
+                *cfg = next;
+                Ok(match command { "save" => "Saved / 已保存", "delete" => "Deleted locally; sync WorkBuddy to update its list / 已删除，请同步 WorkBuddy 列表", _ => "Added / 已新增连接" }.into())
+            }
+            "test" => self.test(id).await,
+            "install" => {
+                let count = self.configure_workbuddy(&crate::workbuddy::path()?)?;
+                Ok(format!(
+                    "Synced {count} models; reopen WorkBuddy model list / 已同步 {count} 项，请重新打开模型列表"
+                ))
+            }
+            "restore" => self
+                .restore_workbuddy(&crate::workbuddy::path()?)
+                .map(|_| "Previous entries restored / 已恢复原列表项".into()),
+            "copy" => {
+                let cfg = self.config.lock().unwrap();
+                let c = cfg.connection(id)?;
+                Ok(format!(
+                    "URL: {}\nAPI Key: {}\nModel: {}\nName: {}",
+                    self.connection_address(&c.id),
+                    cfg.local_key,
+                    c.alias,
+                    c.label()
+                ))
+            }
+            "quit" => {
+                if let Some(tx) = self.stop.lock().unwrap().take() {
+                    tokio::spawn(async move {
+                        tokio::time::sleep(Duration::from_millis(50)).await;
+                        let _ = tx.send(());
+                    });
+                }
+                Ok("Stopping / 正在退出".into())
+            }
+            _ => Err("Unknown command".into()),
+        }
+    }
+}
+fn prepare_request(body: bytes::Bytes, c: &Connection) -> Result<bytes::Bytes, String> {
+    let e: Envelope<'_> = serde_json::from_slice(&body).map_err(|_| "Invalid chat request")?;
+    let replace_model = (e.model != c.model).then_some(c.model.as_str());
+    rewrite_request(body, replace_model, &c.reasoning_effort)
+}
 fn apply_reasoning(body: bytes::Bytes, effort: &str) -> Result<bytes::Bytes, String> {
-    if effort == "default" {
+    rewrite_request(body, None, effort)
+}
+// Borrow messages/tools unchanged. Alias and thinking overrides share one
+// serialization and one bounded output allocation, even with a large prompt.
+fn rewrite_request(
+    body: bytes::Bytes,
+    model: Option<&str>,
+    effort: &str,
+) -> Result<bytes::Bytes, String> {
+    if model.is_none() && effort == "default" {
         return Ok(body);
     }
     use serde_json::value::RawValue;
-    use std::collections::BTreeMap;
-    let mut fields: BTreeMap<String, &RawValue> =
+    let mut fields: std::collections::BTreeMap<String, &RawValue> =
         serde_json::from_slice(&body).map_err(|_| "Invalid chat request")?;
+    let model_value =
+        model.map(|m| RawValue::from_string(serde_json::to_string(m).unwrap()).unwrap());
+    if let Some(value) = &model_value {
+        fields.insert("model".into(), value);
+    }
     let deepseek = fields
         .get("model")
         .and_then(|v| serde_json::from_str::<String>(v.get()).ok())
         .is_some_and(|m| m.starts_with("deepseek-"));
-    let encoded_effort = serde_json::to_string(effort).map_err(|e| e.to_string())?;
-    let effort_value = RawValue::from_string(encoded_effort).map_err(|e| e.to_string())?;
-    let thinking_value = RawValue::from_string(if effort == "none" {
-        r#"{"type":"disabled"}"#.into()
-    } else {
-        r#"{"type":"enabled"}"#.into()
-    })
-    .map_err(|e| e.to_string())?;
-    if deepseek {
-        fields.insert("thinking".into(), &thinking_value);
-        if effort == "none" {
-            // DeepSeek rejects disabled thinking combined with reasoning_effort.
-            fields.remove("reasoning_effort");
+    let effort_value = (effort != "default")
+        .then(|| RawValue::from_string(serde_json::to_string(effort).unwrap()).unwrap());
+    let thinking_value = (effort != "default").then(|| {
+        RawValue::from_string(
+            if effort == "none" {
+                r#"{"type":"disabled"}"#
+            } else {
+                r#"{"type":"enabled"}"#
+            }
+            .into(),
+        )
+        .unwrap()
+    });
+    if let Some(value) = &effort_value {
+        if deepseek {
+            fields.insert("thinking".into(), thinking_value.as_ref().unwrap());
+            if effort == "none" {
+                fields.remove("reasoning_effort");
+            } else {
+                fields.insert("reasoning_effort".into(), value);
+            }
         } else {
-            fields.insert("reasoning_effort".into(), &effort_value);
+            fields.insert("reasoning_effort".into(), value);
         }
-    } else {
-        fields.insert("reasoning_effort".into(), &effort_value);
     }
     serde_json::to_vec(&fields)
         .map(bytes::Bytes::from)

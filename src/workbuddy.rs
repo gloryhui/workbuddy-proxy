@@ -63,94 +63,142 @@ fn backup(path: &Path) -> Result<(), String> {
     }
     Ok(())
 }
+fn matching(d: &Document, id: &str) -> Result<Option<usize>, String> {
+    let indices: Vec<_> = d
+        .entries()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .filter(|(_, v)| v.get("id").and_then(Value::as_str) == Some(id))
+        .map(|(i, _)| i)
+        .collect();
+    if indices.len() > 1 {
+        return Err("Duplicate model IDs; refusing to overwrite".into());
+    }
+    Ok(indices.first().copied())
+}
+fn owned(current: &Value, record: &Installation, address: &str, key: &str) -> bool {
+    if let Some(expected) = &record.expected {
+        return current == expected;
+    }
+    current.get("url").and_then(Value::as_str) == Some(address)
+        && current.get("apiKey").and_then(Value::as_str) == Some(key)
+}
+fn entry(c: &config::Connection, url: &str, key: &str) -> Value {
+    let mut e = json!({"id":c.alias,"name":c.label(),"vendor":"Custom","url":url,"apiKey":key,"supportsToolCall":true,"supportsImages":false,"useCustomProtocol":false});
+    if matches!(
+        c.model.as_str(),
+        "deepseek-v4.1-flash" | "deepseek-v4-pro" | "deepseek-v4-flash"
+    ) {
+        e["supportsReasoning"] = json!(true);
+        e["onlyReasoning"] = json!(false);
+        e["reasoning"] = json!({"defaultEffort":"high","supportedEfforts":["high","max"],"canDisableThinking":true});
+        e["maxInputTokens"] = json!(1_000_000);
+        e["contextWindow"] =
+            json!({"defaultLength":300_000,"supportedLengths":[128_000,300_000,1_000_000]});
+    }
+    e
+}
 impl Bridge {
-    pub fn configure_workbuddy(&self, path: &Path) -> Result<(), String> {
+    pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
         let mut cfg = self.config.lock().unwrap();
-        if cfg.api_key.is_empty() {
-            return Err("Save and test upstream key first / 请先保存并测试 Key".into());
-        }
-        if cfg.installed.as_ref().is_some_and(|i| i.id != cfg.model) {
-            return Err(
-                "Restore the previous model before changing model ID / 更换模型前请恢复原配置"
-                    .into(),
-            );
-        }
         let mut d = Document::read(path)?;
-        let matches: Vec<usize> = d
-            .entries()
-            .unwrap()
+        let active: Vec<_> = cfg
+            .connections
             .iter()
-            .enumerate()
-            .filter(|(_, v)| v.get("id").and_then(Value::as_str) == Some(&cfg.model))
-            .map(|(i, _)| i)
+            .filter(|c| !c.api_key.is_empty())
             .collect();
-        if matches.len() > 1 {
-            return Err("Duplicate model IDs; refusing to overwrite".into());
+        if active.is_empty() && cfg.installed.is_empty() {
+            return Err("Save at least one connection first / 请先保存至少一个连接".into());
+        }
+        // Preflight the complete batch before touching any file or model.
+        for record in &cfg.installed {
+            if let Some(i) = matching(&d, &record.id)?
+                && !owned(
+                    &d.entries().unwrap()[i],
+                    record,
+                    &self.address(),
+                    &cfg.local_key,
+                )
+            {
+                return Err("A proxy model was edited elsewhere; restore from backup / 列表项已被其他操作修改，请使用备份处理".into());
+            }
         }
         let mut next = cfg.clone();
-        if next.installed.is_none() {
-            next.installed = Some(Installation {
-                id: cfg.model.clone(),
-                previous: matches.first().map(|i| d.entries().unwrap()[*i].clone()),
-            })
+        next.installed.clear();
+        for record in &cfg.installed {
+            if !active.iter().any(|c| c.alias == record.id)
+                && let Some(i) = matching(&d, &record.id)?
+            {
+                if let Some(previous) = &record.previous {
+                    d.entries_mut()[i] = previous.clone();
+                } else {
+                    d.entries_mut().remove(i);
+                }
+            }
         }
-        let mut entry = json!({"id":cfg.model,"name":format!("WorkBuddy Proxy · {}",cfg.model),"vendor":"Custom","url":self.address(),"apiKey":cfg.local_key,"supportsToolCall":true,"supportsImages":false,"supportsReasoning":false,"useCustomProtocol":false});
-        // WorkBuddy reads these capability fields to show its own selectors.
-        // Use the Go catalog's V4.1 levels, rather than inventing more UI levels.
-        if cfg.model == "deepseek-v4.1-flash" {
-            entry["supportsReasoning"] = json!(true);
-            entry["onlyReasoning"] = json!(false);
-            entry["reasoning"] = json!({"defaultEffort":"high","supportedEfforts":["high","max"],"canDisableThinking":true});
-            entry["maxInputTokens"] = json!(1_000_000);
-            entry["contextWindow"] =
-                json!({"defaultLength":300_000,"supportedLengths":[128_000,300_000,1_000_000]});
-        }
-        let list = d.entries_mut();
-        if let Some(i) = matches.first() {
-            list[*i] = entry
-        } else {
-            list.push(entry)
+        for c in &active {
+            let i = matching(&d, &c.alias)?;
+            let old = cfg.installed.iter().find(|r| r.id == c.alias);
+            // Generated IDs must not overwrite a coincidental user-created ID.
+            if i.is_some() && old.is_none() {
+                return Err(
+                    "Model alias already exists in WorkBuddy; refusing to overwrite".into(),
+                );
+            }
+            let e = entry(c, &self.connection_address(&c.id), &cfg.local_key);
+            next.installed.push(Installation {
+                id: c.alias.clone(),
+                previous: old.and_then(|r| r.previous.clone()),
+                expected: Some(e.clone()),
+            });
+            if let Some(i) = i {
+                d.entries_mut()[i] = e;
+            } else {
+                d.entries_mut().push(e);
+            }
         }
         config::make_private_dir(path.parent().ok_or("Invalid configuration path")?)?;
         backup(path)?;
         config::write_json(&self.dir.join("config.json"), &next)?;
+        if let Err(e) = config::write_json(path, &d.root) {
+            let _ = config::write_json(&self.dir.join("config.json"), &*cfg);
+            return Err(e);
+        }
+        let count = active.len();
         *cfg = next;
-        config::write_json(path, &d.root)
+        Ok(count)
     }
     pub fn restore_workbuddy(&self, path: &Path) -> Result<(), String> {
         let mut cfg = self.config.lock().unwrap();
-        let installation = cfg
-            .installed
-            .as_ref()
-            .ok_or("No WorkBuddy configuration to restore / 无需恢复")?;
+        if cfg.installed.is_empty() {
+            return Err("No WorkBuddy entries to restore / 无需恢复".into());
+        }
         let mut d = Document::read(path)?;
-        let indices: Vec<usize> = d
-            .entries()
-            .unwrap()
-            .iter()
-            .enumerate()
-            .filter(|(_, v)| v.get("id").and_then(Value::as_str) == Some(&installation.id))
-            .map(|(i, _)| i)
-            .collect();
-        if indices.len() != 1 {
-            return Err("Model was removed or duplicated; restore from backup manually".into());
+        for record in &cfg.installed {
+            let i = matching(&d, &record.id)?
+                .ok_or("Model was removed; restore manually from backup")?;
+            if !owned(
+                &d.entries().unwrap()[i],
+                record,
+                &self.address(),
+                &cfg.local_key,
+            ) {
+                return Err("This model has been edited elsewhere; refusing to overwrite / 列表项已被其他操作修改".into());
+            }
         }
-        let i = indices[0];
-        let current = &d.entries().unwrap()[i];
-        if current.get("url").and_then(Value::as_str) != Some(self.address().as_str())
-            || current.get("apiKey").and_then(Value::as_str) != Some(&cfg.local_key)
-        {
-            return Err("This model has been edited elsewhere; refusing to overwrite / 模型已被其他操作修改，请使用备份恢复".into());
-        }
-        if let Some(previous) = &installation.previous {
-            d.entries_mut()[i] = previous.clone()
-        } else {
-            d.entries_mut().remove(i);
+        for record in &cfg.installed {
+            let i = matching(&d, &record.id)?.unwrap();
+            if let Some(previous) = &record.previous {
+                d.entries_mut()[i] = previous.clone();
+            } else {
+                d.entries_mut().remove(i);
+            }
         }
         backup(path)?;
         config::write_json(path, &d.root)?;
         let mut next = cfg.clone();
-        next.installed = None;
+        next.installed.clear();
         config::write_json(&self.dir.join("config.json"), &next)?;
         *cfg = next;
         Ok(())
@@ -163,41 +211,42 @@ pub fn path() -> Result<std::path::PathBuf, String> {
 mod tests {
     use super::*;
     #[test]
-    fn preserve_unrelated_changes_and_restore() {
+    fn sync_multiple_preserves_unrelated_and_restores() {
         let dir = tempfile::tempdir().unwrap();
         let p = dir.path().join("models.json");
-        let old = json!({"otherField":true,"models":[{"id":"other","apiKey":"keep"},{"id":"deepseek-v4.1-flash","url":"https://opencode.ai/zen/go/v1","apiKey":"original"}]});
+        let old = json!({"otherField":true,"models":[{"id":"other","apiKey":"keep"}]});
         config::write_json(&p, &old).unwrap();
-        let c = config::Config {
-            api_key: "test-upstream".into(),
-            ..Default::default()
-        };
+        let mut c = config::Config::default();
+        c.connections[0].api_key = "test-upstream".into();
+        let mut second = c.connections[0].clone();
+        second.id = "second-route".into();
+        second.name = "Second".into();
+        second.refresh_alias();
+        c.connections.push(second);
         let a = Bridge::new(c, dir.path().into()).unwrap();
         a.port.store(18080, std::sync::atomic::Ordering::Relaxed);
-        a.configure_workbuddy(&p).unwrap();
-        let installed = Document::read(&p).unwrap();
-        assert_eq!(installed.entries().unwrap()[1]["supportsReasoning"], true);
-        assert_eq!(
-            installed.entries().unwrap()[1]["reasoning"]["supportedEfforts"],
-            json!(["high", "max"])
+        assert_eq!(a.configure_workbuddy(&p).unwrap(), 2);
+        let d = Document::read(&p).unwrap();
+        assert_eq!(d.entries().unwrap().len(), 3);
+        assert_eq!(d.entries().unwrap()[1]["supportsReasoning"], true);
+        assert_ne!(d.entries().unwrap()[1]["id"], d.entries().unwrap()[2]["id"]);
+        assert_ne!(
+            d.entries().unwrap()[1]["url"],
+            d.entries().unwrap()[2]["url"]
         );
-        assert_eq!(
-            installed.entries().unwrap()[1]["contextWindow"]["supportedLengths"],
-            json!([128000, 300000, 1000000])
-        );
-        let mut d = Document::read(&p).unwrap();
-        d.entries_mut().push(json!({"id":"new","apiKey":"new"}));
-        config::write_json(&p, &d.root).unwrap();
+        a.config.lock().unwrap().connections.remove(0);
+        assert_eq!(a.configure_workbuddy(&p).unwrap(), 1);
+        assert_eq!(Document::read(&p).unwrap().entries().unwrap().len(), 2);
         a.restore_workbuddy(&p).unwrap();
-        let restored = Document::read(&p).unwrap();
-        assert_eq!(restored.entries().unwrap()[1], old["models"][1]);
-        assert_eq!(restored.entries().unwrap().len(), 3);
-        assert_eq!(restored.root["otherField"], true);
+        assert_eq!(Document::read(&p).unwrap().root, old);
         a.configure_workbuddy(&p).unwrap();
         let mut d = Document::read(&p).unwrap();
-        d.entries_mut()[1]["url"] = json!("https://changed.example");
+        d.entries_mut()[1]["name"] = json!("user edited");
         config::write_json(&p, &d.root).unwrap();
+        let bytes = fs::read(&p).unwrap();
+        assert!(a.configure_workbuddy(&p).is_err());
         assert!(a.restore_workbuddy(&p).is_err());
+        assert_eq!(fs::read(&p).unwrap(), bytes);
     }
     #[test]
     fn invalid_config_is_untouched() {

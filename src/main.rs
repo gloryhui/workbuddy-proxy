@@ -168,6 +168,7 @@ fn run() -> Result<(), String> {
         .set(native::Context {
             bridge: a.clone(),
             handle,
+            selected: std::sync::atomic::AtomicUsize::new(0),
             #[cfg(any(windows, target_os = "macos"))]
             remote: None,
         })

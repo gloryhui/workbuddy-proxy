@@ -39,6 +39,8 @@ jobs:
       - run: cargo build --release --locked
       - name: Real executable smoke checks
         run: python scripts/smoke.py --exe "${{ matrix.binary }}"
+      - name: Independent providers, aliases, models and WorkBuddy list sync
+        run: python scripts/multi_routing.py --exe "${{ matrix.binary }}"
       - name: Native Windows window smoke checks
         if: runner.os == 'Windows'
         run: python scripts/smoke.py --exe "${{ matrix.binary }}" --gui
