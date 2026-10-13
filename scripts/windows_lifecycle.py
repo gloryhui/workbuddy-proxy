@@ -104,6 +104,13 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Native model table save failed')
             assert entries[0]['name']=='Flash' and entries[1]['name']=='other-model' and entries[1]['model']=='other-model'
+            for model in ['third-model','fourth-model']:
+                user.PostMessageW(h,0x0111,210,0);enter(editor(),model)
+            user.PostMessageW(h,0x0111,201,0)
+            for _ in range(200):
+                if len(profile()['providers'][0]['models'])==4:break
+                time.sleep(.025)
+            else:raise AssertionError('Extra test model rows did not save')
             # Switching languages persists a preference and uses one language per button.
             language=user.GetDlgItem(h,110);assert language
             def caption(control):
@@ -123,8 +130,63 @@ def main():
                 if caption(update)=='Up to date':break
                 time.sleep(.025)
             else:raise AssertionError('Automatic Release check did not update the header button')
-            from windows_preview import capture
-            capture(h,'bench-results/native-windows-preview.png')
+            # Native modifier-click selection, then Backspace deletes exactly the selected rows.
+            kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+            kernel.OpenProcess.argtypes=[wintypes.DWORD,wintypes.BOOL,wintypes.DWORD];kernel.OpenProcess.restype=wintypes.HANDLE
+            kernel.VirtualAllocEx.argtypes=[wintypes.HANDLE,ctypes.c_void_p,ctypes.c_size_t,wintypes.DWORD,wintypes.DWORD];kernel.VirtualAllocEx.restype=ctypes.c_void_p
+            kernel.WriteProcessMemory.argtypes=[wintypes.HANDLE,ctypes.c_void_p,ctypes.c_void_p,ctypes.c_size_t,ctypes.c_void_p]
+            kernel.ReadProcessMemory.argtypes=[wintypes.HANDLE,ctypes.c_void_p,ctypes.c_void_p,ctypes.c_size_t,ctypes.c_void_p]
+            kernel.VirtualFreeEx.argtypes=[wintypes.HANDLE,ctypes.c_void_p,ctypes.c_size_t,wintypes.DWORD]
+            kernel.CloseHandle.argtypes=[wintypes.HANDLE]
+            user.SetForegroundWindow.argtypes=[wintypes.HWND];user.SetForegroundWindow(h)
+            target=kernel.OpenProcess(0x438,False,first.pid);assert target
+            memory=kernel.VirtualAllocEx(target,None,ctypes.sizeof(wintypes.RECT),0x3000,4);assert memory
+            def click_row(index,modifier=None):
+                rect=wintypes.RECT();assert kernel.WriteProcessMemory(target,memory,ctypes.byref(rect),ctypes.sizeof(rect),None)
+                assert user.SendMessageW(table,0x100E,index,memory)
+                assert kernel.ReadProcessMemory(target,memory,ctypes.byref(rect),ctypes.sizeof(rect),None)
+                point=12|(((rect.top+rect.bottom)//2)<<16);flags=1
+                if modifier:
+                    user.keybd_event(modifier,0,0,0);time.sleep(.04);flags|=4 if modifier==16 else 8
+                user.SendMessageW(table,0x0201,flags,point);user.SendMessageW(table,0x0202,flags&~1,point)
+                time.sleep(.04)
+                if modifier:user.keybd_event(modifier,0,2,0);time.sleep(.04)
+            try:
+                click_row(0);click_row(2,16)
+                assert user.SendMessageW(table,0x1032,0,0)==3,'Shift-click did not select a range'
+                click_row(1,17)
+                assert user.SendMessageW(table,0x1032,0,0)==2,'Ctrl-click did not toggle one row'
+                click_row(3,17)
+                assert user.SendMessageW(table,0x1032,0,0)==3,'Ctrl-click did not add a separate row'
+                from windows_preview import capture
+                capture(h,'bench-results/native-windows-preview.png')
+                user.PostMessageW(table,0x0100,8,0);user.PostMessageW(h,0x0111,201,0)
+                for _ in range(200):
+                    remaining=profile()['providers'][0]['models']
+                    if len(remaining)==1:break
+                    time.sleep(.025)
+                else:raise AssertionError('Backspace did not delete selected rows')
+                assert remaining[0]['model']=='other-model','Batch delete changed an unselected model'
+                # Ctrl+A + Delete removes the remaining model; typed Backspace stays in the cell editor.
+                user.keybd_event(17,0,0,0);time.sleep(.04);user.SendMessageW(table,0x0100,65,0);user.keybd_event(17,0,2,0)
+                assert user.SendMessageW(table,0x1032,0,0)==1
+                user.SendMessageW(table,0x0100,46,0);user.PostMessageW(h,0x0111,201,0)
+                for _ in range(200):
+                    if not profile()['providers'][0]['models']:break
+                    time.sleep(.025)
+                else:raise AssertionError('Delete did not remove the selected model')
+                user.PostMessageW(h,0x0111,210,0);edit=editor()
+                value=ctypes.c_wchar_p('temporary-model');user.SendMessageW(edit,0x000C,0,ctypes.cast(value,ctypes.c_void_p).value)
+                user.SendMessageW(edit,0x00B1,-1,-1);user.SendMessageW(edit,0x0100,8,0);user.SendMessageW(edit,0x0102,8,0)
+                assert caption(edit)=='temporary-mode','Backspace did not edit text normally'
+                assert user.FindWindowExW(table,None,'Edit',None)==edit,'Editing Backspace removed its model row'
+                enter(edit,'kept-model');user.PostMessageW(h,0x0111,201,0)
+                for _ in range(200):
+                    if len(profile()['providers'][0]['models'])==1:break
+                    time.sleep(.025)
+                else:raise AssertionError('Cell editing did not save the model')
+            finally:
+                kernel.VirtualFreeEx(target,memory,0,0x8000);kernel.CloseHandle(target)
             listing=user.GetDlgItem(h,107);assert listing
             assert user.SendMessageW(listing,0x018B,0,0)==1 # LB_GETCOUNT
             user.PostMessageW(h,0x0111,207,0) # Duplicate the selected configured connection
@@ -173,7 +235,7 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Tray Quit left the core running')
             core=None
-            print('PASS: embedded executable/window/header icons; native table editing, automatic display names, language switch and log panel; effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
+            print('PASS: embedded executable/window/header icons; native range/toggle multiselect, batch Delete/Backspace, protected cell editing, automatic display names, language switch and log panel; effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
         finally:
             for process in [first,second]:
                 if process is not None and process.poll() is None:process.terminate();process.wait(timeout=5)
