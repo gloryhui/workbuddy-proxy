@@ -39,22 +39,26 @@
 | 🌊 流式透传 | 默认只还原模型别名，保留其余请求字节、流式响应与上游错误 |
 | 🦦 统一图标 | 主图标覆盖应用、窗口、Windows 任务栏 / 托盘、Mac 菜单栏和启动提示 |
 | 🔄 一键同步 | 批量写入 WorkBuddy 模型列表，自动备份并保留其他已有模型 |
+| 📋 获取模型 | 按当前地址和 Key 拉取可用模型，支持多选、批量删除和双击编辑 |
+| 🌐 单语言界面 | 简体中文 / English 切换，按钮和提示使用同一种语言 |
+| 🪟 单例启动 | 重复打开唤回原窗口，保留未保存的输入，复用后台核心 |
+| 🔔 更新检测 | 自动检测 GitHub 正式 Release，也可手动检查 |
 
 最多 **64 个供应商、合计 256 个模型**，共用一个转发核心和一个本地端口。
 
 ## 下载与安装
 
-### v0.3.0
+### v0.4.0
 
 | 系统 | 下载 | ZIP 大小 | 启动方式 |
 | --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-windows-x64.zip) | 1.84 MB | 解压，双击 `workbuddy-proxy.exe` |
-| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-macos-arm64.zip) | 3.40 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
-| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-macos-x64.zip) | 3.50 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+| Windows 10 / 11，x64 | [Windows 版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-windows-x64.zip) | 约 2 MB | 解压，双击 `workbuddy-proxy.exe` |
+| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.zip) | 约 3.6 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.zip) | 约 3.7 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
 
 Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP，每个人填写自己的 Key 即可。
 
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [源代码 ZIP](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-source.zip) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/SHA256SUMS) · [性能原始数据](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/performance.json)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [源代码 ZIP](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-source.zip) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/SHA256SUMS) · [性能原始数据](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
@@ -137,6 +141,8 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**；内部标识使用短�
 | 重新打开设置 | 单击托盘，或再次双击程序 | 再次打开 `.app`；窗口运行时也可从菜单栏打开设置 |
 | 完全退出 | 右键托盘 → 退出 | 菜单栏 → 退出；设置窗口已关闭时先重新打开程序 |
 
+普通启动使用单例模式：同一配置目录只运行一个设置窗口和一个转发核心。连续打开、从另一份程序文件打开，都唤回原窗口；最小化时恢复窗口，未保存的输入保留。显式使用不同 `--config-dir` 时，可运行独立的隔离实例。
+
 Windows 的托盘模式保留核心和界面两个进程；Mac 关闭设置窗口后只保留核心。需要无界面运行时，两端都可使用 `--headless`。
 
 ## 多供应商与同名模型
@@ -157,7 +163,7 @@ flowchart LR
 | 同一家服务的多个账号 | 复制供应商，为各账号填写各自的 Key |
 | 不同供应商提供相同模型 ID | 分别添加供应商，独立同步到 WorkBuddy |
 
-每个模型具有独立内部 ID、别名和本地 URL。例如 `wbp-abc123/deepseek-v4.1-flash` 会在转发时还原为真实上游 ID `deepseek-v4.1-flash`，使用所选供应商的 Key。上游响应中的模型字段保持原样。
+每个模型具有独立内部 ID、别名和本地 URL。例如 `wbp-abc123` 会在转发时还原为真实上游 ID `deepseek-v4.1-flash`，使用所选供应商的 Key。上游响应中的模型字段保持原样。
 
 裸模型 ID 对应多项配置时，代理会拒绝模糊选路。WorkBuddy 自动同步使用每个模型的独立 URL，选中的列表项与上游凭据保持对应。
 
@@ -207,7 +213,7 @@ flowchart LR
 
 小请求的直连 / 代理中位数差值：Windows 原生界面模式约 **0.16 ms**，Mac Apple Silicon 约 **0.18 ms**，Mac Intel 约 **0.16 ms**。这是本地 HTTP 模拟测试中的差值，包含连接复用和调度影响，不是上游模型的响应时间。
 
-不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38399284219)。
+不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38399284219)。
 
 ### 轻量实现
 

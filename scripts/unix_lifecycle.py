@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """The Mac core must survive settings/launcher process-group termination."""
 import argparse
+import fcntl
 import json
 import os
 from pathlib import Path
 import signal
+import shutil
 import subprocess
 import tempfile
 import time
@@ -17,8 +19,22 @@ def main():
     with tempfile.TemporaryDirectory(prefix='workbuddy-unix-lifecycle-') as directory:
         config={'api_key':'fixture-key','local_key':'fixture-local','upstream':'https://opencode.ai/zen/go/v1','model':'deepseek-v4.1-flash','port':free_port(),'installed':None}
         Path(directory,'config.json').write_text(json.dumps(config));command=[exe,'--config-dir',directory]
-        first=subprocess.Popen(command,start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);second=None;core=None
+        first=subprocess.Popen(command,start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);second=None;core=None;duplicates=[]
         try:
+            # Wait until this launcher owns the UI lock, then race more launches against startup.
+            for _ in range(200):
+                lock_path=Path(directory,'frontend.lock')
+                if lock_path.exists():
+                    with lock_path.open('r+b') as lock:
+                        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+                        except BlockingIOError:break
+                        else:fcntl.flock(lock,fcntl.LOCK_UN)
+                time.sleep(.025)
+            else:raise AssertionError('Settings singleton lock was not acquired')
+            duplicates=[subprocess.Popen(command,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL) for _ in range(5)]
+            for process in duplicates:assert process.wait(timeout=12)==0,'Concurrent launch did not exit cleanly'
+            assert first.poll() is None,'Original settings window was replaced'
+            assert json.loads(Path(directory,'frontend.json').read_text())['pid']==first.pid
             for _ in range(200):
                 try:
                     core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
@@ -27,14 +43,24 @@ def main():
                 except (OSError,ValueError):time.sleep(.025)
             assert core and core['pid']!=first.pid
             assert os.getpgid(core['pid'])!=os.getpgid(first.pid),'Core shares the settings/launcher process group'
+            # Another copy of the executable must wake this same UI and reuse its core.
+            copy=Path(directory,'another-copy');shutil.copy2(exe,copy);copy.chmod(0o755)
+            repeat=subprocess.Popen([str(copy),'--config-dir',directory],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);duplicates.append(repeat)
+            assert repeat.wait(timeout=12)==0
+            assert json.loads(Path(directory,'frontend.json').read_text())['pid']==first.pid
+            assert json.loads(Path(directory,'instance.json').read_text())['pid']==core['pid']
             os.killpg(os.getpgid(first.pid),signal.SIGTERM);first.wait(timeout=5)
             with urllib.request.urlopen(f"http://127.0.0.1:{core['port']}/health",timeout=3) as r:assert json.load(r)['ready']
             second=subprocess.Popen(command,start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-            time.sleep(.5);assert second.poll() is None
+            for _ in range(200):
+                if Path(directory,'frontend.json').exists() and json.loads(Path(directory,'frontend.json').read_text())['pid']==second.pid:break
+                time.sleep(.025)
+            else:raise AssertionError('Reopened UI did not replace stale readiness metadata')
+            assert second.poll() is None
             assert json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))['pid']==core['pid']
-            print('PASS: launcher/UI process-group termination leaves the same core running; reopened UI attaches')
+            print('PASS: concurrent startup and another executable copy reuse one UI/core; launcher/UI process-group termination leaves the same core running; reopened UI replaces stale readiness and attaches')
         finally:
-            for process in [first,second]:
+            for process in [first,second]+duplicates:
                 if process and process.poll() is None:process.terminate();process.wait(timeout=5)
             if core:
                 req=urllib.request.Request(f"http://127.0.0.1:{core['port']}/_control/stop",data=b'',headers={'Authorization':'Bearer '+core['management_key']})

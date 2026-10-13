@@ -1,5 +1,7 @@
 #ifndef WB_UI_H
 #define WB_UI_H
+extern void wb_frontend_ready(void);
+extern void wb_frontend_closing(void);
 extern char *wb_value(const char *name);
 extern char *wb_command(const char *name);
 extern void wb_free(char *value);

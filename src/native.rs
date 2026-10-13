@@ -20,6 +20,7 @@ pub static CONTEXT: OnceLock<Context> = OnceLock::new();
 unsafe extern "C" {
     fn wb_native_run();
     fn wb_native_show();
+    fn wb_native_show_process(pid: u32) -> i32;
     fn wb_native_quit();
     fn wb_native_error(message: *const c_char);
 }
@@ -44,6 +45,20 @@ pub fn show() {
     unsafe {
         wb_native_show()
     }
+}
+#[cfg(any(windows, target_os = "macos"))]
+pub fn show_process(pid: u32) -> bool {
+    pid != 0 && unsafe { wb_native_show_process(pid) != 0 }
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_frontend_ready() {
+    #[cfg(any(windows, target_os = "macos"))]
+    crate::frontend::ready();
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_frontend_closing() {
+    #[cfg(any(windows, target_os = "macos"))]
+    crate::frontend::closing();
 }
 pub fn quit() {
     #[cfg(any(windows, target_os = "macos"))]

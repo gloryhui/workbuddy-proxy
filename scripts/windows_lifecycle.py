@@ -49,10 +49,20 @@ def main():
                     if attempt==19:raise
                     time.sleep(.005) # MoveFileEx can hold a brief replacement lock.
         command=[exe,'--config-dir',directory];first=subprocess.Popen(command)
-        second=None;core=None
+        second=None;core=None;duplicates=[]
         try:
             h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
             assert core['pid']!=first.pid
+            for _ in range(200):
+                ready=Path(directory,'frontend.json')
+                if ready.exists() and json.loads(ready.read_text())['pid']==first.pid:break
+                time.sleep(.025)
+            else:raise AssertionError('Native UI readiness was not published')
+            duplicates=[subprocess.Popen(command) for _ in range(5)]
+            for process in duplicates:assert process.wait(timeout=12)==0,'Concurrent relaunch did not exit cleanly'
+            assert first.poll() is None
+            assert json.loads(ready.read_text())['pid']==first.pid
+            assert json.loads(Path(directory,'instance.json').read_text())['pid']==core['pid']
             # The real window, taskbar and header use embedded application icons.
             big=user.SendMessageW(h,0x007F,1,0);small=user.SendMessageW(h,0x007F,0,0)
             assert big and small,'Application icon is missing'
@@ -231,8 +241,13 @@ def main():
                 assert wait_window(first)==h
             user.PostMessageW(h,0x0010,0,0)
             time.sleep(.1)
-            second=subprocess.Popen(command);assert second.wait(timeout=5)==0
+            name_field=user.GetDlgItem(h,105);original_name=caption(name_field)
+            draft=ctypes.c_wchar_p('Unsaved provider draft');user.SendMessageW(name_field,0x000C,0,ctypes.cast(draft,ctypes.c_void_p).value)
+            second=subprocess.Popen(command);assert second.wait(timeout=12)==0
             assert wait_window(first)==h, 'Second launch did not restore original tray window'
+            assert caption(name_field)=='Unsaved provider draft','Relaunch discarded unsaved form edits'
+            original=ctypes.c_wchar_p(original_name);user.SendMessageW(name_field,0x000C,0,ctypes.cast(original,ctypes.c_void_p).value)
+            assert json.loads(ready.read_text())['pid']==first.pid
             assert json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))['pid']==core['pid']
             user.PostMessageW(h,0x0111,302,0) # same command as tray Quit
             assert first.wait(timeout=5)==0
@@ -243,7 +258,7 @@ def main():
             core=None
             print('PASS: embedded executable/window/header icons; native range/toggle multiselect, batch Delete/Backspace, protected cell editing, automatic display names, language switch and log panel; effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
         finally:
-            for process in [first,second]:
+            for process in [first,second]+duplicates:
                 if process is not None and process.poll() is None:process.terminate();process.wait(timeout=5)
             if core:
                 req=urllib.request.Request(f"http://127.0.0.1:{core['port']}/_control/stop",data=b'',headers={'Authorization':'Bearer '+core['management_key']})

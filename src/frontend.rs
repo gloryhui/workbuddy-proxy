@@ -2,6 +2,7 @@
 //! the settings window closes. Windows keeps its controller for the tray.
 use crate::{Instance, config, native, proxy::Bridge};
 use fs2::FileExt;
+use serde::Deserialize;
 use serde_json::Value;
 use std::{
     fs,
@@ -145,6 +146,51 @@ fn stop_old(value: &Instance, dir: &Path) -> Result<(), String> {
     }
     Err("Previous core did not stop / 旧版核心尚未退出".into())
 }
+#[derive(Deserialize)]
+struct FrontendInstance {
+    pid: u32,
+}
+
+fn claim_or_wake_frontend(lock: &fs::File, dir: &Path) -> Result<bool, String> {
+    // The lock can be held before the native window and its wake-up handler exist.
+    for _ in 0..160 {
+        // A window may be closing while another launch waits for readiness.
+        if lock.try_lock_exclusive().is_ok() {
+            return Ok(true);
+        }
+        if let Ok(bytes) = fs::read(dir.join("frontend.json"))
+            && let Ok(frontend) = serde_json::from_slice::<FrontendInstance>(&bytes)
+            && native::show_process(frontend.pid)
+        {
+            return Ok(false);
+        }
+        std::thread::sleep(Duration::from_millis(50));
+    }
+    Err(
+        "Existing settings window is still starting; try again / 已有设置窗口仍在启动，请稍后重试"
+            .into(),
+    )
+}
+
+pub fn ready() {
+    if let Some(context) = native::CONTEXT.get()
+        && context.remote.is_some()
+    {
+        let _ = config::write_json(
+            &context.bridge.dir.join("frontend.json"),
+            &serde_json::json!({"pid": std::process::id()}),
+        );
+    }
+}
+
+pub fn closing() {
+    if let Some(context) = native::CONTEXT.get()
+        && context.remote.is_some()
+    {
+        let _ = fs::remove_file(context.bridge.dir.join("frontend.json"));
+    }
+}
+
 pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
     let frontend_lock = fs::OpenOptions::new()
         .create(true)
@@ -163,9 +209,13 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
         if outdated {
             return Err("Quit the previous version from its tray/menu, then reopen / 请先从托盘或菜单栏退出旧版，再打开新版".into());
         }
-        native::show();
-        return Ok(());
+        if !claim_or_wake_frontend(&frontend_lock, &dir)? {
+            return Ok(());
+        }
     }
+    let ready_path = dir.join("frontend.json");
+    // Only the lock owner removes stale readiness data left after a crash.
+    let _ = fs::remove_file(&ready_path);
     if outdated {
         stop_old(existing.as_ref().unwrap(), &dir)?;
         existing = None;
@@ -249,6 +299,7 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
         })
         .map_err(|_| "Already initialized")?;
     native::run();
+    let _ = fs::remove_file(&ready_path);
     let _ = stop_tx.send(());
     let _ = worker.join();
     drop(frontend_lock);

@@ -76,6 +76,7 @@ static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;d
 @property NSTimer *timer;
 @end
 static ProxyUI *ui;
+static NSString *const WBShowNotification=@"io.github.gloryhui.workbuddy-proxy.show";
 static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWithType:NSEventTypeApplicationDefined location:NSZeroPoint modifierFlags:0 timestamp:0 windowNumber:0 context:nil subtype:0 data1:0 data2:0] atStart:YES];}
 @implementation ProxyUI
 - (NSView *)card {NSView *v=[NSView new];v.wantsLayer=YES;v.layer.backgroundColor=color(0xffffff).CGColor;v.layer.cornerRadius=12;v.layer.borderWidth=1;v.layer.borderColor=color(0xe2e9f1).CGColor;[self.window.contentView addSubview:v];return v;}
@@ -106,7 +107,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     [self label:T_INFO in:self.right];self.logScroll=[NSScrollView new];self.logScroll.hasVerticalScroller=YES;self.logScroll.autohidesScrollers=YES;self.logs=[[NSTextView alloc]initWithFrame:NSMakeRect(0,0,260,550)];self.logs.autoresizingMask=NSViewWidthSizable;self.logs.horizontallyResizable=NO;self.logs.editable=NO;self.logs.richText=NO;self.logs.font=[NSFont monospacedSystemFontOfSize:11 weight:NSFontWeightRegular];self.logs.textColor=color(0x465d75);self.logs.backgroundColor=color(0xf8fafd);self.logs.textContainerInset=NSMakeSize(12,12);self.logs.verticallyResizable=YES;self.logs.textContainer.widthTracksTextView=YES;self.logScroll.documentView=self.logs;[self.right addSubview:self.logScroll];
     self.status=[NSTextField labelWithString:t(T_READY)];self.status.font=[NSFont systemFontOfSize:11];self.status.textColor=color(0x526379);self.status.lineBreakMode=NSLineBreakByTruncatingMiddle;[self.window.contentView addSubview:self.status];
     self.item=[[NSStatusBar systemStatusBar]statusItemWithLength:NSSquareStatusItemLength];NSImage *menuIcon=[appIcon() copy];menuIcon.size=NSMakeSize(18,18);self.item.button.image=menuIcon;
-    [self translate];[self layout];[self.window center];[self show];[self poll];[self checkUpdate:NO];self.timer=[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(poll) userInfo:nil repeats:YES];
+    [self translate];[self layout];[self.window center];[self refresh];[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(reopen:) name:WBShowNotification object:[NSString stringWithFormat:@"%d",getpid()] suspensionBehavior:NSNotificationSuspensionBehaviorDeliverImmediately];[self show];wb_frontend_ready();[self poll];[self checkUpdate:NO];self.timer=[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(poll) userInfo:nil repeats:YES];
 }
 - (NSView *)tag:(int)tag in:(NSView *)parent {for(NSView *v in parent.subviews)if([v isKindOfClass:NSControl.class]&&v.tag==tag)return v;return nil;}
 - (void)layout {
@@ -170,8 +171,10 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
 - (void)renderLog{NSPoint origin=self.logScroll.contentView.bounds.origin;BOOL bottom=NSMaxY(self.logScroll.documentVisibleRect)>=self.logs.bounds.size.height-35;self.logs.string=[self.systemText stringByAppendingFormat:@"\n\n%@\n%@",t(T_EVENTS),[self.events componentsJoinedByString:@"\n"]];if(bottom)[self.logs scrollRangeToVisible:NSMakeRange(self.logs.string.length,0)];else [self.logScroll.contentView scrollToPoint:origin];}
 - (void)report:(NSString *)s {BOOL error=[s hasPrefix:@"ERROR "];if([s hasPrefix:@"OK "])s=[s substringFromIndex:3];self.status.textColor=error?color(0xc43a54):color(0x0081a8);self.status.stringValue=s;self.status.toolTip=s;if(self.events.count==20)[self.events removeObjectAtIndex:0];[self.events addObject:s];[self renderLog];}
 - (void)poll{if(self.polling||self.busy||(!self.window.visible||self.window.miniaturized))return;self.polling=YES;int language=wb_ui_zh();dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY,0),^{NSString *s=take(wb_snapshot());dispatch_async(dispatch_get_main_queue(),^{self.polling=NO;if(language==wb_ui_zh()){self.systemText=s;[self renderLog];}else [self poll];});});}
-- (BOOL)windowShouldClose:(NSWindow *)sender{(void)sender;[self.timer invalidate];stopUI();return YES;}
-- (void)show{[self refresh];[self.window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];}
+- (BOOL)windowShouldClose:(NSWindow *)sender{(void)sender;[self.timer invalidate];wb_frontend_closing();stopUI();return YES;}
+- (void)show{if(self.window.miniaturized)[self.window deminiaturize:nil];[self.window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];}
+- (void)reopen:(NSNotification *)note{(void)note;[self show];}
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)application hasVisibleWindows:(BOOL)visible{(void)application;(void)visible;[self show];return NO;}
 - (void)save{[self.window makeFirstResponder:nil];NSString *r=take(wb_save_table(self.name.stringValue.UTF8String,self.key.stringValue.UTF8String,self.upstream.stringValue.UTF8String,efforts[MAX(0,self.effort.indexOfSelectedItem)]));if([r hasPrefix:@"OK "])[self refresh];[self report:r];[self poll];}
 - (void)change:(const char *)command{NSString *r=take(wb_command(command));if([r hasPrefix:@"OK "])[self refresh];[self report:r];[self poll];}
 - (void)add{[self change:"add"];}- (void)duplicate{[self change:"duplicate"];}
@@ -181,9 +184,10 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
 - (void)setControlsBusy:(BOOL)busy{self.busy=busy;for(NSControl *c in self.controls)c.enabled=!busy;self.list.enabled=!busy;self.models.enabled=!busy;}
 - (void)execute:(const char *)command{if(self.busy)return;[self.window makeFirstResponder:nil];[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);NSString *url=self.upstream.stringValue,*key=self.key.stringValue;BOOL fetch=strcmp(command,"fetch")==0;dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(fetch?wb_fetch(url.UTF8String,key.UTF8String):wb_command(command));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if(fetch&&[r hasPrefix:@"OK "]){[self.models reloadData];self.dirty=YES;}[self report:r];[self poll];});});}
 - (void)fetch{[self execute:"fetch"];}- (void)test{[self execute:"test"];}- (void)install{[self execute:"install"];}- (void)restore{[self execute:"restore"];}
-- (void)quit{wb_free(wb_command("quit"));[self.timer invalidate];stopUI();}
+- (void)quit{wb_free(wb_command("quit"));[self.timer invalidate];wb_frontend_closing();stopUI();}
 @end
-void wb_native_run(void){@autoreleasepool{[NSApplication sharedApplication];NSApp.applicationIconImage=appIcon();[NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];ui=[ProxyUI new];NSApp.delegate=ui;[NSApp run];ui=nil;}}
-void wb_native_show(void){if(ui){dispatch_async(dispatch_get_main_queue(),^{[ui show];});}else{for(NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:@"io.github.gloryhui.workbuddy-proxy"]){if(app.processIdentifier!=getpid())[app activateWithOptions:NSApplicationActivateIgnoringOtherApps];}}}
+void wb_native_run(void){@autoreleasepool{[NSApplication sharedApplication];NSApp.applicationIconImage=appIcon();[NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];ui=[ProxyUI new];NSApp.delegate=ui;[NSApp run];[[NSDistributedNotificationCenter defaultCenter] removeObserver:ui];ui=nil;}}
+int wb_native_show_process(unsigned int pid){@autoreleasepool{NSRunningApplication *app=[NSRunningApplication runningApplicationWithProcessIdentifier:(pid_t)pid];if(!app||app.terminated)return 0;[[NSDistributedNotificationCenter defaultCenter] postNotificationName:WBShowNotification object:[NSString stringWithFormat:@"%u",pid] userInfo:nil deliverImmediately:YES];[app activateWithOptions:NSApplicationActivateIgnoringOtherApps];return 1;}}
+void wb_native_show(void){if(ui){dispatch_async(dispatch_get_main_queue(),^{[ui show];});}}
 void wb_native_quit(void){dispatch_async(dispatch_get_main_queue(),^{[ui quit];});}
 void wb_native_error(const char *message){@autoreleasepool{wb_use_language([NSLocale.preferredLanguages.firstObject hasPrefix:@"zh"]);[NSApplication sharedApplication];NSAlert *a=[NSAlert new];a.icon=appIcon();a.messageText=@"WorkBuddy Proxy";a.informativeText=take(wb_message(message));[a runModal];}}
