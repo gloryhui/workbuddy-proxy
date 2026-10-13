@@ -85,6 +85,8 @@ Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、N
 | 编程任务 | model-b |
 | 同模型的另一项 | model-a |
 
+模型表格支持 Shift + 点击连续选择，以及 Windows Ctrl / Mac Command + 点击逐项多选。表格获得焦点后，Delete / Backspace 移除所选模型，Ctrl / Command + A 全选，Ctrl / Command + C 复制所选模型 ID，Enter / F2 编辑显示名，Ctrl / Command + N 添加模型，Ctrl / Command + S 保存。编辑单元格时 Delete / Backspace 只删除文字，Esc 取消此次编辑。
+
 这些 ID 仅用于演示，请替换成上游实际支持的模型。相同模型 ID 可以添加多项，填写不同显示名即可。修改供应商地址或 Key 会对该供应商下的全部模型生效。
 
 点击**保存**，再点击**测试连接**。测试只检查已保存的首个模型，使用其思考设置，发送一个简短流式请求。
@@ -93,9 +95,9 @@ Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、N
 
 点击**同步 WorkBuddy**，一次写入所有已保存 Key 的供应商下的模型。重新打开 WorkBuddy 的模型列表，分别选择对应项；必要时重启 WorkBuddy。
 
-删除模型行或供应商后，再同步一次即可清理对应的 WorkBuddy 项。供应商侧栏的“复制”用于复制供应商配置；“复制配置”用于取得本地 URL、连接码、模型别名和每个模型的独立 URL。
+删除模型行或供应商后，再同步一次即可清理对应的 WorkBuddy 项。供应商侧栏的“复制”用于复制供应商配置。
 
-> **两种 Key 各有用途：** 供应商 Key 填在代理里；WorkBuddy 使用代理生成的本地连接码。“同步 WorkBuddy 列表”会自动完成填写，“复制配置”也会给出配套的本地信息。
+> **两种 Key 各有用途：** 供应商 Key 填在代理里；WorkBuddy 使用代理生成的本地连接码。“同步 WorkBuddy”会自动完成填写。
 
 ## 界面预览
 
@@ -108,6 +110,13 @@ Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、N
 WorkBuddy 的列表名称为 **显示名 · 供应商**；内部标识使用短格式 `wbp-<路由标识>`，不再拼接完整模型 ID。升级后再次同步，可更新已安装的列表项。
 
 “运行信息与日志”显示本地地址、供应商与模型数、请求数、运行时长和最近 100 条核心事件。日志不会记录 API Key 或对话内容。窗口最小化 / 隐藏后停止轮询。
+
+<details>
+<summary>查看英文界面</summary>
+
+![Mac English UI](docs/native-mac-en-preview.png)
+
+</details>
 
 ### Release 更新检测
 
@@ -228,7 +237,7 @@ flowchart LR
 <details>
 <summary><strong>模型列表要手动填写吗？可以自动发现吗？</strong></summary>
 
-当前版本在代理中手动填写真实模型 ID。“测试首个模型”只验证首项，不自动发现上游目录或验证所有模型。
+点击“获取模型”，按当前供应商地址和 Key 拉取上游 `/models`，也可以手动添加真实模型 ID。“测试连接”只验证已保存的首项，不会逐一测试所有模型。
 
 代理的 `/v1/models` 可向兼容客户端提供已配置模型列表，供应商 URL 下的 `/models` 只返回该供应商的模型。WorkBuddy 使用“一键同步”即可批量添加。
 
@@ -253,7 +262,7 @@ flowchart LR
 <details>
 <summary><strong>测试报 401 / 403 / 429，怎么排查？</strong></summary>
 
-若“测试首个模型”提示上游 HTTP 401 / 403，检查供应商 Key、地址、账号权限及模型可用性。若 WorkBuddy 提示本地 Key 错误，重新同步，或使用“复制配置”中的本地连接码。
+若“测试连接”提示上游 HTTP 401 / 403，检查供应商 Key、地址、账号权限及模型可用性。若 WorkBuddy 提示本地 Key 错误，重新同步 WorkBuddy。
 
 上游 429 通常需要检查服务额度或限流；代理自己也会在 4 个请求同时在途时返回 429，错误信息会说明请求槽已满。HTTP 400 可检查模型 ID 和参数；不确定思考档位时先选择“跟随 WorkBuddy”。
 
