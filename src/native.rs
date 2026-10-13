@@ -8,6 +8,8 @@ use std::{
 pub struct Context {
     pub bridge: Arc<Bridge>,
     pub handle: tokio::runtime::Handle,
+    #[cfg(any(windows, target_os = "macos"))]
+    pub remote: Option<crate::frontend::Remote>,
 }
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
 #[cfg(any(windows, target_os = "macos"))]
@@ -24,6 +26,16 @@ pub fn run() {
     }
 }
 pub fn show() {
+    #[cfg(any(windows, target_os = "macos"))]
+    if let Some(ctx) = CONTEXT.get()
+        && ctx.remote.is_none()
+    {
+        let _ = crate::frontend::spawn(
+            &ctx.bridge.dir,
+            ctx.bridge.port.load(std::sync::atomic::Ordering::Relaxed),
+        );
+        return;
+    }
     #[cfg(any(windows, target_os = "macos"))]
     unsafe {
         wb_native_show()
@@ -97,6 +109,18 @@ pub extern "C" fn wb_save(
 ) -> *mut c_char {
     ffi_result(|| {
         let ctx = CONTEXT.get().ok_or("Service is not ready")?;
+        #[cfg(any(windows, target_os = "macos"))]
+        if let Some(remote) = &ctx.remote {
+            let message = ctx.handle.block_on(remote.execute(
+                &ctx.bridge.client,
+                "save",
+                &input(key),
+                &input(model),
+                &input(upstream),
+            ))?;
+            *ctx.bridge.config.lock().unwrap() = crate::config::Config::load(&ctx.bridge.dir)?;
+            return Ok(message);
+        }
         let mut cfg = ctx.bridge.config.lock().unwrap();
         let mut next = cfg.clone();
         let key = input(key).trim().to_owned();
@@ -118,6 +142,16 @@ pub extern "C" fn wb_save(
 pub extern "C" fn wb_command(name: *const c_char) -> *mut c_char {
     ffi_result(|| {
         let ctx = CONTEXT.get().ok_or("Service is not ready")?;
+        #[cfg(any(windows, target_os = "macos"))]
+        if let Some(remote) = &ctx.remote {
+            return ctx.handle.block_on(remote.execute(
+                &ctx.bridge.client,
+                &input(name),
+                "",
+                "",
+                "",
+            ));
+        }
         match input(name).as_str() {
             "test" => ctx.handle.block_on(ctx.bridge.test()),
             "install" => {

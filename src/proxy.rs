@@ -82,6 +82,8 @@ impl Bridge {
             .route("/v1/models", get(models))
             .route("/v1/chat/completions", post(relay))
             .route("/_control/show", post(show))
+            .route("/_control/ping", post(ping))
+            .route("/_control/action", post(action))
             .route("/_control/stop", post(stop))
             .with_state(self)
     }
@@ -326,9 +328,101 @@ async fn stop(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body
         return fail(StatusCode::UNAUTHORIZED, "Unauthorized");
     };
     if let Some(tx) = a.stop.lock().unwrap().take() {
-        let _ = tx.send(());
+        tokio::spawn(async move {
+            tokio::time::sleep(Duration::from_millis(50)).await;
+            let _ = tx.send(());
+        });
     }
     Response::new(Body::from("OK"))
+}
+async fn ping(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body> {
+    if !local(&headers, a.port.load(Ordering::Relaxed)) || !authorized(&headers, &a.management_key)
+    {
+        return fail(StatusCode::UNAUTHORIZED, "Unauthorized");
+    }
+    Response::new(Body::from("workbuddy-proxy"))
+}
+#[derive(serde::Deserialize)]
+struct Control {
+    command: String,
+    #[serde(default)]
+    key: String,
+    #[serde(default)]
+    model: String,
+    #[serde(default)]
+    upstream: String,
+}
+async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Response<Body> {
+    let (parts, body) = request.into_parts();
+    if !local(&parts.headers, a.port.load(Ordering::Relaxed))
+        || !authorized(&parts.headers, &a.management_key)
+    {
+        return fail(StatusCode::UNAUTHORIZED, "Unauthorized");
+    }
+    let bytes = match to_bytes(body, 8192).await {
+        Ok(b) => b,
+        Err(_) => return fail(StatusCode::PAYLOAD_TOO_LARGE, "Control payload too large"),
+    };
+    let p: Control = match serde_json::from_slice(&bytes) {
+        Ok(p) => p,
+        Err(_) => return fail(StatusCode::BAD_REQUEST, "Invalid control payload"),
+    };
+    let result: Result<String, String> = match p.command.as_str() {
+        "save" => {
+            let mut cfg = a.config.lock().unwrap();
+            let mut next = cfg.clone();
+            if !p.key.trim().is_empty() {
+                next.api_key = p.key.trim().into();
+            }
+            next.model = p.model.trim().into();
+            next.upstream = p.upstream.trim().into();
+            next.validate().and_then(|_| {
+                if next.api_key.is_empty() {
+                    return Err("Enter upstream API key".into());
+                }
+                crate::config::write_json(&a.dir.join("config.json"), &next)?;
+                *cfg = next;
+                Ok("Saved / 已保存".into())
+            })
+        }
+        "test" => a.test().await,
+        "install" => crate::workbuddy::path()
+            .and_then(|p| a.configure_workbuddy(&p))
+            .map(|_| {
+                "WorkBuddy configured; reopen model settings / 已配置，请重新打开模型设置".into()
+            }),
+        "restore" => crate::workbuddy::path()
+            .and_then(|p| a.restore_workbuddy(&p))
+            .map(|_| "Previous model restored / 已恢复原配置".into()),
+        "copy" => {
+            let c = a.settings();
+            Ok(format!(
+                "URL: {}\nAPI Key: {}\nModel: {}",
+                a.address(),
+                c.local_key,
+                c.model
+            ))
+        }
+        "quit" => {
+            if let Some(tx) = a.stop.lock().unwrap().take() {
+                tokio::spawn(async move {
+                    tokio::time::sleep(Duration::from_millis(50)).await;
+                    let _ = tx.send(());
+                });
+            }
+            Ok("Stopping / 正在退出".into())
+        }
+        _ => Err("Unknown command".into()),
+    };
+    let (status, message) = match result {
+        Ok(m) => (StatusCode::OK, m),
+        Err(m) => (StatusCode::BAD_REQUEST, m),
+    };
+    Response::builder()
+        .status(status)
+        .header("Content-Type", "application/json")
+        .body(Body::from(json!({"message":message}).to_string()))
+        .unwrap()
 }
 
 #[cfg(test)]

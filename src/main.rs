@@ -1,5 +1,7 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 mod config;
+#[cfg(any(windows, target_os = "macos"))]
+mod frontend;
 mod native;
 mod proxy;
 mod session;
@@ -16,6 +18,8 @@ use std::{
 
 #[derive(Serialize, Deserialize)]
 struct Instance {
+    #[serde(default)]
+    pid: u32,
     port: u16,
     management_key: String,
 }
@@ -62,6 +66,10 @@ fn run() -> Result<(), String> {
     }
     let dir = config::directory()?;
     config::make_private_dir(&dir)?;
+    #[cfg(any(windows, target_os = "macos"))]
+    if !headless {
+        return frontend::run(dir, override_port);
+    }
     let lock = fs::OpenOptions::new()
         .create(true)
         .truncate(false)
@@ -85,7 +93,7 @@ fn run() -> Result<(), String> {
                 .build()
                 .map_err(|e| e.to_string())?;
             let r = client
-                .post(format!("http://127.0.0.1:{}/_control/show", old.port))
+                .post(format!("http://127.0.0.1:{}/_control/ping", old.port))
                 .bearer_auth(old.management_key)
                 .send()
                 .await
@@ -114,6 +122,7 @@ fn run() -> Result<(), String> {
     config::write_json(
         &dir.join("instance.json"),
         &Instance {
+            pid: std::process::id(),
             port,
             management_key: a.management_key.clone(),
         },
@@ -159,6 +168,8 @@ fn run() -> Result<(), String> {
         .set(native::Context {
             bridge: a.clone(),
             handle,
+            #[cfg(any(windows, target_os = "macos"))]
+            remote: None,
         })
         .map_err(|_| "Already initialized")?;
     if !headless {

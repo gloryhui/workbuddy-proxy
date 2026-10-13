@@ -51,7 +51,7 @@ static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
         case WM_RESULT:{char *r=(char *)l;status(r);wb_free(r);setBusy(FALSE);return 0;}
         case WM_SHOW:show();return 0;
         case WM_STOP:DestroyWindow(h);return 0;
-        case WM_CLOSE:ShowWindow(h,SW_HIDE);return 0;
+        case WM_CLOSE:DestroyWindow(h);return 0;
         case WM_TRAY:
             if(l==WM_LBUTTONUP||l==WM_LBUTTONDBLCLK){show();return 0;}
             if(l==WM_RBUTTONUP){POINT p;GetCursorPos(&p);HMENU menu=CreatePopupMenu();AppendMenuW(menu,MF_STRING,301,L"设置 / Settings");AppendMenuW(menu,MF_STRING,302,L"退出 / Quit");SetForegroundWindow(h);TrackPopupMenu(menu,TPM_RIGHTBUTTON,p.x,p.y,0,h,NULL);DestroyMenu(menu);return 0;}break;
@@ -65,6 +65,6 @@ void wb_native_run(void){
     if(!h){MessageBoxW(NULL,L"Cannot create settings window",L"WorkBuddy Proxy",MB_ICONERROR);return;}ShowWindow(h,SW_SHOW);UpdateWindow(h);
     MSG message;while(GetMessageW(&message,NULL,0,0)>0){if(!IsDialogMessageW(h,&message)){TranslateMessage(&message);DispatchMessageW(&message);}}
 }
-void wb_native_show(void){if(window)PostMessageW(window,WM_SHOW,0,0);}
+void wb_native_show(void){HWND h=window?window:FindWindowW(L"WorkBuddyProxyWindow",NULL);if(h)PostMessageW(h,WM_SHOW,0,0);}
 void wb_native_quit(void){if(window)PostMessageW(window,WM_STOP,0,0);}
 void wb_native_error(const char *message){wchar_t *w=wide(message);MessageBoxW(NULL,w?w:L"Startup failed",L"WorkBuddy Proxy",MB_ICONERROR);free(w);}

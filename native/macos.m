@@ -1,5 +1,6 @@
 #import <AppKit/AppKit.h>
 #include <stdlib.h>
+#include <unistd.h>
 extern char *wb_value(const char *name);
 extern char *wb_save(const char *key,const char *model,const char *upstream);
 extern char *wb_command(const char *name);
@@ -48,7 +49,7 @@ static ProxyUI *ui;
     self.status=[self label:@"" frame:NSMakeRect(24,14,472,65)];self.status.lineBreakMode=NSLineBreakByWordWrapping;self.status.maximumNumberOfLines=3;
     [self.window center];[self show];
 }
-- (BOOL)windowShouldClose:(NSWindow *)sender{[sender orderOut:nil];return NO;}
+- (BOOL)windowShouldClose:(NSWindow *)sender{(void)sender;[NSApp stop:nil];NSEvent *event=[NSEvent otherEventWithType:NSEventTypeApplicationDefined location:NSZeroPoint modifierFlags:0 timestamp:0 windowNumber:0 context:nil subtype:0 data1:0 data2:0];[NSApp postEvent:event atStart:YES];return YES;}
 - (void)show{self.status.stringValue=[NSString stringWithFormat:@"%@\n%@",value("url"),value("status")];[self.window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];}
 - (void)save{NSString *result=take(wb_save(self.key.stringValue.UTF8String,self.model.stringValue.UTF8String,self.upstream.stringValue.UTF8String));self.status.stringValue=result;if([result hasPrefix:@"OK "]){self.key.stringValue=@"";}}
 - (void)execute:(const char *)command{
@@ -64,6 +65,6 @@ static ProxyUI *ui;
 - (void)quit{wb_free(wb_command("quit"));[NSApp stop:nil];NSEvent *event=[NSEvent otherEventWithType:NSEventTypeApplicationDefined location:NSZeroPoint modifierFlags:0 timestamp:0 windowNumber:0 context:nil subtype:0 data1:0 data2:0];[NSApp postEvent:event atStart:YES];}
 @end
 void wb_native_run(void){@autoreleasepool{[NSApplication sharedApplication];[NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];ui=[ProxyUI new];NSApp.delegate=ui;[NSApp run];ui=nil;}}
-void wb_native_show(void){dispatch_async(dispatch_get_main_queue(),^{[ui show];});}
+void wb_native_show(void){if(ui){dispatch_async(dispatch_get_main_queue(),^{[ui show];});}else{for(NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:@"io.github.gloryhui.workbuddy-proxy"]){if(app.processIdentifier!=getpid()){[app activateWithOptions:NSApplicationActivateIgnoringOtherApps];}}}}
 void wb_native_quit(void){dispatch_async(dispatch_get_main_queue(),^{[ui quit];});}
 void wb_native_error(const char *message){@autoreleasepool{[NSApplication sharedApplication];NSAlert *alert=[NSAlert new];alert.messageText=@"WorkBuddy Proxy";alert.informativeText=[NSString stringWithUTF8String:message]?:@"Startup failed";[alert runModal];}}

@@ -81,17 +81,39 @@ def request(port, payload, token='fixture-local-key', origin=None):
 
 
 def stop(process, port, directory, log):
-    if process.poll() is None:
+    controller = False
+    if Path(directory, 'instance.json').exists():
+        current=json.loads(Path(directory,'instance.json').read_text())
+        controller=current.get('pid',process.pid)!=process.pid
+    if process.poll() is None or controller:
         instance = json.loads(Path(directory, 'instance.json').read_text())
         req = urllib.request.Request(f'http://127.0.0.1:{port}/_control/stop', data=b'',
                                      headers={'Authorization': 'Bearer '+instance['management_key']})
         try:
             with urllib.request.urlopen(req, timeout=3) as response: response.read()
         finally:
+            if controller:
+                if os.name=='nt':
+                    import ctypes
+                    from ctypes import wintypes
+                    user=ctypes.WinDLL('user32');cbtype=ctypes.WINFUNCTYPE(wintypes.BOOL,wintypes.HWND,wintypes.LPARAM)
+                    user.GetWindowThreadProcessId.argtypes=[wintypes.HWND,ctypes.POINTER(wintypes.DWORD)]
+                    user.PostMessageW.argtypes=[wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM]
+                    def close(hwnd,param):
+                        pid=wintypes.DWORD();user.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
+                        if pid.value==process.pid:user.PostMessageW(hwnd,0x0010,0,0)
+                        return True
+                    user.EnumWindows(cbtype(close),0)
+                else:
+                    process.terminate()
             try: process.wait(timeout=5)
             except subprocess.TimeoutExpired: process.kill(); process.wait(); raise
     log.close()
-    assert process.returncode == 0
+    for _ in range(100):
+        if not Path(directory,'instance.json').exists():break
+        time.sleep(.025)
+    else:raise AssertionError('Core did not release its instance record')
+    assert process.returncode == 0 or (controller and os.name!='nt' and process.returncode==-15)
 
 
 def main():
@@ -151,6 +173,12 @@ def main():
             second = subprocess.run([str(Path(args.exe).resolve()), '--headless','--config-dir',folder], capture_output=True, timeout=5)
             assert second.returncode == 0, second.stderr.decode(errors='replace')
             assert process.poll() is None
+            instance=json.loads(Path(folder,'instance.json').read_text())
+            control=lambda obj:urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps(obj).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
+            with urllib.request.urlopen(control({'command':'test'}),timeout=5) as response:
+                assert 'HTTP 200' in json.load(response)['message']
+            with urllib.request.urlopen(control({'command':'copy'}),timeout=5) as response:
+                message=json.load(response)['message'];assert 'fixture-local-key' in message and 'fixture-upstream-key' not in message
             print(json.dumps({'result':'PASS','streaming_first_bytes_ms':round(first_byte*1000,3),
                               'checks':['startup','byte-identical tool payload','auth','origin','upstream 429',
                                         'first SSE chunk before completion','bounded concurrent streams','cancellation releases slots',

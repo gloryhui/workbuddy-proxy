@@ -10,13 +10,13 @@
 
 ## 原生界面
 
-Rust 调用一个小型 C / Objective-C 平台适配层。Windows 主线程运行 Win32 消息循环，Mac 主线程运行 AppKit 事件循环，后台只有一个 I/O 运行时。测试请求在原生工作线程中执行，保持设置窗口响应。UI 不通过 HTTP 获取配置，控制 API 只供单实例唤起和测试停止服务。
+Rust 调用一个小型 C / Objective-C 平台适配层。Windows 主线程运行 Win32 消息循环，Mac 主线程运行 AppKit 事件循环，后台核心只有一个 I/O 运行时。界面按需作为第二个进程启动，关闭窗口退出界面进程；核心的会话缓存和连接继续保持。测试请求在原生工作线程中执行，保持设置窗口响应。UI 通过仅限本机、独立管理令牌保护的控制 API 保存配置、测试连接和处理 WorkBuddy 配置；控制连接禁用代理，绝不把本机管理令牌和 Key 输入发到系统代理。
 
-FFI 字符串所有权由 Rust 分配，平台读取后调用 `wb_free`。FFI 入口捕获 Rust panic，避免 panic 穿越 C 边界。密钥字段不会回填上游 Key。关闭设置窗口只隐藏窗口，托盘 / 菜单栏负责退出。
+FFI 字符串所有权由 Rust 分配，平台读取后调用 `wb_free`。FFI 入口捕获 Rust panic，避免 panic 穿越 C 边界。密钥字段不会回填上游 Key。关闭设置窗口退出界面进程；托盘 / 菜单栏退出命令停止核心。
 
 ## 性能验证方式
 
-`scripts/benchmark.py` 启动独立 mock 上游和独立代理子进程。测量 RSS 只针对代理 PID，原生 UI 与网络核心在同一 PID 时一起计入。Windows 使用 GetProcessMemoryInfo 的 WorkingSetSize，Unix 使用 ps RSS；这些指标存在平台差异，不能直接作为跨平台排行榜。
+`scripts/benchmark.py` 启动独立 mock 上游和独立代理子进程。无界面时测量核心 PID；原生界面模式读取实例记录中的核心 PID，并与界面 PID 的 RSS 相加。共享映射页面可能重复计入，因此总量是保守的进程 RSS 和，不是唯一物理内存。Windows 使用 GetProcessMemoryInfo 的 WorkingSetSize，Unix 使用 ps RSS；这些指标存在平台差异，不能直接作为跨平台排行榜。
 
 基准包含：预热 10 次；直接和代理各 200 个小请求，记录 p50 / p95；4 并发、80 个约 1 MiB 请求，每 150 ms 采样 RSS；负载结束后记录进程 RSS。小请求客户端每次重建连接，上游连接由代理复用。mock 禁止保存请求，测试数据不含真实 Key。
 

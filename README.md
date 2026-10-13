@@ -1,6 +1,6 @@
 # WorkBuddy Proxy
 
-专门给 WorkBuddy 使用的轻量模型代理。Rust 转发核心，Windows Win32 / macOS AppKit 原生界面，同一进程运行。首版支持 OpenAI Chat Completions 与 OpenCode Go。
+专门给 WorkBuddy 使用的轻量模型代理。Rust 转发核心，Windows Win32 / macOS AppKit 原生界面，设置界面按需启动，后台只常驻转发核心。首版支持 OpenAI Chat Completions 与 OpenCode Go。
 
 目标是**更少的常驻内存、更低的转发开销**。本项目不声称在所有平台、所有负载下“全球最小 / 最快”；每次 CI 都构建真实可执行文件、运行冒烟测试并记录可复现的内存与延迟数据。
 
@@ -8,8 +8,8 @@
 
 从 [Releases](https://github.com/gloryhui/workbuddy-proxy/releases) 下载与你的系统对应的包。测试与开发中的文件也会出现在 [Actions](https://github.com/gloryhui/workbuddy-proxy/actions) 的构建附件里。
 
-- Windows 10/11 x64：解压，双击 `workbuddy-proxy.exe`，直接显示原生设置窗口。后台运行时可从托盘重新打开。
-- macOS 12+：解压，将 `WorkBuddy Proxy.app` 拖到“应用程序”，双击启动。关闭设置窗口后服务保留在菜单栏。
+- Windows 10/11 x64：解压，双击 `workbuddy-proxy.exe`，直接显示原生设置窗口。窗口打开时提供托盘菜单；关闭窗口会退出界面进程，核心继续运行，再次双击打开设置。
+- macOS 12+：解压，将 `WorkBuddy Proxy.app` 拖到“应用程序”，双击启动。关闭设置窗口后界面进程退出，转发核心继续运行；再次双击可重新打开设置。
 - 无需安装 Rust、Python、Node 或额外 WebView 运行时。
 
 1. 填写上游地址、你自己的 API Key 和模型名，点击保存。默认上游为 `https://opencode.ai/zen/go/v1`，默认模型为 `deepseek-v4.1-flash`。
@@ -36,7 +36,7 @@
 | 会话缓存 | 最多 64 个会话，每个最多 128 个消息哈希；24 小时不活跃后按需清理 |
 | 上游连接 | 每个主机最多保留 2 个空闲连接，60 秒空闲后清理 |
 
-没有内置浏览器、前端框架、数据库、自动更新器、遥测、聊天日志或响应重写。图形界面和服务是同一个可执行程序。运行时不进行模型目录同步和后台余额轮询。
+没有内置浏览器、前端框架、数据库、自动更新器、遥测、聊天日志或响应重写。同一个可执行文件包含核心和设置界面：后台常驻 1 个核心进程，打开设置时暂时增加 1 个原生界面进程，关闭窗口释放整份 UI 内存。运行时不进行模型目录同步和后台余额轮询。
 
 对于 OpenCode Go，发送本工具自己的 User-Agent，并补齐 `x-opencode-session`。优先读取客户端会话头，缺少时根据聊天历史前缀推断；不同会话不会共用一个全局固定值。相同开场历史的独立聊天可能被归为同一会话；超过缓存窗口、历史压缩和服务重启可能产生新的上游会话。这影响路由 / 缓存，不会混合或交换聊天内容。使用范围与额度以 [OpenCode Go 官方说明](https://opencode.ai/docs/go/) 为准。
 
@@ -62,7 +62,7 @@ Windows 将二进制路径改为 `target/release/workbuddy-proxy.exe`。添加 `
 
 `config.json` 以本地明文保存上游 Key 和本地连接码。Unix 目录为 0700、配置文件为 0600；Windows 使用当前用户配置目录的默认权限。目录、文件和备份均不要打包分享。只分发官方发布 ZIP，每位使用者填写自己的 Key。
 
-服务仅监听 `127.0.0.1`，校验请求 Host、Origin 和本地 Key；上游重定向关闭，保留 TLS 验证。订阅 Key 仅发往配置的上游。请求和响应内容不写日志，启动日志最多 64 KiB；单实例使用操作系统文件锁，重复启动会唤起已有窗口。
+服务仅监听 `127.0.0.1`，校验请求 Host、Origin 和本地 Key；原生界面通过独立管理令牌访问本机控制接口，控制连接不经过系统代理；上游重定向关闭，保留 TLS 验证。订阅 Key 仅发往配置的上游。请求和响应内容不写日志，启动日志最多约 64 KiB；核心与界面分别使用操作系统文件锁。关闭设置不重启核心，也不清空聊天会话缓存。
 
 命令行：`workbuddy-proxy --headless --port 18080 --config-dir <私有目录>`。默认端口冲突会报错，不静默换端口，以免 WorkBuddy 指向错误地址。Windows 包含 `Diagnose.cmd`，原生启动失败也会显示错误框。正常退出会取消在途请求。
 

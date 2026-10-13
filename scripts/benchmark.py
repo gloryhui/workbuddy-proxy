@@ -55,10 +55,13 @@ def main():
     with tempfile.TemporaryDirectory(prefix='workbuddy-proxy-bench-') as folder:
         process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream.server_port}/v1',args.gui)
         try:
-            time.sleep(1);idle=rss_kib(process.pid);peak=[idle];done=threading.Event()
+            instance=json.loads(Path(folder,'instance.json').read_text())
+            pids=set([process.pid,instance.get('pid',process.pid)])
+            total_rss=lambda:sum(rss_kib(pid) for pid in pids)
+            time.sleep(1);idle=total_rss();core_idle=rss_kib(instance.get('pid',process.pid));peak=[idle];done=threading.Event()
             def sample():
                 while not done.wait(.15):
-                    try: peak.append(rss_kib(process.pid))
+                    try: peak.append(total_rss())
                     except Exception: break
             watcher=threading.Thread(target=sample,daemon=True);watcher.start()
             payload=json.dumps({'model':'fixture-model','stream':True,'messages':[{'role':'user','content':'bench'}]}).encode()
@@ -78,15 +81,16 @@ def main():
             with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
                 list(pool.map(lambda _:measured(True,large),range(80)))
             large_seconds=time.perf_counter()-start_time
-            time.sleep(.5);settled=rss_kib(process.pid);done.set();watcher.join()
+            time.sleep(.5);settled=total_rss();done.set();watcher.join()
             result={'platform':platform.platform(),'architecture':platform.machine(),'mode':'native GUI' if args.gui else 'headless',
                 'binary_bytes':Path(args.exe).stat().st_size,'idle_rss_mib':round(idle/1024,2),
+                'core_idle_rss_mib':round(core_idle/1024,2),'measured_process_count':len(pids),
                 'sampled_peak_rss_mib':round(max(peak)/1024,2),'post_load_rss_mib':round(settled/1024,2),
                 'small_request_count':args.requests,'direct_loopback_ms':percentiles(direct),
                 'proxied_loopback_ms':percentiles(proxied),
                 'median_proxy_overhead_ms':round(statistics.median(proxied)-statistics.median(direct),3),
                 'large_request_size_mib':1,'large_concurrency':4,'large_requests':80,'large_seconds':round(large_seconds,3),
-                'notes':'Sampled process RSS includes runtime/native UI and excludes mock/client processes. Loopback HTTP mock; no TLS or Internet/model latency. Each client request opens a new connection; upstream connections are pooled. No cross-platform ranking implied.'}
+                'notes':'RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock, no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.'}
             Path(args.output).parent.mkdir(parents=True,exist_ok=True);Path(args.output).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
         finally: stop(process,port,folder,log)
     upstream.shutdown();upstream.server_close()
