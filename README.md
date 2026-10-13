@@ -202,18 +202,18 @@ flowchart LR
 
 ## 性能实测
 
-轻量化通过发布包和实际进程测量验证。以下来自 **v0.3.0 发布构建**，统一配置为 **1 个供应商、64 个模型**：
+轻量化通过发布包和实际进程测量验证。以下来自 **v0.4.0 发布构建**，统一配置为 **1 个供应商、64 个模型**：
 
 | 平台 / 模式 | 空闲进程 RSS | 测量范围 |
 | --- | ---: | --- |
-| Windows x64，无界面 | **9.06 MiB** | 仅转发核心 |
-| Windows x64，原生界面 / 托盘 | **28.82 MiB** | 核心与界面进程的 RSS 合计 |
-| Mac Apple Silicon，无界面 | **11.66 MiB** | CI 环境中的转发核心 |
-| Mac Intel，无界面 | **4.39 MiB** | CI 环境中的转发核心 |
+| Windows x64，无界面 | **9.33 MiB** | 仅转发核心 |
+| Windows x64，原生界面 / 托盘 | **36.32 MiB** | 核心与界面进程的 RSS 合计 |
+| Mac Apple Silicon，无界面 | **11.81 MiB** | CI 环境中的转发核心 |
+| Mac Intel，无界面 | **4.37 MiB** | CI 环境中的转发核心 |
 
-小请求的直连 / 代理中位数差值：Windows 原生界面模式约 **0.16 ms**，Mac Apple Silicon 约 **0.18 ms**，Mac Intel 约 **0.16 ms**。这是本地 HTTP 模拟测试中的差值，包含连接复用和调度影响，不是上游模型的响应时间。
+小请求的直连 / 代理中位数差值：Windows 原生界面模式约 **0.075 ms**，Mac Apple Silicon 约 **0.102 ms**，Mac Intel 约 **0.268 ms**。这是本地 HTTP 模拟测试中的差值，包含连接复用和调度影响，不是上游模型的响应时间。
 
-不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38399284219)。
+不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38436398114)。
 
 ### 轻量实现
 
