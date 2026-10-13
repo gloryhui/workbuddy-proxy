@@ -27,5 +27,5 @@ def main():
                 name=f'icon_{size}x{size}'+('@2x' if scale==2 else '')+'.png'
                 shutil.copyfile(temp/f'{size*scale}.png',iconset/name)
         subprocess.run(['iconutil','-c','icns',str(iconset),'-o',str(ASSETS/'app-icon.icns')],check=True)
-    print('Generated ICO, ICNS and native UI PNG from the unchanged supplied artwork')
+    print('Generated ICO, ICNS and native UI PNG from the current icon artwork')
 if __name__=='__main__':main()
