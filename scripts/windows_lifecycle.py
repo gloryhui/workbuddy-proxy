@@ -182,8 +182,9 @@ def main():
                 else:raise AssertionError('Delete did not remove the selected model')
                 user.PostMessageW(h,0x0111,210,0);edit=editor()
                 value=ctypes.c_wchar_p('temporary-model');user.SendMessageW(edit,0x000C,0,ctypes.cast(value,ctypes.c_void_p).value)
-                user.SendMessageW(edit,0x00B1,-1,-1);user.SendMessageW(edit,0x0100,8,0);user.SendMessageW(edit,0x0102,8,0)
-                assert caption(edit)=='temporary-mode','Backspace did not edit text normally'
+                user.SendMessageW(edit,0x00B1,len('temporary-model'),len('temporary-model'))
+                user.keybd_event(8,0,0,0);user.keybd_event(8,0,2,0);time.sleep(.12)
+                assert caption(edit)=='temporary-mode',f'Backspace did not edit text normally: {caption(edit)!r}'
                 assert user.FindWindowExW(table,None,'Edit',None)==edit,'Editing Backspace removed its model row'
                 enter(edit,'kept-model');user.PostMessageW(h,0x0111,201,0)
                 for _ in range(200):

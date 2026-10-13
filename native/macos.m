@@ -30,6 +30,11 @@ static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;d
     [super keyDown:event];
 }
 @end
+@interface WBModelLabel:NSTextField
+@end
+@implementation WBModelLabel
+- (NSView *)hitTest:(NSPoint)point{(void)point;return nil;}
+@end
 @interface WBModelRow:NSTableRowView
 @end
 @implementation WBModelRow
@@ -41,6 +46,7 @@ static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;d
 @interface ProxyUI:NSObject<NSApplicationDelegate,NSWindowDelegate,NSTableViewDataSource,NSTableViewDelegate,NSTextFieldDelegate,WBModelActions>
 @property NSWindow *window;
 @property NSButton *updateButton;
+@property NSTextField *modelEditor;
 @property BOOL updating;
 @property NSStatusItem *item;
 @property NSView *left,*center,*right;
@@ -128,16 +134,23 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     }
     int col=[column.identifier isEqualToString:@"name"]?0:1;
     NSTableCellView *cell=[[NSTableCellView alloc]initWithFrame:NSMakeRect(0,0,column.width,table.rowHeight)];
-    NSTextField *v=[NSTextField labelWithString:take(wb_model((int)row,col))];v.font=[NSFont systemFontOfSize:13];v.lineBreakMode=NSLineBreakByTruncatingTail;v.alignment=NSTextAlignmentLeft;v.delegate=self;v.tag=1000+row*2+col;v.textColor=color(0x243b55);v.toolTip=v.stringValue;v.accessibilityLabel=[NSString stringWithFormat:@"%@ %ld",column.title,(long)row+1];
+    NSTextField *v=[WBModelLabel new];v.stringValue=take(wb_model((int)row,col));v.bezeled=NO;v.drawsBackground=NO;v.editable=NO;v.selectable=NO;v.font=[NSFont systemFontOfSize:13];v.lineBreakMode=NSLineBreakByTruncatingTail;v.alignment=NSTextAlignmentLeft;v.delegate=self;v.tag=1000+row*2+col;v.textColor=color(0x243b55);v.toolTip=v.stringValue;v.accessibilityLabel=[NSString stringWithFormat:@"%@ %ld",column.title,(long)row+1];
     CGFloat height=v.intrinsicContentSize.height;v.frame=NSMakeRect(8,floor((table.rowHeight-height)/2),MAX(0,column.width-16),height);v.autoresizingMask=NSViewWidthSizable|NSViewMinYMargin|NSViewMaxYMargin;cell.textField=v;[cell addSubview:v];return cell;
 }
 - (NSTableRowView *)tableView:(NSTableView *)table rowViewForRow:(NSInteger)row {(void)row;return table==self.models?[WBModelRow new]:nil;}
-- (void)editModel {if(self.busy)return;[self.window makeFirstResponder:nil];NSInteger row=self.models.selectedRow,col=0;if(row<0)return;NSTableCellView *cell=[self.models viewAtColumn:col row:row makeIfNecessary:YES];cell.textField.editable=YES;cell.textField.selectable=YES;[self.window makeFirstResponder:cell.textField];[cell.textField selectText:self];}
-- (void)editClickedModel {if(self.busy)return;[self.window makeFirstResponder:nil];NSInteger row=self.models.clickedRow,col=self.models.clickedColumn;if(row<0||col<0)return;NSTableCellView *cell=[self.models viewAtColumn:col row:row makeIfNecessary:YES];cell.textField.editable=YES;cell.textField.selectable=YES;[self.window makeFirstResponder:cell.textField];[cell.textField selectText:self];}
+- (void)editRow:(NSInteger)row column:(NSInteger)col {
+    if(self.busy)return;[self.window makeFirstResponder:nil];if(row<0||col<0||row>=wb_models_count())return;
+    NSTableCellView *cell=[self.models viewAtColumn:col row:row makeIfNecessary:YES];
+    NSTextField *editor=[[NSTextField alloc]initWithFrame:NSInsetRect(cell.bounds,4,2)];editor.stringValue=take(wb_model((int)row,(int)col));editor.font=[NSFont systemFontOfSize:13];editor.alignment=NSTextAlignmentLeft;editor.editable=YES;editor.selectable=YES;editor.bezelStyle=NSTextFieldRoundedBezel;editor.delegate=self;editor.tag=1000+row*2+col;editor.accessibilityLabel=cell.textField.accessibilityLabel;self.modelEditor=editor;cell.textField.hidden=YES;[cell addSubview:editor];[self.window makeFirstResponder:editor];[[editor currentEditor] selectAll:self];
+}
+- (void)editModel {[self editRow:self.models.selectedRow column:0];}
+- (void)editClickedModel {[self editRow:self.models.clickedRow column:self.models.clickedColumn];}
 - (void)copyModelIDs {NSMutableArray *ids=[NSMutableArray array];[self.models.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger row,BOOL *stop){(void)stop;[ids addObject:take(wb_model((int)row,1))];}];if(!ids.count)return;NSPasteboard *p=NSPasteboard.generalPasteboard;[p clearContents];[p setString:[ids componentsJoinedByString:@"\n"] forType:NSPasteboardTypeString];}
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)editor doCommandBySelector:(SEL)command {if(control.tag>=1000&&command==@selector(cancelOperation:)){NSString *original=take(wb_model((int)(control.tag-1000)/2,(int)(control.tag-1000)%2));((NSTextField *)control).stringValue=original;editor.string=original;[self.window makeFirstResponder:self.models];return YES;}return NO;}
 - (void)controlTextDidChange:(NSNotification *)note{if(!self.refreshing)self.dirty=YES;(void)note;}
-- (void)controlTextDidEndEditing:(NSNotification *)note {NSTextField *v=note.object;if(v.tag>=1000){int row=(int)(v.tag-1000)/2,col=(int)(v.tag-1000)%2;wb_model_set(row,col,v.stringValue.UTF8String);v.toolTip=v.stringValue;v.editable=NO;v.selectable=NO;if(col==1){NSTableCellView *cell=[self.models viewAtColumn:0 row:row makeIfNecessary:NO];cell.textField.stringValue=take(wb_model(row,0));cell.textField.toolTip=cell.textField.stringValue;}}}
+- (void)controlTextDidEndEditing:(NSNotification *)note {
+    NSTextField *v=note.object;if(v!=self.modelEditor)return;int row=(int)(v.tag-1000)/2,col=(int)(v.tag-1000)%2;wb_model_set(row,col,v.stringValue.UTF8String);NSTableCellView *cell=(NSTableCellView *)v.superview;cell.textField.stringValue=take(wb_model(row,col));cell.textField.toolTip=cell.textField.stringValue;cell.textField.hidden=NO;self.modelEditor=nil;[v removeFromSuperview];if(col==1){NSTableCellView *nameCell=[self.models viewAtColumn:0 row:row makeIfNecessary:NO];nameCell.textField.stringValue=take(wb_model(row,0));nameCell.textField.toolTip=nameCell.textField.stringValue;}
+}
 - (void)markDirty {self.dirty=YES;}
 - (void)tableViewSelectionDidChange:(NSNotification *)note{if(note.object!=self.list||self.refreshing||self.list.selectedRow<0)return;[self.window makeFirstResponder:nil];if(self.dirty){NSAlert *a=[NSAlert new];a.messageText=t(T_DISCARD);[a addButtonWithTitle:wb_ui_zh()?@"放弃修改":@"Discard"];[a addButtonWithTitle:wb_ui_zh()?@"取消":@"Cancel"];if([a runModal]!=NSAlertFirstButtonReturn){[self reloadProviders];return;}}wb_select((int)self.list.selectedRow);[self fields];[self.list reloadData];}
 - (void)fields{self.refreshing=YES;self.name.stringValue=value("name");self.upstream.stringValue=value("upstream");self.key.stringValue=@"";wb_models_load();[self.models deselectAll:nil];[self.models reloadData];NSString *e=value("reasoning_effort");for(int i=0;i<6;i++)if([e isEqualToString:[NSString stringWithUTF8String:efforts[i]]])[self.effort selectItemAtIndex:i];self.dirty=NO;self.refreshing=NO;}
@@ -152,7 +165,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
 - (void)change:(const char *)command{NSString *r=take(wb_command(command));if([r hasPrefix:@"OK "])[self refresh];[self report:r];[self poll];}
 - (void)add{[self change:"add"];}- (void)duplicate{[self change:"duplicate"];}
 - (void)remove{NSAlert *a=[NSAlert new];a.messageText=t(T_DELETE_QUESTION);[a addButtonWithTitle:t(T_DELETE)];[a addButtonWithTitle:wb_ui_zh()?@"取消":@"Cancel"];if([a runModal]==NSAlertFirstButtonReturn)[self change:"delete"];}
-- (void)addModel{[self.window makeFirstResponder:nil];int row=wb_model_add();if(row<0){[self report:t(T_LIMIT)];return;}self.dirty=YES;[self.models reloadData];[self.models selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];[self.models scrollRowToVisible:row];NSTableCellView *cell=[self.models viewAtColumn:1 row:row makeIfNecessary:YES];cell.textField.editable=YES;cell.textField.selectable=YES;[self.window makeFirstResponder:cell.textField];[cell.textField selectText:self];}
+- (void)addModel{[self.window makeFirstResponder:nil];int row=wb_model_add();if(row<0){[self report:t(T_LIMIT)];return;}self.dirty=YES;[self.models reloadData];[self.models selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];[self.models scrollRowToVisible:row];[self editRow:row column:1];}
 - (void)removeModel{if(self.busy)return;[self.window makeFirstResponder:nil];NSIndexSet *rows=[self.models.selectedRowIndexes copy];if(!rows.count)return;[rows enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger row,BOOL *stop){(void)stop;wb_model_remove((int)row);}];[self.models deselectAll:nil];[self.models reloadData];NSInteger next=MIN((NSInteger)rows.firstIndex,wb_models_count()-1);if(next>=0)[self.models selectRowIndexes:[NSIndexSet indexSetWithIndex:next] byExtendingSelection:NO];self.dirty=YES;[self.window makeFirstResponder:self.models];}
 - (void)setControlsBusy:(BOOL)busy{self.busy=busy;for(NSControl *c in self.controls)c.enabled=!busy;self.list.enabled=!busy;self.models.enabled=!busy;}
 - (void)execute:(const char *)command{if(self.busy)return;[self.window makeFirstResponder:nil];[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);NSString *url=self.upstream.stringValue,*key=self.key.stringValue;BOOL fetch=strcmp(command,"fetch")==0;dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(fetch?wb_fetch(url.UTF8String,key.UTF8String):wb_command(command));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if(fetch&&[r hasPrefix:@"OK "]){[self.models reloadData];self.dirty=YES;}[self report:r];[self poll];});});}
