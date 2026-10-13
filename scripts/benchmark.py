@@ -55,7 +55,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='workbuddy-proxy-bench-') as folder:
         process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream.server_port}/v1',args.gui)
         try:
-            instance=json.loads(Path(folder,'instance.json').read_text())
+            instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
             pids=set([process.pid,instance.get('pid',process.pid)])
             total_rss=lambda:sum(rss_kib(pid) for pid in pids)
             time.sleep(1);idle=total_rss();core_idle=rss_kib(instance.get('pid',process.pid));peak=[idle];done=threading.Event()
