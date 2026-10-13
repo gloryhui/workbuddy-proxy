@@ -95,7 +95,7 @@ def main():
             user.PostMessageW(table,0x0201,1,point);user.PostMessageW(table,0x0202,0,point)
             user.PostMessageW(table,0x0203,1,point);user.PostMessageW(table,0x0202,0,point)
             enter(editor(),'Flash')
-            user.PostMessageW(h,0x0111,210,0) # Add model and edit its ID.
+            user.SendMessageW(h,0x0111,210,0) # Add model and edit its ID.
             enter(editor(),'other-model')
             user.PostMessageW(h,0x0111,201,0)
             for _ in range(200):
@@ -105,7 +105,7 @@ def main():
             else:raise AssertionError('Native model table save failed')
             assert entries[0]['name']=='Flash' and entries[1]['name']=='other-model' and entries[1]['model']=='other-model'
             for model in ['third-model','fourth-model']:
-                user.PostMessageW(h,0x0111,210,0);enter(editor(),model)
+                user.SendMessageW(h,0x0111,210,0);enter(editor(),model)
             user.PostMessageW(h,0x0111,201,0)
             for _ in range(200):
                 if len(profile()['providers'][0]['models'])==4:break
@@ -180,7 +180,7 @@ def main():
                     if not profile()['providers'][0]['models']:break
                     time.sleep(.025)
                 else:raise AssertionError('Delete did not remove the selected model')
-                user.PostMessageW(h,0x0111,210,0);edit=editor()
+                user.SendMessageW(h,0x0111,210,0);edit=editor()
                 value=ctypes.c_wchar_p('temporary-model');user.SendMessageW(edit,0x000C,0,ctypes.cast(value,ctypes.c_void_p).value)
                 user.SendMessageW(edit,0x00B1,len('temporary-model'),len('temporary-model'))
                 user.keybd_event(8,0,0,0);user.keybd_event(8,0,2,0);time.sleep(.12)
