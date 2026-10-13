@@ -17,6 +17,7 @@ extern void wb_free(char *value);
 #define WM_STOP (WM_APP+4)
 static HWND window,connectionList,nameEdit,keyEdit,modelEdit,urlEdit,effortCombo,statusLabel,buttons[8];
 static HFONT font;
+static HICON appIcon,smallIcon;
 static BOOL busy=FALSE;
 static NOTIFYICONDATAW tray;
 static BOOL trayAvailable=FALSE;
@@ -40,7 +41,8 @@ static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
     switch(msg){
         case WM_CREATE:{
             window=h;font=CreateFontW(-16,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,CLEARTYPE_QUALITY,DEFAULT_PITCH,L"Segoe UI");
-            control(L"STATIC",L"WorkBuddy Proxy",0,20,16,700,28,0);
+            HWND logo=control(L"STATIC",L"",SS_ICON,20,12,32,32,108);SendMessageW(logo,STM_SETICON,(WPARAM)appIcon,0);
+            control(L"STATIC",L"WorkBuddy Proxy",0,62,16,648,28,0);
             control(L"STATIC",L"供应商 / Providers",0,20,48,230,22,0);
             connectionList=control(L"LISTBOX",L"",WS_BORDER|LBS_NOTIFY|WS_VSCROLL|WS_TABSTOP,20,75,230,445,107);
             buttons[5]=control(L"BUTTON",L"新增",WS_TABSTOP,20,530,70,32,206);buttons[6]=control(L"BUTTON",L"复制",WS_TABSTOP,100,530,70,32,207);buttons[7]=control(L"BUTTON",L"删除",WS_TABSTOP,180,530,70,32,208);
@@ -54,7 +56,7 @@ static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
             buttons[0]=control(L"BUTTON",L"保存 / Save",WS_TABSTOP,270,450,130,32,201);buttons[1]=control(L"BUTTON",L"测试首项 / Test",WS_TABSTOP,415,450,130,32,202);buttons[2]=control(L"BUTTON",L"复制配置",WS_TABSTOP,560,450,150,32,203);
             buttons[3]=control(L"BUTTON",L"同步 WorkBuddy 列表",WS_TABSTOP,270,495,215,32,204);buttons[4]=control(L"BUTTON",L"恢复原配置 / Restore",WS_TABSTOP,500,495,210,32,205);
             statusLabel=control(L"STATIC",L"",0,270,545,440,65,0);refresh();char *state=wb_value("status");status(state);wb_free(state);
-            memset(&tray,0,sizeof(tray));tray.cbSize=sizeof(tray);tray.hWnd=h;tray.uID=1;tray.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;tray.uCallbackMessage=WM_TRAY;tray.hIcon=LoadIconW(NULL,IDI_APPLICATION);lstrcpyW(tray.szTip,L"WorkBuddy Proxy");trayAvailable=Shell_NotifyIconW(NIM_ADD,&tray);return 0;
+            memset(&tray,0,sizeof(tray));tray.cbSize=sizeof(tray);tray.hWnd=h;tray.uID=1;tray.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;tray.uCallbackMessage=WM_TRAY;tray.hIcon=smallIcon;lstrcpyW(tray.szTip,L"WorkBuddy Proxy");trayAvailable=Shell_NotifyIconW(NIM_ADD,&tray);return 0;
         }
         case WM_COMMAND:switch(LOWORD(w)){
             case 107:if(HIWORD(w)==LBN_SELCHANGE){wb_select((int)SendMessageW(connectionList,LB_GETCURSEL,0,0));fields();}return 0;
@@ -75,12 +77,12 @@ static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
     }return DefWindowProcW(h,msg,w,l);
 }
 void wb_native_run(void){
-    SetProcessDPIAware();taskbarCreated=RegisterWindowMessageW(L"TaskbarCreated");HINSTANCE instance=GetModuleHandleW(NULL);WNDCLASSW cls;memset(&cls,0,sizeof(cls));cls.lpfnWndProc=procedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hCursor=LoadCursorW(NULL,IDC_ARROW);cls.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);cls.hIcon=LoadIconW(NULL,IDI_APPLICATION);
+    SetProcessDPIAware();taskbarCreated=RegisterWindowMessageW(L"TaskbarCreated");HINSTANCE instance=GetModuleHandleW(NULL);appIcon=(HICON)LoadImageW(instance,MAKEINTRESOURCEW(1),IMAGE_ICON,GetSystemMetrics(SM_CXICON),GetSystemMetrics(SM_CYICON),LR_SHARED);smallIcon=(HICON)LoadImageW(instance,MAKEINTRESOURCEW(1),IMAGE_ICON,GetSystemMetrics(SM_CXSMICON),GetSystemMetrics(SM_CYSMICON),LR_SHARED);WNDCLASSW cls;memset(&cls,0,sizeof(cls));cls.lpfnWndProc=procedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hCursor=LoadCursorW(NULL,IDC_ARROW);cls.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);cls.hIcon=appIcon;
     if(!RegisterClassW(&cls)){MessageBoxW(NULL,L"Cannot register native window",L"WorkBuddy Proxy",MB_ICONERROR);return;}
     HWND h=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,CW_USEDEFAULT,CW_USEDEFAULT,750,660,NULL,NULL,instance,NULL);
-    if(!h){MessageBoxW(NULL,L"Cannot create settings window",L"WorkBuddy Proxy",MB_ICONERROR);return;}ShowWindow(h,SW_SHOW);UpdateWindow(h);
+    if(!h){MessageBoxW(NULL,L"Cannot create settings window",L"WorkBuddy Proxy",MB_ICONERROR);return;}SendMessageW(h,WM_SETICON,ICON_BIG,(LPARAM)appIcon);SendMessageW(h,WM_SETICON,ICON_SMALL,(LPARAM)smallIcon);ShowWindow(h,SW_SHOW);UpdateWindow(h);
     MSG message;while(GetMessageW(&message,NULL,0,0)>0){if(!IsDialogMessageW(h,&message)){TranslateMessage(&message);DispatchMessageW(&message);}}
 }
 void wb_native_show(void){HWND h=window?window:FindWindowW(L"WorkBuddyProxyWindow",NULL);if(h)PostMessageW(h,WM_SHOW,0,0);}
 void wb_native_quit(void){if(window)PostMessageW(window,WM_STOP,0,0);}
-void wb_native_error(const char *message){wchar_t *w=wide(message);MessageBoxW(NULL,w?w:L"Startup failed",L"WorkBuddy Proxy",MB_ICONERROR);free(w);}
+void wb_native_error(const char *message){wchar_t *w=wide(message);MSGBOXPARAMSW box;memset(&box,0,sizeof(box));box.cbSize=sizeof(box);box.hInstance=GetModuleHandleW(NULL);box.lpszText=w?w:L"Startup failed";box.lpszCaption=L"WorkBuddy Proxy";box.dwStyle=MB_USERICON;box.lpszIcon=MAKEINTRESOURCEW(1);MessageBoxIndirectW(&box);free(w);}

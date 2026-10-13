@@ -3,7 +3,9 @@
 import argparse
 import concurrent.futures
 import http.client
-import multiprocessing
+import contextlib
+import subprocess
+import sys
 import json
 import platform
 from pathlib import Path
@@ -15,16 +17,34 @@ import urllib.request
 from smoke import Mock, ThreadingHTTPServer, start, stop, request
 
 
-def mock_process(ready):
+def mock_process(marker):
     # Keep client and server in separate interpreters: a shared Python GIL can
     # add scheduler waits to pooled requests, particularly on Windows.
     class NullList:
         def append(self,value):pass
     Mock.received=NullList()
     server=ThreadingHTTPServer(('127.0.0.1',0),Mock)
-    ready.send(server.server_port);ready.close()
+    Path(marker).write_text(str(server.server_port),encoding='utf-8')
     try:server.serve_forever()
     finally:server.server_close()
+
+
+@contextlib.contextmanager
+def mock_server(directory):
+    marker=Path(directory)/'mock-port';log=Path(directory)/'mock-start.log'
+    with log.open('wb') as out:
+        child=subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'--mock-server',str(marker)],stdin=subprocess.DEVNULL,stdout=out,stderr=out)
+        try:
+            for _ in range(600):
+                if child.poll() is not None:raise AssertionError('Mock exited: '+log.read_text(encoding='utf-8',errors='replace')[:8192])
+                try:
+                    port=int(marker.read_text(encoding='utf-8'));break
+                except (OSError,ValueError):time.sleep(.05)
+            else:raise AssertionError('Mock process did not start')
+            yield port
+        finally:
+            if child.poll() is None:child.terminate()
+            child.wait(timeout=5)
 
 
 def rss_kib(pid):
@@ -61,11 +81,7 @@ def percentiles(values):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--output',required=True)
     p.add_argument('--requests',type=int,default=200);p.add_argument('--models',type=int,default=64);p.add_argument('--gui',action='store_true');args=p.parse_args()
-    ctx=multiprocessing.get_context('spawn');ready,writer=ctx.Pipe(duplex=False)
-    upstream=ctx.Process(target=mock_process,args=(writer,),daemon=True);upstream.start();writer.close()
-    if not ready.poll(10):upstream.terminate();upstream.join();raise AssertionError('Mock process did not start')
-    upstream_port=ready.recv();ready.close()
-    with tempfile.TemporaryDirectory(prefix='workbuddy-proxy-bench-') as folder:
+    with tempfile.TemporaryDirectory(prefix='workbuddy-proxy-bench-') as folder, mock_server(folder) as upstream_port:
         process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream_port}/v1',args.gui)
         try:
             instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
@@ -112,7 +128,8 @@ def main():
                 'notes':'RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.'}
             Path(args.output).parent.mkdir(parents=True,exist_ok=True);Path(args.output).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
         finally: stop(process,port,folder,log)
-    upstream.terminate();upstream.join(timeout=5)
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    if len(sys.argv)==3 and sys.argv[1]=='--mock-server':mock_process(sys.argv[2])
+    else:main()

@@ -39,17 +39,35 @@ def main():
     with tempfile.TemporaryDirectory(prefix='workbuddy-lifecycle-') as directory:
         config={'api_key':'fixture-key','local_key':'fixture-local','upstream':'https://opencode.ai/zen/go/v1','model':'deepseek-v4.1-flash','port':free_port(),'installed':None}
         Path(directory,'config.json').write_text(json.dumps(config))
+        def profile():
+            for attempt in range(20):
+                try:return json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))
+                except PermissionError:
+                    if attempt==19:raise
+                    time.sleep(.005) # MoveFileEx can hold a brief replacement lock.
         command=[exe,'--config-dir',directory];first=subprocess.Popen(command)
         second=None;core=None
         try:
             h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
             assert core['pid']!=first.pid
+            # The real window, taskbar and header use embedded application icons.
+            big=user.SendMessageW(h,0x007F,1,0);small=user.SendMessageW(h,0x007F,0,0)
+            assert big and small,'Application icon is missing'
+            logo=user.GetDlgItem(h,108);assert logo
+            assert user.SendMessageW(logo,0x0171,0,0)==big,'Settings header icon differs'
+            kernel=ctypes.WinDLL('kernel32');kernel.LoadLibraryExW.argtypes=[wintypes.LPCWSTR,wintypes.HANDLE,wintypes.DWORD];kernel.LoadLibraryExW.restype=wintypes.HMODULE
+            kernel.FindResourceW.argtypes=[wintypes.HMODULE,wintypes.LPCWSTR,wintypes.LPCWSTR];kernel.FindResourceW.restype=wintypes.HANDLE
+            kernel.FreeLibrary.argtypes=[wintypes.HMODULE]
+            module=kernel.LoadLibraryExW(exe,None,0x2|0x20);assert module
+            try:assert kernel.FindResourceW(module,ctypes.cast(ctypes.c_void_p(1),wintypes.LPCWSTR),ctypes.cast(ctypes.c_void_p(14),wintypes.LPCWSTR)),'Executable icon group is missing'
+            finally:kernel.FreeLibrary(module)
+
             combo=user.GetDlgItem(h,104);assert combo
             assert user.SendMessageW(combo,0x0146,0,0)==6, 'Thinking selector is missing choices'
             user.SendMessageW(combo,0x014E,3,0) # select High
             user.PostMessageW(h,0x0111,201,0) # Save through actual native UI / FFI
             for _ in range(200):
-                if json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers'][0]['models'][0].get('reasoning_effort')=='high':break
+                if profile()['providers'][0]['models'][0].get('reasoning_effort')=='high':break
                 time.sleep(.025)
             else:raise AssertionError('Native Save did not persist thinking effort')
             # Edit the actual Win32 multiline model control, then save through FFI.
@@ -58,7 +76,7 @@ def main():
             user.SendMessageW(model_edit,0x000C,0,ctypes.cast(model_text,ctypes.c_void_p).value)
             user.PostMessageW(h,0x0111,201,0)
             for _ in range(200):
-                entries=json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers'][0]['models']
+                entries=profile()['providers'][0]['models']
                 if len(entries)==2:break
                 time.sleep(.025)
             else:raise AssertionError('Native multiline model save failed')
@@ -67,14 +85,14 @@ def main():
             assert user.SendMessageW(listing,0x018B,0,0)==1 # LB_GETCOUNT
             user.PostMessageW(h,0x0111,207,0) # Duplicate the selected configured connection
             for _ in range(200):
-                saved=json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers']
+                saved=profile()['providers']
                 if len(saved)==2:break
                 time.sleep(.025)
             else:raise AssertionError('Native Duplicate did not add a connection')
             assert saved[0]['api_key']==saved[1]['api_key'] and saved[0]['models'][0]['alias']!=saved[1]['models'][0]['alias']
             user.PostMessageW(h,0x0111,208,0) # Delete duplicate, leaves original configured connection
             for _ in range(200):
-                if len(json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers'])==1:break
+                if len(profile()['providers'])==1:break
                 time.sleep(.025)
             else:raise AssertionError('Native Delete failed')
             for message,wparam in [(0x0010,0),(0x0112,0xF020)]: # Close; minimize system command
@@ -99,7 +117,7 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Tray Quit left the core running')
             core=None
-            print('PASS: native effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
+            print('PASS: embedded executable/window/header icons; native effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
         finally:
             for process in [first,second]:
                 if process is not None and process.poll() is None:process.terminate();process.wait(timeout=5)

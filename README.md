@@ -1,5 +1,7 @@
 # WorkBuddy Proxy
 
+<img src="assets/icon-128.png" width="72" alt="WorkBuddy Proxy">
+
 专门给 WorkBuddy 使用的轻量模型代理。Rust 转发核心，Windows Win32 / macOS AppKit 原生界面，支持多个供应商和多个模型连接，同一家或不同家、同模型 ID 或不同模型 ID 均可独立列出。支持 OpenAI Chat Completions 与 OpenCode Go。
 
 ![Mac 原生设置窗口](docs/native-mac-preview.png)
@@ -12,7 +14,7 @@
 
 - Windows 10/11 x64：解压，双击 `workbuddy-proxy.exe`，直接显示原生设置窗口。关闭或最小化窗口时隐藏到任务栏托盘，转发继续。单击托盘或再次双击程序可恢复设置；右键托盘“退出”停止程序。Explorer 重启后会重新注册托盘。
 - macOS 12+：解压，将 `WorkBuddy Proxy.app` 拖到“应用程序”，双击启动。关闭设置窗口后界面进程退出，转发核心继续运行；再次双击可重新打开设置。
-- 无需安装 Rust、Python、Node 或额外 WebView 运行时。
+- 无需安装 Rust、Python、Node 或额外 WebView 运行时。程序、Windows 托盘 / 任务栏、Mac 菜单栏和设置窗口均使用项目主图标。
 
 1. 左侧新增一个供应商，只填写一次**供应商名称、OpenAI 兼容地址和 API Key**。支持任意实现 OpenAI Chat Completions 的上游；OpenCode Go 只是其中一家。
 2. 在“模型列表”中**每行填写一个真实模型 ID**，也可用 `ID | 显示名称` 自定义列表名称。例如：

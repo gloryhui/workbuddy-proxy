@@ -18,8 +18,9 @@ def main():
         if args.platform.startswith('macos'):
             app=root/'WorkBuddy Proxy.app';contents=app/'Contents';binaries=contents/'MacOS';binaries.mkdir(parents=True)
             exe=binaries/'workbuddy-proxy';shutil.copy(args.exe,exe);exe.chmod(0o755)
+            resources=contents/'Resources';resources.mkdir();shutil.copy('assets/app-icon.icns',resources/'app-icon.icns')
             with (contents/'Info.plist').open('wb') as f:
-                plistlib.dump({'CFBundleName':'WorkBuddy Proxy','CFBundleDisplayName':'WorkBuddy Proxy','CFBundleIdentifier':'io.github.gloryhui.workbuddy-proxy','CFBundleExecutable':'workbuddy-proxy','CFBundlePackageType':'APPL','CFBundleShortVersionString':args.version,'CFBundleVersion':'1','LSMinimumSystemVersion':'12.0','LSUIElement':True,'NSHighResolutionCapable':True},f)
+                plistlib.dump({'CFBundleName':'WorkBuddy Proxy','CFBundleDisplayName':'WorkBuddy Proxy','CFBundleIdentifier':'io.github.gloryhui.workbuddy-proxy','CFBundleExecutable':'workbuddy-proxy','CFBundlePackageType':'APPL','CFBundleIconFile':'app-icon.icns','CFBundleShortVersionString':args.version,'CFBundleVersion':'1','LSMinimumSystemVersion':'12.0','LSUIElement':True,'NSHighResolutionCapable':True},f)
             subprocess.run(['codesign','--force','--sign','-',str(app)],check=True)
             subprocess.run(['codesign','--verify','--strict',str(app)],check=True)
         else:

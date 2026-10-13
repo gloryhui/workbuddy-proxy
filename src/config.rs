@@ -252,9 +252,19 @@ fn replace_file(src: &Path, dst: &Path) -> Result<(), String> {
     }
     let from: Vec<u16> = src.as_os_str().encode_wide().chain(Some(0)).collect();
     let to: Vec<u16> = dst.as_os_str().encode_wide().chain(Some(0)).collect();
-    if unsafe { MoveFileExW(from.as_ptr(), to.as_ptr(), 1 | 8) } == 0 {
-        return Err(std::io::Error::last_os_error().to_string());
+    for attempt in 0..6 {
+        if unsafe { MoveFileExW(from.as_ptr(), to.as_ptr(), 1 | 8) } != 0 {
+            return Ok(());
+        }
+        let error = std::io::Error::last_os_error();
+        if attempt == 5 || !matches!(error.raw_os_error(), Some(5 | 32 | 33)) {
+            return Err(error.to_string());
+        }
+        // Antivirus/file readers may briefly hold the destination during an
+        // atomic replace. Keep retries bounded and outside the forwarding path.
+        std::thread::sleep(std::time::Duration::from_millis(5));
     }
+
     Ok(())
 }
 impl Config {

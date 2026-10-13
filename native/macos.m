@@ -1,6 +1,7 @@
 #import <AppKit/AppKit.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "icon_png.h"
 extern char *wb_value(const char *name);
 extern char *wb_save(const char *name,const char *key,const char *model,const char *upstream,const char *effort);
 extern void wb_select(int index);
@@ -8,6 +9,7 @@ extern char *wb_command(const char *name);
 extern void wb_free(char *value);
 static NSString *take(char *p){NSString *s=p?[NSString stringWithUTF8String:p]:@"Internal error";wb_free(p);return s?:@"Internal error";}
 static NSString *value(const char *name){return take(wb_value(name));}
+static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;dispatch_once(&once,^{icon=[[NSImage alloc]initWithData:[NSData dataWithBytes:WB_ICON_PNG length:sizeof(WB_ICON_PNG)]];icon.accessibilityDescription=@"WorkBuddy Proxy";});return icon;}
 @interface ProxyUI:NSObject<NSApplicationDelegate,NSWindowDelegate,NSTableViewDataSource,NSTableViewDelegate>
 @property NSWindow *window;
 @property NSStatusItem *item;
@@ -30,10 +32,11 @@ static void stopUI(void){[NSApp stop:nil];NSEvent *event=[NSEvent otherEventWith
 - (NSButton *)button:(NSString *)title action:(SEL)action x:(CGFloat)x y:(CGFloat)y width:(CGFloat)width{NSButton *b=[NSButton buttonWithTitle:title target:self action:action];b.frame=NSMakeRect(x,y,width,32);[self.window.contentView addSubview:b];[self.buttons addObject:b];return b;}
 - (void)applicationDidFinishLaunching:(NSNotification *)notification{
     (void)notification;self.buttons=[NSMutableArray array];self.rows=@[];
-    self.item=[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];self.item.button.image=[NSImage imageWithSystemSymbolName:@"arrow.left.arrow.right" accessibilityDescription:@"WorkBuddy Proxy"];
+    self.item=[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];NSImage *menuIcon=[appIcon() copy];menuIcon.size=NSMakeSize(18,18);menuIcon.template=NO;self.item.button.image=menuIcon;self.item.button.imageScaling=NSImageScaleProportionallyDown;
     NSMenu *menu=[NSMenu new];NSMenuItem *settings=[[NSMenuItem alloc]initWithTitle:@"设置 / Settings" action:@selector(show) keyEquivalent:@""];settings.target=self;[menu addItem:settings];NSMenuItem *quit=[[NSMenuItem alloc]initWithTitle:@"退出 / Quit" action:@selector(quit) keyEquivalent:@"q"];quit.target=self;[menu addItem:quit];self.item.menu=menu;
     self.window=[[NSWindow alloc]initWithContentRect:NSMakeRect(0,0,780,650) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable backing:NSBackingStoreBuffered defer:NO];self.window.title=@"WorkBuddy Proxy";self.window.delegate=self;self.window.releasedWhenClosed=NO;
-    NSTextField *heading=[self label:@"WorkBuddy Proxy" frame:NSMakeRect(20,602,730,28)];heading.font=[NSFont boldSystemFontOfSize:20];
+    NSImageView *logo=[[NSImageView alloc]initWithFrame:NSMakeRect(20,599,36,36)];logo.image=appIcon();logo.imageScaling=NSImageScaleProportionallyUpOrDown;[self.window.contentView addSubview:logo];
+    NSTextField *heading=[self label:@"WorkBuddy Proxy" frame:NSMakeRect(66,602,684,28)];heading.font=[NSFont boldSystemFontOfSize:20];
     [self label:@"供应商 / Providers" frame:NSMakeRect(20,569,240,20)];
     NSScrollView *scroll=[[NSScrollView alloc]initWithFrame:NSMakeRect(20,183,240,376)];scroll.hasVerticalScroller=YES;scroll.borderType=NSBezelBorder;
     self.list=[[NSTableView alloc]initWithFrame:scroll.bounds];NSTableColumn *column=[[NSTableColumn alloc]initWithIdentifier:@"connection"];column.width=230;[self.list addTableColumn:column];self.list.headerView=nil;self.list.rowHeight=30;self.list.dataSource=self;self.list.delegate=self;self.list.allowsEmptySelection=NO;scroll.documentView=self.list;[self.window.contentView addSubview:scroll];
@@ -64,7 +67,7 @@ static void stopUI(void){[NSApp stop:nil];NSEvent *event=[NSEvent otherEventWith
 - (void)copyConfiguration{NSString *r=take(wb_command("copy"));if([r hasPrefix:@"OK "]){NSPasteboard *p=[NSPasteboard generalPasteboard];[p clearContents];[p setString:[r substringFromIndex:3] forType:NSPasteboardTypeString];self.status.stringValue=@"配置已复制 / Configuration copied";}else self.status.stringValue=r;}
 - (void)quit{wb_free(wb_command("quit"));stopUI();}
 @end
-void wb_native_run(void){@autoreleasepool{[NSApplication sharedApplication];[NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];ui=[ProxyUI new];NSApp.delegate=ui;[NSApp run];ui=nil;}}
+void wb_native_run(void){@autoreleasepool{[NSApplication sharedApplication];NSApp.applicationIconImage=appIcon();[NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];ui=[ProxyUI new];NSApp.delegate=ui;[NSApp run];ui=nil;}}
 void wb_native_show(void){if(ui){dispatch_async(dispatch_get_main_queue(),^{[ui show];});}else{for(NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:@"io.github.gloryhui.workbuddy-proxy"]){if(app.processIdentifier!=getpid())[app activateWithOptions:NSApplicationActivateIgnoringOtherApps];}}}
 void wb_native_quit(void){dispatch_async(dispatch_get_main_queue(),^{[ui quit];});}
-void wb_native_error(const char *message){@autoreleasepool{[NSApplication sharedApplication];NSAlert *alert=[NSAlert new];alert.messageText=@"WorkBuddy Proxy";alert.informativeText=[NSString stringWithUTF8String:message]?:@"Startup failed";[alert runModal];}}
+void wb_native_error(const char *message){@autoreleasepool{[NSApplication sharedApplication];NSAlert *alert=[NSAlert new];alert.icon=appIcon();alert.messageText=@"WorkBuddy Proxy";alert.informativeText=[NSString stringWithUTF8String:message]?:@"Startup failed";[alert runModal];}}
