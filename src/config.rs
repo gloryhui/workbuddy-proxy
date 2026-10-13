@@ -10,14 +10,130 @@ pub const DEFAULT_MODEL: &str = "deepseek-v4.1-flash";
 pub const DEFAULT_UPSTREAM: &str = "https://opencode.ai/zen/go/v1";
 pub const DEFAULT_PORT: u16 = 18080;
 
-pub const MAX_CONNECTIONS: usize = 64;
+pub const MAX_PROVIDERS: usize = 64;
+pub const MAX_MODELS: usize = 256;
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Config {
     pub local_key: String,
     pub port: u16,
-    pub connections: Vec<Connection>,
+    pub providers: Vec<Provider>,
     pub installed: Vec<Installation>,
+}
+#[derive(Clone, Serialize, Deserialize)]
+#[serde(default)]
+pub struct Provider {
+    pub id: String,
+    pub name: String,
+    pub upstream: String,
+    pub api_key: String,
+    pub models: Vec<Model>,
+}
+#[derive(Clone, Serialize, Deserialize)]
+#[serde(default)]
+pub struct Model {
+    pub id: String,
+    pub alias: String,
+    pub name: String,
+    pub model: String,
+    pub reasoning_effort: String,
+}
+impl Default for Provider {
+    fn default() -> Self {
+        Self {
+            id: token()[..12].into(),
+            name: "供应商 1".into(),
+            upstream: "https://api.openai.com/v1".into(),
+            api_key: String::new(),
+            models: Vec::new(),
+        }
+    }
+}
+impl Default for Model {
+    fn default() -> Self {
+        let c = Connection::default();
+        Self {
+            id: c.id,
+            alias: c.alias,
+            name: DEFAULT_MODEL.into(),
+            model: c.model,
+            reasoning_effort: c.reasoning_effort,
+        }
+    }
+}
+impl Model {
+    pub fn new(model: &str, name: &str) -> Self {
+        let mut m = Self {
+            model: model.into(),
+            name: name.into(),
+            ..Default::default()
+        };
+        m.refresh_alias();
+        m
+    }
+    pub fn refresh_alias(&mut self) {
+        self.alias = format!("wbp-{}/{}", self.id, self.model);
+    }
+}
+impl Provider {
+    pub fn label(&self) -> String {
+        format!("{} · {} 个模型", self.name, self.models.len())
+    }
+    pub fn model_lines(&self) -> String {
+        self.models
+            .iter()
+            .map(|m| {
+                if m.name == m.model {
+                    m.model.clone()
+                } else {
+                    format!("{} | {}", m.model, m.name)
+                }
+            })
+            .collect::<Vec<_>>()
+            .join("\n")
+    }
+    pub fn effort(&self) -> &str {
+        let first = self
+            .models
+            .first()
+            .map_or("default", |m| m.reasoning_effort.as_str());
+        if self.models.iter().all(|m| m.reasoning_effort == first) {
+            first
+        } else {
+            "keep"
+        }
+    }
+    // Preserve IDs, aliases and per-model options when editing the supplier's list.
+    pub fn set_models(&mut self, lines: &str, effort: &str) -> Result<(), String> {
+        if !matches!(effort, "keep" | "default" | "none" | "low" | "high" | "max") {
+            return Err("Invalid thinking effort".into());
+        }
+        let mut old = self.models.clone();
+        let mut models = Vec::new();
+        for line in lines.lines().map(str::trim).filter(|s| !s.is_empty()) {
+            if models.len() >= MAX_MODELS {
+                return Err("最多 256 个模型 / At most 256 models".into());
+            }
+            let (id, name) = line
+                .split_once('|')
+                .map_or((line, line), |(a, b)| (a.trim(), b.trim()));
+            if id.is_empty() || name.is_empty() {
+                return Err("每行填写模型 ID，可用 ID | 名称 / Invalid model line".into());
+            }
+            let found = old
+                .iter()
+                .position(|m| m.model == id && m.name == name)
+                .or_else(|| old.iter().position(|m| m.model == id));
+            let mut m = found.map_or_else(|| Model::new(id, name), |i| old.remove(i));
+            m.name = name.into();
+            if effort != "keep" {
+                m.reasoning_effort = effort.into();
+            }
+            models.push(m);
+        }
+        self.models = models;
+        Ok(())
+    }
 }
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(default)]
@@ -43,7 +159,7 @@ impl Default for Config {
         Self {
             local_key: token(),
             port: DEFAULT_PORT,
-            connections: vec![Connection::default()],
+            providers: vec![Provider::default()],
             installed: Vec::new(),
         }
     }
@@ -66,9 +182,6 @@ impl Default for Connection {
 impl Connection {
     pub fn label(&self) -> String {
         format!("{} · {} · {}", self.name, self.provider, self.model)
-    }
-    pub fn refresh_alias(&mut self) {
-        self.alias = format!("wbp-{}/{}", self.id, self.model);
     }
 }
 pub fn token() -> String {
@@ -161,8 +274,8 @@ impl Config {
         if !value.is_object() {
             return Err("Invalid config.json object; no file was changed".into());
         }
-        let legacy = value.get("connections").is_none();
-        let mut c: Self = if legacy {
+        let legacy = value.get("providers").is_none();
+        let mut c: Self = if legacy && value.get("connections").is_none() {
             #[derive(Deserialize)]
             #[serde(default)]
             struct Legacy {
@@ -200,8 +313,25 @@ impl Config {
             Self {
                 local_key: old.local_key,
                 port: old.port,
-                connections: vec![connection],
+                providers: Self::group(vec![connection]),
                 installed: old.installed.into_iter().collect(),
+            }
+        } else if legacy {
+            #[derive(Deserialize)]
+            struct Flat {
+                local_key: String,
+                port: u16,
+                connections: Vec<Connection>,
+                #[serde(default)]
+                installed: Vec<Installation>,
+            }
+            let old: Flat = serde_json::from_value(value)
+                .map_err(|_| "Invalid v0.2 config.json; no file was changed")?;
+            Self {
+                local_key: old.local_key,
+                port: old.port,
+                providers: Self::group(old.connections),
+                installed: old.installed,
             }
         } else {
             serde_json::from_value(value).map_err(|_| "Invalid config.json; no file was changed")?
@@ -212,7 +342,7 @@ impl Config {
         }
         c.validate()?;
         if legacy {
-            let backup = dir.join(format!("config.pre-v0.2-{}.bak", token()));
+            let backup = dir.join(format!("config.pre-v0.3-{}.bak", token()));
             fs::copy(&path, &backup).map_err(|e| e.to_string())?;
             #[cfg(unix)]
             {
@@ -226,54 +356,130 @@ impl Config {
         }
         Ok(c)
     }
+    fn group(connections: Vec<Connection>) -> Vec<Provider> {
+        let mut providers: Vec<Provider> = Vec::new();
+        for c in connections {
+            let found = providers.iter().position(|p| {
+                p.name == c.provider && p.upstream == c.upstream && p.api_key == c.api_key
+            });
+            let i = found.unwrap_or_else(|| {
+                providers.push(Provider {
+                    name: c.provider.clone(),
+                    upstream: c.upstream.clone(),
+                    api_key: c.api_key.clone(),
+                    ..Default::default()
+                });
+                providers.len() - 1
+            });
+            providers[i].models.push(Model {
+                id: c.id,
+                alias: c.alias,
+                name: c.name,
+                model: c.model,
+                reasoning_effort: c.reasoning_effort,
+            });
+        }
+        let mut names = std::collections::HashSet::new();
+        for p in &mut providers {
+            let root = p.name.clone();
+            let mut n = 2;
+            while !names.insert(p.name.clone()) {
+                p.name = format!("{root} {n}");
+                n += 1;
+            }
+        }
+        providers
+    }
+    pub fn connections(&self) -> Vec<Connection> {
+        self.providers
+            .iter()
+            .flat_map(|p| {
+                p.models.iter().map(move |m| Connection {
+                    id: m.id.clone(),
+                    alias: m.alias.clone(),
+                    name: m.name.clone(),
+                    model: m.model.clone(),
+                    reasoning_effort: m.reasoning_effort.clone(),
+                    provider: p.name.clone(),
+                    upstream: p.upstream.clone(),
+                    api_key: p.api_key.clone(),
+                })
+            })
+            .collect()
+    }
     pub fn validate(&self) -> Result<(), String> {
-        if self.connections.len() > MAX_CONNECTIONS {
-            return Err("At most 64 connections / 最多 64 个连接".into());
+        if self.providers.len() > MAX_PROVIDERS
+            || self.providers.iter().map(|p| p.models.len()).sum::<usize>() > MAX_MODELS
+        {
+            return Err("最多 64 个供应商、合计 256 个模型 / Configuration limit exceeded".into());
         }
         let mut ids = std::collections::HashSet::new();
         let mut aliases = std::collections::HashSet::new();
         let mut names = std::collections::HashSet::new();
-        for c in &self.connections {
+        for p in &self.providers {
+            let c = Connection {
+                id: p.id.clone(),
+                name: p.name.clone(),
+                provider: p.name.clone(),
+                upstream: p.upstream.clone(),
+                api_key: p.api_key.clone(),
+                ..Default::default()
+            };
             c.validate()?;
-            if !ids.insert(&c.id) || !aliases.insert(&c.alias) || !names.insert(&c.name) {
-                return Err(
-                    "Connection IDs and list names must be unique / 连接标识和列表名称不可重复"
-                        .into(),
-                );
+            if !ids.insert(p.id.clone()) || !names.insert(&p.name) {
+                return Err("供应商名称和标识不可重复 / Duplicate provider".into());
+            }
+            let mut model_names = std::collections::HashSet::new();
+            for m in &p.models {
+                let c = Connection {
+                    id: m.id.clone(),
+                    alias: m.alias.clone(),
+                    name: m.name.clone(),
+                    model: m.model.clone(),
+                    reasoning_effort: m.reasoning_effort.clone(),
+                    ..c.clone()
+                };
+                c.validate()?;
+                if !ids.insert(m.id.clone())
+                    || !aliases.insert(&m.alias)
+                    || !model_names.insert(&m.name)
+                {
+                    return Err("模型标识和同供应商内的显示名称不可重复 / Duplicate model".into());
+                }
             }
         }
         Ok(())
     }
-    pub fn connection(&self, id: &str) -> Result<&Connection, String> {
-        if id.is_empty() && self.connections.len() == 1 {
-            return Ok(&self.connections[0]);
+    pub fn provider(&self, id: &str) -> Result<&Provider, String> {
+        if id.is_empty() && self.providers.len() == 1 {
+            return Ok(&self.providers[0]);
         }
-        self.connections
+        self.providers
             .iter()
-            .find(|c| c.id == id)
-            .ok_or("Select a connection / 请选择连接".into())
+            .find(|p| p.id == id || p.models.iter().any(|m| m.id == id))
+            .ok_or("请选择供应商 / Select a provider".into())
     }
-    pub fn resolve(&self, route: Option<&str>, model: &str) -> Result<Connection, String> {
-        if let Some(route) = route {
-            let c = self.connection(route)?;
-            if model != c.alias && model != c.model {
-                return Err("Model does not belong to this connection".into());
-            }
-            return Ok(c.clone());
-        }
-        if let Some(c) = self.connections.iter().find(|c| c.alias == model) {
-            return Ok(c.clone());
-        }
-        let mut matching = self.connections.iter().filter(|c| c.model == model);
-        let first = matching
-            .next()
-            .ok_or("Unknown model alias / 未知模型标识")?;
-        if matching.next().is_some() {
-            return Err("Ambiguous model ID; use the connection alias or its URL / 同名模型请使用独立列表项".into());
-        }
-        Ok(first.clone())
+    pub fn connection(&self, id: &str) -> Result<Connection, String> {
+        let p = self.provider(id)?;
+        let m = p
+            .models
+            .iter()
+            .find(|m| m.id == id)
+            .or_else(|| p.models.first())
+            .ok_or("请先添加模型 / Add a model first")?;
+        Ok(Connection {
+            id: m.id.clone(),
+            alias: m.alias.clone(),
+            name: m.name.clone(),
+            model: m.model.clone(),
+            reasoning_effort: m.reasoning_effort.clone(),
+            provider: p.name.clone(),
+            upstream: p.upstream.clone(),
+            api_key: p.api_key.clone(),
+        })
     }
 }
+
 impl Connection {
     pub fn validate(&self) -> Result<(), String> {
         if self.id.len() < 4
@@ -350,83 +556,77 @@ impl Connection {
 mod tests {
     use super::*;
     #[test]
-    fn url_rules_and_roundtrip() {
-        let dir = tempfile::tempdir().unwrap();
-        let c = Config::load(dir.path()).unwrap();
-        assert_eq!(
-            c.connections[0].endpoint(),
-            "https://opencode.ai/zen/go/v1/chat/completions"
-        );
-        let mut d = c.connections[0].clone();
-        d.upstream = "https://evil.example/path?key=secret".into();
-        assert!(d.validate().is_err());
-        d.upstream = "http://127.0.0.1:1234/v1".into();
-        assert!(d.validate().is_ok());
-        d.upstream = "http://example.com/v1".into();
-        assert!(d.validate().is_err());
-        assert_eq!(c.connections[0].reasoning_effort, "default");
-        d.upstream = DEFAULT_UPSTREAM.into();
-        d.reasoning_effort = "ultra".into();
-        assert!(d.validate().is_err());
-        assert_eq!(c.local_key, Config::load(dir.path()).unwrap().local_key);
-    }
-    #[test]
-    fn legacy_migrates_without_losing_key_or_installation() {
+    fn migration_groups_credentials_and_keeps_routes() {
         let dir = tempfile::tempdir().unwrap();
         let p = dir.path().join("config.json");
-        let old = serde_json::json!({"api_key":"secret-fixture","local_key":"keep-local","model":"deepseek-v4.1-flash","upstream":DEFAULT_UPSTREAM,"port":19000,"installed":{"id":"deepseek-v4.1-flash","previous":{"id":"old"}}});
+        let mut a = Connection {
+            name: "one".into(),
+            api_key: "fixture".into(),
+            ..Default::default()
+        };
+        a.alias = format!("wbp-{}/{}", a.id, a.model);
+        let mut b = a.clone();
+        b.id = "second-route".into();
+        b.name = "two".into();
+        b.alias = format!("wbp-{}/{}", b.id, b.model);
+        let mut c = b.clone();
+        c.id = "third-route".into();
+        c.api_key = "other-key".into();
+        c.alias = format!("wbp-{}/{}", c.id, c.model);
+        let old = serde_json::json!({"local_key":"keep","port":19000,"connections":[a,b,c],"installed":[{"id":"saved","previous":null}]});
         write_json(&p, &old).unwrap();
-        let c = Config::load(dir.path()).unwrap();
-        assert_eq!(c.local_key, "keep-local");
-        assert_eq!(c.connections[0].api_key, "secret-fixture");
-        assert_eq!(c.connections[0].alias, "deepseek-v4.1-flash");
-        assert_eq!(c.port, 19000);
-        assert_eq!(c.installed.len(), 1);
-        let id = c.connections[0].id.clone();
-        assert_eq!(Config::load(dir.path()).unwrap().connections[0].id, id);
+        let cfg = Config::load(dir.path()).unwrap();
+        assert_eq!(cfg.providers.len(), 2);
+        assert_eq!(cfg.providers[0].models.len(), 2);
+        assert_eq!(cfg.connections()[0].alias, a.alias);
+        assert_eq!(cfg.connections()[1].id, b.id);
+        assert_eq!(cfg.local_key, "keep");
+        assert_eq!(cfg.port, 19000);
+        assert_eq!(cfg.installed.len(), 1);
+        assert_eq!(
+            Config::load(dir.path()).unwrap().providers[0].id,
+            cfg.providers[0].id
+        );
         assert!(fs::read_dir(dir.path()).unwrap().any(|e| {
             e.unwrap()
                 .file_name()
                 .to_string_lossy()
-                .starts_with("config.pre-v0.2-")
+                .starts_with("config.pre-v0.3-")
         }));
     }
     #[test]
-    fn every_provider_and_model_combination_routes_independently() {
-        let mut cfg = Config {
-            connections: Vec::new(),
-            ..Default::default()
-        };
-        for (i, (provider, model)) in [
-            ("A", "same"),
-            ("A", "same"),
-            ("A", "different"),
-            ("B", "same"),
-            ("B", "different"),
-        ]
-        .into_iter()
-        .enumerate()
-        {
-            let mut c = Connection {
-                name: format!("connection {i}"),
-                provider: provider.into(),
-                model: model.into(),
-                ..Default::default()
-            };
-            c.refresh_alias();
-            cfg.connections.push(c);
-        }
+    fn legacy_migration_and_model_edits_keep_aliases() {
+        let dir = tempfile::tempdir().unwrap();
+        let p = dir.path().join("config.json");
+        write_json(
+            &p,
+            &serde_json::json!({"api_key":"fixture","local_key":"keep","model":DEFAULT_MODEL}),
+        )
+        .unwrap();
+        let mut cfg = Config::load(dir.path()).unwrap();
+        assert_eq!(cfg.connections()[0].alias, DEFAULT_MODEL);
+        let p = &mut cfg.providers[0];
+        let id = p.models[0].id.clone();
+        p.set_models(&format!("{DEFAULT_MODEL} | Renamed\nother-model"), "keep")
+            .unwrap();
+        assert_eq!(p.models[0].id, id);
+        assert_eq!(p.models[0].alias, DEFAULT_MODEL);
+        assert_eq!(p.models.len(), 2);
         cfg.validate().unwrap();
-        for c in &cfg.connections {
-            assert_eq!(cfg.resolve(None, &c.alias).unwrap().id, c.id);
-            assert_eq!(cfg.resolve(Some(&c.id), &c.model).unwrap().id, c.id);
-        }
-        assert!(cfg.resolve(None, "same").is_err());
-        assert!(cfg.resolve(None, "different").is_err());
-        assert!(
-            cfg.resolve(Some(&cfg.connections[0].id), "different")
-                .is_err()
-        );
+    }
+    #[test]
+    fn limits_and_url_validation() {
+        let mut cfg = Config::default();
+        cfg.providers[0]
+            .set_models("same | One\nsame | Two\nother", "default")
+            .unwrap();
+        cfg.validate().unwrap();
+        cfg.providers[0].upstream = "https://example.com/v1?key=secret".into();
+        assert!(cfg.validate().is_err());
+        cfg.providers[0].upstream = "http://127.0.0.1:1234/v1".into();
+        cfg.validate().unwrap();
+        cfg.providers[0].models[1].name = "One".into();
+        assert!(cfg.validate().is_err());
     }
     #[test]
     fn atomic_replacement() {

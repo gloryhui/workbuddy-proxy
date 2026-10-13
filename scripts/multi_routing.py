@@ -4,6 +4,7 @@ import argparse
 import concurrent.futures
 from http.server import BaseHTTPRequestHandler
 import json
+import http.client
 import os
 from pathlib import Path
 import subprocess
@@ -27,15 +28,19 @@ class Mock(BaseHTTPRequestHandler):
             assert body['messages'][0]['content']=='fixture'
             assert body['tools']==[{'type':'function','function':{'name':'fixture','parameters':{'type':'object'}}}]
             self.server.seen.append((key,body['model'],body.get('reasoning_effort'),body.get('thinking')))
+            self.server.raw.append(data)
+            assert self.headers['X-Fixture']=='transparent'
+            assert self.path.endswith('?fixture=a%2Fb')
+            assert self.headers.get('X-Hop') is None
         tag=self.server.label+'|'+key+'|'+body['model']
         result=('data: '+json.dumps({'choices':[{'delta':{'content':tag}}]})+'\n\ndata: [DONE]\n\n').encode()
-        self.send_response(200);self.send_header('Content-Type','text/event-stream');self.send_header('Content-Length',str(len(result)));self.end_headers();self.wfile.write(result);self.wfile.flush()
+        self.send_response(200);self.send_header('Content-Type','text/event-stream');self.send_header('Content-Length',str(len(result)));self.send_header('X-Upstream','preserved');self.send_header('Connection','X-Hop');self.send_header('X-Hop','remove');self.end_headers();self.wfile.write(result);self.wfile.flush()
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--exe',required=True);args=p.parse_args()
     servers=[]
     for label,keys in [('A',['Bearer key-a','Bearer key-a2']),('B',['Bearer key-b'])]:
-        server=ThreadingHTTPServer(('127.0.0.1',0),Mock);server.label=label;server.allowed_keys=keys;server.seen=[]
+        server=ThreadingHTTPServer(('127.0.0.1',0),Mock);server.label=label;server.allowed_keys=keys;server.seen=[];server.raw=[]
         threading.Thread(target=server.serve_forever,daemon=True).start();servers.append(server)
     with tempfile.TemporaryDirectory(prefix='workbuddy-multi-') as folder:
         directory=Path(folder);port=free_port();connections=[]
@@ -60,9 +65,17 @@ def main():
             def call(c,scoped,bare=False):
                 body={'model':c['model'] if bare else c['alias'],'messages':[{'role':'user','content':'fixture'}],'stream':True,'tools':[{'type':'function','function':{'name':'fixture','parameters':{'type':'object'}}}],'extra':{'keep':123}}
                 path=f"/r/{c['id']}/v1/chat/completions" if scoped else '/v1/chat/completions'
-                req=urllib.request.Request(f'http://127.0.0.1:{port}'+path,data=json.dumps(body).encode(),headers={'Authorization':'Bearer local-fixture','Content-Type':'application/json'})
-                with urllib.request.urlopen(req,timeout=5) as r:result=r.read().decode();assert r.status==200
+                conn=http.client.HTTPConnection('127.0.0.1',port,timeout=5)
+                conn.request('POST',path+'?fixture=a%2Fb',json.dumps(body).encode(),{'Authorization':'Bearer local-fixture','Content-Type':'application/json','X-Fixture':'transparent','Connection':'X-Hop','X-Hop':'remove'})
+                r=conn.getresponse();result=r.read().decode();assert r.status==200
+                assert r.getheader('X-Upstream')=='preserved';assert r.getheader('X-Hop') is None;conn.close()
                 assert c['provider']+'|Bearer '+c['api_key']+'|'+c['model'] in result
+                if c['reasoning_effort']=='default':
+                    expected=json.dumps(body).encode().replace(json.dumps(body['model']).encode(),json.dumps(c['model']).encode(),1)
+                    assert expected in servers[cases[connections.index(c)][0]].raw
+            migrated=json.loads((directory/'config.json').read_text(encoding='utf-8'))
+            assert len(migrated['providers'])==3 and [len(p['models']) for p in migrated['providers']]==[3,2,1]
+            assert 'connections' not in migrated
             for scoped,bare in [(False,False),(True,False),(True,True)]:
                 for c in connections:call(c,scoped,bare)
             # Two simultaneous requests with the same raw model reach different suppliers.
@@ -73,10 +86,21 @@ def main():
                 req=urllib.request.Request(f'http://127.0.0.1:{port}'+path,headers={'Authorization':'Bearer local-fixture'})
                 with urllib.request.urlopen(req) as r:items=json.load(r)['data'];assert len(items)==(6 if path=='/v1/models' else 1)
                 assert all(item['id'].startswith('wbp-route-') for item in items)
+            provider=migrated['providers'][0]
+            req=urllib.request.Request(f"http://127.0.0.1:{port}/r/{provider['id']}/v1/models",headers={'Authorization':'Bearer local-fixture'})
+            with urllib.request.urlopen(req) as r:assert len(json.load(r)['data'])==3
+            # Changing a supplier credential updates every child model, without changing aliases.
+            action({'command':'save','provider_id':provider['id'],'key':'key-a2'})
+            for original in connections[:3]:
+                original['api_key']='key-a2';call(original,True)
+            action({'command':'save','provider_id':provider['id'],'key':'key-a'})
+            for original in connections[:3]:original['api_key']='key-a'
             assert '6' in action({'command':'install'});listed=json.loads(models.read_text(encoding='utf-8'));assert listed[0]==unrelated;assert len(listed)==7;assert len({m['id'] for m in listed})==7
             assert all(m['apiKey']=='local-fixture' for m in listed[1:])
             assert len({m['url'] for m in listed[1:]})==6
-            action({'command':'delete','connection_id':'route-1'});action({'command':'install'});assert len(json.loads(models.read_text(encoding='utf-8')))==6
+            provider=migrated['providers'][0]
+            action({'command':'save','provider_id':provider['id'],'models':'deepseek-v4.1-flash | 账号 0\nother-model | 账号 2','reasoning_effort':'keep'})
+            action({'command':'install'});assert len(json.loads(models.read_text(encoding='utf-8')))==6
             action({'command':'restore'});assert json.loads(models.read_text(encoding='utf-8'))==[unrelated]
             # A deleted/unknown/mismatched route must never silently select another upstream.
             for path,model in [('/v1/chat/completions','deepseek-v4.1-flash'),('/v1/chat/completions','unknown'),('/r/route-1/v1/chat/completions',connections[1]['alias']),('/r/route-0/v1/chat/completions','other-model')]:

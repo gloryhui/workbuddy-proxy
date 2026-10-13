@@ -103,8 +103,8 @@ impl Bridge {
     pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
         let mut cfg = self.config.lock().unwrap();
         let mut d = Document::read(path)?;
-        let active: Vec<_> = cfg
-            .connections
+        let connections = cfg.connections();
+        let active: Vec<_> = connections
             .iter()
             .filter(|c| !c.api_key.is_empty())
             .collect();
@@ -217,12 +217,13 @@ mod tests {
         let old = json!({"otherField":true,"models":[{"id":"other","apiKey":"keep"}]});
         config::write_json(&p, &old).unwrap();
         let mut c = config::Config::default();
-        c.connections[0].api_key = "test-upstream".into();
-        let mut second = c.connections[0].clone();
-        second.id = "second-route".into();
-        second.name = "Second".into();
-        second.refresh_alias();
-        c.connections.push(second);
+        c.providers[0].api_key = "test-upstream".into();
+        c.providers[0]
+            .set_models(
+                "deepseek-v4.1-flash | First\ndeepseek-v4.1-flash | Second",
+                "default",
+            )
+            .unwrap();
         let a = Bridge::new(c, dir.path().into()).unwrap();
         a.port.store(18080, std::sync::atomic::Ordering::Relaxed);
         assert_eq!(a.configure_workbuddy(&p).unwrap(), 2);
@@ -234,7 +235,7 @@ mod tests {
             d.entries().unwrap()[1]["url"],
             d.entries().unwrap()[2]["url"]
         );
-        a.config.lock().unwrap().connections.remove(0);
+        a.config.lock().unwrap().providers[0].models.remove(0);
         assert_eq!(a.configure_workbuddy(&p).unwrap(), 1);
         assert_eq!(Document::read(&p).unwrap().entries().unwrap().len(), 2);
         a.restore_workbuddy(&p).unwrap();

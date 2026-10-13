@@ -1,5 +1,5 @@
 use crate::{
-    config::{Config, Connection},
+    config::{Config, Connection, Provider},
     session::{Envelope, Sessions},
 };
 use axum::{
@@ -23,8 +23,100 @@ use tokio::sync::{Semaphore, oneshot};
 
 pub const BODY_LIMIT: usize = 8 * 1024 * 1024;
 pub const MAX_CONCURRENT: usize = 4;
+struct Destination {
+    endpoint: reqwest::Url,
+    authorization: axum::http::HeaderValue,
+    go: bool,
+    has_key: bool,
+}
+struct Route {
+    connection: Connection,
+    destination: Arc<Destination>,
+    provider_id: String,
+}
+#[derive(Default)]
+struct Routes {
+    ids: std::collections::HashMap<String, Arc<Route>>,
+    aliases: std::collections::HashMap<String, Arc<Route>>,
+    models: std::collections::HashMap<String, Vec<Arc<Route>>>,
+}
+impl Routes {
+    fn new(cfg: &Config) -> Result<Self, String> {
+        let mut routes = Self::default();
+        for p in &cfg.providers {
+            let c = Connection {
+                upstream: p.upstream.clone(),
+                ..Default::default()
+            };
+            let mut authorization: axum::http::HeaderValue = format!("Bearer {}", p.api_key)
+                .parse()
+                .map_err(|_| "Invalid API key")?;
+            authorization.set_sensitive(true);
+            let destination = Arc::new(Destination {
+                endpoint: c.endpoint().parse().map_err(|_| "Invalid upstream URL")?,
+                authorization,
+                go: c.is_go(),
+                has_key: !p.api_key.is_empty(),
+            });
+            for m in &p.models {
+                let connection = Connection {
+                    id: m.id.clone(),
+                    alias: m.alias.clone(),
+                    name: m.name.clone(),
+                    provider: p.name.clone(),
+                    model: m.model.clone(),
+                    reasoning_effort: m.reasoning_effort.clone(),
+                    api_key: String::new(),
+                    upstream: String::new(),
+                };
+                let route = Arc::new(Route {
+                    connection,
+                    destination: destination.clone(),
+                    provider_id: p.id.clone(),
+                });
+                routes.ids.insert(m.id.clone(), route.clone());
+                routes.aliases.insert(m.alias.clone(), route.clone());
+                routes
+                    .models
+                    .entry(m.model.clone())
+                    .or_default()
+                    .push(route);
+            }
+        }
+        Ok(routes)
+    }
+    fn resolve(&self, scope: Option<&str>, model: &str) -> Result<Arc<Route>, String> {
+        if let Some(id) = scope
+            && let Some(r) = self.ids.get(id)
+        {
+            return if model == r.connection.alias || model == r.connection.model {
+                Ok(r.clone())
+            } else {
+                Err("Model does not belong to this connection".into())
+            };
+        }
+        let in_scope = |r: &&Arc<Route>| scope.is_none_or(|id| r.provider_id == id);
+        if let Some(r) = self.aliases.get(model).filter(in_scope) {
+            return Ok(r.clone());
+        }
+        let mut matching = self
+            .models
+            .get(model)
+            .into_iter()
+            .flatten()
+            .filter(in_scope);
+        let first = matching
+            .next()
+            .ok_or("Unknown model alias / 未知模型标识")?;
+        if matching.next().is_some() {
+            return Err("Ambiguous model ID; use its alias / 同名模型请使用独立列表项".into());
+        }
+        Ok(first.clone())
+    }
+}
 pub struct Bridge {
     pub config: Mutex<Config>,
+    routes: Mutex<Routes>,
     pub dir: PathBuf,
     pub client: reqwest::Client,
     sessions: Mutex<Sessions>,
@@ -47,6 +139,7 @@ impl Bridge {
             .build()
             .map_err(|e| e.to_string())?;
         Ok(Self {
+            routes: Mutex::new(Routes::new(&config)?),
             config: Mutex::new(config),
             dir,
             client,
@@ -84,36 +177,42 @@ impl Bridge {
             .route("/_control/stop", post(stop))
             .with_state(self)
     }
-    pub async fn upstream(
+    async fn upstream(
         &self,
-        c: &Connection,
+        r: &Route,
+        headers: &HeaderMap,
         body: bytes::Bytes,
         session: &str,
+        query: Option<&str>,
     ) -> Result<reqwest::Response, reqwest::Error> {
+        let mut endpoint = r.destination.endpoint.clone();
+        endpoint.set_query(query);
         let mut req = self
             .client
-            .post(c.endpoint())
-            .header("Authorization", format!("Bearer {}", c.api_key))
-            .header("Content-Type", "application/json")
-            .header("Accept", "text/event-stream, application/json")
-            .header(
+            .post(endpoint)
+            .headers(forward_headers(headers, true))
+            .header("Authorization", r.destination.authorization.clone())
+            .body(body);
+        if !headers.contains_key("content-type") {
+            req = req.header("Content-Type", "application/json");
+        }
+        if r.destination.go {
+            req = req.header("x-opencode-session", session).header(
                 "User-Agent",
                 concat!("WorkBuddy-Proxy/", env!("CARGO_PKG_VERSION")),
-            )
-            .body(body);
-        if c.is_go() {
-            req = req.header("x-opencode-session", session)
+            );
         }
         req.send().await
     }
     pub async fn test(&self, id: &str) -> Result<String, String> {
-        let c = self.config.lock().unwrap().connection(id)?.clone();
+        let c = self.config.lock().unwrap().connection(id)?;
+        let r = self.routes.lock().unwrap().resolve(Some(&c.id), &c.model)?;
         let _permit = self
             .permits
             .clone()
             .try_acquire_owned()
             .map_err(|_| "Four requests are already in flight")?;
-        if c.api_key.is_empty() {
+        if !r.destination.has_key {
             return Err("Save your API key first / 请先保存 API Key".into());
         }
         let payload=serde_json::to_vec(&json!({"model":c.model,"stream":true,"max_tokens":1,"messages":[{"role":"user","content":"Reply with OK."}]})).unwrap();
@@ -121,7 +220,13 @@ impl Bridge {
         let started = std::time::Instant::now();
         let res = tokio::time::timeout(
             Duration::from_secs(45),
-            self.upstream(&c, payload, &crate::config::token()),
+            self.upstream(
+                &r,
+                &HeaderMap::new(),
+                payload,
+                &crate::config::token(),
+                None,
+            ),
         )
         .await
         .map_err(|_| "Connection timeout / 连接超时")?
@@ -166,6 +271,36 @@ impl Bridge {
         .map_err(str::to_string)?;
         Ok(format!("HTTP 200 · {} ms", started.elapsed().as_millis()))
     }
+}
+// Remove hop-by-hop fields, including names nominated by Connection. Never
+// forward the local bearer token or the local Host to an upstream provider.
+fn forward_headers(headers: &HeaderMap, request: bool) -> HeaderMap {
+    let nominated: Vec<_> = headers
+        .get_all("connection")
+        .iter()
+        .filter_map(|v| v.to_str().ok())
+        .flat_map(|s| s.split(',').map(|s| s.trim().to_ascii_lowercase()))
+        .collect();
+    let mut out = HeaderMap::new();
+    for (name, value) in headers {
+        if matches!(
+            name.as_str(),
+            "connection"
+                | "keep-alive"
+                | "proxy-authenticate"
+                | "proxy-authorization"
+                | "te"
+                | "trailer"
+                | "transfer-encoding"
+                | "upgrade"
+        ) || nominated.iter().any(|n| n == name.as_str())
+            || (request && matches!(name.as_str(), "authorization" | "host" | "content-length"))
+        {
+            continue;
+        }
+        out.append(name.clone(), value.clone());
+    }
+    out
 }
 fn fail(status: StatusCode, message: &str) -> Response<Body> {
     Response::builder()
@@ -234,14 +369,16 @@ fn model_list(a: &Bridge, headers: &HeaderMap, id: Option<&str>) -> Response<Bod
     if !local(headers, a.port.load(Ordering::Relaxed)) || !authorized(headers, &cfg.local_key) {
         return fail(StatusCode::UNAUTHORIZED, "Invalid local API key");
     }
-    if id.is_some_and(|id| !cfg.connections.iter().any(|c| c.id == id)) {
+    if id.is_some_and(|id| {
+        !cfg.providers
+            .iter()
+            .any(|p| p.id == id || p.models.iter().any(|m| m.id == id))
+    }) {
         return fail(StatusCode::NOT_FOUND, "Unknown connection");
     }
-    let entries: Vec<_> = cfg
-        .connections
-        .iter()
-        .filter(|c| !c.api_key.is_empty() && id.is_none_or(|id| c.id == id))
-        .map(|c| json!({"id":c.alias,"object":"model","owned_by":c.provider,"name":c.label()}))
+    let entries: Vec<_> = cfg.providers.iter().filter(|p| !p.api_key.is_empty())
+        .flat_map(|p| p.models.iter().filter(move |m| id.is_none_or(|id| p.id==id || m.id==id))
+            .map(move |m| json!({"id":m.alias,"object":"model","owned_by":p.name,"name":format!("{} · {} · {}",m.name,p.name,m.model)})))
         .collect();
     Response::builder()
         .header("Content-Type", "application/json")
@@ -291,32 +428,36 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
                 );
             }
         };
-    let envelope: Envelope<'_> = match serde_json::from_slice(&bytes) {
-        Ok(e) => e,
-        Err(_) => return fail(StatusCode::BAD_REQUEST, "model and messages are required"),
-    };
-    if envelope.model.is_empty() || envelope.messages.is_empty() {
-        return fail(
-            StatusCode::BAD_REQUEST,
-            "model and messages must not be empty",
-        );
+    #[derive(serde::Deserialize)]
+    struct ModelField<'a> {
+        #[serde(borrow)]
+        model: std::borrow::Cow<'a, str>,
     }
-    let c = match a
-        .config
+    let model: ModelField<'_> = match serde_json::from_slice(&bytes) {
+        Ok(e) => e,
+        Err(_) => return fail(StatusCode::BAD_REQUEST, "A model string is required"),
+    };
+    let r = match a
+        .routes
         .lock()
         .unwrap()
-        .resolve(route.as_deref(), envelope.model)
+        .resolve(route.as_deref(), &model.model)
     {
-        Ok(c) => c,
+        Ok(r) => r,
         Err(e) => return fail(StatusCode::BAD_REQUEST, &e),
     };
-    if c.api_key.is_empty() {
+    if !r.destination.has_key {
         return fail(
             StatusCode::SERVICE_UNAVAILABLE,
-            "Save this connection's API key first",
+            "Save this provider's API key first",
         );
     }
-    let session = if c.is_go() {
+    let c = &r.connection;
+    let session = if r.destination.go {
+        let envelope: Envelope<'_> = match serde_json::from_slice(&bytes) {
+            Ok(e) => e,
+            Err(_) => return fail(StatusCode::BAD_REQUEST, "Go requires a messages array"),
+        };
         format!(
             "{}-{}",
             c.id,
@@ -328,12 +469,15 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
     } else {
         String::new()
     };
-    drop(envelope);
-    let bytes = match prepare_request(bytes, &c) {
+    let replace_model = (model.model != c.model).then_some(c.model.as_str());
+    let bytes = match rewrite_request(bytes, replace_model, &c.reasoning_effort) {
         Ok(b) => b,
         Err(e) => return fail(StatusCode::BAD_REQUEST, &e),
     };
-    let res = match a.upstream(&c, bytes, &session).await {
+    let res = match a
+        .upstream(&r, &parts.headers, bytes, &session, parts.uri.query())
+        .await
+    {
         Ok(r) => r,
         Err(_) => {
             a.set_status("Network error / 网络错误".into());
@@ -350,15 +494,8 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
         a.calls.load(Ordering::Relaxed)
     ));
     let status = res.status();
-    let mut response = Response::builder()
-        .status(status)
-        .header("Cache-Control", "no-store")
-        .header("X-Content-Type-Options", "nosniff");
-    for name in ["content-type", "retry-after", "content-encoding"] {
-        if let Some(value) = res.headers().get(name) {
-            response = response.header(name, value)
-        }
-    }
+    let mut response = Response::builder().status(status);
+    *response.headers_mut().unwrap() = forward_headers(res.headers(), false);
     // No SSE parsing, buffering, rewriting or extra response copies. The permit
     // travels with the stream and is released on completion OR client cancellation.
     let stream = stream::unfold(
@@ -402,7 +539,7 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
     {
         return fail(StatusCode::UNAUTHORIZED, "Unauthorized");
     }
-    let bytes = match to_bytes(body, 16384).await {
+    let bytes = match to_bytes(body, 131072).await {
         Ok(b) => b,
         Err(_) => return fail(StatusCode::PAYLOAD_TOO_LARGE, "Control payload too large"),
     };
@@ -428,7 +565,8 @@ impl Bridge {
             .and_then(serde_json::Value::as_str)
             .ok_or("Missing command")?;
         let id = p
-            .get("connection_id")
+            .get("provider_id")
+            .or_else(|| p.get("connection_id"))
             .and_then(serde_json::Value::as_str)
             .unwrap_or("");
         match command {
@@ -438,44 +576,42 @@ impl Bridge {
                 match command {
                     "add" | "duplicate" => {
                         let mut c = if command == "duplicate" {
-                            cfg.connection(id)?.clone()
+                            cfg.provider(id)?.clone()
                         } else {
-                            Connection::default()
+                            Provider::default()
                         };
                         c.id = crate::config::token()[..12].into();
-                        c.refresh_alias();
+                        for m in &mut c.models {
+                            m.id = crate::config::token()[..12].into();
+                            m.refresh_alias();
+                        }
                         let root = if command == "duplicate" {
                             format!("{} 副本", c.name)
                         } else {
-                            "连接".into()
+                            "供应商".into()
                         };
                         c.name = root.clone();
                         let mut n = 1;
-                        while next.connections.iter().any(|v| v.name == c.name) {
+                        while next.providers.iter().any(|v| v.name == c.name) {
                             c.name = format!("{root} {n}");
                             n += 1;
                         }
-                        next.connections.push(c);
+                        next.providers.push(c);
                     }
                     "delete" => {
-                        let selected = cfg.connection(id)?.id.clone();
-                        next.connections.retain(|c| c.id != selected);
+                        let selected = cfg.provider(id)?.id.clone();
+                        next.providers.retain(|p| p.id != selected);
                     }
                     "save" => {
-                        let selected = cfg.connection(id)?.id.clone();
+                        let selected = cfg.provider(id)?.id.clone();
                         let c = next
-                            .connections
+                            .providers
                             .iter_mut()
-                            .find(|c| c.id == selected)
+                            .find(|p| p.id == selected)
                             .unwrap();
-                        let old_model = c.model.clone();
-                        for (field, target) in [
-                            ("model", &mut c.model),
-                            ("upstream", &mut c.upstream),
-                            ("name", &mut c.name),
-                            ("provider", &mut c.provider),
-                            ("reasoning_effort", &mut c.reasoning_effort),
-                        ] {
+                        for (field, target) in
+                            [("name", &mut c.name), ("upstream", &mut c.upstream)]
+                        {
                             if let Some(s) = p.get(field).and_then(serde_json::Value::as_str) {
                                 *target = s.trim().into();
                             }
@@ -488,18 +624,45 @@ impl Bridge {
                             c.api_key = key.trim().into();
                         }
                         if c.api_key.is_empty() {
-                            return Err("Enter upstream API key / 请填写上游 Key".into());
+                            return Err("请填写上游 API Key / Enter upstream API key".into());
                         }
-                        if c.alias != old_model || c.model != old_model {
-                            c.refresh_alias();
+                        let effort = p
+                            .get("reasoning_effort")
+                            .and_then(serde_json::Value::as_str)
+                            .unwrap_or("keep");
+                        if let Some(lines) = p.get("models").and_then(serde_json::Value::as_str) {
+                            c.set_models(lines, effort)?;
+                        } else {
+                            // Compatibility with v0.2 control clients: update a single model only.
+                            if let Some(model) = p.get("model").and_then(serde_json::Value::as_str)
+                            {
+                                let index = c.models.iter().position(|m| m.id == id).unwrap_or(0);
+                                let m = c.models.get_mut(index).ok_or("Add models first")?;
+                                if m.model != model {
+                                    m.model = model.trim().into();
+                                    m.refresh_alias();
+                                }
+                            }
+                            if effort != "keep" {
+                                for m in &mut c.models {
+                                    m.reasoning_effort = effort.into();
+                                }
+                            }
                         }
                     }
                     _ => unreachable!(),
                 }
                 next.validate()?;
+                let routes = Routes::new(&next)?;
                 crate::config::write_json(&self.dir.join("config.json"), &next)?;
+                *self.routes.lock().unwrap() = routes;
                 *cfg = next;
-                Ok(match command { "save" => "Saved / 已保存", "delete" => "Deleted locally; sync WorkBuddy to update its list / 已删除，请同步 WorkBuddy 列表", _ => "Added / 已新增连接" }.into())
+                Ok(if command == "delete" {
+                    "已删除，请同步 WorkBuddy 列表 / Deleted; sync WorkBuddy"
+                } else {
+                    "已保存供应商和模型 / Saved"
+                }
+                .into())
             }
             "test" => self.test(id).await,
             "install" => {
@@ -513,13 +676,17 @@ impl Bridge {
                 .map(|_| "Previous entries restored / 已恢复原列表项".into()),
             "copy" => {
                 let cfg = self.config.lock().unwrap();
-                let c = cfg.connection(id)?;
+                let provider = cfg.provider(id)?;
                 Ok(format!(
-                    "URL: {}\nAPI Key: {}\nModel: {}\nName: {}",
-                    self.connection_address(&c.id),
+                    "URL: {}\nAPI Key: {}\nModels:\n{}",
+                    self.connection_address(&provider.id),
                     cfg.local_key,
-                    c.alias,
-                    c.label()
+                    provider
+                        .models
+                        .iter()
+                        .map(|m| format!("{} | {}", m.alias, m.name))
+                        .collect::<Vec<_>>()
+                        .join("\n")
                 ))
             }
             "quit" => {
@@ -535,11 +702,6 @@ impl Bridge {
         }
     }
 }
-fn prepare_request(body: bytes::Bytes, c: &Connection) -> Result<bytes::Bytes, String> {
-    let e: Envelope<'_> = serde_json::from_slice(&body).map_err(|_| "Invalid chat request")?;
-    let replace_model = (e.model != c.model).then_some(c.model.as_str());
-    rewrite_request(body, replace_model, &c.reasoning_effort)
-}
 fn apply_reasoning(body: bytes::Bytes, effort: &str) -> Result<bytes::Bytes, String> {
     rewrite_request(body, None, effort)
 }
@@ -554,6 +716,22 @@ fn rewrite_request(
         return Ok(body);
     }
     use serde_json::value::RawValue;
+    if effort == "default" {
+        #[derive(serde::Deserialize)]
+        struct Field<'a> {
+            #[serde(borrow)]
+            model: &'a RawValue,
+        }
+        let field: Field<'_> = serde_json::from_slice(&body).map_err(|_| "Invalid chat request")?;
+        let raw = field.model.get().as_bytes();
+        let offset = raw.as_ptr() as usize - body.as_ptr() as usize;
+        let replacement = serde_json::to_vec(&model.unwrap()).unwrap();
+        let mut out = Vec::with_capacity(body.len() - raw.len() + replacement.len());
+        out.extend_from_slice(&body[..offset]);
+        out.extend_from_slice(&replacement);
+        out.extend_from_slice(&body[offset + raw.len()..]);
+        return Ok(out.into());
+    }
     let mut fields: std::collections::BTreeMap<String, &RawValue> =
         serde_json::from_slice(&body).map_err(|_| "Invalid chat request")?;
     let model_value =
@@ -618,6 +796,56 @@ mod tests {
             serde_json::from_slice(&apply_reasoning(body, "none").unwrap()).unwrap();
         assert!(off.get("reasoning_effort").is_none());
         assert_eq!(off["thinking"]["type"], "disabled");
+    }
+    #[test]
+    fn alias_rewrite_preserves_every_other_byte() {
+        let input=bytes::Bytes::from_static(br#"{ "opaque": {"model":"leave"}, "model" : "alias\/m", "messages" : [ { "content" : "unicode \u4e2d" } ], "x" : 1.2300e+2 }"#);
+        let out = rewrite_request(input.clone(), Some("real-model"), "default").unwrap();
+        let expected = std::str::from_utf8(&input)
+            .unwrap()
+            .replace(r#""alias\/m""#, r#""real-model""#);
+        assert_eq!(&out[..], expected.as_bytes());
+        assert_eq!(
+            rewrite_request(input.clone(), None, "default")
+                .unwrap()
+                .as_ptr(),
+            input.as_ptr()
+        );
+    }
+    #[test]
+    fn grouped_routes_share_credentials_and_reject_ambiguity() {
+        let mut cfg = Config::default();
+        cfg.providers[0].api_key = "fixture".into();
+        cfg.providers[0]
+            .set_models("same | First\nsame | Second\nother", "default")
+            .unwrap();
+        let routes = Routes::new(&cfg).unwrap();
+        let p = &cfg.providers[0];
+        let first = routes.resolve(None, &p.models[0].alias).unwrap();
+        let other = routes.resolve(Some(&p.id), "other").unwrap();
+        assert!(Arc::ptr_eq(&first.destination, &other.destination));
+        assert!(routes.resolve(Some(&p.id), "same").is_err());
+        assert!(routes.resolve(Some(&p.models[0].id), "other").is_err());
+        assert!(routes.resolve(Some("unknown"), &p.models[0].alias).is_err());
+    }
+    #[test]
+    fn end_to_end_headers_preserved_without_hop_fields_or_local_key() {
+        let mut h = HeaderMap::new();
+        h.insert("connection", "X-Hop, keep-alive".parse().unwrap());
+        h.insert("x-hop", "remove".parse().unwrap());
+        h.insert("x-custom", "keep".parse().unwrap());
+        h.insert("authorization", "Bearer local".parse().unwrap());
+        h.insert("content-length", "123".parse().unwrap());
+        h.append("set-cookie", "a=1".parse().unwrap());
+        h.append("set-cookie", "b=2".parse().unwrap());
+        let r = forward_headers(&h, true);
+        assert!(!r.contains_key("authorization"));
+        assert!(!r.contains_key("content-length"));
+        assert!(!r.contains_key("x-hop"));
+        assert_eq!(r["x-custom"], "keep");
+        let r = forward_headers(&h, false);
+        assert_eq!(r.get_all("set-cookie").iter().count(), 2);
+        assert_eq!(r["content-length"], "123");
     }
     #[test]
     fn local_access_rules() {

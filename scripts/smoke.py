@@ -80,7 +80,7 @@ def start(exe, directory, upstream, gui=False):
 
 def request(port, payload, token='fixture-local-key', origin=None):
     connection = http.client.HTTPConnection('127.0.0.1', port, timeout=5)
-    headers = {'Authorization': 'Bearer '+token, 'Content-Type': 'application/json'}
+    headers = {'Authorization': 'Bearer '+token, 'Content-Type': 'application/json','User-Agent':'WorkBuddy-fixture-client'}
     if origin: headers['Origin'] = origin
     connection.request('POST', '/v1/chat/completions', payload, headers)
     return connection, connection.getresponse()
@@ -150,18 +150,18 @@ def main():
                 else:raise AssertionError('Native Windows settings window did not appear')
             instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
             control=lambda obj:urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps(obj).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
-            original_id=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['connections'][0]['id']
+            original_id=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['providers'][0]['id']
             for model in ['quota-test','slow-test']:
                 with urllib.request.urlopen(control({'command':'add'}),timeout=5) as response:response.read()
-                route=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['connections'][-1]['id']
-                with urllib.request.urlopen(control({'command':'save','connection_id':route,'key':'fixture-upstream-key','model':model,'name':model,'upstream':f'http://127.0.0.1:{upstream.server_port}/v1'}),timeout=5) as response:response.read()
+                route=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['providers'][-1]['id']
+                with urllib.request.urlopen(control({'command':'save','connection_id':route,'key':'fixture-upstream-key','models':model,'name':model,'upstream':f'http://127.0.0.1:{upstream.server_port}/v1'}),timeout=5) as response:response.read()
             payload = b'{"model":"fixture-model","stream":true,"messages":[{"role":"user","content":"test"}],"tools":[{"type":"function","function":{"name":"report","parameters":{"type":"object"}}}]}'
             conn, res = request(port, payload); received = res.read(); conn.close()
             assert res.status == 200 and b'tool_calls' in received and b'[DONE]' in received
             body, headers = Mock.received[-1]
             assert body == payload, 'Payload was rewritten'
             assert headers['authorization'] == 'Bearer fixture-upstream-key'
-            assert headers['user-agent'].startswith('WorkBuddy-Proxy/')
+            assert headers['user-agent']=='WorkBuddy-fixture-client'
             conn, res = request(port, payload, token='wrong'); assert res.status == 401; res.read(); conn.close()
             conn, res = request(port, payload, origin='https://evil.example'); assert res.status == 403; res.read(); conn.close()
             quota = payload.replace(b'fixture-model', b'quota-test')
@@ -196,7 +196,7 @@ def main():
             for effort in ['low','high','max','none','default']:
                 settings={'command':'save','connection_id':original_id,'model':'deepseek-v4.1-flash','upstream':f'http://127.0.0.1:{upstream.server_port}/v1','reasoning_effort':effort}
                 with urllib.request.urlopen(control(settings),timeout=5) as response:response.read()
-                assert json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['connections'][0]['reasoning_effort']==effort
+                assert json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['providers'][0]['models'][0]['reasoning_effort']==effort
                 input_body=payload.replace(b'fixture-model',b'deepseek-v4.1-flash')[:-1]+b',"thinking":{"type":"disabled"},"reasoning_effort":"high","extra_field":{"keep":123}}'
                 conn,res=request(port,input_body);assert res.status==200;res.read();conn.close()
                 outgoing=json.loads(Mock.received[-1][0]);original=json.loads(input_body)

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 extern char *wb_value(const char *name);
-extern char *wb_save(const char *name,const char *provider,const char *key,const char *model,const char *upstream,const char *effort);
+extern char *wb_save(const char *name,const char *key,const char *model,const char *upstream,const char *effort);
 extern void wb_select(int index);
 extern char *wb_command(const char *name);
 extern void wb_free(char *value);
@@ -15,20 +15,20 @@ extern void wb_free(char *value);
 #define WM_RESULT (WM_APP+2)
 #define WM_SHOW (WM_APP+3)
 #define WM_STOP (WM_APP+4)
-static HWND window,connectionList,nameEdit,providerEdit,keyEdit,modelEdit,urlEdit,effortCombo,statusLabel,buttons[8];
+static HWND window,connectionList,nameEdit,keyEdit,modelEdit,urlEdit,effortCombo,statusLabel,buttons[8];
 static HFONT font;
 static BOOL busy=FALSE;
 static NOTIFYICONDATAW tray;
 static BOOL trayAvailable=FALSE;
 static UINT taskbarCreated;
-static const char *efforts[]={"default","none","low","high","max"};
+static const char *efforts[]={"default","none","low","high","max","keep"};
 
 static wchar_t *wide(const char *s){int n=MultiByteToWideChar(CP_UTF8,0,s,-1,NULL,0);if(n<=0)n=1;wchar_t *v=(wchar_t *)calloc((size_t)n,sizeof(wchar_t));if(v)MultiByteToWideChar(CP_UTF8,0,s,-1,v,n);return v;}
 static void text(HWND h,const char *s){wchar_t *v=wide(s);if(v){SetWindowTextW(h,v);free(v);}}
 static char *editText(HWND h){int n=GetWindowTextLengthW(h)+1;wchar_t *w=(wchar_t *)calloc((size_t)n,sizeof(wchar_t));if(!w)return NULL;GetWindowTextW(h,w,n);int size=WideCharToMultiByte(CP_UTF8,0,w,-1,NULL,0,NULL,NULL);char *v=(char *)calloc((size_t)(size>0?size:1),1);if(v)WideCharToMultiByte(CP_UTF8,0,w,-1,v,size,NULL,NULL);free(w);return v;}
 static HWND control(const wchar_t *cls,const wchar_t *title,DWORD style,int x,int y,int width,int height,int id){HWND h=CreateWindowExW(0,cls,title,WS_CHILD|WS_VISIBLE|style,x,y,width,height,window,(HMENU)(INT_PTR)id,GetModuleHandleW(NULL),NULL);SendMessageW(h,WM_SETFONT,(WPARAM)font,TRUE);return h;}
 static void status(const char *s){text(statusLabel,s);}
-static void fields(void){const char *names[]={"name","provider","model","upstream"};HWND controls[]={nameEdit,providerEdit,modelEdit,urlEdit};for(int i=0;i<4;i++){char *v=wb_value(names[i]);text(controls[i],v);wb_free(v);}SetWindowTextW(keyEdit,L"");char *e=wb_value("reasoning_effort");int index=0;for(int i=0;i<5;i++)if(strcmp(e,efforts[i])==0)index=i;SendMessageW(effortCombo,CB_SETCURSEL,index,0);wb_free(e);}
+static void fields(void){const char *names[]={"name","model","upstream"};HWND controls[]={nameEdit,modelEdit,urlEdit};for(int i=0;i<3;i++){char *v=wb_value(names[i]);if(controls[i]==modelEdit){size_t n=strlen(v);char *lines=(char *)calloc(n*2+1,1);if(lines){size_t j=0;for(size_t k=0;k<n;k++){if(v[k]=='\n')lines[j++]='\r';lines[j++]=v[k];}text(modelEdit,lines);free(lines);}}else text(controls[i],v);wb_free(v);}SetWindowTextW(keyEdit,L"");char *e=wb_value("reasoning_effort");int index=0;for(int i=0;i<6;i++)if(strcmp(e,efforts[i])==0)index=i;SendMessageW(effortCombo,CB_SETCURSEL,index,0);wb_free(e);}
 static void refresh(void){char *list=wb_value("connections");SendMessageW(connectionList,LB_RESETCONTENT,0,0);char *row=list;while(*row){char *end=strchr(row,'\n');if(end)*end=0;wchar_t *w=wide(row);if(w){SendMessageW(connectionList,LB_ADDSTRING,0,(LPARAM)w);free(w);}if(!end)break;row=end+1;}char *selected=wb_value("selected");SendMessageW(connectionList,LB_SETCURSEL,atoi(selected),0);wb_free(selected);wb_free(list);fields();}
 static void show(void){ShowWindow(window,SW_RESTORE);SetForegroundWindow(window);refresh();}
 static void setBusy(BOOL value){busy=value;for(int i=0;i<8;i++)EnableWindow(buttons[i],!value);EnableWindow(connectionList,!value);}
@@ -41,25 +41,24 @@ static LRESULT CALLBACK procedure(HWND h,UINT msg,WPARAM w,LPARAM l){
         case WM_CREATE:{
             window=h;font=CreateFontW(-16,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,CLEARTYPE_QUALITY,DEFAULT_PITCH,L"Segoe UI");
             control(L"STATIC",L"WorkBuddy Proxy",0,20,16,700,28,0);
-            control(L"STATIC",L"连接列表 / Connections",0,20,48,230,22,0);
+            control(L"STATIC",L"供应商 / Providers",0,20,48,230,22,0);
             connectionList=control(L"LISTBOX",L"",WS_BORDER|LBS_NOTIFY|WS_VSCROLL|WS_TABSTOP,20,75,230,445,107);
             buttons[5]=control(L"BUTTON",L"新增",WS_TABSTOP,20,530,70,32,206);buttons[6]=control(L"BUTTON",L"复制",WS_TABSTOP,100,530,70,32,207);buttons[7]=control(L"BUTTON",L"删除",WS_TABSTOP,180,530,70,32,208);
-            control(L"STATIC",L"列表显示名称 / Display name",0,270,48,440,22,0);nameEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,73,440,28,105);SendMessageW(nameEdit,EM_SETLIMITTEXT,80,0);
-            control(L"STATIC",L"供应商 / Provider",0,270,113,440,22,0);providerEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,138,440,28,106);SendMessageW(providerEdit,EM_SETLIMITTEXT,80,0);
-            control(L"STATIC",L"上游地址 / Upstream URL",0,270,178,440,22,0);urlEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,203,440,28,101);SendMessageW(urlEdit,EM_SETLIMITTEXT,2048,0);
-            control(L"STATIC",L"API Key（留空保留已保存值）",0,270,243,440,22,0);keyEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|ES_PASSWORD|WS_TABSTOP,270,268,440,28,102);SendMessageW(keyEdit,EM_SETLIMITTEXT,4096,0);
-            control(L"STATIC",L"上游真实模型 ID / Model ID",0,270,308,440,22,0);modelEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,333,440,28,103);SendMessageW(modelEdit,EM_SETLIMITTEXT,160,0);
-            control(L"STATIC",L"思考强度 / Thinking effort",0,270,373,440,22,0);
-            effortCombo=control(L"COMBOBOX",L"",CBS_DROPDOWNLIST|WS_VSCROLL|WS_TABSTOP,270,398,440,180,104);
-            const wchar_t *labels[]={L"跟随 WorkBuddy / Default",L"关闭思考 / Off",L"低 / Low",L"高 / High",L"最高 / Max"};for(int i=0;i<5;i++)SendMessageW(effortCombo,CB_ADDSTRING,0,(LPARAM)labels[i]);
-            buttons[0]=control(L"BUTTON",L"保存 / Save",WS_TABSTOP,270,450,130,32,201);buttons[1]=control(L"BUTTON",L"测试此项 / Test",WS_TABSTOP,415,450,130,32,202);buttons[2]=control(L"BUTTON",L"复制配置",WS_TABSTOP,560,450,150,32,203);
+            control(L"STATIC",L"供应商名称 / Provider name",0,270,48,440,22,0);nameEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,73,440,28,105);SendMessageW(nameEdit,EM_SETLIMITTEXT,80,0);
+            control(L"STATIC",L"OpenAI 兼容地址 / Base URL",0,270,113,440,22,0);urlEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|WS_TABSTOP,270,138,440,28,101);SendMessageW(urlEdit,EM_SETLIMITTEXT,2048,0);
+            control(L"STATIC",L"API Key（留空保留已保存值）",0,270,178,440,22,0);keyEdit=control(L"EDIT",L"",WS_BORDER|ES_AUTOHSCROLL|ES_PASSWORD|WS_TABSTOP,270,203,440,28,102);SendMessageW(keyEdit,EM_SETLIMITTEXT,4096,0);
+            control(L"STATIC",L"模型列表：每行 ID，可填写 ID | 显示名称",0,270,243,440,22,0);modelEdit=control(L"EDIT",L"",WS_BORDER|ES_MULTILINE|ES_AUTOVSCROLL|ES_WANTRETURN|WS_VSCROLL|WS_TABSTOP,270,268,440,110,103);SendMessageW(modelEdit,EM_SETLIMITTEXT,60000,0);
+            control(L"STATIC",L"思考强度（默认透明透传）",0,270,388,440,22,0);
+            effortCombo=control(L"COMBOBOX",L"",CBS_DROPDOWNLIST|WS_VSCROLL|WS_TABSTOP,270,413,440,200,104);
+            const wchar_t *labels[]={L"跟随 WorkBuddy / Default",L"关闭思考 / Off",L"低 / Low",L"高 / High",L"最高 / Max",L"保留各模型设置 / Keep"};for(int i=0;i<6;i++)SendMessageW(effortCombo,CB_ADDSTRING,0,(LPARAM)labels[i]);
+            buttons[0]=control(L"BUTTON",L"保存 / Save",WS_TABSTOP,270,450,130,32,201);buttons[1]=control(L"BUTTON",L"测试首项 / Test",WS_TABSTOP,415,450,130,32,202);buttons[2]=control(L"BUTTON",L"复制配置",WS_TABSTOP,560,450,150,32,203);
             buttons[3]=control(L"BUTTON",L"同步 WorkBuddy 列表",WS_TABSTOP,270,495,215,32,204);buttons[4]=control(L"BUTTON",L"恢复原配置 / Restore",WS_TABSTOP,500,495,210,32,205);
             statusLabel=control(L"STATIC",L"",0,270,545,440,65,0);refresh();char *state=wb_value("status");status(state);wb_free(state);
             memset(&tray,0,sizeof(tray));tray.cbSize=sizeof(tray);tray.hWnd=h;tray.uID=1;tray.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;tray.uCallbackMessage=WM_TRAY;tray.hIcon=LoadIconW(NULL,IDI_APPLICATION);lstrcpyW(tray.szTip,L"WorkBuddy Proxy");trayAvailable=Shell_NotifyIconW(NIM_ADD,&tray);return 0;
         }
         case WM_COMMAND:switch(LOWORD(w)){
             case 107:if(HIWORD(w)==LBN_SELCHANGE){wb_select((int)SendMessageW(connectionList,LB_GETCURSEL,0,0));fields();}return 0;
-            case 201:{char *name=editText(nameEdit),*provider=editText(providerEdit),*key=editText(keyEdit),*model=editText(modelEdit),*url=editText(urlEdit);LRESULT i=SendMessageW(effortCombo,CB_GETCURSEL,0,0);char *r=wb_save(name,provider,key,model,url,efforts[i>=0&&i<5?i:0]);if(strncmp(r,"OK ",3)==0)refresh();status(r);free(name);free(provider);free(key);free(model);free(url);wb_free(r);return 0;}
+            case 201:{char *name=editText(nameEdit),*key=editText(keyEdit),*model=editText(modelEdit),*url=editText(urlEdit);LRESULT i=SendMessageW(effortCombo,CB_GETCURSEL,0,0);char *r=wb_save(name,key,model,url,efforts[i>=0&&i<6?i:0]);if(strncmp(r,"OK ",3)==0)refresh();status(r);free(name);free(key);free(model);free(url);wb_free(r);return 0;}
             case 202:execute("test");return 0;case 203:copyConfiguration();return 0;case 204:execute("install");return 0;case 205:execute("restore");return 0;
             case 206:case 207:case 208:{char *r=wb_command(LOWORD(w)==206?"add":LOWORD(w)==207?"duplicate":"delete");if(strncmp(r,"OK ",3)==0)refresh();status(r);wb_free(r);return 0;}
             case 301:show();return 0;case 302:wb_free(wb_command("quit"));DestroyWindow(h);return 0;

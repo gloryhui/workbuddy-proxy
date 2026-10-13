@@ -12,8 +12,6 @@ const MAX_HASHES: usize = 128;
 #[derive(Deserialize)]
 pub struct Envelope<'a> {
     #[serde(borrow)]
-    pub model: &'a str,
-    #[serde(borrow)]
     pub messages: Vec<&'a RawValue>,
 }
 #[derive(Deserialize)]

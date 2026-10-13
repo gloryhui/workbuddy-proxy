@@ -45,25 +45,36 @@ def main():
             h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
             assert core['pid']!=first.pid
             combo=user.GetDlgItem(h,104);assert combo
-            assert user.SendMessageW(combo,0x0146,0,0)==5, 'Thinking selector is missing choices'
+            assert user.SendMessageW(combo,0x0146,0,0)==6, 'Thinking selector is missing choices'
             user.SendMessageW(combo,0x014E,3,0) # select High
             user.PostMessageW(h,0x0111,201,0) # Save through actual native UI / FFI
             for _ in range(200):
-                if json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['connections'][0].get('reasoning_effort')=='high':break
+                if json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers'][0]['models'][0].get('reasoning_effort')=='high':break
                 time.sleep(.025)
             else:raise AssertionError('Native Save did not persist thinking effort')
+            # Edit the actual Win32 multiline model control, then save through FFI.
+            model_edit=user.GetDlgItem(h,103);assert model_edit
+            model_text=ctypes.c_wchar_p('deepseek-v4.1-flash | Flash\r\nother-model | Other')
+            user.SendMessageW(model_edit,0x000C,0,ctypes.cast(model_text,ctypes.c_void_p).value)
+            user.PostMessageW(h,0x0111,201,0)
+            for _ in range(200):
+                entries=json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers'][0]['models']
+                if len(entries)==2:break
+                time.sleep(.025)
+            else:raise AssertionError('Native multiline model save failed')
+            assert entries[0]['name']=='Flash' and entries[1]['model']=='other-model'
             listing=user.GetDlgItem(h,107);assert listing
             assert user.SendMessageW(listing,0x018B,0,0)==1 # LB_GETCOUNT
             user.PostMessageW(h,0x0111,207,0) # Duplicate the selected configured connection
             for _ in range(200):
-                saved=json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['connections']
+                saved=json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers']
                 if len(saved)==2:break
                 time.sleep(.025)
             else:raise AssertionError('Native Duplicate did not add a connection')
-            assert saved[0]['api_key']==saved[1]['api_key'] and saved[0]['alias']!=saved[1]['alias']
+            assert saved[0]['api_key']==saved[1]['api_key'] and saved[0]['models'][0]['alias']!=saved[1]['models'][0]['alias']
             user.PostMessageW(h,0x0111,208,0) # Delete duplicate, leaves original configured connection
             for _ in range(200):
-                if len(json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['connections'])==1:break
+                if len(json.loads(Path(directory,'config.json').read_text(encoding='utf-8'))['providers'])==1:break
                 time.sleep(.025)
             else:raise AssertionError('Native Delete failed')
             for message,wparam in [(0x0010,0),(0x0112,0xF020)]: # Close; minimize system command

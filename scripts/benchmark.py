@@ -10,6 +10,7 @@ import statistics
 import tempfile
 import threading
 import time
+import urllib.request
 from smoke import Mock, ThreadingHTTPServer, start, stop, request
 
 
@@ -46,7 +47,7 @@ def percentiles(values):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--output',required=True)
-    p.add_argument('--requests',type=int,default=200);p.add_argument('--gui',action='store_true');args=p.parse_args()
+    p.add_argument('--requests',type=int,default=200);p.add_argument('--models',type=int,default=64);p.add_argument('--gui',action='store_true');args=p.parse_args()
     upstream=ThreadingHTTPServer(('127.0.0.1',0),Mock);threading.Thread(target=upstream.serve_forever,daemon=True).start()
     # Do not retain test prompts in the mock while measuring memory.
     class NullList:
@@ -56,6 +57,11 @@ def main():
         process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream.server_port}/v1',args.gui)
         try:
             instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
+            assert 1<=args.models<=256
+            req=urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps({'command':'save','models':'\n'.join(f'bench-model-{i}' for i in range(args.models))}).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
+            with urllib.request.urlopen(req,timeout=5) as r:r.read()
+            saved=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['providers'][0]['models'][-1]
+            real_model=saved['model'];alias=saved['alias']
             pids=set([process.pid,instance.get('pid',process.pid)])
             total_rss=lambda:sum(rss_kib(pid) for pid in pids)
             time.sleep(1);idle=total_rss();core_idle=rss_kib(instance.get('pid',process.pid));peak=[idle];done=threading.Event()
@@ -64,10 +70,10 @@ def main():
                     try: peak.append(total_rss())
                     except Exception: break
             watcher=threading.Thread(target=sample,daemon=True);watcher.start()
-            payload=json.dumps({'model':'fixture-model','stream':True,'messages':[{'role':'user','content':'bench'}]}).encode()
+            payload=json.dumps({'model':real_model,'stream':True,'messages':[{'role':'user','content':'bench'}]}).encode()
             def measured(proxy,payload):
                 started=time.perf_counter()
-                if proxy: conn,res=request(port,payload)
+                if proxy: conn,res=request(port,payload.replace(json.dumps(real_model).encode(),json.dumps(alias).encode(),1))
                 else:
                     conn=http.client.HTTPConnection('127.0.0.1',upstream.server_port,timeout=5)
                     conn.request('POST','/v1/chat/completions',payload,{'Content-Type':'application/json'});res=conn.getresponse()
@@ -75,7 +81,7 @@ def main():
             for _ in range(10): measured(True,payload)
             direct=[measured(False,payload) for _ in range(args.requests)]
             proxied=[measured(True,payload) for _ in range(args.requests)]
-            large=json.dumps({'model':'fixture-model','stream':True,'messages':[{'role':'user','content':'x'*(1024*1024)}]}).encode()
+            large=json.dumps({'model':real_model,'stream':True,'messages':[{'role':'user','content':'x'*(1024*1024)}]}).encode()
             # Four concurrent 1 MiB requests, repeated, while RSS is sampled.
             start_time=time.perf_counter()
             with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
@@ -83,6 +89,7 @@ def main():
             large_seconds=time.perf_counter()-start_time
             time.sleep(.5);settled=total_rss();done.set();watcher.join()
             result={'platform':platform.platform(),'architecture':platform.machine(),'mode':'native GUI' if args.gui else 'headless',
+                'configured_providers':1,'configured_models':args.models,'alias_rewrite':True,
                 'binary_bytes':Path(args.exe).stat().st_size,'idle_rss_mib':round(idle/1024,2),
                 'core_idle_rss_mib':round(core_idle/1024,2),'measured_process_count':len(pids),
                 'sampled_peak_rss_mib':round(max(peak)/1024,2),'post_load_rss_mib':round(settled/1024,2),

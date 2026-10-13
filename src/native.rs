@@ -82,7 +82,7 @@ pub extern "C" fn wb_select(index: i32) {
     let _ = catch_unwind(AssertUnwindSafe(|| {
         if let Some(ctx) = CONTEXT.get()
             && index >= 0
-            && (index as usize) < ctx.bridge.config.lock().unwrap().connections.len()
+            && (index as usize) < ctx.bridge.config.lock().unwrap().providers.len()
         {
             ctx.selected.store(index as usize, Ordering::Relaxed);
         }
@@ -99,22 +99,22 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
             let index = ctx
                 .selected
                 .load(Ordering::Relaxed)
-                .min(cfg.connections.len().saturating_sub(1));
-            let c = cfg.connections.get(index).cloned().unwrap_or_default();
+                .min(cfg.providers.len().saturating_sub(1));
+            let c = cfg.providers.get(index).cloned().unwrap_or_default();
             match input(name).as_str() {
                 "connections" => cfg
-                    .connections
+                    .providers
                     .iter()
                     .map(|c| c.label())
                     .collect::<Vec<_>>()
                     .join("\n"),
                 "selected" => index.to_string(),
-                "connection_count" => cfg.connections.len().to_string(),
-                "name" => c.name,
-                "provider" => c.provider,
-                "model" => c.model,
-                "upstream" => c.upstream,
-                "reasoning_effort" => c.reasoning_effort,
+                "connection_count" => cfg.providers.len().to_string(),
+                "name" => c.name.clone(),
+                "provider" => c.name.clone(),
+                "model" => c.model_lines(),
+                "upstream" => c.upstream.clone(),
+                "reasoning_effort" => c.effort().into(),
                 "url" => ctx.bridge.connection_address(&c.id),
                 "local_key" => cfg.local_key.clone(),
                 "status" => ctx.bridge.status.lock().unwrap().clone(),
@@ -130,8 +130,8 @@ fn execute(mut p: serde_json::Value) -> Result<String, String> {
     let ctx = CONTEXT.get().ok_or("Service is not ready")?;
     {
         let cfg = ctx.bridge.config.lock().unwrap();
-        if let Some(c) = cfg.connections.get(ctx.selected.load(Ordering::Relaxed)) {
-            p["connection_id"] = serde_json::json!(c.id);
+        if let Some(c) = cfg.providers.get(ctx.selected.load(Ordering::Relaxed)) {
+            p["provider_id"] = serde_json::json!(c.id);
         }
     }
     #[cfg(any(windows, target_os = "macos"))]
@@ -144,7 +144,7 @@ fn execute(mut p: serde_json::Value) -> Result<String, String> {
     let result = ctx.handle.block_on(ctx.bridge.command(&p));
     if result.is_ok() {
         *ctx.bridge.config.lock().unwrap() = crate::config::Config::load(&ctx.bridge.dir)?;
-        let count = ctx.bridge.config.lock().unwrap().connections.len();
+        let count = ctx.bridge.config.lock().unwrap().providers.len();
         let index = if matches!(p["command"].as_str(), Some("add" | "duplicate")) {
             count.saturating_sub(1)
         } else {
@@ -159,7 +159,6 @@ fn execute(mut p: serde_json::Value) -> Result<String, String> {
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_save(
     name: *const c_char,
-    provider: *const c_char,
     key: *const c_char,
     model: *const c_char,
     upstream: *const c_char,
@@ -167,7 +166,7 @@ pub extern "C" fn wb_save(
 ) -> *mut c_char {
     ffi_result(|| {
         execute(
-            serde_json::json!({"command":"save","name":input(name),"provider":input(provider),"key":input(key),"model":input(model),"upstream":input(upstream),"reasoning_effort":input(effort)}),
+            serde_json::json!({"command":"save","name":input(name),"key":input(key),"models":input(model),"upstream":input(upstream),"reasoning_effort":input(effort)}),
         )
     })
 }
