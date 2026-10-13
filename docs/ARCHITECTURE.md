@@ -24,7 +24,7 @@ FFI 字符串所有权由 Rust 分配，平台读取后调用 `wb_free`。FFI �
 
 ## 性能验证方式
 
-`scripts/benchmark.py` 启动独立 mock 上游和独立代理子进程。无界面时测量核心 PID；原生界面模式读取实例记录中的核心 PID，并与界面 PID 的 RSS 相加。共享映射页面可能重复计入，因此总量是保守的进程 RSS 和，不是唯一物理内存。Windows 使用 GetProcessMemoryInfo 的 WorkingSetSize，Unix 使用 ps RSS；这些指标存在平台差异，不能直接作为跨平台排行榜。
+`scripts/benchmark.py` 启动独立 mock 上游进程和独立代理子进程，避免 Python 客户端和模拟服务共享 GIL 对 Windows 时序造成干扰。无界面时测量核心 PID；原生界面模式读取实例记录中的核心 PID，并与界面 PID 的 RSS 相加。共享映射页面可能重复计入，因此总量是保守的进程 RSS 和，不是唯一物理内存。Windows 使用 GetProcessMemoryInfo 的 WorkingSetSize，Unix 使用 ps RSS；这些指标存在平台差异，不能直接作为跨平台排行榜。
 
 基准包含：预热 10 次；直接和代理各 200 个小请求，记录 p50 / p95；4 并发、80 个约 1 MiB 请求，每 150 ms 采样 RSS；负载结束后记录进程 RSS。小请求客户端每次重建连接，上游连接由代理复用。mock 禁止保存请求，测试数据不含真实 Key。
 
@@ -35,5 +35,3 @@ FFI 字符串所有权由 Rust 分配，平台读取后调用 `wb_free`。FFI �
 GitHub Actions 在 Windows、Apple Silicon Mac、Intel Mac、Linux 上进行编译、lint、单元测试、执行实际二进制冒烟测试；Windows 另执行原生窗口模式。自动测试不代替用户在目标机上的人工 UI、WorkBuddy 真正对话和上游真实账号验收。
 
 发布包仅含二进制、许可证、说明和 Windows 诊断启动器。用户配置始终在发布目录外。Git 忽略规则排除密钥文件、构建目录、日志和基准中间文件。
-
-Windows 仅在实际转发请求存续期间调用 `timeBeginPeriod(1)`，结束、失败或取消时 RAII 配对 `timeEndPeriod(1)`；空闲期间不持有高精度计时，不添加轮询或忙等待。其进程范围与耗电取舍遵循 [Microsoft 官方说明](https://learn.microsoft.com/en-us/windows/win32/api/timeapi/nf-timeapi-timebeginperiod)：Windows 10 2004 起为进程请求，更旧 Windows 会影响全局计时精度；高精度可能增加活动期间耗电。

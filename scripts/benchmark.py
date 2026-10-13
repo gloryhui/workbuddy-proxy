@@ -3,6 +3,7 @@
 import argparse
 import concurrent.futures
 import http.client
+import multiprocessing
 import json
 import platform
 from pathlib import Path
@@ -12,6 +13,18 @@ import threading
 import time
 import urllib.request
 from smoke import Mock, ThreadingHTTPServer, start, stop, request
+
+
+def mock_process(ready):
+    # Keep client and server in separate interpreters: a shared Python GIL can
+    # add scheduler waits to pooled requests, particularly on Windows.
+    class NullList:
+        def append(self,value):pass
+    Mock.received=NullList()
+    server=ThreadingHTTPServer(('127.0.0.1',0),Mock)
+    ready.send(server.server_port);ready.close()
+    try:server.serve_forever()
+    finally:server.server_close()
 
 
 def rss_kib(pid):
@@ -48,13 +61,12 @@ def percentiles(values):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--output',required=True)
     p.add_argument('--requests',type=int,default=200);p.add_argument('--models',type=int,default=64);p.add_argument('--gui',action='store_true');args=p.parse_args()
-    upstream=ThreadingHTTPServer(('127.0.0.1',0),Mock);threading.Thread(target=upstream.serve_forever,daemon=True).start()
-    # Do not retain test prompts in the mock while measuring memory.
-    class NullList:
-        def append(self,value): pass
-    Mock.received=NullList()
+    ctx=multiprocessing.get_context('spawn');ready,writer=ctx.Pipe(duplex=False)
+    upstream=ctx.Process(target=mock_process,args=(writer,),daemon=True);upstream.start();writer.close()
+    if not ready.poll(10):upstream.terminate();upstream.join();raise AssertionError('Mock process did not start')
+    upstream_port=ready.recv();ready.close()
     with tempfile.TemporaryDirectory(prefix='workbuddy-proxy-bench-') as folder:
-        process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream.server_port}/v1',args.gui)
+        process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream_port}/v1',args.gui)
         try:
             instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
             assert 1<=args.models<=256
@@ -75,7 +87,7 @@ def main():
                 started=time.perf_counter()
                 if proxy: conn,res=request(port,payload.replace(json.dumps(real_model).encode(),json.dumps(alias).encode(),1))
                 else:
-                    conn=http.client.HTTPConnection('127.0.0.1',upstream.server_port,timeout=5)
+                    conn=http.client.HTTPConnection('127.0.0.1',upstream_port,timeout=5)
                     conn.request('POST','/v1/chat/completions',payload,{'Content-Type':'application/json'});res=conn.getresponse()
                 assert res.status==200;res.read();conn.close();return (time.perf_counter()-started)*1000
             for _ in range(10): measured(True,payload)
@@ -97,10 +109,10 @@ def main():
                 'proxied_loopback_ms':percentiles(proxied),
                 'median_proxy_overhead_ms':round(statistics.median(proxied)-statistics.median(direct),3),
                 'large_request_size_mib':1,'large_concurrency':4,'large_requests':80,'large_seconds':round(large_seconds,3),
-                'notes':'RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock, no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.'}
+                'notes':'RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.'}
             Path(args.output).parent.mkdir(parents=True,exist_ok=True);Path(args.output).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
         finally: stop(process,port,folder,log)
-    upstream.shutdown();upstream.server_close()
+    upstream.terminate();upstream.join(timeout=5)
 
 
 if __name__=='__main__':main()
