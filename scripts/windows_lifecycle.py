@@ -115,8 +115,8 @@ def main():
             language=user.GetDlgItem(h,110);assert language
             def caption(control):
                 buffer=ctypes.create_unicode_buffer(256)
-                user.GetWindowTextW.argtypes=[wintypes.HWND,wintypes.LPWSTR,ctypes.c_int]
-                user.GetWindowTextW(control,buffer,256);return buffer.value
+                # WM_GETTEXT marshals control text across processes; GetWindowText cannot read another process's Edit contents.
+                user.SendMessageW(control,0x000D,256,ctypes.cast(buffer,ctypes.c_void_p).value);return buffer.value
             for index,code,title in [(0,'zh','保存'),(1,'en','Save')]:
                 user.SendMessageW(language,0x014E,index,0)
                 user.PostMessageW(h,0x0111,110 | (1<<16),0)

@@ -35,6 +35,17 @@ static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;d
 @implementation WBModelLabel
 - (NSView *)hitTest:(NSPoint)point{(void)point;return nil;}
 @end
+@interface WBProviderRow:NSTableRowView
+@end
+@implementation WBProviderRow
+- (NSBackgroundStyle)interiorBackgroundStyle{return NSBackgroundStyleNormal;}
+- (void)drawSelectionInRect:(NSRect)dirtyRect{(void)dirtyRect;}
+@end
+@interface WBProviderCell:NSView
+@end
+@implementation WBProviderCell
+- (NSView *)hitTest:(NSPoint)point{(void)point;return nil;}
+@end
 @interface WBModelRow:NSTableRowView
 @end
 @implementation WBModelRow
@@ -82,7 +93,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     self.updateButton=[NSButton buttonWithTitle:@"" target:self action:@selector(updateClick)];self.updateButton.bezelStyle=NSBezelStyleRounded;self.updateButton.font=[NSFont systemFontOfSize:12];[self.window.contentView addSubview:self.updateButton];
     self.language=[NSPopUpButton new];[self.language addItemsWithTitles:@[@"简体中文",@"English"]];[self.language selectItemAtIndex:wb_ui_zh()?0:1];self.language.target=self;self.language.action=@selector(changeLanguage);[self.window.contentView addSubview:self.language];[self.controls addObject:self.language];
     [self label:T_PROVIDERS in:self.left];
-    self.providerScroll=[NSScrollView new];self.providerScroll.hasVerticalScroller=YES;self.providerScroll.autohidesScrollers=YES;self.list=[NSTableView new];NSTableColumn *col=[[NSTableColumn alloc]initWithIdentifier:@"provider"];[self.list addTableColumn:col];self.list.headerView=nil;self.list.rowHeight=54;self.list.intercellSpacing=NSMakeSize(0,5);self.list.selectionHighlightStyle=NSTableViewSelectionHighlightStyleNone;self.list.backgroundColor=color(0xeef3f9);self.providerScroll.drawsBackground=NO;self.list.dataSource=self;self.list.delegate=self;self.list.allowsEmptySelection=NO;self.list.style=NSTableViewStylePlain;self.providerScroll.documentView=self.list;[self.left addSubview:self.providerScroll];
+    self.providerScroll=[NSScrollView new];self.providerScroll.hasVerticalScroller=YES;self.providerScroll.autohidesScrollers=YES;self.list=[NSTableView new];NSTableColumn *col=[[NSTableColumn alloc]initWithIdentifier:@"provider"];[self.list addTableColumn:col];self.list.headerView=nil;self.list.rowHeight=54;self.list.intercellSpacing=NSMakeSize(0,5);self.list.selectionHighlightStyle=NSTableViewSelectionHighlightStyleRegular;self.list.backgroundColor=color(0xeef3f9);self.providerScroll.drawsBackground=NO;self.list.dataSource=self;self.list.delegate=self;self.list.allowsEmptySelection=NO;self.list.style=NSTableViewStylePlain;self.providerScroll.documentView=self.list;[self.left addSubview:self.providerScroll];
     [self button:T_ADD action:@selector(add) in:self.left];[self button:T_DUPLICATE action:@selector(duplicate) in:self.left];[self button:T_DELETE action:@selector(remove) in:self.left];
     [self label:T_NAME in:self.center];self.name=[self fieldIn:self.center secure:NO];
     [self label:T_URL in:self.center];self.upstream=[self fieldIn:self.center secure:NO];self.upstream.placeholderString=@"https://example.com/v1";
@@ -127,7 +138,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     if(table==self.list){
         NSString *text=self.rows[row];NSRange separator=[text rangeOfString:@" · " options:NSBackwardsSearch];NSString *name=separator.location==NSNotFound?text:[text substringToIndex:separator.location];NSString *count=separator.location==NSNotFound?@"":[text substringFromIndex:NSMaxRange(separator)];
         CGFloat width=column.width;BOOL selected=row==self.list.selectedRow;
-        NSView *card=[[NSView alloc]initWithFrame:NSMakeRect(0,0,width,54)];card.wantsLayer=YES;card.layer.cornerRadius=8;card.layer.backgroundColor=(selected?color(0xc7e8fa):NSColor.clearColor).CGColor;card.layer.borderWidth=selected?1:0;card.layer.borderColor=color(0x58acd3).CGColor;
+        NSView *card=[[WBProviderCell alloc]initWithFrame:NSMakeRect(0,0,width,54)];card.wantsLayer=YES;card.layer.cornerRadius=8;card.layer.backgroundColor=(selected?color(0xc7e8fa):NSColor.clearColor).CGColor;card.layer.borderWidth=selected?1:0;card.layer.borderColor=color(0x58acd3).CGColor;
         if(selected){NSView *accent=[[NSView alloc]initWithFrame:NSMakeRect(1,8,3,38)];accent.wantsLayer=YES;accent.layer.cornerRadius=1.5;accent.layer.backgroundColor=color(0x008fc4).CGColor;[card addSubview:accent];}
         NSTextField *a=[NSTextField labelWithString:name];a.font=[NSFont systemFontOfSize:13 weight:NSFontWeightSemibold];a.textColor=selected?color(0x124e72):color(0x25465f);a.lineBreakMode=NSLineBreakByTruncatingTail;a.alignment=NSTextAlignmentLeft;a.frame=NSMakeRect(8,28,width-16,18);a.autoresizingMask=NSViewWidthSizable;a.toolTip=name;[card addSubview:a];
         NSTextField *b=[NSTextField labelWithString:count];b.font=[NSFont systemFontOfSize:11];b.textColor=selected?color(0x317b9f):color(0x6a8097);b.alignment=NSTextAlignmentLeft;b.frame=NSMakeRect(8,8,width-16,16);b.autoresizingMask=NSViewWidthSizable;[card addSubview:b];return card;
@@ -137,7 +148,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     NSTextField *v=[WBModelLabel new];v.stringValue=take(wb_model((int)row,col));v.bezeled=NO;v.drawsBackground=NO;v.editable=NO;v.selectable=NO;v.font=[NSFont systemFontOfSize:13];v.lineBreakMode=NSLineBreakByTruncatingTail;v.alignment=NSTextAlignmentLeft;v.delegate=self;v.tag=1000+row*2+col;v.textColor=color(0x243b55);v.toolTip=v.stringValue;v.accessibilityLabel=[NSString stringWithFormat:@"%@ %ld",column.title,(long)row+1];
     CGFloat height=v.intrinsicContentSize.height;v.frame=NSMakeRect(8,floor((table.rowHeight-height)/2),MAX(0,column.width-16),height);v.autoresizingMask=NSViewWidthSizable|NSViewMinYMargin|NSViewMaxYMargin;cell.textField=v;[cell addSubview:v];return cell;
 }
-- (NSTableRowView *)tableView:(NSTableView *)table rowViewForRow:(NSInteger)row {(void)row;return table==self.models?[WBModelRow new]:nil;}
+- (NSTableRowView *)tableView:(NSTableView *)table rowViewForRow:(NSInteger)row {(void)row;return table==self.models?[WBModelRow new]:[WBProviderRow new];}
 - (void)editRow:(NSInteger)row column:(NSInteger)col {
     if(self.busy)return;[self.window makeFirstResponder:nil];if(row<0||col<0||row>=wb_models_count())return;
     NSTableCellView *cell=[self.models viewAtColumn:col row:row makeIfNecessary:YES];
@@ -152,7 +163,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     NSTextField *v=note.object;if(v!=self.modelEditor)return;int row=(int)(v.tag-1000)/2,col=(int)(v.tag-1000)%2;wb_model_set(row,col,v.stringValue.UTF8String);NSTableCellView *cell=(NSTableCellView *)v.superview;cell.textField.stringValue=take(wb_model(row,col));cell.textField.toolTip=cell.textField.stringValue;cell.textField.hidden=NO;self.modelEditor=nil;[v removeFromSuperview];if(col==1){NSTableCellView *nameCell=[self.models viewAtColumn:0 row:row makeIfNecessary:NO];nameCell.textField.stringValue=take(wb_model(row,0));nameCell.textField.toolTip=nameCell.textField.stringValue;}
 }
 - (void)markDirty {self.dirty=YES;}
-- (void)tableViewSelectionDidChange:(NSNotification *)note{if(note.object!=self.list||self.refreshing||self.list.selectedRow<0)return;[self.window makeFirstResponder:nil];if(self.dirty){NSAlert *a=[NSAlert new];a.messageText=t(T_DISCARD);[a addButtonWithTitle:wb_ui_zh()?@"放弃修改":@"Discard"];[a addButtonWithTitle:wb_ui_zh()?@"取消":@"Cancel"];if([a runModal]!=NSAlertFirstButtonReturn){[self reloadProviders];return;}}wb_select((int)self.list.selectedRow);[self fields];[self.list reloadData];}
+- (void)tableViewSelectionDidChange:(NSNotification *)note{NSInteger selectedRow=self.list.selectedRow;if(note.object!=self.list||self.refreshing||selectedRow<0)return;[self.window makeFirstResponder:nil];if(self.dirty){NSAlert *a=[NSAlert new];a.messageText=t(T_DISCARD);[a addButtonWithTitle:wb_ui_zh()?@"放弃修改":@"Discard"];[a addButtonWithTitle:wb_ui_zh()?@"取消":@"Cancel"];if([a runModal]!=NSAlertFirstButtonReturn){[self reloadProviders];return;}}wb_select((int)selectedRow);[self fields];[self reloadProviders];[self.window makeFirstResponder:self.list];}
 - (void)fields{self.refreshing=YES;self.name.stringValue=value("name");self.upstream.stringValue=value("upstream");self.key.stringValue=@"";wb_models_load();[self.models deselectAll:nil];[self.models reloadData];NSString *e=value("reasoning_effort");for(int i=0;i<6;i++)if([e isEqualToString:[NSString stringWithUTF8String:efforts[i]]])[self.effort selectItemAtIndex:i];self.dirty=NO;self.refreshing=NO;}
 - (void)reloadProviders{self.refreshing=YES;NSString *rows=value("connections");self.rows=rows.length?[rows componentsSeparatedByString:@"\n"]:@[];[self.list reloadData];NSInteger i=[value("selected") integerValue];if(i>=0&&(NSUInteger)i<self.rows.count)[self.list selectRowIndexes:[NSIndexSet indexSetWithIndex:i] byExtendingSelection:NO];if(self.rows.count)[self.list reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:i] columnIndexes:[NSIndexSet indexSetWithIndex:0]];self.refreshing=NO;}
 - (void)refresh{[self reloadProviders];[self fields];}
