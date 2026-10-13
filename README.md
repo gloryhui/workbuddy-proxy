@@ -1,125 +1,333 @@
-# WorkBuddy Proxy
+<p align="center">
+  <img src="assets/icon-128.png" width="128" height="128" alt="WorkBuddy Proxy 主图标">
+</p>
 
-<img src="assets/icon-128.png" width="72" alt="WorkBuddy Proxy">
+<h1 align="center">WorkBuddy Proxy</h1>
 
-专门给 WorkBuddy 使用的轻量模型代理。Rust 转发核心，Windows Win32 / macOS AppKit 原生界面，支持多个供应商和多个模型连接，同一家或不同家、同模型 ID 或不同模型 ID 均可独立列出。支持 OpenAI Chat Completions 与 OpenCode Go。
+<p align="center">
+  <strong>轻量运行 · 快速转发 · 参数透传</strong><br>
+  为 WorkBuddy 打造的原生本地模型代理，一份供应商配置连接多个模型。
+</p>
 
-![Mac 原生设置窗口](docs/native-mac-preview.png)
+<p align="center">
+  <a href="https://github.com/gloryhui/workbuddy-proxy/releases"><img src="https://img.shields.io/github/v/release/gloryhui/workbuddy-proxy?style=flat-square&color=0ea5e9" alt="最新版本"></a>
+  <a href="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/ci.yml"><img src="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/ci.yml/badge.svg?branch=main" alt="构建与测试"></a>
+  <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D6?style=flat-square" alt="Windows 10 / 11">
+  <img src="https://img.shields.io/badge/macOS-12%2B-475569?style=flat-square" alt="macOS 12 及以上">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="MIT License"></a>
+</p>
 
-目标是**更少的常驻内存、更低的转发开销**。本项目不声称在所有平台、所有负载下“全球最小 / 最快”；每次 CI 都构建真实可执行文件、运行冒烟测试并记录可复现的内存与延迟数据。
+<p align="center">
+  <a href="#下载与安装">下载与安装</a> ·
+  <a href="#三步接入-workbuddy">快速上手</a> ·
+  <a href="#界面预览">界面预览</a> ·
+  <a href="#性能实测">性能实测</a> ·
+  <a href="#常见问题">常见问题</a>
+</p>
 
-## 使用
+---
 
-从 [Releases](https://github.com/gloryhui/workbuddy-proxy/releases) 下载与你的系统对应的包。测试与开发中的文件也会出现在 [Actions](https://github.com/gloryhui/workbuddy-proxy/actions) 的构建附件里。
+## 用它做什么
 
-- Windows 10/11 x64：解压，双击 `workbuddy-proxy.exe`，直接显示原生设置窗口。关闭或最小化窗口时隐藏到任务栏托盘，转发继续。单击托盘或再次双击程序可恢复设置；右键托盘“退出”停止程序。Explorer 重启后会重新注册托盘。
-- macOS 12+：解压，将 `WorkBuddy Proxy.app` 拖到“应用程序”，双击启动。关闭设置窗口后界面进程退出，转发核心继续运行；再次双击可重新打开设置。
-- 无需安装 Rust、Python、Node 或额外 WebView 运行时。程序、Windows 托盘 / 任务栏、Mac 菜单栏和设置窗口均使用项目主图标。
+把兼容 **OpenAI Chat Completions** 的服务接入 WorkBuddy，用一个小型原生程序管理地址、Key 和模型列表。OpenCode Go、其他兼容供应商，以及本机兼容服务，都可以按同一套方式配置。
 
-1. 左侧新增一个供应商，只填写一次**供应商名称、OpenAI 兼容地址和 API Key**。支持任意实现 OpenAI Chat Completions 的上游；OpenCode Go 只是其中一家。
-2. 在“模型列表”中**每行填写一个真实模型 ID**，也可用 `ID | 显示名称` 自定义列表名称。例如：
-
-   ```text
-   deepseek-v4.1-flash | DeepSeek Flash
-   deepseek-v4-pro | DeepSeek Pro
-   other-model | 我的另一个模型
-   ```
-
-3. 保存，点击“测试首个模型”检查当前供应商的首个模型。模型 ID 必须是上游账号实际可用的 ID；不自动猜测、替换或回退。
-4. 点击“同步 WorkBuddy 列表”，一次写入所有供应商下已配置的模型，每个模型在 WorkBuddy 中独立显示；需要时重启 WorkBuddy。
-5. 修改地址或 Key 即对该供应商全部模型生效，Key 留空保留已保存值。新增模型只需加一行；删除一行后同步，会移除对应 WorkBuddy 项。
-
-最多 64 个供应商、合计 256 个模型，共用一个核心和监听端口。同供应商下重复模型 ID 可填写不同显示名称；不同账号可复制供应商后更换 Key。不同供应商的同名模型有独立别名和选路，不会覆盖或随机选取凭据。
-
-“复制配置”包含当前供应商的本地 URL、连接码和全部模型别名。支持自动读取 `/models` 的客户端可在这个 URL 下获取该供应商的模型列表；WorkBuddy 使用“同步 WorkBuddy 列表”一次写入全部模型即可。复制结果同时列出每个模型的独立 URL，不包含上游 Key。旧版裸别名遇到同名模型时，使用该模型的独立 URL；WorkBuddy 自动同步已使用这些 URL。
-
-DeepSeek V4.1 Flash 会声明思考能力与档位，WorkBuddy 列表可选择“高 / 极致”、允许关闭思考；上下文可选择 128K / 300K / 1M，默认 300K。工具调用默认开启、图片默认关闭；其他模型的能力以真实支持范围为准，必要时在 WorkBuddy 高级配置中调整。
-
-## 同名模型如何区分
-
-每个模型生成一个独立内部 ID，以及带真实模型后缀的 WorkBuddy 别名，例如 `wbp-abc123/deepseek-v4.1-flash`。真实 ID 的后缀使 WorkBuddy 仍可识别模型能力。每个模型还有独立本地 URL `/r/模型ID/v1`，避免客户端处理名称时丢失路由信息。代理将请求的 `model` 还原成所选上游真实 ID，只发送该项的 Key。
-
-| 场景 | 支持 |
+| 能力 | 使用体验 |
 | --- | --- |
-| 同供应商、同模型 ID、同 Key，作为两项配置 | 是，显示名称不同即可 |
-| 同供应商、同模型 ID、不同 Key | 是 |
-| 同供应商、不同模型 ID | 是 |
-| 不同供应商、同模型 ID | 是 |
-| 不同供应商、不同模型 ID | 是 |
+| 🪶 轻量原生 | Rust 转发核心，Windows Win32 / Mac AppKit 界面；解压即可运行 |
+| 🧩 一份配置，多个模型 | 同一个供应商只填一次 URL 和 Key，模型列表每行添加一个 ID |
+| 🔀 同名模型独立选路 | 多个账号、多个供应商使用相同模型 ID，也能在 WorkBuddy 中分别选择 |
+| 🌊 流式透传 | 默认只还原模型别名，保留其余请求字节、流式响应与上游错误 |
+| 🦦 统一图标 | 主图标覆盖应用、窗口、Windows 任务栏 / 托盘、Mac 菜单栏和启动提示 |
+| 🔄 一键同步 | 批量写入 WorkBuddy 模型列表，自动备份并保留其他已有模型 |
 
-`/v1/models` 返回所有已保存供应商的模型别名列表；共用 `/v1/chat/completions` 可按别名路由。若直接发送一个对应多条连接的裸模型 ID，代理返回错误，避免选错供应商。独立模型 URL 支持该项别名或真实模型 ID；供应商 URL `/r/供应商ID/v1` 支持该供应商全部模型，裸 ID 在供应商内多义时也会拒绝。
+最多 **64 个供应商、合计 256 个模型**，共用一个转发核心和一个本地端口。
 
-## 从 v0.1 / v0.2 升级
+## 下载与安装
 
-先从托盘 / 菜单栏“退出”旧版，再运行新版。旧配置备份为私有的 `config.pre-v0.3-*.bak` 后自动迁移；v0.2 中供应商标签、URL、Key 均相同的连接会合并为一个供应商，原模型 ID、别名、思考设置和 WorkBuddy 恢复记录保留，不需要重新填写。不同 Key 会保留为独立供应商。Mac 仅剩旧核心时，新版会识别版本并停止旧核心再启动；旧版窗口仍常驻时会提示先退出。
+### v0.3.0
 
-“恢复配置”只恢复本工具改动的模型。如果该模型后来被其他操作修改，程序拒绝覆盖，并保留备份供手动恢复。备份位于 WorkBuddy 配置旁，名称为 `models.json.workbuddy-proxy-时间戳.bak`。
+| 系统 | 下载 | ZIP 大小 | 启动方式 |
+| --- | --- | ---: | --- |
+| Windows 10 / 11，x64 | [Windows 版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-windows-x64.zip) | 1.84 MB | 解压，双击 `workbuddy-proxy.exe` |
+| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-macos-arm64.zip) | 3.40 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-macos-x64.zip) | 3.50 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
 
-## 思考强度和 WorkBuddy 选择器
+Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP，每个人填写自己的 Key 即可。
 
-WorkBuddy 的“思考强度”由 `supportsReasoning: true`、`reasoning.defaultEffort` 和 `reasoning.supportedEfforts` 控制；仅填模型 ID / URL / Key 不保证显示。`contextWindow.defaultLength` / `supportedLengths` 控制上下文窗口选择器。“同步 WorkBuddy 列表”会为 `deepseek-v4.1-flash` 写入这些能力字段；已有用户需再次点击并重新打开模型设置，必要时重启 WorkBuddy。
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [源代码 ZIP](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/workbuddy-proxy-0.3.0-source.zip) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/SHA256SUMS) · [性能原始数据](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/performance.json)
 
-代理的每个模型默认“跟随 WorkBuddy”，保留客户端的思考参数。只有明确选择关闭 / 低 / 高 / 最高并保存，才批量覆盖当前供应商各模型的上游请求，优先级高于 WorkBuddy 当前选择。“保留各模型设置”保留迁移来的不同档位；“测试首个模型”使用该模型已保存的档位。
+> 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
-DeepSeek 的覆盖参数遵循 [官方说明](https://api-docs.deepseek.com/guides/thinking_mode/)：开启时发送 `thinking.type=enabled` 与 `reasoning_effort`；关闭时发送 `thinking.type=disabled` 并删除冲突的 `reasoning_effort`。代理提供 `low / high / max` 参数；WorkBuddy 的 Go 目录目前为 V4.1 声明 `high / max`，所以其列表只展示这两档。其他 OpenAI 兼容模型仅发送 `reasoning_effort`，不保证每家都支持全部档位，上游拒绝时原样返回错误。思考内容和工具历史仍由 WorkBuddy 管理，代理不伪造 `reasoning_content`。
+## 三步接入 WorkBuddy
 
-## 轻量设计
+### 1. 添加供应商
 
-| 部分 | 选择 |
+打开程序，在左侧选择或新增供应商，填写：
+
+| 字段 | 填什么 |
 | --- | --- |
-| 网络核心 | Rust、单线程 Tokio I/O 调度器、Axum / Hyper、Reqwest |
-| TLS | 系统原生 TLS 和证书验证 |
-| Windows UI | Win32 标准控件和托盘 |
-| Mac UI | AppKit 标准控件和菜单栏 |
-| 响应 | 流式直通、背压、取消时释放上游流 |
-| 请求 | 默认只替换 model 值，其余字节原样保留；真实 ID 无需替换时复用原 Bytes |
-| 选路 | 内存哈希索引，模型共享供应商 URL / 凭据，无逐请求目录克隆 |
-| 并发 | 4 个在途请求；忙时返回本地 HTTP 429，不排队堆积 |
+| 供应商名称 | 方便自己区分的名称，例如“日常账号”“备用账号” |
+| 上游地址 | 供应商提供的 OpenAI 兼容 Base URL，例如 `https://api.openai.com/v1` |
+| API Key | 自己在该供应商获得的 Key；再次编辑时留空保留已保存值 |
+| 模型列表 | 上游实际支持的模型 ID，每行一个；可用 `ID \| 显示名称` 自定义名称 |
+
+使用 OpenCode Go 时，地址填写 `https://opencode.ai/zen/go/v1`。上游地址使用 HTTPS，本机 loopback 地址也允许 HTTP。
+
+### 2. 配置模型，保存并测试
+
+下面用 `model-a` / `model-b` 演示格式，请替换为自己上游实际可用的模型 ID：
+
+```text
+model-a | 日常任务
+model-b | 编程任务
+model-a | 同模型的另一项
+```
+
+同名模型填写不同的显示名称即可。以后增加模型只需加一行；修改供应商 URL 或 Key，会对该供应商下的全部模型生效。
+
+点击**保存**，再点击**测试首个模型**。测试只检查该供应商的首个模型，使用已保存的思考设置，发送一个简短流式请求。
+
+### 3. 同步到 WorkBuddy
+
+点击**同步 WorkBuddy 列表**，一次写入所有已保存 Key 的供应商下的模型。重新打开 WorkBuddy 的模型列表，分别选择对应项；必要时重启 WorkBuddy。
+
+删除模型行或供应商后，再同步一次即可清理对应的 WorkBuddy 项。界面的“复制”用于复制供应商配置；“复制配置”用于取得本地 URL、连接码、模型别名和每个模型的独立 URL。
+
+> **两种 Key 各有用途：**供应商 Key 填在代理里；WorkBuddy 使用代理生成的本地连接码。“同步 WorkBuddy 列表”会自动完成填写，“复制配置”也会给出配套的本地信息。
+
+## 界面预览
+
+原生设置窗口集中展示供应商、模型列表和同步操作。主图标与系统托盘 / 菜单栏保持一致。
+
+<p align="center">
+  <img src="docs/native-mac-preview.png" width="780" alt="Mac 原生界面：一个供应商配置三个模型，窗口左上显示应用主图标">
+</p>
+
+### 关闭窗口以后
+
+| 操作 | Windows | Mac |
+| --- | --- | --- |
+| 关闭设置窗口 | 隐藏到任务栏托盘，转发继续 | 界面进程退出，转发核心继续 |
+| 最小化设置窗口 | 隐藏到任务栏托盘 | 按系统方式最小化窗口 |
+| 重新打开设置 | 单击托盘，或再次双击程序 | 再次打开 `.app`；窗口运行时也可从菜单栏打开设置 |
+| 完全退出 | 右键托盘 → 退出 | 菜单栏 → 退出；设置窗口已关闭时先重新打开程序 |
+
+Windows 的托盘模式保留核心和界面两个进程；Mac 关闭设置窗口后只保留核心。需要无界面运行时，两端都可使用 `--headless`。
+
+## 多供应商与同名模型
+
+```mermaid
+flowchart LR
+    W["WorkBuddy<br/>独立模型列表"] --> P["WorkBuddy Proxy<br/>一个本地核心"]
+    P --> A["供应商 A<br/>模型 A · 模型 B"]
+    P --> B["供应商 B<br/>模型 A · 模型 C"]
+    classDef proxy fill:#e0f7fa,stroke:#06b6d4,color:#083344;
+    class P proxy;
+```
+
+| 配置场景 | 配置方式 |
+| --- | --- |
+| 同一个账号使用多个模型 | 一个供应商，添加多行模型 |
+| 同一个账号、同模型 ID，展示为多项 | 一个供应商，同模型 ID 配不同显示名称 |
+| 同一家服务的多个账号 | 复制供应商，为各账号填写各自的 Key |
+| 不同供应商提供相同模型 ID | 分别添加供应商，独立同步到 WorkBuddy |
+
+每个模型具有独立内部 ID、别名和本地 URL。例如 `wbp-abc123/deepseek-v4.1-flash` 会在转发时还原为真实上游 ID `deepseek-v4.1-flash`，使用所选供应商的 Key。上游响应中的模型字段保持原样。
+
+裸模型 ID 对应多项配置时，代理会拒绝模糊选路。WorkBuddy 自动同步使用每个模型的独立 URL，选中的列表项与上游凭据保持对应。
+
+## 透明转发与思考设置
+
+默认选择**跟随 WorkBuddy**：思考参数、输出上限、消息、工具历史和额外字段由客户端决定，代理只处理选路、认证和模型别名还原。
+
+- 其余请求字节保留原样，包括字段顺序、空白和未知字段；真实模型 ID 已匹配时复用原始请求 Bytes。
+- 响应按流返回，保留原始 SSE 字节、HTTP 状态、端到端头与错误内容，支持背压和取消。
+- 本地 Authorization 替换为供应商 Key，Host 按上游生成；移除 hop-by-hop 及 Connection 指定的头。
+- 上游 401 / 403 / 429 原样返回，不自动换 Key、换模型或重试这些错误。
+
+### 需要固定思考档位时
+
+代理提供“关闭 / 低 / 高 / 最高”覆盖，保存后应用到当前供应商的各模型，优先级高于 WorkBuddy 的选择。“保留各模型设置”用于保留迁移来的不同档位；默认透传可保留客户端发送的其他档位。
+
+对 DeepSeek，显式开启会写入 `thinking.type=enabled` 和 `reasoning_effort`；关闭会写入 `thinking.type=disabled` 并删除冲突的 `reasoning_effort`。其他模型只覆盖 `reasoning_effort`。可用档位由上游决定，不支持的参数会收到其原始错误。
+
+<details>
+<summary><strong>WorkBuddy 的思考强度、上下文窗口如何显示？</strong></summary>
+
+同步时，本程序为 `deepseek-v4.1-flash`、`deepseek-v4-pro`、`deepseek-v4-flash` 写入以下能力声明：
+
+| 项目 | 本程序写入的值 |
+| --- | --- |
+| 思考能力 | 支持思考，允许关闭；档位 `high` / `max`，默认 `high` |
+| 上下文窗口 | 128K / 300K / 1M，默认 300K |
+| 最大输入声明 | 1,000,000 tokens |
+| 工具 / 图片声明 | 工具调用开启，图片关闭 |
+
+这些是 WorkBuddy 的模型配置声明，实际限制以上游服务为准；上下文窗口也不等于最大输出长度。默认转发不主动增加输出上限或上下文参数。
+
+仅填写模型 ID、URL、Key 不保证 WorkBuddy 显示思考选项。选择器依赖 `supportsReasoning`、`reasoning`、`contextWindow` 等字段；同步后重新打开模型列表，必要时重启 WorkBuddy。其他模型的能力声明需按真实支持范围配置。
+
+</details>
+
+## 性能实测
+
+轻量化通过发布包和实际进程测量验证。以下来自 **v0.3.0 发布构建**，统一配置为 **1 个供应商、64 个模型**：
+
+| 平台 / 模式 | 空闲进程 RSS | 测量范围 |
+| --- | ---: | --- |
+| Windows x64，无界面 | **9.06 MiB** | 仅转发核心 |
+| Windows x64，原生界面 / 托盘 | **28.82 MiB** | 核心与界面进程的 RSS 合计 |
+| Mac Apple Silicon，无界面 | **11.66 MiB** | CI 环境中的转发核心 |
+| Mac Intel，无界面 | **4.39 MiB** | CI 环境中的转发核心 |
+
+小请求的直连 / 代理中位数差值：Windows 原生界面模式约 **0.16 ms**，Mac Apple Silicon 约 **0.18 ms**，Mac Intel 约 **0.16 ms**。这是本地 HTTP 模拟测试中的差值，包含连接复用和调度影响，不是上游模型的响应时间。
+
+不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.3.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38399284219)。
+
+### 轻量实现
+
+| 部分 | 选择与边界 |
+| --- | --- |
+| 核心 | Rust，单线程 Tokio I/O 调度器，Axum / Hyper / Reqwest |
+| 界面 | Win32 / AppKit 系统原生控件 |
+| TLS | 系统原生 TLS，保留证书验证 |
+| 选路 | 内存哈希索引，模型共享供应商 URL / 凭据 |
+| 连接 | 上游池化复用，每个主机最多 2 个空闲连接，60 秒后清理 |
+| 并发 | 全局 4 个在途请求；忙时本地返回 429，不堆积等待队列 |
 | 请求体 | 每个最多 8 MiB，输入读取最多 30 秒 |
-| 会话缓存 | 最多 64 个会话，每个最多 128 个消息哈希；24 小时不活跃后按需清理 |
-| 上游连接 | 每个主机最多保留 2 个空闲连接，60 秒空闲后清理 |
+| 上游读取 | 单次读取的空闲超时 180 秒 |
+| Go 会话缓存 | 最多 64 个会话，每个最多 128 个消息哈希，按需清理 |
 
-没有内置浏览器、前端框架、数据库、自动更新器、遥测、聊天日志或响应重写。同一个可执行文件包含核心和设置界面：Mac 后台常驻 1 个核心进程，关闭设置会释放界面进程。Windows 为保持托盘，关闭窗口后仍保留核心和一个原生界面进程；需要最低常驻内存时可使用 `--headless`（无托盘）。没有自动模型发现或后台轮询，模型列表由用户明确配置。
+界面按需运行。模型目录由用户配置；程序没有后台余额轮询、自动更新器、遥测、数据库或聊天日志。更完整的取舍见 [设计与性能边界](docs/ARCHITECTURE.md)，历史测量见 [首版记录](docs/PERFORMANCE.md)。
 
-端到端自定义请求 / 响应头、错误状态及响应体保留；本地 Authorization / Host 和 hop-by-hop 头不会透传，Authorization 替换为供应商 Key。流式响应保持原始 SSE 字节，不解析、不拼接、不重写。默认不补思考、输出上限或上下文参数。
+## 常见问题
 
-对于 OpenCode Go，发送本工具自己的 User-Agent，并补齐 `x-opencode-session`。优先读取客户端会话头，缺少时根据聊天历史前缀推断；不同会话不会共用一个全局固定值。相同开场历史的独立聊天可能被归为同一会话；超过缓存窗口、历史压缩和服务重启可能产生新的上游会话。这影响路由 / 缓存，不会混合或交换聊天内容。使用范围与额度以 [OpenCode Go 官方说明](https://opencode.ai/docs/go/) 为准。
+<details>
+<summary><strong>同步成功了，WorkBuddy 里还是看不到模型？</strong></summary>
 
-## 验证和性能
+重新打开模型列表，必要时重启 WorkBuddy。确认已保存供应商 Key 和至少一个模型；没有 Key 的草稿供应商不会同步。配置文件位置为当前用户的 `~/.workbuddy/models.json`。
 
-参见 [设计与性能边界](docs/ARCHITECTURE.md)。基准脚本测量进程 RSS、直接 / 代理的本地请求延迟、4 并发 1 MiB 输入的采样峰值。**本地 HTTP mock 数据不等于真实 TLS、互联网、模型响应或 Windows 人工验收。**
+</details>
 
-[首版原始性能记录](docs/PERFORMANCE.md)：无界面核心空闲约 Mac 6.23 MiB / Windows 8.61 MiB；这些是无界面核心的数据。Windows 托盘模式还保留 UI 进程，总占用以最新 CI 测量为准。
+<details>
+<summary><strong>模型列表要手动填写吗？可以自动发现吗？</strong></summary>
+
+当前版本在代理中手动填写真实模型 ID。“测试首个模型”只验证首项，不自动发现上游目录或验证所有模型。
+
+代理的 `/v1/models` 可向兼容客户端提供已配置模型列表，供应商 URL 下的 `/models` 只返回该供应商的模型。WorkBuddy 使用“一键同步”即可批量添加。
+
+</details>
+
+<details>
+<summary><strong>可以连接本机兼容模型服务吗？</strong></summary>
+
+可以使用 `http://127.0.0.1:端口/v1` 这类 loopback 地址。上游需实现 OpenAI Chat Completions；本工具的供应商 Key 字段需要保存非空值，不校验 Key 的上游可填写自用占位值，例如 `local`。
+
+远程上游要求 HTTPS，地址不能包含用户名、密码、查询参数或 fragment。
+
+</details>
+
+<details>
+<summary><strong>改完 Key、增加或删除模型，还要做什么？</strong></summary>
+
+先保存，再同步 WorkBuddy 列表。Key 留空会保留当前供应商已保存的值；URL / Key 的修改作用于该供应商全部模型。已开始的请求沿用原来的选路，新请求使用新配置。
+
+</details>
+
+<details>
+<summary><strong>测试报 401 / 403 / 429，怎么排查？</strong></summary>
+
+若“测试首个模型”提示上游 HTTP 401 / 403，检查供应商 Key、地址、账号权限及模型可用性。若 WorkBuddy 提示本地 Key 错误，重新同步，或使用“复制配置”中的本地连接码。
+
+上游 429 通常需要检查服务额度或限流；代理自己也会在 4 个请求同时在途时返回 429，错误信息会说明请求槽已满。HTTP 400 可检查模型 ID 和参数；不确定思考档位时先选择“跟随 WorkBuddy”。
+
+</details>
+
+<details>
+<summary><strong>同步 / 恢复提示列表项已被修改？</strong></summary>
+
+程序会比对上次写入的条目，检测到其他操作的修改时拒绝覆盖。先检查当前 `models.json` 和旁边的 `models.json.workbuddy-proxy-时间戳.bak` 备份，再手动处理冲突。恢复操作只处理本工具管理的条目。
+
+</details>
+
+<details>
+<summary><strong>端口被占用，或者 Windows 启动失败？</strong></summary>
+
+默认监听 `127.0.0.1:18080`。端口冲突会报错，不静默换端口；先退出占用该端口的程序，或显式指定另一个端口后重新同步 WorkBuddy。
+
+Windows 包内有 `Diagnose.cmd`，可查看无界面启动诊断。启动日志在代理配置目录的 `startup.log`，只记录启动元数据，不记录聊天内容或 Key。
+
+</details>
+
+<details>
+<summary><strong>OpenCode Go 会话是怎样处理的？</strong></summary>
+
+使用 Go 地址时，程序发送自己的 User-Agent，并补齐 `x-opencode-session`。优先采用客户端会话头，缺少时依据消息历史前缀推断，且使用独立模型 ID 区分连接。
+
+相同开场历史可能归为同一会话；历史压缩、超出缓存窗口或服务重启可能产生新会话标识。请求和响应内容仍来自原对话，不会交换聊天内容。通用上游不进行这项 Go 会话处理。
+
+</details>
+
+## 升级、备份与配置位置
+
+从 v0.1 / v0.2 升级时，旧配置先备份为 `config.pre-v0.3-*.bak` 再自动迁移。同供应商标签、同 URL、同 Key 的 v0.2 连接会合并为一个供应商，其模型别名、思考设置、本地连接码和恢复记录保留；不同 Key 分别保留。
+
+| 文件 / 目录 | 位置与用途 |
+| --- | --- |
+| Windows 代理配置 | `%APPDATA%\WorkBuddyProxy` |
+| Mac 代理配置 | `~/Library/Application Support/WorkBuddyProxy` |
+| Linux 代理配置 | `~/.config/workbuddy-proxy`，用于无界面开发 / 测试 |
+| WorkBuddy 模型配置 | `~/.workbuddy/models.json`，Windows 的 `~` 为当前用户目录 |
+| WorkBuddy 备份 | 与 `models.json` 相邻，名称为 `models.json.workbuddy-proxy-时间戳.bak` |
+
+上游 Key 和本地连接码以明文保存在本机配置中。Unix 目录 / 文件权限为 0700 / 0600；Windows 使用当前用户配置目录的默认权限。**配置目录及备份不要打包分享。**发布 ZIP 不包含这些文件。
+
+服务只监听 loopback，校验 Host、Origin 和本地 Key；管理接口使用独立令牌。控制连接禁用系统代理，上游转发可使用系统代理，且关闭重定向。上游 Key 只发往配置的供应商。
+
+## 开发与协议范围
+
+OpenAI 兼容范围为 Chat Completions 与已配置模型目录：
+
+| 端点 | 用途 |
+| --- | --- |
+| `POST /v1/chat/completions` | 按模型别名选路；裸 ID 唯一时也可使用 |
+| `GET /v1/models` | 所有已保存供应商的模型列表 |
+| `/r/供应商ID/v1` | 限定一个供应商的聊天与模型目录 |
+| `/r/模型ID/v1` | 限定一个模型，供 WorkBuddy 自动同步使用 |
+
+当前不提供 Responses、Anthropic 协议转换或 MCP。构建需要 Rust 1.88+ 和平台 C 编译器：Mac 使用 Xcode 命令行工具，Windows 使用 MSVC Build Tools / Windows SDK。Windows 发布构建静态链接 CRT。
+
+<details>
+<summary><strong>构建、验证、无界面运行与打包命令</strong></summary>
 
 ```sh
 cargo test --locked
 cargo clippy --locked --all-targets -- -D warnings
 cargo build --release --locked
+
 python3 scripts/smoke.py --exe target/release/workbuddy-proxy
 python3 scripts/multi_routing.py --exe target/release/workbuddy-proxy
 python3 scripts/benchmark.py --exe target/release/workbuddy-proxy --output bench-results/local.json
 ```
 
-Windows 将二进制路径改为 `target/release/workbuddy-proxy.exe`。添加 `--gui` 可测量原生窗口打开时的整个进程。测试脚本只用假 Key 和临时目录，Python 仅为开发 / 验证工具，发布程序不依赖 Python。
+Windows 把可执行文件路径改为 `target/release/workbuddy-proxy.exe`。基准默认配置 64 个模型；可用 `--models` 改变数量，`--gui` 测量包含原生界面的进程 RSS 合计。测试只用假 Key 和临时目录，Python 是开发工具，发布程序运行不依赖它。
 
-## 配置与启动诊断
+```sh
+# 从源码构建后，以默认配置目录无界面启动
+./target/release/workbuddy-proxy --headless --port 18080
 
-- Windows：`%APPDATA%\WorkBuddyProxy`
-- Mac：`~/Library/Application Support/WorkBuddyProxy`
-- Linux（仅无界面开发 / 测试）：`~/.config/workbuddy-proxy`
+# 在对应平台打包；platform 可选 macos-arm64 / macos-x64 / windows-x64
+python3 scripts/package.py --exe target/release/workbuddy-proxy --platform macos-arm64
+```
 
-`config.json` 以本地明文保存上游 Key 和本地连接码。Unix 目录为 0700、配置文件为 0600；Windows 使用当前用户配置目录的默认权限。目录、文件和备份均不要打包分享。只分发官方发布 ZIP，每位使用者填写自己的 Key。
+需要独立配置目录时，可附加 `--config-dir "私有目录路径"`。
 
-服务仅监听 `127.0.0.1`，校验请求 Host、Origin 和本地 Key；原生界面通过独立管理令牌访问本机控制接口，控制连接不经过系统代理；上游重定向关闭，保留 TLS 验证。订阅 Key 仅发往配置的上游。请求和响应内容不写日志，启动日志最多约 64 KiB；核心与界面分别使用操作系统文件锁。关闭设置不重启核心，也不清空聊天会话缓存。
+在 Mac 上修改图标原稿后，可运行 `python3 scripts/generate_icons.py` 生成 ICO、ICNS 和原生界面 PNG。资源随构建 / 打包嵌入程序。
 
-命令行：`workbuddy-proxy --headless --port 18080 --config-dir <私有目录>`。默认端口冲突会报错，不静默换端口，以免 WorkBuddy 指向错误地址。Windows 包含 `Diagnose.cmd`，原生启动失败也会显示错误框。正常退出会取消在途请求。
+CI 在 Windows、Apple Silicon Mac、Intel Mac、Linux 上验证实际程序，包含流式直通、取消释放槽位、同名选路、凭据隔离、WorkBuddy 同步 / 恢复、Windows 图标与托盘生命周期及 Mac 进程隔离。自动检查不替代目标机的人工作业和真实上游账号验证。
 
-上游 429 / 401 / 403 原样返回，不自动重试、换模型或切换计费产品。单次读取上游数据的空闲超时为 180 秒。OpenAI 兼容范围是 `/v1/chat/completions`、多模型 `/v1/models` 和 `/r/模型ID/v1` 独立路由，不包含 Responses、Anthropic 协议转换或 MCP。
+</details>
 
-Mac 发布包目前仅 ad-hoc 签名，未做 Developer ID 公证；Windows 文件未做 Authenticode 签名。系统可能提示未知开发者。没有自动移除隔离属性或关闭安全保护的脚本。
+## 许可
 
-## 开发与许可
-
-构建需要 Rust 1.88+ 和平台 C 编译器。Mac 使用 Xcode 命令行工具，Windows 使用 MSVC Build Tools。CI 使用 Cargo.lock 锁定依赖，Windows 静态链接 CRT。
-
-MIT License。第三方项目，与 WorkBuddy、腾讯、OpenCode 无隶属关系。
+[MIT License](LICENSE)。第三方开源项目，与 WorkBuddy、腾讯、OpenCode 无隶属关系。
