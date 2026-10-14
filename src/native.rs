@@ -26,6 +26,11 @@ unsafe extern "C" {
 }
 pub fn run() {
     #[cfg(any(windows, target_os = "macos"))]
+    if crate::gpui_host::available() {
+        crate::gpui_host::run();
+        return;
+    }
+    #[cfg(any(windows, target_os = "macos"))]
     unsafe {
         wb_native_run()
     }
@@ -61,6 +66,8 @@ pub extern "C" fn wb_frontend_closing() {
     crate::frontend::closing();
 }
 pub fn quit() {
+    #[cfg(any(windows, target_os = "macos"))]
+    crate::gpui_host::quit();
     #[cfg(any(windows, target_os = "macos"))]
     unsafe {
         wb_native_quit()

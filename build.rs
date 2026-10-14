@@ -14,6 +14,7 @@ fn main() {
         cc::Build::new()
             .include(&out)
             .file("native/macos.m")
+            .file("native/gpui_host.m")
             .flag("-fobjc-arc")
             .flag("-fblocks")
             .compile("native_ui");
@@ -37,6 +38,7 @@ fn main() {
         println!("cargo:rustc-link-arg={}", res.display());
         cc::Build::new()
             .file("native/windows.c")
+            .file("native/gpui_host.c")
             .flag_if_supported("/utf-8")
             .compile("native_ui");
         for lib in ["user32", "shell32", "gdi32", "comctl32"] {

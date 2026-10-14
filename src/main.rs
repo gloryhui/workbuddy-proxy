@@ -3,6 +3,8 @@ mod config;
 mod diagnostic;
 #[cfg(any(windows, target_os = "macos"))]
 mod frontend;
+#[cfg(any(windows, target_os = "macos"))]
+mod gpui_host;
 mod i18n;
 mod journal;
 mod model_picker;
@@ -36,7 +38,12 @@ struct Instance {
 }
 fn main() {
     if let Err(e) = run() {
-        native::error(&format!("WorkBuddy Proxy startup failed\n{e}"));
+        let message = format!("WorkBuddy Proxy startup failed\n{e}");
+        if std::env::args().any(|arg| arg == "--headless") {
+            eprintln!("{message}");
+        } else {
+            native::error(&message);
+        }
         std::process::exit(1);
     }
 }
