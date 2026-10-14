@@ -727,7 +727,7 @@ impl Bridge {
         let result = self.command_inner(p).await;
         if !matches!(
             p["command"].as_str(),
-            Some("snapshot" | "copy" | "check_update" | "record")
+            Some("snapshot" | "copy" | "check_update" | "record" | "clear_logs")
         ) {
             let status = match &result {
                 Ok(s) if p["command"] == "fetch" => {
@@ -762,6 +762,11 @@ impl Bridge {
             .and_then(serde_json::Value::as_str)
             .unwrap_or("");
         match command {
+            "clear_logs" => {
+                self.logs.lock().unwrap().clear();
+                *self.status.lock().unwrap() = "Ready / 就绪".into();
+                Ok("Logs cleared / 日志已清空".into())
+            }
             "record" => {
                 let message = p["message"].as_str().filter(|s| !s.is_empty() && s.len() <= 16384).ok_or("Invalid log entry")?;
                 self.set_status(self.sanitize(message.into()));

@@ -82,6 +82,17 @@ def main():
             assert status == 400 and report['http'] == '' and report['headers_ms'] is None and report['reason']
             text = action({'command': 'snapshot'})[1]
             assert 'fixture-secret-body' not in text and 'fixture-upstream-key' not in text and instance['management_key'] not in text
+            config_file = Path(directory, 'config.json')
+            config_before = config_file.read_bytes()
+            instance_before = Path(directory, 'instance.json').read_bytes()
+            for _ in range(2):
+                assert action({'command': 'clear_logs'})[0] == 200
+                empty = json.loads(action({'command': 'snapshot'})[1])
+                assert empty['logs'] == [] and empty['status'] == 'Ready / 就绪'
+                assert config_file.read_bytes() == config_before and Path(directory, 'instance.json').read_bytes() == instance_before
+            assert action({'command': 'record', 'message': 'After clear'})[0] == 200
+            entries = json.loads(action({'command': 'snapshot'})[1])['logs']
+            assert len(entries) == 1 and entries[0]['message'] == 'After clear'
             print('PASS: detailed success timings, first valid SSE, empty/error/malformed SSE, HTTP 401/403/404/429/503, network failure, redacted metadata, chronological journal and no duplicate UI-owned entries')
         finally: stop(process, port, directory, log)
     server.shutdown(); server.server_close()

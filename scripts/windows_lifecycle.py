@@ -120,6 +120,46 @@ def main():
             assert 'fixture-key' not in log_text and 'fixture-secret-body' not in log_text
             assert caption(user.GetDlgItem(h,111))=='Connection test passed'
             assert re.search(r'\d{2}:\d{2}:\d{2}: Connection test passed',log_text)
+            # Copy the whole log (including off-screen details), not its selection.
+            for identifier in [215,216]:assert user.IsWindowVisible(user.GetDlgItem(h,identifier)) and user.IsWindowEnabled(user.GetDlgItem(h,identifier))
+            user.OpenClipboard.argtypes=[wintypes.HWND];user.OpenClipboard.restype=wintypes.BOOL
+            user.GetClipboardData.argtypes=[wintypes.UINT];user.GetClipboardData.restype=wintypes.HANDLE
+            kernel.GlobalLock.argtypes=[wintypes.HANDLE];kernel.GlobalLock.restype=ctypes.c_void_p
+            kernel.GlobalUnlock.argtypes=[wintypes.HANDLE]
+            def clipboard():
+                assert user.OpenClipboard(None)
+                try:
+                    data=user.GetClipboardData(13);assert data
+                    pointer=kernel.GlobalLock(data);assert pointer
+                    try:return ctypes.wstring_at(pointer)
+                    finally:kernel.GlobalUnlock(data)
+                finally:user.CloseClipboard()
+            user.SendMessageW(user.GetDlgItem(h,112),0x00B1,0,5)
+            user.SendMessageW(h,0x0111,216,0)
+            copied=clipboard()
+            assert 'Local service' in copied and 'First valid SSE event:' in copied and 'Streaming validated;' in copied
+            assert profile()['providers'][0]['models'][0]['name'] in copied and 'fixture-key' not in copied
+            assert caption(user.GetDlgItem(h,111))=='Logs copied'
+            # Queue several UI reports, then clear. Neither pending reports nor old snapshots may reappear.
+            for _ in range(5):user.SendMessageW(h,0x0111,201,0)
+            user.SendMessageW(h,0x0111,215,0)
+            for _ in range(400):
+                cleared=caption(user.GetDlgItem(h,112),30000)
+                if user.IsWindowEnabled(user.GetDlgItem(h,215)) and 'No log entries' in cleared:break
+                time.sleep(.025)
+            else:raise AssertionError('Native Clear did not empty the core log')
+            assert caption(user.GetDlgItem(h,111))=='Logs cleared'
+            time.sleep(2.2)
+            cleared=caption(user.GetDlgItem(h,112),30000)
+            assert 'No log entries' in cleared and 'Connection test passed' not in cleared and ': Saved' not in cleared
+            user.SendMessageW(h,0x0111,216,0)
+            assert 'No log entries' in clipboard()
+            # New operations continue logging after clearing.
+            user.SendMessageW(h,0x0111,202,0)
+            for _ in range(400):
+                if 'Connection test passed' in caption(user.GetDlgItem(h,112),30000):break
+                time.sleep(.025)
+            else:raise AssertionError('Logging did not resume after clearing')
             # Edit the real table's first display name through its native cell editor.
             table=user.GetDlgItem(h,103);assert table
             user.FindWindowExW.argtypes=[wintypes.HWND,wintypes.HWND,wintypes.LPCWSTR,wintypes.LPCWSTR];user.FindWindowExW.restype=wintypes.HWND
@@ -294,7 +334,7 @@ def main():
             for action in [201,202,209,210,211,212]:user.SendMessageW(h,0x0111,action,0)
             assert caption(user.GetDlgItem(h,111))==status and profile()['providers']==[]
             # Global controls remain visible without a selected provider.
-            for identifier in [204,205,115,214]:assert user.IsWindowVisible(user.GetDlgItem(h,identifier))
+            for identifier in [204,205,115,214,215,216]:assert user.IsWindowVisible(user.GetDlgItem(h,identifier))
             assert not user.IsWindowEnabled(user.GetDlgItem(h,204)) and not user.IsWindowEnabled(user.GetDlgItem(h,205))
             assert user.IsWindowEnabled(user.GetDlgItem(h,115)) and user.IsWindowEnabled(user.GetDlgItem(h,214))
             def change_port(port,success):

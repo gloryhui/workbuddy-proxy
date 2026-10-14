@@ -460,19 +460,17 @@ pub extern "C" fn wb_snapshot() -> *mut c_char {
                 v["uptime"]
             )
         };
-        let mut rows: Vec<(u64, String)> = v["logs"]
+        let rows: Vec<(u64, String)> = v["logs"]
             .as_array()
             .into_iter()
             .flatten()
             .filter_map(|row| Some((row["time"].as_u64()?, row["message"].as_str()?.to_owned())))
             .collect();
         if rows.is_empty() {
-            rows.push((
-                crate::journal::now_ms(),
-                v["status"].as_str().unwrap_or("Ready").into(),
-            ));
+            text.push_str(if zh { "暂无日志" } else { "No log entries" });
+        } else {
+            text.push_str(&crate::journal::render(rows, zh));
         }
-        text.push_str(&crate::journal::render(rows, zh));
         Ok(text)
     })();
     output(result.unwrap_or_else(|e| crate::i18n::message(&e, UI_ZH.load(Ordering::Relaxed))))
@@ -491,33 +489,70 @@ pub extern "C" fn wb_record(text: *const c_char) {
                 message = message.replace(&remote.key, "[redacted]");
             }
             let message = ctx.bridge.sanitize(message);
-            let mut sender = RECORDS.lock().unwrap();
-            let sender = sender.get_or_insert_with(|| {
-                let (sender, mut receiver) = tokio::sync::mpsc::channel::<String>(100);
-                ctx.handle.spawn(async move {
-                    while let Some(message) = receiver.recv().await {
-                        let payload =
-                            serde_json::json!({"command":"record","message":message,"ui":true});
-                        #[cfg(any(windows, target_os = "macos"))]
-                        if let Some(remote) = &ctx.remote {
-                            let _ = tokio::time::timeout(
-                                std::time::Duration::from_secs(3),
-                                remote.execute(&ctx.bridge.client, &payload),
-                            )
-                            .await;
-                            continue;
-                        }
-                        let _ = ctx.bridge.command(&payload).await;
-                    }
-                });
-                sender
-            });
-            let _ = sender.try_send(message);
+            let _ = record_sender(ctx).try_send(JournalTask::Record(message));
         }
     }));
 }
-static RECORDS: LazyLock<Mutex<Option<tokio::sync::mpsc::Sender<String>>>> =
+// Clear travels through the same bounded queue as UI records, so earlier
+// reports finish before clearing and cannot reappear in the next snapshot.
+enum JournalTask {
+    Record(String),
+    Clear(tokio::sync::oneshot::Sender<Result<String, String>>),
+}
+fn record_sender(ctx: &'static Context) -> tokio::sync::mpsc::Sender<JournalTask> {
+    let mut sender = RECORDS.lock().unwrap();
+    sender
+        .get_or_insert_with(|| {
+            let (sender, mut receiver) = tokio::sync::mpsc::channel::<JournalTask>(100);
+            ctx.handle.spawn(async move {
+                while let Some(task) = receiver.recv().await {
+                    let payload = match &task {
+                        JournalTask::Record(message) => {
+                            serde_json::json!({"command":"record","message":message,"ui":true})
+                        }
+                        JournalTask::Clear(_) => {
+                            serde_json::json!({"command":"clear_logs","ui":true})
+                        }
+                    };
+                    let result = tokio::time::timeout(std::time::Duration::from_secs(3), async {
+                        #[cfg(any(windows, target_os = "macos"))]
+                        if let Some(remote) = &ctx.remote {
+                            return remote.execute(&ctx.bridge.client, &payload).await;
+                        }
+                        ctx.bridge.command(&payload).await
+                    })
+                    .await
+                    .unwrap_or_else(|_| Err("Core is not responding / 后台核心未响应".into()));
+                    if let JournalTask::Clear(reply) = task {
+                        let _ = reply.send(result);
+                    }
+                }
+            });
+            sender
+        })
+        .clone()
+}
+static RECORDS: LazyLock<Mutex<Option<tokio::sync::mpsc::Sender<JournalTask>>>> =
     LazyLock::new(|| Mutex::new(None));
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_clear_logs() -> *mut c_char {
+    ffi_result(|| {
+        let ctx = CONTEXT.get().ok_or("Service is not ready")?;
+        let sender = record_sender(ctx);
+        ctx.handle.block_on(async {
+            tokio::time::timeout(std::time::Duration::from_secs(10), async {
+                let (reply, result) = tokio::sync::oneshot::channel();
+                sender
+                    .send(JournalTask::Clear(reply))
+                    .await
+                    .map_err(|_| "Core is not responding")?;
+                result.await.map_err(|_| "Core is not responding")?
+            })
+            .await
+            .map_err(|_| "Core is not responding / 后台核心未响应")?
+        })
+    })
+}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_message(text: *const c_char) -> *mut c_char {
