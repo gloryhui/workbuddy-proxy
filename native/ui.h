@@ -1,5 +1,15 @@
 #ifndef WB_UI_H
 #define WB_UI_H
+#include <time.h>
+void wb_format_time(unsigned long long millis,char *buffer,unsigned int length){time_t seconds=(time_t)(millis/1000);struct tm local;
+#ifdef _WIN32
+    if(localtime_s(&local,&seconds)!=0){if(length)buffer[0]=0;return;}
+#else
+    if(!localtime_r(&seconds,&local)){if(length)buffer[0]=0;return;}
+#endif
+    strftime(buffer,length,"%H:%M:%S",&local);
+}
+extern void wb_record(const char *text);
 extern void wb_frontend_ready(void);
 extern void wb_frontend_closing(void);
 extern char *wb_value(const char *name);

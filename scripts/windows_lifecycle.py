@@ -11,6 +11,10 @@ from pathlib import Path
 import subprocess
 import tempfile
 import time
+import threading
+import re
+from connection_test import DiagnosticUpstream
+from smoke import ThreadingHTTPServer
 import urllib.request
 from smoke import free_port
 
@@ -40,8 +44,9 @@ def main():
             if h:return h
             time.sleep(.025)
         raise AssertionError('UI window did not appear')
+    server=ThreadingHTTPServer(('127.0.0.1',0),DiagnosticUpstream);threading.Thread(target=server.serve_forever,daemon=True).start()
     with tempfile.TemporaryDirectory(prefix='workbuddy-lifecycle-') as directory:
-        config={'api_key':'fixture-key','local_key':'fixture-local','upstream':'https://opencode.ai/zen/go/v1','model':'deepseek-v4.1-flash','port':free_port(),'installed':None}
+        config={'api_key':'fixture-key','local_key':'fixture-local','upstream':f'http://127.0.0.1:{server.server_port}/v1','model':'deepseek-v4.1-flash','port':free_port(),'installed':None}
         Path(directory,'config.json').write_text(json.dumps(config))
         version=tomllib.loads(Path('Cargo.toml').read_text())['package']['version']
         Path(directory,'update-cache.json').write_text(json.dumps({'tag':'v'+version,'checked_at':int(time.time())}))
@@ -55,10 +60,10 @@ def main():
         command=[exe,'--config-dir',directory];first=subprocess.Popen(command,env=env)
         second=None;core=None;duplicates=[]
         try:
-            def caption(control):
-                buffer=ctypes.create_unicode_buffer(256)
+            def caption(control,size=256):
+                buffer=ctypes.create_unicode_buffer(size)
                 # WM_GETTEXT marshals control text across processes; GetWindowText cannot read another process's Edit contents.
-                user.SendMessageW(control,0x000D,256,ctypes.cast(buffer,ctypes.c_void_p).value);return buffer.value
+                user.SendMessageW(control,0x000D,size,ctypes.cast(buffer,ctypes.c_void_p).value);return buffer.value
             h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
             assert core['pid']!=first.pid
             for _ in range(200):
@@ -102,6 +107,19 @@ def main():
             user.SendMessageW(key_field,0x0203,1,4|(4<<16)) # Double-click selects the complete field.
             selection=user.SendMessageW(key_field,0x00B0,0,0)
             assert selection&0xffff==0 and selection>>16==len('fixture-key')
+            # A native test reports once in the unified chronological log.
+            user.SendMessageW(h,0x0111,202,0)
+            for _ in range(400):
+                log_text=caption(user.GetDlgItem(h,112),30000)
+                if user.IsWindowEnabled(user.GetDlgItem(h,202)) and 'First valid SSE event:' in log_text:break
+                time.sleep(.025)
+            else:raise AssertionError('Detailed native test output did not reach the log')
+            for detail in ['Provider:','Model:','Request: POST','HTTP 200','Total test time:']:
+                assert detail in log_text,detail
+            assert log_text.count('Connection test passed')==1 and "This window's actions" not in log_text
+            assert 'fixture-key' not in log_text and 'fixture-secret-body' not in log_text
+            assert caption(user.GetDlgItem(h,111))=='Connection test passed'
+            assert re.search(r'\d{2}:\d{2}:\d{2}: Connection test passed',log_text)
             # Edit the real table's first display name through its native cell editor.
             table=user.GetDlgItem(h,103);assert table
             user.FindWindowExW.argtypes=[wintypes.HWND,wintypes.HWND,wintypes.LPCWSTR,wintypes.LPCWSTR];user.FindWindowExW.restype=wintypes.HWND
@@ -338,4 +356,5 @@ def main():
                 for _ in range(200):
                     if not Path(directory,'instance.json').exists():break
                     time.sleep(.025)
+    server.shutdown();server.server_close()
 if __name__=='__main__':main()

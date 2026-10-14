@@ -1,8 +1,10 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 mod config;
+mod diagnostic;
 #[cfg(any(windows, target_os = "macos"))]
 mod frontend;
 mod i18n;
+mod journal;
 mod native;
 mod port;
 mod proxy;
@@ -123,6 +125,11 @@ fn run() -> Result<(), String> {
     let port = listener.local_addr().map_err(|e| e.to_string())?.port();
     let a = Arc::new(proxy::Bridge::new(cfg, dir.clone())?);
     a.port.store(port, Ordering::Relaxed);
+    a.set_status(format!(
+        "Local service started: {} / 本地服务已启动：{}",
+        a.address(),
+        a.address()
+    ));
     let (port_tx, port_rx) = tokio::sync::mpsc::channel(1);
     *a.port_changes.lock().unwrap() = Some(port_tx);
     config::write_json(

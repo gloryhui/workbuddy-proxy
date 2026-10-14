@@ -191,6 +191,7 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
     )
 }
 fn execute(mut p: serde_json::Value) -> Result<String, String> {
+    p["ui"] = serde_json::json!(true);
     let ctx = CONTEXT.get().ok_or("Service is not ready")?;
     {
         let cfg = ctx.bridge.config.lock().unwrap();
@@ -373,6 +374,7 @@ pub extern "C" fn wb_save_table(
     })
 }
 fn remote_call(mut p: serde_json::Value) -> Result<String, String> {
+    p["ui"] = serde_json::json!(true);
     let ctx = CONTEXT.get().ok_or("Service is not ready")?;
     if let Some(c) = ctx
         .bridge
@@ -458,25 +460,64 @@ pub extern "C" fn wb_snapshot() -> *mut c_char {
                 v["uptime"]
             )
         };
-        if let Some(logs) = v["logs"].as_array() {
-            for row in logs {
-                text.push_str(&format!(
-                    "[+{}s] {}\n",
-                    row["time"],
-                    crate::i18n::message(row["message"].as_str().unwrap_or(""), zh)
-                ));
-            }
-        }
-        if v["logs"].as_array().is_none_or(|l| l.is_empty()) {
-            text.push_str(&crate::i18n::message(
-                v["status"].as_str().unwrap_or("Ready"),
-                zh,
+        let mut rows: Vec<(u64, String)> = v["logs"]
+            .as_array()
+            .into_iter()
+            .flatten()
+            .filter_map(|row| Some((row["time"].as_u64()?, row["message"].as_str()?.to_owned())))
+            .collect();
+        if rows.is_empty() {
+            rows.push((
+                crate::journal::now_ms(),
+                v["status"].as_str().unwrap_or("Ready").into(),
             ));
         }
+        text.push_str(&crate::journal::render(rows, zh));
         Ok(text)
     })();
     output(result.unwrap_or_else(|e| crate::i18n::message(&e, UI_ZH.load(Ordering::Relaxed))))
 }
+
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_record(text: *const c_char) {
+    let _ = catch_unwind(AssertUnwindSafe(|| {
+        if let Some(ctx) = CONTEXT.get() {
+            let mut message = input(text);
+            if let Some(s) = message.strip_prefix("OK ") {
+                message = s.to_owned();
+            }
+            #[cfg(any(windows, target_os = "macos"))]
+            if let Some(remote) = &ctx.remote {
+                message = message.replace(&remote.key, "[redacted]");
+            }
+            let message = ctx.bridge.sanitize(message);
+            let mut sender = RECORDS.lock().unwrap();
+            let sender = sender.get_or_insert_with(|| {
+                let (sender, mut receiver) = tokio::sync::mpsc::channel::<String>(100);
+                ctx.handle.spawn(async move {
+                    while let Some(message) = receiver.recv().await {
+                        let payload =
+                            serde_json::json!({"command":"record","message":message,"ui":true});
+                        #[cfg(any(windows, target_os = "macos"))]
+                        if let Some(remote) = &ctx.remote {
+                            let _ = tokio::time::timeout(
+                                std::time::Duration::from_secs(3),
+                                remote.execute(&ctx.bridge.client, &payload),
+                            )
+                            .await;
+                            continue;
+                        }
+                        let _ = ctx.bridge.command(&payload).await;
+                    }
+                });
+                sender
+            });
+            let _ = sender.try_send(message);
+        }
+    }));
+}
+static RECORDS: LazyLock<Mutex<Option<tokio::sync::mpsc::Sender<String>>>> =
+    LazyLock::new(|| Mutex::new(None));
 
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_message(text: *const c_char) -> *mut c_char {

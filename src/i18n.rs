@@ -8,6 +8,11 @@ pub fn message(text: &str, zh: bool) -> String {
         ""
     };
     let text = text.strip_prefix(prefix).unwrap_or(text);
+    if text.starts_with("{\"kind\":\"connection_test\"")
+        && let Ok(report) = serde_json::from_str::<crate::diagnostic::TestReport>(text)
+    {
+        return format!("{prefix}{}", report.render(zh));
+    }
     if let Some((a, b)) = text.split_once(" / ") {
         let chinese = |s: &str| s.chars().any(|c| ('\u{4e00}'..='\u{9fff}').contains(&c));
         let selected = if chinese(a) == zh { a } else { b };

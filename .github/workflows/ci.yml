@@ -43,6 +43,8 @@ jobs:
         run: python scripts/multi_routing.py --exe "${{ matrix.binary }}"
       - name: Model discovery, table rows, locale and bounded logs
         run: python scripts/model_discovery.py --exe "${{ matrix.binary }}"
+      - name: Detailed connection diagnostics and unified journal
+        run: python scripts/connection_test.py --exe "${{ matrix.binary }}"
       - name: Live port switching, conflict checks and WorkBuddy URL migration
         run: python scripts/port_change.py --exe "${{ matrix.binary }}"
       - name: Native Windows window smoke checks

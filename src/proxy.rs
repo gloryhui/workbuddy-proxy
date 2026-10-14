@@ -191,13 +191,49 @@ impl Bridge {
             self.port.load(Ordering::Relaxed)
         )
     }
+    pub fn sanitize(&self, text: String) -> String {
+        let cfg = self.config.lock().unwrap();
+        let redact = |mut value: String| {
+            for secret in std::iter::once(&cfg.local_key)
+                .chain(std::iter::once(&self.management_key))
+                .chain(cfg.providers.iter().map(|p| &p.api_key))
+                .filter(|s| !s.is_empty())
+            {
+                value = value.replace(secret, "[redacted]");
+            }
+            value
+                .chars()
+                .filter(|c| !c.is_control() || *c == '\n' || *c == '\t')
+                .take(4096)
+                .collect::<String>()
+        };
+        let (prefix, body) = text
+            .strip_prefix("ERROR ")
+            .map_or(("", text.as_str()), |body| ("ERROR ", body));
+        if let Ok(mut report) = serde_json::from_str::<crate::diagnostic::TestReport>(body) {
+            for field in [
+                &mut report.provider,
+                &mut report.name,
+                &mut report.model,
+                &mut report.url,
+                &mut report.reasoning,
+                &mut report.http,
+                &mut report.reason,
+            ] {
+                *field = redact(std::mem::take(field));
+            }
+            report.response_model = report.response_model.map(redact);
+            return format!("{prefix}{}", report.json());
+        }
+        redact(text)
+    }
     pub fn set_status(&self, text: String) {
         *self.status.lock().unwrap() = text.clone();
         let mut logs = self.logs.lock().unwrap();
         if logs.len() == 100 {
             logs.pop_front();
         }
-        logs.push_back((self.started.elapsed().as_secs(), text));
+        logs.push_back((crate::journal::now_ms(), text));
     }
     pub fn address(&self) -> String {
         format!("http://127.0.0.1:{}/v1", self.port.load(Ordering::Relaxed))
@@ -326,75 +362,61 @@ impl Bridge {
         })
         .await
         .map_err(|_| "Connection timeout")??;
-        self.set_status(format!("Fetched {} models", models.len()));
         Ok(json!(models).to_string())
     }
     pub async fn test(&self, id: &str) -> Result<String, String> {
         let c = self.config.lock().unwrap().connection(id)?;
-        let r = self.routes.lock().unwrap().resolve(Some(&c.id), &c.model)?;
-        let _permit = self
-            .permits
-            .clone()
-            .try_acquire_owned()
-            .map_err(|_| "Four requests are already in flight")?;
-        if !r.destination.has_key {
-            return Err("Save your API key first / 请先保存 API Key".into());
-        }
-        let payload=serde_json::to_vec(&json!({"model":c.model,"stream":true,"max_tokens":1,"messages":[{"role":"user","content":"Reply with OK."}]})).unwrap();
-        let payload = apply_reasoning(payload.into(), &c.reasoning_effort)?;
+        let mut report = crate::diagnostic::TestReport::from_connection(&c);
         let started = std::time::Instant::now();
-        let res = tokio::time::timeout(
-            Duration::from_secs(45),
-            self.upstream(
-                &r,
-                &HeaderMap::new(),
-                payload,
-                &crate::config::token(),
-                None,
-            ),
-        )
-        .await
-        .map_err(|_| "Connection timeout / 连接超时")?
-        .map_err(|_| "Connection failed; check network and proxy / 请检查网络和代理")?;
-        let status = res.status();
-        if !status.is_success() {
-            return Err(format!(
-                "Upstream HTTP {} / 上游返回 HTTP {}",
-                status.as_u16(),
-                status.as_u16()
-            ));
-        }
-        tokio::time::timeout(Duration::from_secs(45), async {
-            let mut stream = res.bytes_stream();
-            let mut pending = Vec::new();
-            while let Some(chunk) = stream.next().await {
-                let b = chunk.map_err(|_| "Invalid upstream stream")?;
-                pending.extend_from_slice(&b);
-                if pending.len() > 65536 {
-                    return Err("Invalid upstream response");
-                }
-                while let Some(i) = pending.iter().position(|b| *b == b'\n') {
-                    let line = String::from_utf8_lossy(&pending[..i]);
-                    let data = line.trim().strip_prefix("data:").map(str::trim);
-                    if let Some(text) = data
-                        && let Ok(v) = serde_json::from_str::<serde_json::Value>(text)
-                    {
-                        if v.get("error").is_some() {
-                            return Err("Upstream returned an error");
-                        };
-                        if v.get("choices").is_some() {
-                            return Ok(());
-                        }
-                    }
-                    pending.drain(..=i);
-                }
+        let outcome: Result<(), String> = async {
+            let r = self.routes.lock().unwrap().resolve(Some(&c.id), &c.model)?;
+            let _permit = self.permits.clone().try_acquire_owned()
+                .map_err(|_| "Four requests are already in flight")?;
+            if !r.destination.has_key {
+                return Err("Save your API key first / 请先保存 API Key".into());
             }
-            Err("No valid streaming response")
-        })
-        .await
-        .map_err(|_| "Stream timeout / 流式响应超时")?
-        .map_err(str::to_string)?;
-        Ok(format!("HTTP 200 · {} ms", started.elapsed().as_millis()))
+            let payload = serde_json::to_vec(&json!({"model":c.model,"stream":true,"max_tokens":1,"messages":[{"role":"user","content":"Reply with OK."}]})).unwrap();
+            let payload = apply_reasoning(payload.into(), &c.reasoning_effort)?;
+            let res = tokio::time::timeout(Duration::from_secs(45), self.upstream(&r, &HeaderMap::new(), payload, &crate::config::token(), None))
+                .await.map_err(|_| "Connection timeout / 连接超时")?
+                .map_err(|_| "Connection failed; check network and proxy / 请检查网络和代理")?;
+            report.headers_ms = Some(started.elapsed().as_millis() as u64);
+            let status = res.status();
+            report.http = format!("HTTP {}", status.as_u16());
+            if !status.is_success() {
+                return Err("Upstream rejected the test request / 上游拒绝了测试请求".into());
+            }
+            tokio::time::timeout(Duration::from_secs(45), async {
+                let mut stream = res.bytes_stream();
+                let mut pending = Vec::new();
+                while let Some(chunk) = stream.next().await {
+                    let b = chunk.map_err(|_| "Invalid upstream stream")?;
+                    if pending.len() + b.len() > 65536 { return Err("Invalid upstream response"); }
+                    pending.extend_from_slice(&b);
+                    while let Some(i) = pending.iter().position(|b| *b == b'\n') {
+                        let line = String::from_utf8_lossy(&pending[..i]);
+                        if let Some(text) = line.trim().strip_prefix("data:").map(str::trim)
+                            && let Ok(v) = serde_json::from_str::<serde_json::Value>(text)
+                        {
+                            if v.get("error").is_some() { return Err("Upstream returned an error"); }
+                            if v["choices"].as_array().is_some_and(|choices| !choices.is_empty()) {
+                                report.first_event_ms = Some(started.elapsed().as_millis() as u64);
+                                report.response_model = v["model"].as_str().map(|m| m.chars().filter(|c| !c.is_control()).take(160).collect());
+                                return Ok(());
+                            }
+                        }
+                        pending.drain(..=i);
+                    }
+                }
+                Err("No valid streaming response")
+            }).await.map_err(|_| "Stream timeout / 流式响应超时")?.map_err(str::to_string)
+        }.await;
+        report.elapsed_ms = started.elapsed().as_millis() as u64;
+        if let Err(reason) = &outcome {
+            report.reason = reason.clone();
+        }
+        let detail = self.sanitize(report.json());
+        outcome.map(|_| detail.clone()).map_err(|_| detail)
     }
 }
 // Remove hop-by-hop fields, including names nominated by Connection. Never
@@ -705,9 +727,13 @@ impl Bridge {
         let result = self.command_inner(p).await;
         if !matches!(
             p["command"].as_str(),
-            Some("snapshot" | "copy" | "fetch" | "check_update")
+            Some("snapshot" | "copy" | "check_update" | "record")
         ) {
-            self.set_status(match &result {
+            let status = match &result {
+                Ok(s) if p["command"] == "fetch" => {
+                    let count = serde_json::from_str::<Vec<String>>(s).map_or(0, |m| m.len());
+                    format!("Fetched {count} models")
+                }
                 Ok(s) if p["command"] == "set_port" => {
                     serde_json::from_str::<crate::port::Applied>(s)
                         .map(|v| v.message())
@@ -715,7 +741,13 @@ impl Bridge {
                 }
                 Ok(s) => s.clone(),
                 Err(e) => format!("ERROR {e}"),
-            });
+            };
+            let status = self.sanitize(status);
+            if p["ui"].as_bool() == Some(true) {
+                *self.status.lock().unwrap() = status;
+            } else {
+                self.set_status(status);
+            }
         }
         result
     }
@@ -730,6 +762,11 @@ impl Bridge {
             .and_then(serde_json::Value::as_str)
             .unwrap_or("");
         match command {
+            "record" => {
+                let message = p["message"].as_str().filter(|s| !s.is_empty() && s.len() <= 16384).ok_or("Invalid log entry")?;
+                self.set_status(self.sanitize(message.into()));
+                Ok("Recorded".into())
+            }
             "set_port" => {
                 let port = p["port"]
                     .as_u64()
@@ -1055,6 +1092,34 @@ mod tests {
                 .as_ptr(),
             input.as_ptr()
         );
+    }
+    #[test]
+    fn diagnostic_redaction_preserves_json_and_localized_details() {
+        let mut cfg = Config::default();
+        cfg.providers[0].api_key = "kind".into();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
+        let folder = tempfile::tempdir().unwrap();
+        let bridge = Bridge::new(cfg, folder.path().into()).unwrap();
+        let c = Connection {
+            provider: "供应商 kind".into(),
+            name: "演示模型".into(),
+            ..Default::default()
+        };
+        let mut report = crate::diagnostic::TestReport::from_connection(&c);
+        report.reason = "Upstream rejected the test request / 上游拒绝了测试请求".into();
+        report.http = "HTTP 401".into();
+        let sanitized = bridge.sanitize(format!("ERROR {}", report.json()));
+        let json = sanitized.strip_prefix("ERROR ").unwrap();
+        let parsed: crate::diagnostic::TestReport = serde_json::from_str(json).unwrap();
+        assert_eq!(parsed.kind, "connection_test");
+        assert_eq!(parsed.provider, "供应商 [redacted]");
+        let zh = crate::i18n::message(&sanitized, true);
+        assert!(zh.starts_with("ERROR 测试连接失败："));
+        assert!(zh.contains("检查 API Key 是否正确、有效。"));
+        assert!(!zh.contains("Connection test failed"));
+        let en = crate::i18n::message(&sanitized, false);
+        assert!(en.starts_with("ERROR Connection test failed:"));
+        assert!(en.contains("Check whether the API key is valid."));
     }
     #[test]
     fn grouped_routes_share_credentials_and_reject_ambiguity() {
