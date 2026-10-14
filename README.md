@@ -5,13 +5,14 @@
 <h1 align="center">WorkBuddy Proxy</h1>
 
 <p align="center">
-  <strong>轻量运行 · 快速转发 · 参数透传</strong><br>
-  为 WorkBuddy 打造的原生本地模型代理，一份供应商配置连接多个模型。
+  <strong>轻量运行 · 多模型管理 · 流式透传</strong><br>
+  为 WorkBuddy 打造的跨平台本地模型代理，一份配置管理多个服务与模型。
 </p>
 
 <p align="center">
   <a href="https://github.com/gloryhui/workbuddy-proxy/releases"><img src="https://img.shields.io/github/v/release/gloryhui/workbuddy-proxy?style=flat-square&color=0ea5e9" alt="最新版本"></a>
-  <a href="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/ci.yml"><img src="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/ci.yml/badge.svg?branch=main" alt="构建与测试"></a>
+  <a href="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/desktop.yml"><img src="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/desktop.yml/badge.svg?branch=main" alt="桌面构建与安装测试"></a>
+  <a href="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/ci.yml"><img src="https://github.com/gloryhui/workbuddy-proxy/actions/workflows/ci.yml/badge.svg?branch=main" alt="核心检查"></a>
   <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D6?style=flat-square" alt="Windows 10 / 11">
   <img src="https://img.shields.io/badge/macOS-12%2B-475569?style=flat-square" alt="macOS 12 及以上">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="MIT License"></a>
@@ -25,11 +26,21 @@
   <a href="#常见问题">常见问题</a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/gloryhui/workbuddy-proxy/releases/latest"><strong>下载正式版</strong></a> ·
+  <a href="docs/ARCHITECTURE.md">设计与性能边界</a>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/macos-zh.jpg" width="1180" alt="WorkBuddy Proxy v0.5.0 中文主界面：供应商侧栏、模型管理、本地代理状态和连接诊断日志">
+</p>
+<p align="center"><sub>v0.5.0 macOS 实拍 · Windows 使用同一套设置界面 · 截图使用独立演示配置与本机模拟上游</sub></p>
+
 ---
 
 ## 用它做什么
 
-把兼容 **OpenAI Chat Completions** 的服务接入 WorkBuddy，用一个小型原生程序管理地址、Key 和模型列表。OpenCode Go、其他兼容供应商，以及本机兼容服务，都可以按同一套方式配置。
+把兼容 **OpenAI Chat Completions** 的服务接入 WorkBuddy，用同一套桌面界面管理地址、Key 和模型列表。OpenCode Go、其他兼容供应商，以及本机兼容服务，都可以按同一套方式配置。
 
 | 能力 | 使用体验 |
 | --- | --- |
@@ -50,15 +61,15 @@
 
 ### v0.5.0 正式版
 
-| 系统 | 下载 | 安装方式 |
-| --- | --- | --- |
-| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-windows-x64-setup.exe) | 中文向导，自选目录，默认创建桌面图标 |
-| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-arm64.dmg) | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
-| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-x64.dmg) | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| 系统 | 下载 | 体积 | 安装方式 |
+| --- | --- | ---: | --- |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-windows-x64-setup.exe) | 7.00 MiB | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-arm64.dmg) | 13.67 MiB | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-x64.dmg) | 14.45 MiB | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
 Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
-主分支只维护 GPUI Kit 统一界面；Win32 / AppKit 旧设置界面完整保存在 [backup 分支](https://github.com/gloryhui/workbuddy-proxy/tree/backup)，不再维护。少量平台适配代码仅负责托盘、唤醒和错误提示。
+Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 
 [全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/SHA256SUMS.txt)
 
@@ -85,7 +96,7 @@ Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一
 
 获取列表最多展示 4096 个模型；确认添加时检查所有供应商合计最多 256 个模型。超限会提示并保留选择，可取消部分勾选后重试。
 
-也可以点击模型表格旁的 **＋** 手动添加，双击单元格编辑，再用 **−** 移除选中项。例如：
+也可以点击模型表格旁的 **＋** 手动添加，双击模型行，在弹窗中编辑显示名与模型 ID，再用 **−** 移除选中项。例如：
 
 | 显示名 | 模型 ID |
 | --- | --- |
@@ -93,7 +104,7 @@ Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一
 | 编程任务 | model-b |
 | 同模型的另一项 | model-a |
 
-模型表格支持 Shift + 点击连续选择，以及 Windows Ctrl / Mac Command + 点击逐项多选。表格获得焦点后，Delete / Backspace 移除所选模型，Ctrl / Command + A 全选，Ctrl / Command + C 复制所选模型 ID，Enter / F2 编辑显示名，Ctrl / Command + N 添加模型，Ctrl / Command + S 保存。编辑单元格时 Delete / Backspace 只删除文字，Esc 取消此次编辑。
+模型表格支持 Shift + 点击连续选择，以及 Windows Ctrl / Mac Command + 点击逐项多选。表格获得焦点后，Delete / Backspace 移除所选模型，Ctrl / Command + A 全选，Enter / F2 打开模型编辑弹窗。Ctrl / Command + S 保存当前供应商；编辑弹窗内回车确认，Esc 取消，Delete / Backspace 只删除输入框中的文字。
 
 这些 ID 仅用于演示，请替换成上游实际支持的模型。相同模型 ID 可以添加多项，填写不同显示名即可。修改供应商地址或 Key 会对该供应商下的全部模型生效。
 
@@ -101,7 +112,7 @@ Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一
 
 ### 3. 同步到 WorkBuddy
 
-在右侧全局设置区点击**同步 WorkBuddy**，先自动保存当前供应商的修改，再一次写入所有已保存 Key 的供应商下的模型，无需先单独点击保存。正在编辑的单元格也会先提交；校验或保存失败时保留草稿并停止同步。重新打开 WorkBuddy 的模型列表，分别选择对应项；必要时重启 WorkBuddy。
+在右侧全局设置区点击**同步 WorkBuddy**，先自动保存当前供应商的修改，再一次写入所有已保存 Key 的供应商下的模型，无需先单独点击保存。模型编辑弹窗内的修改请先确认；校验或保存失败时保留草稿并停止同步。重新打开 WorkBuddy 的模型列表，分别选择对应项；必要时重启 WorkBuddy。
 
 删除模型行或供应商后，再同步一次即可清理对应的 WorkBuddy 项。供应商侧栏的“复制”用于复制供应商配置。
 
@@ -109,7 +120,7 @@ Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一
 
 ## 界面预览
 
-两端采用同一套三栏布局：供应商侧栏、模型设置、全局设置与滚动日志。右侧“同步 WorkBuddy”作用于所有已保存供应商；“移除已同步模型”移除代理添加的条目，如曾覆盖已有条目则恢复原条目。简体中文 / English 默认跟随系统，右上角可切换，界面每次只显示一种语言。主图标与系统托盘 / 菜单栏保持一致。
+两端采用同一套三栏布局：供应商侧栏、模型设置、全局设置与滚动日志。右侧“同步 WorkBuddy”作用于所有已保存供应商；“取消同步”移除代理添加的条目，如曾覆盖已有条目则恢复原条目。简体中文 / English 默认跟随系统，右上角使用下拉框切换，界面每次只显示一种语言。主图标与系统托盘 / 菜单栏保持一致。
 
 可用按钮显示清晰描边和深色文字，悬停 / 按下有反馈，灰色表示当前不可用。日志统一按“本地时间：操作内容”从旧到新显示，每次操作只记录一次；日志区域提供“清空日志”和“复制日志”，前者同步清空核心记录，后者复制服务摘要及全部当前日志，便于反馈问题；关闭并重开设置窗口仍可查看当前核心进程的日志。连接测试详情包含供应商、模型、请求目标、HTTP 状态、响应头耗时、首个有效 SSE 事件耗时、总耗时及失败提示，收到首个有效事件即结束测试，不等待完整生成。
 
@@ -117,7 +128,26 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 升级后再次同步，会按内部路由关联并原位更新已安装条目，保留恢复记录和其他已有模型。修改供应商名称或上游模型 ID 后，再次同步会更新对应的可读 ID。旧的 `wbp-<路由标识>` 及更早版本的别名仍可调用；保存更名后、尚未同步时，当前已安装的 ID 也保持可用。本地 `/models` 列表返回相同的可读 ID。
 
-“运行信息与日志”显示本地地址、供应商与模型数、请求数、运行时长和最近 100 条核心事件。日志不会记录 API Key 或对话内容。窗口最小化 / 隐藏后停止轮询。
+本地代理状态卡集中显示地址、端口、供应商数、模型数和请求数。日志保留最近 100 条事件，不记录 API Key 或对话内容；关闭设置后，日志仍保留在核心内存中。
+
+### 模型发现与选择
+
+按当前 API 地址和 Key 获取模型，搜索后批量勾选。已有模型单独标记，确认添加前不会修改配置。
+
+<p align="center">
+  <img src="docs/screenshots/model-discovery-zh.jpg" width="1180" alt="模型发现弹窗：搜索、筛选、批量勾选、已有模型标记与确认添加">
+</p>
+
+<details>
+<summary><strong>查看英文界面</strong></summary>
+
+界面语言通过下拉框选择。供应商名称、显示名等用户输入不会被自动翻译。
+
+![WorkBuddy Proxy v0.5.0 English interface](docs/screenshots/macos-en.jpg)
+
+</details>
+
+截图均来自 macOS 正式版，使用本机模拟服务和演示 Key；示例模型与测试结果不代表真实供应商账号的可用权限。
 
 ### Release 更新检测
 
@@ -133,14 +163,14 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 | 操作 | Windows | Mac |
 | --- | --- | --- |
-| 关闭设置窗口 | 隐藏到任务栏托盘，转发继续 | 界面进程退出，转发核心继续 |
-| 最小化设置窗口 | 隐藏到任务栏托盘 | 按系统方式最小化窗口 |
-| 重新打开设置 | 单击托盘，或再次双击程序 | 再次打开 `.app`；窗口运行时也可从菜单栏打开设置 |
-| 完全退出 | 右键托盘 → 退出 | 菜单栏 → 退出；设置窗口已关闭时先重新打开程序 |
+| 关闭设置窗口 | 释放设置进程，托盘和转发继续 | 释放设置进程，菜单栏和转发继续 |
+| 最小化设置窗口 | 按系统方式最小化 | 按系统方式最小化 |
+| 重新打开设置 | 单击托盘，或再次启动程序 | 菜单栏 → 设置，或再次打开 `.app` |
+| 完全退出 | 右键托盘 → 退出 | 菜单栏 → 退出，或设置窗口中按 Command + Q |
 
-普通启动使用单例模式：同一配置目录只运行一个设置窗口和一个转发核心。连续打开、从另一份程序文件打开，都唤回原窗口；最小化时恢复窗口，未保存的输入保留。显式使用不同 `--config-dir` 时，可运行独立的隔离实例。
+两个平台都采用**转发核心 + 轻量托盘 + 按需设置界面**。设置打开时有 3 个进程；关闭设置后保留核心与托盘 2 个进程。未保存的草稿保存在私有目录，重新打开可继续编辑。
 
-Windows 的托盘模式保留核心和界面两个进程；Mac 关闭设置窗口后只保留核心。需要无界面运行时，两端都可使用 `--headless`。
+普通启动使用单例模式，同一配置目录复用原有应用；显式使用不同 `--config-dir` 时可运行隔离实例。仅需转发时，可以使用 `--headless` 运行单个核心进程。
 
 ## 多供应商与同名模型
 
@@ -201,7 +231,17 @@ flowchart LR
 
 本版将转发核心、托盘和设置界面分为独立进程。关闭设置窗口会释放 GPUI 设置进程，核心继续转发；托盘重新打开会恢复私有草稿。
 
-每次三平台构建都会记录核心延迟/负载基准，以及设置打开、关闭时的进程 RSS。测量采用隔离假 Key 和本机模拟上游，不等于真实模型速度；RSS 合计可能重复计入共享页，GPU 内存未独立测量。原始数据随 [Actions 构建附件](https://github.com/gloryhui/workbuddy-proxy/actions) 提供。
+以下来自 **v0.5.0 同一提交的 CI 发行包测试**，配置为 1 个供应商、64 个模型，数值为进程 RSS 合计：
+
+| CI 环境 | 设置打开：核心 + 托盘 + 界面 | 关闭设置：核心 + 托盘 |
+| --- | ---: | ---: |
+| Windows x64 | 77.54 MiB | 23.31 MiB |
+| Mac Apple Silicon | 147.60 MiB | 51.73 MiB |
+| Mac Intel | 71.13 MiB | 20.62 MiB |
+
+这些数值包含界面开销；关闭设置会释放设置进程。不同机器和 GPU 环境会影响占用，不能据此比较平台优劣。RSS 合计可能重复计算共享页，GPU 内存未独立测量。核心延迟测试使用本机模拟 HTTP 上游，不代表真实模型推理速度。
+
+[查看本版原始数据](docs/benchmarks/v0.5.0) · [三平台构建与测试](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38558550741) · [测量方法与历史记录](docs/PERFORMANCE.md)
 
 ### 轻量实现
 
@@ -231,7 +271,7 @@ flowchart LR
 <details>
 <summary><strong>模型列表要手动填写吗？可以自动发现吗？</strong></summary>
 
-点击“获取模型”，按当前供应商地址和 Key 拉取上游 `/models`，在弹窗中勾选并确认添加后保存，也可以手动添加真实模型 ID。“测试连接”只验证已保存的首项，不会逐一测试所有模型。
+点击“获取模型”，按当前供应商地址和 Key 拉取上游 `/models`，在弹窗中勾选并确认添加后保存，也可以手动添加真实模型 ID。“测试连接”先保存修改，再测试所选模型；多选时测试列表顺序的第一项，未选中时测试首项。
 
 代理的 `/v1/models` 可向兼容客户端提供已配置模型列表，供应商 URL 下的 `/models` 只返回该供应商的模型。WorkBuddy 使用“一键同步”即可批量添加。
 
@@ -263,7 +303,7 @@ flowchart LR
 </details>
 
 <details>
-<summary><strong>同步 / 恢复提示列表项已被修改？</strong></summary>
+<summary><strong>同步 / 取消同步提示列表项已被修改？</strong></summary>
 
 程序会比对上次写入的条目，检测到其他操作的修改时拒绝覆盖。先检查当前 `models.json` 和旁边的 `models.json.workbuddy-proxy-时间戳.bak` 备份，再手动处理冲突。恢复操作只处理本工具管理的条目。
 
@@ -296,6 +336,9 @@ Windows 包内有 `Diagnose.cmd`，可查看无界面启动诊断。启动日志
 | Windows 代理配置 | `%APPDATA%\WorkBuddyProxy` |
 | Mac 代理配置 | `~/Library/Application Support/WorkBuddyProxy` |
 | Linux 代理配置 | `~/.config/workbuddy-proxy`，用于无界面开发 / 测试 |
+| 已保存设置与 Key | 代理配置目录中的 `config.json` |
+| 未保存的设置草稿 | 同目录的 `gpui-drafts.json`，可能包含 Key |
+| 启动诊断 | 同目录的 `startup.log`、`gpui-startup.log`；界面事件日志保留在核心内存中 |
 | WorkBuddy 模型配置 | `~/.workbuddy/models.json`，Windows 的 `~` 为当前用户目录 |
 | WorkBuddy 备份 | 与 `models.json` 相邻，名称为 `models.json.workbuddy-proxy-时间戳.bak` |
 
@@ -316,6 +359,8 @@ OpenAI 兼容范围为 Chat Completions 与已配置模型目录：
 
 当前不提供 Responses、Anthropic 协议转换或 MCP。构建需要 Rust 1.88+ 和平台 C 编译器：Mac 使用 Xcode 命令行工具，Windows 使用 MSVC Build Tools / Windows SDK。Windows 发布构建静态链接 CRT。
 
+主分支只维护 GPUI Kit 统一设置界面；旧 Win32 / AppKit 设置页归档在 [backup 分支](https://github.com/gloryhui/workbuddy-proxy/tree/backup)，不再维护。平台适配层仅负责托盘、单例唤醒和错误提示。
+
 <details>
 <summary><strong>构建、验证、无界面运行与打包命令</strong></summary>
 
@@ -323,13 +368,15 @@ OpenAI 兼容范围为 Chat Completions 与已配置模型目录：
 cargo test --locked
 cargo clippy --locked --all-targets -- -D warnings
 cargo build --release --locked
+cargo test --manifest-path gpui/Cargo.toml --locked
+cargo build --manifest-path gpui/Cargo.toml --release --locked
 
 python3 scripts/smoke.py --exe target/release/workbuddy-proxy
 python3 scripts/multi_routing.py --exe target/release/workbuddy-proxy
 python3 scripts/benchmark.py --exe target/release/workbuddy-proxy --output bench-results/local.json
 ```
 
-Windows 把可执行文件路径改为 `target/release/workbuddy-proxy.exe`。基准默认配置 64 个模型；可用 `--models` 改变数量，设置进程测量使用 `scripts/gpui_package_test.py`。测试只用假 Key 和临时目录，Python 是开发工具，发布程序运行不依赖它。
+Windows 把可执行文件路径改为 `target/release/workbuddy-proxy.exe`。基准默认配置 64 个模型，可用 `--models` 改变数量；设置进程测量使用 `scripts/gpui_package_test.py`。测试只用假 Key 和临时目录，Python 是开发工具，发布程序运行不依赖它。
 
 ```sh
 # 从源码构建后，以默认配置目录无界面启动
@@ -347,7 +394,7 @@ python3 scripts/package.py --exe target/release/workbuddy-proxy --gpui gpui/targ
 
 需要独立配置目录时，可附加 `--config-dir "私有目录路径"`。
 
-在 Mac 上修改图标原稿后，可运行 `python3 scripts/generate_icons.py` 生成 ICO、ICNS 和原生界面 PNG。资源随构建 / 打包嵌入程序。
+在 Mac 上修改图标原稿后，可运行 `python3 scripts/generate_icons.py` 生成 ICO、ICNS 和 PNG。资源随构建 / 打包嵌入程序。
 
 CI 在 Windows、Apple Silicon Mac、Intel Mac、Linux 上验证实际程序，包含流式直通、取消释放槽位、同名选路、凭据隔离、WorkBuddy 同步 / 恢复、Windows 图标与托盘生命周期及 Mac 进程隔离。自动检查不替代目标机的人工作业和真实上游账号验证。
 

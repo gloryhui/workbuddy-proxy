@@ -1,4 +1,26 @@
-# 首版性能记录
+# 性能测量与历史记录
+
+## v0.5.0 正式版
+
+来源：[主分支发布构建](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38558550741)，提交 `510e853fdc685f42477307d8fa9c66de2032fbd5`。配置为 1 个供应商、64 个模型。
+
+| CI 环境 | 单独核心空闲 RSS | 设置打开：核心 + 托盘 + 界面 | 设置关闭：核心 + 托盘 |
+| --- | ---: | ---: | ---: |
+| Windows x64 | 9.23 MiB | 77.54 MiB | 23.31 MiB |
+| Mac Apple Silicon | 11.83 MiB | 147.60 MiB | 51.73 MiB |
+| Mac Intel | 4.58 MiB | 71.13 MiB | 20.62 MiB |
+
+核心空闲值与界面开/关值来自不同的隔离测试进程，不能相减推断单个组件的精确占用。RSS 合计可能重复计算共享页面，GPU 内存未单独测量，CI 机器与物理设备存在差异。
+
+- `gpui-*.json`：真实发行包的核心、托盘、设置进程生命周期和 RSS。关闭窗口释放设置进程，保留两个后台进程。
+- `core-*.json`：无界面核心；直连与代理各 200 个小请求，4 并发、80 个约 1 MiB 请求，记录采样峰值和负载后 RSS。
+- 转发测试使用本机 HTTP 模拟上游，客户端每次新建连接，上游连接池复用；中位数差值出现负数不代表代理没有成本，不能作为真实模型速度或跨平台排名。
+
+原始 JSON 保存在 [benchmarks/v0.5.0](benchmarks/v0.5.0/)。本版发行包为 Windows 安装 EXE 7.00 MiB、Mac ARM DMG 13.67 MiB、Mac Intel DMG 14.45 MiB。
+
+## 历史原生版记录
+
+下方记录属于已经归档的旧设置界面，不代表当前 GPUI 版本。旧源码保存在 [backup 分支](https://github.com/gloryhui/workbuddy-proxy/tree/backup)。
 
 数据来自 `scripts/benchmark.py`。它们是过程测量，**不是全网最小内存或最快速度排名**。每个 JSON 保留平台、模式、样本数、二进制大小和测试边界。
 

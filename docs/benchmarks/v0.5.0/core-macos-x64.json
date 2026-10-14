@@ -1,0 +1,29 @@
+{
+  "platform": "macOS-15.7.9-x86_64-i386-64bit",
+  "architecture": "x86_64",
+  "mode": "headless",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 3519296,
+  "idle_rss_mib": 4.58,
+  "core_idle_rss_mib": 4.58,
+  "measured_process_count": 1,
+  "sampled_peak_rss_mib": 14.07,
+  "post_load_rss_mib": 14.07,
+  "small_request_count": 200,
+  "direct_loopback_ms": {
+    "p50": 1.11,
+    "p95": 1.508
+  },
+  "proxied_loopback_ms": {
+    "p50": 1.055,
+    "p95": 1.479
+  },
+  "median_proxy_overhead_ms": -0.055,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.606,
+  "notes": "RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied."
+}
