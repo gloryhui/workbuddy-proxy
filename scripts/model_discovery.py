@@ -19,6 +19,7 @@ class Models(BaseHTTPRequestHandler):
         status=401 if mode=='denied' else 200
         body=({'data':[{'id':'z-model'},{'id':'a-model'},{'id':'a-model'}]} if mode=='v1' else
               {'data':[{'id':f'model-{i}'} for i in range(257)]} if mode=='many' else
+              {'data':[{'id':f'model-{i}'} for i in range(4097)]} if mode=='oversized' else
               {'data':[{'name':'missing-id'}]} if mode=='bad' else {'error':'fixture-secret-must-not-leak'})
         data=json.dumps(body).encode();self.send_response(status);self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
     def do_POST(self):
@@ -47,7 +48,10 @@ def main():
             assert cfg.read_bytes()==before,'Fetching must not save draft URL/key/models'
             assert action({'command':'fetch','upstream':base+'/v1','key':''})[0]==200
             assert server.seen[-1][1]=='Bearer fixture-upstream-key'
-            for path in ['denied','many','bad']:
+            code,text=action({'command':'fetch','upstream':base+'/many','key':'draft-secret'})
+            assert code==200 and len(json.loads(text))==257
+            assert cfg.read_bytes()==before,'Large discovery must not change configuration'
+            for path in ['denied','oversized','bad']:
                 code,text=action({'command':'fetch','upstream':base+'/'+path,'key':'draft-secret'})
                 assert code==400 and 'fixture-secret-must-not-leak' not in text and 'draft-secret' not in text
             assert action({'command':'save','models':[{'name':'','model':''}]})[0]==400
@@ -67,7 +71,7 @@ def main():
             code,text=action({'command':'snapshot'});snapshot=json.loads(text)
             assert code==200 and len(snapshot['logs'])==100 and snapshot['requests']==1
             assert 'draft-secret' not in text and 'fixture-upstream-key' not in text and key not in text
-            print('PASS: draft discovery, saved-key fallback, invalid/401/oversized lists, editable/default names, stable route IDs, compact model aliases, persisted language, bounded secret-free system logs, cached release check')
+            print('PASS: draft discovery, saved-key fallback, large catalogs, invalid/401/oversized lists, editable/default names, stable route IDs, compact model aliases, persisted language, bounded secret-free system logs, cached release check')
         finally:stop(process,port,directory,log)
     server.shutdown();server.server_close()
 if __name__=='__main__':main()

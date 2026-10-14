@@ -20,7 +20,7 @@ static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;d
 - (void)setEnabled:(BOOL)enabled{[super setEnabled:enabled];self.needsDisplay=YES;[self.window invalidateCursorRectsForView:self];}
 - (void)highlight:(BOOL)flag{[super highlight:flag];self.needsDisplay=YES;}
 - (void)drawRect:(NSRect)dirtyRect{
-    (void)dirtyRect;BOOL enabled=self.enabled,primary=self.tag==T_SAVE||self.tag==T_ADD_PROVIDER,danger=self.tag==T_RESTORE||self.tag==T_DELETE,down=[self.cell isHighlighted];
+    (void)dirtyRect;BOOL enabled=self.enabled,primary=self.tag==T_SAVE||self.tag==T_ADD_PROVIDER||self.tag==T_CONFIRM_MODELS,danger=self.tag==T_RESTORE||self.tag==T_DELETE,down=[self.cell isHighlighted];
     NSColor *fill=!enabled?color(0xf2f4f7):primary?color(down?0x00688f:self.hovered?0x007dab:0x008fc4):color(down?0xd5eafa:self.hovered?0xeaf6ff:0xffffff);
     NSColor *stroke=!enabled?color(0xe0e5ec):primary?fill:danger?color(0xc56672):color(self.hovered||down?0x008fc4:0x6b9cba);
     NSColor *ink=!enabled?color(0x9aa6b5):primary?NSColor.whiteColor:danger?color(0x9e3547):color(0x174a6b);
@@ -110,8 +110,73 @@ static NSImage *appIcon(void){static NSImage *icon;static dispatch_once_t once;d
     (void)dirtyRect;[color(0xcdeafb) setFill];[[NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds,1,1) xRadius:5 yRadius:5] fill];
 }
 @end
+// A sheet owns only discovery selection; the supplier draft changes on confirm.
+@interface WBModelPicker:NSWindowController<NSTableViewDataSource,NSTableViewDelegate,NSSearchFieldDelegate,NSWindowDelegate>
+@property NSTableView *table;
+@property NSSearchField *search;
+@property NSButton *selectedOnly,*confirm;
+@property NSTextField *summary,*errorLabel;
+@property NSArray<NSString *> *ids;
+@property NSArray<NSNumber *> *visible;
+@property(copy) void (^completion)(NSString *result);
+- (instancetype)initWithProvider:(NSString *)provider;
+@end
+@implementation WBModelPicker
+- (NSButton *)button:(int)tag action:(SEL)action frame:(NSRect)frame {
+    NSButton *b=[WBButton new];b.frame=frame;b.title=t(tag);b.tag=tag;b.target=self;b.action=action;b.bordered=NO;b.font=[NSFont systemFontOfSize:12 weight:NSFontWeightSemibold];[self.window.contentView addSubview:b];return b;
+}
+- (instancetype)initWithProvider:(NSString *)provider {
+    NSPanel *panel=[[NSPanel alloc]initWithContentRect:NSMakeRect(0,0,820,640) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskClosable backing:NSBackingStoreBuffered defer:NO];
+    if((self=[super initWithWindow:panel])){
+        panel.title=[NSString stringWithFormat:@"%@ · %@",t(T_PICK_MODELS),provider];panel.releasedWhenClosed=NO;panel.delegate=self;panel.appearance=[NSAppearance appearanceNamed:NSAppearanceNameAqua];panel.backgroundColor=NSColor.whiteColor;
+        NSTextField *heading=[NSTextField labelWithString:panel.title];heading.frame=NSMakeRect(20,595,780,28);heading.font=[NSFont systemFontOfSize:19 weight:NSFontWeightSemibold];heading.textColor=color(0x142c48);[panel.contentView addSubview:heading];
+        NSMutableArray *ids=[NSMutableArray array];for(int i=0;i<wb_fetch_count();i++)[ids addObject:take(wb_fetch_model(i))];self.ids=ids;
+        NSTextField *hint=[NSTextField labelWithString:t(T_PICK_HINT)];hint.frame=NSMakeRect(20,555,780,24);hint.font=[NSFont systemFontOfSize:12];hint.textColor=color(0x526379);[panel.contentView addSubview:hint];
+        self.search=[[NSSearchField alloc]initWithFrame:NSMakeRect(20,511,570,32)];self.search.placeholderString=t(T_SEARCH_MODELS);self.search.delegate=self;[panel.contentView addSubview:self.search];
+        self.selectedOnly=[NSButton checkboxWithTitle:t(T_SELECTED_ONLY) target:self action:@selector(filterChanged:)];self.selectedOnly.frame=NSMakeRect(607,515,190,26);[panel.contentView addSubview:self.selectedOnly];
+        [self button:T_SELECT_ALL action:@selector(selectAllFiltered) frame:NSMakeRect(20,467,156,30)];[self button:T_INVERT action:@selector(invertFiltered) frame:NSMakeRect(186,467,156,30)];[self button:T_CLEAR_SELECTION action:@selector(clearSelection) frame:NSMakeRect(352,467,130,30)];
+        self.summary=[NSTextField labelWithString:@""];self.summary.frame=NSMakeRect(490,472,310,20);self.summary.alignment=NSTextAlignmentRight;self.summary.font=[NSFont systemFontOfSize:12];[panel.contentView addSubview:self.summary];
+        NSScrollView *scroll=[[NSScrollView alloc]initWithFrame:NSMakeRect(20,102,780,350)];scroll.hasVerticalScroller=YES;scroll.autohidesScrollers=YES;scroll.borderType=NSBezelBorder;
+        self.table=[NSTableView new];self.table.style=NSTableViewStylePlain;self.table.rowHeight=34;self.table.usesAlternatingRowBackgroundColors=YES;self.table.dataSource=self;self.table.delegate=self;self.table.target=self;self.table.action=@selector(toggleRow);self.table.columnAutoresizingStyle=NSTableViewLastColumnOnlyAutoresizingStyle;
+        NSArray *names=@[@"check",@"id",@"state"];for(int i=0;i<3;i++){NSTableColumn *c=[[NSTableColumn alloc]initWithIdentifier:names[i]];c.title=i==0?@"":i==1?t(T_ID):@"";c.width=i==0?42:i==1?548:160;[self.table addTableColumn:c];}
+        scroll.documentView=self.table;[panel.contentView addSubview:scroll];
+        self.errorLabel=[NSTextField labelWithString:@""];self.errorLabel.frame=NSMakeRect(20,62,780,28);self.errorLabel.textColor=color(0xc43a54);self.errorLabel.font=[NSFont systemFontOfSize:12];[panel.contentView addSubview:self.errorLabel];
+        NSButton *cancel=[self button:T_CANCEL action:@selector(cancel) frame:NSMakeRect(510,20,110,32)];cancel.keyEquivalent=@"\033";
+        self.confirm=[self button:T_CONFIRM_MODELS action:@selector(confirmSelection) frame:NSMakeRect(632,20,168,32)];self.confirm.keyEquivalent=@"\r";[self reload];
+    }return self;
+}
+- (void)reload {
+    NSMutableArray *visible=[NSMutableArray array];NSString *query=[self.search.stringValue stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    for(NSUInteger i=0;i<self.ids.count;i++)if((!query.length||[self.ids[i] rangeOfString:query options:NSCaseInsensitiveSearch].location!=NSNotFound)&&(self.selectedOnly.state!=NSControlStateValueOn||wb_fetch_selected((int)i)))[visible addObject:@(i)];
+    self.visible=visible;[self.table reloadData];[self updateSummary];
+}
+- (void)updateSummary {
+    int selected=0;for(int i=0;i<wb_fetch_count();i++)if(wb_fetch_selected(i)&&!wb_fetch_existing(i))selected++;
+    self.summary.stringValue=wb_ui_zh()?[NSString stringWithFormat:@"筛选 %lu / %lu · 待添加 %d",(unsigned long)self.visible.count,(unsigned long)self.ids.count,selected]:[NSString stringWithFormat:@"%lu / %lu shown · %d to add",(unsigned long)self.visible.count,(unsigned long)self.ids.count,selected];
+    self.confirm.title=[NSString stringWithFormat:@"%@ (%d)",t(T_CONFIRM_MODELS),selected];self.confirm.enabled=selected>0;
+}
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)table {(void)table;return self.visible.count;}
+- (NSView *)tableView:(NSTableView *)table viewForTableColumn:(NSTableColumn *)column row:(NSInteger)row {
+    (void)table;int index=self.visible[row].intValue;
+    if([column.identifier isEqualToString:@"check"]){NSButton *b=[NSButton checkboxWithTitle:@"" target:self action:@selector(toggleCheckbox:)];b.frame=NSMakeRect(12,6,22,22);b.tag=index;b.state=wb_fetch_selected(index)?NSControlStateValueOn:NSControlStateValueOff;b.enabled=!wb_fetch_existing(index);b.accessibilityLabel=self.ids[index];return b;}
+    NSTextField *label=[WBModelLabel new];label.stringValue=[column.identifier isEqualToString:@"id"]?self.ids[index]:wb_fetch_existing(index)?t(T_ALREADY_ADDED):@"";label.bezeled=NO;label.drawsBackground=NO;label.editable=NO;label.font=[NSFont systemFontOfSize:13];label.textColor=wb_fetch_existing(index)?color(0x6a8097):color(0x243b55);label.lineBreakMode=NSLineBreakByTruncatingTail;label.frame=NSMakeRect(8,7,column.width-16,20);label.toolTip=label.stringValue;return label;
+}
+- (void)toggleCheckbox:(NSButton *)sender {wb_fetch_select((int)sender.tag,sender.state==NSControlStateValueOn);self.errorLabel.stringValue=@"";[self reload];}
+- (void)toggleRow {NSInteger row=self.table.clickedRow;if(row<0||self.table.clickedColumn==0)return;int index=self.visible[row].intValue;wb_fetch_select(index,!wb_fetch_selected(index));self.errorLabel.stringValue=@"";[self reload];}
+- (void)selectAllFiltered {for(NSNumber *row in self.visible)wb_fetch_select(row.intValue,1);self.errorLabel.stringValue=@"";[self reload];}
+- (void)invertFiltered {for(NSNumber *row in self.visible)wb_fetch_select(row.intValue,!wb_fetch_selected(row.intValue));self.errorLabel.stringValue=@"";[self reload];}
+- (void)clearSelection {for(int i=0;i<wb_fetch_count();i++)wb_fetch_select(i,0);self.errorLabel.stringValue=@"";[self reload];}
+- (void)filterChanged:(id)sender {(void)sender;[self reload];}
+- (void)controlTextDidChange:(NSNotification *)note {(void)note;[self reload];}
+- (void)finish:(NSString *)result {wb_fetch_cancel();[self.window.sheetParent endSheet:self.window];[self.window orderOut:nil];if(self.completion)self.completion(result);}
+- (void)confirmSelection {NSString *result=take(wb_fetch_apply());if([result hasPrefix:@"ERROR "]){self.errorLabel.stringValue=[result substringFromIndex:6];return;}[self finish:result];}
+- (void)cancel {[self finish:nil];}
+- (void)cancelOperation:(id)sender {(void)sender;[self cancel];}
+- (BOOL)windowShouldClose:(NSWindow *)sender {(void)sender;[self cancel];return NO;}
+@end
 @interface ProxyUI:NSObject<NSApplicationDelegate,NSWindowDelegate,NSTableViewDataSource,NSTableViewDelegate,NSTextFieldDelegate,WBModelActions>
 @property NSWindow *window;
+@property WBModelPicker *picker;
 @property NSButton *updateButton;
 @property NSButton *keyToggle;
 @property WBKeyMask *keyMask;
@@ -275,8 +340,13 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     ((NSControl *)[self tag:T_SYNC in:self.right]).enabled=!self.busy&&([value("model_count") integerValue]>0||installed);((NSControl *)[self tag:T_RESTORE in:self.right]).enabled=!self.busy&&installed;self.emptyAdd.enabled=!self.busy;self.list.enabled=!self.busy;self.models.enabled=!self.busy&&has;
 }
 - (void)setControlsBusy:(BOOL)busy{self.busy=busy;[self updateProviderState];}
-- (void)execute:(const char *)command{if(self.busy||(![self hasProvider]&&strcmp(command,"restore")!=0&&strcmp(command,"install")!=0))return;[self.window makeFirstResponder:nil];[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);NSString *url=self.upstream.stringValue,*key=self.key.stringValue;BOOL fetch=strcmp(command,"fetch")==0;dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(fetch?wb_fetch(url.UTF8String,key.UTF8String):wb_command(command));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if(fetch&&[r hasPrefix:@"OK "]){[self.models reloadData];self.dirty=YES;}[self report:r];[self poll];});});}
+- (void)execute:(const char *)command{if(self.busy||(![self hasProvider]&&strcmp(command,"restore")!=0&&strcmp(command,"install")!=0))return;[self.window makeFirstResponder:nil];[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);NSString *url=self.upstream.stringValue,*key=self.key.stringValue;BOOL fetch=strcmp(command,"fetch")==0;dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(fetch?wb_fetch(url.UTF8String,key.UTF8String):wb_command(command));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if(fetch&&[r hasPrefix:@"OK "]){[self showModelPicker];}[self report:r];[self poll];});});}
 - (void)applyPort{if(self.busy)return;[self.window makeFirstResponder:nil];NSString *port=self.portInput.stringValue;[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(wb_set_port(port.UTF8String));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if([r hasPrefix:@"OK "])self.portInput.stringValue=value("port");[self report:r];[self poll];});});}
+- (void)showModelPicker {
+    [self setControlsBusy:YES];self.picker=[[WBModelPicker alloc]initWithProvider:self.name.stringValue];
+    __weak ProxyUI *weakSelf=self;self.picker.completion=^(NSString *result){ProxyUI *owner=weakSelf;[owner setControlsBusy:NO];if(result){[owner.models reloadData];owner.dirty=YES;[owner report:result];}owner.picker=nil;[owner poll];};
+    [self.window beginSheet:self.picker.window completionHandler:nil];
+}
 - (void)fetch{[self execute:"fetch"];}- (void)test{[self execute:"test"];}- (void)install{[self execute:"install"];}- (void)restore{[self execute:"restore"];}
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender{(void)sender;[self quit];return NSTerminateCancel;}
 - (void)quit{wb_free(wb_command("quit"));[self.timer invalidate];wb_frontend_closing();stopUI();}

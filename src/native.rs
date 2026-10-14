@@ -400,40 +400,89 @@ pub extern "C" fn wb_fetch(upstream: *const c_char, key: *const c_char) -> *mut 
         )?;
         let models: Vec<String> =
             serde_json::from_str(&result).map_err(|_| "Invalid model list")?;
-        let mut rows = DRAFT.lock().unwrap();
-        let missing: Vec<_> = models
-            .iter()
-            .filter(|id| !rows.iter().any(|m| m["model"].as_str() == Some(id)))
-            .collect();
-        let other = CONTEXT
-            .get()
-            .map(|ctx| {
-                let cfg = ctx.bridge.config.lock().unwrap();
-                cfg.providers
-                    .iter()
-                    .enumerate()
-                    .filter(|(i, _)| *i != ctx.selected.load(Ordering::Relaxed))
-                    .map(|(_, p)| p.models.len())
-                    .sum::<usize>()
-            })
-            .unwrap_or(0);
-        if rows.len() + missing.len() + other > crate::config::MAX_MODELS {
-            return Err("At most 256 models".into());
-        }
-        let count = missing.len();
-        for id in missing {
-            rows.push(serde_json::json!({"name":id,"model":id}));
-        }
+        let count = models.len();
+        let picker = crate::model_picker::ModelPicker::new(models, &DRAFT.lock().unwrap());
+        *PICKER.lock().unwrap() = picker;
         Ok(if UI_ZH.load(Ordering::Relaxed) {
-            format!("获取 {} 个模型，新增 {count} 项；保存后生效", models.len())
+            format!("获取 {count} 个模型，请勾选后确认添加")
         } else {
-            format!(
-                "Fetched {} models, {count} added; save to apply",
-                models.len()
-            )
+            format!("Fetched {count} models; select models to add")
         })
     })
 }
+static PICKER: LazyLock<Mutex<crate::model_picker::ModelPicker>> =
+    LazyLock::new(|| Mutex::new(crate::model_picker::ModelPicker::default()));
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch_count() -> i32 {
+    PICKER.lock().unwrap().models.len() as i32
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch_model(row: i32) -> *mut c_char {
+    output(
+        PICKER
+            .lock()
+            .unwrap()
+            .models
+            .get(row as usize)
+            .map(|m| m.id.clone())
+            .unwrap_or_default(),
+    )
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch_selected(row: i32) -> i32 {
+    i32::from(
+        PICKER
+            .lock()
+            .unwrap()
+            .models
+            .get(row as usize)
+            .is_some_and(|m| m.selected),
+    )
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch_existing(row: i32) -> i32 {
+    i32::from(
+        PICKER
+            .lock()
+            .unwrap()
+            .models
+            .get(row as usize)
+            .is_some_and(|m| m.existing),
+    )
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch_select(row: i32, selected: i32) {
+    PICKER.lock().unwrap().select(row as usize, selected != 0);
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch_cancel() {
+    *PICKER.lock().unwrap() = crate::model_picker::ModelPicker::default();
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_fetch_apply() -> *mut c_char {
+    ffi_result(|| {
+        let ctx = CONTEXT.get().ok_or("Service is not ready")?;
+        let other = {
+            let cfg = ctx.bridge.config.lock().unwrap();
+            cfg.providers
+                .iter()
+                .enumerate()
+                .filter(|(i, _)| *i != ctx.selected.load(Ordering::Relaxed))
+                .map(|(_, p)| p.models.len())
+                .sum()
+        };
+        let count = PICKER
+            .lock()
+            .unwrap()
+            .apply(&mut DRAFT.lock().unwrap(), other)?;
+        Ok(if UI_ZH.load(Ordering::Relaxed) {
+            format!("新增 {count} 个模型；保存后生效")
+        } else {
+            format!("Added {count} models; save to apply")
+        })
+    })
+}
+
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_snapshot() -> *mut c_char {
     let result = (|| -> Result<String, String> {
