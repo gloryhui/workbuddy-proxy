@@ -56,18 +56,27 @@ def main():
             env = os.environ.copy()
             env['WBP_INSTALL_QA'] = str(install)
             ps = '''$ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 $w = New-Object -ComObject WScript.Shell
 $paths = @(
  (Join-Path ([Environment]::GetFolderPath('Programs')) 'WorkBuddy Proxy Preview\\WorkBuddy Proxy Preview.lnk'),
  (Join-Path ([Environment]::GetFolderPath('Desktop')) 'WorkBuddy Proxy Preview.lnk')
 )
-foreach ($p in $paths) {
+$targets = foreach ($p in $paths) {
  if (!(Test-Path $p)) { throw "Missing shortcut: $p" }
  $s = $w.CreateShortcut($p)
- if ($s.TargetPath -ne (Join-Path $env:WBP_INSTALL_QA 'workbuddy-proxy.exe')) { throw 'Wrong shortcut target' }
+ [pscustomobject]@{ shortcut = $p; target = $s.TargetPath; workingDirectory = $s.WorkingDirectory; arguments = $s.Arguments }
 }
+$targets | ConvertTo-Json -Compress
 '''
-            subprocess.run(['powershell', '-NoProfile', '-Command', ps], env=env, check=True, timeout=20)
+            shortcuts = subprocess.run(['powershell', '-NoProfile', '-Command', ps], env=env,
+                                       check=True, timeout=20, capture_output=True, encoding='utf-8')
+            for shortcut in json.loads(shortcuts.stdout):
+                # Windows may expand RUNNER~1 into runneradmin in .lnk metadata.
+                # Compare actual file identity, not equivalent long/short path strings.
+                assert os.path.samefile(shortcut['target'], install / 'workbuddy-proxy.exe'), shortcut
+                assert os.path.samefile(shortcut['workingDirectory'], install), shortcut
+                assert not shortcut['arguments'], shortcut
             lifecycle = directory / 'lifecycle.json'
             subprocess.run(['python', 'scripts/gpui_package_test.py', '--exe', str(install / 'workbuddy-proxy.exe'),
                             '--directory', str(data), '--output', str(lifecycle)], check=True, timeout=120)
