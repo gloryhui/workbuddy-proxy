@@ -151,10 +151,7 @@ impl Bridge {
     pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
         let mut cfg = self.config.lock().unwrap();
         let mut d = Document::read(path)?;
-        let mut connections = cfg.connections();
-        for c in &mut connections {
-            c.alias = format!("wbp-{}", c.id);
-        }
+        let connections = cfg.workbuddy_connections()?;
         let active: Vec<_> = connections
             .iter()
             .filter(|c| !c.api_key.is_empty())
@@ -177,34 +174,54 @@ impl Bridge {
         }
         let mut next = cfg.clone();
         next.installed.clear();
+        let mut records = std::collections::HashMap::new();
         for record in &cfg.installed {
-            if !active.iter().any(|c| c.alias == record.id)
-                && let Some(i) = matching(&d, &record.id)?
+            if let Some(id) = cfg.installed_connection_id(record)
+                && records.insert(id, record).is_some()
             {
-                if let Some(previous) = &record.previous {
-                    d.entries_mut()[i] = previous.clone();
-                } else {
-                    d.entries_mut().remove(i);
-                }
+                return Err("Multiple installed entries belong to the same route".into());
             }
         }
+        // Reject user-owned collisions before changing any document entry.
         for c in &active {
-            let i = matching(&d, &c.alias)?;
-            let old = cfg.installed.iter().find(|r| r.id == c.alias);
-            // Generated IDs must not overwrite a coincidental user-created ID.
-            if i.is_some() && old.is_none() {
+            if matching(&d, &c.alias)?.is_some() && !cfg.installed.iter().any(|r| r.id == c.alias) {
                 return Err(
                     "Model alias already exists in WorkBuddy; refusing to overwrite".into(),
                 );
             }
+        }
+        // Replace managed entries in place, matching by route rather than the
+        // changing display ID. Preserve their original restore records.
+        let mut entries = Vec::new();
+        for current in std::mem::take(d.entries_mut()) {
+            let old = cfg
+                .installed
+                .iter()
+                .find(|r| current.get("id").and_then(Value::as_str) == Some(r.id.as_str()));
+            if let Some(record) = old {
+                let id = cfg.installed_connection_id(record);
+                if let Some(c) = active.iter().find(|c| id.as_deref() == Some(c.id.as_str())) {
+                    entries.push(entry(c, &self.connection_address(&c.id), &cfg.local_key));
+                } else if let Some(previous) = &record.previous {
+                    entries.push(previous.clone());
+                }
+            } else {
+                entries.push(current);
+            }
+        }
+        *d.entries_mut() = entries;
+        for c in &active {
+            let old = records.get(&c.id);
             let e = entry(c, &self.connection_address(&c.id), &cfg.local_key);
             next.installed.push(Installation {
                 id: c.alias.clone(),
                 previous: old.and_then(|r| r.previous.clone()),
                 expected: Some(e.clone()),
             });
-            if let Some(i) = i {
-                d.entries_mut()[i] = e;
+            if let Some(i) = matching(&d, &c.alias)? {
+                if d.entries().unwrap()[i] != e {
+                    return Err("Model alias conflicts with a restored WorkBuddy entry".into());
+                }
             } else {
                 d.entries_mut().push(e);
             }
@@ -261,6 +278,107 @@ pub fn path() -> Result<std::path::PathBuf, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn readable_sync_migrates_in_place_and_keeps_restore_history() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("models.json");
+        let mut cfg = config::Config::default();
+        cfg.providers[0].name = "opencode".into();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
+        cfg.providers[0].api_key = "fixture-key".into();
+        cfg.providers[0]
+            .set_models("deepseek-v4.1-flash | ds", "default")
+            .unwrap();
+        let c = cfg.connections().remove(0);
+        let url = format!("http://127.0.0.1:18080/r/{}/v1", c.id);
+        let old = entry(&c, &url, &cfg.local_key);
+        let previous = json!({"id":c.alias,"name":"original user entry","other":"keep"});
+        cfg.installed.push(Installation {
+            id: c.alias.clone(),
+            previous: Some(previous.clone()),
+            expected: Some(old.clone()),
+        });
+        let before = json!({"id":"before","apiKey":"keep"});
+        let after = json!({"id":"after","extra":7});
+        config::write_json(
+            &path,
+            &json!({"otherField":true,"models":[before,old,after]}),
+        )
+        .unwrap();
+        let bridge = Bridge::new(cfg, dir.path().into()).unwrap();
+        bridge
+            .port
+            .store(18080, std::sync::atomic::Ordering::Relaxed);
+        assert_eq!(bridge.configure_workbuddy(&path).unwrap(), 1);
+        let document = Document::read(&path).unwrap();
+        let entries = document.entries().unwrap();
+        assert_eq!(entries.len(), 3);
+        assert_eq!(entries[0], before);
+        assert_eq!(entries[2], after);
+        assert_eq!(entries[1]["id"], "opencode/deepseek-v4.1-flash");
+        assert_eq!(entries[1]["name"], "ds · opencode");
+        assert_eq!(entries[1]["url"], url);
+        assert_eq!(entries[1]["reasoning"], old["reasoning"]);
+        assert_eq!(
+            bridge.config.lock().unwrap().installed[0].previous,
+            Some(previous.clone())
+        );
+        let bytes = fs::read(&path).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(fs::read(&path).unwrap(), bytes);
+        bridge.config.lock().unwrap().providers[0].name = "renamed".into();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(
+            Document::read(&path).unwrap().entries().unwrap()[1]["id"],
+            "renamed/deepseek-v4.1-flash"
+        );
+        bridge.restore_workbuddy(&path).unwrap();
+        assert_eq!(
+            Document::read(&path).unwrap().root,
+            json!({"otherField":true,"models":[before,previous,after]})
+        );
+    }
+    #[test]
+    fn legacy_snapshotless_sync_and_user_collisions_are_safe() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("models.json");
+        let mut cfg = config::Config::default();
+        cfg.providers[0].name = "opencode".into();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
+        cfg.providers[0].api_key = "fixture-key".into();
+        cfg.providers[0].set_models("same", "default").unwrap();
+        cfg.providers[0].models[0].alias = "same".into();
+        let c = cfg.connections().remove(0);
+        let old = entry(&c, "http://127.0.0.1:18080/v1", &cfg.local_key);
+        cfg.installed.push(Installation {
+            id: c.alias,
+            previous: None,
+            expected: None,
+        });
+        let user = json!({"id":"opencode/same","name":"user-owned"});
+        config::write_json(&path, &json!([old, user])).unwrap();
+        config::write_json(&dir.path().join("config.json"), &cfg).unwrap();
+        let bridge = Bridge::new(cfg, dir.path().into()).unwrap();
+        bridge
+            .port
+            .store(18080, std::sync::atomic::Ordering::Relaxed);
+        let bytes = fs::read(&path).unwrap();
+        let config_bytes = fs::read(dir.path().join("config.json")).unwrap();
+        assert!(bridge.configure_workbuddy(&path).is_err());
+        assert_eq!(fs::read(&path).unwrap(), bytes);
+        assert_eq!(
+            fs::read(dir.path().join("config.json")).unwrap(),
+            config_bytes
+        );
+        config::write_json(&path, &json!([old])).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(
+            Document::read(&path).unwrap().entries().unwrap()[0]["id"],
+            "opencode/same"
+        );
+        bridge.restore_workbuddy(&path).unwrap();
+        assert!(Document::read(&path).unwrap().entries().unwrap().is_empty());
+    }
     #[test]
     fn sync_multiple_preserves_unrelated_and_restores() {
         let dir = tempfile::tempdir().unwrap();

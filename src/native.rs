@@ -259,6 +259,16 @@ pub extern "C" fn wb_command(name: *const c_char) -> *mut c_char {
     }
     ffi_result(|| execute(serde_json::json!({"command":command})))
 }
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_test_row(row: i32) -> *mut c_char {
+    ffi_result(|| {
+        let mut p = serde_json::json!({"command":"test"});
+        if row >= 0 {
+            p["model_index"] = serde_json::json!(row);
+        }
+        execute(p)
+    })
+}
 fn ffi_result(f: impl FnOnce() -> Result<String, String>) -> *mut c_char {
     output(match catch_unwind(AssertUnwindSafe(f)) {
         Ok(Ok(message)) => format!(

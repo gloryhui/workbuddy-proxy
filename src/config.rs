@@ -321,6 +321,105 @@ fn replace_file(src: &Path, dst: &Path) -> Result<(), String> {
     Ok(())
 }
 impl Config {
+    // Installation snapshots carry the stable route even after a supplier or
+    // model is renamed. Older records can still be matched by their old alias.
+    pub fn installed_connection_id(&self, record: &Installation) -> Option<String> {
+        let route = record
+            .expected
+            .as_ref()
+            .and_then(|e| e.get("url"))
+            .and_then(serde_json::Value::as_str)
+            .and_then(|url| reqwest::Url::parse(url).ok())
+            .and_then(|url| {
+                url.path()
+                    .trim_end_matches('/')
+                    .strip_prefix("/r/")
+                    .and_then(|path| path.strip_suffix("/v1"))
+                    .map(str::to_owned)
+            });
+        self.providers
+            .iter()
+            .flat_map(|p| &p.models)
+            .find(|m| {
+                route.as_ref().map_or_else(
+                    || record.id == m.alias || record.id == format!("wbp-{}", m.id),
+                    |id| id == &m.id,
+                )
+            })
+            .map(|m| m.id.clone())
+    }
+    // Keep storage/legacy aliases intact; this ID is shared by WorkBuddy sync,
+    // model discovery and routing. Reserve old aliases to avoid stealing routes.
+    pub fn workbuddy_connections(&self) -> Result<Vec<Connection>, String> {
+        use sha2::{Digest, Sha256};
+        use std::collections::{HashMap, HashSet};
+        let mut connections = self.connections();
+        let bases: Vec<_> = connections
+            .iter()
+            .map(|c| format!("{}/{}", c.provider, c.model))
+            .collect();
+        let mut counts = HashMap::new();
+        let mut owners: HashMap<String, HashSet<String>> = HashMap::new();
+        for (c, base) in connections.iter().zip(&bases) {
+            *counts.entry(base.clone()).or_insert(0usize) += 1;
+            for alias in [c.alias.clone(), format!("wbp-{}", c.id), c.model.clone()] {
+                owners.entry(alias).or_default().insert(c.id.clone());
+            }
+        }
+        let mut installed = HashMap::new();
+        for record in &self.installed {
+            if let Some(id) = self.installed_connection_id(record) {
+                owners
+                    .entry(record.id.clone())
+                    .or_default()
+                    .insert(id.clone());
+                installed.insert(id, record.id.as_str());
+            }
+        }
+        let mut order: Vec<_> = (0..connections.len()).collect();
+        order.sort_by(|&a, &b| connections[a].id.cmp(&connections[b].id));
+        for i in order {
+            let c = &mut connections[i];
+            let base = &bases[i];
+            let available = |alias: &str| {
+                owners
+                    .get(alias)
+                    .is_none_or(|ids| ids.iter().all(|id| id == &c.id))
+            };
+            let digest = format!("{:x}", Sha256::digest(c.id.as_bytes()));
+            // A suffix already synced for a duplicate remains fixed even if
+            // its sibling is later removed. Renaming still changes the base.
+            let previous = installed.get(&c.id).filter(|alias| {
+                alias
+                    .strip_prefix(&format!("{base}-"))
+                    .is_some_and(|suffix| {
+                        suffix.len() >= 8
+                            && suffix.len() <= 64
+                            && suffix.len() % 2 == 0
+                            && digest.starts_with(suffix)
+                    })
+                    && !counts.contains_key(**alias)
+                    && available(alias)
+            });
+            let alias = if let Some(alias) = previous {
+                (*alias).to_owned()
+            } else if counts[base] == 1 && available(base) {
+                base.clone()
+            } else {
+                (8..=64)
+                    .step_by(2)
+                    .map(|length| format!("{base}-{}", &digest[..length]))
+                    .find(|alias| !counts.contains_key(alias) && available(alias))
+                    .ok_or("Cannot generate a unique WorkBuddy model ID")?
+            };
+            owners
+                .entry(alias.clone())
+                .or_default()
+                .insert(c.id.clone());
+            c.alias = alias;
+        }
+        Ok(connections)
+    }
     pub fn load(dir: &Path) -> Result<Self, String> {
         let path = dir.join("config.json");
         if !path.exists() {
@@ -628,6 +727,67 @@ impl Connection {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn readable_ids_are_unique_and_duplicate_suffixes_are_stable() {
+        let mut cfg = Config::default();
+        cfg.providers[0].name = "opencode".into();
+        cfg.providers[0]
+            .set_models("same | First\nsame | Second\nother", "default")
+            .unwrap();
+        let connections = cfg.workbuddy_connections().unwrap();
+        assert_eq!(connections[2].alias, "opencode/other");
+        for c in &connections[..2] {
+            let suffix = c.alias.strip_prefix("opencode/same-").unwrap();
+            assert_eq!(suffix.len(), 8);
+            assert!(suffix.bytes().all(|b| b.is_ascii_hexdigit()));
+        }
+        assert_ne!(connections[0].alias, connections[1].alias);
+        cfg.providers[0].models.reverse();
+        for c in cfg.workbuddy_connections().unwrap() {
+            assert_eq!(
+                c.alias,
+                connections.iter().find(|old| old.id == c.id).unwrap().alias
+            );
+        }
+        let c = &connections[0];
+        cfg.installed.push(Installation {
+            id: c.alias.clone(),
+            previous: None,
+            expected: Some(
+                serde_json::json!({"url":format!("http://127.0.0.1:18080/r/{}/v1", c.id)}),
+            ),
+        });
+        cfg.providers[0].models.retain(|m| m.id == c.id);
+        assert_eq!(cfg.workbuddy_connections().unwrap()[0].alias, c.alias);
+        cfg.providers[0].name = "中文供应商 / 日常".into();
+        assert_eq!(
+            cfg.workbuddy_connections().unwrap()[0].alias,
+            "中文供应商 / 日常/same"
+        );
+    }
+    #[test]
+    fn readable_ids_reserve_other_bases_and_legacy_aliases() {
+        let mut cfg = Config::default();
+        cfg.providers[0].name = "provider".into();
+        cfg.providers[0]
+            .set_models("same | First\nsame | Second", "default")
+            .unwrap();
+        let original = cfg.workbuddy_connections().unwrap();
+        let model = original[0].alias.strip_prefix("provider/").unwrap();
+        cfg.providers[0].models.push(Model::new(model, "Collision"));
+        let result = cfg.workbuddy_connections().unwrap();
+        assert_eq!(result[2].alias, original[0].alias);
+        assert_ne!(result[0].alias, result[2].alias);
+        assert!(result[0].alias.starts_with(&original[0].alias));
+        cfg.providers[0].models[2].alias = "provider/other".into();
+        cfg.providers[0]
+            .models
+            .push(Model::new("other", "Legacy collision"));
+        let result = cfg.workbuddy_connections().unwrap();
+        assert!(result[3].alias.starts_with("provider/other-"));
+        let mut ids = std::collections::HashSet::new();
+        assert!(result.iter().all(|c| ids.insert(&c.alias)));
+    }
     #[test]
     fn migration_groups_credentials_and_keeps_routes() {
         let dir = tempfile::tempdir().unwrap();

@@ -16,6 +16,8 @@ class DiagnosticUpstream(BaseHTTPRequestHandler):
     def do_POST(self):
         payload = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
         assert payload['stream'] and payload['max_tokens'] == 1
+        if hasattr(self.server, 'seen_models'):
+            self.server.seen_models.append(payload['model'])
         mode = self.path.split('/')[1]
         status = int(mode) if mode.isdigit() else 200
         if status != 200:
@@ -39,6 +41,7 @@ class DiagnosticUpstream(BaseHTTPRequestHandler):
 def main():
     parser = argparse.ArgumentParser(); parser.add_argument('--exe', required=True); args = parser.parse_args()
     server = ThreadingHTTPServer(('127.0.0.1', 0), DiagnosticUpstream)
+    server.seen_models = []
     threading.Thread(target=server.serve_forever, daemon=True).start()
     base = f'http://127.0.0.1:{server.server_port}'
     with tempfile.TemporaryDirectory(prefix='workbuddy-diagnostics-') as directory:
@@ -69,6 +72,19 @@ def main():
             assert action({'command': 'record', 'message': 'UI test result', 'ui': True})[0] == 200
             entries = json.loads(action({'command': 'snapshot'})[1])['logs']
             assert len(entries) == before + 1 and sum(row['message'] == 'UI test result' for row in entries) == 1
+            assert action({'command': 'save', 'models': 'fixture-model | First\nsecond-model | Second\nthird-model | Third'})[0] == 200
+            for selection, expected in [(None, 'fixture-model'), (1, 'second-model'), (2, 'third-model')]:
+                payload = {'command': 'test'}
+                if selection is not None:
+                    payload['model_index'] = selection
+                before_requests = len(server.seen_models)
+                status, message = action(payload)
+                assert status == 200 and json.loads(message)['model'] == expected
+                assert server.seen_models[before_requests:] == [expected], 'Test must call exactly the selected model'
+            before_requests = len(server.seen_models)
+            for invalid in [-1, 3, '1', 1.5, None]:
+                assert action({'command': 'test', 'model_index': invalid})[0] == 400
+            assert len(server.seen_models) == before_requests, 'Invalid selections must never fall back to another model'
             for mode in ['401', '403', '404', '429', '503', 'invalid', 'stream-error', 'empty']:
                 assert action({'command': 'save', 'upstream': base + '/' + mode})[0] == 200
                 status, message = action({'command': 'test'})
@@ -93,7 +109,7 @@ def main():
             assert action({'command': 'record', 'message': 'After clear'})[0] == 200
             entries = json.loads(action({'command': 'snapshot'})[1])['logs']
             assert len(entries) == 1 and entries[0]['message'] == 'After clear'
-            print('PASS: detailed success timings, first valid SSE, empty/error/malformed SSE, HTTP 401/403/404/429/503, network failure, redacted metadata, chronological journal and no duplicate UI-owned entries')
+            print('PASS: selected-model tests and default fallback, invalid selection isolation, detailed timings, SSE/HTTP/network errors, redacted metadata, chronological journal, ordered log clear and no duplicate UI-owned entries')
         finally: stop(process, port, directory, log)
     server.shutdown(); server.server_close()
 

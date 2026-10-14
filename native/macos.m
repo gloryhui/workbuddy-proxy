@@ -320,6 +320,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
 - (void)fields{[self.window makeFirstResponder:nil];self.refreshing=YES;self.name.stringValue=value("name");self.upstream.stringValue=value("upstream");self.key.stringValue=value("api_key");self.keyShown=NO;[self renderKey];wb_models_load();[self.models deselectAll:nil];[self.models reloadData];NSString *e=value("reasoning_effort");for(int i=0;i<6;i++)if([e isEqualToString:[NSString stringWithUTF8String:efforts[i]]])[self.effort selectItemAtIndex:i];self.dirty=NO;self.refreshing=NO;[self updateProviderState];}
 - (void)reloadProviders{self.refreshing=YES;NSString *rows=value("connections");self.rows=rows.length?[rows componentsSeparatedByString:@"\n"]:@[];[self.list reloadData];NSInteger i=[value("selected") integerValue];if(i>=0&&(NSUInteger)i<self.rows.count)[self.list selectRowIndexes:[NSIndexSet indexSetWithIndex:i] byExtendingSelection:NO];else [self.list deselectAll:nil];if(self.rows.count)[self.list reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:i] columnIndexes:[NSIndexSet indexSetWithIndex:0]];self.refreshing=NO;}
 - (void)refresh{[self reloadProviders];[self fields];}
+- (void)refreshSavedModels{NSIndexSet *selected=[self.models.selectedRowIndexes copy];[self reloadProviders];wb_models_load();[self.models reloadData];NSMutableIndexSet *valid=[NSMutableIndexSet new];[selected enumerateIndexesUsingBlock:^(NSUInteger row,BOOL *stop){(void)stop;if(row<(NSUInteger)wb_models_count())[valid addIndex:row];}];[self.models selectRowIndexes:valid byExtendingSelection:NO];self.dirty=NO;[self updateProviderState];}
 - (void)renderLog{NSPoint origin=self.logScroll.contentView.bounds.origin;BOOL bottom=NSMaxY(self.logScroll.documentVisibleRect)>=self.logs.bounds.size.height-35;self.logs.string=self.systemText;if(bottom)[self.logs scrollRangeToVisible:NSMakeRange(self.logs.string.length,0)];else [self.logScroll.contentView scrollToPoint:origin];}
 - (void)report:(NSString *)s {BOOL error=[s hasPrefix:@"ERROR "];wb_record(s.UTF8String);if([s hasPrefix:@"OK "])s=[s substringFromIndex:3];self.status.textColor=error?color(0xc43a54):color(0x0081a8);self.status.stringValue=[s componentsSeparatedByString:@"\n"].firstObject;self.status.toolTip=s;[self poll];}
 
@@ -331,7 +332,7 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
 - (void)show{if(self.window.miniaturized)[self.window deminiaturize:nil];[self.window makeKeyAndOrderFront:nil];[NSApp activateIgnoringOtherApps:YES];}
 - (void)reopen:(NSNotification *)note{(void)note;[self show];}
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)application hasVisibleWindows:(BOOL)visible{(void)application;(void)visible;[self show];return NO;}
-- (void)save{if(self.busy||![self hasProvider])return;[self.window makeFirstResponder:nil];NSString *r=take(wb_save_table(self.name.stringValue.UTF8String,self.key.stringValue.UTF8String,self.upstream.stringValue.UTF8String,efforts[MAX(0,self.effort.indexOfSelectedItem)]));if([r hasPrefix:@"OK "])[self refresh];[self report:r];[self poll];}
+- (void)save{if(self.busy||![self hasProvider])return;[self.window makeFirstResponder:nil];NSString *r=take(wb_save_table(self.name.stringValue.UTF8String,self.key.stringValue.UTF8String,self.upstream.stringValue.UTF8String,efforts[MAX(0,self.effort.indexOfSelectedItem)]));if([r hasPrefix:@"OK "])[self refreshSavedModels];[self report:r];[self poll];}
 - (void)change:(const char *)command{NSString *r=take(wb_command(command));if([r hasPrefix:@"OK "])[self refresh];[self report:r];[self poll];}
 - (void)add{[self change:"add"];}- (void)duplicate{if(!self.busy&&[self hasProvider])[self change:"duplicate"];}
 - (void)remove{if(self.busy||![self hasProvider])return;NSAlert *a=[NSAlert new];a.messageText=t(T_DELETE_QUESTION);[a addButtonWithTitle:t(T_DELETE)];[a addButtonWithTitle:wb_ui_zh()?@"取消":@"Cancel"];if([a runModal]==NSAlertFirstButtonReturn)[self change:"delete"];}
@@ -342,10 +343,30 @@ static void stopUI(void){[NSApp stop:nil];[NSApp postEvent:[NSEvent otherEventWi
     BOOL has=[self hasProvider],installed=[value("installed_count") integerValue]>0;
     for(NSView *v in self.center.subviews)v.hidden=v==self.emptyView?has:!has;
     for(NSControl *c in self.controls){BOOL needsProvider=([c isDescendantOf:self.center]&&![c isDescendantOf:self.emptyView])||c.tag==T_DUPLICATE||c.tag==T_DELETE;c.enabled=!self.busy&&(!needsProvider||has);}
-    ((NSControl *)[self tag:T_SYNC in:self.right]).enabled=!self.busy&&([value("model_count") integerValue]>0||installed);((NSControl *)[self tag:T_RESTORE in:self.right]).enabled=!self.busy&&installed;self.emptyAdd.enabled=!self.busy;self.list.enabled=!self.busy;self.models.enabled=!self.busy&&has;
+    ((NSControl *)[self tag:T_SYNC in:self.right]).enabled=!self.busy&&(has||[value("model_count") integerValue]>0||installed);((NSControl *)[self tag:T_RESTORE in:self.right]).enabled=!self.busy&&installed;self.emptyAdd.enabled=!self.busy;self.list.enabled=!self.busy;self.models.enabled=!self.busy&&has;
 }
 - (void)setControlsBusy:(BOOL)busy{self.busy=busy;[self updateProviderState];}
-- (void)execute:(const char *)command{if(self.busy||(![self hasProvider]&&strcmp(command,"restore")!=0&&strcmp(command,"install")!=0))return;[self.window makeFirstResponder:nil];[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);NSString *url=self.upstream.stringValue,*key=self.key.stringValue;BOOL fetch=strcmp(command,"fetch")==0;dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(fetch?wb_fetch(url.UTF8String,key.UTF8String):wb_command(command));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if(fetch&&[r hasPrefix:@"OK "]){[self showModelPicker];}[self report:r];[self poll];});});}
+- (void)execute:(const char *)command {
+    if(self.busy||(![self hasProvider]&&strcmp(command,"restore")!=0&&strcmp(command,"install")!=0))return;
+    [self.window makeFirstResponder:nil];
+    BOOL fetch=strcmp(command,"fetch")==0,test=strcmp(command,"test")==0;
+    BOOL save=(test||strcmp(command,"install")==0)&&self.dirty&&[self hasProvider];
+    NSUInteger selected=self.models.selectedRowIndexes.firstIndex;int row=selected==NSNotFound?-1:(int)selected;
+    NSString *name=self.name.stringValue,*url=self.upstream.stringValue,*key=self.key.stringValue;
+    const char *effort=efforts[MAX(0,self.effort.indexOfSelectedItem)];
+    [self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
+        NSString *r=nil;BOOL saved=NO;
+        if(save){r=take(wb_save_table(name.UTF8String,key.UTF8String,url.UTF8String,effort));saved=[r hasPrefix:@"OK "];}
+        if(!save||saved)r=take(fetch?wb_fetch(url.UTF8String,key.UTF8String):test?wb_test_row(row):wb_command(command));
+        dispatch_async(dispatch_get_main_queue(),^{
+            [self setControlsBusy:NO];
+            if(saved)[self refreshSavedModels];
+            if(fetch&&[r hasPrefix:@"OK "]){[self showModelPicker];}
+            [self report:r];[self poll];
+        });
+    });
+}
 - (void)applyPort{if(self.busy)return;[self.window makeFirstResponder:nil];NSString *port=self.portInput.stringValue;[self setControlsBusy:YES];self.status.stringValue=t(T_WORKING);dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{NSString *r=take(wb_set_port(port.UTF8String));dispatch_async(dispatch_get_main_queue(),^{[self setControlsBusy:NO];if([r hasPrefix:@"OK "])self.portInput.stringValue=value("port");[self report:r];[self poll];});});}
 - (void)showModelPicker {
     [self setControlsBusy:YES];self.picker=[[WBModelPicker alloc]initWithProvider:self.name.stringValue];

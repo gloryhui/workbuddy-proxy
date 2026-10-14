@@ -89,6 +89,25 @@ impl Routes {
                     .push(route);
             }
         }
+        for c in cfg.workbuddy_connections()? {
+            let route = routes.ids[&c.id].clone();
+            routes.aliases.insert(c.alias, route);
+        }
+        // Saved names may change before the user resyncs WorkBuddy. Keep its
+        // currently installed IDs usable on the same stable, scoped routes.
+        for record in &cfg.installed {
+            if let Some(id) = cfg.installed_connection_id(record) {
+                let route = routes.ids[&id].clone();
+                if routes
+                    .aliases
+                    .get(&record.id)
+                    .is_some_and(|old| old.connection.id != id)
+                {
+                    return Err("Installed model ID conflicts with another route".into());
+                }
+                routes.aliases.insert(record.id.clone(), route);
+            }
+        }
         Ok(routes)
     }
     fn resolve(&self, scope: Option<&str>, model: &str) -> Result<Arc<Route>, String> {
@@ -98,6 +117,10 @@ impl Routes {
             return if model == r.connection.alias
                 || model == r.connection.model
                 || model == format!("wbp-{}", r.connection.id)
+                || self
+                    .aliases
+                    .get(model)
+                    .is_some_and(|alias| alias.connection.id == r.connection.id)
             {
                 Ok(r.clone())
             } else {
@@ -525,9 +548,13 @@ fn model_list(a: &Bridge, headers: &HeaderMap, id: Option<&str>) -> Response<Bod
     }) {
         return fail(StatusCode::NOT_FOUND, "Unknown connection");
     }
-    let entries: Vec<_> = cfg.providers.iter().filter(|p| !p.api_key.is_empty())
-        .flat_map(|p| p.models.iter().filter(move |m| id.is_none_or(|id| p.id==id || m.id==id))
-            .map(move |m| json!({"id":m.alias,"object":"model","owned_by":p.name,"name":format!("{} · {} · {}",m.name,p.name,m.model)})))
+    let connections = match cfg.workbuddy_connections() {
+        Ok(connections) => connections,
+        Err(e) => return fail(StatusCode::INTERNAL_SERVER_ERROR, &e),
+    };
+    let entries: Vec<_> = connections.iter().filter(|c| !c.api_key.is_empty())
+        .filter(|c| id.is_none_or(|id| c.id == id || cfg.provider(&c.id).is_ok_and(|p| p.id == id)))
+        .map(|c| json!({"id":c.alias,"object":"model","owned_by":c.provider,"name":format!("{} · {} · {}",c.name,c.provider,c.model)}))
         .collect();
     Response::builder()
         .header("Content-Type", "application/json")
@@ -947,7 +974,17 @@ impl Bridge {
                 }
                 .into())
             }
-            "test" => self.test(id).await,
+            "test" => {
+                let selected = if let Some(index) = p.get("model_index") {
+                    let index = index.as_u64().and_then(|n| usize::try_from(n).ok())
+                        .ok_or("Invalid model selection / 无效的模型选择")?;
+                    Some(self.config.lock().unwrap().provider(id)?.models.get(index)
+                        .ok_or("Selected model no longer exists / 选中的模型已不存在")?.id.clone())
+                } else {
+                    None
+                };
+                self.test(selected.as_deref().unwrap_or(id)).await
+            }
             "install" => {
                 let count = self.configure_workbuddy(&crate::workbuddy::path()?)?;
                 Ok(format!(
@@ -1144,6 +1181,48 @@ mod tests {
         assert!(routes.resolve(Some(&p.id), "same").is_err());
         assert!(routes.resolve(Some(&p.models[0].id), "other").is_err());
         assert!(routes.resolve(Some("unknown"), &p.models[0].alias).is_err());
+    }
+    #[test]
+    fn readable_and_legacy_ids_keep_scoped_routes_after_renaming() {
+        let mut cfg = Config::default();
+        cfg.providers[0].name = "opencode".into();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
+        cfg.providers[0]
+            .set_models("same | First\nsame | Second", "default")
+            .unwrap();
+        let first = &mut cfg.providers[0].models[0];
+        first.alias = format!("wbp-{}/same", first.id);
+        let readable = cfg.workbuddy_connections().unwrap();
+        cfg.installed.push(crate::config::Installation {
+            id: readable[0].alias.clone(),
+            previous: None,
+            expected: Some(
+                json!({"url":format!("http://127.0.0.1:18080/r/{}/v1", readable[0].id)}),
+            ),
+        });
+        cfg.providers[0].name = "renamed".into();
+        let routes = Routes::new(&cfg).unwrap();
+        let current = cfg.workbuddy_connections().unwrap();
+        for model in [
+            &readable[0].alias,
+            &current[0].alias,
+            &cfg.providers[0].models[0].alias,
+            &format!("wbp-{}", readable[0].id),
+        ] {
+            for scope in [
+                None,
+                Some(cfg.providers[0].id.as_str()),
+                Some(readable[0].id.as_str()),
+            ] {
+                assert_eq!(
+                    routes.resolve(scope, model).unwrap().connection.id,
+                    readable[0].id
+                );
+            }
+            assert!(routes.resolve(Some(&readable[1].id), model).is_err());
+        }
+        assert!(routes.resolve(None, "same").is_err());
+        assert!(routes.resolve(Some("unknown"), &current[0].alias).is_err());
     }
     #[test]
     fn legacy_bare_alias_does_not_bypass_same_model_isolation() {
