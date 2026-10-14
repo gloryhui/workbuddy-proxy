@@ -69,7 +69,7 @@ def main():
                     if process.poll() is not None:
                         raise AssertionError('Core exited during port migration test')
                     try:
-                        current = json.loads(instance_file.read_text())
+                        current = json.loads(instance_file.read_text(encoding='utf-8'))
                         with urllib.request.urlopen(f"http://127.0.0.1:{current['port']}/health", timeout=.3) as response:
                             assert json.load(response)['ready']
                         return current
@@ -90,7 +90,7 @@ def main():
                     return error.code, json.load(error)['message']
 
             assert action({'command': 'install'})[0] == 200
-            owned = json.loads(models_file.read_text())[0]
+            owned = json.loads(models_file.read_text(encoding='utf-8'))[0]
             manual = {'id': 'manual', 'name': 'Keep name', 'url': f'http://localhost:{old_port}/v1',
                       'apiKey': 'fixture-local-key', 'reasoning': {'defaultEffort': 'max'}, 'extra': 7}
             other = {'id': 'other', 'name': 'Other vendor', 'url': f'http://127.0.0.1:{old_port}/v1', 'apiKey': 'other-key'}
@@ -116,10 +116,10 @@ def main():
             assert status == 200, message
             assert json.loads(message) == {'port': new_port, 'updated': 2, 'changed': True}
             port = new_port
-            changed = json.loads(instance_file.read_text())
+            changed = json.loads(instance_file.read_text(encoding='utf-8'))
             assert changed == {**instance, 'port': new_port}
-            assert json.loads(config_file.read_text())['port'] == new_port
-            doc = json.loads(models_file.read_text())
+            assert json.loads(config_file.read_text(encoding='utf-8'))['port'] == new_port
+            doc = json.loads(models_file.read_text(encoding='utf-8'))
             assert doc['custom'] == 'keep-root'
             assert doc['models'][0] == {**owned, 'url': owned['url'].replace(f':{old_port}/', f':{new_port}/')}
             assert doc['models'][1] == {**manual, 'url': manual['url'].replace(f':{old_port}/', f':{new_port}/')}
@@ -145,7 +145,7 @@ def main():
             assert models_file.read_bytes() == b'not-json'
             models_file.write_bytes(valid)
             assert action({'command': 'restore'})[0] == 200, 'Expected-entry tracking was not migrated'
-            assert [entry['id'] for entry in json.loads(models_file.read_text())['models']] == ['manual', 'other']
+            assert [entry['id'] for entry in json.loads(models_file.read_text(encoding='utf-8'))['models']] == ['manual', 'other']
             request = urllib.request.Request(f'http://127.0.0.1:{port}/_control/stop', data=b'', headers={'Authorization': 'Bearer ' + instance['management_key']})
             with urllib.request.urlopen(request, timeout=3) as current:
                 current.read()
@@ -154,13 +154,13 @@ def main():
             restarted = wait_ready()
             assert restarted['port'] == new_port
             instance = restarted
-            provider = json.loads(config_file.read_text())['providers'][0]['id']
+            provider = json.loads(config_file.read_text(encoding='utf-8'))['providers'][0]['id']
             assert action({'command': 'delete', 'provider_id': provider})[0] == 200
             empty_port = free_port()
             status, message = action({'command': 'set_port', 'port': empty_port})
             assert status == 200 and json.loads(message)['port'] == empty_port
             port = empty_port
-            assert json.loads(config_file.read_text())['providers'] == []
+            assert json.loads(config_file.read_text(encoding='utf-8'))['providers'] == []
             print('PASS: occupied/invalid ports keep all files and old listener; same-port no-op; same core and live SSE survive rebinding; owned/manual WorkBuddy URLs migrate without changing other entries; malformed configuration is rejected; restore and persisted restart work; empty-provider migration works')
         finally:
             RELEASE.set()
@@ -168,7 +168,7 @@ def main():
                 live.close()
             if process.poll() is None:
                 try:
-                    current = json.loads(instance_file.read_text())
+                    current = json.loads(instance_file.read_text(encoding='utf-8'))
                     request = urllib.request.Request(f"http://127.0.0.1:{current['port']}/_control/stop", data=b'', headers={'Authorization': 'Bearer ' + current['management_key']})
                     with urllib.request.urlopen(request, timeout=3) as response:
                         response.read()
