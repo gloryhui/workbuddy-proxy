@@ -70,6 +70,10 @@ jobs:
             choco install innosetup --yes --no-progress --limit-output
             if ($LASTEXITCODE -ne 0) { throw 'Inno Setup installation failed' }
           }
+          if ((Get-Item $iscc).VersionInfo.FileVersionRaw -lt [version]'6.5.0') {
+            choco upgrade innosetup --yes --no-progress --limit-output
+            if ($LASTEXITCODE -ne 0) { throw 'Inno Setup 6.5+ upgrade failed' }
+          }
           python scripts/windows_installer.py --zip 'dist/workbuddy-proxy-0.4.0-gpui-kit-preview.4-windows-x64.zip'
           if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
       - name: Test Windows installer custom path, shortcuts, reinstall and uninstall

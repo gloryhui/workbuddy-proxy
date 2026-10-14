@@ -51,9 +51,14 @@ def main():
         try:
             for attempt in range(2):
                 subprocess.run([str(setup), '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART',
-                                '/SP-', f'/DIR={install}', '/TASKS=desktopicon',
+                                '/SP-', f'/DIR={install}',
                                 f'/LOG={directory / (str(attempt) + "-install.log")}'], check=True, timeout=90)
                 installed = True
+                log_bytes = (directory / (str(attempt) + '-install.log')).read_bytes()
+                log_text = log_bytes.decode('utf-16' if log_bytes.startswith(b'\xff\xfe') else 'utf-8-sig')
+                assert 'Installer language: chinesesimplified' in log_text
+                assert 'Desktop task label: 创建桌面快捷方式' in log_text
+                assert 'Desktop shortcut selected: yes' in log_text
                 assert (install / 'workbuddy-proxy.exe').is_file()
                 assert (install / 'internal/workbuddy-settings.exe').is_file()
                 assert not (install / 'workbuddy-proxy-gpui.exe').exists()
@@ -111,6 +116,8 @@ $targets | ConvertTo-Json -Compress
                 pass
             result = json.loads(lifecycle.read_text())
             result['installer_checks'] = ['custom Unicode/space installation directory', 'per-user HKCU uninstall registration',
+                                          'Simplified Chinese installer language and task text',
+                                          'desktop shortcut created by default without TASKS override',
                                           'only one root entry point; renamed internal helper', 'repeat install to same directory',
                                           'main-only Start Menu and desktop shortcuts', 'installed bytes match portable package',
                                           'installed app real relay/settings lifecycle', 'uninstall removes binaries/registration and preserves external config']

@@ -38,15 +38,15 @@ CloseApplicationsFilter=*.exe
 RestartApplications=no
 UsePreviousAppDir=yes
 Uninstallable=yes
+ShowLanguageDialog=no
+UsePreviousLanguage=no
+UsePreviousTasks=no
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
-#if FileExists(AddBackslash(CompilerPath) + "Languages\ChineseSimplified.isl")
-Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
-#endif
+Name: "chinesesimplified"; MessagesFile: "ChineseSimplified.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -64,3 +64,17 @@ Name: "{autodesktop}\WorkBuddy Proxy Preview"; Filename: "{app}\workbuddy-proxy.
 Filename: "{app}\workbuddy-proxy.exe"; Description: "{cm:LaunchProgram,WorkBuddy Proxy Preview}"; Flags: nowait postinstall skipifsilent
 
 ; Configuration/logs are outside {app}. No UninstallDelete or user-data cleanup.
+
+[Code]
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssInstall then
+  begin
+    Log('Installer language: ' + ActiveLanguage);
+    Log('Desktop task label: ' + CustomMessage('CreateDesktopIcon'));
+    if WizardIsTaskSelected('desktopicon') then
+      Log('Desktop shortcut selected: yes')
+    else
+      Log('Desktop shortcut selected: no');
+  end;
+end;

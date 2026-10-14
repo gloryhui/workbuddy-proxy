@@ -60,7 +60,7 @@
 | Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.zip) | 约 4.1 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
 | Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.zip) | 约 4.2 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
 
-GPUI 测试版另提供 Windows `-setup.exe` 安装包，可选择安装目录、创建快捷方式，并从系统应用列表卸载。便携 ZIP 顶层只有 `workbuddy-proxy.exe`；界面辅助程序位于 `internal/workbuddy-settings.exe`，无需单独运行。测试包通过 Actions 提供，尚未替换正式 Release。
+GPUI 测试版另提供简体中文界面的 Windows `-setup.exe` 安装包，可选择安装目录，默认勾选创建桌面快捷方式（可取消），并从系统应用列表卸载。便携 ZIP 顶层只有 `workbuddy-proxy.exe`；界面辅助程序位于 `internal/workbuddy-settings.exe`，无需单独运行。测试包通过 Actions 提供，尚未替换正式 Release。
 
 Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP / DMG，每个人填写自己的 Key 即可。
 
