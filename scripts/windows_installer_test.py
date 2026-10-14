@@ -8,7 +8,20 @@ from pathlib import Path
 import platform
 import subprocess
 import tempfile
+import time
 import zipfile
+
+
+def wait_for_uninstall_log(path):
+    """Inno's detached cleanup process can briefly retain the log handle."""
+    deadline = time.monotonic() + 10
+    while path.exists():
+        try:
+            path.unlink()
+        except PermissionError:
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(.1)
 
 
 def main():
@@ -86,6 +99,7 @@ $targets | ConvertTo-Json -Compress
             original_config = (data / 'config.json').read_bytes()
             subprocess.run([str(install / 'unins000.exe'), '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART',
                             f'/LOG={directory / "uninstall.log"}'], check=True, timeout=90)
+            wait_for_uninstall_log(directory / 'uninstall.log')
             installed = False
             assert not (install / 'workbuddy-proxy.exe').exists()
             assert not (install / 'internal/workbuddy-settings.exe').exists()
