@@ -1038,6 +1038,11 @@ impl Proxy {
                 SidebarMenuItem::new(name.clone())
                     .accessibility_label(name)
                     .active(active)
+                    .font_weight(if active {
+                        FontWeight::SEMIBOLD
+                    } else {
+                        FontWeight::NORMAL
+                    })
                     .disable(self.busy)
                     .suffix(move |_, _| Tag::secondary().small().child(count.to_string()))
                     .on_click(cx.listener(move |this, _, window, cx| {
@@ -1048,6 +1053,8 @@ impl Proxy {
         Sidebar::new("providers")
             .collapsible(false)
             .w(px(196.))
+            .border_1()
+            .border_color(rgb(0xcbdbe6))
             .rounded(px(12.))
             .header(
                 SidebarHeader::new().child(
@@ -1647,20 +1654,23 @@ impl Render for Proxy {
             .bg(rgb(BG))
             .text_color(rgb(INK))
             .text_size(px(13.))
-            .p_5()
-            .gap_4()
+            .px_3()
+            .pt_2()
+            .pb_1()
+            .gap_1()
             .child(
                 div()
                     .flex()
                     .items_center()
                     .justify_between()
-                    .h(px(52.))
+                    .h(px(48.))
+                    .mb_2()
                     .child(
                         div()
                             .flex()
                             .items_center()
                             .gap_3()
-                            .child(img("brand.png").size(px(42.)))
+                            .child(img("brand.png").size(px(36.)))
                             .child(
                                 div()
                                     .flex()
@@ -1714,12 +1724,12 @@ impl Render for Proxy {
                     .child(right),
             )
             .child(
-                div().flex().justify_end().child(
+                div().flex().justify_end().h(px(16.)).items_center().child(
                     Label::new(self.t(
                         "关闭窗口后，代理仍在托盘运行",
                         "Close this window to keep the relay running in the tray",
                     ))
-                    .text_size(px(11.))
+                    .text_size(px(10.))
                     .text_color(rgb(MUTED)),
                 ),
             );

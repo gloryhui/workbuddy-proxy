@@ -69,10 +69,10 @@ fn main() {
                 theme.colors.foreground = rgb(0x19334d).into();
                 theme.colors.muted_foreground = rgb(0x6b7c90).into();
                 theme.colors.border = rgb(0xe2e9f1).into();
-                theme.colors.sidebar = rgb(0xf0f5fa).into();
+                theme.colors.sidebar = rgb(0xeaf2f8).into();
                 theme.colors.sidebar_foreground = rgb(0x19334d).into();
-                theme.colors.sidebar_accent = rgb(0xdff3fa).into();
-                theme.colors.sidebar_accent_foreground = rgb(0x007e99).into();
+                theme.colors.sidebar_accent = rgb(0xc5ebf4).into();
+                theme.colors.sidebar_accent_foreground = rgb(0x006b83).into();
                 theme.colors.table_active = rgb(0xdff3fa).into();
                 theme.colors.table_hover = rgb(0xeef8fc).into();
                 theme.colors.table_head = rgb(0xf7f9fc).into();
