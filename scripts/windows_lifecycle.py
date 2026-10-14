@@ -44,7 +44,7 @@ def main():
             if h:return h
             time.sleep(.025)
         raise AssertionError('UI window did not appear')
-    server=ThreadingHTTPServer(('127.0.0.1',0),DiagnosticUpstream);threading.Thread(target=server.serve_forever,daemon=True).start()
+    server=ThreadingHTTPServer(('127.0.0.1',0),DiagnosticUpstream);server.seen_models=[];threading.Thread(target=server.serve_forever,daemon=True).start()
     with tempfile.TemporaryDirectory(prefix='workbuddy-lifecycle-') as directory:
         config={'api_key':'fixture-key','local_key':'fixture-local','upstream':f'http://127.0.0.1:{server.server_port}/v1','model':'deepseek-v4.1-flash','port':free_port(),'installed':None}
         Path(directory,'config.json').write_text(json.dumps(config))
@@ -144,13 +144,29 @@ def main():
             enter(editor(),'Flash')
             user.SendMessageW(h,0x0111,210,0) # Add model and edit its ID.
             enter(editor(),'other-model')
-            user.PostMessageW(h,0x0111,201,0)
+            user.PostMessageW(h,0x0111,204,0) # Sync commits the table without an explicit Save.
             for _ in range(200):
                 entries=profile()['providers'][0]['models']
                 if len(entries)==2:break
                 time.sleep(.025)
-            else:raise AssertionError('Native model table save failed')
+            else:raise AssertionError('Native sync did not save table edits')
             assert entries[0]['name']=='Flash' and entries[1]['name']=='other-model' and entries[1]['model']=='other-model'
+            models_file=Path(env['USERPROFILE'])/'.workbuddy/models.json'
+            for _ in range(200):
+                if user.IsWindowEnabled(user.GetDlgItem(h,204)) and models_file.exists():break
+                time.sleep(.025)
+            else:raise AssertionError('Native sync did not complete')
+            assert len(json.loads(models_file.read_text(encoding='utf-8')))==2
+            saved_bytes=models_file.read_bytes()
+            saved_config=Path(directory,'config.json').read_bytes()
+            user.SendMessageW(h,0x0111,210,0) # A blank model cannot be autosaved or synced.
+            user.PostMessageW(h,0x0111,204,0)
+            for _ in range(200):
+                if user.IsWindowEnabled(user.GetDlgItem(h,204)) and 'Model ID is required' in caption(user.GetDlgItem(h,111)):break
+                time.sleep(.025)
+            else:raise AssertionError('Invalid draft was not rejected before sync')
+            assert models_file.read_bytes()==saved_bytes and Path(directory,'config.json').read_bytes()==saved_config
+            user.SendMessageW(h,0x0111,211,0) # Remove the invalid draft row.
             for model in ['third-model','fourth-model']:
                 user.SendMessageW(h,0x0111,210,0);enter(editor(),model)
             user.PostMessageW(h,0x0111,201,0)
@@ -199,7 +215,20 @@ def main():
                 time.sleep(.12)
                 if modifier:user.keybd_event(modifier,0,2,0)
                 time.sleep(.08)
+            def test_model(expected):
+                before=len(server.seen_models)
+                user.SendMessageW(h,0x0111,202,0)
+                for _ in range(200):
+                    if user.IsWindowEnabled(user.GetDlgItem(h,202)) and len(server.seen_models)>before:break
+                    time.sleep(.025)
+                else:raise AssertionError('Selected native model test did not finish')
+                assert server.seen_models[before:]==[expected],server.seen_models[before:]
             try:
+                click_row(3);test_model('fourth-model')
+                click_row(1);click_row(3,17);test_model('other-model')
+                click_row(1);click_row(1,17)
+                assert user.SendMessageW(table,0x1032,0,0)==0
+                test_model('deepseek-v4.1-flash')
                 click_row(0);click_row(2,16)
                 assert user.SendMessageW(table,0x1032,0,0)==3,'Shift-click did not select a range'
                 click_row(1,17)
