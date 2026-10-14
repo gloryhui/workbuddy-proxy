@@ -83,7 +83,7 @@ fn main() {
                 KeyBinding::new("ctrl-a", ui::SelectModels, Some("ModelList")),
                 KeyBinding::new("f2", ui::EditModel, Some("ModelList")),
                 KeyBinding::new("enter", ui::EditModel, Some("ModelList")),
-                KeyBinding::new("escape", ui::Dismiss, None),
+                KeyBinding::new("escape", ui::Dismiss, Some("Proxy")),
                 KeyBinding::new("cmd-q", ui::Quit, None),
             ]);
             let bounds = Bounds::centered(None, size(px(1180.), px(780.)), cx);

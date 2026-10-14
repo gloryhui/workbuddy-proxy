@@ -7,6 +7,7 @@ use gpui_kit::component::{
     Disableable, Sizable,
     button::{Button, ButtonVariants},
     input::{Input, InputEvent, InputState, Textarea, TextareaState},
+    select::{Select, SelectEvent, SelectItem, SelectState},
 };
 use gpui_kit::*;
 use serde_json::{Value, json};
@@ -26,7 +27,46 @@ const MUTED: u32 = 0x6b7c90;
 const BORDER: u32 = 0xe2e9f1;
 const TEAL: u32 = 0x008daa;
 const TINT: u32 = 0xe6f6fb;
-const EFFORTS: [&str; 6] = ["keep", "default", "none", "low", "high", "max"];
+#[derive(Clone)]
+struct Choice {
+    code: String,
+    title: SharedString,
+}
+impl SelectItem for Choice {
+    type Value = String;
+    fn title(&self) -> SharedString {
+        self.title.clone()
+    }
+    fn value(&self) -> &String {
+        &self.code
+    }
+}
+type ChoiceState = SelectState<Vec<Choice>>;
+fn choices(zh: bool, languages: bool) -> Vec<Choice> {
+    let entries: &[(&str, &str, &str)] = if languages {
+        &[
+            ("auto", "跟随系统", "System default"),
+            ("zh", "简体中文", "简体中文"),
+            ("en", "English", "English"),
+        ]
+    } else {
+        &[
+            ("keep", "保留各模型设置", "Keep per-model settings"),
+            ("default", "跟随 WorkBuddy", "Follow WorkBuddy"),
+            ("none", "关闭思考", "Thinking off"),
+            ("low", "低", "Low"),
+            ("high", "高", "High"),
+            ("max", "最高", "Max"),
+        ]
+    };
+    entries
+        .iter()
+        .map(|(code, cn, en)| Choice {
+            code: (*code).into(),
+            title: (if zh { *cn } else { *en }).into(),
+        })
+        .collect()
+}
 pub struct Proxy {
     dir: PathBuf,
     cfg: Config,
@@ -57,7 +97,8 @@ pub struct Proxy {
     only_picked: bool,
     editing: Option<usize>,
     new_model: bool,
-    effort_open: bool,
+    language: Entity<ChoiceState>,
+    effort_select: Entity<ChoiceState>,
     delete_open: bool,
     wake: String,
     last_poll: Instant,
@@ -100,6 +141,103 @@ fn card() -> Div {
         .min_h_0()
 }
 impl Proxy {
+    fn set_language(&mut self, code: &str, window: &mut Window, cx: &mut Context<Self>) {
+        if self.busy || self.cfg.language == code {
+            return;
+        }
+        self.capture(cx);
+        self.zh = code == "zh"
+            || (code == "auto" && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
+        let zh = self.zh;
+        for (state, hint) in [
+            (
+                &self.name,
+                if zh {
+                    "填写供应商名称"
+                } else {
+                    "Enter provider name"
+                },
+            ),
+            (
+                &self.key,
+                if zh {
+                    "填写 API Key"
+                } else {
+                    "Enter API Key"
+                },
+            ),
+            (
+                &self.url,
+                if zh {
+                    "填写供应商提供的 OpenAI 兼容接口地址"
+                } else {
+                    "Enter your provider's OpenAI-compatible API URL"
+                },
+            ),
+            (
+                &self.search,
+                if zh {
+                    "搜索模型 ID"
+                } else {
+                    "Search model IDs"
+                },
+            ),
+            (
+                &self.edit_name,
+                if zh {
+                    "默认使用模型 ID"
+                } else {
+                    "Defaults to model ID"
+                },
+            ),
+            (
+                &self.edit_model,
+                if zh {
+                    "填写模型 ID"
+                } else {
+                    "Enter model ID"
+                },
+            ),
+        ] {
+            state.update(cx, |s, cx| s.set_placeholder(hint.to_owned(), window, cx));
+        }
+        self.refresh_choices(code, window, cx);
+        self.send(
+            "language",
+            vec![json!({"command":"language", "language":code})],
+            cx,
+        );
+    }
+    fn refresh_choices(&mut self, code: &str, window: &mut Window, cx: &mut Context<Self>) {
+        self.language.update(cx, |s, cx| {
+            s.set_items(choices(self.zh, true), window, cx);
+            s.set_selected_value(&code.to_owned(), window, cx);
+        });
+        self.effort_select.update(cx, |s, cx| {
+            s.set_items(choices(self.zh, false), window, cx);
+            s.set_selected_value(&self.effort, window, cx);
+        });
+    }
+    fn language_menu(&self) -> AnyElement {
+        Select::new(&self.language)
+            .id("language")
+            .small()
+            .w(px(144.))
+            .menu_width(px(180.))
+            .accessibility_label(self.t("界面语言", "Interface language"))
+            .disabled(self.busy)
+            .into_any_element()
+    }
+    fn effort_menu(&self) -> AnyElement {
+        Select::new(&self.effort_select)
+            .id("effort")
+            .small()
+            .w(px(220.))
+            .menu_width(px(240.))
+            .accessibility_label(self.t("思考强度", "Thinking effort"))
+            .disabled(self.busy)
+            .into_any_element()
+    }
     fn t(&self, zh: &'static str, en: &'static str) -> &'static str {
         if self.zh { zh } else { en }
     }
@@ -176,6 +314,9 @@ impl Proxy {
             window,
             cx,
         );
+        let language = cx.new(|cx| SelectState::new(choices(zh, true), None, window, cx));
+        language.update(cx, |s, cx| s.set_selected_value(&cfg.language, window, cx));
+        let effort_select = cx.new(|cx| SelectState::new(choices(zh, false), None, window, cx));
         let logs = cx.new(|cx| TextareaState::new(window, cx));
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle();
@@ -220,13 +361,27 @@ impl Proxy {
             only_picked: false,
             editing: None,
             new_model: false,
-            effort_open: false,
+            language,
+            effort_select,
             delete_open: false,
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
             _timer: timer,
         };
+        cx.subscribe_in(&this.language, window, |this, _, event, window, cx| {
+            if let SelectEvent::Confirm(Some(code)) = event {
+                this.set_language(code, window, cx);
+            }
+        })
+        .detach();
+        cx.subscribe(&this.effort_select, |this, _, event, cx| {
+            if let SelectEvent::Confirm(Some(code)) = event {
+                this.effort = code.clone();
+                cx.notify();
+            }
+        })
+        .detach();
         this.load_form(window, cx);
         this.focus.focus(window, cx);
         for state in [&this.edit_name, &this.edit_model] {
@@ -304,6 +459,8 @@ impl Proxy {
         } else {
             draft.effort
         };
+        self.effort_select
+            .update(cx, |s, cx| s.set_selected_value(&self.effort, window, cx));
         self.selection = Selection::default();
         cx.notify();
     }
@@ -338,7 +495,7 @@ impl Proxy {
             .unwrap_or_default()
     }
     fn save(&mut self, _: &Save, _: &mut Window, cx: &mut Context<Self>) {
-        if self.picker.is_some() || self.editing.is_some() || self.delete_open || self.effort_open {
+        if self.picker.is_some() || self.editing.is_some() || self.delete_open {
             return;
         }
         let steps = self.save_steps(cx);
@@ -655,7 +812,6 @@ impl Proxy {
     fn dismiss(&mut self, _: &Dismiss, window: &mut Window, cx: &mut Context<Self>) {
         self.picker = None;
         self.editing = None;
-        self.effort_open = false;
         self.delete_open = false;
         self.focus.focus(window, cx);
         cx.notify();
@@ -912,7 +1068,6 @@ impl Proxy {
                 )
                 .into_any_element();
         }
-        let effort = self.effort_label();
         card().flex_1().min_w_0().gap_4().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
         .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(Input::new(&self.name).disabled(self.busy))).child(div().flex_1().child(label("API Key")).child(Input::new(&self.key).mask_toggle().disabled(self.busy))))
         .child(div().child(label(self.t("API 地址","API URL"))).child(Input::new(&self.url).disabled(self.busy)))
@@ -923,20 +1078,9 @@ impl Proxy {
           .child(div().flex().h(px(32.)).items_center().px_3().bg(rgb(0xf7f9fc)).border_b_1().border_color(rgb(BORDER)).text_color(rgb(MUTED)).text_size(px(11.)).child(div().w_1_2().child(self.t("显示名","Display name"))).child(div().flex_1().child(self.t("模型 ID","Model ID"))))
           .child(div().key_context("ModelList").track_focus(&self.table_focus).flex_1().min_h_0().on_action(cx.listener(Self::remove_models)).on_action(cx.listener(Self::select_models)).on_action(cx.listener(Self::edit_selected)).child(if self.models.is_empty(){div().size_full().flex().items_center().justify_center().text_color(rgb(MUTED)).child(self.t("获取模型，或点击 + 手动添加","Fetch models or use + to add one")).into_any_element()}else{uniform_list("models",self.models.len(),cx.processor(|this,range: std::ops::Range<usize>,_,cx|range.map(|i|this.model_row(i,cx)).collect())).size_full().into_any_element()})))
         .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑","Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit")))
-        .child(div().flex().items_center().justify_between().child(label(self.t("思考强度","Thinking effort"))).child(Button::new("effort").small().label(format!("{effort}  ⌄")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.effort_open=true;cx.notify();}))))
+        .child(div().flex().items_center().gap_3().child(div().text_size(px(12.)).text_color(rgb(MUTED)).child(self.t("思考强度","Thinking effort"))).child(self.effort_menu()))
         .child(div().flex().gap_2().child(Button::new("save").primary().label(self.t("保存","Save")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
         .child(Button::new("test").label(self.t("测试连接","Test connection")).disabled(self.busy||self.models.is_empty()).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
-    }
-    fn effort_label(&self) -> String {
-        match self.effort.as_str() {
-            "default" => self.t("跟随 WorkBuddy", "Follow WorkBuddy"),
-            "none" => self.t("关闭思考", "Thinking off"),
-            "low" => self.t("低", "Low"),
-            "high" => self.t("高", "High"),
-            "max" => self.t("最高", "Max"),
-            _ => self.t("保留各模型设置", "Keep per-model settings"),
-        }
-        .into()
     }
     fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
         card()
@@ -1132,39 +1276,6 @@ impl Proxy {
                                 .on_click(cx.listener(|this, _, _, cx| this.confirm_edit(cx))),
                         ),
                 )
-                .into_any_element()
-        } else if self.effort_open {
-            let choices = EFFORTS
-                .into_iter()
-                .enumerate()
-                .map(|(i, effort)| {
-                    let title = match effort {
-                        "keep" => self.t("保留各模型设置", "Keep per-model settings"),
-                        "default" => self.t("跟随 WorkBuddy", "Follow WorkBuddy"),
-                        "none" => self.t("关闭思考", "Thinking off"),
-                        "low" => self.t("低", "Low"),
-                        "high" => self.t("高", "High"),
-                        _ => self.t("最高", "Max"),
-                    };
-                    Button::new(("effort-choice", i))
-                        .label(title)
-                        .on_click(cx.listener(move |this, _, _, cx| {
-                            this.effort = effort.into();
-                            this.effort_open = false;
-                            cx.notify();
-                        }))
-                        .into_any_element()
-                })
-                .collect::<Vec<_>>();
-            card()
-                .w(px(340.))
-                .child(
-                    div()
-                        .text_lg()
-                        .font_weight(FontWeight::SEMIBOLD)
-                        .child(self.t("思考强度", "Thinking effort")),
-                )
-                .children(choices)
                 .into_any_element()
         } else if self.delete_open {
             card().w(px(420.)).gap_4().child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("删除供应商？","Delete provider?"))).child(div().text_color(rgb(MUTED)).child(self.t("将移除此供应商及其保存的 Key 和模型。","This removes the provider and its saved key and models.")))
@@ -1407,13 +1518,111 @@ impl Render for Proxy {
         let center = self.center(cx);
         let right = self.right(cx);
         let overlay = self.overlay(cx);
-        div().relative().key_context("Proxy").track_focus(&self.focus).on_action(cx.listener(Self::save)).on_action(cx.listener(Self::dismiss)).on_action(cx.listener(Self::quit)).flex().flex_col().size_full().bg(rgb(BG)).text_color(rgb(INK)).text_size(px(13.)).p_5().gap_4()
-        .child(div().flex().items_center().justify_between().h(px(52.)).child(div().flex().items_center().gap_3().child(img("brand.png").size(px(42.))).child(div().flex().flex_col().gap_1().child(div().text_size(px(22.)).font_weight(FontWeight::BOLD).child("WorkBuddy Proxy")).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("轻量转发 · 多模型管理","Lightweight relay · Multiple models")))).child(div().ml_2().px_2().py_1().rounded(px(6.)).bg(rgb(TINT)).text_color(rgb(TEAL)).text_size(px(10.)).child("GPUI Preview 01")))
-        .child(div().flex().gap_2().child(Button::new("check-update").small().label(self.t("检查更新","Check updates")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|this.send("check_update",vec![json!({"command":"check_update","force":true})],cx))))
-        .child(Button::new("language").small().label(if self.zh{"English"}else{"简体中文"}).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|{this.capture(cx);this.zh = !this.zh;let zh=this.zh;for(state,hint)in[(&this.name,if zh{"填写供应商名称"}else{"Enter provider name"}),(&this.key,if zh{"填写 API Key"}else{"Enter API Key"}),(&this.url,if zh{"填写供应商提供的 OpenAI 兼容接口地址"}else{"Enter your provider's OpenAI-compatible API URL"}),(&this.search,if zh{"搜索模型 ID"}else{"Search model IDs"}),(&this.edit_name,if zh{"默认使用模型 ID"}else{"Defaults to model ID"}),(&this.edit_model,if zh{"填写模型 ID"}else{"Enter model ID"})]{state.update(cx,|s,cx|s.set_placeholder(hint.to_owned(),window,cx));}this.send("language",vec![json!({"command":"language","language":if zh{"zh"}else{"en"}})],cx);})))))
-        .child(div().flex().gap_3().flex_1().min_h_0().child(sidebar).child(center).child(right))
-        .child(div().h(px(18.)).flex().items_center().justify_between().text_size(px(11.)).child(div().text_color(rgb(if self.error{0xca4960}else{MUTED})).child(self.status.clone())).child(div().text_color(rgb(MUTED)).child(self.t("关闭窗口后，代理仍在托盘运行","Close this window to keep the relay running in the tray"))))
-        .children(overlay)
+        div()
+            .relative()
+            .key_context("Proxy")
+            .track_focus(&self.focus)
+            .on_action(cx.listener(Self::save))
+            .on_action(cx.listener(Self::dismiss))
+            .on_action(cx.listener(Self::quit))
+            .flex()
+            .flex_col()
+            .size_full()
+            .bg(rgb(BG))
+            .text_color(rgb(INK))
+            .text_size(px(13.))
+            .p_5()
+            .gap_4()
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .h(px(52.))
+                    .child(
+                        div()
+                            .flex()
+                            .items_center()
+                            .gap_3()
+                            .child(img("brand.png").size(px(42.)))
+                            .child(
+                                div()
+                                    .flex()
+                                    .flex_col()
+                                    .gap_1()
+                                    .child(
+                                        div()
+                                            .text_size(px(22.))
+                                            .font_weight(FontWeight::BOLD)
+                                            .child("WorkBuddy Proxy"),
+                                    )
+                                    .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(
+                                        self.t(
+                                            "轻量转发 · 多模型管理",
+                                            "Lightweight relay · Multiple models",
+                                        ),
+                                    )),
+                            )
+                            .child(
+                                div()
+                                    .ml_2()
+                                    .px_2()
+                                    .py_1()
+                                    .rounded(px(6.))
+                                    .bg(rgb(TINT))
+                                    .text_color(rgb(TEAL))
+                                    .text_size(px(10.))
+                                    .child("GPUI Preview 01"),
+                            ),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .gap_2()
+                            .child(
+                                Button::new("check-update")
+                                    .small()
+                                    .label(self.t("检查更新", "Check updates"))
+                                    .disabled(self.busy)
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.send(
+                                            "check_update",
+                                            vec![json!({"command":"check_update","force":true})],
+                                            cx,
+                                        )
+                                    })),
+                            )
+                            .child(self.language_menu()),
+                    ),
+            )
+            .child(
+                div()
+                    .flex()
+                    .gap_3()
+                    .flex_1()
+                    .min_h_0()
+                    .child(sidebar)
+                    .child(center)
+                    .child(right),
+            )
+            .child(
+                div()
+                    .h(px(18.))
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .text_size(px(11.))
+                    .child(
+                        div()
+                            .text_color(rgb(if self.error { 0xca4960 } else { MUTED }))
+                            .child(self.status.clone()),
+                    )
+                    .child(div().text_color(rgb(MUTED)).child(self.t(
+                        "关闭窗口后，代理仍在托盘运行",
+                        "Close this window to keep the relay running in the tray",
+                    ))),
+            )
+            .children(overlay)
     }
 }
 impl Drop for Proxy {
