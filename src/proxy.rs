@@ -843,7 +843,9 @@ impl Bridge {
                 crate::config::write_json(&self.dir.join("config.json"), &next)?;
                 *self.routes.lock().unwrap() = routes;
                 *cfg = next;
-                Ok(if command == "delete" {
+                Ok(if command == "delete" && cfg.providers.is_empty() {
+                    "已删除供应商 / Provider deleted"
+                } else if command == "delete" {
                     "已删除，请同步 WorkBuddy 列表 / Deleted; sync WorkBuddy"
                 } else {
                     "已保存供应商和模型 / Saved"

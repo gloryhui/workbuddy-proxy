@@ -18,6 +18,7 @@ def main():
     cbtype=ctypes.WINFUNCTYPE(wintypes.BOOL,wintypes.HWND,wintypes.LPARAM)
     user.GetWindowThreadProcessId.argtypes=[wintypes.HWND,ctypes.POINTER(wintypes.DWORD)]
     user.IsWindowVisible.argtypes=[wintypes.HWND]
+    user.IsWindowEnabled.argtypes=[wintypes.HWND]
     user.GetDlgItem.argtypes=[wintypes.HWND,ctypes.c_int]
     user.GetDlgItem.restype=wintypes.HWND
     user.SendMessageW.argtypes=[wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM]
@@ -223,23 +224,43 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Native Duplicate did not add a connection')
             assert saved[0]['api_key']==saved[1]['api_key'] and saved[0]['models'][0]['alias']!=saved[1]['models'][0]['alias']
-            user.PostMessageW(h,0x0111,208,0) # Delete duplicate, leaves original configured connection
-            # Acknowledge the native delete dialog, then check the saved list.
+            def delete_provider(expected_count):
+                user.PostMessageW(h,0x0111,208,0)
+                for _ in range(200):
+                    dialogs=[]
+                    def find_dialog(hwnd,param):
+                        pid=wintypes.DWORD();user.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
+                        if pid.value==first.pid and hwnd!=h and user.IsWindowVisible(hwnd):dialogs.append(hwnd)
+                        return True
+                    user.EnumWindows(cbtype(find_dialog),0)
+                    if dialogs:
+                        user.PostMessageW(dialogs[0],0x0111,1,0);break
+                    time.sleep(.025)
+                else:raise AssertionError('Delete confirmation did not open')
+                for _ in range(200):
+                    if len(profile()['providers'])==expected_count:break
+                    time.sleep(.025)
+                else:raise AssertionError('Native Delete failed')
+            delete_provider(1)
+            delete_provider(0)
+            empty_add=user.GetDlgItem(h,213);assert empty_add
             for _ in range(200):
-                dialogs=[]
-                def find_dialog(hwnd,param):
-                    pid=wintypes.DWORD();user.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
-                    if pid.value==first.pid and hwnd!=h and user.IsWindowVisible(hwnd):dialogs.append(hwnd)
-                    return True
-                user.EnumWindows(cbtype(find_dialog),0)
-                if dialogs:
-                    user.PostMessageW(dialogs[0],0x0111,1,0);break
+                if user.IsWindowVisible(empty_add) and not user.IsWindowVisible(user.GetDlgItem(h,105)):break
                 time.sleep(.025)
-            else:raise AssertionError('Delete confirmation did not open')
-            for _ in range(200):
-                if len(profile()['providers'])==1:break
-                time.sleep(.025)
-            else:raise AssertionError('Native Delete failed')
+            else:raise AssertionError('Deleting the last provider did not show the empty state')
+            for identifier in [101,102,103,104,105,201,202,204,209,210,211,212]:
+                control=user.GetDlgItem(h,identifier)
+                assert not user.IsWindowVisible(control) and not user.IsWindowEnabled(control)
+            assert user.SendMessageW(user.GetDlgItem(h,102),0x000E,0,0)==0,'Last provider key remained in the form'
+            assert caption(user.GetDlgItem(h,105))=='' and caption(user.GetDlgItem(h,101))==''
+            assert not user.IsWindowEnabled(user.GetDlgItem(h,207)) and not user.IsWindowEnabled(user.GetDlgItem(h,208))
+            status=caption(user.GetDlgItem(h,111))
+            for action in [201,202,204,209,210,211,212]:user.SendMessageW(h,0x0111,action,0)
+            assert caption(user.GetDlgItem(h,111))==status and profile()['providers']==[]
+            user.SendMessageW(h,0x0111,213,0) # Add provider from the empty-state primary action.
+            assert len(profile()['providers'])==1 and user.IsWindowVisible(user.GetDlgItem(h,105))
+            assert not user.IsWindowVisible(empty_add) and user.IsWindowEnabled(user.GetDlgItem(h,201))
+            assert caption(user.GetDlgItem(h,101))=='https://api.openai.com/v1'
             for message,wparam in [(0x0010,0),(0x0112,0xF020)]: # Close; minimize system command
                 user.PostMessageW(h,message,wparam,0)
                 for _ in range(200):
@@ -267,7 +288,7 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Tray Quit left the core running')
             core=None
-            print('PASS: embedded executable/window/header icons; native range/toggle multiselect, batch Delete/Backspace, protected cell editing, automatic display names, language switch and log panel; effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
+            print('PASS: empty-provider form hiding/clearing, ignored hidden actions and add-first-provider transition; embedded executable/window/header icons; native range/toggle multiselect, batch Delete/Backspace, protected cell editing, automatic display names, language switch and log panel; effort Save; Close/minimize hide to tray; tray click/relaunch restore same UI and core; Quit stops both')
         finally:
             for process in [first,second]+duplicates:
                 if process is not None and process.poll() is None:process.terminate();process.wait(timeout=5)

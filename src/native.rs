@@ -115,7 +115,7 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
                 .selected
                 .load(Ordering::Relaxed)
                 .min(cfg.providers.len().saturating_sub(1));
-            let c = cfg.providers.get(index).cloned().unwrap_or_default();
+            let c = cfg.providers.get(index);
             match input(name).as_str() {
                 "language" => cfg.language.clone(),
                 "connections" => cfg
@@ -130,18 +130,26 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
                     })
                     .collect::<Vec<_>>()
                     .join("\n"),
-                "selected" => index.to_string(),
+                "selected" => c.map_or_else(|| "-1".into(), |_| index.to_string()),
                 "connection_count" => cfg.providers.len().to_string(),
-                "name" => c.name.clone(),
-                "provider" => c.name.clone(),
-                "model" => c.model_lines(),
-                "upstream" => c.upstream.clone(),
-                "reasoning_effort" => c.effort().into(),
-                "url" => ctx.bridge.connection_address(&c.id),
+                "has_provider" => if c.is_some() { "1" } else { "0" }.into(),
+                "installed_count" => cfg.installed.len().to_string(),
+                "name" | "provider" => c.map(|p| p.name.clone()).unwrap_or_default(),
+                "model" => c.map(|p| p.model_lines()).unwrap_or_default(),
+                "upstream" => c.map(|p| p.upstream.clone()).unwrap_or_default(),
+                "reasoning_effort" => c.map(|p| p.effort()).unwrap_or("keep").into(),
+                "url" => c
+                    .map(|p| ctx.bridge.connection_address(&p.id))
+                    .unwrap_or_default(),
                 "local_key" => cfg.local_key.clone(),
                 "status" => ctx.bridge.status.lock().unwrap().clone(),
-                "has_key" => if c.api_key.is_empty() { "0" } else { "1" }.into(),
-                "api_key" => c.api_key.clone(),
+                "has_key" => if c.is_some_and(|p| !p.api_key.is_empty()) {
+                    "1"
+                } else {
+                    "0"
+                }
+                .into(),
+                "api_key" => c.map(|p| p.api_key.clone()).unwrap_or_default(),
                 "version" => env!("CARGO_PKG_VERSION").into(),
                 "update_url" => UPDATE.lock().unwrap()["url"].as_str().unwrap_or("").into(),
                 "update_available" => if UPDATE.lock().unwrap()["available"] == true {
