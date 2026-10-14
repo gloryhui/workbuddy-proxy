@@ -904,7 +904,8 @@ impl Proxy {
     }
 
     fn refresh_table(&self, window: &Window, cx: &mut Context<Self>) {
-        let column_width = px(((window.viewport_size().width.as_f32() - 726.) / 2.).max(120.));
+        // Outer padding, panel gaps/widths and the table's small trailing gutter.
+        let column_width = px(((window.viewport_size().width.as_f32() - 626.) / 2.).max(120.));
         let data = self.model_table.read(cx).delegate();
         if data.rows == self.models
             && data.selection == self.selection
