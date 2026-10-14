@@ -16,11 +16,11 @@ static NOTIFYICONDATAW hostIcon;
 static BOOL hostChinese;
 static void hostQuit(void){wb_gpui_stop();wb_free(wb_command("quit"));DestroyWindow(hostWindow);}
 static LRESULT CALLBACK hostProcedure(HWND h,UINT msg,WPARAM w,LPARAM l){
-    if(msg==WM_APP+1){wb_gpui_open();return 0;}
-    if(msg==WM_APP+4){if(l==WM_LBUTTONUP||l==WM_LBUTTONDBLCLK){wb_gpui_open();return 0;}if(l==WM_RBUTTONUP||l==WM_CONTEXTMENU){POINT p;GetCursorPos(&p);SetForegroundWindow(h);HMENU menu=CreatePopupMenu();AppendMenuW(menu,MF_STRING,1,hostChinese?L"设置":L"Settings");AppendMenuW(menu,MF_SEPARATOR,0,NULL);AppendMenuW(menu,MF_STRING,2,hostChinese?L"退出":L"Quit");TrackPopupMenu(menu,TPM_RIGHTBUTTON,p.x,p.y,0,h,NULL);DestroyMenu(menu);return 0;}}
+    if(msg==WM_APP+3){wb_gpui_open();return 0;}
+    if(msg==WM_APP+1){if(l==WM_LBUTTONUP||l==WM_LBUTTONDBLCLK){wb_gpui_open();return 0;}if(l==WM_RBUTTONUP||l==WM_CONTEXTMENU){POINT p;GetCursorPos(&p);SetForegroundWindow(h);HMENU menu=CreatePopupMenu();AppendMenuW(menu,MF_STRING,1,hostChinese?L"设置":L"Settings");AppendMenuW(menu,MF_SEPARATOR,0,NULL);AppendMenuW(menu,MF_STRING,2,hostChinese?L"退出":L"Quit");TrackPopupMenu(menu,TPM_RIGHTBUTTON,p.x,p.y,0,h,NULL);DestroyMenu(menu);return 0;}}
     if(msg==WM_COMMAND){if(LOWORD(w)==1)wb_gpui_open();if(LOWORD(w)==2)hostQuit();return 0;}
     if(msg==WM_TIMER){if(wb_gpui_exit_requested())hostQuit();return 0;}
-    if(msg==WM_APP+3||msg==WM_CLOSE){hostQuit();return 0;}
+    if(msg==WM_APP+4||msg==WM_CLOSE){hostQuit();return 0;}
     if(msg==WM_DESTROY){wb_frontend_closing();KillTimer(h,1);Shell_NotifyIconW(NIM_DELETE,&hostIcon);hostWindow=NULL;PostQuitMessage(0);return 0;}
     if(msg==RegisterWindowMessageW(L"TaskbarCreated")){Shell_NotifyIconW(NIM_ADD,&hostIcon);return 0;}
     return DefWindowProcW(h,msg,w,l);
@@ -29,7 +29,7 @@ void wb_gpui_host_run(void){
     HINSTANCE instance=GetModuleHandleW(NULL);char *language=wb_value("language");hostChinese=strcmp(language,"zh")==0||(strcmp(language,"auto")==0&&PRIMARYLANGID(GetUserDefaultUILanguage())==LANG_CHINESE);wb_free(language);
     WNDCLASSW cls={0};cls.lpfnWndProc=hostProcedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hIcon=LoadIconW(instance,MAKEINTRESOURCEW(1));RegisterClassW(&cls);
     hostWindow=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPED,0,0,0,0,NULL,NULL,instance,NULL);if(!hostWindow)return;
-    memset(&hostIcon,0,sizeof(hostIcon));hostIcon.cbSize=sizeof(hostIcon);hostIcon.hWnd=hostWindow;hostIcon.uID=1;hostIcon.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;hostIcon.uCallbackMessage=WM_APP+4;hostIcon.hIcon=cls.hIcon;lstrcpyW(hostIcon.szTip,L"WorkBuddy Proxy · GPUI");Shell_NotifyIconW(NIM_ADD,&hostIcon);
+    memset(&hostIcon,0,sizeof(hostIcon));hostIcon.cbSize=sizeof(hostIcon);hostIcon.hWnd=hostWindow;hostIcon.uID=1;hostIcon.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;hostIcon.uCallbackMessage=WM_APP+1;hostIcon.hIcon=cls.hIcon;lstrcpyW(hostIcon.szTip,L"WorkBuddy Proxy · GPUI");Shell_NotifyIconW(NIM_ADD,&hostIcon);
     SetTimer(hostWindow,1,500,NULL);wb_frontend_ready();wb_gpui_open();MSG message;while(GetMessageW(&message,NULL,0,0)>0){TranslateMessage(&message);DispatchMessageW(&message);}
 }
-void wb_gpui_host_quit(void){if(hostWindow)PostMessageW(hostWindow,WM_APP+3,0,0);}
+void wb_gpui_host_quit(void){if(hostWindow)PostMessageW(hostWindow,WM_APP+4,0,0);}

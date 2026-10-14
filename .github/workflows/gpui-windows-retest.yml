@@ -1,0 +1,70 @@
+name: GPUI Windows package retest (no Release)
+on:
+  push:
+    branches: [codex/gpui-preview]
+    paths: [native/gpui_host.c, .github/workflows/gpui-windows-retest.yml]
+  workflow_dispatch:
+    inputs:
+      ui_run:
+        description: Successful GPUI compilation run whose gpui source tree must match HEAD exactly
+        required: true
+        default: '38527941475'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - run: cargo fmt --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo test --locked
+      - run: cargo build --release --locked
+      - name: Verify identical GPUI sources and recover the compiled helper
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UI_RUN: ${{ inputs.ui_run || '38527941475' }}
+        run: |
+          $uiSource = gh run view $env:UI_RUN --json headSha --jq .headSha
+          git diff --exit-code $uiSource HEAD -- gpui
+          if ($LASTEXITCODE -ne 0) { throw 'The GPUI sources differ; a helper rebuild is required' }
+          gh run download $env:UI_RUN --name workbuddy-proxy-gpui-windows-x64 --dir reused
+          if ($LASTEXITCODE -ne 0) { throw 'The source helper artifact is unavailable' }
+          Expand-Archive -Path reused/dist/workbuddy-proxy-0.4.0-gpui-preview.1-windows-x64.zip -DestinationPath reused/extracted
+          New-Item -ItemType Directory -Force gpui/target/release | Out-Null
+          $uiExe = (Get-ChildItem reused/extracted -Recurse -Filter workbuddy-proxy-gpui.exe).FullName
+          Copy-Item $uiExe gpui/target/release/workbuddy-proxy-gpui.exe
+          New-Item -ItemType Directory -Force bench-results | Out-Null
+          @{ source_commit = (git rev-parse HEAD); ui_source_commit = $uiSource; ui_source_run = $env:UI_RUN; ui_source_verified_identical = $true } | ConvertTo-Json | Set-Content bench-results/build-provenance.json
+      - name: Routing and native regression checks
+        run: |
+          python scripts/multi_routing.py --exe target/release/workbuddy-proxy.exe
+          python scripts/port_change.py --exe target/release/workbuddy-proxy.exe
+      - name: Package exact executables and test extracted package
+        shell: pwsh
+        run: |
+          python scripts/package.py --exe target/release/workbuddy-proxy.exe --gpui gpui/target/release/workbuddy-proxy-gpui.exe --variant gpui-preview.1 --platform windows-x64
+          $packageRoot = Join-Path $env:RUNNER_TEMP 'workbuddy-gpui-package'
+          Expand-Archive -Path dist/workbuddy-proxy-0.4.0-gpui-preview.1-windows-x64.zip -DestinationPath $packageRoot
+          $packagedExe = (Get-ChildItem $packageRoot -Recurse -Filter workbuddy-proxy.exe).FullName
+          python scripts/gpui_package_test.py --exe "$packagedExe" --output bench-results/gpui-windows-x64.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: workbuddy-proxy-gpui-windows-x64-reviewed
+          path: |
+            dist/
+            bench-results/
