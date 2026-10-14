@@ -25,6 +25,20 @@ impl AssetSource for Assets {
             r#"<path d="m6 9 6 6 6-6"/>"#
         } else if path.contains("search") {
             r#"<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>"#
+        } else if path.contains("window-minimize") {
+            r#"<path d="M5 12h14"/>"#
+        } else if path.contains("window-maximize") {
+            r#"<rect x="5" y="5" width="14" height="14" rx="1"/>"#
+        } else if path.contains("window-restore") {
+            r#"<path d="M9 5h10v10"/><rect x="5" y="9" width="10" height="10" rx="1"/>"#
+        } else if path.contains("window-close") {
+            r#"<path d="m6 6 12 12M6 18 18 6"/>"#
+        } else if path.contains("inbox") {
+            r#"<path d="m4 4-2 12v4h20v-4L20 4Z M2 16h6l2 3h4l2-3h6"/>"#
+        } else if path.contains("arrow-up") {
+            r#"<path d="m6 12 6-6 6 6M12 6v12"/>"#
+        } else if path.contains("arrow-down") {
+            r#"<path d="m6 12 6 6 6-6M12 6v12"/>"#
         } else if path.contains("minus") {
             r#"<path d="M5 12h14"/>"#
         } else if path.contains("close") || path.contains("/x.") {

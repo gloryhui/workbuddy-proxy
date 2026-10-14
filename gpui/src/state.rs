@@ -49,7 +49,7 @@ impl Drafts {
         config::write_json(&dir.join("gpui-drafts.json"), self)
     }
 }
-#[derive(Default)]
+#[derive(Clone, Default, PartialEq)]
 pub struct Selection {
     pub rows: BTreeSet<usize>,
     pub anchor: usize,

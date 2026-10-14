@@ -12,10 +12,11 @@ mod diagnostic;
 #[allow(dead_code)]
 #[path = "../../src/i18n.rs"]
 mod i18n;
+mod model_table;
 mod state;
 mod ui;
 use fs2::FileExt;
-use gpui_kit::component::{Theme, ThemeMode};
+use gpui_kit::component::{Theme, ThemeMode, TitleBar};
 use gpui_kit::*;
 fn main() {
     let mut args = std::env::args().skip(1);
@@ -29,7 +30,7 @@ fn main() {
                 }
             }
             "--version" => {
-                println!("0.4.0-gpui-preview.1");
+                println!("0.4.0-gpui-kit-preview.2");
                 return;
             }
             _ => {}
@@ -65,6 +66,18 @@ fn main() {
             Theme::update(cx, |theme| {
                 theme.radius = px(8.);
                 theme.radius_lg = px(12.);
+                theme.colors.foreground = rgb(0x19334d).into();
+                theme.colors.muted_foreground = rgb(0x6b7c90).into();
+                theme.colors.border = rgb(0xe2e9f1).into();
+                theme.colors.sidebar = rgb(0xf0f5fa).into();
+                theme.colors.sidebar_foreground = rgb(0x19334d).into();
+                theme.colors.sidebar_accent = rgb(0xdff3fa).into();
+                theme.colors.sidebar_accent_foreground = rgb(0x007e99).into();
+                theme.colors.table_active = rgb(0xdff3fa).into();
+                theme.colors.table_hover = rgb(0xeef8fc).into();
+                theme.colors.table_head = rgb(0xf7f9fc).into();
+                theme.colors.table_head_foreground = rgb(0x6b7c90).into();
+                theme.colors.table_row_border = rgb(0xe2e9f1).into();
                 theme.colors.primary = rgb(0x008daa).into();
                 theme.colors.primary_hover = rgb(0x007e99).into();
                 theme.colors.primary_active = rgb(0x006e86).into();
@@ -91,11 +104,7 @@ fn main() {
                 WindowOptions {
                     window_bounds: Some(WindowBounds::Windowed(bounds)),
                     window_min_size: Some(size(px(1100.), px(700.))),
-                    titlebar: Some(TitlebarOptions {
-                        title: Some("WorkBuddy Proxy · GPUI Preview".into()),
-                        ..Default::default()
-                    }),
-                    ..Default::default()
+                    ..TitleBar::window_options()
                 },
                 cx,
                 move |window, cx| cx.new(|cx| ui::Proxy::new(dir, cfg, window, cx)),

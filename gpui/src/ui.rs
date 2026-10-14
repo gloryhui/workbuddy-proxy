@@ -4,10 +4,18 @@ use crate::{
     state::{Draft, Drafts, Selection},
 };
 use gpui_kit::component::{
-    Disableable, Sizable,
+    Disableable, Sizable, TitleBar, WindowExt,
     button::{Button, ButtonVariants},
+    checkbox::Checkbox,
+    dialog::{DialogContent, DialogFooter},
     input::{Input, InputEvent, InputState, Textarea, TextareaState},
+    label::Label,
+    list::ListItem,
     select::{Select, SelectEvent, SelectItem, SelectState},
+    sidebar::{Sidebar, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem},
+    status_bar::StatusBar,
+    table::{DataTable, TableState},
+    tag::Tag,
 };
 use gpui_kit::*;
 use serde_json::{Value, json};
@@ -25,8 +33,6 @@ const BG: u32 = 0xf4f7fb;
 const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
 const BORDER: u32 = 0xe2e9f1;
-const TEAL: u32 = 0x008daa;
-const TINT: u32 = 0xe6f6fb;
 #[derive(Clone)]
 struct Choice {
     code: String,
@@ -91,6 +97,8 @@ pub struct Proxy {
     effort: String,
     selection: Selection,
     table_focus: FocusHandle,
+    model_table: Entity<TableState<crate::model_table::Models>>,
+    dialog_open: bool,
     focus: FocusHandle,
     picker: Option<Vec<String>>,
     picked: BTreeSet<usize>,
@@ -120,26 +128,29 @@ fn input(
         state
     })
 }
-fn label(s: impl Into<SharedString>) -> Div {
-    div()
+fn label(s: impl Into<SharedString>) -> Label {
+    Label::new(s)
         .text_size(px(12.))
         .text_color(rgb(MUTED))
         .mb_2()
-        .child(s.into())
 }
-fn card() -> Div {
+// Layout surfaces are not interactive controls. GroupBox adds nested intrinsic-
+// height wrappers, so flexible table/log panels use GPUI layout containers.
+fn card(id: &'static str) -> Stateful<Div> {
     div()
-        .relative()
+        .id(id)
         .flex()
         .flex_col()
+        .min_h_0()
+        .h_full()
         .bg(rgb(0xffffff))
         .border_1()
         .border_color(rgb(BORDER))
-        .rounded(px(14.))
+        .rounded(px(12.))
         .p_4()
         .gap_3()
-        .min_h_0()
 }
+
 impl Proxy {
     fn set_language(&mut self, code: &str, window: &mut Window, cx: &mut Context<Self>) {
         if self.busy || self.cfg.language == code {
@@ -320,6 +331,24 @@ impl Proxy {
         let logs = cx.new(|cx| TextareaState::new(window, cx));
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle();
+        let owner = cx.entity().downgrade();
+        let model_table = cx.new(|cx| {
+            TableState::new(
+                crate::model_table::Models {
+                    owner,
+                    rows: vec![],
+                    selection: Selection::default(),
+                    zh,
+                    column_width: px(230.),
+                },
+                window,
+                cx,
+            )
+            .row_selectable(false)
+            .col_selectable(false)
+            .sortable(false)
+            .col_movable(false)
+        });
         let timer = cx.spawn_in(window, async move |this, cx| {
             loop {
                 cx.background_executor()
@@ -355,6 +384,8 @@ impl Proxy {
             effort: "keep".into(),
             selection: Selection::default(),
             table_focus,
+            model_table,
+            dialog_open: false,
             focus,
             picker: None,
             picked: BTreeSet::new(),
@@ -872,56 +903,92 @@ impl Proxy {
         cx.notify();
     }
 
-    fn model_row(&mut self, i: usize, cx: &mut Context<Self>) -> AnyElement {
-        let selected = self.selection.rows.contains(&i);
-        let row = &self.models[i];
-        let id = row["model"].as_str().unwrap_or("");
-        let name = row["name"].as_str().filter(|s| !s.is_empty()).unwrap_or(id);
-        div()
-            .id(("model", i))
-            .w_full()
-            .role(accesskit::Role::ListBoxOption)
-            .aria_label(format!("{name} · {id}"))
-            .accessibility_id(format!("model-{i}"))
-            .flex()
-            .items_center()
-            .h(px(34.))
-            .px_3()
-            .rounded(px(6.))
-            .bg(rgb(if selected { TINT } else { 0xffffff }))
-            .text_color(rgb(if selected { TEAL } else { INK }))
-            .cursor_pointer()
-            .hover(|s| s.bg(rgb(if selected { 0xd5f0f8 } else { 0xf5f8fc })))
-            .child(
-                div()
-                    .w_1_2()
-                    .min_w_0()
-                    .pr_3()
-                    .text_ellipsis()
-                    .child(name.to_owned()),
-            )
-            .child(
-                div()
-                    .flex_1()
-                    .min_w_0()
-                    .text_ellipsis()
-                    .child(id.to_owned()),
-            )
-            .on_click(cx.listener(move |this, event: &ClickEvent, window, cx| {
-                let modifiers = event.modifiers();
-                this.selection
-                    .click(i, modifiers.shift, modifiers.control || modifiers.platform);
-                this.table_focus.focus(window, cx);
-                if event.click_count() == 2
-                    && !modifiers.shift
-                    && !modifiers.control
-                    && !modifiers.platform
-                {
-                    this.edit(i, false, window, cx);
+    fn refresh_table(&self, window: &Window, cx: &mut Context<Self>) {
+        let column_width = px(((window.viewport_size().width.as_f32() - 726.) / 2.).max(120.));
+        let data = self.model_table.read(cx).delegate();
+        if data.rows == self.models
+            && data.selection == self.selection
+            && data.zh == self.zh
+            && data.column_width == column_width
+        {
+            return;
+        }
+        self.model_table.update(cx, |table, cx| {
+            let data = table.delegate_mut();
+            data.rows = self.models.clone();
+            data.selection = self.selection.clone();
+            let header_changed = data.zh != self.zh || data.column_width != column_width;
+            data.zh = self.zh;
+            data.column_width = column_width;
+            if header_changed {
+                table.refresh(cx);
+            }
+            cx.notify();
+        });
+    }
+    fn manage_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        let active = self.picker.is_some() || self.editing.is_some() || self.delete_open;
+        if active && !self.dialog_open {
+            self.dialog_open = true;
+            let owner = cx.entity().downgrade();
+            let observer = cx.entity().clone();
+            let body = cx.new(|cx| {
+                cx.observe(&observer, |_, _, cx| cx.notify()).detach();
+                ModalBody {
+                    owner: owner.clone(),
                 }
-                cx.notify();
-            }))
-            .into_any_element()
+            });
+            let width = if self.picker.is_some() { 720. } else { 480. };
+            let focus = if self.picker.is_some() {
+                self.search.read(cx).focus_handle(cx)
+            } else if self.editing.is_some() {
+                self.edit_model.read(cx).focus_handle(cx)
+            } else {
+                self.focus.clone()
+            };
+            let first = std::cell::Cell::new(true);
+            window.open_dialog(cx, move |dialog, window, cx| {
+                if first.replace(false) {
+                    focus.focus(window, cx);
+                }
+                let owner = owner.clone();
+                dialog
+                    .w(px(width))
+                    .close_button(true)
+                    .overlay_closable(false)
+                    .child(body.clone())
+                    .on_close(move |_, window, cx| {
+                        let _ = owner.update(cx, |this, cx| {
+                            this.dialog_open = false;
+                            this.dismiss(&Dismiss, window, cx);
+                        });
+                    })
+            });
+        } else if !active && self.dialog_open {
+            self.dialog_open = false;
+            window.close_dialog(cx);
+            self.table_focus.focus(window, cx);
+        }
+    }
+    pub(crate) fn click_model(
+        &mut self,
+        i: usize,
+        event: &ClickEvent,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
+        if self.busy || i >= self.models.len() {
+            return;
+        }
+        let modifiers = event.modifiers();
+        self.selection
+            .click(i, modifiers.shift, modifiers.control || modifiers.platform);
+        self.table_focus.focus(window, cx);
+        if event.click_count() == 2 && !modifiers.shift && !modifiers.control && !modifiers.platform
+        {
+            self.edit(i, false, window, cx);
+        }
+        cx.notify();
     }
     fn sidebar(&mut self, cx: &mut Context<Self>) -> AnyElement {
         let selected = self.selected();
@@ -938,111 +1005,71 @@ impl Proxy {
                     .filter(|s| !s.is_empty())
                     .unwrap_or_else(|| p.name.clone());
                 let count = draft.map_or(p.models.len(), |d| d.models.len());
-                div()
-                    .id(SharedString::from(format!("provider-{id}")))
-                    .role(accesskit::Role::Button)
-                    .aria_label(name.clone())
-                    .accessibility_id(format!("provider-{id}"))
-                    .flex()
-                    .flex_col()
-                    .gap_1()
-                    .px_3()
-                    .py_3()
-                    .rounded(px(9.))
-                    .border_1()
-                    .border_color(rgb(if active { 0x96d7e8 } else { 0xf0f5fa }))
-                    .bg(rgb(if active { 0xe0f3fa } else { 0xf0f5fa }))
-                    .hover(|s| s.bg(rgb(0xe8f0f7)))
-                    .cursor_pointer()
-                    .child(
-                        div()
-                            .text_color(rgb(if active { TEAL } else { INK }))
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .text_ellipsis()
-                            .child(name),
-                    )
-                    .child(
-                        div()
-                            .text_size(px(11.))
-                            .text_color(rgb(MUTED))
-                            .child(format!("{count} {}", self.t("个模型", "models"))),
-                    )
+                SidebarMenuItem::new(name.clone())
+                    .accessibility_label(name)
+                    .active(active)
+                    .disable(self.busy)
+                    .suffix(move |_, _| Tag::secondary().small().child(count.to_string()))
                     .on_click(cx.listener(move |this, _, window, cx| {
                         this.switch_provider(id.clone(), window, cx)
                     }))
-                    .into_any_element()
             })
             .collect::<Vec<_>>();
-        div()
-            .flex()
-            .flex_col()
+        Sidebar::new("providers")
+            .collapsible(false)
             .w(px(196.))
-            .flex_shrink_0()
-            .bg(rgb(0xf0f5fa))
-            .rounded(px(14.))
-            .p_3()
-            .gap_2()
-            .child(
-                div()
-                    .px_1()
-                    .py_2()
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .child(self.t("供应商", "Providers")),
+            .rounded(px(12.))
+            .header(
+                SidebarHeader::new().child(
+                    Label::new(self.t("供应商", "Providers")).font_weight(FontWeight::SEMIBOLD),
+                ),
             )
-            .child(
-                div()
-                    .id("provider-scroll")
-                    .flex_1()
-                    .min_h_0()
-                    .overflow_y_scroll()
-                    .flex()
-                    .flex_col()
-                    .gap_2()
-                    .children(rows),
-            )
-            .child(
-                div()
-                    .flex()
-                    .gap_2()
-                    .child(
-                        Button::new("provider-add")
-                            .small()
-                            .label(self.t("新增", "Add"))
-                            .disabled(self.busy)
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.capture(cx);
-                                this.send("add", vec![json!({"command":"add"})], cx);
-                            })),
-                    )
-                    .child(
-                        Button::new("provider-copy")
-                            .small()
-                            .label(self.t("复制", "Copy"))
-                            .disabled(self.busy || selected.is_empty())
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                let mut steps = this.dirty_steps(cx);
-                                steps.push(
+            .child(SidebarMenu::new().children(rows))
+            .footer(
+                SidebarFooter::new().child(
+                    div()
+                        .flex()
+                        .gap_2()
+                        .child(
+                            Button::new("provider-add")
+                                .small()
+                                .label(self.t("新增", "Add"))
+                                .disabled(self.busy)
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    this.capture(cx);
+                                    this.send("add", vec![json!({"command":"add"})], cx);
+                                })),
+                        )
+                        .child(
+                            Button::new("provider-copy")
+                                .small()
+                                .label(self.t("复制", "Copy"))
+                                .disabled(self.busy || selected.is_empty())
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    let mut steps = this.dirty_steps(cx);
+                                    steps.push(
                                     json!({"command":"duplicate","provider_id":this.selected()}),
                                 );
-                                this.send("duplicate", steps, cx);
-                            })),
-                    )
-                    .child(
-                        Button::new("provider-delete")
-                            .small()
-                            .label(self.t("删除", "Delete"))
-                            .disabled(self.busy || selected.is_empty())
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.delete_open = true;
-                                cx.notify();
-                            })),
-                    ),
+                                    this.send("duplicate", steps, cx);
+                                })),
+                        )
+                        .child(
+                            Button::new("provider-delete")
+                                .small()
+                                .label(self.t("删除", "Delete"))
+                                .disabled(self.busy || selected.is_empty())
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    this.delete_open = true;
+                                    cx.notify();
+                                })),
+                        ),
+                ),
             )
             .into_any_element()
     }
     fn center(&mut self, cx: &mut Context<Self>) -> AnyElement {
         if self.selected().is_empty() {
-            return card()
+            return card("empty-provider")
                 .flex_1()
                 .items_center()
                 .justify_center()
@@ -1068,22 +1095,20 @@ impl Proxy {
                 )
                 .into_any_element();
         }
-        card().flex_1().min_w_0().gap_4().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
+        card("provider-settings").flex_1().min_w_0().gap_4().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
         .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(Input::new(&self.name).disabled(self.busy))).child(div().flex_1().child(label("API Key")).child(Input::new(&self.key).mask_toggle().disabled(self.busy))))
         .child(div().child(label(self.t("API 地址","API URL"))).child(Input::new(&self.url).disabled(self.busy)))
         .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string()})],cx);})))
         .child(Button::new("model-add").small().label("+").disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.edit(this.models.len(),true,window,cx))))
         .child(Button::new("model-remove").small().label("−").disabled(self.busy||self.selection.rows.is_empty()).on_click(cx.listener(|this,_,window,cx|this.remove_models(&RemoveModels,window,cx))))))
-        .child(div().flex().flex_col().flex_1().min_h(px(140.)).border_1().border_color(rgb(BORDER)).rounded(px(9.)).overflow_hidden()
-          .child(div().flex().h(px(32.)).items_center().px_3().bg(rgb(0xf7f9fc)).border_b_1().border_color(rgb(BORDER)).text_color(rgb(MUTED)).text_size(px(11.)).child(div().w_1_2().child(self.t("显示名","Display name"))).child(div().flex_1().child(self.t("模型 ID","Model ID"))))
-          .child(div().key_context("ModelList").track_focus(&self.table_focus).flex_1().min_h_0().on_action(cx.listener(Self::remove_models)).on_action(cx.listener(Self::select_models)).on_action(cx.listener(Self::edit_selected)).child(if self.models.is_empty(){div().size_full().flex().items_center().justify_center().text_color(rgb(MUTED)).child(self.t("获取模型，或点击 + 手动添加","Fetch models or use + to add one")).into_any_element()}else{uniform_list("models",self.models.len(),cx.processor(|this,range: std::ops::Range<usize>,_,cx|range.map(|i|this.model_row(i,cx)).collect())).size_full().into_any_element()})))
+        .child(div().key_context("ModelList").track_focus(&self.table_focus).flex_1().min_h(px(140.)).on_action(cx.listener(Self::remove_models)).on_action(cx.listener(Self::select_models)).on_action(cx.listener(Self::edit_selected)).child(DataTable::new(&self.model_table).small().header_row_height(px(32.)).scrollbar_visible(true,true)))
         .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑","Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit")))
         .child(div().flex().items_center().gap_3().child(div().text_size(px(12.)).text_color(rgb(MUTED)).child(self.t("思考强度","Thinking effort"))).child(self.effort_menu()))
         .child(div().flex().gap_2().child(Button::new("save").primary().label(self.t("保存","Save")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
         .child(Button::new("test").label(self.t("测试连接","Test connection")).disabled(self.busy||self.models.is_empty()).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
     }
     fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
-        card()
+        card("global-settings")
             .w(px(322.))
             .flex_shrink_0()
             .gap_3()
@@ -1230,12 +1255,12 @@ impl Proxy {
             )
             .into_any_element()
     }
-    fn overlay(&mut self, cx: &mut Context<Self>) -> Option<AnyElement> {
+    fn dialog_body(&mut self, cx: &mut Context<Self>) -> Option<AnyElement> {
         let content = if self.picker.is_some() {
             self.picker_dialog(cx)
         } else if self.editing.is_some() {
-            card()
-                .w(px(480.))
+            DialogContent::new()
+                .w_full()
                 .gap_4()
                 .child(
                     div()
@@ -1258,10 +1283,7 @@ impl Proxy {
                         .child(Input::new(&self.edit_model)),
                 )
                 .child(
-                    div()
-                        .flex()
-                        .justify_end()
-                        .gap_2()
+                    DialogFooter::new()
                         .child(
                             Button::new("edit-cancel")
                                 .label(self.t("取消", "Cancel"))
@@ -1278,32 +1300,22 @@ impl Proxy {
                 )
                 .into_any_element()
         } else if self.delete_open {
-            card().w(px(420.)).gap_4().child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("删除供应商？","Delete provider?"))).child(div().text_color(rgb(MUTED)).child(self.t("将移除此供应商及其保存的 Key 和模型。","This removes the provider and its saved key and models.")))
-            .child(div().flex().justify_end().gap_2().child(Button::new("delete-cancel").label(self.t("取消","Cancel")).on_click(cx.listener(|this,_,window,cx|this.dismiss(&Dismiss,window,cx)))).child(Button::new("delete-confirm").danger().label(self.t("删除","Delete")).on_click(cx.listener(|this,_,_,cx|{this.delete_open=false;this.send("delete",vec![json!({"command":"delete","provider_id":this.selected()})],cx);})))) .into_any_element()
+            DialogContent::new().w_full().gap_4().child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("删除供应商？","Delete provider?"))).child(div().text_color(rgb(MUTED)).child(self.t("将移除此供应商及其保存的 Key 和模型。","This removes the provider and its saved key and models.")))
+            .child(DialogFooter::new().child(Button::new("delete-cancel").label(self.t("取消","Cancel")).on_click(cx.listener(|this,_,window,cx|this.dismiss(&Dismiss,window,cx)))).child(Button::new("delete-confirm").danger().label(self.t("删除","Delete")).on_click(cx.listener(|this,_,_,cx|{this.delete_open=false;this.send("delete",vec![json!({"command":"delete","provider_id":this.selected()})],cx);})))) .into_any_element()
         } else {
             return None;
         };
-        Some(
-            div()
-                .occlude()
-                .absolute()
-                .inset_0()
-                .flex()
-                .items_center()
-                .justify_center()
-                .bg(rgba(0x17324d66))
-                .child(content)
-                .into_any_element(),
-        )
+        Some(content)
     }
+
     fn picker_dialog(&mut self, cx: &mut Context<Self>) -> AnyElement {
         let filtered = self.filtered(cx);
         let count = filtered.len();
         let chosen = self.picked.len();
         let total = self.picker.as_ref().map_or(0, Vec::len);
-        card()
-            .w(px(720.))
-            .h(px(580.))
+        DialogContent::new()
+            .w_full()
+            .h(px(550.))
             .gap_3()
             .child(
                 div()
@@ -1413,65 +1425,38 @@ impl Proxy {
                                             .iter()
                                             .any(|m| m["model"].as_str() == Some(&id));
                                         let checked = existing || this.picked.contains(&i);
-                                        div()
-                                            .id(("candidate", i))
+                                        let zh = this.zh;
+                                        ListItem::new(("candidate", i))
                                             .w_full()
-                                            .role(accesskit::Role::CheckBox)
-                                            .aria_label(id.clone())
-                                            .accessibility_id(format!("candidate-{i}"))
-                                            .flex()
-                                            .items_center()
-                                            .justify_between()
-                                            .h(px(34.))
-                                            .px_3()
-                                            .cursor_pointer()
-                                            .hover(|s| s.bg(rgb(0xf1f8fc)))
+                                            .h(px(36.))
+                                            .accessibility_label(id.clone())
                                             .child(
-                                                div()
-                                                    .flex()
-                                                    .items_center()
-                                                    .gap_3()
-                                                    .child(
-                                                        div()
-                                                            .size(px(17.))
-                                                            .border_1()
-                                                            .border_color(rgb(if checked {
-                                                                TEAL
+                                                Checkbox::new(("candidate-check", i))
+                                                    .accessibility_id(format!("candidate-{i}"))
+                                                    .label(id)
+                                                    .checked(checked)
+                                                    .disabled(existing)
+                                                    .small()
+                                                    .w_full()
+                                                    .on_change(cx.listener(
+                                                        move |this, checked: &bool, _, cx| {
+                                                            if *checked {
+                                                                this.picked.insert(i);
                                                             } else {
-                                                                0xc2cfdb
-                                                            }))
-                                                            .rounded(px(4.))
-                                                            .bg(rgb(if checked {
-                                                                TEAL
-                                                            } else {
-                                                                0xffffff
-                                                            }))
-                                                            .text_size(px(12.))
-                                                            .text_color(rgb(0xffffff))
-                                                            .child(if checked {
-                                                                "✓"
-                                                            } else {
-                                                                ""
-                                                            }),
-                                                    )
-                                                    .child(id),
+                                                                this.picked.remove(&i);
+                                                            }
+                                                            cx.notify();
+                                                        },
+                                                    )),
                                             )
-                                            .child(
-                                                div()
-                                                    .text_size(px(11.))
-                                                    .text_color(rgb(MUTED))
-                                                    .child(if existing {
-                                                        this.t("已添加", "Added")
-                                                    } else {
-                                                        ""
-                                                    }),
-                                            )
-                                            .on_click(cx.listener(move |this, _, _, cx| {
-                                                if !existing && !this.picked.remove(&i) {
-                                                    this.picked.insert(i);
-                                                }
-                                                cx.notify();
-                                            }))
+                                            .suffix(move |_, _| {
+                                                Label::new(if existing {
+                                                    if zh { "已添加" } else { "Added" }
+                                                } else {
+                                                    ""
+                                                })
+                                                .text_size(px(11.))
+                                            })
                                             .into_any_element()
                                     })
                                     .collect()
@@ -1490,10 +1475,7 @@ impl Proxy {
                     )),
             )
             .child(
-                div()
-                    .flex()
-                    .justify_end()
-                    .gap_2()
+                DialogFooter::new()
                     .child(
                         Button::new("picker-cancel")
                             .label(self.t("取消", "Cancel"))
@@ -1513,12 +1495,13 @@ impl Proxy {
     }
 }
 impl Render for Proxy {
-    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        self.refresh_table(window, cx);
         let sidebar = self.sidebar(cx);
         let center = self.center(cx);
         let right = self.right(cx);
-        let overlay = self.overlay(cx);
-        div()
+        self.manage_dialog(window, cx);
+        let content = div()
             .relative()
             .key_context("Proxy")
             .track_focus(&self.focus)
@@ -1563,17 +1546,7 @@ impl Render for Proxy {
                                         ),
                                     )),
                             )
-                            .child(
-                                div()
-                                    .ml_2()
-                                    .px_2()
-                                    .py_1()
-                                    .rounded(px(6.))
-                                    .bg(rgb(TINT))
-                                    .text_color(rgb(TEAL))
-                                    .text_size(px(10.))
-                                    .child("GPUI Preview 01"),
-                            ),
+                            .child(Tag::info().small().child("GPUI Kit Preview 02")),
                     )
                     .child(
                         div()
@@ -1606,27 +1579,45 @@ impl Render for Proxy {
                     .child(right),
             )
             .child(
-                div()
-                    .h(px(18.))
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .text_size(px(11.))
-                    .child(
-                        div()
-                            .text_color(rgb(if self.error { 0xca4960 } else { MUTED }))
-                            .child(self.status.clone()),
+                StatusBar::new()
+                    .left(
+                        Label::new(self.status.clone()).text_color(rgb(if self.error {
+                            0xca4960
+                        } else {
+                            MUTED
+                        })),
                     )
-                    .child(div().text_color(rgb(MUTED)).child(self.t(
+                    .right(self.t(
                         "关闭窗口后，代理仍在托盘运行",
                         "Close this window to keep the relay running in the tray",
-                    ))),
+                    )),
+            );
+        div()
+            .size_full()
+            .flex()
+            .flex_col()
+            .child(
+                TitleBar::new()
+                    .child(Label::new("WorkBuddy Proxy · GPUI Preview").text_size(px(12.))),
             )
-            .children(overlay)
+            .child(content.flex_1().min_h_0())
     }
 }
 impl Drop for Proxy {
     fn drop(&mut self) {
         let _ = std::fs::remove_file(self.dir.join("gpui.json"));
+    }
+}
+
+struct ModalBody {
+    owner: WeakEntity<Proxy>,
+}
+impl Render for ModalBody {
+    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        self.owner
+            .update(cx, |this, cx| this.dialog_body(cx))
+            .ok()
+            .flatten()
+            .unwrap_or_else(|| div().into_any_element())
     }
 }

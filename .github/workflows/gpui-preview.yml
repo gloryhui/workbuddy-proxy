@@ -52,18 +52,18 @@ jobs:
         if: runner.os == 'macOS'
         run: python -m pip install -r scripts/dmg-requirements.txt
       - name: Package both executables without publishing a Release
-        run: python scripts/package.py --exe "${{ matrix.core }}" --gpui "${{ matrix.ui }}" --variant gpui-preview.1 --platform "${{ matrix.platform }}"
+        run: python scripts/package.py --exe "${{ matrix.core }}" --gpui "${{ matrix.ui }}" --variant gpui-kit-preview.2 --platform "${{ matrix.platform }}"
       - name: Test extracted Windows package and measure open/closed memory
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           $packageRoot = Join-Path $env:RUNNER_TEMP 'workbuddy-gpui-package'
-          Expand-Archive -Path 'dist/workbuddy-proxy-0.4.0-gpui-preview.1-windows-x64.zip' -DestinationPath $packageRoot
+          Expand-Archive -Path 'dist/workbuddy-proxy-0.4.0-gpui-kit-preview.2-windows-x64.zip' -DestinationPath $packageRoot
           $packagedExe = (Get-ChildItem -Path $packageRoot -Filter 'workbuddy-proxy.exe' -Recurse).FullName
           python scripts/gpui_package_test.py --exe "$packagedExe" --output 'bench-results/gpui-windows-x64.json'
       - name: Test copied Mac DMG application and measure open/closed memory
         if: runner.os == 'macOS'
-        run: python scripts/gpui_macos_package.py --dmg "dist/workbuddy-proxy-0.4.0-gpui-preview.1-${{ matrix.platform }}.dmg" --output "bench-results/gpui-${{ matrix.platform }}.json"
+        run: python scripts/gpui_macos_package.py --dmg "dist/workbuddy-proxy-0.4.0-gpui-kit-preview.2-${{ matrix.platform }}.dmg" --output "bench-results/gpui-${{ matrix.platform }}.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
