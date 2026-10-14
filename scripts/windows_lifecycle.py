@@ -242,6 +242,12 @@ def main():
             user.SetCursorPos.argtypes=[ctypes.c_int,ctypes.c_int]
             target=kernel.OpenProcess(0x438,False,first.pid);assert target
             memory=kernel.VirtualAllocEx(target,None,ctypes.sizeof(wintypes.RECT),0x3000,4);assert memory
+            def selected_rows():
+                rows=[];index=-1
+                while True:
+                    index=user.SendMessageW(table,0x100C,index,2)
+                    if index<0:return rows
+                    rows.append(index)
             def click_row(index,modifier=None):
                 rect=wintypes.RECT();assert kernel.WriteProcessMemory(target,memory,ctypes.byref(rect),ctypes.sizeof(rect),None)
                 assert user.SendMessageW(table,0x100E,index,memory)
@@ -255,6 +261,7 @@ def main():
                 time.sleep(.12)
                 if modifier:user.keybd_event(modifier,0,2,0)
                 time.sleep(.08)
+                print(f'Native row click: row={index}, modifier={modifier}, selected={selected_rows()}, enabled={bool(user.IsWindowEnabled(table))}, editing={bool(user.FindWindowExW(table,None,"Edit",None))}',flush=True)
             def test_model(expected):
                 before=len(server.seen_models)
                 user.SendMessageW(h,0x0111,202,0)
