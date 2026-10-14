@@ -134,7 +134,18 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
                 "connection_count" => cfg.providers.len().to_string(),
                 "has_provider" => if c.is_some() { "1" } else { "0" }.into(),
                 "installed_count" => cfg.installed.len().to_string(),
-                "name" | "provider" => c.map(|p| p.name.clone()).unwrap_or_default(),
+                "port" => ctx.bridge.port.load(Ordering::Relaxed).to_string(),
+                "name" => c
+                    .filter(|p| !p.is_draft())
+                    .map(|p| p.name.clone())
+                    .unwrap_or_default(),
+                "provider" => c.map(|p| p.name.clone()).unwrap_or_default(),
+                "model_count" => cfg
+                    .providers
+                    .iter()
+                    .map(|p| p.models.len())
+                    .sum::<usize>()
+                    .to_string(),
                 "model" => c.map(|p| p.model_lines()).unwrap_or_default(),
                 "upstream" => c.map(|p| p.upstream.clone()).unwrap_or_default(),
                 "reasoning_effort" => c.map(|p| p.effort()).unwrap_or("keep").into(),
@@ -195,7 +206,12 @@ fn execute(mut p: serde_json::Value) -> Result<String, String> {
     };
     #[cfg(not(any(windows, target_os = "macos")))]
     let result = ctx.handle.block_on(ctx.bridge.command(&p));
-    if result.is_ok() {
+    if let Ok(message) = &result {
+        if p["command"] == "set_port" {
+            let applied: crate::port::Applied =
+                serde_json::from_str(message).map_err(|_| "Invalid port response")?;
+            ctx.bridge.port.store(applied.port, Ordering::Relaxed);
+        }
         *ctx.bridge.config.lock().unwrap() = crate::config::Config::load(&ctx.bridge.dir)?;
         let count = ctx.bridge.config.lock().unwrap().providers.len();
         let index = if matches!(p["command"].as_str(), Some("add" | "duplicate")) {
@@ -257,6 +273,21 @@ fn ffi_result(f: impl FnOnce() -> Result<String, String>) -> *mut c_char {
 }
 
 static UI_ZH: AtomicBool = AtomicBool::new(false);
+#[unsafe(no_mangle)]
+pub extern "C" fn wb_set_port(text: *const c_char) -> *mut c_char {
+    ffi_result(|| {
+        let port = input(text)
+            .trim()
+            .parse::<u16>()
+            .ok()
+            .filter(|n| *n > 0)
+            .ok_or("Enter a port from 1 to 65535 / 请输入 1–65535 的端口号")?;
+        let result = execute(serde_json::json!({"command":"set_port","port":port}))?;
+        let applied: crate::port::Applied =
+            serde_json::from_str(&result).map_err(|_| "Invalid port response")?;
+        Ok(applied.message())
+    })
+}
 static DRAFT: LazyLock<Mutex<Vec<serde_json::Value>>> = LazyLock::new(|| Mutex::new(Vec::new()));
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_use_language(zh: i32) {

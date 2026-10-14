@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Close/minimize to tray, restore, and exit the real Win32 application."""
 import argparse
+import os
+import socket
 import ctypes
 from ctypes import wintypes
 import json
@@ -49,7 +51,8 @@ def main():
                 except PermissionError:
                     if attempt==19:raise
                     time.sleep(.005) # MoveFileEx can hold a brief replacement lock.
-        command=[exe,'--config-dir',directory];first=subprocess.Popen(command)
+        env=os.environ.copy();env['USERPROFILE']=str(Path(directory)/'home');Path(env['USERPROFILE']).mkdir()
+        command=[exe,'--config-dir',directory];first=subprocess.Popen(command,env=env)
         second=None;core=None;duplicates=[]
         try:
             def caption(control):
@@ -63,7 +66,7 @@ def main():
                 if ready.exists() and json.loads(ready.read_text())['pid']==first.pid:break
                 time.sleep(.025)
             else:raise AssertionError('Native UI readiness was not published')
-            duplicates=[subprocess.Popen(command) for _ in range(5)]
+            duplicates=[subprocess.Popen(command,env=env) for _ in range(5)]
             for process in duplicates:assert process.wait(timeout=12)==0,'Concurrent relaunch did not exit cleanly'
             assert first.poll() is None
             assert json.loads(ready.read_text())['pid']==first.pid
@@ -224,6 +227,21 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Native Duplicate did not add a connection')
             assert saved[0]['api_key']==saved[1]['api_key'] and saved[0]['models'][0]['alias']!=saved[1]['models'][0]['alias']
+            # Global sync includes both providers, regardless of the selection.
+            user.SendMessageW(h,0x0111,204,0)
+            for _ in range(400):
+                if user.IsWindowEnabled(user.GetDlgItem(h,204)):break
+                time.sleep(.025)
+            else:raise AssertionError('Global sync never completed')
+            models_file=Path(env['USERPROFILE'])/'.workbuddy/models.json'
+            assert len(json.loads(models_file.read_text(encoding='utf-8')))==2
+            assert len(profile()['installed'])==2 and user.IsWindowEnabled(user.GetDlgItem(h,205))
+            user.SendMessageW(h,0x0111,205,0)
+            for _ in range(400):
+                if user.IsWindowEnabled(user.GetDlgItem(h,204)):break
+                time.sleep(.025)
+            else:raise AssertionError('Global removal never completed')
+            assert json.loads(models_file.read_text(encoding='utf-8'))==[] and profile()['installed']==[]
             def delete_provider(expected_count):
                 user.PostMessageW(h,0x0111,208,0)
                 for _ in range(200):
@@ -248,19 +266,41 @@ def main():
                 if user.IsWindowVisible(empty_add) and not user.IsWindowVisible(user.GetDlgItem(h,105)):break
                 time.sleep(.025)
             else:raise AssertionError('Deleting the last provider did not show the empty state')
-            for identifier in [101,102,103,104,105,201,202,204,209,210,211,212]:
+            for identifier in [101,102,103,104,105,201,202,209,210,211,212]:
                 control=user.GetDlgItem(h,identifier)
                 assert not user.IsWindowVisible(control) and not user.IsWindowEnabled(control)
             assert user.SendMessageW(user.GetDlgItem(h,102),0x000E,0,0)==0,'Last provider key remained in the form'
             assert caption(user.GetDlgItem(h,105))=='' and caption(user.GetDlgItem(h,101))==''
             assert not user.IsWindowEnabled(user.GetDlgItem(h,207)) and not user.IsWindowEnabled(user.GetDlgItem(h,208))
             status=caption(user.GetDlgItem(h,111))
-            for action in [201,202,204,209,210,211,212]:user.SendMessageW(h,0x0111,action,0)
+            for action in [201,202,209,210,211,212]:user.SendMessageW(h,0x0111,action,0)
             assert caption(user.GetDlgItem(h,111))==status and profile()['providers']==[]
+            # Global controls remain visible without a selected provider.
+            for identifier in [204,205,115,214]:assert user.IsWindowVisible(user.GetDlgItem(h,identifier))
+            assert not user.IsWindowEnabled(user.GetDlgItem(h,204)) and not user.IsWindowEnabled(user.GetDlgItem(h,205))
+            assert user.IsWindowEnabled(user.GetDlgItem(h,115)) and user.IsWindowEnabled(user.GetDlgItem(h,214))
+            def change_port(port,success):
+                value=ctypes.create_unicode_buffer(str(port))
+                user.SendMessageW(user.GetDlgItem(h,115),0x000C,0,ctypes.cast(value,ctypes.c_void_p).value)
+                user.SendMessageW(h,0x0111,214,0)
+                for _ in range(400):
+                    if user.IsWindowEnabled(user.GetDlgItem(h,214)):break
+                    time.sleep(.025)
+                else:raise AssertionError('Port operation never completed')
+                message=caption(user.GetDlgItem(h,111))
+                assert message.startswith('ERROR ')!=success,message
+                return json.loads(Path(directory,'instance.json').read_text())
+            with socket.socket() as occupied:
+                occupied.bind(('127.0.0.1',0));occupied.listen()
+                assert change_port(occupied.getsockname()[1],False)['port']==core['port']
+            old_port=core['port'];core=change_port(free_port(),True)
+            assert core['port']!=old_port and profile()['port']==core['port']
+            assert caption(user.GetDlgItem(h,115))==str(core['port'])
+            with urllib.request.urlopen(f"http://127.0.0.1:{core['port']}/health",timeout=3) as r:assert json.load(r)['ready']
             user.SendMessageW(h,0x0111,213,0) # Add provider from the empty-state primary action.
             assert len(profile()['providers'])==1 and user.IsWindowVisible(user.GetDlgItem(h,105))
             assert not user.IsWindowVisible(empty_add) and user.IsWindowEnabled(user.GetDlgItem(h,201))
-            assert caption(user.GetDlgItem(h,101))=='https://api.openai.com/v1'
+            assert caption(user.GetDlgItem(h,101))=='' and caption(user.GetDlgItem(h,105))==''
             for message,wparam in [(0x0010,0),(0x0112,0xF020)]: # Close; minimize system command
                 user.PostMessageW(h,message,wparam,0)
                 for _ in range(200):
@@ -275,7 +315,7 @@ def main():
             time.sleep(.1)
             name_field=user.GetDlgItem(h,105);original_name=caption(name_field)
             draft=ctypes.c_wchar_p('Unsaved provider draft');user.SendMessageW(name_field,0x000C,0,ctypes.cast(draft,ctypes.c_void_p).value)
-            second=subprocess.Popen(command);assert second.wait(timeout=12)==0
+            second=subprocess.Popen(command,env=env);assert second.wait(timeout=12)==0
             assert wait_window(first)==h, 'Second launch did not restore original tray window'
             assert caption(name_field)=='Unsaved provider draft','Relaunch discarded unsaved form edits'
             original=ctypes.c_wchar_p(original_name);user.SendMessageW(name_field,0x000C,0,ctypes.cast(original,ctypes.c_void_p).value)

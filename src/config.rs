@@ -44,7 +44,7 @@ impl Default for Provider {
         Self {
             id: token()[..12].into(),
             name: "Provider 1".into(),
-            upstream: "https://api.openai.com/v1".into(),
+            upstream: String::new(),
             api_key: String::new(),
             models: Vec::new(),
         }
@@ -77,6 +77,9 @@ impl Model {
     }
 }
 impl Provider {
+    pub fn is_draft(&self) -> bool {
+        self.upstream.is_empty() && self.api_key.is_empty() && self.models.is_empty()
+    }
     pub fn label(&self) -> String {
         format!("{} · {} 个模型", self.name, self.models.len())
     }
@@ -257,6 +260,18 @@ pub fn make_private_dir(dir: &Path) -> Result<(), String> {
     Ok(())
 }
 pub fn write_json<T: Serialize>(path: &Path, value: &T) -> Result<(), String> {
+    atomic_write(path, |f| {
+        serde_json::to_writer_pretty(&mut *f, value).map_err(|e| e.to_string())?;
+        f.write_all(b"\n").map_err(|e| e.to_string())
+    })
+}
+pub fn write_bytes(path: &Path, bytes: &[u8]) -> Result<(), String> {
+    atomic_write(path, |f| f.write_all(bytes).map_err(|e| e.to_string()))
+}
+fn atomic_write(
+    path: &Path,
+    write: impl FnOnce(&mut fs::File) -> Result<(), String>,
+) -> Result<(), String> {
     let tmp = path.with_extension(format!("tmp-{}", token()));
     let result = (|| {
         let mut opts = fs::OpenOptions::new();
@@ -267,8 +282,7 @@ pub fn write_json<T: Serialize>(path: &Path, value: &T) -> Result<(), String> {
             opts.mode(0o600);
         }
         let mut f = opts.open(&tmp).map_err(|e| e.to_string())?;
-        serde_json::to_writer_pretty(&mut f, value).map_err(|e| e.to_string())?;
-        f.write_all(b"\n").map_err(|e| e.to_string())?;
+        write(&mut f)?;
         f.sync_all().map_err(|e| e.to_string())?;
         drop(f);
         replace_file(&tmp, path)
@@ -476,7 +490,7 @@ impl Config {
                 api_key: p.api_key.clone(),
                 ..Default::default()
             };
-            c.validate()?;
+            c.validate_fields(p.is_draft())?;
             if !ids.insert(p.id.clone()) || !names.insert(&p.name) {
                 return Err("供应商名称和标识不可重复 / Duplicate provider".into());
             }
@@ -535,6 +549,9 @@ impl Config {
 
 impl Connection {
     pub fn validate(&self) -> Result<(), String> {
+        self.validate_fields(false)
+    }
+    fn validate_fields(&self, draft: bool) -> Result<(), String> {
         if self.id.len() < 4
             || self.id.len() > 64
             || !self
@@ -572,6 +589,9 @@ impl Connection {
         }
         if self.upstream.len() > 2048 {
             return Err("Upstream URL is too long".into());
+        }
+        if draft {
+            return Ok(());
         }
         let u = reqwest::Url::parse(&self.upstream).map_err(|_| "Invalid upstream URL")?;
         let loopback = matches!(
@@ -668,8 +688,23 @@ mod tests {
         cfg.validate().unwrap();
     }
     #[test]
+    fn empty_provider_drafts_have_no_example_url_and_cannot_route_models() {
+        let mut cfg = Config::default();
+        assert!(cfg.providers[0].is_draft());
+        assert!(cfg.providers[0].upstream.is_empty());
+        cfg.validate().unwrap();
+        cfg.providers[0].name.clear();
+        assert!(cfg.validate().is_err());
+        cfg.providers[0].name = "New provider".into();
+        cfg.providers[0]
+            .models
+            .push(Model::new("fixture-model", "Fixture"));
+        assert!(cfg.validate().is_err());
+    }
+    #[test]
     fn limits_and_url_validation() {
         let mut cfg = Config::default();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
         cfg.providers[0]
             .set_models("same | One\nsame | Two\nother", "default")
             .unwrap();

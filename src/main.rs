@@ -4,6 +4,7 @@ mod config;
 mod frontend;
 mod i18n;
 mod native;
+mod port;
 mod proxy;
 mod session;
 mod update;
@@ -122,6 +123,8 @@ fn run() -> Result<(), String> {
     let port = listener.local_addr().map_err(|e| e.to_string())?.port();
     let a = Arc::new(proxy::Bridge::new(cfg, dir.clone())?);
     a.port.store(port, Ordering::Relaxed);
+    let (port_tx, port_rx) = tokio::sync::mpsc::channel(1);
+    *a.port_changes.lock().unwrap() = Some(port_tx);
     config::write_json(
         &dir.join("instance.json"),
         &Instance {
@@ -160,7 +163,7 @@ fn run() -> Result<(), String> {
         let runtime=tokio::runtime::Builder::new_current_thread().enable_all().max_blocking_threads(2).thread_keep_alive(Duration::from_secs(10)).thread_stack_size(512*1024).build().unwrap();
         ready_tx.send(runtime.handle().clone()).unwrap();
         runtime.block_on(async{
-            let listener=tokio::net::TcpListener::from_std(listener).unwrap();let listener=listener.tap_io(|stream| { if let Err(e)=stream.set_nodelay(true) { eprintln!("Cannot disable local TCP buffering: {e}"); } });let server=axum::serve(listener,thread_a.routes());
+            let listener=tokio::net::TcpListener::from_std(listener).unwrap();let listener=port::SwitchingListener::new(listener,port_rx,thread_a.clone()).tap_io(|stream| { if let Err(e)=stream.set_nodelay(true) { eprintln!("Cannot disable local TCP buffering: {e}"); } });let server=axum::serve(listener,thread_a.routes());
             tokio::select!{result=server=>{if let Err(e)=result{eprintln!("Server stopped: {e}");}},_=stop_rx=>{},_=tokio::signal::ctrl_c()=>{}}
         });native::quit();
     }).map_err(|e|e.to_string())?;

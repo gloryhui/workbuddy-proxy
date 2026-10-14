@@ -44,6 +44,9 @@ impl Routes {
     fn new(cfg: &Config) -> Result<Self, String> {
         let mut routes = Self::default();
         for p in &cfg.providers {
+            if p.models.is_empty() {
+                continue;
+            }
             let c = Connection {
                 upstream: p.upstream.clone(),
                 ..Default::default()
@@ -149,6 +152,8 @@ pub struct Bridge {
     pub management_key: String,
     update_busy: AtomicBool,
     pub stop: Mutex<Option<oneshot::Sender<()>>>,
+    pub port_changes: Mutex<Option<tokio::sync::mpsc::Sender<crate::port::Request>>>,
+    mutations: tokio::sync::Mutex<()>,
 }
 impl Bridge {
     pub fn new(config: Config, dir: PathBuf) -> Result<Self, String> {
@@ -176,6 +181,8 @@ impl Bridge {
             management_key: crate::config::token(),
             update_busy: AtomicBool::new(false),
             stop: Mutex::new(None),
+            port_changes: Mutex::new(None),
+            mutations: tokio::sync::Mutex::new(()),
         })
     }
     pub fn connection_address(&self, id: &str) -> String {
@@ -678,12 +685,34 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
 }
 impl Bridge {
     pub async fn command(&self, p: &serde_json::Value) -> Result<String, String> {
+        let _mutation = if matches!(
+            p["command"].as_str(),
+            Some(
+                "save"
+                    | "add"
+                    | "duplicate"
+                    | "delete"
+                    | "language"
+                    | "install"
+                    | "restore"
+                    | "set_port"
+            )
+        ) {
+            Some(self.mutations.lock().await)
+        } else {
+            None
+        };
         let result = self.command_inner(p).await;
         if !matches!(
             p["command"].as_str(),
             Some("snapshot" | "copy" | "fetch" | "check_update")
         ) {
             self.set_status(match &result {
+                Ok(s) if p["command"] == "set_port" => {
+                    serde_json::from_str::<crate::port::Applied>(s)
+                        .map(|v| v.message())
+                        .unwrap_or_else(|_| "Port updated".into())
+                }
                 Ok(s) => s.clone(),
                 Err(e) => format!("ERROR {e}"),
             });
@@ -701,6 +730,28 @@ impl Bridge {
             .and_then(serde_json::Value::as_str)
             .unwrap_or("");
         match command {
+            "set_port" => {
+                let port = p["port"]
+                    .as_u64()
+                    .and_then(|n| u16::try_from(n).ok())
+                    .filter(|n| *n > 0)
+                    .ok_or("Enter a port from 1 to 65535 / 请输入 1–65535 的端口号")?;
+                let sender = self
+                    .port_changes
+                    .lock()
+                    .unwrap()
+                    .clone()
+                    .ok_or("Listener is unavailable / 监听服务不可用")?;
+                let (reply, result) = oneshot::channel();
+                sender
+                    .send(crate::port::Request { port, reply })
+                    .await
+                    .map_err(|_| "Listener is unavailable / 监听服务不可用")?;
+                let applied = result
+                    .await
+                    .map_err(|_| "Listener stopped / 监听服务已停止")??;
+                serde_json::to_string(&applied).map_err(|e| e.to_string())
+            }
             "check_update" => {
                 if self.update_busy.swap(true, Ordering::Relaxed) {
                     return Err("Update check already running".into());
@@ -861,7 +912,7 @@ impl Bridge {
             }
             "restore" => self
                 .restore_workbuddy(&crate::workbuddy::path()?)
-                .map(|_| "Previous entries restored / 已恢复原列表项".into()),
+                .map(|_| "Removed synced proxy models; original entries preserved / 已移除代理同步的模型，原有条目已保留".into()),
             "copy" => {
                 let cfg = self.config.lock().unwrap();
                 let provider = cfg.provider(id)?;
@@ -1008,6 +1059,7 @@ mod tests {
     #[test]
     fn grouped_routes_share_credentials_and_reject_ambiguity() {
         let mut cfg = Config::default();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
         cfg.providers[0].api_key = "fixture".into();
         cfg.providers[0]
             .set_models("same | First\nsame | Second\nother", "default")
@@ -1024,6 +1076,7 @@ mod tests {
     #[test]
     fn legacy_bare_alias_does_not_bypass_same_model_isolation() {
         let mut cfg = Config::default();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
         cfg.providers[0]
             .set_models("same | One\nsame | Two", "default")
             .unwrap();

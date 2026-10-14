@@ -46,7 +46,7 @@ impl Document {
         }
     }
 }
-fn backup(path: &Path) -> Result<(), String> {
+pub(crate) fn backup(path: &Path) -> Result<(), String> {
     if !path.exists() {
         return Ok(());
     }
@@ -98,6 +98,54 @@ fn entry(c: &config::Connection, url: &str, key: &str) -> Value {
             json!({"defaultLength":300_000,"supportedLengths":[128_000,300_000,1_000_000]});
     }
     e
+}
+// Only change the URL port of entries using this proxy's local key. Preserve
+// all model names, IDs, reasoning options, other vendors and restore backups.
+pub(crate) fn repoint_port(
+    cfg: &mut config::Config,
+    path: &Path,
+    old_port: u16,
+    new_port: u16,
+) -> Result<Option<(Value, usize)>, String> {
+    if !path.exists() {
+        return Ok(None);
+    }
+    fn update(value: &mut Value, key: &str, old: u16, new: u16) -> bool {
+        if value.get("apiKey").and_then(Value::as_str) != Some(key) {
+            return false;
+        }
+        let Some(mut url) = value
+            .get("url")
+            .and_then(Value::as_str)
+            .and_then(|s| reqwest::Url::parse(s).ok())
+        else {
+            return false;
+        };
+        let path = url.path().trim_end_matches('/');
+        if url.scheme() != "http"
+            || !matches!(url.host_str(), Some("127.0.0.1" | "localhost"))
+            || url.port_or_known_default() != Some(old)
+            || !(path == "/v1" || (path.starts_with("/r/") && path.ends_with("/v1")))
+        {
+            return false;
+        }
+        if url.set_port(Some(new)).is_err() {
+            return false;
+        }
+        value["url"] = json!(url.as_str());
+        true
+    }
+    let mut document = Document::read(path)?;
+    let mut count = 0;
+    for entry in document.entries_mut() {
+        count += usize::from(update(entry, &cfg.local_key, old_port, new_port));
+    }
+    for record in &mut cfg.installed {
+        if let Some(expected) = &mut record.expected {
+            update(expected, &cfg.local_key, old_port, new_port);
+        }
+    }
+    Ok((count > 0).then_some((document.root, count)))
 }
 impl Bridge {
     pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
@@ -220,6 +268,7 @@ mod tests {
         let old = json!({"otherField":true,"models":[{"id":"other","apiKey":"keep"}]});
         config::write_json(&p, &old).unwrap();
         let mut c = config::Config::default();
+        c.providers[0].upstream = "https://example.com/v1".into();
         c.providers[0].api_key = "test-upstream".into();
         c.providers[0]
             .set_models(

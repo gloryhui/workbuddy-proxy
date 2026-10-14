@@ -8,12 +8,16 @@ use std::{
     fs,
     path::{Path, PathBuf},
     process::{Command, Stdio},
-    sync::{Arc, atomic::Ordering, mpsc},
+    sync::{
+        Arc,
+        atomic::{AtomicU16, Ordering},
+        mpsc,
+    },
     time::Duration,
 };
 
 pub struct Remote {
-    pub port: u16,
+    pub port: AtomicU16,
     pub key: String,
 }
 impl Remote {
@@ -23,7 +27,10 @@ impl Remote {
         payload: &Value,
     ) -> Result<String, String> {
         let res = client
-            .post(format!("http://127.0.0.1:{}/_control/action", self.port))
+            .post(format!(
+                "http://127.0.0.1:{}/_control/action",
+                self.port.load(Ordering::Relaxed)
+            ))
             .bearer_auth(&self.key)
             .header("Content-Type", "application/json")
             .body(payload.to_string())
@@ -39,6 +46,11 @@ impl Remote {
             .unwrap_or("Control request failed")
             .to_owned();
         if status.is_success() {
+            if payload["command"] == "set_port" {
+                let applied: crate::port::Applied =
+                    serde_json::from_str(&message).map_err(|_| "Invalid port response")?;
+                self.port.store(applied.port, Ordering::Relaxed);
+            }
             Ok(message)
         } else {
             Err(message)
@@ -293,7 +305,7 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
             handle,
             selected: std::sync::atomic::AtomicUsize::new(0),
             remote: Some(Remote {
-                port: running.port,
+                port: AtomicU16::new(running.port),
                 key: running.management_key,
             }),
         })
