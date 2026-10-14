@@ -57,15 +57,17 @@ def main():
             env['WBP_INSTALL_QA'] = str(install)
             ps = '''$ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
-$w = New-Object -ComObject WScript.Shell
+$shell = New-Object -ComObject Shell.Application
 $paths = @(
  (Join-Path ([Environment]::GetFolderPath('Programs')) 'WorkBuddy Proxy Preview\\WorkBuddy Proxy Preview.lnk'),
  (Join-Path ([Environment]::GetFolderPath('Desktop')) 'WorkBuddy Proxy Preview.lnk')
 )
 $targets = foreach ($p in $paths) {
  if (!(Test-Path $p)) { throw "Missing shortcut: $p" }
- $s = $w.CreateShortcut($p)
- [pscustomobject]@{ shortcut = $p; target = $s.TargetPath; workingDirectory = $s.WorkingDirectory; arguments = $s.Arguments }
+ # WScript.Shell can return ANSI paths (???? on English Windows).
+ # Shell.Application exposes the Unicode ShellLinkObject metadata.
+ $s = $shell.NameSpace((Split-Path $p)).ParseName((Split-Path $p -Leaf)).GetLink
+ [pscustomobject]@{ shortcut = $p; target = $s.Path; workingDirectory = $s.WorkingDirectory; arguments = $s.Arguments }
 }
 $targets | ConvertTo-Json -Compress
 '''
