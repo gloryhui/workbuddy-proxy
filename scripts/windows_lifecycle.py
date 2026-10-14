@@ -88,12 +88,13 @@ def main():
                 time.sleep(.025)
             else:raise AssertionError('Native Save did not persist thinking effort')
             key_field=user.GetDlgItem(h,102);toggle=user.GetDlgItem(h,212);assert key_field and toggle
-            assert caption(key_field)=='fixture-key','Saved key disappeared from the form'
+            # Windows intentionally blocks WM_GETTEXT from another process while masked.
+            assert user.SendMessageW(key_field,0x000E,0,0)==len('fixture-key'),'Saved key disappeared from the form'
             assert user.SendMessageW(key_field,0x00D2,0,0)==ord('*'),'Key must start masked'
             user.SendMessageW(h,0x0111,212,0)
             assert user.SendMessageW(key_field,0x00D2,0,0)==0 and caption(key_field)=='fixture-key'
             user.SendMessageW(h,0x0111,212,0)
-            assert user.SendMessageW(key_field,0x00D2,0,0)==ord('*') and caption(key_field)=='fixture-key'
+            assert user.SendMessageW(key_field,0x00D2,0,0)==ord('*') and user.SendMessageW(key_field,0x000E,0,0)==len('fixture-key')
             user.SendMessageW(key_field,0x0203,1,4|(4<<16)) # Double-click selects the complete field.
             selection=user.SendMessageW(key_field,0x00B0,0,0)
             assert selection&0xffff==0 and selection>>16==len('fixture-key')
