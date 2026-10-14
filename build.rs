@@ -13,13 +13,12 @@ fn main() {
         std::fs::write(out.join("icon_png.h"), header).unwrap();
         cc::Build::new()
             .include(&out)
-            .file("native/macos.m")
+            .file("native/gpui_host.m")
             .flag("-fobjc-arc")
             .flag("-fblocks")
-            .compile("native_ui");
+            .compile("platform_tray");
         println!("cargo:rustc-link-lib=framework=AppKit");
         println!("cargo:rustc-link-lib=framework=Foundation");
-        println!("cargo:rustc-link-lib=framework=CoreText");
     } else if os == "windows" {
         let target = std::env::var("TARGET").unwrap();
         let rc = cc::windows_registry::find_tool(&target, "rc.exe")
@@ -36,10 +35,10 @@ fn main() {
         assert!(status.success(), "Cannot compile application icon resource");
         println!("cargo:rustc-link-arg={}", res.display());
         cc::Build::new()
-            .file("native/windows.c")
+            .file("native/gpui_host.c")
             .flag_if_supported("/utf-8")
-            .compile("native_ui");
-        for lib in ["user32", "shell32", "gdi32", "comctl32"] {
+            .compile("platform_tray");
+        for lib in ["user32", "shell32"] {
             println!("cargo:rustc-link-lib={lib}");
         }
     }

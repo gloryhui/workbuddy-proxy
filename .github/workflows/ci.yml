@@ -1,29 +1,14 @@
-name: Native build and executable checks
+name: Core checks
 on:
   push:
+    branches: [main, codex/gpui-preview]
   pull_request:
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   test:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: windows-latest
-            platform: windows-x64
-            binary: target/release/workbuddy-proxy.exe
-          - os: macos-latest
-            platform: macos-arm64
-            binary: target/release/workbuddy-proxy
-          - os: macos-15-intel
-            platform: macos-x64
-            binary: target/release/workbuddy-proxy
-          - os: ubuntu-latest
-            platform: linux-x64
-            binary: target/release/workbuddy-proxy
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -37,54 +22,8 @@ jobs:
       - run: cargo clippy --locked --all-targets -- -D warnings
       - run: cargo test --locked
       - run: cargo build --release --locked
-      - name: Real executable smoke checks
-        run: python scripts/smoke.py --exe "${{ matrix.binary }}"
-      - name: Independent providers, aliases, models and WorkBuddy list sync
-        run: python scripts/multi_routing.py --exe "${{ matrix.binary }}"
-      - name: Model discovery, table rows, locale and bounded logs
-        run: python scripts/model_discovery.py --exe "${{ matrix.binary }}"
-      - name: Detailed connection diagnostics and unified journal
-        run: python scripts/connection_test.py --exe "${{ matrix.binary }}"
-      - name: Live port switching, conflict checks and WorkBuddy URL migration
-        run: python scripts/port_change.py --exe "${{ matrix.binary }}"
-      - name: Replace incompatible background cores before native settings
-        if: runner.os != 'Linux'
-        run: python scripts/core_compatibility.py --exe "${{ matrix.binary }}"
-      - name: Native Windows window smoke checks
-        if: runner.os == 'Windows'
-        run: python scripts/smoke.py --exe "${{ matrix.binary }}" --gui
-      - name: Headless memory and latency benchmark
-        run: python scripts/benchmark.py --exe "${{ matrix.binary }}" --output "bench-results/${{ matrix.platform }}.json"
-      - name: Native Windows memory benchmark
-        if: runner.os == 'Windows'
-        run: python scripts/benchmark.py --exe "${{ matrix.binary }}" --gui --output "bench-results/${{ matrix.platform }}-native.json"
-      - name: Windows tray lifecycle and native thinking controls
-        if: runner.os == 'Windows'
-        run: python scripts/windows_lifecycle.py --exe "${{ matrix.binary }}"
-      - name: Settings process-group isolation
-        if: runner.os == 'macOS'
-        run: python scripts/unix_lifecycle.py --exe "${{ matrix.binary }}"
-      - name: Install Mac disk image build tools
-        if: runner.os == 'macOS'
-        run: python -m pip install -r scripts/dmg-requirements.txt
-      - name: Package native desktop executable
-        if: runner.os != 'Linux'
-        run: python scripts/package.py --exe "${{ matrix.binary }}" --platform "${{ matrix.platform }}"
-      - name: Run the unpacked Windows test package
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $packageRoot = Join-Path $env:RUNNER_TEMP 'workbuddy-packaged-smoke'
-          Expand-Archive -Path 'dist/workbuddy-proxy-0.4.0-windows-x64.zip' -DestinationPath $packageRoot
-          $packagedExe = (Get-ChildItem -Path $packageRoot -Filter 'workbuddy-proxy.exe' -Recurse).FullName
-          python scripts/smoke.py --exe "$packagedExe" --gui
-      - name: Mac drag-to-install disk image checks
-        if: runner.os == 'macOS'
-        run: python scripts/macos_package.py --dmg "dist/workbuddy-proxy-0.4.0-${{ matrix.platform }}.dmg"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: workbuddy-proxy-${{ matrix.platform }}
-          path: |
-            dist/
-            bench-results/
-
+      - run: python scripts/smoke.py --exe target/release/workbuddy-proxy
+      - run: python scripts/multi_routing.py --exe target/release/workbuddy-proxy
+      - run: python scripts/model_discovery.py --exe target/release/workbuddy-proxy
+      - run: python scripts/connection_test.py --exe target/release/workbuddy-proxy
+      - run: python scripts/port_change.py --exe target/release/workbuddy-proxy

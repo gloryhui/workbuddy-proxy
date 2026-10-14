@@ -1,6 +1,5 @@
-//! Native UI is an on-demand controller. The child core keeps serving when
-//! the settings window closes. Windows keeps its controller for the tray.
-use crate::{Instance, config, native, proxy::Bridge};
+//! Lightweight tray controller; settings are a separate on-demand process.
+use crate::{Instance, config, platform, proxy::Bridge};
 use fs2::FileExt;
 use serde::Deserialize;
 use serde_json::Value;
@@ -173,7 +172,7 @@ fn claim_or_wake_frontend(lock: &fs::File, dir: &Path) -> Result<bool, String> {
         }
         if let Ok(bytes) = fs::read(dir.join("frontend.json"))
             && let Ok(frontend) = serde_json::from_slice::<FrontendInstance>(&bytes)
-            && native::show_process(frontend.pid)
+            && platform::show_process(frontend.pid)
         {
             return Ok(false);
         }
@@ -186,7 +185,7 @@ fn claim_or_wake_frontend(lock: &fs::File, dir: &Path) -> Result<bool, String> {
 }
 
 pub fn ready() {
-    if let Some(context) = native::CONTEXT.get()
+    if let Some(context) = platform::CONTEXT.get()
         && context.remote.is_some()
     {
         let _ = config::write_json(
@@ -197,7 +196,7 @@ pub fn ready() {
 }
 
 pub fn closing() {
-    if let Some(context) = native::CONTEXT.get()
+    if let Some(context) = platform::CONTEXT.get()
         && context.remote.is_some()
     {
         let _ = fs::remove_file(context.bridge.dir.join("frontend.json"));
@@ -205,6 +204,9 @@ pub fn closing() {
 }
 
 pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
+    if !crate::gpui_host::available() {
+        return Err("Settings program is missing; reinstall WorkBuddy Proxy / 设置程序缺失，请重新安装 WorkBuddy Proxy".into());
+    }
     let frontend_lock = fs::OpenOptions::new()
         .create(true)
         .truncate(false)
@@ -300,18 +302,17 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
         })
         .map_err(|e| e.to_string())?;
     let handle = ready_rx.recv().map_err(|_| "Controller runtime failed")?;
-    native::CONTEXT
-        .set(native::Context {
+    platform::CONTEXT
+        .set(platform::Context {
             bridge: a,
             handle,
-            selected: std::sync::atomic::AtomicUsize::new(0),
             remote: Some(Remote {
                 port: AtomicU16::new(running.port),
                 key: running.management_key,
             }),
         })
         .map_err(|_| "Already initialized")?;
-    native::run();
+    platform::run();
     let _ = fs::remove_file(&ready_path);
     let _ = stop_tx.send(());
     let _ = worker.join();

@@ -21,6 +21,7 @@ use std::{
 };
 use tokio::sync::{Semaphore, oneshot};
 
+const MAX_DISCOVERED_MODELS: usize = 4096;
 pub const BODY_LIMIT: usize = 8 * 1024 * 1024;
 pub const MAX_CONCURRENT: usize = 4;
 struct Destination {
@@ -368,7 +369,7 @@ impl Bridge {
                         return Err("Invalid model ID".into());
                     }
                     ids.insert(id.to_owned());
-                    if ids.len() > crate::model_picker::MAX_DISCOVERED_MODELS {
+                    if ids.len() > MAX_DISCOVERED_MODELS {
                         return Err(
                             "At most 4096 discovered models; upstream returned too many".into()
                         );
@@ -380,7 +381,7 @@ impl Bridge {
             if ids.is_empty() {
                 return Err("No available models returned".into());
             }
-            if ids.len() > crate::model_picker::MAX_DISCOVERED_MODELS {
+            if ids.len() > MAX_DISCOVERED_MODELS {
                 return Err("At most 4096 discovered models; upstream returned too many".into());
             }
             Ok(ids.into_iter().collect::<Vec<_>>())
@@ -685,7 +686,7 @@ async fn show(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body
     {
         return fail(StatusCode::UNAUTHORIZED, "Unauthorized");
     };
-    crate::native::show();
+    crate::platform::show();
     Response::new(Body::from("OK"))
 }
 async fn stop(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body> {

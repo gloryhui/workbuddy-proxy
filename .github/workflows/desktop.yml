@@ -1,0 +1,101 @@
+name: Desktop packages
+on:
+  push:
+    branches: [main, codex/gpui-preview]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows-x64
+            core: target/release/workbuddy-proxy.exe
+            ui: gpui/target/release/workbuddy-proxy-gpui.exe
+          - os: macos-latest
+            platform: macos-arm64
+            core: target/release/workbuddy-proxy
+            ui: gpui/target/release/workbuddy-proxy-gpui
+          - os: macos-15-intel
+            platform: macos-x64
+            core: target/release/workbuddy-proxy
+            ui: gpui/target/release/workbuddy-proxy-gpui
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+          workspaces: |
+            . -> target
+            gpui -> target
+      - run: cargo fmt --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo test --locked
+      - run: cargo build --release --locked
+      - run: cargo fmt --manifest-path gpui/Cargo.toml --check
+      - run: cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings
+      - run: cargo test --manifest-path gpui/Cargo.toml --locked
+      - run: cargo build --manifest-path gpui/Cargo.toml --release --locked
+      - name: Core streaming and cancellation checks
+        run: python scripts/smoke.py --exe "${{ matrix.core }}"
+      - name: Model discovery and locale checks
+        run: python scripts/model_discovery.py --exe "${{ matrix.core }}"
+      - name: Connection diagnostic checks
+        run: python scripts/connection_test.py --exe "${{ matrix.core }}"
+      - name: Live port and WorkBuddy migration checks
+        run: python scripts/port_change.py --exe "${{ matrix.core }}"
+      - name: Core memory and forwarding benchmark
+        run: python scripts/benchmark.py --exe "${{ matrix.core }}" --output "bench-results/core-${{ matrix.platform }}.json"
+      - name: Test core routing and model isolation
+        run: python scripts/multi_routing.py --exe "${{ matrix.core }}"
+      - name: Install DMG build-only tools
+        if: runner.os == 'macOS'
+        run: python -m pip install -r scripts/dmg-requirements.txt
+      - name: Package both executables without publishing a Release
+        run: python scripts/package.py --exe "${{ matrix.core }}" --gpui "${{ matrix.ui }}" --version 0.5.0 --platform "${{ matrix.platform }}"
+      - name: Test extracted Windows package and measure open/closed memory
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $packageRoot = Join-Path $env:RUNNER_TEMP 'workbuddy-gpui-package'
+          Expand-Archive -Path 'dist/workbuddy-proxy-0.5.0-windows-x64.zip' -DestinationPath $packageRoot
+          $packagedExe = (Get-ChildItem -Path $packageRoot -Filter 'workbuddy-proxy.exe' -Recurse).FullName
+          python scripts/gpui_package_test.py --exe "$packagedExe" --output 'bench-results/gpui-windows-x64.json'
+      - name: Build Windows EXE installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $iscc = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
+          if (!(Test-Path $iscc)) {
+            choco install innosetup --yes --no-progress --limit-output
+            if ($LASTEXITCODE -ne 0) { throw 'Inno Setup installation failed' }
+          }
+          if ((Get-Item $iscc).VersionInfo.FileVersionRaw -lt [version]'6.5.0') {
+            choco upgrade innosetup --yes --no-progress --limit-output
+            if ($LASTEXITCODE -ne 0) { throw 'Inno Setup 6.5+ upgrade failed' }
+          }
+          python scripts/windows_installer.py --zip 'dist/workbuddy-proxy-0.5.0-windows-x64.zip'
+          if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
+      - name: Test Windows installer custom path, shortcuts, reinstall and uninstall
+        if: runner.os == 'Windows'
+        run: python scripts/windows_installer_test.py --setup 'dist/workbuddy-proxy-0.5.0-windows-x64-setup.exe' --zip 'dist/workbuddy-proxy-0.5.0-windows-x64.zip' --output 'bench-results/windows-installer.json'
+      - name: Test copied Mac DMG application and measure open/closed memory
+        if: runner.os == 'macOS'
+        run: python scripts/gpui_macos_package.py --dmg "dist/workbuddy-proxy-0.5.0-${{ matrix.platform }}.dmg" --output "bench-results/gpui-${{ matrix.platform }}.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: workbuddy-proxy-${{ matrix.platform }}
+          path: |
+            dist/
+            bench-results/

@@ -1,0 +1,40 @@
+[package]
+name = "workbuddy-proxy-gpui"
+version = "0.5.0"
+edition = "2024"
+license = "MIT"
+
+[workspace]
+
+[dependencies]
+gpui-kit = { version = "=0.7.3", default-features = false, features = ["component"] }
+url = "2"
+ureq = { version = "3", default-features = false, features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+fs2 = "0.4"
+rand = "0.9"
+sha2 = "0.10"
+accesskit = "=0.24.1"
+anyhow = "1"
+sys-locale = "0.3"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[build-dependencies]
+cc = "1"
+
+[profile.release]
+opt-level = "s"
+lto = "thin"
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[profile.dev]
+debug = 0
+
+[profile.test]
+debug = 0
