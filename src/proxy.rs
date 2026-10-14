@@ -345,8 +345,10 @@ impl Bridge {
                         return Err("Invalid model ID".into());
                     }
                     ids.insert(id.to_owned());
-                    if ids.len() > crate::config::MAX_MODELS {
-                        return Err("At most 256 models; upstream returned too many".into());
+                    if ids.len() > crate::model_picker::MAX_DISCOVERED_MODELS {
+                        return Err(
+                            "At most 4096 discovered models; upstream returned too many".into()
+                        );
                     }
                 } else {
                     return Err("Invalid model list".into());
@@ -355,8 +357,8 @@ impl Bridge {
             if ids.is_empty() {
                 return Err("No available models returned".into());
             }
-            if ids.len() > crate::config::MAX_MODELS {
-                return Err("At most 256 models; upstream returned too many".into());
+            if ids.len() > crate::model_picker::MAX_DISCOVERED_MODELS {
+                return Err("At most 4096 discovered models; upstream returned too many".into());
             }
             Ok(ids.into_iter().collect::<Vec<_>>())
         })

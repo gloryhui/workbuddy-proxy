@@ -38,8 +38,8 @@ pub fn message(text: &str, zh: bool) -> String {
             "Invalid thinking effort" => "思考强度无效",
             "Invalid language" => "语言选项无效",
             "At most 256 models" => "最多支持 256 个模型",
-            "At most 256 models; upstream returned too many" => {
-                "上游返回超过 256 个模型，请手动选择所需模型"
+            "At most 4096 discovered models; upstream returned too many" => {
+                "上游返回超过 4096 个模型，请缩小上游模型列表后重试"
             }
             "Connection failed; check network and proxy" => "连接失败，请检查网络和代理",
             "Connection timeout" => "连接超时",

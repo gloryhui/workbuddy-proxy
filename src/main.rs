@@ -5,6 +5,7 @@ mod diagnostic;
 mod frontend;
 mod i18n;
 mod journal;
+mod model_picker;
 mod native;
 mod port;
 mod proxy;
