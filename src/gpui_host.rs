@@ -137,6 +137,15 @@ pub extern "C" fn wb_gpui_stop() {
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_gpui_exit_requested() -> i32 {
+    // Reap a closed settings child promptly rather than retaining a zombie or
+    // a Windows process handle until the user next opens the window.
+    if let Ok(mut child) = SETTINGS.try_lock()
+        && child
+            .as_mut()
+            .is_some_and(|p| matches!(p.try_wait(), Ok(Some(_))))
+    {
+        *child = None;
+    }
     crate::native::CONTEXT
         .get()
         .is_some_and(|c| c.bridge.dir.join("gpui-exit-host").exists()) as i32

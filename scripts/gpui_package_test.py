@@ -28,7 +28,9 @@ def running(pid):
         if not handle:return False
         try:return kernel.WaitForSingleObject(handle,0)==258
         finally:kernel.CloseHandle(handle)
-    try:return bool(subprocess.check_output(['ps','-o','stat=','-p',str(pid)],text=True).strip().strip('Z'))
+    try:
+        state=subprocess.check_output(['ps','-o','stat=','-p',str(pid)],text=True).strip()
+        return bool(state) and not state.startswith('Z')
     except subprocess.CalledProcessError:return False
 
 
