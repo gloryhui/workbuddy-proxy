@@ -15,7 +15,25 @@ from connection_test import DiagnosticUpstream
 from smoke import ThreadingHTTPServer, free_port
 from benchmark import rss_kib
 
+def running(pid):
+    if platform.system() == 'Windows':
+        import ctypes
+        from ctypes import wintypes
+        kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+        kernel.OpenProcess.argtypes=[wintypes.DWORD,wintypes.BOOL,wintypes.DWORD]
+        kernel.OpenProcess.restype=wintypes.HANDLE
+        kernel.WaitForSingleObject.argtypes=[wintypes.HANDLE,wintypes.DWORD]
+        kernel.CloseHandle.argtypes=[wintypes.HANDLE]
+        handle=kernel.OpenProcess(0x100000,False,pid)
+        if not handle:return False
+        try:return kernel.WaitForSingleObject(handle,0)==258
+        finally:kernel.CloseHandle(handle)
+    try:return bool(subprocess.check_output(['ps','-o','stat=','-p',str(pid)],text=True).strip().strip('Z'))
+    except subprocess.CalledProcessError:return False
+
+
 def rss(pid):
+    if not running(pid):return 0
     try:return rss_kib(pid)
     except (OSError,subprocess.CalledProcessError,ValueError):return 0
 
@@ -85,11 +103,15 @@ def main():
             snapshot=json.loads(action({'command':'snapshot'}));assert len(snapshot['logs'])>=2
             action({'command':'clear_logs'});assert json.loads(action({'command':'snapshot'}))['logs']==[]
             action({'command':'test','provider_id':'qa-provider','model_index':3});assert upstream.seen_models[-1]=='model-3'
+        saved_name=read('config.json')['providers'][0]['name']
+        second=subprocess.run([str(exe),'--config-dir',str(directory)],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,timeout=8)
+        assert second.returncode==0,'Opening the app again failed'
+        time.sleep(.4)
+        assert read('frontend.json')['pid']==host.pid and read('gpui.json')['pid']==ui['pid'],'Opening again created another application instance'
         first_ui=ui['pid']
         (directory/'gpui-stop.json').write_text('true')
         wait(lambda:not (directory/'gpui.json').exists(),'Closing settings did not release GPUI')
-        time.sleep(.5)
-        assert rss(first_ui)==0,'GPUI settings process is still resident'
+        wait(lambda:not running(first_ui),'GPUI settings process is still resident',seconds=8)
         assert read('instance.json')['pid']==core['pid'] and read('frontend.json')['pid']==host.pid
         metrics['settings_closed_rss_mib']=round((rss(core['pid'])+rss(host.pid))/1024,2)
         metrics['processes_after_close']=2
@@ -99,9 +121,10 @@ def main():
         wake()
         ui=wait(lambda:read('gpui.json'),'Tray could not reopen GPUI settings')
         assert ui['pid']!=first_ui and read('instance.json')['pid']==core['pid']
+        time.sleep(.7)  # Let the reopened window capture and persist its actual restored state.
         wait(lambda:read('gpui-drafts.json')['providers']['qa-provider']['name']=='Unsaved package draft','Draft was lost on reopen')
-        assert read('config.json')['providers'][0]['name']=='Fixture provider','Unsaved draft overwrote saved configuration'
-        metrics['checks']=['separate lightweight core/tray/GPUI processes','real loopback streaming diagnostic with selected model','ordered core log clear','closing settings releases GPUI without stopping the core','tray reopens settings using the same core','private unsaved drafts survive reopening without changing config.json']
+        assert read('config.json')['providers'][0]['name']==saved_name,'Unsaved draft overwrote saved configuration'
+        metrics['checks']=['separate lightweight core/tray/GPUI processes','repeated launch reuses the existing application instance','real loopback streaming diagnostic with selected model','ordered core log clear','closing settings releases GPUI without stopping the core','tray reopens settings using the same core','private unsaved drafts survive reopening without changing config.json']
         metrics['result']='passed';output.write_text(json.dumps(metrics,ensure_ascii=False,indent=2)+'\n')
         print('PASS: packaged GPUI lifecycle, management API, log clear, selected-model diagnostic, draft persistence and resident-process measurements',flush=True)
     finally:

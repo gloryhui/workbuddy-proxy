@@ -229,6 +229,15 @@ impl Proxy {
         };
         this.load_form(window, cx);
         this.focus.focus(window, cx);
+        for state in [&this.edit_name, &this.edit_model] {
+            cx.subscribe_in(state, window, |this, _, event, window, cx| {
+                if matches!(event, InputEvent::PressEnter { .. }) && this.editing.is_some() {
+                    this.confirm_edit(cx);
+                    this.table_focus.focus(window, cx);
+                }
+            })
+            .detach();
+        }
         cx.subscribe(&this.search, |_, _, event, cx| {
             if matches!(event, InputEvent::Change) {
                 cx.notify();
@@ -329,6 +338,9 @@ impl Proxy {
             .unwrap_or_default()
     }
     fn save(&mut self, _: &Save, _: &mut Window, cx: &mut Context<Self>) {
+        if self.picker.is_some() || self.editing.is_some() || self.delete_open || self.effort_open {
+            return;
+        }
         let steps = self.save_steps(cx);
         if !steps.is_empty() {
             self.send("save", steps, cx);
@@ -537,6 +549,7 @@ impl Proxy {
                         self.picked.clear();
                         self.only_picked = false;
                         self.search.update(cx, |s, cx| s.set_value("", window, cx));
+                        self.search.read(cx).focus_handle(cx).focus(window, cx);
                     }
                     if let Some(cfg) = reply.config {
                         self.update_config(cfg, &reply.tag, window, cx);
@@ -601,6 +614,7 @@ impl Proxy {
         self.edit_model.update(cx, |s, cx| {
             s.set_value(row["model"].as_str().unwrap_or("").to_owned(), window, cx)
         });
+        self.edit_model.read(cx).focus_handle(cx).focus(window, cx);
         cx.notify();
     }
     fn confirm_edit(&mut self, cx: &mut Context<Self>) {
@@ -638,11 +652,12 @@ impl Proxy {
         self.editing = None;
         cx.notify();
     }
-    fn dismiss(&mut self, _: &Dismiss, _: &mut Window, cx: &mut Context<Self>) {
+    fn dismiss(&mut self, _: &Dismiss, window: &mut Window, cx: &mut Context<Self>) {
         self.picker = None;
         self.editing = None;
         self.effort_open = false;
         self.delete_open = false;
+        self.focus.focus(window, cx);
         cx.notify();
     }
     fn quit(&mut self, _: &Quit, _: &mut Window, cx: &mut Context<Self>) {
@@ -1159,6 +1174,7 @@ impl Proxy {
         };
         Some(
             div()
+                .occlude()
                 .absolute()
                 .inset_0()
                 .flex()
