@@ -47,6 +47,9 @@ jobs:
         run: python scripts/connection_test.py --exe "${{ matrix.binary }}"
       - name: Live port switching, conflict checks and WorkBuddy URL migration
         run: python scripts/port_change.py --exe "${{ matrix.binary }}"
+      - name: Replace incompatible background cores before native settings
+        if: runner.os != 'Linux'
+        run: python scripts/core_compatibility.py --exe "${{ matrix.binary }}"
       - name: Native Windows window smoke checks
         if: runner.os == 'Windows'
         run: python scripts/smoke.py --exe "${{ matrix.binary }}" --gui
@@ -67,6 +70,14 @@ jobs:
       - name: Package native desktop executable
         if: runner.os != 'Linux'
         run: python scripts/package.py --exe "${{ matrix.binary }}" --platform "${{ matrix.platform }}"
+      - name: Run the unpacked Windows test package
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $packageRoot = Join-Path $env:RUNNER_TEMP 'workbuddy-packaged-smoke'
+          Expand-Archive -Path 'dist/workbuddy-proxy-0.4.0-windows-x64.zip' -DestinationPath $packageRoot
+          $packagedExe = (Get-ChildItem -Path $packageRoot -Filter 'workbuddy-proxy.exe' -Recurse).FullName
+          python scripts/smoke.py --exe "$packagedExe" --gui
       - name: Mac drag-to-install disk image checks
         if: runner.os == 'macOS'
         run: python scripts/macos_package.py --dmg "dist/workbuddy-proxy-0.4.0-${{ matrix.platform }}.dmg"

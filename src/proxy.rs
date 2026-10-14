@@ -521,7 +521,7 @@ async fn health(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Bo
     Response::builder()
         .header("Content-Type", "application/json")
         .body(Body::from(
-            json!({"app":"workbuddy-proxy","version":env!("CARGO_PKG_VERSION"),"ready":true})
+            json!({"app":"workbuddy-proxy","version":env!("CARGO_PKG_VERSION"),"control_protocol":crate::CONTROL_PROTOCOL,"ready":true})
                 .to_string(),
         ))
         .unwrap()

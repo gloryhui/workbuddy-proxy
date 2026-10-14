@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import plistlib
 import subprocess
+import sys
 import tempfile
 from ds_store import DSStore
 
@@ -40,6 +41,8 @@ def main():
             assert os.access(executable, os.X_OK)
             version = subprocess.check_output([str(executable), '--version'], text=True).strip()
             assert version == info['CFBundleShortVersionString']
+            subprocess.run([sys.executable, 'scripts/core_compatibility.py', '--exe', str(executable)], check=True)
+            subprocess.run([sys.executable, 'scripts/connection_test.py', '--exe', str(executable)], check=True)
             print('PASS: read-only DMG, Finder layout, Applications link, regular-app metadata, copied app signature/executable/version and no user configuration')
         finally:
             subprocess.run(['hdiutil', 'detach', str(mount)], check=True, stdout=subprocess.DEVNULL)

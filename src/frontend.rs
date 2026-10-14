@@ -107,7 +107,7 @@ fn alive(value: &Instance) -> bool {
             .is_ok_and(|r| r.status().is_success())
     })
 }
-fn version(value: &Instance) -> Result<String, String> {
+fn compatible(value: &Instance) -> Result<bool, String> {
     let rt = tokio::runtime::Builder::new_current_thread()
         .enable_all()
         .build()
@@ -127,7 +127,8 @@ fn version(value: &Instance) -> Result<String, String> {
             .await
             .map_err(|e| e.to_string())?;
         let data: Value = serde_json::from_slice(&bytes).map_err(|e| e.to_string())?;
-        Ok(data["version"].as_str().unwrap_or("").to_owned())
+        Ok(data["version"] == env!("CARGO_PKG_VERSION")
+            && data["control_protocol"].as_u64() == Some(crate::CONTROL_PROTOCOL.into()))
     })
 }
 fn stop_old(value: &Instance, dir: &Path) -> Result<(), String> {
@@ -213,7 +214,7 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
         .map_err(|e| e.to_string())?;
     let mut existing = instance(&dir).filter(alive);
     let outdated = if let Some(i) = &existing {
-        version(i)? != env!("CARGO_PKG_VERSION")
+        !compatible(i)?
     } else {
         false
     };

@@ -23,6 +23,10 @@ use std::{
     time::Duration,
 };
 
+// Bump when native controllers require new management commands or semantics.
+// Release versions alone cannot distinguish successive local review builds.
+const CONTROL_PROTOCOL: u32 = 1;
+
 #[derive(Serialize, Deserialize)]
 struct Instance {
     #[serde(default)]
