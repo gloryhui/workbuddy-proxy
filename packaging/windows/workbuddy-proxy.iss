@@ -1,0 +1,66 @@
+#ifndef SourceDir
+  #error SourceDir is required
+#endif
+#ifndef OutputDir
+  #error OutputDir is required
+#endif
+#ifndef PackageName
+  #error PackageName is required
+#endif
+#ifndef DisplayVersion
+  #define DisplayVersion "0.4.0 Preview 04"
+#endif
+
+[Setup]
+; Preview has its own uninstall identity; it cannot replace the formal release.
+AppId=WorkBuddyProxy-GPUI-Preview
+AppName=WorkBuddy Proxy Preview
+AppVersion={#DisplayVersion}
+AppPublisher=gloryhui
+AppPublisherURL=https://github.com/gloryhui/workbuddy-proxy
+DefaultDirName={localappdata}\Programs\WorkBuddy Proxy Preview
+DefaultGroupName=WorkBuddy Proxy Preview
+DisableDirPage=no
+DisableProgramGroupPage=yes
+PrivilegesRequired=lowest
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+MinVersion=10.0
+WizardStyle=modern
+SetupIconFile=..\..\assets\app-icon.ico
+UninstallDisplayIcon={app}\workbuddy-proxy.exe
+OutputDir={#OutputDir}
+OutputBaseFilename={#PackageName}-setup
+Compression=lzma2
+SolidCompression=yes
+CloseApplications=yes
+CloseApplicationsFilter=*.exe
+RestartApplications=no
+UsePreviousAppDir=yes
+Uninstallable=yes
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+#if FileExists(AddBackslash(CompilerPath) + "Languages\ChineseSimplified.isl")
+Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+#endif
+
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
+[Files]
+Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+[InstallDelete]
+; Remove only the legacy helper name from a previous portable layout.
+Type: files; Name: "{app}\workbuddy-proxy-gpui.exe"
+
+[Icons]
+Name: "{group}\WorkBuddy Proxy Preview"; Filename: "{app}\workbuddy-proxy.exe"; WorkingDir: "{app}"
+Name: "{group}\{cm:UninstallProgram,WorkBuddy Proxy Preview}"; Filename: "{uninstallexe}"
+Name: "{autodesktop}\WorkBuddy Proxy Preview"; Filename: "{app}\workbuddy-proxy.exe"; WorkingDir: "{app}"; Tasks: desktopicon
+
+[Run]
+Filename: "{app}\workbuddy-proxy.exe"; Description: "{cm:LaunchProgram,WorkBuddy Proxy Preview}"; Flags: nowait postinstall skipifsilent
+
+; Configuration/logs are outside {app}. No UninstallDelete or user-data cleanup.

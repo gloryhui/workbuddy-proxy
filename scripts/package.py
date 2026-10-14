@@ -34,7 +34,8 @@ def main():
                     plistlib.dump({'CFBundleName':'WorkBuddy Proxy','CFBundleDisplayName':'WorkBuddy Proxy','CFBundleIdentifier':'io.github.gloryhui.workbuddy-proxy.gpui-preview.settings','CFBundleExecutable':'workbuddy-proxy-gpui','CFBundlePackageType':'APPL','CFBundleIconFile':'app-icon.icns','CFBundleShortVersionString':args.version,'CFBundleVersion':'10','LSMinimumSystemVersion':'12.0','LSUIElement':False,'NSHighResolutionCapable':True},f)
                 subprocess.run(['codesign','--force','--sign','-',str(helper.parent)],check=True)
             else:
-                shutil.copy(args.gpui,root/'workbuddy-proxy-gpui.exe')
+                internal=root/'internal';internal.mkdir()
+                shutil.copy(args.gpui,internal/'workbuddy-settings.exe')
             shutil.copy('docs/gpui-preview.md',root/'GPUI-PREVIEW.md')
         shutil.copy('README.md',root/'README.md');shutil.copy('LICENSE',root/'LICENSE');shutil.copy('CHANGELOG.md',root/'CHANGELOG.md')
         (root/'assets').mkdir();shutil.copy('assets/icon-128.png',root/'assets/icon-128.png')

@@ -1689,7 +1689,7 @@ impl Render for Proxy {
                                         ),
                                     )),
                             )
-                            .child(Tag::info().small().child("GPUI Kit Preview 03")),
+                            .child(Tag::info().small().child("GPUI Kit Preview 04")),
                     )
                     .child(
                         div()

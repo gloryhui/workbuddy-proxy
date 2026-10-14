@@ -13,6 +13,16 @@ unsafe extern "C" {
     fn wb_gpui_host_quit();
 }
 fn executable() -> Option<PathBuf> {
+    #[cfg(windows)]
+    {
+        let directory = std::env::current_exe().ok()?.parent()?.to_path_buf();
+        let helper = directory.join("internal/workbuddy-settings.exe");
+        if helper.is_file() {
+            return Some(helper);
+        }
+        // Existing portable previews remain usable during the layout migration.
+        Some(directory.join("workbuddy-proxy-gpui.exe"))
+    }
     #[cfg(target_os = "macos")]
     {
         let path = std::env::current_exe()
@@ -23,15 +33,12 @@ fn executable() -> Option<PathBuf> {
             return Some(path);
         }
     }
+    #[cfg(not(windows))]
     Some(
         std::env::current_exe()
             .ok()?
             .parent()?
-            .join(if cfg!(windows) {
-                "workbuddy-proxy-gpui.exe"
-            } else {
-                "workbuddy-proxy-gpui"
-            }),
+            .join("workbuddy-proxy-gpui"),
     )
 }
 pub fn available() -> bool {
