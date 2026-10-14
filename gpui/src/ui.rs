@@ -437,7 +437,7 @@ impl Proxy {
         });
         let _ = config::write_json(
             &this.dir.join("gpui.json"),
-            &json!({"pid":std::process::id(),"preview":1}),
+            &json!({"pid":std::process::id(),"version":env!("CARGO_PKG_VERSION")}),
         );
         this
     }
@@ -1689,7 +1689,11 @@ impl Render for Proxy {
                                         ),
                                     )),
                             )
-                            .child(Tag::info().small().child("GPUI Kit Preview 04")),
+                            .child(
+                                Tag::info()
+                                    .small()
+                                    .child(concat!("v", env!("CARGO_PKG_VERSION"))),
+                            ),
                     )
                     .child(
                         div()
@@ -1737,10 +1741,7 @@ impl Render for Proxy {
             .size_full()
             .flex()
             .flex_col()
-            .child(
-                TitleBar::new()
-                    .child(Label::new("WorkBuddy Proxy · GPUI Preview").text_size(px(12.))),
-            )
+            .child(TitleBar::new().child(Label::new("WorkBuddy Proxy").text_size(px(12.))))
             .child(content.flex_1().min_h_0())
     }
 }

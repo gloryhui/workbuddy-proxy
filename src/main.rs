@@ -1,14 +1,15 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 mod config;
+#[allow(dead_code)] // Shared diagnostic rendering is used by the settings binary.
 mod diagnostic;
 #[cfg(any(windows, target_os = "macos"))]
 mod frontend;
 #[cfg(any(windows, target_os = "macos"))]
 mod gpui_host;
+#[allow(dead_code)] // Shared localization is used by the settings binary.
 mod i18n;
 mod journal;
-mod model_picker;
-mod native;
+mod platform;
 mod port;
 mod proxy;
 mod session;
@@ -42,7 +43,7 @@ fn main() {
         if std::env::args().any(|arg| arg == "--headless") {
             eprintln!("{message}");
         } else {
-            native::error(&message);
+            platform::error(&message);
         }
         std::process::exit(1);
     }
@@ -184,22 +185,21 @@ fn run() -> Result<(), String> {
         runtime.block_on(async{
             let listener=tokio::net::TcpListener::from_std(listener).unwrap();let listener=port::SwitchingListener::new(listener,port_rx,thread_a.clone()).tap_io(|stream| { if let Err(e)=stream.set_nodelay(true) { eprintln!("Cannot disable local TCP buffering: {e}"); } });let server=axum::serve(listener,thread_a.routes());
             tokio::select!{result=server=>{if let Err(e)=result{eprintln!("Server stopped: {e}");}},_=stop_rx=>{},_=tokio::signal::ctrl_c()=>{}}
-        });native::quit();
+        });platform::quit();
     }).map_err(|e|e.to_string())?;
     let handle = ready_rx
         .recv()
         .map_err(|_| "Network runtime failed to start")?;
-    native::CONTEXT
-        .set(native::Context {
+    platform::CONTEXT
+        .set(platform::Context {
             bridge: a.clone(),
             handle,
-            selected: std::sync::atomic::AtomicUsize::new(0),
             #[cfg(any(windows, target_os = "macos"))]
             remote: None,
         })
         .map_err(|_| "Already initialized")?;
     if !headless {
-        native::run();
+        platform::run();
         if let Some(stop) = a.stop.lock().unwrap().take() {
             let _ = stop.send(());
         }

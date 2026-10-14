@@ -63,7 +63,7 @@ def main():
             'providers':[{'id':'qa-provider','name':'Fixture provider','upstream':f'http://127.0.0.1:{upstream.server_port}/v1','api_key':'fixture-upstream-key',
                           'models':[{'id':f'qa-model-{i:04}','alias':f'wbp-qa-model-{i:04}','name':f'Model {i:02}','model':f'model-{i}','reasoning_effort':'default'} for i in range(64)]}]}
     (directory/'config.json').write_text(json.dumps(config))
-    (directory/'update-cache.json').write_text(json.dumps({'tag':'v0.4.0','checked_at':int(time.time())}))
+    (directory/'update-cache.json').write_text(json.dumps({'tag':'v'+__import__('tomllib').loads(Path('Cargo.toml').read_text())['package']['version'],'checked_at':int(time.time())}))
     home=directory/'home';home.mkdir(exist_ok=True);env=os.environ.copy();env['HOME']=env['USERPROFILE']=str(home)
     host=subprocess.Popen([str(exe),'--config-dir',str(directory)],env=env,start_new_session=platform.system()!='Windows',stdout=(directory/'host.stdout.log').open('wb'),stderr=(directory/'host.stderr.log').open('wb'))
     core=None;ui=None;metrics={}

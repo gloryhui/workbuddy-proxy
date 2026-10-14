@@ -8,18 +8,19 @@
   #error PackageName is required
 #endif
 #ifndef DisplayVersion
-  #define DisplayVersion "0.4.0 Preview 04"
+  #define DisplayVersion "0.5.0"
 #endif
 
 [Setup]
-; Preview has its own uninstall identity; it cannot replace the formal release.
-AppId=WorkBuddyProxy-GPUI-Preview
-AppName=WorkBuddy Proxy Preview
+; Stable per-user identity, separate from older preview installations.
+AppId=WorkBuddyProxy
+AppName=WorkBuddy Proxy
 AppVersion={#DisplayVersion}
+UninstallDisplayName=WorkBuddy Proxy
 AppPublisher=gloryhui
 AppPublisherURL=https://github.com/gloryhui/workbuddy-proxy
-DefaultDirName={localappdata}\Programs\WorkBuddy Proxy Preview
-DefaultGroupName=WorkBuddy Proxy Preview
+DefaultDirName={localappdata}\Programs\WorkBuddy Proxy
+DefaultGroupName=WorkBuddy Proxy
 DisableDirPage=no
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
@@ -56,12 +57,12 @@ Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs 
 Type: files; Name: "{app}\workbuddy-proxy-gpui.exe"
 
 [Icons]
-Name: "{group}\WorkBuddy Proxy Preview"; Filename: "{app}\workbuddy-proxy.exe"; WorkingDir: "{app}"
-Name: "{group}\{cm:UninstallProgram,WorkBuddy Proxy Preview}"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\WorkBuddy Proxy Preview"; Filename: "{app}\workbuddy-proxy.exe"; WorkingDir: "{app}"; Tasks: desktopicon
+Name: "{group}\WorkBuddy Proxy"; Filename: "{app}\workbuddy-proxy.exe"; WorkingDir: "{app}"
+Name: "{group}\{cm:UninstallProgram,WorkBuddy Proxy}"; Filename: "{uninstallexe}"
+Name: "{autodesktop}\WorkBuddy Proxy"; Filename: "{app}\workbuddy-proxy.exe"; WorkingDir: "{app}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\workbuddy-proxy.exe"; Description: "{cm:LaunchProgram,WorkBuddy Proxy Preview}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\workbuddy-proxy.exe"; Description: "{cm:LaunchProgram,WorkBuddy Proxy}"; Flags: nowait postinstall skipifsilent
 
 ; Configuration/logs are outside {app}. No UninstallDelete or user-data cleanup.
 

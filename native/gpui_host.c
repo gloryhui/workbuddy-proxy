@@ -29,7 +29,23 @@ void wb_gpui_host_run(void){
     HINSTANCE instance=GetModuleHandleW(NULL);char *language=wb_value("language");hostChinese=strcmp(language,"zh")==0||(strcmp(language,"auto")==0&&PRIMARYLANGID(GetUserDefaultUILanguage())==LANG_CHINESE);wb_free(language);
     WNDCLASSW cls={0};cls.lpfnWndProc=hostProcedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hIcon=LoadIconW(instance,MAKEINTRESOURCEW(1));RegisterClassW(&cls);
     hostWindow=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPED,0,0,0,0,NULL,NULL,instance,NULL);if(!hostWindow)return;
-    memset(&hostIcon,0,sizeof(hostIcon));hostIcon.cbSize=sizeof(hostIcon);hostIcon.hWnd=hostWindow;hostIcon.uID=1;hostIcon.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;hostIcon.uCallbackMessage=WM_APP+1;hostIcon.hIcon=cls.hIcon;lstrcpyW(hostIcon.szTip,L"WorkBuddy Proxy · GPUI");Shell_NotifyIconW(NIM_ADD,&hostIcon);
+    memset(&hostIcon,0,sizeof(hostIcon));hostIcon.cbSize=sizeof(hostIcon);hostIcon.hWnd=hostWindow;hostIcon.uID=1;hostIcon.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;hostIcon.uCallbackMessage=WM_APP+1;hostIcon.hIcon=cls.hIcon;lstrcpyW(hostIcon.szTip,L"WorkBuddy Proxy");Shell_NotifyIconW(NIM_ADD,&hostIcon);
     SetTimer(hostWindow,1,500,NULL);wb_frontend_ready();wb_gpui_open();MSG message;while(GetMessageW(&message,NULL,0,0)>0){TranslateMessage(&message);DispatchMessageW(&message);}
 }
 void wb_gpui_host_quit(void){if(hostWindow)PostMessageW(hostWindow,WM_APP+4,0,0);}
+struct ShowTarget { DWORD pid; HWND window; };
+static BOOL CALLBACK findHost(HWND window,LPARAM data){
+    struct ShowTarget *target=(struct ShowTarget *)data;DWORD pid=0;GetWindowThreadProcessId(window,&pid);
+    wchar_t name[80];GetClassNameW(window,name,80);
+    if(pid==target->pid&&lstrcmpW(name,L"WorkBuddyProxyWindow")==0){target->window=window;return FALSE;}
+    return TRUE;
+}
+int wb_platform_show_process(unsigned int pid){
+    struct ShowTarget target={pid,NULL};EnumWindows(findHost,(LPARAM)&target);
+    if(!target.window)return 0;AllowSetForegroundWindow(pid);return PostMessageW(target.window,WM_APP+3,0,0)!=0;
+}
+void wb_platform_error(const char *message){
+    int count=MultiByteToWideChar(CP_UTF8,0,message,-1,NULL,0);
+    wchar_t *wide=(wchar_t *)HeapAlloc(GetProcessHeap(),0,(size_t)count*sizeof(wchar_t));
+    if(wide){MultiByteToWideChar(CP_UTF8,0,message,-1,wide,count);MessageBoxW(NULL,wide,L"WorkBuddy Proxy",MB_OK|MB_ICONERROR);HeapFree(GetProcessHeap(),0,wide);}
+}

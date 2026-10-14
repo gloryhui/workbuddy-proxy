@@ -1,4 +1,4 @@
-# GPUI preview third-party notices
+# Third-party notices
 
 This application uses GPUI (Zed Industries and contributors), GPUI Kit and GPUI Component (Longbridge and contributors), under the Apache License 2.0. The license text is included in LICENSE-APACHE-GPUI.txt.
 

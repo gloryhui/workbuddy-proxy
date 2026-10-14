@@ -9,6 +9,7 @@ import platform
 import subprocess
 import tempfile
 import time
+import tomllib
 import zipfile
 
 
@@ -33,6 +34,7 @@ def main():
     args = parser.parse_args()
     setup = Path(args.setup).resolve()
     archive = Path(args.zip).resolve()
+    version = tomllib.loads(Path('Cargo.toml').read_text())['package']['version']
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='workbuddy-install-qa-') as temp:
@@ -41,10 +43,10 @@ def main():
         data = directory / 'private-fixture'
         # Do not overwrite a real installation registration on a developer machine.
         import winreg
-        uninstall_key = r'Software\Microsoft\Windows\CurrentVersion\Uninstall\WorkBuddyProxy-GPUI-Preview_is1'
+        uninstall_key = r'Software\Microsoft\Windows\CurrentVersion\Uninstall\WorkBuddyProxy_is1'
         try:
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER, uninstall_key):
-                raise AssertionError('Existing preview installation detected; use isolated CI')
+                raise AssertionError('Existing installation detected; use isolated CI')
         except FileNotFoundError:
             pass
         installed = False
@@ -70,6 +72,10 @@ def main():
                     assert hashlib.sha256(z.read(entries[0])).digest() == hashlib.sha256((install / tail).read_bytes()).digest()
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER, uninstall_key) as key:
                 assert Path(winreg.QueryValueEx(key, 'InstallLocation')[0]).resolve() == install.resolve()
+                assert winreg.QueryValueEx(key, 'DisplayName')[0] == 'WorkBuddy Proxy'
+                assert winreg.QueryValueEx(key, 'DisplayVersion')[0] == version
+            for binary in ('workbuddy-proxy.exe', 'internal/workbuddy-settings.exe'):
+                assert subprocess.check_output([str(install / binary), '--version'], text=True).strip() == version
             # COM reads shortcut metadata; it does not send GUI input.
             env = os.environ.copy()
             env['WBP_INSTALL_QA'] = str(install)
@@ -77,8 +83,8 @@ def main():
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 $shell = New-Object -ComObject Shell.Application
 $paths = @(
- (Join-Path ([Environment]::GetFolderPath('Programs')) 'WorkBuddy Proxy Preview\\WorkBuddy Proxy Preview.lnk'),
- (Join-Path ([Environment]::GetFolderPath('Desktop')) 'WorkBuddy Proxy Preview.lnk')
+ (Join-Path ([Environment]::GetFolderPath('Programs')) 'WorkBuddy Proxy\\WorkBuddy Proxy.lnk'),
+ (Join-Path ([Environment]::GetFolderPath('Desktop')) 'WorkBuddy Proxy.lnk')
 )
 $targets = foreach ($p in $paths) {
  if (!(Test-Path $p)) { throw "Missing shortcut: $p" }

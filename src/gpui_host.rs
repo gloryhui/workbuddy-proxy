@@ -45,7 +45,7 @@ pub fn available() -> bool {
     executable().is_some_and(|p| p.is_file())
 }
 pub fn run() {
-    if let Some(ctx) = crate::native::CONTEXT.get() {
+    if let Some(ctx) = crate::platform::CONTEXT.get() {
         let _ = std::fs::remove_file(ctx.bridge.dir.join("gpui-exit-host"));
     }
     unsafe { wb_gpui_host_run() };
@@ -56,7 +56,7 @@ pub fn quit() {
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_gpui_open() {
-    let Some(ctx) = crate::native::CONTEXT.get() else {
+    let Some(ctx) = crate::platform::CONTEXT.get() else {
         return;
     };
     let mut child = SETTINGS.lock().unwrap();
@@ -119,12 +119,14 @@ pub extern "C" fn wb_gpui_open() {
             }
             *child = Some(p);
         }
-        Err(_) => crate::native::error("Cannot open GPUI settings / 无法打开 GPUI 设置窗口"),
+        Err(_) => crate::platform::error(
+            "Cannot open WorkBuddy Proxy settings / 无法打开 WorkBuddy Proxy 设置窗口",
+        ),
     }
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn wb_gpui_stop() {
-    let Some(ctx) = crate::native::CONTEXT.get() else {
+    let Some(ctx) = crate::platform::CONTEXT.get() else {
         return;
     };
     let _ = crate::config::write_json(&ctx.bridge.dir.join("gpui-stop.json"), &true);
@@ -153,7 +155,7 @@ pub extern "C" fn wb_gpui_exit_requested() -> i32 {
     {
         *child = None;
     }
-    crate::native::CONTEXT
+    crate::platform::CONTEXT
         .get()
         .is_some_and(|c| c.bridge.dir.join("gpui-exit-host").exists()) as i32
 }

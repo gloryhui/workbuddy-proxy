@@ -28,7 +28,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--zip', required=True)
     parser.add_argument('--output', default='dist')
-    parser.add_argument('--display-version', default='0.4.0 GPUI Kit Preview 04')
+    parser.add_argument('--display-version', default='0.5.0')
     args = parser.parse_args()
     archive = Path(args.zip).resolve()
     out = Path(args.output).resolve()

@@ -80,9 +80,6 @@ impl Provider {
     pub fn is_draft(&self) -> bool {
         self.upstream.is_empty() && self.api_key.is_empty() && self.models.is_empty()
     }
-    pub fn label(&self) -> String {
-        format!("{} · {} 个模型", self.name, self.models.len())
-    }
     pub fn set_model_rows(
         &mut self,
         rows: &[serde_json::Value],
@@ -120,31 +117,6 @@ impl Provider {
         self.models = models;
         Ok(())
     }
-    pub fn model_lines(&self) -> String {
-        self.models
-            .iter()
-            .map(|m| {
-                if m.name == m.model {
-                    m.model.clone()
-                } else {
-                    format!("{} | {}", m.model, m.name)
-                }
-            })
-            .collect::<Vec<_>>()
-            .join("\n")
-    }
-    pub fn effort(&self) -> &str {
-        let first = self
-            .models
-            .first()
-            .map_or("default", |m| m.reasoning_effort.as_str());
-        if self.models.iter().all(|m| m.reasoning_effort == first) {
-            first
-        } else {
-            "keep"
-        }
-    }
-    // Preserve IDs, aliases and per-model options when editing the supplier's list.
     pub fn set_models(&mut self, lines: &str, effort: &str) -> Result<(), String> {
         if !matches!(effort, "keep" | "default" | "none" | "low" | "high" | "max") {
             return Err("Invalid thinking effort".into());

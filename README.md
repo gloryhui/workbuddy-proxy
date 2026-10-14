@@ -33,7 +33,7 @@
 
 | 能力 | 使用体验 |
 | --- | --- |
-| 🪶 轻量原生 | Rust 转发核心，Windows Win32 / Mac AppKit 界面；解压即可运行 |
+| 🪶 轻量界面 | Rust 转发核心，GPUI Kit 统一界面；关闭设置释放界面进程 |
 | 🧩 一份配置，多个模型 | 同一个供应商只填一次 URL 和 Key，模型列表每行添加一个 ID |
 | 🔀 同名模型独立选路 | 多个账号、多个供应商使用相同模型 ID，也能在 WorkBuddy 中分别选择 |
 | 🌊 流式透传 | 默认只还原模型别名，保留其余请求字节、流式响应与上游错误 |
@@ -48,23 +48,19 @@
 
 ## 下载与安装
 
-### 当前开发版（尚未正式发布）
+### v0.5.0 正式版
 
-当前代码已增加无供应商时的添加引导、Mac DMG 拖入安装、标准应用 / Dock 模式、输入框复制粘贴与双击全选，以及 API Key 小眼睛开关和保存后回显。这些变更目前用于本地检查，尚未覆盖 GitHub Release。下方下载链接仍指向已发布的 v0.4.0，后续功能说明以当前开发代码为准。
+| 系统 | 下载 | 安装方式 |
+| --- | --- | --- |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-windows-x64-setup.exe) | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-arm64.dmg) | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-x64.dmg) | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
-### v0.4.0 正式版
+Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
-| 系统 | 下载 | 安装包大小 | 启动方式 |
-| --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-windows-x64.zip) | 约 2 MB | 解压，双击 `workbuddy-proxy.exe` |
-| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.zip) | 约 4.1 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
-| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.zip) | 约 4.2 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+主分支只维护 GPUI Kit 统一界面；Win32 / AppKit 旧设置界面完整保存在 [backup 分支](https://github.com/gloryhui/workbuddy-proxy/tree/backup)，不再维护。少量平台适配代码仅负责托盘、唤醒和错误提示。
 
-GPUI 测试版另提供简体中文界面的 Windows `-setup.exe` 安装包，可选择安装目录，默认勾选创建桌面快捷方式（可取消），并从系统应用列表卸载。便携 ZIP 顶层只有 `workbuddy-proxy.exe`；界面辅助程序位于 `internal/workbuddy-settings.exe`，无需单独运行。测试包通过 Actions 提供，尚未替换正式 Release。
-
-Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP / DMG，每个人填写自己的 Key 即可。
-
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [源代码 ZIP](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-source.zip) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/SHA256SUMS) · [性能原始数据](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/SHA256SUMS.txt)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
@@ -117,22 +113,11 @@ Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、N
 
 可用按钮显示清晰描边和深色文字，悬停 / 按下有反馈，灰色表示当前不可用。日志统一按“本地时间：操作内容”从旧到新显示，每次操作只记录一次；日志区域提供“清空日志”和“复制日志”，前者同步清空核心记录，后者复制服务摘要及全部当前日志，便于反馈问题；关闭并重开设置窗口仍可查看当前核心进程的日志。连接测试详情包含供应商、模型、请求目标、HTTP 状态、响应头耗时、首个有效 SSE 事件耗时、总耗时及失败提示，收到首个有效事件即结束测试，不等待完整生成。
 
-<p align="center">
-  <img src="docs/native-mac-preview.png" width="1136" alt="Mac 原生界面：供应商侧栏、模型表格与运行日志，窗口左上显示应用主图标">
-</p>
-
 WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供应商名称/上游模型 ID**，例如 `opencode/deepseek-v4.1-flash`。重复条目会加固定的 8 位短后缀，例如 `opencode/deepseek-v4.1-flash-a1b2c3d4`；后缀由内部路由标识生成，调整列表顺序不会改变，删除其他重复条目也会保留已同步的后缀。遇到标识碰撞时自动延长后缀。
 
 升级后再次同步，会按内部路由关联并原位更新已安装条目，保留恢复记录和其他已有模型。修改供应商名称或上游模型 ID 后，再次同步会更新对应的可读 ID。旧的 `wbp-<路由标识>` 及更早版本的别名仍可调用；保存更名后、尚未同步时，当前已安装的 ID 也保持可用。本地 `/models` 列表返回相同的可读 ID。
 
 “运行信息与日志”显示本地地址、供应商与模型数、请求数、运行时长和最近 100 条核心事件。日志不会记录 API Key 或对话内容。窗口最小化 / 隐藏后停止轮询。
-
-<details>
-<summary>查看英文界面</summary>
-
-![Mac English UI](docs/native-mac-en-preview.png)
-
-</details>
 
 ### Release 更新检测
 
@@ -214,25 +199,16 @@ flowchart LR
 
 ## 性能实测
 
-轻量化通过发布包和实际进程测量验证。以下来自 **v0.4.0 发布构建**，统一配置为 **1 个供应商、64 个模型**：
+本版将转发核心、托盘和设置界面分为独立进程。关闭设置窗口会释放 GPUI 设置进程，核心继续转发；托盘重新打开会恢复私有草稿。
 
-| 平台 / 模式 | 空闲进程 RSS | 测量范围 |
-| --- | ---: | --- |
-| Windows x64，无界面 | **9.34 MiB** | 仅转发核心 |
-| Windows x64，原生界面 / 托盘 | **36.36 MiB** | 核心与界面进程的 RSS 合计 |
-| Mac Apple Silicon，无界面 | **11.86 MiB** | CI 环境中的转发核心 |
-| Mac Intel，无界面 | **4.35 MiB** | CI 环境中的转发核心 |
-
-小请求的直连 / 代理中位数差值：Windows 原生界面模式约 **0.039 ms**，Mac Apple Silicon 约 **0.079 ms**，Mac Intel 约 **0.258 ms**。这是本地 HTTP 模拟测试中的差值，包含连接复用和调度影响，不是上游模型的响应时间。
-
-不同系统、机器和负载的 RSS 会不同；进程 RSS 合计可能重复计入共享页面，负载后的占用也可能高于初始空闲值。完整延迟、采样峰值、负载后占用和测试条件见 [performance.json](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json) 与 [对应 CI](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38439397537)。
+每次三平台构建都会记录核心延迟/负载基准，以及设置打开、关闭时的进程 RSS。测量采用隔离假 Key 和本机模拟上游，不等于真实模型速度；RSS 合计可能重复计入共享页，GPU 内存未独立测量。原始数据随 [Actions 构建附件](https://github.com/gloryhui/workbuddy-proxy/actions) 提供。
 
 ### 轻量实现
 
 | 部分 | 选择与边界 |
 | --- | --- |
 | 核心 | Rust，单线程 Tokio I/O 调度器，Axum / Hyper / Reqwest |
-| 界面 | Win32 / AppKit 系统原生控件 |
+| 界面 | GPUI Kit 共享组件，虚拟化模型列表 |
 | TLS | 系统原生 TLS，保留证书验证 |
 | 选路 | 内存哈希索引，模型共享供应商 URL / 凭据 |
 | 连接 | 上游池化复用，每个主机最多 2 个空闲连接，60 秒后清理 |
@@ -323,7 +299,7 @@ Windows 包内有 `Diagnose.cmd`，可查看无界面启动诊断。启动日志
 | WorkBuddy 模型配置 | `~/.workbuddy/models.json`，Windows 的 `~` 为当前用户目录 |
 | WorkBuddy 备份 | 与 `models.json` 相邻，名称为 `models.json.workbuddy-proxy-时间戳.bak` |
 
-上游 Key 和本地连接码以明文保存在本机配置中。Unix 目录 / 文件权限为 0700 / 0600；Windows 使用当前用户配置目录的默认权限。**配置目录及备份不要打包分享。** 发布 ZIP / DMG 不包含这些文件。
+上游 Key 和本地连接码以明文保存在本机配置中。Unix 目录 / 文件权限为 0700 / 0600；Windows 使用当前用户配置目录的默认权限。**配置目录及备份不要打包分享。** 安装 EXE / DMG 不包含这些文件。
 
 服务只监听 loopback，校验 Host、Origin 和本地 Key；管理接口使用独立令牌。控制连接禁用系统代理，上游转发可使用系统代理，且关闭重定向。上游 Key 只发往配置的供应商。
 
@@ -353,7 +329,7 @@ python3 scripts/multi_routing.py --exe target/release/workbuddy-proxy
 python3 scripts/benchmark.py --exe target/release/workbuddy-proxy --output bench-results/local.json
 ```
 
-Windows 把可执行文件路径改为 `target/release/workbuddy-proxy.exe`。基准默认配置 64 个模型；可用 `--models` 改变数量，`--gui` 测量包含原生界面的进程 RSS 合计。测试只用假 Key 和临时目录，Python 是开发工具，发布程序运行不依赖它。
+Windows 把可执行文件路径改为 `target/release/workbuddy-proxy.exe`。基准默认配置 64 个模型；可用 `--models` 改变数量，设置进程测量使用 `scripts/gpui_package_test.py`。测试只用假 Key 和临时目录，Python 是开发工具，发布程序运行不依赖它。
 
 ```sh
 # 从源码构建后，以默认配置目录无界面启动
@@ -362,8 +338,11 @@ Windows 把可执行文件路径改为 `target/release/workbuddy-proxy.exe`。�
 # Mac 打包前安装仅构建时使用的 DMG 工具
 python3 -m pip install -r scripts/dmg-requirements.txt
 
-# 在对应平台打包；Mac 同时生成 DMG 和 ZIP，Windows 生成 ZIP
-python3 scripts/package.py --exe target/release/workbuddy-proxy --platform macos-arm64
+# 构建设置程序
+cargo build --manifest-path gpui/Cargo.toml --release --locked
+
+# Mac 打包 DMG；Windows 暂存 ZIP 仅供安装包构建
+python3 scripts/package.py --exe target/release/workbuddy-proxy --gpui gpui/target/release/workbuddy-proxy-gpui --platform macos-arm64
 ```
 
 需要独立配置目录时，可附加 `--config-dir "私有目录路径"`。

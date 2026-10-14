@@ -18,7 +18,7 @@ static WBGPUIHost *hostDelegate;
 @implementation WBGPUIHost
 - (void)applicationDidFinishLaunching:(NSNotification *)note{
     (void)note;char *lang=wb_value("language");BOOL zh=strcmp(lang,"zh")==0||(strcmp(lang,"auto")==0&&[NSLocale.preferredLanguages.firstObject hasPrefix:@"zh"]);wb_free(lang);
-    self.item=[[NSStatusBar systemStatusBar]statusItemWithLength:NSSquareStatusItemLength];NSImage *image=[[NSImage alloc]initWithData:[NSData dataWithBytes:WB_ICON_PNG length:sizeof(WB_ICON_PNG)]];image.size=NSMakeSize(20,20);self.item.button.image=image;self.item.button.toolTip=@"WorkBuddy Proxy · GPUI";
+    self.item=[[NSStatusBar systemStatusBar]statusItemWithLength:NSSquareStatusItemLength];NSImage *image=[[NSImage alloc]initWithData:[NSData dataWithBytes:WB_ICON_PNG length:sizeof(WB_ICON_PNG)]];image.size=NSMakeSize(20,20);self.item.button.image=image;self.item.button.toolTip=@"WorkBuddy Proxy";
     NSMenu *menu=[NSMenu new];for(int i=0;i<2;i++){NSMenuItem *entry=[[NSMenuItem alloc]initWithTitle:i?(zh?@"退出":@"Quit"):(zh?@"设置":@"Settings") action:i?@selector(quit):@selector(show) keyEquivalent:@""];entry.target=self;[menu addItem:entry];}self.item.menu=menu;
     [[NSDistributedNotificationCenter defaultCenter]addObserver:self selector:@selector(wake:) name:@"io.github.gloryhui.workbuddy-proxy.show" object:nil];self.timer=[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(tick) userInfo:nil repeats:YES];wb_frontend_ready();wb_gpui_open();
 }
@@ -30,3 +30,12 @@ static WBGPUIHost *hostDelegate;
 @end
 void wb_gpui_host_run(void){@autoreleasepool{NSApplication *app=[NSApplication sharedApplication];[app setActivationPolicy:NSApplicationActivationPolicyAccessory];hostDelegate=[WBGPUIHost new];app.delegate=hostDelegate;[app run];hostDelegate=nil;}}
 void wb_gpui_host_quit(void){dispatch_async(dispatch_get_main_queue(),^{if(hostDelegate)[hostDelegate quit];});}
+int wb_platform_show_process(unsigned int pid){@autoreleasepool{
+    NSRunningApplication *app=[NSRunningApplication runningApplicationWithProcessIdentifier:(pid_t)pid];
+    if(!app||app.terminated)return 0;
+    [[NSDistributedNotificationCenter defaultCenter]postNotificationName:@"io.github.gloryhui.workbuddy-proxy.show" object:[NSString stringWithFormat:@"%u",pid] userInfo:nil deliverImmediately:YES];return 1;
+}}
+void wb_platform_error(const char *message){@autoreleasepool{
+    [NSApplication sharedApplication];NSAlert *alert=[NSAlert new];
+    alert.messageText=@"WorkBuddy Proxy";alert.informativeText=[NSString stringWithUTF8String:message];[alert runModal];
+}}

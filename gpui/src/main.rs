@@ -30,7 +30,7 @@ fn main() {
                 }
             }
             "--version" => {
-                println!("0.4.0-gpui-kit-preview.4");
+                println!("{}", env!("CARGO_PKG_VERSION"));
                 return;
             }
             _ => {}
@@ -109,7 +109,7 @@ fn main() {
                 cx,
                 move |window, cx| cx.new(|cx| ui::Proxy::new(dir, cfg, window, cx)),
             )
-            .expect("Cannot open GPUI window");
+            .expect("Cannot open WorkBuddy Proxy window");
             cx.on_window_closed(|cx, _| {
                 if cx.windows().is_empty() {
                     cx.quit();
