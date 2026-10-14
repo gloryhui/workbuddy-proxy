@@ -51,6 +51,10 @@ def main():
         command=[exe,'--config-dir',directory];first=subprocess.Popen(command)
         second=None;core=None;duplicates=[]
         try:
+            def caption(control):
+                buffer=ctypes.create_unicode_buffer(256)
+                # WM_GETTEXT marshals control text across processes; GetWindowText cannot read another process's Edit contents.
+                user.SendMessageW(control,0x000D,256,ctypes.cast(buffer,ctypes.c_void_p).value);return buffer.value
             h=wait_window(first);core=json.loads(Path(directory,'instance.json').read_text(encoding='utf-8'))
             assert core['pid']!=first.pid
             for _ in range(200):
@@ -83,6 +87,16 @@ def main():
                 if profile()['providers'][0]['models'][0].get('reasoning_effort')=='high':break
                 time.sleep(.025)
             else:raise AssertionError('Native Save did not persist thinking effort')
+            key_field=user.GetDlgItem(h,102);toggle=user.GetDlgItem(h,212);assert key_field and toggle
+            assert caption(key_field)=='fixture-key','Saved key disappeared from the form'
+            assert user.SendMessageW(key_field,0x00D2,0,0)==ord('*'),'Key must start masked'
+            user.SendMessageW(h,0x0111,212,0)
+            assert user.SendMessageW(key_field,0x00D2,0,0)==0 and caption(key_field)=='fixture-key'
+            user.SendMessageW(h,0x0111,212,0)
+            assert user.SendMessageW(key_field,0x00D2,0,0)==ord('*') and caption(key_field)=='fixture-key'
+            user.SendMessageW(key_field,0x0203,1,4|(4<<16)) # Double-click selects the complete field.
+            selection=user.SendMessageW(key_field,0x00B0,0,0)
+            assert selection&0xffff==0 and selection>>16==len('fixture-key')
             # Edit the real table's first display name through its native cell editor.
             table=user.GetDlgItem(h,103);assert table
             user.FindWindowExW.argtypes=[wintypes.HWND,wintypes.HWND,wintypes.LPCWSTR,wintypes.LPCWSTR];user.FindWindowExW.restype=wintypes.HWND
@@ -123,10 +137,6 @@ def main():
             else:raise AssertionError('Extra test model rows did not save')
             # Switching languages persists a preference and uses one language per button.
             language=user.GetDlgItem(h,110);assert language
-            def caption(control):
-                buffer=ctypes.create_unicode_buffer(256)
-                # WM_GETTEXT marshals control text across processes; GetWindowText cannot read another process's Edit contents.
-                user.SendMessageW(control,0x000D,256,ctypes.cast(buffer,ctypes.c_void_p).value);return buffer.value
             for index,code,title in [(0,'zh','保存'),(1,'en','Save')]:
                 user.SendMessageW(language,0x014E,index,0)
                 user.PostMessageW(h,0x0111,110 | (1<<16),0)

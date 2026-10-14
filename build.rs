@@ -19,6 +19,7 @@ fn main() {
             .compile("native_ui");
         println!("cargo:rustc-link-lib=framework=AppKit");
         println!("cargo:rustc-link-lib=framework=Foundation");
+        println!("cargo:rustc-link-lib=framework=CoreText");
     } else if os == "windows" {
         let target = std::env::var("TARGET").unwrap();
         let rc = cc::windows_registry::find_tool(&target, "rc.exe")

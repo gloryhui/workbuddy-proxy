@@ -141,6 +141,7 @@ pub extern "C" fn wb_value(name: *const c_char) -> *mut c_char {
                 "local_key" => cfg.local_key.clone(),
                 "status" => ctx.bridge.status.lock().unwrap().clone(),
                 "has_key" => if c.api_key.is_empty() { "0" } else { "1" }.into(),
+                "api_key" => c.api_key.clone(),
                 "version" => env!("CARGO_PKG_VERSION").into(),
                 "update_url" => UPDATE.lock().unwrap()["url"].as_str().unwrap_or("").into(),
                 "update_available" => if UPDATE.lock().unwrap()["available"] == true {

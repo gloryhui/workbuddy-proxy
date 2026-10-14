@@ -50,13 +50,15 @@
 
 ### v0.4.0
 
-| 系统 | 下载 | ZIP 大小 | 启动方式 |
+Mac 安装后可通过启动台、Dock 或“应用程序”打开。关闭设置窗口后转发核心继续运行；菜单栏或应用菜单中的“退出”会停止代理。旧版若已运行，替换前请先退出旧程序。
+
+| 系统 | 下载 | 安装包大小 | 启动方式 |
 | --- | --- | ---: | --- |
 | Windows 10 / 11，x64 | [Windows 版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-windows-x64.zip) | 约 2 MB | 解压，双击 `workbuddy-proxy.exe` |
-| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.zip) | 约 4.1 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
-| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.zip) | 约 4.2 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.dmg) | 约 4 MB | 打开 DMG，将图标拖到右侧“应用程序”后打开 |
+| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.dmg) | 约 4 MB | 打开 DMG，将图标拖到右侧“应用程序”后打开 |
 
-Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP，每个人填写自己的 Key 即可。
+Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP / DMG，每个人填写自己的 Key 即可。
 
 [全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [源代码 ZIP](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-source.zip) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/SHA256SUMS) · [性能原始数据](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/performance.json)
 
@@ -72,7 +74,7 @@ Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、N
 | --- | --- |
 | 供应商名称 | 方便自己区分的名称，例如“日常账号”“备用账号” |
 | 上游地址 | 供应商提供的 OpenAI 兼容 Base URL，例如 `https://api.openai.com/v1` |
-| API Key | 自己在该供应商获得的 Key；再次编辑时留空保留已保存值 |
+| API Key | 自己在该供应商获得的 Key；保存后保留显示，默认为星号，可切换显示 / 隐藏 |
 | 模型列表 | 两列表格：显示名在前、模型 ID 在后；显示名默认使用 ID |
 
 使用 OpenCode Go 时，地址填写 `https://opencode.ai/zen/go/v1`。上游地址使用 HTTPS，本机 loopback 地址也允许 HTTP。
@@ -311,7 +313,7 @@ Windows 包内有 `Diagnose.cmd`，可查看无界面启动诊断。启动日志
 | WorkBuddy 模型配置 | `~/.workbuddy/models.json`，Windows 的 `~` 为当前用户目录 |
 | WorkBuddy 备份 | 与 `models.json` 相邻，名称为 `models.json.workbuddy-proxy-时间戳.bak` |
 
-上游 Key 和本地连接码以明文保存在本机配置中。Unix 目录 / 文件权限为 0700 / 0600；Windows 使用当前用户配置目录的默认权限。**配置目录及备份不要打包分享。** 发布 ZIP 不包含这些文件。
+上游 Key 和本地连接码以明文保存在本机配置中。Unix 目录 / 文件权限为 0700 / 0600；Windows 使用当前用户配置目录的默认权限。**配置目录及备份不要打包分享。** 发布 ZIP / DMG 不包含这些文件。
 
 服务只监听 loopback，校验 Host、Origin 和本地 Key；管理接口使用独立令牌。控制连接禁用系统代理，上游转发可使用系统代理，且关闭重定向。上游 Key 只发往配置的供应商。
 
@@ -347,7 +349,10 @@ Windows 把可执行文件路径改为 `target/release/workbuddy-proxy.exe`。�
 # 从源码构建后，以默认配置目录无界面启动
 ./target/release/workbuddy-proxy --headless --port 18080
 
-# 在对应平台打包；platform 可选 macos-arm64 / macos-x64 / windows-x64
+# Mac 打包前安装仅构建时使用的 DMG 工具
+python3 -m pip install -r scripts/dmg-requirements.txt
+
+# 在对应平台打包；Mac 同时生成 DMG 和 ZIP，Windows 生成 ZIP
 python3 scripts/package.py --exe target/release/workbuddy-proxy --platform macos-arm64
 ```
 
