@@ -48,15 +48,17 @@
 
 ## 下载与安装
 
-### v0.4.0
+### 当前开发版（尚未正式发布）
 
-Mac 安装后可通过启动台、Dock 或“应用程序”打开。关闭设置窗口后转发核心继续运行；菜单栏或应用菜单中的“退出”会停止代理。旧版若已运行，替换前请先退出旧程序。
+当前代码已增加 Mac DMG 拖入安装、标准应用 / Dock 模式、输入框复制粘贴与双击全选，以及 API Key 小眼睛开关和保存后回显。这些变更目前用于本地检查，尚未覆盖 GitHub Release。下方下载链接仍指向已发布的 v0.4.0，后续功能说明以当前开发代码为准。
+
+### v0.4.0 正式版
 
 | 系统 | 下载 | 安装包大小 | 启动方式 |
 | --- | --- | ---: | --- |
 | Windows 10 / 11，x64 | [Windows 版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-windows-x64.zip) | 约 2 MB | 解压，双击 `workbuddy-proxy.exe` |
-| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.dmg) | 约 4 MB | 打开 DMG，将图标拖到右侧“应用程序”后打开 |
-| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.dmg) | 约 4 MB | 打开 DMG，将图标拖到右侧“应用程序”后打开 |
+| Mac，Apple Silicon | [M 系列芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-arm64.zip) | 约 4.1 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
+| Mac，Intel | [Intel 芯片版](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.4.0/workbuddy-proxy-0.4.0-macos-x64.zip) | 约 4.2 MB | 解压，把 `.app` 拖到“应用程序”后打开 |
 
 Mac 要求 macOS 12 或更高版本。运行程序无需安装 Rust、Python、Node 或额外 WebView 运行时。分享给朋友时，直接发送对应系统的 ZIP / DMG，每个人填写自己的 Key 即可。
 
