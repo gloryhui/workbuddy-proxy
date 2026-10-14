@@ -249,20 +249,27 @@ def main():
                     if index<0:return rows
                     rows.append(index)
             def click_row(index,modifier=None):
+                # These are separate selection gestures, not cell-edit double-clicks.
+                # Let Win32 consume the modifier key before injecting mouse input.
+                time.sleep(user.GetDoubleClickTime()/1000+.02)
+                user.SetForegroundWindow(h)
                 rect=wintypes.RECT();assert kernel.WriteProcessMemory(target,memory,ctypes.byref(rect),ctypes.sizeof(rect),None)
                 assert user.SendMessageW(table,0x100E,index,memory)
                 assert kernel.ReadProcessMemory(target,memory,ctypes.byref(rect),ctypes.sizeof(rect),None)
                 point=wintypes.POINT(12,(rect.top+rect.bottom)//2)
                 assert user.ClientToScreen(table,ctypes.byref(point))
                 assert user.SetCursorPos(point.x,point.y)
-                if modifier:user.keybd_event(modifier,0,0,0)
+                if modifier:
+                    user.keybd_event(modifier,0,0,0)
+                    time.sleep(.08)
                 # Real input goes through the UI thread queue, including modifier state.
                 user.mouse_event(2,0,0,0,0);user.mouse_event(4,0,0,0,0)
                 time.sleep(.12)
                 if modifier:user.keybd_event(modifier,0,2,0)
                 time.sleep(.08)
                 print(f'Native row click: row={index}, modifier={modifier}, selected={selected_rows()}, enabled={bool(user.IsWindowEnabled(table))}, editing={bool(user.FindWindowExW(table,None,"Edit",None))}',flush=True)
-            def test_model(expected):
+            def test_model(expected,rows):
+                assert selected_rows()==rows,('Unexpected selection before testing',selected_rows(),rows)
                 before=len(server.seen_models)
                 user.SendMessageW(h,0x0111,202,0)
                 for _ in range(200):
@@ -271,11 +278,11 @@ def main():
                 else:raise AssertionError('Selected native model test did not finish')
                 assert server.seen_models[before:]==[expected],server.seen_models[before:]
             try:
-                click_row(3);test_model('fourth-model')
-                click_row(1);click_row(3,17);test_model('other-model')
+                click_row(3);test_model('fourth-model',[3])
+                click_row(1);click_row(3,17);test_model('other-model',[1,3])
                 click_row(1);click_row(1,17)
                 assert user.SendMessageW(table,0x1032,0,0)==0
-                test_model('deepseek-v4.1-flash')
+                test_model('deepseek-v4.1-flash',[])
                 click_row(0);click_row(2,16)
                 assert user.SendMessageW(table,0x1032,0,0)==3,'Shift-click did not select a range'
                 click_row(1,17)
