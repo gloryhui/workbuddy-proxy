@@ -74,6 +74,14 @@ impl TableDelegate for Models {
             .w_full()
             .text_ellipsis()
     }
+    // The Kit default adds a 12px trailing cell; this table has exactly two columns.
+    fn render_last_empty_col(
+        &mut self,
+        _: &mut Window,
+        _: &mut Context<TableState<Self>>,
+    ) -> impl IntoElement {
+        div().w(px(0.)).flex_shrink_0()
+    }
     fn render_empty(
         &mut self,
         _: &mut Window,

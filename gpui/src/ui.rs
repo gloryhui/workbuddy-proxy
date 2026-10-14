@@ -4,7 +4,7 @@ use crate::{
     state::{Draft, Drafts, Selection},
 };
 use gpui_kit::component::{
-    Disableable, Sizable, TitleBar, WindowExt,
+    Disableable, ElementExt, IconName, Sizable, TitleBar, WindowExt,
     button::{Button, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
@@ -12,11 +12,11 @@ use gpui_kit::component::{
     label::Label,
     list::ListItem,
     select::{Select, SelectEvent, SelectItem, SelectState},
-    sidebar::{Sidebar, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem},
-    status_bar::StatusBar,
+    sidebar::{Sidebar, SidebarHeader, SidebarMenu, SidebarMenuItem},
     table::{DataTable, TableState},
     tag::Tag,
 };
+use gpui_kit::prelude::FluentBuilder;
 use gpui_kit::*;
 use serde_json::{Value, json};
 use std::{
@@ -93,11 +93,14 @@ pub struct Proxy {
     logs: Entity<TextareaState>,
     log_text: String,
     summary: String,
+    proxy_address: String,
+    proxy_counts: [u64; 3],
     models: Vec<Value>,
     effort: String,
     selection: Selection,
     table_focus: FocusHandle,
     model_table: Entity<TableState<crate::model_table::Models>>,
+    table_width: Pixels,
     dialog_open: bool,
     focus: FocusHandle,
     picker: Option<Vec<String>>,
@@ -380,11 +383,14 @@ impl Proxy {
             logs,
             log_text: String::new(),
             summary: String::new(),
+            proxy_address: String::new(),
+            proxy_counts: [0; 3],
             models: vec![],
             effort: "keep".into(),
             selection: Selection::default(),
             table_focus,
             model_table,
+            table_width: px(0.),
             dialog_open: false,
             focus,
             picker: None,
@@ -415,15 +421,6 @@ impl Proxy {
         .detach();
         this.load_form(window, cx);
         this.focus.focus(window, cx);
-        for state in [&this.edit_name, &this.edit_model] {
-            cx.subscribe_in(state, window, |this, _, event, window, cx| {
-                if matches!(event, InputEvent::PressEnter { .. }) && this.editing.is_some() {
-                    this.confirm_edit(cx);
-                    this.table_focus.focus(window, cx);
-                }
-            })
-            .detach();
-        }
         cx.subscribe(&this.search, |_, _, event, cx| {
             if matches!(event, InputEvent::Change) {
                 cx.notify();
@@ -617,6 +614,9 @@ impl Proxy {
         }
     }
     fn snapshot(&mut self, v: Value, window: &mut Window, cx: &mut Context<Self>) {
+        self.proxy_address = v["url"].as_str().unwrap_or("").to_owned();
+        self.proxy_counts =
+            ["providers", "models", "requests"].map(|key| v[key].as_u64().unwrap_or(0));
         self.summary = format!(
             "{}\n{}  {}   ·   {}  {}   ·   {}  {}",
             v["url"].as_str().unwrap_or(""),
@@ -644,11 +644,11 @@ impl Proxy {
                         .lines()
                         .map(|s| crate::i18n::message(s, self.zh))
                         .collect::<Vec<_>>()
-                        .join("\n    ")
+                        .join(" · ")
                 ))
             })
             .collect::<Vec<_>>()
-            .join("\n\n");
+            .join("\n");
         let text = if text.is_empty() {
             self.t("暂无日志", "No log entries").to_owned()
         } else {
@@ -656,8 +656,11 @@ impl Proxy {
         };
         if text != self.log_text {
             self.log_text = text;
-            self.logs
-                .update(cx, |s, cx| s.set_value(self.log_text.clone(), window, cx));
+            self.logs.update(cx, |s, cx| {
+                let offset = s.scroll_offset();
+                s.set_value(self.log_text.clone(), window, cx);
+                s.set_scroll_offset(offset, cx);
+            });
             cx.notify();
         }
     }
@@ -793,6 +796,7 @@ impl Proxy {
         if self.busy {
             return;
         }
+        self.error = false;
         self.editing = Some(i);
         self.new_model = new;
         let row = self.models.get(i).cloned().unwrap_or(json!({}));
@@ -806,10 +810,14 @@ impl Proxy {
         cx.notify();
     }
     fn confirm_edit(&mut self, cx: &mut Context<Self>) {
+        if self.editing.is_none() {
+            return;
+        }
         let id = self.edit_model.read(cx).value().trim().to_owned();
         if id.is_empty() {
             self.status = self.t("请填写模型 ID", "Model ID is required").into();
             self.error = true;
+            cx.notify();
             return;
         }
         let mut row = self
@@ -838,6 +846,10 @@ impl Proxy {
             self.models[i] = row;
         }
         self.editing = None;
+        self.error = false;
+        self.status = self
+            .t("模型已更新，保存后生效", "Models updated; save to apply")
+            .into();
         cx.notify();
     }
     fn dismiss(&mut self, _: &Dismiss, window: &mut Window, cx: &mut Context<Self>) {
@@ -904,8 +916,12 @@ impl Proxy {
     }
 
     fn refresh_table(&self, window: &Window, cx: &mut Context<Self>) {
-        // Outer padding, panel gaps/widths and the table's small trailing gutter.
-        let column_width = px(((window.viewport_size().width.as_f32() - 626.) / 2.).max(120.));
+        let width = if self.table_width > px(0.) {
+            self.table_width
+        } else {
+            window.viewport_size().width - px(616.)
+        };
+        let column_width = (width / 2.).max(px(120.));
         let data = self.model_table.read(cx).delegate();
         if data.rows == self.models
             && data.selection == self.selection
@@ -952,12 +968,25 @@ impl Proxy {
                 if first.replace(false) {
                     focus.focus(window, cx);
                 }
+                let confirm_owner = owner.clone();
                 let owner = owner.clone();
                 dialog
                     .w(px(width))
                     .close_button(true)
                     .overlay_closable(false)
                     .child(body.clone())
+                    .on_ok(move |_, _, cx| {
+                        let _ = confirm_owner.update(cx, |this, cx| {
+                            if this.editing.is_some() {
+                                this.confirm_edit(cx);
+                            } else if this.picker.is_some() {
+                                this.apply_picker(cx);
+                            }
+                        });
+                        // Owner closes only after a valid submission; never use the
+                        // Kit default close which could discard editor contents.
+                        false
+                    })
                     .on_close(move |_, window, cx| {
                         let _ = owner.update(cx, |this, cx| {
                             this.dialog_open = false;
@@ -1027,44 +1056,60 @@ impl Proxy {
             )
             .child(SidebarMenu::new().children(rows))
             .footer(
-                SidebarFooter::new().child(
-                    div()
-                        .flex()
-                        .gap_2()
-                        .child(
-                            Button::new("provider-add")
-                                .small()
-                                .label(self.t("新增", "Add"))
-                                .disabled(self.busy)
-                                .on_click(cx.listener(|this, _, _, cx| {
-                                    this.capture(cx);
-                                    this.send("add", vec![json!({"command":"add"})], cx);
-                                })),
-                        )
-                        .child(
-                            Button::new("provider-copy")
-                                .small()
-                                .label(self.t("复制", "Copy"))
-                                .disabled(self.busy || selected.is_empty())
-                                .on_click(cx.listener(|this, _, _, cx| {
-                                    let mut steps = this.dirty_steps(cx);
-                                    steps.push(
+                div()
+                    .w_full()
+                    .p_2()
+                    .border_t_1()
+                    .border_color(rgb(BORDER))
+                    .child(
+                        div()
+                            .flex()
+                            .items_center()
+                            .justify_between()
+                            .gap_2()
+                            .child(
+                                Button::new("provider-add")
+                                    .small()
+                                    .ghost()
+                                    .icon(IconName::Plus)
+                                    .tooltip(self.t("新增供应商", "Add provider"))
+                                    .accessibility_label(self.t("新增供应商", "Add provider"))
+                                    .disabled(self.busy)
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.capture(cx);
+                                        this.send("add", vec![json!({"command":"add"})], cx);
+                                    })),
+                            )
+                            .child(
+                                Button::new("provider-copy")
+                                    .small()
+                                    .ghost()
+                                    .icon(IconName::Copy)
+                                    .tooltip(self.t("复制供应商", "Duplicate provider"))
+                                    .accessibility_label(self.t("复制供应商", "Duplicate provider"))
+                                    .disabled(self.busy || selected.is_empty())
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        let mut steps = this.dirty_steps(cx);
+                                        steps.push(
                                     json!({"command":"duplicate","provider_id":this.selected()}),
                                 );
-                                    this.send("duplicate", steps, cx);
-                                })),
-                        )
-                        .child(
-                            Button::new("provider-delete")
-                                .small()
-                                .label(self.t("删除", "Delete"))
-                                .disabled(self.busy || selected.is_empty())
-                                .on_click(cx.listener(|this, _, _, cx| {
-                                    this.delete_open = true;
-                                    cx.notify();
-                                })),
-                        ),
-                ),
+                                        this.send("duplicate", steps, cx);
+                                    })),
+                            )
+                            .child(
+                                Button::new("provider-delete")
+                                    .small()
+                                    .ghost()
+                                    .icon(IconName::Delete)
+                                    .tooltip(self.t("删除供应商", "Delete provider"))
+                                    .accessibility_label(self.t("删除供应商", "Delete provider"))
+                                    .disabled(self.busy || selected.is_empty())
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.delete_open = true;
+                                        cx.notify();
+                                    })),
+                            ),
+                    ),
             )
             .into_any_element()
     }
@@ -1099,14 +1144,22 @@ impl Proxy {
         card("provider-settings").flex_1().min_w_0().gap_4().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
         .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(Input::new(&self.name).disabled(self.busy))).child(div().flex_1().child(label("API Key")).child(Input::new(&self.key).mask_toggle().disabled(self.busy))))
         .child(div().child(label(self.t("API 地址","API URL"))).child(Input::new(&self.url).disabled(self.busy)))
-        .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string()})],cx);})))
-        .child(Button::new("model-add").small().label("+").disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.edit(this.models.len(),true,window,cx))))
-        .child(Button::new("model-remove").small().label("−").disabled(self.busy||self.selection.rows.is_empty()).on_click(cx.listener(|this,_,window,cx|this.remove_models(&RemoveModels,window,cx))))))
-        .child(div().key_context("ModelList").track_focus(&self.table_focus).flex_1().min_h(px(140.)).on_action(cx.listener(Self::remove_models)).on_action(cx.listener(Self::select_models)).on_action(cx.listener(Self::edit_selected)).child(DataTable::new(&self.model_table).small().header_row_height(px(32.)).scrollbar_visible(true,true)))
+        .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().primary().outline().icon(IconName::RefreshCw).label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string()})],cx);})))
+        .child(Button::new("model-add").small().ghost().icon(IconName::Plus).tooltip(self.t("添加模型","Add model")).accessibility_label(self.t("添加模型","Add model")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.edit(this.models.len(),true,window,cx))))
+        .child(Button::new("model-remove").small().ghost().icon(IconName::Minus).tooltip(self.t("删除模型","Remove models")).accessibility_label(self.t("删除模型","Remove models")).disabled(self.busy||self.selection.rows.is_empty()).on_click(cx.listener(|this,_,window,cx|this.remove_models(&RemoveModels,window,cx))))))
+        .child(div().key_context("ModelList").track_focus(&self.table_focus).flex_1().min_h(px(140.)).on_action(cx.listener(Self::remove_models)).on_action(cx.listener(Self::select_models)).on_action(cx.listener(Self::edit_selected)).on_prepaint({
+            let owner = cx.entity().downgrade();
+            move |bounds, _, cx| {
+                let width = (bounds.size.width - px(2.)).max(px(240.));
+                let _ = owner.update(cx, |this, cx| {
+                    if this.table_width != width { this.table_width = width; cx.notify(); }
+                });
+            }
+        }).child(DataTable::new(&self.model_table).small().header_row_height(px(32.)).scrollbar_visible(true,true)))
         .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑","Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit")))
         .child(div().flex().items_center().gap_3().child(div().text_size(px(12.)).text_color(rgb(MUTED)).child(self.t("思考强度","Thinking effort"))).child(self.effort_menu()))
-        .child(div().flex().gap_2().child(Button::new("save").primary().label(self.t("保存","Save")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
-        .child(Button::new("test").label(self.t("测试连接","Test connection")).disabled(self.busy||self.models.is_empty()).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
+        .child(div().flex().gap_2().child(Button::new("save").small().primary().icon(IconName::Check).label(self.t("保存","Save")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
+        .child(Button::new("test").small().primary().outline().label(self.t("测试连接","Test connection")).disabled(self.busy||self.models.is_empty()).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
     }
     fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
         card("global-settings")
@@ -1119,6 +1172,13 @@ impl Proxy {
                     .text_size(px(15.))
                     .child(self.t("全局设置与日志", "Settings & logs")),
             )
+            .when(self.error && self.editing.is_none(), |this| {
+                this.child(
+                    Label::new(self.status.clone())
+                        .text_size(px(11.))
+                        .text_color(rgb(0xca4960)),
+                )
+            })
             .child(
                 div()
                     .flex()
@@ -1126,6 +1186,8 @@ impl Proxy {
                     .child(
                         Button::new("sync")
                             .small()
+                            .primary()
+                            .icon(IconName::RefreshCw)
                             .label(self.t("同步 WorkBuddy", "Sync WorkBuddy"))
                             .disabled(self.busy)
                             .on_click(cx.listener(|this, _, _, cx| this.sync(cx))),
@@ -1133,7 +1195,13 @@ impl Proxy {
                     .child(
                         Button::new("restore")
                             .small()
-                            .label(self.t("移除已同步模型", "Remove synced"))
+                            .ghost()
+                            .icon(IconName::Delete)
+                            .label(self.t("取消同步", "Unsync"))
+                            .tooltip(self.t(
+                                "移除代理同步到 WorkBuddy 的模型",
+                                "Remove proxy models synced to WorkBuddy",
+                            ))
                             .disabled(self.busy || self.cfg.installed.is_empty())
                             .on_click(cx.listener(|this, _, _, cx| {
                                 this.send("restore", vec![json!({"command":"restore"})], cx)
@@ -1143,59 +1211,109 @@ impl Proxy {
             .child(
                 div()
                     .flex()
-                    .items_center()
+                    .flex_col()
                     .gap_2()
+                    .p_3()
+                    .rounded(px(9.))
+                    .bg(rgb(0xf0f7fa))
+                    .border_1()
+                    .border_color(rgb(BORDER))
                     .child(
                         div()
-                            .w(px(60.))
+                            .flex()
+                            .items_center()
+                            .justify_between()
+                            .child(
+                                Label::new(self.t("本地代理", "Local relay"))
+                                    .text_size(px(12.))
+                                    .font_weight(FontWeight::SEMIBOLD),
+                            )
+                            .child(Tag::secondary().small().child(self.t("运行中", "Running"))),
+                    )
+                    .child(
+                        Label::new(self.proxy_address.clone())
                             .text_size(px(12.))
-                            .text_color(rgb(MUTED))
-                            .child(self.t("本地端口", "Local port")),
+                            .text_color(rgb(0x007e99)),
                     )
                     .child(
                         div()
-                            .flex_1()
-                            .child(Input::new(&self.port).disabled(self.busy)),
+                            .flex()
+                            .items_center()
+                            .gap_2()
+                            .child(
+                                div()
+                                    .w(px(60.))
+                                    .text_size(px(12.))
+                                    .text_color(rgb(MUTED))
+                                    .child(self.t("本地端口", "Local port")),
+                            )
+                            .child(
+                                div()
+                                    .flex_1()
+                                    .child(Input::new(&self.port).small().disabled(self.busy)),
+                            )
+                            .child(
+                                Button::new("port-apply")
+                                    .small()
+                                    .ghost()
+                                    .icon(IconName::Check)
+                                    .tooltip(self.t("应用端口", "Apply port"))
+                                    .accessibility_label(self.t("应用端口", "Apply port"))
+                                    .disabled(self.busy)
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        match this
+                                            .port
+                                            .read(cx)
+                                            .value()
+                                            .parse::<u16>()
+                                            .ok()
+                                            .filter(|p| *p > 0)
+                                        {
+                                            Some(port) => this.send(
+                                                "port",
+                                                vec![json!({"command":"set_port","port":port})],
+                                                cx,
+                                            ),
+                                            None => {
+                                                this.error = true;
+                                                this.status = this
+                                                    .t(
+                                                        "请输入 1–65535 的端口号",
+                                                        "Enter a port from 1 to 65535",
+                                                    )
+                                                    .into();
+                                                cx.notify();
+                                            }
+                                        }
+                                    })),
+                            ),
                     )
                     .child(
-                        Button::new("port-apply")
-                            .small()
-                            .label(self.t("应用", "Apply"))
-                            .disabled(self.busy)
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                match this
-                                    .port
-                                    .read(cx)
-                                    .value()
-                                    .parse::<u16>()
-                                    .ok()
-                                    .filter(|p| *p > 0)
-                                {
-                                    Some(port) => this.send(
-                                        "port",
-                                        vec![json!({"command":"set_port","port":port})],
-                                        cx,
-                                    ),
-                                    None => {
-                                        this.error = true;
-                                        this.status = this
-                                            .t(
-                                                "请输入 1–65535 的端口号",
-                                                "Enter a port from 1 to 65535",
-                                            )
-                                            .into();
-                                        cx.notify();
-                                    }
-                                }
-                            })),
+                        div().flex().gap_3().children(
+                            [
+                                self.t("供应商", "Providers"),
+                                self.t("模型", "Models"),
+                                self.t("请求", "Requests"),
+                            ]
+                            .into_iter()
+                            .zip(self.proxy_counts)
+                            .map(|(name, count)| {
+                                div()
+                                    .flex_1()
+                                    .flex()
+                                    .flex_col()
+                                    .gap_1()
+                                    .child(
+                                        Label::new(count.to_string())
+                                            .font_weight(FontWeight::SEMIBOLD)
+                                            .text_size(px(15.)),
+                                    )
+                                    .child(
+                                        Label::new(name).text_color(rgb(MUTED)).text_size(px(10.)),
+                                    )
+                            }),
+                        ),
                     ),
-            )
-            .child(div().h(px(1.)).bg(rgb(BORDER)).my_1())
-            .child(
-                div()
-                    .text_size(px(11.))
-                    .text_color(rgb(MUTED))
-                    .child(self.summary.clone()),
             )
             .child(
                 div()
@@ -1214,7 +1332,10 @@ impl Proxy {
                             .child(
                                 Button::new("clear-logs")
                                     .small()
-                                    .label(self.t("清空日志", "Clear logs"))
+                                    .ghost()
+                                    .icon(IconName::Delete)
+                                    .tooltip(self.t("清空日志", "Clear logs"))
+                                    .accessibility_label(self.t("清空日志", "Clear logs"))
                                     .disabled(self.busy)
                                     .on_click(cx.listener(|this, _, _, cx| {
                                         this.send(
@@ -1227,7 +1348,10 @@ impl Proxy {
                             .child(
                                 Button::new("copy-logs")
                                     .small()
-                                    .label(self.t("复制日志", "Copy logs"))
+                                    .ghost()
+                                    .icon(IconName::Copy)
+                                    .tooltip(self.t("复制日志", "Copy logs"))
+                                    .accessibility_label(self.t("复制日志", "Copy logs"))
                                     .on_click(cx.listener(|this, _, _, cx| {
                                         cx.write_to_clipboard(ClipboardItem::new_string(format!(
                                             "{}\n\n{}",
@@ -1251,6 +1375,7 @@ impl Proxy {
                         Textarea::new(&self.logs)
                             .readonly(true)
                             .text_size(px(11.))
+                            .line_height(px(16.))
                             .h_full(),
                     ),
             )
@@ -1283,6 +1408,13 @@ impl Proxy {
                         .child(label(self.t("模型 ID", "Model ID")))
                         .child(Input::new(&self.edit_model)),
                 )
+                .when(self.error, |this| {
+                    this.child(
+                        Label::new(self.status.clone())
+                            .text_color(rgb(0xc03c45))
+                            .text_size(px(12.)),
+                    )
+                })
                 .child(
                     DialogFooter::new()
                         .child(
@@ -1547,7 +1679,7 @@ impl Render for Proxy {
                                         ),
                                     )),
                             )
-                            .child(Tag::info().small().child("GPUI Kit Preview 02")),
+                            .child(Tag::info().small().child("GPUI Kit Preview 03")),
                     )
                     .child(
                         div()
@@ -1556,6 +1688,8 @@ impl Render for Proxy {
                             .child(
                                 Button::new("check-update")
                                     .small()
+                                    .ghost()
+                                    .icon(IconName::RefreshCw)
                                     .label(self.t("检查更新", "Check updates"))
                                     .disabled(self.busy)
                                     .on_click(cx.listener(|this, _, _, cx| {
@@ -1580,18 +1714,14 @@ impl Render for Proxy {
                     .child(right),
             )
             .child(
-                StatusBar::new()
-                    .left(
-                        Label::new(self.status.clone()).text_color(rgb(if self.error {
-                            0xca4960
-                        } else {
-                            MUTED
-                        })),
-                    )
-                    .right(self.t(
+                div().flex().justify_end().child(
+                    Label::new(self.t(
                         "关闭窗口后，代理仍在托盘运行",
                         "Close this window to keep the relay running in the tray",
-                    )),
+                    ))
+                    .text_size(px(11.))
+                    .text_color(rgb(MUTED)),
+                ),
             );
         div()
             .size_full()

@@ -30,7 +30,7 @@ fn main() {
                 }
             }
             "--version" => {
-                println!("0.4.0-gpui-kit-preview.2");
+                println!("0.4.0-gpui-kit-preview.3");
                 return;
             }
             _ => {}

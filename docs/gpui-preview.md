@@ -1,4 +1,4 @@
-# GPUI Kit Preview 02 (unreleased)
+# GPUI Kit Preview 03 (unreleased)
 
 A separate test build with one shared GPUI interface on macOS and Windows.
 
@@ -16,8 +16,16 @@ GPUI and GPUI Kit are Apache-2.0 software. https://github.com/zed-industries/zed
 
 ## Component coverage
 
-All settings-page interactive controls use GPUI Kit 0.7.3: `Button`, `Input` (including mask toggle), `Select`, `Checkbox`, `Sidebar`/`SidebarMenuItem`, virtualized `DataTable`, `ListItem`, `Dialog`/`DialogContent`/`DialogFooter`, `Label`, `Tag`, `TitleBar` and `StatusBar`. Provider counts appear in a compact tag; the active provider uses the shared teal theme. Existing models in discovery are checked and disabled, with an Added label.
+All settings-page interactive controls use GPUI Kit 0.7.3: `Button`, `Input` (including mask toggle), `Select`, `Checkbox`, `Sidebar`/`SidebarMenuItem`, virtualized `DataTable`, `ListItem`, `Dialog`/`DialogContent`/`DialogFooter`, `Label`, `Tag`, `TitleBar`. Provider counts appear in a compact tag; the active provider uses the shared teal theme. Existing models in discovery are checked and disabled, with an Added label.
 
 Layout-only surfaces and spacing use GPUI containers. A GroupBox was evaluated but its nested intrinsic-height wrappers clipped flexible log panels, so the settings surfaces retain flexible layout containers. They are not OS-native input or list controls. Native tray integration remains small and resident; closing settings releases the GPUI process.
 
 The DataTable delegates row selection to the application to preserve Shift ranges, Ctrl/Command toggle, Delete/Backspace, and double-click editing. Both configured and discovered models remain virtualized.
+
+## Preview 03 adjustments
+
+Provider and log operations use compact Kit ghost icon buttons with localized tooltips; the sidebar footer no longer applies a whole-toolbar hover background. Sync is the primary action and removal is shortened to Unsync. Local port, the live relay address and provider/model/request counts share one service card.
+
+Model dialog Enter uses the same validation/submission as Confirm; missing IDs keep the dialog open. The bottom status bar is removed; only a muted tray hint remains at the lower right, while failures appear beside settings. The model table has two columns, with the Kit trailing placeholder overridden to zero width; widths come from the actual table container.
+
+Log entries use single newlines and a 16px line height. Polling preserves the viewport scroll offset; the existing core keeps its latest 100 entries rather than growing memory without a bound. An isolated GUI test inserted 150 entries and exercised forward/backward scrolling and refresh while reading history.

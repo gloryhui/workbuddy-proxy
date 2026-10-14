@@ -39,6 +39,12 @@ impl AssetSource for Assets {
             r#"<path d="m6 12 6-6 6 6M12 6v12"/>"#
         } else if path.contains("arrow-down") {
             r#"<path d="m6 12 6 6 6-6M12 6v12"/>"#
+        } else if path.contains("copy") {
+            r#"<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/>"#
+        } else if path.contains("delete") {
+            r#"<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>"#
+        } else if path.contains("refresh") {
+            r#"<path d="M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 1l1 5M4 12l1 5a8 8 0 0 0 13 1"/>"#
         } else if path.contains("minus") {
             r#"<path d="M5 12h14"/>"#
         } else if path.contains("close") || path.contains("/x.") {

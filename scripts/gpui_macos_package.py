@@ -23,7 +23,7 @@ def main():
                 subprocess.run(['codesign','--verify','--strict',str(bundle)],check=True)
                 info=plistlib.loads((bundle/'Contents/Info.plist').read_bytes());assert info['CFBundleVersion']=='10' and info['LSUIElement'] is False
             assert not any(p.name in {'config.json','instance.json','gpui-drafts.json','frontend.json'} for p in app.rglob('*'))
-            assert subprocess.check_output([str(helper/'Contents/MacOS/workbuddy-proxy-gpui'),'--version'],text=True).strip()=='0.4.0-gpui-kit-preview.2'
+            assert subprocess.check_output([str(helper/'Contents/MacOS/workbuddy-proxy-gpui'),'--version'],text=True).strip()=='0.4.0-gpui-kit-preview.3'
             subprocess.run([sys.executable,'scripts/gpui_package_test.py','--exe',str(core),'--output',str(Path(a.output).resolve())],check=True)
             print('PASS: readonly GPUI DMG, Finder drag layout, copied core/helper signatures, metadata, no user config, real packaged settings/relay lifecycle')
         finally:subprocess.run(['hdiutil','detach',str(mount)],check=True,stdout=subprocess.DEVNULL)
