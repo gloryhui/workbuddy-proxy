@@ -428,6 +428,8 @@ CI 在 Windows、Apple Silicon Mac、Intel Mac、Linux 上验证实际程序，�
 
 </details>
 
+统计功能的实现、价格快照口径和验收边界见[统计文档](docs/statistics/README.md)。
+
 ## 致谢
 
 感谢 [yetone/magpie](https://github.com/yetone/magpie) 提供的思路和方案。本项目在供应商预设、模型能力自动识别与 WorkBuddy 配置同步等方面参考了 Magpie 的设计，帮助减少用户手动配置的工作。

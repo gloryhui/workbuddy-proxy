@@ -1,0 +1,2 @@
+{"seed": 1200, "samples": [{"elapsed_s": 0.81, "state": "degraded", "pending": 688}, {"elapsed_s": 2.0, "state": "degraded", "pending": 432}, {"elapsed_s": 4.5, "state": "degraded", "pending": 176}, {"elapsed_s": 9.01, "state": "ready", "pending": 0}, {"elapsed_s": 18.0, "state": "ready", "pending": 0}]}
+{"seed": 20000, "samples": [{"elapsed_s": 0.81, "state": "degraded", "pending": 19488}, {"elapsed_s": 2.01, "state": "degraded", "pending": 19232}, {"elapsed_s": 4.51, "state": "degraded", "pending": 18976}, {"elapsed_s": 9.01, "state": "degraded", "pending": 18720}]}

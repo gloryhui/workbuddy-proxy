@@ -42,7 +42,7 @@ def fixture(missing_key=False):
         cfg=json.loads((directory/'config.json').read_text())
         for index,name in enumerate(['model-json-error','model-json-invalid','model-partial-conflict']):
             cfg['providers'][0]['models'].append({'id':'extra-%s'%index,'alias':name,'model':name,'name':name,'reasoning_effort':'default'})
-        
+
         if missing_key:cfg['providers'][0]['api_key']=''
         (directory/'config.json').write_text(json.dumps(cfg))
         process,log,_=t.start_core(EXE,directory,port)
@@ -87,10 +87,10 @@ def main():
         t.relay(p,'model-partial-conflict');time.sleep(.5)
         health=t.stats(d,p,'stats_health')
         with sqlite3.connect(d/'usage.sqlite3') as db:record=db.execute('select outcome,usage_status,total_tokens from usage_requests').fetchall()
-        
+
         with sqlite3.connect(d/'usage.sqlite3') as db:before=db.execute('select count(*) from usage_requests').fetchone()[0]
         t.relay(p,'wbp-ok');time.sleep(.5)
-        
+
         with sqlite3.connect(d/'usage.sqlite3') as db:after=db.execute('select count(*) from usage_requests').fetchone()[0]
         emit('conflicting_partial_usage',state=health['state'],error=health['error_code'],rows=record,subsequent_request_recorded=after>before)
     with fixture() as (d,p,process,log):

@@ -1,0 +1,7 @@
+{
+  "first_state": "ready",
+  "pending_before": 1,
+  "state_after_trigger_removed": "ready",
+  "pending_after": 1,
+  "backlog": 0
+}

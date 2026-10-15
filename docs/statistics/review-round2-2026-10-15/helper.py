@@ -35,7 +35,7 @@ def fixture(missing_key=False):
         cfg=json.loads((directory/'config.json').read_text())
         for index,name in enumerate(['model-json-error','model-json-invalid','model-partial-conflict']):
             cfg['providers'][0]['models'].append({'id':'extra-%s'%index,'alias':name,'model':name,'name':name,'reasoning_effort':'default'})
-        
+
         if missing_key:cfg['providers'][0]['api_key']=''
         (directory/'config.json').write_text(json.dumps(cfg))
         process,log,_=t.start_core(EXE,directory,port)

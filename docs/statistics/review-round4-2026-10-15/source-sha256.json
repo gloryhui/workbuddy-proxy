@@ -1,0 +1,12 @@
+{
+  "src/stats/store.rs": "a4e5ac98185d67e95e05d05ac764560f4e4910b2f94f333c16d19a194ac15dbc",
+  "src/stats/mod.rs": "a9bcaa2064c45e71f6023b4850c4b95753c3f1d8331bdd2dada07abaf1bbeadd",
+  "src/stats/query.rs": "e13b162c42b60b4a90f30fcc4e69d21953217dc85dd9f7159beded48cfefc286",
+  "src/stats/dto.rs": "6487f787c4f4422203e9bc9ea69769de4320c93657783b862633dc193d6ff789",
+  "src/stats/pricing.rs": "91429fc78ebf8c96b20efc4ef6f9ed874d250ceb79e2c6007f163651e9ce6f93",
+  "src/stats/migrations/0002.sql": "87d0885a516a2fc68f405e26f32754b33bfde3902d35807b24573b0c1da9a899",
+  "gpui/src/statistics.rs": "6510b7853b0e4b3bd001f1f45d938bfd63f27ee7bbc37eb592910fb9e3602c9d",
+  "gpui/src/stats_backend.rs": "649e7a99be2b6e3e9c3c0625fc7e4468b7de89b75afbe155f6527954d7931496",
+  "gpui/src/usage_table.rs": "9b6e140ec41e1817e0451524f976202aa977d17bdad219b1fe51d198b15168d7",
+  "scripts/statistics_test.py": "42c9425b288753af806b9ac911d156eae3b04e0a693d88b842498da200800b68"
+}

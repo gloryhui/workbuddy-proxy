@@ -1,0 +1,16 @@
+{
+  "case": "both_start_finish_lost",
+  "http": 200,
+  "first": {
+    "state": "degraded",
+    "write_failures": 2,
+    "requests": 0,
+    "backlog": 0
+  },
+  "after_wait": {
+    "state": "degraded",
+    "write_failures": 2,
+    "requests": 0,
+    "backlog": 0
+  }
+}

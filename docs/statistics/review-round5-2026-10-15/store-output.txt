@@ -1,0 +1,3 @@
+{"case":"clear_multiple_batches","deleted":600,"eligible_left":0,"expected_eligible":600,"outside_preview_deleted":0,"steps":2}
+{"case":"retention_multiple_batches","deleted":1200,"expected_delete":1200,"left":0,"steps":3}
+{"budget_ms":1,"case":"remaining_budget_not_applied_to_busy_wait","elapsed_ms":280,"failed":true}

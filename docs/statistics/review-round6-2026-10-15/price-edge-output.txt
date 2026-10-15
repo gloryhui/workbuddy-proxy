@@ -1,0 +1,1 @@
+[{"case": "new_with_existing_revision_but_no_id", "accepted": false, "error": "stats_price_save failed: stats_invalid_argument: creating a price must use expected_revision 0; edit it with its price_id instead"}, {"case": "canonical_delete", "accepted": true, "response": {}}]

@@ -1,0 +1,27 @@
+[
+  {
+    "script": "smoke.py",
+    "exit_code": 0,
+    "seconds": 1.17
+  },
+  {
+    "script": "multi_routing.py",
+    "exit_code": 0,
+    "seconds": 5.6
+  },
+  {
+    "script": "connection_test.py",
+    "exit_code": 0,
+    "seconds": 0.81
+  },
+  {
+    "script": "core_compatibility.py",
+    "exit_code": 1,
+    "seconds": 0.05
+  },
+  {
+    "script": "model_capabilities_test.py",
+    "exit_code": 0,
+    "seconds": 1.0
+  }
+]

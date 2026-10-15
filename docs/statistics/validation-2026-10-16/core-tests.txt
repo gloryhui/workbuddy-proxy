@@ -1,6 +1,4 @@
-
 running 125 tests
 ....................................................................................... 87/125
 ......................................
 test result: ok. 125 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.65s
-
