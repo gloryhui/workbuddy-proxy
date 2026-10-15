@@ -75,7 +75,7 @@ def main():
         workbuddy = home / '.workbuddy/models.json'
         workbuddy.parent.mkdir(parents=True)
         unrelated = {'id': 'user-model', 'extra': 'keep'}
-        workbuddy.write_text(json.dumps([unrelated]))
+        workbuddy.write_text(json.dumps([unrelated]), encoding='utf-8')
         models = [
             {'id': 'auto', 'alias': 'wbp-auto', 'name': 'Automatic', 'model': 'vision-model', 'reasoning_effort': 'default'},
             {'id': 'manual', 'alias': 'wbp-manual', 'name': 'Manual', 'model': 'vision-model',
@@ -84,7 +84,7 @@ def main():
         cfg = {'local_key': 'fixture-local', 'port': free_port(), 'providers': [{
             'id': 'plan', 'name': 'Hosted plan', 'api_key': 'fixture-upstream',
             'upstream': base + '/plan/v1', 'models': models}], 'installed': []}
-        (data / 'config.json').write_text(json.dumps(cfg))
+        (data / 'config.json').write_text(json.dumps(cfg), encoding='utf-8')
         env = dict(os.environ, HOME=str(home), USERPROFILE=str(home),
                    WORKBUDDY_PROXY_CATALOG_TEST_URL=base + '/catalog')
         process = None
@@ -97,7 +97,7 @@ def main():
             for _ in range(400):
                 assert process.poll() is None, 'Core exited'
                 try:
-                    instance = json.loads((data / 'instance.json').read_text())
+                    instance = json.loads((data / 'instance.json').read_text(encoding='utf-8'))
                     return
                 except (OSError, ValueError):
                     time.sleep(.025)
@@ -131,9 +131,9 @@ def main():
 
         def synced():
             action('install')
-            rows = json.loads(workbuddy.read_text())
+            rows = json.loads(workbuddy.read_text(encoding='utf-8'))
             assert unrelated in rows
-            return {row['name'].split(' · ')[0]: row for row in rows if 'name' in row}
+            return {row['_workbuddyProxy']['route']: row for row in rows if '_workbuddyProxy' in row}
 
         try:
             start()
@@ -150,9 +150,9 @@ def main():
             assert metadata(upstream=base + '/other/v1')['capabilities']['supportsImages']
             assert not metadata('unlisted-model')['image_known']
             rows = synced()
-            assert rows['Automatic']['supportsImages'] is False
-            assert rows['Manual']['supportsImages'] is True
-            assert rows['Manual']['maxOutputTokens'] == 1234
+            assert rows['auto']['supportsImages'] is False
+            assert rows['manual']['supportsImages'] is True
+            assert rows['manual']['maxOutputTokens'] == 1234
 
             # Discovery uses the unsaved endpoint/key, without contaminating the
             # saved plan's metadata. The old list-of-IDs API remains compatible.
@@ -168,50 +168,50 @@ def main():
             assert caps['maxInputTokens'] == 64000 and caps['maxOutputTokens'] == 7777
             assert caps['reasoning']['supportedEfforts'] == ['low', 'high']
             rows = synced()
-            assert rows['Automatic']['supportsImages'] and rows['Automatic']['maxOutputTokens'] == 7777
-            assert rows['Manual']['maxOutputTokens'] == 1234
+            assert rows['auto']['supportsImages'] and rows['auto']['maxOutputTokens'] == 7777
+            assert rows['manual']['maxOutputTokens'] == 1234
 
             models[0]['capabilities'] = None
             models[1]['capabilities'] = {'supportsImages': False}
             action('save', models=models, reasoning_effort='keep')
             rows = synced()
-            assert rows['Automatic']['supportsImages'] and not rows['Manual']['supportsImages']
-            saved = json.loads((data / 'config.json').read_text())['providers'][0]['models']
+            assert rows['auto']['supportsImages'] and not rows['manual']['supportsImages']
+            saved = json.loads((data / 'config.json').read_text(encoding='utf-8'))['providers'][0]['models']
             assert saved[0]['capabilities'] is None, 'Automatic values became manual overrides'
             models[1]['capabilities'] = None
             action('save', models=models, reasoning_effort='keep')
-            assert synced()['Manual']['supportsImages']
+            assert synced()['manual']['supportsImages']
             models[0]['model'] = 'brand-new-id'
             action('save', models=models, reasoning_effort='keep')
-            assert not synced()['Automatic']['supportsImages'], 'Renamed model inherited stale capabilities'
+            assert not synced()['auto']['supportsImages'], 'Renamed model inherited stale capabilities'
             models[0]['model'] = 'vision-model'
             action('save', models=models, reasoning_effort='keep')
 
             cache_path = data / 'model-catalog.json'
-            text = cache_path.read_text()
+            text = cache_path.read_text(encoding='utf-8')
             assert all(secret not in text for secret in ['fixture-upstream', 'draft-secret', instance['management_key']])
             stop()
             # Expire both caches and refuse refreshes: the last good metadata
             # must remain available and failures must be rate-limited.
-            cache = json.loads(cache_path.read_text())
+            cache = json.loads(cache_path.read_text(encoding='utf-8'))
             cache['fetched_at'] = int(time.time()) - 90000
             for item in cache['live'].values():
                 item['fetched_at'] = int(time.time()) - 90000
-            cache_path.write_text(json.dumps(cache))
+            cache_path.write_text(json.dumps(cache), encoding='utf-8')
             server.offline = True
             start()
-            assert synced()['Automatic']['supportsImages']
+            assert synced()['auto']['supportsImages']
             hits = len(server.hits)
-            assert synced()['Automatic']['maxOutputTokens'] == 7777
+            assert synced()['auto']['maxOutputTokens'] == 7777
             assert len(server.hits) == hits, 'Failed lookups were retried immediately'
             stop()
-            cache_path.write_text('{')
+            cache_path.write_text('{', encoding='utf-8')
             start()
             assert metadata('deepseek-flash')['capabilities']['supportsImages']
             assert metadata('unlisted-model')['sources'] == ['unknown']
-            assert synced()['Automatic']['supportsImages'] is False
+            assert synced()['auto']['supportsImages'] is False
             action('restore')
-            assert json.loads(workbuddy.read_text()) == [unrelated]
+            assert json.loads(workbuddy.read_text(encoding='utf-8')) == [unrelated]
             print('PASS: automatic background metadata, provider/plan isolation, canonical fallback, live precedence, '
                   'manual override/reset, rename, WorkBuddy sync, offline cache, failure backoff, corrupt-cache recovery, '
                   'compatible discovery and credential-free public requests/cache')
