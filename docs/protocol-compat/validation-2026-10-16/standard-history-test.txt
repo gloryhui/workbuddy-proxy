@@ -1,0 +1,8 @@
+   Compiling workbuddy-proxy v0.5.3 (/Users/glory/.codex/worktrees/upstream-protocols/workbuddy-proxy)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.57s
+     Running unittests src/main.rs (target/debug/deps/workbuddy_proxy-b061d2548db7055c)
+
+running 1 test
+test protocol::streaming::tests::standard_chat_history_replays_two_tool_rounds_without_private_fields ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 163 filtered out; finished in 0.01s

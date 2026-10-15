@@ -1888,6 +1888,18 @@ fn recover_collection(
     if complete {
         *probe_backoff = PROBE_BACKOFF_MIN;
         if *inner.state.read().unwrap() == HealthState::Degraded {
+            if let Err(failure) = writer.persist_counters(now) {
+                // Closing the degraded interval alone is not enough. Keep
+                // driving the idle recovery probe until loss counters are
+                // durable too, even when no new relay request ever arrives.
+                *degraded_since = Some(now);
+                *degraded_recorded = false;
+                eprintln!(
+                    "statistics could not persist recovery counters: {}",
+                    failure.message
+                );
+                return RecoveryProgress::Failed;
+            }
             inner.set_state(HealthState::Ready, None);
         }
         RecoveryProgress::Complete
@@ -1957,7 +1969,7 @@ fn flush_and_stop(inner: &Arc<Inner>, writer: &mut store::Writer) {
         inner.counters.commits.fetch_add(1, Ordering::Relaxed);
     }
     let now = now_ms();
-    if writer
+    if writer.persist_counters(now).is_ok() && writer
         .conn
         .execute(
             "UPDATE stats_runs SET stopped_at_ms=?2, stop_reason='normal', last_persisted_at_ms=?2

@@ -573,6 +573,23 @@ impl Writer {
         Ok(())
     }
 
+    /// A successful recovery can be idle: no later request batch may arrive to
+    /// persist the counters for events that were lost while SQLite was locked.
+    pub fn persist_counters(&self, now_ms: i64) -> Result<(), DbError> {
+        self.conn.execute(
+            "UPDATE stats_runs SET last_persisted_at_ms=?2, admitted_requests=?3,
+                dropped_requests=?4, write_failures=?5 WHERE run_id=?1",
+            rusqlite::params![
+                self.run_id,
+                now_ms,
+                self.counters.admitted.load(Ordering::Relaxed) as i64,
+                self.counters.dropped.load(Ordering::Relaxed) as i64,
+                self.counters.write_failures.load(Ordering::Relaxed) as i64
+            ],
+        )?;
+        Ok(())
+    }
+
     /// Records a `degraded` collection window (`database_error`).
     pub fn enter_degraded(&mut self, now_ms: i64) -> Result<(), DbError> {
         self.open_interval(now_ms, "degraded", Some("database_error"))
@@ -2111,6 +2128,28 @@ fn write_cost_maybe_correcting(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn idle_loss_counters_are_durable_without_a_later_request_batch() {
+        let folder = tempfile::tempdir().unwrap();
+        let counters = Arc::new(Counters::default());
+        let (writer, _) =
+            Writer::open(folder.path(), "run-idle-counters", counters.clone()).unwrap();
+        counters.admitted.store(3, Ordering::Relaxed);
+        counters.dropped.store(2, Ordering::Relaxed);
+        counters.write_failures.store(1, Ordering::Relaxed);
+        writer.persist_counters(crate::stats::now_ms()).unwrap();
+        let reader = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+        let values:(i64,i64,i64)=reader.query_row("SELECT admitted_requests,dropped_requests,write_failures FROM stats_runs WHERE run_id='run-idle-counters'",[],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?))).unwrap();
+        assert_eq!(values, (3, 2, 1));
+        assert_eq!(
+            reader
+                .query_row("SELECT COUNT(*) FROM usage_requests", [], |r| r
+                    .get::<_, i64>(0))
+                .unwrap(),
+            0
+        );
+    }
 
     /// Drives the bounded startup scan to completion, exactly as the writer's
     /// recovery probe does between live batches.

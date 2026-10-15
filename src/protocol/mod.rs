@@ -4,9 +4,12 @@
 //! relay integration owns transport, cancellation and the existing stats guard.
 pub mod config;
 pub mod encode;
+pub mod output;
 pub mod replay;
 pub mod request;
 pub mod sse;
+pub mod streaming;
+pub mod usage;
 
 /// Errors contain static descriptions and structural paths, never input values.
 #[derive(Clone, Debug, PartialEq, Eq)]

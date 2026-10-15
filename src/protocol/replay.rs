@@ -11,7 +11,7 @@ use sha2::{Digest, Sha256};
 use std::{
     collections::{BTreeMap, VecDeque},
     io,
-    sync::Arc,
+    sync::{Arc, Weak},
     time::{Duration, Instant},
 };
 
@@ -159,18 +159,43 @@ struct Entry {
 pub struct Cache {
     by_id: BTreeMap<String, Arc<Entry>>,
     oldest: VecDeque<Arc<Entry>>,
+    /// Removed lookup entries can still be used by an in-flight request.
+    /// Their allocations keep consuming the budget until the final Arc drops.
+    retired: Vec<(Weak<ReplayTurn>, usize, usize)>,
     bytes: usize,
+    items: usize,
 }
 impl Cache {
+    fn collect_retired(&mut self) {
+        self.retired.retain(|(turn, bytes, items)| {
+            if turn.strong_count() > 0 {
+                true
+            } else {
+                self.bytes = self.bytes.saturating_sub(*bytes);
+                self.items = self.items.saturating_sub(*items);
+                false
+            }
+        });
+    }
     fn evict_oldest(&mut self) {
         if let Some(entry) = self.oldest.pop_front() {
-            self.bytes = self.bytes.saturating_sub(entry.pending.bytes);
             for id in entry.pending.turn.calls.keys() {
                 self.by_id.remove(id);
+            }
+            if Arc::strong_count(&entry.pending.turn) > 1 {
+                self.retired.push((
+                    Arc::downgrade(&entry.pending.turn),
+                    entry.pending.bytes,
+                    entry.pending.turn.calls.len(),
+                ));
+            } else {
+                self.bytes = self.bytes.saturating_sub(entry.pending.bytes);
+                self.items = self.items.saturating_sub(entry.pending.turn.calls.len());
             }
         }
     }
     fn expire(&mut self, now: Instant) {
+        self.collect_retired();
         while self
             .oldest
             .front()
@@ -190,11 +215,15 @@ impl Cache {
             return Err(Error::upstream("duplicate_tool_id"));
         }
         while self.bytes + pending.bytes > MAX_BYTES
-            || self.by_id.len() + pending.turn.calls.len() > MAX_ITEMS
+            || self.items + pending.turn.calls.len() > MAX_ITEMS
         {
+            if self.oldest.is_empty() {
+                return Err(Error::upstream("conversation_state_capacity_exhausted"));
+            }
             self.evict_oldest();
         }
         self.bytes += pending.bytes;
+        self.items += pending.turn.calls.len();
         let entry = Arc::new(Entry {
             pending,
             created: now,
@@ -251,23 +280,29 @@ fn hash_message(hash: &mut Sha256, m: &Message) {
         Role::Assistant => 3,
         Role::Tool => 4,
     }]);
-    hash.update((m.parts.len() as u64).to_le_bytes());
-    for part in &m.parts {
-        match part {
-            Part::Text(s) => {
-                hash.update([0]);
-                field(hash, s);
-            }
-            Part::ImageData { mime, data, detail } => {
-                hash.update([1]);
-                field(hash, mime);
-                field(hash, data);
-                field(hash, detail);
-            }
-            Part::ImageUrl { url, detail } => {
-                hash.update([2]);
-                field(hash, url);
-                field(hash, detail);
+    if m.role == Role::Assistant {
+        // Standard clients may round-trip a tool-only assistant content as
+        // either null or an empty string. Both bind to the same visible text.
+        field(hash, &m.text());
+    } else {
+        hash.update((m.parts.len() as u64).to_le_bytes());
+        for part in &m.parts {
+            match part {
+                Part::Text(s) => {
+                    hash.update([0]);
+                    field(hash, s);
+                }
+                Part::ImageData { mime, data, detail } => {
+                    hash.update([1]);
+                    field(hash, mime);
+                    field(hash, data);
+                    field(hash, detail);
+                }
+                Part::ImageUrl { url, detail } => {
+                    hash.update([2]);
+                    field(hash, url);
+                    field(hash, detail);
+                }
             }
         }
     }
@@ -387,5 +422,35 @@ mod tests {
         let raw = json_bytes(&turn.assistant);
         let pending = Pending::new([1; 32], &prefix, &assistant, turn).unwrap();
         assert!(pending.bytes > raw);
+    }
+
+    #[test]
+    fn evicted_state_held_by_an_active_request_still_consumes_the_budget() {
+        let (mut prefix, assistant, turn) = fixture();
+        let now = Instant::now();
+        let route = [1; 32];
+        let mut cache = Cache::default();
+        let mut pending = Pending::new(route, &prefix, &assistant, turn).unwrap();
+        // Exercise the accounting boundary without allocating 32MiB in a test.
+        pending.bytes = MAX_BYTES;
+        prefix.push(assistant);
+        cache.commit(pending, now).unwrap();
+        let held = cache.resolve(&route, &prefix, now).unwrap();
+        let (prefix, assistant, turn) = fixture();
+        let pending = Pending::new(route, &prefix, &assistant, turn).unwrap();
+        assert_eq!(
+            cache.commit(pending, now).unwrap_err().code,
+            "conversation_state_capacity_exhausted"
+        );
+        assert_eq!(cache.bytes, MAX_BYTES);
+        assert!(cache.by_id.is_empty());
+        drop(held);
+        cache.expire(now);
+        assert_eq!(cache.bytes, 0);
+        assert_eq!(cache.items, 0);
+        let (prefix, assistant, turn) = fixture();
+        cache
+            .commit(Pending::new(route, &prefix, &assistant, turn).unwrap(), now)
+            .unwrap();
     }
 }

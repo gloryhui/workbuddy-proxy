@@ -94,7 +94,7 @@ fn responses(
         return Err(Error::input("unsupported_parameter", "stop"));
     }
     let mut input = Vec::new();
-    let mut calls = BTreeMap::new();
+    let mut calls: BTreeMap<String, NativeCall> = BTreeMap::new();
     for (i, m) in r.messages.iter().enumerate() {
         let replay = history.get(&i).map(Arc::as_ref);
         match m.role {
@@ -298,7 +298,7 @@ fn anthropic(
     let protocol = UpstreamProtocol::AnthropicMessages;
     let (system, first) = system_prefix(r, protocol)?;
     let mut messages: Vec<Value> = vec![];
-    let mut calls = BTreeMap::new();
+    let mut calls: BTreeMap<String, NativeCall> = BTreeMap::new();
     let mut call_order = Vec::new();
     let mut i = first;
     while i < r.messages.len() {
@@ -425,7 +425,7 @@ fn gemini(
     }
     let (system, first) = system_prefix(r, protocol)?;
     let mut contents = vec![];
-    let mut calls = BTreeMap::new();
+    let mut calls: BTreeMap<String, NativeCall> = BTreeMap::new();
     let mut call_order = Vec::new();
     let mut i = first;
     while i < r.messages.len() {
@@ -439,7 +439,12 @@ fn gemini(
                 let call = calls
                     .get(id)
                     .ok_or_else(|| Error::input("invalid_tool_history", "messages.tool_call_id"))?;
-                parts.push(json!({"functionResponse":{"id":call_id(&calls,id)?,"name":call.name,"response":{"result":m.text()}}}));
+                let mut response = json!({"name":call.name,"response":{"result":m.text()}});
+                let native_id = call_id(&calls, id)?;
+                if !native_id.is_empty() {
+                    response["id"] = json!(native_id);
+                }
+                parts.push(json!({"functionResponse":response}));
             }
             i = end;
             contents.push(json!({"role":"user","parts":parts}));

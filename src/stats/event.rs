@@ -229,6 +229,7 @@ pub struct RequestGuard {
     ttfb_ms: Option<i64>,
     first_content_ms: Option<i64>,
     collector: Collector,
+    native: Option<NativeObservation>,
     http_status: Option<i64>,
     http_ok: Option<bool>,
     /// `Content-Length` of the upstream body when the upstream declared one.
@@ -237,6 +238,11 @@ pub struct RequestGuard {
     upstream_started: bool,
     finished: bool,
     shared: Arc<Counters>,
+}
+#[derive(Debug)]
+struct NativeObservation {
+    usage: UsageOutcome,
+    complete: bool,
 }
 
 impl RequestGuard {
@@ -264,6 +270,7 @@ impl RequestGuard {
             ttfb_ms: None,
             first_content_ms: None,
             collector: Collector::new(protocol, encoded),
+            native: None,
             http_status: None,
             http_ok: None,
             expected_bytes: None,
@@ -309,6 +316,44 @@ impl RequestGuard {
         }
     }
 
+    /// Native adapters supply only normalized counters and semantic timing.
+    /// Raw messages, images, tools and opaque signatures never enter the stats
+    /// collector or queue. Updates replace cumulative usage, never add it.
+    #[allow(dead_code)] // Staged adapter API; removed when native relay is wired.
+    pub fn observe_native(
+        &mut self,
+        bytes: usize,
+        content: bool,
+        usage: Option<UsageOutcome>,
+        model: Option<&str>,
+    ) {
+        self.observed_bytes = self.observed_bytes.saturating_add(bytes as u64);
+        if bytes > 0 && self.ttfb_ms.is_none() {
+            self.ttfb_ms = Some(self.elapsed_ms());
+        }
+        if content && self.first_content_ms.is_none() {
+            self.first_content_ms = Some(self.elapsed_ms());
+        }
+        let state = self.native.get_or_insert_with(|| NativeObservation {
+            usage: UsageOutcome::missing(UsageReason::NoUsage),
+            complete: false,
+        });
+        if let Some(usage) = usage {
+            state.usage = usage;
+        }
+        if let Some(model) = model {
+            self.collector.response_model = Some(model.into());
+        }
+    }
+
+    /// Called after the adapter's terminal state and clean transport EOF agree.
+    #[allow(dead_code)] // Staged adapter API; removed when native relay is wired.
+    pub fn native_complete(&mut self) {
+        if let Some(state) = self.native.as_mut() {
+            state.complete = true;
+        }
+    }
+
     fn elapsed_ms(&self) -> i64 {
         match self.upstream_at {
             Some(start) => start.elapsed().as_millis() as i64,
@@ -329,6 +374,13 @@ impl RequestGuard {
     pub fn terminal(&mut self) -> (Outcome, Option<ErrorKind>) {
         if self.http_ok == Some(false) {
             return (Outcome::Failed, Some(ErrorKind::UpstreamHttp));
+        }
+        if let Some(native) = &self.native {
+            return if native.complete {
+                (Outcome::Completed, None)
+            } else {
+                (Outcome::Interrupted, Some(ErrorKind::UpstreamStream))
+            };
         }
         if self.collector.saw_protocol_error() {
             return (Outcome::Failed, Some(ErrorKind::SseError));
@@ -379,7 +431,11 @@ impl RequestGuard {
             Outcome::Failed | Outcome::Rejected => UsageReason::StreamError,
             _ => UsageReason::NoUsage,
         };
-        let usage = self.collector.finish(fallback);
+        let usage = self
+            .native
+            .as_ref()
+            .map(|state| state.usage.clone())
+            .unwrap_or_else(|| self.collector.finish(fallback));
         let usage = adjust_usage(usage, outcome, self.upstream_started);
         let (status, source, numbers, breakdown, uncached) = decompose(&usage, outcome);
         FinishRecord {
@@ -551,6 +607,67 @@ impl Drop for RequestGuard {
 mod tests {
     use super::*;
     use crate::stats::dto::UsageStatus;
+
+    #[test]
+    fn native_cumulative_usage_reuses_the_exactly_once_finish_queue_with_disjoint_input() {
+        use crate::protocol::{config::UpstreamProtocol, usage};
+        let queue = Arc::new(EventQueue::new(8));
+        let counters = Arc::new(Counters::default());
+        let mut guard =
+            RequestGuard::begin(&queue, &counters, meta("native"), Protocol::Unknown, false)
+                .unwrap();
+        guard.mark_upstream_started();
+        guard.set_http_status(200);
+        for output in [0, 7] {
+            let u = usage::normalize(
+                UpstreamProtocol::AnthropicMessages,
+                &serde_json::json!({"input_tokens":10,"cache_read_input_tokens":40,"cache_creation_input_tokens":5,"output_tokens":output}),
+            );
+            guard.observe_native(100, output > 0, Some(u.outcome()), Some("native-model"));
+        }
+        assert_eq!(guard.terminal().0, Outcome::Interrupted);
+        guard.native_complete();
+        let (outcome, kind) = guard.terminal();
+        assert_eq!(outcome, Outcome::Completed);
+        guard.finish(outcome, kind);
+        guard.finish(Outcome::Failed, Some(ErrorKind::Other));
+        drop(guard);
+        let events = queue.pop_batch(16, Duration::from_millis(1));
+        assert_eq!(events.len(), 2);
+        let finish = finish_record(&events);
+        assert_eq!(finish.input_tokens, Some(55));
+        assert_eq!(finish.output_tokens, Some(7));
+        assert_eq!(finish.total_tokens, Some(62));
+        assert_eq!(finish.input_breakdown, InputBreakdown::Disjoint);
+        assert_eq!(finish.input_uncached_tokens, Some(10));
+        assert_eq!(finish.cache_read_tokens, Some(40));
+        assert_eq!(finish.response_model.as_deref(), Some("native-model"));
+        assert!(finish.first_content_ms.is_some());
+        assert_eq!(counters.pending.load(Ordering::Relaxed), 0);
+    }
+
+    #[test]
+    fn native_cancellation_never_claims_a_valid_terminal() {
+        let queue = Arc::new(EventQueue::new(8));
+        let counters = Arc::new(Counters::default());
+        let mut guard = RequestGuard::begin(
+            &queue,
+            &counters,
+            meta("native-cancel"),
+            Protocol::Unknown,
+            false,
+        )
+        .unwrap();
+        guard.mark_upstream_started();
+        guard.set_http_status(200);
+        guard.observe_native(12, true, None, None);
+        drop(guard);
+        let events = queue.pop_batch(16, Duration::from_millis(1));
+        let finish = finish_record(&events);
+        assert_eq!(finish.outcome, Outcome::Cancelled);
+        assert_eq!(finish.error_kind, Some(ErrorKind::ClientDrop));
+        assert_eq!(events.len(), 2);
+    }
 
     fn meta(id: &str) -> RequestMeta {
         RequestMeta {
