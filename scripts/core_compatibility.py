@@ -81,7 +81,18 @@ def check(exe, version, protocol):
                     server.handle_request()
             finally:
                 server.server_close()
-                instance_path.unlink(missing_ok=True)
+                # The polling reader can briefly open this fixture without
+                # delete sharing on Windows. Let that read finish, while still
+                # requiring the simulated legacy instance to disappear.
+                deadline = time.monotonic() + 1
+                while True:
+                    try:
+                        instance_path.unlink(missing_ok=True)
+                        break
+                    except PermissionError:
+                        if time.monotonic() >= deadline:
+                            raise
+                        time.sleep(.01)
 
         thread = threading.Thread(target=serve, daemon=True)
         thread.start()
