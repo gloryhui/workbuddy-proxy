@@ -1,0 +1,29 @@
+{
+  "platform": "Windows-2025Server-10.0.26100-SP0",
+  "architecture": "AMD64",
+  "mode": "headless",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 4591616,
+  "idle_rss_mib": 9.26,
+  "core_idle_rss_mib": 9.26,
+  "measured_process_count": 1,
+  "sampled_peak_rss_mib": 13.19,
+  "post_load_rss_mib": 10.06,
+  "small_request_count": 200,
+  "direct_loopback_ms": {
+    "p50": 13.916,
+    "p95": 16.196
+  },
+  "proxied_loopback_ms": {
+    "p50": 1.07,
+    "p95": 16.324
+  },
+  "median_proxy_overhead_ms": -12.846,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.345,
+  "notes": "RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied."
+}

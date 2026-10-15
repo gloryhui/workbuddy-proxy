@@ -1,5 +1,25 @@
 # 性能测量与历史记录
 
+## v0.5.2 正式版
+
+来源：[三平台发布构建](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38675797234)，提交 `b0782b2cd84d3b17ecb549e26274fbcaad703c6f`。配置为 1 个供应商、64 个模型。
+
+| CI 环境 | 单独核心空闲 RSS | 设置打开：核心 + 托盘 + 界面 | 设置关闭：核心 + 托盘 |
+| --- | ---: | ---: | ---: |
+| Windows x64 | 9.26 MiB | 75.53 MiB | 22.73 MiB |
+| Mac Apple Silicon | 11.91 MiB | 148.77 MiB | 52.80 MiB |
+| Mac Intel | 4.59 MiB | 72.46 MiB | 21.76 MiB |
+
+核心空闲值与界面开／关值来自不同的隔离测试进程，不能相减推断单个组件的精确占用。RSS 合计可能重复计算共享页面，GPU 内存未单独测量；CI 硬件与运行环境不同，不能据此比较平台优劣。
+
+- `gpui-*.json`：实际发行包的核心、托盘、设置进程生命周期和 RSS。关闭窗口释放设置进程，保留两个后台进程。
+- `core-*.json`：无界面核心；直连与代理各 200 个小请求，4 并发、80 个约 1 MiB 请求，记录采样峰值和负载后 RSS。
+- `windows-installer.json`：自定义安装目录下的实际程序生命周期和 RSS；对应构建另验证安装目录、快捷方式、重复安装、卸载清理启动项及保留配置。
+
+原始 JSON 保存在 [benchmarks/v0.5.2](benchmarks/v0.5.2/)。正式安装包体积：Windows 安装 EXE 7.29 MiB、Mac ARM DMG 12.06 MiB、Mac Intel DMG 12.85 MiB，来自 [v0.5.2 Release](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.5.2) 的附件大小。
+
+转发基准使用本机 HTTP 模拟上游，不含真实模型推理、公网延迟或 TLS；客户端每次新建连接，上游连接池复用。中位数差值可能受测量波动影响，不能当作真实模型速度或跨平台排名。下方保留历史版本记录。
+
 ## v0.5.0 正式版
 
 来源：[主分支发布构建](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38558550741)，提交 `510e853fdc685f42477307d8fa9c66de2032fbd5`。配置为 1 个供应商、64 个模型。

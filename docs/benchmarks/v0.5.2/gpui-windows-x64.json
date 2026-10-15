@@ -1,0 +1,23 @@
+{
+  "platform": "Windows-2025Server-10.0.26100-SP0",
+  "architecture": "AMD64",
+  "processes_with_settings": 3,
+  "core_rss_mib": 9.09,
+  "tray_rss_mib": 12.89,
+  "gpui_rss_mib": 53.55,
+  "model_count": 64,
+  "note": "RSS sums process working sets; shared pages can be counted more than once. GPU/driver allocations are not separately measured. Mock/client processes are excluded.",
+  "settings_open_rss_mib": 75.53,
+  "settings_closed_rss_mib": 22.73,
+  "processes_after_close": 2,
+  "checks": [
+    "separate lightweight core/tray/GPUI processes",
+    "repeated launch reuses the existing application instance",
+    "real loopback streaming diagnostic with selected model",
+    "ordered core log clear",
+    "closing settings releases GPUI without stopping the core",
+    "tray reopens settings using the same core",
+    "private unsaved drafts survive reopening without changing config.json"
+  ],
+  "result": "passed"
+}
