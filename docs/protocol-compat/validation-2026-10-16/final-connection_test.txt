@@ -1,0 +1,1 @@
+PASS: selected-model tests and default fallback, invalid selection isolation, detailed timings, SSE/HTTP/network errors, redacted metadata, chronological journal, ordered log clear and no duplicate UI-owned entries

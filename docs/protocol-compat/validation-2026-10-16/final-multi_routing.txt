@@ -1,0 +1,1 @@
+PASS: 6 connection combinations, readable/legacy IDs, fixed duplicate suffixes, transparent model rewrite, scoped isolation, 6 tests, discovery, in-place migration, idempotent sync, forced sync/unsync with edits/duplicates/missing entries, repeated unsync, supplier rename, delete/restore, no fallback

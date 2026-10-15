@@ -1,0 +1,1 @@
+{"result": "PASS", "streaming_first_bytes_ms": 0.192, "checks": ["startup", "byte-identical tool payload", "auth", "origin", "upstream 429", "first SSE chunk before completion", "bounded concurrent streams", "cancellation releases slots", "8 MiB request cap", "single instance", "persisted thinking levels affect forwarding and test", "shutdown"]}

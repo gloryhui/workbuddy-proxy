@@ -1,0 +1,86 @@
+{
+  "code_commit": "37f7738",
+  "date": "2026-10-16",
+  "implementation_complete": true,
+  "local_validation": "passed",
+  "app_version": "0.5.3",
+  "control_protocol": 7,
+  "statistics_api": 2,
+  "statistics_schema": 4,
+  "levels": [
+    {
+      "id": "L1",
+      "status": "passed",
+      "scope": "175 core + 61 GPUI tests; strict clippy; fmt; both release builds",
+      "evidence": [
+        "final-core-tests.txt",
+        "final-gpui-tests.txt",
+        "final-core-clippy.txt",
+        "final-gpui-clippy.txt",
+        "final-core-release.txt",
+        "final-gpui-release.txt"
+      ]
+    },
+    {
+      "id": "L2",
+      "status": "passed",
+      "scope": "Independent native REST fixtures + ordinary Chat consumer: three protocols JSON/SSE, images, ordinary history, two rounds same-name parallel tools, raw IDs/opaque replay, native errors, cancellation, probes",
+      "evidence": [
+        "final-native_protocol_test.txt",
+        "final-native_discovery_test.txt"
+      ]
+    },
+    {
+      "id": "L3",
+      "status": "passed",
+      "scope": "39 statistics checks, schema v0-v3 migration, immutable native price changes/default zero, privacy, real 20/50/100 forward/back cursor traversal",
+      "evidence": [
+        "final-statistics_test.txt",
+        "final-statistics_pagination_test.txt",
+        "final-core-tests.txt",
+        "final-native_protocol_test.txt"
+      ]
+    },
+    {
+      "id": "L4",
+      "status": "passed",
+      "scope": "Native 1 MiB frame/16 MiB aggregate/8 MiB request, 4 permits/fifth 429, slow consumers/cancellation; 100000-row mixed-price query and relay budgets",
+      "evidence": [
+        "final-native_resource_test.txt",
+        "benchmark-fixed.json",
+        "benchmark-fixed.txt"
+      ]
+    },
+    {
+      "id": "L5",
+      "status": "passed",
+      "scope": "macOS native protocol options/validation/discovery/selection/save; 1100x700 fixed actions; packaged helper/core lifecycle, legacy core replacement, opt-in autostart rollback",
+      "evidence": [
+        "ui-1100x700.png",
+        "ui-protocols.png",
+        "final-gpui_package_test.txt",
+        "final-gpui-lifecycle.json",
+        "final-core_compatibility.txt",
+        "final-autostart_test.txt"
+      ]
+    },
+    {
+      "id": "L6",
+      "status": "not_run",
+      "scope": "Real provider accounts, real WorkBuddy agent tools and real billing",
+      "reason": "No real keys used and no installation; external environment acceptance remains separately documented in USAGE.md."
+    }
+  ],
+  "delivery": {
+    "merge_target": "local main",
+    "push": false,
+    "release": false,
+    "install": false
+  },
+  "limitations": [
+    "L6 not performed; no Windows physical GUI acceptance",
+    "Gemini non-text response_format, strict tools and parallel_tool_calls=false explicitly rejected",
+    "Large aggregate ranges may hit a controlled statistics query budget; pagination is bounded independently",
+    "Replay is process-local with TTL/capacity and cannot survive restart"
+  ]
+}

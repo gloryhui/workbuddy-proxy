@@ -1,0 +1,2 @@
+READY: /var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/workbuddy-gpui-package-eilo746c GPUI PID 79122
+PASS: packaged GPUI lifecycle, management API, log clear, selected-model diagnostic, draft persistence and resident-process measurements

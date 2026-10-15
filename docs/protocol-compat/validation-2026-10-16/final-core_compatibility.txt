@@ -1,0 +1,1 @@
+PASS: same-version cores without/currently incompatible protocol and older-version cores are gracefully replaced; supplier configuration and port survive; new log clear works

@@ -1,0 +1,96 @@
+{
+  "code_commit": "37f7738",
+  "executable": "temporary app with release core and matching GPUI helper",
+  "results": [
+    {
+      "script": "smoke",
+      "exit": 0,
+      "seconds": 1.27,
+      "log": "final-smoke.txt"
+    },
+    {
+      "script": "multi_routing",
+      "exit": 0,
+      "seconds": 2.61,
+      "log": "final-multi_routing.txt"
+    },
+    {
+      "script": "multimodal_test",
+      "exit": 0,
+      "seconds": 2.94,
+      "log": "final-multimodal_test.txt"
+    },
+    {
+      "script": "model_discovery",
+      "exit": 0,
+      "seconds": 1.13,
+      "log": "final-model_discovery.txt"
+    },
+    {
+      "script": "model_capabilities_test",
+      "exit": 0,
+      "seconds": 1.06,
+      "log": "final-model_capabilities_test.txt"
+    },
+    {
+      "script": "connection_test",
+      "exit": 0,
+      "seconds": 0.87,
+      "log": "final-connection_test.txt"
+    },
+    {
+      "script": "port_change",
+      "exit": 0,
+      "seconds": 2.85,
+      "log": "final-port_change.txt"
+    },
+    {
+      "script": "autostart_test",
+      "exit": 0,
+      "seconds": 3.42,
+      "log": "final-autostart_test.txt"
+    },
+    {
+      "script": "core_compatibility",
+      "exit": 0,
+      "seconds": 2.67,
+      "log": "final-core_compatibility.txt"
+    },
+    {
+      "script": "statistics_test",
+      "exit": 0,
+      "seconds": 11.22,
+      "log": "final-statistics_test.txt"
+    },
+    {
+      "script": "statistics_pagination_test",
+      "exit": 0,
+      "seconds": 2.63,
+      "log": "final-statistics_pagination_test.txt"
+    },
+    {
+      "script": "native_protocol_test",
+      "exit": 0,
+      "seconds": 1.06,
+      "log": "final-native_protocol_test.txt"
+    },
+    {
+      "script": "native_discovery_test",
+      "exit": 0,
+      "seconds": 0.59,
+      "log": "final-native_discovery_test.txt"
+    },
+    {
+      "script": "native_resource_test",
+      "exit": 0,
+      "seconds": 2.75,
+      "log": "final-native_resource_test.txt"
+    },
+    {
+      "script": "gpui_package_test",
+      "exit": 0,
+      "seconds": 3.38,
+      "log": "final-gpui_package_test.txt"
+    }
+  ]
+}

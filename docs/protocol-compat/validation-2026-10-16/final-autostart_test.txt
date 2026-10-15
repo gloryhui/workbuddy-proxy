@@ -1,0 +1,1 @@
+PASS: old-config default off, actual opt-in registration, Unicode/space paths, quiet and duplicate login launch, manual wake, repeated disable, persistence, registration failure rollback (macOS)

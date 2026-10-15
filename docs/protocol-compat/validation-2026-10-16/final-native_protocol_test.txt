@@ -1,0 +1,14 @@
+PASS real relay openai_responses JSON: image, thinking, two parallel tool rounds, final answer
+PASS real relay openai_responses SSE: image, thinking, two parallel tool rounds, final answer
+PASS real relay anthropic_messages JSON: image, thinking, two parallel tool rounds, final answer
+PASS real relay anthropic_messages SSE: image, thinking, two parallel tool rounds, final answer
+PASS real relay gemini_generate_content JSON: image, thinking, two parallel tool rounds, final answer
+PASS real relay gemini_generate_content SSE: image, thinking, two parallel tool rounds, final answer
+PASS openai_responses: HTTP 429, encoding, truncation, error event, unsupported inputs, expired state, shared connection probe
+PASS anthropic_messages: HTTP 429, encoding, truncation, error event, unsupported inputs, expired state, shared connection probe
+PASS gemini_generate_content: HTTP 429, encoding, truncation, error event, unsupported inputs, expired state, shared connection probe
+PASS openai_responses: ordinary assistant history, mid-flight frozen rates, deleted price defaults to zero
+PASS anthropic_messages: ordinary assistant history, mid-flight frozen rates, deleted price defaults to zero
+PASS gemini_generate_content: ordinary assistant history, mid-flight frozen rates, deleted price defaults to zero
+PASS native usage + immutable price rows + protocol DTO + SQLite privacy
+PASS native protocol loopback contracts

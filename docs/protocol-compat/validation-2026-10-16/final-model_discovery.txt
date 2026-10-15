@@ -1,0 +1,1 @@
+PASS: draft discovery, saved-key fallback, large catalogs, invalid/401/oversized lists, editable/default names, stable route IDs, compact model aliases, persisted language, bounded secret-free system logs, cached release check
