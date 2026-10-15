@@ -3,6 +3,7 @@ use super::*;
 pub(super) struct State {
     message: Option<Value>,
     blocks: BTreeMap<u64, Block>,
+    usage_final: bool,
 }
 struct Block {
     native: Value,
@@ -65,7 +66,7 @@ impl State {
                     return Err(bad("invalid_upstream_message_start"));
                 }
                 c.model(m, "model")?;
-                c.usage = super::super::usage::normalize(
+                c.usage = super::super::usage::normalize_partial(
                     UpstreamProtocol::AnthropicMessages,
                     &m["usage"],
                 );
@@ -262,11 +263,21 @@ impl State {
                 }
                 if let Some(usage) = v.get("usage") {
                     merge_usage(message, usage)?;
+                    if message["stop_reason"].is_string() && usage.get("output_tokens").is_some() {
+                        self.usage_final = true;
+                    }
                 }
-                c.usage = super::super::usage::normalize(
-                    UpstreamProtocol::AnthropicMessages,
-                    &message["usage"],
-                );
+                c.usage = if self.usage_final {
+                    super::super::usage::normalize(
+                        UpstreamProtocol::AnthropicMessages,
+                        &message["usage"],
+                    )
+                } else {
+                    super::super::usage::normalize_partial(
+                        UpstreamProtocol::AnthropicMessages,
+                        &message["usage"],
+                    )
+                };
             }
             "message_stop" => {
                 if self.blocks.values().any(|b| !b.closed) {
@@ -278,6 +289,16 @@ impl State {
                     .ok_or_else(|| bad("stop_before_message"))?;
                 if !message["stop_reason"].is_string() {
                     return Err(bad("missing_upstream_finish"));
+                }
+                if !self.usage_final
+                    && message["usage"]
+                        .get("output_tokens")
+                        .is_some_and(|v| !v.is_null())
+                {
+                    message["usage"]
+                        .as_object_mut()
+                        .expect("usage object")
+                        .remove("output_tokens");
                 }
                 message["content"] = json!(
                     std::mem::take(&mut self.blocks)

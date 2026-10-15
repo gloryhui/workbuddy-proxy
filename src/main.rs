@@ -14,12 +14,13 @@ mod i18n;
 mod journal;
 mod platform;
 mod port;
-#[allow(dead_code)] // Native conversion modules are staged before relay integration.
 mod protocol;
 mod proxy;
 mod session;
 mod stats;
 mod update;
+#[path = "protocol/config.rs"]
+pub mod upstream_config;
 mod workbuddy;
 use axum::serve::ListenerExt;
 use fs2::FileExt;
@@ -34,10 +35,8 @@ use std::{
 
 // Bump when native controllers require new management commands or semantics.
 // Release versions alone cannot distinguish successive local review builds.
-/// Bumped to 6: the statistics control channel gained `stats_price_delete`,
-/// returns `stats_operation_removed` for `stats_reprice_start`, and the request
-/// detail replaced `rule` with `price_snapshot`.
-const CONTROL_PROTOCOL: u32 = 6;
+/// 7: provider protocol/settings, native upstream adapters and protocol-aware UI.
+const CONTROL_PROTOCOL: u32 = 7;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {

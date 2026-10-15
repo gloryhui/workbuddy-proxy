@@ -12,12 +12,16 @@ pub struct Draft {
     pub name: String,
     pub key: String,
     pub upstream: String,
+    #[serde(default)]
+    pub protocol: crate::upstream_config::UpstreamProtocol,
+    #[serde(default)]
+    pub protocol_settings: crate::upstream_config::ProtocolSettings,
     pub effort: String,
     pub models: Vec<Value>,
 }
 impl Draft {
     pub fn payload(&self, id: &str) -> Value {
-        json!({"command":"save","provider_id":id,"name":self.name,"key":self.key,"upstream":self.upstream,"reasoning_effort":self.effort,"models":self.models})
+        json!({"command":"save","provider_id":id,"name":self.name,"key":self.key,"upstream":self.upstream,"protocol":self.protocol,"protocol_settings":self.protocol_settings,"reasoning_effort":self.effort,"models":self.models})
     }
 }
 #[derive(Default, Serialize, Deserialize)]
@@ -37,12 +41,30 @@ impl Drafts {
         let stored = std::fs::read(dir.join("gpui-drafts.json"))
             .ok()
             .filter(|s| s.len() <= 4 * 1024 * 1024)
-            .and_then(|s| serde_json::from_slice::<Self>(&s).ok())
+            .and_then(|s| {
+                let mut value: Value = serde_json::from_slice(&s).ok()?;
+                if let Some(providers) = value.get_mut("providers").and_then(Value::as_object_mut) {
+                    for provider in &cfg.providers {
+                        if let Some(draft) = providers
+                            .get_mut(&provider.id)
+                            .and_then(Value::as_object_mut)
+                        {
+                            draft
+                                .entry("protocol")
+                                .or_insert_with(|| json!(provider.protocol));
+                            draft
+                                .entry("protocol_settings")
+                                .or_insert_with(|| json!(provider.protocol_settings));
+                        }
+                    }
+                }
+                serde_json::from_value::<Self>(value).ok()
+            })
             .filter(|s| s.base == Self::fingerprint(dir));
         stored.unwrap_or_else(|| Self::from_config(dir, cfg))
     }
     pub fn from_config(dir: &Path, cfg: &Config) -> Self {
-        Self{base:Self::fingerprint(dir),selected:cfg.providers.first().map(|p|p.id.clone()).unwrap_or_default(),providers:cfg.providers.iter().map(|p|(p.id.clone(),Draft{name:if p.is_draft(){String::new()}else{p.name.clone()},key:p.api_key.clone(),upstream:p.upstream.clone(),effort:if p.models.iter().all(|m|p.models.first().is_some_and(|a|a.reasoning_effort==m.reasoning_effort)){p.models.first().map(|m|m.reasoning_effort.clone()).unwrap_or("keep".into())}else{"keep".into()},models:p.models.iter().map(|m|json!({"id":m.id,"name":m.name,"model":m.model,"reasoning_effort":m.reasoning_effort,"capabilities":m.capabilities})).collect()})).collect()}
+        Self{base:Self::fingerprint(dir),selected:cfg.providers.first().map(|p|p.id.clone()).unwrap_or_default(),providers:cfg.providers.iter().map(|p|(p.id.clone(),Draft{name:if p.is_draft(){String::new()}else{p.name.clone()},key:p.api_key.clone(),upstream:p.upstream.clone(),protocol:p.protocol,protocol_settings:p.protocol_settings.clone(),effort:if p.models.iter().all(|m|p.models.first().is_some_and(|a|a.reasoning_effort==m.reasoning_effort)){p.models.first().map(|m|m.reasoning_effort.clone()).unwrap_or("keep".into())}else{"keep".into()},models:p.models.iter().map(|m|json!({"id":m.id,"name":m.name,"model":m.model,"reasoning_effort":m.reasoning_effort,"capabilities":m.capabilities})).collect()})).collect()}
     }
     pub fn persist(&mut self, dir: &Path) -> Result<(), String> {
         self.base = Self::fingerprint(dir);
@@ -86,6 +108,28 @@ impl Selection {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn legacy_private_draft_inherits_current_protocol_without_losing_typed_edits() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut cfg = Config::default();
+        let p = &mut cfg.providers[0];
+        p.protocol = crate::upstream_config::UpstreamProtocol::AnthropicMessages;
+        p.upstream = "https://example.test/v1".into();
+        p.api_key = "fixture".into();
+        let id = p.id.clone();
+        config::write_json(&dir.path().join("config.json"), &cfg).unwrap();
+        let drafts = Drafts::from_config(dir.path(), &cfg);
+        let mut value = serde_json::to_value(drafts).unwrap();
+        let draft = value["providers"][&id].as_object_mut().unwrap();
+        draft.remove("protocol");
+        draft.remove("protocol_settings");
+        draft.insert("name".into(), json!("unsaved provider name"));
+        config::write_json(&dir.path().join("gpui-drafts.json"), &value).unwrap();
+        let loaded = Drafts::load(dir.path(), &cfg);
+        let payload = loaded.providers[&id].payload(&id);
+        assert_eq!(payload["protocol"], "anthropic_messages");
+        assert_eq!(payload["name"], "unsaved provider name");
+    }
     #[test]
     fn model_capabilities_survive_private_drafts_and_save_payloads() {
         let dir = tempfile::tempdir().unwrap();

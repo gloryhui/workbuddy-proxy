@@ -79,4 +79,4 @@ R07：所有原生协议请求与Chat请求进入同一统计生命周期/数据
 
 `acceptance.json` 全部必测项有可运行测试或明确平台证据；本机可执行项全部通过；三个原生协议都有流/非流工具闭环、取消及安全错误证据；两个 Cargo 工程构建回归；L6 独立标记。交付包含工作树/分支、基线/当前 SHA、完整差异、测试命令和退出码、性能数字、GUI 截图或未验证说明、限制、下一步实机验收步骤。
 
-当前开发模型是 DeepSeek。不得自动把后续 DeepSeek 独立编写的全部代码署名为 Codex。若提交实际包含本次 Codex 编写的任务书等开发文档，应如实按 AGENTS.md 添加且仅添加一次 `Co-authored-by: Codex <codex@openai.com>`，保留真人 Author/Committer。若只提交其他工具独立贡献且来源明确，不伪造 Codex 参与。
+原任务书曾供 DeepSeek 使用；2026-10-16起由Codex直接接手。不得把其他工具独立编写的代码虚假署名为 Codex。若提交实际包含本次 Codex 编写的任务书等开发文档，应如实按 AGENTS.md 添加且仅添加一次 `Co-authored-by: Codex <codex@openai.com>`，保留真人 Author/Committer。若只提交其他工具独立贡献且来源明确，不伪造 Codex 参与。

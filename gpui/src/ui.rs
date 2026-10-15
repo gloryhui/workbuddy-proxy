@@ -66,6 +66,20 @@ impl SelectItem for Choice {
     }
 }
 type ChoiceState = SelectState<Vec<Choice>>;
+fn protocol_choices() -> Vec<Choice> {
+    [
+        ("openai_chat", "OpenAI Chat Completions"),
+        ("openai_responses", "OpenAI Responses"),
+        ("anthropic_messages", "Anthropic Messages"),
+        ("gemini_generate_content", "Gemini GenerateContent"),
+    ]
+    .into_iter()
+    .map(|(code, title)| Choice {
+        code: code.into(),
+        title: title.into(),
+    })
+    .collect()
+}
 fn choices(zh: bool, languages: bool) -> Vec<Choice> {
     let entries: &[(&str, &str, &str)] = if languages {
         &[
@@ -120,6 +134,7 @@ pub struct Proxy {
     busy: bool,
     polling: bool,
     metadata_polling: bool,
+    metadata_context: Value,
     last_metadata: Instant,
     status: String,
     error: bool,
@@ -143,6 +158,9 @@ pub struct Proxy {
     model_table: Entity<TableState<crate::model_table::Models>>,
     table_width: Pixels,
     dialog_open: bool,
+    protocol_open: bool,
+    protocol_select: Entity<ChoiceState>,
+    protocol_options: crate::protocol_options::Editor,
     focus: FocusHandle,
     picker: Option<Vec<String>>,
     picked: BTreeSet<usize>,
@@ -228,9 +246,9 @@ impl Proxy {
             (
                 &self.url,
                 if zh {
-                    "填写供应商提供的 OpenAI 兼容接口地址"
+                    "填写供应商提供的 API 基础地址"
                 } else {
-                    "Enter your provider's OpenAI-compatible API URL"
+                    "Enter your provider's API base URL"
                 },
             ),
             (
@@ -430,9 +448,9 @@ impl Proxy {
         let url = input(
             "",
             if zh {
-                "填写供应商提供的 OpenAI 兼容接口地址"
+                "填写供应商提供的 API 基础地址"
             } else {
-                "Enter your provider's OpenAI-compatible API URL"
+                "Enter your provider's API base URL"
             },
             false,
             window,
@@ -478,6 +496,8 @@ impl Proxy {
         let effort_select = cx.new(|cx| SelectState::new(choices(zh, false), None, window, cx));
         let preset_select =
             cx.new(|cx| SelectState::new(preset_choices(zh), None, window, cx).searchable(true));
+        let protocol_options = crate::protocol_options::Editor::new(window, cx);
+        let protocol_select = cx.new(|cx| SelectState::new(protocol_choices(), None, window, cx));
         let logs = cx.new(|cx| TextareaState::new(window, cx));
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle();
@@ -522,6 +542,7 @@ impl Proxy {
             busy: false,
             polling: false,
             metadata_polling: false,
+            metadata_context: Value::Null,
             last_metadata: Instant::now() - Duration::from_secs(10),
             status: if zh { "就绪" } else { "Ready" }.into(),
             error: false,
@@ -545,6 +566,9 @@ impl Proxy {
             model_table,
             table_width: px(0.),
             dialog_open: false,
+            protocol_open: false,
+            protocol_select,
+            protocol_options,
             focus,
             picker: None,
             picked: BTreeSet::new(),
@@ -563,6 +587,24 @@ impl Proxy {
         cx.subscribe_in(&this.language, window, |this, _, event, window, cx| {
             if let SelectEvent::Confirm(Some(code)) = event {
                 this.set_language(code, window, cx);
+            }
+        })
+        .detach();
+        cx.subscribe(&this.protocol_select, |this, _, event, cx| {
+            if let SelectEvent::Confirm(Some(code)) = event {
+                let Ok(protocol) = serde_json::from_value(serde_json::Value::String(code.clone()))
+                else {
+                    return;
+                };
+                let id = this.selected();
+                if let Some(draft) = this.drafts.providers.get_mut(&id)
+                    && draft.protocol != protocol
+                {
+                    draft.protocol = protocol;
+                    draft.protocol_settings = Default::default();
+                }
+                this.last_metadata = Instant::now() - Duration::from_secs(10);
+                cx.notify();
             }
         })
         .detach();
@@ -630,6 +672,58 @@ impl Proxy {
         );
         this
     }
+    pub(crate) fn native_protocol(&self) -> bool {
+        self.drafts
+            .providers
+            .get(&self.selected())
+            .is_some_and(|d| d.protocol.is_native())
+    }
+    fn metadata_request(&self, cx: &App) -> Value {
+        json!({"command":"model_metadata","key":self.key.read(cx).value().trim(),"provider_id":self.selected(),"model":self.model_id_for_options(cx),"upstream":self.url.read(cx).value().trim(),"protocol":self.protocol_payload()["protocol"],"protocol_settings":self.protocol_payload()["protocol_settings"]})
+    }
+    fn protocol_payload(&self) -> Value {
+        let draft = self
+            .drafts
+            .providers
+            .get(&self.selected())
+            .cloned()
+            .unwrap_or_default();
+        json!({"protocol":draft.protocol,"protocol_settings":draft.protocol_settings})
+    }
+    fn confirm_protocol(&mut self, cx: &mut Context<Self>) {
+        match self.protocol_options.read(cx) {
+            Ok(settings) => {
+                let id = self.selected();
+                if let Some(d) = self.drafts.providers.get_mut(&id) {
+                    d.protocol_settings = settings;
+                }
+                self.protocol_open = false;
+                self.error = false;
+            }
+            Err(error) => {
+                self.status = error;
+                self.error = true;
+            }
+        }
+        cx.notify();
+    }
+    fn url_hint(&self) -> &'static str {
+        use crate::upstream_config::UpstreamProtocol as P;
+        match self
+            .drafts
+            .providers
+            .get(&self.selected())
+            .map(|d| d.protocol)
+            .unwrap_or_default()
+        {
+            P::OpenaiChat => "https://host/gateway/v1 → /chat/completions",
+            P::OpenaiResponses => "https://host/gateway/v1 → /responses",
+            P::AnthropicMessages => "https://api.anthropic.com/v1 → /messages",
+            P::GeminiGenerateContent => {
+                "https://generativelanguage.googleapis.com/v1beta → /models/{model}:generateContent"
+            }
+        }
+    }
     fn selected(&self) -> String {
         self.drafts.selected.clone()
     }
@@ -643,6 +737,18 @@ impl Proxy {
                 name: self.name.read(cx).value().to_string(),
                 key: self.key.read(cx).value().to_string(),
                 upstream: self.url.read(cx).value().to_string(),
+                protocol: self
+                    .drafts
+                    .providers
+                    .get(&self.selected())
+                    .map(|d| d.protocol)
+                    .unwrap_or_default(),
+                protocol_settings: self
+                    .drafts
+                    .providers
+                    .get(&self.selected())
+                    .map(|d| d.protocol_settings.clone())
+                    .unwrap_or_default(),
                 effort: self.effort.clone(),
                 models: self.models.clone(),
             },
@@ -670,6 +776,9 @@ impl Proxy {
         ] {
             state.update(cx, |s, cx| s.set_value(value, window, cx));
         }
+        self.protocol_select.update(cx, |s, cx| {
+            s.set_selected_value(&draft.protocol.as_str().to_owned(), window, cx)
+        });
         self.models = draft.models;
         self.effort = if draft.effort.is_empty() {
             "keep".into()
@@ -713,7 +822,8 @@ impl Proxy {
             .unwrap_or_default()
     }
     fn save(&mut self, _: &Save, _: &mut Window, cx: &mut Context<Self>) {
-        if self.picker.is_some() || self.editing.is_some() || self.delete_open {
+        if self.picker.is_some() || self.editing.is_some() || self.delete_open || self.protocol_open
+        {
             return;
         }
         let steps = self.save_steps(cx);
@@ -881,8 +991,11 @@ impl Proxy {
                     && self.model_options.automatic
                     && let Ok(message) = &reply.result
                     && let Ok(value) = serde_json::from_str::<Value>(message)
+                    && self.metadata_context == self.metadata_request(cx)
                     && value["model"].as_str() == Some(self.model_id_for_options(cx).as_str())
                     && value["upstream"].as_str() == Some(self.url.read(cx).value().trim())
+                    && value["protocol"] == self.protocol_payload()["protocol"]
+                    && value["protocol_settings"] == self.protocol_payload()["protocol_settings"]
                     && self
                         .model_options
                         .apply_automatic(&value["metadata"], self.zh, window, cx)
@@ -987,10 +1100,18 @@ impl Proxy {
             && self.last_metadata.elapsed() > Duration::from_secs(1)
         {
             let model = self.model_id_for_options(cx);
-            if !model.is_empty() && self.backend.jobs.try_send(Job {
-                tag: "metadata".into(),
-                steps: vec![json!({"command":"model_metadata","model":model,"upstream":self.url.read(cx).value().trim()})],
-            }).is_ok() {
+            let request = self.metadata_request(cx);
+            if !model.is_empty()
+                && self
+                    .backend
+                    .jobs
+                    .try_send(Job {
+                        tag: "metadata".into(),
+                        steps: vec![request.clone()],
+                    })
+                    .is_ok()
+            {
+                self.metadata_context = request;
                 self.metadata_polling = true;
                 self.last_metadata = Instant::now();
             }
@@ -1111,6 +1232,7 @@ impl Proxy {
         self.picker = None;
         self.editing = None;
         self.delete_open = false;
+        self.protocol_open = false;
         self.focus.focus(window, cx);
         cx.notify();
     }
@@ -1201,7 +1323,10 @@ impl Proxy {
         });
     }
     fn manage_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {
-        let active = self.picker.is_some() || self.editing.is_some() || self.delete_open;
+        let active = self.picker.is_some()
+            || self.editing.is_some()
+            || self.delete_open
+            || self.protocol_open;
         if active && !self.dialog_open {
             self.dialog_open = true;
             let owner = cx.entity().downgrade();
@@ -1212,7 +1337,7 @@ impl Proxy {
                     owner: owner.clone(),
                 }
             });
-            let width = if self.picker.is_some() || self.editing.is_some() {
+            let width = if self.picker.is_some() || self.editing.is_some() || self.protocol_open {
                 720.
             } else {
                 480.
@@ -1238,7 +1363,9 @@ impl Proxy {
                     .child(body.clone())
                     .on_ok(move |_, _, cx| {
                         let _ = confirm_owner.update(cx, |this, cx| {
-                            if this.editing.is_some() {
+                            if this.protocol_open {
+                                this.confirm_protocol(cx);
+                            } else if this.editing.is_some() {
                                 this.confirm_edit(cx);
                             } else if this.picker.is_some() {
                                 this.apply_picker(cx);
@@ -1458,11 +1585,18 @@ impl Proxy {
                 )
                 .into_any_element();
         }
-        card("provider-settings").flex_1().min_w_0().gap_4().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
+        card("provider-settings").flex_1().min_w_0().min_h_0().gap_3().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
+        .child(div().id("provider-form").flex().flex_col().flex_1().min_h_0().overflow_y_scroll().gap_3()
         .child(div().child(label(self.t("供应商预设", "Provider preset"))).child(self.preset_menu()))
         .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(Input::new(&self.name).disabled(self.busy))).child(div().flex_1().child(label("API Key")).child(Input::new(&self.key).mask_toggle().disabled(self.busy))))
+        .child(div().flex().gap_3().items_center().child(label(self.t("上游协议","Upstream protocol"))).child(Select::new(&self.protocol_select).w(px(260.)).accessibility_label(self.t("上游协议","Upstream protocol")).disabled(self.busy))
+            .child(Button::new("protocol-options").small().label(self.t("协议选项","Protocol options")).disabled(self.busy||!self.native_protocol()).on_click(cx.listener(|this,_,window,cx|{
+                let draft=this.drafts.providers.get(&this.selected()).cloned().unwrap_or_default();
+                this.protocol_options.load(draft.protocol,&draft.protocol_settings,window,cx);this.protocol_open=true;this.error=false;cx.notify();
+            }))))
         .child(div().child(label(self.t("API 地址","API URL"))).child(Input::new(&self.url).disabled(self.busy)))
-        .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().primary().outline().icon(IconName::RefreshCw).label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string()})],cx);})))
+        .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.url_hint()))
+        .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().primary().outline().icon(IconName::RefreshCw).label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string(),"protocol":this.protocol_payload()["protocol"],"protocol_settings":this.protocol_payload()["protocol_settings"]})],cx);})))
         .child(Button::new("model-add").small().ghost().icon(IconName::Plus).tooltip(self.t("添加模型","Add model")).accessibility_label(self.t("添加模型","Add model")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.edit(this.models.len(),true,window,cx))))
         .child(Button::new("model-remove").small().ghost().icon(IconName::Minus).tooltip(self.t("删除模型","Remove models")).accessibility_label(self.t("删除模型","Remove models")).disabled(self.busy||self.selection.rows.is_empty()).on_click(cx.listener(|this,_,window,cx|this.remove_models(&RemoveModels,window,cx))))))
         .child(div().key_context("ModelList").track_focus(&self.table_focus).flex_1().min_h(px(140.)).on_action(cx.listener(Self::remove_models)).on_action(cx.listener(Self::select_models)).on_action(cx.listener(Self::edit_selected)).on_prepaint({
@@ -1475,8 +1609,9 @@ impl Proxy {
             }
         }).child(DataTable::new(&self.model_table).small().header_row_height(px(32.)).scrollbar_visible(true,true)))
         .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑","Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit")))
-        .child(div().flex().items_center().gap_3().child(div().text_size(px(12.)).text_color(rgb(MUTED)).child(self.t("思考强度","Thinking effort"))).child(self.effort_menu()))
-        .child(div().flex().gap_2().child(Button::new("save").small().primary().icon(IconName::Check).label(self.t("保存","Save")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
+        )
+        .child(div().flex_shrink_0().flex().items_center().gap_3().child(div().text_size(px(12.)).text_color(rgb(MUTED)).child(self.t("思考强度","Thinking effort"))).child(self.effort_menu()))
+        .child(div().flex_shrink_0().flex().gap_2().child(Button::new("save").small().primary().icon(IconName::Check).label(self.t("保存","Save")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
         .child(Button::new("test").small().primary().outline().label(self.t("测试连接","Test connection")).disabled(self.busy||self.models.is_empty()).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
     }
     fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
@@ -1700,7 +1835,30 @@ impl Proxy {
             .into_any_element()
     }
     fn dialog_body(&mut self, window: &Window, cx: &mut Context<Self>) -> Option<AnyElement> {
-        let content = if self.picker.is_some() {
+        let content = if self.protocol_open {
+            DialogContent::new()
+                .w_full()
+                .h((window.viewport_size().height - px(210.)).clamp(px(360.), px(570.)))
+                .gap_3()
+                .child(
+                    div()
+                        .text_lg()
+                        .child(self.t("上游协议选项", "Upstream protocol options")),
+                )
+                .child(self.protocol_options.render(self.zh))
+                .when(self.error, |this| {
+                    this.child(Label::new(self.status.clone()).text_color(rgb(0xc03c45)))
+                })
+                .child(
+                    DialogFooter::new().child(
+                        Button::new("protocol-apply")
+                            .primary()
+                            .label(self.t("应用到草稿", "Apply to draft"))
+                            .on_click(cx.listener(|this, _, _, cx| this.confirm_protocol(cx))),
+                    ),
+                )
+                .into_any_element()
+        } else if self.picker.is_some() {
             self.picker_dialog(cx)
         } else if self.editing.is_some() {
             DialogContent::new()

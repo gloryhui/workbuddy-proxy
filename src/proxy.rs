@@ -25,6 +25,8 @@ use std::{
     time::Duration,
 };
 use tokio::sync::{Semaphore, oneshot};
+#[path = "proxy_native.rs"]
+mod native;
 
 pub const BODY_LIMIT: usize = 8 * 1024 * 1024;
 pub const MAX_CONCURRENT: usize = 4;
@@ -33,11 +35,19 @@ struct Destination {
     authorization: axum::http::HeaderValue,
     go: bool,
     has_key: bool,
+    protocol: crate::upstream_config::UpstreamProtocol,
+    settings: crate::upstream_config::ProtocolSettings,
+    base: String,
+    native_key: axum::http::HeaderValue,
+    fingerprint: [u8; 32],
+    generation: [u8; 32],
 }
 struct Route {
     connection: Connection,
     destination: Arc<Destination>,
     provider_id: String,
+    fingerprint: [u8; 32],
+    generation: [u8; 32],
 }
 #[derive(Default)]
 struct Routes {
@@ -47,6 +57,9 @@ struct Routes {
 }
 impl Routes {
     fn new(cfg: &Config) -> Result<Self, String> {
+        Self::rebuild(cfg, None)
+    }
+    fn rebuild(cfg: &Config, previous: Option<&Routes>) -> Result<Self, String> {
         let mut routes = Self::default();
         for p in &cfg.providers {
             if p.models.is_empty() {
@@ -54,17 +67,48 @@ impl Routes {
             }
             let c = Connection {
                 upstream: p.upstream.clone(),
+                protocol: p.protocol,
+                protocol_settings: p.protocol_settings.clone(),
                 ..Default::default()
             };
             let mut authorization: axum::http::HeaderValue = format!("Bearer {}", p.api_key)
                 .parse()
                 .map_err(|_| "Invalid API key")?;
             authorization.set_sensitive(true);
+            let mut native_key: axum::http::HeaderValue =
+                p.api_key.parse().map_err(|_| "Invalid API key")?;
+            native_key.set_sensitive(true);
+            use sha2::{Digest, Sha256};
+            let fingerprint: [u8; 32] = Sha256::digest(
+                serde_json::to_vec(&(
+                    &p.id,
+                    &p.upstream,
+                    &p.api_key,
+                    p.protocol,
+                    &p.protocol_settings,
+                ))
+                .map_err(|_| "Invalid protocol settings")?,
+            )
+            .into();
+            let generation = previous
+                .and_then(|old| {
+                    old.ids
+                        .values()
+                        .find(|r| r.provider_id == p.id && r.destination.fingerprint == fingerprint)
+                })
+                .map(|r| r.destination.generation)
+                .unwrap_or_else(|| Sha256::digest(crate::config::token().as_bytes()).into());
             let destination = Arc::new(Destination {
                 endpoint: c.endpoint().parse().map_err(|_| "Invalid upstream URL")?,
                 authorization,
                 go: c.is_go(),
                 has_key: !p.api_key.is_empty(),
+                protocol: p.protocol,
+                settings: p.protocol_settings.clone(),
+                base: p.upstream.clone(),
+                native_key,
+                fingerprint,
+                generation,
             });
             for m in &p.models {
                 let connection = Connection {
@@ -77,11 +121,31 @@ impl Routes {
                     capabilities: m.capabilities.clone(),
                     api_key: String::new(),
                     upstream: String::new(),
+                    protocol: p.protocol,
+                    protocol_settings: p.protocol_settings.clone(),
                 };
+                let fingerprint: [u8; 32] = Sha256::digest(
+                    serde_json::to_vec(&(
+                        destination.generation,
+                        &m.id,
+                        &m.model,
+                        &m.reasoning_effort,
+                        &m.capabilities,
+                    ))
+                    .map_err(|_| "Invalid route settings")?,
+                )
+                .into();
+                let generation = previous
+                    .and_then(|old| old.ids.get(&m.id))
+                    .filter(|r| r.fingerprint == fingerprint)
+                    .map(|r| r.generation)
+                    .unwrap_or_else(|| Sha256::digest(crate::config::token().as_bytes()).into());
                 let route = Arc::new(Route {
                     connection,
                     destination: destination.clone(),
                     provider_id: p.id.clone(),
+                    fingerprint,
+                    generation,
                 });
                 routes.ids.insert(m.id.clone(), route.clone());
                 routes.aliases.insert(m.alias.clone(), route.clone());
@@ -188,6 +252,7 @@ pub struct Bridge {
     /// a chat request.
     pub stats: stats::StatsHandle,
     usage_injection_warned: Mutex<std::collections::HashSet<String>>,
+    native_replay: Mutex<crate::protocol::replay::Cache>,
 }
 impl Bridge {
     pub fn new(config: Config, dir: PathBuf) -> Result<Self, String> {
@@ -208,6 +273,7 @@ impl Bridge {
             dir,
             client,
             sessions: Mutex::new(Sessions::default()),
+            native_replay: Mutex::new(crate::protocol::replay::Cache::default()),
             permits: Arc::new(Semaphore::new(MAX_CONCURRENT)),
             port: AtomicU16::new(0),
             calls: AtomicU64::new(0),
@@ -317,7 +383,7 @@ impl Bridge {
         req.send().await
     }
     async fn discover(&self, id: &str, payload: &serde_json::Value) -> Result<String, String> {
-        let (base, key) = {
+        let (base, key, protocol, settings) = {
             let cfg = self.config.lock().unwrap();
             let provider = cfg.provider(id)?;
             (
@@ -332,6 +398,18 @@ impl Bridge {
                     .unwrap_or(&provider.api_key)
                     .trim()
                     .to_owned(),
+                payload
+                    .get("protocol")
+                    .map(|v| serde_json::from_value(v.clone()).map_err(|_| "Invalid protocol"))
+                    .transpose()?
+                    .unwrap_or(provider.protocol),
+                payload
+                    .get("protocol_settings")
+                    .map(|v| {
+                        serde_json::from_value(v.clone()).map_err(|_| "Invalid protocol settings")
+                    })
+                    .transpose()?
+                    .unwrap_or_else(|| provider.protocol_settings.clone()),
             )
         };
         if key.is_empty() {
@@ -342,11 +420,19 @@ impl Bridge {
             .clone()
             .try_acquire_owned()
             .map_err(|_| "Four requests are already in flight")?;
-        let models =
-            crate::catalog::fetch_provider(&self.client, &base, &key, Duration::from_secs(30))
-                .await?;
+        let models = crate::catalog::fetch_protocol(
+            &self.client,
+            &base,
+            &key,
+            protocol,
+            &settings,
+            Duration::from_secs(30),
+        )
+        .await?;
         let ids: Vec<_> = models.keys().cloned().collect();
-        self.catalog.remember(&base, models);
+        self.catalog
+            .remember_async(base, protocol, key, models)
+            .await;
         Ok(json!(ids).to_string())
     }
     /// Reports, once per provider, that `include_usage` could not be merged
@@ -373,6 +459,8 @@ impl Bridge {
             .map(|p| crate::catalog::Target {
                 upstream: p.upstream.clone(),
                 key: p.api_key.clone(),
+                protocol: p.protocol,
+                settings: p.protocol_settings.clone(),
             })
             .collect()
     }
@@ -411,6 +499,7 @@ impl Bridge {
                     route_name: r.connection.name.clone(),
                     requested_model: c.model.clone(),
                     upstream_model: r.connection.model.clone(),
+            upstream_protocol:r.destination.protocol.as_str().into(),
                     stream: true,
                 },
                 Protocol::Sse,
@@ -421,6 +510,9 @@ impl Bridge {
                     guard.finish(Outcome::Rejected, Some(ErrorKind::MissingKey));
                 }
                 return Err("Save your API key first / 请先保存 API Key".into());
+            }
+            if r.destination.protocol.is_native(){
+                return native::test(self,&r,&mut guard,&mut report,started).await;
             }
             let payload = serde_json::to_vec(&json!({"model":c.model,"stream":true,"max_tokens":1,"messages":[{"role":"user","content":"Reply with OK."}]})).unwrap();
             let payload = match apply_reasoning(payload.into(), &c.reasoning_effort) {
@@ -564,7 +656,11 @@ fn forward_headers(headers: &HeaderMap, request: bool) -> HeaderMap {
                 | "transfer-encoding"
                 | "upgrade"
         ) || nominated.iter().any(|n| n == name.as_str())
-            || (request && matches!(name.as_str(), "authorization" | "host" | "content-length"))
+            || (request
+                && matches!(
+                    name.as_str(),
+                    "authorization" | "host" | "content-length" | "x-api-key" | "x-goog-api-key"
+                ))
         {
             continue;
         }
@@ -733,6 +829,7 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
             route_name: r.connection.name.clone(),
             requested_model: model.model.to_string(),
             upstream_model: r.connection.model.clone(),
+            upstream_protocol: r.destination.protocol.as_str().into(),
             stream: model.stream,
         },
         Protocol::Unknown,
@@ -748,6 +845,18 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
         );
     }
     let c = &r.connection;
+    if r.destination.protocol.is_native() {
+        return native::relay(
+            a,
+            r,
+            bytes,
+            parts.headers,
+            parts.uri.query().map(str::to_owned),
+            permit,
+            stats_guard,
+        )
+        .await;
+    }
     let session = if r.destination.go {
         let envelope: Envelope<'_> = match serde_json::from_slice(&bytes) {
             Ok(e) => e,
@@ -1066,8 +1175,16 @@ impl Bridge {
                 let model = p["model"].as_str().unwrap_or("");
                 let upstream = p["upstream"].as_str().unwrap_or("");
                 if model.len() > 160 || upstream.len() > 2048 { return Err("Invalid model metadata request".into()); }
-                let resolved = self.catalog.resolve(upstream, model, None);
-                Ok(json!({"model":model,"upstream":upstream,"metadata":resolved}).to_string())
+                let (protocol, settings, credential) = {
+                    let cfg=self.config.lock().unwrap();
+                    let provider=cfg.providers.iter().find(|v|v.id==id);
+                    (p.get("protocol").map(|v|serde_json::from_value(v.clone()).map_err(|_|"Invalid protocol")).transpose()?.unwrap_or_else(||provider.map(|v|v.protocol).unwrap_or_default()),
+                     p.get("protocol_settings").map(|v|serde_json::from_value(v.clone()).map_err(|_|"Invalid protocol settings")).transpose()?.unwrap_or_else(||provider.map(|v|v.protocol_settings.clone()).unwrap_or_default()),
+                     p["key"].as_str().filter(|s|!s.trim().is_empty()).map(str::trim).map(str::to_owned).unwrap_or_else(||provider.map(|v|v.api_key.clone()).unwrap_or_default()))
+                };
+                settings.validate(protocol)?;
+                let resolved = self.catalog.resolve_protocol(upstream, model, None, crate::catalog::Wire{protocol,settings:&settings,credential:&credential});
+                Ok(json!({"model":model,"upstream":upstream,"protocol":protocol,"protocol_settings":settings,"metadata":resolved}).to_string())
             }
             "autostart" => {
                 let enabled = p["enabled"].as_bool()
@@ -1153,6 +1270,14 @@ impl Bridge {
                             .iter_mut()
                             .find(|p| p.id == selected)
                             .unwrap();
+                        // Older management clients omit these fields; preserve
+                        // the existing protocol/settings rather than downgrading.
+                        if let Some(protocol)=p.get("protocol"){
+                            c.protocol=serde_json::from_value(protocol.clone()).map_err(|_|"Invalid upstream protocol")?;
+                        }
+                        if let Some(settings)=p.get("protocol_settings"){
+                            c.protocol_settings=serde_json::from_value(settings.clone()).map_err(|_|"Invalid protocol settings")?;
+                        }
                         for (field, target) in
                             [("name", &mut c.name), ("upstream", &mut c.upstream)]
                         {
@@ -1201,7 +1326,7 @@ impl Bridge {
                     _ => unreachable!(),
                 }
                 next.validate()?;
-                let routes = Routes::new(&next)?;
+                let routes = Routes::rebuild(&next,Some(&self.routes.lock().unwrap()))?;
                 crate::config::write_json(&self.dir.join("config.json"), &next)?;
                 *self.routes.lock().unwrap() = routes;
                 *cfg = next;
@@ -1405,6 +1530,32 @@ fn request_is_stream(
 mod tests {
     use super::*;
     #[test]
+    fn effective_route_changes_invalidate_replay_even_after_settings_change_back() {
+        let mut cfg = Config::default();
+        let p = &mut cfg.providers[0];
+        p.upstream = "https://example.test/v1".into();
+        p.api_key = "fixture".into();
+        p.protocol = crate::upstream_config::UpstreamProtocol::OpenaiResponses;
+        p.models.push(crate::config::Model::new("model-a", "A"));
+        let id = p.models[0].id.clone();
+        let first = Routes::new(&cfg).unwrap();
+        let original = first.ids[&id].generation;
+        cfg.providers[0].name = "Cosmetic rename".into();
+        let renamed = Routes::rebuild(&cfg, Some(&first)).unwrap();
+        assert_eq!(renamed.ids[&id].generation, original);
+        cfg.providers[0].models[0].model = "model-b".into();
+        let changed = Routes::rebuild(&cfg, Some(&renamed)).unwrap();
+        assert_ne!(changed.ids[&id].generation, original);
+        cfg.providers[0].models[0].model = "model-a".into();
+        let back = Routes::rebuild(&cfg, Some(&changed)).unwrap();
+        assert_ne!(back.ids[&id].generation, original);
+        cfg.providers[0].api_key = "rotated".into();
+        let key = Routes::rebuild(&cfg, Some(&back)).unwrap();
+        cfg.providers[0].api_key = "fixture".into();
+        let key_back = Routes::rebuild(&cfg, Some(&key)).unwrap();
+        assert_ne!(key_back.ids[&id].generation, back.ids[&id].generation);
+    }
+    #[test]
     fn thinking_override_preserves_large_raw_fields() {
         let body = bytes::Bytes::from_static(br#"{ "model":"deepseek-v4.1-flash", "messages": [ {"role":"user","content":"test"} ], "tools":[{"type":"function"}], "reasoning_effort":"high" }"#);
         assert_eq!(
@@ -1555,9 +1706,12 @@ mod tests {
         h.insert("x-custom", "keep".parse().unwrap());
         h.insert("authorization", "Bearer local".parse().unwrap());
         h.insert("content-length", "123".parse().unwrap());
+        h.insert("x-api-key", "client-vendor-key".parse().unwrap());
+        h.insert("x-goog-api-key", "client-google-key".parse().unwrap());
         h.append("set-cookie", "a=1".parse().unwrap());
         h.append("set-cookie", "b=2".parse().unwrap());
         let r = forward_headers(&h, true);
+        assert!(!r.contains_key("x-api-key") && !r.contains_key("x-goog-api-key"));
         assert!(!r.contains_key("authorization"));
         assert!(!r.contains_key("content-length"));
         assert!(!r.contains_key("x-hop"));

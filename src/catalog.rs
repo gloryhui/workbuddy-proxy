@@ -1,13 +1,15 @@
-//! Automatic capability metadata. Never used on the forwarding path and never
-//! stores credentials. Explicit model settings remain in config.json.
+//! Cached capability metadata. Forwarding lookups do no network or disk I/O;
+//! credentials themselves are never stored here. Explicit settings stay in config.json.
 use crate::capabilities::{ContextWindow, EFFORTS, ModelCapabilities};
+use crate::upstream_config::{ProtocolSettings, ReasoningMode, UpstreamProtocol};
 use futures_util::{StreamExt, stream};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use sha2::{Digest, Sha256};
 use std::{
     collections::{BTreeMap, BTreeSet},
     path::PathBuf,
-    sync::Mutex,
+    sync::{Arc, Mutex},
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 
@@ -44,6 +46,8 @@ pub struct Hints {
     output: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     context: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    thinking_modes: Option<Vec<String>>,
 }
 
 fn positive(v: Option<&Value>) -> Option<u32> {
@@ -125,9 +129,55 @@ impl Hints {
             output: positive(v.pointer("/limit/output"))
                 .or_else(|| positive(v.get("max_output_tokens")))
                 .or_else(|| positive(v.get("maxOutputTokens"))),
+            thinking_modes: None,
             context: positive(v.pointer("/limit/context"))
                 .or_else(|| positive(v.get("context_length"))),
         }
+    }
+
+    fn native(v: &Value, protocol: UpstreamProtocol) -> Self {
+        let mut hints = Self::parse(v);
+        if protocol == UpstreamProtocol::AnthropicMessages {
+            hints.images = v
+                .pointer("/capabilities/image_input/supported")
+                .and_then(Value::as_bool);
+            hints.reasoning = v
+                .pointer("/capabilities/thinking/supported")
+                .and_then(Value::as_bool);
+            hints.can_disable = v
+                .pointer("/capabilities/thinking/types/disabled/supported")
+                .and_then(Value::as_bool);
+            hints.output = positive(v.get("max_tokens"));
+            hints.thinking_modes = v
+                .pointer("/capabilities/thinking/types")
+                .and_then(Value::as_object)
+                .map(|types| {
+                    ["enabled", "adaptive"]
+                        .into_iter()
+                        .filter(|k| {
+                            types.get(*k).and_then(|v| v["supported"].as_bool()) == Some(true)
+                        })
+                        .map(str::to_owned)
+                        .collect()
+                });
+            hints.efforts = v
+                .pointer("/capabilities/effort")
+                .and_then(Value::as_object)
+                .map(|levels| {
+                    EFFORTS
+                        .iter()
+                        .filter(|e| {
+                            levels.get(**e).and_then(|v| v["supported"].as_bool()) == Some(true)
+                        })
+                        .map(|s| (*s).to_owned())
+                        .collect()
+                });
+        } else if protocol == UpstreamProtocol::GeminiGenerateContent {
+            hints.input = positive(v.get("inputTokenLimit"));
+            hints.output = positive(v.get("outputTokenLimit"));
+            hints.reasoning = v.get("thinking").and_then(Value::as_bool);
+        }
+        hints
     }
 
     fn overlay(&mut self, higher: &Self) {
@@ -140,7 +190,8 @@ impl Hints {
             can_disable,
             input,
             output,
-            context
+            context,
+            thinking_modes
         );
         // A text-only/reasoning-off declaration must also clear lower-priority
         // reasoning choices. A supplied list fully replaces the older list.
@@ -212,7 +263,7 @@ struct Live {
     fetched_at: u64,
     models: BTreeMap<String, Hints>,
 }
-#[derive(Default, Serialize, Deserialize)]
+#[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(default)]
 struct Cache {
     version: u32,
@@ -252,12 +303,20 @@ impl Cache {
 pub struct Target {
     pub upstream: String,
     pub key: String,
+    pub protocol: UpstreamProtocol,
+    pub settings: ProtocolSettings,
+}
+pub struct Wire<'a> {
+    pub protocol: UpstreamProtocol,
+    pub settings: &'a ProtocolSettings,
+    pub credential: &'a str,
 }
 pub struct Catalog {
     path: PathBuf,
     cache: Mutex<Cache>,
     refresh: tokio::sync::Mutex<()>,
     attempts: Mutex<BTreeMap<String, u64>>,
+    persistence: Mutex<()>,
 }
 
 #[derive(Serialize)]
@@ -265,6 +324,7 @@ pub struct Resolved {
     pub capabilities: ModelCapabilities,
     pub sources: Vec<&'static str>,
     pub image_known: bool,
+    pub reasoning_known: bool,
     pub updated_at: Option<u64>,
 }
 
@@ -301,6 +361,20 @@ fn endpoint(base: &str) -> Option<String> {
     }
     u.set_path(&path);
     Some(u.as_str().trim_end_matches('/').to_owned())
+}
+fn catalog_key(base: &str, protocol: UpstreamProtocol, credential: &str) -> Option<String> {
+    if protocol == UpstreamProtocol::OpenaiChat {
+        endpoint(base)
+    } else {
+        protocol.models_endpoint(base).ok().map(|u| {
+            format!(
+                "{}|{}|{:x}",
+                protocol.as_str(),
+                u,
+                Sha256::digest(credential.as_bytes())
+            )
+        })
+    }
 }
 fn tail(id: &str) -> String {
     id.trim()
@@ -343,23 +417,183 @@ impl Catalog {
             cache: Mutex::new(cache),
             refresh: tokio::sync::Mutex::new(()),
             attempts: Mutex::new(BTreeMap::new()),
+            persistence: Mutex::new(()),
         }
     }
-    fn persist(&self, cache: &Cache) {
-        let _ = crate::config::write_json(&self.path, cache);
+    fn persist(&self) {
+        // Serialize writes without holding the hot metadata lock during JSON
+        // encoding or disk I/O. Production callers run this on the blocking pool.
+        let _writer = self.persistence.lock().unwrap();
+        let snapshot = self.cache.lock().unwrap().clone();
+        let _ = crate::config::write_json(&self.path, &snapshot);
     }
 
+    pub async fn remember_async(
+        self: &Arc<Self>,
+        upstream: String,
+        protocol: UpstreamProtocol,
+        credential: String,
+        models: BTreeMap<String, Hints>,
+    ) {
+        let catalog = self.clone();
+        let _ = tokio::task::spawn_blocking(move || {
+            catalog.remember_protocol(&upstream, protocol, &credential, models)
+        })
+        .await;
+    }
+
+    #[cfg(test)]
     pub fn resolve(
         &self,
         upstream: &str,
         model: &str,
         manual: Option<&ModelCapabilities>,
     ) -> Resolved {
+        self.resolve_protocol(
+            upstream,
+            model,
+            manual,
+            Wire {
+                protocol: UpstreamProtocol::OpenaiChat,
+                settings: &ProtocolSettings::default(),
+                credential: "",
+            },
+        )
+    }
+
+    pub fn resolve_protocol(
+        &self,
+        upstream: &str,
+        model: &str,
+        manual: Option<&ModelCapabilities>,
+        wire: Wire<'_>,
+    ) -> Resolved {
+        let Wire {
+            protocol,
+            settings,
+            credential,
+        } = wire;
+        let mut resolved = self.resolve_raw(upstream, model, manual, protocol, credential);
+        if !protocol.is_native() {
+            return resolved;
+        }
+        let value = &mut resolved.capabilities;
+        value.use_custom_protocol = false;
+        let cache = self.cache.lock().unwrap();
+        let live = catalog_key(upstream, protocol, credential)
+            .and_then(|k| cache.live.get(&k))
+            .and_then(|l| find(&l.models, model));
+        let profile = &settings.reasoning_profile;
+        let mut choices: Vec<String> = EFFORTS
+            .iter()
+            .filter_map(|e| {
+                let native = if protocol == UpstreamProtocol::OpenaiResponses {
+                    let mapped = settings
+                        .responses_efforts
+                        .get(*e)
+                        .map(String::as_str)
+                        .unwrap_or(e);
+                    if mapped == "max" {
+                        return None;
+                    }
+                    mapped
+                } else {
+                    match profile.mode {
+                        ReasoningMode::AnthropicBudget | ReasoningMode::GeminiBudget => {
+                            profile.budgets.get(*e)?;
+                            *e
+                        }
+                        ReasoningMode::AnthropicAdaptive | ReasoningMode::GeminiLevel => {
+                            profile.levels.get(*e)?.as_str()
+                        }
+                        ReasoningMode::None => return None,
+                    }
+                };
+                if let Some(efforts) = live.and_then(|h| h.efforts.as_ref()) {
+                    if (matches!(profile.mode, ReasoningMode::AnthropicAdaptive)
+                        || protocol == UpstreamProtocol::OpenaiResponses)
+                        && !efforts.iter().any(|s| s == native)
+                    {
+                        return None;
+                    }
+                } else if protocol == UpstreamProtocol::OpenaiResponses
+                    && !settings.responses_efforts.contains_key(*e)
+                    && (!value.supports_reasoning
+                        || !value
+                            .reasoning
+                            .supported_efforts
+                            .iter()
+                            .any(|s| s == native))
+                {
+                    return None;
+                }
+                if manual.is_some_and(|v| !v.reasoning.supported_efforts.iter().any(|s| s == *e)) {
+                    return None;
+                }
+                Some((*e).to_owned())
+            })
+            .collect();
+        let mode_name = match profile.mode {
+            ReasoningMode::AnthropicAdaptive => Some("adaptive"),
+            ReasoningMode::AnthropicBudget => Some("enabled"),
+            _ => None,
+        };
+        if mode_name.is_some_and(|mode| {
+            live.and_then(|h| h.thinking_modes.as_ref())
+                .is_some_and(|m| !m.iter().any(|s| s == mode))
+        }) {
+            choices.clear();
+        }
+        let model_supports = manual
+            .map(|v| v.supports_reasoning)
+            .or_else(|| live.and_then(|h| h.reasoning))
+            .unwrap_or(value.supports_reasoning);
+        value.supports_reasoning = model_supports && !choices.is_empty();
+        value.reasoning.supported_efforts = choices;
+        if let Some(last) = value.reasoning.supported_efforts.last()
+            && !value
+                .reasoning
+                .supported_efforts
+                .contains(&value.reasoning.default_effort)
+        {
+            value.reasoning.default_effort = last.clone();
+        }
+        // All native encoders implement an explicit `none` request, subject to
+        // model evidence; unknown model support is not advertised as disable.
+        value.reasoning.can_disable_thinking = manual
+            .map(|v| v.reasoning.can_disable_thinking)
+            .or_else(|| live.and_then(|h| h.can_disable))
+            .unwrap_or(false)
+            && match protocol {
+                UpstreamProtocol::GeminiGenerateContent => {
+                    profile.mode == ReasoningMode::GeminiBudget
+                }
+                UpstreamProtocol::OpenaiResponses => settings
+                    .responses_efforts
+                    .get("none")
+                    .is_none_or(|v| v == "none"),
+                _ => true,
+            };
+        value.only_reasoning = value.supports_reasoning
+            && !value.reasoning.can_disable_thinking
+            && manual.is_some_and(|v| v.only_reasoning);
+        resolved
+    }
+
+    fn resolve_raw(
+        &self,
+        upstream: &str,
+        model: &str,
+        manual: Option<&ModelCapabilities>,
+        protocol: UpstreamProtocol,
+        credential: &str,
+    ) -> Resolved {
         if let Some(value) = manual {
             return Resolved {
                 capabilities: value.clone(),
                 sources: vec!["manual"],
                 image_known: true,
+                reasoning_known: true,
                 updated_at: None,
             };
         }
@@ -408,7 +642,9 @@ impl Catalog {
             sources.push("models.dev:provider");
             updated_at = Some(cache.fetched_at);
         }
-        if let Some(live) = key.as_ref().and_then(|k| cache.live.get(k))
+        if let Some(live) = catalog_key(upstream, protocol, credential)
+            .as_ref()
+            .and_then(|k| cache.live.get(k))
             && let Some(m) = find(&live.models, model)
             && m != &Hints::default()
         {
@@ -433,12 +669,23 @@ impl Catalog {
             capabilities: value,
             sources,
             image_known: hints.images.is_some() || built_in,
+            reasoning_known: hints.reasoning.is_some() || built_in,
             updated_at,
         }
     }
 
+    #[cfg(test)]
     pub fn remember(&self, upstream: &str, models: BTreeMap<String, Hints>) {
-        if let Some(key) = endpoint(upstream) {
+        self.remember_protocol(upstream, UpstreamProtocol::OpenaiChat, "", models)
+    }
+    pub fn remember_protocol(
+        &self,
+        upstream: &str,
+        protocol: UpstreamProtocol,
+        credential: &str,
+        models: BTreeMap<String, Hints>,
+    ) {
+        if let Some(key) = catalog_key(upstream, protocol, credential) {
             let mut cache = self.cache.lock().unwrap();
             cache.version = 1;
             cache.live.insert(
@@ -459,7 +706,8 @@ impl Catalog {
                     .clone();
                 cache.live.remove(&oldest);
             }
-            self.persist(&cache);
+            drop(cache);
+            self.persist();
         }
     }
 
@@ -479,7 +727,7 @@ impl Catalog {
         true
     }
 
-    pub async fn refresh(&self, client: &reqwest::Client, targets: Vec<Target>) {
+    pub async fn refresh(self: &Arc<Self>, client: &reqwest::Client, targets: Vec<Target>) {
         let _guard = self.refresh.lock().await;
         let public = async {
             let fetched = self.cache.lock().unwrap().fetched_at;
@@ -512,12 +760,23 @@ impl Catalog {
             }
             .await;
             if let Ok(providers) = result {
-                let mut cache = self.cache.lock().unwrap();
-                cache.version = 1;
-                cache.providers = providers;
-                cache.reindex();
-                cache.fetched_at = now();
-                self.persist(&cache);
+                let catalog = self.clone();
+                let _ = tokio::task::spawn_blocking(move || {
+                    let mut incoming = Cache {
+                        providers,
+                        ..Default::default()
+                    };
+                    incoming.reindex();
+                    {
+                        let mut cache = catalog.cache.lock().unwrap();
+                        cache.version = 1;
+                        cache.providers = incoming.providers;
+                        cache.origins = incoming.origins;
+                        cache.fetched_at = now();
+                    }
+                    catalog.persist();
+                })
+                .await;
             }
         };
         let live = async {
@@ -525,7 +784,7 @@ impl Catalog {
             let targets: Vec<_> = targets
                 .into_iter()
                 .filter(|t| {
-                    let Some(key) = endpoint(&t.upstream) else {
+                    let Some(key) = catalog_key(&t.upstream, t.protocol, &t.key) else {
                         return false;
                     };
                     if t.key.is_empty() || !seen.insert(key.clone()) {
@@ -543,15 +802,18 @@ impl Catalog {
                 .collect();
             stream::iter(targets)
                 .for_each_concurrent(2, |target| async move {
-                    if let Ok(rows) = fetch_provider(
+                    if let Ok(rows) = fetch_protocol(
                         client,
                         &target.upstream,
                         &target.key,
+                        target.protocol,
+                        &target.settings,
                         Duration::from_secs(4),
                     )
                     .await
                     {
-                        self.remember(&target.upstream, rows);
+                        self.remember_async(target.upstream, target.protocol, target.key, rows)
+                            .await;
                     }
                 })
                 .await;
@@ -573,6 +835,13 @@ async fn download(
         if !response.status().is_success() {
             return Err(format!("Upstream HTTP {}", response.status().as_u16()));
         }
+        if response
+            .headers()
+            .get("content-encoding")
+            .is_some_and(|v| v != "identity")
+        {
+            return Err("Unsupported model list encoding".into());
+        }
         let mut bytes = Vec::new();
         let mut stream = response.bytes_stream();
         while let Some(chunk) = stream.next().await {
@@ -588,40 +857,120 @@ async fn download(
     .map_err(|_| "Connection timeout")?
 }
 
-pub async fn fetch_provider(
+pub async fn fetch_protocol(
     client: &reqwest::Client,
     base: &str,
     key: &str,
+    protocol: UpstreamProtocol,
+    settings: &ProtocolSettings,
     timeout: Duration,
 ) -> Result<BTreeMap<String, Hints>, String> {
-    if endpoint(base).is_none() {
-        return Err("Invalid upstream URL".into());
-    }
-    let url = format!("{}/models", base.trim_end_matches('/'));
-    let bytes = download(client.get(url).bearer_auth(key), LIVE_LIMIT, timeout).await?;
-    let data: Value = serde_json::from_slice(&bytes).map_err(|_| "Invalid model list")?;
-    let rows = data["data"]
-        .as_array()
-        .ok_or("Expected OpenAI models data array")?;
-    let mut models = BTreeMap::new();
-    for row in rows {
-        let id = row["id"]
-            .as_str()
-            .map(str::trim)
-            .filter(|s| !s.is_empty())
-            .ok_or("Invalid model list")?;
-        if id.len() > 160 || id.chars().any(char::is_control) {
-            return Err("Invalid model ID".into());
+    let endpoint = protocol.models_endpoint(base)?;
+    settings.validate(protocol)?;
+    tokio::time::timeout(timeout.min(Duration::from_secs(30)), async {
+        let mut models = BTreeMap::new();
+        let mut cursor = None::<String>;
+        let mut seen = BTreeSet::new();
+        let mut remaining = LIVE_LIMIT;
+        let mut row_count = 0;
+        for _ in 0..16 {
+            let mut url = endpoint.clone();
+            if protocol == UpstreamProtocol::AnthropicMessages {
+                url.query_pairs_mut().append_pair("limit", "1000");
+                if let Some(c) = &cursor {
+                    url.query_pairs_mut().append_pair("after_id", c);
+                }
+            } else if protocol == UpstreamProtocol::GeminiGenerateContent {
+                url.query_pairs_mut().append_pair("pageSize", "1000");
+                if let Some(c) = &cursor {
+                    url.query_pairs_mut().append_pair("pageToken", c);
+                }
+            }
+            let request = client.get(url).header("Accept-Encoding", "identity");
+            let request = match protocol {
+                UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses => {
+                    request.bearer_auth(key)
+                }
+                UpstreamProtocol::AnthropicMessages => request
+                    .header("x-api-key", key)
+                    .header("anthropic-version", &settings.anthropic_version),
+                UpstreamProtocol::GeminiGenerateContent => request.header("x-goog-api-key", key),
+            };
+            let bytes = download(request, remaining, timeout).await?;
+            remaining = remaining.saturating_sub(bytes.len());
+            let data: Value = serde_json::from_slice(&bytes).map_err(|_| "Invalid model list")?;
+            let rows = data[if protocol == UpstreamProtocol::GeminiGenerateContent {
+                "models"
+            } else {
+                "data"
+            }]
+            .as_array()
+            .ok_or("Invalid model list array")?;
+            row_count += rows.len();
+            if row_count > 4096 {
+                return Err("At most 4096 discovered models".into());
+            }
+            for row in rows {
+                if protocol == UpstreamProtocol::GeminiGenerateContent
+                    && !row["supportedGenerationMethods"]
+                        .as_array()
+                        .is_some_and(|a| a.iter().any(|v| v == "generateContent"))
+                {
+                    continue;
+                }
+                let id = row[if protocol == UpstreamProtocol::GeminiGenerateContent {
+                    "name"
+                } else {
+                    "id"
+                }]
+                .as_str()
+                .filter(|s| !s.is_empty() && *s == s.trim())
+                .ok_or("Invalid model ID")?;
+                let id = if protocol == UpstreamProtocol::GeminiGenerateContent {
+                    crate::upstream_config::gemini_model(id)?
+                } else {
+                    id
+                };
+                if id.len() > 160 || id.chars().any(char::is_control) {
+                    return Err("Invalid model ID".into());
+                }
+                models.insert(id.to_owned(), Hints::native(row, protocol));
+            }
+            cursor = match protocol {
+                UpstreamProtocol::AnthropicMessages => match data["has_more"].as_bool() {
+                    Some(true) => Some(
+                        data["last_id"]
+                            .as_str()
+                            .filter(|s| !s.is_empty())
+                            .ok_or("Missing model cursor")?
+                            .to_owned(),
+                    ),
+                    Some(false) => None,
+                    None => return Err("Missing model pagination state".into()),
+                },
+                UpstreamProtocol::GeminiGenerateContent => match data.get("nextPageToken") {
+                    None => None,
+                    Some(Value::String(s)) if s.is_empty() => None,
+                    Some(Value::String(s)) => Some(s.clone()),
+                    _ => return Err("Invalid model cursor".into()),
+                },
+                _ => None,
+            };
+            let Some(c) = &cursor else {
+                return if models.is_empty() {
+                    Err("No available models returned".into())
+                } else {
+                    Ok(models)
+                };
+            };
+            if c.len() > 4096 || c.chars().any(char::is_control) || !seen.insert(c.clone()) {
+                return Err("Invalid or repeated model cursor".into());
+            }
         }
-        models.insert(id.to_owned(), Hints::parse(row));
-        if models.len() > 4096 {
-            return Err("At most 4096 discovered models; upstream returned too many".into());
-        }
-    }
-    if models.is_empty() {
-        return Err("No available models returned".into());
-    }
-    Ok(models)
+        Err("Model list exceeds 16 pages".into())
+    })
+    .await
+    .map_err(|_| "Connection timeout".to_owned())?
 }
 
 fn parse_public(bytes: &[u8]) -> Result<BTreeMap<String, ProviderCatalog>, String> {
@@ -680,6 +1029,185 @@ fn parse_public(bytes: &[u8]) -> Result<BTreeMap<String, ProviderCatalog>, Strin
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn native_live_metadata_is_isolated_and_profile_is_intersected_with_model() {
+        let tmp = tempfile::tempdir().unwrap();
+        let c = Catalog::load(tmp.path());
+        let base = "https://native.invalid/gateway/v1";
+        let hints = Hints::native(
+            &json!({"id":"m","max_input_tokens":10000,"max_tokens":1000,
+            "capabilities":{"image_input":{"supported":true},"effort":{"low":{"supported":true},"high":{"supported":false}},
+            "thinking":{"supported":true,"types":{"adaptive":{"supported":true},"enabled":{"supported":false},"disabled":{"supported":false}}}}}),
+            UpstreamProtocol::AnthropicMessages,
+        );
+        c.remember_protocol(
+            base,
+            UpstreamProtocol::AnthropicMessages,
+            "fixture-key",
+            BTreeMap::from([("m".into(), hints)]),
+        );
+        c.remember_protocol(
+            base,
+            UpstreamProtocol::OpenaiResponses,
+            "fixture-key",
+            BTreeMap::from([(
+                "bare".into(),
+                Hints::native(
+                    &json!({"supportsReasoning":true}),
+                    UpstreamProtocol::OpenaiResponses,
+                ),
+            )]),
+        );
+        assert!(
+            !c.resolve_protocol(
+                base,
+                "bare",
+                None,
+                Wire {
+                    protocol: UpstreamProtocol::OpenaiResponses,
+                    settings: &ProtocolSettings::default(),
+                    credential: "fixture-key"
+                }
+            )
+            .capabilities
+            .supports_reasoning
+        );
+        let mut s = ProtocolSettings::default();
+        s.reasoning_profile.mode = ReasoningMode::AnthropicAdaptive;
+        s.reasoning_profile.levels =
+            BTreeMap::from([("high".into(), "low".into()), ("max".into(), "high".into())]);
+        let v = c.resolve_protocol(
+            base,
+            "m",
+            None,
+            Wire {
+                protocol: UpstreamProtocol::AnthropicMessages,
+                settings: &s,
+                credential: "fixture-key",
+            },
+        );
+        assert!(v.capabilities.supports_images && v.capabilities.supports_reasoning);
+        assert_eq!(v.capabilities.reasoning.supported_efforts, vec!["high"]);
+        assert!(!v.capabilities.reasoning.can_disable_thinking);
+        assert_eq!(v.capabilities.max_output_tokens, Some(1000));
+        v.capabilities.validate().unwrap();
+        assert!(!c.resolve(base, "m", None).image_known);
+        assert!(
+            !c.resolve_protocol(
+                base,
+                "m",
+                None,
+                Wire {
+                    protocol: UpstreamProtocol::AnthropicMessages,
+                    settings: &s,
+                    credential: "different-key"
+                }
+            )
+            .image_known
+        );
+        assert!(
+            !c.resolve_protocol(
+                base,
+                "m",
+                None,
+                Wire {
+                    protocol: UpstreamProtocol::OpenaiResponses,
+                    settings: &ProtocolSettings::default(),
+                    credential: "fixture-key"
+                }
+            )
+            .image_known
+        );
+        s.reasoning_profile.mode = ReasoningMode::AnthropicBudget;
+        s.reasoning_profile.levels.clear();
+        s.reasoning_profile.budgets.insert("high".into(), 1024);
+        assert!(
+            !c.resolve_protocol(
+                base,
+                "m",
+                None,
+                Wire {
+                    protocol: UpstreamProtocol::AnthropicMessages,
+                    settings: &s,
+                    credential: "fixture-key"
+                }
+            )
+            .capabilities
+            .supports_reasoning
+        );
+        let manual = ModelCapabilities {
+            use_custom_protocol: true,
+            ..Default::default()
+        };
+        assert!(
+            !c.resolve_protocol(
+                base,
+                "m",
+                Some(&manual),
+                Wire {
+                    protocol: UpstreamProtocol::OpenaiResponses,
+                    settings: &ProtocolSettings::default(),
+                    credential: "fixture-key"
+                }
+            )
+            .capabilities
+            .use_custom_protocol
+        );
+        // Reload does not collapse native cache keys into the old Chat namespace.
+        let loaded = Catalog::load(tmp.path());
+        assert!(!loaded.resolve(base, "m", None).image_known);
+        assert!(
+            loaded
+                .resolve_protocol(
+                    base,
+                    "m",
+                    None,
+                    Wire {
+                        protocol: UpstreamProtocol::AnthropicMessages,
+                        settings: &s,
+                        credential: "fixture-key"
+                    }
+                )
+                .capabilities
+                .supports_images
+        );
+    }
+
+    #[test]
+    fn waiting_for_catalog_persistence_does_not_lock_capability_lookups() {
+        let tmp = tempfile::tempdir().unwrap();
+        let c = Arc::new(Catalog::load(tmp.path()));
+        let guard = c.persistence.lock().unwrap();
+        let writer = c.clone();
+        let worker = std::thread::spawn(move || {
+            writer.remember(
+                "https://p.invalid/v1",
+                BTreeMap::from([(
+                    "model".into(),
+                    Hints {
+                        images: Some(true),
+                        ..Default::default()
+                    },
+                )]),
+            )
+        });
+        let deadline = std::time::Instant::now() + Duration::from_secs(2);
+        while !c.cache.try_lock().is_ok_and(|cache| {
+            cache.live.values().any(|live| {
+                live.models
+                    .get("model")
+                    .is_some_and(|m| m.images == Some(true))
+            })
+        }) {
+            assert!(std::time::Instant::now() < deadline);
+            std::thread::yield_now();
+        }
+        assert!(c.resolve("https://p.invalid/v1", "model", None).image_known);
+        assert!(!worker.is_finished());
+        drop(guard);
+        worker.join().unwrap();
+    }
 
     fn seeded(dir: &std::path::Path) -> Catalog {
         let catalog = Catalog::load(dir);

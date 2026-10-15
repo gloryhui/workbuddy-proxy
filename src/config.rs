@@ -1,4 +1,5 @@
 use crate::capabilities::ModelCapabilities;
+use crate::upstream_config::{ProtocolSettings, UpstreamProtocol};
 use rand::RngCore;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -29,6 +30,8 @@ pub struct Provider {
     pub id: String,
     pub name: String,
     pub upstream: String,
+    pub protocol: UpstreamProtocol,
+    pub protocol_settings: ProtocolSettings,
     pub api_key: String,
     pub models: Vec<Model>,
 }
@@ -48,6 +51,8 @@ impl Default for Provider {
             id: token()[..12].into(),
             name: "Provider 1".into(),
             upstream: String::new(),
+            protocol: Default::default(),
+            protocol_settings: Default::default(),
             api_key: String::new(),
             models: Vec::new(),
         }
@@ -172,6 +177,8 @@ pub struct Connection {
     pub api_key: String,
     pub model: String,
     pub upstream: String,
+    pub protocol: UpstreamProtocol,
+    pub protocol_settings: ProtocolSettings,
     pub reasoning_effort: String,
     pub capabilities: Option<ModelCapabilities>,
 }
@@ -205,6 +212,8 @@ impl Default for Connection {
             api_key: String::new(),
             model: DEFAULT_MODEL.into(),
             upstream: DEFAULT_UPSTREAM.into(),
+            protocol: Default::default(),
+            protocol_settings: Default::default(),
             reasoning_effort: "default".into(),
             capabilities: None,
         }
@@ -515,13 +524,19 @@ impl Config {
         let mut providers: Vec<Provider> = Vec::new();
         for c in connections {
             let found = providers.iter().position(|p| {
-                p.name == c.provider && p.upstream == c.upstream && p.api_key == c.api_key
+                p.name == c.provider
+                    && p.upstream == c.upstream
+                    && p.api_key == c.api_key
+                    && p.protocol == c.protocol
+                    && p.protocol_settings == c.protocol_settings
             });
             let i = found.unwrap_or_else(|| {
                 providers.push(Provider {
                     name: c.provider.clone(),
                     upstream: c.upstream.clone(),
                     api_key: c.api_key.clone(),
+                    protocol: c.protocol,
+                    protocol_settings: c.protocol_settings.clone(),
                     ..Default::default()
                 });
                 providers.len() - 1
@@ -560,6 +575,8 @@ impl Config {
                     provider: p.name.clone(),
                     upstream: p.upstream.clone(),
                     api_key: p.api_key.clone(),
+                    protocol: p.protocol,
+                    protocol_settings: p.protocol_settings.clone(),
                 })
             })
             .collect()
@@ -580,6 +597,8 @@ impl Config {
                 provider: p.name.clone(),
                 upstream: p.upstream.clone(),
                 api_key: p.api_key.clone(),
+                protocol: p.protocol,
+                protocol_settings: p.protocol_settings.clone(),
                 ..Default::default()
             };
             c.validate_fields(p.is_draft())?;
@@ -637,6 +656,8 @@ impl Config {
             provider: p.name.clone(),
             upstream: p.upstream.clone(),
             api_key: p.api_key.clone(),
+            protocol: p.protocol,
+            protocol_settings: p.protocol_settings.clone(),
         })
     }
 }
@@ -646,6 +667,7 @@ impl Connection {
         self.validate_fields(false)
     }
     fn validate_fields(&self, draft: bool) -> Result<(), String> {
+        self.protocol_settings.validate(self.protocol)?;
         if let Some(capabilities) = &self.capabilities {
             capabilities.validate()?;
         }
@@ -690,24 +712,19 @@ impl Connection {
         if draft {
             return Ok(());
         }
-        let u = reqwest::Url::parse(&self.upstream).map_err(|_| "Invalid upstream URL")?;
-        let loopback = matches!(
-            u.host_str(),
-            Some("127.0.0.1" | "localhost" | "[::1]" | "::1")
-        );
-        if u.scheme() != "https" && !(u.scheme() == "http" && loopback) {
-            return Err("Upstream must use HTTPS (HTTP is allowed only on loopback)".into());
-        }
-        if !u.username().is_empty()
-            || u.password().is_some()
-            || u.query().is_some()
-            || u.fragment().is_some()
-        {
-            return Err("URL must not contain credentials, query or fragment".into());
-        }
+        self.upstream_endpoint(false)?;
         Ok(())
     }
+    pub fn upstream_endpoint(&self, stream: bool) -> Result<reqwest::Url, String> {
+        self.protocol.endpoint(&self.upstream, &self.model, stream)
+    }
     pub fn endpoint(&self) -> String {
+        if self.protocol.is_native() {
+            return self
+                .upstream_endpoint(false)
+                .map(|u| u.to_string())
+                .unwrap_or_default();
+        }
         format!(
             "{}/chat/completions",
             self.upstream
@@ -717,14 +734,53 @@ impl Connection {
         )
     }
     pub fn is_go(&self) -> bool {
-        reqwest::Url::parse(&self.upstream)
-            .is_ok_and(|u| u.host_str() == Some("opencode.ai") && u.path().starts_with("/zen/go"))
+        self.protocol == UpstreamProtocol::OpenaiChat
+            && reqwest::Url::parse(&self.upstream).is_ok_and(|u| {
+                u.host_str() == Some("opencode.ai") && u.path().starts_with("/zen/go")
+            })
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn protocol_config_roundtrips_without_changing_routes_and_legacy_defaults_to_chat() {
+        let mut cfg = Config::default();
+        let p = &mut cfg.providers[0];
+        p.upstream = "https://example.test/gateway/v1".into();
+        p.api_key = "fixture".into();
+        p.protocol = UpstreamProtocol::OpenaiResponses;
+        p.models.push(Model::new("native-test", "Native"));
+        let id = p.models[0].id.clone();
+        let alias = p.models[0].alias.clone();
+        cfg.validate().unwrap();
+        let c = cfg.connection(&id).unwrap();
+        assert_eq!(c.protocol, UpstreamProtocol::OpenaiResponses);
+        assert_eq!(c.id, id);
+        assert_eq!(c.alias, alias);
+        let mut value = serde_json::to_value(&cfg).unwrap();
+        let decoded: Config = serde_json::from_value(value.clone()).unwrap();
+        assert_eq!(
+            decoded.connections()[0].protocol,
+            UpstreamProtocol::OpenaiResponses
+        );
+        let p = value["providers"][0].as_object_mut().unwrap();
+        p.remove("protocol");
+        p.remove("protocol_settings");
+        let legacy: Config = serde_json::from_value(value).unwrap();
+        legacy.validate().unwrap();
+        assert_eq!(
+            legacy.connections()[0].protocol,
+            UpstreamProtocol::OpenaiChat
+        );
+        let mut first = c.clone();
+        first.provider = "same".into();
+        let mut other = first.clone();
+        other.id = token()[..12].into();
+        other.protocol = UpstreamProtocol::OpenaiChat;
+        assert_eq!(Config::group(vec![first, other]).len(), 2);
+    }
     #[test]
     fn per_model_capabilities_survive_edits_routes_and_legacy_clients() {
         let mut cfg = Config::default();

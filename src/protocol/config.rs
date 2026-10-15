@@ -29,6 +29,25 @@ impl UpstreamProtocol {
         self != Self::OpenaiChat
     }
 
+    /// Lists use the same prefix/version and authentication as inference.
+    pub fn models_endpoint(self, base: &str) -> Result<reqwest::Url, String> {
+        // Reuse inference validation, including mismatched full endpoints.
+        let mut url = self.endpoint(base, "model", false)?;
+        let path = url.path().to_owned();
+        let suffix = match self {
+            Self::OpenaiChat => "/chat/completions",
+            Self::OpenaiResponses => "/responses",
+            Self::AnthropicMessages => "/messages",
+            Self::GeminiGenerateContent => "/models/model:generateContent",
+        };
+        let prefix = path
+            .strip_suffix(suffix)
+            .ok_or("Invalid model list endpoint")?;
+        url.set_path(&format!("{prefix}/models"));
+        url.set_query(None);
+        Ok(url)
+    }
+
     /// Gateway prefixes survive; no absolute-path URL join is used.
     pub fn endpoint(self, base: &str, model: &str, stream: bool) -> Result<reqwest::Url, String> {
         let mut url = validate_base(base)?;
@@ -190,7 +209,7 @@ impl ProtocolSettings {
             return Err("Reasoning profile does not match protocol/mode".into());
         }
         for (effort, budget) in &profile.budgets {
-            if !effort_key(effort) || *budget == 0 {
+            if !effort_key(effort) || effort == "none" || *budget == 0 {
                 return Err("Invalid explicit reasoning budget".into());
             }
             if profile.mode == ReasoningMode::AnthropicBudget && *budget < 1024 {
@@ -207,7 +226,7 @@ impl ProtocolSettings {
                 }
                 _ => false,
             };
-            if !effort_key(effort) || !valid {
+            if !effort_key(effort) || effort == "none" || !valid {
                 return Err("Invalid explicit reasoning level".into());
             }
         }

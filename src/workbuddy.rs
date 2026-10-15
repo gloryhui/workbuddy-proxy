@@ -134,10 +134,13 @@ fn managed(current: &Value, cfg: &config::Config) -> bool {
 }
 fn entry(c: &config::Connection, url: &str, key: &str) -> Value {
     let mut e = json!({"id":c.alias,"name":c.label(),"vendor":"Custom","url":url,"apiKey":key,"_workbuddyProxy":{"managed":true,"route":c.id}});
-    let capabilities = c
+    let mut capabilities = c
         .capabilities
         .clone()
         .unwrap_or_else(|| crate::capabilities::ModelCapabilities::for_model(&c.model));
+    if c.protocol.is_native() {
+        capabilities.use_custom_protocol = false;
+    }
     capabilities.apply(&mut e);
     e
 }
@@ -197,7 +200,16 @@ impl Bridge {
         for c in &mut connections {
             c.capabilities = Some(
                 self.catalog
-                    .resolve(&c.upstream, &c.model, c.capabilities.as_ref())
+                    .resolve_protocol(
+                        &c.upstream,
+                        &c.model,
+                        c.capabilities.as_ref(),
+                        crate::catalog::Wire {
+                            protocol: c.protocol,
+                            settings: &c.protocol_settings,
+                            credential: &c.api_key,
+                        },
+                    )
                     .capabilities,
             );
         }

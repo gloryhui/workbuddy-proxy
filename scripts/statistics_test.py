@@ -989,7 +989,7 @@ def crash_recovery(exe, directory, port, checks):
         log.close()
     process, log, health = start_core(exe, directory, port)
     try:
-        assert health['control_protocol'] == 6, health
+        assert health['control_protocol'] == 7, health
         page = wait_for(lambda: _recovered(directory, port), 'interrupted row was not recovered')
         assert page
         checks.ok('crash recovery marks in-flight rows interrupted')
@@ -1096,7 +1096,7 @@ def main():
         start_ms = now_ms()
         process, log, health = start_core(args.exe, folder, port)
         try:
-            assert health['control_protocol'] == 6, health
+            assert health['control_protocol'] == 7, health
             checks.ok('control protocol is 6', str(health['control_protocol']))
             run(folder, port, upstream.server_port, start_ms, checks)
         except AssertionError:

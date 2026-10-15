@@ -21,6 +21,7 @@ mod i18n;
 mod model_options;
 mod model_table;
 mod presets;
+mod protocol_options;
 mod state;
 mod statistics;
 mod stats_backend;
@@ -29,6 +30,9 @@ mod stats_controller;
 #[path = "../../src/stats/dto.rs"]
 mod stats_dto;
 mod ui;
+#[allow(dead_code)]
+#[path = "../../src/protocol/config.rs"]
+mod upstream_config;
 mod usage_chart;
 mod usage_table;
 use fs2::FileExt;

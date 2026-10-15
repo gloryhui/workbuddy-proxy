@@ -1788,6 +1788,20 @@ impl Statistics {
             ),
             row(
                 if zh {
+                    "上游协议".into()
+                } else {
+                    "Upstream protocol".into()
+                },
+                match item.upstream_protocol.as_str() {
+                    "openai_responses" => "OpenAI Responses",
+                    "anthropic_messages" => "Anthropic Messages",
+                    "gemini_generate_content" => "Gemini GenerateContent",
+                    _ => "OpenAI Chat Completions",
+                }
+                .into(),
+            ),
+            row(
+                if zh {
                     "响应声明模型".into()
                 } else {
                     "Response model".into()

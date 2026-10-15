@@ -44,6 +44,7 @@ pub struct RequestMeta {
     pub route_name: String,
     pub requested_model: String,
     pub upstream_model: String,
+    pub upstream_protocol: String,
     pub stream: bool,
     pub started_at_ms: i64,
     /// Unit prices copied from the published cache when the request was
@@ -319,7 +320,6 @@ impl RequestGuard {
     /// Native adapters supply only normalized counters and semantic timing.
     /// Raw messages, images, tools and opaque signatures never enter the stats
     /// collector or queue. Updates replace cumulative usage, never add it.
-    #[allow(dead_code)] // Staged adapter API; removed when native relay is wired.
     pub fn observe_native(
         &mut self,
         bytes: usize,
@@ -347,7 +347,6 @@ impl RequestGuard {
     }
 
     /// Called after the adapter's terminal state and clean transport EOF agree.
-    #[allow(dead_code)] // Staged adapter API; removed when native relay is wired.
     pub fn native_complete(&mut self) {
         if let Some(state) = self.native.as_mut() {
             state.complete = true;
@@ -431,11 +430,18 @@ impl RequestGuard {
             Outcome::Failed | Outcome::Rejected => UsageReason::StreamError,
             _ => UsageReason::NoUsage,
         };
-        let usage = self
+        let mut usage = self
             .native
             .as_ref()
             .map(|state| state.usage.clone())
             .unwrap_or_else(|| self.collector.finish(fallback));
+        if self.native.is_some()
+            && (usage.status == UsageStatus::Missing
+                || usage.status == UsageStatus::Partial
+                    && usage.reason == Some(UsageReason::NoUsage))
+        {
+            usage.reason = Some(fallback);
+        }
         let usage = adjust_usage(usage, outcome, self.upstream_started);
         let (status, source, numbers, breakdown, uncached) = decompose(&usage, outcome);
         FinishRecord {
@@ -680,6 +686,7 @@ mod tests {
             route_name: "route".into(),
             requested_model: "model-x".into(),
             upstream_model: "model-x".into(),
+            upstream_protocol: "openai_chat".into(),
             stream: true,
             started_at_ms: crate::stats::now_ms(),
             price: crate::stats::store::PriceSnapshot::default_zero("CNY", crate::stats::now_ms()),

@@ -263,13 +263,17 @@ pub fn render(owner: &Proxy, cx: &mut Context<Proxy>) -> AnyElement {
         .gap_3()
         .children(flags.into_iter().enumerate().map(|(i, (flag, cn, en))| {
             let unavailable = disabled
+                || (matches!(flag, Flag::CustomProtocol) && owner.native_protocol())
                 || (matches!(flag, Flag::OnlyReasoning | Flag::DisableThinking)
                     && !editor.value.supports_reasoning)
                 || (matches!(flag, Flag::DisableThinking) && editor.value.only_reasoning);
             Checkbox::new(("model-capability", i))
                 .small()
                 .label(owner.t(cn, en))
-                .checked(flag.get(&editor.value))
+                .checked(
+                    flag.get(&editor.value)
+                        && !(matches!(flag, Flag::CustomProtocol) && owner.native_protocol()),
+                )
                 .disabled(unavailable)
                 .on_change(cx.listener(move |this, enabled: &bool, _, cx| {
                     flag.set(&mut this.model_options.value, *enabled);

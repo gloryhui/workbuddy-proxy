@@ -179,20 +179,34 @@ impl Cache {
     }
     fn evict_oldest(&mut self) {
         if let Some(entry) = self.oldest.pop_front() {
-            for id in entry.pending.turn.calls.keys() {
-                self.by_id.remove(id);
-            }
-            if Arc::strong_count(&entry.pending.turn) > 1 {
-                self.retired.push((
-                    Arc::downgrade(&entry.pending.turn),
-                    entry.pending.bytes,
-                    entry.pending.turn.calls.len(),
-                ));
-            } else {
-                self.bytes = self.bytes.saturating_sub(entry.pending.bytes);
-                self.items = self.items.saturating_sub(entry.pending.turn.calls.len());
-            }
+            self.retire_entry(entry);
         }
+    }
+    fn retire_entry(&mut self, entry: Arc<Entry>) {
+        for id in entry.pending.turn.calls.keys() {
+            self.by_id.remove(id);
+        }
+        if Arc::strong_count(&entry.pending.turn) > 1 {
+            self.retired.push((
+                Arc::downgrade(&entry.pending.turn),
+                entry.pending.bytes,
+                entry.pending.turn.calls.len(),
+            ));
+        } else {
+            self.bytes = self.bytes.saturating_sub(entry.pending.bytes);
+            self.items = self.items.saturating_sub(entry.pending.turn.calls.len());
+        }
+    }
+    pub fn discard(&mut self, id: &str) {
+        if let Some(position) = self
+            .oldest
+            .iter()
+            .position(|e| e.pending.turn.calls.contains_key(id))
+            && let Some(entry) = self.oldest.remove(position)
+        {
+            self.retire_entry(entry);
+        }
+        self.collect_retired();
     }
     fn expire(&mut self, now: Instant) {
         self.collect_retired();
@@ -242,8 +256,23 @@ impl Cache {
     ) -> Result<ResolvedHistory, Error> {
         self.expire(now);
         let mut out = ResolvedHistory::new();
-        for (i, m) in messages.iter().enumerate() {
+        if !messages
+            .iter()
+            .any(|m| m.role == Role::Assistant && m.calls.iter().any(|c| c.id.starts_with("wbpt_")))
+        {
+            return Ok(out);
+        }
+        let mut prefix = initial_hash();
+        let mut i = 0;
+        while i < messages.len() {
+            let m = &messages[i];
+            if m.role == Role::Tool {
+                i = hash_result_group(&mut prefix, messages, i);
+                continue;
+            }
             if m.role != Role::Assistant || !m.calls.iter().any(|c| c.id.starts_with("wbpt_")) {
+                hash_message(&mut prefix, m);
+                i += 1;
                 continue;
             }
             let first = m.calls.first().ok_or_else(invalid)?;
@@ -258,11 +287,13 @@ impl Cache {
                 }
             }
             if m.calls.len() != entry.pending.turn.calls.len()
-                || binding(&messages[..i], m) != entry.pending.binding
+                || finish_binding(prefix.clone(), i, m) != entry.pending.binding
             {
                 return Err(invalid());
             }
             out.insert(i, entry.pending.turn.clone());
+            hash_message(&mut prefix, m);
+            i += 1;
         }
         Ok(out)
     }
@@ -320,14 +351,40 @@ fn hash_message(hash: &mut Sha256, m: &Message) {
     field(hash, m.tool_call_id.as_deref().unwrap_or(""));
 }
 fn binding(prefix: &[Message], assistant: &Message) -> [u8; 32] {
-    let mut hash = Sha256::new();
-    hash.update(b"workbuddy-native-replay-v1");
-    hash.update((prefix.len() as u64).to_le_bytes());
-    for m in prefix {
-        hash_message(&mut hash, m);
+    let mut hash = initial_hash();
+    let mut i = 0;
+    while i < prefix.len() {
+        if prefix[i].role == Role::Tool {
+            i = hash_result_group(&mut hash, prefix, i);
+        } else {
+            hash_message(&mut hash, &prefix[i]);
+            i += 1;
+        }
     }
+    finish_binding(hash, prefix.len(), assistant)
+}
+fn initial_hash() -> Sha256 {
+    let mut hash = Sha256::new();
+    hash.update(b"workbuddy-native-replay-v2");
+    hash
+}
+fn finish_binding(mut hash: Sha256, prefix_len: usize, assistant: &Message) -> [u8; 32] {
+    hash.update((prefix_len as u64).to_le_bytes());
     hash_message(&mut hash, assistant);
     hash.finalize().into()
+}
+fn hash_result_group(hash: &mut Sha256, messages: &[Message], start: usize) -> usize {
+    let end = start
+        + messages[start..]
+            .iter()
+            .take_while(|m| m.role == Role::Tool)
+            .count();
+    let mut group = messages[start..end].iter().collect::<Vec<_>>();
+    group.sort_by(|a, b| a.tool_call_id.cmp(&b.tool_call_id));
+    for m in group {
+        hash_message(hash, m);
+    }
+    end
 }
 
 #[cfg(test)]

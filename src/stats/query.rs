@@ -1057,7 +1057,8 @@ const ROW_COLUMNS: &str =
     r.duration_ms, r.ttfb_ms, r.first_content_ms, r.usage_status, r.usage_reason, r.usage_source,
     r.input_tokens, r.output_tokens, r.total_tokens, r.cache_read_tokens, r.cache_write_tokens,
     r.reasoning_tokens, r.input_uncached_tokens, r.input_breakdown,
-    c.status, c.currency, c.total_cost_nanos, c.source_price_id, c.pricing_version";
+    c.status, c.currency, c.total_cost_nanos, c.source_price_id, c.pricing_version,r.upstream_protocol";
+const ROW_COLUMN_COUNT: usize = 37;
 
 fn read_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<RequestRowDto> {
     let cost_status: Option<String> = row.get(31)?;
@@ -1086,6 +1087,7 @@ fn read_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<RequestRowDto> {
         route_name: row.get(6)?,
         requested_model: row.get(7)?,
         upstream_model: row.get(8)?,
+        upstream_protocol: row.get(36)?,
         response_model: row.get(9)?,
         started_at_ms: row.get(10)?,
         ended_at_ms: row.get(11)?,
@@ -1325,9 +1327,9 @@ fn request_detail_inner(conn: &Connection, request_id: &str) -> Result<RequestDe
             let parsed = read_row(row)?;
             Ok((
                 parsed,
-                row.get::<_, i64>(36)?,
-                row.get::<_, i64>(37)?,
-                row.get::<_, i64>(38)?,
+                row.get::<_, i64>(ROW_COLUMN_COUNT)?,
+                row.get::<_, i64>(ROW_COLUMN_COUNT + 1)?,
+                row.get::<_, i64>(ROW_COLUMN_COUNT + 2)?,
             ))
         })
         .optional()
@@ -1428,6 +1430,7 @@ fn request_detail_inner(conn: &Connection, request_id: &str) -> Result<RequestDe
                 route_name: String::new(),
                 requested_model: String::new(),
                 upstream_model: String::new(),
+                upstream_protocol: "openai_chat".into(),
                 response_model: None,
                 started_at_ms: 0,
                 ended_at_ms: None,

@@ -137,6 +137,34 @@ pub fn normalize(protocol: UpstreamProtocol, native: &Value) -> Usage {
         },
     }
 }
+
+/// Interim streaming counters are lower bounds, not a final output bill.
+/// Keep proven input and quality errors while withholding unfinished output.
+pub fn normalize_partial(protocol: UpstreamProtocol, native: &Value) -> Usage {
+    let full = normalize(protocol, native);
+    if full.invalid {
+        return full;
+    }
+    let mut partial = native.clone();
+    if let Some(object) = partial.as_object_mut() {
+        match protocol {
+            UpstreamProtocol::AnthropicMessages => {
+                object.remove("output_tokens");
+            }
+            UpstreamProtocol::GeminiGenerateContent => {
+                for key in [
+                    "candidatesTokenCount",
+                    "thoughtsTokenCount",
+                    "totalTokenCount",
+                ] {
+                    object.remove(key);
+                }
+            }
+            _ => (),
+        }
+    }
+    normalize(protocol, &partial)
+}
 fn normalize_checked(protocol: UpstreamProtocol, v: &Value) -> Result<Usage, ()> {
     if !v.is_object() {
         return Err(());

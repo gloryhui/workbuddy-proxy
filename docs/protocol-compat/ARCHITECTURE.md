@@ -125,7 +125,8 @@ Bridge::test 使用相同 PreparedRequest 和响应适配器，再消费Chat事�
 | 单个SSE帧含data | 1 MiB，超限终止该转换流，不无限等待分隔符 |
 | SSE待解析驻留 | 1 MiB + 64 KiB，分片处理任意大的网络chunk，不依赖chunk自然较小 |
 | 单个工具arguments | 256 KiB UTF-8，不能截断成合法JSON冒充完整 |
-| 单响应tool calls | 64，超限明确失败；文本不积攒成完整输出 |
+| 单响应原生解析聚合状态 | 16 MiB总量，文本/思考/签名均计入；须为潜在工具回合保留原生assistant块，到普通回答终态不写全局缓存 |
+| 单响应tool calls | 64，超限明确失败；可见delta按pull增量发送；用于完整工具回放的原生assistant blocks暂存受16 MiB聚合预算约束 |
 | 单响应opaque回放 | 8 MiB，单项1 MiB；预算包含签名及必须完整保留的原生block |
 | 进程replay缓存 | 32 MiB、最多512项、30分钟TTL，以较早达到者为准，LRU淘汰 |
 | 下游输出待发队列 | 最多16事件、合计1 MiB，或等价pull式单事件发送；超大单事件拆文本delta |

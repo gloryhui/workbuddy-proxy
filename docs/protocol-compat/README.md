@@ -4,7 +4,7 @@
 
 2026-10-16用户已授权Codex直接接手goal，不再交给dsh。统计和固定分页已合入本地main（40ec917）。协议实现位于`/Users/glory/.codex/worktrees/upstream-protocols/workbuddy-proxy`，分支`codex/upstream-protocols`；旧`protocol-compat` worktree仅留作设计原件，不在旧基线施工。
 
-当前版本仍0.5.3，管理协议基线6。本地提交/测试/合并已授权，不推送、不发布、不安装。各阶段真实进展以[实施状态](IMPLEMENTATION-STATUS.md)为准，未完成的接线和验收不能当成功能已交付。
+当前版本仍0.5.3，管理协议7，统计schema 4。本地提交/测试/合并已授权，不推送、不发布、不安装。各阶段真实进展以[实施状态](IMPLEMENTATION-STATUS.md)为准，本地验证与真实供应商验收分别记录。使用方式见 [USAGE.md](USAGE.md)，验证见 [FINAL-VALIDATION.md](FINAL-VALIDATION.md)。
 
 ## 阅读顺序
 

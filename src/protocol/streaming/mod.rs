@@ -731,13 +731,29 @@ mod tests {
                 for call in m["tool_calls"].as_array().unwrap().iter().rev() {
                     messages.as_array_mut().unwrap().push(json!({"role":"tool","tool_call_id":call["id"],"content":format!("non-JSON result {round}")}));
                 }
-                let next = ChatRequest::parse(
+                let mut next = ChatRequest::parse(
                     &serde_json::to_vec(
                         &json!({"model":"local","messages":messages,"tools":declared_tools}),
                     )
                     .unwrap(),
                 )
                 .unwrap();
+                // A standard client may reorder an older parallel result
+                // group too; identical ID/content associations stay canonical.
+                let mut cursor = 0;
+                while cursor < next.messages.len() {
+                    if next.messages[cursor].role == super::super::request::Role::Tool {
+                        let end = cursor
+                            + next.messages[cursor..]
+                                .iter()
+                                .take_while(|m| m.role == super::super::request::Role::Tool)
+                                .count();
+                        next.messages[cursor..end].reverse();
+                        cursor = end;
+                    } else {
+                        cursor += 1;
+                    }
+                }
                 let resolved = cache.resolve(&route, &next.messages, now).unwrap();
                 assert_eq!(resolved.len(), round + 1);
                 let native = encode::encode(
@@ -846,5 +862,49 @@ mod tests {
         assert!(common.tools[t].args.is_empty());
         let mut decoder = Decoder::new(UpstreamProtocol::OpenaiResponses).unwrap();
         assert!(decoder.event(sse::Event{kind:"message".into(),data:json!({"type":"response.output_item.added","output_index":0,"item":{"id":"x".repeat(257),"type":"message"}}).to_string()}).is_err());
+    }
+
+    #[test]
+    fn initial_counters_are_not_a_final_zero_output_bill() {
+        for (protocol, first) in [
+            (
+                UpstreamProtocol::AnthropicMessages,
+                anthropic_events().remove(0),
+            ),
+            (
+                UpstreamProtocol::GeminiGenerateContent,
+                json!({"candidates":[{"content":{"parts":[{"text":"early"}]}}],"usageMetadata":{"promptTokenCount":10,"candidatesTokenCount":0,"totalTokenCount":10}}),
+            ),
+        ] {
+            let mut decoder = Decoder::new(protocol).unwrap();
+            let kind = first
+                .get("type")
+                .and_then(Value::as_str)
+                .unwrap_or("message")
+                .to_owned();
+            decoder
+                .event(sse::Event {
+                    kind,
+                    data: first.to_string(),
+                })
+                .unwrap();
+            assert!(!decoder.usage().complete);
+            assert!(decoder.usage().chat.get("completion_tokens").is_none());
+            assert!(decoder.usage().chat.get("total_tokens").is_none());
+            assert!(decoder.usage().outcome().numbers.output.is_none());
+        }
+        let events = vec![
+            json!({"candidates":[{"content":{"parts":[{"text":"early"}]}}],"usageMetadata":{"promptTokenCount":10,"candidatesTokenCount":0,"totalTokenCount":10}}),
+            json!({"candidates":[{"finishReason":"STOP"}]}),
+            json!({"candidates":[{"content":{"parts":[{"text":"","thoughtSignature":"tail"}]}}]}),
+        ];
+        let (_, out) = consume(
+            UpstreamProtocol::GeminiGenerateContent,
+            &wire(&events, false),
+            1,
+        )
+        .unwrap();
+        assert!(!out.usage.complete);
+        assert!(out.usage.chat.get("completion_tokens").is_none());
     }
 }

@@ -72,9 +72,8 @@ fn remember(
     }
 }
 
-fn response_part(part: &Part, assistant: bool) -> Value {
+fn response_part(part: &Part) -> Value {
     match part {
-        Part::Text(text) if assistant => json!({"type":"output_text","text":text,"annotations":[]}),
         Part::Text(text) => json!({"type":"input_text","text":text}),
         Part::ImageData { mime, data, detail } => {
             json!({"type":"input_image","image_url":format!("data:{mime};base64,{data}"),"detail":detail})
@@ -107,8 +106,11 @@ fn responses(
                 } else {
                     if !m.parts.is_empty() {
                         let role=match m.role {Role::System=>"system",Role::Developer=>"developer",Role::User=>"user",_=>"assistant"};
-                        let mut message=json!({"role":role,"content":m.parts.iter().map(|p| response_part(p,m.role==Role::Assistant)).collect::<Vec<_>>()});
-                        if m.role==Role::Assistant {message["type"]=json!("message");message["status"]=json!("completed");}
+                        // Ordinary assistant text uses EasyInputMessage. OutputMessage
+                        // requires a native ID and is only used for cached replay.
+                        let message=if m.role==Role::Assistant {
+                            json!({"role":role,"content":m.text()})
+                        } else {json!({"role":role,"content":m.parts.iter().map(response_part).collect::<Vec<_>>()})};
                         input.push(message);
                     }
                     for call in &m.calls {
@@ -644,6 +646,24 @@ mod tests {
             value[k] = v.clone();
         }
         ChatRequest::parse(&serde_json::to_vec(&value).unwrap()).unwrap()
+    }
+    #[test]
+    fn ordinary_responses_assistant_history_uses_easy_input_message() {
+        let r = request(json!({"messages":[{"role":"user","content":"one"},
+            {"role":"assistant","content":[{"type":"text","text":"answer "},{"type":"text","text":"one"}]},
+            {"role":"user","content":"two"}]}));
+        let out = encode(
+            UpstreamProtocol::OpenaiResponses,
+            "real",
+            &ProtocolSettings::default(),
+            &r,
+            &ResolvedHistory::new(),
+        )
+        .unwrap();
+        assert_eq!(
+            out["input"][1],
+            json!({"role":"assistant","content":"answer one"})
+        );
     }
     #[test]
     fn text_system_and_limits_map_without_changing_the_real_model() {

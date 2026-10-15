@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 pub struct TestReport {
     pub kind: String,
     pub provider: String,
+    #[serde(default)]
+    pub protocol: String,
     pub name: String,
     pub model: String,
     pub url: String,
@@ -21,6 +23,7 @@ impl TestReport {
         Self {
             kind: "connection_test".into(),
             provider: c.provider.clone(),
+            protocol: c.protocol.as_str().into(),
             name: c.name.clone(),
             model: c.model.clone(),
             url: c.endpoint(),
@@ -46,6 +49,14 @@ impl TestReport {
                     format!("测试连接失败：{reason}")
                 },
                 format!("供应商：{}", self.provider),
+                format!(
+                    "协议：{}",
+                    if self.protocol.is_empty() {
+                        "openai_chat"
+                    } else {
+                        &self.protocol
+                    }
+                ),
                 format!("模型：{}（{}）", self.name, self.model),
                 format!("请求：POST {}", self.url),
             ]
@@ -57,6 +68,14 @@ impl TestReport {
                     format!("Connection test failed: {reason}")
                 },
                 format!("Provider: {}", self.provider),
+                format!(
+                    "Protocol: {}",
+                    if self.protocol.is_empty() {
+                        "openai_chat"
+                    } else {
+                        &self.protocol
+                    }
+                ),
                 format!("Model: {} ({})", self.name, self.model),
                 format!("Request: POST {}", self.url),
             ]

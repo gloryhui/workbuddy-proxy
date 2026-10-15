@@ -105,6 +105,7 @@ pub struct RequestSpec {
     pub route_name: String,
     pub requested_model: String,
     pub upstream_model: String,
+    pub upstream_protocol: String,
     pub stream: bool,
 }
 
@@ -439,11 +440,12 @@ impl StatsHandle {
             run_id: self.inner.run_id.clone(),
             source: spec.source,
             provider_id: spec.provider_id,
-            provider_name: spec.provider_name,
+            provider_name: spec.provider_name.chars().take(160).collect(),
             route_id: spec.route_id,
-            route_name: spec.route_name,
-            requested_model: spec.requested_model,
+            route_name: spec.route_name.chars().take(160).collect(),
+            requested_model: spec.requested_model.chars().take(160).collect(),
             upstream_model: spec.upstream_model,
+            upstream_protocol: spec.upstream_protocol,
             stream: spec.stream,
             started_at_ms,
             price,
@@ -2329,8 +2331,26 @@ mod tests {
             route_name: "Route".into(),
             requested_model: id.into(),
             upstream_model: id.into(),
+            upstream_protocol: "openai_chat".into(),
             stream: true,
         }
+    }
+
+    #[test]
+    fn valid_long_labels_and_aliases_do_not_drop_statistics() {
+        let tmp = temporary_dir();
+        let handle = StatsHandle::start(tmp.path().to_path_buf());
+        assert!(wait_ready(&handle));
+        let mut request = spec("model");
+        request.provider_name = "名".repeat(180);
+        request.route_name = "r".repeat(240);
+        request.requested_model = "a".repeat(256);
+        let guard = handle.begin(request, Protocol::Json, false).unwrap();
+        drop(guard);
+        handle.shutdown();
+        let db = rusqlite::Connection::open(tmp.path().join("usage.sqlite3")).unwrap();
+        let lengths:(i64,i64,i64)=db.query_row("SELECT length(provider_name),length(route_name),length(requested_model) FROM usage_requests",[],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?))).unwrap();
+        assert_eq!(lengths, (160, 160, 160));
     }
 
     fn wait_for_state(handle: &StatsHandle, state: HealthState, timeout: Duration) -> bool {

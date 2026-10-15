@@ -19,10 +19,11 @@ use std::{
 };
 
 /// Schema version understood by this build.
-pub const SCHEMA_VERSION: i64 = 3;
+pub const SCHEMA_VERSION: i64 = 4;
 const MIGRATION_0001: &str = include_str!("migrations/0001.sql");
 const MIGRATION_0002: &str = include_str!("migrations/0002.sql");
 const MIGRATION_0003: &str = include_str!("migrations/0003.sql");
+const MIGRATION_0004: &str = include_str!("migrations/0004.sql");
 const WRITE_RETRIES: usize = 2;
 /// Single lock wait before our own retry loop takes over (was 2000 ms, which
 /// multiplied into seconds per batch under a held lock).
@@ -145,20 +146,18 @@ pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
         tx.pragma_update(None, "user_version", 1)?;
         tx.commit()?;
     }
-    if version >= 2 {
-        // Already at v2 or v3: only the additive backlog step is missing.
-        return apply_step(conn, 3, MIGRATION_0003);
-    }
     // v1 -> v2 rebuilds tables, which SQLite only allows with foreign keys
     // disabled outside the transaction; the copy is verified afterwards.
-    conn.pragma_update(None, "foreign_keys", "OFF")?;
-    let upgraded = apply_step(conn, 2, MIGRATION_0002).and_then(|()| {
-        // v2 -> v3 only adds the bounded recovery backlog; existing rows are
-        // untouched, so this is safe to run against a live database.
-        apply_step(conn, 3, MIGRATION_0003)
-    });
-    conn.pragma_update(None, "foreign_keys", "ON")?;
-    upgraded
+    if version < 2 {
+        conn.pragma_update(None, "foreign_keys", "OFF")?;
+        let upgraded = apply_step(conn, 2, MIGRATION_0002);
+        conn.pragma_update(None, "foreign_keys", "ON")?;
+        upgraded?;
+    }
+    if version < 3 {
+        apply_step(conn, 3, MIGRATION_0003)?;
+    }
+    apply_step(conn, 4, MIGRATION_0004)
 }
 
 /// Runs one migration step in its own transaction and records the new version,
@@ -704,14 +703,14 @@ impl Writer {
                         "INSERT INTO usage_requests(
                             request_id, run_id, source, provider_id, route_id, provider_name,
                             route_name, requested_model, upstream_model, started_at_ms, stream,
-                            created_at_ms, updated_at_ms, outcome, usage_status, usage_source)
+                            created_at_ms, updated_at_ms, outcome, usage_status, usage_source,upstream_protocol)
                          VALUES(:request_id,:run_id,:source,:provider_id,:route_id,:provider_name,
                             :route_name,:requested_model,:upstream_model,:started_at,:stream,
                             -- `created_at_ms` is the request's own start time, not the
                             -- batch time: a fast request can put Start and Finish in the
                             -- same batch, and the schema requires
                             -- `updated_at_ms >= created_at_ms`.
-                            :started_at,:now,'in_flight','missing','none')
+                            :started_at,:now,'in_flight','missing','none',:protocol)
                          ON CONFLICT(request_id) DO NOTHING",
                         rusqlite::named_params! {
                             ":request_id": meta.request_id,
@@ -723,6 +722,7 @@ impl Writer {
                             ":route_name": meta.route_name,
                             ":requested_model": meta.requested_model,
                             ":upstream_model": meta.upstream_model,
+                            ":protocol":meta.upstream_protocol,
                             ":started_at": meta.started_at_ms,
                             ":stream": if meta.stream { 1 } else { 0 },
                             ":now": now_ms,
@@ -2185,6 +2185,7 @@ mod tests {
             route_name: "Route".into(),
             requested_model: "model-x".into(),
             upstream_model: "model-x".into(),
+            upstream_protocol: "openai_chat".into(),
             stream: true,
             started_at_ms: crate::stats::now_ms(),
             price: PriceSnapshot::default_zero("CNY", crate::stats::now_ms()),
@@ -2768,7 +2769,7 @@ mod tests {
     /// already exists" and left collection disabled.
     #[test]
     fn every_schema_generation_upgrades_in_place_and_is_idempotent() {
-        for start in 0..=2i64 {
+        for start in 0..=3i64 {
             let folder = tempfile::tempdir().unwrap();
             let path = folder.path().join("usage.sqlite3");
             {
@@ -2788,6 +2789,9 @@ mod tests {
                     tx.pragma_update(None, "user_version", 2).unwrap();
                     tx.commit().unwrap();
                     conn.pragma_update(None, "foreign_keys", "ON").unwrap();
+                }
+                if start >= 3 {
+                    apply_step(&mut conn, 3, MIGRATION_0003).unwrap();
                 }
             }
             let mut conn = Connection::open(&path).unwrap();
@@ -2820,6 +2824,40 @@ mod tests {
                 .unwrap();
             assert_eq!((prices, costs), (0, 0));
         }
+    }
+
+    #[test]
+    fn v3_protocol_migration_preserves_historical_unit_prices_and_total() {
+        let folder = tempfile::tempdir().unwrap();
+        let mut conn = open_connection(&folder.path().join("usage.sqlite3"), false).unwrap();
+        conn.execute_batch(MIGRATION_0001).unwrap();
+        conn.pragma_update(None, "user_version", 1).unwrap();
+        conn.pragma_update(None, "foreign_keys", "OFF").unwrap();
+        apply_step(&mut conn, 2, MIGRATION_0002).unwrap();
+        conn.pragma_update(None, "foreign_keys", "ON").unwrap();
+        apply_step(&mut conn, 3, MIGRATION_0003).unwrap();
+        start_run(&mut conn, "run-v3", 1000, true).unwrap();
+        conn.execute_batch("INSERT INTO usage_requests(request_id,run_id,source,provider_id,provider_name,route_id,route_name,requested_model,upstream_model,started_at_ms,ended_at_ms,duration_ms,stream,upstream_started,outcome,usage_status,usage_source,input_tokens,output_tokens,total_tokens,created_at_ms,updated_at_ms)
+            VALUES('historical-v3','run-v3','relay','provider','Provider','route','Route','alias','actual-model',1000,1001,1,0,1,'completed','complete','upstream',10,5,15,1000,1001);
+            INSERT INTO usage_costs(request_id,source_price_id,source_price_revision,price_source,price_snapshot_at_ms,currency,input_mode,input_rate_nanos,output_rate_nanos,cache_read_rate_nanos,cache_write_rate_nanos,status,input_cost_nanos,output_cost_nanos,cache_read_cost_nanos,cache_write_cost_nanos,total_cost_nanos,pricing_version,calculated_at_ms)
+            VALUES('historical-v3','deleted-old-price',3,'manual',1000,'USD','flat',2000000000,8000000000,0,0,'priced',20000,40000,0,0,60000,2,1001);").unwrap();
+        migrate(&mut conn, folder.path()).unwrap();
+        let values:(String,String,i64,i64,i64)=conn.query_row("SELECT r.upstream_protocol,c.currency,c.input_rate_nanos,c.output_rate_nanos,c.total_cost_nanos FROM usage_requests r JOIN usage_costs c USING(request_id)",[],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?,r.get(3)?,r.get(4)?))).unwrap();
+        assert_eq!(
+            values,
+            (
+                "openai_chat".into(),
+                "USD".into(),
+                2_000_000_000,
+                8_000_000_000,
+                60_000
+            )
+        );
+        let detail = crate::stats::query::request_detail(&conn, "historical-v3").unwrap();
+        assert_eq!(detail.row.upstream_protocol, "openai_chat");
+        assert_eq!(detail.parser_version, 1);
+        assert_eq!(detail.created_at_ms, 1000);
+        assert_eq!(detail.updated_at_ms, 1001);
     }
 
     /// U05: a tiny budget must bound the whole attempt, including the SQLite

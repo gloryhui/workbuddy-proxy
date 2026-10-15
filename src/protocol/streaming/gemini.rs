@@ -6,6 +6,7 @@ pub(super) struct State {
     blocked: Option<Value>,
     usage: Value,
     ids: BTreeMap<String, usize>,
+    usage_final: bool,
 }
 impl State {
     pub(super) fn terminal_seen(&self) -> bool {
@@ -31,10 +32,20 @@ impl State {
                 usage,
                 UpstreamProtocol::GeminiGenerateContent,
             );
-            c.usage = super::super::usage::normalize(
-                UpstreamProtocol::GeminiGenerateContent,
-                &self.usage,
-            );
+            self.usage_final = self.usage_final
+                || self.terminal_seen()
+                || v.get("candidates")
+                    .and_then(Value::as_array)
+                    .is_some_and(|c| c.iter().any(|c| c.get("finishReason").is_some()))
+                || v["promptFeedback"].get("blockReason").is_some();
+            c.usage = if self.usage_final {
+                super::super::usage::normalize(UpstreamProtocol::GeminiGenerateContent, &self.usage)
+            } else {
+                super::super::usage::normalize_partial(
+                    UpstreamProtocol::GeminiGenerateContent,
+                    &self.usage,
+                )
+            };
         }
         if let Some(feedback) = v.get("promptFeedback")
             && feedback
@@ -96,7 +107,12 @@ impl State {
                     return Err(bad("unsupported_upstream_content"));
                 }
                 let has_content = part.get("text").is_some() || part.get("functionCall").is_some();
-                if self.reason.is_some() && has_content {
+                let visible_content = part
+                    .get("text")
+                    .and_then(Value::as_str)
+                    .is_some_and(|s| !s.is_empty())
+                    || part.get("functionCall").is_some();
+                if self.reason.is_some() && visible_content {
                     return Err(bad("content_after_terminal"));
                 }
                 if let Some(s) = part.get("text") {
@@ -192,6 +208,19 @@ impl State {
         Ok(())
     }
     pub(super) fn finish(&mut self, c: &mut Common) -> Result<(), Error> {
+        if !self.usage_final
+            && !super::super::usage::normalize(UpstreamProtocol::GeminiGenerateContent, &self.usage)
+                .invalid
+            && let Some(usage) = self.usage.as_object_mut()
+        {
+            for key in [
+                "candidatesTokenCount",
+                "thoughtsTokenCount",
+                "totalTokenCount",
+            ] {
+                usage.remove(key);
+            }
+        }
         let native = if let Some(block) = self.blocked.take() {
             json!({"promptFeedback":block,"usageMetadata":self.usage})
         } else {

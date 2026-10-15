@@ -591,6 +591,8 @@ pub struct RequestRowDto {
     pub route_name: String,
     pub requested_model: String,
     pub upstream_model: String,
+    #[serde(default = "default_upstream_protocol")]
+    pub upstream_protocol: String,
     pub response_model: Option<String>,
     pub started_at_ms: i64,
     pub ended_at_ms: Option<i64>,
@@ -615,6 +617,9 @@ pub struct RequestRowDto {
     pub input_uncached_tokens: Option<i64>,
     pub input_breakdown: InputBreakdown,
     pub cost: Option<CostDto>,
+}
+fn default_upstream_protocol() -> String {
+    "openai_chat".into()
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

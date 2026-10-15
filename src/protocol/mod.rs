@@ -2,7 +2,7 @@
 //!
 //! The conversion boundary is deliberately independent of HTTP and SQLite;
 //! relay integration owns transport, cancellation and the existing stats guard.
-pub mod config;
+pub use crate::upstream_config as config;
 pub mod encode;
 pub mod output;
 pub mod replay;
@@ -39,11 +39,14 @@ impl Error {
     pub fn envelope(&self) -> serde_json::Value {
         serde_json::json!({"error":{
             "message": match self.status {
+                _ if self.code=="upstream_http_error"=>"Upstream rejected the request",
+                _ if self.code=="upstream_connection_error"=>"Upstream connection failed",
+                _ if self.code=="upstream_timeout"=>"Upstream response timed out",
                 409 => "Conversation state expired; start a new conversation",
                 400 => "Request cannot be represented by the selected upstream protocol",
                 _ => "Upstream protocol response was invalid or incomplete",
             },
-            "type": if self.status == 400 { "invalid_request_error" } else { "upstream_error" },
+            "type": if self.status == 400 && self.param.is_some() { "invalid_request_error" } else { "upstream_error" },
             "param":self.param,"code":self.code
         }})
     }
