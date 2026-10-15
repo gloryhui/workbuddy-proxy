@@ -1,0 +1,12 @@
+Observed on reviewed source, 2026-10-15. Outputs are diagnostics, not passing product assertions.
+
+Scheduler:
+submitted provider and model filters before pump; dispatched=["models-0"]; replies=["models-0"]
+
+Writer (busy_timeout intentionally reduced from production 2000ms to 30ms):
+{"batch_events":64,"busy_timeout_ms":30,"elapsed_ms":2474,"result_is_error":true}
+
+Collector:
+same valid SSE 195098 bytes: one_chunk=Complete, split_chunks=Complete
+conflicting partial merged: UsageOutcome { status: Invalid, reason: Some(ConflictingUsage), numbers: UsageNumbers { input: None, output: None, total: None, cache_read: None, cache_write: None, reasoning: None }, breakdown: Unknown, uncached: None }
+same totals adding valid cache detail: UsageOutcome { status: Complete, reason: None, numbers: UsageNumbers { input: Some(100), output: Some(10), total: Some(110), cache_read: Some(80), cache_write: None, reasoning: None }, breakdown: ReadSubset, uncached: None }

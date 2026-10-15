@@ -1,0 +1,17 @@
+[
+  {
+    "case": "clear_multiple_batches",
+    "deleted": 500,
+    "eligible_left": 100,
+    "expected_eligible": 600,
+    "outside_preview_deleted": 0,
+    "steps": 2
+  },
+  {
+    "case": "retention_multiple_batches",
+    "deleted": 500,
+    "expected_delete": 1200,
+    "left": 700,
+    "steps": 2
+  }
+]

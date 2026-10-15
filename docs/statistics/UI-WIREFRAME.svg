@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1440" viewBox="0 0 1440 1440" role="img" aria-labelledby="title desc">
+<title id="title">WorkBuddy Proxy 使用统计设计稿</title>
+<desc id="desc">原生GPUI页面布局示意，全部为示例数据。包含筛选、质量提醒、概览、断点趋势、请求表和成本存储设置。</desc>
+<defs>
+<pattern id="gap" width="8" height="8" patternUnits="userSpaceOnUse">
+<path d="M0 8L8 0" stroke="#cbd5e1" stroke-width="1" />
+</pattern>
+</defs>
+<rect width="1440" height="1440" fill="#f4f7fb" />
+<g font-family="PingFang SC,Microsoft YaHei,Arial,sans-serif" fill="#19334d">
+<rect x="16" y="16" width="1408" height="62" rx="12" fill="#ffffff" stroke="#e2e9f1" />
+<text x="36" y="55" font-size="24" font-weight="700" fill="#19334d">WorkBuddy Proxy</text>
+<text x="279" y="55" font-size="13" font-weight="400" fill="#6b7c90">轻量转发 · 多模型管理</text>
+<text x="1090" y="53" font-size="14" font-weight="600" fill="#008daa">统计功能设计稿 · 示例数据</text>
+<rect x="16" y="94" width="168" height="1330" rx="12" fill="#eaf2f8" stroke="#e2e9f1" />
+<text x="36" y="129" font-size="12" font-weight="600" fill="#6b7c90">工作区</text>
+<text x="36" y="172" font-size="15" font-weight="400" fill="#19334d">模型管理</text>
+<rect x="28" y="192" width="144" height="44" rx="8" fill="#c5ebf4" stroke="#c5ebf4" />
+<text x="43" y="220" font-size="15" font-weight="700" fill="#006b83">使用统计</text>
+<text x="35" y="1367" font-size="12" font-weight="400" fill="#6b7c90">原生 GPUI Kit</text>
+<text x="35" y="1386" font-size="12" font-weight="400" fill="#6b7c90">只存统计摘要</text>
+<text x="35" y="1409" font-size="12" font-weight="400" fill="#6b7c90">不保存聊天正文</text>
+<rect x="200" y="94" width="1224" height="144" rx="12" fill="#ffffff" stroke="#e2e9f1" />
+<text x="222" y="130" font-size="25" font-weight="700" fill="#19334d">使用统计</text>
+<text x="222" y="155" font-size="13" font-weight="400" fill="#6b7c90">统计本代理已记录的模型请求，用量缺失时保留未知状态。</text>
+<rect x="1140" y="110" width="261" height="30" rx="15" fill="#edf9f4" stroke="#d4eee1" />
+<text x="1155" y="130" font-size="12" font-weight="400" fill="#19865e">● SQLite 正常 · 最后刷新 15:05</text>
+<rect x="222" y="179" width="145" height="36" rx="8" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="234" y="202" font-size="13" font-weight="400" fill="#19334d">全部供应商</text>
+<rect x="375" y="179" width="145" height="36" rx="8" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="387" y="202" font-size="13" font-weight="400" fill="#19334d">全部模型</text>
+<rect x="528" y="179" width="128" height="36" rx="8" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="540" y="202" font-size="13" font-weight="400" fill="#19334d">全部状态</text>
+<rect x="664" y="179" width="128" height="36" rx="8" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="676" y="202" font-size="13" font-weight="400" fill="#19334d">全部用量</text>
+<rect x="800" y="179" width="140" height="36" rx="8" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="812" y="202" font-size="13" font-weight="400" fill="#19334d">近 30 天</text>
+<rect x="948" y="179" width="170" height="36" rx="8" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="960" y="202" font-size="13" font-weight="400" fill="#19334d">自动刷新：关闭</text>
+<rect x="1126" y="179" width="82" height="36" rx="8" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="1138" y="202" font-size="13" font-weight="400" fill="#19334d">刷新</text>
+<rect x="200" y="254" width="1224" height="64" rx="12" fill="#fffaf0" stroke="#f3dfb0" />
+<text x="222" y="281" font-size="14" font-weight="600" fill="#a66e0a">ⓘ  2 次已结束请求缺少完整用量</text>
+<text x="222" y="303" font-size="12" font-weight="400" fill="#8a713e">只汇总已确认的用量；缺失记录不当作 0。查看明细可定位原因。</text>
+<rect x="200" y="334" width="1224" height="280" rx="12" fill="#ffffff" stroke="#e2e9f1" />
+<text x="222" y="365" font-size="14" font-weight="600" fill="#6b7c90">已确认 Token</text>
+<text x="222" y="414" font-size="44" font-weight="700" fill="#19334d">7,700</text>
+<text x="410" y="409" font-size="13" font-weight="400" fill="#6b7c90">7 / 9 次上游请求用量完整</text>
+<text x="925" y="365" font-size="13" font-weight="400" fill="#6b7c90">请求数</text>
+<text x="925" y="400" font-size="26" font-weight="700" fill="#19334d">10</text>
+<text x="1100" y="365" font-size="13" font-weight="400" fill="#6b7c90">估算费用 · USD</text>
+<text x="1100" y="400" font-size="26" font-weight="700" fill="#008daa">$0.0154</text>
+<rect x="222" y="437" width="285" height="76" rx="10" fill="#f9fbfd" stroke="#e2e9f1" />
+<text x="234" y="461" font-size="12" font-weight="400" fill="#6b7c90">输入</text>
+<text x="234" y="493" font-size="19" font-weight="600" fill="#5477ee">7,000</text>
+<rect x="517" y="437" width="285" height="76" rx="10" fill="#f9fbfd" stroke="#e2e9f1" />
+<text x="529" y="461" font-size="12" font-weight="400" fill="#6b7c90">输出</text>
+<text x="529" y="493" font-size="19" font-weight="600" fill="#00a978">700</text>
+<rect x="812" y="437" width="285" height="76" rx="10" fill="#f9fbfd" stroke="#e2e9f1" />
+<text x="824" y="461" font-size="12" font-weight="400" fill="#6b7c90">缓存读取</text>
+<text x="824" y="493" font-size="19" font-weight="600" fill="#9265e9">4,000</text>
+<rect x="1107" y="437" width="285" height="76" rx="10" fill="#f9fbfd" stroke="#e2e9f1" />
+<text x="1119" y="461" font-size="12" font-weight="400" fill="#6b7c90">缓存创建</text>
+<text x="1119" y="493" font-size="19" font-weight="600" fill="#e8a01d">—</text>
+<rect x="222" y="525" width="285" height="76" rx="10" fill="#f9fbfd" stroke="#e2e9f1" />
+<text x="234" y="549" font-size="12" font-weight="400" fill="#6b7c90">缓存命中率</text>
+<text x="234" y="581" font-size="19" font-weight="600" fill="#008daa">80% · 5次覆盖</text>
+<rect x="517" y="525" width="285" height="76" rx="10" fill="#f9fbfd" stroke="#e2e9f1" />
+<text x="529" y="549" font-size="12" font-weight="400" fill="#6b7c90">进行中</text>
+<text x="529" y="581" font-size="19" font-weight="600" fill="#6b7c90">1</text>
+<rect x="200" y="630" width="1224" height="355" rx="12" fill="#ffffff" stroke="#e2e9f1" />
+<text x="222" y="663" font-size="18" font-weight="700" fill="#19334d">用量趋势</text>
+<text x="1045" y="660" font-size="12" font-weight="400" fill="#6b7c90">粒度：日  ·  已知值 / 数据质量</text>
+<text x="222" y="687" font-size="12" font-weight="400" fill="#6b7c90">缓存为输入细分，不可与输入相加；灰色区间表示缺少完整用量。</text>
+<line x1="280" y1="910" x2="1360" y2="910" stroke="#e2e9f1" stroke-dasharray="4 4" />
+<text x="230" y="914" font-size="11" font-weight="400" fill="#6b7c90">0</text>
+<line x1="280" y1="862.5" x2="1360" y2="862.5" stroke="#e2e9f1" stroke-dasharray="4 4" />
+<text x="230" y="866.5" font-size="11" font-weight="400" fill="#6b7c90">500</text>
+<line x1="280" y1="815" x2="1360" y2="815" stroke="#e2e9f1" stroke-dasharray="4 4" />
+<text x="230" y="819" font-size="11" font-weight="400" fill="#6b7c90">1000</text>
+<line x1="280" y1="767.5" x2="1360" y2="767.5" stroke="#e2e9f1" stroke-dasharray="4 4" />
+<text x="230" y="771.5" font-size="11" font-weight="400" fill="#6b7c90">1500</text>
+<line x1="280" y1="720" x2="1360" y2="720" stroke="#e2e9f1" stroke-dasharray="4 4" />
+<text x="230" y="724" font-size="11" font-weight="400" fill="#6b7c90">2000</text>
+<rect x="742.8571428571429" y="720" width="154.28571428571428" height="190" rx="0" fill="url(#gap)" stroke="#e2e9f1" />
+<polyline points="280.0,834.0 460.0,867.2 640.0,796.0" fill="none" stroke="#5477ee" stroke-width="2.5" stroke-linecap="round" />
+<circle cx="280.0" cy="834" r="3" fill="#5477ee" />
+<circle cx="460.0" cy="867.25" r="3" fill="#5477ee" />
+<circle cx="640.0" cy="796" r="3" fill="#5477ee" />
+<polyline points="1000.0,753.2 1180.0,767.5 1360.0,777.0" fill="none" stroke="#5477ee" stroke-width="2.5" stroke-linecap="round" />
+<circle cx="1000.0" cy="753.25" r="3" fill="#5477ee" />
+<circle cx="1180.0" cy="767.5" r="3" fill="#5477ee" />
+<circle cx="1360.0" cy="777" r="3" fill="#5477ee" />
+<polyline points="280.0,900.5 460.0,905.2 640.0,891.0" fill="none" stroke="#00a978" stroke-width="2.5" stroke-linecap="round" />
+<circle cx="280.0" cy="900.5" r="3" fill="#00a978" />
+<circle cx="460.0" cy="905.25" r="3" fill="#00a978" />
+<circle cx="640.0" cy="891" r="3" fill="#00a978" />
+<polyline points="1000.0,895.8 1180.0,900.5 1360.0,900.5" fill="none" stroke="#00a978" stroke-width="2.5" stroke-linecap="round" />
+<circle cx="1000.0" cy="895.75" r="3" fill="#00a978" />
+<circle cx="1180.0" cy="900.5" r="3" fill="#00a978" />
+<circle cx="1360.0" cy="900.5" r="3" fill="#00a978" />
+<polyline points="280.0,853.0 460.0,891.0 640.0,815.0" fill="none" stroke="#9265e9" stroke-width="2.5" stroke-linecap="round" />
+<circle cx="280.0" cy="853" r="3" fill="#9265e9" />
+<circle cx="460.0" cy="891" r="3" fill="#9265e9" />
+<circle cx="640.0" cy="815" r="3" fill="#9265e9" />
+<polyline points="1000.0,815.0 1180.0,843.5 1360.0,862.5" fill="none" stroke="#9265e9" stroke-width="2.5" stroke-linecap="round" />
+<circle cx="1000.0" cy="815" r="3" fill="#9265e9" />
+<circle cx="1180.0" cy="843.5" r="3" fill="#9265e9" />
+<circle cx="1360.0" cy="862.5" r="3" fill="#9265e9" />
+<text x="263.0" y="935" font-size="11" font-weight="400" fill="#6b7c90">10/09</text>
+<text x="443.0" y="935" font-size="11" font-weight="400" fill="#6b7c90">10/10</text>
+<text x="623.0" y="935" font-size="11" font-weight="400" fill="#6b7c90">10/11</text>
+<text x="803.0" y="935" font-size="11" font-weight="400" fill="#6b7c90">10/12</text>
+<text x="983.0" y="935" font-size="11" font-weight="400" fill="#6b7c90">10/13</text>
+<text x="1163.0" y="935" font-size="11" font-weight="400" fill="#6b7c90">10/14</text>
+<text x="1343.0" y="935" font-size="11" font-weight="400" fill="#6b7c90">10/15</text>
+<circle cx="440" cy="961" r="4" fill="#5477ee" />
+<text x="450" y="965" font-size="12" font-weight="400" fill="#6b7c90">输入</text>
+<circle cx="610" cy="961" r="4" fill="#00a978" />
+<text x="620" y="965" font-size="12" font-weight="400" fill="#6b7c90">输出</text>
+<circle cx="780" cy="961" r="4" fill="#9265e9" />
+<text x="790" y="965" font-size="12" font-weight="400" fill="#6b7c90">缓存读取</text>
+<circle cx="950" cy="961" r="4" fill="#e8a01d" />
+<text x="960" y="965" font-size="12" font-weight="400" fill="#6b7c90">缓存创建（未知）</text>
+<rect x="200" y="1001" width="1224" height="306" rx="12" fill="#ffffff" stroke="#e2e9f1" />
+<text x="222" y="1034" font-size="18" font-weight="700" fill="#19334d">请求级明细</text>
+<text x="1045" y="1034" font-size="12" font-weight="400" fill="#6b7c90">服务端分页 · 20 / 50 / 100 条</text>
+<rect x="222" y="1050" width="110" height="32" rx="7" fill="#c5ebf4" stroke="#e2e9f1" />
+<text x="235" y="1071" font-size="13" font-weight="600" fill="#006b83">请求日志</text>
+<rect x="342" y="1050" width="110" height="32" rx="7" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="355" y="1071" font-size="13" font-weight="400" fill="#6b7c90">供应商统计</text>
+<rect x="462" y="1050" width="110" height="32" rx="7" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="475" y="1071" font-size="13" font-weight="400" fill="#6b7c90">模型统计</text>
+<rect x="216" y="1094" width="1192" height="31" rx="0" fill="#f7f9fc" stroke="#e2e9f1" />
+<text x="222" y="1114" font-size="12" font-weight="600" fill="#6b7c90">时间</text>
+<text x="341" y="1114" font-size="12" font-weight="600" fill="#6b7c90">模型 / 供应商</text>
+<text x="600" y="1114" font-size="12" font-weight="600" fill="#6b7c90">请求</text>
+<text x="792" y="1114" font-size="12" font-weight="600" fill="#6b7c90">Token</text>
+<text x="1028" y="1114" font-size="12" font-weight="600" fill="#6b7c90">估算费用</text>
+<text x="1168" y="1114" font-size="12" font-weight="600" fill="#6b7c90">性能</text>
+<text x="1292" y="1114" font-size="12" font-weight="600" fill="#6b7c90">状态</text>
+<text x="222" y="1148" font-size="13" font-weight="400" fill="#19334d">15:05</text>
+<text x="341" y="1148" font-size="14" font-weight="600" fill="#19334d">model-x</text>
+<text x="341" y="1170" font-size="11" font-weight="400" fill="#6b7c90">供应商 A</text>
+<text x="600" y="1148" font-size="12" font-weight="400" fill="#6b7c90">req-a…</text>
+<text x="792" y="1148" font-size="13" font-weight="400" fill="#5477ee">↓ 1,000   ↑ 100</text>
+<text x="792" y="1170" font-size="11" font-weight="400" fill="#9265e9">缓存读 800  Σ 1,100</text>
+<text x="1028" y="1148" font-size="13" font-weight="400" fill="#d44d7b">$0.0022</text>
+<text x="1168" y="1148" font-size="12" font-weight="400" fill="#19334d">1,200ms</text>
+<text x="1168" y="1170" font-size="10" font-weight="400" fill="#6b7c90">首内容 120ms</text>
+<text x="1292" y="1148" font-size="13" font-weight="400" fill="#00a978">200</text>
+<text x="1292" y="1170" font-size="11" font-weight="400" fill="#6b7c90">成功</text>
+<line x1="216" y1="1183" x2="1408" y2="1183" stroke="#e2e9f1" stroke-dasharray="" />
+<text x="222" y="1212" font-size="13" font-weight="400" fill="#19334d">15:04</text>
+<text x="341" y="1212" font-size="14" font-weight="600" fill="#19334d">model-x</text>
+<text x="341" y="1234" font-size="11" font-weight="400" fill="#6b7c90">供应商 A</text>
+<text x="600" y="1212" font-size="12" font-weight="400" fill="#6b7c90">req-b…</text>
+<text x="792" y="1212" font-size="13" font-weight="400" fill="#5477ee">↓ —       ↑ —</text>
+<text x="792" y="1234" font-size="11" font-weight="400" fill="#9265e9">用量未知 · 客户端取消</text>
+<text x="1028" y="1212" font-size="13" font-weight="400" fill="#a66e0a">用量不全</text>
+<text x="1168" y="1212" font-size="12" font-weight="400" fill="#19334d">350ms</text>
+<text x="1168" y="1234" font-size="10" font-weight="400" fill="#6b7c90">首内容 —</text>
+<text x="1292" y="1212" font-size="13" font-weight="400" fill="#a66e0a">200</text>
+<text x="1292" y="1234" font-size="11" font-weight="400" fill="#6b7c90">已取消</text>
+<line x1="216" y1="1247" x2="1408" y2="1247" stroke="#e2e9f1" stroke-dasharray="" />
+<text x="222" y="1284" font-size="12" font-weight="400" fill="#6b7c90">共 10 条请求 · 点击行查看摘要详情</text>
+<text x="1130" y="1284" font-size="12" font-weight="400" fill="#008daa">‹ 上一页      1      下一页 ›</text>
+<rect x="200" y="1323" width="1224" height="48" rx="12" fill="#ffffff" stroke="#e2e9f1" />
+<text x="222" y="1346" font-size="15" font-weight="600" fill="#19334d">成本定价</text>
+<text x="380" y="1346" font-size="12" font-weight="400" fill="#6b7c90">当前价可改可删；每次调用独立保存单价与费用</text>
+<text x="1380" y="1349" font-size="17" font-weight="400" fill="#6b7c90">⌄</text>
+<rect x="200" y="1383" width="1224" height="48" rx="12" fill="#ffffff" stroke="#e2e9f1" />
+<text x="222" y="1406" font-size="15" font-weight="600" fill="#19334d">采集与存储</text>
+<text x="380" y="1406" font-size="12" font-weight="400" fill="#6b7c90">摘要采集已开启 · 保留 180 天 · 清理前预览并确认</text>
+<text x="1380" y="1409" font-size="17" font-weight="400" fill="#6b7c90">⌄</text>
+</g>
+</svg>

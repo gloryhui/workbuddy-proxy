@@ -1,0 +1,71 @@
+{
+  "case": "orphan_settlement_failure_ready",
+  "during": {
+    "health": {
+      "api_version": 2,
+      "request_tag": "fixture-tag",
+      "generated_at_ms": 1792075842385,
+      "generation": "8e17c2ed1fd3ffd57b9b012c3e9473c61fe4a8c6274bb316:1",
+      "state": "degraded",
+      "enabled": true,
+      "schema_version": 3,
+      "collection_started_at_ms": 1792075840554,
+      "earliest_record_at_ms": null,
+      "retention_days": 180,
+      "record_count": 0,
+      "db_bytes": 4096,
+      "wal_bytes": 189552,
+      "queue_depth": 0,
+      "queue_capacity": 1024,
+      "pending_requests": 0,
+      "dropped_requests_current_run": 0,
+      "write_failures_current_run": 1,
+      "last_commit_at_ms": 1792075840572,
+      "loss_scope": "loss_observed",
+      "error_code": "fixture orphan cost failure",
+      "settings_revision": 1,
+      "timezone": "Asia/Shanghai"
+    },
+    "rows": [
+      [
+        "in_flight",
+        "pending",
+        null
+      ]
+    ]
+  },
+  "after_trigger_removed": {
+    "health": {
+      "api_version": 2,
+      "request_tag": "fixture-tag",
+      "generated_at_ms": 1792075843893,
+      "generation": "8e17c2ed1fd3ffd57b9b012c3e9473c61fe4a8c6274bb316:1",
+      "state": "ready",
+      "enabled": true,
+      "schema_version": 3,
+      "collection_started_at_ms": 1792075840554,
+      "earliest_record_at_ms": null,
+      "retention_days": 180,
+      "record_count": 0,
+      "db_bytes": 4096,
+      "wal_bytes": 189552,
+      "queue_depth": 0,
+      "queue_capacity": 1024,
+      "pending_requests": 0,
+      "dropped_requests_current_run": 0,
+      "write_failures_current_run": 1,
+      "last_commit_at_ms": 1792075840572,
+      "loss_scope": "loss_observed",
+      "error_code": null,
+      "settings_revision": 1,
+      "timezone": "Asia/Shanghai"
+    },
+    "rows": [
+      [
+        "interrupted",
+        "default_zero",
+        0
+      ]
+    ]
+  }
+}

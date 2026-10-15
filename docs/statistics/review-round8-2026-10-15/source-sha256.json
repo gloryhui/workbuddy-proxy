@@ -1,0 +1,9 @@
+{
+  "gpui/src/statistics.rs": "47bda3feae618917a431f807883572d2a43637fb6d8937e3aa3a1fa45032eb01",
+  "gpui/src/stats_controller.rs": "54f09ee328af6f9cb8808664ee5f323724375cbc910e0d184526be9ab58a9b0c",
+  "gpui/src/stats_backend.rs": "b2495ae125ef93c40e853d8ec4b22e08007d9216a5e842e404a8f2d1f0459a23",
+  "gpui/src/usage_table.rs": "f4ebe54007cee8fdd8bea125859f70d18e2c79d6b0f6b0b26711590ee8312b39",
+  "src/stats/store.rs": "7c3db6f087d09af8a1b9b3f1c5f6fe289abbe7ce5e807fb25323dd90f80e6c41",
+  "src/stats/mod.rs": "bc37f8419e58a529a2daea2ac2a253663a9e3a11849ab2d2b29f784dda719e21",
+  "src/stats/dto.rs": "1f22de9f18d5b174d49f07425097d95179c983d5c8a018b95b9344643f2dfb78"
+}

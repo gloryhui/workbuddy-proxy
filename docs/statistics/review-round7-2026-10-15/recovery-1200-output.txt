@@ -1,0 +1,2 @@
+{"case": "existing_v2_upgrade", "state": "ready", "error": null, "user_version": 3}
+{"case": "large_startup_repair", "seed_terminal_pending": 1200, "first": {"state": "ready", "cost_counts": {"default_zero": 1200}, "backlog": 0}, "after_wait": {"state": "ready", "cost_counts": {"default_zero": 1200}, "backlog": 0}}

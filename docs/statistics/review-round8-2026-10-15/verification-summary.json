@@ -1,0 +1,11 @@
+{
+  "core_tests": 121,
+  "gpui_tests": 49,
+  "integration_checks": 39,
+  "core_build": "passed",
+  "core_clippy": {
+    "exit_code": 101,
+    "error": "src/stats/dto.rs:72 format_amount_text is never used; -D warnings"
+  },
+  "evidence_boundary": "tests from Codex tool outputs; integration and isolated probes have full saved logs; no human GUI or real provider acceptance"
+}

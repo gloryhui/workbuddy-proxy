@@ -410,6 +410,8 @@ CI 在 Windows、Apple Silicon Mac、Intel Mac、Linux 上验证实际程序，�
 
 </details>
 
+使用统计功能的待实现方案见[统计设计包](docs/statistics/README.md)，包含需求、SQLite 表结构、管理接口、Rust/GPUI 开发步骤、页面线框图及独立 worktree 开发 Prompt。
+
 ## 致谢
 
 感谢 [yetone/magpie](https://github.com/yetone/magpie) 提供的思路和方案。本项目在供应商预设、模型能力自动识别与 WorkBuddy 配置同步等方面参考了 Magpie 的设计，帮助减少用户手动配置的工作。

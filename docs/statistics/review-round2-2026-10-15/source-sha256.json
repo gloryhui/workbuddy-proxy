@@ -1,0 +1,7 @@
+{
+  "gpui/src/stats_backend.rs": "29ad00f8d7942ab8633d2e96b3687deb590a08e4b2784a035501765c6516a5e5",
+  "gpui/src/statistics.rs": "7eeac8edbf2f0e6dac7afda7506ef27dab16f5c30fcf9c7c4427855a1609c1a4",
+  "src/stats/query.rs": "8c65a28668b8af9e396f959f3a492a0f79c1ab72141c1c4f0f48a9b5fcc5ea0e",
+  "src/stats/mod.rs": "538a9b02df0d3a2c057f699cc798f401a57040c380c3e38ad2498ee2db4ad268",
+  "src/stats/store.rs": "44b7e87c8cd26494e26c8a240256f896ac21dbeb1a0dfe5dd3383dddfc75ef5b"
+}

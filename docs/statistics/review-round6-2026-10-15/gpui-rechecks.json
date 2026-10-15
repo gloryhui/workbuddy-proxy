@@ -1,0 +1,20 @@
+[
+  {
+    "run": 0,
+    "target": "focused",
+    "exit": 101,
+    "tail": "_backend::tests::statistics_errors_keep_the_core_message' (7596710) panicked at src/stats_backend.rs:684:9:\nInvalid core response\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    stats_backend::tests::statistics_errors_keep_the_core_message\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 36 filtered out; finished in 0.01s\n\nerror: test failed, to rerun pass `--bin workbuddy-proxy-gpui`\n"
+  },
+  {
+    "run": 1,
+    "target": "full",
+    "exit": 101,
+    "tail": "backend::tests::statistics_errors_keep_the_core_message' (7596796) panicked at src/stats_backend.rs:684:9:\nCore is not responding\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    stats_backend::tests::statistics_errors_keep_the_core_message\n\ntest result: FAILED. 36 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s\n\nerror: test failed, to rerun pass `--bin workbuddy-proxy-gpui`\n"
+  },
+  {
+    "run": 2,
+    "target": "full",
+    "exit": 0,
+    "tail": "\nrunning 37 tests\n.....................................\ntest result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s\n\n"
+  }
+]

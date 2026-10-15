@@ -1,0 +1,116 @@
+[
+  {
+    "case": "model-json-error",
+    "http": 200,
+    "record": [
+      "failed",
+      "upstream_stream",
+      "missing",
+      null,
+      null
+    ]
+  },
+  {
+    "case": "model-json-invalid",
+    "http": 200,
+    "record": [
+      "failed",
+      "upstream_stream",
+      "missing",
+      null,
+      null
+    ]
+  },
+  {
+    "case": "model-partial-conflict",
+    "http": 200,
+    "record": [
+      "completed",
+      null,
+      "invalid",
+      null,
+      null
+    ]
+  },
+  {
+    "case": "collector_after_bad_usage",
+    "state": "ready"
+  },
+  {
+    "case": "price_decoupling_not_implemented",
+    "missing_price_cost": [
+      [
+        "unpriced",
+        null
+      ]
+    ],
+    "has_rate_snapshot": false,
+    "has_price_snapshot_time": false
+  },
+  {
+    "case": "price_still_locked_after_use",
+    "editable": false,
+    "error": "stats_price_save failed: stats_invalid_argument: this rule is already used by recorded requests; create a new rule instead"
+  },
+  {
+    "case": "empty_bucket",
+    "series": [
+      {
+        "start_ms": 1792063732199,
+        "end_ms": 1792063732320,
+        "request_count": 0,
+        "finished_count": 0,
+        "usage_complete_count": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cache_read_tokens": null,
+        "cache_write_tokens": null,
+        "cache_read_known_count": 0,
+        "cache_write_known_count": 0,
+        "cache_read_denominator_input_tokens": null,
+        "costs": [],
+        "quality": "empty",
+        "collection_warning": false
+      }
+    ]
+  },
+  {
+    "case": "normal_stop",
+    "records": [
+      [
+        "interrupted",
+        "shutdown"
+      ]
+    ]
+  },
+  {
+    "case": "transient_finish_lock",
+    "state": "ready",
+    "write_failures": 1,
+    "rows": [
+      [
+        "model-slow",
+        "interrupted"
+      ],
+      [
+        "model-ok",
+        "completed"
+      ]
+    ],
+    "intervals": [
+      [
+        "collecting",
+        null
+      ],
+      [
+        "degraded",
+        "database_error"
+      ],
+      [
+        "collecting",
+        null
+      ]
+    ]
+  }
+]

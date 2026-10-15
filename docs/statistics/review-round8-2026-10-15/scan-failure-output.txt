@@ -1,0 +1,2 @@
+statistics could not repair pending-1: review transient settlement refusal
+{"backlog":0,"first":[0,0],"pending":1,"scan_finished":true,"second_after_failure_removed":[0,0]}
