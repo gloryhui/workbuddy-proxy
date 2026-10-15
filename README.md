@@ -47,6 +47,7 @@
 | 🪶 轻量界面 | Rust 转发核心，GPUI Kit 统一界面；关闭设置释放界面进程 |
 | 🧩 一份配置，多个模型 | 同一个供应商只填一次 URL 和 Key，模型列表每行添加一个 ID |
 | 🗂️ 供应商预设 | 内置 76 个 API 地址，可搜索供应商、地区和套餐，选择后仍可自定义 |
+| 🧠 自动识别模型能力 | 结合供应商信息与 models.dev 自动补齐图片、工具、思考档位及 Token 上限，支持离线缓存与手动覆盖 |
 | 🔀 同名模型独立选路 | 多个账号、多个供应商使用相同模型 ID，也能在 WorkBuddy 中分别选择 |
 | 🌊 流式透传 | 默认只还原模型别名，保留其余请求字节、流式响应与上游错误 |
 | 🦦 统一图标 | 主图标覆盖应用、窗口、Windows 任务栏 / 托盘、Mac 菜单栏和启动提示 |
@@ -106,7 +107,7 @@ Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / �
 
 获取列表最多展示 4096 个模型；确认添加时检查所有供应商合计最多 256 个模型。超限会提示并保留选择，可取消部分勾选后重试。
 
-也可以点击模型表格旁的 **＋** 手动添加，双击模型行，在弹窗中编辑显示名与模型 ID，再用 **−** 移除选中项。例如：
+也可以点击模型表格旁的 **＋** 手动添加，通过“操作”列的编辑图标或双击模型行，在弹窗中编辑显示名、模型 ID 与能力配置，再用 **−** 移除选中项。例如：
 
 | 显示名 | 模型 ID |
 | --- | --- |
@@ -409,8 +410,12 @@ CI 在 Windows、Apple Silicon Mac、Intel Mac、Linux 上验证实际程序，�
 
 </details>
 
+## 致谢
+
+感谢 [yetone/magpie](https://github.com/yetone/magpie) 提供的思路和方案。本项目在供应商预设、模型能力自动识别与 WorkBuddy 配置同步等方面参考了 Magpie 的设计，帮助减少用户手动配置的工作。
+
+供应商预设的来源与许可见[供应商预设说明](docs/PROVIDER-PRESETS.md)及[Magpie 上游许可](docs/third-party/magpie-LICENSE.txt)。
+
 ## 许可
 
 [MIT License](LICENSE)。第三方开源项目，与 WorkBuddy、腾讯、OpenCode 无隶属关系。
-
-供应商预设参考 yetone/magpie（MIT），来源及许可见[供应商预设说明](docs/PROVIDER-PRESETS.md)与[上游许可](docs/third-party/magpie-LICENSE.txt)。
