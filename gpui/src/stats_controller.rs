@@ -137,7 +137,7 @@ pub enum ReplyKind {
     Dashboard,
     Rows,
     Groups,
-    /// Health, prices, settings and the rest are not paginated.
+    /// Resources with independent reply identities, including price pages.
     Other,
 }
 

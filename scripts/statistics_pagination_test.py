@@ -63,6 +63,30 @@ def main():
                             value=stats('stats_breakdown',group_by=group,sort='total_tokens',limit=size,**fields) if group else stats('stats_requests',page_size=size,**fields)
                             assert [r['key' if group else 'request_id'] for r in value['items']]==ids[page]
                         print('PASS real %s pages 1->2->3->2->1 size %s'%(group or 'requests',size),flush=True)
+                    # The pricing view keeps exactly one page, using the core's
+                    # next cursor. Cover backtracking as well as the partial end
+                    # page; a full page alone must not imply another page exists.
+                    price_cursors=[None];price_ids=[];after=None
+                    while True:
+                        fields={'limit':size}
+                        if after is not None:fields['after_rule_id']=after
+                        value=stats('stats_prices_list',**fields)
+                        current=[row['price_id'] for row in value['items']]
+                        assert 0<len(current)<=size,(size,value)
+                        price_ids.append(current)
+                        after=value['next_rule_id']
+                        if after is None:break
+                        price_cursors.append(after)
+                    assert len(set(sum(price_ids,[])))==321
+                    assert len(price_ids[-1])==321%size
+                    for page in [1,0,1,2,1,0]:
+                        fields={'limit':size,'after_rule_id':price_cursors[page]}
+                        value=stats('stats_prices_list',**fields)
+                        assert [row['price_id'] for row in value['items']]==price_ids[page]
+                    exact=stats('stats_prices_list',limit=size,provider_id='provider-a',upstream_model='history-model-320')
+                    assert [row['price_id'] for row in exact['items']]==['price-0320']
+                    assert exact['next_rule_id'] is None
+                    print('PASS real prices fixed pages 1->2->3->2->1, final page and filter reset size %s'%size,flush=True)
                 for command,kind,key in [('stats_filters','provider','key'),('stats_filters','model','key'),('stats_prices_list',None,'price_id')]:
                     after=None;seen=[]
                     while True:

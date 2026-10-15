@@ -13,7 +13,7 @@ use gpui_kit::component::{
     label::Label,
     list::ListItem,
     select::{SearchableVec, Select, SelectEvent, SelectItem, SelectState},
-    sidebar::{Sidebar, SidebarHeader, SidebarMenu, SidebarMenuItem},
+    sidebar::{Sidebar, SidebarMenu, SidebarMenuItem},
     table::{DataTable, TableState},
     tag::Tag,
 };
@@ -33,7 +33,7 @@ gpui_kit::actions!(
 /// Top-level pages of the settings window.
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Page {
-    Models,
+    Providers,
     Statistics,
 }
 
@@ -513,7 +513,7 @@ impl Proxy {
         });
         let mut this = Self {
             dir,
-            page: Page::Models,
+            page: Page::Providers,
             statistics,
             cfg,
             drafts,
@@ -1297,7 +1297,7 @@ impl Proxy {
             statistics.set_configured_providers(providers);
             statistics.set_visible(page == Page::Statistics, cx)
         });
-        if page == Page::Models {
+        if page == Page::Providers {
             self.table_focus.focus(window, cx);
         }
         cx.notify();
@@ -1311,7 +1311,7 @@ impl Proxy {
             .iter()
             .map(|p| {
                 let id = p.id.clone();
-                let active = id == selected;
+                let active = self.page == Page::Providers && id == selected;
                 let draft = self.drafts.providers.get(&id);
                 let name = draft
                     .map(|d| d.name.clone())
@@ -1319,6 +1319,7 @@ impl Proxy {
                     .unwrap_or_else(|| p.name.clone());
                 let count = draft.map_or(p.models.len(), |d| d.models.len());
                 SidebarMenuItem::new(name.clone())
+                    .pl_4()
                     .accessibility_label(name)
                     .active(active)
                     .font_weight(if active {
@@ -1329,56 +1330,45 @@ impl Proxy {
                     .disable(self.busy)
                     .suffix(move |_, _| Tag::secondary().small().child(count.to_string()))
                     .on_click(cx.listener(move |this, _, window, cx| {
+                        this.switch_page(Page::Providers, window, cx);
                         this.switch_provider(id.clone(), window, cx)
                     }))
             })
             .collect::<Vec<_>>();
         let statistics_active = self.page == Page::Statistics;
-        let models_active = self.page == Page::Models;
-        let navigation = vec![
-            SidebarMenuItem::new(self.t("模型管理", "Models"))
-                .accessibility_label(self.t("模型管理", "Models"))
-                .active(models_active)
-                .font_weight(if models_active {
-                    FontWeight::SEMIBOLD
-                } else {
-                    FontWeight::NORMAL
-                })
-                .on_click(
-                    cx.listener(|this, _, window, cx| this.switch_page(Page::Models, window, cx)),
-                ),
-            SidebarMenuItem::new(self.t("使用统计", "Statistics"))
-                .accessibility_label(self.t("使用统计", "Statistics"))
-                .active(statistics_active)
-                .font_weight(if statistics_active {
-                    FontWeight::SEMIBOLD
-                } else {
-                    FontWeight::NORMAL
-                })
-                .on_click(cx.listener(|this, _, window, cx| {
-                    this.switch_page(Page::Statistics, window, cx)
-                })),
-        ];
+        let models_active = self.page == Page::Providers;
+        let navigation =
+            vec![
+                SidebarMenuItem::new(self.t("数据统计", "Statistics"))
+                    .accessibility_label(self.t("数据统计", "Statistics"))
+                    .active(statistics_active)
+                    .font_weight(if statistics_active {
+                        FontWeight::SEMIBOLD
+                    } else {
+                        FontWeight::NORMAL
+                    })
+                    .on_click(cx.listener(|this, _, window, cx| {
+                        this.switch_page(Page::Statistics, window, cx)
+                    })),
+                SidebarMenuItem::new(self.t("供应商管理", "Providers"))
+                    .accessibility_label(self.t("供应商管理", "Providers"))
+                    .font_weight(if models_active {
+                        FontWeight::SEMIBOLD
+                    } else {
+                        FontWeight::NORMAL
+                    })
+                    .on_click(cx.listener(|this, _, window, cx| {
+                        this.switch_page(Page::Providers, window, cx)
+                    })),
+            ];
         Sidebar::new("providers")
             .collapsible(false)
             .w(px(168.))
             .border_1()
             .border_color(rgb(0xcbdbe6))
             .rounded(px(12.))
-            .header(
-                SidebarHeader::new().child(
-                    Label::new(self.t("导航", "Navigation")).font_weight(FontWeight::SEMIBOLD),
-                ),
-            )
             .child(SidebarMenu::new().children({
-                // A non-interactive group header keeps the single-menu contract
-                // of the Kit sidebar.
                 let mut items = navigation;
-                items.push(
-                    SidebarMenuItem::new(self.t("供应商", "Providers"))
-                        .disable(true)
-                        .font_weight(FontWeight::SEMIBOLD),
-                );
                 items.extend(rows);
                 items
             }))
@@ -1972,7 +1962,7 @@ impl Render for Proxy {
         self.refresh_table(window, cx);
         let sidebar = self.sidebar(cx);
         let center = match self.page {
-            Page::Models => self.center(cx),
+            Page::Providers => self.center(cx),
             Page::Statistics => self.statistics.clone().into_any_element(),
         };
         let right = self.right(cx);
@@ -2051,7 +2041,7 @@ impl Render for Proxy {
                     .min_h_0()
                     .child(sidebar)
                     .child(center)
-                    .when(self.page == Page::Models, |this| this.child(right)),
+                    .when(self.page == Page::Providers, |this| this.child(right)),
             )
             .child(
                 div().flex().justify_end().h(px(16.)).items_center().child(

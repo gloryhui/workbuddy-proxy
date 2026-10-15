@@ -269,10 +269,13 @@ pub struct Statistics {
     price_query: String,
     provider_after: Option<String>,
     model_after: Option<String>,
-    prices_after: Option<String>,
+    prices_cursors: crate::stats_controller::CursorStack<String>,
+    prices_page_size: i64,
+    prices_loading: bool,
+    storage_page: usize,
+    storage_page_size: usize,
     provider_next: Option<String>,
     model_next: Option<String>,
-    prices_next: Option<String>,
     provider_seq: u64,
     model_seq: u64,
     prices_seq: u64,
@@ -595,10 +598,13 @@ impl Statistics {
             price_query: String::new(),
             provider_after: None,
             model_after: None,
-            prices_after: None,
+            prices_cursors: Default::default(),
+            prices_page_size: 20,
+            prices_loading: false,
+            storage_page: 0,
+            storage_page_size: 20,
             provider_next: None,
             model_next: None,
-            prices_next: None,
             provider_seq: 0,
             model_seq: 0,
             prices_seq: 0,
@@ -642,7 +648,10 @@ impl Statistics {
 
     /// Called by the settings window when the statistics page becomes visible.
     pub fn set_configured_providers(&mut self, providers: Vec<(String, String)>) {
-        self.configured_providers = providers;
+        if self.configured_providers != providers {
+            self.configured_providers = providers;
+            self.storage_page = 0;
+        }
     }
 
     pub fn set_visible(&mut self, visible: bool, cx: &mut Context<Self>) {
@@ -1026,20 +1035,25 @@ impl Statistics {
 
     fn request_prices(&mut self, cx: &mut Context<Self>) {
         let tag = format!("prices-{}", self.generation);
-        self.prices_after = None;
+        self.prices_cursors.reset();
         self.request_price_page(tag, cx);
     }
 
     fn request_price_page(&mut self, tag: String, cx: &mut Context<Self>) {
+        // Never leave the previous page's rows/actions under the new page
+        // number, or reuse its next cursor after a failed read.
+        self.prices.clear();
+        self.prices_cursors.finish_page(None);
         let request = crate::stats_backend::command(
             "stats_prices_list",
             &tag,
-            json!({"limit":100,"after_rule_id":self.prices_after,
+            json!({"limit":self.prices_page_size,"after_rule_id":self.prices_cursors.current,
                    "provider_id": if self.provider.is_empty(){None}else{Some(&self.provider)},
                    "upstream_model":if self.price_query.is_empty(){None}else{Some(&self.price_query)}}),
         );
         self.prices_seq = self.backend.submit_read(JobKey::Prices, tag, request);
-        let _ = cx;
+        self.prices_loading = true;
+        cx.notify();
     }
 
     /// Mirrors the selectors into the fields the query builder reads.
@@ -1239,7 +1253,7 @@ impl Statistics {
         }
         // Provider modes are filled in one per tick so the list converges
         // without ever queueing a job per provider at once.
-        if foreground && !self.provider_options.is_empty() {
+        if foreground && self.storage_open {
             self.request_provider_modes(cx);
         }
         // Maintenance progress is polled at most every two seconds and only
@@ -1363,6 +1377,9 @@ impl Statistics {
         });
         match result {
             Err(failure) => {
+                if kind == JobKind::Prices {
+                    self.prices_loading = false;
+                }
                 if dashboard_reply {
                     self.pending_dashboard = false;
                 }
@@ -1589,22 +1606,10 @@ impl Statistics {
             return;
         }
         if kind == JobKind::Prices {
+            self.prices_loading = false;
             if let Ok(list) = serde_json::from_value::<crate::stats_dto::PriceListDto>(value) {
-                self.prices_next = list.next_rule_id;
-                if self.prices_after.is_none() {
-                    self.prices.clear();
-                }
-                for rule in list.items {
-                    if let Some(old) = self
-                        .prices
-                        .iter_mut()
-                        .find(|old| old.price_id == rule.price_id)
-                    {
-                        *old = rule;
-                    } else {
-                        self.prices.push(rule);
-                    }
-                }
+                self.prices_cursors.finish_page(list.next_rule_id);
+                self.prices = list.items;
             }
             return;
         }
@@ -3020,7 +3025,9 @@ impl Statistics {
                         .on_click(cx.listener(|this, _, _, cx| this.request_prices(cx))),
                 ),
         );
-        if self.prices.is_empty() {
+        if self.prices_loading {
+            body = body.child(Label::new(self.t("加载中…", "Loading…")).text_size(px(11.)));
+        } else if self.prices.is_empty() {
             body = body.child(
                 Label::new(self.t(
                     "还没有价格规则。缺少模型价格时按默认币种记录0元，历史快照不受以后改价影响。",
@@ -3098,25 +3105,65 @@ impl Statistics {
             }
         }
         body = body.child(
-            Button::new("prices-more")
-                .small()
-                .ghost()
-                .label(self.t("加载更多价格", "Load more prices"))
-                .disabled(self.prices_next.is_none())
-                .on_click(cx.listener(|this, _, _, cx| {
-                    this.prices_after = this.prices_next.clone();
-                    this.request_price_page(format!("prices-{}", this.generation), cx);
-                })),
-        );
-        body = body.child(
-            div().flex().items_center().gap_2().child(
-                Button::new("price-add")
-                    .small()
-                    .primary()
-                    .outline()
-                    .label(self.t("新建价格规则", "New price rule"))
-                    .on_click(cx.listener(|this, _, window, cx| this.new_price(window, cx))),
-            ),
+            div()
+                .flex()
+                .items_center()
+                .gap_2()
+                .child(
+                    Label::new(format!(
+                        "{} {} · {} {}",
+                        self.t("第", "Page"),
+                        self.prices_cursors.page_number(),
+                        self.prices.len(),
+                        self.t("条", "rows")
+                    ))
+                    .text_size(px(11.)),
+                )
+                .child(
+                    Button::new("prices-prev")
+                        .small()
+                        .ghost()
+                        .label(self.t("上一页", "Previous"))
+                        .disabled(self.prices_loading || !self.prices_cursors.can_go_back())
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            if let Some(previous) = this.prices_cursors.back() {
+                                this.prices_cursors.begin_page(previous);
+                                this.request_price_page(format!("prices-{}", this.generation), cx);
+                            }
+                        })),
+                )
+                .child(
+                    Button::new("prices-page-size")
+                        .small()
+                        .ghost()
+                        .label(format!(
+                            "{} {}",
+                            self.prices_page_size,
+                            self.t("条/页", "per page")
+                        ))
+                        .disabled(self.prices_loading)
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            this.prices_page_size = match this.prices_page_size {
+                                20 => 50,
+                                50 => 100,
+                                _ => 20,
+                            };
+                            this.request_prices(cx);
+                        })),
+                )
+                .child(
+                    Button::new("prices-next")
+                        .small()
+                        .ghost()
+                        .label(self.t("下一页", "Next"))
+                        .disabled(self.prices_loading || !self.prices_cursors.can_go_next())
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            if let Some(next) = this.prices_cursors.forward() {
+                                this.prices_cursors.begin_page(next);
+                                this.request_price_page(format!("prices-{}", this.generation), cx);
+                            }
+                        })),
+                ),
         );
         // Repricing history with the current price was removed: every request
         // keeps the snapshot it was admitted with.
@@ -3279,26 +3326,104 @@ impl Statistics {
                         .ghost()
                         .icon(IconName::RefreshCw)
                         .label(self.t("刷新供应商采集模式", "Reload provider modes"))
-                        .on_click(cx.listener(|this, _, _, cx| this.request_provider_modes(cx))),
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            for (id, _) in this
+                                .configured_providers
+                                .iter()
+                                .skip(this.storage_page * this.storage_page_size)
+                                .take(this.storage_page_size)
+                            {
+                                this.provider_modes.remove(id);
+                            }
+                            this.request_provider_modes(cx);
+                            cx.notify();
+                        })),
                 ),
             )
             .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .gap_2()
+                    .child(
+                        Label::new(format!(
+                            "{} {}/{}",
+                            self.t("第", "Page"),
+                            self.storage_page + 1,
+                            self.configured_providers
+                                .len()
+                                .div_ceil(self.storage_page_size)
+                                .max(1)
+                        ))
+                        .text_size(px(11.)),
+                    )
+                    .child(
+                        Button::new("storage-prev")
+                            .small()
+                            .ghost()
+                            .label(self.t("上一页", "Previous"))
+                            .disabled(self.storage_page == 0)
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.storage_page = this.storage_page.saturating_sub(1);
+                                this.request_provider_modes(cx);
+                                cx.notify();
+                            })),
+                    )
+                    .child(
+                        Button::new("storage-page-size")
+                            .small()
+                            .ghost()
+                            .label(format!(
+                                "{} {}",
+                                self.storage_page_size,
+                                self.t("条/页", "per page")
+                            ))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.storage_page_size = match this.storage_page_size {
+                                    20 => 50,
+                                    50 => 100,
+                                    _ => 20,
+                                };
+                                this.storage_page = 0;
+                                this.request_provider_modes(cx);
+                                cx.notify();
+                            })),
+                    )
+                    .child(
+                        Button::new("storage-next")
+                            .small()
+                            .ghost()
+                            .label(self.t("下一页", "Next"))
+                            .disabled(
+                                (self.storage_page + 1) * self.storage_page_size
+                                    >= self.configured_providers.len(),
+                            )
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.storage_page += 1;
+                                this.request_provider_modes(cx);
+                                cx.notify();
+                            })),
+                    ),
+            )
+            .child(
                 div().flex().flex_col().gap_1().children(
-                    self.provider_options
+                    self.configured_providers
                         .iter()
                         .enumerate()
-                        .map(|(index, option)| {
-                            let id = option.key.clone();
+                        .skip(self.storage_page * self.storage_page_size)
+                        .take(self.storage_page_size)
+                        .map(|(index, (key, name))| {
+                            let id = key.clone();
                             let settings = self.provider_modes.get(&id).cloned();
                             let mode = settings
                                 .as_ref()
                                 .map_or(UsageMode::Observe, |settings| settings.usage_mode);
                             let revision =
                                 settings.as_ref().map_or(0, |settings| settings.revision);
-                            let label = if option.label.is_empty() {
-                                option.key.clone()
+                            let label = if name.is_empty() {
+                                key.clone()
                             } else {
-                                option.label.clone()
+                                name.clone()
                             };
                             div()
                                 .flex()
@@ -3313,6 +3438,12 @@ impl Statistics {
                                             "Request upstream usage (request mode)",
                                         ))
                                         .checked(mode == UsageMode::Request)
+                                        .disabled(
+                                            settings.is_none()
+                                                || self
+                                                    .backend
+                                                    .is_busy(&JobKey::ProviderMode(id.clone())),
+                                        )
                                         .small()
                                         .on_change(cx.listener(
                                             move |this, value: &bool, _, cx| {
@@ -3943,32 +4074,27 @@ impl Statistics {
     /// silently keep only the last; instead this walks the list one provider per
     /// tick, so nothing is lost and the bounded queue is never flooded.
     fn request_provider_modes(&mut self, cx: &mut Context<Self>) {
-        // One provider per tick: the walk is not a flood, and each provider is
-        // its own resource so no reply can overwrite another.
-        let pending_modes = self
-            .provider_options
+        let Some((id, _)) = self
+            .configured_providers
             .iter()
-            .filter(|option| !option.historical && !self.provider_modes.contains_key(&option.key))
-            .count();
-        if pending_modes == 0 {
-            return;
-        }
-        let Some(option) = self
-            .provider_options
-            .iter()
-            .find(|option| !option.historical && !self.provider_modes.contains_key(&option.key))
+            .skip(self.storage_page * self.storage_page_size)
+            .take(self.storage_page_size)
+            .find(|(id, _)| {
+                !self.provider_modes.contains_key(id)
+                    && !self.backend.is_busy(&JobKey::ProviderMode(id.clone()))
+            })
             .cloned()
         else {
             return;
         };
-        let tag = format!("providersettings-{}", option.key);
+        let tag = format!("providersettings-{id}");
         let request = crate::stats_backend::command(
             "stats_provider_settings_get",
             &tag,
-            json!({"provider_id": option.key}),
+            json!({"provider_id":id}),
         );
         self.backend
-            .submit_read(JobKey::ProviderMode(option.key.clone()), tag, request);
+            .submit_read(JobKey::ProviderMode(id), tag, request);
         let _ = cx;
     }
 
