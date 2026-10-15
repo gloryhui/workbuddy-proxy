@@ -1,0 +1,14 @@
+PASS real requests pages 1->2->3->2->1 size 20
+PASS real provider pages 1->2->3->2->1 size 20
+PASS real model pages 1->2->3->2->1 size 20
+PASS real requests pages 1->2->3->2->1 size 50
+PASS real provider pages 1->2->3->2->1 size 50
+PASS real model pages 1->2->3->2->1 size 50
+PASS real requests pages 1->2->3->2->1 size 100
+PASS real provider pages 1->2->3->2->1 size 100
+PASS real model pages 1->2->3->2->1 size 100
+PASS stats_filters provider all 321 options reachable
+PASS stats_filters model all 321 options reachable
+PASS stats_prices_list  all 321 options reachable
+PASS default currency affects only newly admitted zero-price snapshots
+PASS statistics list and settings contracts

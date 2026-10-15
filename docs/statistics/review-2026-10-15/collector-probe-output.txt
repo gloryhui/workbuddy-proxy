@@ -1,0 +1,11 @@
+Actual source-path probe output, 2026-10-15:
+same valid SSE 195098 bytes: one_chunk=Missing, split_chunks=Complete
+conflicting partial merged: UsageOutcome { status: Complete, reason: None, numbers: UsageNumbers { input: Some(100), output: Some(10), total: Some(210), cache_read: None, cache_write: None, reasoning: None }, breakdown: Unknown, uncached: None }
+same totals adding valid cache detail: UsageOutcome { status: Invalid, reason: Some(ConflictingUsage), numbers: UsageNumbers { input: Some(100), output: Some(10), total: Some(110), cache_read: None, cache_write: None, reasoning: None }, breakdown: Unknown, uncached: None }
+
+Fixture definitions:
+1. b'data: {"usage":{"prompt_tokens":1000,"completion_tokens":100,"total_tokens":1100}}\n\n' + 15000 * b': heartbeat\n\n' + b'data: [DONE]\n\n'. Feed all at once versus chunks of 4096 bytes to the actual Collector.
+2. UsageAccumulator.observe({"prompt_tokens":100}); then observe({"prompt_tokens":200,"completion_tokens":10,"total_tokens":210}); finalize(NoUsage).
+3. UsageAccumulator.observe({"prompt_tokens":100,"completion_tokens":10,"total_tokens":110}); then same fields plus prompt_tokens_details.cached_tokens=80; finalize(NoUsage).
+
+The temporary Rust probe imported src/stats/dto.rs and src/stats/collector.rs via absolute #[path] and used serde, serde_json and sha2 dependencies. It did not modify reviewed source.

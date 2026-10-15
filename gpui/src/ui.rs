@@ -2,6 +2,7 @@ use crate::{
     backend::{Backend, Job},
     config::{self, Config},
     state::{Draft, Drafts, Selection},
+    statistics::Statistics,
 };
 use gpui_kit::component::{
     Disableable, ElementExt, IconName, Sizable, TitleBar, WindowExt,
@@ -28,6 +29,13 @@ gpui_kit::actions!(
     proxy,
     [Save, RemoveModels, SelectModels, EditModel, Dismiss, Quit]
 );
+
+/// Top-level pages of the settings window.
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum Page {
+    Models,
+    Statistics,
+}
 
 const BG: u32 = 0xf4f7fb;
 const INK: u32 = 0x19334d;
@@ -103,6 +111,8 @@ fn preset_choices(zh: bool) -> SearchableVec<Choice> {
 }
 pub struct Proxy {
     dir: PathBuf,
+    page: Page,
+    statistics: Entity<Statistics>,
     cfg: Config,
     drafts: Drafts,
     backend: Backend,
@@ -194,6 +204,9 @@ impl Proxy {
         self.capture(cx);
         self.zh = code == "zh"
             || (code == "auto" && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
+        let zh = self.zh;
+        self.statistics
+            .update(cx, |page, cx| page.set_language(zh, window, cx));
         let zh = self.zh;
         for (state, hint) in [
             (
@@ -391,6 +404,7 @@ impl Proxy {
                 && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
         let drafts = Drafts::load(&dir, &cfg);
         let backend = Backend::new(dir.clone());
+        let statistics = cx.new(|cx| Statistics::new(dir.clone(), zh, window, cx));
         let name = input(
             "",
             if zh {
@@ -499,6 +513,8 @@ impl Proxy {
         });
         let mut this = Self {
             dir,
+            page: Page::Models,
+            statistics,
             cfg,
             drafts,
             backend,
@@ -847,6 +863,10 @@ impl Proxy {
             let _ = self.drafts.persist(&self.dir);
             cx.quit();
             return;
+        }
+        if self.page == Page::Statistics {
+            self.statistics
+                .update(cx, |page, cx| page.poll_maintenance(cx));
         }
         let wake = std::fs::read_to_string(self.dir.join("gpui-wake.json")).unwrap_or_default();
         if wake != self.wake {
@@ -1261,6 +1281,28 @@ impl Proxy {
         }
         cx.notify();
     }
+    pub(crate) fn switch_page(&mut self, page: Page, window: &mut Window, cx: &mut Context<Self>) {
+        if self.page == page {
+            return;
+        }
+        self.page = page;
+        let providers = self
+            .cfg
+            .providers
+            .iter()
+            .filter(|p| !p.is_draft())
+            .map(|p| (p.id.clone(), p.name.clone()))
+            .collect();
+        self.statistics.update(cx, |statistics, cx| {
+            statistics.set_configured_providers(providers);
+            statistics.set_visible(page == Page::Statistics, cx)
+        });
+        if page == Page::Models {
+            self.table_focus.focus(window, cx);
+        }
+        cx.notify();
+    }
+
     fn sidebar(&mut self, cx: &mut Context<Self>) -> AnyElement {
         let selected = self.selected();
         let rows = self
@@ -1291,18 +1333,55 @@ impl Proxy {
                     }))
             })
             .collect::<Vec<_>>();
+        let statistics_active = self.page == Page::Statistics;
+        let models_active = self.page == Page::Models;
+        let navigation = vec![
+            SidebarMenuItem::new(self.t("模型管理", "Models"))
+                .accessibility_label(self.t("模型管理", "Models"))
+                .active(models_active)
+                .font_weight(if models_active {
+                    FontWeight::SEMIBOLD
+                } else {
+                    FontWeight::NORMAL
+                })
+                .on_click(
+                    cx.listener(|this, _, window, cx| this.switch_page(Page::Models, window, cx)),
+                ),
+            SidebarMenuItem::new(self.t("使用统计", "Statistics"))
+                .accessibility_label(self.t("使用统计", "Statistics"))
+                .active(statistics_active)
+                .font_weight(if statistics_active {
+                    FontWeight::SEMIBOLD
+                } else {
+                    FontWeight::NORMAL
+                })
+                .on_click(cx.listener(|this, _, window, cx| {
+                    this.switch_page(Page::Statistics, window, cx)
+                })),
+        ];
         Sidebar::new("providers")
             .collapsible(false)
-            .w(px(196.))
+            .w(px(168.))
             .border_1()
             .border_color(rgb(0xcbdbe6))
             .rounded(px(12.))
             .header(
                 SidebarHeader::new().child(
-                    Label::new(self.t("供应商", "Providers")).font_weight(FontWeight::SEMIBOLD),
+                    Label::new(self.t("导航", "Navigation")).font_weight(FontWeight::SEMIBOLD),
                 ),
             )
-            .child(SidebarMenu::new().children(rows))
+            .child(SidebarMenu::new().children({
+                // A non-interactive group header keeps the single-menu contract
+                // of the Kit sidebar.
+                let mut items = navigation;
+                items.push(
+                    SidebarMenuItem::new(self.t("供应商", "Providers"))
+                        .disable(true)
+                        .font_weight(FontWeight::SEMIBOLD),
+                );
+                items.extend(rows);
+                items
+            }))
             .footer(
                 div()
                     .w_full()
@@ -1892,7 +1971,10 @@ impl Render for Proxy {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         self.refresh_table(window, cx);
         let sidebar = self.sidebar(cx);
-        let center = self.center(cx);
+        let center = match self.page {
+            Page::Models => self.center(cx),
+            Page::Statistics => self.statistics.clone().into_any_element(),
+        };
         let right = self.right(cx);
         self.manage_dialog(window, cx);
         let content = div()
@@ -1969,7 +2051,7 @@ impl Render for Proxy {
                     .min_h_0()
                     .child(sidebar)
                     .child(center)
-                    .child(right),
+                    .when(self.page == Page::Models, |this| this.child(right)),
             )
             .child(
                 div().flex().justify_end().h(px(16.)).items_center().child(

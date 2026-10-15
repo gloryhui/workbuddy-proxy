@@ -1,4 +1,7 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
+// The statistics page builds large `IntoElement` trees; the default limit is
+// not enough for the generated element types.
+#![recursion_limit = "256"]
 extern crate gpui_kit as gpui;
 extern crate url as reqwest;
 mod assets;
@@ -19,7 +22,15 @@ mod model_options;
 mod model_table;
 mod presets;
 mod state;
+mod statistics;
+mod stats_backend;
+mod stats_controller;
+#[allow(dead_code)]
+#[path = "../../src/stats/dto.rs"]
+mod stats_dto;
 mod ui;
+mod usage_chart;
+mod usage_table;
 use fs2::FileExt;
 use gpui_kit::component::{Theme, ThemeMode, TitleBar};
 use gpui_kit::*;

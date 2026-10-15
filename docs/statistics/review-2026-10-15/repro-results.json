@@ -1,0 +1,143 @@
+[
+  {
+    "case": "model-json-error",
+    "http": 200,
+    "body": "{\"error\":{\"message\":\"fixture upstream error\"}}",
+    "record": [
+      "completed",
+      null,
+      "missing",
+      "stream_error"
+    ]
+  },
+  {
+    "case": "model-json-invalid",
+    "http": 200,
+    "body": "{\"broken\":",
+    "record": [
+      "completed",
+      null,
+      "missing",
+      "parse_error"
+    ]
+  },
+  {
+    "case": "documented_nano_rates",
+    "accepted": false,
+    "error": "stats_price_save failed: stats_invalid_argument: input rate: rate is out of range"
+  },
+  {
+    "case": "one_nano_rate",
+    "sent": "1",
+    "stored": [
+      1000000000,
+      1000000000
+    ]
+  },
+  {
+    "case": "invalid_cursor",
+    "accepted": true,
+    "items": 3
+  },
+  {
+    "case": "covered_empty_bucket",
+    "series": [
+      {
+        "start_ms": 1792056509432,
+        "end_ms": 1792056509552,
+        "request_count": 0,
+        "finished_count": 0,
+        "usage_complete_count": 0,
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "cache_read_tokens": null,
+        "cache_write_tokens": null,
+        "cache_read_known_count": 0,
+        "cache_write_known_count": 0,
+        "cache_read_denominator_input_tokens": null,
+        "costs": [],
+        "quality": "empty",
+        "collection_warning": false
+      }
+    ]
+  },
+  {
+    "case": "conflicting_partial_usage",
+    "state": "degraded",
+    "error": "CHECK constraint failed: input_tokens IS NULL OR output_tokens IS NULL OR total_tokens IS NULL\n        OR total_tokens = input_tokens + output_tokens",
+    "rows": [
+      [
+        "in_flight",
+        "missing",
+        null
+      ]
+    ],
+    "subsequent_request_recorded": false
+  },
+  {
+    "case": "transient_database_lock",
+    "state_after_unlock": "ready",
+    "state_after_new_request": "ready",
+    "write_failures": 1,
+    "loss_scope": "loss_observed",
+    "intervals": [
+      [
+        "collecting",
+        null
+      ]
+    ]
+  },
+  {
+    "case": "normal_shutdown_active_stream",
+    "record": [
+      [
+        "cancelled",
+        "client_drop"
+      ]
+    ]
+  },
+  {
+    "case": "failed_finish_lock_released",
+    "state_after_unlock": "degraded",
+    "state_after_new_request": "degraded",
+    "rows": [
+      [
+        "in_flight",
+        null
+      ]
+    ],
+    "intervals": [
+      [
+        "collecting",
+        null
+      ]
+    ],
+    "write_failures": 1
+  },
+  {
+    "case": "unsupported_breakdown_counts",
+    "actual_costs": [
+      [
+        "unsupported_breakdown"
+      ]
+    ],
+    "summary": {
+      "unpriced_request_count": 1,
+      "cost_incomplete_request_count": 0
+    }
+  },
+  {
+    "case": "reprice_not_sent_request",
+    "before": [
+      [
+        "not_applicable"
+      ]
+    ],
+    "after": [
+      [
+        "usage_incomplete"
+      ]
+    ]
+  }
+]

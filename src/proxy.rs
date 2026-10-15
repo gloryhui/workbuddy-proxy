@@ -1,6 +1,11 @@
 use crate::{
     config::{Config, Connection, Provider},
     session::{Envelope, Sessions},
+    stats::{
+        self,
+        collector::Protocol,
+        dto::{ErrorKind, Outcome, Source, UsageMode},
+    },
 };
 use axum::{
     Router,
@@ -179,6 +184,10 @@ pub struct Bridge {
     pub stop: Mutex<Option<oneshot::Sender<()>>>,
     pub port_changes: Mutex<Option<tokio::sync::mpsc::Sender<crate::port::Request>>>,
     mutations: tokio::sync::Mutex<()>,
+    /// Local usage statistics. Never holds a SQLite connection and never blocks
+    /// a chat request.
+    pub stats: stats::StatsHandle,
+    usage_injection_warned: Mutex<std::collections::HashSet<String>>,
 }
 impl Bridge {
     pub fn new(config: Config, dir: PathBuf) -> Result<Self, String> {
@@ -191,6 +200,7 @@ impl Bridge {
             .tcp_nodelay(true)
             .build()
             .map_err(|e| e.to_string())?;
+        let stats = stats::StatsHandle::start(dir.clone());
         Ok(Self {
             catalog: Arc::new(crate::catalog::Catalog::load(&dir)),
             routes: Mutex::new(Routes::new(&config)?),
@@ -209,6 +219,8 @@ impl Bridge {
             stop: Mutex::new(None),
             port_changes: Mutex::new(None),
             mutations: tokio::sync::Mutex::new(()),
+            stats,
+            usage_injection_warned: Mutex::new(std::collections::HashSet::new()),
         })
     }
     pub fn connection_address(&self, id: &str) -> String {
@@ -337,6 +349,20 @@ impl Bridge {
         self.catalog.remember(&base, models);
         Ok(json!(ids).to_string())
     }
+    /// Reports, once per provider, that `include_usage` could not be merged
+    /// because the request carried a non-object `stream_options`.
+    fn warn_usage_injection(&self, provider_id: &str) {
+        if self
+            .usage_injection_warned
+            .lock()
+            .unwrap()
+            .insert(provider_id.to_owned())
+        {
+            eprintln!(
+                "usage_mode=request could not merge stream_options for provider {provider_id}; the chat request was forwarded unchanged"
+            );
+        }
+    }
     fn metadata_targets(&self) -> Vec<crate::catalog::Target> {
         self.config
             .lock()
@@ -374,25 +400,82 @@ impl Bridge {
             let r = self.routes.lock().unwrap().resolve(Some(&c.id), &c.model)?;
             let _permit = self.permits.clone().try_acquire_owned()
                 .map_err(|_| "Four requests are already in flight")?;
+            // Connection tests are recorded with their own source so the normal
+            // statistics views can exclude them by default.
+            let mut guard = self.stats.begin(
+                stats::RequestSpec {
+                    source: Source::ConnectionTest,
+                    provider_id: r.provider_id.clone(),
+                    provider_name: r.connection.provider.clone(),
+                    route_id: r.connection.id.clone(),
+                    route_name: r.connection.name.clone(),
+                    requested_model: c.model.clone(),
+                    upstream_model: r.connection.model.clone(),
+                    stream: true,
+                },
+                Protocol::Sse,
+                false,
+            );
             if !r.destination.has_key {
+                if let Some(guard) = guard.as_mut() {
+                    guard.finish(Outcome::Rejected, Some(ErrorKind::MissingKey));
+                }
                 return Err("Save your API key first / 请先保存 API Key".into());
             }
             let payload = serde_json::to_vec(&json!({"model":c.model,"stream":true,"max_tokens":1,"messages":[{"role":"user","content":"Reply with OK."}]})).unwrap();
-            let payload = apply_reasoning(payload.into(), &c.reasoning_effort)?;
-            let res = tokio::time::timeout(Duration::from_secs(45), self.upstream(&r, &HeaderMap::new(), payload, &crate::config::token(), None))
-                .await.map_err(|_| "Connection timeout / 连接超时")?
-                .map_err(|_| "Connection failed; check network and proxy / 请检查网络和代理")?;
+            let payload = match apply_reasoning(payload.into(), &c.reasoning_effort) {
+                Ok(payload) => payload,
+                Err(error) => {
+                    if let Some(guard) = guard.as_mut() {
+                        guard.finish(Outcome::Rejected, Some(ErrorKind::Other));
+                    }
+                    return Err(error);
+                }
+            };
+            if let Some(guard) = guard.as_mut() {
+                guard.mark_upstream_started();
+            }
+            let res = match tokio::time::timeout(Duration::from_secs(45), self.upstream(&r, &HeaderMap::new(), payload, &crate::config::token(), None)).await {
+                Ok(Ok(res)) => res,
+                Ok(Err(_)) => {
+                    if let Some(guard) = guard.as_mut() {
+                        guard.finish(Outcome::Failed, Some(ErrorKind::Connect));
+                    }
+                    return Err("Connection failed; check network and proxy / 请检查网络和代理".into());
+                }
+                Err(_) => {
+                    if let Some(guard) = guard.as_mut() {
+                        guard.finish(Outcome::Failed, Some(ErrorKind::Connect));
+                    }
+                    return Err("Connection timeout / 连接超时".into());
+                }
+            };
             report.headers_ms = Some(started.elapsed().as_millis() as u64);
             let status = res.status();
             report.http = format!("HTTP {}", status.as_u16());
             if !status.is_success() {
+                if let Some(guard) = guard.as_mut() {
+                    guard.set_http_status(status.as_u16());
+                    guard.finish(Outcome::Failed, Some(ErrorKind::UpstreamHttp));
+                }
                 return Err("Upstream rejected the test request / 上游拒绝了测试请求".into());
             }
-            tokio::time::timeout(Duration::from_secs(45), async {
+            if let Some(guard) = guard.as_mut() {
+                guard.set_http_status(status.as_u16());
+                guard.attach_collector(
+                    Protocol::classify(header_text(res.headers(), "content-type").as_deref()),
+                    Protocol::is_encoded(header_text(res.headers(), "content-encoding").as_deref()),
+                );
+            }
+            let probe = tokio::time::timeout(Duration::from_secs(45), async {
                 let mut stream = res.bytes_stream();
                 let mut pending = Vec::new();
                 while let Some(chunk) = stream.next().await {
                     let b = chunk.map_err(|_| "Invalid upstream stream")?;
+                    // Observe the same bytes that are being discarded below.
+                    if let Some(guard) = guard.as_mut() {
+                        guard.observe(&b);
+                    }
                     if pending.len() + b.len() > 65536 { return Err("Invalid upstream response"); }
                     pending.extend_from_slice(&b);
                     while let Some(i) = pending.iter().position(|b| *b == b'\n') {
@@ -400,10 +483,21 @@ impl Bridge {
                         if let Some(text) = line.trim().strip_prefix("data:").map(str::trim)
                             && let Ok(v) = serde_json::from_str::<serde_json::Value>(text)
                         {
-                            if v.get("error").is_some() { return Err("Upstream returned an error"); }
+                            if v.get("error").is_some() {
+                                if let Some(guard) = guard.as_mut() {
+                                    guard.finish(Outcome::Failed, Some(ErrorKind::SseError));
+                                }
+                                return Err("Upstream returned an error");
+                            }
                             if v["choices"].as_array().is_some_and(|choices| !choices.is_empty()) {
                                 report.first_event_ms = Some(started.elapsed().as_millis() as u64);
                                 report.response_model = v["model"].as_str().map(|m| m.chars().filter(|c| !c.is_control()).take(160).collect());
+                                // The probe intentionally stops at the first
+                                // event; statistics record that as a cancelled
+                                // probe, never as a failed connection test.
+                                if let Some(guard) = guard.as_mut() {
+                                    guard.finish(Outcome::Cancelled, Some(ErrorKind::ClientDrop));
+                                }
                                 return Ok(());
                             }
                         }
@@ -411,7 +505,23 @@ impl Bridge {
                     }
                 }
                 Err("No valid streaming response")
-            }).await.map_err(|_| "Stream timeout / 流式响应超时")?.map_err(str::to_string)
+            }).await;
+            let result = match probe {
+                Ok(Ok(())) => Ok(()),
+                Ok(Err(reason)) => {
+                    if let Some(guard) = guard.as_mut() {
+                        guard.finish(Outcome::Failed, Some(ErrorKind::UpstreamStream));
+                    }
+                    Err(reason)
+                }
+                Err(_) => {
+                    if let Some(guard) = guard.as_mut() {
+                        guard.finish(Outcome::Failed, Some(ErrorKind::UpstreamStream));
+                    }
+                    Err("Stream timeout / 流式响应超时")
+                }
+            };
+            result.map_err(str::to_string)
         }.await;
         report.elapsed_ms = started.elapsed().as_millis() as u64;
         if let Err(reason) = &outcome {
@@ -419,6 +529,17 @@ impl Bridge {
         }
         let detail = self.sanitize(report.json());
         outcome.map(|_| detail.clone()).map_err(|_| detail)
+    }
+
+    /// Publishes the provider list used by the statistics filter options.
+    pub fn refresh_stats_providers(&self) {
+        let cfg = self.config.lock().unwrap();
+        self.stats.set_configured_providers(
+            cfg.providers
+                .iter()
+                .map(|p| (p.id.clone(), p.name.clone()))
+                .collect(),
+        );
     }
 }
 // Remove hop-by-hop fields, including names nominated by Connection. Never
@@ -585,6 +706,8 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
     struct ModelField<'a> {
         #[serde(borrow)]
         model: std::borrow::Cow<'a, str>,
+        #[serde(default)]
+        stream: bool,
     }
     let model: ModelField<'_> = match serde_json::from_slice(&bytes) {
         Ok(e) => e,
@@ -599,7 +722,26 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
         Ok(r) => r,
         Err(e) => return fail(StatusCode::BAD_REQUEST, &e),
     };
+    // Statistics admission happens only after a valid route exists. Anything
+    // refused earlier (host, auth, permit, body, routing) writes no row.
+    let mut stats_guard = a.stats.begin(
+        stats::RequestSpec {
+            source: Source::Relay,
+            provider_id: r.provider_id.clone(),
+            provider_name: r.connection.provider.clone(),
+            route_id: r.connection.id.clone(),
+            route_name: r.connection.name.clone(),
+            requested_model: model.model.to_string(),
+            upstream_model: r.connection.model.clone(),
+            stream: model.stream,
+        },
+        Protocol::Unknown,
+        false,
+    );
     if !r.destination.has_key {
+        if let Some(guard) = stats_guard.as_mut() {
+            guard.finish(Outcome::Rejected, Some(ErrorKind::MissingKey));
+        }
         return fail(
             StatusCode::SERVICE_UNAVAILABLE,
             "Save this provider's API key first",
@@ -609,7 +751,12 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
     let session = if r.destination.go {
         let envelope: Envelope<'_> = match serde_json::from_slice(&bytes) {
             Ok(e) => e,
-            Err(_) => return fail(StatusCode::BAD_REQUEST, "Go requires a messages array"),
+            Err(_) => {
+                if let Some(guard) = stats_guard.as_mut() {
+                    guard.finish(Outcome::Rejected, Some(ErrorKind::Other));
+                }
+                return fail(StatusCode::BAD_REQUEST, "Go requires a messages array");
+            }
         };
         format!(
             "{}-{}",
@@ -623,16 +770,34 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
         String::new()
     };
     let replace_model = (model.model != c.model).then_some(c.model.as_str());
-    let bytes = match rewrite_request(bytes, replace_model, &c.reasoning_effort) {
-        Ok(b) => b,
-        Err(e) => return fail(StatusCode::BAD_REQUEST, &e),
+    // Only an explicitly configured provider may ask the upstream for usage.
+    let inject_usage = a.stats.usage_mode(&r.provider_id) == UsageMode::Request;
+    let bytes = match rewrite_request(bytes, replace_model, &c.reasoning_effort, inject_usage) {
+        Ok(outcome) => {
+            if outcome.injection_failed {
+                a.warn_usage_injection(&r.provider_id);
+            }
+            outcome.bytes
+        }
+        Err(e) => {
+            if let Some(guard) = stats_guard.as_mut() {
+                guard.finish(Outcome::Rejected, Some(ErrorKind::Other));
+            }
+            return fail(StatusCode::BAD_REQUEST, &e);
+        }
     };
+    if let Some(guard) = stats_guard.as_mut() {
+        guard.mark_upstream_started();
+    }
     let res = match a
         .upstream(&r, &parts.headers, bytes, &session, parts.uri.query())
         .await
     {
         Ok(r) => r,
         Err(_) => {
+            if let Some(guard) = stats_guard.as_mut() {
+                guard.finish(Outcome::Failed, Some(ErrorKind::Connect));
+            }
             a.set_status("Network error / 网络错误".into());
             return fail(
                 StatusCode::BAD_GATEWAY,
@@ -647,15 +812,56 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
         a.calls.load(Ordering::Relaxed)
     ));
     let status = res.status();
+    if let Some(guard) = stats_guard.as_mut() {
+        guard.set_http_status(status.as_u16());
+        guard.set_content_length(
+            header_text(res.headers(), "content-length")
+                .and_then(|value| value.trim().parse().ok()),
+        );
+        guard.attach_collector(
+            Protocol::classify(header_text(res.headers(), "content-type").as_deref()),
+            Protocol::is_encoded(header_text(res.headers(), "content-encoding").as_deref()),
+        );
+    }
     let mut response = Response::builder().status(status);
     *response.headers_mut().unwrap() = forward_headers(res.headers(), false);
-    // No SSE parsing, buffering, rewriting or extra response copies. The permit
-    // travels with the stream and is released on completion OR client cancellation.
+    // The original bytes, status, back pressure and cancellation semantics are
+    // untouched: every chunk is observed and then yielded as the same buffer.
+    // The permit and the guard travel with the stream, so a client cancellation
+    // releases both exactly once.
     let stream = stream::unfold(
-        (res.bytes_stream(), permit),
-        |(mut source, permit)| async move { source.next().await.map(|chunk| (chunk, (source, permit))) },
+        (res.bytes_stream(), permit, stats_guard),
+        move |(mut source, permit, mut guard)| async move {
+            match source.next().await {
+                Some(Ok(chunk)) => {
+                    if let Some(guard) = guard.as_mut() {
+                        guard.observe(&chunk);
+                    }
+                    Some((Ok(chunk), (source, permit, guard)))
+                }
+                Some(Err(error)) => {
+                    if let Some(guard) = guard.as_mut() {
+                        guard.finish(Outcome::Failed, Some(ErrorKind::UpstreamStream));
+                    }
+                    Some((Err(error), (source, permit, guard)))
+                }
+                None => {
+                    if let Some(guard) = guard.as_mut() {
+                        let (outcome, kind) = guard.terminal();
+                        guard.finish(outcome, kind);
+                    }
+                    None
+                }
+            }
+        },
     );
     response.body(Body::from_stream(stream)).unwrap()
+}
+fn header_text(headers: &HeaderMap, name: &str) -> Option<String> {
+    headers
+        .get(name)
+        .and_then(|value| value.to_str().ok())
+        .map(str::to_owned)
 }
 async fn show(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body> {
     if !local(&headers, a.port.load(Ordering::Relaxed)) || !authorized(&headers, &a.management_key)
@@ -713,6 +919,23 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
 }
 impl Bridge {
     pub async fn command(&self, p: &serde_json::Value) -> Result<String, String> {
+        // Statistics commands are dispatched before the shared status pipeline:
+        // they never set the proxy status string and never reload the config.
+        if let Some(command) = p["command"].as_str()
+            && stats::StatsHandle::is_silent_command(command)
+        {
+            // The GUI caps a control reply at 1 MiB; refuse instead of cutting JSON.
+            return self.stats.command(p).await.and_then(|message| {
+                if message.len() > stats::dto::MAX_RESULT_BYTES {
+                    Err(stats::dto::error(
+                        stats::dto::ERR_RESULT_TOO_LARGE,
+                        "statistics result exceeds 1 MiB; narrow the range",
+                    ))
+                } else {
+                    Ok(message)
+                }
+            });
+        }
         let _mutation = if matches!(
             p["command"].as_str(),
             Some(
@@ -734,6 +957,14 @@ impl Bridge {
         let result = self.command_inner(p).await;
         if result.is_ok() && p["command"] == "save" {
             self.warm_metadata();
+        }
+        if result.is_ok()
+            && matches!(
+                p["command"].as_str(),
+                Some("save" | "add" | "duplicate" | "delete")
+            )
+        {
+            self.refresh_stats_providers();
         }
         if !matches!(
             p["command"].as_str(),
@@ -1037,21 +1268,35 @@ impl Bridge {
         }
     }
 }
-fn apply_reasoning(body: bytes::Bytes, effort: &str) -> Result<bytes::Bytes, String> {
-    rewrite_request(body, None, effort)
+#[derive(Debug)]
+struct RewriteOutcome {
+    bytes: bytes::Bytes,
+    /// True when `usage_mode=request` wanted `include_usage` but the existing
+    /// `stream_options` value was not an object, so it was left untouched.
+    injection_failed: bool,
 }
-// Borrow messages/tools unchanged. Alias and thinking overrides share one
+
+fn apply_reasoning(body: bytes::Bytes, effort: &str) -> Result<bytes::Bytes, String> {
+    rewrite_request(body, None, effort, false).map(|outcome| outcome.bytes)
+}
+
+// Borrow messages/tools unchanged. Alias, thinking and usage overrides share one
 // serialization and one bounded output allocation, even with a large prompt.
 fn rewrite_request(
     body: bytes::Bytes,
     model: Option<&str>,
     effort: &str,
-) -> Result<bytes::Bytes, String> {
-    if model.is_none() && effort == "default" {
-        return Ok(body);
+    inject_usage: bool,
+) -> Result<RewriteOutcome, String> {
+    if model.is_none() && effort == "default" && !inject_usage {
+        // Byte-for-byte passthrough for the common observe path.
+        return Ok(RewriteOutcome {
+            bytes: body,
+            injection_failed: false,
+        });
     }
     use serde_json::value::RawValue;
-    if effort == "default" {
+    if effort == "default" && !inject_usage {
         #[derive(serde::Deserialize)]
         struct Field<'a> {
             #[serde(borrow)]
@@ -1065,7 +1310,10 @@ fn rewrite_request(
         out.extend_from_slice(&body[..offset]);
         out.extend_from_slice(&replacement);
         out.extend_from_slice(&body[offset + raw.len()..]);
-        return Ok(out.into());
+        return Ok(RewriteOutcome {
+            bytes: out.into(),
+            injection_failed: false,
+        });
     }
     let mut fields: std::collections::BTreeMap<String, &RawValue> =
         serde_json::from_slice(&body).map_err(|_| "Invalid chat request")?;
@@ -1103,9 +1351,54 @@ fn rewrite_request(
             fields.insert("reasoning_effort".into(), value);
         }
     }
+    let mut injection_failed = false;
+    let injected_options: Option<Box<RawValue>> = if inject_usage && request_is_stream(&fields) {
+        match fields.get("stream_options") {
+            None => Some(
+                RawValue::from_string(r#"{"include_usage":true}"#.to_owned())
+                    .map_err(|_| "Invalid chat request")?,
+            ),
+            Some(existing) => {
+                let text = existing.get().trim_start();
+                if text.starts_with('{') {
+                    // Merge, keeping every unknown `stream_options` field.
+                    let mut options: serde_json::Map<String, serde_json::Value> =
+                        serde_json::from_str(existing.get()).map_err(|_| "Invalid chat request")?;
+                    options.insert("include_usage".into(), serde_json::Value::Bool(true));
+                    Some(
+                        RawValue::from_string(serde_json::to_string(&options).unwrap())
+                            .map_err(|_| "Invalid chat request")?,
+                    )
+                } else {
+                    // Never turn a working chat request into a 400: keep the
+                    // original value and surface a health warning instead.
+                    injection_failed = true;
+                    None
+                }
+            }
+        }
+    } else {
+        None
+    };
+    if let Some(value) = &injected_options {
+        fields.insert("stream_options".into(), value.as_ref());
+    }
     serde_json::to_vec(&fields)
         .map(bytes::Bytes::from)
+        .map(|bytes| RewriteOutcome {
+            bytes,
+            injection_failed,
+        })
         .map_err(|e| e.to_string())
+}
+
+fn request_is_stream(
+    fields: &std::collections::BTreeMap<String, &serde_json::value::RawValue>,
+) -> bool {
+    fields
+        .get("stream")
+        .and_then(|value| serde_json::from_str::<bool>(value.get()).ok())
+        .unwrap_or(false)
 }
 
 #[cfg(test)]
@@ -1135,14 +1428,17 @@ mod tests {
     #[test]
     fn alias_rewrite_preserves_every_other_byte() {
         let input=bytes::Bytes::from_static(br#"{ "opaque": {"model":"leave"}, "model" : "alias\/m", "messages" : [ { "content" : "unicode \u4e2d" } ], "x" : 1.2300e+2 }"#);
-        let out = rewrite_request(input.clone(), Some("real-model"), "default").unwrap();
+        let out = rewrite_request(input.clone(), Some("real-model"), "default", false)
+            .unwrap()
+            .bytes;
         let expected = std::str::from_utf8(&input)
             .unwrap()
             .replace(r#""alias\/m""#, r#""real-model""#);
         assert_eq!(&out[..], expected.as_bytes());
         assert_eq!(
-            rewrite_request(input.clone(), None, "default")
+            rewrite_request(input.clone(), None, "default", false)
                 .unwrap()
+                .bytes
                 .as_ptr(),
             input.as_ptr()
         );
