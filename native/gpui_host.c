@@ -4,6 +4,7 @@
 #include <shellapi.h>
 #include <string.h>
 extern void wb_gpui_open(void);
+extern void wb_gpui_open_initial(void);
 extern void wb_gpui_stop(void);
 extern int wb_gpui_exit_requested(void);
 extern void wb_frontend_ready(void);
@@ -30,7 +31,7 @@ void wb_gpui_host_run(void){
     WNDCLASSW cls={0};cls.lpfnWndProc=hostProcedure;cls.hInstance=instance;cls.lpszClassName=L"WorkBuddyProxyWindow";cls.hIcon=LoadIconW(instance,MAKEINTRESOURCEW(1));RegisterClassW(&cls);
     hostWindow=CreateWindowExW(0,cls.lpszClassName,L"WorkBuddy Proxy",WS_OVERLAPPED,0,0,0,0,NULL,NULL,instance,NULL);if(!hostWindow)return;
     memset(&hostIcon,0,sizeof(hostIcon));hostIcon.cbSize=sizeof(hostIcon);hostIcon.hWnd=hostWindow;hostIcon.uID=1;hostIcon.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;hostIcon.uCallbackMessage=WM_APP+1;hostIcon.hIcon=cls.hIcon;lstrcpyW(hostIcon.szTip,L"WorkBuddy Proxy");Shell_NotifyIconW(NIM_ADD,&hostIcon);
-    SetTimer(hostWindow,1,500,NULL);wb_frontend_ready();wb_gpui_open();MSG message;while(GetMessageW(&message,NULL,0,0)>0){TranslateMessage(&message);DispatchMessageW(&message);}
+    SetTimer(hostWindow,1,500,NULL);wb_frontend_ready();wb_gpui_open_initial();MSG message;while(GetMessageW(&message,NULL,0,0)>0){TranslateMessage(&message);DispatchMessageW(&message);}
 }
 void wb_gpui_host_quit(void){if(hostWindow)PostMessageW(hostWindow,WM_APP+4,0,0);}
 struct ShowTarget { DWORD pid; HWND window; };

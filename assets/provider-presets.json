@@ -1,0 +1,458 @@
+[
+  {
+    "id": "openai",
+    "name": "OpenAI",
+    "url": "https://api.openai.com/v1",
+    "name_zh": "OpenAI"
+  },
+  {
+    "id": "google",
+    "name": "Google Gemini",
+    "url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "name_zh": "Google Gemini"
+  },
+  {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "url": "https://api.deepseek.com/v1",
+    "name_zh": "DeepSeek"
+  },
+  {
+    "id": "xai",
+    "name": "xAI",
+    "url": "https://api.x.ai/v1",
+    "name_zh": "xAI"
+  },
+  {
+    "id": "moonshot",
+    "name": "Kimi",
+    "url": "https://api.moonshot.ai/v1",
+    "name_zh": "Kimi"
+  },
+  {
+    "id": "moonshot-cn",
+    "name": "Kimi (China)",
+    "url": "https://api.moonshot.cn/v1",
+    "name_zh": "Kimi （国内）"
+  },
+  {
+    "id": "kimi-code",
+    "name": "Kimi Code",
+    "url": "https://api.kimi.ai/coding/v1",
+    "name_zh": "Kimi Code"
+  },
+  {
+    "id": "kimi-code-cn",
+    "name": "Kimi Code (China)",
+    "url": "https://api.kimi.com/coding/v1",
+    "name_zh": "Kimi Code （国内）"
+  },
+  {
+    "id": "zhipu-api",
+    "name": "Zhipu GLM · Pay as you go",
+    "url": "https://open.bigmodel.cn/api/paas/v4",
+    "name_zh": "智谱 GLM · 按量付费"
+  },
+  {
+    "id": "zhipu-coding",
+    "name": "Zhipu GLM · Coding Plan",
+    "url": "https://open.bigmodel.cn/api/coding/paas/v4",
+    "name_zh": "智谱 GLM · Coding Plan"
+  },
+  {
+    "id": "zai-api",
+    "name": "Z.ai · Pay as you go",
+    "url": "https://api.z.ai/api/paas/v4",
+    "name_zh": "Z.ai · 按量付费"
+  },
+  {
+    "id": "zai-coding",
+    "name": "Z.ai · Coding Plan",
+    "url": "https://api.z.ai/api/coding/paas/v4",
+    "name_zh": "Z.ai · Coding Plan"
+  },
+  {
+    "id": "minimax",
+    "name": "MiniMax",
+    "url": "https://api.minimax.io/v1",
+    "name_zh": "MiniMax"
+  },
+  {
+    "id": "minimax-cn",
+    "name": "MiniMax (China)",
+    "url": "https://api.minimaxi.com/v1",
+    "name_zh": "MiniMax （国内）"
+  },
+  {
+    "id": "stepfun-plan",
+    "name": "StepFun · Step Plan",
+    "url": "https://api.stepfun.ai/step_plan/v1",
+    "name_zh": "阶跃星辰 · Step Plan"
+  },
+  {
+    "id": "stepfun-api",
+    "name": "StepFun · Pay as you go",
+    "url": "https://api.stepfun.ai/v1",
+    "name_zh": "阶跃星辰 · 按量付费"
+  },
+  {
+    "id": "stepfun-cn-plan",
+    "name": "StepFun (China) · Step Plan",
+    "url": "https://api.stepfun.com/step_plan/v1",
+    "name_zh": "阶跃星辰 （国内） · Step Plan"
+  },
+  {
+    "id": "stepfun-cn-api",
+    "name": "StepFun (China) · Pay as you go",
+    "url": "https://api.stepfun.com/v1",
+    "name_zh": "阶跃星辰 （国内） · 按量付费"
+  },
+  {
+    "id": "xiaomi-plan-cn",
+    "name": "Xiaomi MiMo · Plan · China",
+    "url": "https://token-plan-cn.xiaomimimo.com/v1",
+    "name_zh": "小米 MiMo · 套餐 · 国内"
+  },
+  {
+    "id": "xiaomi-plan-sgp",
+    "name": "Xiaomi MiMo · Plan · Singapore",
+    "url": "https://token-plan-sgp.xiaomimimo.com/v1",
+    "name_zh": "小米 MiMo · 套餐 · 新加坡"
+  },
+  {
+    "id": "xiaomi-plan-ams",
+    "name": "Xiaomi MiMo · Plan · Europe",
+    "url": "https://token-plan-ams.xiaomimimo.com/v1",
+    "name_zh": "小米 MiMo · 套餐 · 欧洲"
+  },
+  {
+    "id": "xiaomi-api",
+    "name": "Xiaomi MiMo · Pay as you go",
+    "url": "https://api.xiaomimimo.com/v1",
+    "name_zh": "小米 MiMo · 按量付费"
+  },
+  {
+    "id": "baidu-qianfan-personal",
+    "name": "Baidu Qianfan · Token Plan Personal",
+    "url": "https://qianfan.baidubce.com/v2/tokenplan/personal",
+    "name_zh": "百度千帆 · Token Plan 个人版"
+  },
+  {
+    "id": "baidu-qianfan-team",
+    "name": "Baidu Qianfan · Token Plan Enterprise",
+    "url": "https://qianfan.baidubce.com/v2/tokenplan/team",
+    "name_zh": "百度千帆 · Token Plan 企业版"
+  },
+  {
+    "id": "baidu-qianfan-api",
+    "name": "Baidu Qianfan · Pay as you go",
+    "url": "https://qianfan.baidubce.com/v2",
+    "name_zh": "百度千帆 · 按量付费"
+  },
+  {
+    "id": "tencent-cloud-plan",
+    "name": "Tencent Cloud · Plan · China",
+    "url": "https://api.lkeap.cloud.tencent.com/plan/v3",
+    "name_zh": "腾讯云 · 套餐 · 国内"
+  },
+  {
+    "id": "tencent-cloud-cn",
+    "name": "Tencent Cloud · Pay as you go · China",
+    "url": "https://tokenhub.tencentmaas.com/v1",
+    "name_zh": "腾讯云 · 按量付费 · 国内"
+  },
+  {
+    "id": "tencent-cloud-intl",
+    "name": "Tencent Cloud · Pay as you go · Global",
+    "url": "https://tokenhub-intl.tencentmaas.com/v1",
+    "name_zh": "腾讯云 · 按量付费 · 国际"
+  },
+  {
+    "id": "tencent-cloud-enterprise",
+    "name": "Tencent Cloud · Enterprise plan · China",
+    "url": "https://tokenhub.tencentmaas.com/plan/v3",
+    "name_zh": "腾讯云 · 企业套餐 · 国内"
+  },
+  {
+    "id": "tencent-cloud-enterprise-intl",
+    "name": "Tencent Cloud · Enterprise plan · Global",
+    "url": "https://tokenhub-intl.tencentmaas.com/plan/v3",
+    "name_zh": "腾讯云 · 企业套餐 · 国际"
+  },
+  {
+    "id": "huaweicloud-plan",
+    "name": "Huawei Cloud MaaS · Token Plan",
+    "url": "https://api.modelarts-maas.com/plan/v2",
+    "name_zh": "华为云 MaaS · Token Plan"
+  },
+  {
+    "id": "huaweicloud-api",
+    "name": "Huawei Cloud MaaS · Pay as you go",
+    "url": "https://api.modelarts-maas.com/openai/v1",
+    "name_zh": "华为云 MaaS · 按量付费"
+  },
+  {
+    "id": "volcengine-coding",
+    "name": "Volcengine Ark · Coding Plan",
+    "url": "https://ark.cn-beijing.volces.com/api/coding/v3",
+    "name_zh": "火山方舟 · Coding Plan"
+  },
+  {
+    "id": "volcengine-agent",
+    "name": "Volcengine Ark · Agent Plan",
+    "url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "name_zh": "火山方舟 · Agent Plan"
+  },
+  {
+    "id": "volcengine-api",
+    "name": "Volcengine Ark · Pay as you go",
+    "url": "https://ark.cn-beijing.volces.com/api/v3",
+    "name_zh": "火山方舟 · 按量付费"
+  },
+  {
+    "id": "qwen",
+    "name": "Qwen",
+    "url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+    "name_zh": "Qwen"
+  },
+  {
+    "id": "qwen-cn",
+    "name": "Qwen (China)",
+    "url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "name_zh": "Qwen （国内）"
+  },
+  {
+    "id": "qwen-token-plan",
+    "name": "Qwen Token Plan",
+    "url": "https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1",
+    "name_zh": "千问 Token Plan"
+  },
+  {
+    "id": "bailian-token-plan",
+    "name": "Bailian Token Plan",
+    "url": "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1",
+    "name_zh": "百炼 Token Plan"
+  },
+  {
+    "id": "mistral",
+    "name": "Mistral",
+    "url": "https://api.mistral.ai/v1",
+    "name_zh": "Mistral"
+  },
+  {
+    "id": "groq",
+    "name": "Groq",
+    "url": "https://api.groq.com/openai/v1",
+    "name_zh": "Groq"
+  },
+  {
+    "id": "bedrock-us-east-1",
+    "name": "Amazon Bedrock · us-east-1",
+    "url": "https://bedrock-runtime.us-east-1.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · us-east-1"
+  },
+  {
+    "id": "bedrock-us-east-2",
+    "name": "Amazon Bedrock · us-east-2",
+    "url": "https://bedrock-runtime.us-east-2.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · us-east-2"
+  },
+  {
+    "id": "bedrock-us-west-2",
+    "name": "Amazon Bedrock · us-west-2",
+    "url": "https://bedrock-runtime.us-west-2.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · us-west-2"
+  },
+  {
+    "id": "bedrock-eu-central-1",
+    "name": "Amazon Bedrock · eu-central-1",
+    "url": "https://bedrock-runtime.eu-central-1.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · eu-central-1"
+  },
+  {
+    "id": "bedrock-eu-west-1",
+    "name": "Amazon Bedrock · eu-west-1",
+    "url": "https://bedrock-runtime.eu-west-1.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · eu-west-1"
+  },
+  {
+    "id": "bedrock-eu-west-3",
+    "name": "Amazon Bedrock · eu-west-3",
+    "url": "https://bedrock-runtime.eu-west-3.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · eu-west-3"
+  },
+  {
+    "id": "bedrock-ap-northeast-1",
+    "name": "Amazon Bedrock · ap-northeast-1",
+    "url": "https://bedrock-runtime.ap-northeast-1.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · ap-northeast-1"
+  },
+  {
+    "id": "bedrock-ap-southeast-1",
+    "name": "Amazon Bedrock · ap-southeast-1",
+    "url": "https://bedrock-runtime.ap-southeast-1.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · ap-southeast-1"
+  },
+  {
+    "id": "bedrock-ap-southeast-2",
+    "name": "Amazon Bedrock · ap-southeast-2",
+    "url": "https://bedrock-runtime.ap-southeast-2.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · ap-southeast-2"
+  },
+  {
+    "id": "bedrock-ap-south-1",
+    "name": "Amazon Bedrock · ap-south-1",
+    "url": "https://bedrock-runtime.ap-south-1.amazonaws.com/openai/v1",
+    "name_zh": "Amazon Bedrock · ap-south-1"
+  },
+  {
+    "id": "ollama-cloud",
+    "name": "Ollama Cloud",
+    "url": "https://ollama.com/v1",
+    "name_zh": "Ollama Cloud"
+  },
+  {
+    "id": "nous",
+    "name": "Nous Portal",
+    "url": "https://inference-api.nousresearch.com/v1",
+    "name_zh": "Nous Portal"
+  },
+  {
+    "id": "openrouter",
+    "name": "OpenRouter",
+    "url": "https://openrouter.ai/api/v1",
+    "name_zh": "OpenRouter"
+  },
+  {
+    "id": "opencode-go",
+    "name": "OpenCode Go",
+    "url": "https://opencode.ai/zen/go/v1",
+    "name_zh": "OpenCode Go"
+  },
+  {
+    "id": "clinepass",
+    "name": "ClinePass",
+    "url": "https://api.cline.bot/api/v1",
+    "name_zh": "ClinePass"
+  },
+  {
+    "id": "opencode-zen",
+    "name": "OpenCode Zen",
+    "url": "https://opencode.ai/zen/v1",
+    "name_zh": "OpenCode Zen"
+  },
+  {
+    "id": "kilo",
+    "name": "Kilo Gateway",
+    "url": "https://api.kilo.ai/api/openrouter",
+    "name_zh": "Kilo Gateway"
+  },
+  {
+    "id": "commandcode",
+    "name": "Command Code",
+    "url": "https://api.commandcode.ai/provider/v1",
+    "name_zh": "Command Code"
+  },
+  {
+    "id": "together",
+    "name": "Together AI",
+    "url": "https://api.together.xyz/v1",
+    "name_zh": "Together AI"
+  },
+  {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "url": "https://api.fireworks.ai/inference/v1",
+    "name_zh": "Fireworks"
+  },
+  {
+    "id": "siliconflow-cn",
+    "name": "SiliconFlow · China",
+    "url": "https://api.siliconflow.cn/v1",
+    "name_zh": "硅基流动 · 国内"
+  },
+  {
+    "id": "siliconflow-intl",
+    "name": "SiliconFlow · Global",
+    "url": "https://api.siliconflow.com/v1",
+    "name_zh": "硅基流动 · 国际"
+  },
+  {
+    "id": "nvidia",
+    "name": "NVIDIA NIM",
+    "url": "https://integrate.api.nvidia.com/v1",
+    "name_zh": "NVIDIA NIM"
+  },
+  {
+    "id": "modelscope",
+    "name": "ModelScope",
+    "url": "https://api-inference.modelscope.cn/v1",
+    "name_zh": "ModelScope"
+  },
+  {
+    "id": "aihubmix",
+    "name": "AiHubMix",
+    "url": "https://aihubmix.com/v1",
+    "name_zh": "AiHubMix"
+  },
+  {
+    "id": "pipellm",
+    "name": "PipeLLM",
+    "url": "https://api.pipellm.ai/openai/v1",
+    "name_zh": "PipeLLM"
+  },
+  {
+    "id": "302ai",
+    "name": "302.AI",
+    "url": "https://api.302.ai/v1",
+    "name_zh": "302.AI"
+  },
+  {
+    "id": "cherryin",
+    "name": "CherryIN",
+    "url": "https://open.cherryin.ai/v1",
+    "name_zh": "CherryIN"
+  },
+  {
+    "id": "yylx-auto",
+    "name": "鱼鱼连线 · Auto",
+    "url": "https://app.yylx.io/v1",
+    "name_zh": "鱼鱼连线 · 自动"
+  },
+  {
+    "id": "yylx-global",
+    "name": "鱼鱼连线 · Global",
+    "url": "https://global.yylx.io/v1",
+    "name_zh": "鱼鱼连线 · 国际"
+  },
+  {
+    "id": "yylx-cn",
+    "name": "鱼鱼连线 · China Mainland",
+    "url": "https://cn.yylx.io/v1",
+    "name_zh": "鱼鱼连线 · 中国大陆"
+  },
+  {
+    "id": "ollama",
+    "name": "Ollama",
+    "url": "http://localhost:11434/v1",
+    "name_zh": "Ollama"
+  },
+  {
+    "id": "lmstudio",
+    "name": "LM Studio",
+    "url": "http://localhost:1234/v1",
+    "name_zh": "LM Studio"
+  },
+  {
+    "id": "omlx",
+    "name": "oMLX",
+    "url": "http://localhost:8000/v1",
+    "name_zh": "oMLX"
+  },
+  {
+    "id": "mlx-serve",
+    "name": "MLX-Serve",
+    "url": "http://localhost:11234/v1",
+    "name_zh": "MLX-Serve"
+  }
+]

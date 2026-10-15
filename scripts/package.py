@@ -10,7 +10,7 @@ import tempfile
 import zipfile
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--platform',choices=['macos-arm64','macos-x64','windows-x64'],required=True);p.add_argument('--output',default='dist');p.add_argument('--version',default='0.5.1');p.add_argument('--gpui',required=True);p.add_argument('--variant',default='');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--platform',choices=['macos-arm64','macos-x64','windows-x64'],required=True);p.add_argument('--output',default='dist');p.add_argument('--version',default='0.5.2');p.add_argument('--gpui',required=True);p.add_argument('--variant',default='');args=p.parse_args()
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     name=f'workbuddy-proxy-{args.version}'+(f'-{args.variant}' if args.variant else '')+f'-{args.platform}'
     app_name='WorkBuddy Proxy.app'

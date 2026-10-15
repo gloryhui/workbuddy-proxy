@@ -11,7 +11,7 @@ use gpui_kit::component::{
     input::{Input, InputEvent, InputState, Textarea, TextareaState},
     label::Label,
     list::ListItem,
-    select::{Select, SelectEvent, SelectItem, SelectState},
+    select::{SearchableVec, Select, SelectEvent, SelectItem, SelectState},
     sidebar::{Sidebar, SidebarHeader, SidebarMenu, SidebarMenuItem},
     table::{DataTable, TableState},
     tag::Tag,
@@ -46,6 +46,16 @@ impl SelectItem for Choice {
     fn value(&self) -> &String {
         &self.code
     }
+    fn matches(&self, query: &str) -> bool {
+        let query = query.trim().to_lowercase();
+        self.title.to_lowercase().contains(&query)
+            || self.code.to_lowercase().contains(&query)
+            || crate::presets::all().iter().any(|p| {
+                p.id == self.code
+                    && (p.name.to_lowercase().contains(&query)
+                        || p.url.to_lowercase().contains(&query))
+            })
+    }
 }
 type ChoiceState = SelectState<Vec<Choice>>;
 fn choices(zh: bool, languages: bool) -> Vec<Choice> {
@@ -72,6 +82,24 @@ fn choices(zh: bool, languages: bool) -> Vec<Choice> {
             title: (if zh { *cn } else { *en }).into(),
         })
         .collect()
+}
+fn preset_choices(zh: bool) -> SearchableVec<Choice> {
+    SearchableVec::new(
+        std::iter::once(Choice {
+            code: "custom".into(),
+            title: (if zh {
+                "自定义地址"
+            } else {
+                "Custom endpoint"
+            })
+            .into(),
+        })
+        .chain(crate::presets::all().iter().map(|p| Choice {
+            code: p.id.clone(),
+            title: p.title(zh).to_owned().into(),
+        }))
+        .collect::<Vec<_>>(),
+    )
 }
 pub struct Proxy {
     dir: PathBuf,
@@ -110,6 +138,7 @@ pub struct Proxy {
     new_model: bool,
     language: Entity<ChoiceState>,
     effort_select: Entity<ChoiceState>,
+    preset_select: Entity<SelectState<SearchableVec<Choice>>>,
     delete_open: bool,
     wake: String,
     last_poll: Instant,
@@ -231,15 +260,69 @@ impl Proxy {
             s.set_items(choices(self.zh, false), window, cx);
             s.set_selected_value(&self.effort, window, cx);
         });
+        self.preset_select
+            .update(cx, |s, cx| s.set_items(preset_choices(self.zh), window, cx));
+        self.sync_preset(window, cx);
     }
     fn language_menu(&self) -> AnyElement {
         Select::new(&self.language)
             .id("language")
             .small()
-            .w(px(144.))
+            .w(px(if self.zh { 112. } else { 128. }))
             .menu_width(px(180.))
             .accessibility_label(self.t("界面语言", "Interface language"))
             .disabled(self.busy)
+            .into_any_element()
+    }
+    fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
+        div()
+            .flex()
+            .items_center()
+            .gap_3()
+            .child(
+                Checkbox::new("autostart")
+                    .label(self.t("开机启动", "Launch at login"))
+                    .checked(self.cfg.autostart)
+                    .disabled(self.busy)
+                    .small()
+                    .on_change(cx.listener(|this, enabled: &bool, _, cx| {
+                        this.send(
+                            "autostart",
+                            vec![json!({"command":"autostart","enabled":enabled})],
+                            cx,
+                        );
+                    })),
+            )
+            .child(
+                Button::new("check-update")
+                    .small()
+                    .ghost()
+                    .icon(IconName::RefreshCw)
+                    .label(self.t("检查更新", "Check updates"))
+                    .disabled(self.busy)
+                    .on_click(cx.listener(|this, _, _, cx| {
+                        this.send(
+                            "check_update",
+                            vec![json!({"command":"check_update","force":true})],
+                            cx,
+                        )
+                    })),
+            )
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .gap_2()
+                    .pl_3()
+                    .border_l_1()
+                    .border_color(rgb(BORDER))
+                    .child(
+                        Label::new(self.t("语言:", "Language:"))
+                            .text_size(px(12.))
+                            .text_color(rgb(MUTED)),
+                    )
+                    .child(self.language_menu()),
+            )
             .into_any_element()
     }
     fn effort_menu(&self) -> AnyElement {
@@ -251,6 +334,50 @@ impl Proxy {
             .accessibility_label(self.t("思考强度", "Thinking effort"))
             .disabled(self.busy)
             .into_any_element()
+    }
+    fn preset_menu(&self) -> AnyElement {
+        Select::new(&self.preset_select)
+            .id("provider-preset")
+            .small()
+            .w_full()
+            .menu_width(px(420.))
+            .search_placeholder(self.t(
+                "搜索供应商、地区或套餐",
+                "Search providers, regions or plans",
+            ))
+            .accessibility_label(self.t("供应商预设", "Provider preset"))
+            .disabled(self.busy)
+            .into_any_element()
+    }
+    fn sync_preset(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        let id = crate::presets::matching_url(&self.url.read(cx).value()).to_owned();
+        self.preset_select
+            .update(cx, |s, cx| s.set_selected_value(&id, window, cx));
+    }
+    fn apply_preset(&mut self, id: &str, window: &mut Window, cx: &mut Context<Self>) {
+        if self.busy {
+            return;
+        }
+        if let Some(preset) = crate::presets::all().iter().find(|p| p.id == id) {
+            let base = preset.title(self.zh);
+            let selected = self.selected();
+            let mut name = base.to_owned();
+            let mut number = 2;
+            while self
+                .cfg
+                .providers
+                .iter()
+                .any(|p| p.id != selected && p.name == name)
+            {
+                name = format!("{base} {number}");
+                number += 1;
+            }
+            self.name.update(cx, |s, cx| s.set_value(name, window, cx));
+            self.url
+                .update(cx, |s, cx| s.set_value(preset.url.clone(), window, cx));
+            self.capture(cx);
+        }
+        cx.notify();
     }
     fn t(&self, zh: &'static str, en: &'static str) -> &'static str {
         if self.zh { zh } else { en }
@@ -331,6 +458,8 @@ impl Proxy {
         let language = cx.new(|cx| SelectState::new(choices(zh, true), None, window, cx));
         language.update(cx, |s, cx| s.set_selected_value(&cfg.language, window, cx));
         let effort_select = cx.new(|cx| SelectState::new(choices(zh, false), None, window, cx));
+        let preset_select =
+            cx.new(|cx| SelectState::new(preset_choices(zh), None, window, cx).searchable(true));
         let logs = cx.new(|cx| TextareaState::new(window, cx));
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle();
@@ -400,6 +529,7 @@ impl Proxy {
             new_model: false,
             language,
             effort_select,
+            preset_select,
             delete_open: false,
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
@@ -416,6 +546,18 @@ impl Proxy {
             if let SelectEvent::Confirm(Some(code)) = event {
                 this.effort = code.clone();
                 cx.notify();
+            }
+        })
+        .detach();
+        cx.subscribe_in(&this.preset_select, window, |this, _, event, window, cx| {
+            if let SelectEvent::Confirm(Some(id)) = event {
+                this.apply_preset(id, window, cx);
+            }
+        })
+        .detach();
+        cx.subscribe_in(&this.url, window, |this, _, event, window, cx| {
+            if matches!(event, InputEvent::Change) {
+                this.sync_preset(window, cx);
             }
         })
         .detach();
@@ -489,6 +631,7 @@ impl Proxy {
         };
         self.effort_select
             .update(cx, |s, cx| s.set_selected_value(&self.effort, window, cx));
+        self.sync_preset(window, cx);
         self.selection = Selection::default();
         cx.notify();
     }
@@ -617,6 +760,9 @@ impl Proxy {
         self.proxy_address = v["url"].as_str().unwrap_or("").to_owned();
         self.proxy_counts =
             ["providers", "models", "requests"].map(|key| v[key].as_u64().unwrap_or(0));
+        if let Some(enabled) = v["autostart"].as_bool() {
+            self.cfg.autostart = enabled;
+        }
         self.summary = format!(
             "{}\n{}  {}   ·   {}  {}   ·   {}  {}",
             v["url"].as_str().unwrap_or(""),
@@ -657,9 +803,9 @@ impl Proxy {
         if text != self.log_text {
             self.log_text = text;
             self.logs.update(cx, |s, cx| {
-                let offset = s.scroll_offset();
                 s.set_value(self.log_text.clone(), window, cx);
-                s.set_scroll_offset(offset, cx);
+                // Textarea clamps this to the actual bottom after laying out the new text.
+                s.set_scroll_offset(point(px(0.), px(-f32::MAX)), cx);
             });
             cx.notify();
         }
@@ -1149,6 +1295,7 @@ impl Proxy {
                 .into_any_element();
         }
         card("provider-settings").flex_1().min_w_0().gap_4().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
+        .child(div().child(label(self.t("供应商预设", "Provider preset"))).child(self.preset_menu()))
         .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(Input::new(&self.name).disabled(self.busy))).child(div().flex_1().child(label("API Key")).child(Input::new(&self.key).mask_toggle().disabled(self.busy))))
         .child(div().child(label(self.t("API 地址","API URL"))).child(Input::new(&self.url).disabled(self.busy)))
         .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().primary().outline().icon(IconName::RefreshCw).label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string()})],cx);})))
@@ -1679,43 +1826,33 @@ impl Render for Proxy {
                                     .child(
                                         div()
                                             .text_size(px(22.))
+                                            .line_height(px(26.))
                                             .font_weight(FontWeight::BOLD)
                                             .child("WorkBuddy Proxy"),
                                     )
                                     .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(
-                                        self.t(
-                                            "轻量转发 · 多模型管理",
-                                            "Lightweight relay · Multiple models",
-                                        ),
+                                        {
+                                            let subtitle = self.t(
+                                                "轻量转发 · 多模型管理",
+                                                "Lightweight relay · Multiple models",
+                                            );
+                                            let text = format!(
+                                                "{subtitle} · v{}",
+                                                env!("CARGO_PKG_VERSION")
+                                            );
+                                            let version_range = subtitle.len()..text.len();
+                                            StyledText::new(text).with_highlights([(
+                                                version_range,
+                                                HighlightStyle {
+                                                    color: Some(rgb(0x8a98a7).into()),
+                                                    ..Default::default()
+                                                },
+                                            )])
+                                        },
                                     )),
-                            )
-                            .child(
-                                Tag::info()
-                                    .small()
-                                    .child(concat!("v", env!("CARGO_PKG_VERSION"))),
                             ),
                     )
-                    .child(
-                        div()
-                            .flex()
-                            .gap_2()
-                            .child(
-                                Button::new("check-update")
-                                    .small()
-                                    .ghost()
-                                    .icon(IconName::RefreshCw)
-                                    .label(self.t("检查更新", "Check updates"))
-                                    .disabled(self.busy)
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.send(
-                                            "check_update",
-                                            vec![json!({"command":"check_update","force":true})],
-                                            cx,
-                                        )
-                                    })),
-                            )
-                            .child(self.language_menu()),
-                    ),
+                    .child(self.app_controls(cx)),
             )
             .child(
                 div()

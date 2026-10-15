@@ -18,6 +18,7 @@ pub struct Config {
     pub local_key: String,
     pub language: String,
     pub port: u16,
+    pub autostart: bool,
     pub providers: Vec<Provider>,
     pub installed: Vec<Installation>,
 }
@@ -173,6 +174,7 @@ impl Default for Config {
             local_key: token(),
             language: "auto".into(),
             port: DEFAULT_PORT,
+            autostart: false,
             providers: vec![Provider::default()],
             installed: Vec::new(),
         }
@@ -448,6 +450,7 @@ impl Config {
                 local_key: old.local_key,
                 language: "auto".into(),
                 port: old.port,
+                autostart: false,
                 providers: Self::group(vec![connection]),
                 installed: old.installed.into_iter().collect(),
             }
@@ -466,6 +469,7 @@ impl Config {
                 local_key: old.local_key,
                 language: "auto".into(),
                 port: old.port,
+                autostart: false,
                 providers: Self::group(old.connections),
                 installed: old.installed,
             }

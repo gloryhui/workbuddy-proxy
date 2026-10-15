@@ -43,6 +43,15 @@ def main():
         data = directory / 'private-fixture'
         # Do not overwrite a real installation registration on a developer machine.
         import winreg
+        startup_key = r'Software\Microsoft\Windows\CurrentVersion\Run'
+        def assert_startup_absent():
+            try:
+                with winreg.OpenKey(winreg.HKEY_CURRENT_USER, startup_key) as key:
+                    winreg.QueryValueEx(key, 'WorkBuddyProxy')
+                raise AssertionError('Unexpected login startup registration')
+            except FileNotFoundError:
+                pass
+        assert_startup_absent()
         uninstall_key = r'Software\Microsoft\Windows\CurrentVersion\Uninstall\WorkBuddyProxy_is1'
         try:
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER, uninstall_key):
@@ -56,6 +65,7 @@ def main():
                                 '/SP-', f'/DIR={install}',
                                 f'/LOG={directory / (str(attempt) + "-install.log")}'], check=True, timeout=90)
                 installed = True
+                assert_startup_absent()
                 log_bytes = (directory / (str(attempt) + '-install.log')).read_bytes()
                 log_text = log_bytes.decode('utf-16' if log_bytes.startswith(b'\xff\xfe') else 'utf-8-sig')
                 assert 'Installer language: chinesesimplified' in log_text
@@ -108,6 +118,10 @@ $targets | ConvertTo-Json -Compress
                             '--directory', str(data), '--output', str(lifecycle)], check=True, timeout=120)
             assert json.loads(lifecycle.read_text())['result'] == 'passed'
             original_config = (data / 'config.json').read_bytes()
+            # Simulate an explicit in-app opt-in before uninstall.
+            with winreg.CreateKey(winreg.HKEY_CURRENT_USER, startup_key) as key:
+                winreg.SetValueEx(key, 'WorkBuddyProxy', 0, winreg.REG_SZ,
+                                 f'"{install / "workbuddy-proxy.exe"}" --autostart')
             subprocess.run([str(install / 'unins000.exe'), '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART',
                             f'/LOG={directory / "uninstall.log"}'], check=True, timeout=90)
             wait_for_uninstall_log(directory / 'uninstall.log')
@@ -115,6 +129,7 @@ $targets | ConvertTo-Json -Compress
             assert not (install / 'workbuddy-proxy.exe').exists()
             assert not (install / 'internal/workbuddy-settings.exe').exists()
             assert (data / 'config.json').read_bytes() == original_config
+            assert_startup_absent()
             try:
                 with winreg.OpenKey(winreg.HKEY_CURRENT_USER, uninstall_key):
                     raise AssertionError('Uninstall registration remains')

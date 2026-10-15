@@ -55,6 +55,12 @@ pub fn quit() {
     unsafe { wb_gpui_host_quit() }
 }
 #[unsafe(no_mangle)]
+pub extern "C" fn wb_gpui_open_initial() {
+    if !std::env::args().any(|arg| arg == "--autostart") {
+        wb_gpui_open();
+    }
+}
+#[unsafe(no_mangle)]
 pub extern "C" fn wb_gpui_open() {
     let Some(ctx) = crate::platform::CONTEXT.get() else {
         return;

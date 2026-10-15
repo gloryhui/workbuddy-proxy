@@ -203,7 +203,7 @@ pub fn closing() {
     }
 }
 
-pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
+pub fn run(dir: PathBuf, port: Option<u16>, autostart: bool) -> Result<(), String> {
     if !crate::gpui_host::available() {
         return Err("Settings program is missing; reinstall WorkBuddy Proxy / 设置程序缺失，请重新安装 WorkBuddy Proxy".into());
     }
@@ -221,6 +221,9 @@ pub fn run(dir: PathBuf, port: Option<u16>) -> Result<(), String> {
         false
     };
     if frontend_lock.try_lock_exclusive().is_err() {
+        if autostart {
+            return Ok(());
+        }
         if outdated {
             return Err("Quit the previous version from its tray/menu, then reopen / 请先从托盘或菜单栏退出旧版，再打开新版".into());
         }

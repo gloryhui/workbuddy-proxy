@@ -1,4 +1,5 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
+mod autostart;
 mod config;
 #[allow(dead_code)] // Shared diagnostic rendering is used by the settings binary.
 mod diagnostic;
@@ -28,7 +29,7 @@ use std::{
 
 // Bump when native controllers require new management commands or semantics.
 // Release versions alone cannot distinguish successive local review builds.
-const CONTROL_PROTOCOL: u32 = 1;
+const CONTROL_PROTOCOL: u32 = 2;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {
@@ -40,7 +41,7 @@ struct Instance {
 fn main() {
     if let Err(e) = run() {
         let message = format!("WorkBuddy Proxy startup failed\n{e}");
-        if std::env::args().any(|arg| arg == "--headless") {
+        if std::env::args().any(|arg| matches!(arg.as_str(), "--headless" | "--autostart")) {
             eprintln!("{message}");
         } else {
             platform::error(&message);
@@ -50,11 +51,13 @@ fn main() {
 }
 fn run() -> Result<(), String> {
     let mut headless = false;
+    let mut autostart = false;
     let mut override_port = None;
     let mut args = std::env::args().skip(1);
     while let Some(arg) = args.next() {
         match arg.as_str() {
             "--headless" => headless = true,
+            "--autostart" => autostart = true,
             "--port" => {
                 override_port = Some(
                     args.next()
@@ -70,7 +73,9 @@ fn run() -> Result<(), String> {
                 }
             }
             "--help" | "-h" => {
-                println!("workbuddy-proxy [--headless] [--port PORT] [--config-dir DIR]");
+                println!(
+                    "workbuddy-proxy [--headless | --autostart] [--port PORT] [--config-dir DIR]"
+                );
                 return Ok(());
             }
             "--version" => {
@@ -87,8 +92,10 @@ fn run() -> Result<(), String> {
     config::make_private_dir(&dir)?;
     #[cfg(any(windows, target_os = "macos"))]
     if !headless {
-        return frontend::run(dir, override_port);
+        return frontend::run(dir, override_port, autostart);
     }
+    #[cfg(not(any(windows, target_os = "macos")))]
+    let _ = autostart;
     let lock = fs::OpenOptions::new()
         .create(true)
         .truncate(false)

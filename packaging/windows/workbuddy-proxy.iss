@@ -8,7 +8,7 @@
   #error PackageName is required
 #endif
 #ifndef DisplayVersion
-  #define DisplayVersion "0.5.1"
+  #define DisplayVersion "0.5.2"
 #endif
 
 [Setup]
@@ -63,6 +63,11 @@ Name: "{autodesktop}\WorkBuddy Proxy"; Filename: "{app}\workbuddy-proxy.exe"; Wo
 
 [Run]
 Filename: "{app}\workbuddy-proxy.exe"; Description: "{cm:LaunchProgram,WorkBuddy Proxy}"; Flags: nowait postinstall skipifsilent
+
+[Registry]
+; The application opts in. Installation never creates/enables this value.
+; Uninstall removes only our own Run value, retaining other programs' entries.
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "WorkBuddyProxy"; Flags: dontcreatekey uninsdeletevalue
 
 ; Configuration/logs are outside {app}. No UninstallDelete or user-data cleanup.
 

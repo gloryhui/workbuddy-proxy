@@ -748,6 +748,7 @@ impl Bridge {
                     | "install"
                     | "restore"
                     | "set_port"
+                    | "autostart"
             )
         ) {
             Some(self.mutations.lock().await)
@@ -846,11 +847,32 @@ impl Bridge {
                 let cfg = self.config.lock().unwrap();
                 let logs = self.logs.lock().unwrap();
                 Ok(json!({"url":self.address(),"requests":self.calls.load(Ordering::Relaxed),
-                    "providers":cfg.providers.len(),"models":cfg.providers.iter().map(|p|p.models.len()).sum::<usize>(),
+                    "providers":cfg.providers.len(),"models":cfg.providers.iter().map(|p|p.models.len()).sum::<usize>(),"autostart":cfg.autostart,
                     "uptime":self.started.elapsed().as_secs(),"status":self.status.lock().unwrap().clone(),
                     "logs":logs.iter().map(|(t,s)|json!({"time":t,"message":s})).collect::<Vec<_>>()}).to_string())
             }
             "fetch" => self.discover(id, p).await,
+            "autostart" => {
+                let enabled = p["enabled"].as_bool()
+                    .ok_or("Invalid startup selection / 开机启动选项无效")?;
+                let mut cfg = self.config.lock().unwrap();
+                let mut next = cfg.clone();
+                next.autostart = enabled;
+                let path = self.dir.join("config.json");
+                crate::config::write_json(&path, &next)?;
+                if let Err(error) = crate::autostart::set(enabled, &self.dir) {
+                    if let Err(rollback) = crate::config::write_json(&path, &*cfg) {
+                        return Err(format!("Startup update failed ({error}); configuration rollback failed ({rollback}) / 开机启动设置失败，配置回滚也失败，请重试"));
+                    }
+                    return Err(format!("Cannot update login startup: {error} / 无法设置开机启动：{error}"));
+                }
+                *cfg = next;
+                Ok(if enabled {
+                    "Login startup enabled / 已开启开机启动"
+                } else {
+                    "Login startup disabled / 已关闭开机启动"
+                }.into())
+            }
             "language" => {
                 let lang = p["language"].as_str().unwrap_or("");
                 if !matches!(lang, "auto" | "zh" | "en") {

@@ -13,6 +13,7 @@ mod diagnostic;
 #[path = "../../src/i18n.rs"]
 mod i18n;
 mod model_table;
+mod presets;
 mod state;
 mod ui;
 use fs2::FileExt;
