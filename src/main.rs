@@ -14,6 +14,8 @@ mod i18n;
 mod journal;
 mod platform;
 mod port;
+#[allow(dead_code)] // Native conversion modules are staged before relay integration.
+mod protocol;
 mod proxy;
 mod session;
 mod stats;
