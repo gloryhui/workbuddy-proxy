@@ -2,6 +2,7 @@
 /gpui/target/
 /dist/
 /bench-results/
+/video-prompt/
 *.log
 *.bak
 .DS_Store
