@@ -24,6 +24,8 @@ The DataTable delegates row selection to the application to preserve Shift range
 
 ## Interface behavior
 
+The development version adds per-model [WorkBuddy capability settings](MODEL-CAPABILITIES.md) to the model editor: images, tools, reasoning options, token/context limits and complete Chat Completions URL mode. Defaults enable image input for DeepSeek V4.1 Flash; explicit per-model overrides survive drafts, saving, duplication and sync. Other media JSON and response bytes remain transparent; this does not add native audio/video APIs or protocol conversion.
+
 Version 0.5.2 adds an opt-in **Launch at login** checkbox in the header. New configurations and existing configurations without this setting default to off. The authenticated core command persists the selection and updates only this user's Windows `Run/WorkBuddyProxy` value or macOS `~/Library/LaunchAgents/io.github.gloryhui.workbuddy-proxy.autostart.plist`; a registration failure rolls back the saved choice. Login launches use `--autostart --config-dir DIR`, start the resident tray/core without settings, and do not wake an already-running settings window. Normal manual launches still show settings. There is no keep-alive restart after Quit. Windows uninstall removes the app's Run value while retaining user configuration.
 
 Provider and log operations use compact Kit ghost icon buttons with localized tooltips; the sidebar footer no longer applies a whole-toolbar hover background. Sync is the primary action and removal is shortened to Unsync. Local port, the live relay address and provider/model/request counts share one service card.

@@ -118,6 +118,7 @@ pub struct Proxy {
     search: Entity<InputState>,
     edit_name: Entity<InputState>,
     edit_model: Entity<InputState>,
+    pub(crate) model_options: crate::model_options::OptionsEditor,
     logs: Entity<TextareaState>,
     log_text: String,
     summary: String,
@@ -379,7 +380,7 @@ impl Proxy {
         }
         cx.notify();
     }
-    fn t(&self, zh: &'static str, en: &'static str) -> &'static str {
+    pub(crate) fn t(&self, zh: &'static str, en: &'static str) -> &'static str {
         if self.zh { zh } else { en }
     }
     pub fn new(dir: PathBuf, cfg: Config, window: &mut Window, cx: &mut Context<Self>) -> Self {
@@ -455,6 +456,7 @@ impl Proxy {
             window,
             cx,
         );
+        let model_options = crate::model_options::OptionsEditor::new(zh, window, cx);
         let language = cx.new(|cx| SelectState::new(choices(zh, true), None, window, cx));
         language.update(cx, |s, cx| s.set_selected_value(&cfg.language, window, cx));
         let effort_select = cx.new(|cx| SelectState::new(choices(zh, false), None, window, cx));
@@ -509,6 +511,7 @@ impl Proxy {
             search,
             edit_name,
             edit_model,
+            model_options,
             logs,
             log_text: String::new(),
             summary: String::new(),
@@ -558,6 +561,29 @@ impl Proxy {
         cx.subscribe_in(&this.url, window, |this, _, event, window, cx| {
             if matches!(event, InputEvent::Change) {
                 this.sync_preset(window, cx);
+            }
+        })
+        .detach();
+        cx.subscribe_in(
+            &this.model_options.default_effort,
+            window,
+            |this, _, event, _, cx| {
+                if let SelectEvent::Confirm(Some(effort)) = event {
+                    this.model_options.value.reasoning.default_effort = effort.clone();
+                    cx.notify();
+                }
+            },
+        )
+        .detach();
+        cx.subscribe_in(&this.edit_model, window, |this, _, event, window, cx| {
+            if matches!(event, InputEvent::Change)
+                && this.editing.is_some()
+                && this.model_options.automatic
+            {
+                let model = this.model_id_for_options(cx);
+                this.model_options
+                    .load(&Value::Null, &model, this.zh, window, cx);
+                cx.notify();
             }
         })
         .detach();
@@ -952,8 +978,21 @@ impl Proxy {
         self.edit_model.update(cx, |s, cx| {
             s.set_value(row["model"].as_str().unwrap_or("").to_owned(), window, cx)
         });
+        self.model_options.load(
+            &row,
+            row["model"].as_str().unwrap_or(""),
+            self.zh,
+            window,
+            cx,
+        );
         self.edit_model.read(cx).focus_handle(cx).focus(window, cx);
         cx.notify();
+    }
+    pub(crate) fn is_chinese(&self) -> bool {
+        self.zh
+    }
+    pub(crate) fn model_id_for_options(&self, cx: &App) -> String {
+        self.edit_model.read(cx).value().to_string()
     }
     fn confirm_edit(&mut self, cx: &mut Context<Self>) {
         if self.editing.is_none() {
@@ -966,11 +1005,21 @@ impl Proxy {
             cx.notify();
             return;
         }
+        let capabilities = match self.model_options.read(cx) {
+            Ok(value) => value,
+            Err(error) => {
+                self.status = crate::i18n::message(&error, self.zh);
+                self.error = true;
+                cx.notify();
+                return;
+            }
+        };
         let mut row = self
             .editing
             .and_then(|i| self.models.get(i).cloned())
             .unwrap_or(json!({}));
         row["model"] = json!(id);
+        row["capabilities"] = json!(capabilities);
         row["name"] = json!(self.edit_name.read(cx).value().trim().to_owned());
         if self.new_model {
             if self
@@ -1101,7 +1150,11 @@ impl Proxy {
                     owner: owner.clone(),
                 }
             });
-            let width = if self.picker.is_some() { 720. } else { 480. };
+            let width = if self.picker.is_some() || self.editing.is_some() {
+                720.
+            } else {
+                480.
+            };
             let focus = if self.picker.is_some() {
                 self.search.read(cx).focus_handle(cx)
             } else if self.editing.is_some() {
@@ -1535,13 +1588,14 @@ impl Proxy {
             )
             .into_any_element()
     }
-    fn dialog_body(&mut self, cx: &mut Context<Self>) -> Option<AnyElement> {
+    fn dialog_body(&mut self, window: &Window, cx: &mut Context<Self>) -> Option<AnyElement> {
         let content = if self.picker.is_some() {
             self.picker_dialog(cx)
         } else if self.editing.is_some() {
             DialogContent::new()
                 .w_full()
-                .gap_4()
+                .h((window.viewport_size().height - px(210.)).clamp(px(360.), px(570.)))
+                .gap_3()
                 .child(
                     div()
                         .text_lg()
@@ -1554,13 +1608,24 @@ impl Proxy {
                 )
                 .child(
                     div()
-                        .child(label(self.t("显示名", "Display name")))
-                        .child(Input::new(&self.edit_name)),
-                )
-                .child(
-                    div()
-                        .child(label(self.t("模型 ID", "Model ID")))
-                        .child(Input::new(&self.edit_model)),
+                        .id("model-editor-fields")
+                        .flex()
+                        .flex_col()
+                        .gap_3()
+                        .flex_1()
+                        .min_h_0()
+                        .overflow_y_scroll()
+                        .child(
+                            div()
+                                .child(label(self.t("显示名", "Display name")))
+                                .child(Input::new(&self.edit_name)),
+                        )
+                        .child(
+                            div()
+                                .child(label(self.t("模型 ID", "Model ID")))
+                                .child(Input::new(&self.edit_model)),
+                        )
+                        .child(crate::model_options::render(self, cx)),
                 )
                 .when(self.error, |this| {
                     this.child(
@@ -1892,9 +1957,9 @@ struct ModalBody {
     owner: WeakEntity<Proxy>,
 }
 impl Render for ModalBody {
-    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         self.owner
-            .update(cx, |this, cx| this.dialog_body(cx))
+            .update(cx, |this, cx| this.dialog_body(window, cx))
             .ok()
             .flatten()
             .unwrap_or_else(|| div().into_any_element())

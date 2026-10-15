@@ -1,5 +1,6 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 mod autostart;
+mod capabilities;
 mod config;
 #[allow(dead_code)] // Shared diagnostic rendering is used by the settings binary.
 mod diagnostic;
@@ -29,7 +30,7 @@ use std::{
 
 // Bump when native controllers require new management commands or semantics.
 // Release versions alone cannot distinguish successive local review builds.
-const CONTROL_PROTOCOL: u32 = 2;
+const CONTROL_PROTOCOL: u32 = 3;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {

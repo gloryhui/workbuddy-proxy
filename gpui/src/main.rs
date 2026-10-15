@@ -4,6 +4,9 @@ extern crate url as reqwest;
 mod assets;
 mod backend;
 #[allow(dead_code)]
+#[path = "../../src/capabilities.rs"]
+mod capabilities;
+#[allow(dead_code)]
 #[path = "../../src/config.rs"]
 mod config;
 #[allow(dead_code)]
@@ -12,6 +15,7 @@ mod diagnostic;
 #[allow(dead_code)]
 #[path = "../../src/i18n.rs"]
 mod i18n;
+mod model_options;
 mod model_table;
 mod presets;
 mod state;

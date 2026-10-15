@@ -72,8 +72,9 @@ fn route(value: &Value) -> Option<String> {
         return Some(id.into());
     }
     let url = reqwest::Url::parse(value.get("url")?.as_str()?).ok()?;
-    url.path()
-        .trim_end_matches('/')
+    let path = url.path().trim_end_matches('/');
+    path.strip_suffix("/chat/completions")
+        .unwrap_or(path)
         .strip_prefix("/r/")?
         .strip_suffix("/v1")
         .map(str::to_owned)
@@ -115,6 +116,7 @@ fn managed_signature(current: &Value, local_key: &str) -> bool {
         return false;
     };
     let path = url.path().trim_end_matches('/');
+    let path = path.strip_suffix("/chat/completions").unwrap_or(path);
     url.scheme() == "http"
         && matches!(url.host_str(), Some("127.0.0.1" | "localhost" | "[::1]"))
         && url.username().is_empty()
@@ -131,18 +133,12 @@ fn managed(current: &Value, cfg: &config::Config) -> bool {
     installation(current, cfg).is_some() || managed_signature(current, &cfg.local_key)
 }
 fn entry(c: &config::Connection, url: &str, key: &str) -> Value {
-    let mut e = json!({"id":c.alias,"name":c.label(),"vendor":"Custom","url":url,"apiKey":key,"supportsToolCall":true,"supportsImages":false,"useCustomProtocol":false,"_workbuddyProxy":{"managed":true,"route":c.id}});
-    if matches!(
-        c.model.as_str(),
-        "deepseek-v4.1-flash" | "deepseek-v4-pro" | "deepseek-v4-flash"
-    ) {
-        e["supportsReasoning"] = json!(true);
-        e["onlyReasoning"] = json!(false);
-        e["reasoning"] = json!({"defaultEffort":"high","supportedEfforts":["high","max"],"canDisableThinking":true});
-        e["maxInputTokens"] = json!(1_000_000);
-        e["contextWindow"] =
-            json!({"defaultLength":300_000,"supportedLengths":[128_000,300_000,1_000_000]});
-    }
+    let mut e = json!({"id":c.alias,"name":c.label(),"vendor":"Custom","url":url,"apiKey":key,"_workbuddyProxy":{"managed":true,"route":c.id}});
+    let capabilities = c
+        .capabilities
+        .clone()
+        .unwrap_or_else(|| crate::capabilities::ModelCapabilities::for_model(&c.model));
+    capabilities.apply(&mut e);
     e
 }
 // Only change the URL port of entries using this proxy's local key. Preserve
@@ -330,6 +326,17 @@ pub fn path() -> Result<std::path::PathBuf, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn complete_chat_endpoints_remain_recognizable_after_reinstall() {
+        let cfg = config::Config::default();
+        let value = json!({"id":"old/model","vendor":"Custom","apiKey":"0123456789abcdef0123456789abcdef0123456789abcdef",
+            "url":"http://127.0.0.1:18080/r/media-route/v1/chat/completions"});
+        assert_eq!(route(&value).as_deref(), Some("media-route"));
+        assert!(managed_signature(&value, &cfg.local_key));
+        let mut unrelated = value;
+        unrelated["url"] = json!("https://example.com/r/media-route/v1/chat/completions");
+        assert!(!managed_signature(&unrelated, &cfg.local_key));
+    }
     #[test]
     fn readable_sync_migrates_in_place_and_keeps_restore_history() {
         let dir = tempfile::tempdir().unwrap();

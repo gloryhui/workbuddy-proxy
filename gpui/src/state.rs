@@ -42,7 +42,7 @@ impl Drafts {
         stored.unwrap_or_else(|| Self::from_config(dir, cfg))
     }
     pub fn from_config(dir: &Path, cfg: &Config) -> Self {
-        Self{base:Self::fingerprint(dir),selected:cfg.providers.first().map(|p|p.id.clone()).unwrap_or_default(),providers:cfg.providers.iter().map(|p|(p.id.clone(),Draft{name:if p.is_draft(){String::new()}else{p.name.clone()},key:p.api_key.clone(),upstream:p.upstream.clone(),effort:if p.models.iter().all(|m|p.models.first().is_some_and(|a|a.reasoning_effort==m.reasoning_effort)){p.models.first().map(|m|m.reasoning_effort.clone()).unwrap_or("keep".into())}else{"keep".into()},models:p.models.iter().map(|m|json!({"id":m.id,"name":m.name,"model":m.model,"reasoning_effort":m.reasoning_effort})).collect()})).collect()}
+        Self{base:Self::fingerprint(dir),selected:cfg.providers.first().map(|p|p.id.clone()).unwrap_or_default(),providers:cfg.providers.iter().map(|p|(p.id.clone(),Draft{name:if p.is_draft(){String::new()}else{p.name.clone()},key:p.api_key.clone(),upstream:p.upstream.clone(),effort:if p.models.iter().all(|m|p.models.first().is_some_and(|a|a.reasoning_effort==m.reasoning_effort)){p.models.first().map(|m|m.reasoning_effort.clone()).unwrap_or("keep".into())}else{"keep".into()},models:p.models.iter().map(|m|json!({"id":m.id,"name":m.name,"model":m.model,"reasoning_effort":m.reasoning_effort,"capabilities":m.capabilities})).collect()})).collect()}
     }
     pub fn persist(&mut self, dir: &Path) -> Result<(), String> {
         self.base = Self::fingerprint(dir);
@@ -86,6 +86,25 @@ impl Selection {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn model_capabilities_survive_private_drafts_and_save_payloads() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut cfg = Config::default();
+        cfg.providers[0].set_model_rows(&[json!({
+            "model":"custom-vision", "capabilities":{"supportsImages":true,"supportsToolCall":false}
+        })], "default").unwrap();
+        config::write_json(&dir.path().join("config.json"), &cfg).unwrap();
+        let mut drafts = Drafts::from_config(dir.path(), &cfg);
+        drafts.persist(dir.path()).unwrap();
+        let restored = Drafts::load(dir.path(), &cfg);
+        let provider = &cfg.providers[0].id;
+        let payload = restored.providers[provider].payload(provider);
+        assert_eq!(payload["models"][0]["capabilities"]["supportsImages"], true);
+        assert_eq!(
+            payload["models"][0]["capabilities"]["supportsToolCall"],
+            false
+        );
+    }
     #[test]
     fn modifier_selection_and_batch_delete_keep_unselected_models() {
         let mut s = Selection::default();

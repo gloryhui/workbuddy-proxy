@@ -70,6 +70,7 @@ impl Routes {
                     provider: p.name.clone(),
                     model: m.model.clone(),
                     reasoning_effort: m.reasoning_effort.clone(),
+                    capabilities: m.capabilities.clone(),
                     api_key: String::new(),
                     upstream: String::new(),
                 };

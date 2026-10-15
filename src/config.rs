@@ -1,3 +1,4 @@
+use crate::capabilities::ModelCapabilities;
 use rand::RngCore;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -39,6 +40,7 @@ pub struct Model {
     pub name: String,
     pub model: String,
     pub reasoning_effort: String,
+    pub capabilities: Option<ModelCapabilities>,
 }
 impl Default for Provider {
     fn default() -> Self {
@@ -60,6 +62,7 @@ impl Default for Model {
             name: DEFAULT_MODEL.into(),
             model: c.model,
             reasoning_effort: c.reasoning_effort,
+            capabilities: c.capabilities,
         }
     }
 }
@@ -110,6 +113,16 @@ impl Provider {
             let mut m = found.map_or_else(|| Model::new(id, name), |i| old.remove(i));
             m.name = name.into();
             m.model = id.into();
+            if let Some(value) = row.get("capabilities") {
+                m.capabilities = if value.is_null() {
+                    None
+                } else {
+                    let capabilities: ModelCapabilities = serde_json::from_value(value.clone())
+                        .map_err(|_| "Invalid model capabilities / 模型能力配置无效")?;
+                    capabilities.validate()?;
+                    Some(capabilities)
+                };
+            }
             if effort != "keep" {
                 m.reasoning_effort = effort.into();
             }
@@ -160,6 +173,7 @@ pub struct Connection {
     pub model: String,
     pub upstream: String,
     pub reasoning_effort: String,
+    pub capabilities: Option<ModelCapabilities>,
 }
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Installation {
@@ -192,6 +206,7 @@ impl Default for Connection {
             model: DEFAULT_MODEL.into(),
             upstream: DEFAULT_UPSTREAM.into(),
             reasoning_effort: "default".into(),
+            capabilities: None,
         }
     }
 }
@@ -517,6 +532,7 @@ impl Config {
                 name: c.name,
                 model: c.model,
                 reasoning_effort: c.reasoning_effort,
+                capabilities: c.capabilities,
             });
         }
         let mut names = std::collections::HashSet::new();
@@ -540,6 +556,7 @@ impl Config {
                     name: m.name.clone(),
                     model: m.model.clone(),
                     reasoning_effort: m.reasoning_effort.clone(),
+                    capabilities: m.capabilities.clone(),
                     provider: p.name.clone(),
                     upstream: p.upstream.clone(),
                     api_key: p.api_key.clone(),
@@ -577,6 +594,7 @@ impl Config {
                     name: m.name.clone(),
                     model: m.model.clone(),
                     reasoning_effort: m.reasoning_effort.clone(),
+                    capabilities: m.capabilities.clone(),
                     ..c.clone()
                 };
                 c.validate()?;
@@ -615,6 +633,7 @@ impl Config {
             name: m.name.clone(),
             model: m.model.clone(),
             reasoning_effort: m.reasoning_effort.clone(),
+            capabilities: m.capabilities.clone(),
             provider: p.name.clone(),
             upstream: p.upstream.clone(),
             api_key: p.api_key.clone(),
@@ -627,6 +646,9 @@ impl Connection {
         self.validate_fields(false)
     }
     fn validate_fields(&self, draft: bool) -> Result<(), String> {
+        if let Some(capabilities) = &self.capabilities {
+            capabilities.validate()?;
+        }
         if self.id.len() < 4
             || self.id.len() > 64
             || !self
@@ -703,6 +725,60 @@ impl Connection {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn per_model_capabilities_survive_edits_routes_and_legacy_clients() {
+        let mut cfg = Config::default();
+        let provider = &mut cfg.providers[0];
+        provider.upstream = "https://example.com/v1".into();
+        provider.api_key = "fixture".into();
+        provider.set_models("vision | First", "default").unwrap();
+        let id = provider.models[0].id.clone();
+        provider
+            .set_model_rows(
+                &[serde_json::json!({
+                    "id":id, "model":"vision", "name":"First",
+                    "capabilities":{"supportsImages":true,"maxOutputTokens":8192}
+                })],
+                "keep",
+            )
+            .unwrap();
+        provider
+            .set_model_rows(
+                &[serde_json::json!({"id":id,"model":"renamed-model","name":"Renamed"})],
+                "keep",
+            )
+            .unwrap();
+        cfg.validate().unwrap();
+        for connection in [
+            cfg.connections()[0].clone(),
+            cfg.connection(&id).unwrap(),
+            cfg.workbuddy_connections().unwrap()[0].clone(),
+        ] {
+            let value = connection.capabilities.unwrap();
+            assert!(value.supports_images);
+            assert_eq!(value.max_output_tokens, Some(8192));
+        }
+        let decoded: Config = serde_json::from_slice(&serde_json::to_vec(&cfg).unwrap()).unwrap();
+        assert!(
+            decoded.providers[0].models[0]
+                .capabilities
+                .as_ref()
+                .unwrap()
+                .supports_images
+        );
+        let before = cfg.providers[0].models[0].capabilities.clone();
+        assert!(cfg.providers[0].set_model_rows(&[serde_json::json!({
+            "id":id,"model":"renamed-model","name":"Renamed","capabilities":{"maxInputTokens":0}
+        })], "keep").is_err());
+        assert_eq!(cfg.providers[0].models[0].capabilities, before);
+        cfg.providers[0]
+            .set_model_rows(
+                &[serde_json::json!({"id":id,"model":"renamed-model","capabilities":null})],
+                "keep",
+            )
+            .unwrap();
+        assert!(cfg.providers[0].models[0].capabilities.is_none());
+    }
     #[test]
     fn readable_ids_are_unique_and_duplicate_suffixes_are_stable() {
         let mut cfg = Config::default();

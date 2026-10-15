@@ -24,6 +24,7 @@ jobs:
       - run: cargo build --release --locked
       - run: python scripts/smoke.py --exe target/release/workbuddy-proxy
       - run: python scripts/multi_routing.py --exe target/release/workbuddy-proxy
+      - run: python scripts/multimodal_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/model_discovery.py --exe target/release/workbuddy-proxy
       - run: python scripts/connection_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/port_change.py --exe target/release/workbuddy-proxy

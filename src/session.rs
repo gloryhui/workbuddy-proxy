@@ -91,6 +91,16 @@ fn hex(data: &[u8]) -> String {
 mod tests {
     use super::*;
     #[test]
+    fn go_sessions_accept_multimodal_content_and_hash_media_changes() {
+        let first: Envelope<'_> = serde_json::from_str(r#"{"messages":[{"role":"user","content":[{"type":"image_url","image_url":{"url":"data:image/png;base64,AAAA"}}]}]}"#).unwrap();
+        let changed: Envelope<'_> = serde_json::from_str(r#"{"messages":[{"role":"user","content":[{"type":"image_url","image_url":{"url":"data:image/png;base64,BBBB"}}]}]}"#).unwrap();
+        let mut sessions = Sessions::default();
+        let headers = HeaderMap::new();
+        let id = sessions.resolve(&headers, &first);
+        assert_eq!(id, sessions.resolve(&headers, &first));
+        assert_ne!(id, sessions.resolve(&headers, &changed));
+    }
+    #[test]
     fn continuation_isolation_and_explicit_id() {
         let first: Envelope<'_> =
             serde_json::from_str(r#"{"model":"m","messages":[{"role":"user","content":"a"}]}"#)
