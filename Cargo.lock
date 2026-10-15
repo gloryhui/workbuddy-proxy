@@ -1609,7 +1609,7 @@ checksum = "1ebf944e87a7c253233ad6766e082e3cd714b5d03812acc24c318f549614536e"
 
 [[package]]
 name = "workbuddy-proxy"
-version = "0.5.2"
+version = "0.5.3"
 dependencies = [
  "axum",
  "bytes",

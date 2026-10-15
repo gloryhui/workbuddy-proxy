@@ -1,6 +1,7 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 mod autostart;
 mod capabilities;
+mod catalog;
 mod config;
 #[allow(dead_code)] // Shared diagnostic rendering is used by the settings binary.
 mod diagnostic;
@@ -30,7 +31,7 @@ use std::{
 
 // Bump when native controllers require new management commands or semantics.
 // Release versions alone cannot distinguish successive local review builds.
-const CONTROL_PROTOCOL: u32 = 3;
+const CONTROL_PROTOCOL: u32 = 4;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {
@@ -191,6 +192,13 @@ fn run() -> Result<(), String> {
         let runtime=tokio::runtime::Builder::new_current_thread().enable_all().max_blocking_threads(2).thread_keep_alive(Duration::from_secs(10)).thread_stack_size(512*1024).build().unwrap();
         ready_tx.send(runtime.handle().clone()).unwrap();
         runtime.block_on(async{
+            let metadata_bridge = thread_a.clone();
+            tokio::spawn(async move {
+                loop {
+                    metadata_bridge.warm_metadata();
+                    tokio::time::sleep(Duration::from_secs(3600)).await;
+                }
+            });
             let listener=tokio::net::TcpListener::from_std(listener).unwrap();let listener=port::SwitchingListener::new(listener,port_rx,thread_a.clone()).tap_io(|stream| { if let Err(e)=stream.set_nodelay(true) { eprintln!("Cannot disable local TCP buffering: {e}"); } });let server=axum::serve(listener,thread_a.routes());
             tokio::select!{result=server=>{if let Err(e)=result{eprintln!("Server stopped: {e}");}},_=stop_rx=>{},_=tokio::signal::ctrl_c()=>{}}
         });platform::quit();

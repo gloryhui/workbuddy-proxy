@@ -26,6 +26,7 @@ def main():
             assert not any(p.name in {'config.json','instance.json','gpui-drafts.json','frontend.json'} for p in app.rglob('*'))
             assert subprocess.check_output([str(helper/'Contents/MacOS/workbuddy-proxy-gpui'),'--version'],text=True).strip()==tomllib.loads(Path('Cargo.toml').read_text())['package']['version']
             subprocess.run([sys.executable,'scripts/core_compatibility.py','--exe',str(core)],check=True)
+            subprocess.run([sys.executable,'scripts/model_capabilities_test.py','--exe',str(core)],check=True)
             subprocess.run([sys.executable,'scripts/autostart_test.py','--exe',str(core)],check=True)
             subprocess.run([sys.executable,'scripts/gpui_package_test.py','--exe',str(core),'--output',str(Path(a.output).resolve())],check=True)
             print('PASS: readonly GPUI DMG, Finder drag layout, copied core/helper signatures, metadata, no user config, real packaged settings/relay lifecycle')

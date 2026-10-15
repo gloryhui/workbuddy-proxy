@@ -109,6 +109,8 @@ pub struct Proxy {
     zh: bool,
     busy: bool,
     polling: bool,
+    metadata_polling: bool,
+    last_metadata: Instant,
     status: String,
     error: bool,
     name: Entity<InputState>,
@@ -473,6 +475,7 @@ impl Proxy {
                     rows: vec![],
                     selection: Selection::default(),
                     zh,
+                    busy: false,
                     column_width: px(230.),
                 },
                 window,
@@ -502,6 +505,8 @@ impl Proxy {
             zh,
             busy: false,
             polling: false,
+            metadata_polling: false,
+            last_metadata: Instant::now() - Duration::from_secs(10),
             status: if zh { "就绪" } else { "Ready" }.into(),
             error: false,
             name,
@@ -850,6 +855,22 @@ impl Proxy {
             cx.activate(true);
         }
         while let Ok(reply) = self.backend.replies.try_recv() {
+            if reply.tag == "metadata" {
+                self.metadata_polling = false;
+                if self.editing.is_some()
+                    && self.model_options.automatic
+                    && let Ok(message) = &reply.result
+                    && let Ok(value) = serde_json::from_str::<Value>(message)
+                    && value["model"].as_str() == Some(self.model_id_for_options(cx).as_str())
+                    && value["upstream"].as_str() == Some(self.url.read(cx).value().trim())
+                    && self
+                        .model_options
+                        .apply_automatic(&value["metadata"], self.zh, window, cx)
+                {
+                    cx.notify();
+                }
+                continue;
+            }
             if reply.tag == "poll" {
                 self.polling = false;
             } else {
@@ -940,6 +961,20 @@ impl Proxy {
             self.polling = true;
             self.last_poll = Instant::now();
         }
+        if self.editing.is_some()
+            && self.model_options.automatic
+            && !self.metadata_polling
+            && self.last_metadata.elapsed() > Duration::from_secs(1)
+        {
+            let model = self.model_id_for_options(cx);
+            if !model.is_empty() && self.backend.jobs.try_send(Job {
+                tag: "metadata".into(),
+                steps: vec![json!({"command":"model_metadata","model":model,"upstream":self.url.read(cx).value().trim()})],
+            }).is_ok() {
+                self.metadata_polling = true;
+                self.last_metadata = Instant::now();
+            }
+        }
         // Persist changed drafts only. Idle ticks never redraw a static window.
         self.capture(cx);
         let digest = serde_json::to_string(&self.drafts.providers).unwrap_or_default();
@@ -961,6 +996,11 @@ impl Proxy {
     }
     fn edit_selected(&mut self, _: &EditModel, window: &mut Window, cx: &mut Context<Self>) {
         if let Some(i) = self.selection.rows.first().copied() {
+            self.edit(i, false, window, cx);
+        }
+    }
+    pub(crate) fn edit_model_row(&mut self, i: usize, window: &mut Window, cx: &mut Context<Self>) {
+        if i < self.models.len() && self.editing.is_none() && self.picker.is_none() {
             self.edit(i, false, window, cx);
         }
     }
@@ -1116,11 +1156,12 @@ impl Proxy {
         } else {
             window.viewport_size().width - px(616.)
         };
-        let column_width = (width / 2.).max(px(120.));
+        let column_width = ((width - crate::model_table::EDIT_COLUMN_WIDTH) / 2.).max(px(120.));
         let data = self.model_table.read(cx).delegate();
         if data.rows == self.models
             && data.selection == self.selection
             && data.zh == self.zh
+            && data.busy == self.busy
             && data.column_width == column_width
         {
             return;
@@ -1129,6 +1170,7 @@ impl Proxy {
             let data = table.delegate_mut();
             data.rows = self.models.clone();
             data.selection = self.selection.clone();
+            data.busy = self.busy;
             let header_changed = data.zh != self.zh || data.column_width != column_width;
             data.zh = self.zh;
             data.column_width = column_width;

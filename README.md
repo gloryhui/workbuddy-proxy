@@ -62,21 +62,21 @@
 
 ## 下载与安装
 
-### v0.5.2 正式版
+### v0.5.3 正式版
 
-本版新增开机启动和可搜索的供应商预设，调整顶部布局、版本号显示与日志自动滚动。[查看更新记录](CHANGELOG.md#v052--2026-10-15)。
+本版新增模型能力自动识别、独立的多模态与思考设置，以及模型列表的“操作”编辑按钮；结合供应商信息和 models.dev 自动补齐能力，支持离线缓存与手动覆盖。[查看更新记录](CHANGELOG.md#v053--2026-10-15)。
 
 | 系统 | 下载 | 体积 | 安装方式 |
 | --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.2/workbuddy-proxy-0.5.2-windows-x64-setup.exe) | 7.29 MiB | 中文向导，自选目录，默认创建桌面图标 |
-| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.2/workbuddy-proxy-0.5.2-macos-arm64.dmg) | 12.06 MiB | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
-| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.2/workbuddy-proxy-0.5.2-macos-x64.dmg) | 12.85 MiB | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.3/workbuddy-proxy-0.5.3-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.3/workbuddy-proxy-0.5.3-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.3/workbuddy-proxy-0.5.3-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
 Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
 Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.2/SHA256SUMS.txt)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.3/SHA256SUMS.txt)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
@@ -119,6 +119,8 @@ Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / �
 这些 ID 仅用于演示，请替换成上游实际支持的模型。相同模型 ID 可以添加多项，填写不同显示名即可。修改供应商地址或 Key 会对该供应商下的全部模型生效。
 
 点击**测试连接**会先保存当前修改：选中模型时测试该项；多选时按列表顺序测试第一个选中项；未选中时测试列表第一项。测试使用该模型的思考设置，发送一个简短流式请求。保存失败时保留草稿，不发起测试。也可以随时点击**保存**单独保存。
+
+**v0.5.3 新增：** 模型默认自动识别图片、工具、思考档位和 Token 上限，结合供应商返回信息与 models.dev 自动补齐，并支持离线缓存及手动覆盖。“操作”列可直接打开编辑窗口。[查看自动识别规则与多模态边界](docs/MODEL-CAPABILITIES.md)。
 
 ### 3. 同步到 WorkBuddy
 
@@ -224,18 +226,11 @@ flowchart LR
 <details>
 <summary><strong>WorkBuddy 的思考强度、上下文窗口如何显示？</strong></summary>
 
-同步时，本程序为 `deepseek-v4.1-flash`、`deepseek-v4-pro`、`deepseek-v4-flash` 写入以下能力声明：
+v0.5.3 默认开启“自动识别模型能力”：读取供应商模型列表的明确声明，再用 models.dev 的供应商／原厂记录补齐图片、工具、思考档位、输入／输出上限与上下文长度。后台定期更新，离线使用缓存；用户手动设置始终优先。点击模型列表“操作”列的编辑按钮，可查看识别结果和主要来源，也可以取消自动识别后单独调整。
 
-| 项目 | 本程序写入的值 |
-| --- | --- |
-| 思考能力 | 支持思考，允许关闭；档位 `high` / `max`，默认 `high` |
-| 上下文窗口 | 128K / 300K / 1M，默认 300K |
-| 最大输入声明 | 1,000,000 tokens |
-| 工具 / 图片声明 | 工具调用开启，图片关闭 |
+能力未知时会明确提示，不将缺少信息解释为模型一定不支持。没有已知思考档位时不虚构选择项。默认转发不主动增加输出上限或上下文参数，实际限制以上游服务为准。
 
-这些是 WorkBuddy 的模型配置声明，实际限制以上游服务为准；上下文窗口也不等于最大输出长度。默认转发不主动增加输出上限或上下文参数。
-
-仅填写模型 ID、URL、Key 不保证 WorkBuddy 显示思考选项。选择器依赖 `supportsReasoning`、`reasoning`、`contextWindow` 等字段；同步后重新打开模型列表，必要时重启 WorkBuddy。其他模型的能力声明需按真实支持范围配置。
+同步后重新打开 WorkBuddy 模型列表，必要时重启 WorkBuddy。[自动识别规则、缓存及多模态边界](docs/MODEL-CAPABILITIES.md)。
 
 </details>
 
@@ -243,7 +238,7 @@ flowchart LR
 
 本版将转发核心、托盘和设置界面分为独立进程。关闭设置窗口会释放 GPUI 设置进程，核心继续转发；托盘重新打开会恢复私有草稿。
 
-以下来自 **v0.5.2 同一提交的 CI 发行包测试**，配置为 1 个供应商、64 个模型，数值为进程 RSS 合计：
+以下为上一版 **v0.5.2 同一提交的 CI 发行包测试**，配置为 1 个供应商、64 个模型，数值为进程 RSS 合计：
 
 | CI 环境 | 设置打开：核心 + 托盘 + 界面 | 关闭设置：核心 + 托盘 |
 | --- | ---: | ---: |
@@ -253,7 +248,7 @@ flowchart LR
 
 这些数值包含界面开销；关闭设置会释放设置进程。不同机器和 GPU 环境会影响占用，不能据此比较平台优劣。RSS 合计可能重复计算共享页，GPU 内存未独立测量。核心延迟测试使用本机模拟 HTTP 上游，不代表真实模型推理速度。
 
-[查看本版原始数据](docs/benchmarks/v0.5.2) · [三平台构建与测试](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38675797234) · [测量方法与历史记录](docs/PERFORMANCE.md)
+[查看 v0.5.2 原始数据](docs/benchmarks/v0.5.2) · [三平台构建与测试](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38675797234) · [测量方法与历史记录](docs/PERFORMANCE.md)
 
 ### 轻量实现
 

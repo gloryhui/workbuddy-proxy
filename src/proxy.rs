@@ -21,7 +21,6 @@ use std::{
 };
 use tokio::sync::{Semaphore, oneshot};
 
-const MAX_DISCOVERED_MODELS: usize = 4096;
 pub const BODY_LIMIT: usize = 8 * 1024 * 1024;
 pub const MAX_CONCURRENT: usize = 4;
 struct Destination {
@@ -165,6 +164,7 @@ impl Routes {
 pub struct Bridge {
     pub config: Mutex<Config>,
     routes: Mutex<Routes>,
+    pub catalog: Arc<crate::catalog::Catalog>,
     pub dir: PathBuf,
     pub client: reqwest::Client,
     sessions: Mutex<Sessions>,
@@ -192,6 +192,7 @@ impl Bridge {
             .build()
             .map_err(|e| e.to_string())?;
         Ok(Self {
+            catalog: Arc::new(crate::catalog::Catalog::load(&dir)),
             routes: Mutex::new(Routes::new(&config)?),
             config: Mutex::new(config),
             dir,
@@ -307,89 +308,63 @@ impl Bridge {
         let (base, key) = {
             let cfg = self.config.lock().unwrap();
             let provider = cfg.provider(id)?;
-            let base = payload["upstream"]
-                .as_str()
-                .unwrap_or(&provider.upstream)
-                .trim()
-                .to_owned();
-            let key = payload["key"]
-                .as_str()
-                .filter(|s| !s.trim().is_empty())
-                .unwrap_or(&provider.api_key)
-                .trim()
-                .to_owned();
-            (base, key)
+            (
+                payload["upstream"]
+                    .as_str()
+                    .unwrap_or(&provider.upstream)
+                    .trim()
+                    .to_owned(),
+                payload["key"]
+                    .as_str()
+                    .filter(|s| !s.trim().is_empty())
+                    .unwrap_or(&provider.api_key)
+                    .trim()
+                    .to_owned(),
+            )
         };
         if key.is_empty() {
             return Err("Enter upstream API key".into());
-        }
-        let url = reqwest::Url::parse(&format!("{}/models", base.trim_end_matches('/')))
-            .map_err(|_| "Invalid upstream URL")?;
-        if !matches!(url.scheme(), "http" | "https")
-            || !url.username().is_empty()
-            || url.password().is_some()
-            || url.query().is_some()
-            || url.fragment().is_some()
-        {
-            return Err("Invalid upstream URL".into());
         }
         let _permit = self
             .permits
             .clone()
             .try_acquire_owned()
             .map_err(|_| "Four requests are already in flight")?;
-        let models = tokio::time::timeout(Duration::from_secs(30), async {
-            let response = self
-                .client
-                .get(url)
-                .bearer_auth(key)
-                .send()
-                .await
-                .map_err(|_| "Connection failed; check network and proxy")?;
-            if !response.status().is_success() {
-                return Err(format!("Upstream HTTP {}", response.status().as_u16()));
-            }
-            let mut bytes = Vec::new();
-            let mut stream = response.bytes_stream();
-            while let Some(chunk) = stream.next().await {
-                let chunk = chunk.map_err(|_| "Invalid model list")?;
-                if bytes.len() + chunk.len() > 1024 * 1024 {
-                    return Err("Model list exceeds 1 MiB".into());
-                }
-                bytes.extend_from_slice(&chunk);
-            }
-            let data: serde_json::Value =
-                serde_json::from_slice(&bytes).map_err(|_| "Invalid model list")?;
-            let rows = data["data"]
-                .as_array()
-                .ok_or("Expected OpenAI models data array")?;
-            let mut ids = std::collections::BTreeSet::new();
-            for row in rows {
-                if let Some(id) = row["id"].as_str().map(str::trim).filter(|s| !s.is_empty()) {
-                    if id.len() > 160 || id.chars().any(char::is_control) {
-                        return Err("Invalid model ID".into());
-                    }
-                    ids.insert(id.to_owned());
-                    if ids.len() > MAX_DISCOVERED_MODELS {
-                        return Err(
-                            "At most 4096 discovered models; upstream returned too many".into()
-                        );
-                    }
-                } else {
-                    return Err("Invalid model list".into());
-                }
-            }
-            if ids.is_empty() {
-                return Err("No available models returned".into());
-            }
-            if ids.len() > MAX_DISCOVERED_MODELS {
-                return Err("At most 4096 discovered models; upstream returned too many".into());
-            }
-            Ok(ids.into_iter().collect::<Vec<_>>())
-        })
-        .await
-        .map_err(|_| "Connection timeout")??;
-        Ok(json!(models).to_string())
+        let models =
+            crate::catalog::fetch_provider(&self.client, &base, &key, Duration::from_secs(30))
+                .await?;
+        let ids: Vec<_> = models.keys().cloned().collect();
+        self.catalog.remember(&base, models);
+        Ok(json!(ids).to_string())
+    }
+    fn metadata_targets(&self) -> Vec<crate::catalog::Target> {
+        self.config
+            .lock()
+            .unwrap()
+            .providers
+            .iter()
+            .filter(|p| p.models.iter().any(|m| m.capabilities.is_none()))
+            .map(|p| crate::catalog::Target {
+                upstream: p.upstream.clone(),
+                key: p.api_key.clone(),
+            })
+            .collect()
+    }
+    pub fn warm_metadata(&self) {
+        let catalog = self.catalog.clone();
+        let client = self.client.clone();
+        let targets = self.metadata_targets();
+        tokio::spawn(async move {
+            catalog.refresh(&client, targets).await;
+        });
+    }
+    async fn prepare_metadata(&self) {
+        // Finish a first refresh when possible, with a hard bound on sync delay.
+        let _ = tokio::time::timeout(
+            Duration::from_secs(6),
+            self.catalog.refresh(&self.client, self.metadata_targets()),
+        )
+        .await;
     }
     pub async fn test(&self, id: &str) -> Result<String, String> {
         let c = self.config.lock().unwrap().connection(id)?;
@@ -757,9 +732,12 @@ impl Bridge {
             None
         };
         let result = self.command_inner(p).await;
+        if result.is_ok() && p["command"] == "save" {
+            self.warm_metadata();
+        }
         if !matches!(
             p["command"].as_str(),
-            Some("snapshot" | "copy" | "check_update" | "record" | "clear_logs")
+            Some("snapshot" | "copy" | "check_update" | "record" | "clear_logs" | "model_metadata")
         ) {
             let status = match &result {
                 Ok(s) if p["command"] == "fetch" => {
@@ -853,6 +831,13 @@ impl Bridge {
                     "logs":logs.iter().map(|(t,s)|json!({"time":t,"message":s})).collect::<Vec<_>>()}).to_string())
             }
             "fetch" => self.discover(id, p).await,
+            "model_metadata" => {
+                let model = p["model"].as_str().unwrap_or("");
+                let upstream = p["upstream"].as_str().unwrap_or("");
+                if model.len() > 160 || upstream.len() > 2048 { return Err("Invalid model metadata request".into()); }
+                let resolved = self.catalog.resolve(upstream, model, None);
+                Ok(json!({"model":model,"upstream":upstream,"metadata":resolved}).to_string())
+            }
             "autostart" => {
                 let enabled = p["enabled"].as_bool()
                     .ok_or("Invalid startup selection / 开机启动选项无效")?;
@@ -1010,6 +995,7 @@ impl Bridge {
                 self.test(selected.as_deref().unwrap_or(id)).await
             }
             "install" => {
+                self.prepare_metadata().await;
                 let count = self.configure_workbuddy(&crate::workbuddy::path()?)?;
                 Ok(format!(
                     "Synced {count} models; reopen WorkBuddy model list / 已同步 {count} 项，请重新打开模型列表"

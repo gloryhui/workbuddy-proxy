@@ -2,27 +2,39 @@
 //! Application selection retains Shift/Ctrl/Command semantics.
 use crate::{state::Selection, ui::Proxy};
 use gpui_kit::component::{
-    ActiveTheme,
+    ActiveTheme, Disableable, Icon, Sizable,
+    button::{Button, ButtonVariants},
     table::{Column, TableDelegate, TableState},
 };
 use gpui_kit::*;
 use serde_json::Value;
+
+pub const EDIT_COLUMN_WIDTH: Pixels = px(48.);
 
 pub struct Models {
     pub owner: WeakEntity<Proxy>,
     pub rows: Vec<Value>,
     pub selection: Selection,
     pub zh: bool,
+    pub busy: bool,
     pub column_width: Pixels,
 }
 impl TableDelegate for Models {
     fn columns_count(&self, _: &App) -> usize {
-        2
+        3
     }
     fn rows_count(&self, _: &App) -> usize {
         self.rows.len()
     }
     fn column(&self, i: usize, _: &App) -> Column {
+        if i == 2 {
+            return Column::new("edit", if self.zh { "操作" } else { "Actions" })
+                .width(EDIT_COLUMN_WIDTH)
+                .min_width(EDIT_COLUMN_WIDTH)
+                .max_width(EDIT_COLUMN_WIDTH)
+                .resizable(false)
+                .selectable(false);
+        }
         Column::new(
             if i == 0 { "name" } else { "model" },
             if i == 0 {
@@ -63,6 +75,26 @@ impl TableDelegate for Models {
         _: &mut Window,
         _: &mut Context<TableState<Self>>,
     ) -> impl IntoElement {
+        if col == 2 {
+            let owner = self.owner.clone();
+            let label = if self.zh {
+                "编辑模型"
+            } else {
+                "Edit model"
+            };
+            return Button::new(("model-edit", i))
+                .small()
+                .ghost()
+                .icon(Icon::default().path("icons/model-edit.svg"))
+                .tooltip(label)
+                .accessibility_label(label)
+                .disabled(self.busy)
+                .on_click(move |_, window, cx| {
+                    cx.stop_propagation();
+                    let _ = owner.update(cx, |this, cx| this.edit_model_row(i, window, cx));
+                })
+                .into_any_element();
+        }
         let row = &self.rows[i];
         let id = row["model"].as_str().unwrap_or("");
         let value = if col == 0 {
@@ -73,8 +105,9 @@ impl TableDelegate for Models {
         gpui_kit::component::label::Label::new(value.to_owned())
             .w_full()
             .text_ellipsis()
+            .into_any_element()
     }
-    // The Kit default adds a 12px trailing cell; this table has exactly two columns.
+    // The three explicit columns fill the container without Kit's 12px trailing cell.
     fn render_last_empty_col(
         &mut self,
         _: &mut Window,

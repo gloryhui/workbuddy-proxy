@@ -41,6 +41,8 @@ impl AssetSource for Assets {
             r#"<path d="m6 12 6 6 6-6M12 6v12"/>"#
         } else if path.contains("copy") {
             r#"<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/>"#
+        } else if path.contains("model-edit") {
+            r#"<path d="M12 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-7M16 3a2.1 2.1 0 0 1 3 3L10 15l-4 1 1-4Z"/>"#
         } else if path.contains("delete") {
             r#"<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>"#
         } else if path.contains("refresh") {

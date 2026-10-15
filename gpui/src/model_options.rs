@@ -44,6 +44,8 @@ fn choices(zh: bool) -> Vec<EffortChoice> {
 }
 pub struct OptionsEditor {
     pub automatic: bool,
+    pub source: String,
+    pub image_known: bool,
     pub value: ModelCapabilities,
     pub default_effort: Entity<SelectState<Vec<EffortChoice>>>,
     limits: [Entity<InputState>; 4],
@@ -52,6 +54,8 @@ impl OptionsEditor {
     pub fn new(zh: bool, window: &mut Window, cx: &mut App) -> Self {
         Self {
             automatic: true,
+            source: "unknown".into(),
+            image_known: false,
             value: ModelCapabilities::default(),
             default_effort: cx.new(|cx| SelectState::new(choices(zh), None, window, cx)),
             limits: std::array::from_fn(|_| cx.new(|cx| InputState::new(window, cx))),
@@ -64,7 +68,46 @@ impl OptionsEditor {
             .and_then(|v| serde_json::from_value(v.clone()).ok());
         self.automatic = stored.is_none();
         self.value = stored.unwrap_or_else(|| ModelCapabilities::for_model(model));
+        self.source = if !self.automatic {
+            "manual"
+        } else if self.value != ModelCapabilities::default() {
+            "builtin"
+        } else {
+            "unknown"
+        }
+        .into();
+        self.image_known = self.source != "unknown";
         self.refresh(zh, window, cx);
+    }
+    pub fn apply_automatic(
+        &mut self,
+        metadata: &Value,
+        zh: bool,
+        window: &mut Window,
+        cx: &mut App,
+    ) -> bool {
+        let Ok(value) =
+            serde_json::from_value::<ModelCapabilities>(metadata["capabilities"].clone())
+        else {
+            return false;
+        };
+        if !self.automatic || value.validate().is_err() {
+            return false;
+        }
+        let source = metadata["sources"]
+            .as_array()
+            .and_then(|s| s.last())
+            .and_then(Value::as_str)
+            .unwrap_or("unknown");
+        let known = metadata["image_known"].as_bool().unwrap_or(false);
+        if self.value == value && self.source == source && self.image_known == known {
+            return false;
+        }
+        self.value = value;
+        self.source = source.to_owned();
+        self.image_known = known;
+        self.refresh(zh, window, cx);
+        true
     }
     pub fn refresh(&mut self, zh: bool, window: &mut Window, cx: &mut App) {
         let window_values = self.value.context_window.as_ref();
@@ -298,7 +341,7 @@ pub fn render(owner: &Proxy, cx: &mut Context<Proxy>) -> AnyElement {
     div().flex().flex_col().gap_3().text_size(px(12.))
         .child(div().font_weight(FontWeight::SEMIBOLD).child(owner.t("WorkBuddy 模型能力", "WorkBuddy model capabilities")))
         .child(Checkbox::new("model-capabilities-auto").small()
-            .label(owner.t("使用模型默认能力（取消后自定义）", "Use model defaults (uncheck to customize)"))
+            .label(owner.t("自动识别模型能力（取消后自定义）", "Detect capabilities automatically (uncheck to customize)"))
             .checked(editor.automatic).on_change(cx.listener(|this, enabled: &bool, window, cx| {
                 if *enabled {
                     let model = this.model_id_for_options(cx);
@@ -307,6 +350,18 @@ pub fn render(owner: &Proxy, cx: &mut Context<Proxy>) -> AnyElement {
                 } else { this.model_options.automatic = false; }
                 cx.notify();
             })))
+        .child(div().text_color(rgb(0x6b7c90)).text_size(px(11.)).child(if editor.automatic {
+            match editor.source.as_str() {
+                "upstream" => owner.t("已自动填充 · 供应商模型信息", "Auto-filled · Provider model metadata"),
+                "models.dev:provider" => owner.t("已自动填充 · models.dev 供应商目录", "Auto-filled · models.dev provider catalog"),
+                "models.dev:canonical" => owner.t("已自动填充 · models.dev 原厂模型信息", "Auto-filled · models.dev canonical model"),
+                "builtin" => owner.t("使用内置能力预设，自动尝试补齐", "Built-in defaults; checking for additional metadata"),
+                _ => owner.t("暂未找到可信能力信息，可手动设置", "No confirmed metadata yet; manual settings are available"),
+            }
+        } else { owner.t("使用手动设置，自动识别不会覆盖", "Manual settings take precedence over detected capabilities") }))
+        .children((editor.automatic && !editor.image_known).then(|| div().text_color(rgb(0x6b7c90)).text_size(px(11.)).child(owner.t(
+            "图片能力尚未确认，未自动开启", "Image capability is unknown and has not been enabled automatically"
+        ))))
         .child(checks)
         .child(div().text_color(rgb(0x6b7c90)).text_size(px(11.)).child(owner.t(
             "图片输入用于附件和读图工具；其他媒体格式按上游接口透传。自定义协议同步完整 Chat Completions 地址。",

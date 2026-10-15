@@ -9,6 +9,8 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      WORKBUDDY_PROXY_CATALOG_TEST_URL: http://127.0.0.1:1/catalog
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -26,5 +28,6 @@ jobs:
       - run: python scripts/multi_routing.py --exe target/release/workbuddy-proxy
       - run: python scripts/multimodal_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/model_discovery.py --exe target/release/workbuddy-proxy
+      - run: python scripts/model_capabilities_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/connection_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/port_change.py --exe target/release/workbuddy-proxy

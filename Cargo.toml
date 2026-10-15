@@ -1,6 +1,6 @@
 [package]
 name = "workbuddy-proxy"
-version = "0.5.2"
+version = "0.5.3"
 edition = "2024"
 rust-version = "1.88"
 description = "A small native proxy for WorkBuddy, with bounded memory and streaming passthrough"

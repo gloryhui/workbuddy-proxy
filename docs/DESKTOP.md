@@ -30,7 +30,7 @@ Version 0.5.2 adds an opt-in **Launch at login** checkbox in the header. New con
 
 Provider and log operations use compact Kit ghost icon buttons with localized tooltips; the sidebar footer no longer applies a whole-toolbar hover background. Sync is the primary action and removal is shortened to Unsync. Local port, the live relay address and provider/model/request counts share one service card.
 
-Model dialog Enter uses the same validation/submission as Confirm; missing IDs keep the dialog open. The bottom status bar is removed; only a muted tray hint remains at the lower right, while failures appear beside settings. The model table has two columns, with the Kit trailing placeholder overridden to zero width; widths come from the actual table container.
+Model dialog Enter uses the same validation/submission as Confirm; missing IDs keep the dialog open. The bottom status bar is removed; only a muted tray hint remains at the lower right, while failures appear beside settings. The model table has display-name and model-ID columns plus a fixed-width edit-icon column. Clicking an edit icon opens that row's editor without changing selection; double-click and keyboard editing remain available. The Kit trailing placeholder is overridden to zero width; widths come from the actual table container.
 
 Log entries use single newlines and a 16px line height. New content scrolls to the bottom after layout; polls without new content preserve the viewport. The existing core keeps its latest 100 entries rather than growing memory without a bound.
 
@@ -38,10 +38,12 @@ Global header controls are ordered Launch at login, Check updates, Language. The
 
 ## Windows installation
 
-Use `workbuddy-proxy-0.5.2-windows-x64-setup.exe`. The wizard and uninstaller use Simplified Chinese on all Windows display languages. The directory selection page is always shown. Setup defaults to `%LOCALAPPDATA%\Programs\WorkBuddy Proxy`, installs for the current user, creates a Start Menu entry, and selects the desktop shortcut by default (users can uncheck it). Both shortcuts launch only `workbuddy-proxy.exe`.
+Use `workbuddy-proxy-0.5.3-windows-x64-setup.exe`. The wizard and uninstaller use Simplified Chinese on all Windows display languages. The directory selection page is always shown. Setup defaults to `%LOCALAPPDATA%\Programs\WorkBuddy Proxy`, installs for the current user, creates a Start Menu entry, and selects the desktop shortcut by default (users can uncheck it). Both shortcuts launch only `workbuddy-proxy.exe`.
 
 The settings helper is named `internal/workbuddy-settings.exe`; do not launch or move it separately. Only the main executable is exposed through installation shortcuts; internal binaries must remain with the installation.
 
 Close the old app using the tray Quit command before upgrading. The installer registers a stable uninstall entry. Uninstall removes installed program files and shortcuts, retaining `%APPDATA%\WorkBuddyProxy` configuration/logs. Installing to a protected directory requires adequate permissions; the per-user installer does not request elevation.
 
 Inno Setup 6.5+ is a Windows build dependency only; neither portable nor installed applications need it or Python/Rust. The Chinese translation is vendored from the upstream Inno Setup `Files/Languages/ChineseSimplified.isl` (retrieved 2026-10-14, translator attribution retained). No compiler language-pack fallback is allowed. CI checks the active Chinese language, translated task text, desktop shortcut creation without a `/TASKS` override, a custom directory containing Unicode and spaces, repeat installation, shortcut targets, installed binary hashes, application lifecycle and uninstall/config retention. Interactive wizard and physical Windows GPU acceptance remain separate checks.
+
+Automatic model capabilities are resolved by the core from provider metadata, the models.dev catalog and built-in fallback rules. Refresh runs in the background; forwarding never consults the catalog. The editor reads cached results asynchronously, displays the main source, and preserves manual overrides. See [MODEL-CAPABILITIES.md](MODEL-CAPABILITIES.md) for precedence, cache limits and offline behavior.

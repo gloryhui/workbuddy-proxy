@@ -193,7 +193,14 @@ impl Bridge {
     pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
         let mut cfg = self.config.lock().unwrap();
         let mut d = Document::read(path)?;
-        let connections = cfg.workbuddy_connections()?;
+        let mut connections = cfg.workbuddy_connections()?;
+        for c in &mut connections {
+            c.capabilities = Some(
+                self.catalog
+                    .resolve(&c.upstream, &c.model, c.capabilities.as_ref())
+                    .capabilities,
+            );
+        }
         let active: Vec<_> = connections
             .iter()
             .filter(|c| !c.api_key.is_empty())

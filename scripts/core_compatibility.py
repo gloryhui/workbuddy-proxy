@@ -122,7 +122,7 @@ def check(exe, version, protocol):
             assert running['port'] == port, 'Core replacement changed the configured port'
             with urllib.request.urlopen(f'http://127.0.0.1:{port}/health', timeout=3) as response:
                 health = json.load(response)
-            assert health['version'] == current_version and health['control_protocol'] == 3
+            assert health['version'] == current_version and health['control_protocol'] == 4
             saved = json.loads((root / 'config.json').read_text())
             assert saved['providers'][0]['models'][0]['model'] == 'fixture-model'
             assert saved['providers'][0]['api_key'] == 'fixture-upstream'
@@ -161,7 +161,7 @@ def main():
     args = parser.parse_args()
     exe = str(Path(args.exe).resolve())
     version = tomllib.loads(Path('Cargo.toml').read_text())['package']['version']
-    for legacy_version, protocol in [(version, None), (version, 0), (version, 1), (version, 2), ('0.3.0', 1)]:
+    for legacy_version, protocol in [(version, None), (version, 0), (version, 1), (version, 2), (version, 3), ('0.3.0', 1)]:
         check(exe, legacy_version, protocol)
     print('PASS: same-version cores without/currently incompatible protocol and older-version cores '
           'are gracefully replaced; supplier configuration and port survive; new log clear works')

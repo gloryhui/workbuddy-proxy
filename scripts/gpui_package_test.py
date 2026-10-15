@@ -90,7 +90,7 @@ def main():
         ui=wait(lambda:read('gpui.json'),'GPUI renderer/window did not start')
         assert core['pid']!=host.pid and ui['pid'] not in (core['pid'],host.pid)
         wait(lambda:read('frontend.json')['pid']==host.pid,'Tray singleton was not published')
-        with urllib.request.urlopen(f'http://127.0.0.1:{port}/health',timeout=3) as response:assert json.load(response)['control_protocol']==3
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/health',timeout=3) as response:assert json.load(response)['control_protocol']==4
         time.sleep(1)
         metrics={'platform':platform.platform(),'architecture':platform.machine(),'processes_with_settings':3,
                  'core_rss_mib':round(rss(core['pid'])/1024,2),'tray_rss_mib':round(rss(host.pid)/1024,2),'gpui_rss_mib':round(rss(ui['pid'])/1024,2),'model_count':64,

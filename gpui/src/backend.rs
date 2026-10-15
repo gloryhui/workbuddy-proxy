@@ -80,7 +80,9 @@ impl Backend {
                             break;
                         }
                     }
-                    let snapshot = if job.tag == "poll" {
+                    let snapshot = if job.tag == "metadata" {
+                        None
+                    } else if job.tag == "poll" {
                         result
                             .as_ref()
                             .ok()
@@ -90,7 +92,7 @@ impl Backend {
                             .ok()
                             .and_then(|s| serde_json::from_str(&s).ok())
                     };
-                    let config = if job.tag != "poll" {
+                    let config = if job.tag != "poll" && job.tag != "metadata" {
                         Config::load(&dir).ok()
                     } else {
                         None
