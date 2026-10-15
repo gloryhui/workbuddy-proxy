@@ -23,7 +23,8 @@
     "command": [
       "git",
       "diff",
-      "--check"
+      "--check",
+      "40ec917"
     ],
     "exit": 0,
     "output": ""

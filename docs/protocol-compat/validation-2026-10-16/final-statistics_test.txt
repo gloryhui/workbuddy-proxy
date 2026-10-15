@@ -1,40 +1,40 @@
   PASS control protocol is 6                          7
   PASS streaming response is byte-identical           944633d542871c62
   PASS non-streaming response is byte-identical       9a60de25ce11b33d
-  PASS upstream 429 status and body are preserved     
-  PASS observe mode forwards the original request bytes 
-  PASS request mode merges include_usage and keeps unknown fields 
-  PASS request mode never injects stream_options for stream=false 
-  PASS non-object stream_options is forwarded unchanged 
-  PASS connection test still reports success          
+  PASS upstream 429 status and body are preserved
+  PASS observe mode forwards the original request bytes
+  PASS request mode merges include_usage and keeps unknown fields
+  PASS request mode never injects stream_options for stream=false
+  PASS non-object stream_options is forwarded unchanged
+  PASS connection test still reports success
   PASS all scenarios were recorded                    13 rows
   PASS A01/A02 complete usage is counted once         {"total": 1100, "cache_read": 800}
-  PASS A03 missing usage stays null and the request still completes 
-  PASS A08 conflicting usage is invalid and excluded  
-  PASS A09 usage after an oversized event is still parsed 
-  PASS compressed responses never guess usage         
+  PASS A03 missing usage stays null and the request still completes
+  PASS A08 conflicting usage is invalid and excluded
+  PASS A09 usage after an oversized event is still parsed
+  PASS compressed responses never guess usage
   PASS A06 a truncated 200 stream is not a success    failed
-  PASS A04 client cancellation is recorded immediately 
-  PASS A06 upstream 429 keeps status and marks failure 
-  PASS non-streaming JSON usage is parsed             
-  PASS encoded SSE is not decoded implicitly          
-  PASS dashboard summary and buckets match the request list 
-  PASS model filter is exact                          
+  PASS A04 client cancellation is recorded immediately
+  PASS A06 upstream 429 keeps status and marks failure
+  PASS non-streaming JSON usage is parsed
+  PASS encoded SSE is not decoded implicitly
+  PASS dashboard summary and buckets match the request list
+  PASS model filter is exact
   PASS keyset pagination walks every row once and rejects stale cursors 37 rows in 2 pages
-  PASS request detail returns summary fields only     
-  PASS unknown request ids report stats_not_found     
-  PASS breakdown and filter options are served server-side 
-  PASS grouping pagination walks every group once and rejects stale cursors 
-  PASS grouping money obeys the frozen id watermark   
-  PASS connection tests are recorded but excluded by default 
-  PASS the local API key cannot read statistics       
-  PASS the current price can be added, edited and listed without interval rules 
-  PASS create is revision 0 only and delete takes the canonical price_id 
-  PASS a request detail returns its own price snapshot 
-  PASS an unconfigured model is an explicit zero amount 
-  PASS deleting the current price leaves recorded history readable 
-  PASS pausing collection only stops new requests     
+  PASS request detail returns summary fields only
+  PASS unknown request ids report stats_not_found
+  PASS breakdown and filter options are served server-side
+  PASS grouping pagination walks every group once and rejects stale cursors
+  PASS grouping money obeys the frozen id watermark
+  PASS connection tests are recorded but excluded by default
+  PASS the local API key cannot read statistics
+  PASS the current price can be added, edited and listed without interval rules
+  PASS create is revision 0 only and delete takes the canonical price_id
+  PASS a request detail returns its own price snapshot
+  PASS an unconfigured model is an explicit zero amount
+  PASS deleting the current price leaves recorded history readable
+  PASS pausing collection only stops new requests
   PASS clear deletes exactly the previewed rows and no more preview=39 deleted=39 kept=0
-  PASS crash recovery marks in-flight rows interrupted 
+  PASS crash recovery marks in-flight rows interrupted
   PASS empty buckets distinguish a proven zero from unknown covered=empty paused=unknown
 PASS: 39 statistics integration checks
