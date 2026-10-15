@@ -21,11 +21,15 @@ def main():
             payload.extend(png);offset+=len(png)
         (ASSETS/'app-icon.ico').write_bytes(directory+payload)
         shutil.copyfile(temp/'128.png',ASSETS/'icon-128.png')
+        # macOS shows full-bleed artwork larger than neighbouring app icons.
+        # Keep the master/UI/Windows artwork, and compile ICNS with 82% content.
+        padded=temp/'macos-padded.png'
+        subprocess.run(['swift',str(ROOT/'scripts/pad_macos_icon.swift'),str(ASSETS/'icon-source.png'),str(padded)],check=True)
         iconset=temp/'app-icon.iconset';iconset.mkdir()
         for size in [16,32,128,256,512]:
             for scale in [1,2]:
                 name=f'icon_{size}x{size}'+('@2x' if scale==2 else '')+'.png'
-                shutil.copyfile(temp/f'{size*scale}.png',iconset/name)
+                subprocess.run(['sips','-z',str(size*scale),str(size*scale),str(padded),'--out',str(iconset/name)],check=True,stdout=subprocess.DEVNULL)
         subprocess.run(['iconutil','-c','icns',str(iconset),'-o',str(ASSETS/'app-icon.icns')],check=True)
     print('Generated ICO, ICNS and native UI PNG from the current icon artwork')
 if __name__=='__main__':main()

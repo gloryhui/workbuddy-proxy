@@ -59,19 +59,19 @@
 
 ## 下载与安装
 
-### v0.5.0 正式版
+### v0.5.1 正式版
 
 | 系统 | 下载 | 体积 | 安装方式 |
 | --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-windows-x64-setup.exe) | 7.00 MiB | 中文向导，自选目录，默认创建桌面图标 |
-| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-arm64.dmg) | 13.67 MiB | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
-| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/workbuddy-proxy-0.5.0-macos-x64.dmg) | 14.45 MiB | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.1/workbuddy-proxy-0.5.1-windows-x64-setup.exe) | 见 Release | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.1/workbuddy-proxy-0.5.1-macos-arm64.dmg) | 见 Release | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.1/workbuddy-proxy-0.5.1-macos-x64.dmg) | 见 Release | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
 Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
 Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.0/SHA256SUMS.txt)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.1/SHA256SUMS.txt)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
@@ -305,7 +305,9 @@ flowchart LR
 <details>
 <summary><strong>同步 / 取消同步提示列表项已被修改？</strong></summary>
 
-程序会比对上次写入的条目，检测到其他操作的修改时拒绝覆盖。先检查当前 `models.json` 和旁边的 `models.json.workbuddy-proxy-时间戳.bak` 备份，再手动处理冲突。恢复操作只处理本工具管理的条目。
+同步会强制覆盖本工具管理的条目，手动修改、重复条目或重装后遗留的代理条目也会被更新；缺失条目会重新添加。取消同步会移除这些条目，条目已删除或重复取消也会成功，重装后无需先同步即可取消。已保存的历史原条目仍会恢复，其他手动添加的模型会保留。同标识但无法识别为本工具管理的条目仍会提示冲突，避免覆盖其他模型。
+
+新同步的条目带有管理标记；旧版遗留条目通过本地代理地址和代理 Key 特征识别。写入前仍会生成 `models.json.workbuddy-proxy-时间戳.bak` 备份。
 
 </details>
 

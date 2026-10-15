@@ -4,6 +4,7 @@ use crate::{
 };
 use serde_json::{Value, json};
 use std::{
+    collections::{HashMap, HashSet},
     fs,
     path::Path,
     time::{SystemTime, UNIX_EPOCH},
@@ -63,29 +64,74 @@ pub(crate) fn backup(path: &Path) -> Result<(), String> {
     }
     Ok(())
 }
-fn matching(d: &Document, id: &str) -> Result<Option<usize>, String> {
-    let indices: Vec<_> = d
-        .entries()
-        .unwrap()
-        .iter()
-        .enumerate()
-        .filter(|(_, v)| v.get("id").and_then(Value::as_str) == Some(id))
-        .map(|(i, _)| i)
-        .collect();
-    if indices.len() > 1 {
-        return Err("Duplicate model IDs; refusing to overwrite".into());
+fn route(value: &Value) -> Option<String> {
+    if let Some(id) = value
+        .pointer("/_workbuddyProxy/route")
+        .and_then(Value::as_str)
+    {
+        return Some(id.into());
     }
-    Ok(indices.first().copied())
+    let url = reqwest::Url::parse(value.get("url")?.as_str()?).ok()?;
+    url.path()
+        .trim_end_matches('/')
+        .strip_prefix("/r/")?
+        .strip_suffix("/v1")
+        .map(str::to_owned)
 }
-fn owned(current: &Value, record: &Installation, address: &str, key: &str) -> bool {
-    if let Some(expected) = &record.expected {
-        return current == expected;
+fn installation<'a>(current: &Value, cfg: &'a config::Config) -> Option<&'a Installation> {
+    let id = current.get("id").and_then(Value::as_str);
+    let current_route = route(current);
+    cfg.installed.iter().find(|record| {
+        id == Some(record.id.as_str())
+            || (managed_signature(current, &cfg.local_key)
+                && current_route.is_some()
+                && record.expected.as_ref().and_then(route) == current_route)
+    })
+}
+// The marker survives reinstalling the proxy and editing the WorkBuddy entry.
+// Older versions wrote no marker: recognize their loopback endpoint plus the
+// generated 48-hex local key (or this installation's key), never the alias alone.
+fn managed_signature(current: &Value, local_key: &str) -> bool {
+    if current
+        .pointer("/_workbuddyProxy/managed")
+        .and_then(Value::as_bool)
+        == Some(true)
+    {
+        return true;
     }
-    current.get("url").and_then(Value::as_str) == Some(address)
-        && current.get("apiKey").and_then(Value::as_str) == Some(key)
+    let Some(key) = current.get("apiKey").and_then(Value::as_str) else {
+        return false;
+    };
+    if current.get("vendor").and_then(Value::as_str) != Some("Custom")
+        || !(key == local_key || (key.len() == 48 && key.bytes().all(|c| c.is_ascii_hexdigit())))
+    {
+        return false;
+    }
+    let Some(url) = current
+        .get("url")
+        .and_then(Value::as_str)
+        .and_then(|s| reqwest::Url::parse(s).ok())
+    else {
+        return false;
+    };
+    let path = url.path().trim_end_matches('/');
+    url.scheme() == "http"
+        && matches!(url.host_str(), Some("127.0.0.1" | "localhost" | "[::1]"))
+        && url.username().is_empty()
+        && url.password().is_none()
+        && url.query().is_none()
+        && url.fragment().is_none()
+        && (path == "/v1"
+            || path
+                .strip_prefix("/r/")
+                .and_then(|p| p.strip_suffix("/v1"))
+                .is_some_and(|id| !id.is_empty() && !id.contains('/')))
+}
+fn managed(current: &Value, cfg: &config::Config) -> bool {
+    installation(current, cfg).is_some() || managed_signature(current, &cfg.local_key)
 }
 fn entry(c: &config::Connection, url: &str, key: &str) -> Value {
-    let mut e = json!({"id":c.alias,"name":c.label(),"vendor":"Custom","url":url,"apiKey":key,"supportsToolCall":true,"supportsImages":false,"useCustomProtocol":false});
+    let mut e = json!({"id":c.alias,"name":c.label(),"vendor":"Custom","url":url,"apiKey":key,"supportsToolCall":true,"supportsImages":false,"useCustomProtocol":false,"_workbuddyProxy":{"managed":true,"route":c.id}});
     if matches!(
         c.model.as_str(),
         "deepseek-v4.1-flash" | "deepseek-v4-pro" | "deepseek-v4-flash"
@@ -156,53 +202,59 @@ impl Bridge {
             .iter()
             .filter(|c| !c.api_key.is_empty())
             .collect();
-        if active.is_empty() && cfg.installed.is_empty() {
+        if active.is_empty()
+            && cfg.installed.is_empty()
+            && !d.entries().unwrap().iter().any(|e| managed(e, &cfg))
+        {
             return Err("Save at least one connection first / 请先保存至少一个连接".into());
         }
-        // Preflight the complete batch before touching any file or model.
-        for record in &cfg.installed {
-            if let Some(i) = matching(&d, &record.id)?
-                && !owned(
-                    &d.entries().unwrap()[i],
-                    record,
-                    &self.address(),
-                    &cfg.local_key,
-                )
-            {
-                return Err("A proxy model was edited elsewhere; restore from backup / 列表项已被其他操作修改，请使用备份处理".into());
-            }
-        }
-        let mut next = cfg.clone();
-        next.installed.clear();
-        let mut records = std::collections::HashMap::new();
-        for record in &cfg.installed {
-            if let Some(id) = cfg.installed_connection_id(record)
-                && records.insert(id, record).is_some()
-            {
-                return Err("Multiple installed entries belong to the same route".into());
-            }
-        }
-        // Reject user-owned collisions before changing any document entry.
+        // An unrelated entry with the same display ID is still user-owned.
+        // Managed entries are authoritative even if edited, duplicated or left
+        // behind by an older installation with a different local key/route.
         for c in &active {
-            if matching(&d, &c.alias)?.is_some() && !cfg.installed.iter().any(|r| r.id == c.alias) {
+            if d.entries()
+                .unwrap()
+                .iter()
+                .any(|e| e.get("id").and_then(Value::as_str) == Some(&c.alias) && !managed(e, &cfg))
+            {
                 return Err(
                     "Model alias already exists in WorkBuddy; refusing to overwrite".into(),
                 );
             }
         }
-        // Replace managed entries in place, matching by route rather than the
-        // changing display ID. Preserve their original restore records.
+        let mut next = cfg.clone();
+        next.installed.clear();
+        let mut records = HashMap::new();
+        for record in &cfg.installed {
+            if let Some(id) = cfg.installed_connection_id(record) {
+                records.entry(id).or_insert(record);
+            }
+        }
+        let mut emitted = HashSet::new();
+        let mut restored = HashSet::new();
         let mut entries = Vec::new();
         for current in std::mem::take(d.entries_mut()) {
-            let old = cfg
-                .installed
-                .iter()
-                .find(|r| current.get("id").and_then(Value::as_str) == Some(r.id.as_str()));
-            if let Some(record) = old {
-                let id = cfg.installed_connection_id(record);
-                if let Some(c) = active.iter().find(|c| id.as_deref() == Some(c.id.as_str())) {
-                    entries.push(entry(c, &self.connection_address(&c.id), &cfg.local_key));
-                } else if let Some(previous) = &record.previous {
+            let record = installation(&current, &cfg);
+            if record.is_some() || managed_signature(&current, &cfg.local_key) {
+                let id = record
+                    .and_then(|r| cfg.installed_connection_id(r))
+                    .or_else(|| route(&current));
+                let connection = active
+                    .iter()
+                    .find(|c| id.as_deref() == Some(c.id.as_str()))
+                    .or_else(|| {
+                        active
+                            .iter()
+                            .find(|c| current.get("id").and_then(Value::as_str) == Some(&c.alias))
+                    });
+                if let Some(c) = connection {
+                    if emitted.insert(c.id.clone()) {
+                        entries.push(entry(c, &self.connection_address(&c.id), &cfg.local_key));
+                    }
+                } else if let Some(record) = record
+                    && let Some(previous) = &record.previous
+                    && restored.insert(record.id.clone())
+                {
                     entries.push(previous.clone());
                 }
             } else {
@@ -211,19 +263,26 @@ impl Bridge {
         }
         *d.entries_mut() = entries;
         for c in &active {
-            let old = records.get(&c.id);
             let e = entry(c, &self.connection_address(&c.id), &cfg.local_key);
             next.installed.push(Installation {
                 id: c.alias.clone(),
-                previous: old.and_then(|r| r.previous.clone()),
+                previous: records.get(&c.id).and_then(|r| r.previous.clone()),
                 expected: Some(e.clone()),
             });
-            if let Some(i) = matching(&d, &c.alias)? {
-                if d.entries().unwrap()[i] != e {
-                    return Err("Model alias conflicts with a restored WorkBuddy entry".into());
-                }
-            } else {
+            if !emitted.contains(&c.id) {
                 d.entries_mut().push(e);
+            }
+        }
+        // Restoring an original entry must not create an ambiguous active ID.
+        for c in &active {
+            if d.entries()
+                .unwrap()
+                .iter()
+                .filter(|e| e.get("id").and_then(Value::as_str) == Some(&c.alias))
+                .count()
+                > 1
+            {
+                return Err("Model alias conflicts with a restored WorkBuddy entry".into());
             }
         }
         config::make_private_dir(path.parent().ok_or("Invalid configuration path")?)?;
@@ -239,32 +298,25 @@ impl Bridge {
     }
     pub fn restore_workbuddy(&self, path: &Path) -> Result<(), String> {
         let mut cfg = self.config.lock().unwrap();
-        if cfg.installed.is_empty() {
-            return Err("No WorkBuddy entries to restore / 无需恢复".into());
-        }
         let mut d = Document::read(path)?;
-        for record in &cfg.installed {
-            let i = matching(&d, &record.id)?
-                .ok_or("Model was removed; restore manually from backup")?;
-            if !owned(
-                &d.entries().unwrap()[i],
-                record,
-                &self.address(),
-                &cfg.local_key,
-            ) {
-                return Err("This model has been edited elsewhere; refusing to overwrite / 列表项已被其他操作修改".into());
+        let mut entries = Vec::new();
+        let mut restored = HashSet::new();
+        for current in std::mem::take(d.entries_mut()) {
+            if let Some(record) = installation(&current, &cfg) {
+                if let Some(previous) = &record.previous
+                    && restored.insert(record.id.clone())
+                {
+                    entries.push(previous.clone());
+                }
+            } else if !managed_signature(&current, &cfg.local_key) {
+                entries.push(current);
             }
         }
-        for record in &cfg.installed {
-            let i = matching(&d, &record.id)?.unwrap();
-            if let Some(previous) = &record.previous {
-                d.entries_mut()[i] = previous.clone();
-            } else {
-                d.entries_mut().remove(i);
-            }
+        *d.entries_mut() = entries;
+        if path.exists() {
+            backup(path)?;
+            config::write_json(path, &d.root)?;
         }
-        backup(path)?;
-        config::write_json(path, &d.root)?;
         let mut next = cfg.clone();
         next.installed.clear();
         config::write_json(&self.dir.join("config.json"), &next)?;
@@ -349,7 +401,8 @@ mod tests {
         cfg.providers[0].set_models("same", "default").unwrap();
         cfg.providers[0].models[0].alias = "same".into();
         let c = cfg.connections().remove(0);
-        let old = entry(&c, "http://127.0.0.1:18080/v1", &cfg.local_key);
+        let mut old = entry(&c, "http://127.0.0.1:18080/v1", &cfg.local_key);
+        old.as_object_mut().unwrap().remove("_workbuddyProxy");
         cfg.installed.push(Installation {
             id: c.alias,
             previous: None,
@@ -414,10 +467,137 @@ mod tests {
         let mut d = Document::read(&p).unwrap();
         d.entries_mut()[1]["name"] = json!("user edited");
         config::write_json(&p, &d.root).unwrap();
-        let bytes = fs::read(&p).unwrap();
-        assert!(a.configure_workbuddy(&p).is_err());
-        assert!(a.restore_workbuddy(&p).is_err());
-        assert_eq!(fs::read(&p).unwrap(), bytes);
+        a.configure_workbuddy(&p).unwrap();
+        let mut d = Document::read(&p).unwrap();
+        assert_ne!(d.entries().unwrap()[1]["name"], "user edited");
+        d.entries_mut()[1]["name"] = json!("edited again");
+        config::write_json(&p, &d.root).unwrap();
+        a.restore_workbuddy(&p).unwrap();
+        assert_eq!(Document::read(&p).unwrap().root, old);
+        a.restore_workbuddy(&p).unwrap();
+        assert_eq!(Document::read(&p).unwrap().root, old);
+    }
+    fn configured() -> config::Config {
+        let mut cfg = config::Config::default();
+        cfg.providers[0].name = "supplier".into();
+        cfg.providers[0].upstream = "https://example.com/v1".into();
+        cfg.providers[0].api_key = "fixture-key".into();
+        cfg.providers[0].set_models("model", "default").unwrap();
+        cfg
+    }
+    #[test]
+    fn edited_duplicate_and_missing_entries_are_authoritative() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("models.json");
+        let bridge = Bridge::new(configured(), dir.path().into()).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        let expected = Document::read(&path).unwrap().entries().unwrap()[0].clone();
+        let mut edited = expected.clone();
+        // Older entries without a marker are still owned by their recorded ID.
+        edited.as_object_mut().unwrap().remove("_workbuddyProxy");
+        edited["name"] = json!("manual name");
+        edited["url"] = json!("https://edited.example/v1");
+        edited["apiKey"] = json!("manual-key");
+        let unrelated = json!({"id":"other","name":"keep","extra":7});
+        config::write_json(&path, &json!([unrelated, edited, edited])).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(
+            Document::read(&path).unwrap().root,
+            json!([unrelated, expected])
+        );
+        config::write_json(&path, &json!([unrelated])).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(
+            Document::read(&path).unwrap().root,
+            json!([unrelated, expected])
+        );
+        config::write_json(&path, &json!([unrelated, edited, edited])).unwrap();
+        bridge.restore_workbuddy(&path).unwrap();
+        assert_eq!(Document::read(&path).unwrap().root, json!([unrelated]));
+        bridge.configure_workbuddy(&path).unwrap();
+        config::write_json(&path, &json!([unrelated])).unwrap();
+        bridge.restore_workbuddy(&path).unwrap();
+        assert_eq!(Document::read(&path).unwrap().root, json!([unrelated]));
+        assert!(bridge.config.lock().unwrap().installed.is_empty());
+        bridge.configure_workbuddy(&path).unwrap();
+        fs::remove_file(&path).unwrap();
+        bridge.restore_workbuddy(&path).unwrap();
+        bridge.restore_workbuddy(&path).unwrap();
+        assert!(!path.exists());
+        assert!(bridge.config.lock().unwrap().installed.is_empty());
+    }
+    #[test]
+    fn reinstall_adopts_legacy_entries_and_removes_stale_routes() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("models.json");
+        let old = configured();
+        let c = old.workbuddy_connections().unwrap().remove(0);
+        let mut legacy = entry(
+            &c,
+            &format!("http://127.0.0.1:18080/r/{}/v1", c.id),
+            &old.local_key,
+        );
+        legacy.as_object_mut().unwrap().remove("_workbuddyProxy");
+        legacy["name"] = json!("manual legacy name");
+        let mut stale = legacy.clone();
+        stale["id"] = json!("deleted-supplier/old-model");
+        stale["url"] = json!("http://localhost:19090/v1");
+        let unrelated = json!({"id":"manual","vendor":"Custom","url":"http://127.0.0.1:18080/v1","apiKey":"user-key"});
+        let cfg = configured();
+        assert_ne!(cfg.local_key, old.local_key);
+        assert_ne!(cfg.connections()[0].id, c.id);
+        let bridge = Bridge::new(cfg, dir.path().into()).unwrap();
+        config::write_json(
+            &path,
+            &json!({"extra":true,"models":[unrelated,legacy,legacy,stale]}),
+        )
+        .unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        let d = Document::read(&path).unwrap();
+        assert_eq!(d.root["extra"], true);
+        assert_eq!(d.entries().unwrap().len(), 2);
+        assert_eq!(d.entries().unwrap()[0], unrelated);
+        assert_eq!(d.entries().unwrap()[1]["id"], "supplier/model");
+        assert_eq!(
+            d.entries().unwrap()[1]["apiKey"],
+            bridge.config.lock().unwrap().local_key
+        );
+        let bytes = fs::read(&path).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(fs::read(&path).unwrap(), bytes);
+        // Cancel directly after another reinstall, with no installation history.
+        let fresh = Bridge::new(configured(), dir.path().into()).unwrap();
+        fresh.restore_workbuddy(&path).unwrap();
+        assert_eq!(
+            Document::read(&path).unwrap().root,
+            json!({"extra":true,"models":[unrelated]})
+        );
+        config::write_json(&path, &json!([unrelated, legacy, stale])).unwrap();
+        fresh.restore_workbuddy(&path).unwrap();
+        assert_eq!(Document::read(&path).unwrap().root, json!([unrelated]));
+    }
+    #[test]
+    fn marker_survives_reinstall_and_edits_to_id_url_and_key() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("models.json");
+        let old = Bridge::new(configured(), dir.path().into()).unwrap();
+        old.configure_workbuddy(&path).unwrap();
+        let mut edited = Document::read(&path).unwrap().entries().unwrap()[0].clone();
+        edited["id"] = json!("manually-renamed");
+        edited["url"] = json!("https://edited.example/v1");
+        edited["apiKey"] = json!("changed-key");
+        edited["supportsToolCall"] = json!(false);
+        let bridge = Bridge::new(configured(), dir.path().into()).unwrap();
+        config::write_json(&path, &json!([edited])).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(Document::read(&path).unwrap().entries().unwrap().len(), 1);
+        assert_eq!(
+            Document::read(&path).unwrap().entries().unwrap()[0]["id"],
+            "supplier/model"
+        );
+        config::write_json(&path, &json!([edited, edited])).unwrap();
+        bridge.restore_workbuddy(&path).unwrap();
+        assert!(Document::read(&path).unwrap().entries().unwrap().is_empty());
     }
     #[test]
     fn invalid_config_is_untouched() {

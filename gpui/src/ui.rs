@@ -1209,7 +1209,7 @@ impl Proxy {
                                 "移除代理同步到 WorkBuddy 的模型",
                                 "Remove proxy models synced to WorkBuddy",
                             ))
-                            .disabled(self.busy || self.cfg.installed.is_empty())
+                            .disabled(self.busy)
                             .on_click(cx.listener(|this, _, _, cx| {
                                 this.send("restore", vec![json!({"command":"restore"})], cx)
                             })),

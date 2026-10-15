@@ -132,6 +132,20 @@ def main():
             action({'command':'save','provider_id':provider['id'],'models':'deepseek-v4.1-flash | 账号 0\nother-model | 账号 2','reasoning_effort':'keep'})
             action({'command':'install'});remaining=json.loads(models.read_text(encoding='utf-8'));assert len(remaining)==6
             assert remaining[1]['id']==readable[connections[0]['id']], 'Synced suffix must remain fixed after duplicate deletion'
+            before_repair=json.dumps(remaining)
+            # Sync overrides edits, collapses managed duplicates and fills missing entries.
+            remaining[1].update(name='manual edit', url='https://edited.example/v1', apiKey='edited-key')
+            remaining.pop(2);remaining.append(dict(remaining[2]))
+            models.write_text(json.dumps(remaining),encoding='utf-8')
+            action({'command':'install'})
+            repaired=json.loads(models.read_text(encoding='utf-8'))
+            assert len(repaired)==6 and repaired[0]==unrelated
+            assert {m['id']:m for m in repaired}=={m['id']:m for m in json.loads(before_repair)}
+            remaining=repaired
+            remaining[1].update(name='edited before unsync',apiKey='edited-key')
+            remaining.pop(2);remaining.append(dict(remaining[1]))
+            models.write_text(json.dumps(remaining),encoding='utf-8')
+            action({'command':'restore'});assert json.loads(models.read_text(encoding='utf-8'))==[unrelated]
             action({'command':'restore'});assert json.loads(models.read_text(encoding='utf-8'))==[unrelated]
             # A deleted/unknown/mismatched route must never silently select another upstream.
             for path,model in [('/v1/chat/completions','deepseek-v4.1-flash'),('/v1/chat/completions','unknown'),('/r/route-1/v1/chat/completions',connections[1]['alias']),('/r/route-0/v1/chat/completions','other-model')]:
@@ -139,7 +153,7 @@ def main():
                 try:urllib.request.urlopen(req);raise AssertionError('Invalid routing was accepted')
                 except urllib.error.HTTPError as e:assert e.code==400;e.read()
             assert any(effort=='high' and thinking=={'type':'enabled'} for _,_,effort,thinking in servers[0].seen)
-            print('PASS: 6 connection combinations, readable/legacy IDs, fixed duplicate suffixes, transparent model rewrite, scoped isolation, 6 tests, discovery, in-place migration, idempotent sync, supplier rename, delete/restore, no fallback')
+            print('PASS: 6 connection combinations, readable/legacy IDs, fixed duplicate suffixes, transparent model rewrite, scoped isolation, 6 tests, discovery, in-place migration, idempotent sync, forced sync/unsync with edits/duplicates/missing entries, repeated unsync, supplier rename, delete/restore, no fallback')
         finally:stop(process,port,folder,log)
     for server in servers:server.shutdown();server.server_close()
 if __name__=='__main__':main()
