@@ -1012,21 +1012,30 @@ def _rows_ready(directory, port, start_ms, expectations):
 def crash_recovery(exe, directory, port, checks):
     """Kills the core while a request is in flight, then restarts it."""
     process, log, _health = start_core(exe, directory, port)
+    connection = None
     try:
+        # HTTP readiness precedes the asynchronous SQLite migration. Do not
+        # admit the crash fixture until collection is actually ready.
+        wait_for(lambda: stats(directory, port, 'stats_health')['state'] == 'ready',
+                 'statistics was not ready before the crash request')
         payload = {'model': 'wbp-slow', 'stream': True, 'messages': [{'role': 'user', 'content': 'ping'}]}
         connection = http.client.HTTPConnection('127.0.0.1', port, timeout=20)
         connection.request('POST', '/v1/chat/completions', json.dumps(payload).encode(),
                            {'Authorization': 'Bearer ' + LOCAL_KEY, 'Content-Type': 'application/json'})
         response = connection.getresponse()
         response.read(16)
-        wait_for(lambda: stats(directory, port, 'stats_requests',
-                               filter=window(now_ms() - 3_600_000), page_size=20)['total_rows'] >= 1,
-                 'in-flight row was not recorded')
+        def in_flight():
+            page = stats(directory, port, 'stats_requests',
+                         filter=window(now_ms() - 3_600_000), page_size=20)
+            row = find_row(page['items'], 'model-slow')
+            return row and row['outcome'] == 'in_flight'
+        wait_for(in_flight, 'in-flight row was not recorded')
         process.kill()
         process.wait()
     finally:
-        connection.close()
-        log.close()
+        if connection is not None:
+            connection.close()
+        stop_core(process, port, directory, log, expect_clean=False)
     process, log, health = start_core(exe, directory, port)
     try:
         assert health['control_protocol'] == 8, health
@@ -1154,7 +1163,7 @@ def main():
         process, log, health = start_core(args.exe, folder, port)
         try:
             assert health['control_protocol'] == 8, health
-            checks.ok('control protocol is 6', str(health['control_protocol']))
+            checks.ok('control protocol is 8', str(health['control_protocol']))
             run(folder, port, upstream.server_port, start_ms, checks)
         except AssertionError:
             text = (Path(folder) / 'process.log').read_text(encoding='utf-8', errors='replace')
