@@ -11,6 +11,7 @@ import time
 import urllib.error
 import urllib.request
 from smoke import free_port
+from gpui_package_test import running as process_running
 
 LABEL = 'io.github.gloryhui.workbuddy-proxy.autostart'
 RUN = r'Software\Microsoft\Windows\CurrentVersion\Run'
@@ -132,7 +133,8 @@ def main():
             # Quitting/reopening must retain the explicit opt-in without opening settings.
             (data / 'gpui-exit-host').write_text('true')
             host.wait(timeout=10)
-            wait(lambda: not (data / 'instance.json').exists(), 'Core did not stop')
+            wait(lambda: not (data / 'instance.json').exists() and not process_running(instance['pid']),
+                 'Core did not finish shutdown')
             host = subprocess.Popen([*command, '--autostart'], env=env,
                                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             wait(lambda: read('frontend.json')['pid'] == host.pid, 'Quiet restart failed')
@@ -164,6 +166,11 @@ def main():
                         response.read()
                 except OSError:
                     pass
+            if instance:
+                # A stop response (or tray exit) is not proof that the separate
+                # core has released its SQLite handles, especially on Windows.
+                wait(lambda: not (data / 'instance.json').exists()
+                     and not process_running(instance['pid']), 'Core still owns the test profile')
             if os.name == 'nt':
                 try:
                     with winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN, 0, winreg.KEY_SET_VALUE) as key:

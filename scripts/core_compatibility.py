@@ -11,6 +11,7 @@ import threading
 import time
 import tomllib
 import urllib.request
+from gpui_package_test import running as process_running
 
 
 def check(exe, version, protocol):
@@ -163,9 +164,9 @@ def check(exe, version, protocol):
                 # The host requests core shutdown before it exits. The socket
                 # closes before the final instance-file cleanup completes.
                 deadline = time.monotonic() + 10
-                while instance_path.exists() and time.monotonic() < deadline:
+                while (instance_path.exists() or process_running(running['pid'])) and time.monotonic() < deadline:
                     time.sleep(.025)
-                assert not instance_path.exists(), 'Replaced core did not finish shutdown'
+                assert not instance_path.exists() and not process_running(running['pid']), 'Replaced core did not finish shutdown'
             stopped.set()
             thread.join(timeout=2)
 
