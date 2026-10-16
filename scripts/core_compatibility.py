@@ -149,19 +149,23 @@ def check(exe, version, protocol):
                         running = candidate
                 except (OSError, ValueError):
                     pass
-            if running:
-                request = urllib.request.Request(
-                    f'http://127.0.0.1:{running["port"]}/_control/stop', data=b'',
-                    headers={'Authorization': 'Bearer ' + running['management_key']})
-                with urllib.request.urlopen(request, timeout=3) as response:
-                    response.read()
-                for _ in range(100):
-                    if not instance_path.exists():
-                        break
-                    time.sleep(.025)
+            # Let the tray stop and reap its settings child before deleting the
+            # profile. Terminating only the tray races a late settings draft write.
             if process.poll() is None:
-                process.terminate()
-                process.wait(timeout=5)
+                (root / 'gpui-exit-host').write_text('true')
+                try:
+                    process.wait(timeout=15)
+                except subprocess.TimeoutExpired:
+                    process.terminate()
+                    process.wait(timeout=5)
+                    raise AssertionError('Native controller did not quit cleanly')
+            if running:
+                # The host requests core shutdown before it exits. The socket
+                # closes before the final instance-file cleanup completes.
+                deadline = time.monotonic() + 10
+                while instance_path.exists() and time.monotonic() < deadline:
+                    time.sleep(.025)
+                assert not instance_path.exists(), 'Replaced core did not finish shutdown'
             stopped.set()
             thread.join(timeout=2)
 
