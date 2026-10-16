@@ -150,11 +150,12 @@ pub fn error(code: &str, detail: &str) -> String {
 }
 
 macro_rules! stats_enum {
-    ($name:ident { $($variant:ident => $text:literal),+ $(,)? }) => {
+    ($(#[$enum_attr:meta])* $name:ident { $($(#[$variant_attr:meta])* $variant:ident => $text:literal),+ $(,)? }) => {
+        $(#[$enum_attr])*
         #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
         #[serde(rename_all = "snake_case")]
         pub enum $name {
-            $($variant),+
+            $($(#[$variant_attr])* $variant),+
         }
         impl $name {
             /// Every variant, in declaration order (used by UI option lists).
@@ -237,8 +238,9 @@ stats_enum!(InputBreakdown {
     Disjoint => "disjoint",
 });
 
-stats_enum!(UsageMode {
+stats_enum!(#[derive(Default)] UsageMode {
     Observe => "observe",
+    #[default]
     Request => "request",
 });
 
@@ -812,12 +814,24 @@ pub struct ProviderSettingsDto {
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PriceListDto {
+    #[serde(default)]
+    pub catalog_sync: Option<PriceSyncDto>,
     pub api_version: u32,
     pub request_tag: String,
     pub generated_at_ms: i64,
     pub generation: String,
     pub items: Vec<PriceRuleDto>,
     pub next_rule_id: Option<String>,
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+pub struct PriceSyncDto {
+    pub last_success_day: Option<String>,
+    pub updated_at_ms: Option<i64>,
+    pub updated_count: i64,
+    pub unmatched_count: i64,
+    pub catalog_count: i64,
+    pub targets_key: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

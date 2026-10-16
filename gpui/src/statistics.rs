@@ -241,7 +241,7 @@ pub struct Statistics {
     loading_dashboard: bool,
     loading_rows: bool,
     error: Option<String>,
-    last_updated: Option<Instant>,
+    last_updated: Option<String>,
     currency: Currency,
     visible_series: BTreeSet<SeriesKind>,
     details: Option<RequestDetailDto>,
@@ -250,6 +250,8 @@ pub struct Statistics {
     settings: Option<SettingsDto>,
     provider_modes: BTreeMap<String, ProviderSettingsDto>,
     prices: Vec<PriceRuleDto>,
+    price_sync: Option<crate::stats_dto::PriceSyncDto>,
+    price_sync_pending: bool,
     price_open: bool,
     /// True while the dialog is being closed because a save was confirmed.
     price_closing: bool,
@@ -582,6 +584,8 @@ impl Statistics {
             settings: None,
             provider_modes: BTreeMap::new(),
             prices: Vec::new(),
+            price_sync: None,
+            price_sync_pending: false,
             price_open: false,
             price_closing: false,
             price_draft: crate::stats_controller::PriceDraft::blank(String::new(), 0),
@@ -1362,6 +1366,10 @@ impl Statistics {
                     serde_json::from_value::<crate::stats_dto::PriceListDto>(value.clone())
                         .map(|_| ())
                 }
+                JobKind::PriceSync => serde_json::from_value::<crate::stats_dto::PriceSyncDto>(
+                    value["catalog_sync"].clone(),
+                )
+                .map(|_| ()),
                 JobKind::Detail => {
                     serde_json::from_value::<RequestDetailDto>(value.clone()).map(|_| ())
                 }
@@ -1377,6 +1385,9 @@ impl Statistics {
         });
         match result {
             Err(failure) => {
+                if kind == JobKind::PriceSync {
+                    self.price_sync_pending = false;
+                }
                 if kind == JobKind::Prices {
                     self.prices_loading = false;
                 }
@@ -1440,7 +1451,7 @@ impl Statistics {
                 self.filter_key = dashboard.filter_key.clone();
                 self.dashboard = Some(dashboard);
                 self.error = None;
-                self.last_updated = Some(Instant::now());
+                self.last_updated = Some(chrono::Local::now().format("%H:%M").to_string());
             }
             return;
         }
@@ -1467,7 +1478,7 @@ impl Statistics {
                             table.refresh(cx);
                         });
                         self.error = None;
-                        self.last_updated = Some(Instant::now());
+                        self.last_updated = Some(chrono::Local::now().format("%H:%M").to_string());
                     }
                 }
                 _ => {
@@ -1488,7 +1499,7 @@ impl Statistics {
                             table.refresh(cx);
                         });
                         self.error = None;
-                        self.last_updated = Some(Instant::now());
+                        self.last_updated = Some(chrono::Local::now().format("%H:%M").to_string());
                     }
                 }
             }
@@ -1587,6 +1598,17 @@ impl Statistics {
             self.request_prices(cx);
             return;
         }
+        if kind == JobKind::PriceSync {
+            self.price_sync_pending = false;
+            self.price_sync = value
+                .get("catalog_sync")
+                .cloned()
+                .and_then(|value| serde_json::from_value(value).ok());
+            self.error = None;
+            self.request_prices(cx);
+            cx.notify();
+            return;
+        }
         if kind == JobKind::PriceSave {
             // Only the reply for the draft that is still open may close it; a
             // late reply for a replaced draft is ignored entirely.
@@ -1608,6 +1630,7 @@ impl Statistics {
         if kind == JobKind::Prices {
             self.prices_loading = false;
             if let Ok(list) = serde_json::from_value::<crate::stats_dto::PriceListDto>(value) {
+                self.price_sync = list.catalog_sync;
                 self.prices_cursors.finish_page(list.next_rule_id);
                 self.prices = list.items;
             }
@@ -1999,12 +2022,8 @@ impl Statistics {
                         name if name.is_empty() => self.t("本机时区", "Local timezone").to_owned(),
                         name => name.clone(),
                     }))
-                    .child(Tag::secondary().small().child(match self.last_updated {
-                        Some(at) => format!(
-                            "{} {:.1}s",
-                            self.t("刷新于", "updated"),
-                            at.elapsed().as_secs_f32()
-                        ),
+                    .child(Tag::secondary().small().child(match &self.last_updated {
+                        Some(at) => format!("{}: {at}", self.t("更新于", "Updated at")),
                         None => self.t("尚未刷新", "not refreshed").to_owned(),
                     }))
                     .child(if healthy {
@@ -3037,15 +3056,58 @@ impl Statistics {
                         .ghost()
                         .label(self.t("刷新价格", "Reload prices"))
                         .on_click(cx.listener(|this, _, _, cx| this.request_prices(cx))),
+                )
+                .child(
+                    Button::new("price-sync-models-dev")
+                        .small()
+                        .label(if self.price_sync_pending {
+                            self.t("正在更新价格…", "Updating prices…")
+                        } else {
+                            self.t("手动更新价格", "Update prices now")
+                        })
+                        .disabled(self.price_sync_pending)
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            let tag = format!("price-sync-{}", this.generation);
+                            let request = crate::stats_backend::command(
+                                "stats_prices_update",
+                                &tag,
+                                json!({}),
+                            );
+                            match this.backend.submit_write(JobKind::PriceSync, tag, request) {
+                                Ok(_) => this.price_sync_pending = true,
+                                Err(error) => this.error = Some(error),
+                            }
+                            cx.notify();
+                        })),
                 ),
         );
+        body = body.child(Label::new(self.t(
+            "每日从 models.dev 更新；同模型价格直接覆盖手工调整，历史调用金额保持不变。",
+            "Daily models.dev updates overwrite matching manual prices; recorded costs stay unchanged.",
+        )).text_size(px(11.)).text_color(rgb(MUTED)));
+        if let Some(sync) = &self.price_sync
+            && let Some(day) = &sync.last_success_day
+        {
+            body = body.child(
+                Label::new(format!(
+                    "{} {day} · {} {} · {} {}",
+                    self.t("价格更新于", "Prices updated"),
+                    self.t("更新", "Updated"),
+                    sync.updated_count,
+                    self.t("未匹配", "Unmatched"),
+                    sync.unmatched_count,
+                ))
+                .text_size(px(11.))
+                .text_color(rgb(MUTED)),
+            );
+        }
         if self.prices_loading {
             body = body.child(Label::new(self.t("加载中…", "Loading…")).text_size(px(11.)));
         } else if self.prices.is_empty() {
             body = body.child(
                 Label::new(self.t(
-                    "还没有价格规则。缺少模型价格时按默认币种记录0元，历史快照不受以后改价影响。",
-                    "No price rules yet. Missing model prices record zero in the default currency.",
+                    "没有匹配的价格规则，可手动更新或新建。未匹配模型暂按默认币种记录0元。",
+                    "No matching price rules. Update prices or add a rule; unmatched models default to zero.",
                 ))
                 .text_size(px(11.))
                 .text_color(rgb(MUTED)),
@@ -3431,7 +3493,7 @@ impl Statistics {
                             let settings = self.provider_modes.get(&id).cloned();
                             let mode = settings
                                 .as_ref()
-                                .map_or(UsageMode::Observe, |settings| settings.usage_mode);
+                                .map_or(UsageMode::default(), |settings| settings.usage_mode);
                             let revision =
                                 settings.as_ref().map_or(0, |settings| settings.revision);
                             let label = if name.is_empty() {

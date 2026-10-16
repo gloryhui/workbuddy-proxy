@@ -143,6 +143,13 @@ enum ControlKind {
         limit: i64,
     },
     PriceSave(Box<PriceSaveRequest>),
+    PriceCatalogStatus,
+    PriceCatalog {
+        prices: Option<crate::price_catalog::Prices>,
+        targets: Vec<crate::price_catalog::Target>,
+        day: String,
+        targets_key: String,
+    },
     /// Removes one current price. Recorded history keeps its own snapshot.
     PriceDelete {
         price_id: String,
@@ -414,7 +421,32 @@ impl StatsHandle {
             .unwrap()
             .get(provider_id)
             .copied()
-            .unwrap_or(UsageMode::Observe)
+            .unwrap_or_default()
+    }
+
+    pub async fn price_catalog_status(&self) -> Result<dto::PriceSyncDto, String> {
+        let reply = self.control(ControlKind::PriceCatalogStatus).await?;
+        serde_json::from_str(&reply)
+            .map_err(|_| error(ERR_UNAVAILABLE, "invalid price sync status"))
+    }
+
+    pub async fn import_price_catalog(
+        &self,
+        prices: Option<crate::price_catalog::Prices>,
+        targets: Vec<crate::price_catalog::Target>,
+        day: String,
+        targets_key: String,
+    ) -> Result<dto::PriceSyncDto, String> {
+        let reply = self
+            .control(ControlKind::PriceCatalog {
+                prices,
+                targets,
+                day,
+                targets_key,
+            })
+            .await?;
+        serde_json::from_str(&reply)
+            .map_err(|_| error(ERR_UNAVAILABLE, "invalid price sync status"))
     }
 
     /// Admits one request. Returns `None` when statistics must be skipped.
@@ -2138,6 +2170,9 @@ fn handle_control(
             )
             .map_err(|failure| failure.message)?;
             let dto = PriceListDto {
+                catalog_sync: Some(
+                    store::price_catalog_status(&writer.conn).map_err(|e| e.message)?,
+                ),
                 api_version: API_VERSION,
                 request_tag: String::new(),
                 generated_at_ms: now_ms(),
@@ -2171,6 +2206,24 @@ fn handle_control(
                 Err(failure) => return Err(failure.message),
             };
             serde_json::to_string(&rule).map_err(|_| error(ERR_UNAVAILABLE, "serialize price rule"))
+        }
+        ControlKind::PriceCatalogStatus => {
+            let status = store::price_catalog_status(&writer.conn).map_err(|e| e.message)?;
+            serde_json::to_string(&status)
+                .map_err(|_| error(ERR_UNAVAILABLE, "serialize price sync"))
+        }
+        ControlKind::PriceCatalog {
+            prices,
+            targets,
+            day,
+            targets_key,
+        } => {
+            let status =
+                store::import_price_catalog(writer, prices, &targets, &day, &targets_key, now_ms())
+                    .map_err(|e| e.message)?;
+            *inner.prices.write().unwrap() = writer.prices.clone();
+            serde_json::to_string(&status)
+                .map_err(|_| error(ERR_UNAVAILABLE, "serialize price sync"))
         }
         ControlKind::ClearPreview { before_ms } => {
             if writer.maintenance.is_some() {
@@ -2334,6 +2387,43 @@ mod tests {
             upstream_protocol: "openai_chat".into(),
             stream: true,
         }
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn usage_request_is_default_and_explicit_opt_out_survives_restart() {
+        let tmp = temporary_dir();
+        let handle = StatsHandle::start(tmp.path().to_path_buf());
+        // The forwarding path must use the default even before the UI reads it.
+        assert_eq!(handle.usage_mode("p1"), UsageMode::Request);
+        assert!(wait_ready(&handle));
+        let reply = handle
+            .command(&json!({
+                "command": "stats_provider_settings_get", "provider_id": "p1",
+            }))
+            .await
+            .unwrap();
+        let settings: ProviderSettingsDto = serde_json::from_str(&reply).unwrap();
+        assert_eq!(
+            (settings.usage_mode, settings.revision),
+            (UsageMode::Request, 0)
+        );
+        assert_eq!(handle.inner.runtime_flags().observe_mode_providers, 0);
+        handle
+            .command(&json!({
+                "command": "stats_provider_settings_update", "provider_id": "p1",
+                "usage_mode": "observe", "expected_revision": 0,
+            }))
+            .await
+            .unwrap();
+        assert_eq!(handle.usage_mode("p1"), UsageMode::Observe);
+        handle.shutdown();
+
+        let restarted = StatsHandle::start(tmp.path().to_path_buf());
+        assert!(wait_ready(&restarted));
+        assert_eq!(restarted.usage_mode("p1"), UsageMode::Observe);
+        assert_eq!(restarted.usage_mode("new-provider"), UsageMode::Request);
+        assert_eq!(restarted.inner.runtime_flags().observe_mode_providers, 1);
+        restarted.shutdown();
     }
 
     #[test]

@@ -99,6 +99,11 @@ def main():
                             if e.get('_workbuddyProxy', {}).get('route') == route)
 
             action({'command': 'install'})
+            # Media byte transparency is checked with usage injection disabled;
+            # the default request-mode behavior has its own statistics fixture.
+            action({'command': 'stats_provider_settings_update',
+                    'provider_id': 'media-provider', 'usage_mode': 'observe',
+                    'expected_revision': 0})
             assert entry('vision-route')['supportsImages'] is True
             assert entry('vision-route')['reasoning']['supportedEfforts'] == ['low', 'high', 'max']
             assert entry('other-route')['supportsImages'] is False

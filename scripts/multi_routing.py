@@ -78,6 +78,9 @@ def main():
             migrated=json.loads((directory/'config.json').read_text(encoding='utf-8'))
             assert len(migrated['providers'])==3 and [len(p['models']) for p in migrated['providers']]==[3,2,1]
             assert 'connections' not in migrated
+            # Keep exact-body assertions scoped to explicit passive collection.
+            for supplier in migrated['providers']:
+                action({'command':'stats_provider_settings_update','provider_id':supplier['id'],'usage_mode':'observe','expected_revision':0})
             readable={}
             for supplier in migrated['providers']:
                 for model in supplier['models']:

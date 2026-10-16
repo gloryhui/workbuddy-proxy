@@ -1,6 +1,6 @@
 # 使用统计功能
 
-日期：2026-10-16。统计初版已接入Rust核心与原生GPUI界面，schema3/API2/control6。当前状态及测试边界见[接手验收](validation-2026-10-16/README.md)和[实现记录](IMPLEMENTATION-STATUS.md)。历史设计与审查保留供追溯，价格口径以PRICING-DECISION为准。
+日期：2026-10-16。统计功能已接入Rust核心与原生GPUI界面，当前schema6/API2/control7。支持每日模型价格更新与默认请求上游返回用量，已有调用继续保留各自价格快照。早期测试记录见[接手验收](validation-2026-10-16/README.md)和[实现记录](IMPLEMENTATION-STATUS.md)，协议联合验收见[联合验收](../protocol-compat/FINAL-VALIDATION.md)。历史设计与审查保留供追溯，价格口径以PRICING-DECISION为准。
 
 代码调研基线：`main` / `0b2fe84415cb148a498b091e5814ce4fb8d97e35`，核心与 GPUI 包版本均为 `0.5.3`，GPUI Kit 锁定 `=0.7.3`。后续开发开始时重新确认实际 HEAD 和工作区状态。
 
@@ -43,7 +43,7 @@ python3 docs/statistics/validate_design.py
 - 核心服务独占数据库写入；GPUI 只走已有本地管理 API，不直接打开数据库。
 - 原始请求明细是统计事实源，第一版不引入第二套持久化汇总表，避免双写不一致。
 - 上游 usage 是真实用量来源；Token未知保持 NULL，第一版不做本地 Token 估算。价格缺失则单价/费用默认0，当前价格可编辑删除，历史快照独立不变。
-- 默认被动采集，不全局注入 `include_usage`；按供应商显式开启请求 usage。
+- 默认请求上游返回用量，流式 Chat 请求合并 `include_usage=true`；可按供应商关闭，已保存的选择保持不变。
 - 流式响应保持原始字节、状态、背压和取消行为；统计旁路有界、失败不影响聊天。
 - 功能编码必须在独立 Git worktree 中进行。正式迁移位于src/stats/migrations；schema.sql保留为设计验证材料。
 

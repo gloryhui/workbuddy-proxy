@@ -19,11 +19,13 @@ use std::{
 };
 
 /// Schema version understood by this build.
-pub const SCHEMA_VERSION: i64 = 4;
+pub const SCHEMA_VERSION: i64 = 6;
 const MIGRATION_0001: &str = include_str!("migrations/0001.sql");
 const MIGRATION_0002: &str = include_str!("migrations/0002.sql");
 const MIGRATION_0003: &str = include_str!("migrations/0003.sql");
 const MIGRATION_0004: &str = include_str!("migrations/0004.sql");
+const MIGRATION_0005: &str = include_str!("migrations/0005.sql");
+const MIGRATION_0006: &str = include_str!("migrations/0006.sql");
 const WRITE_RETRIES: usize = 2;
 /// Single lock wait before our own retry loop takes over (was 2000 ms, which
 /// multiplied into seconds per batch under a held lock).
@@ -157,7 +159,13 @@ pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
     if version < 3 {
         apply_step(conn, 3, MIGRATION_0003)?;
     }
-    apply_step(conn, 4, MIGRATION_0004)
+    if version < 4 {
+        apply_step(conn, 4, MIGRATION_0004)?;
+    }
+    if version < 5 {
+        apply_step(conn, 5, MIGRATION_0005)?;
+    }
+    apply_step(conn, 6, MIGRATION_0006)
 }
 
 /// Runs one migration step in its own transaction and records the new version,
@@ -1011,11 +1019,8 @@ impl Writer {
             )
             .optional()
         {
-            Ok(Some((mode, revision))) => (
-                UsageMode::parse(&mode).unwrap_or(UsageMode::Observe),
-                revision,
-            ),
-            _ => (UsageMode::Observe, 0),
+            Ok(Some((mode, revision))) => (UsageMode::parse(&mode).unwrap_or_default(), revision),
+            _ => (UsageMode::default(), 0),
         }
     }
 
@@ -1102,10 +1107,7 @@ fn load_provider_modes(
     while let Some(row) = rows.next()? {
         let provider_id: String = row.get(0)?;
         let mode: String = row.get(1)?;
-        modes.insert(
-            provider_id,
-            UsageMode::parse(&mode).unwrap_or(UsageMode::Observe),
-        );
+        modes.insert(provider_id, UsageMode::parse(&mode).unwrap_or_default());
     }
     Ok(modes)
 }
@@ -1180,6 +1182,124 @@ impl PublishedPrices {
 
 fn currency_static(value: &str) -> &'static str {
     if value == "CNY" { "CNY" } else { "USD" }
+}
+
+pub fn price_catalog_status(conn: &Connection) -> Result<crate::stats::dto::PriceSyncDto, DbError> {
+    Ok(conn.query_row(
+        "SELECT last_success_day,updated_at_ms,updated_count,unmatched_count,catalog_count,targets_key
+         FROM stats_price_catalog WHERE singleton=1", [], |r| Ok(crate::stats::dto::PriceSyncDto {
+            last_success_day: Some(r.get(0)?), updated_at_ms: Some(r.get(1)?),
+            updated_count: r.get(2)?, unmatched_count: r.get(3)?, catalog_count: r.get(4)?, targets_key: r.get(5)?,
+        }),
+    ).optional()?.unwrap_or_default())
+}
+
+/// Fresh downloads replace matching local prices, including manual edits.
+/// Reusing today's catalogue after route changes only initializes missing keys.
+pub fn import_price_catalog(
+    writer: &mut Writer,
+    fresh: Option<crate::price_catalog::Prices>,
+    targets: &[crate::price_catalog::Target],
+    day: &str,
+    targets_key: &str,
+    now: i64,
+) -> Result<crate::stats::dto::PriceSyncDto, DbError> {
+    let overwrite = fresh.is_some();
+    let prices = match fresh {
+        Some(prices) => prices,
+        None => {
+            let text: String = writer.conn.query_row(
+                "SELECT catalogue_json FROM stats_price_catalog WHERE singleton=1",
+                [],
+                |r| r.get(0),
+            )?;
+            serde_json::from_str(&text)
+                .map_err(|_| DbError::refused("Invalid cached price catalogue".into()))?
+        }
+    };
+    let mut targets: std::collections::BTreeMap<_, _> = targets
+        .iter()
+        .map(|target| {
+            (
+                (target.provider_id.clone(), target.model.clone()),
+                target.clone(),
+            )
+        })
+        .collect();
+    let upstreams: std::collections::HashMap<_, _> = targets
+        .values()
+        .map(|target| (target.provider_id.clone(), target.upstream.clone()))
+        .collect();
+    // Prices for models removed from the route list are still editable and
+    // participate in the next explicit/daily refresh by their exact model ID.
+    if overwrite {
+        let mut statement = writer
+            .conn
+            .prepare("SELECT provider_id,upstream_model FROM stats_model_prices")?;
+        for row in
+            statement.query_map([], |r| Ok((r.get::<_, String>(0)?, r.get::<_, String>(1)?)))?
+        {
+            let (provider_id, model) = row?;
+            targets
+                .entry((provider_id.clone(), model.clone()))
+                .or_insert(crate::price_catalog::Target {
+                    upstream: upstreams.get(&provider_id).cloned().unwrap_or_default(),
+                    provider_id,
+                    model,
+                });
+        }
+    }
+    let tx = writer
+        .conn
+        .transaction_with_behavior(TransactionBehavior::Immediate)?;
+    let mut updated = 0i64;
+    let mut unmatched = 0i64;
+    for target in targets.values() {
+        let Some(entry) = prices.find(&target.upstream, &target.model) else {
+            unmatched += 1;
+            continue;
+        };
+        let label: String = format!("models.dev · {}/{}", entry.provider, entry.model)
+            .chars()
+            .take(160)
+            .collect();
+        updated += tx.execute(
+            "INSERT INTO stats_model_prices(price_id,provider_id,upstream_model,currency,input_mode,
+             input_rate_nanos,output_rate_nanos,cache_read_rate_nanos,cache_write_rate_nanos,
+             label,revision,created_at_ms,updated_at_ms)
+             VALUES(?1,?2,?3,'USD',?4,?5,?6,?7,?8,?9,1,?10,?10)
+             ON CONFLICT(provider_id,upstream_model) DO UPDATE SET currency='USD',
+             input_mode=excluded.input_mode,input_rate_nanos=excluded.input_rate_nanos,
+             output_rate_nanos=excluded.output_rate_nanos,cache_read_rate_nanos=excluded.cache_read_rate_nanos,
+             cache_write_rate_nanos=excluded.cache_write_rate_nanos,label=excluded.label,
+             revision=stats_model_prices.revision+1,updated_at_ms=MAX(stats_model_prices.created_at_ms,excluded.updated_at_ms)
+             WHERE ?11=1",
+            rusqlite::params![crate::config::token(), target.provider_id, target.model, entry.rates.mode(),
+                entry.rates.input, entry.rates.output, entry.rates.read.unwrap_or(0), entry.rates.write.unwrap_or(0),
+                label, now, i64::from(overwrite)],
+        )? as i64;
+    }
+    if overwrite {
+        let text = serde_json::to_string(&prices)
+            .map_err(|_| DbError::refused("Cannot cache price catalogue".into()))?;
+        tx.execute(
+            "INSERT INTO stats_price_catalog(singleton,catalogue_json,last_success_day,updated_at_ms,
+             updated_count,unmatched_count,catalog_count,targets_key) VALUES(1,?1,?2,?3,?4,?5,?6,?7)
+             ON CONFLICT(singleton) DO UPDATE SET catalogue_json=excluded.catalogue_json,
+             last_success_day=excluded.last_success_day,updated_at_ms=excluded.updated_at_ms,
+             updated_count=excluded.updated_count,unmatched_count=excluded.unmatched_count,
+             catalog_count=excluded.catalog_count,targets_key=excluded.targets_key",
+            rusqlite::params![text, day, now, updated, unmatched, prices.0.len() as i64, targets_key],
+        )?;
+    } else {
+        tx.execute(
+            "UPDATE stats_price_catalog SET targets_key=?1 WHERE singleton=1",
+            [targets_key],
+        )?;
+    }
+    tx.commit()?;
+    writer.prices = load_price_cache(&writer.conn)?;
+    price_catalog_status(&writer.conn)
 }
 
 /// Loads the current prices into a publishable cache.
@@ -2130,6 +2250,126 @@ mod tests {
     use super::*;
 
     #[test]
+    fn catalogue_updates_overwrite_prices_but_cached_route_seeding_preserves_edits() {
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "catalogue-test",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        let prices = crate::price_catalog::Prices::parse(
+            br#"{"lab":{"models":{"m":{"cost":{"input":2,"output":4}}}}}"#,
+        )
+        .unwrap();
+        let target = |provider: &str| crate::price_catalog::Target {
+            provider_id: provider.into(),
+            model: "m".into(),
+            upstream: "https://custom.test/v1".into(),
+        };
+        import_price_catalog(
+            &mut writer,
+            Some(prices.clone()),
+            &[target("p")],
+            "2026-10-16",
+            "one",
+            1000,
+        )
+        .unwrap();
+        writer
+            .conn
+            .execute(
+                "UPDATE stats_model_prices SET input_rate_nanos=9000000000",
+                [],
+            )
+            .unwrap();
+        import_price_catalog(
+            &mut writer,
+            None,
+            &[target("p"), target("new")],
+            "2026-10-16",
+            "two",
+            2000,
+        )
+        .unwrap();
+        assert_eq!(
+            writer.prices.get("p", "m").unwrap().input_rate_nanos,
+            9_000_000_000
+        );
+        assert_eq!(
+            writer.prices.get("new", "m").unwrap().input_rate_nanos,
+            2_000_000_000
+        );
+        let cached = price_catalog_status(&writer.conn).unwrap();
+        assert_eq!(cached.updated_at_ms, Some(1000));
+        assert_eq!(cached.targets_key, "two");
+        import_price_catalog(
+            &mut writer,
+            Some(prices),
+            &[target("p")],
+            "2026-10-17",
+            "one",
+            3000,
+        )
+        .unwrap();
+        assert_eq!(
+            writer.prices.get("p", "m").unwrap().input_rate_nanos,
+            2_000_000_000
+        );
+        assert_eq!(
+            price_catalog_status(&writer.conn)
+                .unwrap()
+                .last_success_day
+                .as_deref(),
+            Some("2026-10-17")
+        );
+    }
+
+    #[test]
+    fn catalogue_import_failure_rolls_back_prices_and_daily_marker() {
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "catalogue-rollback",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        let prices = crate::price_catalog::Prices::parse(
+            br#"{"lab":{"models":{"m":{"cost":{"input":2,"output":4}}}}}"#,
+        )
+        .unwrap();
+        let targets: Vec<_> = ["p".to_owned(), "z".repeat(161)]
+            .into_iter()
+            .map(|provider_id| crate::price_catalog::Target {
+                provider_id,
+                model: "m".into(),
+                upstream: String::new(),
+            })
+            .collect();
+        assert!(
+            import_price_catalog(
+                &mut writer,
+                Some(prices),
+                &targets,
+                "2026-10-16",
+                "bad",
+                1000
+            )
+            .is_err()
+        );
+        let count: i64 = writer
+            .conn
+            .query_row("SELECT COUNT(*) FROM stats_model_prices", [], |r| r.get(0))
+            .unwrap();
+        assert_eq!(count, 0);
+        assert_eq!(
+            price_catalog_status(&writer.conn).unwrap().last_success_day,
+            None
+        );
+        assert!(writer.prices.get("p", "m").is_none());
+    }
+
+    #[test]
     fn idle_loss_counters_are_durable_without_a_later_request_batch() {
         let folder = tempfile::tempdir().unwrap();
         let counters = Arc::new(Counters::default());
@@ -2769,7 +3009,7 @@ mod tests {
     /// already exists" and left collection disabled.
     #[test]
     fn every_schema_generation_upgrades_in_place_and_is_idempotent() {
-        for start in 0..=3i64 {
+        for start in 0..=5i64 {
             let folder = tempfile::tempdir().unwrap();
             let path = folder.path().join("usage.sqlite3");
             {
@@ -2792,6 +3032,16 @@ mod tests {
                 }
                 if start >= 3 {
                     apply_step(&mut conn, 3, MIGRATION_0003).unwrap();
+                }
+                if start >= 4 {
+                    apply_step(&mut conn, 4, MIGRATION_0004).unwrap();
+                    conn.execute(
+                        "INSERT INTO stats_provider_settings(provider_id, usage_mode, updated_at_ms, revision)
+                         VALUES('opted-out', 'observe', 1234, 7)", [],
+                    ).unwrap();
+                }
+                if start >= 5 {
+                    apply_step(&mut conn, 5, MIGRATION_0005).unwrap();
                 }
             }
             let mut conn = Connection::open(&path).unwrap();
@@ -2823,6 +3073,26 @@ mod tests {
                 .query_row("SELECT COUNT(*) FROM usage_costs", [], |row| row.get(0))
                 .unwrap();
             assert_eq!((prices, costs), (0, 0));
+            conn.execute(
+                "INSERT INTO stats_provider_settings(provider_id, updated_at_ms) VALUES('new', 0)",
+                [],
+            )
+            .unwrap();
+            let mode: String = conn
+                .query_row(
+                    "SELECT usage_mode FROM stats_provider_settings WHERE provider_id='new'",
+                    [],
+                    |r| r.get(0),
+                )
+                .unwrap();
+            assert_eq!(mode, "request", "SQL default after upgrade from v{start}");
+            if start >= 4 {
+                let preserved: (String, i64, i64) = conn.query_row(
+                    "SELECT usage_mode, updated_at_ms, revision FROM stats_provider_settings WHERE provider_id='opted-out'", [],
+                    |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?)),
+                ).unwrap();
+                assert_eq!(preserved, ("observe".into(), 1234, 7));
+            }
         }
     }
 

@@ -260,7 +260,7 @@ Content-Type application/json（含charset后缀）分支用最多256KiB的旁�
 
 ### 6.6 请求include_usage
 
-默认observe，原有请求改写行为保持。provider usage_mode=request且stream=true时，合并顶层stream_options.include_usage=true，保留其他字段。已有false被显式设置覆盖，必须让UI文案说明。
+未配置的供应商默认request，已保存的选择保持。provider usage_mode=request且stream=true时，合并顶层stream_options.include_usage=true，保留其他字段。已有false会被request模式覆盖，UI提供按供应商关闭的入口。
 
 stream_options已有非object且非null：保留转发、记录该请求usage请求参数无法注入的健康警告，不把一个本能工作的聊天变成400。不能无条件加到所有供应商，也不能上游400后自动重发（可能产生重复消耗）。若请求体实际stream=false，不注入stream_options。
 
@@ -350,6 +350,8 @@ GROUP BY b.bucket_start,b.bucket_end ORDER BY b.bucket_start;
 实现细节及v1→v2迁移以[PRICING-DECISION.md](PRICING-DECISION.md)为准。stats_model_prices保存可变当前配置；usage_costs在Start事务保存四项单价/币种/模式/来源/快照时间，Finish只用本次快照结算，不能重新查当前价格。没有匹配价格时创建全0快照，终态明确总金额0。
 
 当前价格保存/删除提交后发布有界缓存，新请求从缓存复制快照；已接纳请求即使之后调价也不变。费用查询不得JOIN当前价格配置。价格可以任意修改/删除，来源ID不能建价格表外键。
+
+2026-10-16：0005 将未配置供应商的 usage_mode 默认改为 request，保留已有显式选择。0006 添加 stats_price_catalog，保存完整价格目录 JSON、最近成功的本机日期、更新时间/数量与路由指纹。核心每分钟检查日期；未成功的当天联网拉取，失败后至少间隔 15 分钟，手动 stats_prices_update 跳过日期/退避检查。网络下载限 16 MiB/30 秒，十进制定点转换不做浮点金额计算；目录导入、当前价覆盖和日期标记在同一 writer 事务内提交，随后发布价格缓存。新路由在同一天只用缓存补齐缺价。UI 价格更新走不可丢弃的写任务，单独使用 45 秒超时，不改变其他统计查询 3 秒超时。当前价格 label 记录 models.dev 供应商/模型来源；调用仍使用现有本地价格快照契约。
 
 flat：全部input乘输入价，缓存不再另收；read_discount：非缓存部分乘输入价、cache_read乘缓存读价；disjoint：已证明互斥的新增/读/写分别计价；output始终按输出价，reasoning不重复计。每项公式为`(tokens * rate_nanos + 500_000) / 1_000_000`，i128中间值，checked转i64和求和。
 

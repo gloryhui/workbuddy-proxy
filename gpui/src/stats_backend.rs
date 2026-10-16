@@ -35,6 +35,7 @@ pub enum JobKind {
     ClearPreview,
     PriceSave,
     PriceDelete,
+    PriceSync,
     SettingsUpdate,
     ProviderMode,
     ClearStart,
@@ -327,7 +328,11 @@ pub fn call(directory: &Path, request: &Value) -> Result<Value, String> {
         .proxy(None)
         .max_redirects(0)
         .http_status_as_error(false)
-        .timeout_global(Some(QUERY_TIMEOUT))
+        .timeout_global(Some(if request["command"] == "stats_prices_update" {
+            Duration::from_secs(45)
+        } else {
+            QUERY_TIMEOUT
+        }))
         .build()
         .into();
     let mut response = agent

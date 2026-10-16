@@ -330,7 +330,7 @@ pub struct Resolved {
 
 /// Retain scheme/port and plan paths. Only documented OpenCode path aliases
 /// share metadata; Go and the ordinary inference API remain separate.
-fn endpoint(base: &str) -> Option<String> {
+pub(crate) fn endpoint(base: &str) -> Option<String> {
     let mut u = reqwest::Url::parse(base.trim()).ok()?;
     if !matches!(u.scheme(), "http" | "https")
         || u.host_str().is_none()
@@ -822,7 +822,7 @@ impl Catalog {
     }
 }
 
-async fn download(
+pub(crate) async fn download(
     request: reqwest::RequestBuilder,
     limit: usize,
     timeout: Duration,

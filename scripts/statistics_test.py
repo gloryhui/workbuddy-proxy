@@ -8,7 +8,7 @@ proxy port is random.
 
 Verified on this path:
   * byte-for-byte response passthrough (direct upstream vs. proxied);
-  * observe-mode request fidelity and request-mode `include_usage` merging;
+  * default usage requests, observe-mode fidelity and `include_usage` merging;
   * SSE/JSON usage recording, conflicts, oversized events, encodings, 429, cuts;
   * client cancellation, connection-test exclusion, paused collection;
   * management API filtering, pagination, pricing, reprice, clear preview/start;
@@ -414,6 +414,11 @@ class Checks:
 def run(directory, port, upstream_port, start_ms, checks):
     # --- byte-for-byte passthrough -------------------------------------
     status, _headers, proxied = relay(port, 'wbp-ok')
+    forwarded = json.loads(Mock.received[-1]['body'])
+    assert forwarded['stream_options']['include_usage'] is True, forwarded
+    settings = stats(directory, port, 'stats_provider_settings_get', provider_id='provider-a')
+    assert settings['usage_mode'] == 'request' and settings['revision'] == 0, settings
+    checks.ok('usage is requested by default before settings are read')
     direct_status, direct_body = direct(upstream_port, 'model-ok')
     assert status == direct_status == 200, (status, direct_status)
     assert proxied == direct_body, 'streamed body differs: %s vs %s' % (digest(proxied), digest(direct_body))
@@ -430,6 +435,8 @@ def run(directory, port, upstream_port, start_ms, checks):
     checks.ok('upstream 429 status and body are preserved')
 
     # --- request fidelity ----------------------------------------------
+    stats(directory, port, 'stats_provider_settings_update', provider_id='provider-a',
+          usage_mode='observe', expected_revision=0)
     original = json.dumps({'model': 'wbp-ok', 'stream': True, 'temperature': 0.25,
                            'messages': [{'role': 'user', 'content': 'ping'}],
                            'tools': [{'type': 'function'}]}, separators=(',', ':')).encode()
@@ -447,7 +454,7 @@ def run(directory, port, upstream_port, start_ms, checks):
 
     # --- request mode merges only include_usage ------------------------
     settings = stats(directory, port, 'stats_provider_settings_get', provider_id='provider-a')
-    assert settings['usage_mode'] == 'observe' and settings['revision'] == 0, settings
+    assert settings['usage_mode'] == 'observe' and settings['revision'] == 1, settings
     stats(directory, port, 'stats_provider_settings_update', provider_id='provider-a',
           usage_mode='request', expected_revision=settings['revision'])
     stream_request = b'{"model":"wbp-ok","stream":true,"stream_options":{"vendor":"keep"},"messages":[]}'
@@ -486,7 +493,7 @@ def run(directory, port, upstream_port, start_ms, checks):
     assert forwarded, 'the original stream_options value must be forwarded unchanged'
     checks.ok('non-object stream_options is forwarded unchanged')
     stats(directory, port, 'stats_provider_settings_update', provider_id='provider-a',
-          usage_mode='observe', expected_revision=1)
+          usage_mode='observe', expected_revision=2)
 
     # --- remaining scenarios -------------------------------------------
     relay(port, 'wbp-nousage')

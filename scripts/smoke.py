@@ -151,6 +151,9 @@ def main():
             instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
             control=lambda obj:urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps(obj).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
             original_id=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['providers'][0]['id']
+            # Byte-for-byte passthrough is an explicit observe-mode contract.
+            # Default request-mode usage injection is covered by statistics_test.
+            with urllib.request.urlopen(control({'command':'stats_provider_settings_update','provider_id':original_id,'usage_mode':'observe','expected_revision':0}),timeout=5) as response:response.read()
             for model in ['quota-test','slow-test']:
                 with urllib.request.urlopen(control({'command':'add'}),timeout=5) as response:response.read()
                 route=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['providers'][-1]['id']

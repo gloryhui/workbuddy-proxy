@@ -252,6 +252,7 @@ pub struct Bridge {
     /// a chat request.
     pub stats: stats::StatsHandle,
     usage_injection_warned: Mutex<std::collections::HashSet<String>>,
+    price_sync: tokio::sync::Mutex<Option<std::time::Instant>>,
     native_replay: Mutex<crate::protocol::replay::Cache>,
 }
 impl Bridge {
@@ -287,6 +288,7 @@ impl Bridge {
             mutations: tokio::sync::Mutex::new(()),
             stats,
             usage_injection_warned: Mutex::new(std::collections::HashSet::new()),
+            price_sync: tokio::sync::Mutex::new(None),
         })
     }
     pub fn connection_address(&self, id: &str) -> String {
@@ -471,6 +473,64 @@ impl Bridge {
         tokio::spawn(async move {
             catalog.refresh(&client, targets).await;
         });
+    }
+
+    pub async fn sync_prices(&self, force: bool) -> Result<stats::dto::PriceSyncDto, String> {
+        use sha2::{Digest, Sha256};
+        let mut attempt = self.price_sync.try_lock().map_err(|_| {
+            stats::dto::error(stats::dto::ERR_BUSY, "price update is already running")
+        })?;
+        // Startup migration happens off-thread; don't race the first daily check.
+        for _ in 0..100 {
+            if self.stats.state() != stats::dto::HealthState::Migrating {
+                break;
+            }
+            tokio::time::sleep(Duration::from_millis(100)).await;
+        }
+        let targets: Vec<_> = {
+            let config = self.config.lock().unwrap();
+            config
+                .providers
+                .iter()
+                .flat_map(|provider| {
+                    provider
+                        .models
+                        .iter()
+                        .map(|model| crate::price_catalog::Target {
+                            provider_id: provider.id.clone(),
+                            upstream: provider.upstream.clone(),
+                            model: model.model.clone(),
+                        })
+                })
+                .collect()
+        };
+        let targets_key = format!(
+            "{:x}",
+            Sha256::digest(serde_json::to_vec(&targets).unwrap())
+        );
+        let day = chrono::Local::now().format("%Y-%m-%d").to_string();
+        let status = self.stats.price_catalog_status().await?;
+        if !force && status.last_success_day.as_deref() == Some(day.as_str()) {
+            if status.targets_key == targets_key {
+                return Ok(status);
+            }
+            return self
+                .stats
+                .import_price_catalog(None, targets, day, targets_key)
+                .await;
+        }
+        if !force && attempt.is_some_and(|time| time.elapsed() < Duration::from_secs(900)) {
+            return Ok(status);
+        }
+        *attempt = Some(std::time::Instant::now());
+        let prices = crate::price_catalog::fetch(&self.client).await?;
+        let completed_day = chrono::Local::now().format("%Y-%m-%d").to_string();
+        let status = self
+            .stats
+            .import_price_catalog(Some(prices), targets, completed_day, targets_key)
+            .await?;
+        *attempt = None;
+        Ok(status)
     }
     async fn prepare_metadata(&self) {
         // Finish a first refresh when possible, with a hard bound on sync delay.
@@ -1028,6 +1088,13 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
 }
 impl Bridge {
     pub async fn command(&self, p: &serde_json::Value) -> Result<String, String> {
+        if p["command"] == "stats_prices_update" {
+            let status = self.sync_prices(true).await?;
+            return Ok(json!({"api_version": stats::dto::API_VERSION,
+                "request_tag": p["request_tag"].as_str().unwrap_or(""),
+                "catalog_sync": status})
+            .to_string());
+        }
         // Statistics commands are dispatched before the shared status pipeline:
         // they never set the proxy status string and never reload the config.
         if let Some(command) = p["command"].as_str()

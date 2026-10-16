@@ -17,7 +17,7 @@ INSERT INTO stats_settings(singleton, updated_at_ms) VALUES (1,0);
 
 CREATE TABLE stats_provider_settings (
     provider_id TEXT PRIMARY KEY CHECK (length(provider_id) BETWEEN 1 AND 160),
-    usage_mode TEXT NOT NULL DEFAULT 'observe'
+    usage_mode TEXT NOT NULL DEFAULT 'request'
         CHECK (usage_mode IN ('observe','request')),
     updated_at_ms INTEGER NOT NULL CHECK (updated_at_ms >= 0),
     revision INTEGER NOT NULL DEFAULT 1 CHECK (revision > 0)

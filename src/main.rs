@@ -14,6 +14,7 @@ mod i18n;
 mod journal;
 mod platform;
 mod port;
+mod price_catalog;
 mod protocol;
 mod proxy;
 mod session;
@@ -200,6 +201,15 @@ fn run() -> Result<(), String> {
         ready_tx.send(runtime.handle().clone()).unwrap();
         runtime.block_on(async{
             let metadata_bridge = thread_a.clone();
+            let price_bridge = thread_a.clone();
+            tokio::spawn(async move {
+                loop {
+                    if let Err(error) = price_bridge.sync_prices(false).await {
+                        eprintln!("Price catalogue update: {error}");
+                    }
+                    tokio::time::sleep(Duration::from_secs(60)).await;
+                }
+            });
             tokio::spawn(async move {
                 loop {
                     metadata_bridge.warm_metadata();
