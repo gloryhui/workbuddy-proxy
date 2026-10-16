@@ -750,6 +750,7 @@ impl Proxy {
         })
         .detach();
         this.load_form(window, cx);
+        this.switch_page(Page::Statistics, window, cx);
         this.focus.focus(window, cx);
         cx.subscribe(&this.search, |_, _, event, cx| {
             if matches!(event, InputEvent::Change) {
@@ -1104,6 +1105,7 @@ impl Proxy {
         let wake = std::fs::read_to_string(self.dir.join("gpui-wake.json")).unwrap_or_default();
         if wake != self.wake {
             self.wake = wake;
+            self.switch_page(Page::Statistics, window, cx);
             window.activate_window();
             cx.activate(true);
         }

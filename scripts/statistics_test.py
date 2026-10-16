@@ -907,6 +907,37 @@ def run(directory, port, upstream_port, start_ms, checks):
     assert still_there['request']['request_id'] == early['request_id']
     checks.ok('deleting the current price leaves recorded history readable')
 
+    # Provider names are per-request snapshots, independent of editable config.
+    action(directory, port, 'duplicate', provider_id='provider-a')
+    temporary_provider = json.loads((Path(directory) / 'config.json').read_text())['providers'][-1]
+    provider_id = temporary_provider['id']
+    alias = temporary_provider['models'][0]['alias']
+    original_name = temporary_provider['name']
+    assert relay(port, alias)[0] == 200
+
+    def provider_history(count):
+        page = stats(directory, port, 'stats_requests',
+                     filter={**window(start_ms), 'provider_id': provider_id}, page_size=100)
+        items = [item for item in page['items'] if item['provider_id'] == provider_id
+                 and item['outcome'] == 'completed']
+        return items if len(items) == count else None
+
+    before_rename = wait_for(lambda: provider_history(1), 'provider snapshot not recorded')[0]
+    action(directory, port, 'save', provider_id=provider_id, name='Renamed fixture provider')
+    assert relay(port, alias)[0] == 200
+    history = wait_for(lambda: provider_history(2), 'renamed provider snapshot not recorded')
+    assert {item['provider_name'] for item in history} == {original_name, 'Renamed fixture provider'}
+    action(directory, port, 'delete', provider_id=provider_id)
+    assert len(provider_history(2)) == 2, 'deleting config removed historical request rows'
+    for saved in history:
+        recorded = stats(directory, port, 'stats_request_detail', request_id=saved['request_id'])['request']
+        assert recorded['provider_id'] == provider_id
+        assert recorded['provider_name'] == saved['provider_name']
+    with sqlite3.connect(Path(directory) / 'usage.sqlite3') as connection:
+        assert connection.execute('SELECT provider_name FROM usage_requests WHERE request_id=?',
+                                  (before_rename['request_id'],)).fetchone()[0] == original_name
+    checks.ok('supplier rename/delete preserves SQLite and API name snapshots')
+
     # --- paused collection -------------------------------------------------
     health = stats(directory, port, 'stats_health')
     paused = stats(directory, port, 'stats_settings_update', enabled=False, retention_days=180,

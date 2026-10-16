@@ -1,6 +1,6 @@
 //! Table delegates for the statistics page: the request log plus the provider
 //! and model summaries. All rows are already server-aggregated; the table only
-//! renders the current page and never computes statistics locally.
+//! renders the current page; per-request display ratios use the stored counters.
 use crate::{
     statistics::Statistics,
     stats_dto::{
@@ -85,6 +85,63 @@ pub fn amount(nanos: Option<&str>, currency: Option<Currency>) -> String {
 
 pub fn percent(value: Option<f64>) -> String {
     value.map_or_else(|| "—".into(), |value| format!("{:.1}%", value * 100.))
+}
+
+/// Input includes cache reads in all normalized protocol usage records.
+pub fn cache_rate(read: Option<i64>, input: Option<i64>) -> Option<f64> {
+    match (read, input) {
+        (Some(read), Some(input)) if input > 0 && read >= 0 && read <= input => {
+            Some(read as f64 / input as f64)
+        }
+        _ => None,
+    }
+}
+
+/// Streaming output rate excludes the wait for first content. Non-streaming
+/// responses have no observable generation interval, so use end-to-end time.
+/// Never replace a missing/invalid streaming interval with a different metric.
+pub fn output_rate(
+    output: Option<i64>,
+    duration_ms: Option<i64>,
+    first_content_ms: Option<i64>,
+    stream: bool,
+) -> Option<f64> {
+    let output = output.filter(|value| *value >= 0)?;
+    let duration = duration_ms.filter(|value| *value > 0)?;
+    let elapsed = if stream {
+        let first = first_content_ms.filter(|value| *value >= 0)?;
+        duration.checked_sub(first).filter(|value| *value > 0)?
+    } else {
+        duration
+    };
+    Some(output as f64 * 1000. / elapsed as f64)
+}
+
+pub fn rate_text(item: &RequestRowDto) -> String {
+    output_rate(
+        item.output_tokens,
+        item.duration_ms,
+        item.first_content_ms,
+        item.stream,
+    )
+    .map_or_else(|| "—".into(), |rate| format!("{rate:.1}"))
+}
+
+pub fn rate_hint(stream: bool, zh: bool) -> &'static str {
+    match (stream, zh) {
+        (true, true) => {
+            "流式输出 tok/s = 输出 Token ÷（总耗时 − 首内容耗时）秒。包含输出中的推理 Token；仅为平均速率，尾部传输耗时也计入。数据缺失或时间区间无效时显示 —。"
+        }
+        (true, false) => {
+            "Streaming tok/s = output tokens / (duration − time to first content) in seconds. Includes reasoning counted in output and tail transfer time; an average, not instantaneous speed. Missing or invalid intervals show —."
+        }
+        (false, true) => {
+            "非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。"
+        }
+        (false, false) => {
+            "Non-streaming tok/s = output tokens / total seconds, an end-to-end average including wait time. Missing data or invalid duration shows —."
+        }
+    }
 }
 
 pub fn timestamp(ms: i64, _zh: bool) -> String {
@@ -211,9 +268,9 @@ pub fn cost_label(status: CostStatus, zh: bool) -> String {
         }
         .to_owned(),
         CostStatus::UnsupportedBreakdown => if zh {
-            "拆分不支持"
+            "缓存计费数据不足"
         } else {
-            "Split unsupported"
+            "Cache pricing data missing"
         }
         .to_owned(),
         CostStatus::NotApplicable => if zh { "未发上游" } else { "Not sent" }.to_owned(),
@@ -223,6 +280,18 @@ pub fn cost_label(status: CostStatus, zh: bool) -> String {
             "Amount overflow"
         }
         .to_owned(),
+    }
+}
+
+pub fn cost_hint(status: CostStatus, zh: bool) -> String {
+    if status == CostStatus::UnsupportedBreakdown {
+        if zh {
+            "本次价格快照按普通输入、缓存读取或缓存写入分别计费，但本次调用的用量拆分或缓存单价不足/不兼容，无法可靠估算费用。这不代表请求失败，也不代表费用为 0。修改当前价格不会重算历史明细。"
+        } else {
+            "The price snapshot bills ordinary input and cache reads/writes separately, but the usage breakdown or cache rates are missing/incompatible. Cost cannot be estimated reliably. This does not mean the request failed or was free. Editing current prices does not recalculate history."
+        }.into()
+    } else {
+        cost_label(status, zh)
     }
 }
 
@@ -252,34 +321,95 @@ fn cell(
         .into_any_element()
 }
 
+pub const REQUEST_COLUMNS: usize = 9;
+// Time is just wide enough for MM-DD HH:MM:SS at the table's 12px font.
+const MIN_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 68., 112., 80., 260., 110., 66., 60., 102.];
+const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] =
+    [110., 180., 350., 110., 460., 140., 82., 78., 130.];
+const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 1., 2., 0.2, 2., 0.3, 0.1, 0.1, 0.3];
+
+/// Fit automatic columns into the measured host. Explicit user widths win;
+/// when minimum readable widths cannot fit, keep horizontal scrolling.
+fn fitted_widths(
+    available: f32,
+    custom: &[Option<f32>; REQUEST_COLUMNS],
+) -> [f32; REQUEST_COLUMNS] {
+    let mut widths = MIN_WIDTHS;
+    for i in 1..REQUEST_COLUMNS {
+        if let Some(width) = custom[i] {
+            widths[i] = width.max(if i == 4 { 180. } else { 60. });
+        }
+    }
+    let mut remaining = (available - widths.iter().sum::<f32>()).max(0.);
+    for _ in 0..REQUEST_COLUMNS {
+        let weight: f32 = (1..REQUEST_COLUMNS)
+            .filter(|&i| custom[i].is_none() && widths[i] < MAX_AUTO_WIDTHS[i])
+            .map(|i| FLEX_WEIGHTS[i])
+            .sum();
+        if remaining < 0.01 || weight == 0. {
+            break;
+        }
+        let budget = remaining;
+        for i in 1..REQUEST_COLUMNS {
+            if custom[i].is_none() && widths[i] < MAX_AUTO_WIDTHS[i] {
+                let extra = (budget * FLEX_WEIGHTS[i] / weight).min(MAX_AUTO_WIDTHS[i] - widths[i]);
+                widths[i] += extra;
+                remaining -= extra;
+            }
+        }
+    }
+    // On very wide windows, use surplus for names rather than numeric columns.
+    if remaining > 0. && custom[2].is_none() {
+        widths[2] += remaining;
+    }
+    widths
+}
+
 pub struct UsageRows {
     pub owner: WeakEntity<Statistics>,
     pub rows: Vec<RequestRowDto>,
     pub zh: bool,
     pub loading: bool,
+    pub available_width: f32,
+    /// Only dragged columns are overridden; other columns continue to fit.
+    pub custom_widths: [Option<f32>; REQUEST_COLUMNS],
 }
 
 impl UsageRows {
-    fn columns(&self) -> [(&'static str, &'static str, f32); 7] {
+    pub fn resize(&mut self, widths: &[Pixels]) {
+        let previous = fitted_widths(self.available_width, &self.custom_widths);
+        for (i, width) in widths.iter().enumerate().take(REQUEST_COLUMNS).skip(1) {
+            let width = f32::from(*width);
+            if (width - previous[i]).abs() > 0.5 {
+                self.custom_widths[i] = Some(width);
+            }
+        }
+    }
+
+    fn columns(&self) -> [(&'static str, &'static str); REQUEST_COLUMNS] {
         if self.zh {
             [
-                ("time", "时间", 110.),
-                ("model", "供应商 / 模型", 240.),
-                ("request", "请求标识", 130.),
-                ("tokens", "Token（↓输入 ↑输出 R缓存读 Σ总）", 260.),
-                ("cost", "估算费用", 130.),
-                ("latency", "性能", 110.),
-                ("status", "状态", 140.),
+                ("time", "时间"),
+                ("provider", "供应商"),
+                ("model", "模型"),
+                ("request", "请求标识"),
+                ("tokens", "Token / 缓存命中率"),
+                ("cost", "估算费用"),
+                ("latency", "耗时"),
+                ("speed", "tok/s"),
+                ("status", "状态"),
             ]
         } else {
             [
-                ("time", "Time", 110.),
-                ("model", "Provider / Model", 240.),
-                ("request", "Request", 130.),
-                ("tokens", "Tokens (↓in ↑out Rread Σtotal)", 260.),
-                ("cost", "Est. cost", 130.),
-                ("latency", "Latency", 110.),
-                ("status", "Status", 140.),
+                ("time", "Time"),
+                ("provider", "Provider"),
+                ("model", "Model"),
+                ("request", "Request"),
+                ("tokens", "Tokens / cache hit"),
+                ("cost", "Est. cost"),
+                ("latency", "Latency"),
+                ("speed", "tok/s"),
+                ("status", "Status"),
             ]
         }
     }
@@ -287,7 +417,7 @@ impl UsageRows {
 
 impl TableDelegate for UsageRows {
     fn columns_count(&self, _: &App) -> usize {
-        7
+        self.columns().len()
     }
 
     fn rows_count(&self, _: &App) -> usize {
@@ -295,11 +425,18 @@ impl TableDelegate for UsageRows {
     }
 
     fn column(&self, index: usize, _: &App) -> Column {
-        let (id, title, width) = self.columns()[index];
+        let (id, title) = self.columns()[index];
+        let width = fitted_widths(self.available_width, &self.custom_widths)[index];
         Column::new(id, title)
             .width(px(width))
-            .min_width(px(width))
-            .resizable(false)
+            .min_width(px(if index == 0 {
+                110.
+            } else if id == "tokens" {
+                180.
+            } else {
+                60.
+            }))
+            .resizable(index != 0)
             .selectable(false)
     }
 
@@ -349,6 +486,21 @@ impl TableDelegate for UsageRows {
                 ("usage-time", row),
             ),
             1 => cell(
+                item.provider_name.clone(),
+                Some(format!(
+                    "{}\nID: {}\n{}",
+                    item.provider_name,
+                    item.provider_id,
+                    if zh {
+                        "请求发生时的名称快照，改名或删除供应商不会改变历史记录"
+                    } else {
+                        "Name captured at request time; renaming or deleting the provider does not change history"
+                    }
+                )),
+                0x19334d,
+                ("usage-provider", row),
+            ),
+            2 => cell(
                 item.upstream_model.clone(),
                 Some(format!(
                     "{}\n{}\n{}{}",
@@ -360,7 +512,7 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-model", row),
             ),
-            2 => cell(
+            3 => cell(
                 if item.request_id.len() > 12 {
                     format!("{}…", &item.request_id[..12])
                 } else {
@@ -380,16 +532,17 @@ impl TableDelegate for UsageRows {
                 0x6b7c90,
                 ("usage-request", row),
             ),
-            3 => cell(
+            4 => cell(
                 format!(
-                    "↓{} ↑{} R{} Σ{}",
+                    "↓{} ↑{} R{} Σ{} · {}",
                     compact(item.input_tokens, zh),
                     compact(item.output_tokens, zh),
                     compact(item.cache_read_tokens, zh),
-                    compact(item.total_tokens, zh)
+                    compact(item.total_tokens, zh),
+                    percent(cache_rate(item.cache_read_tokens, item.input_tokens))
                 ),
                 Some(format!(
-                    "{} {}\n{} {}\n{} {}\n{} {}",
+                    "{} {}\n{} {}\n{} {}\n{} {}\n{} {}",
                     if zh { "输入" } else { "Input" },
                     exact(item.input_tokens),
                     if zh { "输出" } else { "Output" },
@@ -397,12 +550,18 @@ impl TableDelegate for UsageRows {
                     if zh { "缓存读" } else { "Cache read" },
                     exact(item.cache_read_tokens),
                     if zh { "总 Token" } else { "Total" },
-                    exact(item.total_tokens)
+                    exact(item.total_tokens),
+                    if zh {
+                        "缓存命中率 = 缓存读 ÷ 输入（缺失或输入为 0 显示 —）"
+                    } else {
+                        "Cache hit = cache read / input (missing or zero input: —)"
+                    },
+                    percent(cache_rate(item.cache_read_tokens, item.input_tokens))
                 )),
                 0x19334d,
                 ("usage-tokens", row),
             ),
-            4 => {
+            5 => {
                 let status = item
                     .cost
                     .as_ref()
@@ -432,10 +591,15 @@ impl TableDelegate for UsageRows {
                         ("usage-cost", row),
                     )
                 } else {
-                    cell(label.clone(), Some(label), 0x8a98a7, ("usage-cost", row))
+                    cell(
+                        label,
+                        Some(cost_hint(status, zh)),
+                        0x8a98a7,
+                        ("usage-cost", row),
+                    )
                 }
             }
-            5 => cell(
+            6 => cell(
                 duration(item.duration_ms),
                 Some(format!(
                     "{} {}\n{} {}\n{} {}",
@@ -448,6 +612,12 @@ impl TableDelegate for UsageRows {
                 )),
                 0x19334d,
                 ("usage-latency", row),
+            ),
+            7 => cell(
+                rate_text(item),
+                Some(rate_hint(item.stream, zh).into()),
+                0x19334d,
+                ("usage-speed", row),
             ),
             _ => {
                 let (text, _) = usage_label(item.usage_status, zh);
@@ -720,7 +890,10 @@ impl TableDelegate for GroupRows {
 mod tests {
     // Explicit imports only: `use super::*` would pull GPUI's `#[gpui::test]`
     // attribute into scope and shadow the built-in `#[test]` macro.
-    use super::{amount, compact, duration, outcome_label, percent};
+    use super::{
+        MIN_WIDTHS, amount, cache_rate, compact, duration, fitted_widths, outcome_label,
+        output_rate, percent,
+    };
     use crate::stats_dto::{Currency, ErrorKind, Outcome};
 
     #[test]
@@ -757,6 +930,95 @@ mod tests {
         assert_eq!(duration(Some(2500)), "2.50 s");
         assert_eq!(percent(None), "—");
         assert_eq!(percent(Some(0.5)), "50.0%");
+    }
+
+    #[test]
+    fn cache_percentage_requires_a_known_valid_input_split() {
+        assert_eq!(cache_rate(Some(800), Some(1000)), Some(0.8));
+        assert_eq!(cache_rate(Some(0), Some(1000)), Some(0.));
+        assert_eq!(cache_rate(Some(1000), Some(1000)), Some(1.));
+        for (read, input) in [
+            (None, Some(1000)),
+            (Some(800), None),
+            (Some(0), Some(0)),
+            (Some(1001), Some(1000)),
+            (Some(-1), Some(1000)),
+            (Some(0), Some(-1)),
+        ] {
+            assert_eq!(cache_rate(read, input), None);
+        }
+    }
+
+    #[test]
+    fn output_rate_distinguishes_streaming_generation_from_end_to_end_time() {
+        assert_eq!(
+            output_rate(Some(100), Some(3000), Some(1000), true),
+            Some(50.)
+        );
+        assert_eq!(output_rate(Some(100), Some(2000), None, false), Some(50.));
+        assert_eq!(output_rate(Some(0), Some(2000), Some(1000), true), Some(0.));
+        assert_eq!(output_rate(Some(100), Some(2000), Some(0), true), Some(50.));
+        for (output, duration, first, stream) in [
+            (None, Some(2000), Some(1000), true),
+            (Some(-1), Some(2000), Some(1000), true),
+            (Some(100), None, Some(1000), true),
+            (Some(100), Some(0), None, false),
+            (Some(100), Some(-1), None, false),
+            (Some(100), Some(2000), None, true),
+            (Some(100), Some(2000), Some(2000), true),
+            (Some(100), Some(2000), Some(3000), true),
+            (Some(100), Some(2000), Some(-1), true),
+        ] {
+            assert_eq!(output_rate(output, duration, first, stream), None);
+        }
+    }
+
+    #[test]
+    fn automatic_columns_fit_default_viewport_and_keep_numeric_columns_compact() {
+        for available in [1134., 1454., 2400.] {
+            let widths = fitted_widths(available, &[None; 9]);
+            assert!((widths.iter().sum::<f32>() - available).abs() < 0.1);
+            assert_eq!(widths[0], 110.);
+            assert!(widths[5] <= 140. && widths[6] <= 82. && widths[7] <= 78.);
+            assert!(
+                widths
+                    .iter()
+                    .zip(MIN_WIDTHS)
+                    .all(|(width, min)| *width >= min)
+            );
+        }
+    }
+
+    #[test]
+    fn user_columns_are_preserved_while_remaining_columns_fit() {
+        let custom = [
+            Some(400.),
+            Some(120.),
+            Some(200.),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        ];
+        for available in [1280., 1454.] {
+            let widths = fitted_widths(available, &custom);
+            assert_eq!(widths[0], 110.); // Time is always fixed.
+            assert_eq!(widths[1], 120.);
+            assert_eq!(widths[2], 200.);
+            // If both names were manually sized, unused space is preferable
+            // to stretching compact numeric columns beyond their auto caps.
+            assert!(widths.iter().sum::<f32>() <= available + 0.1);
+            assert!(widths[4] >= MIN_WIDTHS[4]);
+        }
+    }
+
+    #[test]
+    fn narrow_windows_scroll_instead_of_hiding_or_crushing_columns() {
+        let widths = fitted_widths(800., &[None; 9]);
+        assert_eq!(widths, MIN_WIDTHS);
+        assert!(widths.iter().sum::<f32>() > 800.);
     }
 
     #[test]

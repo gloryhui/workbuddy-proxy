@@ -425,7 +425,11 @@ UI查阅本机`gpui-component-0.7.3`示例确认select/column/table API，不写
 
 参考model_table.rs实现`TableDelegate`，行数据为`Vec<RequestRowDto>`而非无限Value数组。只传本页最多100行。
 
-推荐列宽：时间120、模型/供应商220、请求ID130、Token240、费用130、性能120、状态110，表内容约1070px。固定行高64/72以容纳双行；窄区横向滚动。表头固定、表体由DataTable滚动，页码条放表外。
+请求表现有九列：时间、供应商、模型、请求 ID、Token/缓存命中率、金额、耗时、tok/s、状态。`usage_table.rs::fitted_widths` 按实际表格容器宽度分配自动列，时间固定 110，其他列有可读的最小值；模型/Token/供应商权重较高，数值列的自动最大值较小。`stats-table-host.on_prepaint` 测量宽度并只在尺寸变化时刷新表头。宽度不足时保留横向滚动，仍只渲染当前服务端分页。
+
+除时间列外启用 `Column.resizable(true)`；订阅 `TableEvent::ColumnWidthsChanged`，只将相对上次布局发生变化的列记为用户覆盖宽度，其余列继续自适应。翻页和轮询只更新 delegate.rows 并 notify，避免刷新列元数据中断拖动；切语言重建表头时读取同一覆盖值。宽度仅保留于当前设置窗口，不写统计 SQLite。
+
+每行缓存比例和输出速率从 RequestRowDto 已存的计数和单调时钟耗时派生，不新增 SQLite 字段或接口版本。公式及未知值规则见需求 3.3/4.3，单测覆盖零、缺失、越界和流式/非流式差异。供应商从 Start 事件写入的 provider_name 快照直接查询；不关联当前配置补名，集成测试用真实管理接口完成复制、调用、改名、再次调用、删除，再验证 SQLite 和详情接口的名称均保留。
 
 列排序只提供API支持的白名单，第一版请求列表固定时间降序，不在GUI本页点击列头排序假装全量已排序。点击行详情使用request_id请求新详情。显示长模型ellipsis+tooltip，可复制request_id，禁止把未知字段自动dump成原始JSON给用户。
 

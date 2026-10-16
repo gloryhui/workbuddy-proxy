@@ -20,14 +20,14 @@ use crate::{
 };
 use chrono::{Local, TimeZone as _};
 use gpui_kit::component::{
-    Disableable, IconName, Sizable, WindowExt,
+    Disableable, ElementExt, IconName, Sizable, WindowExt,
     button::{Button, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
     input::{Input, InputState},
     label::Label,
     select::{Select, SelectEvent, SelectItem, SelectState},
-    table::{DataTable, TableState},
+    table::{DataTable, TableEvent, TableState},
     tag::Tag,
 };
 use gpui_kit::prelude::FluentBuilder;
@@ -479,6 +479,8 @@ impl Statistics {
                     rows: Vec::new(),
                     zh,
                     loading: false,
+                    available_width: 1134.,
+                    custom_widths: [None; usage_table::REQUEST_COLUMNS],
                 },
                 window,
                 cx,
@@ -634,6 +636,16 @@ impl Statistics {
     }
 
     fn subscribe(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        cx.subscribe(&self.usage_table, |_, table, event, cx| {
+            if let TableEvent::ColumnWidthsChanged(widths) = event {
+                table.update(cx, |table, cx| {
+                    table.delegate_mut().resize(widths);
+                    table.refresh(cx);
+                    cx.notify();
+                });
+            }
+        })
+        .detach();
         cx.subscribe_in(&self.refresh_select, window, |this, _, event, _, cx| {
             if let SelectEvent::Confirm(Some(code)) = event {
                 this.refresh_interval = code.parse().unwrap_or(0);
@@ -1475,7 +1487,9 @@ impl Statistics {
                         self.usage_table.update(cx, |table, cx| {
                             table.delegate_mut().rows = self.rows.clone();
                             table.delegate_mut().loading = false;
-                            table.refresh(cx);
+                            // Row-only updates must not rebuild column metadata
+                            // while the user is dragging a column divider.
+                            cx.notify();
                         });
                         self.error = None;
                         self.last_updated = Some(chrono::Local::now().format("%H:%M").to_string());
@@ -1749,8 +1763,15 @@ impl Statistics {
                 .justify_between()
                 .gap_3()
                 .text_size(px(12.))
-                .child(Label::new(name).text_color(rgb(MUTED)))
-                .child(Label::new(value).text_color(rgb(INK)))
+                .child(Label::new(name).flex_shrink_0().text_color(rgb(MUTED)))
+                .child(
+                    div()
+                        .flex_1()
+                        .min_w_0()
+                        .text_right()
+                        .text_color(rgb(INK))
+                        .child(value),
+                )
         };
         let cost_text = match item.cost.as_ref() {
             Some(cost)
@@ -1765,7 +1786,7 @@ impl Statistics {
                     usage_table::amount(cost.total_cost_nanos.as_deref(), cost.currency)
                 )
             }
-            Some(cost) => usage_table::cost_label(cost.status, zh),
+            Some(cost) => usage_table::cost_hint(cost.status, zh),
             None => usage_table::cost_label(CostStatus::Unpriced, zh),
         };
         let mut rows = vec![
@@ -1877,6 +1898,25 @@ impl Statistics {
                     if zh { "首内容" } else { "first" },
                     usage_table::duration(item.first_content_ms),
                     usage_table::duration(item.ttfb_ms)
+                ),
+            ),
+            row(
+                if zh {
+                    "缓存命中率".into()
+                } else {
+                    "Cache hit rate".into()
+                },
+                usage_table::percent(usage_table::cache_rate(
+                    item.cache_read_tokens,
+                    item.input_tokens,
+                )),
+            ),
+            row(
+                "tok/s".into(),
+                format!(
+                    "{} · {}",
+                    usage_table::rate_text(item),
+                    usage_table::rate_hint(item.stream, zh)
                 ),
             ),
             row(
@@ -2857,6 +2897,19 @@ impl Statistics {
                     .h(px(400.))
                     .min_h_0()
                     .overflow_hidden()
+                    .on_prepaint({
+                        let table = self.usage_table.downgrade();
+                        move |bounds, _, cx| {
+                            let available = f32::from(bounds.size.width) - 2.;
+                            let _ = table.update(cx, |table, cx| {
+                                if (table.delegate().available_width - available).abs() > 0.5 {
+                                    table.delegate_mut().available_width = available;
+                                    table.refresh(cx);
+                                    cx.notify();
+                                }
+                            });
+                        }
+                    })
                     .child(table),
             )
             .into_any_element()
