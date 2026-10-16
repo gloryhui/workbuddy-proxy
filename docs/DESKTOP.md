@@ -24,7 +24,7 @@ The DataTable delegates row selection to the application to preserve Shift range
 
 ## Interface behavior
 
-The development version adds per-model [WorkBuddy capability settings](MODEL-CAPABILITIES.md) to the model editor: images, tools, reasoning options, token/context limits and complete Chat Completions URL mode. Defaults enable image input for DeepSeek V4.1 Flash; explicit per-model overrides survive drafts, saving, duplication and sync. Other media JSON and response bytes remain transparent; this does not add native audio/video APIs or protocol conversion.
+The development version adds per-model [WorkBuddy capability settings](MODEL-CAPABILITIES.md) to the model editor: images, tools, reasoning options, token/context limits and complete Chat Completions URL mode. Defaults enable image input for DeepSeek V4.1 Flash; explicit per-model overrides survive drafts, saving, duplication and sync. Other media JSON and response bytes remain transparent; this does not add native audio/video APIs. Provider-level protocol selection now also adapts OpenAI Responses, Anthropic Messages and Gemini GenerateContent to the local Chat Completions interface; see [protocol usage](protocol-compat/USAGE.md).
 
 Version 0.5.2 adds an opt-in **Launch at login** checkbox in the header. New configurations and existing configurations without this setting default to off. The authenticated core command persists the selection and updates only this user's Windows `Run/WorkBuddyProxy` value or macOS `~/Library/LaunchAgents/io.github.gloryhui.workbuddy-proxy.autostart.plist`; a registration failure rolls back the saved choice. Login launches use `--autostart --config-dir DIR`, start the resident tray/core without settings, and do not wake an already-running settings window. Normal manual launches still show settings. There is no keep-alive restart after Quit. Windows uninstall removes the app's Run value while retaining user configuration.
 
@@ -34,11 +34,11 @@ Model dialog Enter uses the same validation/submission as Confirm; missing IDs k
 
 Log entries use single newlines and a 16px line height. New content scrolls to the bottom after layout; polls without new content preserve the viewport. The existing core keeps its latest 100 entries rather than growing memory without a bound.
 
-Global header controls are ordered Launch at login, Check updates, Language. The language selector has a visible label and compact width; the version appears as muted text at the end of the subtitle. Connection settings offer a searchable [provider preset catalog](PROVIDER-PRESETS.md) above the name and key fields. Presets fill the form and remain editable until saved.
+Global header icon controls are ordered Launch at login, Check updates, Language, Restore default size, GitHub and Feedback. Language uses a globe menu; the version appears as muted text at the end of the subtitle. Connection settings offer a searchable [provider preset catalog](PROVIDER-PRESETS.md) above the name and key fields. Presets fill the form and remain editable until saved.
 
 ## Windows installation
 
-Use `workbuddy-proxy-0.5.3-windows-x64-setup.exe`. The wizard and uninstaller use Simplified Chinese on all Windows display languages. The directory selection page is always shown. Setup defaults to `%LOCALAPPDATA%\Programs\WorkBuddy Proxy`, installs for the current user, creates a Start Menu entry, and selects the desktop shortcut by default (users can uncheck it). Both shortcuts launch only `workbuddy-proxy.exe`.
+Use `workbuddy-proxy-0.5.5-windows-x64-setup.exe`. The wizard and uninstaller use Simplified Chinese on all Windows display languages. The directory selection page is always shown. Setup defaults to `%LOCALAPPDATA%\Programs\WorkBuddy Proxy`, installs for the current user, creates a Start Menu entry, and selects the desktop shortcut by default (users can uncheck it). Both shortcuts launch only `workbuddy-proxy.exe`.
 
 The settings helper is named `internal/workbuddy-settings.exe`; do not launch or move it separately. Only the main executable is exposed through installation shortcuts; internal binaries must remain with the installation.
 

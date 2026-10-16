@@ -36,3 +36,5 @@ jobs:
       - run: python scripts/native_resource_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/statistics_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/statistics_pagination_test.py --exe target/release/workbuddy-proxy
+      - run: python scripts/price_catalog_test.py --exe target/release/workbuddy-proxy
+      - run: python scripts/workbuddy_endpoint_check_test.py --exe target/release/workbuddy-proxy

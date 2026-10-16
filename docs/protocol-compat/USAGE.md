@@ -33,7 +33,7 @@ Gemini 当前明确拒绝非 text response_format、strict=true 工具和 parall
 
 ## 统计与价格
 
-四种协议使用同一统计生命周期、写队列和 SQLite；schema 4 增加 upstream_protocol，历史行默认 Chat，不改历史价格和费用。统计详情显示上游协议。
+四种协议使用同一统计生命周期、写队列和 SQLite；当前 schema 6；schema 4 引入的 upstream_protocol 使历史行默认 Chat，不改历史价格和费用。统计详情显示上游协议。
 
 价格表可直接增删改。每次接纳请求时冻结币种、计价方式、输入/输出/缓存单价和来源版本；结束时按该快照结算。修改或删除当前价格不改变过去或已经开始的调用。缺少价格时按配置币种默认零价；缺少有效 Token 时仍为未知，不能用 0 冒充用量和费用。
 
@@ -43,4 +43,4 @@ Gemini 当前明确拒绝非 text response_format、strict=true 工具和 parall
 
 仓库自测使用隔离临时配置、虚构 Key、本地独立 REST fixtures、真实核心和 SQLite。它证明适配链行为，不代表真实供应商计费或 WorkBuddy 工具执行器验收。
 
-具备相应测试账号后，应逐个协议在 WorkBuddy 中确认：普通多轮；真实图片；同名并行工具及连续两轮结果；思考/签名；中途取消；异常响应；配置保存重开；统计用量和供应商账单核对。不要把连接探测成功称为全部功能兼容。测试前备份 WorkBuddy models.json；本次开发未使用真实 Key、不安装、不发布。
+具备相应测试账号后，应逐个协议在 WorkBuddy 中确认：普通多轮；真实图片；同名并行工具及连续两轮结果；思考/签名；中途取消；异常响应；配置保存重开；统计用量和供应商账单核对。不要把连接探测成功称为全部功能兼容。测试前备份 WorkBuddy models.json；自动化验收不使用真实 Key，也不会修改真实 WorkBuddy 配置。
