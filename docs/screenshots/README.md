@@ -1,9 +1,12 @@
 # 界面截图
 
-- 版本：WorkBuddy Proxy v0.5.2 正式版，发布提交 `b0782b2cd84d3b17ecb549e26274fbcaad703c6f`。
-- 平台：macOS Apple Silicon。Windows 使用相同的 GPUI Kit 设置组件；这些图片不作为 Windows 实机截图。
-- `macos-zh.jpg`：中文主界面、顶部开机启动与语言控件、供应商预设、模型管理、代理状态与流式连接诊断。
-- `model-discovery-zh.jpg`：按地址与 Key 从本机模拟服务获取模型，显示已有模型与待添加项。
-- `macos-en.jpg`：通过语言下拉框切换到 English；用户输入的名称不会自动翻译。
+- 版本：WorkBuddy Proxy v0.5.5，Release 构建的应用源码提交 `fe4cc50`；后续至 `862fc98` 的变更仅涉及测试和 CI。
+- 拍摄日期：2026-10-16。
+- 平台：macOS Apple Silicon，1440 × 900 逻辑像素窗口，Retina 截图 2880 × 1802 像素（含标题栏）。不作为 Windows 实机截图。
+- `statistics-zh-v0.5.5.jpg`：统计总览、七天筛选、Token 汇总、缓存命中率、费用和趋势。
+- `request-log-zh-v0.5.5.jpg`：向下滚动后的请求日志、分页、供应商 / 模型分列、Token 明细、费用与 tok/s。
+- `macos-zh-v0.5.5.jpg`：供应商设置、上游协议、模型列表、WorkBuddy 同步和本地代理状态。
+- `model-discovery-zh-v0.5.5.jpg`：从本机模拟服务获取模型，显示已有模型与待添加项。
+- `macos-en-v0.5.5.jpg`：通过地球图标切换 English；演示供应商名称不会自动翻译。
 
-图片由正式 DMG 中的应用直接截取，使用独立演示配置、演示 Key 和 loopback 模拟上游，不包含个人账号信息。示例模型和响应不代表真实账号可用性。截图未经界面内容重绘或拼接。
+图片来自当前 Release 二进制的原生 GPUI 界面，使用独立临时 HOME、演示 Key 和 loopback 模拟上游，没有读取或展示真实 WorkBuddy 配置、密钥与调用历史。统计数据库仅在临时配置目录中填入合成记录和价格，金额及速率不代表真实服务表现或官方报价。截图仅转为 JPEG 压缩，未重绘或拼接界面。

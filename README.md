@@ -34,9 +34,9 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/macos-zh.jpg" width="1180" alt="WorkBuddy Proxy v0.5.2 中文主界面：开机启动、供应商预设、模型管理和连接诊断日志">
+  <img src="docs/screenshots/statistics-zh-v0.5.5.jpg" width="1180" alt="WorkBuddy Proxy v0.5.5 数据统计：筛选、Token 汇总、费用与使用趋势">
 </p>
-<p align="center"><sub>历史 v0.5.2 供应商页面实拍，未包含新版统计页与协议选择 · 当前功能说明见下文 · 截图使用独立演示配置与本机模拟上游</sub></p>
+<p align="center"><sub>v0.5.5 当前界面实拍 · 隔离演示配置与本机模拟上游 · 用量与费用为合成示例数据</sub></p>
 
 ---
 
@@ -158,12 +158,24 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 本地代理状态卡集中显示地址、端口、供应商数、模型数和请求数。日志保留最近 100 条事件，不记录 API Key 或对话内容；关闭设置后，日志仍保留在核心内存中。
 
+<p align="center">
+  <img src="docs/screenshots/macos-zh-v0.5.5.jpg" width="1180" alt="v0.5.5 供应商管理：上游协议、模型管理、WorkBuddy 同步和本地代理设置">
+</p>
+
+### 统计请求明细
+
+请求日志分别展示供应商、模型、输入 / 输出 / 缓存读 / 总 Token / 命中率、费用、耗时和 tok/s，支持分页与拖动列宽。
+
+<p align="center">
+  <img src="docs/screenshots/request-log-zh-v0.5.5.jpg" width="1180" alt="v0.5.5 请求日志：供应商和模型分列、Token 明细、费用、tok/s 与分页">
+</p>
+
 ### 模型发现与选择
 
 按当前 API 地址和 Key 获取模型，搜索后批量勾选。已有模型单独标记，确认添加前不会修改配置。
 
 <p align="center">
-  <img src="docs/screenshots/model-discovery-zh.jpg" width="1180" alt="模型发现弹窗：搜索、筛选、批量勾选、已有模型标记与确认添加">
+  <img src="docs/screenshots/model-discovery-zh-v0.5.5.jpg" width="1180" alt="模型发现弹窗：搜索、筛选、批量勾选、已有模型标记与确认添加">
 </p>
 
 <details>
@@ -171,11 +183,11 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 点击顶部地球图标选择界面语言。供应商名称、显示名等用户输入不会被自动翻译。
 
-![WorkBuddy Proxy v0.5.2 English interface](docs/screenshots/macos-en.jpg)
+![WorkBuddy Proxy v0.5.5 English interface](docs/screenshots/macos-en-v0.5.5.jpg)
 
 </details>
 
-截图均来自 macOS 正式版，使用本机模拟服务和演示 Key；示例模型与测试结果不代表真实供应商账号的可用权限。
+截图均由 v0.5.5 的 macOS Release 构建实际截取，使用隔离配置、本机模拟服务和演示 Key；统计记录与价格为合成示例，不代表真实调用、官方报价或账号可用权限。
 
 ### Release 更新检测
 
