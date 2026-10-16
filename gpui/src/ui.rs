@@ -393,8 +393,8 @@ impl Proxy {
                     .ghost()
                     .icon(Icon::default().path("icons/restore-size.svg"))
                     .tooltip(self.t(
-                        "恢复默认窗口尺寸（1180 × 780）",
-                        "Restore default window size (1180 × 780)",
+                        "恢复默认窗口尺寸（1440 × 900）",
+                        "Restore default window size (1440 × 900)",
                     ))
                     .accessibility_label(self.t("恢复默认窗口尺寸", "Restore default window size"))
                     .disabled(self.resetting_window)

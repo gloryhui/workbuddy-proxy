@@ -40,7 +40,7 @@ use fs2::FileExt;
 use gpui_kit::component::{Theme, ThemeMode, TitleBar};
 use gpui_kit::*;
 pub(crate) fn default_window_size() -> Size<Pixels> {
-    size(px(1180.), px(780.))
+    size(px(1440.), px(900.))
 }
 fn main() {
     let mut args = std::env::args().skip(1);
