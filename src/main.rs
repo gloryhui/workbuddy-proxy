@@ -37,8 +37,9 @@ use std::{
 
 // Bump when native controllers require new management commands or semantics.
 // Release versions alone cannot distinguish successive local review builds.
-/// 8: startup WorkBuddy endpoint validation and confirmed port/restart flow.
-const CONTROL_PROTOCOL: u32 = 8;
+/// 10: API-key provider presets and explicit Azure authentication settings.
+/// Protocol 9 is also used by the separate automatic-update development branch.
+const CONTROL_PROTOCOL: u32 = 10;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {

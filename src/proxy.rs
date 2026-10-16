@@ -385,8 +385,12 @@ impl Bridge {
             .client
             .post(endpoint)
             .headers(forward_headers(headers, true))
-            .header("Authorization", r.destination.authorization.clone())
             .body(body);
+        req = if r.destination.settings.is_azure() {
+            req.header("api-key", r.destination.native_key.clone())
+        } else {
+            req.header("Authorization", r.destination.authorization.clone())
+        };
         if !headers.contains_key("content-type") {
             req = req.header("Content-Type", "application/json");
         }
@@ -447,7 +451,7 @@ impl Bridge {
         .await?;
         let ids: Vec<_> = models.keys().cloned().collect();
         self.catalog
-            .remember_async(base, protocol, key, models)
+            .remember_async(base, protocol, key, settings, models)
             .await;
         Ok(json!(ids).to_string())
     }
@@ -733,7 +737,12 @@ fn forward_headers(headers: &HeaderMap, request: bool) -> HeaderMap {
             || (request
                 && matches!(
                     name.as_str(),
-                    "authorization" | "host" | "content-length" | "x-api-key" | "x-goog-api-key"
+                    "authorization"
+                        | "host"
+                        | "content-length"
+                        | "x-api-key"
+                        | "x-goog-api-key"
+                        | "api-key"
                 ))
         {
             continue;
@@ -1797,11 +1806,16 @@ mod tests {
         h.insert("authorization", "Bearer local".parse().unwrap());
         h.insert("content-length", "123".parse().unwrap());
         h.insert("x-api-key", "client-vendor-key".parse().unwrap());
+        h.insert("api-key", "client-azure-key".parse().unwrap());
         h.insert("x-goog-api-key", "client-google-key".parse().unwrap());
         h.append("set-cookie", "a=1".parse().unwrap());
         h.append("set-cookie", "b=2".parse().unwrap());
         let r = forward_headers(&h, true);
-        assert!(!r.contains_key("x-api-key") && !r.contains_key("x-goog-api-key"));
+        assert!(
+            !r.contains_key("x-api-key")
+                && !r.contains_key("x-goog-api-key")
+                && !r.contains_key("api-key")
+        );
         assert!(!r.contains_key("authorization"));
         assert!(!r.contains_key("content-length"));
         assert!(!r.contains_key("x-hop"));

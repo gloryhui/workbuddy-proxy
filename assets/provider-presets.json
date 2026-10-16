@@ -1,9 +1,23 @@
 [
   {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "name_zh": "Anthropic 官方",
+    "url": "https://api.anthropic.com/v1",
+    "protocol": "anthropic_messages"
+  },
+  {
     "id": "openai",
     "name": "OpenAI",
     "url": "https://api.openai.com/v1",
     "name_zh": "OpenAI"
+  },
+  {
+    "id": "azure",
+    "name": "Azure OpenAI",
+    "name_zh": "Azure OpenAI",
+    "url": "",
+    "authentication": "azure_api_key"
   },
   {
     "id": "google",

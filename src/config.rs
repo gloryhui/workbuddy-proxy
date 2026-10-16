@@ -716,10 +716,11 @@ impl Connection {
         Ok(())
     }
     pub fn upstream_endpoint(&self, stream: bool) -> Result<reqwest::Url, String> {
-        self.protocol.endpoint(&self.upstream, &self.model, stream)
+        self.protocol_settings
+            .endpoint(self.protocol, &self.upstream, &self.model, stream)
     }
     pub fn endpoint(&self) -> String {
-        if self.protocol.is_native() {
+        if self.protocol.is_native() || self.protocol_settings.is_azure() {
             return self
                 .upstream_endpoint(false)
                 .map(|u| u.to_string())

@@ -48,6 +48,7 @@ fn modes(protocol: UpstreamProtocol) -> Vec<Mode> {
 pub struct Editor {
     protocol: UpstreamProtocol,
     limit: Entity<InputState>,
+    authentication: Entity<SelectState<Vec<Mode>>>,
     mode: Entity<SelectState<Vec<Mode>>>,
     mapping: [Entity<InputState>; 7],
 }
@@ -55,6 +56,23 @@ impl Editor {
     pub fn new(window: &mut Window, cx: &mut App) -> Self {
         Self {
             protocol: UpstreamProtocol::default(),
+            authentication: cx.new(|cx| {
+                SelectState::new(
+                    vec![
+                        Mode {
+                            code: "protocol_default".into(),
+                            title: "协议默认 / Protocol default".into(),
+                        },
+                        Mode {
+                            code: "azure_api_key".into(),
+                            title: "Azure API Key".into(),
+                        },
+                    ],
+                    None,
+                    window,
+                    cx,
+                )
+            }),
             limit: cx.new(|cx| InputState::new(window, cx)),
             mode: cx
                 .new(|cx| SelectState::new(modes(UpstreamProtocol::default()), None, window, cx)),
@@ -69,6 +87,14 @@ impl Editor {
         cx: &mut App,
     ) {
         self.protocol = protocol;
+        let authentication = serde_json::to_value(settings.authentication)
+            .unwrap()
+            .as_str()
+            .unwrap()
+            .to_owned();
+        self.authentication.update(cx, |s, cx| {
+            s.set_selected_value(&authentication, window, cx)
+        });
         self.limit.update(cx, |s, cx| {
             s.set_value(settings.default_max_output_tokens.to_string(), window, cx)
         });
@@ -103,7 +129,7 @@ impl Editor {
             .selected_value()
             .cloned()
             .unwrap_or_else(|| "none".into());
-        parse(
+        let mut settings = parse(
             self.protocol,
             &self.limit.read(cx).value(),
             &code,
@@ -112,11 +138,22 @@ impl Editor {
                 .zip(&self.mapping)
                 .map(|(key, input)| (key.to_owned(), input.read(cx).value().trim().to_owned()))
                 .collect(),
-        )
+        )?;
+        settings.authentication = serde_json::from_value(serde_json::Value::String(
+            self.authentication
+                .read(cx)
+                .selected_value()
+                .cloned()
+                .unwrap_or_else(|| "protocol_default".into()),
+        ))
+        .map_err(|_| "Invalid authentication")?;
+        settings.validate(self.protocol)?;
+        Ok(settings)
     }
     pub fn render(&self, zh: bool) -> AnyElement {
         let t = |cn: &str, en: &str| if zh { cn.to_owned() } else { en.to_owned() };
         div().id("protocol-options-fields").flex().flex_col().gap_3().overflow_y_scroll().flex_1().min_h_0()
+            .children(matches!(self.protocol, UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses).then(|| div().child(t("API Key 认证", "API Key authentication")).child(Select::new(&self.authentication).accessibility_label(t("API Key 认证", "API Key authentication")))))
             .children((self.protocol==UpstreamProtocol::AnthropicMessages).then(||div().child(t("默认最大输出 Token","Default maximum output tokens")).child(Input::new(&self.limit).aria_label(t("默认最大输出 Token","Default maximum output tokens")))))
             .children((self.protocol==UpstreamProtocol::AnthropicMessages).then(||div().child("Anthropic-Version: 2023-06-01")))
             .child(div().child(t("思考模式","Thinking mode")).child(Select::new(&self.mode).accessibility_label(t("思考模式","Thinking mode"))))

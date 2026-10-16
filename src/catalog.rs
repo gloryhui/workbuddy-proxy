@@ -306,6 +306,7 @@ pub struct Target {
     pub protocol: UpstreamProtocol,
     pub settings: ProtocolSettings,
 }
+#[derive(Clone, Copy)]
 pub struct Wire<'a> {
     pub protocol: UpstreamProtocol,
     pub settings: &'a ProtocolSettings,
@@ -362,13 +363,24 @@ pub(crate) fn endpoint(base: &str) -> Option<String> {
     u.set_path(&path);
     Some(u.as_str().trim_end_matches('/').to_owned())
 }
-fn catalog_key(base: &str, protocol: UpstreamProtocol, credential: &str) -> Option<String> {
-    if protocol == UpstreamProtocol::OpenaiChat {
-        endpoint(base)
+fn catalog_key(base: &str, wire: Wire<'_>) -> Option<String> {
+    let Wire {
+        protocol,
+        settings,
+        credential,
+    } = wire;
+    let base = settings.api_base(protocol, base).ok()?;
+    if protocol == UpstreamProtocol::OpenaiChat && !settings.is_azure() {
+        endpoint(&base)
     } else {
-        protocol.models_endpoint(base).ok().map(|u| {
+        settings.models_endpoint(protocol, &base).ok().map(|u| {
             format!(
-                "{}|{}|{:x}",
+                "{}{}|{}|{:x}",
+                if settings.is_azure() {
+                    "azure_api_key|"
+                } else {
+                    ""
+                },
                 protocol.as_str(),
                 u,
                 Sha256::digest(credential.as_bytes())
@@ -433,11 +445,12 @@ impl Catalog {
         upstream: String,
         protocol: UpstreamProtocol,
         credential: String,
+        settings: ProtocolSettings,
         models: BTreeMap<String, Hints>,
     ) {
         let catalog = self.clone();
         let _ = tokio::task::spawn_blocking(move || {
-            catalog.remember_protocol(&upstream, protocol, &credential, models)
+            catalog.remember_protocol(&upstream, protocol, &credential, &settings, models)
         })
         .await;
     }
@@ -473,16 +486,23 @@ impl Catalog {
             settings,
             credential,
         } = wire;
-        let mut resolved = self.resolve_raw(upstream, model, manual, protocol, credential);
+        let mut resolved = self.resolve_raw(upstream, model, manual, wire);
         if !protocol.is_native() {
             return resolved;
         }
         let value = &mut resolved.capabilities;
         value.use_custom_protocol = false;
         let cache = self.cache.lock().unwrap();
-        let live = catalog_key(upstream, protocol, credential)
-            .and_then(|k| cache.live.get(&k))
-            .and_then(|l| find(&l.models, model));
+        let live = catalog_key(
+            upstream,
+            Wire {
+                protocol,
+                settings,
+                credential,
+            },
+        )
+        .and_then(|k| cache.live.get(&k))
+        .and_then(|l| find(&l.models, model));
         let profile = &settings.reasoning_profile;
         let mut choices: Vec<String> = EFFORTS
             .iter()
@@ -585,9 +605,13 @@ impl Catalog {
         upstream: &str,
         model: &str,
         manual: Option<&ModelCapabilities>,
-        protocol: UpstreamProtocol,
-        credential: &str,
+        wire: Wire<'_>,
     ) -> Resolved {
+        let Wire {
+            protocol,
+            settings,
+            credential,
+        } = wire;
         if let Some(value) = manual {
             return Resolved {
                 capabilities: value.clone(),
@@ -642,9 +666,16 @@ impl Catalog {
             sources.push("models.dev:provider");
             updated_at = Some(cache.fetched_at);
         }
-        if let Some(live) = catalog_key(upstream, protocol, credential)
-            .as_ref()
-            .and_then(|k| cache.live.get(k))
+        if let Some(live) = catalog_key(
+            upstream,
+            Wire {
+                protocol,
+                settings,
+                credential,
+            },
+        )
+        .as_ref()
+        .and_then(|k| cache.live.get(k))
             && let Some(m) = find(&live.models, model)
             && m != &Hints::default()
         {
@@ -676,16 +707,30 @@ impl Catalog {
 
     #[cfg(test)]
     pub fn remember(&self, upstream: &str, models: BTreeMap<String, Hints>) {
-        self.remember_protocol(upstream, UpstreamProtocol::OpenaiChat, "", models)
+        self.remember_protocol(
+            upstream,
+            UpstreamProtocol::OpenaiChat,
+            "",
+            &ProtocolSettings::default(),
+            models,
+        )
     }
     pub fn remember_protocol(
         &self,
         upstream: &str,
         protocol: UpstreamProtocol,
         credential: &str,
+        settings: &ProtocolSettings,
         models: BTreeMap<String, Hints>,
     ) {
-        if let Some(key) = catalog_key(upstream, protocol, credential) {
+        if let Some(key) = catalog_key(
+            upstream,
+            Wire {
+                protocol,
+                settings,
+                credential,
+            },
+        ) {
             let mut cache = self.cache.lock().unwrap();
             cache.version = 1;
             cache.live.insert(
@@ -784,7 +829,14 @@ impl Catalog {
             let targets: Vec<_> = targets
                 .into_iter()
                 .filter(|t| {
-                    let Some(key) = catalog_key(&t.upstream, t.protocol, &t.key) else {
+                    let Some(key) = catalog_key(
+                        &t.upstream,
+                        Wire {
+                            protocol: t.protocol,
+                            settings: &t.settings,
+                            credential: &t.key,
+                        },
+                    ) else {
                         return false;
                     };
                     if t.key.is_empty() || !seen.insert(key.clone()) {
@@ -812,8 +864,14 @@ impl Catalog {
                     )
                     .await
                     {
-                        self.remember_async(target.upstream, target.protocol, target.key, rows)
-                            .await;
+                        self.remember_async(
+                            target.upstream,
+                            target.protocol,
+                            target.key,
+                            target.settings,
+                            rows,
+                        )
+                        .await;
                     }
                 })
                 .await;
@@ -865,9 +923,67 @@ pub async fn fetch_protocol(
     settings: &ProtocolSettings,
     timeout: Duration,
 ) -> Result<BTreeMap<String, Hints>, String> {
-    let endpoint = protocol.models_endpoint(base)?;
+    let endpoint = settings.models_endpoint(protocol, base)?;
     settings.validate(protocol)?;
     tokio::time::timeout(timeout.min(Duration::from_secs(30)), async {
+        // Azure inference takes deployment names. The v1 models catalog may
+        // contain underlying model IDs instead, so never use it as a fallback.
+        if settings.is_azure() {
+            let mut deployments = endpoint.clone();
+            let root = deployments
+                .path()
+                .strip_suffix("/v1/models")
+                .ok_or("Use the Azure resource endpoint or its /openai/v1 base URL")?;
+            deployments.set_path(&format!("{root}/deployments"));
+            deployments.set_query(Some("api-version=2022-12-01"));
+            let result = download(
+                client
+                    .get(deployments)
+                    .header("api-key", key)
+                    .header("Accept-Encoding", "identity"),
+                LIVE_LIMIT,
+                timeout,
+            )
+            .await;
+            match result {
+                Ok(bytes) => {
+                    let data: Value = serde_json::from_slice(&bytes)
+                        .map_err(|_| "Invalid Azure deployment list")?;
+                    let rows = data["data"]
+                        .as_array()
+                        .ok_or("Invalid Azure deployment list")?;
+                    if rows.len() > 4096 {
+                        return Err("At most 4096 discovered models".into());
+                    }
+                    if rows.is_empty() {
+                        return Err("No Azure deployments returned; enter your deployment name manually / 未返回 Azure 部署，请手动填写部署名称".into());
+                    }
+                    let mut models = BTreeMap::new();
+                    for row in rows {
+                        let id = row["id"]
+                            .as_str()
+                            .filter(|id| {
+                                !id.is_empty()
+                                    && *id == id.trim()
+                                    && id.len() <= 160
+                                    && !id.chars().any(char::is_control)
+                            })
+                            .ok_or("Invalid Azure deployment name")?;
+                        models.insert(id.to_owned(), Hints::native(row, protocol));
+                    }
+                    return Ok(models);
+                }
+                Err(error)
+                    if matches!(
+                        error.as_str(),
+                        "Upstream HTTP 400"
+                            | "Upstream HTTP 403"
+                            | "Upstream HTTP 404"
+                            | "Upstream HTTP 410"
+                    ) => return Err("Azure deployment discovery unavailable; enter your deployment name manually / 无法获取 Azure 部署，请手动填写部署名称".into()),
+                Err(error) => return Err(error),
+            }
+        }
         let mut models = BTreeMap::new();
         let mut cursor = None::<String>;
         let mut seen = BTreeSet::new();
@@ -889,7 +1005,11 @@ pub async fn fetch_protocol(
             let request = client.get(url).header("Accept-Encoding", "identity");
             let request = match protocol {
                 UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses => {
-                    request.bearer_auth(key)
+                    if settings.is_azure() {
+                        request.header("api-key", key)
+                    } else {
+                        request.bearer_auth(key)
+                    }
                 }
                 UpstreamProtocol::AnthropicMessages => request
                     .header("x-api-key", key)
@@ -1045,12 +1165,14 @@ mod tests {
             base,
             UpstreamProtocol::AnthropicMessages,
             "fixture-key",
+            &ProtocolSettings::default(),
             BTreeMap::from([("m".into(), hints)]),
         );
         c.remember_protocol(
             base,
             UpstreamProtocol::OpenaiResponses,
             "fixture-key",
+            &ProtocolSettings::default(),
             BTreeMap::from([(
                 "bare".into(),
                 Hints::native(

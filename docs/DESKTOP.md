@@ -38,7 +38,7 @@ Global header icon controls are ordered Launch at login, Check updates, Language
 
 ## Windows installation
 
-Use `workbuddy-proxy-0.5.5-windows-x64-setup.exe`. The wizard and uninstaller use Simplified Chinese on all Windows display languages. The directory selection page is always shown. Setup defaults to `%LOCALAPPDATA%\Programs\WorkBuddy Proxy`, installs for the current user, creates a Start Menu entry, and selects the desktop shortcut by default (users can uncheck it). Both shortcuts launch only `workbuddy-proxy.exe`.
+Use `workbuddy-proxy-0.5.6-windows-x64-setup.exe`. The wizard and uninstaller use Simplified Chinese on all Windows display languages. The directory selection page is always shown. Setup defaults to `%LOCALAPPDATA%\Programs\WorkBuddy Proxy`, installs for the current user, creates a Start Menu entry, and selects the desktop shortcut by default (users can uncheck it). Both shortcuts launch only `workbuddy-proxy.exe`.
 
 The settings helper is named `internal/workbuddy-settings.exe`; do not launch or move it separately. Only the main executable is exposed through installation shortcuts; internal binaries must remain with the installation.
 

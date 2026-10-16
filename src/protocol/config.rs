@@ -147,9 +147,18 @@ pub struct ReasoningProfile {
     pub levels: BTreeMap<String, String>,
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Authentication {
+    #[default]
+    ProtocolDefault,
+    AzureApiKey,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct ProtocolSettings {
+    pub authentication: Authentication,
     pub anthropic_version: String,
     pub default_max_output_tokens: u32,
     pub reasoning_profile: ReasoningProfile,
@@ -160,6 +169,7 @@ pub struct ProtocolSettings {
 impl Default for ProtocolSettings {
     fn default() -> Self {
         Self {
+            authentication: Authentication::default(),
             anthropic_version: "2023-06-01".into(),
             default_max_output_tokens: 4096,
             reasoning_profile: ReasoningProfile::default(),
@@ -176,7 +186,56 @@ fn effort_key(s: &str) -> bool {
 }
 
 impl ProtocolSettings {
+    pub fn is_azure(&self) -> bool {
+        self.authentication == Authentication::AzureApiKey
+    }
+
+    /// Azure's v1 API accepts the resource root or an explicit gateway prefix.
+    /// Authentication is explicit; a hostname alone never changes credentials.
+    pub fn api_base(&self, protocol: UpstreamProtocol, base: &str) -> Result<String, String> {
+        self.validate(protocol)?;
+        let mut url = validate_base(base)?;
+        if self.is_azure() {
+            let path = url.path().trim_end_matches('/');
+            match path {
+                "" => url.set_path("/openai/v1"),
+                "/openai" => url.set_path("/openai/v1"),
+                _ if path.contains("/deployments/") => {
+                    return Err("Use the Azure resource endpoint or its /openai/v1 base URL".into());
+                }
+                _ => {}
+            }
+        }
+        Ok(url.to_string().trim_end_matches('/').to_owned())
+    }
+
+    pub fn endpoint(
+        &self,
+        protocol: UpstreamProtocol,
+        base: &str,
+        model: &str,
+        stream: bool,
+    ) -> Result<reqwest::Url, String> {
+        protocol.endpoint(&self.api_base(protocol, base)?, model, stream)
+    }
+
+    pub fn models_endpoint(
+        &self,
+        protocol: UpstreamProtocol,
+        base: &str,
+    ) -> Result<reqwest::Url, String> {
+        protocol.models_endpoint(&self.api_base(protocol, base)?)
+    }
+
     pub fn validate(&self, protocol: UpstreamProtocol) -> Result<(), String> {
+        if self.is_azure()
+            && !matches!(
+                protocol,
+                UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses
+            )
+        {
+            return Err("Azure API Key requires OpenAI Chat or Responses".into());
+        }
         if self.default_max_output_tokens == 0 {
             return Err("Invalid default output token limit".into());
         }
@@ -250,6 +309,84 @@ impl ProtocolSettings {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn azure_key_endpoints_are_explicit_and_legacy_settings_keep_their_defaults() {
+        let settings = ProtocolSettings {
+            authentication: Authentication::AzureApiKey,
+            ..Default::default()
+        };
+        for base in [
+            "https://resource.openai.azure.com",
+            "https://resource.openai.azure.com/",
+            "https://resource.openai.azure.com/openai",
+            "https://resource.openai.azure.com/openai/v1/",
+        ] {
+            for (protocol, suffix) in [
+                (UpstreamProtocol::OpenaiChat, "chat/completions"),
+                (UpstreamProtocol::OpenaiResponses, "responses"),
+            ] {
+                assert_eq!(
+                    settings
+                        .endpoint(protocol, base, "deployment-name", true)
+                        .unwrap()
+                        .as_str(),
+                    format!("https://resource.openai.azure.com/openai/v1/{suffix}")
+                );
+                assert_eq!(
+                    settings.models_endpoint(protocol, base).unwrap().as_str(),
+                    "https://resource.openai.azure.com/openai/v1/models"
+                );
+            }
+        }
+        assert_eq!(
+            settings
+                .endpoint(
+                    UpstreamProtocol::OpenaiResponses,
+                    "https://gateway.test/custom/openai/v1",
+                    "deployment",
+                    false
+                )
+                .unwrap()
+                .as_str(),
+            "https://gateway.test/custom/openai/v1/responses"
+        );
+        for protocol in [
+            UpstreamProtocol::AnthropicMessages,
+            UpstreamProtocol::GeminiGenerateContent,
+        ] {
+            assert!(settings.validate(protocol).is_err());
+        }
+        for base in [
+            "",
+            "https://<resource>.openai.azure.com",
+            "https://resource.openai.azure.com/openai/deployments/name",
+            "https://resource.openai.azure.com?api-version=old",
+        ] {
+            assert!(
+                settings
+                    .endpoint(UpstreamProtocol::OpenaiChat, base, "deployment", false)
+                    .is_err()
+            );
+        }
+        assert_eq!(
+            ProtocolSettings::default()
+                .endpoint(
+                    UpstreamProtocol::OpenaiChat,
+                    "https://resource.openai.azure.com",
+                    "model",
+                    false
+                )
+                .unwrap()
+                .path(),
+            "/chat/completions"
+        );
+        assert_eq!(
+            serde_json::from_str::<ProtocolSettings>("{}")
+                .unwrap()
+                .authentication,
+            Authentication::ProtocolDefault
+        );
+    }
     #[test]
     fn protocol_values_are_explicit_and_settings_are_closed() {
         assert!(serde_json::from_str::<UpstreamProtocol>("null").is_err());

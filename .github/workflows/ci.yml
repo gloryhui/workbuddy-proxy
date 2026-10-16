@@ -35,6 +35,7 @@ jobs:
       - run: python scripts/port_change.py --exe target/release/workbuddy-proxy
       - run: python scripts/native_protocol_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/native_discovery_test.py --exe target/release/workbuddy-proxy
+      - run: python scripts/api_key_providers_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/native_resource_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/statistics_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/statistics_pagination_test.py --exe target/release/workbuddy-proxy

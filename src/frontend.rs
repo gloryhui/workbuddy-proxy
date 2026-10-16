@@ -130,6 +130,49 @@ fn compatible(value: &Instance) -> Result<bool, String> {
             && data["control_protocol"].as_u64() == Some(crate::CONTROL_PROTOCOL.into()))
     })
 }
+
+#[cfg(test)]
+mod compatibility_tests {
+    use super::*;
+    use std::io::{Read, Write};
+
+    #[test]
+    fn same_version_protocol_nine_is_incompatible_with_api_key_provider_settings() {
+        for (version, protocol, expected) in [
+            (env!("CARGO_PKG_VERSION"), None, false),
+            (env!("CARGO_PKG_VERSION"), Some(9), false),
+            (env!("CARGO_PKG_VERSION"), Some(10), true),
+            ("0.3.0", Some(10), false),
+        ] {
+            let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+            let port = listener.local_addr().unwrap().port();
+            let server = std::thread::spawn(move || {
+                let (mut stream, _) = listener.accept().unwrap();
+                stream
+                    .set_read_timeout(Some(Duration::from_secs(3)))
+                    .unwrap();
+                let mut request = Vec::new();
+                let mut byte = [0];
+                while !request.ends_with(b"\r\n\r\n") {
+                    stream.read_exact(&mut byte).unwrap();
+                    request.push(byte[0]);
+                    assert!(request.len() < 8192);
+                }
+                let body =
+                    serde_json::json!({"version":version,"control_protocol":protocol}).to_string();
+                write!(stream, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}", body.len()).unwrap();
+            });
+            let result = compatible(&Instance {
+                pid: 0,
+                port,
+                management_key: "fixture-management".into(),
+            });
+            server.join().unwrap();
+            assert_eq!(result.unwrap(), expected, "{version} protocol {protocol:?}");
+        }
+    }
+}
+
 fn stop_old(value: &Instance, dir: &Path) -> Result<(), String> {
     let rt = tokio::runtime::Builder::new_current_thread()
         .enable_all()

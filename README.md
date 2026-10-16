@@ -40,7 +40,7 @@
 <p align="center">
   <img src="docs/screenshots/statistics-zh-v0.5.5.jpg" width="1180" alt="WorkBuddy Proxy v0.5.5 数据统计：筛选、Token 汇总、费用与使用趋势">
 </p>
-<p align="center"><sub>v0.5.5 当前界面实拍 · 隔离演示配置与本机模拟上游 · 用量与费用为合成示例数据</sub></p>
+<p align="center"><sub>v0.5.5 界面实拍 · 隔离演示配置与本机模拟上游 · 用量与费用为合成示例数据</sub></p>
 
 ---
 
@@ -52,7 +52,7 @@
 | --- | --- |
 | 🪶 轻量界面 | Rust 转发核心，GPUI Kit 统一界面；关闭设置释放界面进程 |
 | 🧩 一份配置，多个模型 | 同一个供应商只填一次 URL 和 Key，模型列表每行添加一个 ID |
-| 🗂️ 供应商预设 | 内置 76 个 API 地址，可搜索供应商、地区和套餐，选择后仍可自定义 |
+| 🗂️ 供应商预设 | 内置 78 个供应商／地区／套餐预设，支持 Anthropic 官方与 Azure API Key，地址仍可自定义 |
 | 🧠 自动识别模型能力 | 结合供应商信息与 models.dev 自动补齐图片、工具、思考档位及 Token 上限，支持离线缓存与手动覆盖 |
 | 🔀 同名模型独立选路 | 多个账号、多个供应商使用相同模型 ID，也能在 WorkBuddy 中分别选择 |
 | 🌊 四协议流式接入 | Chat 保留上游流；Responses / Anthropic / Gemini 转为标准 Chat JSON / SSE，支持多轮与工具结果 |
@@ -71,21 +71,21 @@
 
 ## 下载与安装
 
-### v0.5.5 正式版
+### v0.5.6 正式版
 
 本版新增三种原生上游协议适配、完整的本地用量与成本统计、逐请求价格快照，以及 WorkBuddy 同步 / 取消同步和端口变更的重启确认。统计默认查看当天，支持分页、拖动列宽、原生趋势图和每日价格更新。[查看更新记录](CHANGELOG.md#v055--2026-10-16)。
 
 | 系统 | 下载 | 体积 | 安装方式 |
 | --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.5/workbuddy-proxy-0.5.5-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
-| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.5/workbuddy-proxy-0.5.5-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
-| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.5/workbuddy-proxy-0.5.5-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/workbuddy-proxy-0.5.6-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/workbuddy-proxy-0.5.6-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/workbuddy-proxy-0.5.6-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
 Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
 Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.5/SHA256SUMS.txt)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/SHA256SUMS.txt)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
@@ -93,9 +93,9 @@ Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / �
 
 ### 1. 添加供应商
 
-打开程序，在左侧选择或新增供应商。可先用连接设置顶部的**供应商预设**下拉框，搜索供应商名称、地区、套餐或地址，选择后填入供应商名称和 API 地址；也可直接填写自定义地址。
+打开程序，在左侧选择或新增供应商。可先用连接设置顶部的**供应商预设**下拉框，搜索供应商名称、地区、套餐或地址，选择后填入供应商名称、上游协议和 API 地址；Azure 预设需要填写自己的资源地址。也可直接填写自定义地址。
 
-预设不会自动保存或发起上游请求，也不会修改已有 Key、模型和路由。确认地址对应自己的套餐与地区，再填写 Key 和模型：
+预设不会自动保存或发起上游请求，也不会修改已有 Key、模型和路由；选择预设会设置对应协议、认证方式并恢复协议选项默认值。确认地址对应自己的套餐与地区，再填写 Key 和模型：
 
 | 字段 | 填什么 |
 | --- | --- |
@@ -108,7 +108,7 @@ Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / �
 
 使用 OpenCode Go 时，可选择对应预设，或填写 `https://opencode.ai/zen/go/v1`。上游地址使用 HTTPS，本机 loopback 地址也允许 HTTP。预设中的完整路径应保留，不要统一替换为 `/v1`。
 
-预设目录参考 [yetone/magpie](https://github.com/yetone/magpie)，共收录 76 个固定 OpenAI Chat API 地址（地区和套餐分别列出）；收录范围和来源见[供应商预设说明](docs/PROVIDER-PRESETS.md)。预设只提供地址，不提供 Key 或模型权限；部分套餐没有 `/models` 接口，可手动填写模型 ID。
+预设目录参考 [yetone/magpie](https://github.com/yetone/magpie)，共收录 78 个预设：原有 76 个 OpenAI Chat 地址、Anthropic 官方 Messages 地址及需填写资源地址的 Azure OpenAI（地区和套餐分别列出）；收录范围和来源见[供应商预设说明](docs/PROVIDER-PRESETS.md)。预设提供连接参数，不提供 Key 或模型权限；部分套餐没有 `/models` 接口，可手动填写模型 ID。
 
 ### 2. 配置模型，保存并测试
 
@@ -223,6 +223,8 @@ flowchart LR
 每个模型具有独立内部路由 ID、可读别名和本地 URL。例如 `opencode/deepseek-v4.1-flash` 会在转发时还原为真实上游 ID `deepseek-v4.1-flash`，使用所选供应商的 Key。旧的 `wbp-abc123` 仍支持相同选路；上游响应中的模型字段保持原样。
 
 裸模型 ID 对应多项配置时，代理会拒绝模糊选路。WorkBuddy 自动同步使用每个模型的独立 URL，选中的列表项与上游凭据保持对应。
+
+Anthropic 官方预设使用 `https://api.anthropic.com/v1` 和 Messages 协议，填写 API Key 后可获取模型、测试并保存。Azure OpenAI 预设默认使用 Chat 协议和 `api-key` 认证：填写 `https://你的资源.openai.azure.com` 或完整的 `/openai/v1` 基地址；也可切换 Responses，认证方式会保留。模型 ID 必须填写 Azure **部署名称**，不一定等于模型品牌名称；获取模型只查询部署列表，列表不可用或为空时请手动填写部署名称，不使用 `/models` 中的基础模型 ID 代替部署名称。两者均只支持 API Key 接入，不需要 OAuth 登录。
 
 ## 上游协议
 

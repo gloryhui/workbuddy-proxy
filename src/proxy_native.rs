@@ -146,8 +146,13 @@ async fn open(
 ) -> Result<reqwest::Response, Error> {
     let endpoint = r
         .destination
-        .protocol
-        .endpoint(&r.destination.base, &r.connection.model, p.request.stream)
+        .settings
+        .endpoint(
+            r.destination.protocol,
+            &r.destination.base,
+            &r.connection.model,
+            p.request.stream,
+        )
         .map_err(|_| Error::input("invalid_upstream_endpoint", "upstream"))?;
     let mut request = b
         .client
@@ -165,7 +170,11 @@ async fn open(
         .body(p.body.clone());
     request = match r.destination.protocol {
         UP::OpenaiResponses => {
-            request.header(header::AUTHORIZATION, r.destination.authorization.clone())
+            if r.destination.settings.is_azure() {
+                request.header("api-key", r.destination.native_key.clone())
+            } else {
+                request.header(header::AUTHORIZATION, r.destination.authorization.clone())
+            }
         }
         UP::AnthropicMessages => request
             .header("x-api-key", r.destination.native_key.clone())
@@ -739,8 +748,13 @@ pub(super) async fn test(
 ) -> Result<(), String> {
     report.url = r
         .destination
-        .protocol
-        .endpoint(&r.destination.base, &r.connection.model, true)
+        .settings
+        .endpoint(
+            r.destination.protocol,
+            &r.destination.base,
+            &r.connection.model,
+            true,
+        )
         .map_err(|_| "Invalid upstream endpoint")?
         .to_string();
     let result = async {

@@ -324,7 +324,7 @@ def main():
             (folder / 'config.json').write_text(dumps(config))
             process, log, health = t.start_core(args.exe, folder, port)
             try:
-                assert health['control_protocol'] == 8
+                assert health['control_protocol'] == 10
                 t.wait_for(lambda: t.stats(folder, port, 'stats_health')['state'] == 'ready', 'stats ready')
                 for i, protocol in enumerate(PROTOCOLS):
                     t.stats(folder, port, 'stats_price_save', provider_id='provider-%s' % i, upstream_model=providers[i]['models'][0]['model'],

@@ -48,7 +48,7 @@ def main():
                 assert core.poll() is None, 'Core exited'
                 try:
                     with urllib.request.urlopen(f'http://127.0.0.1:{actual_port}/health', timeout=.5) as response:
-                        assert json.load(response)['control_protocol'] == 8
+                        assert json.load(response)['control_protocol'] == 10
                     break
                 except OSError:
                     time.sleep(.025)

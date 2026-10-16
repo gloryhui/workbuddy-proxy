@@ -1038,7 +1038,7 @@ def crash_recovery(exe, directory, port, checks):
         stop_core(process, port, directory, log, expect_clean=False)
     process, log, health = start_core(exe, directory, port)
     try:
-        assert health['control_protocol'] == 8, health
+        assert health['control_protocol'] == 10, health
         page = wait_for(lambda: _recovered(directory, port), 'interrupted row was not recovered')
         assert page
         assert stats(directory, port, 'stats_health')['loss_scope'] == 'unknown_after_unclean_exit'
@@ -1162,8 +1162,8 @@ def main():
         start_ms = now_ms()
         process, log, health = start_core(args.exe, folder, port)
         try:
-            assert health['control_protocol'] == 8, health
-            checks.ok('control protocol is 8', str(health['control_protocol']))
+            assert health['control_protocol'] == 10, health
+            checks.ok('control protocol is 10', str(health['control_protocol']))
             run(folder, port, upstream.server_port, start_ms, checks)
         except AssertionError:
             text = (Path(folder) / 'process.log').read_text(encoding='utf-8', errors='replace')

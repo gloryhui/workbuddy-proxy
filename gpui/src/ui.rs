@@ -510,7 +510,18 @@ impl Proxy {
             .into_any_element()
     }
     fn sync_preset(&mut self, window: &mut Window, cx: &mut Context<Self>) {
-        let id = crate::presets::matching_url(&self.url.read(cx).value()).to_owned();
+        let draft = self
+            .drafts
+            .providers
+            .get(&self.selected())
+            .cloned()
+            .unwrap_or_default();
+        let id = crate::presets::matching_url(
+            &self.url.read(cx).value(),
+            draft.protocol,
+            &draft.protocol_settings,
+        )
+        .to_owned();
         self.preset_select
             .update(cx, |s, cx| s.set_selected_value(&id, window, cx));
     }
@@ -533,9 +544,16 @@ impl Proxy {
                 number += 1;
             }
             self.name.update(cx, |s, cx| s.set_value(name, window, cx));
-            self.url
-                .update(cx, |s, cx| s.set_value(preset.url.clone(), window, cx));
             self.capture(cx);
+            if let Some(draft) = self.drafts.providers.get_mut(&selected) {
+                preset.apply_connection(draft);
+                let url = draft.upstream.clone();
+                self.url.update(cx, |s, cx| s.set_value(url, window, cx));
+            }
+            self.protocol_select.update(cx, |s, cx| {
+                s.set_selected_value(&preset.protocol.as_str().to_owned(), window, cx)
+            });
+            self.last_metadata = Instant::now() - Duration::from_secs(10);
         }
         cx.notify();
     }
@@ -716,23 +734,39 @@ impl Proxy {
             last_dirty: String::new(),
             _timer: timer,
         };
-        cx.subscribe(&this.protocol_select, |this, _, event, cx| {
-            if let SelectEvent::Confirm(Some(code)) = event {
-                let Ok(protocol) = serde_json::from_value(serde_json::Value::String(code.clone()))
-                else {
-                    return;
-                };
-                let id = this.selected();
-                if let Some(draft) = this.drafts.providers.get_mut(&id)
-                    && draft.protocol != protocol
-                {
-                    draft.protocol = protocol;
-                    draft.protocol_settings = Default::default();
+        cx.subscribe_in(
+            &this.protocol_select,
+            window,
+            |this, _, event, window, cx| {
+                if let SelectEvent::Confirm(Some(code)) = event {
+                    let Ok(protocol) =
+                        serde_json::from_value(serde_json::Value::String(code.clone()))
+                    else {
+                        return;
+                    };
+                    let id = this.selected();
+                    if let Some(draft) = this.drafts.providers.get_mut(&id)
+                        && draft.protocol != protocol
+                    {
+                        let azure = draft.protocol_settings.is_azure()
+                            && matches!(
+                                protocol,
+                                crate::upstream_config::UpstreamProtocol::OpenaiChat
+                                    | crate::upstream_config::UpstreamProtocol::OpenaiResponses
+                            );
+                        draft.protocol = protocol;
+                        draft.protocol_settings = Default::default();
+                        if azure {
+                            draft.protocol_settings.authentication =
+                                crate::upstream_config::Authentication::AzureApiKey;
+                        }
+                    }
+                    this.sync_preset(window, cx);
+                    this.last_metadata = Instant::now() - Duration::from_secs(10);
+                    cx.notify();
                 }
-                this.last_metadata = Instant::now() - Duration::from_secs(10);
-                cx.notify();
-            }
-        })
+            },
+        )
         .detach();
         cx.subscribe(&this.effort_select, |this, _, event, cx| {
             if let SelectEvent::Confirm(Some(code)) = event {
@@ -817,13 +851,14 @@ impl Proxy {
             .unwrap_or_default();
         json!({"protocol":draft.protocol,"protocol_settings":draft.protocol_settings})
     }
-    fn confirm_protocol(&mut self, cx: &mut Context<Self>) {
+    fn confirm_protocol(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         match self.protocol_options.read(cx) {
             Ok(settings) => {
                 let id = self.selected();
                 if let Some(d) = self.drafts.providers.get_mut(&id) {
                     d.protocol_settings = settings;
                 }
+                self.sync_preset(window, cx);
                 self.protocol_open = false;
                 self.error = false;
             }
@@ -836,6 +871,14 @@ impl Proxy {
     }
     fn url_hint(&self) -> &'static str {
         use crate::upstream_config::UpstreamProtocol as P;
+        if self
+            .drafts
+            .providers
+            .get(&self.selected())
+            .is_some_and(|d| d.protocol_settings.is_azure())
+        {
+            return self.t("填写 Azure 资源地址，如 https://your-resource.openai.azure.com；模型 ID 填部署名称，认证使用 API Key。", "Enter your Azure resource URL, e.g. https://your-resource.openai.azure.com; use deployment names as model IDs. API Key authentication.");
+        }
         match self
             .drafts
             .providers
@@ -1649,10 +1692,10 @@ impl Proxy {
                     .close_button(true)
                     .overlay_closable(false)
                     .child(body.clone())
-                    .on_ok(move |_, _, cx| {
+                    .on_ok(move |_, window, cx| {
                         let _ = confirm_owner.update(cx, |this, cx| {
                             if this.protocol_open {
-                                this.confirm_protocol(cx);
+                                this.confirm_protocol(window, cx);
                             } else if this.editing.is_some() {
                                 this.confirm_edit(cx);
                             } else if this.picker.is_some() {
@@ -1921,7 +1964,7 @@ impl Proxy {
         .child(div().child(label(self.t("供应商预设", "Provider preset"))).child(self.preset_menu()))
         .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(Input::new(&self.name).disabled(self.busy))).child(div().flex_1().child(label("API Key")).child(Input::new(&self.key).mask_toggle().disabled(self.busy))))
         .child(div().flex().gap_3().items_center().child(label(self.t("上游协议","Upstream protocol"))).child(Select::new(&self.protocol_select).w(px(260.)).accessibility_label(self.t("上游协议","Upstream protocol")).disabled(self.busy))
-            .child(Button::new("protocol-options").small().label(self.t("协议选项","Protocol options")).disabled(self.busy||!self.native_protocol()).on_click(cx.listener(|this,_,window,cx|{
+            .child(Button::new("protocol-options").small().label(self.t("协议选项","Protocol options")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|{
                 let draft=this.drafts.providers.get(&this.selected()).cloned().unwrap_or_default();
                 this.protocol_options.load(draft.protocol,&draft.protocol_settings,window,cx);this.protocol_open=true;this.error=false;cx.notify();
             }))))
@@ -2195,7 +2238,11 @@ impl Proxy {
                         Button::new("protocol-apply")
                             .primary()
                             .label(self.t("应用到草稿", "Apply to draft"))
-                            .on_click(cx.listener(|this, _, _, cx| this.confirm_protocol(cx))),
+                            .on_click(
+                                cx.listener(|this, _, window, cx| {
+                                    this.confirm_protocol(window, cx)
+                                }),
+                            ),
                     ),
                 )
                 .into_any_element()

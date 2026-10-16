@@ -1,5 +1,11 @@
 # 更新记录
 
+## v0.5.6 — 2026-10-16
+
+- 增加 Anthropic 官方与 Azure OpenAI 预设，共 78 个；选择时设置对应协议与认证，保留 Key、模型和路由。
+- Azure 支持资源地址、API Key、部署名称发现及 Chat／Responses 转发；保存、重开与连接测试保持一致，不增加 OAuth 登录。
+- Azure 部署列表不可用或为空时提示手动填写部署名称，避免将基础模型 ID 当作部署名称；管理协议升级为 10，与自动更新开发分支区分。
+
 ## v0.5.5 — 2026-10-16
 
 - 新增 OpenAI Responses、Anthropic Messages、Gemini GenerateContent 上游适配；WorkBuddy 统一调用本地 Chat Completions，支持 JSON / SSE、多轮、图片、函数工具及原生状态回放，协议与思考映射显式配置。
