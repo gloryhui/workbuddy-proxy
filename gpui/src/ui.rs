@@ -42,6 +42,7 @@ const BG: u32 = 0xf4f7fb;
 const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
 const BORDER: u32 = 0xe2e9f1;
+const SIDEBAR_WIDTH: f32 = 168. * 1.2;
 const PROJECT_URL: &str = "https://github.com/gloryhui/workbuddy-proxy";
 const FEEDBACK_URL: &str = "https://github.com/gloryhui/workbuddy-proxy/issues/new";
 #[derive(Clone)]
@@ -1419,7 +1420,7 @@ impl Proxy {
         let width = if self.table_width > px(0.) {
             self.table_width
         } else {
-            window.viewport_size().width - px(616.)
+            window.viewport_size().width - px(448. + SIDEBAR_WIDTH)
         };
         let column_width = ((width - crate::model_table::EDIT_COLUMN_WIDTH) / 2.).max(px(120.));
         let data = self.model_table.read(cx).delegate();
@@ -1614,7 +1615,7 @@ impl Proxy {
             ];
         Sidebar::new("providers")
             .collapsible(false)
-            .w(px(168.))
+            .w(px(SIDEBAR_WIDTH))
             .border_1()
             .border_color(rgb(0xcbdbe6))
             .rounded(px(12.))
