@@ -375,7 +375,7 @@ retention每日/启动空闲执行；清理使maintenance_revision递增。数�
 
 ### 9.1 页面状态与Entity
 
-`Proxy`新增`Page::Models | Page::Statistics`和`Entity<Statistics>`。模型管理保留原三栏。统计页替换主内容为宽单列，不渲染原右侧日志；不要将统计UI塞入models的center/right函数。
+`Proxy`使用`Page::Providers | Page::Statistics`和`Entity<Statistics>`。模型管理保留原三栏。统计页替换主内容为宽单列，不渲染原右侧日志；不要将统计UI塞入models的center/right函数。
 
 ```text
 Statistics
@@ -391,6 +391,12 @@ Statistics
   visible_series: BTreeSet<SeriesKind>
   _subscriptions/_tasks: 保存生命周期句柄，避免事件订阅立即释放
 ```
+
+`Proxy.providers_expanded` 控制供应商二级列表与操作栏；两个一级标题放入 Sidebar.header，供应商放入可滚动 content，操作放入 Sidebar.footer，因此长列表不影响按钮可达性。窗口右上图标使用自定义 Button 尺寸，按 GPUI Kit 的图标 75% 比例得到 18.2px 图标；工具栏高度 26px 与主标题行对齐。
+
+统计页以 8px gap 依次放置状态、筛选、Token 总用量、趋势、明细。`more_filters_open` 仅控制额外条件显示，不重置已应用筛选；日期与刷新使用独立 Popover，更多区只保留附加筛选。0.7.3 的 Select 样式作用于内层输入，外层 BaseSelect 固定 size_full，横向行内必须用明确宽高的 Div 包裹；主筛选、更多筛选和币种选择均约束各自的 host，避免整行占满和异常空白。筛选卡片 on_prepaint 记录可用宽度，预留时钟/日期/操作空间后分配三个下拉框宽度；展开区搜索、用量和测试开关按基线横排并可换行。两个统计模块标题共用 stats_heading；GPUI 原生组件 locale 随应用语言同步。
+
+日期面板直接复用 `component::calendar::{Calendar, CalendarState, Date}`，Popover 使用受控 open 与 `on_open_change`。`draft_preset/draft_follow_now/custom_from/custom_to` 仅为草稿，打开时从已应用范围初始化；`apply_date_draft` 校验后一次性写入 `range/custom_range/custom_follow_now` 并 mark_dirty。取消/外部关闭只清草稿错误。Calendar 完整选择更新日期并保留时分，显式结束日期关闭跟随；不完整选择禁止确认。输入轮询只同步草稿日历，不使查询失效。`resolve_custom_range` 解析跟随时钟，`reset_pagination` 捕获 frozen_range，翻页不移动窗口。面板打开时暂停自动刷新，确认后按新 generation 重新查询。自动刷新菜单的时钟使用现有 AssetSource 的轻量 SVG 路径；日期/时钟/左箭头均有对应图形。
 
 统计backend线程最多一个dashboard和一个rows查询在途，队列full只保留最新筛选意图，不排100个过期任务。UI回调根据request_tag/generation判断，丢掉迟到回复；过期错误也不能覆盖当前状态。
 
@@ -460,15 +466,15 @@ let chart = LineChart::new(points)
 1. 以容器bounds预留左64px、右16px、上12px、下28px给坐标标签，得到plot_rect；所有线/hover使用同一矩形。
 2. x用桶中心真实UTC时间按比例映射，保证DST小时长度正确。`x=left+(center-first_center)/(last_center-first_center)*width`；只有一桶画居中点。
 3. y只看可见序列的已知最大值，取nice_max（1/2/5×10^n向上），最小=0；全零用[0,1]，全未知不画线只显示空状态。
-4. y映射`top+height*(1-value/ymax)`，绘制5条浅色水平网格，X轴挑6–8个不重叠标签。
+4. y映射`top+height*(1-value/ymax)`，绘制5条浅色水平网格，X轴按实际宽度挑2–8个标签并包含两端；整个时间范围超过36小时显示月/日，日内显示时:分，避免30天日桶都标为00:00。
 5. 每条线按Option切成连续known段，用PathBuilder或Kit plot shape::Line的linear曲线，stroke=2px。None处断开；一段仅一点画圆点。部分覆盖桶用空心/低透明度点，不改变数值。
-6. 只给输入/缓存读可选10%透明填充，不做四条堆叠面积；避免缓存读已包含输入的视觉重复相加。
-7. unknown/degraded桶背景浅灰斜纹或透明带；对没有完整usage的桶不画掉到零的折线。
+6. 绘图区保持白底，不做面积填充和堆叠；避免缓存读已包含输入的视觉重复相加。
+7. unknown/degraded 桶不涂背景；图表角落显示质量提示，悬浮显示每桶覆盖状态。没有完整 usage 的桶保留 None 并断线，不能画到零。旧 rgba(0xf1f4f8) 缺少 alpha 字节，实际造成青色背景，现已移除。
 8. 图例在绘图区外，每项有颜色+文字+toggle状态；开关只重建几何，不访问API。
 
 自定义Plot须按0.7.3源码实现：`paint(bounds,window,cx)`；`id()->Some(ElementId)`；`tooltip_state(position,bounds,cx)`；`tooltip(...)`。需要标签测量时放prepaint返回Vec<AnyElement>；不能在paint里随意layout_as_root。PlotElement的构造和IntoElement实现参照该版本源码，不在文档假设不存在的宏导入。
 
-hover最近桶以x距离二分查找，显示一条竖线与各known点；tooltip一个卡片列出全部可见序列、桶范围、请求/完整用量数、分币种费用。碰右边时翻到左侧，碰底边上移。tooltip显示精确整数，卡片缩写只用于总览。图表提供可读文本摘要帮助可访问性，不要求读屏逐像素读取。
+hover 最近桶以 x 距离查找。PlotElement 传入的是局部坐标，必须扣除左侧标签留白，不能加减屏幕/滚动原点；gutter 不触发提示。使用 GPUI Kit `component::plot::tooltip::{Tooltip,CrossLine,Dot}` 显示一条竖线、各 known 点和统一卡片，自动按容器边缘翻转。卡片列出可见序列、桶范围、请求/完整用量数及覆盖情况。tooltip显示精确整数，卡片缩写只用于总览。图表提供可读文本摘要帮助可访问性，不要求读屏逐像素读取。
 
 费用图同一时间轴，独立Y轴单位货币，UI选择USD/CNY；缺价默认0也进入费用图，可提示“未配置价格，按0计算”。费用只有known部分的桶也必须带coverage提示。第一版不实现双轴混图。
 

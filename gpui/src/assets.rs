@@ -19,12 +19,18 @@ impl AssetSource for Assets {
             r#"<path d="m5 12 4 4L19 6"/>"#
         } else if path.contains("chevron-up") {
             r#"<path d="m6 15 6-6 6 6"/>"#
+        } else if path.contains("chevron-left") {
+            r#"<path d="m15 6-6 6 6 6"/>"#
         } else if path.contains("chevron-right") {
             r#"<path d="m9 6 6 6-6 6"/>"#
         } else if path.contains("chevron") {
             r#"<path d="m6 9 6 6 6-6"/>"#
         } else if path.contains("search") {
             r#"<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>"#
+        } else if path.contains("clock") {
+            r#"<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>"#
+        } else if path.contains("calendar") {
+            r#"<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h.01M12 15h.01M16 15h.01M8 18h.01M12 18h.01"/>"#
         } else if path.contains("autostart") {
             r#"<path d="M12 2v10M18.36 5.64a9 9 0 1 1-12.73 0"/>"#
         } else if path.contains("globe") {

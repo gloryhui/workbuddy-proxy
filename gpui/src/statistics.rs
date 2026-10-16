@@ -20,15 +20,16 @@ use crate::{
 };
 use chrono::{Local, TimeZone as _};
 use gpui_kit::component::{
-    Disableable, ElementExt, IconName, Sizable, WindowExt,
+    Disableable, ElementExt, Icon, IconName, Sizable, WindowExt,
     button::{Button, ButtonVariants},
+    calendar::{Calendar, CalendarEvent, CalendarState, Date},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
     input::{Input, InputState},
     label::Label,
+    popover::Popover,
     select::{Select, SelectEvent, SelectItem, SelectState},
     table::{DataTable, TableEvent, TableState},
-    tag::Tag,
 };
 use gpui_kit::prelude::FluentBuilder;
 use gpui_kit::*;
@@ -57,53 +58,70 @@ pub enum Tab {
     Models,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum RangePreset {
     Today,
+    Day,
     Week,
+    Fortnight,
     Month,
     Quarter,
-    /// User-typed window in this machine's timezone.
     Custom,
 }
 
 impl RangePreset {
-    fn code(self) -> &'static str {
-        match self {
-            RangePreset::Today => "today",
-            RangePreset::Week => "7d",
-            RangePreset::Month => "30d",
-            RangePreset::Quarter => "90d",
-            RangePreset::Custom => "custom",
-        }
-    }
-
-    /// Parses the stored code; unknown values keep the previous preset.
-    fn parse(code: &str) -> Option<Self> {
-        match code {
-            "today" => Some(RangePreset::Today),
-            "7d" => Some(RangePreset::Week),
-            "30d" => Some(RangePreset::Month),
-            "90d" => Some(RangePreset::Quarter),
-            "custom" => Some(RangePreset::Custom),
-            _ => None,
-        }
-    }
-
     fn title(self, zh: bool) -> &'static str {
         match (self, zh) {
-            (RangePreset::Today, true) => "今天",
-            (RangePreset::Today, false) => "Today",
-            (RangePreset::Week, true) => "近 7 天",
-            (RangePreset::Week, false) => "Last 7 days",
-            (RangePreset::Month, true) => "近 30 天",
-            (RangePreset::Month, false) => "Last 30 days",
-            (RangePreset::Quarter, true) => "近 90 天",
-            (RangePreset::Quarter, false) => "Last 90 days",
-            (RangePreset::Custom, true) => "自定义",
-            (RangePreset::Custom, false) => "Custom",
+            (Self::Today, true) => "当天",
+            (Self::Today, false) => "Today",
+            (Self::Day, true) => "1天",
+            (Self::Day, false) => "24 hours",
+            (Self::Week, true) => "7天",
+            (Self::Week, false) => "7 days",
+            (Self::Fortnight, true) => "14天",
+            (Self::Fortnight, false) => "14 days",
+            (Self::Month, true) => "30天",
+            (Self::Month, false) => "30 days",
+            (Self::Quarter, true) => "90天",
+            (Self::Quarter, false) => "90 days",
+            (Self::Custom, true) => "自定义",
+            (Self::Custom, false) => "Custom",
         }
     }
+
+    fn bounds(self, now: i64) -> Option<(i64, i64)> {
+        let days = match self {
+            Self::Today => 0,
+            Self::Day => return Some((now - 86_400_000, now)),
+            Self::Week => 6,
+            Self::Fortnight => 13,
+            Self::Month => 29,
+            Self::Quarter => 89,
+            Self::Custom => return None,
+        };
+        Some((local_midnight_days_ago(days), now))
+    }
+}
+
+/// Resolves only the applied selection. Draft edits never reach query builders.
+fn resolve_custom_range(range: (i64, i64), follow_now: bool, now: i64) -> (i64, i64) {
+    (range.0, if follow_now { now } else { range.1 })
+}
+
+fn validate_date_draft(
+    from: &str,
+    to: &str,
+    follow_now: bool,
+    now: i64,
+) -> Result<(i64, i64), &'static str> {
+    crate::stats_controller::validate_range(
+        crate::usage_table::parse_local_time(from),
+        if follow_now {
+            Some(now)
+        } else {
+            crate::usage_table::parse_local_time(to)
+        },
+    )
 }
 
 #[derive(Clone)]
@@ -151,6 +169,14 @@ fn local_midnight_days_ago(days: i64) -> i64 {
         .unwrap_or_else(|| now_ms() - days * 86_400_000)
 }
 
+fn stats_heading(text: &'static str) -> Div {
+    div()
+        .text_size(px(13.))
+        .font_weight(FontWeight::SEMIBOLD)
+        .text_color(rgb(INK))
+        .child(text)
+}
+
 fn stats_card(id: &'static str) -> Stateful<Div> {
     // Unlike the model-management `card()`, statistics cards size to their
     // content; only the chart and the table get explicit heights.
@@ -164,8 +190,8 @@ fn stats_card(id: &'static str) -> Stateful<Div> {
         .border_1()
         .border_color(rgb(BORDER))
         .rounded(px(12.))
-        .p_4()
-        .gap_3()
+        .p_3()
+        .gap(px(6.))
 }
 
 pub struct Statistics {
@@ -198,12 +224,19 @@ pub struct Statistics {
     outcome: String,
     usage: String,
     include_tests: bool,
-    range_select: Entity<ChoiceState>,
+    more_filters_open: bool,
+    filters_width: f32,
+    date_open: bool,
+    refresh_open: bool,
+    draft_preset: RangePreset,
+    draft_follow_now: bool,
+    custom_follow_now: bool,
+    draft_text: (String, String),
+    calendar: Entity<CalendarState>,
     provider_select: Entity<ChoiceState>,
     model_select: Entity<ChoiceState>,
     outcome_select: Entity<ChoiceState>,
     usage_select: Entity<ChoiceState>,
-    refresh_select: Entity<ChoiceState>,
     currency_select: Entity<ChoiceState>,
     // Data.
     dashboard: Option<DashboardDto>,
@@ -217,7 +250,6 @@ pub struct Statistics {
     /// Current model search text (R07 wires the input to this).
     model_query: String,
     model_options: Vec<FilterOptionDto>,
-    timezone: String,
     filter_key: String,
     tab: Tab,
     page_size: i64,
@@ -312,26 +344,7 @@ impl Statistics {
         let provider_search = cx.new(|cx| InputState::new(window, cx));
         let model_search = cx.new(|cx| InputState::new(window, cx));
         let price_search = cx.new(|cx| InputState::new(window, cx));
-        let range_select = cx.new(|cx| {
-            SelectState::new(
-                [
-                    RangePreset::Today,
-                    RangePreset::Week,
-                    RangePreset::Month,
-                    RangePreset::Quarter,
-                    RangePreset::Custom,
-                ]
-                .into_iter()
-                .map(|preset| choice(preset.code(), preset.title(zh)))
-                .collect::<Vec<_>>(),
-                None,
-                window,
-                cx,
-            )
-        });
-        range_select.update(cx, |state, cx| {
-            state.set_selected_value(&RangePreset::Month.code().to_owned(), window, cx);
-        });
+        let calendar = cx.new(|cx| CalendarState::new(window, cx));
         let custom_from = cx.new(|cx| InputState::new(window, cx).placeholder("YYYY-MM-DD HH:MM"));
         let custom_to = cx.new(|cx| InputState::new(window, cx).placeholder("YYYY-MM-DD HH:MM"));
         let provider_select = cx.new(|cx| {
@@ -383,26 +396,6 @@ impl Statistics {
                 items.push(choice(code, if zh { cn } else { en }));
             }
             SelectState::new(items, None, window, cx)
-        });
-        let refresh_select = cx.new(|cx| {
-            SelectState::new(
-                vec![
-                    choice(
-                        "0",
-                        if zh {
-                            "自动刷新：关闭"
-                        } else {
-                            "Auto refresh: off"
-                        },
-                    ),
-                    choice("10", if zh { "每 10 秒" } else { "Every 10s" }),
-                    choice("30", if zh { "每 30 秒" } else { "Every 30s" }),
-                    choice("60", if zh { "每 60 秒" } else { "Every 60s" }),
-                ],
-                None,
-                window,
-                cx,
-            )
         });
         let currency_select = cx.new(|cx| {
             SelectState::new(
@@ -536,14 +529,21 @@ impl Statistics {
             outcome: String::new(),
             usage: String::new(),
             include_tests: false,
-            range_select,
+            more_filters_open: false,
+            filters_width: 760.,
+            date_open: false,
+            refresh_open: false,
+            draft_preset: RangePreset::Month,
+            draft_follow_now: true,
+            custom_follow_now: false,
+            draft_text: (String::new(), String::new()),
+            calendar,
             provider_select,
             custom_from,
             custom_to,
             model_select,
             outcome_select,
             usage_select,
-            refresh_select,
             currency_select,
             dashboard: None,
             rows: Vec::new(),
@@ -555,7 +555,6 @@ impl Statistics {
             configured_providers: Vec::new(),
             model_query: String::new(),
             model_options: Vec::new(),
-            timezone: String::new(),
             filter_key: String::new(),
             tab: Tab::Requests,
             dashboard_seq: 0,
@@ -646,11 +645,31 @@ impl Statistics {
             }
         })
         .detach();
-        cx.subscribe_in(&self.refresh_select, window, |this, _, event, _, cx| {
-            if let SelectEvent::Confirm(Some(code)) = event {
-                this.refresh_interval = code.parse().unwrap_or(0);
-                cx.notify();
+        cx.subscribe_in(&self.calendar, window, |this, _, event, window, cx| {
+            let CalendarEvent::Selected(date) = event;
+            this.draft_preset = RangePreset::Custom;
+            this.date_error = None;
+            if let Some(start) = date.start() {
+                let time = this.custom_from.read(cx).value();
+                let time = time.split_whitespace().nth(1).unwrap_or("00:00");
+                this.custom_from.update(cx, |state, cx| {
+                    state.set_value(format!("{start} {time}"), window, cx)
+                });
             }
+            if let Some(end) = date.end() {
+                let time = this.custom_to.read(cx).value();
+                let time = time.split_whitespace().nth(1).unwrap_or("23:59");
+                this.custom_to.update(cx, |state, cx| {
+                    state.set_value(format!("{end} {time}"), window, cx)
+                });
+                // A calendar end selection is explicit, so it must be honored.
+                this.draft_follow_now = false;
+            }
+            this.draft_text = (
+                this.custom_from.read(cx).value().to_string(),
+                this.custom_to.read(cx).value().to_string(),
+            );
+            cx.notify();
         })
         .detach();
         cx.subscribe_in(&self.currency_select, window, |this, _, event, _, cx| {
@@ -726,17 +745,6 @@ impl Statistics {
     }
 
     fn rebuild_choices(&mut self, window: &mut Window, cx: &mut Context<Self>) {
-        let zh = self.zh;
-        let ranges = [
-            RangePreset::Today,
-            RangePreset::Week,
-            RangePreset::Month,
-            RangePreset::Quarter,
-            RangePreset::Custom,
-        ]
-        .into_iter()
-        .map(|r| choice(r.code(), r.title(zh)))
-        .collect();
         let outcomes = vec![
             choice("", self.t("全部状态", "All states")),
             choice("completed", self.t("已完成", "Completed")),
@@ -753,12 +761,6 @@ impl Statistics {
             choice("missing", self.t("缺失", "Missing")),
             choice("invalid", self.t("无效", "Invalid")),
             choice("not_applicable", self.t("不适用", "N/A")),
-        ];
-        let refresh = vec![
-            choice("0", self.t("自动刷新：关闭", "Auto refresh: off")),
-            choice("10", self.t("每10秒", "Every 10s")),
-            choice("30", self.t("每30秒", "Every 30s")),
-            choice("60", self.t("每60秒", "Every 60s")),
         ];
         let modes = vec![
             choice("flat", self.t("统一输入价", "Flat input")),
@@ -791,10 +793,8 @@ impl Statistics {
             models.push(choice(self.model.clone(), self.model.clone()));
         }
         for (select, items) in [
-            (&self.range_select, ranges),
             (&self.outcome_select, outcomes),
             (&self.usage_select, usage),
-            (&self.refresh_select, refresh),
             (&self.price_mode, modes),
             (&self.provider_select, providers),
             (&self.model_select, models),
@@ -868,18 +868,9 @@ impl Statistics {
     }
 
     fn compute_range(&self) -> (i64, i64) {
-        match self.range {
-            RangePreset::Today => (local_midnight_days_ago(0), now_ms()),
-            RangePreset::Week => (local_midnight_days_ago(6), now_ms()),
-            RangePreset::Month => (local_midnight_days_ago(29), now_ms()),
-            RangePreset::Quarter => (local_midnight_days_ago(89), now_ms()),
-            // Values are validated on submit; an unparsable pair falls back to
-            // today rather than silently querying an empty range.
-            RangePreset::Custom => {
-                let (from, to) = self.custom_range;
-                (from, to)
-            }
-        }
+        self.range.bounds(now_ms()).unwrap_or_else(|| {
+            resolve_custom_range(self.custom_range, self.custom_follow_now, now_ms())
+        })
     }
 
     fn filter(&self) -> Value {
@@ -1079,56 +1070,33 @@ impl Statistics {
     /// the query dirty exactly once.
     fn sync_filter_state(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         let mut dirty = false;
-        let range = self
-            .range_select
-            .read(cx)
-            .selected_value()
-            .cloned()
-            .unwrap_or_default();
-        let preset = RangePreset::parse(&range).unwrap_or(self.range);
-        let mut valid = true;
-        if preset == RangePreset::Custom {
-            match self.parsed_custom_range(cx) {
-                Ok(custom) => {
-                    self.date_error = None;
-                    if custom != self.custom_range {
-                        self.custom_range = custom;
-                        dirty = true;
-                    }
+        if self.date_open {
+            let text = (
+                self.custom_from.read(cx).value().to_string(),
+                self.custom_to.read(cx).value().to_string(),
+            );
+            if text != self.draft_text {
+                if text.1 != self.draft_text.1 {
+                    self.draft_follow_now = false;
                 }
-                Err(code) => {
-                    valid = false;
-                    self.date_error = Some(
-                        match code {
-                            "reversed_date" => {
-                                self.t("结束时间必须晚于开始时间", "End must be after start")
-                            }
-                            "range_too_long" => {
-                                self.t("时间范围不能超过366天", "Range cannot exceed 366 days")
-                            }
-                            _ => self.t(
-                                "日期格式无效：YYYY-MM-DD HH:MM",
-                                "Invalid date: YYYY-MM-DD HH:MM",
-                            ),
+                self.draft_preset = RangePreset::Custom;
+                self.date_error = None;
+                self.draft_text = text;
+                let from =
+                    chrono::NaiveDateTime::parse_from_str(&self.draft_text.0, "%Y-%m-%d %H:%M")
+                        .ok();
+                let to =
+                    chrono::NaiveDateTime::parse_from_str(&self.draft_text.1, "%Y-%m-%d %H:%M")
+                        .ok();
+                if let (Some(from), Some(to)) = (from, to) {
+                    let date = Date::Range(Some(from.date()), Some(to.date()));
+                    self.calendar.update(cx, |calendar, cx| {
+                        if calendar.date() != date {
+                            calendar.set_date(date, window, cx);
                         }
-                        .to_owned(),
-                    );
-                    self.debounce_until = None;
-                    self.rows_gate.invalidate();
-                    self.groups_gate.invalidate();
-                    self.dashboard_seq = 0;
-                    self.pending_rows = false;
-                    self.pending_dashboard = false;
-                    self.loading_rows = false;
-                    self.loading_dashboard = false;
+                    });
                 }
             }
-        } else {
-            self.date_error = None;
-        }
-        if preset != self.range && valid {
-            self.range = preset;
-            dirty = true;
         }
         let provider = self
             .provider_select
@@ -1166,12 +1134,14 @@ impl Statistics {
         if pq != self.provider_query {
             self.provider_query = pq;
             self.provider_after = None;
+            self.provider_next = None;
             self.request_filters(cx);
         }
         let mq = self.model_search.read(cx).value().trim().to_owned();
         if mq != self.model_query {
             self.model_query = mq;
             self.model_after = None;
+            self.model_next = None;
             self.request_model_filters(cx);
         }
         let priceq = self.price_search.read(cx).value().trim().to_owned();
@@ -1201,23 +1171,25 @@ impl Statistics {
                 dirty = true;
             }
         }
-        if dirty && valid {
+        if dirty {
             self.mark_dirty(cx);
         }
         cx.notify();
     }
 
-    /// Parses the two custom inputs; an unparsable end keeps the last good one
-    /// so the query never silently widens or empties.
-    fn parsed_custom_range(&self, cx: &App) -> Result<(i64, i64), &'static str> {
-        crate::stats_controller::validate_range(
-            crate::usage_table::parse_local_time(&self.custom_from.read(cx).value()),
-            crate::usage_table::parse_local_time(&self.custom_to.read(cx).value()),
-        )
-    }
-
     fn refresh(&mut self, cx: &mut Context<Self>) {
-        if self.date_error.is_some() {
+        // Following the clock can eventually exceed the core's 366 day cap.
+        // Keep the last valid data instead of sending an invalid range.
+        let (from, to) = self.compute_range();
+        if crate::stats_controller::validate_range(Some(from), Some(to)).is_err() {
+            self.error = Some(
+                self.t(
+                    "时间范围不能超过366天，请重新选择",
+                    "Range exceeds 366 days; select a new range",
+                )
+                .to_owned(),
+            );
+            self.last_refresh = Instant::now();
             return;
         }
         self.reset_pagination();
@@ -1236,8 +1208,8 @@ impl Statistics {
         let foreground = crate::stats_controller::may_refresh(
             self.visible,
             window.is_window_active(),
-            window.has_active_dialog(cx),
-            self.date_error.is_none(),
+            window.has_active_dialog(cx) || self.date_open,
+            true,
         );
         if !self.visible {
             self.backend.cancel_reads();
@@ -1253,7 +1225,7 @@ impl Statistics {
         if let Some(deadline) = self.debounce_until {
             if !self.visible {
                 self.debounce_until = None;
-            } else if foreground && self.date_error.is_none() && Instant::now() >= deadline {
+            } else if foreground && Instant::now() >= deadline {
                 self.debounce_until = None;
                 self.applied = self.generation;
                 self.refresh(cx);
@@ -1349,9 +1321,6 @@ impl Statistics {
             if let Ok(health) =
                 serde_json::from_value::<HealthDto>(result.clone().unwrap_or(Value::Null))
             {
-                if self.timezone.is_empty() {
-                    self.timezone = health.timezone.clone();
-                }
                 // Full snapshot: the badge and the warnings come from here, not
                 // from the fact that this query succeeded.
                 self.health = Some(health);
@@ -1459,7 +1428,6 @@ impl Statistics {
             self.pending_dashboard = false;
             self.loading_dashboard = false;
             if let Ok(dashboard) = serde_json::from_value::<DashboardDto>(value) {
-                self.timezone = dashboard.timezone.clone();
                 self.filter_key = dashboard.filter_key.clone();
                 self.dashboard = Some(dashboard);
                 self.error = None;
@@ -1557,6 +1525,10 @@ impl Statistics {
                     };
                     items.push(choice(option.key.clone(), label));
                 }
+                if !self.provider.is_empty() && !items.iter().any(|item| item.code == self.provider)
+                {
+                    items.push(choice(self.provider.clone(), self.provider.clone()));
+                }
                 self.provider_select.update(cx, |state, cx| {
                     state.set_items(items, window, cx);
                     state.set_selected_value(&self.provider.clone(), window, cx);
@@ -1586,6 +1558,9 @@ impl Statistics {
                 )];
                 for option in &self.model_options {
                     items.push(choice(option.key.clone(), option.key.clone()));
+                }
+                if !self.model.is_empty() && !items.iter().any(|item| item.code == self.model) {
+                    items.push(choice(self.model.clone(), self.model.clone()));
                 }
                 self.model_select.update(cx, |state, cx| {
                     state.set_items(items, window, cx);
@@ -2027,178 +2002,517 @@ impl Statistics {
 /// Filter row and the page header.
 impl Statistics {
     fn header(&self, _cx: &mut Context<Self>) -> AnyElement {
-        let healthy = self.error.is_none();
         div()
             .flex()
             .items_center()
-            .justify_between()
+            .gap_3()
             .w_full()
             .child(
                 div()
-                    .flex()
-                    .flex_col()
-                    .gap_1()
-                    .child(
-                        div()
-                            .text_size(px(18.))
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .child(self.t("使用统计", "Usage statistics")),
-                    )
-                    .child(
-                        Label::new(self.t(
-                            "统计本代理已记录的模型请求",
-                            "Requests recorded by this proxy",
-                        ))
-                        .text_size(px(11.))
-                        .text_color(rgb(MUTED)),
-                    ),
+                    .text_size(px(18.))
+                    .font_weight(FontWeight::SEMIBOLD)
+                    .child(self.t("使用统计", "Usage statistics")),
+            )
+            .child(
+                Label::new(self.t(
+                    "统计本代理已记录的模型请求",
+                    "Requests recorded by this proxy",
+                ))
+                .text_size(px(11.))
+                .text_color(rgb(MUTED)),
+            )
+            .into_any_element()
+    }
+
+    fn write_date_draft(&mut self, range: (i64, i64), window: &mut Window, cx: &mut Context<Self>) {
+        let format = |ms| {
+            Local
+                .timestamp_millis_opt(ms)
+                .single()
+                .expect("valid timestamp")
+                .format("%Y-%m-%d %H:%M")
+                .to_string()
+        };
+        self.draft_text = (format(range.0), format(range.1));
+        self.custom_from.update(cx, |state, cx| {
+            state.set_value(self.draft_text.0.clone(), window, cx)
+        });
+        self.custom_to.update(cx, |state, cx| {
+            state.set_value(self.draft_text.1.clone(), window, cx)
+        });
+        self.calendar.update(cx, |calendar, cx| {
+            calendar.set_date(
+                Date::Range(
+                    Local
+                        .timestamp_millis_opt(range.0)
+                        .single()
+                        .map(|dt| dt.date_naive()),
+                    Local
+                        .timestamp_millis_opt(range.1)
+                        .single()
+                        .map(|dt| dt.date_naive()),
+                ),
+                window,
+                cx,
+            )
+        });
+    }
+
+    fn open_date_draft(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        self.draft_preset = self.range;
+        self.draft_follow_now = self.range != RangePreset::Custom || self.custom_follow_now;
+        self.date_error = None;
+        self.write_date_draft(self.compute_range(), window, cx);
+    }
+
+    fn apply_date_draft(&mut self, cx: &mut Context<Self>) {
+        if !self.calendar.read(cx).date().is_complete()
+            && self.draft_text
+                == (
+                    self.custom_from.read(cx).value().to_string(),
+                    self.custom_to.read(cx).value().to_string(),
+                )
+        {
+            self.date_error = Some(
+                self.t(
+                    "请在日历中选择结束日期",
+                    "Select an end date in the calendar",
+                )
+                .to_owned(),
+            );
+            cx.notify();
+            return;
+        }
+        match validate_date_draft(
+            &self.custom_from.read(cx).value(),
+            &self.custom_to.read(cx).value(),
+            self.draft_follow_now,
+            now_ms(),
+        ) {
+            Ok(range) => {
+                self.custom_range = range;
+                self.custom_follow_now = self.draft_follow_now;
+                self.range = if self.draft_follow_now {
+                    self.draft_preset
+                } else {
+                    RangePreset::Custom
+                };
+                self.date_error = None;
+                self.date_open = false;
+                self.mark_dirty(cx);
+            }
+            Err(code) => {
+                self.date_error = Some(
+                    match code {
+                        "reversed_date" => {
+                            self.t("结束时间必须晚于开始时间", "End must be after start")
+                        }
+                        "range_too_long" => {
+                            self.t("时间范围不能超过366天", "Range cannot exceed 366 days")
+                        }
+                        _ => self.t(
+                            "请输入完整日期时间：YYYY-MM-DD HH:MM",
+                            "Enter a complete date/time: YYYY-MM-DD HH:MM",
+                        ),
+                    }
+                    .to_owned(),
+                );
+                cx.notify();
+            }
+        }
+    }
+
+    fn date_panel(&self, cx: &mut Context<Self>) -> AnyElement {
+        div()
+            .flex()
+            .flex_col()
+            .w(px(554.))
+            .gap_3()
+            .child(
+                div().flex().gap_2().children(
+                    [
+                        RangePreset::Today,
+                        RangePreset::Day,
+                        RangePreset::Week,
+                        RangePreset::Fortnight,
+                        RangePreset::Month,
+                        RangePreset::Quarter,
+                    ]
+                    .into_iter()
+                    .enumerate()
+                    .map(|(ix, preset)| {
+                        Button::new(("date-preset", ix))
+                            .small()
+                            .outline()
+                            .label(preset.title(self.zh))
+                            .when(self.draft_preset == preset, |button| button.primary())
+                            .on_click(cx.listener(move |this, _, window, cx| {
+                                this.draft_preset = preset;
+                                this.draft_follow_now = true;
+                                this.date_error = None;
+                                this.write_date_draft(
+                                    preset.bounds(now_ms()).expect("relative preset"),
+                                    window,
+                                    cx,
+                                );
+                                cx.notify();
+                            }))
+                    }),
+                ),
             )
             .child(
                 div()
                     .flex()
+                    .gap_4()
+                    .border_t_1()
+                    .border_color(rgb(BORDER))
+                    .pt_3()
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .w(px(290.))
+                            .gap_3()
+                            .child(self.filter_label(
+                                self.t("支持日期与时间（本地时间）", "Date and time (local)"),
+                            ))
+                            .child(self.filter_label(self.t("开始时间", "Start")))
+                            .child(Input::new(&self.custom_from).small().w_full())
+                            .child(self.filter_label(self.t("结束时间", "End")))
+                            .child(
+                                Input::new(&self.custom_to)
+                                    .small()
+                                    .w_full()
+                                    .disabled(self.draft_follow_now),
+                            )
+                            .child(
+                                Checkbox::new("date-follow-now")
+                                    .small()
+                                    .label(
+                                        self.t("结束时间跟随当前时刻", "End follows current time"),
+                                    )
+                                    .checked(self.draft_follow_now)
+                                    .on_change(cx.listener(|this, enabled: &bool, window, cx| {
+                                        this.draft_follow_now = *enabled;
+                                        // Turning off following freezes exactly the displayed draft.
+                                        // Turning it on keeps a manually edited start fixed.
+                                        if *enabled {
+                                            let text =
+                                                Local::now().format("%Y-%m-%d %H:%M").to_string();
+                                            this.custom_to.update(cx, |state, cx| {
+                                                state.set_value(text.clone(), window, cx)
+                                            });
+                                            this.draft_text.1 = text;
+                                        }
+                                        cx.notify();
+                                    })),
+                            )
+                            .when_some(self.date_error.clone(), |this, error| {
+                                this.child(
+                                    Label::new(error)
+                                        .text_size(px(11.))
+                                        .text_color(rgb(0xa4424a)),
+                                )
+                            })
+                            .child(
+                                div()
+                                    .flex()
+                                    .gap_2()
+                                    .mt_2()
+                                    .child(
+                                        Button::new("date-cancel")
+                                            .small()
+                                            .outline()
+                                            .label(self.t("取消", "Cancel"))
+                                            .on_click(cx.listener(|this, _, _, cx| {
+                                                this.date_open = false;
+                                                this.date_error = None;
+                                                cx.notify();
+                                            })),
+                                    )
+                                    .child(
+                                        Button::new("date-apply")
+                                            .small()
+                                            .primary()
+                                            .label(self.t("确定", "Apply"))
+                                            .on_click(cx.listener(|this, _, _, cx| {
+                                                // Capture text changes immediately, even before the polling tick.
+                                                let text = (
+                                                    this.custom_from.read(cx).value().to_string(),
+                                                    this.custom_to.read(cx).value().to_string(),
+                                                );
+                                                if text != this.draft_text {
+                                                    this.draft_preset = RangePreset::Custom;
+                                                }
+                                                this.apply_date_draft(cx);
+                                            })),
+                                    ),
+                            ),
+                    )
+                    .child(Calendar::new(&self.calendar).first_day_of_week(chrono::Weekday::Mon)),
+            )
+            .into_any_element()
+    }
+
+    fn date_control(&self, cx: &mut Context<Self>) -> AnyElement {
+        let owner = cx.entity().downgrade();
+        let content_owner = owner.clone();
+        let tooltip = if self.range == RangePreset::Custom {
+            let (from, to) = self.compute_range();
+            format!(
+                "{} — {}{}",
+                Local
+                    .timestamp_millis_opt(from)
+                    .single()
+                    .unwrap()
+                    .format("%Y-%m-%d %H:%M"),
+                Local
+                    .timestamp_millis_opt(to)
+                    .single()
+                    .unwrap()
+                    .format("%Y-%m-%d %H:%M"),
+                if self.custom_follow_now {
+                    self.t("（结束时间跟随当前时刻）", " (end follows now)")
+                } else {
+                    ""
+                }
+            )
+        } else {
+            self.range.title(self.zh).to_owned()
+        };
+        Popover::new("stats-date-range")
+            .open(self.date_open)
+            .trigger(
+                Button::new("stats-date-trigger")
+                    .small()
+                    .h(px(28.))
+                    .outline()
+                    .icon(IconName::Calendar)
+                    .label(self.range.title(self.zh))
+                    .tooltip(tooltip)
+                    .accessibility_label(self.t("选择日期范围", "Choose date range")),
+            )
+            .on_open_change(move |open, window, cx| {
+                let _ = owner.update(cx, |this, cx| {
+                    if *open && !this.date_open {
+                        this.open_date_draft(window, cx);
+                    }
+                    this.date_open = *open;
+                    if !*open {
+                        this.date_error = None;
+                    }
+                    cx.notify();
+                });
+            })
+            .content(move |_, _, cx| {
+                content_owner
+                    .update(cx, |this, cx| this.date_panel(cx))
+                    .unwrap_or_else(|_| div().into_any_element())
+            })
+            .into_any_element()
+    }
+
+    fn refresh_control(&self, cx: &mut Context<Self>) -> AnyElement {
+        let owner = cx.entity().downgrade();
+        let content_owner = owner.clone();
+        let label = if self.refresh_interval == 0 {
+            self.t("关闭", "Off").to_owned()
+        } else {
+            format!("{}{}", self.refresh_interval, self.t("秒", "s"))
+        };
+        Popover::new("stats-auto-refresh")
+            .open(self.refresh_open)
+            .trigger(
+                Button::new("stats-auto-trigger")
+                    .small()
+                    .h(px(28.))
+                    .outline()
+                    .icon(Icon::default().path("icons/clock.svg"))
+                    .label(label)
+                    .tooltip(self.t("自动刷新间隔", "Auto refresh interval"))
+                    .accessibility_label(self.t("自动刷新间隔", "Auto refresh interval")),
+            )
+            .on_open_change(move |open, _, cx| {
+                let _ = owner.update(cx, |this, cx| {
+                    this.refresh_open = *open;
+                    cx.notify();
+                });
+            })
+            .content(move |_, _, cx| {
+                content_owner
+                    .update(cx, |this, cx| {
+                        div()
+                            .flex()
+                            .flex_col()
+                            .w(px(110.))
+                            .gap_1()
+                            .children([0, 5, 10, 30, 60].into_iter().map(|seconds| {
+                                let label = if seconds == 0 {
+                                    this.t("关闭", "Off").to_owned()
+                                } else {
+                                    format!("{seconds}{}", this.t("秒", "s"))
+                                };
+                                Button::new(("refresh-interval", seconds as usize))
+                                    .small()
+                                    .ghost()
+                                    .w_full()
+                                    .label(label)
+                                    .when(this.refresh_interval == seconds, |button| {
+                                        button.primary()
+                                    })
+                                    .on_click(cx.listener(move |this, _, _, cx| {
+                                        this.refresh_interval = seconds;
+                                        this.last_refresh = Instant::now();
+                                        this.refresh_open = false;
+                                        cx.notify();
+                                    }))
+                            }))
+                            .into_any_element()
+                    })
+                    .unwrap_or_else(|_| div().into_any_element())
+            })
+            .into_any_element()
+    }
+
+    fn filter_search(&self, provider: bool, cx: &mut Context<Self>) -> AnyElement {
+        let (input, has_next, label, more_label) = if provider {
+            (
+                &self.provider_search,
+                self.provider_next.is_some(),
+                self.t(
+                    "搜索供应商（含历史记录）",
+                    "Search providers, including history",
+                ),
+                self.t("加载下一批供应商选项", "Load next provider options"),
+            )
+        } else {
+            (
+                &self.model_search,
+                self.model_next.is_some(),
+                self.t("搜索模型", "Search models"),
+                self.t("加载下一批模型选项", "Load next model options"),
+            )
+        };
+        div()
+            .flex()
+            .flex_col()
+            .w(px(230.))
+            .gap_1()
+            .child(self.filter_label(label))
+            .child(
+                div()
+                    .flex()
                     .items_center()
+                    .h(px(28.))
                     .gap_2()
-                    .child(Tag::secondary().small().child(match &self.timezone {
-                        name if name.is_empty() => self.t("本机时区", "Local timezone").to_owned(),
-                        name => name.clone(),
-                    }))
-                    .child(Tag::secondary().small().child(match &self.last_updated {
-                        Some(at) => format!("{}: {at}", self.t("更新于", "Updated at")),
-                        None => self.t("尚未刷新", "not refreshed").to_owned(),
-                    }))
-                    .child(if healthy {
-                        Tag::success().small().child(self.t("正常", "OK"))
-                    } else {
-                        Tag::danger()
+                    .child(
+                        div()
+                            .flex_1()
+                            .min_w_0()
+                            .child(Input::new(input).small().w_full().h(px(28.))),
+                    )
+                    .when(has_next, |row| {
+                        row.child(
+                            Button::new(if provider {
+                                "provider-search-more"
+                            } else {
+                                "model-search-more"
+                            })
                             .small()
-                            .child(self.t("数据更新失败", "Update failed"))
+                            .size(px(28.))
+                            .outline()
+                            .icon(IconName::ChevronDown)
+                            .tooltip(more_label)
+                            .accessibility_label(more_label)
+                            .on_click(cx.listener(
+                                move |this, _, _, cx| {
+                                    if provider {
+                                        this.provider_after = this.provider_next.clone();
+                                        this.provider_next = None;
+                                        this.request_filters(cx);
+                                    } else {
+                                        this.model_after = this.model_next.clone();
+                                        this.model_next = None;
+                                        this.request_model_filters(cx);
+                                    }
+                                },
+                            )),
+                        )
                     }),
             )
             .into_any_element()
     }
 
     fn filters(&self, cx: &mut Context<Self>) -> AnyElement {
+        let advanced_active = !self.usage.is_empty()
+            || self.include_tests
+            || !self.provider_query.is_empty()
+            || !self.model_query.is_empty();
+        // Budget space for clock/date/actions before fitting the selectors.
+        let extra = (self.filters_width - if self.zh { 268. } else { 332. } - 350.).clamp(0., 140.);
+        let widths = [
+            110. + extra * 50. / 140.,
+            150. + extra * 70. / 140.,
+            90. + extra * 20. / 140.,
+        ];
         stats_card("stats-filters")
+            .on_prepaint({
+                let owner = cx.entity().downgrade();
+                move |bounds, _, cx| {
+                    let available = f32::from(bounds.size.width) - 24.;
+                    let _ = owner.update(cx, |this, cx| {
+                        if (this.filters_width - available).abs() > 0.5 {
+                            this.filters_width = available;
+                            cx.notify();
+                        }
+                    });
+                }
+            })
+            .gap_2()
             .child(
                 div()
                     .flex()
                     .flex_wrap()
-                    .items_end()
-                    .gap_3()
+                    .items_center()
+                    .gap_2()
+                    .w_full()
                     .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(self.filter_label(self.t("时间范围", "Range")))
-                            .child(Select::new(&self.range_select).w(px(140.)).small()),
-                    )
-                    .when(
-                        self.range_select
-                            .read(cx)
-                            .selected_value()
-                            .is_some_and(|v| v == "custom"),
-                        |this| {
-                            // A custom window is typed in this machine's timezone;
-                            // both ends must parse before the query is re-run.
-                            this.child(
-                                div()
-                                    .flex()
-                                    .flex_col()
-                                    .gap_1()
-                                    .child(self.filter_label(self.t("起始", "From")))
-                                    .child(Input::new(&self.custom_from).w(px(160.))),
-                            )
-                            .child(
-                                div()
-                                    .flex()
-                                    .flex_col()
-                                    .gap_1()
-                                    .child(self.filter_label(self.t("结束", "To")))
-                                    .child(Input::new(&self.custom_to).w(px(160.))),
-                            )
-                        },
+                        div().w(px(widths[0])).h(px(28.)).flex_shrink_0().child(
+                            Select::new(&self.provider_select)
+                                .w_full()
+                                .h(px(28.))
+                                .small()
+                                .accessibility_label(self.t("供应商筛选", "Provider filter")),
+                        ),
                     )
                     .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(self.filter_label(self.t("供应商", "Provider")))
-                            .child(Select::new(&self.provider_select).w(px(180.)).small()),
+                        div().w(px(widths[1])).h(px(28.)).flex_shrink_0().child(
+                            Select::new(&self.model_select)
+                                .w_full()
+                                .h(px(28.))
+                                .small()
+                                .accessibility_label(self.t("模型筛选", "Model filter")),
+                        ),
                     )
                     .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(self.filter_label(self.t("模型", "Model")))
-                            .child(Select::new(&self.model_select).w(px(200.)).small()),
+                        div().w(px(widths[2])).h(px(28.)).flex_shrink_0().child(
+                            Select::new(&self.outcome_select)
+                                .w_full()
+                                .h(px(28.))
+                                .small()
+                                .accessibility_label(self.t("请求状态", "Request state")),
+                        ),
                     )
-                    .child(Input::new(&self.provider_search).w(px(150.)))
-                    .child(
-                        Button::new("provider-search-more")
-                            .small()
-                            .ghost()
-                            .label(self.t("更多供应商", "More providers"))
-                            .disabled(self.provider_next.is_none())
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.provider_after = this.provider_next.clone();
-                                this.request_filters(cx);
-                            })),
-                    )
-                    .child(Input::new(&self.model_search).w(px(150.)))
-                    .child(
-                        Button::new("model-search-more")
-                            .small()
-                            .ghost()
-                            .label(self.t("更多模型", "More models"))
-                            .disabled(self.model_next.is_none())
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.model_after = this.model_next.clone();
-                                this.request_model_filters(cx);
-                            })),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(self.filter_label(self.t("状态", "State")))
-                            .child(Select::new(&self.outcome_select).w(px(140.)).small()),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(self.filter_label(self.t("用量完整性", "Usage")))
-                            .child(Select::new(&self.usage_select).w(px(140.)).small()),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(self.filter_label(self.t("自动刷新", "Auto refresh")))
-                            .child(Select::new(&self.refresh_select).w(px(150.)).small()),
-                    )
-                    .child(
-                        Checkbox::new("include-tests")
-                            .label(self.t("包含测试连接", "Include connection tests"))
-                            .checked(self.include_tests)
-                            .small()
-                            .on_change(cx.listener(|this, enabled: &bool, _, cx| {
-                                this.include_tests = *enabled;
-                                this.mark_dirty(cx);
-                            })),
-                    )
+                    .child(self.refresh_control(cx))
+                    .child(self.date_control(cx))
                     .child(
                         Button::new("stats-refresh")
                             .small()
-                            .primary()
+                            .size(px(28.))
+                            .outline()
                             .icon(IconName::RefreshCw)
-                            .label(self.t("刷新", "Refresh"))
+                            .tooltip(self.t("刷新统计", "Refresh statistics"))
+                            .accessibility_label(self.t("刷新统计", "Refresh statistics"))
                             .disabled(self.loading_dashboard || self.loading_rows)
                             .on_click(cx.listener(|this, _, _, cx| {
                                 this.generation += 1;
@@ -2206,13 +2520,74 @@ impl Statistics {
                                 this.applied = this.generation;
                                 this.refresh(cx);
                             })),
+                    )
+                    .child(
+                        Button::new("stats-more-filters")
+                            .small()
+                            .size(px(28.))
+                            .ghost()
+                            .icon(if self.more_filters_open {
+                                IconName::ChevronUp
+                            } else {
+                                IconName::ChevronDown
+                            })
+                            .when(advanced_active, |button| button.text_color(rgb(0x356fc0)))
+                            .tooltip(if self.more_filters_open {
+                                self.t("收起更多筛选", "Hide more filters")
+                            } else {
+                                self.t("展开更多筛选", "More filters")
+                            })
+                            .accessibility_label(self.t("更多筛选", "More filters"))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.more_filters_open = !this.more_filters_open;
+                                cx.notify();
+                            })),
                     ),
             )
-            .when_some(self.date_error.clone(), |this, error| {
+            .when(self.more_filters_open, |this| {
                 this.child(
-                    Label::new(error)
-                        .text_color(rgb(0xa4424a))
-                        .text_size(px(11.)),
+                    div()
+                        .flex()
+                        .flex_wrap()
+                        .items_end()
+                        .gap_3()
+                        .pt_3()
+                        .border_t_1()
+                        .border_color(rgb(BORDER))
+                        .child(self.filter_search(true, cx))
+                        .child(self.filter_search(false, cx))
+                        .child(
+                            div()
+                                .flex()
+                                .flex_col()
+                                .gap_1()
+                                .child(
+                                    self.filter_label(self.t("用量完整性", "Usage completeness")),
+                                )
+                                .child(
+                                    div().w(px(140.)).h(px(28.)).child(
+                                        Select::new(&self.usage_select)
+                                            .w_full()
+                                            .h(px(28.))
+                                            .small()
+                                            .accessibility_label(
+                                                self.t("用量完整性", "Usage completeness"),
+                                            ),
+                                    ),
+                                ),
+                        )
+                        .child(
+                            div().flex().items_center().h(px(28.)).child(
+                                Checkbox::new("include-tests")
+                                    .small()
+                                    .label(self.t("包含测试连接", "Include connection tests"))
+                                    .checked(self.include_tests)
+                                    .on_change(cx.listener(|this, enabled: &bool, _, cx| {
+                                        this.include_tests = *enabled;
+                                        this.mark_dirty(cx);
+                                    })),
+                            ),
+                        ),
                 )
             })
             .when_some(self.error.clone(), |this, error| {
@@ -2457,11 +2832,7 @@ impl Statistics {
                             .flex()
                             .flex_col()
                             .gap_1()
-                            .child(
-                                Label::new(self.t("已确认 Token", "Confirmed tokens"))
-                                    .text_size(px(11.))
-                                    .text_color(rgb(MUTED)),
-                            )
+                            .child(stats_heading(self.t("Token 总用量", "Total tokens")))
                             .child(
                                 div()
                                     .text_size(px(28.))
@@ -2519,6 +2890,9 @@ impl Statistics {
                 .into_any_element();
         };
         let points = ChartPoint::from_series(&dashboard.series, self.currency);
+        let incomplete = points.iter().any(|point| {
+            point.collection_warning || point.quality == crate::stats_dto::SeriesQuality::Unknown
+        });
         let token_chart = UsagePlot {
             id: ElementId::Name("usage-token-chart".into()),
             points: points.clone(),
@@ -2545,8 +2919,13 @@ impl Statistics {
             mode: ChartMode::Cost,
             currency: self.currency,
         };
-        let legend = div().flex().flex_wrap().items_center().gap_3().children(
-            SeriesKind::ALL.into_iter().map(|kind| {
+        let legend = div()
+            .flex()
+            .flex_wrap()
+            .items_center()
+            .justify_center()
+            .gap_3()
+            .children(SeriesKind::ALL.into_iter().map(|kind| {
                 let active = self.visible_series.contains(&kind);
                 div()
                     .id(("legend", kind as usize))
@@ -2574,28 +2953,24 @@ impl Statistics {
                             .text_color(rgb(INK)),
                     )
                     .into_any_element()
-            }),
-        );
+            }));
         stats_card("stats-trends")
             .child(
                 div()
                     .flex()
                     .items_center()
                     .justify_between()
-                    .child(
-                        div()
-                            .text_size(px(13.))
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .child(self.t("趋势", "Trend")),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_2()
-                            .child(legend)
-                            .child(Select::new(&self.currency_select).w(px(96.)).small()),
-                    ),
+                    .child(stats_heading(self.t("使用趋势", "Usage trend")))
+                    .when(incomplete, |this| {
+                        this.child(
+                            Label::new(self.t(
+                                "部分时段记录不全，空白区间暂无可靠统计",
+                                "Some intervals are incomplete; gaps have no reliable data",
+                            ))
+                            .text_size(px(10.))
+                            .text_color(rgb(WARN)),
+                        )
+                    }),
             )
             .child(
                 div()
@@ -2610,19 +2985,37 @@ impl Statistics {
                 div()
                     .id("token-chart-host")
                     .w_full()
-                    .h(px(280.))
+                    .h(px(250.))
                     .min_h_0()
                     .aria_label(token_summary.clone())
                     .child(token_chart),
             )
+            .child(legend)
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .pt_2()
+                    .border_t_1()
+                    .border_color(rgb(BORDER))
+                    .child(
+                        Label::new(self.t("估算费用", "Estimated cost"))
+                            .text_size(px(11.))
+                            .text_color(rgb(MUTED)),
+                    )
+                    .child(
+                        div().w(px(88.)).h(px(28.)).child(
+                            Select::new(&self.currency_select)
+                                .w_full()
+                                .h(px(28.))
+                                .small()
+                                .accessibility_label(self.t("费用币种", "Cost currency")),
+                        ),
+                    ),
+            )
             .when(has_cost, |this| {
                 this.child(
-                    div()
-                        .text_size(px(11.))
-                        .text_color(rgb(MUTED))
-                        .child(self.t("估算费用（按币种）", "Estimated cost (per currency)")),
-                )
-                .child(
                     div()
                         .id("cost-chart-host")
                         .w_full()
@@ -2633,6 +3026,13 @@ impl Statistics {
                             "Cost trend chart, one currency at a time",
                         ))
                         .child(cost_chart),
+                )
+            })
+            .when(!has_cost, |this| {
+                this.child(
+                    Label::new(self.t("当前币种暂无费用数据", "No cost data for this currency"))
+                        .text_size(px(11.))
+                        .text_color(rgb(MUTED)),
                 )
             })
             .into_any_element()
@@ -2932,8 +3332,10 @@ impl Statistics {
             .min_w_0()
             .min_h_0()
             .overflow_y_scroll()
-            .p_4()
-            .gap_4()
+            .pl_4()
+            .pr_0()
+            .py_2()
+            .gap_2()
             .bg(rgb(BG))
             .child(self.header(cx))
             .child(self.health_bar(cx))
@@ -3029,6 +3431,9 @@ impl Statistics {
         if let Some(code) = health.error_code.as_ref() {
             alerts.push(code.clone());
         }
+        let attention = matches!(health.state, HealthState::Degraded | HealthState::Migrating)
+            || health.write_failures_current_run > 0
+            || health.loss_scope == LossScope::LossObserved;
         let _ = cx;
         div()
             .flex()
@@ -3041,16 +3446,39 @@ impl Statistics {
             .bg(rgb(PANEL))
             .child(
                 div()
-                    .px_2()
-                    .py_1()
-                    .rounded_sm()
-                    .bg(rgb(color))
-                    .child(Label::new(label).text_size(px(11.)).text_color(rgb(BG))),
+                    .flex()
+                    .items_center()
+                    .gap_2()
+                    .child(div().size(px(6.)).rounded_full().bg(rgb(color)))
+                    .child(Label::new(label).text_size(px(11.)).text_color(rgb(color))),
+            )
+            .child(
+                Label::new(if self.error.is_some() {
+                    self.t("数据更新失败", "Update failed")
+                } else if attention {
+                    self.t("需关注", "Needs attention")
+                } else {
+                    self.t("正常", "OK")
+                })
+                .text_size(px(11.))
+                .text_color(rgb(if self.error.is_some() || attention {
+                    WARN
+                } else {
+                    MUTED
+                })),
             )
             .children(
                 facts
                     .into_iter()
                     .map(|fact| Label::new(fact).text_size(px(11.)).text_color(rgb(MUTED))),
+            )
+            .child(
+                Label::new(match &self.last_updated {
+                    Some(at) => format!("{} {at}", self.t("更新于", "Updated")),
+                    None => self.t("尚未刷新", "Not refreshed").to_owned(),
+                })
+                .text_size(px(11.))
+                .text_color(rgb(MUTED)),
             )
             .children(
                 alerts
@@ -4285,5 +4713,54 @@ impl Render for PriceBody {
         self.owner
             .update(cx, |this, cx| this.price_body(cx))
             .unwrap_or_else(|_| div().into_any_element())
+    }
+}
+
+#[cfg(test)]
+mod date_range_tests {
+    use super::{
+        RangePreset, local_midnight_days_ago, now_ms, resolve_custom_range, validate_date_draft,
+    };
+
+    #[test]
+    fn fixed_and_following_ranges_resolve_without_mutating_applied_snapshot() {
+        let applied = (100, 200);
+        assert_eq!(resolve_custom_range(applied, false, 300), (100, 200));
+        assert_eq!(resolve_custom_range(applied, true, 300), (100, 300));
+        assert_eq!(applied, (100, 200));
+    }
+
+    #[test]
+    fn date_draft_validates_both_fields_but_following_uses_the_clock() {
+        let now = crate::usage_table::parse_local_time("2026-10-16 12:00").unwrap();
+        let from = crate::usage_table::parse_local_time("2026-10-15 00:00").unwrap();
+        assert_eq!(
+            validate_date_draft("2026-10-15 00:00", "2026-10-16 12:00", false, now),
+            Ok((from, now))
+        );
+        assert_eq!(
+            validate_date_draft("2026-10-15 00:00", "", true, now),
+            Ok((from, now))
+        );
+        assert!(validate_date_draft("invalid", "2026-10-16 12:00", false, now).is_err());
+        assert!(validate_date_draft("2026-10-15 00:00", "", false, now).is_err());
+        assert_eq!(
+            validate_date_draft("2026-10-16 12:01", "", true, now),
+            Err("reversed_date")
+        );
+        assert_eq!(
+            validate_date_draft("2025-01-01 00:00", "", true, now),
+            Err("range_too_long")
+        );
+    }
+
+    #[test]
+    fn one_day_means_24_hours_and_custom_has_no_relative_bounds() {
+        let now = now_ms();
+        assert_eq!(RangePreset::Day.bounds(now), Some((now - 86_400_000, now)));
+        assert_eq!(RangePreset::Custom.bounds(now), None);
+        let (from, to) = RangePreset::Fortnight.bounds(now).unwrap();
+        assert_eq!(from, local_midnight_days_ago(13));
+        assert_eq!(to, now);
     }
 }

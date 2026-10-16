@@ -2,8 +2,8 @@
 //!
 //! One coordinate system, one hover state and a single tooltip for every visible
 //! series. Values stay `Option<i64>`: a bucket without confirmed usage breaks
-//! the line instead of falling to zero, and unknown/degraded buckets get a
-//! shaded background so "no data" never looks like "no traffic".
+//! the line instead of falling to zero. Quality is conveyed through a compact
+//! warning and the shared native tooltip, leaving the plot background white.
 use crate::{
     stats_dto::{Currency, SeriesPointDto, SeriesQuality},
     usage_table::{compact, exact},
@@ -12,6 +12,7 @@ use chrono::TimeZone as _;
 use gpui_kit::base::plot::{
     Curve, Plot, PlotElement, PlotLabel, TooltipState, label::Text as PlotText, shape::Line,
 };
+use gpui_kit::component::plot::tooltip::{CrossLine, Dot, Tooltip};
 use gpui_kit::*;
 use std::collections::BTreeSet;
 
@@ -205,7 +206,7 @@ impl UsagePlot {
                 max = Some(max.map_or(value, |current: f64| current.max(value)));
             }
         }
-        max.filter(|value| *value > 0.)
+        max
     }
 
     /// Maps a bucket to the plot width by its real UTC centre time, so a 23 or
@@ -241,6 +242,21 @@ impl UsagePlot {
         Some(best)
     }
 
+    // Plot receives cursor positions relative to its own bounds, including
+    // the label gutters. Subtract only the local left gutter, never screen origin.
+    fn hover_index(&self, position: Point<Pixels>, bounds: &Bounds<Pixels>) -> Option<usize> {
+        let x = position.x.as_f32();
+        let y = position.y.as_f32();
+        if x < PAD_LEFT
+            || x > bounds.size.width.as_f32() - PAD_RIGHT
+            || y < PAD_TOP
+            || y > bounds.size.height.as_f32() - PAD_BOTTOM
+        {
+            return None;
+        }
+        self.nearest(x - PAD_LEFT, &Self::plot_rect(bounds))
+    }
+
     /// Human readable summary for screen readers and empty states.
     pub fn summary(&self) -> String {
         let known = self
@@ -273,27 +289,8 @@ impl Plot for UsagePlot {
         let rect = Self::plot_rect(&bounds);
         let width = rect.size.width.as_f32();
         let height = rect.size.height.as_f32();
-        let grid = rgb(0xe6edf4);
-        let muted = rgb(0x8a98a7);
-
-        // Unknown or lossy buckets are shaded so "no data" is visible.
-        for (index, bucket) in self.points.iter().enumerate() {
-            if bucket.collection_warning || bucket.quality == SeriesQuality::Unknown {
-                let left = Self::x_for(&self.points, &rect, index);
-                let half = width / (self.points.len().max(2) as f32 * 2.);
-                window.paint_quad(quad(
-                    Bounds {
-                        origin: point(rect.origin.x + px(left - half), rect.origin.y),
-                        size: size(px((half * 2.).max(1.)), px(height)),
-                    },
-                    px(0.),
-                    rgba(0xf1f4f8),
-                    px(0.),
-                    transparent_black(),
-                    BorderStyle::default(),
-                ));
-            }
-        }
+        let grid = rgb(0xeff2f6);
+        let muted = rgb(0x8591a2);
 
         // Horizontal grid plus value labels.
         let mut labels = Vec::new();
@@ -308,11 +305,14 @@ impl Plot for UsagePlot {
                     size: size(px(width), px(1.)),
                 },
                 px(0.),
-                if step == 0 { muted } else { grid },
+                if step == 0 { rgb(0xdce3eb) } else { grid },
                 px(0.),
                 transparent_black(),
                 BorderStyle::default(),
             ));
+            if ymax.is_none() && step > 0 {
+                continue;
+            }
             let value = ymax.map_or(0., |max| max * ratio as f64);
             let text = match self.mode {
                 ChartMode::Tokens => compact(Some(value.round() as i64), self.zh),
@@ -331,12 +331,13 @@ impl Plot for UsagePlot {
         // X axis labels: at most eight, never overlapping by construction.
         let count = self.points.len();
         if count > 0 {
-            let stride = (count as f32 / 7.).ceil().max(1.) as usize;
-            for index in (0..count).step_by(stride) {
+            let show_date =
+                self.points.last().unwrap().end_ms - self.points[0].start_ms > 36 * 3_600_000;
+            for index in tick_indices(count, width) {
                 let x = Self::x_for(&self.points, &rect, index);
                 labels.push(
                     PlotText::new(
-                        bucket_label(&self.points[index]),
+                        bucket_label(&self.points[index], show_date),
                         point(px(x), px(height + 6.)),
                         muted.into(),
                     )
@@ -445,17 +446,10 @@ impl Plot for UsagePlot {
         bounds: Bounds<Pixels>,
         _: &App,
     ) -> Option<TooltipState> {
+        let index = self.hover_index(position, &bounds)?;
         let rect = Self::plot_rect(&bounds);
-        let index = self.nearest(
-            position.x.as_f32() - rect.origin.x.as_f32() + rect.origin.x.as_f32(),
-            &rect,
-        )?;
-        let x = Self::x_for(&self.points, &rect, index);
-        Some(TooltipState::new(
-            index,
-            point(rect.origin.x + px(x), rect.origin.y),
-            vec![],
-        ))
+        let x = PAD_LEFT + Self::x_for(&self.points, &rect, index);
+        Some(TooltipState::new(index, point(px(x), px(PAD_TOP)), vec![]))
     }
 
     fn tooltip(
@@ -467,140 +461,109 @@ impl Plot for UsagePlot {
         _: &mut App,
     ) -> Option<AnyElement> {
         let bucket = self.points.get(state.index)?;
-        let _ = bounds;
-        let flip = cursor.x.as_f32() > 0.6 * 400.;
-        let left = if flip {
-            cursor.x - px(268.)
-        } else {
-            cursor.x + px(14.)
-        };
-        let mut rows: Vec<AnyElement> = Vec::new();
-        rows.push(
-            div()
-                .text_size(px(11.))
-                .text_color(rgb(0x6b7c90))
-                .child(format!(
-                    "{} → {}",
-                    crate::usage_table::timestamp(bucket.start_ms, self.zh),
-                    crate::usage_table::timestamp(bucket.end_ms, self.zh)
-                ))
-                .into_any_element(),
-        );
-        rows.push(
-            div()
-                .text_size(px(11.))
-                .text_color(rgb(0x19334d))
-                .child(if self.zh {
-                    format!(
-                        "{} 个请求 · {} 已结束 · {} 完整用量",
-                        bucket.request_count, bucket.finished_count, bucket.complete_count
-                    )
+        let rect = Self::plot_rect(&bounds);
+        let mut tooltip = Tooltip::new(cursor, bounds.size)
+            .cross_line(CrossLine::new(state.cross_line).span(PAD_TOP, rect.size.height.as_f32()))
+            .title(format!(
+                "{} → {}",
+                crate::usage_table::timestamp(bucket.start_ms, self.zh),
+                crate::usage_table::timestamp(bucket.end_ms, self.zh)
+            ))
+            .plain_row(
+                if self.zh {
+                    "请求 / 已结束 / 完整用量"
                 } else {
-                    format!(
-                        "{} requests · {} finished · {} complete",
-                        bucket.request_count, bucket.finished_count, bucket.complete_count
-                    )
-                })
-                .into_any_element(),
-        );
+                    "Requests / finished / complete"
+                },
+                format!(
+                    "{} / {} / {}",
+                    bucket.request_count, bucket.finished_count, bucket.complete_count
+                ),
+            );
+        let mut dots = Vec::new();
+        let ymax = self.series_max().map(nice_max);
+        let mut add_dot = |value: Option<i64>, color: u32| {
+            if let (Some(value), Some(ymax)) = (value, ymax) {
+                let y = PAD_TOP + rect.size.height.as_f32() * (1. - (value as f64 / ymax) as f32);
+                dots.push(
+                    Dot::new(point(state.cross_line.x, px(y)))
+                        .size(5.)
+                        .halo(10.)
+                        .stroke(rgb(0xffffff).into())
+                        .fill(rgb(color).into()),
+                );
+            }
+        };
         match self.mode {
             ChartMode::Tokens => {
                 for kind in SeriesKind::ALL {
-                    if !self.visible.contains(&kind) {
-                        continue;
+                    if self.visible.contains(&kind) {
+                        tooltip = tooltip.row(
+                            rgb(kind.color()),
+                            kind.label(self.zh),
+                            exact(bucket.value(kind)),
+                        );
+                        add_dot(bucket.value(kind), kind.color());
                     }
-                    rows.push(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_2()
-                            .text_size(px(11.))
-                            .child(
-                                div()
-                                    .w(px(8.))
-                                    .h(px(8.))
-                                    .rounded(px(4.))
-                                    .bg(rgb(kind.color())),
-                            )
-                            .child(div().text_color(rgb(0x19334d)).child(format!(
-                                "{} {}",
-                                kind.label(self.zh),
-                                exact(bucket.value(kind))
-                            )))
-                            .into_any_element(),
-                    );
                 }
             }
             ChartMode::Cost => {
-                rows.push(
-                    div()
-                        .text_size(px(11.))
-                        .text_color(rgb(0x19334d))
-                        .child(format!(
-                            "{} {}",
-                            self.currency.as_str(),
-                            bucket
-                                .cost_nanos
-                                .map_or_else(|| "—".into(), crate::stats_dto::format_amount)
-                        ))
-                        .into_any_element(),
+                tooltip = tooltip.row(
+                    rgb(0xc2185b),
+                    self.currency.as_str(),
+                    bucket
+                        .cost_nanos
+                        .map_or_else(|| "—".into(), crate::stats_dto::format_amount),
                 );
+                add_dot(bucket.cost_nanos, 0xc2185b);
             }
         }
-        rows.push(
-            div()
-                .text_size(px(10.))
-                .text_color(rgb(0x8a98a7))
-                .child(match bucket.quality {
-                    SeriesQuality::Known => {
-                        if self.zh {
-                            "覆盖率完整"
-                        } else {
-                            "complete coverage"
-                        }
-                    }
-                    SeriesQuality::Partial => {
-                        if self.zh {
-                            "部分覆盖"
-                        } else {
-                            "partial coverage"
-                        }
-                    }
-                    SeriesQuality::Empty => {
-                        if self.zh {
-                            "确认无请求"
-                        } else {
-                            "confirmed empty"
-                        }
-                    }
-                    SeriesQuality::Unknown => {
-                        if self.zh {
-                            "记录可能不全"
-                        } else {
-                            "records may be incomplete"
-                        }
-                    }
-                })
-                .into_any_element(),
-        );
-        Some(
-            div()
-                .absolute()
-                .left(left)
-                .top(px(8.))
-                .w(px(254.))
-                .p_2()
-                .flex()
-                .flex_col()
-                .gap_1()
-                .bg(rgb(0xffffff))
-                .border_1()
-                .border_color(rgb(0xdbe5ee))
-                .rounded(px(8.))
-                .shadow_md()
-                .children(rows)
-                .into_any_element(),
-        )
+        let quality = match bucket.quality {
+            SeriesQuality::Known => {
+                if self.zh {
+                    "完整"
+                } else {
+                    "Complete"
+                }
+            }
+            SeriesQuality::Partial => {
+                if self.zh {
+                    "部分覆盖"
+                } else {
+                    "Partial"
+                }
+            }
+            SeriesQuality::Empty => {
+                if self.zh {
+                    "确认无请求"
+                } else {
+                    "Confirmed empty"
+                }
+            }
+            SeriesQuality::Unknown => {
+                if self.zh {
+                    "记录可能不全"
+                } else {
+                    "May be incomplete"
+                }
+            }
+        };
+        tooltip = tooltip.plain_row(if self.zh { "数据覆盖" } else { "Coverage" }, quality);
+        if bucket.collection_warning {
+            tooltip = tooltip.plain_row(
+                if self.zh {
+                    "采集提示"
+                } else {
+                    "Collection"
+                },
+                if self.zh {
+                    "该时段记录可能不全"
+                } else {
+                    "Records may be incomplete"
+                },
+            );
+        }
+        Some(tooltip.dots(dots).into_any_element())
     }
 }
 
@@ -612,14 +575,25 @@ impl IntoElement for UsagePlot {
     }
 }
 
-fn bucket_label(bucket: &ChartPoint) -> String {
+/// Include both endpoints and space labels according to actual plot width.
+fn tick_indices(count: usize, width: f32) -> Vec<usize> {
+    if count == 0 {
+        return Vec::new();
+    }
+    if count == 1 {
+        return vec![0];
+    }
+    let ticks = ((width / 90.).floor() as usize).clamp(2, 8).min(count);
+    (0..ticks).map(|i| i * (count - 1) / (ticks - 1)).collect()
+}
+
+fn bucket_label(bucket: &ChartPoint, show_date: bool) -> String {
     match chrono::Local.timestamp_millis_opt(bucket.start_ms).single() {
         Some(value) => {
-            let span = bucket.end_ms - bucket.start_ms;
-            if span <= 36 * 3_600_000 {
+            if !show_date {
                 value.format("%H:%M").to_string()
             } else {
-                value.format("%m-%d").to_string()
+                value.format("%m/%d").to_string()
             }
         }
         None => String::new(),
@@ -630,8 +604,12 @@ fn bucket_label(bucket: &ChartPoint) -> String {
 mod tests {
     // Explicit imports only: a glob import would bring GPUI's `#[gpui::test]`
     // attribute into scope and shadow the built-in `#[test]` macro.
-    use super::{ChartPoint, SeriesQuality, nice_max};
+    use super::{
+        ChartMode, ChartPoint, SeriesQuality, UsagePlot, bucket_label, nice_max, tick_indices,
+    };
     use crate::stats_dto::SeriesPointDto;
+    use gpui_kit::{Bounds, ElementId, point as position, px, size};
+    use std::collections::BTreeSet;
 
     #[test]
     fn nice_max_lands_on_readable_steps() {
@@ -717,5 +695,62 @@ mod tests {
         assert_eq!(chart[1].input, None);
         assert!(chart[1].collection_warning);
         assert_eq!(chart[0].center_ms, 1_800_000);
+    }
+
+    #[test]
+    fn ticks_include_both_endpoints_and_adapt_to_width() {
+        assert!(tick_indices(0, 900.).is_empty());
+        assert_eq!(tick_indices(1, 900.), vec![0]);
+        assert_eq!(tick_indices(30, 200.), vec![0, 29]);
+        let ticks = tick_indices(30, 900.);
+        assert_eq!(ticks.len(), 8);
+        assert_eq!((ticks[0], *ticks.last().unwrap()), (0, 29));
+        assert!(ticks.windows(2).all(|pair| pair[0] < pair[1]));
+    }
+
+    #[test]
+    fn daily_axes_show_dates_instead_of_repeated_midnight_labels() {
+        let points = [point(
+            1_790_000_000_000,
+            1,
+            Some(100),
+            SeriesQuality::Known,
+            false,
+        )];
+        let chart = ChartPoint::from_series(&points, crate::stats_dto::Currency::Usd);
+        assert!(bucket_label(&chart[0], true).contains('/'));
+        assert!(bucket_label(&chart[0], false).contains(':'));
+    }
+
+    #[test]
+    fn hover_uses_local_plot_coordinates_after_scrolling() {
+        let points = (0..3)
+            .map(|i| point(i * 3_600_000, 1, Some(100), SeriesQuality::Known, false))
+            .collect::<Vec<_>>();
+        let plot = UsagePlot {
+            id: ElementId::Name("hover-test".into()),
+            points: ChartPoint::from_series(&points, crate::stats_dto::Currency::Usd),
+            visible: BTreeSet::new(),
+            zh: true,
+            mode: ChartMode::Cost,
+            currency: crate::stats_dto::Currency::Usd,
+        };
+        for origin in [(0., 0.), (200., -500.)] {
+            let bounds = Bounds::new(
+                position(px(origin.0), px(origin.1)),
+                size(px(480.), px(240.)),
+            );
+            for (x, index) in [(64., 0), (264., 1), (464., 2)] {
+                assert_eq!(
+                    plot.hover_index(position(px(x), px(80.)), &bounds),
+                    Some(index)
+                );
+            }
+            assert_eq!(plot.hover_index(position(px(20.), px(80.)), &bounds), None);
+            assert_eq!(
+                plot.hover_index(position(px(200.), px(235.)), &bounds),
+                None
+            );
+        }
     }
 }

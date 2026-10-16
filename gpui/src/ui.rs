@@ -43,8 +43,19 @@ const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
 const BORDER: u32 = 0xe2e9f1;
 const SIDEBAR_WIDTH: f32 = 168. * 1.2;
+// Small icons are 14px in GPUI Kit; custom button sizes use 75% for icons.
+const APP_ICON_SIZE: f32 = 14. * 1.3;
+const APP_CONTROL_SIZE: f32 = APP_ICON_SIZE / 0.75;
 const PROJECT_URL: &str = "https://github.com/gloryhui/workbuddy-proxy";
 const FEEDBACK_URL: &str = "https://github.com/gloryhui/workbuddy-proxy/issues/new";
+
+fn navigation_title(text: &'static str, active: bool) -> Label {
+    Label::new(text)
+        .text_size(px(15.))
+        .line_height(px(20.))
+        .font_weight(FontWeight::BOLD)
+        .text_color(rgb(if active { 0x006b83 } else { INK }))
+}
 #[derive(Clone)]
 struct Choice {
     code: String,
@@ -130,6 +141,7 @@ fn preset_choices(zh: bool) -> SearchableVec<Choice> {
 pub struct Proxy {
     dir: PathBuf,
     page: Page,
+    providers_expanded: bool,
     statistics: Entity<Statistics>,
     cfg: Config,
     drafts: Drafts,
@@ -228,6 +240,7 @@ impl Proxy {
         self.zh = code == "zh"
             || (code == "auto" && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
         let zh = self.zh;
+        gpui_kit::component::set_locale(if zh { "zh-CN" } else { "en" });
         self.statistics
             .update(cx, |page, cx| page.set_language(zh, window, cx));
         let zh = self.zh;
@@ -304,7 +317,7 @@ impl Proxy {
         let selected = self.cfg.language.clone();
         let owner = cx.entity().downgrade();
         Button::new("language")
-            .small()
+            .with_size(px(APP_CONTROL_SIZE))
             .ghost()
             .icon(Icon::default().path("icons/globe.svg"))
             .tooltip(self.t("切换界面语言", "Change interface language"))
@@ -330,11 +343,13 @@ impl Proxy {
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
         div()
             .flex()
+            .h(px(26.))
+            .mr(px(-3.))
             .items_center()
             .gap_3()
             .child(
                 Button::new("autostart")
-                    .small()
+                    .with_size(px(APP_CONTROL_SIZE))
                     .ghost()
                     .icon(Icon::default().path("icons/autostart.svg"))
                     .selected(self.cfg.autostart)
@@ -364,7 +379,7 @@ impl Proxy {
             )
             .child(
                 Button::new("check-update")
-                    .small()
+                    .with_size(px(APP_CONTROL_SIZE))
                     .ghost()
                     .icon(IconName::RefreshCw)
                     .tooltip(self.t("检查更新", "Check updates"))
@@ -390,7 +405,7 @@ impl Proxy {
             )
             .child(
                 Button::new("restore-window-size")
-                    .small()
+                    .with_size(px(APP_CONTROL_SIZE))
                     .ghost()
                     .icon(Icon::default().path("icons/restore-size.svg"))
                     .tooltip(self.t(
@@ -405,7 +420,7 @@ impl Proxy {
             )
             .child(
                 Button::new("project-homepage")
-                    .small()
+                    .with_size(px(APP_CONTROL_SIZE))
                     .ghost()
                     .icon(Icon::default().path("icons/github.svg"))
                     .tooltip(self.t("GitHub 项目主页", "GitHub project"))
@@ -414,7 +429,7 @@ impl Proxy {
             )
             .child(
                 Button::new("submit-feedback")
-                    .small()
+                    .with_size(px(APP_CONTROL_SIZE))
                     .ghost()
                     .icon(Icon::default().path("icons/feedback.svg"))
                     .tooltip(self.t("提交反馈", "Submit feedback"))
@@ -526,6 +541,7 @@ impl Proxy {
         let zh = cfg.language == "zh"
             || (cfg.language == "auto"
                 && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
+        gpui_kit::component::set_locale(if zh { "zh-CN" } else { "en" });
         let drafts = Drafts::load(&dir, &cfg);
         let backend = Backend::new(dir.clone());
         let statistics = cx.new(|cx| Statistics::new(dir.clone(), zh, window, cx));
@@ -638,6 +654,7 @@ impl Proxy {
         let mut this = Self {
             dir,
             page: Page::Providers,
+            providers_expanded: true,
             statistics,
             cfg,
             drafts,
@@ -1573,7 +1590,8 @@ impl Proxy {
                     .unwrap_or_else(|| p.name.clone());
                 let count = draft.map_or(p.models.len(), |d| d.models.len());
                 SidebarMenuItem::new(name.clone())
-                    .pl_4()
+                    .pl_6()
+                    .text_size(px(12.))
                     .accessibility_label(name)
                     .active(active)
                     .font_weight(if active {
@@ -1591,97 +1609,139 @@ impl Proxy {
             .collect::<Vec<_>>();
         let statistics_active = self.page == Page::Statistics;
         let models_active = self.page == Page::Providers;
-        let navigation =
-            vec![
-                SidebarMenuItem::new(self.t("数据统计", "Statistics"))
-                    .accessibility_label(self.t("数据统计", "Statistics"))
-                    .active(statistics_active)
-                    .font_weight(if statistics_active {
-                        FontWeight::SEMIBOLD
-                    } else {
-                        FontWeight::NORMAL
+        let header = div()
+            .w_full()
+            .flex()
+            .flex_col()
+            .gap_1()
+            .child(
+                Button::new("nav-statistics")
+                    .ghost()
+                    .w_full()
+                    .h(px(40.))
+                    .justify_start()
+                    .when(statistics_active, |button| {
+                        button.bg(rgb(0xc5ebf4)).text_color(rgb(0x006b83))
                     })
+                    .accessibility_label(self.t("数据统计", "Statistics"))
+                    .child(div().flex().flex_1().items_center().child(navigation_title(
+                        self.t("数据统计", "Statistics"),
+                        statistics_active,
+                    )))
                     .on_click(cx.listener(|this, _, window, cx| {
                         this.switch_page(Page::Statistics, window, cx)
                     })),
-                SidebarMenuItem::new(self.t("供应商管理", "Providers"))
-                    .accessibility_label(self.t("供应商管理", "Providers"))
-                    .font_weight(if models_active {
-                        FontWeight::SEMIBOLD
-                    } else {
-                        FontWeight::NORMAL
+            )
+            .child(
+                Button::new("nav-providers")
+                    .ghost()
+                    .w_full()
+                    .h(px(40.))
+                    .when(models_active, |button| {
+                        button.bg(rgb(0xc5ebf4)).text_color(rgb(0x006b83))
                     })
+                    .accessibility_label(self.t("供应商管理", "Providers"))
+                    .tooltip(if self.providers_expanded {
+                        self.t("折叠供应商列表", "Collapse providers")
+                    } else {
+                        self.t("展开供应商列表", "Expand providers")
+                    })
+                    .child(
+                        div()
+                            .flex()
+                            .flex_1()
+                            .items_center()
+                            .justify_between()
+                            .child(navigation_title(
+                                self.t("供应商管理", "Providers"),
+                                models_active,
+                            ))
+                            .child(
+                                Icon::new(if self.providers_expanded {
+                                    IconName::ChevronDown
+                                } else {
+                                    IconName::ChevronRight
+                                })
+                                .size_3(),
+                            ),
+                    )
                     .on_click(cx.listener(|this, _, window, cx| {
-                        this.switch_page(Page::Providers, window, cx)
+                        this.providers_expanded = !this.providers_expanded;
+                        this.switch_page(Page::Providers, window, cx);
+                        cx.notify();
                     })),
-            ];
+            );
         Sidebar::new("providers")
             .collapsible(false)
             .w(px(SIDEBAR_WIDTH))
             .border_1()
             .border_color(rgb(0xcbdbe6))
             .rounded(px(12.))
-            .child(SidebarMenu::new().children({
-                let mut items = navigation;
-                items.extend(rows);
-                items
-            }))
-            .footer(
-                div()
-                    .w_full()
-                    .p_2()
-                    .border_t_1()
-                    .border_color(rgb(BORDER))
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .justify_between()
-                            .gap_2()
-                            .child(
-                                Button::new("provider-add")
-                                    .small()
-                                    .ghost()
-                                    .icon(IconName::Plus)
-                                    .tooltip(self.t("新增供应商", "Add provider"))
-                                    .accessibility_label(self.t("新增供应商", "Add provider"))
-                                    .disabled(self.busy)
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.capture(cx);
-                                        this.send("add", vec![json!({"command":"add"})], cx);
-                                    })),
-                            )
-                            .child(
-                                Button::new("provider-copy")
-                                    .small()
-                                    .ghost()
-                                    .icon(IconName::Copy)
-                                    .tooltip(self.t("复制供应商", "Duplicate provider"))
-                                    .accessibility_label(self.t("复制供应商", "Duplicate provider"))
-                                    .disabled(self.busy || selected.is_empty())
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        let mut steps = this.dirty_steps(cx);
-                                        steps.push(
+            .header(header)
+            .when(self.providers_expanded, |sidebar| {
+                sidebar.child(SidebarMenu::new().children(rows)).footer(
+                    div()
+                        .w_full()
+                        .pl_4()
+                        .pr_2()
+                        .py_2()
+                        .border_t_1()
+                        .border_color(rgb(BORDER))
+                        .child(
+                            div()
+                                .flex()
+                                .items_center()
+                                .justify_between()
+                                .gap_2()
+                                .child(
+                                    Button::new("provider-add")
+                                        .small()
+                                        .ghost()
+                                        .icon(IconName::Plus)
+                                        .tooltip(self.t("新增供应商", "Add provider"))
+                                        .accessibility_label(self.t("新增供应商", "Add provider"))
+                                        .disabled(self.busy)
+                                        .on_click(cx.listener(|this, _, _, cx| {
+                                            this.capture(cx);
+                                            this.send("add", vec![json!({"command":"add"})], cx);
+                                        })),
+                                )
+                                .child(
+                                    Button::new("provider-copy")
+                                        .small()
+                                        .ghost()
+                                        .icon(IconName::Copy)
+                                        .tooltip(self.t("复制供应商", "Duplicate provider"))
+                                        .accessibility_label(
+                                            self.t("复制供应商", "Duplicate provider"),
+                                        )
+                                        .disabled(self.busy || selected.is_empty())
+                                        .on_click(cx.listener(|this, _, _, cx| {
+                                            let mut steps = this.dirty_steps(cx);
+                                            steps.push(
                                     json!({"command":"duplicate","provider_id":this.selected()}),
                                 );
-                                        this.send("duplicate", steps, cx);
-                                    })),
-                            )
-                            .child(
-                                Button::new("provider-delete")
-                                    .small()
-                                    .ghost()
-                                    .icon(IconName::Delete)
-                                    .tooltip(self.t("删除供应商", "Delete provider"))
-                                    .accessibility_label(self.t("删除供应商", "Delete provider"))
-                                    .disabled(self.busy || selected.is_empty())
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.delete_open = true;
-                                        cx.notify();
-                                    })),
-                            ),
-                    ),
-            )
+                                            this.send("duplicate", steps, cx);
+                                        })),
+                                )
+                                .child(
+                                    Button::new("provider-delete")
+                                        .small()
+                                        .ghost()
+                                        .icon(IconName::Delete)
+                                        .tooltip(self.t("删除供应商", "Delete provider"))
+                                        .accessibility_label(
+                                            self.t("删除供应商", "Delete provider"),
+                                        )
+                                        .disabled(self.busy || selected.is_empty())
+                                        .on_click(cx.listener(|this, _, _, cx| {
+                                            this.delete_open = true;
+                                            cx.notify();
+                                        })),
+                                ),
+                        ),
+                )
+            })
             .into_any_element()
     }
     fn center(&mut self, cx: &mut Context<Self>) -> AnyElement {
@@ -2304,7 +2364,7 @@ impl Render for Proxy {
             .child(
                 div()
                     .flex()
-                    .items_center()
+                    .items_start()
                     .justify_between()
                     .h(px(48.))
                     .mb_2()
