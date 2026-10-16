@@ -1354,7 +1354,7 @@ impl Bridge {
                 self.prepare_metadata().await;
                 let count = self.configure_workbuddy(&crate::workbuddy::path()?)?;
                 Ok(format!(
-                    "Synced {count} models; reopen WorkBuddy model list / 已同步 {count} 项，请重新打开模型列表"
+                    "Synced {count} models to disk; reopen the WorkBuddy model list. If an existing conversation reports missing endpoint or API key, fully quit and reopen WorkBuddy, then continue the same conversation / 已同步 {count} 项配置到文件，请重开 WorkBuddy 模型列表；旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy 后继续原会话"
                 ))
             }
             "restore" => self

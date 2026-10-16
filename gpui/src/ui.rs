@@ -171,6 +171,7 @@ pub struct Proxy {
     effort_select: Entity<ChoiceState>,
     preset_select: Entity<SelectState<SearchableVec<Choice>>>,
     delete_open: bool,
+    sync_open: bool,
     wake: String,
     last_poll: Instant,
     last_dirty: String,
@@ -579,6 +580,7 @@ impl Proxy {
             effort_select,
             preset_select,
             delete_open: false,
+            sync_open: false,
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
@@ -822,7 +824,11 @@ impl Proxy {
             .unwrap_or_default()
     }
     fn save(&mut self, _: &Save, _: &mut Window, cx: &mut Context<Self>) {
-        if self.picker.is_some() || self.editing.is_some() || self.delete_open || self.protocol_open
+        if self.picker.is_some()
+            || self.editing.is_some()
+            || self.delete_open
+            || self.protocol_open
+            || self.sync_open
         {
             return;
         }
@@ -849,14 +855,34 @@ impl Proxy {
             self.save_steps(cx)
         }
     }
-    fn sync(&mut self, cx: &mut Context<Self>) {
+    fn sync(&mut self, restart: bool, cx: &mut Context<Self>) {
+        if self.busy {
+            return;
+        }
         let mut steps = if self.selected().is_empty() {
             vec![]
         } else {
             self.dirty_steps(cx)
         };
         steps.push(json!({"command":"install"}));
-        self.send("install", steps, cx);
+        self.sync_open = false;
+        self.send(
+            if restart {
+                "install_restart"
+            } else {
+                "install"
+            },
+            steps,
+            cx,
+        );
+        if restart && self.busy {
+            self.status = self
+                .t(
+                    "正在同步并重启 WorkBuddy…",
+                    "Syncing and restarting WorkBuddy…",
+                )
+                .into();
+        }
     }
     fn switch_provider(&mut self, id: String, window: &mut Window, cx: &mut Context<Self>) {
         if self.busy {
@@ -1056,7 +1082,7 @@ impl Proxy {
                             .to_owned();
                     }
                 }
-                if reply.result.is_ok() {
+                if reply.result.is_ok() || reply.synced {
                     if reply.tag == "fetch" {
                         self.picker = reply
                             .result
@@ -1232,6 +1258,7 @@ impl Proxy {
         self.picker = None;
         self.editing = None;
         self.delete_open = false;
+        self.sync_open = false;
         self.protocol_open = false;
         self.focus.focus(window, cx);
         cx.notify();
@@ -1326,6 +1353,7 @@ impl Proxy {
         let active = self.picker.is_some()
             || self.editing.is_some()
             || self.delete_open
+            || self.sync_open
             || self.protocol_open;
         if active && !self.dialog_open {
             self.dialog_open = true;
@@ -1643,7 +1671,10 @@ impl Proxy {
                             .icon(IconName::RefreshCw)
                             .label(self.t("同步 WorkBuddy", "Sync WorkBuddy"))
                             .disabled(self.busy)
-                            .on_click(cx.listener(|this, _, _, cx| this.sync(cx))),
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.sync_open = true;
+                                cx.notify();
+                            })),
                     )
                     .child(
                         Button::new("restore")
@@ -1661,6 +1692,10 @@ impl Proxy {
                             })),
                     ),
             )
+            .child(Label::new(self.t(
+                "新增或修改模型后，旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy，再继续原会话。",
+                "After model changes, fully quit and reopen WorkBuddy if an existing conversation reports a missing URL or key; then continue that conversation.",
+            )).text_size(px(11.)).text_color(rgb(MUTED)))
             .child(
                 div()
                     .flex()
@@ -1919,6 +1954,31 @@ impl Proxy {
                                 .on_click(cx.listener(|this, _, _, cx| this.confirm_edit(cx))),
                         ),
                 )
+                .into_any_element()
+        } else if self.sync_open {
+            DialogContent::new()
+                .w_full().gap_4()
+                .child(div().text_lg().font_weight(FontWeight::SEMIBOLD)
+                    .child(self.t("同步 WorkBuddy", "Sync WorkBuddy")))
+                .child(Label::new(self.t(
+                    "同步会保存当前供应商的修改，并更新所有已保存供应商的模型配置。重启可让旧会话读取新配置，但会中断 WorkBuddy 正在执行的任务，请先保存工作。",
+                    "Sync saves changes to the current provider and updates models for all saved providers. Restart lets existing conversations load the new configuration, but interrupts running WorkBuddy tasks. Save your work first.",
+                )).text_color(rgb(MUTED)))
+                .when(!cfg!(target_os = "macos"), |this| this.child(Label::new(self.t(
+                    "此平台暂不支持自动重启；仅同步后请手动重开 WorkBuddy。",
+                    "Automatic restart is not supported on this platform yet. Sync, then reopen WorkBuddy manually.",
+                )).text_color(rgb(MUTED))))
+                .child(DialogFooter::new()
+                    .child(Button::new("sync-restart").primary()
+                        .label(self.t("同步并重启", "Sync and restart"))
+                        .disabled(self.busy || !cfg!(target_os = "macos"))
+                        .on_click(cx.listener(|this, _, _, cx| this.sync(true, cx))))
+                    .child(Button::new("sync-only")
+                        .label(self.t("仅同步", "Sync only")).disabled(self.busy)
+                        .on_click(cx.listener(|this, _, _, cx| this.sync(false, cx))))
+                    .child(Button::new("sync-cancel")
+                        .label(self.t("取消", "Cancel"))
+                        .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
                 .into_any_element()
         } else if self.delete_open {
             DialogContent::new().w_full().gap_4().child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("删除供应商？","Delete provider?"))).child(div().text_color(rgb(MUTED)).child(self.t("将移除此供应商及其保存的 Key 和模型。","This removes the provider and its saved key and models.")))

@@ -16,10 +16,44 @@ pub struct Reply {
     pub result: Result<String, String>,
     pub config: Option<Config>,
     pub snapshot: Option<Value>,
+    pub synced: bool,
 }
 pub struct Backend {
     pub jobs: SyncSender<Job>,
     pub replies: Receiver<Reply>,
+}
+
+fn execute(
+    job: &Job,
+    mut call: impl FnMut(&Value) -> Result<String, String>,
+    restart: impl FnOnce() -> Result<(), String>,
+) -> (Result<String, String>, bool) {
+    let mut result = Ok(String::new());
+    for step in &job.steps {
+        result = call(step);
+        if result.is_err() {
+            return (result, false);
+        }
+    }
+    let synced = result.is_ok() && job.steps.last().is_some_and(|s| s["command"] == "install");
+    if job.tag == "install_restart" {
+        if !synced {
+            return (
+                Err("Restart requires a successful model sync / 重启前必须成功同步模型".into()),
+                false,
+            );
+        }
+        result = restart()
+            .map(|()| "Models synced; WorkBuddy reopened / 已同步模型并重新打开 WorkBuddy".into())
+            .map_err(|e| {
+                format!(
+                    "Models synced to disk; {} / 模型已同步到文件；{}",
+                    crate::i18n::message(&e, false),
+                    crate::i18n::message(&e, true)
+                )
+            });
+    }
+    (result, synced)
 }
 pub fn call(dir: &std::path::Path, payload: &Value) -> Result<String, String> {
     let info: Value = serde_json::from_slice(
@@ -73,13 +107,11 @@ impl Backend {
             .stack_size(512 * 1024)
             .spawn(move || {
                 while let Ok(job) = requests.recv() {
-                    let mut result = Ok(String::new());
-                    for step in job.steps {
-                        result = call(&dir, &step);
-                        if result.is_err() {
-                            break;
-                        }
-                    }
+                    let (result, synced) = execute(
+                        &job,
+                        |step| call(&dir, step),
+                        crate::workbuddy_restart::restart,
+                    );
                     let snapshot = if job.tag == "metadata" {
                         None
                     } else if job.tag == "poll" {
@@ -99,10 +131,15 @@ impl Backend {
                     };
                     if results
                         .send(Reply {
-                            tag: job.tag,
+                            tag: if job.tag == "install_restart" {
+                                "install".into()
+                            } else {
+                                job.tag
+                            },
                             result,
                             config,
                             snapshot,
+                            synced,
                         })
                         .is_err()
                     {
@@ -122,6 +159,74 @@ mod tests {
         io::{Read, Write},
         net::TcpListener,
     };
+    #[test]
+    fn restart_requires_every_save_and_sync_to_succeed() {
+        let job = Job {
+            tag: "install_restart".into(),
+            steps: vec![json!({"command":"save"}), json!({"command":"install"})],
+        };
+        for fail_at in [0, 1] {
+            let mut calls = 0;
+            let (result, synced) = execute(
+                &job,
+                |_| {
+                    let current = calls;
+                    calls += 1;
+                    if current == fail_at {
+                        Err("fixture failure".into())
+                    } else {
+                        Ok("saved".into())
+                    }
+                },
+                || panic!("must not restart after failure"),
+            );
+            assert_eq!(result, Err("fixture failure".into()));
+            assert!(!synced);
+            assert_eq!(calls, fail_at + 1);
+        }
+        let calls = std::cell::Cell::new(0);
+        let (result, synced) = execute(
+            &job,
+            |_| {
+                calls.set(calls.get() + 1);
+                Ok("ok".into())
+            },
+            || {
+                assert_eq!(calls.get(), 2);
+                Ok(())
+            },
+        );
+        assert!(result.is_ok() && synced);
+        let (result, synced) = execute(
+            &job,
+            |_| Ok("ok".into()),
+            || Err("quit refused / 拒绝退出".into()),
+        );
+        assert!(synced, "saved config must refresh even if restart fails");
+        assert!(result.unwrap_err().contains("模型已同步到文件；拒绝退出"));
+        let sync_only = Job {
+            tag: "install".into(),
+            steps: job.steps,
+        };
+        assert!(
+            execute(
+                &sync_only,
+                |_| Ok("synced".into()),
+                || panic!("sync-only must never restart")
+            )
+            .0
+            .is_ok()
+        );
+        let empty = Job {
+            tag: "install_restart".into(),
+            steps: vec![],
+        };
+        assert!(
+            execute(&empty, |_| unreachable!(), || panic!("no sync occurred"))
+                .0
+                .is_err()
+        );
+    }
     #[test]
     fn authenticated_local_control_handles_success_and_failure() {
         let dir = tempfile::tempdir().unwrap();

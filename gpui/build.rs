@@ -1,4 +1,13 @@
 fn main() {
+    if std::env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {
+        cc::Build::new()
+            .file("../native/workbuddy_restart.m")
+            .flag("-fobjc-arc")
+            .flag("-fblocks")
+            .compile("workbuddy_restart");
+        println!("cargo:rustc-link-lib=framework=AppKit");
+        println!("cargo:rerun-if-changed=../native/workbuddy_restart.m");
+    }
     if std::env::var("CARGO_CFG_TARGET_OS").unwrap() != "windows" {
         return;
     }

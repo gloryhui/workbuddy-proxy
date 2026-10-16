@@ -196,6 +196,7 @@ impl Bridge {
     pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
         let mut cfg = self.config.lock().unwrap();
         let mut d = Document::read(path)?;
+        let original = d.root.clone();
         let mut connections = cfg.workbuddy_connections()?;
         for c in &mut connections {
             c.capabilities = Some(
@@ -301,9 +302,16 @@ impl Bridge {
             }
         }
         config::make_private_dir(path.parent().ok_or("Invalid configuration path")?)?;
-        backup(path)?;
+        // WorkBuddy's existing CLI sessions may watch the file inode. Avoid
+        // replacing a semantically unchanged document on every Sync click.
+        // Changed documents still use backup + atomic replacement: an in-place
+        // truncate/write could make another reader observe incomplete JSON.
+        let changed = d.root != original;
+        if changed {
+            backup(path)?;
+        }
         config::write_json(&self.dir.join("config.json"), &next)?;
-        if let Err(e) = config::write_json(path, &d.root) {
+        if changed && let Err(e) = config::write_json(path, &d.root) {
             let _ = config::write_json(&self.dir.join("config.json"), &*cfg);
             return Err(e);
         }
@@ -402,8 +410,38 @@ mod tests {
             Some(previous.clone())
         );
         let bytes = fs::read(&path).unwrap();
+        let backup_count = || {
+            fs::read_dir(dir.path())
+                .unwrap()
+                .filter_map(Result::ok)
+                .filter(|e| {
+                    e.file_name()
+                        .to_string_lossy()
+                        .starts_with("models.json.workbuddy-proxy-")
+                })
+                .count()
+        };
+        let backups_before = backup_count();
+        let metadata = fs::metadata(&path).unwrap();
         bridge.configure_workbuddy(&path).unwrap();
         assert_eq!(fs::read(&path).unwrap(), bytes);
+        assert_eq!(backup_count(), backups_before);
+        assert_eq!(
+            fs::metadata(&path).unwrap().modified().unwrap(),
+            metadata.modified().unwrap()
+        );
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::MetadataExt;
+            assert_eq!(fs::metadata(&path).unwrap().ino(), metadata.ino());
+        }
+        // Formatting is owned by the external editor; equivalent JSON is a
+        // no-op too, so its watcher and byte representation both survive.
+        let compact = serde_json::to_vec(&Document::read(&path).unwrap().root).unwrap();
+        fs::write(&path, &compact).unwrap();
+        bridge.configure_workbuddy(&path).unwrap();
+        assert_eq!(fs::read(&path).unwrap(), compact);
+        assert_eq!(backup_count(), backups_before);
         bridge.config.lock().unwrap().providers[0].name = "renamed".into();
         bridge.configure_workbuddy(&path).unwrap();
         assert_eq!(
