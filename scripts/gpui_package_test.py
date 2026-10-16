@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -47,6 +48,8 @@ def main():
     parser.add_argument('--output',required=True)
     parser.add_argument('--hold',action='store_true')
     parser.add_argument('--directory')
+    parser.add_argument('--wait-for-cmd-q', action='store_true',
+                        help='Wait for an actual Cmd+Q in the first settings window before checking clean shutdown')
     args=parser.parse_args()
     exe=Path(args.exe).resolve();output=Path(args.output).resolve();output.parent.mkdir(parents=True,exist_ok=True)
     temp=None
@@ -67,14 +70,14 @@ def main():
     home=directory/'home';home.mkdir(exist_ok=True);env=os.environ.copy();env['HOME']=env['USERPROFILE']=str(home)
     host=subprocess.Popen([str(exe),'--config-dir',str(directory)],env=env,start_new_session=platform.system()!='Windows',stdout=(directory/'host.stdout.log').open('wb'),stderr=(directory/'host.stderr.log').open('wb'))
     core=None;ui=None;metrics={}
-    def wait(predicate,message,seconds=35):
+    def wait(predicate,message,seconds=35,allow_host_exit=False):
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline:
             try:
                 value=predicate()
                 if value:return value
             except (OSError,ValueError,KeyError):pass
-            if host.poll() is not None:raise AssertionError('Tray host exited: '+(directory/'host.stderr.log').read_text(errors='replace')[:2000])
+            if not allow_host_exit and host.poll() is not None:raise AssertionError('Tray host exited: '+(directory/'host.stderr.log').read_text(errors='replace')[:2000])
             time.sleep(.05)
         detail=(directory/'gpui-startup.log').read_text(errors='replace')[:2500] if (directory/'gpui-startup.log').exists() else ''
         raise AssertionError(message+'\n'+detail)
@@ -85,6 +88,24 @@ def main():
     def wake():
         request=urllib.request.Request(f'http://127.0.0.1:{core["port"]}/_control/show',data=b'',headers={'Authorization':'Bearer '+core['management_key']})
         with urllib.request.urlopen(request,timeout=5) as response:response.read()
+    def runs():
+        with sqlite3.connect(directory/'usage.sqlite3') as connection:
+            return connection.execute('SELECT stopped_at_ms,stop_reason FROM stats_runs ORDER BY started_at_ms').fetchall()
+    def stats_health():
+        return json.loads(action({'command':'stats_health'}))
+    def assert_clean_start(expected_runs):
+        health=wait(lambda:(h if (h:=stats_health())['state']=='ready' else None),'Statistics did not become ready')
+        assert health['loss_scope']=='no_loss_observed_in_current_run',health
+        current=runs()
+        assert len(current)==expected_runs and current[-1]==(None,None),current
+        assert all(reason=='normal' for _,reason in current[:-1]),current
+    def stop_and_check_normal():
+        (directory/'gpui-exit-host').write_text('true')
+        host.wait(timeout=10)
+        wait(lambda:not (directory/'instance.json').exists() and not running(core['pid']),
+             'Core did not finish shutdown',seconds=10,allow_host_exit=True)
+        current=runs()
+        assert all(stopped is not None and reason=='normal' for stopped,reason in current),current
     try:
         core=wait(lambda:read('instance.json'),'Core did not start')
         ui=wait(lambda:read('gpui.json'),'GPUI renderer/window did not start')
@@ -92,6 +113,7 @@ def main():
         wait(lambda:read('frontend.json')['pid']==host.pid,'Tray singleton was not published')
         with urllib.request.urlopen(f'http://127.0.0.1:{port}/health',timeout=3) as response:assert json.load(response)['control_protocol']==7
         time.sleep(1)
+        assert_clean_start(1)
         metrics={'platform':platform.platform(),'architecture':platform.machine(),'processes_with_settings':3,
                  'core_rss_mib':round(rss(core['pid'])/1024,2),'tray_rss_mib':round(rss(host.pid)/1024,2),'gpui_rss_mib':round(rss(ui['pid'])/1024,2),'model_count':64,
                  'note':'RSS sums process working sets; shared pages can be counted more than once. GPU/driver allocations are not separately measured. Mock/client processes are excluded.'}
@@ -126,7 +148,20 @@ def main():
         time.sleep(.7)  # Let the reopened window capture and persist its actual restored state.
         wait(lambda:read('gpui-drafts.json')['providers']['qa-provider']['name']=='Unsaved package draft','Draft was lost on reopen')
         assert read('config.json')['providers'][0]['name']==saved_name,'Unsaved draft overwrote saved configuration'
+        assert_clean_start(1)  # Opening/closing settings must never create a run.
+        if args.wait_for_cmd_q:
+            print('READY_FOR_CMD_Q:',directory,'GPUI PID',ui['pid'],flush=True)
+            wait(lambda:host.poll() is not None,'Cmd+Q did not quit the tray host',seconds=90,allow_host_exit=True)
+        stop_and_check_normal()
+        host=subprocess.Popen([str(exe),'--config-dir',str(directory)],env=env,start_new_session=platform.system()!='Windows',stdout=(directory/'host-restart.stdout.log').open('wb'),stderr=(directory/'host-restart.stderr.log').open('wb'))
+        core=wait(lambda:read('instance.json'),'Restarted core did not start')
+        ui=wait(lambda:read('gpui.json'),'Restarted settings did not start')
+        wait(lambda:read('frontend.json')['pid']==host.pid,'Restarted tray did not become ready')
+        assert_clean_start(2)
+        stop_and_check_normal()
         metrics['checks']=['separate lightweight core/tray/GPUI processes','repeated launch reuses the existing application instance','real loopback streaming diagnostic with selected model','ordered core log clear','closing settings releases GPUI without stopping the core','tray reopens settings using the same core','private unsaved drafts survive reopening without changing config.json']
+        metrics['checks'] += ['exactly one statistics run owned by the core','opening settings never recovers a live core','normal quit flushes the run and stops the core','reopening after normal quit has no unclean-exit warning']
+        if args.wait_for_cmd_q:metrics['checks'].append('actual settings Cmd+Q stops the tray and core cleanly')
         metrics['result']='passed';output.write_text(json.dumps(metrics,ensure_ascii=False,indent=2)+'\n')
         print('PASS: packaged GPUI lifecycle, management API, log clear, selected-model diagnostic, draft persistence and resident-process measurements',flush=True)
     finally:

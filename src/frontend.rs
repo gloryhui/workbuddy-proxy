@@ -276,7 +276,7 @@ pub fn run(dir: PathBuf, port: Option<u16>, autostart: bool) -> Result<(), Strin
     // Drop Child only detaches it; it does not terminate the core.
     drop(child);
     let cfg = config::Config::load(&dir)?;
-    let mut controller = Bridge::new(cfg, dir)?;
+    let mut controller = Bridge::for_controller(cfg, dir)?;
     // Never send local management credentials through a system/HTTP proxy.
     controller.client = reqwest::Client::builder()
         .no_proxy()

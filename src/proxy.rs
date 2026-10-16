@@ -257,6 +257,15 @@ pub struct Bridge {
 }
 impl Bridge {
     pub fn new(config: Config, dir: PathBuf) -> Result<Self, String> {
+        Self::build(config, dir, true)
+    }
+
+    #[cfg(any(windows, target_os = "macos"))]
+    pub fn for_controller(config: Config, dir: PathBuf) -> Result<Self, String> {
+        Self::build(config, dir, false)
+    }
+
+    fn build(config: Config, dir: PathBuf, owns_statistics: bool) -> Result<Self, String> {
         let client = reqwest::Client::builder()
             .redirect(reqwest::redirect::Policy::none())
             .connect_timeout(Duration::from_secs(15))
@@ -266,10 +275,15 @@ impl Bridge {
             .tcp_nodelay(true)
             .build()
             .map_err(|e| e.to_string())?;
-        let stats = stats::StatsHandle::start(dir.clone());
+        let routes = Routes::new(&config)?;
+        let stats = if owns_statistics {
+            stats::StatsHandle::start(dir.clone())
+        } else {
+            stats::StatsHandle::for_controller(dir.clone())
+        };
         Ok(Self {
             catalog: Arc::new(crate::catalog::Catalog::load(&dir)),
-            routes: Mutex::new(Routes::new(&config)?),
+            routes: Mutex::new(routes),
             config: Mutex::new(config),
             dir,
             client,

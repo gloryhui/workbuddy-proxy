@@ -24,6 +24,7 @@ import http.client
 import json
 import os
 import socket
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -999,7 +1000,11 @@ def crash_recovery(exe, directory, port, checks):
         assert health['control_protocol'] == 7, health
         page = wait_for(lambda: _recovered(directory, port), 'interrupted row was not recovered')
         assert page
-        checks.ok('crash recovery marks in-flight rows interrupted')
+        assert stats(directory, port, 'stats_health')['loss_scope'] == 'unknown_after_unclean_exit'
+        warnings = stats(directory, port, 'stats_dashboard',
+                         filter=window(now_ms() - 3_600_000), granularity='hour')['warnings']
+        assert any(w['code'] == 'unclean_exit' for w in warnings), warnings
+        checks.ok('crash recovery interrupts in-flight rows and keeps the warning')
 
         # F09: a bucket that is provably inside a collecting window and saw no
         # request is a real zero; an uncovered or usage-less bucket stays unknown.
@@ -1051,6 +1056,19 @@ def crash_recovery(exe, directory, port, checks):
     finally:
         stop_core(process, port, directory, log)
 
+    process, log, _health = start_core(exe, directory, port)
+    try:
+        wait_for(lambda: stats(directory, port, 'stats_health')['state'] == 'ready',
+                 'statistics did not finish the clean restart')
+        assert stats(directory, port, 'stats_health')['loss_scope'] == 'no_loss_observed_in_current_run'
+        warnings = stats(directory, port, 'stats_dashboard',
+                         filter=window(now_ms() - 3_600_000), granularity='hour')['warnings']
+        assert not any(w['code'] == 'unclean_exit' for w in warnings), warnings
+        with sqlite3.connect(Path(directory) / 'usage.sqlite3') as db:
+            assert db.execute("SELECT COUNT(*) FROM stats_runs WHERE stop_reason='unclean'").fetchone()[0] > 0
+        checks.ok('normal quit clears the runtime warning without deleting crash history')
+    finally:
+        stop_core(process, port, directory, log)
     return None
 
 

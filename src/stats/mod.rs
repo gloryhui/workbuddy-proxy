@@ -321,6 +321,35 @@ impl StatsHandle {
     /// Starts the statistics subsystem. Migration and recovery run on the writer
     /// thread so network startup is never delayed.
     pub fn start(dir: PathBuf) -> Self {
+        let (inner, control_rx) = Self::initialize(dir);
+        let writer_inner = inner.clone();
+        let spawned = std::thread::Builder::new()
+            .name("stats-writer".into())
+            .stack_size(1024 * 1024)
+            .spawn(move || {
+                writer_thread(writer_inner, control_rx);
+            });
+        if spawned.is_err() {
+            inner.set_state(
+                HealthState::Disabled,
+                Some("statistics writer thread could not start".into()),
+            );
+        }
+        Self { inner }
+    }
+
+    /// A tray controller forwards management calls to the core. It must never
+    /// open SQLite, start recovery or create its own statistics run.
+    pub fn for_controller(dir: PathBuf) -> Self {
+        let (inner, _) = Self::initialize(dir);
+        inner.settings.write().unwrap().enabled = false;
+        inner.counters.enabled.store(false, Ordering::Relaxed);
+        inner.set_state(HealthState::Disabled, None);
+        inner.queue.close();
+        Self { inner }
+    }
+
+    fn initialize(dir: PathBuf) -> (Arc<Inner>, Receiver<ControlMessage>) {
         let (control, control_rx) = std::sync::mpsc::sync_channel(CONTROL_QUEUE_CAPACITY);
         let inner = Arc::new(Inner {
             dir,
@@ -343,20 +372,7 @@ impl StatsHandle {
             configured_providers: RwLock::new(Vec::new()),
             clear_token: Mutex::new(None),
         });
-        let writer_inner = inner.clone();
-        let spawned = std::thread::Builder::new()
-            .name("stats-writer".into())
-            .stack_size(1024 * 1024)
-            .spawn(move || {
-                writer_thread(writer_inner, control_rx);
-            });
-        if spawned.is_err() {
-            inner.set_state(
-                HealthState::Disabled,
-                Some("statistics writer thread could not start".into()),
-            );
-        }
-        Self { inner }
+        (inner, control_rx)
     }
 
     pub fn state(&self) -> HealthState {
@@ -2387,6 +2403,60 @@ mod tests {
             upstream_protocol: "openai_chat".into(),
             stream: true,
         }
+    }
+
+    #[test]
+    fn controller_does_not_recover_a_live_core_or_leave_a_run_behind() {
+        let tmp = temporary_dir();
+        let core = StatsHandle::start(tmp.path().to_path_buf());
+        assert!(wait_ready(&core));
+        let db = rusqlite::Connection::open(tmp.path().join("usage.sqlite3")).unwrap();
+        let controller = StatsHandle::for_controller(tmp.path().to_path_buf());
+        assert!(controller.is_stopped());
+        assert_eq!(controller.state(), HealthState::Disabled);
+        assert!(!controller.inner.accepting());
+        assert_eq!(
+            db.query_row("SELECT COUNT(*) FROM stats_runs", [], |r| r
+                .get::<_, i64>(0))
+                .unwrap(),
+            1
+        );
+        assert_eq!(
+            db.query_row(
+                "SELECT COUNT(*) FROM stats_runs WHERE stopped_at_ms IS NULL",
+                [],
+                |r| r.get::<_, i64>(0)
+            )
+            .unwrap(),
+            1
+        );
+        controller.shutdown();
+        core.shutdown();
+        assert_eq!(
+            db.query_row("SELECT stop_reason FROM stats_runs", [], |r| r
+                .get::<_, String>(0))
+                .unwrap(),
+            "normal"
+        );
+        let restarted = StatsHandle::start(tmp.path().to_path_buf());
+        assert!(wait_ready(&restarted));
+        assert!(!restarted.inner.unclean_exit.load(Ordering::Relaxed));
+        assert_eq!(
+            db.query_row("SELECT COUNT(*) FROM stats_runs", [], |r| r
+                .get::<_, i64>(0))
+                .unwrap(),
+            2
+        );
+        restarted.shutdown();
+    }
+
+    #[test]
+    fn controller_statistics_never_create_files() {
+        let tmp = temporary_dir();
+        let controller = StatsHandle::for_controller(tmp.path().join("not-created"));
+        assert!(controller.is_stopped());
+        controller.shutdown();
+        assert!(!tmp.path().join("not-created").exists());
     }
 
     #[tokio::test(flavor = "current_thread")]

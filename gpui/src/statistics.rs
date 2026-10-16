@@ -2945,13 +2945,25 @@ impl Statistics {
                 self.t("本次运行有丢弃", "requests were dropped in this run")
                     .to_owned(),
             ),
-            LossScope::UnknownAfterUncleanExit => alerts.push(
-                self.t(
-                    "上次运行未正常退出",
-                    "the previous run did not stop cleanly",
+            // The quality banner below already explains this condition. Keep
+            // a fallback here only before that dashboard has been loaded.
+            LossScope::UnknownAfterUncleanExit
+                if self.dashboard.as_ref().is_none_or(|dashboard| {
+                    !dashboard
+                        .warnings
+                        .iter()
+                        .any(|w| w.code == WarningCode::UncleanExit)
+                }) =>
+            {
+                alerts.push(
+                    self.t(
+                        "上次运行未正常退出",
+                        "the previous run did not stop cleanly",
+                    )
+                    .to_owned(),
                 )
-                .to_owned(),
-            ),
+            }
+            LossScope::UnknownAfterUncleanExit => {}
             LossScope::NoLossObservedInCurrentRun => {}
         }
         if health.write_failures_current_run > 0 {
