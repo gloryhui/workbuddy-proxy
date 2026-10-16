@@ -321,9 +321,97 @@ fn cell(
         .into_any_element()
 }
 
+/// Keep labels visually secondary without making users decode glyphs. Each
+/// label/value pair stays together on one line; exact values remain in the tooltip.
+fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+    let fields = [
+        (
+            if zh { "输入" } else { "In" },
+            compact(item.input_tokens, zh),
+        ),
+        (
+            if zh { "输出" } else { "Out" },
+            compact(item.output_tokens, zh),
+        ),
+        (
+            if zh { "缓存读" } else { "Cache read" },
+            compact(item.cache_read_tokens, zh),
+        ),
+        (
+            if zh { "总Token" } else { "Total" },
+            compact(item.total_tokens, zh),
+        ),
+        (
+            if zh { "命中率" } else { "Hit rate" },
+            percent(cache_rate(item.cache_read_tokens, item.input_tokens)),
+        ),
+    ];
+    let description = fields
+        .iter()
+        .map(|(label, value)| format!("{label} {value}"))
+        .collect::<Vec<_>>()
+        .join(" | ");
+    let hint = format!(
+        "{} {}\n{} {}\n{} {}\n{} {}\n{} {}",
+        if zh { "输入" } else { "Input" },
+        exact(item.input_tokens),
+        if zh { "输出" } else { "Output" },
+        exact(item.output_tokens),
+        if zh { "缓存读" } else { "Cache read" },
+        exact(item.cache_read_tokens),
+        if zh { "总 Token" } else { "Total" },
+        exact(item.total_tokens),
+        if zh {
+            "缓存命中率 = 缓存读 ÷ 输入（缺失或输入为 0 显示 —）"
+        } else {
+            "Cache hit = cache read / input (missing or zero input: —)"
+        },
+        percent(cache_rate(item.cache_read_tokens, item.input_tokens)),
+    );
+    div()
+        .id(("usage-tokens", row))
+        .w_full()
+        .min_w_0()
+        .overflow_hidden()
+        .flex()
+        .items_baseline()
+        .gap(px(2.))
+        .whitespace_nowrap()
+        .aria_label(description)
+        .tooltip(move |window, cx| {
+            gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
+        })
+        .children(
+            fields
+                .into_iter()
+                .enumerate()
+                .map(|(index, (label, value))| {
+                    div()
+                        .flex()
+                        .items_baseline()
+                        .gap(px(2.))
+                        .flex_shrink_0()
+                        .when(index > 0, |this| {
+                            this.child(Label::new("|").text_size(px(10.)).text_color(rgb(0xc4ceda)))
+                        })
+                        .child(
+                            Label::new(label)
+                                .text_size(px(10.))
+                                .text_color(rgb(0x6b7c90)),
+                        )
+                        .child(
+                            Label::new(value)
+                                .text_size(px(12.))
+                                .text_color(rgb(0x19334d)),
+                        )
+                }),
+        )
+        .into_any_element()
+}
+
 pub const REQUEST_COLUMNS: usize = 9;
 // Time is just wide enough for MM-DD HH:MM:SS at the table's 12px font.
-const MIN_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 68., 112., 80., 260., 110., 66., 60., 102.];
+const MIN_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 68., 112., 80., 340., 110., 66., 60., 102.];
 const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] =
     [110., 180., 350., 110., 460., 140., 82., 78., 130.];
 const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 1., 2., 0.2, 2., 0.3, 0.1, 0.1, 0.3];
@@ -532,35 +620,7 @@ impl TableDelegate for UsageRows {
                 0x6b7c90,
                 ("usage-request", row),
             ),
-            4 => cell(
-                format!(
-                    "↓{} ↑{} R{} Σ{} · {}",
-                    compact(item.input_tokens, zh),
-                    compact(item.output_tokens, zh),
-                    compact(item.cache_read_tokens, zh),
-                    compact(item.total_tokens, zh),
-                    percent(cache_rate(item.cache_read_tokens, item.input_tokens))
-                ),
-                Some(format!(
-                    "{} {}\n{} {}\n{} {}\n{} {}\n{} {}",
-                    if zh { "输入" } else { "Input" },
-                    exact(item.input_tokens),
-                    if zh { "输出" } else { "Output" },
-                    exact(item.output_tokens),
-                    if zh { "缓存读" } else { "Cache read" },
-                    exact(item.cache_read_tokens),
-                    if zh { "总 Token" } else { "Total" },
-                    exact(item.total_tokens),
-                    if zh {
-                        "缓存命中率 = 缓存读 ÷ 输入（缺失或输入为 0 显示 —）"
-                    } else {
-                        "Cache hit = cache read / input (missing or zero input: —)"
-                    },
-                    percent(cache_rate(item.cache_read_tokens, item.input_tokens))
-                )),
-                0x19334d,
-                ("usage-tokens", row),
-            ),
+            4 => token_cell(item, row, zh),
             5 => {
                 let status = item
                     .cost
