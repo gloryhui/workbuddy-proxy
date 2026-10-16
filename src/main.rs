@@ -23,6 +23,7 @@ mod update;
 #[path = "protocol/config.rs"]
 pub mod upstream_config;
 mod workbuddy;
+mod workbuddy_status;
 use axum::serve::ListenerExt;
 use fs2::FileExt;
 use serde::{Deserialize, Serialize};
@@ -36,8 +37,8 @@ use std::{
 
 // Bump when native controllers require new management commands or semantics.
 // Release versions alone cannot distinguish successive local review builds.
-/// 7: provider protocol/settings, native upstream adapters and protocol-aware UI.
-const CONTROL_PROTOCOL: u32 = 7;
+/// 8: startup WorkBuddy endpoint validation and confirmed port/restart flow.
+const CONTROL_PROTOCOL: u32 = 8;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {

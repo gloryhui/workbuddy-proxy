@@ -36,24 +36,40 @@ fn execute(
         }
     }
     let synced = result.is_ok() && job.steps.last().is_some_and(|s| s["command"] == "install");
-    if job.tag == "install_restart" {
-        if !synced {
+    let port_change = job.tag == "port_restart";
+    let committed =
+        synced || (port_change && job.steps.last().is_some_and(|s| s["command"] == "set_port"));
+    if matches!(
+        job.tag.as_str(),
+        "install_restart" | "startup_install_restart" | "port_restart"
+    ) {
+        if !committed {
             return (
-                Err("Restart requires a successful model sync / 重启前必须成功同步模型".into()),
+                Err(
+                    "Restart requires a successful configuration update / 重启前必须成功更新配置"
+                        .into(),
+                ),
                 false,
             );
         }
-        result = restart()
-            .map(|()| "Models synced; WorkBuddy reopened / 已同步模型并重新打开 WorkBuddy".into())
-            .map_err(|e| {
-                format!(
-                    "Models synced to disk; {} / 模型已同步到文件；{}",
-                    crate::i18n::message(&e, false),
-                    crate::i18n::message(&e, true)
-                )
-            });
+        let port_result = result.as_ref().ok().cloned().unwrap_or_default();
+        result = restart().map(|()| {
+            if port_change {
+                let mut value: Value = serde_json::from_str(&port_result).unwrap_or_else(|_| json!({}));
+                value["workbuddy_restarted"] = json!(true);
+                value.to_string()
+            } else {
+                "Models synced; WorkBuddy reopened / 已同步模型并重新打开 WorkBuddy".into()
+            }
+        }).map_err(|e| {
+            if port_change {
+                format!("Local port and saved addresses updated; {} / 本地端口和已保存的地址已更新；{}", crate::i18n::message(&e, false), crate::i18n::message(&e, true))
+            } else {
+                format!("Models synced to disk; {} / 模型已同步到文件；{}", crate::i18n::message(&e, false), crate::i18n::message(&e, true))
+            }
+        });
     }
-    (result, synced)
+    (result, committed)
 }
 pub fn call(dir: &std::path::Path, payload: &Value) -> Result<String, String> {
     let info: Value = serde_json::from_slice(
@@ -72,7 +88,10 @@ pub fn call(dir: &std::path::Path, payload: &Value) -> Result<String, String> {
         .max_redirects(0)
         .http_status_as_error(false)
         .timeout_global(Some(Duration::from_secs(
-            if payload["command"] == "snapshot" {
+            if matches!(
+                payload["command"].as_str(),
+                Some("snapshot" | "workbuddy_check")
+            ) {
                 3
             } else {
                 100
@@ -112,7 +131,7 @@ impl Backend {
                         |step| call(&dir, step),
                         crate::workbuddy_restart::restart,
                     );
-                    let snapshot = if job.tag == "metadata" {
+                    let snapshot = if matches!(job.tag.as_str(), "metadata" | "workbuddy_check") {
                         None
                     } else if job.tag == "poll" {
                         result
@@ -124,15 +143,20 @@ impl Backend {
                             .ok()
                             .and_then(|s| serde_json::from_str(&s).ok())
                     };
-                    let config = if job.tag != "poll" && job.tag != "metadata" {
-                        Config::load(&dir).ok()
-                    } else {
-                        None
-                    };
+                    let config =
+                        if !matches!(job.tag.as_str(), "poll" | "metadata" | "workbuddy_check") {
+                            Config::load(&dir).ok()
+                        } else {
+                            None
+                        };
                     if results
                         .send(Reply {
                             tag: if job.tag == "install_restart" {
                                 "install".into()
+                            } else if job.tag == "port_restart" {
+                                "port".into()
+                            } else if job.tag == "startup_install_restart" {
+                                "startup_install".into()
                             } else {
                                 job.tag
                             },
@@ -159,6 +183,88 @@ mod tests {
         io::{Read, Write},
         net::TcpListener,
     };
+    #[test]
+    fn port_restart_occurs_only_after_success_and_keeps_committed_state_on_restart_failure() {
+        let job = Job {
+            tag: "port_restart".into(),
+            steps: vec![json!({"command":"set_port","port":19000})],
+        };
+        let (result, committed) = execute(
+            &job,
+            |_| Err("occupied".into()),
+            || panic!("failed port must never restart"),
+        );
+        assert_eq!(result, Err("occupied".into()));
+        assert!(!committed);
+        let applied = std::cell::Cell::new(false);
+        let (result, committed) = execute(
+            &job,
+            |_| {
+                applied.set(true);
+                Ok(json!({"port":19000,"changed":true,"updated":2}).to_string())
+            },
+            || {
+                assert!(applied.get());
+                Ok(())
+            },
+        );
+        let value: Value = serde_json::from_str(&result.unwrap()).unwrap();
+        assert!(committed);
+        assert_eq!(value["port"], 19000);
+        assert_eq!(value["workbuddy_restarted"], true);
+        let (result, committed) = execute(
+            &job,
+            |_| Ok("applied".into()),
+            || Err("quit refused / 拒绝退出".into()),
+        );
+        assert!(committed);
+        assert!(
+            result
+                .unwrap_err()
+                .contains("本地端口和已保存的地址已更新；拒绝退出")
+        );
+        let empty = Job {
+            tag: "port_restart".into(),
+            steps: vec![],
+        };
+        assert!(
+            execute(&empty, |_| unreachable!(), || panic!("nothing applied"))
+                .0
+                .is_err()
+        );
+    }
+
+    #[test]
+    fn startup_sync_never_saves_drafts_or_restarts_before_sync() {
+        let job = Job {
+            tag: "startup_install_restart".into(),
+            steps: vec![json!({"command":"install"})],
+        };
+        let synced = std::cell::Cell::new(false);
+        let (result, committed) = execute(
+            &job,
+            |step| {
+                assert_eq!(step["command"], "install");
+                synced.set(true);
+                Ok("synced".into())
+            },
+            || {
+                assert!(synced.get());
+                Ok(())
+            },
+        );
+        assert!(result.is_ok() && committed);
+        assert!(
+            execute(
+                &job,
+                |_| Err("sync failed".into()),
+                || panic!("sync failed")
+            )
+            .0
+            .is_err()
+        );
+    }
+
     #[test]
     fn restart_requires_every_save_and_sync_to_succeed() {
         let job = Job {

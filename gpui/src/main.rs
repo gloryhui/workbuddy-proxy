@@ -36,6 +36,8 @@ mod upstream_config;
 mod usage_chart;
 mod usage_table;
 mod workbuddy_restart;
+#[path = "../../src/workbuddy_status.rs"]
+mod workbuddy_status;
 use fs2::FileExt;
 use gpui_kit::component::{Theme, ThemeMode, TitleBar};
 use gpui_kit::*;

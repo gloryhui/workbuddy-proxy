@@ -192,7 +192,68 @@ pub(crate) fn repoint_port(
     }
     Ok((count > 0).then_some((document.root, count)))
 }
+/// Compare saved managed entries with the listener that actually bound, not
+/// merely the configured port (which can be overridden on the command line).
+fn check_endpoints(
+    cfg: &config::Config,
+    path: &Path,
+    port: u16,
+) -> Result<crate::workbuddy_status::EndpointCheck, String> {
+    let document = Document::read(path)?;
+    let mut report = crate::workbuddy_status::EndpointCheck {
+        expected_address: format!("http://127.0.0.1:{port}"),
+        checked_count: 0,
+        mismatch_count: 0,
+        actual_addresses: Vec::new(),
+    };
+    let mut origins = std::collections::BTreeSet::new();
+    for entry in document
+        .entries()
+        .unwrap()
+        .iter()
+        .filter(|entry| managed(entry, cfg))
+    {
+        report.checked_count += 1;
+        let url = entry
+            .get("url")
+            .and_then(Value::as_str)
+            .and_then(|url| reqwest::Url::parse(url).ok());
+        let matches = url.as_ref().is_some_and(|url| {
+            url.scheme() == "http"
+                && matches!(url.host_str(), Some("127.0.0.1" | "localhost"))
+                && url.port_or_known_default() == Some(port)
+                && url.username().is_empty()
+                && url.password().is_none()
+        });
+        if !matches {
+            report.mismatch_count += 1;
+            // Serialize only the origin; a saved URL may embed a token anywhere.
+            let origin = url
+                .as_ref()
+                .filter(|url| url.host_str().is_some())
+                .map(|url| url.origin().ascii_serialization())
+                .unwrap_or_else(|| "(invalid address)".to_owned());
+            if origins.len() < 5 {
+                origins.insert(origin);
+            }
+        }
+    }
+    report.actual_addresses = origins.into_iter().collect();
+    Ok(report)
+}
+
 impl Bridge {
+    pub fn check_workbuddy_endpoints(
+        &self,
+        path: &Path,
+    ) -> Result<crate::workbuddy_status::EndpointCheck, String> {
+        let cfg = self.config.lock().unwrap();
+        check_endpoints(
+            &cfg,
+            path,
+            self.port.load(std::sync::atomic::Ordering::Relaxed),
+        )
+    }
     pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
         let mut cfg = self.config.lock().unwrap();
         let mut d = Document::read(path)?;
@@ -353,6 +414,74 @@ pub fn path() -> Result<std::path::PathBuf, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn endpoint_check_is_read_only_scoped_and_uses_actual_listener_port() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("models.json");
+        let mut cfg = config::Config::default();
+        assert_eq!(
+            check_endpoints(&cfg, &path, 19000).unwrap().checked_count,
+            0
+        );
+        assert!(!path.exists());
+        let managed = |id: &str, url: &str| json!({"id":id,"url":url,"apiKey":"secret","_workbuddyProxy":{"managed":true,"route":id}});
+        cfg.installed.push(Installation {
+            id: "tracked".into(),
+            previous: None,
+            expected: None,
+        });
+        let rows = json!({"models":[
+            managed("good", "http://127.0.0.1:19000/r/good/v1"),
+            managed("local", "http://localhost:19000/v1"),
+            managed("wrong-port", "http://127.0.0.1:18080/v1"),
+            managed("wrong-ip", "http://192.0.2.1:19000/v1"),
+            managed("wrong-scheme", "https://127.0.0.1:19000/v1"),
+            managed("secret-url", "http://user:password@192.0.2.2:19000/v1?key=secret#token"),
+            managed("invalid", "not-a-url-secret"),
+            {"id":"tracked","url":"http://192.0.2.3:19000/v1"},
+            {"id":"user-owned","vendor":"Custom","url":"https://unrelated.example:443/v1","apiKey":"user-key"}
+        ]});
+        config::write_json(&path, &rows).unwrap();
+        let before = fs::read(&path).unwrap();
+        let saved = serde_json::to_vec(&cfg).unwrap();
+        let report = check_endpoints(&cfg, &path, 19000).unwrap();
+        assert_eq!(report.checked_count, 8);
+        assert_eq!(report.mismatch_count, 6);
+        assert_eq!(report.expected_address, "http://127.0.0.1:19000");
+        assert!(report.actual_addresses.len() <= 5);
+        let text = serde_json::to_string(&report).unwrap();
+        for secret in [
+            "password",
+            "secret",
+            "token",
+            "user-owned",
+            "unrelated.example",
+            "?",
+            "#",
+        ] {
+            assert!(!text.contains(secret), "{text}");
+        }
+        assert_eq!(fs::read(&path).unwrap(), before);
+        assert_eq!(serde_json::to_vec(&cfg).unwrap(), saved);
+        assert_eq!(fs::read_dir(dir.path()).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn endpoint_check_supports_legacy_entries_and_rejects_corrupt_documents() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("models.json");
+        let cfg = config::Config::default();
+        let rows = json!([{"id":"old","vendor":"Custom","apiKey":cfg.local_key,"url":"http://127.0.0.1:18081/v1"}]);
+        config::write_json(&path, &rows).unwrap();
+        assert_eq!(
+            check_endpoints(&cfg, &path, 18080).unwrap().mismatch_count,
+            1
+        );
+        fs::write(&path, b"not json").unwrap();
+        assert!(check_endpoints(&cfg, &path, 18080).is_err());
+        assert_eq!(fs::read(&path).unwrap(), b"not json");
+    }
+
     #[test]
     fn complete_chat_endpoints_remain_recognizable_after_reinstall() {
         let cfg = config::Config::default();

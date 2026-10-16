@@ -1158,7 +1158,15 @@ impl Bridge {
         }
         if !matches!(
             p["command"].as_str(),
-            Some("snapshot" | "copy" | "check_update" | "record" | "clear_logs" | "model_metadata")
+            Some(
+                "snapshot"
+                    | "workbuddy_check"
+                    | "copy"
+                    | "check_update"
+                    | "record"
+                    | "clear_logs"
+                    | "model_metadata"
+            )
         ) {
             let status = match &result {
                 Ok(s) if p["command"] == "fetch" => {
@@ -1431,6 +1439,7 @@ impl Bridge {
                 };
                 self.test(selected.as_deref().unwrap_or(id)).await
             }
+            "workbuddy_check" => serde_json::to_string(&self.check_workbuddy_endpoints(&crate::workbuddy::path()?)?).map_err(|e| e.to_string()),
             "install" => {
                 self.prepare_metadata().await;
                 let count = self.configure_workbuddy(&crate::workbuddy::path()?)?;

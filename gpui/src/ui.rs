@@ -187,6 +187,10 @@ pub struct Proxy {
     preset_select: Entity<SelectState<SearchableVec<Choice>>>,
     delete_open: bool,
     sync_open: bool,
+    startup_checked: bool,
+    startup_report: Option<crate::workbuddy_status::EndpointCheck>,
+    startup_sync_open: bool,
+    pending_port: Option<u16>,
     resetting_window: bool,
     wake: String,
     last_poll: Instant,
@@ -700,6 +704,10 @@ impl Proxy {
             preset_select,
             delete_open: false,
             sync_open: false,
+            startup_checked: false,
+            startup_report: None,
+            startup_sync_open: false,
+            pending_port: None,
             resetting_window: false,
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
@@ -944,6 +952,8 @@ impl Proxy {
             || self.delete_open
             || self.protocol_open
             || self.sync_open
+            || self.startup_sync_open
+            || self.pending_port.is_some()
         {
             return;
         }
@@ -999,6 +1009,36 @@ impl Proxy {
                 .into();
         }
     }
+    fn confirm_port(&mut self, cx: &mut Context<Self>) {
+        if self.busy {
+            return;
+        }
+        let Some(port) = self.pending_port.take() else {
+            return;
+        };
+        self.startup_report = None;
+        self.send(
+            "port_restart",
+            vec![json!({"command":"set_port","port":port})],
+            cx,
+        );
+    }
+
+    fn confirm_startup_sync(&mut self, cx: &mut Context<Self>) {
+        if self.busy {
+            return;
+        }
+        self.startup_sync_open = false;
+        self.startup_report = None;
+        // Startup repair uses only saved configuration. Never save or discard
+        // restored supplier drafts merely because an endpoint needs resyncing.
+        self.send(
+            "startup_install_restart",
+            vec![json!({"command":"install"})],
+            cx,
+        );
+    }
+
     fn switch_provider(&mut self, id: String, window: &mut Window, cx: &mut Context<Self>) {
         if self.busy {
             return;
@@ -1127,6 +1167,30 @@ impl Proxy {
             cx.activate(true);
         }
         while let Ok(reply) = self.backend.replies.try_recv() {
+            if reply.tag == "workbuddy_check" {
+                match reply.result.and_then(|text| {
+                    serde_json::from_str::<crate::workbuddy_status::EndpointCheck>(&text)
+                        .map_err(|_| "Invalid WorkBuddy endpoint check response".to_owned())
+                }) {
+                    Ok(report) if report.mismatch_count > 0 => {
+                        self.startup_report = Some(report);
+                    }
+                    Ok(_) => {}
+                    Err(error) => {
+                        self.error = true;
+                        self.status = format!(
+                            "{}{}",
+                            self.t(
+                                "WorkBuddy 地址检查失败：",
+                                "WorkBuddy endpoint check failed: "
+                            ),
+                            crate::i18n::message(&error, self.zh)
+                        );
+                    }
+                }
+                cx.notify();
+                continue;
+            }
             if reply.tag == "metadata" {
                 self.metadata_polling = false;
                 if self.editing.is_some()
@@ -1176,7 +1240,14 @@ impl Proxy {
                                 .map(|v| {
                                     format!(
                                         "{} {}",
-                                        self.t("本地端口已更新：", "Local port updated:"),
+                                        if v["workbuddy_restarted"] == true {
+                                            self.t(
+                                                "端口已更新并已重启 WorkBuddy：",
+                                                "Port updated and WorkBuddy restarted:",
+                                            )
+                                        } else {
+                                            self.t("本地端口已更新：", "Local port updated:")
+                                        },
                                         v["port"]
                                     )
                                 })
@@ -1214,12 +1285,44 @@ impl Proxy {
                         self.update_config(cfg, &reply.tag, window, cx);
                     }
                 }
+                if reply.synced || (reply.tag == "port" && reply.result.is_ok()) {
+                    self.startup_report = None;
+                    self.startup_sync_open = false;
+                }
                 let _ = self.drafts.persist(&self.dir);
                 cx.notify();
             }
             if let Some(snapshot) = reply.snapshot {
                 self.snapshot(snapshot, window, cx);
             }
+        }
+        // One bounded read per settings launch, off the UI thread. Defer the
+        // prompt while another editor or action is active.
+        if !self.startup_checked
+            && !self.busy
+            && !self.dialog_open
+            && self
+                .backend
+                .jobs
+                .try_send(Job {
+                    tag: "workbuddy_check".into(),
+                    steps: vec![json!({"command":"workbuddy_check"})],
+                })
+                .is_ok()
+        {
+            self.startup_checked = true;
+        }
+        if self.startup_report.is_some()
+            && !self.busy
+            && !self.dialog_open
+            && !self.sync_open
+            && self.pending_port.is_none()
+            && !self.protocol_open
+            && self.editing.is_none()
+            && self.picker.is_none()
+            && !self.delete_open
+        {
+            self.startup_sync_open = true;
         }
         if !self.busy
             && !self.polling
@@ -1375,6 +1478,21 @@ impl Proxy {
         self.editing = None;
         self.delete_open = false;
         self.sync_open = false;
+        if self.startup_sync_open {
+            self.startup_report = None;
+        }
+        self.startup_sync_open = false;
+        if self.pending_port.take().is_some() {
+            let current = self
+                .proxy_address
+                .parse::<reqwest::Url>()
+                .ok()
+                .and_then(|u| u.port_or_known_default())
+                .unwrap_or(self.cfg.port);
+            self.port.update(cx, |state, cx| {
+                state.set_value(current.to_string(), window, cx)
+            });
+        }
         self.protocol_open = false;
         self.focus.focus(window, cx);
         cx.notify();
@@ -1470,6 +1588,8 @@ impl Proxy {
             || self.editing.is_some()
             || self.delete_open
             || self.sync_open
+            || self.startup_sync_open
+            || self.pending_port.is_some()
             || self.protocol_open;
         if active && !self.dialog_open {
             self.dialog_open = true;
@@ -1916,11 +2036,13 @@ impl Proxy {
                                             .ok()
                                             .filter(|p| *p > 0)
                                         {
-                                            Some(port) => this.send(
-                                                "port",
-                                                vec![json!({"command":"set_port","port":port})],
-                                                cx,
-                                            ),
+                                            Some(port) => {
+                                                let current = this.proxy_address.parse::<reqwest::Url>().ok().and_then(|u| u.port_or_known_default()).unwrap_or(this.cfg.port);
+                                                if port != current {
+                                                    this.pending_port = Some(port);
+                                                    cx.notify();
+                                                }
+                                            }
                                             None => {
                                                 this.error = true;
                                                 this.status = this
@@ -2113,6 +2235,36 @@ impl Proxy {
                                 .on_click(cx.listener(|this, _, _, cx| this.confirm_edit(cx))),
                         ),
                 )
+                .into_any_element()
+        } else if let Some(port) = self.pending_port {
+            DialogContent::new().w_full().gap_4()
+                .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("修改端口并重启 WorkBuddy？", "Change port and restart WorkBuddy?")))
+                .child(Label::new(format!("{} → 127.0.0.1:{port}", self.proxy_address)).text_color(rgb(INK)))
+                .child(Label::new(self.t(
+                    "更改端口后必须重启 WorkBuddy，让现有会话读取新的连接地址。重启会中断正在执行的任务，请先保存工作。取消不会应用端口变更。",
+                    "WorkBuddy must restart to let existing conversations read the new address. This interrupts running tasks; save your work first. Cancel leaves the port unchanged.")).text_color(rgb(MUTED)))
+                .when(!cfg!(target_os = "macos"), |this| this.child(Label::new(self.t("此平台暂不支持自动重启，无法执行此端口变更。", "Automatic restart is unavailable on this platform; the port cannot be changed here.")).text_color(rgb(MUTED))))
+                .child(DialogFooter::new()
+                    .child(Button::new("port-restart-confirm").primary().label(self.t("同意并重启", "Agree and restart"))
+                        .disabled(self.busy || !cfg!(target_os = "macos"))
+                        .on_click(cx.listener(|this, _, _, cx| this.confirm_port(cx))))
+                    .child(Button::new("port-restart-cancel").label(self.t("取消", "Cancel"))
+                        .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
+                .into_any_element()
+        } else if self.startup_sync_open {
+            let report = self.startup_report.as_ref()?;
+            DialogContent::new().w_full().gap_4()
+                .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("WorkBuddy 连接地址不一致", "WorkBuddy endpoint mismatch")))
+                .child(Label::new(format!("{} {}", self.t("当前代理地址：", "Current proxy:"), report.expected_address)).text_color(rgb(INK)))
+                .child(Label::new(format!("{} {} / {} · {}", self.t("地址不一致的模型：", "Mismatched models:"), report.mismatch_count, report.checked_count, report.actual_addresses.join(", "))).text_color(rgb(MUTED)))
+                .child(Label::new(self.t("是否按已保存的供应商配置同步并重启 WorkBuddy？重启会中断正在执行的任务，请先保存工作。取消将保留现有配置。", "Sync saved provider settings and restart WorkBuddy? Restart interrupts running tasks; save your work first. Cancel keeps the existing configuration.")).text_color(rgb(MUTED)))
+                .when(!cfg!(target_os = "macos"), |this| this.child(Label::new(self.t("此平台暂不支持自动重启，请手动同步后重启 WorkBuddy。", "Automatic restart is unavailable on this platform; sync and restart WorkBuddy manually.")).text_color(rgb(MUTED))))
+                .child(DialogFooter::new()
+                    .child(Button::new("startup-sync-restart").primary().label(self.t("同步并重启 WorkBuddy", "Sync and restart WorkBuddy"))
+                        .disabled(self.busy || !cfg!(target_os = "macos"))
+                        .on_click(cx.listener(|this, _, _, cx| this.confirm_startup_sync(cx))))
+                    .child(Button::new("startup-sync-cancel").label(self.t("取消", "Cancel"))
+                        .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
                 .into_any_element()
         } else if self.sync_open {
             DialogContent::new()
