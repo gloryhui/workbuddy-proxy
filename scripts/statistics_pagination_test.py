@@ -4,6 +4,7 @@
 Synthetic history is inserted only in a temporary database. No real user profile,
 credentials or provider is used. This complements native GPUI action verification.
 """
+from contextlib import closing
 import argparse
 import json
 from pathlib import Path
@@ -28,7 +29,7 @@ def main():
             try:
                 t.wait_for(lambda:t.stats(folder,port,'stats_health')['state']=='ready','ready')
                 t.relay(port,'wbp-ok');time.sleep(.4)
-                with sqlite3.connect(folder/'usage.sqlite3') as db:
+                with closing(sqlite3.connect(folder/'usage.sqlite3')) as db, db:
                     db.execute('PRAGMA foreign_keys=ON');db.row_factory=sqlite3.Row
                     req=dict(db.execute('SELECT * FROM usage_requests LIMIT 1').fetchone());req.pop('id')
                     cost=dict(db.execute('SELECT * FROM usage_costs LIMIT 1').fetchone())
@@ -105,7 +106,7 @@ def main():
                 settings=stats('stats_settings_get')
                 stats('stats_settings_update',enabled=True,retention_days=180,default_currency='USD',expected_revision=settings['revision'])
                 t.relay(port,'wbp-ok');time.sleep(.4)
-                with sqlite3.connect(folder/'usage.sqlite3') as db:
+                with closing(sqlite3.connect(folder/'usage.sqlite3')) as db, db:
                     assert db.execute("SELECT DISTINCT currency FROM usage_costs WHERE request_id LIKE 'list-%'").fetchall()==[('CNY',)]
                     assert db.execute("SELECT currency,total_cost_nanos FROM usage_costs ORDER BY rowid DESC LIMIT 1").fetchone()==('USD',0)
                 print('PASS default currency affects only newly admitted zero-price snapshots')

@@ -4,6 +4,7 @@
 No user profile, provider key or upstream is accessed. Fixtures spell the native
 REST contracts directly; they do not import or call the Rust conversion code.
 """
+from contextlib import closing
 import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
@@ -35,7 +36,7 @@ class Vendor(BaseHTTPRequestHandler):
     def handle(self):
         try:
             super().handle()
-        except (ConnectionResetError, BrokenPipeError):
+        except ConnectionError:
             pass  # Expected when the shared connection probe stops early.
 
     def reply(self, payload, stream=False, status=200, encoding='identity'):
@@ -66,7 +67,7 @@ class Vendor(BaseHTTPRequestHandler):
             self.server.seen_posts += 1
             body = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
             self.serve(body)
-        except (BrokenPipeError, ConnectionResetError):
+        except ConnectionError:
             pass  # Connection probes intentionally stop at the first valid event.
         except Exception as exc:
             self.server.failures.append(str(exc))
@@ -227,7 +228,7 @@ class Vendor(BaseHTTPRequestHandler):
                         break
                 for _ in range(200):
                     time.sleep(.03); self.wfile.write(b': heartbeat\n\n'); self.wfile.flush()
-            except (ConnectionResetError, BrokenPipeError):
+            except ConnectionError:
                 self.server.cancelled.add(protocol)
             self.close_connection = True
             return
@@ -355,10 +356,10 @@ def main():
                                 assert finish == 'stop' and message['content'] == 'done'
                         print('PASS real relay %s %s: image, thinking, two parallel tool rounds, final answer' % (protocol, 'SSE' if stream else 'JSON'), flush=True)
                 def recorded():
-                    with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                    with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                         return db.execute("SELECT COUNT(*) FROM usage_requests WHERE outcome='completed'").fetchone()[0] == 18
                 t.wait_for(recorded, 'all native request finishes persisted')
-                with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                     assert db.execute('PRAGMA user_version').fetchone()[0] == 6
                     rows = db.execute("SELECT upstream_protocol,input_tokens,output_tokens,total_tokens,input_breakdown,input_uncached_tokens FROM usage_requests WHERE outcome='completed'").fetchall()
                     assert len(rows) == 18 and set(r[0] for r in rows) == set(PROTOCOLS)
@@ -416,7 +417,7 @@ def main():
                 import concurrent.futures
                 for i, protocol in enumerate(PROTOCOLS):
                     provider_id='provider-%s' % i; model=providers[i]['models'][0]['model']
-                    with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                    with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                         rule_id, revision=db.execute('SELECT price_id,revision FROM stats_model_prices WHERE provider_id=?',(provider_id,)).fetchone()
                         before=db.execute('SELECT COUNT(*) FROM usage_requests WHERE provider_id=?',(provider_id,)).fetchone()[0]
                     server.price_started.clear();server.price_release.clear()
@@ -432,10 +433,10 @@ def main():
                         finally:server.price_release.set()
                         result.result()
                     def settled():
-                        with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                        with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                             return db.execute("SELECT COUNT(*) FROM usage_requests WHERE provider_id=? AND outcome='completed'",(provider_id,)).fetchone()[0]>=7
                     t.wait_for(settled,'native price request settled')
-                    with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                    with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                         old=db.execute('SELECT c.input_rate_nanos,c.output_rate_nanos,c.total_cost_nanos FROM usage_requests r JOIN usage_costs c USING(request_id) WHERE r.provider_id=? ORDER BY r.started_at_ms DESC LIMIT 1',(provider_id,)).fetchone()
                         assert old==(2000000000,8000000000,360000),old
                     rule=updated
@@ -443,19 +444,19 @@ def main():
                     messages[-1]['content'][0]['text']='missing price'
                     chat(port,'wbp-native-%s' % i,messages,False)
                     def zero_price():
-                        with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                        with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                             return db.execute("SELECT COUNT(*) FROM usage_requests r JOIN usage_costs c USING(request_id) WHERE r.provider_id=? AND c.total_cost_nanos=0 AND c.price_source='default_zero'",(provider_id,)).fetchone()[0]==1
                     t.wait_for(zero_price,'native missing model price is zero')
                     print('PASS %s: ordinary assistant history, mid-flight frozen rates, deleted price defaults to zero' % protocol,flush=True)
                 def probes():
-                    with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                    with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                         return db.execute("SELECT COUNT(*) FROM usage_requests WHERE source='connection_test' AND outcome='cancelled'").fetchone()[0] == 3
                 t.wait_for(probes, 'native probes recorded once as cancelled')
                 def cancelled():
-                    with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                    with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                         return db.execute("SELECT COUNT(*) FROM usage_requests WHERE source='relay' AND outcome='cancelled'").fetchone()[0] == 3
                 t.wait_for(cancelled, 'native stream cancellations persisted')
-                with sqlite3.connect(folder / 'usage.sqlite3') as db:
+                with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
                     for protocol, output, total, cost in db.execute("SELECT r.upstream_protocol,r.output_tokens,r.total_tokens,c.total_cost_nanos FROM usage_requests r JOIN usage_costs c USING(request_id) WHERE r.outcome='cancelled'"):
                         assert output is None and total is None and cost is None, (protocol, output, total, cost)
                     dump = '\n'.join(db.iterdump())

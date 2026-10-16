@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Exercise a packaged GPUI application with isolated credentials and loopback SSE."""
+from contextlib import closing
 import argparse
 import json
 import os
@@ -89,7 +90,7 @@ def main():
         request=urllib.request.Request(f'http://127.0.0.1:{core["port"]}/_control/show',data=b'',headers={'Authorization':'Bearer '+core['management_key']})
         with urllib.request.urlopen(request,timeout=5) as response:response.read()
     def runs():
-        with sqlite3.connect(directory/'usage.sqlite3') as connection:
+        with closing(sqlite3.connect(directory/'usage.sqlite3')) as connection, connection:
             return connection.execute('SELECT stopped_at_ms,stop_reason FROM stats_runs ORDER BY started_at_ms').fetchall()
     def stats_health():
         return json.loads(action({'command':'stats_health'}))

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Isolated real-core tests for daily public-price synchronization."""
+from contextlib import closing
 import argparse
 import json
 import os
@@ -58,7 +59,7 @@ def main():
             return next((r for r in page()['items'] if r['upstream_model'] == 'model-ok'), None)
 
         def stored_cost():
-            with sqlite3.connect(db) as conn:
+            with closing(sqlite3.connect(db)) as conn, conn:
                 return conn.execute("SELECT input_rate_nanos,total_cost_nanos FROM usage_costs WHERE status='priced' ORDER BY rowid LIMIT 1").fetchone()
 
         try:
@@ -104,7 +105,7 @@ def main():
             Upstream.failing = False
 
             fixture.stop_core(process, port, directory, log)
-            with sqlite3.connect(db) as conn:
+            with closing(sqlite3.connect(db)) as conn, conn:
                 conn.execute('UPDATE stats_price_catalog SET last_success_day=?',
                              (str(date.today() - timedelta(days=1)),))
             Upstream.input_price = 5

@@ -17,6 +17,7 @@ Verified on this path:
 Usage:
     python3 scripts/statistics_test.py --exe target/release/workbuddy-proxy
 """
+from contextlib import closing
 import argparse
 import gzip
 import hashlib
@@ -933,7 +934,7 @@ def run(directory, port, upstream_port, start_ms, checks):
         recorded = stats(directory, port, 'stats_request_detail', request_id=saved['request_id'])['request']
         assert recorded['provider_id'] == provider_id
         assert recorded['provider_name'] == saved['provider_name']
-    with sqlite3.connect(Path(directory) / 'usage.sqlite3') as connection:
+    with closing(sqlite3.connect(Path(directory) / 'usage.sqlite3')) as connection, connection:
         assert connection.execute('SELECT provider_name FROM usage_requests WHERE request_id=?',
                                   (before_rename['request_id'],)).fetchone()[0] == original_name
     checks.ok('supplier rename/delete preserves SQLite and API name snapshots')
@@ -1095,7 +1096,7 @@ def crash_recovery(exe, directory, port, checks):
         warnings = stats(directory, port, 'stats_dashboard',
                          filter=window(now_ms() - 3_600_000), granularity='hour')['warnings']
         assert not any(w['code'] == 'unclean_exit' for w in warnings), warnings
-        with sqlite3.connect(Path(directory) / 'usage.sqlite3') as db:
+        with closing(sqlite3.connect(Path(directory) / 'usage.sqlite3')) as db, db:
             assert db.execute("SELECT COUNT(*) FROM stats_runs WHERE stop_reason='unclean'").fetchone()[0] > 0
         checks.ok('normal quit clears the runtime warning without deleting crash history')
     finally:
