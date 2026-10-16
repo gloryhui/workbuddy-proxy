@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WORKBUDDY_PROXY_CATALOG_TEST_URL: http://127.0.0.1:1/catalog
+      # SQLite recovery tests retain wall-clock budgets; avoid unrelated tests competing for runner disk I/O.
+      RUST_TEST_THREADS: 1
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
