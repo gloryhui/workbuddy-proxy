@@ -5,13 +5,14 @@ use crate::{
     statistics::Statistics,
 };
 use gpui_kit::component::{
-    Disableable, ElementExt, IconName, Sizable, TitleBar, WindowExt,
+    Disableable, ElementExt, Icon, IconName, Selectable, Sizable, TitleBar, WindowExt,
     button::{Button, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
     input::{Input, InputEvent, InputState, Textarea, TextareaState},
     label::Label,
     list::ListItem,
+    menu::{DropdownMenu, PopupMenuItem},
     select::{SearchableVec, Select, SelectEvent, SelectItem, SelectState},
     sidebar::{Sidebar, SidebarMenu, SidebarMenuItem},
     table::{DataTable, TableState},
@@ -41,6 +42,8 @@ const BG: u32 = 0xf4f7fb;
 const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
 const BORDER: u32 = 0xe2e9f1;
+const PROJECT_URL: &str = "https://github.com/gloryhui/workbuddy-proxy";
+const FEEDBACK_URL: &str = "https://github.com/gloryhui/workbuddy-proxy/issues/new";
 #[derive(Clone)]
 struct Choice {
     code: String,
@@ -167,11 +170,11 @@ pub struct Proxy {
     only_picked: bool,
     editing: Option<usize>,
     new_model: bool,
-    language: Entity<ChoiceState>,
     effort_select: Entity<ChoiceState>,
     preset_select: Entity<SelectState<SearchableVec<Choice>>>,
     delete_open: bool,
     sync_open: bool,
+    resetting_window: bool,
     wake: String,
     last_poll: Instant,
     last_dirty: String,
@@ -279,18 +282,14 @@ impl Proxy {
         ] {
             state.update(cx, |s, cx| s.set_placeholder(hint.to_owned(), window, cx));
         }
-        self.refresh_choices(code, window, cx);
+        self.refresh_choices(window, cx);
         self.send(
             "language",
             vec![json!({"command":"language", "language":code})],
             cx,
         );
     }
-    fn refresh_choices(&mut self, code: &str, window: &mut Window, cx: &mut Context<Self>) {
-        self.language.update(cx, |s, cx| {
-            s.set_items(choices(self.zh, true), window, cx);
-            s.set_selected_value(&code.to_owned(), window, cx);
-        });
+    fn refresh_choices(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         self.effort_select.update(cx, |s, cx| {
             s.set_items(choices(self.zh, false), window, cx);
             s.set_selected_value(&self.effort, window, cx);
@@ -299,14 +298,32 @@ impl Proxy {
             .update(cx, |s, cx| s.set_items(preset_choices(self.zh), window, cx));
         self.sync_preset(window, cx);
     }
-    fn language_menu(&self) -> AnyElement {
-        Select::new(&self.language)
-            .id("language")
+    fn language_menu(&self, cx: &mut Context<Self>) -> AnyElement {
+        let items = choices(self.zh, true);
+        let selected = self.cfg.language.clone();
+        let owner = cx.entity().downgrade();
+        Button::new("language")
             .small()
-            .w(px(if self.zh { 112. } else { 128. }))
-            .menu_width(px(180.))
+            .ghost()
+            .icon(Icon::default().path("icons/globe.svg"))
+            .tooltip(self.t("切换界面语言", "Change interface language"))
             .accessibility_label(self.t("界面语言", "Interface language"))
             .disabled(self.busy)
+            .dropdown_menu_with_anchor(Anchor::TopRight, move |mut menu, _, _| {
+                for item in &items {
+                    let code = item.code.clone();
+                    let owner = owner.clone();
+                    menu = menu.item(
+                        PopupMenuItem::new(item.title.clone())
+                            .checked(code == selected)
+                            .on_click(move |_, window, cx| {
+                                let _ = owner
+                                    .update(cx, |this, cx| this.set_language(&code, window, cx));
+                            }),
+                    );
+                }
+                menu.min_w(px(180.))
+            })
             .into_any_element()
     }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
@@ -315,12 +332,28 @@ impl Proxy {
             .items_center()
             .gap_3()
             .child(
-                Checkbox::new("autostart")
-                    .label(self.t("开机启动", "Launch at login"))
-                    .checked(self.cfg.autostart)
-                    .disabled(self.busy)
+                Button::new("autostart")
                     .small()
-                    .on_change(cx.listener(|this, enabled: &bool, _, cx| {
+                    .ghost()
+                    .icon(Icon::default().path("icons/autostart.svg"))
+                    .selected(self.cfg.autostart)
+                    .toggled(self.cfg.autostart)
+                    .when(self.cfg.autostart, |button| button.primary())
+                    .tooltip(if self.cfg.autostart {
+                        self.t(
+                            "开机启动：已开启（点击关闭）",
+                            "Launch at login: on (click to disable)",
+                        )
+                    } else {
+                        self.t(
+                            "开机启动：已关闭（点击开启）",
+                            "Launch at login: off (click to enable)",
+                        )
+                    })
+                    .accessibility_label(self.t("开机启动", "Launch at login"))
+                    .disabled(self.busy)
+                    .on_click(cx.listener(|this, _, _, cx| {
+                        let enabled = !this.cfg.autostart;
                         this.send(
                             "autostart",
                             vec![json!({"command":"autostart","enabled":enabled})],
@@ -333,7 +366,8 @@ impl Proxy {
                     .small()
                     .ghost()
                     .icon(IconName::RefreshCw)
-                    .label(self.t("检查更新", "Check updates"))
+                    .tooltip(self.t("检查更新", "Check updates"))
+                    .accessibility_label(self.t("检查更新", "Check updates"))
                     .disabled(self.busy)
                     .on_click(cx.listener(|this, _, _, cx| {
                         this.send(
@@ -351,14 +385,84 @@ impl Proxy {
                     .pl_3()
                     .border_l_1()
                     .border_color(rgb(BORDER))
-                    .child(
-                        Label::new(self.t("语言:", "Language:"))
-                            .text_size(px(12.))
-                            .text_color(rgb(MUTED)),
-                    )
-                    .child(self.language_menu()),
+                    .child(self.language_menu(cx)),
+            )
+            .child(
+                Button::new("restore-window-size")
+                    .small()
+                    .ghost()
+                    .icon(Icon::default().path("icons/restore-size.svg"))
+                    .tooltip(self.t(
+                        "恢复默认窗口尺寸（1180 × 780）",
+                        "Restore default window size (1180 × 780)",
+                    ))
+                    .accessibility_label(self.t("恢复默认窗口尺寸", "Restore default window size"))
+                    .disabled(self.resetting_window)
+                    .on_click(
+                        cx.listener(|this, _, window, cx| this.restore_window_size(window, cx)),
+                    ),
+            )
+            .child(
+                Button::new("project-homepage")
+                    .small()
+                    .ghost()
+                    .icon(Icon::default().path("icons/github.svg"))
+                    .tooltip(self.t("GitHub 项目主页", "GitHub project"))
+                    .accessibility_label(self.t("GitHub 项目主页", "GitHub project"))
+                    .on_click(|_, _, cx| cx.open_url(PROJECT_URL)),
+            )
+            .child(
+                Button::new("submit-feedback")
+                    .small()
+                    .ghost()
+                    .icon(Icon::default().path("icons/feedback.svg"))
+                    .tooltip(self.t("提交反馈", "Submit feedback"))
+                    .accessibility_label(self.t("提交反馈", "Submit feedback"))
+                    .on_click(|_, _, cx| cx.open_url(FEEDBACK_URL)),
             )
             .into_any_element()
+    }
+    fn restore_window_size(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        if self.resetting_window {
+            return;
+        }
+        if !window.is_fullscreen() && !window.is_maximized() {
+            window.resize(crate::default_window_size());
+            return;
+        }
+        self.resetting_window = true;
+        if window.is_fullscreen() {
+            window.toggle_fullscreen();
+        }
+        cx.notify();
+        // Fullscreen/zoom transitions are asynchronous on macOS. Wait for a
+        // normal window before resizing, and issue unzoom at most once.
+        let started = Instant::now();
+        cx.spawn_in(window, async move |this, cx| {
+            let mut unzoom_requested = false;
+            loop {
+                cx.background_executor().timer(Duration::from_millis(100)).await;
+                let done = this.update_in(cx, |this, window, cx| {
+                    if started.elapsed() > Duration::from_secs(5) {
+                        this.resetting_window = false;
+                        this.error = true;
+                        this.status = this.t("窗口状态切换未完成，请退出全屏或最大化后重试", "Window transition did not finish; leave fullscreen or maximize mode and try again").into();
+                        cx.notify();
+                        return true;
+                    }
+                    if window.is_fullscreen() { return false; }
+                    if window.is_maximized() {
+                        if !unzoom_requested { window.zoom_window(); unzoom_requested = true; }
+                        return false;
+                    }
+                    window.resize(crate::default_window_size());
+                    this.resetting_window = false;
+                    cx.notify();
+                    true
+                });
+                if done.unwrap_or(true) { break; }
+            }
+        }).detach();
     }
     fn effort_menu(&self) -> AnyElement {
         Select::new(&self.effort_select)
@@ -492,8 +596,6 @@ impl Proxy {
             cx,
         );
         let model_options = crate::model_options::OptionsEditor::new(zh, window, cx);
-        let language = cx.new(|cx| SelectState::new(choices(zh, true), None, window, cx));
-        language.update(cx, |s, cx| s.set_selected_value(&cfg.language, window, cx));
         let effort_select = cx.new(|cx| SelectState::new(choices(zh, false), None, window, cx));
         let preset_select =
             cx.new(|cx| SelectState::new(preset_choices(zh), None, window, cx).searchable(true));
@@ -576,22 +678,16 @@ impl Proxy {
             only_picked: false,
             editing: None,
             new_model: false,
-            language,
             effort_select,
             preset_select,
             delete_open: false,
             sync_open: false,
+            resetting_window: false,
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
             _timer: timer,
         };
-        cx.subscribe_in(&this.language, window, |this, _, event, window, cx| {
-            if let SelectEvent::Confirm(Some(code)) = event {
-                this.set_language(code, window, cx);
-            }
-        })
-        .detach();
         cx.subscribe(&this.protocol_select, |this, _, event, cx| {
             if let SelectEvent::Confirm(Some(code)) = event {
                 let Ok(protocol) = serde_json::from_value(serde_json::Value::String(code.clone()))

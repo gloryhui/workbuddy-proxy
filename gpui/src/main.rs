@@ -39,6 +39,9 @@ mod workbuddy_restart;
 use fs2::FileExt;
 use gpui_kit::component::{Theme, ThemeMode, TitleBar};
 use gpui_kit::*;
+pub(crate) fn default_window_size() -> Size<Pixels> {
+    size(px(1180.), px(780.))
+}
 fn main() {
     let mut args = std::env::args().skip(1);
     while let Some(arg) = args.next() {
@@ -120,7 +123,7 @@ fn main() {
                 KeyBinding::new("escape", ui::Dismiss, Some("Proxy")),
                 KeyBinding::new("cmd-q", ui::Quit, None),
             ]);
-            let bounds = Bounds::centered(None, size(px(1180.), px(780.)), cx);
+            let bounds = Bounds::centered(None, default_window_size(), cx);
             gpui_kit::open_window(
                 WindowOptions {
                     window_bounds: Some(WindowBounds::Windowed(bounds)),

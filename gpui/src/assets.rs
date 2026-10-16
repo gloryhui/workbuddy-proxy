@@ -25,6 +25,16 @@ impl AssetSource for Assets {
             r#"<path d="m6 9 6 6 6-6"/>"#
         } else if path.contains("search") {
             r#"<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>"#
+        } else if path.contains("autostart") {
+            r#"<path d="M12 2v10M18.36 5.64a9 9 0 1 1-12.73 0"/>"#
+        } else if path.contains("globe") {
+            r#"<circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M2 12h20"/>"#
+        } else if path.contains("github") {
+            r#"<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77a5.07 5.07 0 0 0-.09-3.77S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/>"#
+        } else if path.contains("feedback") {
+            r#"<path d="M2 21a8 8 0 0 1 10.821-7.487M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506Z"/><circle cx="10" cy="8" r="5"/>"#
+        } else if path.contains("restore-size") {
+            r#"<path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/>"#
         } else if path.contains("window-minimize") {
             r#"<path d="M5 12h14"/>"#
         } else if path.contains("window-maximize") {
