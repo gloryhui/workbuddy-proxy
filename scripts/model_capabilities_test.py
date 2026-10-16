@@ -36,6 +36,7 @@ def main():
                 data = {
                     'author': {'models': {'vision-model': {
                         'canonical_model_id': 'author/vision-model',
+                        'cost': {'input': 1, 'output': 2},
                         'tool_call': True, 'reasoning': True,
                         'reasoning_options': [{'type': 'effort', 'values': ['low', 'high']}],
                         'modalities': {'input': ['text', 'image']},
@@ -186,6 +187,21 @@ def main():
             assert not synced()['auto']['supportsImages'], 'Renamed model inherited stale capabilities'
             models[0]['model'] = 'vision-model'
             action('save', models=models, reasoning_effort='keep')
+
+            # Pricing uses the same public catalogue. Seed its successful-day
+            # marker before the offline restart so an independent startup price
+            # fetch cannot be mistaken for an immediate capability retry.
+            deadline = time.monotonic() + 10
+            while True:
+                try:
+                    price_sync = json.loads(action('stats_prices_update'))['catalog_sync']
+                    break
+                except urllib.error.HTTPError as failure:
+                    body = failure.read().decode()
+                    assert failure.code == 400 and 'stats_busy' in body, body
+                    assert time.monotonic() < deadline, 'Price refresh stayed busy'
+                    time.sleep(.025)
+            assert price_sync['last_success_day'] == time.strftime('%Y-%m-%d')
 
             cache_path = data / 'model-catalog.json'
             text = cache_path.read_text(encoding='utf-8')
