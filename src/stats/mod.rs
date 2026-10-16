@@ -2836,19 +2836,18 @@ mod tests {
         assert_eq!(handle.state(), HealthState::Ready);
     }
 
-    /// R7-02: the in-memory orphan list must use the same classification as the
-    /// durable queue. A lost `Start`+`Finish` pair leaves no request row, and the
-    /// old `changed rows < len` test kept that id forever, so the proxy never
-    /// returned to `ready`.
+    /// A healthy collector stays Ready while its asynchronous writer has queued
+    /// events. Wait for actual settlement before asserting exactly-once storage;
+    /// the lock-loss recovery path is exercised separately below.
     #[tokio::test]
-    async fn lost_start_and_finish_still_return_to_ready_without_faking_rows() {
+    async fn an_admitted_request_is_persisted_and_settled_exactly_once() {
         let dir = temporary_dir();
         let handle = StatsHandle::start(dir.path().to_path_buf());
         assert!(wait_ready(&handle));
-        // A cancelled request: the guard exists, both writes are lost.
+        // Admit and finish one request through the real asynchronous writer.
         {
             let mut guard = handle
-                .begin(spec("model-lost"), Protocol::Sse, false)
+                .begin(spec("model-admitted"), Protocol::Sse, false)
                 .unwrap();
             guard.mark_upstream_started();
             guard.observe(
@@ -2856,20 +2855,20 @@ mod tests {
             );
             guard.finish(dto::Outcome::Completed, None);
         }
-        // Recovery must clear the impossible id and reach `ready` with no
-        // invented request row.
+        // Ready is a health signal, not a write barrier. The cost row provides
+        // an observable completion boundary for both Start and Finish writes.
+        let _ = wait_cost_count(&dir, "model-admitted", 1).await;
         let ready = wait_for_health(&handle, HealthState::Ready, Duration::from_secs(15));
-        assert!(ready, "recovery must finish and report ready");
+        assert!(ready, "settlement must leave the collector ready");
         let rows: i64 = query_one(
             dir.path(),
-            "SELECT COUNT(*) FROM usage_requests WHERE upstream_model='model-lost'",
+            "SELECT COUNT(*) FROM usage_requests WHERE upstream_model='model-admitted'",
             &[],
         );
         assert_eq!(
             rows, 1,
             "the admitted request must still exist exactly once"
         );
-        let _ = rows;
         let pending: i64 = query_one(
             dir.path(),
             "SELECT COUNT(*) FROM usage_costs WHERE status='pending'",
