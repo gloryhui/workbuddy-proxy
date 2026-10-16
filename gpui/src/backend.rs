@@ -35,15 +35,18 @@ fn execute(
             return (result, false);
         }
     }
-    let synced = result.is_ok() && job.steps.last().is_some_and(|s| s["command"] == "install");
+    let last_command = job.steps.last().and_then(|step| step["command"].as_str());
     let port_change = job.tag == "port_restart";
-    let committed =
-        synced || (port_change && job.steps.last().is_some_and(|s| s["command"] == "set_port"));
-    if matches!(
-        job.tag.as_str(),
-        "install_restart" | "startup_install_restart" | "port_restart"
-    ) {
-        if !committed {
+    let committed = matches!(last_command, Some("install" | "restore"))
+        || (port_change && last_command == Some("set_port"));
+    let restart_after = match job.tag.as_str() {
+        "install_restart" | "startup_install_restart" => Some("install"),
+        "restore_restart" => Some("restore"),
+        "port_restart" => Some("set_port"),
+        _ => None,
+    };
+    if let Some(required) = restart_after {
+        if !committed || last_command != Some(required) {
             return (
                 Err(
                     "Restart requires a successful configuration update / 重启前必须成功更新配置"
@@ -58,12 +61,16 @@ fn execute(
                 let mut value: Value = serde_json::from_str(&port_result).unwrap_or_else(|_| json!({}));
                 value["workbuddy_restarted"] = json!(true);
                 value.to_string()
+            } else if job.tag == "restore_restart" {
+                "Proxy models removed; WorkBuddy reopened / 已取消同步并重新打开 WorkBuddy".into()
             } else {
                 "Models synced; WorkBuddy reopened / 已同步模型并重新打开 WorkBuddy".into()
             }
         }).map_err(|e| {
             if port_change {
                 format!("Local port and saved addresses updated; {} / 本地端口和已保存的地址已更新；{}", crate::i18n::message(&e, false), crate::i18n::message(&e, true))
+            } else if job.tag == "restore_restart" {
+                format!("Proxy models removed from disk; {} / 已取消同步并写入文件；{}", crate::i18n::message(&e, false), crate::i18n::message(&e, true))
             } else {
                 format!("Models synced to disk; {} / 模型已同步到文件；{}", crate::i18n::message(&e, false), crate::i18n::message(&e, true))
             }
@@ -155,6 +162,8 @@ impl Backend {
                                 "install".into()
                             } else if job.tag == "port_restart" {
                                 "port".into()
+                            } else if job.tag == "restore_restart" {
+                                "restore".into()
                             } else if job.tag == "startup_install_restart" {
                                 "startup_install".into()
                             } else {
@@ -183,6 +192,68 @@ mod tests {
         io::{Read, Write},
         net::TcpListener,
     };
+    #[test]
+    fn unsync_restart_requires_restore_and_reports_partial_success() {
+        let mut job = Job {
+            tag: "restore_restart".into(),
+            steps: vec![json!({"command":"restore"})],
+        };
+        let restored = std::cell::Cell::new(false);
+        let (result, committed) = execute(
+            &job,
+            |step| {
+                assert_eq!(step["command"], "restore");
+                restored.set(true);
+                Ok("removed".into())
+            },
+            || {
+                assert!(restored.get());
+                Ok(())
+            },
+        );
+        assert!(committed);
+        assert!(result.unwrap().contains("已取消同步并重新打开 WorkBuddy"));
+        let (result, committed) = execute(
+            &job,
+            |_| Err("restore failed".into()),
+            || panic!("restore failed; must not restart"),
+        );
+        assert_eq!(result, Err("restore failed".into()));
+        assert!(!committed);
+        let (result, committed) = execute(
+            &job,
+            |_| Ok("removed".into()),
+            || Err("quit refused / 拒绝退出".into()),
+        );
+        assert!(committed);
+        assert!(
+            result
+                .unwrap_err()
+                .contains("已取消同步并写入文件；拒绝退出")
+        );
+        job.tag = "restore".into();
+        assert!(
+            execute(
+                &job,
+                |_| Ok("removed".into()),
+                || panic!("remove-only never restarts")
+            )
+            .0
+            .is_ok()
+        );
+        job.tag = "restore_restart".into();
+        job.steps = vec![json!({"command":"install"})];
+        assert!(
+            execute(
+                &job,
+                |_| Ok("wrong action".into()),
+                || panic!("install is not restore")
+            )
+            .0
+            .is_err()
+        );
+    }
+
     #[test]
     fn port_restart_occurs_only_after_success_and_keeps_committed_state_on_restart_failure() {
         let job = Job {

@@ -187,6 +187,7 @@ pub struct Proxy {
     preset_select: Entity<SelectState<SearchableVec<Choice>>>,
     delete_open: bool,
     sync_open: bool,
+    unsync_open: bool,
     startup_checked: bool,
     startup_report: Option<crate::workbuddy_status::EndpointCheck>,
     startup_sync_open: bool,
@@ -704,6 +705,7 @@ impl Proxy {
             preset_select,
             delete_open: false,
             sync_open: false,
+            unsync_open: false,
             startup_checked: false,
             startup_report: None,
             startup_sync_open: false,
@@ -952,6 +954,7 @@ impl Proxy {
             || self.delete_open
             || self.protocol_open
             || self.sync_open
+            || self.unsync_open
             || self.startup_sync_open
             || self.pending_port.is_some()
         {
@@ -1009,6 +1012,24 @@ impl Proxy {
                 .into();
         }
     }
+    fn unsync(&mut self, restart: bool, cx: &mut Context<Self>) {
+        if self.busy {
+            return;
+        }
+        self.unsync_open = false;
+        self.startup_report = None;
+        // Removing saved WorkBuddy entries must not save provider drafts.
+        self.send(
+            if restart {
+                "restore_restart"
+            } else {
+                "restore"
+            },
+            vec![json!({"command":"restore"})],
+            cx,
+        );
+    }
+
     fn confirm_port(&mut self, cx: &mut Context<Self>) {
         if self.busy {
             return;
@@ -1316,6 +1337,7 @@ impl Proxy {
             && !self.busy
             && !self.dialog_open
             && !self.sync_open
+            && !self.unsync_open
             && self.pending_port.is_none()
             && !self.protocol_open
             && self.editing.is_none()
@@ -1478,6 +1500,7 @@ impl Proxy {
         self.editing = None;
         self.delete_open = false;
         self.sync_open = false;
+        self.unsync_open = false;
         if self.startup_sync_open {
             self.startup_report = None;
         }
@@ -1588,6 +1611,7 @@ impl Proxy {
             || self.editing.is_some()
             || self.delete_open
             || self.sync_open
+            || self.unsync_open
             || self.startup_sync_open
             || self.pending_port.is_some()
             || self.protocol_open;
@@ -1967,7 +1991,8 @@ impl Proxy {
                             ))
                             .disabled(self.busy)
                             .on_click(cx.listener(|this, _, _, cx| {
-                                this.send("restore", vec![json!({"command":"restore"})], cx)
+                                this.unsync_open = true;
+                                cx.notify();
                             })),
                     ),
             )
@@ -2264,6 +2289,24 @@ impl Proxy {
                         .disabled(self.busy || !cfg!(target_os = "macos"))
                         .on_click(cx.listener(|this, _, _, cx| this.confirm_startup_sync(cx))))
                     .child(Button::new("startup-sync-cancel").label(self.t("取消", "Cancel"))
+                        .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
+                .into_any_element()
+        } else if self.unsync_open {
+            DialogContent::new().w_full().gap_4()
+                .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("取消同步 WorkBuddy", "Unsync WorkBuddy")))
+                .child(Label::new(self.t(
+                    "将移除代理同步的模型，并恢复已备份的原有条目。重启 WorkBuddy 可让现有会话读取修改，但会中断正在执行的任务，请先保存工作。",
+                    "Remove proxy-managed models and restore backed-up original entries. Restart WorkBuddy to let existing conversations read the change; this interrupts running tasks. Save your work first.")).text_color(rgb(MUTED)))
+                .when(!cfg!(target_os = "macos"), |this| this.child(Label::new(self.t(
+                    "此平台暂不支持自动重启；仅移除后请手动重开 WorkBuddy。",
+                    "Automatic restart is unavailable on this platform; remove the models, then reopen WorkBuddy manually.")).text_color(rgb(MUTED))))
+                .child(DialogFooter::new()
+                    .child(Button::new("unsync-restart").primary().label(self.t("移除并重启", "Remove and restart"))
+                        .disabled(self.busy || !cfg!(target_os = "macos"))
+                        .on_click(cx.listener(|this, _, _, cx| this.unsync(true, cx))))
+                    .child(Button::new("unsync-only").label(self.t("仅移除", "Remove only")).disabled(self.busy)
+                        .on_click(cx.listener(|this, _, _, cx| this.unsync(false, cx))))
+                    .child(Button::new("unsync-cancel").label(self.t("取消", "Cancel"))
                         .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
                 .into_any_element()
         } else if self.sync_open {
