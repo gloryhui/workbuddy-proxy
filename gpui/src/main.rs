@@ -30,6 +30,7 @@ mod stats_controller;
 #[allow(dead_code)]
 #[path = "../../src/stats/dto.rs"]
 mod stats_dto;
+mod theme;
 mod ui;
 #[allow(dead_code)]
 #[path = "../../src/protocol/config.rs"]
@@ -41,7 +42,7 @@ mod workbuddy_restart;
 #[path = "../../src/workbuddy_status.rs"]
 mod workbuddy_status;
 use fs2::FileExt;
-use gpui_kit::component::{Theme, ThemeMode, TitleBar};
+use gpui_kit::component::TitleBar;
 use gpui_kit::*;
 pub(crate) fn default_window_size() -> Size<Pixels> {
     size(px(1440.), px(900.))
@@ -329,31 +330,7 @@ fn main() {
         .with_assets(assets::Assets)
         .run(move |cx| {
             gpui_kit::init(cx);
-            Theme::change(ThemeMode::Light, None, cx);
-            Theme::update(cx, |theme| {
-                theme.radius = px(8.);
-                theme.radius_lg = px(12.);
-                theme.colors.foreground = rgb(0x19334d).into();
-                theme.colors.muted_foreground = rgb(0x6b7c90).into();
-                theme.colors.border = rgb(0xe2e9f1).into();
-                theme.colors.sidebar = rgb(0xeaf2f8).into();
-                theme.colors.sidebar_foreground = rgb(0x19334d).into();
-                theme.colors.sidebar_accent = rgb(0xc5ebf4).into();
-                theme.colors.sidebar_accent_foreground = rgb(0x006b83).into();
-                theme.colors.table_active = rgb(0xdff3fa).into();
-                theme.colors.table_hover = rgb(0xeef8fc).into();
-                theme.colors.table_head = rgb(0xf7f9fc).into();
-                theme.colors.table_head_foreground = rgb(0x6b7c90).into();
-                theme.colors.table_row_border = rgb(0xe2e9f1).into();
-                theme.colors.primary = rgb(0x008daa).into();
-                theme.colors.primary_hover = rgb(0x007e99).into();
-                theme.colors.primary_active = rgb(0x006e86).into();
-                theme.colors.primary_foreground = rgb(0xffffff).into();
-                theme.colors.button_primary = rgb(0x008daa).into();
-                theme.colors.button_primary_hover = rgb(0x007e99).into();
-                theme.colors.button_primary_active = rgb(0x006e86).into();
-                theme.colors.button_primary_foreground = rgb(0xffffff).into();
-            });
+            theme::install(cx);
             cx.bind_keys([
                 KeyBinding::new("cmd-s", ui::Save, Some("Proxy")),
                 KeyBinding::new("ctrl-s", ui::Save, Some("Proxy")),
