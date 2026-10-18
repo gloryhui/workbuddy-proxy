@@ -1,0 +1,58 @@
+{
+  "source": {
+    "sha256": "aeccf66c31af09d1db3db6ee7b75b0114bd54cc61dbb845102d80099aadd5381",
+    "load_commands_end": 4616,
+    "signature_offset": 14625664,
+    "signature_bytes": 114432,
+    "normalized_bytes": 14625653,
+    "masked_fields": [
+      [
+        2432,
+        8
+      ],
+      [
+        2448,
+        8
+      ],
+      [
+        4608,
+        8
+      ]
+    ],
+    "code_probe_offset": 4696
+  },
+  "runtime": {
+    "sha256": "aeccf66c31af09d1db3db6ee7b75b0114bd54cc61dbb845102d80099aadd5381",
+    "load_commands_end": 4616,
+    "signature_offset": 14625664,
+    "signature_bytes": 114432,
+    "normalized_bytes": 14625653,
+    "masked_fields": [
+      [
+        2432,
+        8
+      ],
+      [
+        2448,
+        8
+      ],
+      [
+        4608,
+        8
+      ]
+    ],
+    "code_probe_offset": 4696
+  },
+  "normalized_code_equal": true,
+  "code_mutation_detected": true,
+  "signature_only_mutation_ignored": true,
+  "input_ui_sha256": "27367fd49af0675811cffe86c99e79bfd528b31bd0c21f346d4af5c67bc0ab1e",
+  "runtime_ui_sha256": "27367fd49af0675811cffe86c99e79bfd528b31bd0c21f346d4af5c67bc0ab1e",
+  "comparison_copies_created": false,
+  "comparison_copies_removed": true,
+  "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies",
+  "result": "PASS_SELF_IDENTITY_CONTROLS_SIGNED_PAIR_PENDING",
+  "scope": "same known GUI input; validates text mutation detection and signature-only exclusion, not the failed bundle-signing pair",
+  "temporary_files_created": 0,
+  "system_free_bytes": 19025235968
+}

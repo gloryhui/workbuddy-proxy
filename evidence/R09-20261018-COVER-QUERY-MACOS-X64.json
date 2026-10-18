@@ -1,0 +1,27 @@
+{
+  "at": 1792298491.236525,
+  "result": "PASS_810F_SOURCE_X64_CORE_BUILD_RUNTIME_PRIVATE_PACKAGE_PENDING",
+  "scope": "actual x86_64 core tests/runtime under local arm64 Rosetta; UI source/bytes reused with dependency proof, no physical Intel/nativeGUI/install claim",
+  "arm_source_candidate_sha256": "810fbe7d5c54e033142b5f425e56661f6064c208860eb58664ab58f150a498f8",
+  "core_sha256": "0daf057bc5afc5d5f729d88ddb653077386329e87cc00f3ce34e337fb99f8086",
+  "ui_sha256": "d9d960a31c17505ccc467a658c653744c7e379bd11206eaa3d214350898e510b",
+  "core_tests": 540,
+  "source_import_assertions": 157,
+  "production_edge_assertions": 65,
+  "rotation1137_assertions": 29,
+  "ui_reuse": {
+    "source": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-macos-x64/workbuddy-proxy-gpui",
+    "sha256": "d9d960a31c17505ccc467a658c653744c7e379bd11206eaa3d214350898e510b",
+    "reason": "only two core query files changed; neither in actual GPUI compiler depfile",
+    "changed_source_files": [
+      "src/stats/query/dashboard_aggregate/tests.rs",
+      "src/stats/query/dashboard_aggregate.rs"
+    ],
+    "compiler_depfile": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/x86_64-apple-darwin/release/workbuddy-proxy-gpui.d",
+    "compiler_depfile_sha256": "22feb67e6faeb982c91c6fc54f66000878384962e7732257216651e8e24897f8"
+  },
+  "build_and_runtime_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-macos-x64/report.json",
+  "all_step_roots_removed": true,
+  "retained_temp_bytes": 0,
+  "private_package": "NOT_RUN_NEW_CORE"
+}

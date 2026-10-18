@@ -1,0 +1,58 @@
+{
+  "at": 1792325604.244905,
+  "head": "6102b779871bab0bb8ad646dac5004892adf76be",
+  "branch": "codex/workbuddy-usage-import",
+  "command": [
+    "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+    "-u",
+    "dist/workbuddy-import-review/verify_mapped_reader_final_closeout.py",
+    "--cleanup-extractor"
+  ],
+  "environment": {
+    "TMPDIR": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3",
+    "TMP": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3",
+    "TEMP": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3"
+  },
+  "script_sha256": "f9a5e877b4f9f93a062f2a57f627fdf30cae1079551cc7bde6ba56b27704ba01",
+  "observed_tool_exit_code": 0,
+  "started_at": 1792325444.874918,
+  "ended_at": 1792325445.599176,
+  "result": "PASS_COMPLETE_REQUESTED_LOCAL_SCOPE_EXTERNAL_LIMITS_EXPLICIT",
+  "checks_passed": 480,
+  "failed": 0,
+  "report": "evidence/R09-20261018-MAPPED-READER-FINAL-CLOSEOUT.json",
+  "report_sha256": "5ed0990b26c5a1d52586b0fb1fac4cf1f369898380e45d5d6a5068e95b1874fb",
+  "packages": [
+    {
+      "arch": "arm",
+      "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-arm-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-final-private-macos-arm64.dmg",
+      "sha256": "563fe6986dba2c3b9b28db7f5317c95d3acb3e67567e95c0715e501fbb3b657c",
+      "document_files": 264,
+      "temporary_cleanup": {
+        "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-progress-package-stage-7bx0kufn",
+        "remaining_processes": [],
+        "remaining_mounts": [],
+        "removed": true,
+        "released_allocated_bytes": 33943552,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51349852160
+      }
+    },
+    {
+      "arch": "x64",
+      "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-x64-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-final-private-macos-x64.dmg",
+      "sha256": "29ebf1929a81cef443374a9d50bed1aff814ef07df7d0d88f73a3dd78c70dc10",
+      "document_files": 264,
+      "temporary_cleanup": {
+        "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-progress-package-stage-a7iyi4fv",
+        "remaining_processes": [],
+        "remaining_mounts": [],
+        "removed": true,
+        "released_allocated_bytes": 35926016,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51327643648
+      }
+    }
+  ],
+  "scope": "Actual tool returned exit0 for this exact local final verifier; artifact hashes/current source checks remain in the underlying480 check report. This receipt adds command provenance, not a new product test or platform claim."
+}

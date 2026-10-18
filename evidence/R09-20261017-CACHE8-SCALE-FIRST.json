@@ -1,0 +1,218 @@
+{
+  "result": "PASS_ONE_STRICT_PHASE_REMAINING_11_PENDING",
+  "core_binary_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+  "phase_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-many/trial-1/report.json",
+  "report_sha256": "23f29abb6dfc6969da136e6f63c9b41ef134d86c9ce31548d9fae80b4508933e",
+  "passed": 75,
+  "failed": 0,
+  "backfill_ms": 552941.820667,
+  "peak_rss_bytes": 29736960,
+  "max_incremental_ms": 4991.355333,
+  "query_p95_ms": [
+    320.615459,
+    31.340166,
+    321.366875,
+    31.522625,
+    323.934375,
+    30.775584,
+    323.655292,
+    30.673542,
+    323.836375,
+    31.504041,
+    320.024958,
+    30.66825
+  ],
+  "idle_seconds": 300,
+  "idle_cpu_median_percent": 0.14278438816400224,
+  "idle_body_bytes_before_after": [
+    1492575520,
+    1492575520
+  ],
+  "snapshot_validation": {
+    "completed_proxy_facts": 408,
+    "total_facts": 1010408,
+    "unique_imported_ledger": 1010000,
+    "imported_money_rows": 0
+  },
+  "runtime_metrics": {
+    "queue_depth": 0,
+    "queue_peak": 1,
+    "recent_batches": [
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 109681
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 194209
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 51437
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 185571
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 53844
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 206648
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 47636
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 193824
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 48546
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 139928
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 49396
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 131498
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 46337
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 143634
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 42230
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 134048
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 78940
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 163746
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 62879
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 144725
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 51022
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 151715
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 47908
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 131971
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 52555
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 143428
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 46191
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 136503
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 48013
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 148157
+      },
+      {
+        "candidates": 128,
+        "committed": true,
+        "elapsed_us": 45951
+      },
+      {
+        "candidates": 116,
+        "committed": true,
+        "elapsed_us": 123816
+      }
+    ],
+    "source_io_thread_checks": 10069,
+    "source_io_thread_violations": 0,
+    "writer_batch_count": 8080,
+    "writer_batch_failures": 0,
+    "writer_batch_max_us": 749621,
+    "writer_batch_total_us": 540093510
+  },
+  "temporary_cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 346613096448,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-target-mnmaxd37/tmp/workbuddy-scale-dlqc_sqy",
+    "removed": true,
+    "removed_logical_bytes": 3011921531,
+    "retained_evidence_bytes": 1926545408,
+    "system_disk_available_bytes": 19013427200
+  }
+}

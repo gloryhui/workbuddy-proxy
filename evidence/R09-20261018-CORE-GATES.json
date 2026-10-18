@@ -1,0 +1,386 @@
+{
+  "result": "PASS_25_CURRENT_CORE_INDEPENDENT_GATES_SCALE_NATIVE_PACKAGE_PENDING",
+  "at": 1792290066.937997,
+  "core_binary_sha256": "3d9e774e19773c9245d35527109aa65390bfa71947e9570ff76eb53052cba3d9",
+  "group_count": 25,
+  "scope": "same frozen progress core; independent corrected probes replace invalid harness assertions, original FAIL reports retained; no full scale/native/package acceptance implied",
+  "groups": [
+    {
+      "name": "progress-checkpoints",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-probe-v3-coordinator.json",
+      "script_sha256": "b213ba9e456a64cb9d3fa56e78bcc178037c21a0db00be57beceefab8f2fe5a6",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-zhqoeydx",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51505299456,
+        "external_free_bytes": 446501527552
+      },
+      "supersedes_failed_probe_only": "invalid synthetic session/file pairing; later readonly SQLite observer held across shutdown"
+    },
+    {
+      "name": "canonical-fields",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "66c8cd5c563fdfe0fa47c75743907481792f485b080af037ce7c0f9965705837",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-h1j8zqco",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 46952624128,
+        "external_free_bytes": 442614951936
+      }
+    },
+    {
+      "name": "import-integration",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "67c1ef49acfa1153aa93cdb18bb015523017c1c362168c6c791ae65abc308bc9",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-rvekpuqq",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 49126973440,
+        "external_free_bytes": 446912528384
+      }
+    },
+    {
+      "name": "os-faults",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "809e006de6c4907c7a875868f56e0033101fdf5dbfa960981045c6f6b632bd34",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-56q_kio2",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51058741248,
+        "external_free_bytes": 446860730368
+      }
+    },
+    {
+      "name": "smoke",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "6a6eb662389245ecfbe08dbd58ed5caad62cf77d51f7f1affcf809f8b40bf7bb",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-ri8uhg88",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51058724864,
+        "external_free_bytes": 446860718080
+      }
+    },
+    {
+      "name": "multi_routing",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "128b0a4b13e69e07e3e5e15761ae0447c8abae14b30351ac7ccf1b3b5b139fa7",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-4j86prw4",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51058741248,
+        "external_free_bytes": 446860705792
+      }
+    },
+    {
+      "name": "multimodal_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "525f19e1a22e91fa7ed8366d267de69dc4214db28b70dd518cd36a824510e920",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-4u_yhy8t",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51058741248,
+        "external_free_bytes": 446860689408
+      }
+    },
+    {
+      "name": "model_discovery",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "50a32a2a18a364186db03de5a09afbda14c474f31d16fb41f4aca961b8bec481",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-9jhg1oji",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51058700288,
+        "external_free_bytes": 446860636160
+      }
+    },
+    {
+      "name": "model_capabilities_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "3de908bbdcd3036876242989048c65117b6e25f5a25ca01d407a1938a9f3a44f",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-ab55x61h",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51058700288,
+        "external_free_bytes": 446860623872
+      }
+    },
+    {
+      "name": "connection_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "8b55f0ac3167a53f769d5f2c9444f318eeb1c6b65b261c5ae63c63b37698f03f",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-c3nd9l1x",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51063177216,
+        "external_free_bytes": 447452643328
+      }
+    },
+    {
+      "name": "port_change",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "2aaa6b9ecf87fd5fb4f34610e1be24a79b2da22233460449406a55a3c9f1a6c8",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-qzt0pqgq",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51063169024,
+        "external_free_bytes": 447452901376
+      }
+    },
+    {
+      "name": "native_protocol_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "1f50b4b575f0c97caeaefa53087331e236e5e26ae68db735e09e499d463ef502",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-84c64jp_",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51063111680,
+        "external_free_bytes": 447512649728
+      }
+    },
+    {
+      "name": "native_discovery_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "58bf52d0ced649c84ce5f531422ddbcdf9f090ddea63c4d983f9958d09e2f2cb",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-5qh1qmzv",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51060797440,
+        "external_free_bytes": 447512633344
+      }
+    },
+    {
+      "name": "api_key_providers_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "292013669bdbf393200de2b2f38a810a78df4d20b26e5b3e5447b5a5b444df4c",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-vofqr7sq",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51060789248,
+        "external_free_bytes": 447512621056
+      }
+    },
+    {
+      "name": "native_resource_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "50605471938d9f8138129474a99b303e088eeab8b0eaf04a38828fde8ab16e4a",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-zpoj_znj",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51060789248,
+        "external_free_bytes": 447512608768
+      }
+    },
+    {
+      "name": "statistics_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "0d8874a4d2be473f84d6cda84ab38f0a841f291be1800d2026cffccd0b93a875",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-dylvjr7h",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51496562688,
+        "external_free_bytes": 447512592384
+      }
+    },
+    {
+      "name": "statistics_pagination_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "42986ff632eb34d625ec066dfe6353ced301ba1bf407c7aafb7c526a0dc5dae5",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-dzey7h7t",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51496562688,
+        "external_free_bytes": 447512576000
+      }
+    },
+    {
+      "name": "price_catalog_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "b28d49de55b7a07b9cefe0aa248bc781bfa3902aea512ed569e386b6a081a717",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-cjmwofru",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51496763392,
+        "external_free_bytes": 447512563712
+      }
+    },
+    {
+      "name": "workbuddy_endpoint_check_test",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "37d578339cd06741137b0c3689dba3d1aac4841b7ae2965cd044faeefa62c4f0",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-rcp1j5a1",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51496763392,
+        "external_free_bytes": 447512551424
+      }
+    },
+    {
+      "name": "control-boundary",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "ccb1e5778654c67390c9c48963c3ffea4cf958fb48d3011a5999879ef402cc06",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-03xmievq",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51496759296,
+        "external_free_bytes": 447512522752
+      }
+    },
+    {
+      "name": "scheduling",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "144da274d599b65a014eb1e98495997e859df79c125bb9695a8a36cd3f6ad4c0",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-qhj4slyq",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51850592256,
+        "external_free_bytes": 447697108992
+      }
+    },
+    {
+      "name": "shutdown",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "7a3c12b6e2b12561c72a5b0425ce2f9223fec5f3a0c60c208f6b1aea39430337",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-xdn0gsee",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51848097792,
+        "external_free_bytes": 447689441280
+      }
+    },
+    {
+      "name": "core-forwarding-bench",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "175abf79dbd383a885ecae34217c7f678c35aafe450abd689bbba765a120cbcd",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-8zvc6nd2",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51848097792,
+        "external_free_bytes": 447689424896
+      }
+    },
+    {
+      "name": "production-edges",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-edges-v3-coordinator.json",
+      "script_sha256": "c556942ef72d0cb93fbdc4eb92cae2d8e17864954c82dc68d0681ce541a39640",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-z2ifuhwp",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51839459328,
+        "external_free_bytes": 447647358976
+      },
+      "supersedes_failed_probe_only": "snapshot providers field is a count, continuation total_rows is -1 by existing protocol; explicit detached-root cleanup"
+    },
+    {
+      "name": "retention",
+      "state": "PASS",
+      "source_coordinator": "dist/workbuddy-import-review/progress-local-gates-coordinator.json",
+      "script_sha256": "b7597362185fc3585c8cf6cc70ffff2726b442505a1fcc7428cc8cb02c51f2fd",
+      "exit_code": 0,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-gate-xsznd9mr",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51844395008,
+        "external_free_bytes": 447471828992
+      }
+    }
+  ]
+}

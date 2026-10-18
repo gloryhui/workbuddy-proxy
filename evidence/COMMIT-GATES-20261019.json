@@ -1,0 +1,67 @@
+{
+  "steps": [
+    {
+      "name": "workbuddy_import_test",
+      "state": "PASS",
+      "started_at": 1792342521.598656,
+      "exit_code": 0,
+      "ended_at": 1792342643.476204
+    },
+    {
+      "name": "workbuddy_import_faults",
+      "state": "PASS",
+      "started_at": 1792342643.4773362,
+      "exit_code": 0,
+      "ended_at": 1792342674.013621
+    },
+    {
+      "name": "api_key_providers_test",
+      "state": "PASS",
+      "started_at": 1792342674.0146,
+      "exit_code": 0,
+      "ended_at": 1792342675.327617
+    },
+    {
+      "name": "native_protocol_test",
+      "state": "PASS",
+      "started_at": 1792342675.328608,
+      "exit_code": 0,
+      "ended_at": 1792342676.441965
+    },
+    {
+      "name": "statistics_test",
+      "state": "PASS",
+      "started_at": 1792342676.442997,
+      "exit_code": 0,
+      "ended_at": 1792342687.753807
+    },
+    {
+      "name": "workbuddy_endpoint_check_test",
+      "state": "PASS",
+      "started_at": 1792342687.754598,
+      "exit_code": 0,
+      "ended_at": 1792342688.3747892
+    }
+  ],
+  "result": "PASS",
+  "owner_pid": 99888,
+  "started_at": 1792342521.595998,
+  "cleanup": {
+    "removed": true,
+    "released_bytes": 4096,
+    "residue_bytes": 0,
+    "system_free_bytes": 50898448384,
+    "real_profiles_unchanged": true
+  },
+  "ended_at": 1792342688.537591,
+  "scope": "Pre-commit current Python/CI entrypoints against the frozen, already accepted Rust binaries. Rust/SQL sources unchanged from build reports. No rebuild, publication or installation in this gate.",
+  "rust_sql_hash_validation": {
+    "core_files": 82,
+    "final_ui_scope_files": 109,
+    "mismatches": [],
+    "existing_core_tests": 551,
+    "existing_ui_tests": 137
+  },
+  "import_assertions": 158,
+  "detailed_reports": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-commit-gates"
+}

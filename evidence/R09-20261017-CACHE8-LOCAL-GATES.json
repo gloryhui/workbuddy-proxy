@@ -1,0 +1,3479 @@
+{
+  "result": "PASS_CACHE8_SERIAL_GATES_OTHER_GATES_PENDING",
+  "pid": 14139,
+  "started_at": 1792237761.066831,
+  "core_binary_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+  "core_binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+  "output": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates",
+  "steps": [
+    {
+      "name": "canonical-fields",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/canonical-fields-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-9omhl2tf",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/workbuddy_import_canonical.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/canonical"
+      ],
+      "state": "PASS",
+      "started_at": 1792237761.0720901,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 15537,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 15537,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/workbuddy_import_canonical.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/canonical"
+        ],
+        "monotonic_ns": "171557666",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "c7c9612eaf415a90c84bdb5c3956f52b9b32299b3bb3feb28eb14bffaf06827e",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237792.5036318,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-9omhl2tf",
+        "removed": true,
+        "removed_allocated_bytes": 1888256,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19019341824,
+        "external_free_bytes": 346388303872
+      }
+    },
+    {
+      "name": "import-integration",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/import-integration-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-3ydsaa_0",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/workbuddy_import_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/integration"
+      ],
+      "state": "PASS",
+      "started_at": 1792237792.508296,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 15681,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 15681,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/workbuddy_import_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/integration"
+        ],
+        "monotonic_ns": "156675083",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "bf369e67bc5e14e3f53e6098441d7ab5c9d7e0b9250caa9b8c534915d98ee52b",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237933.109895,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-3ydsaa_0",
+        "removed": true,
+        "removed_allocated_bytes": 1900544,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19017011200,
+        "external_free_bytes": 346388066304
+      }
+    },
+    {
+      "name": "os-faults",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/os-faults-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-xydknq9f",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/workbuddy_import_faults.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/faults"
+      ],
+      "state": "PASS",
+      "started_at": 1792237933.114591,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16434,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16434,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/workbuddy_import_faults.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/faults"
+        ],
+        "monotonic_ns": "153208708",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "12090a84b05f4ad4fba3b5fcada36a71b8267b3a0d21a63dbabbd02bb8758add",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237977.5146701,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-xydknq9f",
+        "removed": true,
+        "removed_allocated_bytes": 1888256,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19021017088,
+        "external_free_bytes": 346388041728
+      }
+    },
+    {
+      "name": "smoke",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/smoke-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-l4gnbips",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/smoke.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237977.520183,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16639,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16639,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/smoke.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "157932083",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "b9ef98b70fb1b28e04d03c998d87677a008e6198d1a99550f94108a50eb77d8e",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237979.132863,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-l4gnbips",
+        "removed": true,
+        "removed_allocated_bytes": 1961984,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19021012992,
+        "external_free_bytes": 346388033536
+      }
+    },
+    {
+      "name": "multi_routing",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/multi_routing-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-3zy3lsqq",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/multi_routing.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237979.137711,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16658,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16658,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/multi_routing.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "155217833",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "bddf82843cf3122547922aac9c1442848e0ab401429419a36f4493918b35bd39",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237980.663445,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-3zy3lsqq",
+        "removed": true,
+        "removed_allocated_bytes": 1994752,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19021008896,
+        "external_free_bytes": 346388025344
+      }
+    },
+    {
+      "name": "multimodal_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/multimodal_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-0b_lml7s",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/multimodal_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237980.668416,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16674,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16674,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/multimodal_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "153661125",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "9f81fb2847076fa83a6f2d0c5cc2eaeeb73521dbb7ad15e633fe3fafa195d6f3",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237981.786979,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-0b_lml7s",
+        "removed": true,
+        "removed_allocated_bytes": 1974272,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19021004800,
+        "external_free_bytes": 346388013056
+      }
+    },
+    {
+      "name": "model_discovery",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/model_discovery-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-xwbmm7t1",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/model_discovery.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237981.7919471,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16687,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16687,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/model_discovery.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "152652291",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "7ec2eed360fa54a6813298f0d2c6e49a8790fc7271a423c3bf49dc7a916750fe",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237983.355784,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-xwbmm7t1",
+        "removed": true,
+        "removed_allocated_bytes": 1974272,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19021000704,
+        "external_free_bytes": 346388004864
+      }
+    },
+    {
+      "name": "model_capabilities_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/model_capabilities_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-0ixiegf6",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/model_capabilities_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237983.360925,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16700,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16700,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/model_capabilities_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "150768416",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "f57d9f90814f4214b6cfe6ca2f583911005ad21c8eb2012e24bfe15fe408cf51",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237984.868704,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-0ixiegf6",
+        "removed": true,
+        "removed_allocated_bytes": 1974272,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020992512,
+        "external_free_bytes": 346387996672
+      }
+    },
+    {
+      "name": "connection_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/connection_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-x7e8tz0l",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/connection_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237984.873951,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16718,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16718,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/connection_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "153305541",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "e15105e1b4c56756ed31c510cbedbe157bc77cc5f2f5fb24428048af21b87c77",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237986.183348,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-x7e8tz0l",
+        "removed": true,
+        "removed_allocated_bytes": 1974272,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020988416,
+        "external_free_bytes": 346387943424
+      }
+    },
+    {
+      "name": "port_change",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/port_change-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-2jy1d4rl",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/port_change.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237986.188514,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16731,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16731,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/port_change.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "152787000",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "5bc1da48dc8ec62079ebc3d2e094c475601780176397f59ba41f75b66624e470",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237987.4076328,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-2jy1d4rl",
+        "removed": true,
+        "removed_allocated_bytes": 1974272,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020984320,
+        "external_free_bytes": 346387931136
+      }
+    },
+    {
+      "name": "native_protocol_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/native_protocol_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-i5sms2mt",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/native_protocol_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237987.4130712,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16746,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16746,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/native_protocol_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "154261500",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "8bf1f94eb2fd2005a44c28fe3bed125ef9f336b27d5d2badb300b271e330f871",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237988.932124,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-i5sms2mt",
+        "removed": true,
+        "removed_allocated_bytes": 2048000,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020967936,
+        "external_free_bytes": 346387922944
+      }
+    },
+    {
+      "name": "native_discovery_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/native_discovery_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-bwcer57_",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/native_discovery_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237988.937542,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16770,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16770,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/native_discovery_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "152442583",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "291ce901dc16ecd1d11a48b54f63ba10e75f4d2ca6e3d2770736d8e31e0cf6b4",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237989.9555461,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-bwcer57_",
+        "removed": true,
+        "removed_allocated_bytes": 1867776,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020767232,
+        "external_free_bytes": 346387914752
+      }
+    },
+    {
+      "name": "api_key_providers_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/api_key_providers_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-md5h8fom",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/api_key_providers_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237989.961025,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16783,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16783,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/api_key_providers_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "154770541",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "7c96c15710079171755e90ccfd968f9539518d236e1b219a7649a39513641996",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237991.192927,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-md5h8fom",
+        "removed": true,
+        "removed_allocated_bytes": 1867776,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020759040,
+        "external_free_bytes": 346387906560
+      }
+    },
+    {
+      "name": "native_resource_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/native_resource_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-xf3bh2x5",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/native_resource_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237991.198516,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16797,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16797,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/native_resource_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "151858416",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "b98db98892ced384275107e4c3198dd89676d59dd3ecf84ee7b3668275939969",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792237993.4855192,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-xf3bh2x5",
+        "removed": true,
+        "removed_allocated_bytes": 2154496,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020754944,
+        "external_free_bytes": 346387894272
+      }
+    },
+    {
+      "name": "statistics_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/statistics_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-ybp6mbgm",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/statistics_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792237993.4910898,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16819,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16819,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/statistics_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "155799916",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "049e48e8ea2f30d89baf06370d6ac7a2e03b6943ee0ded199060d9eab84d6009",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792238005.096628,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-ybp6mbgm",
+        "removed": true,
+        "removed_allocated_bytes": 1826816,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020754944,
+        "external_free_bytes": 346387886080
+      }
+    },
+    {
+      "name": "statistics_pagination_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/statistics_pagination_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-5baycd0z",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/statistics_pagination_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792238005.1022441,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16875,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16875,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/statistics_pagination_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "156344208",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "d1dc1aafd78781d3aacb287b50415f8985c0b7cf8ddc766d6b252f9cc9dea9be",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792238007.221195,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-5baycd0z",
+        "removed": true,
+        "removed_allocated_bytes": 1867776,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020746752,
+        "external_free_bytes": 346387877888
+      }
+    },
+    {
+      "name": "price_catalog_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/price_catalog_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-waozu_ws",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/price_catalog_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792238007.227539,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16893,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16893,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/price_catalog_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "152343458",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "a8e4368b1859ebddd91fb206924bae8b82adcb5aa8e2d3d216553858a9e250bb",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792238009.3229928,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-waozu_ws",
+        "removed": true,
+        "removed_allocated_bytes": 1867776,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020742656,
+        "external_free_bytes": 346387869696
+      }
+    },
+    {
+      "name": "workbuddy_endpoint_check_test",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/workbuddy_endpoint_check_test-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-x1_srkyu",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/workbuddy_endpoint_check_test.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+      ],
+      "state": "PASS",
+      "started_at": 1792238009.328741,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16920,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16920,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/workbuddy_endpoint_check_test.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy"
+        ],
+        "monotonic_ns": "153834125",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "20a6a995ec064c77c5972d77ec6b1832ac12b52ee5f4a428d1ad36c189b4ed49",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792238010.327771,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-x1_srkyu",
+        "removed": true,
+        "removed_allocated_bytes": 1867776,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19020734464,
+        "external_free_bytes": 346387857408
+      }
+    },
+    {
+      "name": "scheduling",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/scheduling-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-ksmu5ztu",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/workbuddy_import_scheduling.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/scheduling"
+      ],
+      "state": "PASS",
+      "started_at": 1792238010.3336692,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 16933,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 16933,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/workbuddy_import_scheduling.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/scheduling"
+        ],
+        "monotonic_ns": "153084750",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "29025a84e8b4a47be07ff9b38012618237d8f7fd3b2a4ea93bebe4902a679447",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792238257.059541,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-ksmu5ztu",
+        "removed": true,
+        "removed_allocated_bytes": 2109440,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19023802368,
+        "external_free_bytes": 346387824640
+      }
+    },
+    {
+      "name": "shutdown",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/shutdown-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-mshpjwvc",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/workbuddy_import_shutdown.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/shutdown"
+      ],
+      "state": "PASS",
+      "started_at": 1792238257.065839,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 18055,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 18055,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/workbuddy_import_shutdown.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/shutdown"
+        ],
+        "monotonic_ns": "159333333",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "633133ef7c6a6c400db5bd51e953f61f2dcb4c1b31fba09156aec6211059d405",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792238301.329695,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-mshpjwvc",
+        "removed": true,
+        "removed_allocated_bytes": 2121728,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19026640896,
+        "external_free_bytes": 346387800064
+      }
+    },
+    {
+      "name": "core-forwarding-bench",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/core-forwarding-bench-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-l3xblomr",
+        "--",
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "scripts/benchmark.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/forwarding-benchmark.json"
+      ],
+      "state": "PASS",
+      "started_at": 1792238301.335752,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 18287,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 18287,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "scripts/benchmark.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-local-gates/forwarding-benchmark.json"
+        ],
+        "monotonic_ns": "156565500",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "39ea5e5481614d021a920daac1dcef7585d277b7a7d5d6bb27fcc626da2a5ad2",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792238303.7829819,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792231699014450150,
+          "size": 512,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-l3xblomr",
+        "removed": true,
+        "removed_allocated_bytes": 2138112,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 19026636800,
+        "external_free_bytes": 346387787776
+      }
+    }
+  ],
+  "ended_at": 1792238303.7857978
+}

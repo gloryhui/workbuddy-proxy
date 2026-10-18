@@ -1,0 +1,66 @@
+{
+  "at": 1792303498.6214678,
+  "result": "FAIL_FIRST_INCREMENT_UNDER_CONTINUOUS_REPORTS",
+  "core_sha256": "228f41d84c9f2d54079340d19ed95b4b49e5e98541e7aa2ca6bfc3f1b8738b9d",
+  "source_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-report-handoff-focused-gates/query-pressure-scheduling/report.json",
+  "requests": 17818,
+  "request_failures": 0,
+  "minimum_visible_count": 833,
+  "maximum_visible_count": 1242,
+  "checks": [
+    {
+      "detail": "",
+      "name": "manual: scan feedback within 2s and exact 500 rows visible within 5s",
+      "ok": true
+    },
+    {
+      "detail": "bytes=231708 source=150291",
+      "name": "full: measured body reread covers complete unchanged source",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "full: no duplicate facts or ledger identities",
+      "ok": true
+    },
+    {
+      "detail": "requests=17818 failures=0",
+      "name": "report pressure: actual nonempty dashboard requests succeed",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "report pressure: dashboard continues reflecting newly committed facts",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "report pressure: both client threads stop before fixture cleanup",
+      "ok": true
+    },
+    {
+      "detail": "AssertionError",
+      "name": "scheduling: phase completes without exception",
+      "ok": false
+    }
+  ],
+  "diagnostic_note": "Old failed probes did not retain failed first-flush timestamps or runtime snapshot; source probe now records these on failure only, without changing success timing or any budgets.",
+  "cleanup": [
+    {
+      "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-report-handoff-gate-ql87hgb2",
+      "removed": true,
+      "removed_allocated_bytes": 0,
+      "retained_temp_bytes": 0,
+      "system_free_bytes": 51555164160,
+      "external_free_bytes": 434787205120
+    },
+    {
+      "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-report-handoff-gate-kpd6aq26",
+      "removed": true,
+      "removed_allocated_bytes": 0,
+      "retained_temp_bytes": 0,
+      "system_free_bytes": 51555164160,
+      "external_free_bytes": 434787184640
+    }
+  ]
+}

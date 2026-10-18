@@ -1,0 +1,21 @@
+{
+  "at": 1792301665.892477,
+  "completed_rounds_removed": 27,
+  "completed_round_retained_temp_bytes": 0,
+  "freed_space_accounting": "outer guards measured0 after inner fixtures cleaned; full inner release amount not measured",
+  "active_or_required_temporary_directories": [
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/package-extractor-empo0u58",
+      "allocated_bytes": 8450048,
+      "state": "retained needed archive-reader tool"
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-reader-yield-target-5q5be_jd",
+      "allocated_bytes": 2042892288,
+      "state": "active million target, not eligible for cleanup"
+    }
+  ],
+  "active_or_required_allocated_bytes": 2051342336,
+  "system_free_bytes": 51555254272,
+  "unknown_system_project_temporary_entries": "previous4002 entries retained, session ownership unproven; no prefix deletion"
+}

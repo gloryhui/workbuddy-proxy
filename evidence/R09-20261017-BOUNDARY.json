@@ -1,0 +1,231 @@
+{
+  "result": "PASS_CONTROL_BOUNDARY_16",
+  "core_binary_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+  "raw_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-control-boundary-v2/report.json",
+  "report_sha256": "18930ef38a3050e6059e6f7ad46f2a99e0931c554392f5d7d02a1cfc64e4c14f",
+  "actual_pid_protection": {
+    "enforced": true,
+    "pid": 2615,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "-u",
+      "scripts/workbuddy_import_boundary_probe.py",
+      "--exe",
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+      "--output",
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-control-boundary-v2"
+    ],
+    "monotonic_ns": "163286041",
+    "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+  },
+  "checks": [
+    {
+      "detail": "{'error': {'message': 'Unauthorized', 'type': 'proxy_error'}, '_http_status': 401}",
+      "name": "local model key cannot call import management",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "synthetic boundary database remains integral with no orphan references",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "normal query returns all valid bounded synthetic labels",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "negative fixture explicitly contains one check-invalid oversized field",
+      "ok": true
+    },
+    {
+      "detail": "{'message': 'stats_result_too_large: statistics result exceeds 1 MiB; narrow the range', 'ok': False}",
+      "name": "result above 1MiB is refused with fixed code rather than truncated JSON",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "oversized result does not corrupt the query or its durable facts",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "metadata_unchanged=True; actual snapshots retained",
+      "name": "sandbox: real source/config I/O denied by kernel",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "fixture stopped before cleanup and temporary root removed",
+      "ok": true
+    }
+  ],
+  "boundary": {
+    "deliberate_corrupt_integrity_check": [
+      [
+        "CHECK constraint failed in usage_requests"
+      ]
+    ],
+    "foreign_key_check_after": [],
+    "foreign_key_check_before": [],
+    "injected_field_bytes": 1048604,
+    "integrity_check_after": [
+      [
+        "ok"
+      ]
+    ],
+    "integrity_check_before": [
+      [
+        "ok"
+      ]
+    ],
+    "label_characters": 24,
+    "oversized_response": {
+      "message": "stats_result_too_large: statistics result exceeds 1 MiB; narrow the range",
+      "ok": false
+    },
+    "response_limit_bytes": 1048576,
+    "rows": 20,
+    "seed_scope": "valid bounded SQLite seed plus one explicitly corrupt field; control defense only, not importer evidence",
+    "small_response_bytes": 20214
+  },
+  "temporary_cleanup": {
+    "child_stopped": true,
+    "external_free_bytes": 348901904384,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-boundary-guard-iiv31jit/tmp/workbuddy-api-boundary-s__d6c3w",
+    "removed": true,
+    "retained_evidence_bytes": 41,
+    "system_free_bytes": 18019205120
+  },
+  "retained_bytes_after_report_flush": 6866,
+  "system_free_bytes": 19016318976,
+  "scope": "real 401 and serialized-result guard; temporary deliberate check-invalid field restored; not valid importer input evidence"
+}

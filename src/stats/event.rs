@@ -32,9 +32,37 @@ pub struct Counters {
     pub accepting: AtomicBool,
 }
 
+/// Exact, allowlisted WorkBuddy correlation. Store hashes, never raw headers.
+#[derive(Clone, Debug)]
+pub struct WorkbuddyIdentity {
+    pub session_hash: String,
+    pub message_hash: String,
+}
+impl WorkbuddyIdentity {
+    pub fn from_headers(headers: &axum::http::HeaderMap) -> Option<Self> {
+        let read = |name| {
+            let mut values = headers.get_all(name).iter();
+            let value = values.next()?.to_str().ok()?;
+            if values.next().is_some()
+                || value.is_empty()
+                || value.chars().count() > 160
+                || value.chars().any(char::is_control)
+            {
+                return None;
+            }
+            Some(crate::stats::workbuddy_import::parser::hash_id(value))
+        };
+        Some(Self {
+            session_hash: read("x-conversation-id")?,
+            message_hash: read("x-conversation-message-id")?,
+        })
+    }
+}
+
 /// Immutable snapshot of the routing decision, cloned while it is still valid.
 #[derive(Clone, Debug)]
 pub struct RequestMeta {
+    pub workbuddy_identity: Option<crate::stats::event::WorkbuddyIdentity>,
     pub request_id: String,
     pub run_id: String,
     pub source: Source,
@@ -677,6 +705,7 @@ mod tests {
 
     fn meta(id: &str) -> RequestMeta {
         RequestMeta {
+            workbuddy_identity: None,
             request_id: id.into(),
             run_id: "run-a".into(),
             source: Source::Relay,
@@ -978,5 +1007,28 @@ mod tests {
         assert_eq!(finish.usage_source, UsageSource::None);
         assert!(finish.input_tokens.is_none() && finish.output_tokens.is_none());
         assert!(finish.total_tokens.is_none());
+    }
+}
+
+#[cfg(test)]
+mod workbuddy_identity_tests {
+    use super::WorkbuddyIdentity;
+    #[test]
+    fn exact_headers_are_hashed_and_ambiguous_or_partial_identity_is_ignored() {
+        let mut headers = axum::http::HeaderMap::new();
+        headers.insert("X-Conversation-ID", "session-a".parse().unwrap());
+        assert!(WorkbuddyIdentity::from_headers(&headers).is_none());
+        headers.insert("X-Conversation-Message-ID", "message-a".parse().unwrap());
+        let value = WorkbuddyIdentity::from_headers(&headers).unwrap();
+        assert_eq!(
+            value.session_hash,
+            crate::stats::workbuddy_import::parser::hash_id("session-a")
+        );
+        assert_eq!(
+            value.message_hash,
+            crate::stats::workbuddy_import::parser::hash_id("message-a")
+        );
+        headers.append("X-Conversation-Message-ID", "message-b".parse().unwrap());
+        assert!(WorkbuddyIdentity::from_headers(&headers).is_none());
     }
 }

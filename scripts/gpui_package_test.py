@@ -18,6 +18,9 @@ from smoke import ThreadingHTTPServer, free_port
 from benchmark import rss_kib
 
 def running(pid):
+    if platform.system() == 'Darwin':
+        from workbuddy_import_resources import darwin_process_running
+        return darwin_process_running(pid)
     if platform.system() == 'Windows':
         import ctypes
         from ctypes import wintypes
@@ -112,7 +115,7 @@ def main():
         ui=wait(lambda:read('gpui.json'),'GPUI renderer/window did not start')
         assert core['pid']!=host.pid and ui['pid'] not in (core['pid'],host.pid)
         wait(lambda:read('frontend.json')['pid']==host.pid,'Tray singleton was not published')
-        with urllib.request.urlopen(f'http://127.0.0.1:{port}/health',timeout=3) as response:assert json.load(response)['control_protocol']==10
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/health',timeout=3) as response:assert json.load(response)['control_protocol']==12
         time.sleep(1)
         assert_clean_start(1)
         metrics={'platform':platform.platform(),'architecture':platform.machine(),'processes_with_settings':3,

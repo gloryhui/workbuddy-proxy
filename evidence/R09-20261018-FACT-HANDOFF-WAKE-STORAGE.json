@@ -1,0 +1,24 @@
+{
+  "at": 1792304092.915395,
+  "completed_build_and_focused_round_roots_removed": true,
+  "completed_rounds_remaining_temp_bytes": 0,
+  "active_or_required_roots": [
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/package-extractor-empo0u58",
+      "allocated_bytes": 8450048,
+      "purpose": "required archive reader for pending private packages"
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-fact-handoff-v2-target-8y106l4u",
+      "allocated_bytes": 2679939072,
+      "purpose": "currently active million test/build scope; retained"
+    }
+  ],
+  "active_or_required_allocated_bytes": 2688389120,
+  "additional_unused_frozen_core_copy_released_allocated_bytes": 8429568,
+  "previous_failed_million_dataset_removed_logical_bytes": 2829116832,
+  "space_scope": "Physical release only the verified unused copy; large fixture count is logical size. Failed snapshot/reports and frozen reproduction artifacts retained, not temporary leftovers.",
+  "unknown_system_temp": "Prior4002 unowned entries retained; no prefix deletion. Current fixtures explicitly external TMPDIR/TMP/TEMP and kernel-attested synthetic roots.",
+  "system_free_bytes": 51554742272,
+  "external_free_bytes": 431724441600
+}

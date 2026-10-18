@@ -1,0 +1,63 @@
+{
+  "notes": "Two-model policy oracle: all custom logs automatically import; p1 is excluded by exact session/message identity from native proxy headers. The source fixture is unchanged.",
+  "imported_entry_ids": [
+    "b1",
+    "b2",
+    "d1",
+    "b3",
+    "b4",
+    "b5",
+    "u1"
+  ],
+  "excluded_proxy_ids": [
+    "p1"
+  ],
+  "pending_ids": [],
+  "ignored_ids": [
+    "ignore1",
+    "ignore2"
+  ],
+  "duplicate_rows": 2,
+  "workbuddy_only": {
+    "record_count": 7,
+    "complete_count": 5,
+    "partial_count": 1,
+    "invalid_count": 1,
+    "input_tokens": 430,
+    "output_tokens": 68,
+    "total_tokens": 498,
+    "cache_read_tokens": 60,
+    "credit_nanos": "2130000000",
+    "credit_known_count": 3,
+    "unpriced_count": 7
+  },
+  "proxy_seed": {
+    "record_count": 1,
+    "input_tokens": 300,
+    "output_tokens": 40,
+    "total_tokens": 340,
+    "cache_read_tokens": 100,
+    "currency": "CNY",
+    "cost_nanos": "123000000",
+    "completed_count": 1
+  },
+  "all": {
+    "record_count": 8,
+    "input_tokens": 730,
+    "output_tokens": 108,
+    "total_tokens": 838,
+    "credit_nanos": "2130000000"
+  },
+  "builtin": {
+    "record_count": 5,
+    "input_tokens": 150,
+    "output_tokens": 30,
+    "total_tokens": 180
+  },
+  "supplier": {
+    "record_count": 3,
+    "input_tokens": 580,
+    "output_tokens": 78,
+    "total_tokens": 658
+  }
+}

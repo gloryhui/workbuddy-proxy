@@ -1,0 +1,178 @@
+{
+  "at": 1792242441.190075,
+  "result": "FAIL_1M_SINGLE_BACKFILL_600_SECONDS",
+  "reported_passed_phases": 9,
+  "required_phases": 12,
+  "final_all_snapshot_and_growth_aggregation": "INCOMPLETE: nine phase reports pass, one failure, two not run; no full matrix PASS",
+  "independently_verified_phase_before_resume": "1000000-many/trial-1",
+  "coordinator": "dist/workbuddy-import-review/cache8-resume-matrix-coordinator.json",
+  "tool_session": 96565,
+  "core_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+  "phase_reports": [
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/100000-many/trial-1/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 64,
+      "failed": 0,
+      "backfill_ms": 44797.533584,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 346173521920,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-2yvt_raq",
+        "removed": true,
+        "removed_logical_bytes": 365399848,
+        "retained_evidence_bytes": 211614994,
+        "system_disk_available_bytes": 19017920512
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/100000-many/trial-2/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 64,
+      "failed": 0,
+      "backfill_ms": 43980.155583,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 345961844736,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-qw0awjwk",
+        "removed": true,
+        "removed_logical_bytes": 364490000,
+        "retained_evidence_bytes": 211500300,
+        "system_disk_available_bytes": 19039113216
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/100000-many/trial-3/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 64,
+      "failed": 0,
+      "backfill_ms": 43969.364416,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 345749995520,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-06ywlb8m",
+        "removed": true,
+        "removed_logical_bytes": 364316000,
+        "retained_evidence_bytes": 211664141,
+        "system_disk_available_bytes": 19038179328
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/100000-single/trial-1/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 64,
+      "failed": 0,
+      "backfill_ms": 61224.313333,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 345541144576,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-n9t2liz2",
+        "removed": true,
+        "removed_logical_bytes": 363199776,
+        "retained_evidence_bytes": 208801041,
+        "system_disk_available_bytes": 19041304576
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/100000-single/trial-2/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 64,
+      "failed": 0,
+      "backfill_ms": 64238.18075,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 345332248576,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-2039xli1",
+        "removed": true,
+        "removed_logical_bytes": 363343832,
+        "retained_evidence_bytes": 208825614,
+        "system_disk_available_bytes": 19037724672
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/100000-single/trial-3/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 64,
+      "failed": 0,
+      "backfill_ms": 42976.274125,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 345123389440,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-2qu00esz",
+        "removed": true,
+        "removed_logical_bytes": 363562312,
+        "retained_evidence_bytes": 208805133,
+        "system_disk_available_bytes": 19037134848
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-many/trial-1/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 75,
+      "failed": 0,
+      "backfill_ms": 552941.820667,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 346613096448,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-target-mnmaxd37/tmp/workbuddy-scale-dlqc_sqy",
+        "removed": true,
+        "removed_logical_bytes": 3011921531,
+        "retained_evidence_bytes": 1926545408,
+        "system_disk_available_bytes": 19013427200
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-many/trial-2/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 73,
+      "failed": 0,
+      "backfill_ms": 534585.676333,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 342930382848,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-c49mquvk",
+        "removed": true,
+        "removed_logical_bytes": 3072089808,
+        "retained_evidence_bytes": 1926451200,
+        "system_disk_available_bytes": 19031293952
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-many/trial-3/report.json",
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "passed": 73,
+      "failed": 0,
+      "backfill_ms": 543906.295167,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 340904685568,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-jmg5v6j_",
+        "removed": true,
+        "removed_logical_bytes": 3065517304,
+        "retained_evidence_bytes": 1926639615,
+        "system_disk_available_bytes": 19026915328
+      }
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-single/trial-1/report.json",
+      "result": "FAIL",
+      "passed": 11,
+      "failed": 1,
+      "backfill_ms": null,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 339224100864,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-4u6de4z_",
+        "removed": true,
+        "removed_logical_bytes": 2762362264,
+        "retained_evidence_bytes": 1660983024,
+        "system_disk_available_bytes": 19176968192
+      }
+    }
+  ],
+  "system_free_bytes": 18961211392,
+  "queue_status": {
+    "ARM": "stopped on failed prerequisite",
+    "x64": "stopped on failed prerequisite"
+  }
+}

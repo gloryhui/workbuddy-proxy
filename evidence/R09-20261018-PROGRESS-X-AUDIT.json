@@ -1,0 +1,1560 @@
+{
+  "at": 1792294638.3135219,
+  "scope": "fixed X01..X47 current-candidate self-audit, complementing the 80 AC rows",
+  "core_sha256": "3d9e774e19773c9245d35527109aa65390bfa71947e9570ff76eb53052cba3d9",
+  "ui_input_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "required_rows": 47,
+  "counts": {
+    "PASS": 47
+  },
+  "note": "A referenced broader AC may still be pending for native or a different subcase. This table states each X case scope separately. Full scale acceptance, native resident quit, additional indeterminate progress captures and external platform boundaries remain outside these fixed X rows and prevent all-complete. Previous version artifacts are never automatically upgraded.",
+  "rows": [
+    {
+      "x": "X01",
+      "input": "same namespace/session/message复制到另一个项目文件",
+      "expected": "fact=1，ledger=1，文件checkpoint各自前进",
+      "stage": "S03/S06",
+      "conclusion": "PASS",
+      "review": "Current65-check real edge probe: different project files, independent committed EOFs and exactly one identity.",
+      "ac_references": [
+        "AC018",
+        "AC043"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X02",
+      "input": "同conversationRequestId不同messageId",
+      "expected": "分别记录，不能压成一次",
+      "stage": "S03",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC018"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X03",
+      "input": "多function_call同messageId/同Token，不同顶层id和timestamp",
+      "expected": "只计一次，首timestamp冻结，不冲突",
+      "stage": "S03/S06",
+      "conclusion": "PASS",
+      "review": "Actual different source top IDs/timestamps preserve first timestamp/fact;65-edge probe.",
+      "ac_references": [
+        "AC022",
+        "AC043"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::parsed_usage_reaches_the_fact_columns_without_losing_credit_or_cache",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X04",
+      "input": "同键不同usage",
+      "expected": "原导入明细撤回，ledger=conflict；proxy记录不变",
+      "stage": "S06",
+      "conclusion": "PASS",
+      "review": "Actual source conflict withdraws imported fact and expires cursor while proxy stays unchanged; edge report and current rollback/lost-ACK module tests.",
+      "ac_references": [
+        "AC012",
+        "AC043"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::the_same_key_is_never_written_twice",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::a_conflict_never_touches_the_proxy_fact_row",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::tombstones_are_terminal",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X05",
+      "input": "缺messageId且traceId存在",
+      "expected": "pending_identity诊断，不以traceId/offset造事实",
+      "stage": "S03",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC018",
+        "AC023"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X06",
+      "input": "explicit0 / missing / negative / float / numeric-string / overflow",
+      "expected": "0保留、缺失null、非法invalid；禁止as i64截断",
+      "stage": "S03",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC019"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::an_explicit_zero_is_preserved",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::missing_fields_stay_unknown_and_are_never_invented",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::negative_values_invalidate_the_whole_record",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::floats_strings_and_booleans_are_never_coerced",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::the_per_field_bound_is_inclusive_and_the_total_bound_too",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::a_contradicting_total_is_invalid_and_never_corrected",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X07",
+      "input": "total缺失但input/output完整",
+      "expected": "checked推导且derived=true；total矛盾不纠正为和",
+      "stage": "S03",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC019",
+        "AC020",
+        "AC064"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::an_explicit_zero_is_preserved",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::missing_fields_stay_unknown_and_are_never_invented",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::negative_values_invalidate_the_whole_record",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::floats_strings_and_booleans_are_never_coerced",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::the_per_field_bound_is_inclusive_and_the_total_bound_too",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::a_contradicting_total_is_invalid_and_never_corrected",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X08",
+      "input": "缓存高优先4096、低优先0",
+      "expected": "取4096，记录alias诊断；不能双加",
+      "stage": "S03",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC020"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X09",
+      "input": "缓存>input、reasoning>output",
+      "expected": "invalid且可汇总Token全null",
+      "stage": "S03",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC020"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X10",
+      "input": "credit1.14/0/null/超9位小数/1e3",
+      "expected": "精确1140000000/0/null/null/null，非法不影响Token",
+      "stage": "S03",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC021"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::a_two_decimal_credit_is_exact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::nine_fractional_digits_is_the_limit",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::scientific_notation_and_signs_are_refused",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::an_invalid_credit_never_damages_the_token_values",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X11",
+      "input": "一行分三次append，最后才换行",
+      "expected": "前两次offset不越过该行；最后仅一次",
+      "stage": "S04",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC028"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::a_record_written_in_three_writes_is_imported_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::bad_lines_do_not_hide_the_lines_after_them",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X12",
+      "input": "CRLF/BOM/中文路径/UTF8损坏行",
+      "expected": "支持前3者；坏行诊断且后续合法行继续",
+      "stage": "S04",
+      "conclusion": "PASS",
+      "review": "Actual BOM/CRLF/malformed UTF8 with two good neighbours and final EOF verified by65-edge probe.",
+      "ac_references": [
+        "AC025",
+        "AC028"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::a_record_written_in_three_writes_is_imported_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::bad_lines_do_not_hide_the_lines_after_them",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X13",
+      "input": "50MiB单行+合法行",
+      "expected": "buffer≤4MiB+固定开销，大行计一次，后一行可入",
+      "stage": "S04",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC027",
+        "AC047"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::the_four_mebibyte_boundary_is_inclusive",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::a_fifty_mebibyte_line_stays_bounded_in_memory",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::an_oversized_line_is_drained_and_the_next_line_is_readable",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X14",
+      "input": "文件截断、rename替换、复制恢复、消失再出现",
+      "expected": "generation变化/重读，ledger保证不重复，消失不删事实",
+      "stage": "S04/S07",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC026",
+        "AC053"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_small_file_that_grew_is_an_append_not_a_replacement",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_replaced_head_is_reported_as_replacement",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_file_shorter_than_the_remembered_regions_is_a_truncation",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::deleting_a_source_file_keeps_every_statistic",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_file_that_comes_back_is_not_counted_twice",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X15",
+      "input": "same-size same-mtime仅修改文件中间",
+      "expected": "full scan发现，常规incremental不宣称能发现",
+      "stage": "S04",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC031"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::runtime::tests::full_scan_rechecks_a_hidden_middle_edit_without_resetting_incremental_offset",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::rescan_tests::a_full_rescan_never_moves_the_incremental_offset",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X16",
+      "input": "symlink指向root外、../越界、非regular文件",
+      "expected": "不读取，诊断固定码，无卡死",
+      "stage": "S04",
+      "conclusion": "PASS",
+      "review": "Actual outside symlink/FIFO/socket/directory rejected; exact body-read delta equals regular positive control.",
+      "ac_references": [
+        "AC025"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X17",
+      "input": "读完到提交之间替换文件",
+      "expected": "原批次不得提交旧身份；重读后正确",
+      "stage": "S04/S06",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC030"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X18",
+      "input": "事务中断/DB busy/磁盘写失败",
+      "expected": "无单独checkpoint提交，重试后exactly-once可见效果",
+      "stage": "S06",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC042"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::a_failed_item_rolls_the_whole_batch_back",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::the_offset_never_leads_the_facts",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::writer::discovery::tests::a_stale_metadata_batch_rolls_back_earlier_files_and_can_be_retried",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X19",
+      "input": "提交成功ACK丢失后重放",
+      "expected": "计数和Token不增加第二次",
+      "stage": "S06",
+      "conclusion": "PASS",
+      "review": "Use the exact lost-ACK/repeated-batch production store test plus real crash/restart release evidence. AC043 remains incomplete only for real cross-file integration.",
+      "ac_references": [
+        "AC043"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X20",
+      "input": "Proxy实时4路转发+历史全量回填",
+      "expected": "不改变转发payload/认证/协议/最大并发；统计不丢原事件",
+      "stage": "S06/S10",
+      "conclusion": "PASS",
+      "review": "Current100k single phase uses four concurrent Mock streams,200 measured baseline and200 during backfill; independent proxy persistence/latency assertions passed. Full12-phase performance gate is pending separately.",
+      "ac_references": [
+        "AC041",
+        "AC073"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::channel_tests::a_full_queue_yields_instead_of_blocking",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::channel_tests::only_one_batch_may_wait_for_an_ack",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-1/report.json",
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X21",
+      "input": "当前custom-local有名字但无历史证据",
+      "expected": "pending，不按模型名/供应商名猜proxy或direct",
+      "stage": "S05",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC034",
+        "AC035"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::classify::observation_tests::a_direct_configuration_proves_nothing_about_history",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::observation_tests::an_older_record_is_outside_a_fresh_observation",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::observer_reads_actual_id_and_leaves_older_custom_record_pending",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_custom_local_model_is_not_proxy_by_its_name",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::the_same_response_model_on_two_routes_is_distinguishable",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_known_proxy_model_stays_excluded_without_a_matching_fact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X22",
+      "input": "alias先direct后proxy，区间相邻",
+      "expected": "按时间正确分类；删当前配置不抹历史",
+      "stage": "S05",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC036"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::the_same_alias_is_direct_before_and_proxy_after",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::a_later_name_never_rewrites_an_earlier_interval",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::a_route_rename_or_delete_does_not_touch_history",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X23",
+      "input": "旧代理记录缺失或采集关闭",
+      "expected": "对应WorkBuddy镜像仍excluded_proxy，不回填抬高总数",
+      "stage": "S05",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC035"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_custom_local_model_is_not_proxy_by_its_name",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::the_same_response_model_on_two_routes_is_distinguishable",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_known_proxy_model_stays_excluded_without_a_matching_fact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X24",
+      "input": "mapping prepare成功，文件写前/后崩溃",
+      "expected": "prepared恢复只按实际证据，未决区间不计数",
+      "stage": "S05/S06",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC037",
+        "AC038"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::production_prepare_failure_changes_neither_models_nor_proxy_config",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::production_finalize_write_failure_returns_synced_unconfirmed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_before_the_write_conflicts_the_prepared_row",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_after_the_write_completes_the_prepared_row",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_before_the_ack_is_resolved_the_same_way",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::observation::tests::restart_after_write_recovers_future_only_and_preserves_uncertain_gap",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X25",
+      "input": "手工direct规则覆盖verified proxy",
+      "expected": "preview/apply拒绝，不因用户选项偷偷改代理归属",
+      "stage": "S05/S08",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC039",
+        "AC071"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X26",
+      "input": "确认/撤销人工规则、过期token、重复token",
+      "expected": "一次有效；撤销撤回关联导入，原proxy和tombstone不变",
+      "stage": "S05/S08",
+      "conclusion": "PASS",
+      "review": "Actual61-second expiry, intervening revision CAS rejection, confirm/revoke API and native preview/apply/revoke with exact tokens/nanocredits.",
+      "ac_references": [
+        "AC039",
+        "AC040"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json",
+        "evidence/R09-20261018-NATIVE-AUDIT.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X27",
+      "input": "clear preview后新导入/晚到历史，再confirm",
+      "expected": "只删as_of内条目；预览外保留；重扫被删身份不复活",
+      "stage": "S07",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC049",
+        "AC051"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::store::tests::a_manual_clear_tombstones_imported_rows_so_a_rescan_cannot_resurrect_them",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::store::tests::a_manual_clear_leaves_proxy_rows_and_their_semantics_alone",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::store::tests::rows_added_after_the_preview_survive_the_sweep",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::store::tests::a_late_record_inside_the_watermark_survives_the_cutoff",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::store::tests::the_preview_counts_exactly_what_the_sweep_deletes",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X28",
+      "input": "retention30→180、永久0、改源文件时间重放",
+      "expected": "被删ledger身份不复活，未删候选遵守当前期限",
+      "stage": "S07",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC050",
+        "AC052"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X29",
+      "input": "全局采集关/导入关/暂停后继续",
+      "expected": "正确effective状态；暂停ACK后无新提交；namespace/历史保留",
+      "stage": "S06/S07",
+      "conclusion": "PASS",
+      "review": "Core global/import pause-ACK and immediate resume paths are covered; native hidden-window independence is separately X45.",
+      "ac_references": [
+        "AC044",
+        "AC046"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::status_reports_skipped_anomalies_without_counting_ordinary_ignored_messages",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::command_tests::status_reports_durable_counters_and_never_claims_completion_while_off",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X30",
+      "input": "source all/builtin/supplier × capture all/proxy/workbuddy",
+      "expected": "全链路相同集合；builtin+proxy拒绝；tests默认排除",
+      "stage": "S08",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC058",
+        "AC064"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::query::scope_tests::all_equals_builtin_plus_supplier_on_real_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::scope_tests::the_three_scopes_partition_the_fact_table",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::scope_tests::source_and_capture_filters_match_the_product_matrix_on_real_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::scope_tests::an_unknown_scope_is_refused_rather_than_guessed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X31",
+      "input": "导入无cost + proxy有cost / 全部导入",
+      "expected": "unpriced计数准确；credit不进入CNY/USD；未知不是0",
+      "stage": "S08",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC059",
+        "AC064"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::query::origin_count_tests::a_mixed_result_counts_proxy_and_imported_separately",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::a_pure_import_result_has_no_proxy_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_is_summed_on_its_own_and_never_added_to_costs",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::different_currencies_are_never_added_together",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_totals_above_i64_remain_exact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X32",
+      "input": "只有导入、只有proxy、混合",
+      "expected": "成功率/耗时只proxy；完整率仅已记录事实；Token按complete",
+      "stage": "S08",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC059",
+        "AC064"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::query::origin_count_tests::a_mixed_result_counts_proxy_and_imported_separately",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::a_pure_import_result_has_no_proxy_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_is_summed_on_its_own_and_never_added_to_costs",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::different_currencies_are_never_added_together",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_totals_above_i64_remain_exact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X33",
+      "input": "切来源时旧dashboard/filters/groups响应后到",
+      "expected": "旧数据/错误/loading一律不落新状态",
+      "stage": "S08/S09",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC062",
+        "AC067"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats_controller::scan_budget_tests::a_stale_reply_cannot_overwrite_a_newer_read",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "stats_controller::scan_budget_tests::a_running_scan_cannot_be_polled_forever",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "stats_controller::tests::a_dashboard_reply_from_the_previous_filter_is_ignored",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "stats_controller::filter_change_tests::a_change_invalidates_first_and_then_owes_exactly_one_request",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "stats_controller::filter_change_tests::clicking_the_option_that_is_already_selected_changes_nothing",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "stats_controller::tests::a_reply_for_an_older_draft_cannot_close_the_newer_one",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "stats_backend::reply_tests::a_malformed_payload_is_an_error_and_never_an_empty_page",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        }
+      ],
+      "additional_evidence": [],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X34",
+      "input": "并发append、撤回、删除+分页",
+      "expected": "append遵守as_of；结构性变化旧cursor expired；无重复页",
+      "stage": "S08",
+      "conclusion": "PASS",
+      "review": "Actual205 distinct writer facts, append/as_of frozen set and revoke/cursor expiry checked; native pagination separately recorded.",
+      "ac_references": [
+        "AC061"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X35",
+      "input": "local model key请求管理接口、超1MiB结果",
+      "expected": "管理鉴权拒绝；不泄漏路径/SQL/密钥；不截断JSON",
+      "stage": "S08",
+      "conclusion": "PASS",
+      "review": "Actual management local-key rejection and fixed oversized-result error passed. Oversized result is a deliberately CHECK-invalid disposable DB defense case, not legal importer-input evidence.",
+      "ac_references": [
+        "AC060"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X36",
+      "input": "升级v0～v6、重复启动v7、未来版本v8",
+      "expected": "前者升级正确，v7 no-op，未来schema明确拒绝不重建",
+      "stage": "S02/S10",
+      "conclusion": "PASS",
+      "review": "Current named production-module tests and release assertions correspond to this fixed condition; test scope is kept explicit in the cited AC evidence. SQL-seeded query/storage tests are component proof, not source-import proof.",
+      "ac_references": [
+        "AC010",
+        "AC016"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::store::tests::every_schema_generation_upgrades_in_place_and_is_idempotent",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X37",
+      "input": "UI三图标A=1012/1011/560/559、中英",
+      "expected": "左侧完整来源组、规定换行，无重叠/截断/横向页面滚动",
+      "stage": "S09",
+      "conclusion": "PASS",
+      "review": "Exact A1012/1011/560/559 component layout tests plus current remote3sources x2languages x2sizes12 native golden cases. Window content1440x900/1100x700; no other physical display claim.",
+      "ac_references": [
+        "AC066",
+        "AC072"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [
+        "evidence/R09-20261018-NATIVE-AUDIT.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X38",
+      "input": "键盘左右/Space/Enter、Tooltip、a11y",
+      "expected": "正确选择/焦点/读屏名；输入框按键不被劫持",
+      "stage": "S09",
+      "conclusion": "PASS",
+      "review": "Actual source arrows, tooltip, backfill-time input and detail scroll plus named focus/Space/Enter/a11y component tests; exact keyboard scope stays explicit.",
+      "ac_references": [
+        "AC065",
+        "AC072"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [
+        "evidence/R09-20261018-NATIVE-AUDIT.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X39",
+      "input": "100次普通页面刷新且源未变化",
+      "expected": "importer不被UI触发扫描；文件正文读取计数不增加",
+      "stage": "S09/S10",
+      "conclusion": "PASS",
+      "review": "100 actual native ordinary refreshes; source_body_read_bytes remains102400854. Separate5-minute idle across full matrix still pending; not required for this100-refresh case.",
+      "ac_references": [
+        "AC070",
+        "AC075"
+      ],
+      "current_named_tests": [
+        {
+          "test": "workbuddy_import::tests::a_failed_switch_rolls_back",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "workbuddy_import::tests::a_plain_refresh_never_reads_the_jsonl",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "workbuddy_import::tests::pausing_keeps_every_counter_and_the_history",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "workbuddy_import::tests::turning_it_on_asks_once_and_needs_no_confirmation",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-NATIVE-AUDIT.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X40",
+      "input": "打包helper关闭重开、旧core协议10",
+      "expected": "用户设置持久，默认source=all；正确替换/拒绝旧core，不静默空白",
+      "stage": "S09/S10",
+      "conclusion": "PASS",
+      "review": "Actual ARM image code identity,13 incompatible simulated old protocols, protected automatic resident lifecycle; native settings close/core-ready/production re-show same expected data. Whole resident native CmdQ blocked by locked Mac, not inferred.",
+      "ac_references": [
+        "AC063",
+        "AC077"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [
+        "evidence/R09-20261018-NATIVE-AUDIT.json",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-package-archive-reader-v3/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X41",
+      "input": "相同clock时间及高ID密集导入",
+      "expected": "排序使用started_at_ms+id稳定，分页无遗漏",
+      "stage": "S08",
+      "conclusion": "PASS",
+      "review": "Actual writer creates high-ID facts >2**53 after clearly labelled allocation priming; dense ordering and205 distinct IDs verified, no SQL-inserted target facts.",
+      "ac_references": [
+        "AC061"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X42",
+      "input": "用户伪供应商与真实供应商同名",
+      "expected": "ID隔离，配置列表/价格targets没有导入伪供应商",
+      "stage": "S08/S09",
+      "conclusion": "PASS",
+      "review": "Actual same-name real/imported provider IDs isolated; configured targets/price-sync digest unchanged and no imported pseudo-provider price rows.",
+      "ac_references": [
+        "AC058",
+        "AC078"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::query::scope_tests::all_equals_builtin_plus_supplier_on_real_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::scope_tests::the_three_scopes_partition_the_fact_table",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::scope_tests::source_and_capture_filters_match_the_product_matrix_on_real_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::query::scope_tests::an_unknown_scope_is_refused_rather_than_guessed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X43",
+      "input": "未读文件坏格式/权限异常+其他正常文件",
+      "expected": "正常文件继续，状态不假报全部完成，原proxy health不被误关闭",
+      "stage": "S06/S09",
+      "conclusion": "PASS",
+      "review": "Unreadable neighbour leaves progress incomplete while normal file advances and public health remains ready; restoring permission consumes bytes with diagnostics and exact facts.",
+      "ac_references": [
+        "AC024",
+        "AC044"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::verify_tests::a_permission_failure_does_not_advance_the_offset",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::status_reports_skipped_anomalies_without_counting_ordinary_ignored_messages",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::command_tests::status_reports_durable_counters_and_never_claims_completion_while_off",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-edges-v3/edges/report.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X44",
+      "input": "日志/候选/主库/ledger/API搜fixture canary",
+      "expected": "除源fixture/测试预期外0命中，只有允许元数据留存",
+      "stage": "全阶段",
+      "conclusion": "PASS",
+      "review": "Current canonical/integration scripts scan real isolated DB/config/log and API payloads for fixed source canaries; source fixtures themselves are excluded as required.",
+      "ac_references": [
+        "AC007",
+        "AC023"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X45",
+      "input": "页面刷新分别选关闭/5/10/30/60秒，再切页/隐藏窗口",
+      "expected": "核心有效开启时均固定5秒同步，SQLite新增可查；页面按自身规则刷新",
+      "stage": "S06/S09/S10",
+      "conclusion": "PASS",
+      "review": "Native off/5/10/30/60 selections plus switched page/minimized7 scenarios each0.9–4.8s; settings close leaves core ready. These are7 measured scenarios, not every15 cross-product.",
+      "ac_references": [
+        "AC045",
+        "AC046",
+        "AC070"
+      ],
+      "current_named_tests": [
+        {
+          "test": "workbuddy_import::tests::a_failed_switch_rolls_back",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "workbuddy_import::tests::a_plain_refresh_never_reads_the_jsonl",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "workbuddy_import::tests::pausing_keeps_every_counter_and_the_history",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        },
+        {
+          "test": "workbuddy_import::tests::turning_it_on_asks_once_and_needs_no_confirmation",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/ui-tests.log",
+          "log_sha256": "e741ecf6073b82efcaa00d31c0eb1fe4e0f2775dffcbcc49eae4a204c6717efb"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-NATIVE-AUDIT.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X46",
+      "input": "回填其他文件时新建项目目录/小JSONL并向已追平文件追加",
+      "expected": "目录发现与增量不被回填阻塞，满足10秒可查门槛",
+      "stage": "S04/S06/S10",
+      "conclusion": "PASS",
+      "review": "Current scheduling20 actual competing-backlog tracked/new-project windows each <=10s; source identities durable and distinct.",
+      "ac_references": [
+        "AC025",
+        "AC029"
+      ],
+      "current_named_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::a_growing_large_file_cannot_starve_the_others",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::caught_up_increments_are_served_before_the_backlog",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::the_cadence_stays_five_seconds_and_independent_of_settings",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/core-tests.log",
+          "log_sha256": "72823f0ad42b8b0b462b5b465c801211dd299abefa03f83012ad08fb73accc03"
+        }
+      ],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    },
+    {
+      "x": "X47",
+      "input": "扫描超过周期、反复手动检查、休眠恢复",
+      "expected": "单worker无重叠，至多一个待办，不补发tick风暴，不丢ACK/游标",
+      "stage": "S06/S10",
+      "conclusion": "PASS",
+      "review": "Current fixed-interval/coalescing/resume component tests and actual scheduling/shutdown probes; no actual OS physical sleep claim.",
+      "ac_references": [
+        "AC045",
+        "AC047",
+        "AC048"
+      ],
+      "current_named_tests": [],
+      "additional_evidence": [
+        "evidence/R09-20261018-CORE-GATES.json"
+      ],
+      "scope": "self audit of the stated condition; no independent reviewer or full delivery completion claim"
+    }
+  ]
+}

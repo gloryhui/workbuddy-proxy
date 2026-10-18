@@ -19,13 +19,15 @@ use std::{
 };
 
 /// Schema version understood by this build.
-pub const SCHEMA_VERSION: i64 = 6;
+pub const SCHEMA_VERSION: i64 = 8;
 const MIGRATION_0001: &str = include_str!("migrations/0001.sql");
 const MIGRATION_0002: &str = include_str!("migrations/0002.sql");
 const MIGRATION_0003: &str = include_str!("migrations/0003.sql");
 const MIGRATION_0004: &str = include_str!("migrations/0004.sql");
 const MIGRATION_0005: &str = include_str!("migrations/0005.sql");
 const MIGRATION_0006: &str = include_str!("migrations/0006.sql");
+const MIGRATION_0007: &str = include_str!("migrations/0007.sql");
+const MIGRATION_0008: &str = include_str!("migrations/0008.sql");
 const WRITE_RETRIES: usize = 2;
 /// Single lock wait before our own retry loop takes over (was 2000 ms, which
 /// multiplied into seconds per batch under a held lock).
@@ -95,11 +97,29 @@ pub fn open_connection(path: &Path, read_only: bool) -> Result<Connection, DbErr
     }))?;
     if read_only {
         conn.pragma_update(None, "query_only", "ON")?;
+        // Only the on-demand report reader gets this bounded SQLite page
+        // cache. The million-row covering index exceeds SQLite's default
+        // 2 MiB cache, causing every warm report to re-read its pages. This
+        // caches database pages, never report results; WAL snapshot rules
+        // still invalidate changed pages. The reader exits after 60s idle.
+        // Import workers and the sole writer keep their existing budgets.
+        conn.pragma_update(None, "cache_size", -131_072_i64)?;
+        // Read-only mappings survive SQLite's page-cache reset between WAL
+        // snapshots. The virtual-address cap is not an eager allocation; report
+        // RSS is measured separately from the import-only worker budget.
+        conn.pragma_update(None, "mmap_size", 2_147_483_648_i64)?;
         return Ok(conn);
     }
     conn.pragma_update(None, "foreign_keys", "ON")?;
+    // Budget 16 MiB for the sole writer's SQLite page cache so growing fact and
+    // ledger indexes can retain more upper pages.
+    conn.pragma_update(None, "cache_size", -16_384_i64)?;
     conn.pragma_update(None, "synchronous", "NORMAL")?;
-    conn.pragma_update(None, "wal_autocheckpoint", 1000)?;
+    // Bound individual checkpoint I/O bursts while reports and imports share
+    // the disk. Keep automatic PASSIVE checkpoints enabled, at roughly 4 MiB
+    // for the normal 4 KiB page size; this is a trigger, not a hard WAL cap.
+    // Transaction/ACK boundaries and synchronous=NORMAL remain unchanged.
+    conn.pragma_update(None, "wal_autocheckpoint", 1_024)?;
     let mode: String = conn.query_row("PRAGMA journal_mode=WAL", [], |row| row.get(0))?;
     if !mode.eq_ignore_ascii_case("wal") {
         return Err(DbError::refused(format!(
@@ -134,6 +154,7 @@ pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
         )));
     }
     if version == SCHEMA_VERSION {
+        conn.execute_batch(include_str!("report_indexes.sql"))?;
         return Ok(());
     }
     if version > 0 {
@@ -165,7 +186,25 @@ pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
     if version < 5 {
         apply_step(conn, 5, MIGRATION_0005)?;
     }
-    apply_step(conn, 6, MIGRATION_0006)
+    if version < 6 {
+        apply_step(conn, 6, MIGRATION_0006)?;
+    }
+    // v7 rebuilds `usage_requests`, which `usage_costs` references with
+    // ON DELETE CASCADE: foreign keys must be disabled outside the transaction
+    // and are restored on both the success and the failure path, so a refused
+    // upgrade can never leave the connection with checks silently off.
+    if version < 7 {
+        conn.pragma_update(None, "foreign_keys", "OFF")?;
+        let upgraded = apply_step(conn, 7, MIGRATION_0007);
+        conn.pragma_update(None, "foreign_keys", "ON")?;
+        upgraded?;
+    }
+    if version < 8 {
+        conn.pragma_update(None, "foreign_keys", "ON")?;
+        apply_step(conn, 8, MIGRATION_0008)?;
+    }
+    conn.execute_batch(include_str!("report_indexes.sql"))?;
+    Ok(())
 }
 
 /// Runs one migration step in its own transaction and records the new version,
@@ -736,6 +775,14 @@ impl Writer {
                             ":now": now_ms,
                         },
                     )?;
+                    if let Some(identity) = meta.workbuddy_identity.as_ref() {
+                        crate::stats::workbuddy_import::store::record_proxy_identity(
+                            &tx,
+                            &meta.request_id,
+                            identity,
+                            now_ms,
+                        )?;
+                    }
                     // The request's own price snapshot is part of the same
                     // transaction, so a later edit or delete cannot change it.
                     tx.execute(
@@ -829,6 +876,37 @@ impl Writer {
         }
     }
 
+    /// Counts the finished rows a clear with this watermark and cutoff removes.
+    ///
+    /// This is the preview the user confirms. The sweep uses **exactly** the same
+    /// predicate, so the number previewed is the number deleted — a row that
+    /// arrives after the preview has a larger id and can never be in range, and
+    /// a late record (`started_at_ms >= cutoff_ms`) is excluded by the cutoff.
+    pub fn preview_clear(
+        conn: &rusqlite::Connection,
+        as_of_id: i64,
+        cutoff_ms: i64,
+    ) -> Result<i64, DbError> {
+        let count = conn.query_row(
+            "SELECT COUNT(*) FROM usage_requests
+             WHERE outcome<>'in_flight' AND ended_at_ms IS NOT NULL
+               AND id<=?1 AND started_at_ms<?2",
+            rusqlite::params![as_of_id, cutoff_ms],
+            |row| row.get(0),
+        )?;
+        Ok(count)
+    }
+
+    /// True while a maintenance task holds the importer back.
+    ///
+    /// A clear takes an immediate write transaction, and an import batch takes
+    /// its own transaction, so the two are serialised by the database itself;
+    /// this flag lets the importer yield *before* it even tries, instead of
+    /// waiting on the write lock.
+    pub fn is_maintenance_running(&self) -> bool {
+        self.maintenance.is_some()
+    }
+
     /// Deletes finished rows in bounded batches.
     ///
     /// `retention` also applies the retention cutoff, so an automatic sweep is
@@ -843,6 +921,12 @@ impl Writer {
         // rows inside the confirmed id watermark and older than the cutoff. A
         // manual clear passes its preview time as the cutoff, so a record that
         // was not counted by the preview can never be deleted.
+        if Self::preview_clear(&tx, task.as_of_id, task.cutoff_ms)? == 0 {
+            // The preview is empty: there is nothing left in range.
+            task.cursor_id = task.as_of_id;
+            tx.commit()?;
+            return Ok((0, false));
+        }
         let mut ids: Vec<i64> = Vec::new();
         {
             let mut statement = tx.prepare(
@@ -872,8 +956,33 @@ impl Writer {
         let last_scanned = *ids.last().expect("non-empty");
         let full_batch = ids.len() as i64 >= task.batch.max(1);
         let mut deleted = 0i64;
+        // An imported row that is about to be deleted leaves a tombstone behind:
+        // its ledger entry moves off `imported` **before** the fact row goes, so
+        // a later rescan of the same message finds the tombstone and cannot
+        // resurrect what a clear removed. Proxy rows have no ledger entry, so
+        // their original clearing semantics are untouched.
+        let tombstone = match task.kind {
+            MaintenanceKind::Clear => Some("deleted_manual"),
+            // A retention sweep leaves its own tombstone: shortening the window
+            // and lengthening it again must not restore what it removed.
+            MaintenanceKind::Retention => Some("deleted_retention"),
+            _ => None,
+        };
         for chunk in ids.chunks(256) {
             let placeholders = chunk.iter().map(|_| "?").collect::<Vec<_>>().join(",");
+            if let Some(state) = tombstone {
+                let sql = format!(
+                    "UPDATE workbuddy_import_ledger
+                     SET state = ?1, request_id = NULL, updated_at_ms = updated_at_ms
+                     WHERE state = 'imported'
+                       AND request_id IN (SELECT request_id FROM usage_requests
+                                          WHERE id IN ({placeholders}))"
+                );
+                let mut params: Vec<rusqlite::types::Value> =
+                    vec![rusqlite::types::Value::Text(state.to_owned())];
+                params.extend(chunk.iter().map(|id| rusqlite::types::Value::Integer(*id)));
+                tx.execute(&sql, rusqlite::params_from_iter(params))?;
+            }
             let sql = format!("DELETE FROM usage_requests WHERE id IN ({placeholders})");
             deleted += tx.execute(&sql, rusqlite::params_from_iter(chunk.iter()))? as i64;
         }
@@ -909,7 +1018,7 @@ impl Writer {
     /// Starts an automatic retention sweep when one is due (at most daily) and
     /// no other maintenance task is running. Only finished rows are eligible.
     pub fn maybe_start_retention(&mut self, now_ms: i64) -> Result<bool, DbError> {
-        if self.maintenance.is_some() || self.settings.retention_days <= 0 {
+        if self.is_maintenance_running() || self.settings.retention_days <= 0 {
             return Ok(false);
         }
         let last: Option<i64> = self.conn.query_row(
@@ -1003,6 +1112,11 @@ impl Writer {
                     ":reason": reason,
                 },
             )?;
+        }
+        if self.settings.enabled && !settings.enabled {
+            super::workbuddy_import::observation::suspend_history(&tx, now_ms).map_err(|_| {
+                DbError::refused(error(ERR_UNAVAILABLE, "cannot suspend import history"))
+            })?;
         }
         tx.commit()?;
         self.settings = settings;
@@ -2250,6 +2364,525 @@ mod tests {
     use super::*;
 
     #[test]
+    fn bounded_report_page_cache_keeps_wal_snapshots_fresh_and_reader_read_only() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("usage.sqlite3");
+        let mut writer = open_connection(&path, false).unwrap();
+        migrate(&mut writer, folder.path()).unwrap();
+        let checkpoint = || {
+            writer
+                .execute_batch("PRAGMA wal_checkpoint(TRUNCATE)")
+                .unwrap()
+        };
+        checkpoint();
+        let reader = open_connection(&path, true).unwrap();
+        assert!(
+            reader
+                .query_row("PRAGMA mmap_size", [], |row| row.get::<_, i64>(0))
+                .unwrap()
+                > 0
+        );
+        let cache = |conn: &Connection| {
+            conn.query_row("PRAGMA cache_size", [], |row| row.get::<_, i64>(0))
+                .unwrap()
+        };
+        assert_eq!(cache(&reader), -131_072);
+        assert_ne!(cache(&writer), cache(&reader));
+        // Import throughput tuning must retain WAL, NORMAL synchronization
+        // and an enabled, bounded automatic checkpoint trigger.
+        assert_eq!(
+            writer
+                .query_row("PRAGMA journal_mode", [], |row| row.get::<_, String>(0))
+                .unwrap(),
+            "wal"
+        );
+        assert_eq!(
+            writer
+                .query_row("PRAGMA synchronous", [], |row| row.get::<_, i64>(0))
+                .unwrap(),
+            1
+        );
+        let checkpoint_frames = writer
+            .query_row("PRAGMA wal_autocheckpoint", [], |row| row.get::<_, i64>(0))
+            .unwrap();
+        assert!((1..=16_384).contains(&checkpoint_frames));
+        let count = || {
+            reader
+                .query_row("SELECT COUNT(*) FROM stats_runs", [], |row| {
+                    row.get::<_, i64>(0)
+                })
+                .unwrap()
+        };
+        reader.execute_batch("BEGIN").unwrap();
+        assert_eq!(count(), 0);
+        writer
+            .execute(
+                "INSERT INTO stats_runs(run_id,started_at_ms) VALUES('one',1)",
+                [],
+            )
+            .unwrap();
+        assert_eq!(count(), 0, "a read transaction retains its WAL snapshot");
+        reader.execute_batch("ROLLBACK").unwrap();
+        checkpoint();
+        assert_eq!(count(), 1, "the next report sees committed changes");
+        writer.execute("DELETE FROM stats_runs", []).unwrap();
+        assert_eq!(count(), 0, "maintenance deletion invalidates cached pages");
+        checkpoint();
+        assert_eq!(
+            count(),
+            0,
+            "checkpointed mapped pages also see the deletion"
+        );
+        assert!(reader.execute("DELETE FROM stats_runs", []).is_err());
+    }
+
+    /// Inserts one imported workbuddy fact row plus its ledger entry.
+    fn seed_imported_row(writer: &Writer, entry_key: &str) -> i64 {
+        writer
+            .conn
+            .execute(
+                "INSERT INTO usage_requests(request_id, source, provider_id, route_id,
+                 provider_name, route_name, requested_model, upstream_model, started_at_ms,
+                 ended_at_ms, outcome, usage_status, usage_source, created_at_ms, updated_at_ms,
+                 upstream_protocol, record_origin, time_basis)
+                 VALUES(?1,'workbuddy_import','wb','wb','WorkBuddy','WorkBuddy','m','m',
+                 1000, 1000, 'recorded', 'missing', 'workbuddy_jsonl', 1000, 1000, NULL,
+                 'workbuddy_builtin', 'message_timestamp')",
+                rusqlite::params![entry_key],
+            )
+            .unwrap();
+        let id: i64 = writer
+            .conn
+            .query_row(
+                "SELECT id FROM usage_requests WHERE request_id = ?1",
+                rusqlite::params![entry_key],
+                |row| row.get(0),
+            )
+            .unwrap();
+        writer
+            .conn
+            .execute(
+                "INSERT INTO workbuddy_import_ledger(entry_key, namespace_id, session_hash,
+                 message_hash, requested_model, event_at_ms, normalized_hash, state, request_id,
+                 mapping_revision, created_at_ms, updated_at_ms)
+                 VALUES(?1, ?2, ?3, ?4, 'm', 1000, ?5, 'imported', ?1, 1, 1000, 1000)",
+                rusqlite::params![
+                    entry_key,
+                    "a".repeat(48),
+                    // Derived from the key so several rows can coexist.
+                    entry_key,
+                    entry_key.chars().rev().collect::<String>(),
+                    "d".repeat(64)
+                ],
+            )
+            .unwrap();
+        id
+    }
+
+    fn seed_proxy_row(writer: &Writer) -> i64 {
+        writer
+            .conn
+            .execute(
+                "INSERT INTO stats_runs(run_id, started_at_ms) VALUES('run-clear', 1000)",
+                [],
+            )
+            .unwrap();
+        writer
+            .conn
+            .execute(
+                "INSERT INTO usage_requests(request_id, run_id, source, provider_id, route_id,
+                 provider_name, route_name, requested_model, upstream_model, started_at_ms,
+                 ended_at_ms, duration_ms, stream, upstream_started, outcome, usage_status,
+                 usage_source, created_at_ms, updated_at_ms, record_origin, upstream_protocol)
+                 VALUES('proxy-clear','run-clear','relay','p','r','P','R','m','m',1000,1000,0,1,1,
+                 'completed','missing','none',1000,1000,'proxy','openai_chat')",
+                [],
+            )
+            .unwrap();
+        writer
+            .conn
+            .query_row(
+                "SELECT id FROM usage_requests WHERE request_id = 'proxy-clear'",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap()
+    }
+
+    fn clear_task() -> Maintenance {
+        Maintenance {
+            task_id: 0,
+            kind: MaintenanceKind::Clear,
+            cutoff_ms: i64::MAX,
+            as_of_id: i64::MAX,
+            filter: None,
+            affected: 0,
+            cursor_id: 0,
+            started_at_ms: 0,
+            batch: 256,
+        }
+    }
+
+    /// Inserts one proxy request that never finished.
+    fn seed_in_flight_proxy_row(writer: &Writer, request_id: &str) -> i64 {
+        writer
+            .conn
+            .execute(
+                "INSERT OR IGNORE INTO stats_runs(run_id, started_at_ms) VALUES('run-orphan', 1000)",
+                [],
+            )
+            .unwrap();
+        writer
+            .conn
+            .execute(
+                "INSERT INTO usage_requests(request_id, run_id, source, provider_id, route_id,
+                 provider_name, route_name, requested_model, upstream_model, started_at_ms, stream,
+                 outcome, usage_status, usage_source, created_at_ms, updated_at_ms,
+                 record_origin, upstream_protocol)
+                 VALUES(?1,'run-orphan','relay','p','r','P','R','m','m',1000,1,
+                 'in_flight','missing','none',1000,1000,'proxy','openai_chat')",
+                rusqlite::params![request_id],
+            )
+            .unwrap();
+        writer
+            .conn
+            .query_row(
+                "SELECT id FROM usage_requests WHERE request_id = ?1",
+                rusqlite::params![request_id],
+                |row| row.get(0),
+            )
+            .unwrap()
+    }
+
+    fn cost_rows(writer: &Writer) -> i64 {
+        writer
+            .conn
+            .query_row("SELECT COUNT(*) FROM usage_costs", [], |row| row.get(0))
+            .unwrap()
+    }
+
+    #[test]
+    fn an_imported_row_never_creates_a_cost_row() {
+        // AC055: the importer writes facts, never money.
+        let folder = tempfile::tempdir().unwrap();
+        let (writer, _) = Writer::open(
+            folder.path(),
+            "import-cost-isolation",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        let before = cost_rows(&writer);
+        seed_imported_row(&writer, &"7".repeat(64));
+        assert_eq!(
+            cost_rows(&writer),
+            before,
+            "an imported fact row creates no cost row"
+        );
+    }
+
+    #[test]
+    fn orphan_recovery_only_settles_proxy_in_flight_rows() {
+        // AC055: an imported row is `recorded`, so it can never be an orphan;
+        // even when its id is offered, nothing happens to it.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "orphan-isolation",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        seed_in_flight_proxy_row(&writer, "proxy-orphan");
+        let entry_key = "6".repeat(64);
+        seed_imported_row(&writer, &entry_key);
+
+        let settled = writer
+            .settle_orphans(&["proxy-orphan".to_owned(), entry_key.clone()], 5000)
+            .unwrap();
+        assert_eq!(settled, 1, "only the proxy row was settled");
+
+        let proxy_outcome: String = writer
+            .conn
+            .query_row(
+                "SELECT outcome FROM usage_requests WHERE request_id = 'proxy-orphan'",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(proxy_outcome, "interrupted");
+        let imported_outcome: String = writer
+            .conn
+            .query_row(
+                "SELECT outcome FROM usage_requests WHERE request_id = ?1",
+                rusqlite::params![entry_key],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(
+            imported_outcome, "recorded",
+            "an imported row is never interrupted by recovery"
+        );
+    }
+
+    #[test]
+    fn an_import_error_does_not_change_proxy_health() {
+        // AC055: what the proxy reports about itself is built from its own
+        // facts — `DbStats` carries counts and sizes only, so an import error
+        // code stored on a checkpoint cannot reach it.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "import-health-isolation",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        writer.refresh_db_stats().unwrap();
+        let before = writer.db_stats;
+        writer
+            .conn
+            .execute(
+                "INSERT INTO workbuddy_import_files(file_key, namespace_id, relative_path,
+                 observed_size, modified_ms, last_seen_at_ms, last_error_code)
+                 VALUES(?1, ?2, 'projects/demo/session.jsonl', 0, 5, 5, 'permission_denied')",
+                rusqlite::params![format!("{:0<64}", "health"), "a".repeat(48)],
+            )
+            .unwrap();
+        writer.refresh_db_stats().unwrap();
+        assert_eq!(
+            writer.db_stats.record_count, before.record_count,
+            "an import error adds no proxy record"
+        );
+        assert_eq!(
+            writer.db_stats.db_bytes, before.db_bytes,
+            "and changes nothing else the proxy reports"
+        );
+        assert_eq!(
+            writer.db_stats.earliest_record_at_ms,
+            before.earliest_record_at_ms
+        );
+    }
+
+    #[test]
+    fn the_preview_counts_exactly_what_the_sweep_deletes() {
+        // AC051: what was previewed is what gets deleted — no more, no less.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "preview-exact",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        for index in 0..3 {
+            seed_imported_row(&writer, &format!("{index}").repeat(64));
+        }
+        let watermark: i64 = writer
+            .conn
+            .query_row("SELECT MAX(id) FROM usage_requests", [], |row| row.get(0))
+            .unwrap();
+        let preview = Writer::preview_clear(&writer.conn, watermark, i64::MAX).unwrap();
+        assert_eq!(preview, 3);
+
+        let mut task = clear_task();
+        task.as_of_id = watermark;
+        let (deleted, _) = writer.delete_finished(&mut task).unwrap();
+        assert_eq!(deleted, preview, "the sweep deleted exactly the preview");
+    }
+
+    #[test]
+    fn rows_added_after_the_preview_survive_the_sweep() {
+        // AC051: a record that arrives after the preview has a larger id and is
+        // outside the confirmed watermark, so it is never deleted.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) =
+            Writer::open(folder.path(), "preview-race", Arc::new(Counters::default())).unwrap();
+        seed_imported_row(&writer, &"1".repeat(64));
+        let watermark: i64 = writer
+            .conn
+            .query_row("SELECT MAX(id) FROM usage_requests", [], |row| row.get(0))
+            .unwrap();
+        let preview = Writer::preview_clear(&writer.conn, watermark, i64::MAX).unwrap();
+        assert_eq!(preview, 1);
+
+        // The importer commits another row while the user is confirming.
+        seed_imported_row(&writer, &"2".repeat(64));
+
+        let mut task = clear_task();
+        task.as_of_id = watermark;
+        let (deleted, _) = writer.delete_finished(&mut task).unwrap();
+        assert_eq!(deleted, preview, "only the previewed row went");
+        let survivors: i64 = writer
+            .conn
+            .query_row(
+                "SELECT COUNT(*) FROM usage_requests WHERE request_id = ?1",
+                rusqlite::params!["2".repeat(64)],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(survivors, 1, "the late row is still there");
+    }
+
+    #[test]
+    fn a_late_record_inside_the_watermark_survives_the_cutoff() {
+        // AC051: a record whose id is in range but which started after the
+        // preview time is excluded by the cutoff.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) =
+            Writer::open(folder.path(), "preview-late", Arc::new(Counters::default())).unwrap();
+        seed_imported_row(&writer, &"3".repeat(64));
+        writer
+            .conn
+            .execute(
+                "UPDATE usage_requests SET started_at_ms = 9000, ended_at_ms = 9000",
+                [],
+            )
+            .unwrap();
+        let watermark: i64 = writer
+            .conn
+            .query_row("SELECT MAX(id) FROM usage_requests", [], |row| row.get(0))
+            .unwrap();
+        // The preview was taken at 5000 ms, before the record started.
+        assert_eq!(
+            Writer::preview_clear(&writer.conn, watermark, 5000).unwrap(),
+            0
+        );
+
+        let mut task = clear_task();
+        task.as_of_id = watermark;
+        task.cutoff_ms = 5000;
+        let (deleted, _) = writer.delete_finished(&mut task).unwrap();
+        assert_eq!(deleted, 0, "a late record is not swept");
+        let survivors: i64 = writer
+            .conn
+            .query_row("SELECT COUNT(*) FROM usage_requests", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(survivors, 1);
+    }
+
+    #[test]
+    fn the_importer_is_held_back_while_maintenance_runs() {
+        // AC051: the importer yields before it even tries to take the write lock.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "maintenance-gate",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        assert!(!writer.is_maintenance_running());
+        writer.maintenance = Some(clear_task());
+        assert!(writer.is_maintenance_running());
+        assert!(
+            !writer.maybe_start_retention(1_000_000).unwrap(),
+            "a second task never starts on top of a running one"
+        );
+    }
+
+    #[test]
+    fn a_retention_sweep_tombstones_imported_rows_with_its_own_state() {
+        // AC050: the automatic sweep marks `deleted_retention`, so it is
+        // distinguishable from a manual clear and equally permanent.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "retention-tombstone",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        let entry_key = "9".repeat(64);
+        seed_imported_row(&writer, &entry_key);
+        let mut task = clear_task();
+        task.kind = MaintenanceKind::Retention;
+        let (deleted, _) = writer.delete_finished(&mut task).unwrap();
+        assert_eq!(deleted, 1);
+
+        let state: String = writer
+            .conn
+            .query_row(
+                "SELECT state FROM workbuddy_import_ledger WHERE entry_key = ?1",
+                rusqlite::params![entry_key],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(state, "deleted_retention");
+    }
+
+    #[test]
+    fn a_manual_clear_tombstones_imported_rows_so_a_rescan_cannot_resurrect_them() {
+        // AC049: the ledger entry becomes `deleted_manual` before the fact row
+        // goes, so the same message coming back from a rescan is a tombstone,
+        // not a new import.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "clear-tombstone",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        let entry_key = "e".repeat(64);
+        seed_imported_row(&writer, &entry_key);
+        let mut task = clear_task();
+        let (deleted, _) = writer.delete_finished(&mut task).unwrap();
+        assert_eq!(deleted, 1, "the fact row is gone");
+
+        let (state, request_id): (String, Option<String>) = writer
+            .conn
+            .query_row(
+                "SELECT state, request_id FROM workbuddy_import_ledger WHERE entry_key = ?1",
+                rusqlite::params![entry_key],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+            .unwrap();
+        assert_eq!(state, "deleted_manual", "the tombstone is kept");
+        assert_eq!(request_id, None, "and holds no request id");
+        let facts: i64 = writer
+            .conn
+            .query_row(
+                "SELECT COUNT(*) FROM usage_requests WHERE request_id = ?1",
+                rusqlite::params![entry_key],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(facts, 0);
+    }
+
+    #[test]
+    fn a_manual_clear_leaves_proxy_rows_and_their_semantics_alone() {
+        // AC049: proxy rows have no ledger entry, so nothing about the original
+        // clearing semantics changes for them.
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) =
+            Writer::open(folder.path(), "clear-proxy", Arc::new(Counters::default())).unwrap();
+        let entry_key = "f".repeat(64);
+        let imported_id = seed_imported_row(&writer, &entry_key);
+        let proxy_id = seed_proxy_row(&writer);
+        assert!(proxy_id > imported_id, "the proxy row was inserted later");
+
+        // A clear whose watermark stops at the imported row leaves the proxy
+        // row alone — the original clearing semantics are untouched.
+        let mut narrow = clear_task();
+        narrow.as_of_id = imported_id;
+        let (deleted, _) = writer.delete_finished(&mut narrow).unwrap();
+        assert_eq!(deleted, 1, "only the imported row was in range");
+        let proxy_rows: i64 = writer
+            .conn
+            .query_row(
+                "SELECT COUNT(*) FROM usage_requests WHERE record_origin = 'proxy'",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(proxy_rows, 1, "the proxy row is untouched");
+        let ledger: i64 = writer
+            .conn
+            .query_row(
+                "SELECT COUNT(*) FROM workbuddy_import_ledger WHERE state = 'deleted_manual'",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(ledger, 1, "and the imported row still left its tombstone");
+    }
+
+    #[test]
     fn catalogue_updates_overwrite_prices_but_cached_route_seeding_preserves_edits() {
         let folder = tempfile::tempdir().unwrap();
         let (mut writer, _) = Writer::open(
@@ -2416,6 +3049,7 @@ mod tests {
 
     fn meta(request_id: &str, run_id: &str) -> RequestMeta {
         RequestMeta {
+            workbuddy_identity: None,
             request_id: request_id.into(),
             run_id: run_id.to_owned(),
             source: Source::Relay,
@@ -3009,7 +3643,7 @@ mod tests {
     /// already exists" and left collection disabled.
     #[test]
     fn every_schema_generation_upgrades_in_place_and_is_idempotent() {
-        for start in 0..=5i64 {
+        for start in 0..=6i64 {
             let folder = tempfile::tempdir().unwrap();
             let path = folder.path().join("usage.sqlite3");
             {
@@ -3042,6 +3676,11 @@ mod tests {
                 }
                 if start >= 5 {
                     apply_step(&mut conn, 5, MIGRATION_0005).unwrap();
+                }
+                if start >= 6 {
+                    // A genuine v6 database: the catalog table must not be
+                    // rebuilt when a v6 file upgrades to v7.
+                    apply_step(&mut conn, 6, MIGRATION_0006).unwrap();
                 }
             }
             let mut conn = Connection::open(&path).unwrap();
@@ -3096,6 +3735,601 @@ mod tests {
         }
     }
 
+    /// S02.02 / AC010: a genuine v6 database upgrades to v7 without losing the
+    /// cost rows whose foreign key points at the rebuilt table, a repeated start
+    /// is a no-op, foreign keys are restored, and a refused step never advances
+    /// `user_version`.
+    #[test]
+    fn v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("usage.sqlite3");
+        {
+            let mut conn = Connection::open(&path).unwrap();
+            conn.execute_batch(MIGRATION_0001).unwrap();
+            conn.pragma_update(None, "user_version", 1).unwrap();
+            conn.pragma_update(None, "foreign_keys", "OFF").unwrap();
+            let tx = conn
+                .transaction_with_behavior(TransactionBehavior::Immediate)
+                .unwrap();
+            tx.execute_batch(MIGRATION_0002).unwrap();
+            tx.pragma_update(None, "user_version", 2).unwrap();
+            tx.commit().unwrap();
+            conn.pragma_update(None, "foreign_keys", "ON").unwrap();
+            apply_step(&mut conn, 3, MIGRATION_0003).unwrap();
+            apply_step(&mut conn, 4, MIGRATION_0004).unwrap();
+            apply_step(&mut conn, 5, MIGRATION_0005).unwrap();
+            apply_step(&mut conn, 6, MIGRATION_0006).unwrap();
+            conn.execute(
+                "INSERT INTO stats_runs(run_id, started_at_ms) VALUES('run-v6', 1000)",
+                [],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO usage_requests(request_id,run_id,source,provider_id,route_id,provider_name,
+                 route_name,requested_model,upstream_model,started_at_ms,ended_at_ms,duration_ms,stream,
+                 outcome,usage_status,usage_source,created_at_ms,updated_at_ms,upstream_protocol)
+                 VALUES('req-v6','run-v6','relay','p','r','P','R','m','m',1000,2000,1000,1,'completed',
+                 'missing','none',1000,2000,'openai_chat')",
+                [],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO usage_costs(request_id,price_source,price_snapshot_at_ms,currency,input_mode,
+                 input_rate_nanos,output_rate_nanos,cache_read_rate_nanos,cache_write_rate_nanos,status,
+                 input_cost_nanos,output_cost_nanos,cache_read_cost_nanos,cache_write_cost_nanos,
+                 total_cost_nanos,calculated_at_ms)
+                 VALUES('req-v6','manual',1500,'CNY','flat',1000000,2000000,0,0,'priced',
+                 100000,40000,0,0,140000,2000)",
+                [],
+            )
+            .unwrap();
+        }
+
+        let mut conn = Connection::open(&path).unwrap();
+        migrate(&mut conn, folder.path()).unwrap();
+        let version: i64 = conn
+            .query_row("PRAGMA user_version", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(
+            version, SCHEMA_VERSION,
+            "v6 must upgrade to the current schema"
+        );
+        let cost: (String, String, i64) = conn
+            .query_row(
+                "SELECT request_id, currency, total_cost_nanos FROM usage_costs",
+                [],
+                |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)),
+            )
+            .unwrap();
+        assert_eq!(cost, ("req-v6".into(), "CNY".into(), 140_000));
+        let targets: Vec<String> = {
+            let mut statement = conn
+                .prepare("PRAGMA foreign_key_list(usage_costs)")
+                .unwrap();
+            statement
+                .query_map([], |row| row.get::<_, String>(2))
+                .unwrap()
+                .map(|row| row.unwrap())
+                .collect()
+        };
+        assert_eq!(
+            targets,
+            vec!["usage_requests".to_string()],
+            "the cost FK follows the rebuilt table"
+        );
+        let foreign_keys: i64 = conn
+            .query_row("PRAGMA foreign_keys", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(
+            foreign_keys, 1,
+            "foreign keys must be restored after the rebuild"
+        );
+        let dangling: i64 = {
+            let mut statement = conn.prepare("PRAGMA foreign_key_check").unwrap();
+            let mut rows = statement.query([]).unwrap();
+            i64::from(rows.next().unwrap().is_some())
+        };
+        assert_eq!(
+            dangling, 0,
+            "the rebuilt schema must have no dangling references"
+        );
+
+        // Idempotent: a second start on v7 is a no-op and keeps the rows.
+        migrate(&mut conn, folder.path()).unwrap();
+        let again: i64 = conn
+            .query_row("PRAGMA user_version", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(again, SCHEMA_VERSION);
+        let costs: i64 = conn
+            .query_row("SELECT COUNT(*) FROM usage_costs", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(costs, 1);
+
+        // A refused step rolls back completely: no version bump, no partial table.
+        let failed = apply_step(&mut conn, 99, "CREATE TABLE broken (;");
+        assert!(failed.is_err(), "an invalid step must fail");
+        let still: i64 = conn
+            .query_row("PRAGMA user_version", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(
+            still, SCHEMA_VERSION,
+            "a failed step must never advance user_version"
+        );
+        let broken: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM sqlite_master WHERE name='broken'",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(broken, 0, "a failed step must not leave a partial table");
+    }
+
+    /// S02.03 / AC011: after a real v7 migration the mutual-exclusion CHECK must
+    /// reject a proxy row that lost its transport shape and an imported row that
+    /// carries HTTP, timing or transport evidence. An imported row may carry
+    /// credit, and it may never receive a cost row.
+    #[test]
+    fn proxy_and_import_rows_cannot_mix_transport_or_cost_columns() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("usage.sqlite3");
+        let mut conn = open_connection(&path, false).unwrap();
+        migrate(&mut conn, folder.path()).unwrap();
+        conn.execute(
+            "INSERT INTO stats_runs(run_id, started_at_ms) VALUES('run-x', 1)",
+            [],
+        )
+        .unwrap();
+
+        // Shared columns are fixed; each case supplies the varying ones.
+        let insert = |id: &str, columns: &str, values: &str| -> String {
+            let sql = format!(
+                "INSERT INTO usage_requests(request_id,provider_id,route_id,provider_name,route_name,\
+                 requested_model,upstream_model,started_at_ms,created_at_ms,updated_at_ms,{columns}) \
+                 VALUES('{id}','p','r','P','R','m','m',1,1,2,{values})"
+            );
+            match conn.execute(&sql, []) {
+                Ok(_) => String::new(),
+                Err(failure) => failure.to_string(),
+            }
+        };
+        let proxy_columns = "source,run_id,ended_at_ms,stream,outcome,usage_status,usage_source";
+        let import_columns = "source,ended_at_ms,outcome,usage_status,usage_source,record_origin,time_basis,upstream_protocol";
+
+        // Baselines that must be accepted.
+        assert_eq!(
+            insert(
+                "ok-proxy",
+                proxy_columns,
+                "'relay','run-x',2,1,'completed','missing','none'"
+            ),
+            ""
+        );
+        assert_eq!(
+            insert(
+                "ok-import",
+                import_columns,
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL"
+            ),
+            ""
+        );
+        assert_eq!(
+            insert(
+                "ok-credit",
+                &format!("{import_columns},workbuddy_credit_nanos"),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL,1500000000"
+            ),
+            "",
+            "an imported row may carry an exact credit"
+        );
+
+        // Proxy rows must keep run/stream/protocol and must not claim import-only states.
+        for (label, columns, values) in [
+            (
+                "proxy without run_id",
+                proxy_columns.to_string(),
+                "'relay',NULL,2,1,'completed','missing','none'".to_string(),
+            ),
+            (
+                "proxy without stream",
+                proxy_columns.to_string(),
+                "'relay','run-x',2,NULL,'completed','missing','none'".to_string(),
+            ),
+            (
+                "proxy marked recorded",
+                proxy_columns.to_string(),
+                "'relay','run-x',2,1,'recorded','missing','none'".to_string(),
+            ),
+            (
+                "proxy with import time basis",
+                format!("{proxy_columns},time_basis"),
+                "'relay','run-x',2,1,'completed','missing','none','message_timestamp'".to_string(),
+            ),
+            (
+                "proxy with workbuddy credit",
+                format!("{proxy_columns},workbuddy_credit_nanos"),
+                "'relay','run-x',2,1,'completed','missing','none',1".to_string(),
+            ),
+            (
+                "proxy with NULL protocol",
+                format!("{proxy_columns},upstream_protocol"),
+                "'relay','run-x',2,1,'completed','missing','none',NULL".to_string(),
+            ),
+        ] {
+            let failure = insert("bad-proxy", &columns, &values);
+            assert!(
+                failure.contains("CHECK constraint failed"),
+                "{label} must be refused, got: {failure}"
+            );
+        }
+
+        // Imported rows must stay free of HTTP, timing and transport evidence.
+        for (label, columns, values) in [
+            (
+                "import with http_status",
+                format!("{import_columns},http_status"),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL,200".to_string(),
+            ),
+            (
+                "import with duration",
+                format!("{import_columns},duration_ms"),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL,0".to_string(),
+            ),
+            (
+                "import with ttfb",
+                format!("{import_columns},ttfb_ms"),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL,1".to_string(),
+            ),
+            (
+                "import with error_kind",
+                format!("{import_columns},error_kind"),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL,'connect'".to_string(),
+            ),
+            (
+                "import with run_id",
+                format!("{import_columns},run_id"),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL,'run-x'".to_string(),
+            ),
+            (
+                "import with stream",
+                format!("{import_columns},stream"),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL,1".to_string(),
+            ),
+            (
+                "import completed",
+                import_columns.to_string(),
+                "'workbuddy_import',1,'completed','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp',NULL".to_string(),
+            ),
+            (
+                "import claiming upstream usage",
+                import_columns.to_string(),
+                "'workbuddy_import',1,'recorded','missing','upstream','workbuddy_builtin','message_timestamp',NULL".to_string(),
+            ),
+            (
+                "import claiming proxy origin",
+                import_columns.to_string(),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','proxy','message_timestamp',NULL".to_string(),
+            ),
+            (
+                "import relying on the default protocol",
+                "source,ended_at_ms,outcome,usage_status,usage_source,record_origin,time_basis".to_string(),
+                "'workbuddy_import',1,'recorded','missing','workbuddy_jsonl','workbuddy_builtin','message_timestamp'".to_string(),
+            ),
+        ] {
+            let failure = insert("bad-import", &columns, &values);
+            assert!(
+                failure.contains("CHECK constraint failed"),
+                "{label} must be refused, got: {failure}"
+            );
+        }
+
+        // The cost trigger keeps imported history out of the currency totals.
+        let failure = conn
+            .execute(
+                "INSERT INTO usage_costs(request_id,price_source,price_snapshot_at_ms,currency,input_mode,
+                 input_rate_nanos,output_rate_nanos,cache_read_rate_nanos,cache_write_rate_nanos,status,
+                 input_cost_nanos,output_cost_nanos,cache_read_cost_nanos,cache_write_cost_nanos,
+                 total_cost_nanos,calculated_at_ms)
+                 VALUES('ok-import','manual',1,'CNY','flat',1,1,1,1,'priced',1,1,1,1,4,1)",
+                [],
+            )
+            .expect_err("an imported row must never receive a cost row");
+        assert!(failure.to_string().contains("imported cost is unknown"));
+        let costs: i64 = conn
+            .query_row("SELECT COUNT(*) FROM usage_costs", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(costs, 0);
+    }
+
+    /// S02.07 / AC015: a v6 database with every protocol, every terminal state,
+    /// both currencies and a full price snapshot must survive the v7 rebuild with
+    /// rows, ids, tokens, snapshots and amounts unchanged, and its indexes and
+    /// view must still answer.
+    #[test]
+    fn a_v6_database_upgrades_without_changing_rows_ids_tokens_or_costs() {
+        const LEGACY_COLUMNS: &str = "id, request_id, run_id, source, provider_id, route_id,
+            provider_name, route_name, requested_model, upstream_model, response_model,
+            started_at_ms, ended_at_ms, duration_ms, ttfb_ms, first_content_ms, stream,
+            upstream_started, http_status, outcome, error_kind, usage_status, usage_reason,
+            usage_source, parser_version, input_tokens, output_tokens, total_tokens,
+            cache_read_tokens, cache_write_tokens, reasoning_tokens, input_uncached_tokens,
+            input_breakdown, created_at_ms, updated_at_ms, upstream_protocol";
+
+        fn dump(conn: &Connection, sql: &str) -> Vec<Vec<rusqlite::types::Value>> {
+            let mut statement = conn.prepare(sql).unwrap();
+            let columns = statement.column_count();
+            let rows = statement
+                .query_map([], |row| {
+                    let mut values = Vec::with_capacity(columns);
+                    for index in 0..columns {
+                        values.push(row.get::<_, rusqlite::types::Value>(index)?);
+                    }
+                    Ok(values)
+                })
+                .unwrap();
+            rows.map(|row| row.unwrap()).collect()
+        }
+
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("usage.sqlite3");
+        {
+            let mut conn = Connection::open(&path).unwrap();
+            conn.execute_batch(MIGRATION_0001).unwrap();
+            conn.pragma_update(None, "user_version", 1).unwrap();
+            conn.pragma_update(None, "foreign_keys", "OFF").unwrap();
+            let tx = conn
+                .transaction_with_behavior(TransactionBehavior::Immediate)
+                .unwrap();
+            tx.execute_batch(MIGRATION_0002).unwrap();
+            tx.pragma_update(None, "user_version", 2).unwrap();
+            tx.commit().unwrap();
+            conn.pragma_update(None, "foreign_keys", "ON").unwrap();
+            apply_step(&mut conn, 3, MIGRATION_0003).unwrap();
+            apply_step(&mut conn, 4, MIGRATION_0004).unwrap();
+            apply_step(&mut conn, 5, MIGRATION_0005).unwrap();
+            apply_step(&mut conn, 6, MIGRATION_0006).unwrap();
+
+            conn.execute(
+                "INSERT INTO stats_runs(run_id, started_at_ms, stopped_at_ms, stop_reason)
+                 VALUES('run-ok', 1000, 9000, 'normal')",
+                [],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO stats_runs(run_id, started_at_ms) VALUES('run-crash', 1000)",
+                [],
+            )
+            .unwrap();
+
+            // One row per protocol, plus a failed, an in-flight and a probe row.
+            let protocols = [
+                "openai_chat",
+                "openai_responses",
+                "anthropic_messages",
+                "gemini_generate_content",
+            ];
+            for (index, protocol) in protocols.iter().enumerate() {
+                let request = format!("req-{index}");
+                conn.execute(
+                    "INSERT INTO usage_requests(request_id,run_id,source,provider_id,route_id,
+                     provider_name,route_name,requested_model,upstream_model,response_model,
+                     started_at_ms,ended_at_ms,duration_ms,ttfb_ms,first_content_ms,stream,
+                     upstream_started,http_status,outcome,usage_status,usage_source,parser_version,
+                     input_tokens,output_tokens,total_tokens,cache_read_tokens,cache_write_tokens,
+                     reasoning_tokens,input_uncached_tokens,input_breakdown,created_at_ms,
+                     updated_at_ms,upstream_protocol)
+                     VALUES(?1,'run-ok','relay','p','r','P','R','m','m','m',1000,2000,1000,100,150,1,1,
+                            200,'completed','complete','upstream',1,100,20,120,10,5,3,85,'disjoint',
+                            1000,2000,?2)",
+                    rusqlite::params![request, protocol],
+                )
+                .unwrap();
+            }
+            conn.execute(
+                "INSERT INTO usage_requests(request_id,run_id,source,provider_id,route_id,
+                 provider_name,route_name,requested_model,upstream_model,started_at_ms,ended_at_ms,
+                 duration_ms,stream,upstream_started,http_status,outcome,error_kind,usage_status,
+                 usage_source,created_at_ms,updated_at_ms,upstream_protocol)
+                 VALUES('req-failed','run-ok','relay','p','r','P','R','m','m',1000,1500,500,1,1,502,
+                        'failed','upstream_http','missing','none',1000,1500,'openai_chat')",
+                [],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO usage_requests(request_id,run_id,source,provider_id,route_id,
+                 provider_name,route_name,requested_model,upstream_model,started_at_ms,stream,
+                 upstream_started,outcome,usage_status,usage_source,created_at_ms,updated_at_ms,
+                 upstream_protocol)
+                 VALUES('req-inflight','run-crash','relay','p','r','P','R','m','m',1000,1,1,
+                        'in_flight','missing','none',1000,1000,'openai_chat')",
+                [],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO usage_requests(request_id,run_id,source,provider_id,route_id,
+                 provider_name,route_name,requested_model,upstream_model,started_at_ms,ended_at_ms,
+                 duration_ms,stream,upstream_started,outcome,usage_status,usage_source,created_at_ms,
+                 updated_at_ms,upstream_protocol)
+                 VALUES('req-probe','run-ok','connection_test','p','r','P','R','m','m',1000,1000,0,0,0,
+                        'completed','not_applicable','none',1000,1000,'openai_chat')",
+                [],
+            )
+            .unwrap();
+
+            let costs = [
+                (
+                    "req-0",
+                    "manual",
+                    "priced",
+                    "USD",
+                    2_000_000_000i64,
+                    8_000_000_000i64,
+                ),
+                (
+                    "req-1",
+                    "manual",
+                    "priced",
+                    "CNY",
+                    1_000_000_000,
+                    4_000_000_000,
+                ),
+                ("req-2", "default_zero", "default_zero", "CNY", 0, 0),
+                (
+                    "req-3",
+                    "manual",
+                    "usage_incomplete",
+                    "USD",
+                    3_000_000_000,
+                    6_000_000_000,
+                ),
+                (
+                    "req-probe",
+                    "manual",
+                    "not_applicable",
+                    "CNY",
+                    5_000_000_000,
+                    7_000_000_000,
+                ),
+            ];
+            for (request, source, status, currency, input_rate, output_rate) in costs {
+                let (input_cost, output_cost, total) = if status == "priced" {
+                    (100_000i64, 40_000i64, 140_000i64)
+                } else {
+                    (0, 0, 0)
+                };
+                let (cost_input, cost_output, cost_total) = match status {
+                    "priced" => (Some(input_cost), Some(output_cost), Some(total)),
+                    "default_zero" | "not_applicable" => (Some(0), Some(0), Some(0)),
+                    _ => (None, None, None),
+                };
+                conn.execute(
+                    "INSERT INTO usage_costs(request_id,source_price_id,source_price_revision,
+                     price_source,price_snapshot_at_ms,currency,input_mode,input_rate_nanos,
+                     output_rate_nanos,cache_read_rate_nanos,cache_write_rate_nanos,status,
+                     input_cost_nanos,output_cost_nanos,cache_read_cost_nanos,cache_write_cost_nanos,
+                     total_cost_nanos,pricing_version,calculated_at_ms)
+                     VALUES(?1,?2,?3,?4,1500,?5,'flat',?6,?7,0,0,?8,?9,?10,?11,?12,?13,2,2000)",
+                    rusqlite::params![
+                        request,
+                        if source == "manual" { Some("price-1") } else { None },
+                        if source == "manual" { Some(1i64) } else { None },
+                        source,
+                        currency,
+                        input_rate,
+                        output_rate,
+                        status,
+                        cost_input,
+                        cost_output,
+                        if cost_input.is_some() { Some(0i64) } else { None },
+                        if cost_input.is_some() { Some(0i64) } else { None },
+                        cost_total,
+                    ],
+                )
+                .unwrap();
+            }
+        }
+
+        let before_requests = {
+            let conn = Connection::open(&path).unwrap();
+            dump(
+                &conn,
+                &format!("SELECT {LEGACY_COLUMNS} FROM usage_requests ORDER BY id"),
+            )
+        };
+        let before_costs = {
+            let conn = Connection::open(&path).unwrap();
+            dump(&conn, "SELECT * FROM usage_costs ORDER BY request_id")
+        };
+        assert_eq!(before_requests.len(), 7);
+        assert_eq!(before_costs.len(), 5);
+
+        let mut conn = Connection::open(&path).unwrap();
+        migrate(&mut conn, folder.path()).unwrap();
+        assert_eq!(
+            conn.query_row("PRAGMA user_version", [], |row| row.get::<_, i64>(0))
+                .unwrap(),
+            SCHEMA_VERSION
+        );
+
+        let after_requests = dump(
+            &conn,
+            &format!("SELECT {LEGACY_COLUMNS} FROM usage_requests ORDER BY id"),
+        );
+        let after_costs = dump(&conn, "SELECT * FROM usage_costs ORDER BY request_id");
+        assert_eq!(
+            before_requests.len(),
+            after_requests.len(),
+            "row count changed"
+        );
+        assert_eq!(before_costs, after_costs, "cost rows changed");
+        for (index, (before, after)) in before_requests.iter().zip(&after_requests).enumerate() {
+            assert_eq!(before, after, "request row {index} changed field by field");
+        }
+
+        // Ids are the same values, in the same order.
+        let ids: Vec<i64> = conn
+            .prepare("SELECT id FROM usage_requests ORDER BY id")
+            .unwrap()
+            .query_map([], |row| row.get(0))
+            .unwrap()
+            .map(|row| row.unwrap())
+            .collect();
+        assert_eq!(ids, (1..=7).collect::<Vec<i64>>());
+
+        // The new columns carry the documented defaults for legacy rows.
+        let legacy_defaults: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM usage_requests WHERE record_origin='proxy'
+                   AND time_basis='request_start' AND total_tokens_derived=0
+                   AND workbuddy_credit_nanos IS NULL",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(legacy_defaults, 7);
+
+        // The view still answers and keeps the cost columns.
+        let facts: i64 = conn
+            .query_row("SELECT COUNT(*) FROM stats_request_facts", [], |row| {
+                row.get(0)
+            })
+            .unwrap();
+        assert_eq!(facts, 7);
+        let priced: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM stats_request_facts WHERE cost_status='priced'",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(priced, 2);
+
+        // The rebuilt indexes are usable: the time index serves the ordered scan.
+        let plan: String = conn
+            .query_row(
+                "EXPLAIN QUERY PLAN SELECT id FROM usage_requests
+                 WHERE started_at_ms >= 0 ORDER BY started_at_ms DESC, id DESC LIMIT 10",
+                [],
+                |row| row.get(3),
+            )
+            .unwrap();
+        assert!(
+            plan.contains("usage_requests_time"),
+            "time index unused: {plan}"
+        );
+        let plan: String = conn
+            .query_row(
+                "EXPLAIN QUERY PLAN SELECT id FROM usage_requests WHERE provider_id='p'",
+                [],
+                |row| row.get(3),
+            )
+            .unwrap();
+        assert!(
+            plan.contains("usage_requests_provider_time"),
+            "provider index unused: {plan}"
+        );
+    }
+
     #[test]
     fn v3_protocol_migration_preserves_historical_unit_prices_and_total() {
         let folder = tempfile::tempdir().unwrap();
@@ -3124,7 +4358,7 @@ mod tests {
             )
         );
         let detail = crate::stats::query::request_detail(&conn, "historical-v3").unwrap();
-        assert_eq!(detail.row.upstream_protocol, "openai_chat");
+        assert_eq!(detail.row.upstream_protocol.as_deref(), Some("openai_chat"));
         assert_eq!(detail.parser_version, 1);
         assert_eq!(detail.created_at_ms, 1000);
         assert_eq!(detail.updated_at_ms, 1001);
@@ -3498,5 +4732,63 @@ mod tests {
             )
             .unwrap();
         assert_eq!(healthy, Some(1100));
+    }
+    #[test]
+    fn v8_migration_preserves_v7_facts_ledger_and_rolls_back_failed_rebuild() {
+        let folder = tempfile::tempdir().unwrap();
+        let mut conn = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+        conn.pragma_update(None, "foreign_keys", "OFF").unwrap();
+        for (version, sql) in [
+            (1, MIGRATION_0001),
+            (2, MIGRATION_0002),
+            (3, MIGRATION_0003),
+            (4, MIGRATION_0004),
+            (5, MIGRATION_0005),
+            (6, MIGRATION_0006),
+            (7, MIGRATION_0007),
+        ] {
+            apply_step(&mut conn, version, sql).unwrap();
+        }
+        conn.execute("INSERT INTO usage_requests(request_id,source,provider_id,route_id,provider_name,route_name,requested_model,upstream_model,started_at_ms,ended_at_ms,outcome,usage_status,usage_source,created_at_ms,updated_at_ms,upstream_protocol,record_origin,time_basis,input_tokens,output_tokens,total_tokens,workbuddy_credit_nanos) VALUES(?1,'workbuddy_import','wb:builtin','r','WorkBuddy','m','m','m',100,100,'recorded','complete','workbuddy_jsonl',100,100,NULL,'workbuddy_builtin','message_timestamp',10,2,12,1140000000)",rusqlite::params!["a".repeat(64)]).unwrap();
+        conn.execute("INSERT INTO workbuddy_import_ledger(entry_key,namespace_id,session_hash,message_hash,requested_model,event_at_ms,normalized_hash,state,request_id,mapping_revision,created_at_ms,updated_at_ms) VALUES(?1,?2,?3,?4,'m',100,?5,'imported',?1,1,100,100)",rusqlite::params!["a".repeat(64),"b".repeat(48),"c".repeat(64),"d".repeat(64),"e".repeat(64)]).unwrap();
+        fn rows(conn: &Connection, table: &str) -> Vec<Vec<rusqlite::types::Value>> {
+            let mut stmt = conn
+                .prepare(&format!("SELECT * FROM {table} ORDER BY rowid"))
+                .unwrap();
+            let columns = stmt.column_count();
+            stmt.query_map([], |row| (0..columns).map(|i| row.get(i)).collect())
+                .unwrap()
+                .map(Result::unwrap)
+                .collect()
+        }
+        let facts = rows(&conn, "usage_requests");
+        let ledger = rows(&conn, "workbuddy_import_ledger");
+        let bad = format!("{MIGRATION_0008} SELECT * FROM deliberate_missing_table;");
+        assert!(apply_step(&mut conn, 8, &bad).is_err());
+        assert_eq!(
+            conn.query_row("PRAGMA user_version", [], |r| r.get::<_, i64>(0))
+                .unwrap(),
+            7
+        );
+        assert_eq!(rows(&conn, "usage_requests"), facts);
+        assert_eq!(rows(&conn, "workbuddy_import_ledger"), ledger);
+        migrate(&mut conn, folder.path()).unwrap();
+        assert_eq!(rows(&conn, "usage_requests"), facts);
+        assert_eq!(rows(&conn, "workbuddy_import_ledger"), ledger);
+        assert_eq!(
+            conn.query_row("SELECT COUNT(*) FROM pragma_foreign_key_check", [], |r| r
+                .get::<_, i64>(
+                0
+            ))
+            .unwrap(),
+            0
+        );
+        assert_eq!(
+            conn.query_row("PRAGMA foreign_keys", [], |r| r.get::<_, i64>(0))
+                .unwrap(),
+            1
+        );
+        migrate(&mut conn, folder.path()).unwrap();
+        assert_eq!(rows(&conn, "usage_requests"), facts);
     }
 }

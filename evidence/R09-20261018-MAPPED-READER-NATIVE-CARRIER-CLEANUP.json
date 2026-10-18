@@ -1,0 +1,20 @@
+{
+  "at": 1792324231.7568882,
+  "exact_path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/WorkBuddy Proxy Review.app",
+  "ownership": {
+    "pid": 26083,
+    "created_at": 1792309127.182813,
+    "thread": "01a148ae-2068-7800-a8d2-904539bc30d3",
+    "purpose": "current core and UI native acceptance"
+  },
+  "ownership_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/session-owner.json",
+  "native_terminal_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/terminal-status.json",
+  "previous_retention_reason": "tccd held handles; system process was not stopped",
+  "current_processes": [],
+  "lsof_exit": 1,
+  "released_allocated_bytes": 14802944,
+  "preserved": "all JPEG/AX/logs/reports and immutable source binaries/DMG images",
+  "removed": true,
+  "retained_temp_bytes": 0,
+  "system_free_bytes": 51403804672
+}

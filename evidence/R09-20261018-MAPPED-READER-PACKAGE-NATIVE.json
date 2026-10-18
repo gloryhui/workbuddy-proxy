@@ -1,0 +1,279 @@
+{
+  "at": 1792312870.593861,
+  "result": "PASS_CURRENT_CANDIDATE_ARM_DMG_IDENTITY_AUTOMATED_AND_ACTUAL_NATIVE_RESIDENT_ACTIVE_BACKFILL",
+  "core_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+  "ui_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-private-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-private-macos-arm64.dmg",
+  "dmg_sha256": "0a9f7f76e00ef66c8f186004ed06505f68f47db278b86a636f48bccbd6619eb9",
+  "candidate_build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-private-package/report.json",
+  "actual_current_payload_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-package-archive/report.json",
+  "native_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-resident-native-quit/report.json",
+  "native_key_evidence": "native-cmdq-request.json",
+  "native_partial_screen": "native-partial-before-cmdq.jpg",
+  "actual_native_exit_upper_bound_ms": 417.927042,
+  "background_corpus": {
+    "records": 1000000,
+    "bytes": 1074000000,
+    "source": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-progress-package-stage-kpqoc55t/native-config/home/.workbuddy/projects/native-cmdq/native-cmdq.jsonl",
+    "partial_totals_at_ready": [
+      640,
+      76800,
+      729600000000
+    ],
+    "no_sql_seeding": true,
+    "partial_totals_after_first_quit": [
+      149376,
+      17925120,
+      170288640000000
+    ],
+    "final_partial_totals": [
+      150144,
+      18017280,
+      171164160000000
+    ],
+    "at_ms": 1792312527226
+  },
+  "durable_normal_runs": [
+    [
+      "fafd2801f348d8901101d7e4bebe0740242629bba95d159a",
+      "normal",
+      1792312608265
+    ],
+    [
+      "3e9c79b1c294873066866164b2021a1a26c3a0202d28416d",
+      "normal",
+      1792312609430
+    ]
+  ],
+  "core_actual_pid_protection": {
+    "46851": {
+      "enforced": true,
+      "pid": 46851,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": false,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    },
+    "47266": {
+      "enforced": true,
+      "pid": 47266,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": false,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    }
+  },
+  "core_pre_main_markers": {
+    "47266.enforced": "enforced\n",
+    "46851.enforced": "enforced\n"
+  },
+  "native_scope": {
+    "tray_pid": 46847,
+    "ui_pid": 46865,
+    "scope": "unique QA carrier + isolated HOME/USERPROFILE/APPDATA/XDG/TMP/config in env and LSEnvironment; no GUI/tray kernel guard claim"
+  },
+  "identity_scope": "Actual DMG data files/encoded Finder layout/signatures and all nonsignature Mach-O bytes verified; unique QA carrier changes bundle metadata/signatures and adds test-only DYLD headless guard. GUI/tray kernel protection not claimed. No product code bytes changed.",
+  "real_profiles_unchanged": true,
+  "native_temporary_cleanup": {
+    "at": 1792312768.1915321,
+    "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-progress-package-stage-kpqoc55t",
+    "removed": true,
+    "remaining_processes": [],
+    "lsof_exit": 1,
+    "remaining_handle_evidence": "",
+    "released_remaining_allocated_bytes": 18345984,
+    "total_post_stop_released_allocated_bytes": 1430982656,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51437867008
+  },
+  "executed_source_snapshots": {
+    "hashes": {
+      "dist/workbuddy-import-review/run_mapped_reader_resident_native_quit.py": "bbb613c3795b9c0ad99cc21ed39a6a922e103b055115a2421d35954f744bd882",
+      "scripts/workbuddy_import_headless_guard.c": "e786ff4eb54e4b6a94a27d2abd2086dedee042ba04736e85ac5da51d6cff3070",
+      "scripts/gpui_package_test.py": "9f3ce932871765d4f3ce0b4682659bb651b56038bc91a36b477e2388c529329b",
+      "scripts/workbuddy_import_performance.py": "447b96f9e13fb1b9fcd6c423713af87a97be672a8f1ec8b9e94a35dec502941b",
+      "scripts/workbuddy_import_ui_sandbox.py": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257",
+      "scripts/workbuddy_import_resources.py": "686356541440b80eae974609bca063cbb674da11f5bf49d1ac5845adc434d5e2",
+      "scripts/workbuddy_import_macho.py": "39467ec6bc647b3c20dfbc8047577f9d162dc0ed5bec7bc63f1bff9f8763d884"
+    },
+    "folder": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-resident-native-quit/executed-sources",
+    "scope": "Copied after the owned run, before any subsequent edits; paths remained unchanged during that run."
+  },
+  "not_claimed": [
+    "OS DMG mount or installation",
+    "publication",
+    "physical Intel/Windows/Linux acceptance",
+    "final documentation/audit payload completion"
+  ],
+  "remaining": "After remaining same-code runtime/scale/resume/x64/final audits, generate final private documentation payload and independently verify actual image bytes again; candidate package is immutable.",
+  "entire_native_lifecycle_test_after_pre_key_marker_ms": 2309.869873046875,
+  "timing_scope": "The original three PIDs were observed gone in the417.927ms polling window. Independent pre-key wall marker to completion of the entire native run, second clean restart and final process checks is2309.870ms; raw marker and monotonic observation fields retained."
+}

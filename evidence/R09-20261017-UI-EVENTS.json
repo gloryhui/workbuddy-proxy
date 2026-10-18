@@ -1,0 +1,71 @@
+{
+  "result": "PASS_NATIVE_EVENT_BUDGET_DURING_BACKFILL",
+  "binary_sha256": {
+    "core": "ac03b9053930489272719d2419effee3bb18797a9331ca22deffc42019b10adf",
+    "ui": "27367fd49af0675811cffe86c99e79bfd528b31bd0c21f346d4af5c67bc0ab1e"
+  },
+  "checks": {
+    "pid_matches": true,
+    "no_drops": true,
+    "actual_backfill_progress": true,
+    "provider_cursor_edit": true,
+    "model_cursor_edit": true,
+    "supplier_scope_tokens": true,
+    "supplier_scope_credits": true,
+    "all_event_kinds": true,
+    "callbacks_under_100ms": true,
+    "next_frame_selected": true
+  },
+  "max_us": {
+    "source_callback": 96,
+    "source_next_frame": 36716,
+    "source_repeat": 0,
+    "provider_input_apply": 8,
+    "model_input_apply": 9
+  },
+  "backfill_before": {
+    "flushed_ns": "290464728011958",
+    "observed_ns": "290465199959041",
+    "count": 128,
+    "records": 300000,
+    "file_size": 307200000,
+    "committed_offset": [
+      131072
+    ],
+    "at_ms": 1792230038905
+  },
+  "backfill_after": {
+    "observed_ns": "290500540095791",
+    "count": 94336,
+    "committed_offset": 97910784,
+    "records": 300000,
+    "active_progress": true
+  },
+  "x45": {
+    "result": "PASS_NATIVE_EVENTS_PLUS_DATA_CHAIN",
+    "maximum_ms": 4051.652083,
+    "total_count_tokens_credit": [
+      11,
+      1006,
+      4220000000
+    ]
+  },
+  "raw_evidence": "dist/workbuddy-import-review/ui-release-1792229486062928000",
+  "artifacts": {
+    "gpui.log": "e6c61a26ebd40a3aa357dd63dd38c1c957756a1e4d38f58fbc906e4a327ac729",
+    "budget-before.json": "a5828a391dc1c0a86414e8545142a6d72ea81dc0abeab575439d9c58580cf320",
+    "budget-active-before.json": "12293b64ec9b1a9ec3f22481e35ab15008eea16eb022eb5d00f5972de6271076",
+    "budget-active-after.json": "dca8eae740e1ff7467023a6860a39aeac5849a2f0c2ccc81c86f88e2a2be2060",
+    "budget-actions.ax.txt": "7be49496a176cc36218a4c0ee0993ea60d1b368163cd2ac6d4316a9df4ecb974",
+    "budget-actions.jpg": "3d143a762637b8999db6e20b91f051eb300d640ff91bcfc9a0041483a8d9803a",
+    "fixture.json": "359213964101469c75e15a58b1b0730025fb497e866012561052f0ac8090ab31"
+  },
+  "limitations": [
+    "Next-frame timing is separate from synchronous callback time.",
+    "Initial 150k corpus had mismatched session ID and correctly yielded 150k session_mismatch diagnostics. Retained budget-before.json documents this rejected attempt.",
+    "300k corpus need not complete here; this is an event budget probe, not strict scale acceptance.",
+    "All 12 screenshots are frozen before extra synthetic data.",
+    "GUI uses isolated environment/unique native ID; only core has kernel policy. No whole-profile isolation pass inferred.",
+    "After original UI exit and valid Drop trace, a CUA state read started an extra fixture executable (PID57303). Exact-PID cleanup is recorded separately. Its effective config/environment was not captured; GUI isolation remains unpassed."
+  ]
+}

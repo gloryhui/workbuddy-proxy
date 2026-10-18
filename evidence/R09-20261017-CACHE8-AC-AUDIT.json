@@ -1,0 +1,1609 @@
+{
+  "at": 1792241224.03895,
+  "review_type": "current-binary evidence self-audit; not an independent reviewer",
+  "core_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+  "ui_input_sha256": "27367fd49af0675811cffe86c99e79bfd528b31bd0c21f346d4af5c67bc0ab1e",
+  "counts": {
+    "PASS": 68,
+    "NOT_RUN": 11,
+    "BLOCKED_EXTERNAL": 1
+  },
+  "required_rows": 80,
+  "resolved_named_test_references": 124,
+  "core_tests": 537,
+  "unchanged_ui_tests": 137,
+  "note": "PASS applies only to each stated condition and referenced evidence; 80-row count is not a delivery completion percentage. Pending native, scale and external boundaries prevent all-complete. Original old-core failure remains preserved.",
+  "logs": {
+    "core": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+      "sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+    },
+    "ui": {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+      "sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+    }
+  },
+  "rows": [
+    {
+      "ac": "AC001",
+      "condition": "发现其他业务改动时定位归属；不得 reset/stash 掩盖差异。",
+      "conclusion": "PASS",
+      "review": "固定6102b77 worktree和用户主工作区改动归属保留，未reset/stash。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC001",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC002",
+      "condition": "版本偏差未解决不得自选迁移编号或覆盖文件。",
+      "conclusion": "PASS",
+      "review": "Cargo及GPUI清单和锁文件与HEAD字节相同，版本0.5.6；未改依赖或自行分配已有迁移号。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC002",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC003",
+      "condition": "fixture 测试不得读写真实 .workbuddy、配置或安装应用。",
+      "conclusion": "NOT_RUN",
+      "review": "当前签名配对和实际PID隔离已通过；完整原生操作因Mac锁屏未执行，旧守卫失败仍保留。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-GUI-IDENTITY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC003",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC004",
+      "condition": "所有样例为合成，无用户正文/账号；明确每项预期而不是生成后自己算自己。",
+      "conclusion": "PASS",
+      "review": "冻结expected.json明确独立人工数值，canonical经真实reader/parser/writer/query/API匹配7记录/750Token/内置180/供应商570/2.13积分，只有代理CNY0.123；源行全为合成身份/正文/凭据。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC004",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC005",
+      "condition": "共享 ID/整数限值、禁止 Value 裸传；暂不挂运行线程。",
+      "conclusion": "PASS",
+      "review": "共享限值及批次边界来自同一DTO；候选携带哈希身份，原始正文不进入强类型通道。S01历史未挂线程边界见S01.05原始报告。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::tests::shared_limits_come_from_the_stats_dto",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::tests::batch_bounds_match_the_design_table",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::tests::candidate_identity_fields_are_hashes_not_raw_ids",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC005",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC006",
+      "condition": "测试必须调用生产模块，不写另一份导入器；不得使用ignore/空断言制造通过，S01结束仓库仍可编译和跑完整测试。",
+      "conclusion": "PASS",
+      "review": "完整核心537/0/0ignored和GPUI137/0；新增测试直接调用生产解析/事务/worker/组件，无ignore/空assert绕过。关键生产故障反例和原生路径另有证据。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC006",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC007",
+      "condition": "日志/DB/API 中不得出现合成密钥、prompt、tool arguments 的 canary。",
+      "conclusion": "PASS",
+      "review": "最终canonical51与integration157全部通过，SQL/日志/各来源API的合成密钥/正文/工具canary均无泄漏。早期profile守卫失败保留；本结论采用带实际kernel凭据的最终重跑。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC007",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC008",
+      "condition": "基线报告包含命令、退出码、环境、日志路径；所有新行为仍未启用。",
+      "conclusion": "PASS",
+      "review": "S01.08原始G00日志包含冻结commit、工具/系统/隔离环境、完整命令和exit；当时只新增类型/自检，未启动导入业务线程。该历史阶段证据与当前最终功能证据分别保留。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC008",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC009",
+      "condition": "旧0001～0006字节完全不变；禁止对真实库执行设计稿。",
+      "conclusion": "PASS",
+      "review": "0001至0006迁移逐个与HEAD字节一致；生产验证均在合成隔离库。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC009",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC010",
+      "condition": "0/1/2/3/4/5/6→7和7→7全部通过；错误迁移原库可恢复且版本不假升。",
+      "conclusion": "PASS",
+      "review": "复核真实0..=6迁移构造、重复migrate、费用/FK保留与拒绝迁移不假升；当前537回归中两个测试均通过。",
+      "current_test_references": [
+        {
+          "test": "stats::store::tests::every_schema_generation_upgrades_in_place_and_is_idempotent",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC010",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC011",
+      "condition": "非法proxy缺run/stream、非法import带HTTP/费用断言拒绝。",
+      "conclusion": "PASS",
+      "review": "真实v7迁移库接受合法proxy/import；逐项拒绝缺run/stream、非法HTTP/耗时字段及导入usage_costs，断言具体CHECK/trigger错误。",
+      "current_test_references": [
+        {
+          "test": "stats::store::tests::proxy_and_import_rows_cannot_mix_transport_or_cost_columns",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC011",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC012",
+      "condition": "同键插入只一行、冲突不覆盖代理、tombstone不丢；FK检查为0行。",
+      "conclusion": "PASS",
+      "review": "同键幂等、冲突不改proxy、墓碑终态均有实际SQL断言；迁移测试检查FK为空。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::the_same_key_is_never_written_twice",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::a_conflict_never_touches_the_proxy_fact_row",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::tombstones_are_terminal",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC012",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC013",
+      "condition": "错误revision、旧generation、负offset、跨namespace拒绝且无部分写。",
+      "conclusion": "PASS",
+      "review": "Checkpoint测试逐项检查旧revision/generation、负值/回退offset、跨namespace，拒绝后revision/offset保持原值。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::checkpoint_tests::stale_revision_is_refused_without_a_partial_write",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::checkpoint_tests::an_old_generation_is_refused",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::checkpoint_tests::negative_or_regressing_offsets_are_refused",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::checkpoint_tests::a_foreign_namespace_is_refused",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC013",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC014",
+      "condition": "相邻区间合法，重叠拒绝；关闭再开namespace不变。",
+      "conclusion": "PASS",
+      "review": "相邻半开区间接受；Rust和SQL触发器均拒绝重叠；关闭重开复用namespace。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::mapping_tests::adjacent_half_open_intervals_are_legal",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::mapping_tests::overlapping_verified_intervals_are_refused_by_rust_and_by_the_trigger",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::mapping_tests::the_namespace_is_created_once_and_reused_after_toggling",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC014",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC015",
+      "condition": "行数、ID、tokens、price snapshots、cost金额逐项相等；并验证索引和视图仍可查询。",
+      "conclusion": "PASS",
+      "review": "v6七条请求及五条费用迁移前后逐字段dump相等，ID顺序不变；报告视图及索引检查保留。",
+      "current_test_references": [
+        {
+          "test": "stats::store::tests::a_v6_database_upgrades_without_changing_rows_ids_tokens_or_costs",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC015",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC016",
+      "condition": "故障注入、外键、integrity_check通过，提交证据后才进入解析。",
+      "conclusion": "PASS",
+      "review": "S02.08真实冲突表故障：失败后仍v6且3请求/1费用、integrity_check=ok、视图3行；移除故障后同库升级、FK为空。当前537仍执行所有代迁移及失败不假升用例，旧迁移字节不变。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC016",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC017",
+      "condition": "message assistant与无role function_call纳入，user/reasoning/tool result全部排除。",
+      "conclusion": "PASS",
+      "review": "assistant message与无role function_call纳入；user/reasoning/tool result排除；完整canonical链另验。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::parser::shell_tests::an_assistant_message_is_usage_bearing",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::shell_tests::a_role_less_function_call_is_usage_bearing",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::shell_tests::user_messages_reasoning_and_tool_results_are_excluded",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC017",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC018",
+      "condition": "同会话不同message分开；跨文件相同消息同键；conversationRequestId不能去重。",
+      "conclusion": "PASS",
+      "review": "身份键使用namespace/session/message；不同消息区分、跨文件同消息一致，不以conversationRequestId去重。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC018",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC019",
+      "condition": "零/缺失/负数/小数/字符串/上限/溢出/冲突分别有明确断言。",
+      "conclusion": "PASS",
+      "review": "明确覆盖零/缺失/负数/小数/字符串/布尔/整数限值与溢出/total冲突；非法不强转不修正。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::an_explicit_zero_is_preserved",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::missing_fields_stay_unknown_and_are_never_invented",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::negative_values_invalidate_the_whole_record",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::floats_strings_and_booleans_are_never_coerced",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::the_per_field_bound_is_inclusive_and_the_total_bound_too",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::a_contradicting_total_is_invalid_and_never_corrected",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC019",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC020",
+      "condition": "高优先4096低优先0得到4096；缓存不重复加输入；推理不超过输出。",
+      "conclusion": "PASS",
+      "review": "读取规范化断言：detail4096优先top-level0；缓存不累加输入、read/write≤input、reasoning≤output。当前core测试及51黄金全字段链通过。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC020",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC021",
+      "condition": "1.14→1140000000，0明确保留，缺失null，科学计数/负值/超精度拒绝。",
+      "conclusion": "PASS",
+      "review": "精确decimal规则与canonical已核验：1.14→1140000000，0与缺失区分，9位上限、科学计数/符号/超界拒绝；非法credit不损坏Token。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::a_two_decimal_credit_is_exact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::nine_fractional_digits_is_the_limit",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::scientific_notation_and_signs_are_refused",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::credit_tests::an_invalid_credit_never_damages_the_token_values",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC021",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC022",
+      "condition": "normalized semantic hash不依赖JSON顺序/正文；冲突比较不含文件路径或时间。",
+      "conclusion": "PASS",
+      "review": "语义哈希固定有序tuple仅含规范化模型及usage字段，不含源时间/文件路径/正文/JSON序列化顺序；回放改时间及诊断不变，复制文件/响应只计一次。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::parsed_usage_reaches_the_fact_columns_without_losing_credit_or_cache",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC022",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC023",
+      "condition": "未知格式有诊断且继续文件；canary不出现在候选、日志、API、数据库。",
+      "conclusion": "PASS",
+      "review": "未知/坏行按固定诊断继续处理；最终integration实际源链/SQL/日志/API全canary检查通过，候选仅允许规范化字段。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC023",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC024",
+      "condition": "不能用本机“正好能读”代替合成错误用例；无HTTP路径变化。",
+      "conclusion": "PASS",
+      "review": "合成权限拒绝不推进offset；release OS写失败及权限恢复另验，HTTP转发未因导入失败改变。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::reader::verify_tests::a_permission_failure_does_not_advance_the_offset",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC024",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC025",
+      "condition": "中文空格路径可读；traces/工具结果/外部symlink完全不读。新目录/新小文件达到X46增量门槛。",
+      "conclusion": "PASS",
+      "review": "生产reader当前测试覆盖中文空格目录、严格projects单层、拒绝文件/目录symlink及traces/tool/storage；最终release X46在真实竞争积压下20个新目录及已跟踪追加样本逐个≤10秒。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC025",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC026",
+      "condition": "小文件增长不误判；替换/截断generation增加，账本不删。",
+      "conclusion": "PASS",
+      "review": "小文件增长保持append；head替换及缩短识别为不同代，保留账本/重启计数，release rename/truncate补验。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_small_file_that_grew_is_an_append_not_a_replacement",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_replaced_head_is_reported_as_replacement",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_file_shorter_than_the_remembered_regions_is_a_truncation",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC026",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC027",
+      "condition": "4MiB边界和50MiB单行内存有界，完整行可被后续处理。",
+      "conclusion": "PASS",
+      "review": "4MiB边界包含，50MiB行分块有界，排空后邻接合法行可读；真实退出oversized场景557.540ms。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::the_four_mebibyte_boundary_is_inclusive",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::a_fifty_mebibyte_line_stays_bounded_in_memory",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::an_oversized_line_is_drained_and_the_next_line_is_readable",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC027",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC028",
+      "condition": "分三次写入同一JSON只入一次；坏行后合法行仍可见。",
+      "conclusion": "PASS",
+      "review": "三段写入完整JSON仅生成一个候选；坏行推进到完整行尾且不吞后续合法行。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::a_record_written_in_three_writes_is_imported_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::bad_lines_do_not_hide_the_lines_after_them",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC028",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC029",
+      "condition": "一个持续追加大文件不能永久饿死其他文件。回填其他文件时已追平文件增量不饥饿。",
+      "conclusion": "PASS",
+      "review": "大文件分片公平轮转，已追平文件先于积压；release X46二十个竞争窗口逐个达标，周期不由UI刷新控制。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::a_growing_large_file_cannot_starve_the_others",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::caught_up_increments_are_served_before_the_backlog",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::the_cadence_stays_five_seconds_and_independent_of_settings",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC029",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC030",
+      "condition": "注入rename/truncate/权限错误，不能半批旧数据入库或丢行。",
+      "conclusion": "PASS",
+      "review": "当前verify测试在读期间改写/rename替换/truncate/权限拒绝时丢弃整批且不前移offset；release真实rename/truncate/权限恢复后精确5事实并每条有账本，DB锁解除后补齐。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC030",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC031",
+      "condition": "同大小/mtime中间修改在full被发现；full不把incremental游标清0。",
+      "conclusion": "PASS",
+      "review": "真实worker发现隐藏中间改写，full扫描使用独立offset，不清零增量断点；release测得完整正文重读及无重复。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::runtime::tests::full_scan_rechecks_a_hidden_middle_edit_without_resetting_incremental_offset",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::rescan_tests::a_full_rescan_never_moves_the_incremental_offset",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC031",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC032",
+      "condition": "未变化文件常规轮次不重读正文，所有checkpoint预期可重放。",
+      "conclusion": "PASS",
+      "review": "当前real_worker测试实测未变化正文读取不增长，读批逐完整行提交/重放及full独立offset通过；S04.08原始checkpoint探针与1字节夹具差异记录保留，按终止符后的契约边界执行。百万300秒空闲另归AC075。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-SCALE-FIRST.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC032",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC033",
+      "condition": "没有第二套按名称/localhost猜测的检测器；旧同步测试仍通过。",
+      "conclusion": "PASS",
+      "review": "同步路径复用同一代理归属谓词；猜名称或裸localhost不足，既有同步CLI通过。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::classify::classify_tests::the_shared_predicate_is_the_sync_path_predicate",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::classify_tests::a_guessed_name_or_a_bare_loopback_url_is_never_enough",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC033",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC034",
+      "condition": "当前直连配置不倒推历史；无法证明旧区间进入pending。",
+      "conclusion": "PASS",
+      "review": "当前direct配置不反推旧区间；真实观察读取实际配置ID，早于观察的custom留pending。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::classify::observation_tests::a_direct_configuration_proves_nothing_about_history",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::observation_tests::an_older_record_is_outside_a_fresh_observation",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::observer_reads_actual_id_and_leaves_older_custom_record_pending",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC034",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC035",
+      "condition": "custom-local并非全部proxy；同响应模型来自两路线可区分；已知proxy缺记录也排除。",
+      "conclusion": "PASS",
+      "review": "固定归属证据表区分两路线同模型，custom-local不按名字判proxy；已知代理镜像即使缺本地事实也排除。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_custom_local_model_is_not_proxy_by_its_name",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::the_same_response_model_on_two_routes_is_distinguishable",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_known_proxy_model_stays_excluded_without_a_matching_fact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC035",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC036",
+      "condition": "direct→proxy同alias时间不同分类正确；不按现有名字覆盖过去。",
+      "conclusion": "PASS",
+      "review": "同alias按半开历史区间判direct/proxy，后续改名或删路由不重写已证实过去。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::the_same_alias_is_direct_before_and_proxy_after",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::a_later_name_never_rewrites_an_earlier_interval",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::a_route_rename_or_delete_does_not_touch_history",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC036",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC037",
+      "condition": "prepare失败零WorkBuddy文件变更；finalize失败报告已同步但归属未确认。",
+      "conclusion": "PASS",
+      "review": "调用真实生产同步路径注入prepare/finalize错误；前者文件零变化，后者明确已同步但归属未确认，不吞错。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::production_prepare_failure_changes_neither_models_nor_proxy_config",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::production_finalize_write_failure_returns_synced_unconfirmed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC037",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC038",
+      "condition": "在写前/写后/ACK前崩溃都不会把不确定历史当direct计入。",
+      "conclusion": "PASS",
+      "review": "覆盖写前、写后、ACK前恢复；只证实未来观察，不把不确定gap补为历史direct。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_before_the_write_conflicts_the_prepared_row",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_after_the_write_completes_the_prepared_row",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_before_the_ack_is_resolved_the_same_way",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::observation::tests::restart_after_write_recovers_future_only_and_preserves_uncertain_gap",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC038",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC039",
+      "condition": "过期/重复token、冲突revision拒绝；tombstone不复活；撤销只影响workbuddy行。",
+      "conclusion": "PASS",
+      "review": "预览token随机、单次、过期及revision绑定；撤销保持精确usage，当前retention及墓碑重新核验，不改变proxy事实。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC039",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC040",
+      "condition": "代理排除、历史pending、规则确认/撤销逐一提供前后计数。",
+      "conclusion": "PASS",
+      "review": "当前真实worker的manual_commands测试经生产命令逐步核对pending/direct确认/代理排除/撤销后事实与ledger；固定黄金镜像最终为excluded_proxy1/imported2，3事实910Token且代理只计一次。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC040",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC041",
+      "condition": "队列满只让worker退让，Proxy begin/finish不阻塞。",
+      "conclusion": "PASS",
+      "review": "容量2非阻塞通道满即worker退让，单批等待ACK；release锁DB时代理仍响应，转发/规模指标另验。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::channel_tests::a_full_queue_yields_instead_of_blocking",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::channel_tests::only_one_batch_may_wait_for_an_ack",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC041",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC042",
+      "condition": "任一SQL失败全批rollback；offset不得领先事实。",
+      "conclusion": "PASS",
+      "review": "真实SQLite事务任一条失败回滚事实及offset；发现批次遇旧revision也全批回滚并可重试。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::a_failed_item_rolls_the_whole_batch_back",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::the_offset_never_leads_the_facts",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::writer::discovery::tests::a_stale_metadata_batch_rolls_back_earlier_files_and_can_be_retried",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC042",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC043",
+      "condition": "ACK丢失/重复批/复制文件/重复工具响应都计一次。",
+      "conclusion": "NOT_RUN",
+      "review": "ACK丢失和重复批单测通过；跨项目复制的真实reader→writer链路仍须运行新增edge探针，未以同文件回放代替。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC043",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC044",
+      "condition": "restart后累计数可信，错误文件未处理时状态仍需处理。",
+      "conclusion": "PASS",
+      "review": "重启读持久累计；错误诊断计入需处理，普通ignored不冒充错误；关闭时不假报完成。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::status_reports_skipped_anomalies_without_counting_ordinary_ignored_messages",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::command_tests::status_reports_durable_counters_and_never_claims_completion_while_off",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC044",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC045",
+      "condition": "持续回填时代理事件仍被写入；DB锁超时不忙等、不丢未ACK批。通过X45～X47，页面状态不改变同步周期。",
+      "conclusion": "NOT_RUN",
+      "review": "当前锁/故障/X46/X47已通过；当前核心与UI组合的原生X45仍待验证。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json",
+        "evidence/R09-20261017-CACHE8-GUI-IDENTITY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC045",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC046",
+      "condition": "关闭后源文件读取字节不增长，已有SQL查询仍可用，恢复断点继续。页面刷新关闭/切页/隐藏窗口不暂停同步。",
+      "conclusion": "NOT_RUN",
+      "review": "当前worker暂停/断点与调度已通过；当前原生隐藏/关闭窗口独立性仍待验证。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json",
+        "evidence/R09-20261017-CACHE8-GUI-IDENTITY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC046",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC047",
+      "condition": "中断后重启无丢失无重复，不等待历史全导完才退出。",
+      "conclusion": "PASS",
+      "review": "SIGKILL时回填确实未完：5128/55000，重启后55000唯一账本/660000Token/5500000000000纳积分；正常退出idle/import/oversized分别356.391/400.499/557.540ms且exit0，不等全历史结束。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC047",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC048",
+      "condition": "证明worker没在Tokio/UI线程读文件；记录队列峰值与批次耗时。",
+      "conclusion": "PASS",
+      "review": "当前生产遥测反例测试可检测off-worker读，真实release100k/many完整阶段中source_io检查1483次、违规0；队列峰值1、成功writer事务1080批、失败0，真实批耗时样本保留。完整规模/增长预算仍单列AC075。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-SCALE-FIRST.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC048",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC049",
+      "condition": "重扫同消息不复活，代理原清除语义不变。",
+      "conclusion": "PASS",
+      "review": "清除导入写终态墓碑，重扫不复活；proxy原清除语义独立保留。",
+      "current_test_references": [
+        {
+          "test": "stats::store::tests::a_manual_clear_tombstones_imported_rows_so_a_rescan_cannot_resurrect_them",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::store::tests::a_manual_clear_leaves_proxy_rows_and_their_semantics_alone",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC049",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC050",
+      "condition": "保留期限缩短再延长不恢复已删除条目；不限期0正确。",
+      "conclusion": "PASS",
+      "review": "R05最终release53/0：0/7/30/180天精确旧消息及新身份，真实一分钟housekeeping后deleted_retention；7→0及full扫描墓碑不复活。不限期0可导入新的400天身份。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-RETENTION.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC050",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC051",
+      "condition": "预览后新增/晚到记录留存，删除数量和预览边界一致。",
+      "conclusion": "PASS",
+      "review": "冻结预览水位+时间边界；预览后新增及晚到均存活，实际删除数与预览一致。",
+      "current_test_references": [
+        {
+          "test": "stats::store::tests::rows_added_after_the_preview_survive_the_sweep",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::store::tests::a_late_record_inside_the_watermark_survives_the_cutoff",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::store::tests::the_preview_counts_exactly_what_the_sweep_deletes",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC051",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC052",
+      "condition": "候选变旧不能绕过retention，deleted状态不可被mapping apply覆盖。",
+      "conclusion": "PASS",
+      "review": "规则任务每批重新读取retention，已过期候选不绕过保留期限；deleted账本不被apply覆盖。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC052",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC053",
+      "condition": "删除源文件不删统计；同文件恢复不重复。",
+      "conclusion": "PASS",
+      "review": "源消失不删统计，检查点回收保留账本；同文件恢复仍一次。",
+      "current_test_references": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::deleting_a_source_file_keeps_every_statistic",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_file_that_comes_back_is_not_counted_twice",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC053",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC054",
+      "condition": "EXPLAIN无每页JSONL读取或全量候选反序列化；旧游标返回expired。",
+      "conclusion": "PASS",
+      "review": "当前真实SQL EXPLAIN确认cover索引；pending查询在SQL按水位/范围LIMIT分页，只解码本页候选，没有每页JSONL读取或全量候选反序列化。scope/mapping变化及规则历史stale cursor均拒绝expired。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC054",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC055",
+      "condition": "恢复只处理proxy in_flight；旧费用快照未变。",
+      "conclusion": "PASS",
+      "review": "崩溃恢复只处理proxy in_flight；费用用该请求自己的原快照，导入不被补成HTTP结果。",
+      "current_test_references": [
+        {
+          "test": "stats::store::tests::orphan_recovery_only_settles_proxy_in_flight_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::store::tests::startup_repair_settles_abandoned_costs_from_their_own_snapshot",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC055",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC056",
+      "condition": "给出每种组合操作后的事实/账本/费用行数，不能只检查HTTP200。",
+      "conclusion": "PASS",
+      "review": "最终生产integration157从真实JSONL导入核对多组事实/账本/费用数：黄金3事实910Token、账本excluded1/imported2、导入费用0；canonical六导入+一代理/各来源/币种/详情/重扫与冻结预期一致。清除/保留期限另有53项真实SQL对照。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json",
+        "evidence/R09-20261017-CACHE8-RETENTION.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC056",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC057",
+      "condition": "所有enum match编译；只做旧UI必要适配，不提前新布局；proxy数值原样。",
+      "conclusion": "PASS",
+      "review": "当前GPUI137完整测试/Clippy/release通过，新增DTO enum均编译；黄金混合总910=builtin120+supplier790，proxy550保留；S08.01原阶段必要旧UI适配的时间边界保留于原报告。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC057",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC058",
+      "condition": "all=builtin+supplier；supplier=proxy+direct（同过滤、排除tests）；非法组合拒绝。",
+      "conclusion": "PASS",
+      "review": "实际事实集合逐组合分区，all=builtin+supplier，capture与tests过滤同谓词；非法scope拒绝。",
+      "current_test_references": [
+        {
+          "test": "stats::query::scope_tests::all_equals_builtin_plus_supplier_on_real_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::scope_tests::the_three_scopes_partition_the_fact_table",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::scope_tests::source_and_capture_filters_match_the_product_matrix_on_real_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::scope_tests::an_unknown_scope_is_refused_rather_than_guessed",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC058",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC059",
+      "condition": "混合和纯导入结果准确；不同币种与credit绝不相加。",
+      "conclusion": "PASS",
+      "review": "混合/纯导入来源数准确；币种分别聚合，credit用i128独立十进制字符串，超过i64仍精确。",
+      "current_test_references": [
+        {
+          "test": "stats::query::origin_count_tests::a_mixed_result_counts_proxy_and_imported_separately",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::origin_count_tests::a_pure_import_result_has_no_proxy_rows",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_is_summed_on_its_own_and_never_added_to_costs",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::origin_count_tests::different_currencies_are_never_added_together",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_totals_above_i64_remain_exact",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC059",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC060",
+      "condition": "仍受管理鉴权/1MiB限制；扫描异步入队，错误码固定无SQL路径。",
+      "conclusion": "PASS",
+      "review": "Current release: local-model management key returns 401, deliberately check-invalid oversized response returns stats_result_too_large, normal/after-restore query remains exact and integrity_check=ok. Current 537 tests also cover asynchronous scan enqueue and fixed error codes. Boundary uses a synthetic corrupt row, not a supported importer input.",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-BOUNDARY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC060",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC061",
+      "condition": "切来源旧cursor拒绝；并发追加不重复分页；归属撤回旧cursor失效。",
+      "conclusion": "NOT_RUN",
+      "review": "Cursor validation and pending-page units passed; actual source-append frozen request pages, scope change and attribution-revoke HTTP proof are queued in the production edge probe.",
+      "current_test_references": [
+        {
+          "test": "stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        },
+        {
+          "test": "stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+          "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/tests.log",
+          "log_sha256": "0f98c9ae09ad31db403a6d97fa31becf5c4ed397b9dd3a099b2f81ce210c371a"
+        }
+      ],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC061",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC062",
+      "condition": "慢旧回复不能覆盖新source；scan轮询不形成无限请求。",
+      "conclusion": "PASS",
+      "review": "应用回复前校验资源/请求tag/filter代；scan轮询有预算，旧来源回复不覆盖新选择。",
+      "current_test_references": [
+        {
+          "test": "stats_controller::scan_budget_tests::a_stale_reply_cannot_overwrite_a_newer_read",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "stats_controller::scan_budget_tests::a_running_scan_cannot_be_polled_forever",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "stats_controller::tests::a_dashboard_reply_from_the_previous_filter_is_ignored",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC062",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC063",
+      "condition": "不把旧core伪判为兼容；不靠吞反序列化错误显示空页。",
+      "conclusion": "NOT_RUN",
+      "review": "同UI版本兼容性单测保留；当前核心私有包/旧协议拒绝链路待补。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC063",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC064",
+      "condition": "SQL汇总、API响应和fixture期望逐项一致，不能只验证接口存在。",
+      "conclusion": "PASS",
+      "review": "最终canonical51及integration157逐字段核验SQL/overview/series/list/detail：已知零、missing、invalid、缓存读写、推理、derived total和1纳积分准确；混合与纯导入均匹配冻结独立预期。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC064",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC065",
+      "condition": "图标不是fallback加号；hover/focus/键盘/选中a11y齐全。",
+      "conclusion": "NOT_RUN",
+      "review": "同UI字节的图标/键盘单测和旧原生证据保留；当前受保护原生操作待解锁。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-GUI-IDENTITY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC065",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC066",
+      "condition": "A=1012/1011/560/559布局测试；来源组永远最前且不拆开。",
+      "conclusion": "PASS",
+      "review": "当前137测试覆盖1012/1011及560/559布局断点，来源组始终最前不拆；最终12原生图含宽/窄布局，各来源数据同时核验。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC066",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC067",
+      "condition": "旧响应/错误/loading不覆盖；同选项点击零新请求。",
+      "conclusion": "PASS",
+      "review": "来源变更先失效旧资源，同选项零请求；旧代draft/数据不应用，错误payload不伪造空成功。",
+      "current_test_references": [
+        {
+          "test": "stats_controller::filter_change_tests::a_change_invalidates_first_and_then_owes_exactly_one_request",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "stats_controller::filter_change_tests::clicking_the_option_that_is_already_selected_changes_nothing",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "stats_controller::tests::a_reply_for_an_older_draft_cannot_close_the_newer_one",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "stats_backend::reply_tests::a_malformed_payload_is_an_error_and_never_an_empty_page",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC067",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC068",
+      "condition": "导入未知显示—，费用无伪零线；纯导入成功率为—。",
+      "conclusion": "PASS",
+      "review": "纯导入成功率和缺失指标为—；无已知费用不绘制伪零货币线，Token趋势保留。",
+      "current_test_references": [
+        {
+          "test": "statistics::metric_text_tests::a_pure_import_range_has_no_success_rate",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "statistics::metric_text_tests::an_unknown_metric_reads_as_a_dash_and_never_as_a_zero",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "usage_chart::tests::unpriced_imports_keep_token_plot_without_fabricating_currency_plot",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC068",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC069",
+      "condition": "proxy/内置/直连可区分，缺HTTP/速率不显示0/200。",
+      "conclusion": "PASS",
+      "review": "proxy/内置/直连列表标签可区分；未知HTTP/速率/金额显示—，不伪造200或零。",
+      "current_test_references": [
+        {
+          "test": "usage_table::source_column_tests::the_three_origins_are_distinguishable",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "usage_table::source_column_tests::an_absent_http_status_is_a_dash_and_never_zero_or_200",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "usage_table::source_column_tests::missing_rates_and_amounts_are_dashes_rather_than_zeros",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        }
+      ],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC069",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC070",
+      "condition": "开关失败回滚，暂停不删历史，普通刷新不读JSONL，首次开启无多余确认。页面刷新与后台同步完全独立，见X45。",
+      "conclusion": "NOT_RUN",
+      "review": "同UI开关回滚/刷新单测通过；当前原生X45操作待补。",
+      "current_test_references": [
+        {
+          "test": "workbuddy_import::tests::a_failed_switch_rolls_back",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "workbuddy_import::tests::a_plain_refresh_never_reads_the_jsonl",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "workbuddy_import::tests::pausing_keeps_every_counter_and_the_history",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "test": "workbuddy_import::tests::turning_it_on_asks_once_and_needs_no_confirmation",
+          "log": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "log_sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        }
+      ],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json",
+        "evidence/R09-20261017-CACHE8-GUI-IDENTITY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC070",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC071",
+      "condition": "过期/冲突重预览；不能把proxy证据强改direct；无裸内部错误。",
+      "conclusion": "PASS",
+      "review": "当前真实manual命令测试拒绝过期/重用token、revision冲突及managed proxy覆盖；UI unsafe_preview_replies_never_enable_confirmation拒绝危险确认，错误映射固定码及中文/英文文案。原生完整异常态操作仍归AC072未完成范围。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC071",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC072",
+      "condition": "3来源×2尺寸×2语言截图齐全，额外异常态/键盘/缩放有证据；截图不能替代实际数据断言。",
+      "conclusion": "NOT_RUN",
+      "review": "完整当前组合12图、异常态、分页、expiry/CAS及缩放待补；1x/Windows另列外部边界。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-GUI-IDENTITY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC072",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC073",
+      "condition": "三类集合正确且代理只计一次；不发公网付费调用。",
+      "conclusion": "PASS",
+      "review": "最终真实代理→JSONL镜像→归属账本→查询的黄金链通过：all3/910、builtin1/120、supplier2/790、排除代理镜像1，full扫描不重复；所有请求均本地Mock，不发公网付费调用。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC073",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC074",
+      "condition": "数据无静默丢失，恢复幂等，代理继续响应；固定种子可复现。",
+      "conclusion": "PASS",
+      "review": "固定种子OS故障矩阵验证实际WAL写上限、55000条不完整回填SIGKILL、重启精确总数/Token/积分/唯一账本，代理写拒绝时继续转发；rename/truncate/权限/DB锁另有实际release覆盖。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC074",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC075",
+      "condition": "达到ACCEPTANCE硬门槛；达不到修实现，不擅改门槛。常态增量每次≤10秒可查，不以UI刷新或中位数替代。",
+      "conclusion": "NOT_RUN",
+      "review": "f402 full matrix stopped after9/12 passing phases; single1M600s timeout. cc06 same strict target also timed out and its SQL cache changes were reverted. Current b629 changes only enabled PASSIVE checkpoint trigger4096; first strict single-million trial running, full matrix incomplete.",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-SCALE-FIRST.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC075",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC076",
+      "condition": "旧断言不放宽，无新warning；新脚本必须真的执行生产二进制。",
+      "conclusion": "PASS",
+      "review": "当前核心537/0/0ignored与GPUI137/0/0ignored，Clippy -D warnings及release通过；21个真实生产程序串行gate成功，无旧断言降级。GPUI block0.1.6 future-incompat提示为既存，不冒称零提示；脚本修复保留先前失败及准确隔离/资源测量边界。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC076",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC077",
+      "condition": "缺平台标BLOCKED_EXTERNAL，不把编译通过算GUI或打包通过算安装。",
+      "conclusion": "BLOCKED_EXTERNAL",
+      "review": "Local macOS x64 target, SDK and Rosetta confirmed available, build/runtime/package verification prepared but not executed. Linux/Windows,1x physical display and real installation/login verification remain external boundaries.",
+      "current_test_references": [],
+      "evidence": [],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC077",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC078",
+      "condition": "代理历史数据/价格/配置前后摘要一致；无真实库/应用替换。",
+      "conclusion": "PASS",
+      "review": "隔离v6库升级前后7条旧请求与5条多币种费用逐字段相同；真实profile仅metadata观察，CLI kernel阻止真实内容I/O，原生最终metadata相同；没有替换真实DB或安装应用。GUI全隔离证明边界仍在AC003保留。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json",
+        "evidence/R09-20261017-CACHE8-GUI-IDENTITY.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC078",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC079",
+      "condition": "每项完成必须有证据链接；没有发布授权就不升版本或制作Release。",
+      "conclusion": "NOT_RUN",
+      "review": "各证据按程序哈希区分，当前发布文档和所有本机验收尚未收口。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json",
+        "evidence/R09-20261017-CACHE8-LOCAL-GATES.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC079",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    },
+    {
+      "ac": "AC080",
+      "condition": "不自动提交/推送/合main；真实作者和工具贡献准确，禁force/amend/hooks。",
+      "conclusion": "PASS",
+      "review": "HEAD保持6102b779871bab0bb8ad646dac5004892adf76be，未自动提交/推送/合并/发布；AI共同作者规则已保留。",
+      "current_test_references": [],
+      "evidence": [
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ],
+      "prior_semantic_review": "evidence/R09-20261017-AC-REVIEW.json#AC080",
+      "scope": "Self review; current core execution and unchanged UI binary proofs. Prior chronology/source review retained; no independent reviewer claim."
+    }
+  ],
+  "prior_table_archive": {
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-status-retention/acceptance-audit-before-cache8.md",
+    "sha256": "82459af9cc8858630eca3d676f1ec531ba5ba554472bef524b08c15759ecf3fc",
+    "scope": "previous ac03 table, failed and old-version scope retained"
+  },
+  "current_probe_pending": {
+    "script": "scripts/workbuddy_import_edge_probe.py",
+    "scope": [
+      "X01",
+      "X03",
+      "X04",
+      "X12",
+      "X16",
+      "X26",
+      "X34",
+      "X41",
+      "X42",
+      "X43",
+      "X44"
+    ],
+    "execution": "runtime proof must be inspected before promotion; see after-matrix queue and pending-edge evidence"
+  },
+  "superseded_by_candidate": {
+    "core_sha256": "b62930d6735fca1ef9aa3cf340c7b734cca61d80b9d0c34a55b22cbb38dbc6ce",
+    "scope": "f402 rows remain versioned evidence; cc06 statement-cache candidate failed and was reverted; b629 WAL4K candidate passed537/fmt/clippy/release, strict runtime underway. No whole-audit transfer."
+  }
+}

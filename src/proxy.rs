@@ -570,6 +570,7 @@ impl Bridge {
             // statistics views can exclude them by default.
             let mut guard = self.stats.begin(
                 stats::RequestSpec {
+                    workbuddy_identity: None,
                     source: Source::ConnectionTest,
                     provider_id: r.provider_id.clone(),
                     provider_name: r.connection.provider.clone(),
@@ -905,6 +906,7 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
     // refused earlier (host, auth, permit, body, routing) writes no row.
     let mut stats_guard = a.stats.begin(
         stats::RequestSpec {
+            workbuddy_identity: stats::event::WorkbuddyIdentity::from_headers(&parts.headers),
             source: Source::Relay,
             provider_id: r.provider_id.clone(),
             provider_name: r.connection.provider.clone(),
@@ -1216,7 +1218,10 @@ impl Bridge {
                 Ok("Logs cleared / 日志已清空".into())
             }
             "record" => {
-                let message = p["message"].as_str().filter(|s| !s.is_empty() && s.len() <= 16384).ok_or("Invalid log entry")?;
+                let message = p["message"]
+                    .as_str()
+                    .filter(|s| !s.is_empty() && s.len() <= 16384)
+                    .ok_or("Invalid log entry")?;
                 self.set_status(self.sanitize(message.into()));
                 Ok("Recorded".into())
             }
@@ -1272,20 +1277,56 @@ impl Bridge {
             "model_metadata" => {
                 let model = p["model"].as_str().unwrap_or("");
                 let upstream = p["upstream"].as_str().unwrap_or("");
-                if model.len() > 160 || upstream.len() > 2048 { return Err("Invalid model metadata request".into()); }
+                if model.len() > 160 || upstream.len() > 2048 {
+                    return Err("Invalid model metadata request".into());
+                }
                 let (protocol, settings, credential) = {
-                    let cfg=self.config.lock().unwrap();
-                    let provider=cfg.providers.iter().find(|v|v.id==id);
-                    (p.get("protocol").map(|v|serde_json::from_value(v.clone()).map_err(|_|"Invalid protocol")).transpose()?.unwrap_or_else(||provider.map(|v|v.protocol).unwrap_or_default()),
-                     p.get("protocol_settings").map(|v|serde_json::from_value(v.clone()).map_err(|_|"Invalid protocol settings")).transpose()?.unwrap_or_else(||provider.map(|v|v.protocol_settings.clone()).unwrap_or_default()),
-                     p["key"].as_str().filter(|s|!s.trim().is_empty()).map(str::trim).map(str::to_owned).unwrap_or_else(||provider.map(|v|v.api_key.clone()).unwrap_or_default()))
+                    let cfg = self.config.lock().unwrap();
+                    let provider = cfg.providers.iter().find(|v| v.id == id);
+                    (
+                        p.get("protocol")
+                            .map(|v| {
+                                serde_json::from_value(v.clone()).map_err(|_| "Invalid protocol")
+                            })
+                            .transpose()?
+                            .unwrap_or_else(|| provider.map(|v| v.protocol).unwrap_or_default()),
+                        p.get("protocol_settings")
+                            .map(|v| {
+                                serde_json::from_value(v.clone())
+                                    .map_err(|_| "Invalid protocol settings")
+                            })
+                            .transpose()?
+                            .unwrap_or_else(|| {
+                                provider
+                                    .map(|v| v.protocol_settings.clone())
+                                    .unwrap_or_default()
+                            }),
+                        p["key"]
+                            .as_str()
+                            .filter(|s| !s.trim().is_empty())
+                            .map(str::trim)
+                            .map(str::to_owned)
+                            .unwrap_or_else(|| {
+                                provider.map(|v| v.api_key.clone()).unwrap_or_default()
+                            }),
+                    )
                 };
                 settings.validate(protocol)?;
-                let resolved = self.catalog.resolve_protocol(upstream, model, None, crate::catalog::Wire{protocol,settings:&settings,credential:&credential});
+                let resolved = self.catalog.resolve_protocol(
+                    upstream,
+                    model,
+                    None,
+                    crate::catalog::Wire {
+                        protocol,
+                        settings: &settings,
+                        credential: &credential,
+                    },
+                );
                 Ok(json!({"model":model,"upstream":upstream,"protocol":protocol,"protocol_settings":settings,"metadata":resolved}).to_string())
             }
             "autostart" => {
-                let enabled = p["enabled"].as_bool()
+                let enabled = p["enabled"]
+                    .as_bool()
                     .ok_or("Invalid startup selection / 开机启动选项无效")?;
                 let mut cfg = self.config.lock().unwrap();
                 let mut next = cfg.clone();
@@ -1294,16 +1335,21 @@ impl Bridge {
                 crate::config::write_json(&path, &next)?;
                 if let Err(error) = crate::autostart::set(enabled, &self.dir) {
                     if let Err(rollback) = crate::config::write_json(&path, &*cfg) {
-                        return Err(format!("Startup update failed ({error}); configuration rollback failed ({rollback}) / 开机启动设置失败，配置回滚也失败，请重试"));
+                        return Err(format!(
+                            "Startup update failed ({error}); configuration rollback failed ({rollback}) / 开机启动设置失败，配置回滚也失败，请重试"
+                        ));
                     }
-                    return Err(format!("Cannot update login startup: {error} / 无法设置开机启动：{error}"));
+                    return Err(format!(
+                        "Cannot update login startup: {error} / 无法设置开机启动：{error}"
+                    ));
                 }
                 *cfg = next;
                 Ok(if enabled {
                     "Login startup enabled / 已开启开机启动"
                 } else {
                     "Login startup disabled / 已关闭开机启动"
-                }.into())
+                }
+                .into())
             }
             "language" => {
                 let lang = p["language"].as_str().unwrap_or("");
@@ -1370,11 +1416,13 @@ impl Bridge {
                             .unwrap();
                         // Older management clients omit these fields; preserve
                         // the existing protocol/settings rather than downgrading.
-                        if let Some(protocol)=p.get("protocol"){
-                            c.protocol=serde_json::from_value(protocol.clone()).map_err(|_|"Invalid upstream protocol")?;
+                        if let Some(protocol) = p.get("protocol") {
+                            c.protocol = serde_json::from_value(protocol.clone())
+                                .map_err(|_| "Invalid upstream protocol")?;
                         }
-                        if let Some(settings)=p.get("protocol_settings"){
-                            c.protocol_settings=serde_json::from_value(settings.clone()).map_err(|_|"Invalid protocol settings")?;
+                        if let Some(settings) = p.get("protocol_settings") {
+                            c.protocol_settings = serde_json::from_value(settings.clone())
+                                .map_err(|_| "Invalid protocol settings")?;
                         }
                         for (field, target) in
                             [("name", &mut c.name), ("upstream", &mut c.upstream)]
@@ -1424,7 +1472,7 @@ impl Bridge {
                     _ => unreachable!(),
                 }
                 next.validate()?;
-                let routes = Routes::rebuild(&next,Some(&self.routes.lock().unwrap()))?;
+                let routes = Routes::rebuild(&next, Some(&self.routes.lock().unwrap()))?;
                 crate::config::write_json(&self.dir.join("config.json"), &next)?;
                 *self.routes.lock().unwrap() = routes;
                 *cfg = next;
@@ -1439,26 +1487,60 @@ impl Bridge {
             }
             "test" => {
                 let selected = if let Some(index) = p.get("model_index") {
-                    let index = index.as_u64().and_then(|n| usize::try_from(n).ok())
+                    let index = index
+                        .as_u64()
+                        .and_then(|n| usize::try_from(n).ok())
                         .ok_or("Invalid model selection / 无效的模型选择")?;
-                    Some(self.config.lock().unwrap().provider(id)?.models.get(index)
-                        .ok_or("Selected model no longer exists / 选中的模型已不存在")?.id.clone())
+                    Some(
+                        self.config
+                            .lock()
+                            .unwrap()
+                            .provider(id)?
+                            .models
+                            .get(index)
+                            .ok_or("Selected model no longer exists / 选中的模型已不存在")?
+                            .id
+                            .clone(),
+                    )
                 } else {
                     None
                 };
                 self.test(selected.as_deref().unwrap_or(id)).await
             }
-            "workbuddy_check" => serde_json::to_string(&self.check_workbuddy_endpoints(&crate::workbuddy::path()?)?).map_err(|e| e.to_string()),
+            "workbuddy_check" => {
+                serde_json::to_string(&self.check_workbuddy_endpoints(&crate::workbuddy::path()?)?)
+                    .map_err(|e| e.to_string())
+            }
             "install" => {
                 self.prepare_metadata().await;
-                let count = self.configure_workbuddy(&crate::workbuddy::path()?)?;
-                Ok(format!(
-                    "Synced {count} models to disk; reopen the WorkBuddy model list. If an existing conversation reports missing endpoint or API key, fully quit and reopen WorkBuddy, then continue the same conversation / 已同步 {count} 项配置到文件，请重开 WorkBuddy 模型列表；旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy 后继续原会话"
-                ))
+                let outcome = self
+                    .sync_workbuddy_with_history(&crate::workbuddy::path()?, false)
+                    .await?;
+                let count = outcome.changed();
+                if outcome.is_confirmed() {
+                    Ok(format!(
+                        "Synced {count} models to disk; reopen the WorkBuddy model list. If an existing conversation reports missing endpoint or API key, fully quit and reopen WorkBuddy, then continue the same conversation / 已同步 {count} 项配置到文件，请重开 WorkBuddy 模型列表；旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy 后继续原会话"
+                    ))
+                } else {
+                    // The file already holds the new entries, so this is a
+                    // partial state to report, never a failed sync to retry.
+                    let code = outcome.error_code().unwrap_or("attribution_unconfirmed");
+                    Ok(format!(
+                        "Synced {count} models to disk, but their attribution was not confirmed ({code}); reopen the WorkBuddy model list / 已同步 {count} 项配置到文件，但归属未确认（{code}）；请重开 WorkBuddy 模型列表"
+                    ))
+                }
             }
-            "restore" => self
-                .restore_workbuddy(&crate::workbuddy::path()?)
-                .map(|_| "Removed synced proxy models; original entries preserved / 已移除代理同步的模型，原有条目已保留".into()),
+            "restore" => {
+                let outcome = self
+                    .sync_workbuddy_with_history(&crate::workbuddy::path()?, true)
+                    .await?;
+                Ok(if outcome.is_confirmed() {
+                    "已移除代理同步的模型，原有条目已保留".into()
+                } else {
+                    "已移除代理同步的模型，原有条目已保留，但归属未确认（attribution_unconfirmed）"
+                        .into()
+                })
+            }
             "copy" => {
                 let cfg = self.config.lock().unwrap();
                 let provider = cfg.provider(id)?;

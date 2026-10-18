@@ -1,0 +1,155 @@
+{
+  "result": "PASS_EXACT_SESSION_PATHS_CLEANED",
+  "at": 1792232626.197221,
+  "rows": [
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/home",
+      "allocated_bytes": 460820480,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/config",
+      "allocated_bytes": 246181888,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/review-core",
+      "allocated_bytes": 8429568,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/WorkBuddy Proxy Review.app",
+      "allocated_bytes": 14745600,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/tmp",
+      "allocated_bytes": 0,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/appdata",
+      "allocated_bytes": 0,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/localappdata",
+      "allocated_bytes": 0,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/xdg-cache",
+      "allocated_bytes": 0,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/xdg-config",
+      "allocated_bytes": 0,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/xdg-data",
+      "allocated_bytes": 0,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/ui-release-1792229486062928000/xdg-state",
+      "allocated_bytes": 0,
+      "ownership_evidence": "fixture.json; event-budget-report.json; extra-native-launch-cleanup.json",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/native-package-lifecycle-telemetry/WorkBuddy Proxy.app",
+      "allocated_bytes": 32108544,
+      "ownership_evidence": "report.json COMPLETE; post-native-process-audit.json no_fixture_processes=true",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/native-package-lifecycle-telemetry/original-code-0",
+      "allocated_bytes": 8364032,
+      "ownership_evidence": "report.json COMPLETE; post-native-process-audit.json no_fixture_processes=true",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/native-package-lifecycle-telemetry/original-code-1",
+      "allocated_bytes": 14626816,
+      "ownership_evidence": "report.json COMPLETE; post-native-process-audit.json no_fixture_processes=true",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/native-package-lifecycle-telemetry/qa-code-0",
+      "allocated_bytes": 8364032,
+      "ownership_evidence": "report.json COMPLETE; post-native-process-audit.json no_fixture_processes=true",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/native-package-lifecycle-telemetry/qa-code-1",
+      "allocated_bytes": 14626816,
+      "ownership_evidence": "report.json COMPLETE; post-native-process-audit.json no_fixture_processes=true",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/native-package-lifecycle-telemetry/volume",
+      "allocated_bytes": 0,
+      "ownership_evidence": "report.json COMPLETE; post-native-process-audit.json no_fixture_processes=true",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/unprivileged-ps/ps",
+      "allocated_bytes": 172032,
+      "ownership_evidence": "unprivileged-ps/report.json rejected experiment",
+      "open_handles": false,
+      "removed": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/workbuddy-native-package-22rbf7lf",
+      "allocated_bytes": 0,
+      "ownership_evidence": "native-package-lifecycle-final/report.json exact config path; created within session",
+      "open_handles": false,
+      "removed": true
+    }
+  ],
+  "system_free_before_bytes": 18028883968,
+  "removed_allocated_bytes": 808439808,
+  "system_free_after_bytes": 16742518784,
+  "external_free_bytes": 353919463424,
+  "retained_unknown_system_temp_candidates": 4001,
+  "rule": "Unknown candidates and preexisting worktree target caches retained; reports, screenshots, snapshots, DMG preserved",
+  "retained_system_temp_candidate_count": 4001,
+  "retained_system_temp_candidates_allocated_bytes": 6262906880,
+  "inventory_measurement_errors": [],
+  "preserved_worktree_caches": {
+    "target": 8058023936,
+    "gpui/target": 4732645376
+  },
+  "session_tmp_allocated_bytes_at_measurement": 374374400,
+  "measurement_note": "session TMP includes live strict matrix fixture on external disk; each phase cleans its own fixture after wait. Unknown older system temp candidates preserved.",
+  "measured_at": 1792232770.950439
+}

@@ -11,7 +11,18 @@ impl AssetSource for Assets {
         if !path.ends_with(".svg") {
             return Ok(None);
         }
-        let shape = if path.contains("eye-off") {
+        // The three source icons have their own branches *before* the shared
+        // fallback, so none of them can ever be served the generic plus shape.
+        let shape = if path.contains("stats-source-all") {
+            // A 2x2 grid: every source.
+            r#"<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/>"#
+        } else if path.contains("stats-source-builtin") {
+            // A badge with a tick: models that came with WorkBuddy.
+            r#"<path d="M12 2.5 20 6v6c0 5-3.4 8.2-8 9.5C7.4 20.2 4 17 4 12V6Z"/><path d="m8.5 12 2.5 2.5L15.5 10"/>"#
+        } else if path.contains("stats-source-supplier") {
+            // Three connected nodes: the supplier's route.
+            r#"<circle cx="5" cy="12" r="2.5"/><circle cx="12" cy="5.5" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M7.3 10.8 9.8 7.5M14.2 7.5l2.5 3.3M7.5 12h9"/>"#
+        } else if path.contains("eye-off") {
             r#"<path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.2A11 11 0 0 1 12 5c5 0 9 7 9 7a15 15 0 0 1-2.5 3.2M6.5 6.5C4.3 8.2 3 12 3 12s4 7 9 7a10 10 0 0 0 5.5-1.6"/>"#
         } else if path.contains("eye") {
             r#"<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>"#
@@ -74,5 +85,62 @@ impl AssetSource for Assets {
     }
     fn list(&self, _: &str) -> anyhow::Result<Vec<SharedString>> {
         Ok(vec![])
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn load(path: &str) -> String {
+        let bytes = Assets.load(path).unwrap().unwrap();
+        String::from_utf8(bytes.to_vec()).unwrap()
+    }
+
+    #[test]
+    fn the_three_source_icons_are_their_own_shapes_and_never_the_plus() {
+        // AC065: the group must not fall back to the generic plus. Each key has
+        // its own branch *before* the shared fallback, which is what this checks.
+        for (path, marker) in [
+            ("icons/stats-source-all.svg", "<rect"),
+            ("icons/stats-source-builtin.svg", "m8.5 12"),
+            ("icons/stats-source-supplier.svg", "<circle"),
+        ] {
+            let svg = load(path);
+            assert!(svg.contains(marker), "{path} must be its own shape");
+            assert!(
+                !svg.contains(r#"d="M5 12h14M12 5v14""#),
+                "{path} must not be the plus fallback"
+            );
+            assert!(
+                svg.contains(r#"viewBox="0 0 24 24""#),
+                "{path} uses a 24x24 viewBox"
+            );
+            assert!(
+                svg.contains(r#"stroke-width="1.7""#),
+                "{path} keeps the 1.7 stroke"
+            );
+            assert!(
+                svg.contains(r#"stroke-linecap="round""#),
+                "{path} rounds its caps"
+            );
+        }
+    }
+
+    #[test]
+    fn the_three_source_shapes_differ_from_each_other() {
+        let all = load("icons/stats-source-all.svg");
+        let builtin = load("icons/stats-source-builtin.svg");
+        let supplier = load("icons/stats-source-supplier.svg");
+        assert_ne!(all, builtin);
+        assert_ne!(builtin, supplier);
+        assert_ne!(all, supplier);
+    }
+
+    #[test]
+    fn an_unknown_svg_still_loads_something_rather_than_failing() {
+        // The fallback stays for every other icon in the app; the point of the
+        // test above is that the three source icons never reach it.
+        assert!(load("icons/whatever.svg").contains("<svg"));
     }
 }

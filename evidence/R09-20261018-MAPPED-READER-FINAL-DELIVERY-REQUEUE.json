@@ -1,0 +1,9 @@
+{
+  "at": 1792324493.1373272,
+  "reason": "Correct final documentation: full12 phases contain one300s idle window, not12. Existing criterion and actual raw proof unchanged. No product changes or test restart.",
+  "prior_coordinator": "dist/workbuddy-import-review/mapped-reader-final-delivery-coordinator.json",
+  "prior_terminal": "FAIL_OR_INTERRUPTED_FINAL_DELIVERY",
+  "next_coordinator": "dist/workbuddy-import-review/mapped-reader-final-delivery-v2-coordinator.json",
+  "resume_queue": "dist/workbuddy-import-review/mapped-reader-full-resume-v2-coordinator.json",
+  "children_launched_before_stop": 0
+}

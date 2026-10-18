@@ -1,0 +1,38 @@
+{
+  "fixture": "session-tail.jsonl",
+  "purpose": "A trailing line without a newline must not advance the committed offset; the same bytes become importable once a newline is appended (ACCEPTANCE X11, DATA-API section 5).",
+  "synthetic": true,
+  "expectation_source": "hand-computed from the fixture bytes; offsets measured with python3 on the fixture file itself, not with the importer under test",
+  "file": {
+    "total_bytes": 1028,
+    "trailing_newline": false,
+    "complete_lines": 2,
+    "unterminated_fragment_bytes": 342
+  },
+  "initial_read": {
+    "committed_offset_bytes": 686,
+    "imported": {
+      "entry_ids": ["tailA", "tailB"],
+      "record_count": 2,
+      "complete_count": 2,
+      "input_tokens": 11,
+      "output_tokens": 11,
+      "total_tokens": 22
+    },
+    "unterminated_fragment_committed": false
+  },
+  "after_appending_newline": {
+    "committed_offset_bytes": 1028,
+    "imported": {
+      "entry_ids": ["tailA", "tailB", "tailC"],
+      "record_count": 3,
+      "complete_count": 3,
+      "input_tokens": 18,
+      "output_tokens": 18,
+      "total_tokens": 36
+    },
+    "duplicate_rows": 0,
+    "conflict_rows": 0
+  },
+  "notes": "Appending the newline in three separate writes must still import tailC exactly once, and the offset must never pass an unterminated line."
+}

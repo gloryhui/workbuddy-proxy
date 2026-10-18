@@ -23,7 +23,9 @@ pub mod dto;
 pub mod event;
 pub mod pricing;
 pub mod query;
+mod report_scheduling;
 pub mod store;
+pub mod workbuddy_import;
 
 use crate::stats::collector::Protocol;
 use crate::stats::dto::{
@@ -98,6 +100,7 @@ pub fn restrict_permissions(path: &Path) {
 /// Description of one routable request, captured while the route is valid.
 #[derive(Clone, Debug)]
 pub struct RequestSpec {
+    pub workbuddy_identity: Option<crate::stats::event::WorkbuddyIdentity>,
     pub source: Source,
     pub provider_id: String,
     pub provider_name: String,
@@ -120,6 +123,14 @@ struct ClearToken {
 
 #[derive(Debug)]
 enum ControlKind {
+    WorkbuddySyncPrepare {
+        models: Vec<workbuddy_import::observation::ManagedModel>,
+        lease: Arc<AtomicBool>,
+    },
+    WorkbuddySyncFinish {
+        token: String,
+        observations: Vec<workbuddy_import::classify::ConfigObservation>,
+    },
     Shutdown,
     SettingsGet,
     SettingsUpdate {
@@ -127,6 +138,11 @@ enum ControlKind {
         retention_days: i64,
         default_currency: Option<String>,
         expected_revision: i64,
+    },
+    /// One of the eight import management commands, dispatched by name.
+    WorkbuddyCommand {
+        command: String,
+        payload: serde_json::Value,
     },
     ProviderSettingsGet {
         provider_id: String,
@@ -226,6 +242,7 @@ enum ReadJob {
         now: i64,
     },
     Filters {
+        scope: query::FilterScope,
         kind: FilterKind,
         query: String,
         provider_id: Option<String>,
@@ -252,6 +269,7 @@ struct Inner {
     counters: Arc<Counters>,
     control: SyncSender<ControlMessage>,
     reader: Mutex<Option<ReaderHandle>>,
+    report_reads: report_scheduling::ReadActivity,
     settings: RwLock<store::Settings>,
     state: RwLock<HealthState>,
     error_code: Mutex<Option<String>>,
@@ -265,6 +283,8 @@ struct Inner {
     prices: store::PriceCache,
     configured_providers: RwLock<Vec<(String, String)>>,
     clear_token: Mutex<Option<ClearToken>>,
+    import_runtime: Arc<workbuddy_import::runtime::Shared>,
+    import_previews: Mutex<workbuddy_import::manual::PreviewCache>,
 }
 
 impl Inner {
@@ -321,13 +341,32 @@ impl StatsHandle {
     /// Starts the statistics subsystem. Migration and recovery run on the writer
     /// thread so network startup is never delayed.
     pub fn start(dir: PathBuf) -> Self {
+        Self::start_with_import_root(dir, None)
+    }
+
+    /// A source-root seam keeps integration tests on disposable JSONL files
+    /// without mutating process-wide HOME or the user's WorkBuddy profile.
+    fn start_with_import_root(
+        dir: PathBuf,
+        import_root: Option<workbuddy_import::reader::ReaderRoot>,
+    ) -> Self {
+        // Fail closed when the typed import contract drifted: a batch bound or an
+        // "unknown is None" invariant that no longer holds must never reach the
+        // writer. This check starts no import worker, queue or connection; the
+        // runtime task owns those later.
+        if let Err(detail) = workbuddy_import::contract_check() {
+            let (inner, _control_rx) = Self::initialize(dir);
+            inner.set_state(HealthState::Disabled, Some(detail.to_owned()));
+            inner.queue.close();
+            return Self { inner };
+        }
         let (inner, control_rx) = Self::initialize(dir);
         let writer_inner = inner.clone();
         let spawned = std::thread::Builder::new()
             .name("stats-writer".into())
             .stack_size(1024 * 1024)
             .spawn(move || {
-                writer_thread(writer_inner, control_rx);
+                writer_thread(writer_inner, control_rx, import_root);
             });
         if spawned.is_err() {
             inner.set_state(
@@ -359,6 +398,7 @@ impl StatsHandle {
             counters: Arc::new(Counters::default()),
             control,
             reader: Mutex::new(None),
+            report_reads: report_scheduling::ReadActivity::default(),
             settings: RwLock::new(store::Settings::default()),
             state: RwLock::new(HealthState::Migrating),
             error_code: Mutex::new(None),
@@ -371,6 +411,8 @@ impl StatsHandle {
             prices: Arc::new(std::sync::RwLock::new(store::PublishedPrices::default())),
             configured_providers: RwLock::new(Vec::new()),
             clear_token: Mutex::new(None),
+            import_runtime: Arc::new(workbuddy_import::runtime::Shared::default()),
+            import_previews: Mutex::new(workbuddy_import::manual::PreviewCache::default()),
         });
         (inner, control_rx)
     }
@@ -385,6 +427,7 @@ impl StatsHandle {
     /// during teardown then records `interrupted/shutdown` instead of a
     /// fictitious client cancellation.
     pub fn mark_closing(&self) {
+        self.inner.import_runtime.configure(false);
         crate::stats::event::RequestGuard::mark_closing(&self.inner.counters);
         self.inner
             .counters
@@ -484,6 +527,7 @@ impl StatsHandle {
             started_at_ms,
         );
         let meta = RequestMeta {
+            workbuddy_identity: spec.workbuddy_identity,
             request_id: crate::config::token(),
             run_id: self.inner.run_id.clone(),
             source: spec.source,
@@ -674,6 +718,23 @@ impl StatsHandle {
                     .and_then(serde_json::Value::as_str)
                     .and_then(FilterKind::parse)
                     .ok_or_else(|| error(ERR_INVALID, "kind must be provider or model"))?;
+                let source = match payload.get("source_scope") {
+                    None => dto::SourceScope::All,
+                    Some(value) => value
+                        .as_str()
+                        .and_then(dto::SourceScope::parse)
+                        .ok_or_else(|| error(ERR_INVALID, "invalid source scope"))?,
+                };
+                let capture = match payload.get("capture_method") {
+                    None => dto::CaptureMethod::All,
+                    Some(value) => value
+                        .as_str()
+                        .and_then(dto::CaptureMethod::parse)
+                        .ok_or_else(|| error(ERR_INVALID, "invalid capture method"))?,
+                };
+                if source == dto::SourceScope::Builtin && capture == dto::CaptureMethod::Proxy {
+                    return Err(error(ERR_INVALID, "incompatible source and capture method"));
+                }
                 let query = payload
                     .get("query")
                     .and_then(serde_json::Value::as_str)
@@ -691,6 +752,7 @@ impl StatsHandle {
                 let tag = tag(payload);
                 let configured = self.inner.configured_providers.read().unwrap().clone();
                 self.read(ReadJob::Filters {
+                    scope: query::FilterScope { source, capture },
                     kind,
                     query,
                     provider_id,
@@ -703,6 +765,13 @@ impl StatsHandle {
                 })
                 .await
             }
+            name if name.starts_with("stats_workbuddy_") => self
+                .control(ControlKind::WorkbuddyCommand {
+                    command: name.to_owned(),
+                    payload: payload.clone(),
+                })
+                .await
+                .map(|text| with_tag(text, &request_tag)),
             "stats_settings_get" => self
                 .control(ControlKind::SettingsGet)
                 .await
@@ -1193,9 +1262,15 @@ fn spawn_reader(inner: Arc<Inner>) -> Result<ReaderHandle, String> {
 
 fn reader_thread(inner: Arc<Inner>, path: PathBuf, rx: Receiver<ReadJobEnvelope>) {
     let mut connection: Option<rusqlite::Connection> = None;
+    let trace = std::env::var_os("WORKBUDDY_PROXY_QUERY_TIMING").as_deref()
+        == Some(std::ffi::OsStr::new("1"));
+    let mut trace_count = 0;
     loop {
         match rx.recv_timeout(READER_IDLE) {
             Ok(envelope) => {
+                let queued = trace.then(Instant::now);
+                let _read_activity = inner.report_reads.enter();
+                let admitted = trace.then(Instant::now);
                 if connection.is_none() {
                     connection = store::open_connection(&path, true).ok();
                 }
@@ -1206,7 +1281,22 @@ fn reader_thread(inner: Arc<Inner>, path: PathBuf, rx: Receiver<ReadJobEnvelope>
                         "statistics database cannot be opened read-only",
                     )),
                 };
+                if trace_count < 128
+                    && let (Some(queued), Some(admitted)) = (queued, admitted)
+                {
+                    trace_count += 1;
+                    eprintln!(
+                        "WB_QUERY_TIMING seq={} admission_us={} execution_us={}",
+                        trace_count,
+                        admitted.duration_since(queued).as_micros(),
+                        admitted.elapsed().as_micros()
+                    );
+                }
                 let _ = envelope.reply.send(result);
+                drop(_read_activity);
+                if inner.report_reads.import_reserved() {
+                    inner.queue.wake();
+                }
             }
             Err(std::sync::mpsc::RecvTimeoutError::Timeout) => break,
             Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => break,
@@ -1365,6 +1455,7 @@ fn run_read(
             ),
         ),
         ReadJob::Filters {
+            scope,
             kind,
             query: text,
             provider_id,
@@ -1375,14 +1466,17 @@ fn run_read(
             tag,
             now,
         } => serialize(
-            query::filter_options(
+            query::filter_options_scoped(
                 conn,
-                kind,
-                &text,
-                provider_id.as_deref(),
-                limit,
-                after_key.as_deref(),
-                &configured,
+                query::FilterOptionsRequest {
+                    kind,
+                    query: &text,
+                    provider_id: provider_id.as_deref(),
+                    limit,
+                    after_key: after_key.as_deref(),
+                    configured: &configured,
+                    scope,
+                },
             )
             .and_then(|options| {
                 let dto = FilterOptionsDto {
@@ -1410,7 +1504,11 @@ fn run_read(
 
 // ---- writer thread --------------------------------------------------------
 
-fn writer_thread(inner: Arc<Inner>, control: Receiver<ControlMessage>) {
+fn writer_thread(
+    inner: Arc<Inner>,
+    control: Receiver<ControlMessage>,
+    import_root: Option<workbuddy_import::reader::ReaderRoot>,
+) {
     let (mut writer, recovery) =
         match store::Writer::open(&inner.dir, &inner.run_id, inner.counters.clone()) {
             Ok(pair) => pair,
@@ -1496,6 +1594,26 @@ fn writer_thread(inner: Arc<Inner>, control: Receiver<ControlMessage>) {
     // no request is left `in_flight` forever.
     let mut orphans: Vec<String> = Vec::new();
 
+    let import_enabled = {
+        let tx = writer.conn.transaction();
+        tx.and_then(|tx| {
+            let enabled = workbuddy_import::store::load_import_settings(&tx)
+                .map(|settings| {
+                    inner.import_runtime.publish_import_policy(settings.enabled);
+                    settings.enabled
+                })
+                .unwrap_or(false);
+            tx.commit()?;
+            Ok(enabled)
+        })
+        .unwrap_or(false)
+    };
+    inner
+        .import_runtime
+        .configure(writer.settings.enabled && import_enabled);
+    let mut importer = import_root
+        .or_else(|| workbuddy_import::reader::ReaderRoot::default_root().ok())
+        .map(|root| workbuddy_import::runtime::Runtime::start(inner.clone(), root));
     loop {
         // Control first: user actions and shutdown must not wait for traffic.
         let mut shutdown = false;
@@ -1511,6 +1629,23 @@ fn writer_thread(inner: Arc<Inner>, control: Receiver<ControlMessage>) {
                     }
                     let reply = message.reply;
                     let result = handle_control(&inner, &mut writer, message.kind);
+                    let import_enabled = {
+                        let tx = writer.conn.transaction();
+                        tx.and_then(|tx| {
+                            let enabled = workbuddy_import::store::load_import_settings(&tx)
+                                .map(|settings| {
+                                    inner.import_runtime.publish_import_policy(settings.enabled);
+                                    settings.enabled
+                                })
+                                .unwrap_or(false);
+                            tx.commit()?;
+                            Ok(enabled)
+                        })
+                        .unwrap_or(false)
+                    };
+                    inner
+                        .import_runtime
+                        .configure(writer.settings.enabled && import_enabled);
                     if let Some(reply) = reply {
                         let _ = reply.send(result);
                     }
@@ -1523,15 +1658,20 @@ fn writer_thread(inner: Arc<Inner>, control: Receiver<ControlMessage>) {
             }
         }
         if shutdown {
+            drop(importer.take());
             flush_and_stop(&inner, &mut writer);
             return;
         }
         // One bounded batch, then loop back to the control queue.
-        let batch = inner.queue.pop_batch(BATCH_EVENTS, BATCH_WAIT);
+        let wait = inner.report_reads.writer_wait(BATCH_WAIT);
+        let batch = inner.queue.pop_batch(BATCH_EVENTS, wait);
         if !batch.is_empty() {
             let budget = store::WriteBudget::new(store::BATCH_BUDGET);
             match writer.apply_batch(&batch, &budget) {
                 Ok(outcome) => {
+                    if batch.iter().any(|event|matches!(event,event::StatsEvent::Start(meta) if meta.workbuddy_identity.is_some())) {
+                        inner.maintenance_revision.fetch_add(1,Ordering::AcqRel);
+                    }
                     inner.counters.commits.fetch_add(1, Ordering::Relaxed);
                     inner
                         .counters
@@ -1673,6 +1813,11 @@ fn writer_thread(inner: Arc<Inner>, control: Receiver<ControlMessage>) {
         }
         // Automatic retention is checked at most once a minute; the sweep
         // itself reports whether a task actually started.
+        if inner.queue.depth() == 0
+            && let Some(importer) = importer.as_mut()
+        {
+            importer.poll(&mut writer, &inner);
+        }
         if retention_check.elapsed() >= Duration::from_secs(60) {
             retention_check = Instant::now();
             if let Ok(true) = writer.maybe_start_retention(now_ms()) {
@@ -2068,6 +2213,13 @@ fn handle_control(
     kind: ControlKind,
 ) -> Result<String, String> {
     match kind {
+        ControlKind::WorkbuddySyncPrepare { models, lease } => {
+            workbuddy_sync::prepare(inner, writer, models, lease)
+        }
+        ControlKind::WorkbuddySyncFinish {
+            token,
+            observations,
+        } => workbuddy_sync::finish(writer, &token, observations),
         ControlKind::Shutdown => Ok("stopped".into()),
         ControlKind::RefreshFacts => {
             let _ = writer.refresh_db_stats();
@@ -2088,6 +2240,33 @@ fn handle_control(
                 revision: settings.revision,
             };
             serde_json::to_string(&dto).map_err(|_| error(ERR_UNAVAILABLE, "serialize settings"))
+        }
+        ControlKind::WorkbuddyCommand { command, payload } => {
+            if command == "stats_workbuddy_scan" {
+                let mode = payload
+                    .get("mode")
+                    .and_then(serde_json::Value::as_str)
+                    .unwrap_or("incremental");
+                return inner.import_runtime.request_scan(mode);
+            }
+            let result = crate::stats::workbuddy_import::handle_command(
+                &mut writer.conn,
+                &command,
+                &payload,
+                now_ms(),
+                &mut inner.import_previews.lock().unwrap(),
+            );
+            if command == "stats_workbuddy_status" {
+                return result.and_then(|text| inner.import_runtime.publish_status(&text));
+            }
+            if command == "stats_workbuddy_settings_update" && result.is_ok() {
+                // Import and global settings deliberately share the same CAS
+                // revision. Refresh the cache before answering either API.
+                writer.settings = store::load_settings(&writer.conn)
+                    .map_err(|_| error(ERR_UNAVAILABLE, "cannot reload statistics settings"))?;
+                *inner.settings.write().unwrap() = writer.settings;
+            }
+            result
         }
         ControlKind::SettingsUpdate {
             enabled,
@@ -2372,6 +2551,8 @@ fn maintenance_dto(
     serde_json::to_string(&dto).map_err(|_| error(ERR_UNAVAILABLE, "serialize maintenance"))
 }
 
+mod workbuddy_sync;
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2393,6 +2574,7 @@ mod tests {
 
     fn spec(id: &str) -> RequestSpec {
         RequestSpec {
+            workbuddy_identity: None,
             source: Source::Relay,
             provider_id: "p1".into(),
             provider_name: "Provider".into(),

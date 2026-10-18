@@ -1,0 +1,192 @@
+{
+  "at": 1792241633.404203,
+  "result": "PASS_CURRENT_LIVE_CORE_PID_PERMISSION_QUERY_AND_UNSANDBOXED_NEGATIVE_CONTROL",
+  "scope": "current live 1M/many trial3 core only; permission queries, no protected file contents opened; no extrapolated per-phase PID observation",
+  "owned_core_command": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-4u6de4z_/core-under-test --headless --config-dir /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-matrix-s547qxcf/tmp/workbuddy-scale-4u6de4z_/config",
+  "positive_actual_core_pid": {
+    "enforced": true,
+    "pid": 33976,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O"
+  },
+  "negative_unsandboxed_observer_pid": {
+    "enforced": false,
+    "pid": 35114,
+    "sandboxed": false,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          0,
+          1
+        ],
+        "file-write-data": [
+          0,
+          1
+        ],
+        "file-write-create": [
+          0,
+          1
+        ],
+        "file-write-unlink": [
+          0,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          0,
+          1
+        ],
+        "file-write-data": [
+          0,
+          1
+        ],
+        "file-write-create": [
+          0,
+          1
+        ],
+        "file-write-unlink": [
+          0,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          0,
+          1
+        ],
+        "file-write-data": [
+          0,
+          1
+        ],
+        "file-write-create": [
+          0,
+          1
+        ],
+        "file-write-unlink": [
+          0,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O"
+  },
+  "core_identity_provenance": "strict matrix frozen f402 input; exact owned copied-executable command under current guard root",
+  "matrix_coordinator": "dist/workbuddy-import-review/cache8-resume-matrix-coordinator.json"
+}

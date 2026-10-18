@@ -1,0 +1,355 @@
+{
+  "scope": "QA harness correction; core/UI bytes unchanged; no acceptance thresholds changed",
+  "kernel_attestation": {
+    "result": "PASS",
+    "checks": {
+      "unprotected_rejected": true,
+      "protected_process_attested": true,
+      "same_pid_after_exec": true,
+      "permissions_still_enforced_after_exec": true,
+      "synthetic_path_allowed": true,
+      "real_metadata_unchanged": true,
+      "child_exit_zero": true
+    },
+    "negative_control": {
+      "enforced": false,
+      "pid": 64685,
+      "sandboxed": false,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            0,
+            1
+          ],
+          "file-write-data": [
+            0,
+            1
+          ],
+          "file-write-create": [
+            0,
+            1
+          ],
+          "file-write-unlink": [
+            0,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            0,
+            1
+          ],
+          "file-write-data": [
+            0,
+            1
+          ],
+          "file-write-create": [
+            0,
+            1
+          ],
+          "file-write-unlink": [
+            0,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            0,
+            1
+          ],
+          "file-write-data": [
+            0,
+            1
+          ],
+          "file-write-create": [
+            0,
+            1
+          ],
+          "file-write-unlink": [
+            0,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    },
+    "before_exec": {
+      "enforced": true,
+      "pid": 64690,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "command": [
+        "/Users/glory/.local/bin/python3.12",
+        "-c",
+        "import os,json;from workbuddy_import_ui_sandbox import kernel_protection;from workbuddy_import_test import real_user_home;print(json.dumps(kernel_protection(real_user_home(),os.environ['HOME'])))"
+      ],
+      "monotonic_ns": "291546023252458",
+      "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+    },
+    "after_exec": {
+      "enforced": true,
+      "pid": 64690,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    },
+    "stderr": "",
+    "scope": "permission introspection only for real paths; no real content read/write attempted"
+  },
+  "sampler": {
+    "result": "PASS",
+    "checks": {
+      "positive_real_rss": true,
+      "allocation_visible": true,
+      "rss_matches_ps": true,
+      "cpu_matches_process_clock": true,
+      "cpu_matches_ps": true,
+      "cpu_burn_visible": true,
+      "invalid_pid_fails_closed": true
+    },
+    "before": {
+      "pid": 62646,
+      "rss": 15417344,
+      "cpu": 0.020164791666666664
+    },
+    "after": {
+      "pid": 62646,
+      "rss": 40632320,
+      "cpu": 0.3215925833333333,
+      "cpu_delta": 0.3014277916666666,
+      "process_time_delta": 0.301434,
+      "invalid_pid_rejected": true
+    },
+    "ps_before": {
+      "rss": 15433728,
+      "cpu": 0.02
+    },
+    "ps_after": {
+      "rss": 40697856,
+      "cpu": 0.32
+    },
+    "script_sha256": "eb8fa5eb56a854be6ded6a3d67c1735f6658d7c8c94436b019b371e2edba20c4",
+    "scope": "libproc inside kernel policy; /bin/ps outside policy observes only the same synthetic child PID; process_time independently checks Mach time conversion"
+  },
+  "scripts": {
+    "scripts/workbuddy_import_ui_sandbox.py": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78",
+    "scripts/workbuddy_import_test.py": "67c1ef49acfa1153aa93cdb18bb015523017c1c362168c6c791ae65abc308bc9",
+    "scripts/workbuddy_import_resources.py": "70a9517dbf4c1a6225348826326214a731208a217f3cd9e20986c438e985fbd5",
+    "scripts/benchmark.py": "175abf79dbd383a885ecae34217c7f678c35aafe450abd689bbba765a120cbcd",
+    "scripts/workbuddy_import_status_probe.py": "3a566469dfd38426b33f7a73ab34d4ebd1c71a3f98f7c1ea12aaec1bde10bc15"
+  },
+  "previous_failures": [
+    "telemetry-protected-complete: native_resource_test failed before assertions because sandbox denies setuid /bin/ps execution",
+    "telemetry-protected-complete: scheduling 27/0 but outer real WorkBuddy directory metadata drifted; original outer step remains FAIL",
+    "kernel-attestation-selfcheck/first-failure.json: nonexistent positive-control path conservatively denied; failed closed, no child executed"
+  ],
+  "policy": [
+    "Real metadata snapshots and real_profiles_unchanged remain accurate observations.",
+    "Only current-process sandbox_check permission proof with a readable/writable existing synthetic positive control can use kernel isolation instead of the unchanged-metadata heuristic.",
+    "Attested launcher captures its PID and permissions before exec; parent requires matching child PID. exec descendants inherit policy.",
+    "Unsandboxed runs retain the original unchanged-metadata assertion. GUI launched by external native services is not covered.",
+    "No actual read/write attempted on real source/config during permission verification."
+  ],
+  "reference": "https://raw.githubusercontent.com/WebKit/WebKit/main/Source/WTF/wtf/spi/darwin/SandboxSPI.h"
+}

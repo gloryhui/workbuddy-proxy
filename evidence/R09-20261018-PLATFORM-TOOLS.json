@@ -1,0 +1,20 @@
+{
+  "at": 1792294943.421344,
+  "scope": "tool presence only, not platform acceptance",
+  "tools": {
+    "rustup": "/Users/glory/.cargo/bin/rustup",
+    "cargo": "/Users/glory/.cargo/bin/cargo",
+    "x86_64-w64-mingw32-gcc": null,
+    "x86_64-w64-mingw32-clang": null,
+    "zig": null,
+    "docker": null,
+    "podman": null,
+    "qemu-system-x86_64": null,
+    "wine": null,
+    "limactl": null,
+    "colima": null
+  },
+  "macos_x64": "Rosetta runtime/SDK and target verified; current build coordinator records actual commands",
+  "linux_windows": "missing cross linker, VM/container runner and Wine; no runnable Linux/Windows local environment",
+  "build_coordinator": "dist/workbuddy-import-review/progress-macos-x64-coordinator.json"
+}

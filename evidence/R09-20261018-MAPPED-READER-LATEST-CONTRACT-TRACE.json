@@ -1,0 +1,27 @@
+{
+  "at": 1792324568.9782348,
+  "scope": "Supplementary actual call-chain source review; static facts are not runtime performance proof. No source was edited.",
+  "source_sha256": {
+    "src/stats/mod.rs": "96f2f4c276a005b5627d5e3e5c39a1a1abc6bd5d85b0c206645df7bd7291ac08",
+    "src/stats/workbuddy_import/runtime.rs": "fb74344f7233b7ca64b1574e98bc2bef60e2365cee8962c07218ef36d96264b7",
+    "src/stats/workbuddy_import/runtime/worker.rs": "2f5316bec0b423ecb2387263f135a2cbfb4ce208b6cb6e9f368d9fcbb5273ffd",
+    "src/stats/workbuddy_import/progress.rs": "056dfc104b46e009e267ef170e9d0e8a2562f41c95d5ccffef67e855d755173e",
+    "gpui/src/statistics/import_controls.rs": "7e2f81b534251eaa3df4511c1c0c3ab7099c328004a6796790667ba3686ad24d",
+    "gpui/src/statistics/import_controls/progress.rs": "3c4ee62c7ddd7de63ae807e6b0c42edfc94cefb2dc7710df2b3bee2e032e4464"
+  },
+  "reviewed_chain": [
+    "StatsHandle writer starts Runtime::start; Runtime spawns dedicated source worker and returns without waiting for historical EOF",
+    "Worker submits bounded envelope and waits for durable writer ACK; committed offsets and facts are transactionally coupled",
+    "Status progress aggregates checkpoint table COUNT/SUM only, never source-body scanning",
+    "Runtime publishes discovery-complete/root-found state separately; full scan displayed as indeterminate by UI",
+    "Visible status poll queues status read every2s; only explicit check buttons enqueue source scans",
+    "UI validates nonnegative counts and committed+remaining=total, caps unfinished progress below100%, displays file/byte units and separate imported count",
+    "Paused/error paths retain committed snapshot; unknown discovery does not show determinate percentage"
+  ],
+  "runtime_evidence": [
+    "evidence/R09-20261018-MAPPED-READER-CORE-GATES.json",
+    "evidence/R09-20261018-MAPPED-READER-NATIVE.json",
+    "evidence/R09-20261018-MAPPED-READER-FULL-MATRIX.json"
+  ],
+  "no_product_changes": true
+}

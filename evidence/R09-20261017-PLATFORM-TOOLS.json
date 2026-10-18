@@ -1,0 +1,35 @@
+{
+  "at": 1792241340.8895261,
+  "scope": "read-only installed platform tool availability; not build/runtime/GUI acceptance",
+  "host": "macOS-15.8.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "tools": {
+    "rustup": "/Users/glory/.cargo/bin/rustup",
+    "cargo": "/Users/glory/.cargo/bin/cargo",
+    "x86_64-w64-mingw32-gcc": null,
+    "x86_64-w64-mingw32-clang": null,
+    "zig": null,
+    "docker": null,
+    "podman": null,
+    "qemu-system-x86_64": null,
+    "wine": null,
+    "limactl": null,
+    "colima": null
+  },
+  "installed_targets": {
+    "exit_code": 0,
+    "stdout": "aarch64-apple-darwin\nx86_64-apple-darwin\nx86_64-pc-windows-gnu",
+    "stderr": ""
+  },
+  "rosetta_package": {
+    "exit_code": 0,
+    "stdout": "package-id: com.apple.pkg.RosettaUpdateAuto\nversion: 1.0.0.0.1.1790146881\nvolume: /\nlocation: /\ninstall-time: 1791248787",
+    "stderr": ""
+  },
+  "rosetta_runtime_exists": true,
+  "macos_sdk": {
+    "exit_code": 0,
+    "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+    "stderr": ""
+  }
+}

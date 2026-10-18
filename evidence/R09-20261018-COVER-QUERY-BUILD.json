@@ -1,0 +1,54 @@
+{
+  "at": 1792297476.3320441,
+  "result": "PASS_540_BUILD_GATES_NEW_RUNTIME_AND_SCALE_PENDING",
+  "core_sha256": "810fbe7d5c54e033142b5f425e56661f6064c208860eb58664ab58f150a498f8",
+  "core_binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-build/workbuddy-proxy",
+  "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-build/report.json",
+  "unchanged_ui_arm_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "old_tests_preserved": 539,
+  "current_tests": 540,
+  "added_named_tests": [
+    "stats::query::dashboard_aggregate::tests::imported_dashboard_scopes_use_the_covering_index_without_fact_lookups"
+  ],
+  "source_change": [
+    "src/stats/query/dashboard_aggregate.rs",
+    "src/stats/query/dashboard_aggregate/tests.rs"
+  ],
+  "query_choice": "existing usage_requests_dashboard_cover for import aggregates with no provider/model/route filters; selective IDs leave planner choice intact",
+  "unchanged_query_budget_seconds": 2,
+  "unchanged_query_p95_acceptance_ms": 500,
+  "unchanged_baseline_files": {
+    "Cargo.toml": true,
+    "Cargo.lock": true,
+    "gpui/Cargo.toml": true,
+    "gpui/Cargo.lock": true,
+    "src/stats/migrations/0001.sql": true,
+    "src/stats/migrations/0002.sql": true,
+    "src/stats/migrations/0003.sql": true,
+    "src/stats/migrations/0004.sql": true,
+    "src/stats/migrations/0005.sql": true,
+    "src/stats/migrations/0006.sql": true
+  },
+  "new_schema_index_changes": false,
+  "diagnostic_scope": "Python SQLite readonly SQL-plan experiment supports cause; actual new RustEXPLAIN and semantic-equivalence regression passed. New concurrent1M acceptance still required.",
+  "old_failure_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/1000000-many/trial-1/report.json",
+  "old_first_read_ms": 3810.275041,
+  "same_snapshot_existing_cover_first_read_ms": 559.152792,
+  "same_snapshot_results_equal": true,
+  "diagnostic_reports": [
+    "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-query-timeout-diagnostic/sqlite-readonly-plan.json",
+    "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-query-timeout-diagnostic/existing-cover-readonly-plan.json"
+  ],
+  "runtime_coordinator": "dist/workbuddy-import-review/cover-query-local-gates-coordinator.json",
+  "required_runtime_groups": 26,
+  "build_cleanup": {
+    "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/progress-build-9teuld8n",
+    "remaining_processes": [],
+    "lsof_exit": 1,
+    "removed": true,
+    "released_bytes": 4096,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51661488128,
+    "external_free_bytes": 438707298304
+  }
+}

@@ -39,7 +39,7 @@ use std::{
 // Release versions alone cannot distinguish successive local review builds.
 /// 10: API-key provider presets and explicit Azure authentication settings.
 /// Protocol 9 is also used by the separate automatic-update development branch.
-const CONTROL_PROTOCOL: u32 = 10;
+const CONTROL_PROTOCOL: u32 = 12;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {

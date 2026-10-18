@@ -1,0 +1,47 @@
+{
+  "at": 1792302419.9440498,
+  "result": "FAIL_CURRENT_HISTORICAL_READER_YIELD_CANDIDATE",
+  "core_binary_sha256": "54989a654cc8a319e6d75bb2f5c9c3555e17da6012b8393158837f5506d0a7aa",
+  "phase_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-reader-yield-matrix/1000000-many/trial-1/report.json",
+  "phase_report_sha256": "db31781a9314a379657165efa8875bfdab45d440b72d10e41d58da03aad40764",
+  "failed_checks": 1,
+  "failure": [
+    {
+      "code": "stats_query_timeout",
+      "count_before_request": 693120,
+      "elapsed_ms": 288999.216667,
+      "progress_before_request": {
+        "bytes_committed": 746610432,
+        "bytes_remaining": 327389568,
+        "bytes_total": 1074000000,
+        "files_remaining": 1000,
+        "files_total": 1000,
+        "total_known": true
+      },
+      "query_ms": 2000.679166
+    }
+  ],
+  "partial_successful_background_samples": 42,
+  "partial_sample_p95_ms": 1755.262708,
+  "scope": "Partial queries before first actual timeout; not a full backfill percentile, formal1M3x50 query or phase PASS",
+  "independent_full_import_memory": {
+    "baseline_bytes": 12189696,
+    "error": null,
+    "method": "whole-core peak and net RSS change; not per-thread RSS",
+    "net_rss_growth_bytes": 27557888,
+    "peak_bytes": 39747584,
+    "sampler": "libproc rusage_info_v0 with Mach timebase",
+    "samples": 3078,
+    "sampling_interval_seconds": 0.1
+  },
+  "temporary_cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 434859458560,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-reader-yield-target-5q5be_jd/tmp/workbuddy-scale-h2gxs_nf",
+    "removed": true,
+    "removed_logical_bytes": 2829116832,
+    "retained_evidence_bytes": 1326794383,
+    "system_disk_available_bytes": 51552239616
+  },
+  "next_source_change": "report/import poll admission handoff; no overlapping poll during active reports; periodic import opportunity and abandoned75ms handoff bound"
+}

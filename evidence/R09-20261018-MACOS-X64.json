@@ -1,0 +1,39 @@
+{
+  "at": 1792295359.594374,
+  "result": "PASS_LOCAL_MACOS_X64_ROSETTA_BUILD_TEST_ACTUAL_IMAGE_PAYLOAD_LIFECYCLE_EXTERNAL_LIMITS_RETAINED",
+  "core_sha256": "37c90f4571e7504f759950264a142a8e836854a033fc2eabfb367ef5a8b6a76d",
+  "ui_sha256": "d9d960a31c17505ccc467a658c653744c7e379bd11206eaa3d214350898e510b",
+  "executable_architecture": "x86_64",
+  "host_architecture": "arm64",
+  "counts": {
+    "core_tests": 539,
+    "ui_tests": 139,
+    "source_import_assertions": 157,
+    "production_edge_assertions": 65,
+    "identity_control_test_groups": 7
+  },
+  "build_and_runtime_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-macos-x64/report.json",
+  "actual_image_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-x64-package-archive-v2/report.json",
+  "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-macos-x64/artifacts/workbuddy-proxy-0.5.6-import-review-progress-private-macos-x64.dmg",
+  "dmg_sha256": "2c246e92a2ab727b1fc0cfe3b22af3276d2e0bbae8c0f47778d762b4136ec1df",
+  "source_files_stable": true,
+  "source_protection_enforced": true,
+  "cleanup": {
+    "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-progress-package-stage-zbto2knd",
+    "remaining_processes": [],
+    "remaining_mounts": [],
+    "removed": true,
+    "released_allocated_bytes": 35889152,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51608768512
+  },
+  "raw_negative_report_preserved": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-x64-package-archive/report.json",
+  "negative_reason": "old comparator required LC_CODE_SIGNATURE in unsigned x64 input; strict optional final-command support plus seven adversarial groups now passed",
+  "same_validator_arm_check": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-arm-identity-v2/report.json",
+  "limits": [
+    "Rosetta, not physical Intel or human GUI acceptance",
+    "archive data-fork extraction, not OS mount or installation",
+    "actual native resident CmdQ remains separately blocked by locked Mac"
+  ],
+  "existing_dependency_future_warning": "block0.1.6 future-incompat warning also present in the current ARM build; no dependency change"
+}

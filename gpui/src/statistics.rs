@@ -18,6 +18,12 @@ use crate::{
     usage_chart::{ChartMode, ChartPoint, SeriesKind, UsagePlot},
     usage_table::{self, GroupRows, UsageRows},
 };
+mod event_metrics;
+mod import_controls;
+mod mapping_controls;
+mod overview;
+mod source_controls;
+
 use chrono::{Local, TimeZone as _};
 use gpui_kit::component::{
     Disableable, ElementExt, Icon, IconName, Sizable, WindowExt,
@@ -25,7 +31,7 @@ use gpui_kit::component::{
     calendar::{Calendar, CalendarEvent, CalendarState, Date},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
-    input::{Input, InputState},
+    input::{Input, InputEvent, InputState},
     label::Label,
     popover::Popover,
     select::{Select, SelectEvent, SelectItem, SelectState},
@@ -201,6 +207,26 @@ pub struct Statistics {
     /// Sequence of the newest read intent per kind; a reply that does not match
     /// is stale and must not touch the screen.
     dashboard_seq: u64,
+    /// The WorkBuddy import panel: switch, health line and counters.
+    import: crate::workbuddy_import::ImportPanel,
+    import_ui: import_controls::ImportUi,
+    mapping_ui: mapping_controls::MappingUi,
+    page_scroll: ScrollHandle,
+    mapping_from: Entity<InputState>,
+    mapping_to: Entity<InputState>,
+    /// The filter generation and the one request it owes.
+    coordinator: crate::stats_controller::FilterCoordinator,
+    /// The source group (U03): always first in the bar, always exactly one.
+    source: crate::source_filter::SourceFilter,
+    source_focus: FocusHandle,
+    event_metrics: event_metrics::EventMetrics,
+    scope_reset_pending: bool,
+    /// The advanced capture-method dropdown (U05).
+    capture: crate::stats_controller::CaptureFilter,
+    /// Sequence of the last import-status read.
+    import_seq: u64,
+    /// How many more times the page may poll a running scan.
+    import_poll: crate::stats_controller::ScanPollBudget,
     /// Identity of the newest rows read; replies carrying an older identity are
     /// dropped instead of clearing a newer pending flag.
     rows_gate: crate::stats_controller::ReplyGate,
@@ -237,6 +263,7 @@ pub struct Statistics {
     model_select: Entity<ChoiceState>,
     outcome_select: Entity<ChoiceState>,
     usage_select: Entity<ChoiceState>,
+    capture_select: Entity<ChoiceState>,
     currency_select: Entity<ChoiceState>,
     // Data.
     dashboard: Option<DashboardDto>,
@@ -344,6 +371,10 @@ impl Statistics {
         let provider_search = cx.new(|cx| InputState::new(window, cx));
         let model_search = cx.new(|cx| InputState::new(window, cx));
         let price_search = cx.new(|cx| InputState::new(window, cx));
+        let mapping_from =
+            cx.new(|cx| InputState::new(window, cx).placeholder("YYYY-MM-DD HH:MM:SS.SSS"));
+        let mapping_to =
+            cx.new(|cx| InputState::new(window, cx).placeholder("YYYY-MM-DD HH:MM:SS.SSS"));
         let calendar = cx.new(|cx| CalendarState::new(window, cx));
         let custom_from = cx.new(|cx| InputState::new(window, cx).placeholder("YYYY-MM-DD HH:MM"));
         let custom_to = cx.new(|cx| InputState::new(window, cx).placeholder("YYYY-MM-DD HH:MM"));
@@ -397,6 +428,8 @@ impl Statistics {
             }
             SelectState::new(items, None, window, cx)
         });
+        let capture_select =
+            cx.new(|cx| SelectState::new(source_controls::capture_choices(zh), None, window, cx));
         let currency_select = cx.new(|cx| {
             SelectState::new(
                 vec![choice("USD", "USD"), choice("CNY", "CNY")],
@@ -544,6 +577,7 @@ impl Statistics {
             model_select,
             outcome_select,
             usage_select,
+            capture_select,
             currency_select,
             dashboard: None,
             rows: Vec::new(),
@@ -558,6 +592,20 @@ impl Statistics {
             filter_key: String::new(),
             tab: Tab::Requests,
             dashboard_seq: 0,
+            import: crate::workbuddy_import::ImportPanel::new(),
+            import_ui: import_controls::ImportUi::new(),
+            mapping_ui: mapping_controls::MappingUi::default(),
+            page_scroll: ScrollHandle::new(),
+            mapping_from,
+            mapping_to,
+            coordinator: crate::stats_controller::FilterCoordinator::new(),
+            source: crate::source_filter::SourceFilter::new(),
+            source_focus: cx.focus_handle().tab_index(0).tab_stop(true),
+            event_metrics: event_metrics::EventMetrics::new(),
+            scope_reset_pending: false,
+            capture: crate::stats_controller::CaptureFilter::new(),
+            import_seq: 0,
+            import_poll: crate::stats_controller::ScanPollBudget::new(),
             rows_gate: crate::stats_controller::ReplyGate::default(),
             groups_gate: crate::stats_controller::ReplyGate::default(),
             health: None,
@@ -631,10 +679,35 @@ impl Statistics {
         };
         this.subscribe(window, cx);
         this.rebuild_choices(window, cx);
+        // The bar opens on its default scope: reconcile the capture dropdown
+        // with it and open the first filter generation, which the first
+        // dashboard request settles. Reconciling the default is a no-op by
+        // construction, which is exactly the point: nothing is hidden yet.
+        let reconciled = this.capture.reconcile(this.source_scope());
+        debug_assert!(!reconciled, "the default scope hides nothing");
+        this.coordinator.change();
         this
     }
 
     fn subscribe(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        cx.on_focus(&self.source_focus, window, |this, _, cx| {
+            this.source.set_focused(true);
+            cx.notify();
+        })
+        .detach();
+        cx.on_blur(&self.source_focus, window, |this, _, cx| {
+            this.source.set_focused(false);
+            cx.notify();
+        })
+        .detach();
+        for input in [&self.mapping_from, &self.mapping_to] {
+            cx.subscribe(input, |this, _, event, cx| {
+                if matches!(event, InputEvent::Change) {
+                    this.invalidate_mapping_draft(cx);
+                }
+            })
+            .detach();
+        }
         cx.subscribe(&self.usage_table, |_, table, event, cx| {
             if let TableEvent::ColumnWidthsChanged(widths) = event {
                 table.update(cx, |table, cx| {
@@ -695,6 +768,11 @@ impl Statistics {
         }
         self.visible = visible;
         if !visible {
+            self.source = crate::source_filter::SourceFilter::new();
+            self.capture = crate::stats_controller::CaptureFilter::new();
+            self.include_tests = false;
+            self.scope_reset_pending = true;
+
             self.backend.cancel_reads();
             self.rows_gate.invalidate();
             self.groups_gate.invalidate();
@@ -715,10 +793,13 @@ impl Statistics {
             self.mark_dirty(cx);
             self.request_health(cx);
             self.request_settings(cx);
+            self.request_import_status(cx);
             self.provider_after = None;
             self.model_after = None;
-            self.request_filters(cx);
-            self.request_model_filters(cx);
+            if !self.scope_reset_pending {
+                self.request_filters(cx);
+                self.request_model_filters(cx);
+            }
             self.request_prices(cx);
             self.request_provider_modes(cx);
         }
@@ -745,6 +826,18 @@ impl Statistics {
     }
 
     fn rebuild_choices(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        self.capture_select.update(cx, |state, cx| {
+            state.set_items(source_controls::capture_choices(self.zh), window, cx);
+            state.set_selected_value(
+                &self
+                    .capture
+                    .displayed(self.source_scope())
+                    .as_str()
+                    .to_owned(),
+                window,
+                cx,
+            );
+        });
         let outcomes = vec![
             choice("", self.t("全部状态", "All states")),
             choice("completed", self.t("已完成", "Completed")),
@@ -892,22 +985,41 @@ impl Statistics {
             "route_id": Value::Null,
             "outcome": option(&self.outcome),
             "usage_status": option(&self.usage),
-            "include_tests": self.include_tests,
+            "include_tests": self.capture.include_tests(),
+            "source_scope": self.source_scope(),
+            "capture_method": self.capture.effective(self.source_scope()).as_str(),
         })
     }
 
     // ---- requests ---------------------------------------------------------
 
     fn request_dashboard(&mut self, cx: &mut Context<Self>) {
-        let tag = format!("dash-{}", self.generation);
+        // The tag carries the filter generation, so a reply is always judged
+        // against the filters it was issued for.
+        let tag = format!("dash-{}", self.coordinator.generation());
         let request = crate::stats_backend::command(
             "stats_dashboard",
             &tag,
             json!({"filter": self.filter(), "granularity": "auto"}),
         );
+        // A dashboard request settles the one request a filter change owes; the
+        // generation it was issued under is what a stale reply is judged by.
+        self.coordinator.take_request();
         self.dashboard_seq = self.backend.submit_read(JobKey::Dashboard, tag, request);
         self.loading_dashboard = true;
         self.pending_dashboard = true;
+        cx.notify();
+    }
+
+    /// Reads the import status. Reads are keyed by resource, so two refreshes in
+    /// a row collapse into one request.
+    fn request_import_status(&mut self, cx: &mut Context<Self>) {
+        let tag = format!("import-{}", self.generation);
+        let request = crate::stats_backend::command("stats_workbuddy_status", &tag, json!({}));
+        self.import_seq = self
+            .backend
+            .submit_read(JobKey::workbuddy_read("status"), tag, request);
+        self.import_poll = crate::stats_controller::ScanPollBudget::new();
         cx.notify();
     }
 
@@ -992,7 +1104,8 @@ impl Statistics {
         let request = crate::stats_backend::command(
             "stats_filters",
             &tag,
-            json!({"kind": "provider", "query": self.provider_query, "after_key": self.provider_after, "limit": 100}),
+            json!({"kind": "provider", "query": self.provider_query, "after_key": self.provider_after, "limit": 100,
+                "source_scope":self.source_scope(),"capture_method":self.capture.effective(self.source_scope()).as_str()}),
         );
         self.provider_seq = self
             .backend
@@ -1012,6 +1125,7 @@ impl Statistics {
                 "query": self.model_query.clone(), "after_key": self.model_after,
                 "provider_id": if self.provider.is_empty() { Value::Null } else { Value::String(self.provider.clone()) },
                 "limit": 100,
+                "source_scope":self.source_scope(),"capture_method":self.capture.effective(self.source_scope()).as_str(),
             }),
         );
         self.model_seq = self.backend.submit_read(
@@ -1069,6 +1183,25 @@ impl Statistics {
     /// tick instead of relying on render-time side effects; a real change marks
     /// the query dirty exactly once.
     fn sync_filter_state(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        if std::mem::take(&mut self.scope_reset_pending) {
+            self.reset_source_dependents(window, cx);
+            return;
+        }
+        let capture = self
+            .capture_select
+            .read(cx)
+            .selected_value()
+            .map(String::as_str)
+            .unwrap_or("all");
+        let capture = match capture {
+            "proxy" => crate::stats_controller::CaptureChoice::Proxy,
+            "workbuddy" => crate::stats_controller::CaptureChoice::WorkbuddyImport,
+            _ => crate::stats_controller::CaptureChoice::All,
+        };
+        if self.capture.select(capture, self.source_scope()) {
+            self.reset_source_dependents(window, cx);
+            return;
+        }
         let mut dirty = false;
         if self.date_open {
             let text = (
@@ -1132,17 +1265,23 @@ impl Statistics {
         }
         let pq = self.provider_search.read(cx).value().trim().to_owned();
         if pq != self.provider_query {
+            let started = self.event_metrics.begin();
             self.provider_query = pq;
             self.provider_after = None;
             self.provider_next = None;
             self.request_filters(cx);
+            self.event_metrics
+                .record("provider_input_apply", started, None);
         }
         let mq = self.model_search.read(cx).value().trim().to_owned();
         if mq != self.model_query {
+            let started = self.event_metrics.begin();
             self.model_query = mq;
             self.model_after = None;
             self.model_next = None;
             self.request_model_filters(cx);
+            self.event_metrics
+                .record("model_input_apply", started, None);
         }
         let priceq = self.price_search.read(cx).value().trim().to_owned();
         if priceq != self.price_query {
@@ -1194,6 +1333,9 @@ impl Statistics {
         }
         self.reset_pagination();
         self.request_dashboard(cx);
+        // The import panel refreshes with the rest of the statistics; its read
+        // is keyed by resource, so two refreshes in a row collapse into one.
+        self.request_import_status(cx);
         match self.tab {
             Tab::Requests => self.request_rows(cx),
             _ => self.request_groups(cx),
@@ -1203,6 +1345,11 @@ impl Statistics {
     }
 
     pub fn tick(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        if !self.visible && self.mapping_ui.open {
+            self.close_mapping_state();
+            window.close_dialog(cx);
+        }
+        self.expire_mapping_preview(cx);
         // Hand pending intents to the worker. A full channel just leaves them
         // queued; nothing is dropped and write intents keep their order.
         let foreground = crate::stats_controller::may_refresh(
@@ -1225,7 +1372,8 @@ impl Statistics {
         if let Some(deadline) = self.debounce_until {
             if !self.visible {
                 self.debounce_until = None;
-            } else if foreground && Instant::now() >= deadline {
+            } else if !window.has_active_dialog(cx) && !self.date_open && Instant::now() >= deadline
+            {
                 self.debounce_until = None;
                 self.applied = self.generation;
                 self.refresh(cx);
@@ -1241,6 +1389,7 @@ impl Statistics {
         }
         // Provider modes are filled in one per tick so the list converges
         // without ever queueing a job per provider at once.
+        self.poll_import_status(cx);
         if foreground && self.storage_open {
             self.request_provider_modes(cx);
         }
@@ -1268,6 +1417,12 @@ impl Statistics {
             result,
             ..
         } = reply;
+        if self.handle_mapping_reply(kind, seq, &tag, &result, cx) {
+            return;
+        }
+        if self.handle_import_reply(kind, seq, &tag, &result, cx) {
+            return;
+        }
         // Routing is the controller's decision, so the real page and its tests
         // agree on when a reply may touch anything.
         let reply_kind = match kind {
@@ -1707,17 +1862,23 @@ struct DetailBody {
 }
 
 impl Render for DetailBody {
-    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
-        self.owner
+    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        let content = self
+            .owner
             .update(cx, |this, cx| this.detail_content(cx))
-            .unwrap_or_else(|_| div().into_any_element())
+            .unwrap_or_else(|_| div().into_any_element());
+        div()
+            .id("usage-detail-scroll")
+            .max_h(px(f32::from(window.viewport_size().height) * 0.8 - 60.))
+            .overflow_y_scroll()
+            .child(content)
     }
 }
 
 impl Statistics {
     fn detail_content(&mut self, cx: &mut Context<Self>) -> AnyElement {
         let zh = self.zh;
-        let title = if zh { "请求详情" } else { "Request detail" };
+        let title = if zh { "用量详情" } else { "Usage detail" };
         let Some(detail) = &self.details else {
             return DialogContent::new()
                 .w_full()
@@ -1734,6 +1895,9 @@ impl Statistics {
         let item = &detail.request;
         let row = |name: String, value: String| {
             div()
+                .id(SharedString::from(format!("detail-{name}")))
+                .role(Role::Group)
+                .aria_label(format!("{name}：{value}"))
                 .flex()
                 .justify_between()
                 .gap_3()
@@ -1764,7 +1928,11 @@ impl Statistics {
             Some(cost) => usage_table::cost_hint(cost.status, zh),
             None => usage_table::cost_label(CostStatus::Unpriced, zh),
         };
-        let mut rows = vec![
+        let mut rows: Vec<_> = detail_metadata::fields(item, zh)
+            .into_iter()
+            .map(|(label, value)| row(label.into(), value))
+            .collect();
+        rows.extend(vec![
             row(
                 if zh {
                     "请求标识".into()
@@ -1811,11 +1979,12 @@ impl Statistics {
                 } else {
                     "Upstream protocol".into()
                 },
-                match item.upstream_protocol.as_str() {
-                    "openai_responses" => "OpenAI Responses",
-                    "anthropic_messages" => "Anthropic Messages",
-                    "gemini_generate_content" => "Gemini GenerateContent",
-                    _ => "OpenAI Chat Completions",
+                match item.upstream_protocol.as_deref() {
+                    Some("openai_responses") => "OpenAI Responses",
+                    Some("anthropic_messages") => "Anthropic Messages",
+                    Some("gemini_generate_content") => "Gemini GenerateContent",
+                    Some("openai_chat") => "OpenAI Chat Completions",
+                    _ => "—",
                 }
                 .into(),
             ),
@@ -1902,7 +2071,7 @@ impl Statistics {
                 },
                 cost_text,
             ),
-        ];
+        ]);
         if let Some(snapshot) = &detail.price_snapshot {
             // The prices this request actually used, read from its own row: they
             // stay correct even after the configuration is edited or deleted.
@@ -2015,8 +2184,8 @@ impl Statistics {
             )
             .child(
                 Label::new(self.t(
-                    "统计本代理已记录的模型请求",
-                    "Requests recorded by this proxy",
+                    "汇总内置及自定义模型用量，同次调用优先本机代理明细",
+                    "Built-in and custom usage; exact duplicates prefer native proxy details",
                 ))
                 .text_size(px(11.))
                 .text_color(rgb(MUTED)),
@@ -2285,7 +2454,8 @@ impl Statistics {
             .trigger(
                 Button::new("stats-date-trigger")
                     .small()
-                    .h(px(28.))
+                    .h(px(32.))
+                    .w_full()
                     .outline()
                     .icon(IconName::Calendar)
                     .label(self.range.title(self.zh))
@@ -2325,7 +2495,8 @@ impl Statistics {
             .trigger(
                 Button::new("stats-auto-trigger")
                     .small()
-                    .h(px(28.))
+                    .h(px(32.))
+                    .w_full()
                     .outline()
                     .icon(Icon::default().path("icons/clock.svg"))
                     .label(label)
@@ -2443,23 +2614,31 @@ impl Statistics {
             .into_any_element()
     }
 
+    /// The source scope the bar is currently showing.
+    fn source_scope(&self) -> crate::stats_dto::SourceScope {
+        self.source.selected()
+    }
+
     fn filters(&self, cx: &mut Context<Self>) -> AnyElement {
-        let advanced_active = !self.usage.is_empty()
-            || self.include_tests
-            || !self.provider_query.is_empty()
-            || !self.model_query.is_empty();
-        // Budget space for clock/date/actions before fitting the selectors.
-        let extra = (self.filters_width - if self.zh { 268. } else { 332. } - 350.).clamp(0., 140.);
-        let widths = [
-            110. + extra * 50. / 140.,
-            150. + extra * 70. / 140.,
-            90. + extra * 20. / 140.,
-        ];
+        let tests_available = self.capture.include_tests_available(self.source_scope());
+        // Render the shared slot budget directly: fixed dimensions and the
+        // explicit one/two/wrapped rows from UI-SPEC U04.
+        let budget = crate::source_filter::layout(self.filters_width as i32);
+        let rows = budget
+            .rows
+            .iter()
+            .enumerate()
+            .map(|(index, slots)| self.filter_row(index, slots, cx))
+            .collect::<Vec<_>>();
         stats_card("stats-filters")
             .on_prepaint({
                 let owner = cx.entity().downgrade();
                 move |bounds, _, cx| {
-                    let available = f32::from(bounds.size.width) - 24.;
+                    // Content width excludes the specified padding and both
+                    // one-point card borders.
+                    let available = f32::from(bounds.size.width)
+                        - (crate::source_filter::PADDING * 2) as f32
+                        - 2.;
                     let _ = owner.update(cx, |this, cx| {
                         if (this.filters_width - available).abs() > 0.5 {
                             this.filters_width = available;
@@ -2469,81 +2648,7 @@ impl Statistics {
                 }
             })
             .gap_2()
-            .child(
-                div()
-                    .flex()
-                    .flex_wrap()
-                    .items_center()
-                    .gap_2()
-                    .w_full()
-                    .child(
-                        div().w(px(widths[0])).h(px(28.)).flex_shrink_0().child(
-                            Select::new(&self.provider_select)
-                                .w_full()
-                                .h(px(28.))
-                                .small()
-                                .accessibility_label(self.t("供应商筛选", "Provider filter")),
-                        ),
-                    )
-                    .child(
-                        div().w(px(widths[1])).h(px(28.)).flex_shrink_0().child(
-                            Select::new(&self.model_select)
-                                .w_full()
-                                .h(px(28.))
-                                .small()
-                                .accessibility_label(self.t("模型筛选", "Model filter")),
-                        ),
-                    )
-                    .child(
-                        div().w(px(widths[2])).h(px(28.)).flex_shrink_0().child(
-                            Select::new(&self.outcome_select)
-                                .w_full()
-                                .h(px(28.))
-                                .small()
-                                .accessibility_label(self.t("请求状态", "Request state")),
-                        ),
-                    )
-                    .child(self.refresh_control(cx))
-                    .child(self.date_control(cx))
-                    .child(
-                        Button::new("stats-refresh")
-                            .small()
-                            .size(px(28.))
-                            .outline()
-                            .icon(IconName::RefreshCw)
-                            .tooltip(self.t("刷新统计", "Refresh statistics"))
-                            .accessibility_label(self.t("刷新统计", "Refresh statistics"))
-                            .disabled(self.loading_dashboard || self.loading_rows)
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.generation += 1;
-                                this.debounce_until = None;
-                                this.applied = this.generation;
-                                this.refresh(cx);
-                            })),
-                    )
-                    .child(
-                        Button::new("stats-more-filters")
-                            .small()
-                            .size(px(28.))
-                            .ghost()
-                            .icon(if self.more_filters_open {
-                                IconName::ChevronUp
-                            } else {
-                                IconName::ChevronDown
-                            })
-                            .when(advanced_active, |button| button.text_color(rgb(0x356fc0)))
-                            .tooltip(if self.more_filters_open {
-                                self.t("收起更多筛选", "Hide more filters")
-                            } else {
-                                self.t("展开更多筛选", "More filters")
-                            })
-                            .accessibility_label(self.t("更多筛选", "More filters"))
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.more_filters_open = !this.more_filters_open;
-                                cx.notify();
-                            })),
-                    ),
-            )
+            .children(rows)
             .when(self.more_filters_open, |this| {
                 this.child(
                     div()
@@ -2554,6 +2659,7 @@ impl Statistics {
                         .pt_3()
                         .border_t_1()
                         .border_color(rgb(BORDER))
+                        .child(self.capture_control())
                         .child(self.filter_search(true, cx))
                         .child(self.filter_search(false, cx))
                         .child(
@@ -2581,15 +2687,28 @@ impl Statistics {
                                 Checkbox::new("include-tests")
                                     .small()
                                     .label(self.t("包含测试连接", "Include connection tests"))
-                                    .checked(self.include_tests)
+                                    .checked(self.capture.include_tests())
+                                    .disabled(!tests_available)
                                     .on_change(cx.listener(|this, enabled: &bool, _, cx| {
-                                        this.include_tests = *enabled;
+                                        this.capture
+                                            .set_include_tests(*enabled, this.source_scope());
+                                        this.include_tests = this.capture.include_tests();
                                         this.mark_dirty(cx);
                                     })),
                             ),
                         ),
                 )
             })
+            .when(
+                self.debounce_until.is_some() || self.loading_dashboard,
+                |this| {
+                    this.child(
+                        Label::new(self.t("正在更新…", "Updating…"))
+                            .text_size(px(11.))
+                            .text_color(rgb(MUTED)),
+                    )
+                },
+            )
             .when_some(self.error.clone(), |this, error| {
                 this.child(
                     Label::new(crate::i18n::message(&error, self.zh))
@@ -2705,183 +2824,6 @@ impl Statistics {
     }
 
     /// Overview: one primary confirmed-token card plus secondary metrics.
-    fn overview(&self, cx: &mut Context<Self>) -> AnyElement {
-        let Some(dashboard) = self.dashboard.clone() else {
-            return stats_card("stats-overview")
-                .child(usage_table::strong(
-                    self.t("正在读取统计…", "Reading statistics…"),
-                ))
-                .into_any_element();
-        };
-        let summary = &dashboard.summary;
-        let zh = self.zh;
-        let main_value = match summary.total_tokens {
-            Some(value) => usage_table::compact(Some(value), zh),
-            None => "—".into(),
-        };
-        let main_hint = match (summary.usage_complete_count, summary.usage_eligible_count) {
-            (0, _) => self.t("暂无完整用量", "No complete usage yet").to_owned(),
-            (complete, eligible) => format!(
-                "{}/{} {}",
-                complete,
-                eligible,
-                self.t("个请求用量完整", "requests with complete usage")
-            ),
-        };
-        let costs = if summary.costs.is_empty() {
-            self.t("未定价", "Unpriced").to_owned()
-        } else {
-            summary
-                .costs
-                .iter()
-                .map(|cost| {
-                    format!(
-                        "{} {}",
-                        cost.currency.as_str(),
-                        crate::stats_dto::format_amount(
-                            cost.total_cost_nanos.parse::<i64>().unwrap_or(0)
-                        )
-                    )
-                })
-                .collect::<Vec<_>>()
-                .join(" / ")
-        };
-        let secondary: Vec<(&'static str, String, String)> = vec![
-            (
-                self.t("请求数", "Requests"),
-                summary.request_count.to_string(),
-                format!(
-                    "{} {}",
-                    summary.in_flight_count,
-                    self.t("进行中", "in flight")
-                ),
-            ),
-            (
-                self.t("成功率", "Success rate"),
-                usage_table::percent(summary.success_rate),
-                format!(
-                    "{} {} · {} {}",
-                    summary.completed_count,
-                    self.t("成功", "ok"),
-                    summary.failed_count,
-                    self.t("失败", "failed")
-                ),
-            ),
-            (
-                self.t("输入 Token", "Input tokens"),
-                usage_table::compact(summary.input_tokens, zh),
-                format!(
-                    "{} {}",
-                    summary.cache_read_known_count,
-                    self.t("已知缓存", "with cache data")
-                ),
-            ),
-            (
-                self.t("输出 Token", "Output tokens"),
-                usage_table::compact(summary.output_tokens, zh),
-                self.t("不含思考子集重复计算", "reasoning stays a subset")
-                    .into(),
-            ),
-            (
-                self.t("缓存读取", "Cache read"),
-                usage_table::compact(summary.cache_read_tokens, zh),
-                format!(
-                    "{} {}",
-                    self.t("命中率", "hit rate"),
-                    usage_table::percent(summary.cache_hit_rate)
-                ),
-            ),
-            (
-                self.t("缓存创建", "Cache write"),
-                usage_table::compact(summary.cache_write_tokens, zh),
-                self.t("输入子集，不可相加", "input subset, never summed")
-                    .into(),
-            ),
-            (
-                self.t("完整覆盖率", "Usage coverage"),
-                usage_table::percent(summary.usage_coverage),
-                format!(
-                    "{} {}/{}",
-                    self.t("用量完整", "complete"),
-                    summary.usage_complete_count,
-                    summary.usage_eligible_count
-                ),
-            ),
-            (
-                self.t("估算费用", "Estimated cost"),
-                costs,
-                format!(
-                    "{} {} · {} {}",
-                    summary.unpriced_request_count,
-                    self.t("未定价", "unpriced"),
-                    summary.cost_incomplete_request_count,
-                    self.t("用量不全", "incomplete")
-                ),
-            ),
-        ];
-        let width = cx.entity_id();
-        let _ = width;
-        stats_card("stats-overview")
-            .child(
-                div()
-                    .flex()
-                    .items_end()
-                    .justify_between()
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(stats_heading(self.t("Token 总用量", "Total tokens")))
-                            .child(
-                                div()
-                                    .text_size(px(28.))
-                                    .font_weight(FontWeight::BOLD)
-                                    .child(main_value),
-                            )
-                            .child(
-                                Label::new(main_hint)
-                                    .text_size(px(11.))
-                                    .text_color(rgb(MUTED)),
-                            ),
-                    )
-                    .child(
-                        Label::new(self.t(
-                            "只统计已结束且用量完整的请求",
-                            "Counts finished requests with complete usage only",
-                        ))
-                        .text_size(px(10.))
-                        .text_color(rgb(MUTED)),
-                    ),
-            )
-            .child(
-                div()
-                    .flex()
-                    .flex_wrap()
-                    .gap_3()
-                    .children(secondary.into_iter().map(|(title, value, hint)| {
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .min_w(px(148.))
-                            .flex_1()
-                            .p_3()
-                            .rounded(px(8.))
-                            .bg(rgb(BG))
-                            .child(Label::new(title).text_size(px(11.)).text_color(rgb(MUTED)))
-                            .child(
-                                div()
-                                    .text_size(px(16.))
-                                    .font_weight(FontWeight::SEMIBOLD)
-                                    .child(value),
-                            )
-                            .child(Label::new(hint).text_size(px(10.)).text_color(rgb(MUTED)))
-                    })),
-            )
-            .into_any_element()
-    }
-
     /// Token chart, optional cost chart and the legend.
     fn trends(&self, cx: &mut Context<Self>) -> AnyElement {
         let Some(dashboard) = self.dashboard.clone() else {
@@ -2889,7 +2831,7 @@ impl Statistics {
                 .child(usage_table::strong(self.t("暂无趋势数据", "No trend data")))
                 .into_any_element();
         };
-        let points = ChartPoint::from_series(&dashboard.series, self.currency);
+        let (points, cost_points) = ChartPoint::split_series(&dashboard.series, self.currency);
         let incomplete = points.iter().any(|point| {
             point.collection_warning || point.quality == crate::stats_dto::SeriesQuality::Unknown
         });
@@ -2910,10 +2852,10 @@ impl Statistics {
             currency: self.currency,
         }
         .summary();
-        let has_cost = points.iter().any(|point| point.cost_nanos.is_some());
+        let has_cost = cost_points.iter().any(|point| point.cost_nanos.is_some());
         let cost_chart = UsagePlot {
             id: ElementId::Name("usage-cost-chart".into()),
-            points: points.clone(),
+            points: cost_points,
             visible: BTreeSet::new(),
             zh: self.zh,
             mode: ChartMode::Cost,
@@ -3123,7 +3065,7 @@ impl Statistics {
                             .child(tab_button(
                                 "tab-requests",
                                 Tab::Requests,
-                                self.t("请求日志", "Request log").to_owned(),
+                                self.t("用量明细", "Usage records").to_owned(),
                             ))
                             .child(tab_button(
                                 "tab-providers",
@@ -3326,6 +3268,7 @@ impl Statistics {
     pub fn render_page(&mut self, cx: &mut Context<Self>) -> AnyElement {
         div()
             .id("statistics-scroll")
+            .track_scroll(&self.page_scroll)
             .flex()
             .flex_col()
             .flex_1()
@@ -3341,9 +3284,37 @@ impl Statistics {
             .child(self.health_bar(cx))
             .child(self.filters(cx))
             .children(self.warnings())
-            .child(self.overview(cx))
-            .child(self.trends(cx))
-            .child(self.details(cx))
+            .children(self.import_notices(cx))
+            .child(
+                div()
+                    .w_full()
+                    .opacity(if self.debounce_until.is_some() || self.loading_dashboard {
+                        0.55
+                    } else {
+                        1.0
+                    })
+                    .child(self.overview(cx)),
+            )
+            .child(
+                div()
+                    .w_full()
+                    .opacity(if self.debounce_until.is_some() || self.loading_dashboard {
+                        0.55
+                    } else {
+                        1.0
+                    })
+                    .child(self.trends(cx)),
+            )
+            .child(
+                div()
+                    .w_full()
+                    .opacity(if self.debounce_until.is_some() || self.loading_rows {
+                        0.55
+                    } else {
+                        1.0
+                    })
+                    .child(self.details(cx)),
+            )
             .child(self.pricing_section(cx))
             .child(self.storage_section(cx))
             .into_any_element()
@@ -3466,6 +3437,11 @@ impl Statistics {
                 } else {
                     MUTED
                 })),
+            )
+            .child(
+                Label::new(self.import_health_text())
+                    .text_size(px(11.))
+                    .text_color(rgb(MUTED)),
             )
             .children(
                 facts
@@ -4074,6 +4050,14 @@ impl Statistics {
                             .text_color(rgb(0xa4424a)),
                         )
                         .child(
+                            Label::new(self.t(
+                                "保留去重标记，不修改 WorkBuddy 源文件。",
+                                "Deduplication markers remain; WorkBuddy source files are unchanged.",
+                            ))
+                            .text_size(px(11.))
+                            .text_color(rgb(MUTED)),
+                        )
+                        .child(
                             Button::new("clear-confirm")
                                 .small()
                                 .danger()
@@ -4090,7 +4074,9 @@ impl Statistics {
                 cx,
                 1,
             ))
-            .when(open, |this| this.child(body))
+            .when(open, |this| {
+                this.child(body).child(self.import_controls(cx))
+            })
             .into_any_element()
     }
 }
@@ -4716,6 +4702,114 @@ impl Render for PriceBody {
     }
 }
 
+/// What an unknown value looks like. It is a dash, never a zero: a zero would
+/// claim the value was measured and happened to be nothing.
+pub const UNKNOWN_TEXT: &str = "—";
+
+/// The nine metrics, in the order U08 fixes them.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum MetricId {
+    /// Records in range. The subtitle splits them by origin.
+    UsageRecords,
+    /// Success rate, which only the proxy can justify.
+    ProxySuccessRate,
+    InputTokens,
+    OutputTokens,
+    CacheRead,
+    CacheWrite,
+    /// How complete the recorded usage is.
+    RecordedCoverage,
+    /// Estimated cost, per currency.
+    EstimatedCost,
+    /// WorkBuddy credit, summed on its own.
+    WorkbuddyCredit,
+}
+
+impl MetricId {
+    /// The heading.
+    pub fn title(self) -> &'static str {
+        match self {
+            MetricId::UsageRecords => "用量记录",
+            MetricId::ProxySuccessRate => "代理成功率",
+            MetricId::InputTokens => "输入 Token",
+            MetricId::OutputTokens => "输出 Token",
+            MetricId::CacheRead => "缓存读取",
+            MetricId::CacheWrite => "缓存创建",
+            MetricId::RecordedCoverage => "已记录用量完整率",
+            MetricId::EstimatedCost => "代理估算费用",
+            MetricId::WorkbuddyCredit => "WorkBuddy 点数",
+        }
+    }
+
+    /// The subtitle, which says what the number does and does not mean.
+    pub fn subtitle(self) -> &'static str {
+        match self {
+            MetricId::UsageRecords => "代理 X · 导入 Y",
+            MetricId::ProxySuccessRate => "仅代理请求有状态依据",
+            MetricId::RecordedCoverage => "只统计已记录条目的用量完整度",
+            MetricId::EstimatedCost => "导入费用未知 N 条",
+            MetricId::WorkbuddyCredit => "日志记录值，不代表账号余额",
+            MetricId::InputTokens
+            | MetricId::OutputTokens
+            | MetricId::CacheRead
+            | MetricId::CacheWrite => "只汇总用量完整的已记录条目",
+        }
+    }
+}
+
+/// One metric's value.
+///
+/// `Unknown` is a first-class answer: it is what a pure-import range says about
+/// the proxy's success rate, and what an unpriced import says about cost.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum MetricValue {
+    /// A measured number.
+    Known(i64),
+    /// No measurement exists.
+    Unknown,
+}
+
+/// The compact text a metric shows.
+pub fn metric_text(metric: MetricId, value: MetricValue) -> String {
+    match value {
+        MetricValue::Unknown => UNKNOWN_TEXT.to_owned(),
+        MetricValue::Known(number) => match metric {
+            // A rate is shown with one decimal; the caller supplies it as
+            // per-mille so no floating point is involved.
+            MetricId::ProxySuccessRate | MetricId::RecordedCoverage => {
+                format!("{}.{}%", number / 10, number % 10)
+            }
+            MetricId::WorkbuddyCredit => {
+                crate::usage_table::format_credit_nanos(&number.to_string())
+                    .unwrap_or_else(|| "—".into())
+            }
+            // Everything else is a count or an amount.
+            _ => compact_number(number),
+        },
+    }
+}
+
+/// A compact rendering of a large number, for a narrow card.
+pub fn compact_number(value: i64) -> String {
+    let negative = value < 0;
+    let magnitude = value.unsigned_abs();
+    let text = if magnitude >= 1_000_000_000 {
+        format!("{:.1}B", magnitude as f64 / 1_000_000_000.0)
+    } else if magnitude >= 1_000_000 {
+        format!("{:.1}M", magnitude as f64 / 1_000_000.0)
+    } else if magnitude >= 10_000 {
+        format!("{:.1}K", magnitude as f64 / 1_000.0)
+    } else {
+        magnitude.to_string()
+    };
+    if negative { format!("-{text}") } else { text }
+}
+
+/// The smallest width a single metric may occupy.
+pub const METRIC_MIN_WIDTH: i32 = 160;
+/// The gap between metrics.
+pub const METRIC_GAP: i32 = 12;
+
 #[cfg(test)]
 mod date_range_tests {
     use super::{
@@ -4764,3 +4858,81 @@ mod date_range_tests {
         assert_eq!(to, now);
     }
 }
+
+#[cfg(test)]
+mod metric_text_tests {
+    use super::{
+        METRIC_GAP, METRIC_MIN_WIDTH, MetricId, MetricValue, UNKNOWN_TEXT, compact_number,
+        metric_text,
+    };
+
+    #[test]
+    fn an_unknown_metric_reads_as_a_dash_and_never_as_a_zero() {
+        // AC068: "unknown" and "measured zero" are different answers.
+        assert_eq!(UNKNOWN_TEXT, "—");
+        for metric in [
+            MetricId::UsageRecords,
+            MetricId::ProxySuccessRate,
+            MetricId::InputTokens,
+            MetricId::OutputTokens,
+            MetricId::CacheRead,
+            MetricId::CacheWrite,
+            MetricId::RecordedCoverage,
+            MetricId::EstimatedCost,
+            MetricId::WorkbuddyCredit,
+        ] {
+            assert_eq!(
+                metric_text(metric, MetricValue::Unknown),
+                "—",
+                "{} must show a dash when unknown",
+                metric.title()
+            );
+        }
+    }
+
+    #[test]
+    fn a_pure_import_range_has_no_success_rate() {
+        // AC068: the proxy's success rate needs proxy status; with none, the
+        // metric is unknown rather than 0%.
+        let rate = match None::<f64> {
+            Some(value) => MetricValue::Known((value * 1000.0).round() as i64),
+            None => MetricValue::Unknown,
+        };
+        assert_eq!(metric_text(MetricId::ProxySuccessRate, rate), "—");
+        // A real rate still renders with one decimal.
+        assert_eq!(
+            metric_text(MetricId::ProxySuccessRate, MetricValue::Known(997)),
+            "99.7%"
+        );
+    }
+
+    #[test]
+    fn a_measured_zero_is_still_a_zero() {
+        // The counterpart of the rule above: a known zero is shown as 0.
+        assert_eq!(
+            metric_text(MetricId::WorkbuddyCredit, MetricValue::Known(0)),
+            "0"
+        );
+        assert_eq!(
+            metric_text(MetricId::UsageRecords, MetricValue::Known(0)),
+            "0"
+        );
+    }
+
+    #[test]
+    fn large_numbers_use_a_compact_form() {
+        assert_eq!(compact_number(999), "999");
+        assert_eq!(compact_number(9_999), "9999");
+        assert_eq!(compact_number(12_345), "12.3K");
+        assert_eq!(compact_number(2_500_000), "2.5M");
+        assert_eq!(compact_number(-12_345), "-12.3K");
+    }
+
+    #[test]
+    fn the_metric_row_geometry_matches_the_spec() {
+        assert_eq!(METRIC_MIN_WIDTH, 160);
+        assert_eq!(METRIC_GAP, 12);
+    }
+}
+
+mod detail_metadata;

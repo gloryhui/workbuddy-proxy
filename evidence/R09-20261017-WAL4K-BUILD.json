@@ -1,0 +1,43 @@
+{
+  "at": 1792243763.85301,
+  "result": "BUILD_PASS_STRICT_SINGLE_MILLION_RUNNING",
+  "core_sha256": "b62930d6735fca1ef9aa3cf340c7b734cca61d80b9d0c34a55b22cbb38dbc6ce",
+  "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-wal4k-build/workbuddy-proxy",
+  "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-wal4k-build/report.json",
+  "changed_from_f402_sources": [
+    "src/stats/store.rs"
+  ],
+  "change": "Enabled PASSIVE auto-checkpoint4096 frames instead of1000. WAL, NORMAL sync, sole writer,128-item batch, exact transaction/ACK boundaries retained. Trigger approximately16MiB at4KiB/page, not a hard WAL size cap.",
+  "abandoned_statement_cache": "Restored import store byte-for-byte to f402 source; cc06 failed trial retained.",
+  "diagnostic": "evidence/R09-20261017-WRITER-FSYNC-DIAGNOSTIC.json",
+  "test_count": 537,
+  "gates": [
+    {
+      "name": "fmt",
+      "state": "PASS"
+    },
+    {
+      "name": "tests",
+      "state": "PASS"
+    },
+    {
+      "name": "clippy",
+      "state": "PASS"
+    },
+    {
+      "name": "release",
+      "state": "PASS"
+    }
+  ],
+  "target_tool_session": 27829,
+  "serial_queue_tool_session": 10053,
+  "scope": "Only build gates pass. Current strict source/SQL-observer runtime, all twelve scale phases, regressions, edges, packages, x64 and native still pending.",
+  "cleanup": {
+    "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-build-5sfj7m59",
+    "removed": true,
+    "removed_allocated_bytes": 4096,
+    "retained_artifact_bytes": 8488659,
+    "system_free_bytes": 18969649152,
+    "external_free_bytes": 337449299968
+  }
+}

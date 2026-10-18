@@ -102,6 +102,30 @@ pub struct ChartPoint {
 }
 
 impl ChartPoint {
+    /// Token visibility is independent of whether the selected currency has
+    /// priced proxy calls. Return both plots together to keep that boundary.
+    pub fn split_series(points: &[SeriesPointDto], currency: Currency) -> (Vec<Self>, Vec<Self>) {
+        (
+            Self::from_series(points, currency),
+            Self::currency_series(points, currency),
+        )
+    }
+
+    /// The points of one currency series, or nothing at all.
+    ///
+    /// A range with no priced proxy call has no currency line to draw: returning
+    /// an empty series hides it, where a series of zeros would claim the calls
+    /// were free.
+    pub fn currency_series(points: &[SeriesPointDto], currency: Currency) -> Vec<Self> {
+        let has_proxy_cost = points
+            .iter()
+            .any(|point| point.costs.iter().any(|cost| cost.currency == currency));
+        if !should_draw_currency_line(has_proxy_cost) {
+            return Vec::new();
+        }
+        Self::from_series(points, currency)
+    }
+
     pub fn from_series(points: &[SeriesPointDto], currency: Currency) -> Vec<Self> {
         points
             .iter()
@@ -600,6 +624,16 @@ fn bucket_label(bucket: &ChartPoint, show_date: bool) -> String {
     }
 }
 
+/// True when a currency series should be drawn at all.
+///
+/// A range that only contains imported records has no price for them, so there
+/// is nothing to plot. Drawing a flat zero line would say "these calls were
+/// free", which is exactly the claim the design forbids — the line is hidden
+/// instead, and the cost card says how many imports are unpriced.
+pub fn should_draw_currency_line(has_proxy_cost: bool) -> bool {
+    has_proxy_cost
+}
+
 #[cfg(test)]
 mod tests {
     // Explicit imports only: a glob import would bring GPUI's `#[gpui::test]`
@@ -646,6 +680,24 @@ mod tests {
             costs: Vec::new(),
             quality,
             collection_warning: warning,
+        }
+    }
+
+    #[test]
+    fn unpriced_imports_keep_token_plot_without_fabricating_currency_plot() {
+        let mut imported = point(0, 1, Some(100), SeriesQuality::Known, true);
+        imported.finished_count = 0;
+        for currency in [
+            crate::stats_dto::Currency::Usd,
+            crate::stats_dto::Currency::Cny,
+        ] {
+            let (tokens, costs) = ChartPoint::split_series(&[imported.clone()], currency);
+            assert_eq!(tokens.len(), 1);
+            assert_eq!(tokens[0].input, Some(100));
+            assert_eq!(tokens[0].output, Some(10));
+            assert_eq!(tokens[0].finished_count, 0);
+            assert!(tokens[0].collection_warning);
+            assert!(costs.is_empty());
         }
     }
 
@@ -752,5 +804,17 @@ mod tests {
                 None
             );
         }
+    }
+}
+
+#[cfg(test)]
+mod currency_line_tests {
+    use super::should_draw_currency_line;
+
+    #[test]
+    fn an_import_only_range_hides_the_currency_line_instead_of_drawing_a_zero() {
+        // AC068: no fake zero line that would imply the calls were free.
+        assert!(!should_draw_currency_line(false));
+        assert!(should_draw_currency_line(true));
     }
 }

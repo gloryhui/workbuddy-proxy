@@ -1,0 +1,68 @@
+{
+  "result": "FAIL_600S_BACKFILL_BUDGET_NO_WAIVER",
+  "core_binary_sha256": "ac03b9053930489272719d2419effee3bb18797a9331ca22deffc42019b10adf",
+  "matrix": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix",
+  "validated_phases": 6,
+  "required_phases": 12,
+  "failed_phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix/1000000-many/trial-1",
+  "failure": "golden timeout: full-scale backfill (600s)",
+  "failed_phase_report_sha256": "50e9338817629f30a2f3a4ed4833470efee4717816fef437e17a66498537285b",
+  "saved_snapshot_base_count": 896431,
+  "saved_snapshot_unique_imported_ledger": [
+    896431,
+    896431,
+    896431
+  ],
+  "counter_query_plan": [
+    [
+      3,
+      0,
+      0,
+      "SEARCH usage_requests USING COVERING INDEX usage_requests_model_time (upstream_model=?)"
+    ]
+  ],
+  "failed_phase_cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 350808805376,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh/tmp/workbuddy-scale-bk4skrwj",
+    "removed": true,
+    "removed_logical_bytes": 3066776488,
+    "retained_evidence_bytes": 1709999035,
+    "system_disk_available_bytes": 18035412992
+  },
+  "coordinator_cleanup": {
+    "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh",
+    "removed": true,
+    "copied_core_removed": true,
+    "system_free_bytes": 18035412992,
+    "external_free_bytes": 350819459072
+  },
+  "diagnostic_scope": "Same-binary 1M/many diagnostic now running with 2s production status counter instead of repeated SQL COUNT for progress; exact final SQL totals, budgets and production code unchanged. This is not strict acceptance.",
+  "count_probe": {
+    "scope": "post-failure read-only snapshot, no live backfill; diagnostic not acceptance",
+    "count": 896431,
+    "ledger": [
+      896431,
+      896431,
+      896431
+    ],
+    "plan": [
+      [
+        3,
+        0,
+        0,
+        "SEARCH usage_requests USING COVERING INDEX usage_requests_model_time (upstream_model=?)"
+      ]
+    ],
+    "reused_connection_ms": [
+      1944.9314579999998,
+      24.787708000000073,
+      23.08379099999991,
+      23.70712500000005,
+      23.824792000000095
+    ],
+    "database_bytes": 1709953024
+  },
+  "system_free_bytes": 18034499584,
+  "at": 1792234475.818552
+}

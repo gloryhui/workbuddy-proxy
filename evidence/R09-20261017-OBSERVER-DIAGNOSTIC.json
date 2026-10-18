@@ -1,0 +1,22 @@
+{
+  "result": "DIAGNOSTIC_FAIL_NOT_STRICT_MATRIX",
+  "core_binary_sha256": "ac03b9053930489272719d2419effee3bb18797a9331ca22deffc42019b10adf",
+  "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-observer-diagnostic/phase/report.json",
+  "report_sha256": "0ceeba6750557c5506f49d403904bf374e1cf90233ce3579d6e3e1d52be9b8dc",
+  "last_durable_counter_observation": {
+    "complete": false,
+    "durable_imported_counter": 774912,
+    "request_end_ns": 625244207791,
+    "request_start_ns": 624962104208
+  },
+  "cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 349336346624,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-observer-diagnostic-ub7ksmdy/tmp/workbuddy-scale-jbispncs",
+    "removed": true,
+    "removed_logical_bytes": 2589646232,
+    "retained_evidence_bytes": 1478577330,
+    "system_disk_available_bytes": 18022490112
+  },
+  "conclusion": "2s production status polling also hit unchanged 600s backfill timeout; changing the observer alone did not resolve the failure. Candidate writer page cache is now being tested with the original strict observer."
+}

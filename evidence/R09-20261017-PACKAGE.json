@@ -1,0 +1,111 @@
+{
+  "result": "PASS_PRIVATE_PACKAGE_NATIVE_AND_SCALE_PENDING",
+  "started_at": 1792231273.63325,
+  "pid": 65715,
+  "scope": "private local DMG only; not installation or publication",
+  "steps": [
+    {
+      "name": "build-private-dmg",
+      "command": [
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+        "scripts/package.py",
+        "--exe",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+        "--gpui",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+        "--platform",
+        "macos-arm64",
+        "--version",
+        "0.5.6",
+        "--variant",
+        "import-review-telemetry-final-private",
+        "--output",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/private-package-telemetry-final"
+      ],
+      "started_at": 1792231594.7031932,
+      "state": "PASS",
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231288864138029,
+          "size": 3456,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792230249383974764,
+          "size": 640,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 68856,
+      "exit_code": 0,
+      "ended_at": 1792231613.082195,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231288864138029,
+          "size": 3456,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792230249383974764,
+          "size": 640,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "log_sha256": "554a598df91c9fd7534941bc6b600afc6dd0dd2a43d0b6a7bb316270d09713d3"
+    },
+    {
+      "name": "verify-private-dmg",
+      "command": [
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+        "scripts/gpui_macos_package.py",
+        "--dmg",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/private-package-telemetry-final/workbuddy-proxy-0.5.6-import-review-telemetry-final-private-macos-arm64.dmg",
+        "--output",
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-package-final/lifecycle.json"
+      ],
+      "started_at": 1792231613.084289,
+      "state": "PASS",
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231288864138029,
+          "size": 3456,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792230249383974764,
+          "size": 640,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "pid": 69001,
+      "exit_code": 0,
+      "ended_at": 1792231638.564137,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231288864138029,
+          "size": 3456,
+          "ino": 121710119
+        },
+        "proxy_config_macos": {
+          "mtime_ns": 1792230249383974764,
+          "size": 640,
+          "ino": 156860115
+        },
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "log_sha256": "323c067e649e7d040f101c09a3a488ff40b7ffa77d8f4a922e606e052e3dcbe4"
+    }
+  ],
+  "source_binary_sha256": {
+    "core": "ac03b9053930489272719d2419effee3bb18797a9331ca22deffc42019b10adf",
+    "ui": "27367fd49af0675811cffe86c99e79bfd528b31bd0c21f346d4af5c67bc0ab1e"
+  },
+  "dmg": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/private-package-telemetry-final/workbuddy-proxy-0.5.6-import-review-telemetry-final-private-macos-arm64.dmg",
+  "dmg_sha256": "03520dbe28d1d009d2f56b1e7953e7c59502698f07b6148e0a5511958f17564c",
+  "ended_at": 1792231638.574433
+}

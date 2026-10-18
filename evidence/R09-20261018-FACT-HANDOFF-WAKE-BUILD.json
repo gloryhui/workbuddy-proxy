@@ -1,0 +1,64 @@
+{
+  "at": 1792303715.1684601,
+  "result": "PASS_CORE_FACT_HANDOFF_V2_BUILD_RUNTIME_PENDING",
+  "core": {
+    "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-build/workbuddy-proxy",
+    "sha256": "6b1ca331b61c83e6b9dfee85943cb71c6cb084ec8383ceb9e7db842c96300fda"
+  },
+  "core_tests": 553,
+  "prior545_named_tests_preserved": true,
+  "new_tests": [
+    "stats::report_scheduling::tests::a_reserved_import_gets_a_turn_before_the_next_report",
+    "stats::report_scheduling::tests::an_active_report_cannot_be_overlapped_by_an_import_opportunity",
+    "stats::report_scheduling::tests::an_import_error_or_unwind_releases_the_report_admission",
+    "stats::report_scheduling::tests::an_inflight_import_finishes_before_a_report_enters",
+    "stats::report_scheduling::tests::cancelled_import_reservations_do_not_block_following_reports",
+    "stats::report_scheduling::tests::proxy_or_control_work_cannot_leave_reports_waiting_for_an_abandoned_import",
+    "stats::report_scheduling::tests::writer_handoff_wait_fits_the_reservation_without_shortening_idle_waits",
+    "stats::workbuddy_import::runtime::tests::report_guard_defers_fact_writes_without_blocking_discovery"
+  ],
+  "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-build/report.json",
+  "steps": [
+    {
+      "name": "core-fmt",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-tests",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "3ace7f1a716084fbe3bf6fe037c44384ed5d5d26bff417c7066d51dfca8d9273"
+    },
+    {
+      "name": "core-clippy",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "0eadc47bc2bc91e89be5706679bd0259e18ee8b7c092b5ffed7a32583bc48d7b"
+    },
+    {
+      "name": "core-release",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "c1cfebfcee447411c20e469a683d5269db146c224f9e4bbc441dc1c7e0c79c24"
+    }
+  ],
+  "cleanup": {
+    "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/progress-build-g36877ru",
+    "remaining_processes": [],
+    "lsof_exit": 1,
+    "removed": true,
+    "released_bytes": 4096,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51543388160,
+    "external_free_bytes": 434410844160
+  },
+  "actual_runtime_state": "focused report-pressure running, million not started; no complete candidate PASS",
+  "source_sha256": {
+    "src/stats/mod.rs": "5b6b453c2f65df80d9eaa7775fcda3b78abe98f589bd2703be551c3038cb0911",
+    "src/stats/report_scheduling.rs": "53fae8af796a5e5a2adde1c43e4a55f899b0fb3f96428d65e75485dc35cc453c",
+    "src/stats/workbuddy_import/runtime.rs": "7cbb7dda210e8fbe31bcf103309ad9429f313d148c7b39396195b422276d4bfa",
+    "src/stats/workbuddy_import/runtime/tests.rs": "fd0d188a143ae0bc6145607c039af29479562423a0710d266bbfa2d75d5d54cc"
+  }
+}

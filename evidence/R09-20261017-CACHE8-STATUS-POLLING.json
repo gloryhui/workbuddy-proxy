@@ -1,0 +1,204 @@
+{
+  "result": "PASS_STATUS_POLLING_OTHER_GATES_PENDING",
+  "at": 1792238877.982419,
+  "core_binary_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+  "scope": "current f402 release, isolated synthetic data; no old performance result reused",
+  "passed": 13,
+  "failed": 0,
+  "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-status-retention/status/report.json",
+  "report_sha256": "f868fbd577b729a4b37d9b091ada7ff458c129103b66a50543e59ccb6f8e2b57",
+  "step": {
+    "name": "status-polling",
+    "command": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+      "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+      "scripts/workbuddy_import_ui_sandbox.py",
+      "--attest-file",
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-status-retention/status-polling-protection.json",
+      "--allowed-root",
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-3qzvp56b",
+      "--",
+      "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+      "scripts/workbuddy_import_status_probe.py",
+      "--exe",
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+      "--phase",
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-many/trial-1",
+      "--output",
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-status-retention/status"
+    ],
+    "state": "PASS",
+    "started_at": 1792238617.246808,
+    "profile_before": {
+      "workbuddy_data": {
+        "mtime_ns": 1792231693515516014,
+        "size": 3328,
+        "ino": 121710119
+      },
+      "proxy_config_macos": {
+        "mtime_ns": 1792231699014450150,
+        "size": 512,
+        "ino": 156860115
+      },
+      "proxy_config_unix": null
+    },
+    "pid": 20156,
+    "exit_code": 0,
+    "kernel_source_protection": {
+      "enforced": true,
+      "pid": 20156,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "command": [
+        "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+        "scripts/workbuddy_import_status_probe.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-cache8-build/workbuddy-proxy",
+        "--phase",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-many/trial-1",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-status-retention/status"
+      ],
+      "monotonic_ns": "160232625",
+      "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+    },
+    "log_sha256": "bdc9d3166f2caefaf638b6bf71e4f455dd697ad47c655e48d983fd03bd2c010c",
+    "scope_process_cleanup": {
+      "unexpected_live_children_after_step": [],
+      "remaining": []
+    },
+    "ended_at": 1792238710.28377,
+    "profile_after": {
+      "workbuddy_data": {
+        "mtime_ns": 1792231693515516014,
+        "size": 3328,
+        "ino": 121710119
+      },
+      "proxy_config_macos": {
+        "mtime_ns": 1792231699014450150,
+        "size": 512,
+        "ino": 156860115
+      },
+      "proxy_config_unix": null
+    },
+    "real_profiles_unchanged": true,
+    "temporary_cleanup": {
+      "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-gate-3qzvp56b",
+      "removed": true,
+      "removed_allocated_bytes": 1638400,
+      "retained_temp_bytes": 0,
+      "system_free_bytes": 19014750208,
+      "external_free_bytes": 346387550208
+    }
+  },
+  "retained_evidence_allocated_bytes": 45056,
+  "median_status_p95_ms": 31.976667,
+  "stream_rounds": [
+    {
+      "round": 0,
+      "baseline_p95_ms": 52.102792,
+      "polled_p95_ms": 51.773792,
+      "allowance_ms": 10
+    },
+    {
+      "round": 1,
+      "baseline_p95_ms": 51.700042,
+      "polled_p95_ms": 51.795041,
+      "allowance_ms": 10
+    },
+    {
+      "round": 2,
+      "baseline_p95_ms": 52.154291,
+      "polled_p95_ms": 51.273708,
+      "allowance_ms": 10
+    }
+  ]
+}

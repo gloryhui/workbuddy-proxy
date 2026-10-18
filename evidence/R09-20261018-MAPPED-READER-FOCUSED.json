@@ -1,0 +1,363 @@
+{
+  "at": 1792308039.1575959,
+  "core_binary_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+  "result": "PASS_MAPPED_READER_FOCUSED_GATES_OTHER_GATES_PENDING",
+  "source_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/report.json",
+  "reports": {
+    "query-pressure-scheduling": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/query-pressure-scheduling/report.json",
+      "passed": 32,
+      "failed": 0
+    },
+    "shutdown": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/shutdown/report.json",
+      "passed": 30,
+      "failed": 0
+    }
+  },
+  "pressure": {
+    "client_count": 2,
+    "discarded_samples": 28097,
+    "error_codes": [],
+    "failed_requests": 0,
+    "maximum_visible_count": 27585,
+    "minimum_visible_count": 1037,
+    "remaining_threads": [],
+    "scope": "Focused200k competing backlog; not formal1M/full12 phase acceptance",
+    "successful_requests_by_client": [
+      18144,
+      18145
+    ],
+    "total_requests": 36289,
+    "wall_ms": 108497.126292,
+    "increment_windows": 20,
+    "max_source_flush_to_query_visible_ms": 6980.129083,
+    "core_binary_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90"
+  },
+  "steps": [
+    {
+      "name": "continuous-report-scheduling",
+      "script_sha256": "9c0b39a36b8283cb612836efd08a2113d571fcd41e4ed30e8304edd2d9afb81a",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/continuous-report-scheduling-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-mapped-reader-gate-aidkewt9",
+        "--",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+        "scripts/workbuddy_import_scheduling.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+        "--query-pressure",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/query-pressure-scheduling"
+      ],
+      "state": "PASS",
+      "started_at": 1792307556.148316,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "pid": 18430,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 18430,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": false,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "scripts/workbuddy_import_scheduling.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+          "--query-pressure",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/query-pressure-scheduling"
+        ],
+        "monotonic_ns": "367979202059208",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "5be82e10c796c3ed77ba345376518c8db6b892f19fedbc28b1caa11bac17f670",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792307730.445138,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-mapped-reader-gate-aidkewt9",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51561320448,
+        "external_free_bytes": 432698970112
+      }
+    },
+    {
+      "name": "shutdown",
+      "script_sha256": "7a3c12b6e2b12561c72a5b0425ce2f9223fec5f3a0c60c208f6b1aea39430337",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/shutdown-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-mapped-reader-gate-wzvso4zm",
+        "--",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+        "scripts/workbuddy_import_shutdown.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/shutdown"
+      ],
+      "state": "PASS",
+      "started_at": 1792307730.449462,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "pid": 19244,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 19244,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": false,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "scripts/workbuddy_import_shutdown.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-focused-gates/shutdown"
+        ],
+        "monotonic_ns": "368153524362583",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "c2727b56ab6c53daba599b23e652c89b693d857a32587ed6d9743bac22dccc1b",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792307734.505971,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-mapped-reader-gate-wzvso4zm",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51561320448,
+        "external_free_bytes": 432698945536
+      }
+    }
+  ]
+}

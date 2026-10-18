@@ -1,0 +1,36 @@
+{
+  "at": 1792244506.335165,
+  "result": "FAIL_UNCHANGED_600_SECONDS_SINGLE_MILLION_BACKFILL",
+  "core_sha256": "b62930d6735fca1ef9aa3cf340c7b734cca61d80b9d0c34a55b22cbb38dbc6ce",
+  "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-wal4k-matrix/1000000-single/trial-1/report.json",
+  "run_log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-wal4k-matrix/target-phase.log",
+  "snapshot_facts": {
+    "imported": 779136,
+    "completed_proxy": 408,
+    "checkpoint_offset": 836792064,
+    "source_size": 1074000000
+  },
+  "runtime_cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 335984189440,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-target-hxtwfqlg/tmp/workbuddy-scale-8o81xcn1",
+    "removed": true,
+    "removed_logical_bytes": 2939253576,
+    "retained_evidence_bytes": 1485025280,
+    "system_disk_available_bytes": 19017609216
+  },
+  "outer_cleanup": {
+    "guard_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-target-hxtwfqlg",
+    "guard_removed": true,
+    "test_input_kept_for_remaining_same_binary_phases": true,
+    "system_free_bytes": 19017609216,
+    "external_free_bytes": 335986421760,
+    "remaining_pids": [],
+    "lsof_exit": 1,
+    "removed_allocated_bytes": 2154496,
+    "retained_temp_bytes": 0
+  },
+  "next_step": "Controlled same-snapshot A/B/A diagnostic: f4021000 frames, b6294096 frames, f4021000 frames. Actual source/actual writer and identical synthetic IDs; no gate or SQL observer modifications, no acceptance claim.",
+  "next_coordinator": "dist/workbuddy-import-review/writer-checkpoint-ab-coordinator.json",
+  "next_tool_session": 90583
+}

@@ -1,0 +1,80 @@
+{
+  "at": 1792311586.681141,
+  "native_completed_round": {
+    "paths": [
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/home",
+        "removed": true,
+        "allocated_bytes": 413716480
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/config",
+        "removed": true,
+        "allocated_bytes": 409075712
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/review-core",
+        "removed": true,
+        "allocated_bytes": 8429568
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/WorkBuddy Proxy Review.app",
+        "removed": true,
+        "allocated_bytes": 14802944
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/tmp",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/appdata",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/localappdata",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-cache",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-config",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-data",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-state",
+        "removed": true,
+        "allocated_bytes": 0
+      }
+    ],
+    "removed_allocated_bytes": 846024704,
+    "retained_allocated_bytes": 5533696,
+    "system_free_bytes": 51483799552,
+    "external_free_bytes": 430747758592
+  },
+  "earlier_carrier_recheck": [
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/WorkBuddy Proxy Review.app",
+      "allocated_bytes": 14802944,
+      "removed": false,
+      "reason": "OS tccd handle retained; no system process stopped",
+      "lsof": "COMMAND   PID  USER   FD   TYPE DEVICE SIZE/OFF     NODE NAME\ntccd    49484 glory    5r   REG   1,28 14794240 16595754 /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui\ntccd    49484 glory    6r   REG   1,28 14794240 16595754 /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui\n"
+    }
+  ],
+  "active_or_required_session_temp_allocated_bytes": 146722816,
+  "retained_native_reports_allocated_bytes": 5550080,
+  "system_free_bytes": 51514941440,
+  "external_free_bytes": 430609211392,
+  "scope": "Completed dynamic owned source/config/database/executable paths removed after child stop; exact OS-referenced earlier carrier retained. Current serial-gate roots and package extractor remain in use. Unknown legacy system temp entries not deleted."
+}

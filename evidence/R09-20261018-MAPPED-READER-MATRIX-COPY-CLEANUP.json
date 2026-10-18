@@ -1,0 +1,14 @@
+{
+  "at": 1792324287.3701062,
+  "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/core-under-test",
+  "ownership_evidence": "dist/workbuddy-import-review/mapped-reader-matrix-coordinator.json",
+  "same_binary_preserved_at": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+  "source_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+  "remaining_processes": [],
+  "lsof_exit": 1,
+  "released_logical_bytes": 8428128,
+  "released_allocated_bytes": 8429568,
+  "kept": "All12 phase reports/full strict SQLite snapshots and build immutable original binary",
+  "removed": true,
+  "system_free_bytes": 51401367552
+}

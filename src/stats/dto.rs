@@ -6,11 +6,27 @@
 //! the sibling modules of `crate::stats`.
 use serde::{Deserialize, Serialize};
 
+/// Fixed error codes for the import management commands.
+///
+/// Every code is a constant: nothing derived from a file, a path or SQL ever
+/// reaches the caller, so a response cannot leak content or a query.
+pub const ERR_WORKBUDDY_IMPORT_DISABLED: &str = "stats_workbuddy_import_disabled";
+pub const ERR_WORKBUDDY_ROOT_MISSING: &str = "stats_workbuddy_root_missing";
+pub const ERR_WORKBUDDY_PERMISSION_DENIED: &str = "stats_workbuddy_permission_denied";
+pub const ERR_WORKBUDDY_INVALID_PATH: &str = "stats_workbuddy_invalid_path";
+pub const ERR_WORKBUDDY_UNSUPPORTED_FORMAT: &str = "stats_workbuddy_unsupported_format";
+pub const ERR_WORKBUDDY_STALE_BATCH: &str = "stats_workbuddy_stale_batch";
+pub const ERR_WORKBUDDY_MAPPING_CONFLICT: &str = "stats_workbuddy_mapping_conflict";
+pub const ERR_WORKBUDDY_SOURCE_CHANGED: &str = "stats_workbuddy_source_changed";
+pub const ERR_WORKBUDDY_SOURCE_READ_FAILED: &str = "stats_workbuddy_source_read_failed";
+pub const ERR_WORKBUDDY_LEDGER_CONFLICT: &str = "stats_workbuddy_ledger_conflict";
+pub const ERR_WORKBUDDY_SCAN_BUSY: &str = "stats_workbuddy_scan_busy";
+
 /// Inner protocol version for every statistics response.
 /// Statistics API version. Bumped to 2 with the per-call price snapshot: the
 /// request detail no longer returns a mutable `rule` and every place is a
 /// decimal string of nano units.
-pub const API_VERSION: u32 = 2;
+pub const API_VERSION: u32 = 4;
 /// Longest accepted `[from_ms, to_ms)` range.
 pub const MAX_RANGE_MS: i64 = 366 * 86_400_000;
 /// Upper bound for a single statistical query, above which the core asks the
@@ -181,6 +197,9 @@ macro_rules! stats_enum {
 stats_enum!(Source {
     Relay => "relay",
     ConnectionTest => "connection_test",
+    /// A record read out of a WorkBuddy JSONL file.
+    #[serde(rename = "workbuddy_import")]
+    JsonlImport => "workbuddy_import",
 });
 
 stats_enum!(Outcome {
@@ -190,6 +209,7 @@ stats_enum!(Outcome {
     Cancelled => "cancelled",
     Interrupted => "interrupted",
     Rejected => "rejected",
+    Recorded => "recorded",
 });
 
 stats_enum!(ErrorKind {
@@ -230,6 +250,7 @@ stats_enum!(UsageReason {
 stats_enum!(UsageSource {
     None => "none",
     Upstream => "upstream",
+    WorkbuddyJsonl => "workbuddy_jsonl",
 });
 
 stats_enum!(InputBreakdown {
@@ -384,12 +405,69 @@ fn clean_id(value: &str) -> Result<String, String> {
     Ok(trimmed.to_owned())
 }
 
+stats_enum!(#[derive(Default)] RecordOrigin {
+    /// Traffic that went through this proxy.
+    #[default]
+    Proxy => "proxy",
+    /// A record imported from WorkBuddy's own JSONL log.
+    WorkbuddyBuiltin => "workbuddy_builtin",
+    /// A record imported from a custom-vendor WorkBuddy log.
+    WorkbuddyCustom => "workbuddy_custom",
+});
+
+stats_enum!(#[derive(Default)] TimeBasis {
+    #[default]
+    RequestStart => "request_start",
+    MessageTimestamp => "message_timestamp",
+});
+
+impl RecordOrigin {
+    /// True for every log-imported origin, including explicit proxy history.
+    pub fn is_imported(self) -> bool {
+        !matches!(self, RecordOrigin::Proxy)
+    }
+}
+
+stats_enum!(#[derive(Default)] SourceScope {
+    /// Everything: the proxy's own traffic plus every imported record.
+    #[default]
+    All => "all",
+    /// Only what the supplier saw: relayed requests and confirmed direct use.
+    Supplier => "supplier",
+    /// Only WorkBuddy built-in model records.
+    Builtin => "builtin",
+});
+
+impl SourceScope {
+    /// True when proxy rows are part of this scope.
+    pub fn includes_proxy(self) -> bool {
+        matches!(self, SourceScope::All | SourceScope::Supplier)
+    }
+
+    /// True when imported rows are part of this scope.
+    pub fn includes_imported(self) -> bool {
+        true
+    }
+}
+
+stats_enum!(#[derive(Default)] CaptureMethod {
+    #[default]
+    All => "all",
+    Proxy => "proxy",
+    Workbuddy => "workbuddy",
+});
+
 /// Common read filter shared by dashboard, requests, breakdown and reprice.
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct StatsFilter {
     pub from_ms: i64,
     pub to_ms: i64,
+    /// Which origins this report includes. Defaults to `all`, so every existing
+    /// caller keeps its current meaning.
+    #[serde(default)]
+    pub source_scope: SourceScope,
+    pub capture_method: CaptureMethod,
     /// IANA timezone name. Empty asks the core for the local zone.
     pub timezone: String,
     pub provider_id: Option<String>,
@@ -403,6 +481,23 @@ pub struct StatsFilter {
 impl StatsFilter {
     /// Validates every field once; the result is reused by the SQL builder.
     pub fn validate(&self) -> Result<(), String> {
+        if self.source_scope == SourceScope::Builtin && self.capture_method == CaptureMethod::Proxy
+        {
+            return Err(error(
+                ERR_INVALID,
+                "built-in models cannot use proxy-only capture",
+            ));
+        }
+        // The scope must name a real scope and include at least one origin.
+        if SourceScope::parse(self.source_scope.as_str()) != Some(self.source_scope) {
+            return Err(error(ERR_INVALID, "source_scope is not a known scope"));
+        }
+        if !self.source_scope.includes_proxy() && !self.source_scope.includes_imported() {
+            return Err(error(
+                ERR_INVALID,
+                "source_scope must include at least one origin",
+            ));
+        }
         if self.from_ms < 0 || self.to_ms < 0 {
             return Err(error(ERR_INVALID, "from_ms and to_ms must not be negative"));
         }
@@ -453,11 +548,59 @@ impl StatsFilter {
         push("outcome", self.outcome.map_or("", |v| v.as_str()));
         push("usage", self.usage_status.map_or("", |v| v.as_str()));
         push("tests", if self.include_tests { "1" } else { "0" });
+        // The source scope is part of the query's identity: switching it must
+        // invalidate every cursor issued under the old one.
+        push("scope", self.source_scope.as_str());
+        push("capture", self.capture_method.as_str());
         hasher
             .finalize()
             .iter()
             .map(|b| format!("{b:02x}"))
             .collect()
+    }
+}
+
+/// One pending-candidate group, as the pending command returns it.
+///
+/// Only the model, the counts and the time bounds: never a message body, never
+/// a file path.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct PendingGroupDto {
+    pub model_id: String,
+    pub count: i64,
+    pub first_at_ms: Option<i64>,
+    pub last_at_ms: Option<i64>,
+    pub reason: String,
+}
+
+/// A cursor over the pending-candidate groups.
+///
+/// It carries the mapping revision it was issued under, so a rule change (or a
+/// withdrawal) invalidates it instead of silently returning a different set of
+/// groups under the same page number.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct PendingCursor {
+    /// The mapping revision in force when the page was issued.
+    pub mapping_revision: i64,
+    /// The `requested_model` the next page starts after.
+    pub after_model: String,
+    /// The size the page was issued with.
+    pub limit: i64,
+}
+
+impl PendingCursor {
+    /// Validates the cursor against the revision currently in force.
+    pub fn validate(&self, mapping_revision: i64) -> Result<(), String> {
+        if self.limit != 20 && self.limit != 50 && self.limit != 100 {
+            return Err(error(ERR_INVALID, "cursor limit is not one of 20, 50, 100"));
+        }
+        if self.mapping_revision != mapping_revision {
+            return Err(error(
+                ERR_CURSOR_EXPIRED,
+                "cursor was invalidated by a mapping change",
+            ));
+        }
+        Ok(())
     }
 }
 
@@ -510,6 +653,28 @@ pub struct SummaryDto {
     /// Requests whose amount is decided and therefore included in `costs`.
     pub settled_cost_request_count: i64,
     pub cost_incomplete_request_count: i64,
+    /// Records that came through the proxy.
+    #[serde(rename = "proxy_request_count", alias = "proxy_record_count")]
+    pub proxy_record_count: i64,
+    /// Records imported from WorkBuddy's log.
+    #[serde(rename = "workbuddy_record_count", alias = "imported_record_count")]
+    pub imported_record_count: i64,
+    /// Imported records that carry no decided price.
+    pub imported_unpriced_count: i64,
+    /// The denominator of the pricing rates: every row whose cost state is
+    /// decided (settled, or explicitly defaulted to zero).
+    pub cost_known_count: i64,
+    /// WorkBuddy credit, summed on its own. Credit is a different unit from
+    /// money, so it is **never** added into `costs` — and the per-currency
+    /// totals keep different currencies apart for the same reason.
+    #[serde(rename = "workbuddy_credit_nanos", alias = "credit_nanos")]
+    pub credit_nanos: Option<String>,
+    #[serde(rename = "credit_known_count", alias = "credit_record_count")]
+    pub credit_record_count: i64,
+    #[serde(default)]
+    pub status_known_count: i64,
+    #[serde(default)]
+    pub pending_import_count: i64,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -583,6 +748,7 @@ pub struct PriceSnapshotDto {
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+
 pub struct RequestRowDto {
     pub id: i64,
     pub request_id: String,
@@ -593,12 +759,12 @@ pub struct RequestRowDto {
     pub route_name: String,
     pub requested_model: String,
     pub upstream_model: String,
-    #[serde(default = "default_upstream_protocol")]
-    pub upstream_protocol: String,
+    #[serde(default)]
+    pub upstream_protocol: Option<String>,
     pub response_model: Option<String>,
     pub started_at_ms: i64,
     pub ended_at_ms: Option<i64>,
-    pub stream: bool,
+    pub stream: Option<bool>,
     /// `None` while a started record cannot prove whether the call was sent.
     pub upstream_started: Option<bool>,
     pub http_status: Option<i64>,
@@ -619,9 +785,19 @@ pub struct RequestRowDto {
     pub input_uncached_tokens: Option<i64>,
     pub input_breakdown: InputBreakdown,
     pub cost: Option<CostDto>,
-}
-fn default_upstream_protocol() -> String {
-    "openai_chat".into()
+    /// Which side wrote this row.
+    #[serde(default)]
+    #[serde(rename = "record_origin", alias = "origin")]
+    pub origin: RecordOrigin,
+    #[serde(default)]
+    pub time_basis: TimeBasis,
+    #[serde(default)]
+    pub total_tokens_derived: bool,
+    #[serde(default)]
+    pub workbuddy_credit_nanos: Option<String>,
+    /// True when the record is a finished import rather than live traffic.
+    #[serde(default)]
+    pub recorded: bool,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

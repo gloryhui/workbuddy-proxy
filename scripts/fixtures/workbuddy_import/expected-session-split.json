@@ -1,0 +1,25 @@
+{
+  "fixture": "session-split.jsonl",
+  "purpose": "One model response split into two function_call representations that share providerData.messageId but carry different top-level ids and timestamps (ACCEPTANCE X03).",
+  "synthetic": true,
+  "expectation_source": "hand-computed from the two fixture lines; not produced by the importer under test",
+  "notes": "Same entry key and same semantic hash must be a duplicate, never a conflict, and the first timestamp must stay frozen. conversationRequestId is shared on purpose so it cannot be used as a de-duplication key.",
+  "imported": {
+    "entry_ids": ["t1"],
+    "record_count": 1,
+    "complete_count": 1,
+    "input_tokens": 64,
+    "output_tokens": 16,
+    "total_tokens": 80,
+    "cache_read_tokens": null,
+    "credit_nanos": "500000000",
+    "credit_known_count": 1
+  },
+  "duplicate_rows": 1,
+  "conflict_rows": 0,
+  "excluded_proxy_ids": [],
+  "pending_ids": [],
+  "ignored_ids": [],
+  "frozen_first_timestamp_ms": 1792108800000,
+  "ledger_rows": 1
+}

@@ -1,0 +1,54 @@
+{
+  "at": 1792248354.533955,
+  "result": "SHORT_DIAGNOSTIC_COMPLETE_STRICT_ACCEPTANCE_NOT_RUN",
+  "core_sha256": "2498694278279c43484f39eddd5fd41024ad39445095fb6de226e439c224636d",
+  "actual_core_protection_enforced": true,
+  "new_source_facts_observed_at_end": 28544,
+  "observation_seconds_after_ready": 19.550427833,
+  "whole_core_rss_samples_bytes": [
+    33095680,
+    33210368,
+    33357824
+  ],
+  "recent32_writer_mean_ms": 92.64815625,
+  "samples": [
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-writer-diagnostic/sample-0.txt",
+      "sha256": "0adcd30359ace7db6071252065b20405307b934133ea65026095bef843fa2b43",
+      "writer_samples": 2631,
+      "fsync_samples": 926,
+      "ratio": 0.35195743063473967
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-writer-diagnostic/sample-1.txt",
+      "sha256": "b522fac625576d44b9cd94f2b2d077390ad7098e615526e12a568ad757408288",
+      "writer_samples": 2642,
+      "fsync_samples": 914,
+      "ratio": 0.3459500378501135
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-writer-diagnostic/sample-2.txt",
+      "sha256": "b5b271571e443af213f37925c54877ce29f8f43a9ba7febe21e08c7c937dda6b",
+      "writer_samples": 2640,
+      "fsync_samples": 1382,
+      "ratio": 0.5234848484848484
+    }
+  ],
+  "cleanup": {
+    "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/writer-diagnostic-guard-ugjhg8id",
+    "removed": true,
+    "remaining": [],
+    "removed_allocated_bytes": 1497432064,
+    "retained_temp_bytes": 0,
+    "lsof_exit": 1,
+    "system_free_bytes": 19008507904
+  },
+  "current_system_free_bytes": 45156413440,
+  "limitations": [
+    "Short writer diagnostic only, not1M-scale acceptance.",
+    "Source written before startup; end fact count is not an exact timed delta.",
+    "Three RSS observations are not a measured full-run peak."
+  ],
+  "next_required_action": "After explicit user resume: verify migrated paths and current source/binary identity, then unchanged strict1M/single target. Do not reuse older binary matrix passes as current candidate acceptance.",
+  "user_instruction": "Finish latest diagnostic task, stop Goal, wait for further instructions; no new tests launched."
+}

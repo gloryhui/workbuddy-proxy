@@ -1,0 +1,371 @@
+{
+  "at": 1792304003.9536798,
+  "result": "PASS_FACT_HANDOFF_V2_FOCUSED_GATES_OTHER_GATES_PENDING",
+  "core_sha256": "6b1ca331b61c83e6b9dfee85943cb71c6cb084ec8383ceb9e7db842c96300fda",
+  "scope": "Focused runtime only, remaining25 groups and formal1M/full12 stages not completed",
+  "reports": {
+    "query-pressure-scheduling": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/query-pressure-scheduling/report.json",
+      "sha256": "c9dad2119334838ca923197e939fd039cb57758069d993a436c8e473f9bca68d",
+      "passed": 32,
+      "failed": 0
+    },
+    "shutdown": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/shutdown/report.json",
+      "sha256": "a2ef13c704e8e1ad10d6119b3028cf3c0ae06859e8d814f41d8da9ed575401eb",
+      "passed": 30,
+      "failed": 0
+    }
+  },
+  "continuous_pressure": {
+    "client_count": 2,
+    "discarded_samples": 29488,
+    "error_codes": [],
+    "failed_requests": 0,
+    "maximum_visible_count": 27661,
+    "minimum_visible_count": 705,
+    "remaining_threads": [],
+    "scope": "continuous real dashboard traffic during20 exact-identity increment windows; not the formal1M query percentile matrix",
+    "successful_requests_by_client": [
+      18841,
+      18839
+    ],
+    "total_requests": 37680,
+    "wall_ms": 106526.357625,
+    "increment_windows": 20,
+    "max_source_flush_to_query_visible_ms": 6853.686333,
+    "current_core_sha256": "6b1ca331b61c83e6b9dfee85943cb71c6cb084ec8383ceb9e7db842c96300fda",
+    "formal_million_query_scope": false
+  },
+  "steps": [
+    {
+      "name": "continuous-report-scheduling",
+      "script_sha256": "9c0b39a36b8283cb612836efd08a2113d571fcd41e4ed30e8304edd2d9afb81a",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/continuous-report-scheduling-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-fact-handoff-v2-gate-osomz0p8",
+        "--",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+        "scripts/workbuddy_import_scheduling.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-build/workbuddy-proxy",
+        "--query-pressure",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/query-pressure-scheduling"
+      ],
+      "state": "PASS",
+      "started_at": 1792303610.020801,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "pid": 99301,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 99301,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": false,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "scripts/workbuddy_import_scheduling.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-build/workbuddy-proxy",
+          "--query-pressure",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/query-pressure-scheduling"
+        ],
+        "monotonic_ns": "364033036970583",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "80d337207d648d9256997d074b7672609ee3f72d6559065feb171988551bdc4c",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792303784.804459,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-fact-handoff-v2-gate-osomz0p8",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51545214976,
+        "external_free_bytes": 434413453312
+      }
+    },
+    {
+      "name": "shutdown",
+      "script_sha256": "7a3c12b6e2b12561c72a5b0425ce2f9223fec5f3a0c60c208f6b1aea39430337",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+        "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+        "scripts/workbuddy_import_ui_sandbox.py",
+        "--attest-file",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/shutdown-protection.json",
+        "--allowed-root",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-fact-handoff-v2-gate-06rg1ah_",
+        "--",
+        "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+        "scripts/workbuddy_import_shutdown.py",
+        "--exe",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-build/workbuddy-proxy",
+        "--output",
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/shutdown"
+      ],
+      "state": "PASS",
+      "started_at": 1792303784.8108191,
+      "profile_before": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "pid": 183,
+      "exit_code": 0,
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 183,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": false,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "scripts/workbuddy_import_shutdown.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-build/workbuddy-proxy",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-focused-gates/shutdown"
+        ],
+        "monotonic_ns": "364207826533541",
+        "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+      },
+      "log_sha256": "bdd913a52681f08270139916a15226d243c7b605ac160005c8bd8fa6a0879467",
+      "scope_process_cleanup": {
+        "unexpected_live_children_after_step": [],
+        "remaining": []
+      },
+      "ended_at": 1792303794.1001642,
+      "profile_after": {
+        "workbuddy_data": {
+          "mtime_ns": 1792231693515516014,
+          "size": 3328,
+          "ino": 121710119
+        },
+        "proxy_config_macos": null,
+        "proxy_config_unix": null
+      },
+      "real_profiles_unchanged": true,
+      "temporary_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-fact-handoff-v2-gate-06rg1ah_",
+        "removed": true,
+        "removed_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51545047040,
+        "external_free_bytes": 434413428736
+      }
+    }
+  ],
+  "cleanup": {
+    "round_roots_removed": 2,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51547152384
+  }
+}

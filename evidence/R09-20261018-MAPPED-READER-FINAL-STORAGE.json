@@ -1,0 +1,15 @@
+{
+  "at": 1792325523.04708,
+  "scope": "Read-only allocated-size inventory of project-named system-temp entries. No deletion and no ownership inferred from prefix. Dedicated current-session temporary roots have separate exact cleanup receipts.",
+  "system_temp_directory": "/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+  "entry_count_at_scan": 4002,
+  "measured_entries": 4002,
+  "observed_allocated_bytes": 6262906880,
+  "du_exit": 0,
+  "du_errors": "",
+  "deleted_entries": 0,
+  "unknown_ownership_preserved": true,
+  "dedicated_session_temp_allocated_bytes": 4096,
+  "system_free_bytes": 51325714432,
+  "closeout_report_sha256": "5ed0990b26c5a1d52586b0fb1fac4cf1f369898380e45d5d6a5068e95b1874fb"
+}

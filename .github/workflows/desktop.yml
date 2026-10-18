@@ -85,6 +85,8 @@ jobs:
         run: python -m pip install -r scripts/dmg-requirements.txt
       - name: Package both executables without publishing a Release
         run: python scripts/package.py --exe "${{ matrix.core }}" --gpui "${{ matrix.ui }}" --version 0.5.6 --platform "${{ matrix.platform }}"
+      - name: WorkBuddy JSONL import integration checks
+        run: python scripts/workbuddy_import_test.py --exe "${{ matrix.core }}"
       - name: Test extracted Windows package and measure open/closed memory
         if: runner.os == 'Windows'
         shell: pwsh

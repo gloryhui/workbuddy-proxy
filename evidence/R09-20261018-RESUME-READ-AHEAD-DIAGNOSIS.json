@@ -1,0 +1,22 @@
+{
+  "at": 1792322640.218787,
+  "result": "DIAGNOSIS_EXACT_READ_AHEAD_MATCH_NOT_NEW_RESUME_ACCEPTANCE",
+  "failed_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume/single-graceful/report.json",
+  "failed_report_sha256": "3d3fd7bbb628c75c6dd98fcbea5ac4043f0e3fe10eabd41f696fae154a4c7c3e",
+  "raw_failure_preserved": true,
+  "fixture_line_bytes": 1074,
+  "committed_records_at_stop": 100736,
+  "committed_offset_in_uniform_fixture": 108190464,
+  "remaining_records": 899264,
+  "read_chunk_bytes": 65536,
+  "batch_candidate_limit": 128,
+  "predicted_reader_bytes_for_exact_checkpoint_resume": 1381239936,
+  "actual_reader_bytes": 1381239936,
+  "predicted_reader_bytes_for_cold_replay_of_full_source": 1535970432,
+  "production_sources": [
+    "src/stats/workbuddy_import/reader.rs:LineReader::open,next_bounded_line,bytes_read",
+    "src/stats/workbuddy_import/runtime/worker/file.rs:read_slice",
+    "src/stats/workbuddy_import/runtime.rs:apply_envelope batch telemetry"
+  ],
+  "scope": "LineReader counts bytes returned by read(), including discarded bounded prefetch across fresh slices; not physical disk I/O. The old raw<corpus-size shortcut is invalid. Fresh acceptance must prove actual skip using early receipts/counter, source-clock restart, exact final data and per-batch prefetch bounds; do not rewrite old FAIL."
+}

@@ -141,7 +141,9 @@ mod compatibility_tests {
         for (version, protocol, expected) in [
             (env!("CARGO_PKG_VERSION"), None, false),
             (env!("CARGO_PKG_VERSION"), Some(9), false),
-            (env!("CARGO_PKG_VERSION"), Some(10), true),
+            (env!("CARGO_PKG_VERSION"), Some(10), false),
+            (env!("CARGO_PKG_VERSION"), Some(11), false),
+            (env!("CARGO_PKG_VERSION"), Some(12), true),
             ("0.3.0", Some(10), false),
         ] {
             let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();

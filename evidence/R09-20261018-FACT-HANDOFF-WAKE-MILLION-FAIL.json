@@ -1,0 +1,97 @@
+{
+  "at": 1792305034.657876,
+  "core_binary_sha256": "6b1ca331b61c83e6b9dfee85943cb71c6cb084ec8383ceb9e7db842c96300fda",
+  "result": "FAIL_BACKGROUND_DASHBOARD_TIMEOUT",
+  "phase_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-matrix/1000000-many/trial-1/report.json",
+  "phase_sha256": "3493b7d9e857c9980e235f45e260be28e5662c7cf143fc79fa99602daf1e6eeb",
+  "failure": [
+    {
+      "code": "stats_query_timeout",
+      "count_before_request": 676603,
+      "elapsed_ms": 350473.8505,
+      "progress_before_request": {
+        "bytes_committed": 730658310,
+        "bytes_remaining": 343341690,
+        "bytes_total": 1074000000,
+        "files_remaining": 1000,
+        "files_total": 1000,
+        "total_known": true
+      },
+      "query_ms": 2000.479667
+    }
+  ],
+  "independent_full_worker_probe": {
+    "backfill_ms": 402731.716542,
+    "cleanup": {
+      "child_stopped": true,
+      "normal_exit": true,
+      "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-fact-handoff-v2-target-8y106l4u/tmp/workbuddy-worker-memory-fxdftu0s",
+      "released_logical_bytes": 2989993384,
+      "removed": true,
+      "retained_temp_bytes": 0,
+      "system_free_bytes": 51552342016
+    },
+    "core_binary_sha256": "6b1ca331b61c83e6b9dfee85943cb71c6cb084ec8383ceb9e7db842c96300fda",
+    "corpus": {
+      "at_ms": 1792303794332,
+      "bytes": 1074000000,
+      "files": 1000,
+      "records": 1000000
+    },
+    "layout": "many",
+    "ledger": [
+      [
+        1000000,
+        1000000,
+        1000000
+      ]
+    ],
+    "memory": {
+      "baseline_bytes": 12697600,
+      "error": null,
+      "method": "whole-core peak and net RSS change; not per-thread RSS",
+      "net_rss_growth_bytes": 27328512,
+      "peak_bytes": 40026112,
+      "sampler": "libproc rusage_info_v0 with Mach timebase",
+      "samples": 3811,
+      "sampling_interval_seconds": 0.1
+    },
+    "money_rows": [
+      [
+        0
+      ]
+    ],
+    "offsets": [
+      [
+        1000,
+        1074000000,
+        1074000000
+      ]
+    ],
+    "report_queries_during_measurement": 0,
+    "result": "PASS_FULL_IMPORT_WORKER_MEMORY_BOUND",
+    "scale": 1000000,
+    "scope": "complete import-only core; no dashboard/request report queries or query caches",
+    "script_sha256": "67abd958fcf93188ae6f62c1f69531283497268afe7bfe70b921622f8e1781cf",
+    "totals": [
+      [
+        1000000,
+        120000000,
+        1140000000000000
+      ]
+    ]
+  },
+  "partial_background_samples": 50,
+  "partial_sample_p95_ms": 1925.560541,
+  "query_scope": "Samples preceding actual timeout; not full1M3x50 acceptance. Focused fairness32 and shutdown30 proofs remain valid only for their scope.",
+  "cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 433091780608,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-fact-handoff-v2-target-8y106l4u/tmp/workbuddy-scale-ufgmhuc_",
+    "removed": true,
+    "removed_logical_bytes": 2706953616,
+    "retained_evidence_bytes": 1297725074,
+    "system_disk_available_bytes": 51554308096
+  },
+  "next_action": "Actual-current-core pause/on/pause query and OS stack diagnostic; no budget/index/version changes"
+}

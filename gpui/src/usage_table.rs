@@ -1,6 +1,7 @@
 //! Table delegates for the statistics page: the request log plus the provider
 //! and model summaries. All rows are already server-aggregated; the table only
 //! renders the current page; per-request display ratios use the stored counters.
+use crate::stats_dto::RecordOrigin;
 use crate::{
     statistics::Statistics,
     stats_dto::{
@@ -63,6 +64,72 @@ pub fn compact(value: Option<i64>, zh: bool) -> String {
     format!("{text}{unit}")
 }
 
+/// The source column's text.
+///
+/// The three origins are distinguishable at a glance: a relayed call, a record
+/// imported from WorkBuddy's own log, and a confirmed direct use of a custom
+/// vendor.
+pub fn origin_text(origin: RecordOrigin, zh: bool) -> &'static str {
+    match origin {
+        RecordOrigin::Proxy => {
+            if zh {
+                "代理"
+            } else {
+                "Proxy"
+            }
+        }
+        RecordOrigin::WorkbuddyBuiltin => {
+            if zh {
+                "内置"
+            } else {
+                "Built-in"
+            }
+        }
+        RecordOrigin::WorkbuddyCustom => {
+            if zh {
+                "自定义"
+            } else {
+                "Custom"
+            }
+        }
+    }
+}
+
+/// The status column's text.
+///
+/// An imported record reads as "recorded": the log it came from says the message
+/// exists, not that a request succeeded, so the row never borrows an HTTP result
+/// it does not have.
+pub fn status_text(recorded: bool, outcome: Outcome, zh: bool) -> &'static str {
+    if recorded {
+        return if zh { "已记录" } else { "Recorded" };
+    }
+    match (outcome, zh) {
+        (Outcome::InFlight, true) => "进行中",
+        (Outcome::InFlight, false) => "In flight",
+        (Outcome::Completed, true) => "完成",
+        (Outcome::Completed, false) => "Completed",
+        (Outcome::Failed, true) => "失败",
+        (Outcome::Failed, false) => "Failed",
+        (Outcome::Cancelled, true) => "已取消",
+        (Outcome::Cancelled, false) => "Cancelled",
+        (Outcome::Interrupted, true) => "中断",
+        (Outcome::Interrupted, false) => "Interrupted",
+        (Outcome::Rejected, true) => "拒绝",
+        (Outcome::Rejected, false) => "Rejected",
+        (Outcome::Recorded, true) => "已记录",
+        (Outcome::Recorded, false) => "Recorded",
+    }
+}
+
+/// The HTTP column's text.
+///
+/// A record without an HTTP status shows a dash. Rendering `0` or a default
+/// `200` would invent a result that was never observed.
+pub fn http_text(status: Option<i64>) -> String {
+    exact(status)
+}
+
 /// Exact integer formatting for tooltips and details.
 pub fn exact(value: Option<i64>) -> String {
     value.map_or_else(|| "—".into(), |value| value.to_string())
@@ -117,29 +184,55 @@ pub fn output_rate(
     Some(output as f64 * 1000. / elapsed as f64)
 }
 
-pub fn rate_text(item: &RequestRowDto) -> String {
-    output_rate(
-        item.output_tokens,
-        item.duration_ms,
-        item.first_content_ms,
-        item.stream,
+/// Displays WorkBuddy credits exactly, independently of currency formatting.
+/// Aggregates can exceed i64, and even one nano-credit is a known value.
+pub fn format_credit_nanos(text: &str) -> Option<String> {
+    if text.is_empty() || !text.bytes().all(|byte| byte.is_ascii_digit()) {
+        return None;
+    }
+    let nanos = text.parse::<i128>().ok()?;
+    let whole = nanos / 1_000_000_000;
+    let fraction = nanos % 1_000_000_000;
+    if fraction == 0 {
+        return Some(whole.to_string());
+    }
+    Some(
+        format!("{whole}.{fraction:09}")
+            .trim_end_matches('0')
+            .to_owned(),
     )
-    .map_or_else(|| "—".into(), |rate| format!("{rate:.1}"))
 }
 
-pub fn rate_hint(stream: bool, zh: bool) -> &'static str {
-    match (stream, zh) {
-        (true, true) => {
+pub fn rate_text(item: &RequestRowDto) -> String {
+    item.stream
+        .and_then(|stream| {
+            output_rate(
+                item.output_tokens,
+                item.duration_ms,
+                item.first_content_ms,
+                stream,
+            )
+        })
+        .map_or_else(|| "—".into(), |rate| format!("{rate:.1}"))
+}
+
+pub fn rate_hint(stream: impl Into<Option<bool>>, zh: bool) -> &'static str {
+    match (stream.into(), zh) {
+        (Some(true), true) => {
             "流式输出 tok/s = 输出 Token ÷（总耗时 − 首内容耗时）秒。包含输出中的推理 Token；仅为平均速率，尾部传输耗时也计入。数据缺失或时间区间无效时显示 —。"
         }
-        (true, false) => {
+        (Some(true), false) => {
             "Streaming tok/s = output tokens / (duration − time to first content) in seconds. Includes reasoning counted in output and tail transfer time; an average, not instantaneous speed. Missing or invalid intervals show —."
         }
-        (false, true) => {
+        (Some(false), true) => {
             "非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。"
         }
-        (false, false) => {
+        (Some(false), false) => {
             "Non-streaming tok/s = output tokens / total seconds, an end-to-end average including wait time. Missing data or invalid duration shows —."
+        }
+        (None, true) => "日志未记录流式状态或可靠耗时，无法计算 tok/s。",
+        (None, false) => {
+            "The log has no streaming state or reliable duration; tok/s is unavailable."
         }
     }
 }
@@ -228,6 +321,7 @@ pub fn outcome_label(
         }
         (Outcome::Rejected, _) => ("本地拒绝", "Rejected"),
         (Outcome::InFlight, _) => ("进行中", "In flight"),
+        (Outcome::Recorded, _) => ("已记录", "Recorded"),
     };
     if zh { key.0 } else { key.1 }.to_owned()
 }
@@ -409,12 +503,14 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .into_any_element()
 }
 
-pub const REQUEST_COLUMNS: usize = 9;
+pub const REQUEST_COLUMNS: usize = 11;
 // Time is just wide enough for MM-DD HH:MM:SS at the table's 12px font.
-const MIN_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 68., 112., 80., 340., 110., 66., 60., 102.];
-const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] =
-    [110., 180., 350., 110., 460., 140., 82., 78., 130.];
-const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 1., 2., 0.2, 2., 0.3, 0.1, 0.1, 0.3];
+const MIN_WIDTHS: [f32; REQUEST_COLUMNS] =
+    [110., 100., 68., 112., 80., 340., 110., 66., 60., 102., 90.];
+const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] = [
+    110., 100., 180., 350., 110., 460., 140., 82., 78., 130., 90.,
+];
+const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 0., 1., 2., 0.2, 2., 0.3, 0.1, 0.1, 0.3, 0.];
 
 /// Fit automatic columns into the measured host. Explicit user widths win;
 /// when minimum readable widths cannot fit, keep horizontal scrolling.
@@ -425,7 +521,13 @@ fn fitted_widths(
     let mut widths = MIN_WIDTHS;
     for i in 1..REQUEST_COLUMNS {
         if let Some(width) = custom[i] {
-            widths[i] = width.max(if i == 4 { 180. } else { 60. });
+            widths[i] = width.max(if i == 5 {
+                180.
+            } else if i == 1 {
+                80.
+            } else {
+                60.
+            });
         }
     }
     let mut remaining = (available - widths.iter().sum::<f32>()).max(0.);
@@ -447,8 +549,8 @@ fn fitted_widths(
         }
     }
     // On very wide windows, use surplus for names rather than numeric columns.
-    if remaining > 0. && custom[2].is_none() {
-        widths[2] += remaining;
+    if remaining > 0. && custom[3].is_none() {
+        widths[3] += remaining;
     }
     widths
 }
@@ -478,6 +580,7 @@ impl UsageRows {
         if self.zh {
             [
                 ("time", "时间"),
+                ("source", "来源"),
                 ("provider", "供应商"),
                 ("model", "模型"),
                 ("request", "请求标识"),
@@ -486,10 +589,12 @@ impl UsageRows {
                 ("latency", "耗时"),
                 ("speed", "tok/s"),
                 ("status", "状态"),
+                ("credits", "点数"),
             ]
         } else {
             [
                 ("time", "Time"),
+                ("source", "Source"),
                 ("provider", "Provider"),
                 ("model", "Model"),
                 ("request", "Request"),
@@ -498,6 +603,7 @@ impl UsageRows {
                 ("latency", "Latency"),
                 ("speed", "tok/s"),
                 ("status", "Status"),
+                ("credits", "Credits"),
             ]
         }
     }
@@ -519,6 +625,8 @@ impl TableDelegate for UsageRows {
             .width(px(width))
             .min_width(px(if index == 0 {
                 110.
+            } else if id == "source" {
+                80.
             } else if id == "tokens" {
                 180.
             } else {
@@ -574,6 +682,25 @@ impl TableDelegate for UsageRows {
                 ("usage-time", row),
             ),
             1 => cell(
+                origin_text(item.origin, zh).into(),
+                Some(
+                    if item.origin == RecordOrigin::Proxy {
+                        if zh { "代理采集" } else { "Proxy capture" }
+                    } else if zh {
+                        "WorkBuddy 导入"
+                    } else {
+                        "WorkBuddy import"
+                    }
+                    .into(),
+                ),
+                match item.origin {
+                    RecordOrigin::Proxy => 0x356fc0,
+                    RecordOrigin::WorkbuddyBuiltin => 0x7354a0,
+                    RecordOrigin::WorkbuddyCustom => 0x397e67,
+                },
+                ("usage-source", row),
+            ),
+            2 => cell(
                 item.provider_name.clone(),
                 Some(format!(
                     "{}\nID: {}\n{}",
@@ -588,7 +715,7 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-provider", row),
             ),
-            2 => cell(
+            3 => cell(
                 item.upstream_model.clone(),
                 Some(format!(
                     "{}\n{}\n{}{}",
@@ -600,17 +727,18 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-model", row),
             ),
-            3 => cell(
+            4 => cell(
                 if item.request_id.len() > 12 {
                     format!("{}…", &item.request_id[..12])
                 } else {
                     item.request_id.clone()
                 },
                 Some(format!(
-                    "{}\nHTTP {}\n{}",
+                    "{}\n{}\nHTTP {}\n{}",
                     item.request_id,
-                    item.http_status
-                        .map_or("—".into(), |status| status.to_string()),
+                    origin_text(item.origin, zh),
+                    // An absent status is a dash: never 0, never a default 200.
+                    http_text(item.http_status),
                     if zh {
                         "点击查看详情"
                     } else {
@@ -620,8 +748,8 @@ impl TableDelegate for UsageRows {
                 0x6b7c90,
                 ("usage-request", row),
             ),
-            4 => token_cell(item, row, zh),
-            5 => {
+            5 => token_cell(item, row, zh),
+            6 => {
                 let status = item
                     .cost
                     .as_ref()
@@ -659,7 +787,7 @@ impl TableDelegate for UsageRows {
                     )
                 }
             }
-            6 => cell(
+            7 => cell(
                 duration(item.duration_ms),
                 Some(format!(
                     "{} {}\n{} {}\n{} {}",
@@ -673,18 +801,34 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-latency", row),
             ),
-            7 => cell(
+            8 => cell(
                 rate_text(item),
                 Some(rate_hint(item.stream, zh).into()),
                 0x19334d,
                 ("usage-speed", row),
             ),
+            10 => cell(
+                item.workbuddy_credit_nanos
+                    .as_deref()
+                    .and_then(format_credit_nanos)
+                    .unwrap_or_else(|| "—".into()),
+                Some(
+                    if zh {
+                        "日志记录值，不代表账号余额"
+                    } else {
+                        "Logged usage; not account balance"
+                    }
+                    .into(),
+                ),
+                0x19334d,
+                ("usage-credit", row),
+            ),
             _ => {
                 let (text, _) = usage_label(item.usage_status, zh);
-                let outcome = outcome_label(item.outcome, item.error_kind, zh);
-                let http = item
-                    .http_status
-                    .map_or("—".to_owned(), |status| status.to_string());
+                // An imported row reads as "recorded": it has no HTTP result to
+                // report and must not borrow one.
+                let outcome = status_text(item.recorded, item.outcome, zh);
+                let http = http_text(item.http_status);
                 cell(
                     format!("{http} · {outcome}"),
                     Some(format!(
@@ -693,7 +837,7 @@ impl TableDelegate for UsageRows {
                     )),
                     match item.outcome {
                         Outcome::Completed => 0x2f7d4f,
-                        Outcome::InFlight => 0x8a98a7,
+                        Outcome::InFlight | Outcome::Recorded => 0x8a98a7,
                         _ => 0xa4424a,
                     },
                     ("usage-status", row),
@@ -951,10 +1095,24 @@ mod tests {
     // Explicit imports only: `use super::*` would pull GPUI's `#[gpui::test]`
     // attribute into scope and shadow the built-in `#[test]` macro.
     use super::{
-        MIN_WIDTHS, amount, cache_rate, compact, duration, fitted_widths, outcome_label,
-        output_rate, percent,
+        MIN_WIDTHS, amount, cache_rate, compact, duration, fitted_widths, format_credit_nanos,
+        outcome_label, output_rate, percent,
     };
     use crate::stats_dto::{Currency, ErrorKind, Outcome};
+
+    #[test]
+    fn credits_are_exact_points_rather_than_nano_unit_counts() {
+        assert_eq!(format_credit_nanos("1140000000").as_deref(), Some("1.14"));
+        assert_eq!(format_credit_nanos("0").as_deref(), Some("0"));
+        assert_eq!(format_credit_nanos("1").as_deref(), Some("0.000000001"));
+        assert_eq!(
+            format_credit_nanos("18446744073709551614").as_deref(),
+            Some("18446744073.709551614")
+        );
+        for invalid in ["", "-1", "1e9", "unknown"] {
+            assert!(format_credit_nanos(invalid).is_none());
+        }
+    }
 
     #[test]
     fn compact_numbers_follow_the_interface_language() {
@@ -1036,10 +1194,12 @@ mod tests {
     #[test]
     fn automatic_columns_fit_default_viewport_and_keep_numeric_columns_compact() {
         for available in [1134., 1454., 2400.] {
-            let widths = fitted_widths(available, &[None; 9]);
-            assert!((widths.iter().sum::<f32>() - available).abs() < 0.1);
+            let widths = fitted_widths(available, &[None; super::REQUEST_COLUMNS]);
+            assert!(
+                (widths.iter().sum::<f32>() - available.max(MIN_WIDTHS.iter().sum())).abs() < 0.1
+            );
             assert_eq!(widths[0], 110.);
-            assert!(widths[5] <= 140. && widths[6] <= 82. && widths[7] <= 78.);
+            assert!(widths[6] <= 140. && widths[7] <= 82. && widths[8] <= 78.);
             assert!(
                 widths
                     .iter()
@@ -1053,8 +1213,10 @@ mod tests {
     fn user_columns_are_preserved_while_remaining_columns_fit() {
         let custom = [
             Some(400.),
+            None,
             Some(120.),
             Some(200.),
+            None,
             None,
             None,
             None,
@@ -1065,18 +1227,20 @@ mod tests {
         for available in [1280., 1454.] {
             let widths = fitted_widths(available, &custom);
             assert_eq!(widths[0], 110.); // Time is always fixed.
-            assert_eq!(widths[1], 120.);
-            assert_eq!(widths[2], 200.);
+            assert_eq!(widths[2], 120.);
+            assert_eq!(widths[3], 200.);
             // If both names were manually sized, unused space is preferable
             // to stretching compact numeric columns beyond their auto caps.
-            assert!(widths.iter().sum::<f32>() <= available + 0.1);
+            let minimum =
+                MIN_WIDTHS.iter().sum::<f32>() + (120. - MIN_WIDTHS[2]) + (200. - MIN_WIDTHS[3]);
+            assert!(widths.iter().sum::<f32>() <= available.max(minimum) + 0.1);
             assert!(widths[4] >= MIN_WIDTHS[4]);
         }
     }
 
     #[test]
     fn narrow_windows_scroll_instead_of_hiding_or_crushing_columns() {
-        let widths = fitted_widths(800., &[None; 9]);
+        let widths = fitted_widths(800., &[None; super::REQUEST_COLUMNS]);
         assert_eq!(widths, MIN_WIDTHS);
         assert!(widths.iter().sum::<f32>() > 800.);
     }
@@ -1093,5 +1257,70 @@ mod tests {
             "Not sent"
         );
         assert_eq!(outcome_label(Outcome::Cancelled, None, false), "Cancelled");
+    }
+}
+
+#[cfg(test)]
+mod source_column_tests {
+    use super::{amount, compact, exact, http_text, origin_text, percent, status_text};
+    use crate::stats_dto::{Currency, Outcome, RecordOrigin};
+
+    #[test]
+    fn the_three_origins_are_distinguishable() {
+        // AC069: a relayed call, an imported built-in record and a confirmed
+        // direct use must not read the same.
+        let zh = [
+            RecordOrigin::Proxy,
+            RecordOrigin::WorkbuddyBuiltin,
+            RecordOrigin::WorkbuddyCustom,
+        ]
+        .map(|origin| origin_text(origin, true));
+        let en = [
+            RecordOrigin::Proxy,
+            RecordOrigin::WorkbuddyBuiltin,
+            RecordOrigin::WorkbuddyCustom,
+        ]
+        .map(|origin| origin_text(origin, false));
+        assert_eq!(zh, ["代理", "内置", "自定义"]);
+        assert_eq!(en, ["Proxy", "Built-in", "Custom"]);
+        assert_ne!(zh[0], zh[1]);
+        assert_ne!(zh[1], zh[2]);
+        assert_ne!(zh[0], zh[2]);
+    }
+
+    #[test]
+    fn an_absent_http_status_is_a_dash_and_never_zero_or_200() {
+        // AC069: inventing a 0 or a default 200 would report a result that was
+        // never observed.
+        assert_eq!(http_text(None), "—");
+        assert_ne!(http_text(None), "0");
+        assert_ne!(http_text(None), "200");
+        assert_eq!(http_text(Some(503)), "503");
+    }
+
+    #[test]
+    fn an_imported_row_reads_as_recorded_and_not_as_an_http_result() {
+        // The log says the message exists; it does not say a request succeeded.
+        assert_eq!(status_text(true, Outcome::Completed, true), "已记录");
+        assert_eq!(status_text(true, Outcome::Completed, false), "Recorded");
+        assert_eq!(status_text(false, Outcome::Completed, true), "完成");
+        assert_eq!(status_text(false, Outcome::Failed, false), "Failed");
+        // A recorded row never borrows the completed wording.
+        assert_ne!(
+            status_text(true, Outcome::Completed, true),
+            status_text(false, Outcome::Completed, true)
+        );
+    }
+
+    #[test]
+    fn missing_rates_and_amounts_are_dashes_rather_than_zeros() {
+        assert_eq!(compact(None, true), "—");
+        assert_eq!(exact(None), "—");
+        assert_eq!(amount(None, Some(Currency::Usd)), "—");
+        assert_eq!(percent(None), "—");
+        // A measured zero is still a zero.
+        assert_eq!(compact(Some(0), true), "0");
+        assert_eq!(exact(Some(0)), "0");
+        assert_eq!(percent(Some(0.0)), "0.0%");
     }
 }

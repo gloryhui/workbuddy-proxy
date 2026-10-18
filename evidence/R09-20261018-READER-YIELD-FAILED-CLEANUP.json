@@ -1,0 +1,13 @@
+{
+  "at": 1792302400.75142,
+  "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-reader-yield-matrix/core-under-test",
+  "ownership": "Current thread created frozen candidate in reader-yield target runner; binary hash matches terminal coordinator",
+  "sha256": "54989a654cc8a319e6d75bb2f5c9c3555e17da6012b8393158837f5506d0a7aa",
+  "lsof_exit": 1,
+  "removed": true,
+  "released_allocated_bytes": 8429568,
+  "original_candidate_build_binary_retained": true,
+  "phase_database_config_and_sources_already_removed": true,
+  "failed_snapshot_and_reports_retained": true,
+  "system_free_bytes": 51547189248
+}

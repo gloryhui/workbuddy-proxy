@@ -1,0 +1,2478 @@
+{
+  "at": 1792325444.874918,
+  "result": "PASS_COMPLETE_REQUESTED_LOCAL_SCOPE_EXTERNAL_LIMITS_EXPLICIT",
+  "scope": "Requirement-by-requirement local completion verification. Does not promote external platform/install boundaries to PASS. Goal status changes only after root inspection.",
+  "checks": [
+    {
+      "name": "Final delivery queue terminal PASS with7 successful executed stages",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Delivery driver has exited",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Final orchestration inputs retain their executed hashes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Executed proof-index log bytes unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Executed final-audit log bytes unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Executed final-docs log bytes unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Executed arm-package log bytes unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Executed arm-archive log bytes unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Executed x64-package log bytes unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Executed x64-archive log bytes unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current frozen ARM code identity",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "All117 compiled production source inputs unchanged",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Original branch and uncommitted base preserved",
+      "ok": true,
+      "detail": {
+        "head": "6102b779871bab0bb8ad646dac5004892adf76be",
+        "branch": "codex/workbuddy-usage-import"
+      }
+    },
+    {
+      "name": "80AC has79 local PASS and1 explicitly external boundary",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "47 fixed X conditions PASS with actual references",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged Cargo.toml",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged Cargo.lock",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged gpui/Cargo.toml",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged gpui/Cargo.lock",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged src/stats/migrations/0001.sql",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged src/stats/migrations/0002.sql",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged src/stats/migrations/0003.sql",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged src/stats/migrations/0004.sql",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged src/stats/migrations/0005.sql",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Protected manifest/old migration unchanged src/stats/migrations/0006.sql",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Audit preserves exactly the80 fixed requirement strings",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Audit preserves exactly the47 fixed expected outcomes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC005 exact passing production test stats::workbuddy_import::tests::shared_limits_come_from_the_stats_dto",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC005 exact passing production test stats::workbuddy_import::tests::batch_bounds_match_the_design_table",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC005 exact passing production test stats::workbuddy_import::tests::candidate_identity_fields_are_hashes_not_raw_ids",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC010 exact passing production test stats::store::tests::every_schema_generation_upgrades_in_place_and_is_idempotent",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC010 exact passing production test stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC011 exact passing production test stats::store::tests::proxy_and_import_rows_cannot_mix_transport_or_cost_columns",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC012 exact passing production test stats::workbuddy_import::store::ledger_tests::the_same_key_is_never_written_twice",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC012 exact passing production test stats::workbuddy_import::store::ledger_tests::a_conflict_never_touches_the_proxy_fact_row",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC012 exact passing production test stats::workbuddy_import::store::ledger_tests::tombstones_are_terminal",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC012 exact passing production test stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC013 exact passing production test stats::workbuddy_import::store::checkpoint_tests::stale_revision_is_refused_without_a_partial_write",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC013 exact passing production test stats::workbuddy_import::store::checkpoint_tests::an_old_generation_is_refused",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC013 exact passing production test stats::workbuddy_import::store::checkpoint_tests::negative_or_regressing_offsets_are_refused",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC013 exact passing production test stats::workbuddy_import::store::checkpoint_tests::a_foreign_namespace_is_refused",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC014 exact passing production test stats::workbuddy_import::store::mapping_tests::adjacent_half_open_intervals_are_legal",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC014 exact passing production test stats::workbuddy_import::store::mapping_tests::overlapping_verified_intervals_are_refused_by_rust_and_by_the_trigger",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC014 exact passing production test stats::workbuddy_import::store::mapping_tests::the_namespace_is_created_once_and_reused_after_toggling",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC015 exact passing production test stats::store::tests::a_v6_database_upgrades_without_changing_rows_ids_tokens_or_costs",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC016 exact passing production test stats::store::tests::every_schema_generation_upgrades_in_place_and_is_idempotent",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC016 exact passing production test stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC017 exact passing production test stats::workbuddy_import::parser::shell_tests::an_assistant_message_is_usage_bearing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC017 exact passing production test stats::workbuddy_import::parser::shell_tests::a_role_less_function_call_is_usage_bearing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC017 exact passing production test stats::workbuddy_import::parser::shell_tests::user_messages_reasoning_and_tool_results_are_excluded",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC018 exact passing production test stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC018 exact passing production test stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC018 exact passing production test stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC019 exact passing production test stats::workbuddy_import::normalize::token_tests::an_explicit_zero_is_preserved",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC019 exact passing production test stats::workbuddy_import::normalize::token_tests::missing_fields_stay_unknown_and_are_never_invented",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC019 exact passing production test stats::workbuddy_import::normalize::token_tests::negative_values_invalidate_the_whole_record",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC019 exact passing production test stats::workbuddy_import::normalize::token_tests::floats_strings_and_booleans_are_never_coerced",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC019 exact passing production test stats::workbuddy_import::normalize::token_tests::the_per_field_bound_is_inclusive_and_the_total_bound_too",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC019 exact passing production test stats::workbuddy_import::normalize::token_tests::a_contradicting_total_is_invalid_and_never_corrected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC020 exact passing production test stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC020 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC020 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC020 exact passing production test stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC021 exact passing production test stats::workbuddy_import::normalize::credit_tests::a_two_decimal_credit_is_exact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC021 exact passing production test stats::workbuddy_import::normalize::credit_tests::nine_fractional_digits_is_the_limit",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC021 exact passing production test stats::workbuddy_import::normalize::credit_tests::scientific_notation_and_signs_are_refused",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC021 exact passing production test stats::workbuddy_import::normalize::credit_tests::an_invalid_credit_never_damages_the_token_values",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC022 exact passing production test stats::workbuddy_import::store::batch_tests::parsed_usage_reaches_the_fact_columns_without_losing_credit_or_cache",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC022 exact passing production test stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::a_broken_line_reports_the_fixed_syntax_code",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::a_missing_usage_object_is_not_a_zero_record",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::a_role_less_function_call_is_usage_bearing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::an_assistant_function_call_is_usage_bearing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::an_assistant_message_is_usage_bearing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::both_usage_wrappers_are_read_with_their_own_key_style",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::non_integer_numbers_are_flagged_not_coerced",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::scientific_credit_keeps_its_literal_text",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::the_parser_contract_holds",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::transcript_content_and_tool_arguments_never_reach_the_shell",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC023 exact passing production test stats::workbuddy_import::parser::shell_tests::user_messages_reasoning_and_tool_results_are_excluded",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC024 exact passing production test stats::workbuddy_import::reader::verify_tests::a_permission_failure_does_not_advance_the_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::a_chinese_path_with_spaces_is_read",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::a_missing_projects_directory_yields_nothing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::discovery_is_lazy_and_sliced",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::new_files_and_directories_appear_on_the_next_walk",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::symlinks_are_not_followed_for_files_or_directories",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::the_allowed_shape_is_exactly_one_project_level",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::the_reader_contract_holds",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::the_sync_interval_is_fixed_and_unrelated_to_refresh_options",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC025 exact passing production test stats::workbuddy_import::reader::discovery_tests::traces_tool_results_and_storage_are_never_entered",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC026 exact passing production test stats::workbuddy_import::reader::fingerprint_tests::a_small_file_that_grew_is_an_append_not_a_replacement",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC026 exact passing production test stats::workbuddy_import::reader::fingerprint_tests::a_replaced_head_is_reported_as_replacement",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC026 exact passing production test stats::workbuddy_import::reader::fingerprint_tests::a_file_shorter_than_the_remembered_regions_is_a_truncation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC026 exact passing production test stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC027 exact passing production test stats::workbuddy_import::reader::line_tests::the_four_mebibyte_boundary_is_inclusive",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC027 exact passing production test stats::workbuddy_import::reader::line_tests::a_fifty_mebibyte_line_stays_bounded_in_memory",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC027 exact passing production test stats::workbuddy_import::reader::line_tests::an_oversized_line_is_drained_and_the_next_line_is_readable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC028 exact passing production test stats::workbuddy_import::reader::advance_tests::a_record_written_in_three_writes_is_imported_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC028 exact passing production test stats::workbuddy_import::reader::advance_tests::bad_lines_do_not_hide_the_lines_after_them",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC029 exact passing production test stats::workbuddy_import::reader::fairness_tests::a_growing_large_file_cannot_starve_the_others",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC029 exact passing production test stats::workbuddy_import::reader::fairness_tests::caught_up_increments_are_served_before_the_backlog",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC029 exact passing production test stats::workbuddy_import::reader::fairness_tests::the_cadence_stays_five_seconds_and_independent_of_settings",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::a_batch_from_a_stable_file_is_accepted",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::a_batch_reports_its_candidates_and_diagnostics_separately",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::a_change_during_the_read_discards_the_batch",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::a_missing_file_or_a_symlink_is_unreadable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::a_permission_failure_does_not_advance_the_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::a_rename_that_replaces_the_file_discards_the_batch",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::a_truncation_discards_the_batch",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::an_unterminated_tail_yields_an_empty_batch_without_moving_the_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC030 exact passing production test stats::workbuddy_import::reader::verify_tests::the_verification_contract_holds",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC031 exact passing production test stats::workbuddy_import::runtime::tests::full_scan_rechecks_a_hidden_middle_edit_without_resetting_incremental_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC031 exact passing production test stats::workbuddy_import::reader::rescan_tests::a_full_rescan_never_moves_the_incremental_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::reader::rescan_tests::a_full_rescan_never_moves_the_incremental_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::reader::rescan_tests::a_middle_edit_is_invisible_to_incremental_but_found_by_a_full_rescan",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::reader::rescan_tests::a_rescan_is_sliced_by_its_own_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::reader::rescan_tests::repeated_passes_rotate_the_starting_file",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::reader::rescan_tests::the_daily_trigger_comes_due_on_the_interval",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::reader::rescan_tests::the_manual_trigger_is_due_whenever_no_pass_is_running",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::reader::rescan_tests::the_rescan_contract_holds",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC032 exact passing production test stats::workbuddy_import::runtime::tests::real_worker_reaches_all_files_and_preserves_usage_without_idle_body_reads",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC033 exact passing production test stats::workbuddy_import::classify::classify_tests::the_shared_predicate_is_the_sync_path_predicate",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC033 exact passing production test stats::workbuddy_import::classify::classify_tests::a_guessed_name_or_a_bare_loopback_url_is_never_enough",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC034 exact passing production test stats::workbuddy_import::classify::observation_tests::a_direct_configuration_proves_nothing_about_history",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC034 exact passing production test stats::workbuddy_import::classify::observation_tests::an_older_record_is_outside_a_fresh_observation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC034 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::observer_reads_actual_id_and_leaves_older_custom_record_pending",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC035 exact passing production test stats::workbuddy_import::classify::attribution_tests::a_custom_local_model_is_not_proxy_by_its_name",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC035 exact passing production test stats::workbuddy_import::classify::attribution_tests::the_same_response_model_on_two_routes_is_distinguishable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC035 exact passing production test stats::workbuddy_import::classify::attribution_tests::a_known_proxy_model_stays_excluded_without_a_matching_fact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC036 exact passing production test stats::workbuddy_import::classify::interval_tests::the_same_alias_is_direct_before_and_proxy_after",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC036 exact passing production test stats::workbuddy_import::classify::interval_tests::a_later_name_never_rewrites_an_earlier_interval",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC036 exact passing production test stats::workbuddy_import::classify::interval_tests::a_route_rename_or_delete_does_not_touch_history",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC037 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::production_prepare_failure_changes_neither_models_nor_proxy_config",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC037 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::production_finalize_write_failure_returns_synced_unconfirmed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC038 exact passing production test stats::workbuddy_import::store::recovery_tests::a_crash_before_the_write_conflicts_the_prepared_row",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC038 exact passing production test stats::workbuddy_import::store::recovery_tests::a_crash_after_the_write_completes_the_prepared_row",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC038 exact passing production test stats::workbuddy_import::store::recovery_tests::a_crash_before_the_ack_is_resolved_the_same_way",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC038 exact passing production test stats::workbuddy_import::observation::tests::restart_after_write_recovers_future_only_and_preserves_uncertain_gap",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC039 exact passing production test stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC039 exact passing production test stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC039 exact passing production test stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC040 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::manual_commands_reconcile_real_worker_data_and_rehydrate_revoked_proxy_records",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC040 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::production_sync_excludes_jsonl_proxy_mirror_without_local_proxy_fact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC040 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::production_sync_withdraws_an_already_imported_direct_fact_in_its_new_interval",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC041 exact passing production test stats::workbuddy_import::channel_tests::a_full_queue_yields_instead_of_blocking",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC041 exact passing production test stats::workbuddy_import::channel_tests::only_one_batch_may_wait_for_an_ack",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC042 exact passing production test stats::workbuddy_import::store::batch_tests::a_failed_item_rolls_the_whole_batch_back",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC042 exact passing production test stats::workbuddy_import::store::batch_tests::the_offset_never_leads_the_facts",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC042 exact passing production test stats::workbuddy_import::runtime::writer::discovery::tests::a_stale_metadata_batch_rolls_back_earlier_files_and_can_be_retried",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC043 exact passing production test stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC043 exact passing production test stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC044 exact passing production test stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC044 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::status_reports_skipped_anomalies_without_counting_ordinary_ignored_messages",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC044 exact passing production test stats::workbuddy_import::command_tests::status_reports_durable_counters_and_never_claims_completion_while_off",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::a_long_scheduler_gap_grants_one_opportunity_without_a_catchup_burst",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::a_report_error_or_unwind_releases_the_activity_guard",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::a_reserved_import_gets_a_turn_before_the_next_report",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::an_active_report_cannot_be_overlapped_by_an_import_opportunity",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::an_import_error_or_unwind_releases_the_report_admission",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::an_inflight_import_finishes_before_a_report_enters",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::cancelled_import_reservations_do_not_block_following_reports",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::completed_reports_release_imports_immediately_and_reset_the_window",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::overlapping_report_guards_release_only_after_the_last_reader",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::proxy_or_control_work_cannot_leave_reports_waiting_for_an_abandoned_import",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::reports_get_a_bounded_quiet_window_and_imports_keep_progressing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::report_scheduling::tests::writer_handoff_wait_fits_the_reservation_without_shortening_idle_waits",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC045 exact passing production test stats::workbuddy_import::runtime::tests::manual_scan_requests_are_coalesced_with_one_stable_id",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC046 exact passing production test stats::workbuddy_import::runtime::tests::real_worker_waits_for_newline_keeps_unlimited_history_and_stops_on_global_disable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC048 exact passing production test stats::workbuddy_import::runtime::telemetry::tests::off_worker_calls_are_detected_and_batch_history_is_bounded",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC048 exact passing production test stats::workbuddy_import::runtime::telemetry::tests::rejected_offer_does_not_invent_a_higher_queue_peak",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC048 exact passing production test stats::workbuddy_import::runtime::tests::metrics_tests::monotonic_source_receipt_tracks_only_committed_offsets_and_survives_rollback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC049 exact passing production test stats::store::tests::a_manual_clear_tombstones_imported_rows_so_a_rescan_cannot_resurrect_them",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC049 exact passing production test stats::store::tests::a_manual_clear_leaves_proxy_rows_and_their_semantics_alone",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC051 exact passing production test stats::store::tests::rows_added_after_the_preview_survive_the_sweep",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC051 exact passing production test stats::store::tests::a_late_record_inside_the_watermark_survives_the_cutoff",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC051 exact passing production test stats::store::tests::the_preview_counts_exactly_what_the_sweep_deletes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC052 exact passing production test stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC053 exact passing production test stats::workbuddy_import::store::replay_tests::deleting_a_source_file_keeps_every_statistic",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC053 exact passing production test stats::workbuddy_import::store::replay_tests::a_file_that_comes_back_is_not_counted_twice",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC054 exact passing production test stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC054 exact passing production test stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC054 exact passing production test stats::query::paging_tests::an_impossible_page_size_is_refused",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC054 exact passing production test stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC055 exact passing production test stats::store::tests::orphan_recovery_only_settles_proxy_in_flight_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC055 exact passing production test stats::store::tests::startup_repair_settles_abandoned_costs_from_their_own_snapshot",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC058 exact passing production test stats::query::scope_tests::all_equals_builtin_plus_supplier_on_real_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC058 exact passing production test stats::query::scope_tests::the_three_scopes_partition_the_fact_table",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC058 exact passing production test stats::query::scope_tests::source_and_capture_filters_match_the_product_matrix_on_real_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC058 exact passing production test stats::query::scope_tests::an_unknown_scope_is_refused_rather_than_guessed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC059 exact passing production test stats::query::origin_count_tests::a_mixed_result_counts_proxy_and_imported_separately",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC059 exact passing production test stats::query::origin_count_tests::a_pure_import_result_has_no_proxy_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC059 exact passing production test stats::query::origin_count_tests::credit_is_summed_on_its_own_and_never_added_to_costs",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC059 exact passing production test stats::query::origin_count_tests::different_currencies_are_never_added_together",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC059 exact passing production test stats::query::origin_count_tests::credit_totals_above_i64_remain_exact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC060 exact passing production test stats::workbuddy_import::command_tests::a_scan_only_enqueues_and_is_refused_while_import_is_off",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC060 exact passing production test stats::workbuddy_import::command_tests::an_unknown_command_is_refused_with_a_fixed_code_and_no_echo",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC061 exact passing production test stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC061 exact passing production test stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC061 exact passing production test stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC062 exact passing production test stats_controller::scan_budget_tests::a_stale_reply_cannot_overwrite_a_newer_read",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC062 exact passing production test stats_controller::scan_budget_tests::a_running_scan_cannot_be_polled_forever",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC062 exact passing production test stats_controller::tests::a_dashboard_reply_from_the_previous_filter_is_ignored",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC063 exact passing production test frontend::compatibility_tests::same_version_protocol_nine_is_incompatible_with_api_key_provider_settings",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC063 exact passing production test stats_backend::reply_tests::a_failed_envelope_keeps_the_core_message",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC063 exact passing production test stats_backend::reply_tests::a_malformed_payload_is_an_error_and_never_an_empty_page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC063 exact passing production test stats_backend::reply_tests::a_well_formed_payload_still_parses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test assets::tests::an_unknown_svg_still_loads_something_rather_than_failing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test assets::tests::the_three_source_icons_are_their_own_shapes_and_never_the_plus",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test assets::tests::the_three_source_shapes_differ_from_each_other",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::a_disabled_group_never_changes_its_selection",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::below_560_the_source_group_still_stays_whole_and_the_rest_wraps",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::clicking_the_current_option_is_free",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::every_option_exposes_a_role_a_full_label_and_a_selected_state",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::every_slot_appears_exactly_once_at_every_width",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::hover_and_focus_are_tracked_for_every_option",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_bar_is_one_row_at_1012_and_two_rows_at_1011",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_default_is_all_sources_and_exactly_one_is_always_selected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_group_geometry_matches_the_layout_spec",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_keyboard_wraps_in_both_directions",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_reserved_widths_match_the_layout_spec",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_selection_can_never_be_cleared",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_source_group_is_always_first_and_never_split",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_three_options_are_mutually_exclusive",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC065 exact passing production test source_filter::tests::the_two_row_split_is_exactly_the_spec_order",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::a_disabled_group_never_changes_its_selection",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::below_560_the_source_group_still_stays_whole_and_the_rest_wraps",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::clicking_the_current_option_is_free",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::every_option_exposes_a_role_a_full_label_and_a_selected_state",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::every_slot_appears_exactly_once_at_every_width",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::hover_and_focus_are_tracked_for_every_option",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_bar_is_one_row_at_1012_and_two_rows_at_1011",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_default_is_all_sources_and_exactly_one_is_always_selected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_group_geometry_matches_the_layout_spec",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_keyboard_wraps_in_both_directions",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_reserved_widths_match_the_layout_spec",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_selection_can_never_be_cleared",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_source_group_is_always_first_and_never_split",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_three_options_are_mutually_exclusive",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC066 exact passing production test source_filter::tests::the_two_row_split_is_exactly_the_spec_order",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC067 exact passing production test stats_controller::filter_change_tests::a_change_invalidates_first_and_then_owes_exactly_one_request",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC067 exact passing production test stats_controller::filter_change_tests::clicking_the_option_that_is_already_selected_changes_nothing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC067 exact passing production test stats_controller::tests::a_reply_for_an_older_draft_cannot_close_the_newer_one",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC067 exact passing production test stats_backend::reply_tests::a_malformed_payload_is_an_error_and_never_an_empty_page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC068 exact passing production test statistics::metric_text_tests::a_pure_import_range_has_no_success_rate",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC068 exact passing production test statistics::metric_text_tests::an_unknown_metric_reads_as_a_dash_and_never_as_a_zero",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC068 exact passing production test usage_chart::tests::unpriced_imports_keep_token_plot_without_fabricating_currency_plot",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC069 exact passing production test usage_table::source_column_tests::the_three_origins_are_distinguishable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC069 exact passing production test usage_table::source_column_tests::an_absent_http_status_is_a_dash_and_never_zero_or_200",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC069 exact passing production test usage_table::source_column_tests::missing_rates_and_amounts_are_dashes_rather_than_zeros",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC070 exact passing production test workbuddy_import::tests::a_failed_switch_rolls_back",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC070 exact passing production test workbuddy_import::tests::a_plain_refresh_never_reads_the_jsonl",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC070 exact passing production test workbuddy_import::tests::pausing_keeps_every_counter_and_the_history",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC070 exact passing production test workbuddy_import::tests::turning_it_on_asks_once_and_needs_no_confirmation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::explicit_confirmation_splits_only_the_selected_uncertain_range",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::late_records_catch_up_in_bounded_batches_without_reopening_the_frozen_user_task",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::managed_proxy_intervals_cannot_be_overridden_or_revoked",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::manual_rule_history_is_bounded_paginated_and_rejects_stale_cursors",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::multiple_batches_resume_from_committed_ledger_revisions",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::proxy_confirmation_excludes_without_fact_and_revoke_keeps_missing_data_pending",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::startup_probe_uses_production_manual_commands_and_preserves_exact_usage",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test statistics::mapping_controls::tests::editable_local_times_preserve_milliseconds_and_exclusive_end",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test statistics::mapping_controls::tests::invalid_task_progress_is_rejected_instead_of_showing_success",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC071 exact passing production test statistics::mapping_controls::tests::unsafe_preview_replies_never_enable_confirmation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::a_long_scheduler_gap_grants_one_opportunity_without_a_catchup_burst",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::a_report_error_or_unwind_releases_the_activity_guard",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::a_reserved_import_gets_a_turn_before_the_next_report",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::an_active_report_cannot_be_overlapped_by_an_import_opportunity",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::an_import_error_or_unwind_releases_the_report_admission",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::an_inflight_import_finishes_before_a_report_enters",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::cancelled_import_reservations_do_not_block_following_reports",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::completed_reports_release_imports_immediately_and_reset_the_window",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::overlapping_report_guards_release_only_after_the_last_reader",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::proxy_or_control_work_cannot_leave_reports_waiting_for_an_abandoned_import",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::reports_get_a_bounded_quiet_window_and_imports_keep_progressing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test stats::report_scheduling::tests::writer_handoff_wait_fits_the_reservation_without_shortening_idle_waits",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC075 exact passing production test statistics::event_metrics::tests::a_disabled_recorder_does_no_work_and_enabled_samples_are_bounded",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC076 exact passing production test stats::store::tests::bounded_report_page_cache_keeps_wal_snapshots_fresh_and_reader_read_only",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "AC076 exact passing production test stats::workbuddy_import::runtime::tests::report_guard_defers_all_import_writes_then_discovery_resumes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X01 exact passing production test stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X01 exact passing production test stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X01 exact passing production test stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X01 exact passing production test stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X01 exact passing production test stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X02 exact passing production test stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X02 exact passing production test stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X02 exact passing production test stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X03 exact passing production test stats::workbuddy_import::store::batch_tests::parsed_usage_reaches_the_fact_columns_without_losing_credit_or_cache",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X03 exact passing production test stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X03 exact passing production test stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X04 exact passing production test stats::workbuddy_import::store::ledger_tests::the_same_key_is_never_written_twice",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X04 exact passing production test stats::workbuddy_import::store::ledger_tests::a_conflict_never_touches_the_proxy_fact_row",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X04 exact passing production test stats::workbuddy_import::store::ledger_tests::tombstones_are_terminal",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X04 exact passing production test stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X04 exact passing production test stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X04 exact passing production test stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X05 exact passing production test stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X05 exact passing production test stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X05 exact passing production test stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X06 exact passing production test stats::workbuddy_import::normalize::token_tests::an_explicit_zero_is_preserved",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X06 exact passing production test stats::workbuddy_import::normalize::token_tests::missing_fields_stay_unknown_and_are_never_invented",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X06 exact passing production test stats::workbuddy_import::normalize::token_tests::negative_values_invalidate_the_whole_record",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X06 exact passing production test stats::workbuddy_import::normalize::token_tests::floats_strings_and_booleans_are_never_coerced",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X06 exact passing production test stats::workbuddy_import::normalize::token_tests::the_per_field_bound_is_inclusive_and_the_total_bound_too",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X06 exact passing production test stats::workbuddy_import::normalize::token_tests::a_contradicting_total_is_invalid_and_never_corrected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::token_tests::an_explicit_zero_is_preserved",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::token_tests::missing_fields_stay_unknown_and_are_never_invented",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::token_tests::negative_values_invalidate_the_whole_record",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::token_tests::floats_strings_and_booleans_are_never_coerced",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::token_tests::the_per_field_bound_is_inclusive_and_the_total_bound_too",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::token_tests::a_contradicting_total_is_invalid_and_never_corrected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X07 exact passing production test stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X08 exact passing production test stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X08 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X08 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X08 exact passing production test stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X09 exact passing production test stats::workbuddy_import::normalize::cache_tests::the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X09 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_counts_are_never_added_to_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X09 exact passing production test stats::workbuddy_import::normalize::cache_tests::cache_read_and_write_may_not_exceed_the_input",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X09 exact passing production test stats::workbuddy_import::normalize::cache_tests::reasoning_may_not_exceed_the_output",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X10 exact passing production test stats::workbuddy_import::normalize::credit_tests::a_two_decimal_credit_is_exact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X10 exact passing production test stats::workbuddy_import::normalize::credit_tests::nine_fractional_digits_is_the_limit",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X10 exact passing production test stats::workbuddy_import::normalize::credit_tests::scientific_notation_and_signs_are_refused",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X10 exact passing production test stats::workbuddy_import::normalize::credit_tests::an_invalid_credit_never_damages_the_token_values",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X11 exact passing production test stats::workbuddy_import::reader::advance_tests::a_record_written_in_three_writes_is_imported_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X11 exact passing production test stats::workbuddy_import::reader::advance_tests::bad_lines_do_not_hide_the_lines_after_them",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X12 exact passing production test stats::workbuddy_import::reader::advance_tests::a_record_written_in_three_writes_is_imported_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X12 exact passing production test stats::workbuddy_import::reader::advance_tests::bad_lines_do_not_hide_the_lines_after_them",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X13 exact passing production test stats::workbuddy_import::reader::line_tests::the_four_mebibyte_boundary_is_inclusive",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X13 exact passing production test stats::workbuddy_import::reader::line_tests::a_fifty_mebibyte_line_stays_bounded_in_memory",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X13 exact passing production test stats::workbuddy_import::reader::line_tests::an_oversized_line_is_drained_and_the_next_line_is_readable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X14 exact passing production test stats::workbuddy_import::reader::fingerprint_tests::a_small_file_that_grew_is_an_append_not_a_replacement",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X14 exact passing production test stats::workbuddy_import::reader::fingerprint_tests::a_replaced_head_is_reported_as_replacement",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X14 exact passing production test stats::workbuddy_import::reader::fingerprint_tests::a_file_shorter_than_the_remembered_regions_is_a_truncation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X14 exact passing production test stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X14 exact passing production test stats::workbuddy_import::store::replay_tests::deleting_a_source_file_keeps_every_statistic",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X14 exact passing production test stats::workbuddy_import::store::replay_tests::a_file_that_comes_back_is_not_counted_twice",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X15 exact passing production test stats::workbuddy_import::runtime::tests::full_scan_rechecks_a_hidden_middle_edit_without_resetting_incremental_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X15 exact passing production test stats::workbuddy_import::reader::rescan_tests::a_full_rescan_never_moves_the_incremental_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X18 exact passing production test stats::workbuddy_import::store::batch_tests::a_failed_item_rolls_the_whole_batch_back",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X18 exact passing production test stats::workbuddy_import::store::batch_tests::the_offset_never_leads_the_facts",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X18 exact passing production test stats::workbuddy_import::runtime::writer::discovery::tests::a_stale_metadata_batch_rolls_back_earlier_files_and_can_be_retried",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X19 exact passing production test stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X19 exact passing production test stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X20 exact passing production test stats::workbuddy_import::channel_tests::a_full_queue_yields_instead_of_blocking",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X20 exact passing production test stats::workbuddy_import::channel_tests::only_one_batch_may_wait_for_an_ack",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X21 exact passing production test stats::workbuddy_import::classify::observation_tests::a_direct_configuration_proves_nothing_about_history",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X21 exact passing production test stats::workbuddy_import::classify::observation_tests::an_older_record_is_outside_a_fresh_observation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X21 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::observer_reads_actual_id_and_leaves_older_custom_record_pending",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X21 exact passing production test stats::workbuddy_import::classify::attribution_tests::a_custom_local_model_is_not_proxy_by_its_name",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X21 exact passing production test stats::workbuddy_import::classify::attribution_tests::the_same_response_model_on_two_routes_is_distinguishable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X21 exact passing production test stats::workbuddy_import::classify::attribution_tests::a_known_proxy_model_stays_excluded_without_a_matching_fact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X22 exact passing production test stats::workbuddy_import::classify::interval_tests::the_same_alias_is_direct_before_and_proxy_after",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X22 exact passing production test stats::workbuddy_import::classify::interval_tests::a_later_name_never_rewrites_an_earlier_interval",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X22 exact passing production test stats::workbuddy_import::classify::interval_tests::a_route_rename_or_delete_does_not_touch_history",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X23 exact passing production test stats::workbuddy_import::classify::attribution_tests::a_custom_local_model_is_not_proxy_by_its_name",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X23 exact passing production test stats::workbuddy_import::classify::attribution_tests::the_same_response_model_on_two_routes_is_distinguishable",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X23 exact passing production test stats::workbuddy_import::classify::attribution_tests::a_known_proxy_model_stays_excluded_without_a_matching_fact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X24 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::production_prepare_failure_changes_neither_models_nor_proxy_config",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X24 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::production_finalize_write_failure_returns_synced_unconfirmed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X24 exact passing production test stats::workbuddy_import::store::recovery_tests::a_crash_before_the_write_conflicts_the_prepared_row",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X24 exact passing production test stats::workbuddy_import::store::recovery_tests::a_crash_after_the_write_completes_the_prepared_row",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X24 exact passing production test stats::workbuddy_import::store::recovery_tests::a_crash_before_the_ack_is_resolved_the_same_way",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X24 exact passing production test stats::workbuddy_import::observation::tests::restart_after_write_recovers_future_only_and_preserves_uncertain_gap",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X25 exact passing production test stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X25 exact passing production test stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X25 exact passing production test stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X26 exact passing production test stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X26 exact passing production test stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X26 exact passing production test stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X27 exact passing production test stats::store::tests::a_manual_clear_tombstones_imported_rows_so_a_rescan_cannot_resurrect_them",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X27 exact passing production test stats::store::tests::a_manual_clear_leaves_proxy_rows_and_their_semantics_alone",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X27 exact passing production test stats::store::tests::rows_added_after_the_preview_survive_the_sweep",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X27 exact passing production test stats::store::tests::a_late_record_inside_the_watermark_survives_the_cutoff",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X27 exact passing production test stats::store::tests::the_preview_counts_exactly_what_the_sweep_deletes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X28 exact passing production test stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X29 exact passing production test stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X29 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::status_reports_skipped_anomalies_without_counting_ordinary_ignored_messages",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X29 exact passing production test stats::workbuddy_import::command_tests::status_reports_durable_counters_and_never_claims_completion_while_off",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X30 exact passing production test stats::query::scope_tests::all_equals_builtin_plus_supplier_on_real_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X30 exact passing production test stats::query::scope_tests::the_three_scopes_partition_the_fact_table",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X30 exact passing production test stats::query::scope_tests::source_and_capture_filters_match_the_product_matrix_on_real_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X30 exact passing production test stats::query::scope_tests::an_unknown_scope_is_refused_rather_than_guessed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X31 exact passing production test stats::query::origin_count_tests::a_mixed_result_counts_proxy_and_imported_separately",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X31 exact passing production test stats::query::origin_count_tests::a_pure_import_result_has_no_proxy_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X31 exact passing production test stats::query::origin_count_tests::credit_is_summed_on_its_own_and_never_added_to_costs",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X31 exact passing production test stats::query::origin_count_tests::different_currencies_are_never_added_together",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X31 exact passing production test stats::query::origin_count_tests::credit_totals_above_i64_remain_exact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X32 exact passing production test stats::query::origin_count_tests::a_mixed_result_counts_proxy_and_imported_separately",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X32 exact passing production test stats::query::origin_count_tests::a_pure_import_result_has_no_proxy_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X32 exact passing production test stats::query::origin_count_tests::credit_is_summed_on_its_own_and_never_added_to_costs",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X32 exact passing production test stats::query::origin_count_tests::different_currencies_are_never_added_together",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X32 exact passing production test stats::query::origin_count_tests::credit_totals_above_i64_remain_exact",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X33 exact passing production test stats_controller::scan_budget_tests::a_stale_reply_cannot_overwrite_a_newer_read",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X33 exact passing production test stats_controller::scan_budget_tests::a_running_scan_cannot_be_polled_forever",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X33 exact passing production test stats_controller::tests::a_dashboard_reply_from_the_previous_filter_is_ignored",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X33 exact passing production test stats_controller::filter_change_tests::a_change_invalidates_first_and_then_owes_exactly_one_request",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X33 exact passing production test stats_controller::filter_change_tests::clicking_the_option_that_is_already_selected_changes_nothing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X33 exact passing production test stats_controller::tests::a_reply_for_an_older_draft_cannot_close_the_newer_one",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X33 exact passing production test stats_backend::reply_tests::a_malformed_payload_is_an_error_and_never_an_empty_page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X34 exact passing production test stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X34 exact passing production test stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X34 exact passing production test stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X36 exact passing production test stats::store::tests::every_schema_generation_upgrades_in_place_and_is_idempotent",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X36 exact passing production test stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X39 exact passing production test workbuddy_import::tests::a_failed_switch_rolls_back",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X39 exact passing production test workbuddy_import::tests::a_plain_refresh_never_reads_the_jsonl",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X39 exact passing production test workbuddy_import::tests::pausing_keeps_every_counter_and_the_history",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X39 exact passing production test workbuddy_import::tests::turning_it_on_asks_once_and_needs_no_confirmation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X41 exact passing production test stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X41 exact passing production test stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X41 exact passing production test stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X42 exact passing production test stats::query::scope_tests::all_equals_builtin_plus_supplier_on_real_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X42 exact passing production test stats::query::scope_tests::the_three_scopes_partition_the_fact_table",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X42 exact passing production test stats::query::scope_tests::source_and_capture_filters_match_the_product_matrix_on_real_rows",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X42 exact passing production test stats::query::scope_tests::an_unknown_scope_is_refused_rather_than_guessed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X43 exact passing production test stats::workbuddy_import::reader::verify_tests::a_permission_failure_does_not_advance_the_offset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X43 exact passing production test stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X43 exact passing production test stats::workbuddy_import::runtime::tests::sync_tests::status_reports_skipped_anomalies_without_counting_ordinary_ignored_messages",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X43 exact passing production test stats::workbuddy_import::command_tests::status_reports_durable_counters_and_never_claims_completion_while_off",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X45 exact passing production test workbuddy_import::tests::a_failed_switch_rolls_back",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X45 exact passing production test workbuddy_import::tests::a_plain_refresh_never_reads_the_jsonl",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X45 exact passing production test workbuddy_import::tests::pausing_keeps_every_counter_and_the_history",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X45 exact passing production test workbuddy_import::tests::turning_it_on_asks_once_and_needs_no_confirmation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X46 exact passing production test stats::workbuddy_import::reader::fairness_tests::a_growing_large_file_cannot_starve_the_others",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X46 exact passing production test stats::workbuddy_import::reader::fairness_tests::caught_up_increments_are_served_before_the_backlog",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "X46 exact passing production test stats::workbuddy_import::reader::fairness_tests::the_cadence_stays_five_seconds_and_independent_of_settings",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Implementation report indexes every required AC and X row",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Same-code complete12 scale matrix and6 resource growth comparisons",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-1/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-2/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current phase raw checks /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scale/layout/20 individual increments /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-3/report.json",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "One actual300s idle window, body reads zero,300 CPU samples median<1%",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Four distinct actual full-million resume modes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "single-graceful exact full result/proof/cleanup",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "single-kill exact full result/proof/cleanup",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "many-graceful exact full result/proof/cleanup",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "many-kill exact full result/proof/cleanup",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Actual native validator and immutable JPEG/AX bytes still match",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Actual dynamic progress AX snapshots retain their recorded hashes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Current12 native matrix and no UI synchronous work over100ms",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "100 actual native refreshes preserve exact facts and source-read bytes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Seven actual refresh/visibility settings retain independent sync",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Actual whole resident normal quit during1M backlog",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "arm actual final DMG payload identity/signature/docs/lifecycle",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "arm exact source documentation payload bytes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "arm archive evidence equals the executed final-delivery receipt",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "x64 actual final DMG payload identity/signature/docs/lifecycle",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "x64 exact source documentation payload bytes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Both architectures include identical final documentation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "x64 archive evidence equals the executed final-delivery receipt",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Exact portable tool ownership matches this thread",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Portable extractor processes and handles exited",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Dedicated external session TMP has no remaining test/config/database/copied-program/build roots",
+      "ok": true,
+      "detail": []
+    }
+  ],
+  "packages": [
+    {
+      "arch": "arm",
+      "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-arm-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-final-private-macos-arm64.dmg",
+      "sha256": "563fe6986dba2c3b9b28db7f5317c95d3acb3e67567e95c0715e501fbb3b657c",
+      "document_files": 264,
+      "temporary_cleanup": {
+        "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-progress-package-stage-7bx0kufn",
+        "remaining_processes": [],
+        "remaining_mounts": [],
+        "removed": true,
+        "released_allocated_bytes": 33943552,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51349852160
+      }
+    },
+    {
+      "arch": "x64",
+      "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-x64-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-final-private-macos-x64.dmg",
+      "sha256": "29ebf1929a81cef443374a9d50bed1aff814ef07df7d0d88f73a3dd78c70dc10",
+      "document_files": 264,
+      "temporary_cleanup": {
+        "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-progress-package-stage-a7iyi4fv",
+        "remaining_processes": [],
+        "remaining_mounts": [],
+        "removed": true,
+        "released_allocated_bytes": 35926016,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51327643648
+      }
+    }
+  ],
+  "tool_cleanup": {
+    "exact_path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/package-extractor-empo0u58",
+    "ownership": {
+      "thread": "01a148ae-2068-7800-a8d2-904539bc30d3",
+      "pid": 37235,
+      "created_at": 1792292812.611729,
+      "purpose": "portable official archive reader for owned private DMG, no system install"
+    },
+    "released_allocated_bytes": 8450048,
+    "retained_temp_bytes": 0,
+    "raw_logs_preserved_at": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-cleanup-tool-evidence",
+    "removed": true
+  },
+  "remaining_session_temp": [],
+  "retained_artifact_storage": {
+    "external_evidence_allocated_bytes": 42730749952,
+    "reusable_package_python_environment_allocated_bytes": 13721600,
+    "scope": "External retained reports, immutable tested binaries, strict/failure SQLite snapshots and private DMGs are evidence/deliverables, not claimed deleted. Existing review history/provenance-unknown directories are preserved; zero-residual claim applies only to the dedicated session TMP."
+  },
+  "system_temp_inventory": {
+    "directory": "/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+    "project_named_entry_count": 4002,
+    "this_thread_owner_markers": [],
+    "unknown_entries_preserved": 4002,
+    "deletion_policy": "No prefix deletion. This inventory is not ownership proof. Exact current-session roots already have their own exit/reference/cleanup receipts."
+  },
+  "external_boundaries": [
+    "Linux/Windows execution and Windows GUI unavailable",
+    "x64 local Rosetta is not physical Intel",
+    "OS DMG mounting denied; archive verification and private packaging do not establish installation",
+    "Physical resolution restoration waived by explicit user instruction; screenshots use current remote desktop"
+  ],
+  "git_status": " M .github/workflows/ci.yml\n M .github/workflows/desktop.yml\n M AGENTS.md\n M README.md\n M gpui/src/assets.rs\n M gpui/src/main.rs\n M gpui/src/statistics.rs\n M gpui/src/stats_backend.rs\n M gpui/src/stats_controller.rs\n M gpui/src/usage_chart.rs\n M gpui/src/usage_table.rs\n M scripts/api_key_providers_test.py\n M scripts/benchmark.py\n M scripts/core_compatibility.py\n M scripts/gpui_macos_package.py\n M scripts/gpui_package_test.py\n M scripts/native_protocol_test.py\n M scripts/statistics_test.py\n M scripts/workbuddy_endpoint_check_test.py\n M src/frontend.rs\n M src/main.rs\n M src/proxy.rs\n M src/stats/dto.rs\n M src/stats/mod.rs\n M src/stats/query.rs\n M src/stats/store.rs\n M src/workbuddy.rs\n?? docs/workbuddy-import/\n?? evidence/\n?? gpui/src/source_filter.rs\n?? gpui/src/statistics/\n?? gpui/src/workbuddy_import.rs\n?? scripts/fixtures/\n?? scripts/workbuddy_import_bench.py\n?? scripts/workbuddy_import_boundary_probe.py\n?? scripts/workbuddy_import_canonical.py\n?? scripts/workbuddy_import_edge_probe.py\n?? scripts/workbuddy_import_faults.py\n?? scripts/workbuddy_import_golden.py\n?? scripts/workbuddy_import_headless_guard.c\n?? scripts/workbuddy_import_macho.py\n?? scripts/workbuddy_import_macho_test.py\n?? scripts/workbuddy_import_performance.py\n?? scripts/workbuddy_import_progress_probe.py\n?? scripts/workbuddy_import_query_pressure.py\n?? scripts/workbuddy_import_query_probe.py\n?? scripts/workbuddy_import_resources.py\n?? scripts/workbuddy_import_resume_probe.py\n?? scripts/workbuddy_import_retention_probe.py\n?? scripts/workbuddy_import_rotation_probe.py\n?? scripts/workbuddy_import_scheduling.py\n?? scripts/workbuddy_import_shutdown.py\n?? scripts/workbuddy_import_status_probe.py\n?? scripts/workbuddy_import_test.py\n?? scripts/workbuddy_import_ui_fixture.py\n?? scripts/workbuddy_import_ui_guard.c\n?? scripts/workbuddy_import_ui_sandbox.py\n?? scripts/workbuddy_import_ui_sync_probe.py\n?? scripts/workbuddy_import_ui_test.py\n?? scripts/workbuddy_import_worker_memory.py\n?? src/stats/migrations/0007.sql\n?? src/stats/query/\n?? src/stats/report_indexes.sql\n?? src/stats/report_scheduling.rs\n?? src/stats/workbuddy_import/\n?? src/stats/workbuddy_sync.rs\n",
+  "system_free_bytes": 51327250432,
+  "external_free_bytes": 417784737792,
+  "ended_at": 1792325445.599176
+}

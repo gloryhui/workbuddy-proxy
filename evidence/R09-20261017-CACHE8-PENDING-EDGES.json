@@ -1,0 +1,72 @@
+{
+  "at": 1792240955.7095811,
+  "result": "NOT_RUN_QUEUED_AFTER_FULL_MATRIX_PASS",
+  "script": "scripts/workbuddy_import_edge_probe.py",
+  "script_sha256": "1fe2fe18cdab4d7be877c73f29de04d5949b867723d45f8e6e672f5741a5cdc0",
+  "syntax": "PASS_compile_only",
+  "production_requirements": [
+    "two projects own checkpoints to complete EOF, one identity and first timestamp frozen",
+    "BOM/CRLF and invalid UTF8 adjacent facts",
+    "FIFO/socket/directory/nested/outside symlink excluded, exact body I/O positive control",
+    "205 actual source imports above 2**53, same timestamp, every API page in SQL order",
+    "source canary absent from database/config/log and API identity results"
+  ],
+  "high_id_setup_scope": "only surrogate IDs of four existing source-imported facts deliberately primed; all other fact fields unchanged; no desired fact inserted by SQL; following 205 high-ID facts created by real production importer",
+  "queue_coordinator": "dist/workbuddy-import-review/cache8-after-matrix-coordinator.json",
+  "queue_tool_session": 75345,
+  "package_result": "PREPARED_NOT_RUN",
+  "native_ui_result": "NOT_RUN_WAITING_HUMAN_UNLOCK",
+  "scope": [
+    "X01",
+    "X03",
+    "X04",
+    "X12",
+    "X16",
+    "X26",
+    "X34",
+    "X41",
+    "X42",
+    "X43",
+    "X44"
+  ],
+  "fixed_stage_oracles": [
+    {
+      "stage": "before dynamic cursor mutation",
+      "facts": 209,
+      "ledger_imported": 209,
+      "total_tokens": 25080,
+      "credit_nanos": 238260000000
+    },
+    {
+      "stage": "after source append",
+      "facts": 210,
+      "ledger_imported": 210,
+      "total_tokens": 25200,
+      "credit_nanos": 239400000000
+    },
+    {
+      "stage": "after conflict",
+      "facts": 209,
+      "ledger_imported": 209,
+      "ledger_conflict": 1,
+      "total_tokens": 25080,
+      "credit_nanos": 238260000000
+    },
+    {
+      "stage": "after direct/revoke and expiry/CAS rejection",
+      "facts": 209,
+      "ledger_imported": 209,
+      "ledger_conflict": 1,
+      "ledger_pending_classification": 1,
+      "total_tokens": 25080,
+      "credit_nanos": 238260000000
+    }
+  ],
+  "additional_pending_checks": [
+    "real source append preserves frozen cursor pages",
+    "actual conflict and attribution revoke expire old request cursors",
+    "real 61-second expiry plus intervening revision conflict via HTTP",
+    "equal-name provider IDs and fixed configured price target digest against local catalog",
+    "real unreadable neighbour does not freeze healthy source or public proxy health"
+  ]
+}

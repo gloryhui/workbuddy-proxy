@@ -8,9 +8,10 @@ use crate::stats::dto::{
     BreakdownCursor, BreakdownItemDto, CostDto, CostStatus, CostTotalDto, Currency, DashboardDto,
     ERR_BUSY, ERR_CURSOR_EXPIRED, ERR_INVALID, ERR_NOT_FOUND, ERR_QUERY_TOO_LARGE, ERR_TIMEOUT,
     ERR_UNAVAILABLE, FilterKind, FilterOptionDto, Granularity, GroupBy, InputBreakdown, InputMode,
-    MAX_BUCKETS, MAX_MATCHING_ROWS, Outcome, PriceSnapshotDto, PriceSource, RequestCursor,
-    RequestRowDto, SeriesPointDto, SeriesQuality, SortMetric, Source, StatsFilter, SummaryDto,
-    UsageReason, UsageSource, UsageStatus, WarningCode, WarningDto, error,
+    MAX_BUCKETS, MAX_MATCHING_ROWS, Outcome, PendingCursor, PendingGroupDto, PriceSnapshotDto,
+    PriceSource, RecordOrigin, RequestCursor, RequestRowDto, SeriesPointDto, SeriesQuality,
+    SortMetric, Source, SourceScope, StatsFilter, SummaryDto, UsageReason, UsageSource,
+    UsageStatus, WarningCode, WarningDto, error,
 };
 use chrono::{Datelike, Duration as ChronoDuration, NaiveDate, TimeZone};
 use chrono_tz::Tz;
@@ -19,6 +20,8 @@ use std::{
     str::FromStr,
     time::{Duration, Instant},
 };
+
+mod dashboard_aggregate;
 
 /// Hard budget for a single statistical query.
 pub const QUERY_BUDGET: Duration = Duration::from_secs(2);
@@ -154,6 +157,45 @@ struct FilterSql {
     params: Vec<Value>,
 }
 
+/// The one place a source scope becomes SQL.
+///
+/// `all` is exactly `builtin + supplier`: the scopes partition the same fact
+/// table by `record_origin`, so a row can neither be counted twice nor missed.
+/// The `include_tests` switch stays where it was — it only ever decides whether
+/// `connection_test` rows are visible, and it is applied identically in every
+/// report because they all share this predicate.
+pub fn scope_predicate(scope: SourceScope, alias: &str) -> String {
+    let prefix = if alias.is_empty() {
+        String::new()
+    } else {
+        format!("{alias}.")
+    };
+    match scope {
+        SourceScope::All => String::new(),
+        SourceScope::Supplier => {
+            format!(" AND {prefix}record_origin IN ('proxy','workbuddy_custom')")
+        }
+        SourceScope::Builtin => {
+            format!(" AND {prefix}record_origin='workbuddy_builtin'")
+        }
+    }
+}
+
+fn capture_predicate(method: crate::stats::dto::CaptureMethod, alias: &str) -> String {
+    let prefix = if alias.is_empty() {
+        String::new()
+    } else {
+        format!("{alias}.")
+    };
+    match method {
+        crate::stats::dto::CaptureMethod::All => String::new(),
+        crate::stats::dto::CaptureMethod::Proxy => format!(" AND {prefix}record_origin='proxy'"),
+        crate::stats::dto::CaptureMethod::Workbuddy => {
+            format!(" AND {prefix}record_origin<>'proxy'")
+        }
+    }
+}
+
 impl FilterSql {
     fn build(filter: &StatsFilter, alias: &str) -> Self {
         let prefix = if alias.is_empty() {
@@ -161,8 +203,13 @@ impl FilterSql {
         } else {
             format!("{alias}.")
         };
+        // `include_tests` decides one thing only: whether `connection_test`
+        // rows are visible. Spelling it as "not a connection test" keeps
+        // imported rows visible too — `source='relay'` would have hidden them.
         let mut clause = format!(
-            "{prefix}started_at_ms>=? AND {prefix}started_at_ms<? AND ({prefix}source='relay' OR ?=1)"
+            "{prefix}started_at_ms>=? AND {prefix}started_at_ms<? AND ({prefix}source<>'connection_test' OR ?=1){}",
+            scope_predicate(filter.source_scope, alias)
+                + &capture_predicate(filter.capture_method, alias)
         );
         let mut params = vec![
             Value::Integer(filter.from_ms),
@@ -262,18 +309,19 @@ struct RawSummary {
     reasoning_tokens: Option<i64>,
     reasoning_known_count: i64,
     avg_duration_ms: Option<f64>,
+    proxy_cost_incomplete_count: i64,
 }
 
 const SUMMARY_COLUMNS: &str = "
   COUNT(*),
-  SUM(CASE WHEN outcome<>'in_flight' THEN 1 ELSE 0 END),
+  SUM(CASE WHEN outcome NOT IN ('in_flight','recorded') THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome='in_flight' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome='completed' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome IN ('failed','rejected') THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome='rejected' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome='cancelled' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome='interrupted' THEN 1 ELSE 0 END),
-  SUM(CASE WHEN outcome<>'in_flight' AND upstream_started=1 THEN 1 ELSE 0 END),
+  SUM(CASE WHEN outcome='recorded' OR (outcome<>'in_flight' AND upstream_started=1) THEN 1 ELSE 0 END),
   SUM(CASE WHEN (usage_status='complete' AND outcome<>'in_flight') THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome<>'in_flight' AND usage_status='partial' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome<>'in_flight' AND usage_status='missing' THEN 1 ELSE 0 END),
@@ -291,7 +339,8 @@ const SUMMARY_COLUMNS: &str = "
   SUM(CASE WHEN input_breakdown='disjoint' THEN 1 ELSE 0 END),
   SUM(CASE WHEN (usage_status='complete' AND outcome<>'in_flight') THEN reasoning_tokens END),
   SUM(CASE WHEN (usage_status='complete' AND outcome<>'in_flight') AND reasoning_tokens IS NOT NULL THEN 1 ELSE 0 END),
-  AVG(CASE WHEN outcome='completed' THEN duration_ms END)
+  AVG(CASE WHEN outcome='completed' THEN duration_ms END),
+  SUM(CASE WHEN outcome NOT IN ('in_flight','recorded') AND usage_status IN ('partial','missing','invalid') THEN 1 ELSE 0 END)
 ";
 
 fn read_summary(row: &rusqlite::Row<'_>, base: usize) -> rusqlite::Result<RawSummary> {
@@ -324,6 +373,7 @@ fn read_summary(row: &rusqlite::Row<'_>, base: usize) -> rusqlite::Result<RawSum
         reasoning_tokens: row.get(at(24))?,
         reasoning_known_count: row.get::<_, Option<i64>>(at(25))?.unwrap_or(0),
         avg_duration_ms: row.get(at(26))?,
+        proxy_cost_incomplete_count: row.get::<_, Option<i64>>(at(27))?.unwrap_or(0),
     })
 }
 
@@ -374,6 +424,137 @@ fn ratio(value: i64, denominator: i64) -> Option<f64> {
     (denominator > 0).then(|| value as f64 / denominator as f64)
 }
 
+/// The counts that only exist because two kinds of record share one table.
+#[derive(Clone, Debug, Default)]
+struct OriginCounts {
+    proxy: i64,
+    imported: i64,
+    imported_unpriced: i64,
+    credit_nanos: i128,
+    credit_count: i64,
+    pending: i64,
+}
+
+/// Reads the origin split, the imported-unpriced count and the credit total.
+///
+/// Credit is summed into its own field on purpose: it is a different unit from
+/// money, so adding it to `costs` (which is already split by currency) would
+/// produce a number that means nothing.
+#[cfg(test)]
+fn origin_counts(conn: &Connection, filter: &StatsFilter) -> Result<OriginCounts, String> {
+    let sql = FilterSql::build(filter, "r");
+    let mut counts = OriginCounts::default();
+    // At most one million matching rows are admitted. Splitting each i64
+    // credit at 1e9 keeps both integer SUM limbs below i64::MAX; reconstruct
+    // with i128 in Rust. This avoids one Rust callback per imported record.
+    let query = format!(
+        "SELECT
+           COALESCE(SUM(CASE WHEN r.record_origin='proxy' THEN 1 ELSE 0 END),0),
+           COALESCE(SUM(CASE WHEN r.record_origin<>'proxy' THEN 1 ELSE 0 END),0),
+           COUNT(r.workbuddy_credit_nanos),
+           COALESCE(SUM(r.workbuddy_credit_nanos / 1000000000),0),
+           COALESCE(SUM(r.workbuddy_credit_nanos % 1000000000),0),
+           COALESCE(SUM(CASE WHEN r.record_origin<>'proxy' AND
+              (c.request_id IS NULL OR c.status IN ('pending','usage_incomplete','unsupported_breakdown','overflow'))
+              THEN 1 ELSE 0 END),0)
+         FROM usage_requests r LEFT JOIN usage_costs c ON c.request_id=r.request_id
+         WHERE {}",
+        sql.clause
+    );
+    conn.query_row(&query, params_from_iter(sql.params.iter()), |row| {
+        let high: i64 = row.get(3)?;
+        let low: i64 = row.get(4)?;
+        counts.proxy = row.get(0)?;
+        counts.imported = row.get(1)?;
+        counts.credit_count = row.get(2)?;
+        counts.credit_nanos = i128::from(high) * 1_000_000_000 + i128::from(low);
+        counts.imported_unpriced = row.get(5)?;
+        Ok(())
+    })
+    .map_err(budget_error)?;
+
+    if filter.source_scope == SourceScope::All
+        && filter.capture_method != crate::stats::dto::CaptureMethod::Proxy
+        && filter.provider_id.is_none()
+        && filter.upstream_model.is_none()
+        && filter.route_id.is_none()
+        && filter.outcome.is_none()
+        && filter.usage_status.is_none()
+    {
+        counts.pending = conn
+            .query_row(
+                "SELECT COUNT(*) FROM workbuddy_import_ledger
+            WHERE state='pending_classification' AND event_at_ms>=?1 AND event_at_ms<?2",
+                rusqlite::params![filter.from_ms, filter.to_ms],
+                |row| row.get(0),
+            )
+            .map_err(budget_error)?;
+    }
+    Ok(counts)
+}
+
+/// Collects metadata only for keys on the current page, in one bounded scan.
+/// Group labels never become SQL; the key column is selected from an enum.
+fn grouped_origins(
+    conn: &Connection,
+    filter: &StatsFilter,
+    group_by: GroupBy,
+    as_of_id: i64,
+    keys: &[String],
+) -> Result<std::collections::HashMap<String, OriginCounts>, String> {
+    let mut grouped = std::collections::HashMap::<String, OriginCounts>::new();
+    if keys.is_empty() {
+        return Ok(grouped);
+    }
+    let column = match group_by {
+        GroupBy::Provider => "provider_id",
+        GroupBy::Model => "upstream_model",
+    };
+    let sql = FilterSql::build(filter, "r");
+    let placeholders = vec!["?"; keys.len()].join(",");
+    let query = format!(
+        "SELECT r.{column},r.record_origin,r.workbuddy_credit_nanos,c.status
+        FROM usage_requests r LEFT JOIN usage_costs c ON c.request_id=r.request_id
+        WHERE {} AND r.id<=? AND r.{column} IN ({placeholders})",
+        sql.clause
+    );
+    let mut params = sql.params;
+    params.push(Value::Integer(as_of_id));
+    params.extend(keys.iter().cloned().map(Value::Text));
+    let mut statement = conn.prepare(&query).map_err(budget_error)?;
+    let mut rows = statement
+        .query(params_from_iter(params.iter()))
+        .map_err(budget_error)?;
+    while let Some(row) = rows.next().map_err(budget_error)? {
+        let key: String = row.get(0).map_err(budget_error)?;
+        let origin = enum_column(row, 1, RecordOrigin::parse).map_err(budget_error)?;
+        let credit: Option<i64> = row.get(2).map_err(budget_error)?;
+        let cost_status: Option<String> = row.get(3).map_err(budget_error)?;
+        let counts = grouped.entry(key).or_default();
+        if origin == RecordOrigin::Proxy {
+            counts.proxy += 1;
+        } else {
+            counts.imported += 1;
+            if cost_status.as_deref().is_none_or(|status| {
+                matches!(
+                    status,
+                    "pending" | "usage_incomplete" | "unsupported_breakdown" | "overflow"
+                )
+            }) {
+                counts.imported_unpriced += 1;
+            }
+        }
+        if let Some(credit) = credit {
+            counts.credit_count += 1;
+            counts.credit_nanos = counts
+                .credit_nanos
+                .checked_add(i128::from(credit))
+                .ok_or_else(|| error(ERR_UNAVAILABLE, "credit total exceeds supported range"))?;
+        }
+    }
+    Ok(grouped)
+}
+
 fn to_summary(
     raw: &RawSummary,
     costs: Vec<CostTotalDto>,
@@ -381,6 +562,7 @@ fn to_summary(
     incomplete: i64,
     default_zero: i64,
     settled: i64,
+    origin: &OriginCounts,
 ) -> SummaryDto {
     let success_rate = ratio(raw.completed_count, raw.finished_count);
     let usage_coverage = ratio(raw.usage_complete_count, raw.usage_eligible_count);
@@ -427,6 +609,16 @@ fn to_summary(
         default_zero_request_count: default_zero,
         settled_cost_request_count: settled,
         cost_incomplete_request_count: incomplete,
+        proxy_record_count: origin.proxy,
+        imported_record_count: origin.imported,
+        imported_unpriced_count: origin.imported_unpriced,
+        // The denominator of every pricing rate: rows whose cost state is
+        // decided, whether by a price or by the explicit "no price" default.
+        cost_known_count: settled,
+        credit_nanos: (origin.credit_count > 0).then(|| origin.credit_nanos.to_string()),
+        credit_record_count: origin.credit_count,
+        status_known_count: raw.finished_count,
+        pending_import_count: origin.pending,
     }
 }
 
@@ -495,7 +687,7 @@ fn scan_costs_grouped(
     let query = format!(
         "SELECT {column}, cost_status, currency, total_cost_nanos
          FROM stats_request_facts
-         WHERE {} AND id<=? AND cost_status IS NOT NULL",
+         WHERE {} AND id<=? AND record_origin='proxy' AND cost_status IS NOT NULL",
         sql.clause
     );
     let mut groups: std::collections::HashMap<String, GroupCosts> =
@@ -546,7 +738,7 @@ fn scan_costs(
     let mut sql = FilterSql::build(filter, "");
     let query = format!(
         "SELECT cost_status, currency, total_cost_nanos, started_at_ms
-         FROM stats_request_facts WHERE {} AND cost_status IS NOT NULL",
+         FROM stats_request_facts WHERE {} AND record_origin='proxy' AND cost_status IS NOT NULL",
         sql.clause
     );
     let mut scan = CostScan {
@@ -613,7 +805,7 @@ fn scan_costs(
 
 /// Counts the unpriced/incomplete buckets from an already-computed summary.
 fn derived_cost_counts(raw: &RawSummary) -> (i64, i64) {
-    let incomplete = raw.usage_partial_count + raw.usage_missing_count + raw.usage_invalid_count;
+    let incomplete = raw.proxy_cost_incomplete_count;
     let unpriced = (raw.finished_count - raw.usage_not_applicable_count - incomplete).max(0);
     (unpriced, incomplete)
 }
@@ -663,25 +855,10 @@ fn dashboard_inner(
 ) -> Result<DashboardDto, String> {
     let (buckets, granularity_used) = build_buckets(filter, granularity)?;
     let (_, timezone) = resolve_timezone(&filter.timezone)?;
-    let sql = FilterSql::build(filter, "");
-    // Summary, money and series share one read transaction, so the cards and
-    // the chart are always derived from the same database snapshot.
+    // Aggregates and money share one read snapshot and the existing deadline.
     let transaction = conn.unchecked_transaction().map_err(budget_error)?;
-    let summary_sql = format!(
-        "SELECT {SUMMARY_COLUMNS} FROM usage_requests WHERE {}",
-        sql.clause
-    );
-    let raw = transaction
-        .query_row(&summary_sql, params_from_iter(sql.params.iter()), |row| {
-            read_summary(row, 0)
-        })
-        .map_err(budget_error)?;
-    if raw.request_count > ROW_BUDGET {
-        return Err(error(
-            ERR_QUERY_TOO_LARGE,
-            "more than 1,000,000 rows match; narrow the range",
-        ));
-    }
+    let (raw, origin, bucket_rows) =
+        dashboard_aggregate::aggregate(&transaction, filter, &buckets)?;
     // One money scan fills the totals and every bucket at once.
     let mut scan = scan_costs(&transaction, filter, Some(&buckets))?;
     if !scan.scanned {
@@ -689,6 +866,7 @@ fn dashboard_inner(
         scan.unpriced = unpriced;
         scan.incomplete = incomplete;
     }
+    scan.unpriced = scan.unpriced.saturating_add(origin.imported_unpriced);
     let summary = to_summary(
         &raw,
         std::mem::take(&mut scan.totals).into_dto(),
@@ -696,8 +874,15 @@ fn dashboard_inner(
         scan.incomplete,
         scan.default_zero,
         scan.settled,
+        &origin,
     );
-    let series = series_inner(&transaction, filter, &buckets, &mut scan.buckets)?;
+    let series = dashboard_aggregate::series(
+        &transaction,
+        filter,
+        &buckets,
+        &bucket_rows,
+        &mut scan.buckets,
+    )?;
     let warnings = warnings(filter, &raw, flags)?;
     transaction.commit().map_err(budget_error)?;
     Ok(DashboardDto {
@@ -714,6 +899,7 @@ fn dashboard_inner(
     })
 }
 
+#[cfg(test)]
 type SeriesRow = (
     i64,
     i64,
@@ -733,6 +919,7 @@ type SeriesRow = (
     i64,
 );
 
+#[cfg(test)]
 fn series_inner(
     conn: &Connection,
     filter: &StatsFilter,
@@ -750,7 +937,8 @@ fn series_inner(
         .map(|(index, _)| format!("(?{},?{})", index * 2 + 1, index * 2 + 2))
         .collect::<Vec<_>>()
         .join(",");
-    let mut extra = String::new();
+    let mut extra =
+        scope_predicate(filter.source_scope, "") + &capture_predicate(filter.capture_method, "");
     params.push(Value::Integer(if filter.include_tests { 1 } else { 0 }));
     for (column, value) in [
         ("provider_id", filter.provider_id.as_deref()),
@@ -774,7 +962,7 @@ fn series_inner(
         "WITH buckets(bucket_start,bucket_end) AS (VALUES {placeholders})
          SELECT b.bucket_start,
            COUNT(r.id),
-           SUM(CASE WHEN r.outcome<>'in_flight' THEN 1 ELSE 0 END),
+           SUM(CASE WHEN r.outcome NOT IN ('in_flight','recorded') THEN 1 ELSE 0 END),
            SUM(CASE WHEN {complete} THEN 1 ELSE 0 END),
            SUM(CASE WHEN {complete} THEN r.input_tokens END),
            SUM(CASE WHEN {complete} THEN r.output_tokens END),
@@ -784,13 +972,13 @@ fn series_inner(
            SUM(CASE WHEN {complete} AND r.cache_read_tokens IS NOT NULL THEN 1 ELSE 0 END),
            SUM(CASE WHEN {complete} AND r.cache_write_tokens IS NOT NULL THEN 1 ELSE 0 END),
            SUM(CASE WHEN r.outcome<>'in_flight' AND r.usage_status='partial' THEN 1 ELSE 0 END),
-           SUM(CASE WHEN r.outcome<>'in_flight' AND r.upstream_started=1 THEN 1 ELSE 0 END),
+           SUM(CASE WHEN r.outcome='recorded' OR (r.outcome<>'in_flight' AND r.upstream_started=1) THEN 1 ELSE 0 END),
            SUM(CASE WHEN {complete} AND r.cache_read_tokens IS NOT NULL THEN r.input_tokens END),
            SUM(CASE WHEN r.outcome='in_flight' THEN 1 ELSE 0 END),
            SUM(CASE WHEN r.outcome<>'in_flight' AND r.usage_status IN ('missing','invalid') THEN 1 ELSE 0 END)
          FROM buckets b LEFT JOIN usage_requests r
            ON r.started_at_ms>=b.bucket_start AND r.started_at_ms<b.bucket_end
-          AND (r.source='relay' OR ?=1){extra}
+          AND (r.source<>'connection_test' OR ?=1){extra}
           AND r.started_at_ms>=? AND r.started_at_ms<?
          GROUP BY b.bucket_start ORDER BY b.bucket_start"
     );
@@ -1057,8 +1245,26 @@ const ROW_COLUMNS: &str =
     r.duration_ms, r.ttfb_ms, r.first_content_ms, r.usage_status, r.usage_reason, r.usage_source,
     r.input_tokens, r.output_tokens, r.total_tokens, r.cache_read_tokens, r.cache_write_tokens,
     r.reasoning_tokens, r.input_uncached_tokens, r.input_breakdown,
-    c.status, c.currency, c.total_cost_nanos, c.source_price_id, c.pricing_version,r.upstream_protocol";
-const ROW_COLUMN_COUNT: usize = 37;
+    c.status, c.currency, c.total_cost_nanos, c.source_price_id, c.pricing_version,r.upstream_protocol,r.record_origin,r.time_basis,r.total_tokens_derived,r.workbuddy_credit_nanos";
+const ROW_COLUMN_COUNT: usize = 41;
+
+fn enum_column<T>(
+    row: &rusqlite::Row<'_>,
+    index: usize,
+    parse: fn(&str) -> Option<T>,
+) -> rusqlite::Result<T> {
+    let value: String = row.get(index)?;
+    parse(&value).ok_or_else(|| {
+        rusqlite::Error::FromSqlConversionFailure(
+            index,
+            rusqlite::types::Type::Text,
+            Box::new(std::io::Error::new(
+                std::io::ErrorKind::InvalidData,
+                "unknown statistics enum",
+            )),
+        )
+    })
+}
 
 fn read_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<RequestRowDto> {
     let cost_status: Option<String> = row.get(31)?;
@@ -1077,10 +1283,11 @@ fn read_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<RequestRowDto> {
         source_price_id: row.get(34).ok().flatten(),
         pricing_version: row.get(35).ok().flatten(),
     });
+    let origin = enum_column(row, 37, RecordOrigin::parse)?;
     Ok(RequestRowDto {
         id: row.get(0)?,
         request_id: row.get(1)?,
-        source: Source::parse(&row.get::<_, String>(2)?).unwrap_or(Source::Relay),
+        source: enum_column(row, 2, Source::parse)?,
         provider_id: row.get(3)?,
         provider_name: row.get(4)?,
         route_id: row.get(5)?,
@@ -1091,10 +1298,10 @@ fn read_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<RequestRowDto> {
         response_model: row.get(9)?,
         started_at_ms: row.get(10)?,
         ended_at_ms: row.get(11)?,
-        stream: row.get::<_, i64>(12)? != 0,
+        stream: row.get::<_, Option<i64>>(12)?.map(|value| value != 0),
         upstream_started: row.get::<_, Option<i64>>(13)?.map(|value| value != 0),
         http_status: row.get(14)?,
-        outcome: Outcome::parse(&row.get::<_, String>(15)?).unwrap_or(Outcome::Failed),
+        outcome: enum_column(row, 15, Outcome::parse)?,
         error_kind: row
             .get::<_, Option<String>>(16)?
             .as_deref()
@@ -1102,13 +1309,12 @@ fn read_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<RequestRowDto> {
         duration_ms: row.get(17)?,
         ttfb_ms: row.get(18)?,
         first_content_ms: row.get(19)?,
-        usage_status: UsageStatus::parse(&row.get::<_, String>(20)?)
-            .unwrap_or(UsageStatus::Missing),
+        usage_status: enum_column(row, 20, UsageStatus::parse)?,
         usage_reason: row
             .get::<_, Option<String>>(21)?
             .as_deref()
             .and_then(UsageReason::parse),
-        usage_source: UsageSource::parse(&row.get::<_, String>(22)?).unwrap_or(UsageSource::None),
+        usage_source: enum_column(row, 22, UsageSource::parse)?,
         input_tokens: row.get(23)?,
         output_tokens: row.get(24)?,
         total_tokens: row.get(25)?,
@@ -1116,10 +1322,93 @@ fn read_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<RequestRowDto> {
         cache_write_tokens: row.get(27)?,
         reasoning_tokens: row.get(28)?,
         input_uncached_tokens: row.get(29)?,
-        input_breakdown: InputBreakdown::parse(&row.get::<_, String>(30)?)
-            .unwrap_or(InputBreakdown::Unknown),
+        input_breakdown: enum_column(row, 30, InputBreakdown::parse)?,
         cost,
+        // The origin is what the `source` column means, and a row is `recorded`
+        // exactly when it came from the importer. Nothing else about the row
+        // changes: every proxy number is passed through untouched.
+        origin,
+        time_basis: enum_column(row, 38, crate::stats::dto::TimeBasis::parse)?,
+        total_tokens_derived: row.get::<_, bool>(39)?,
+        workbuddy_credit_nanos: row
+            .get::<_, Option<i64>>(40)?
+            .map(|value| value.to_string()),
+        recorded: origin.is_imported() && row.get::<_, String>(15)? == "recorded",
     })
+}
+
+/// One page of pending-candidate groups, plus the cursor for the next page.
+///
+/// The page is ordered by model and resumes strictly after the last one, so a
+/// candidate that arrives while the user is paging can never shift a group into
+/// a page that was already shown — it simply appears later. The cursor carries
+/// the mapping revision, so a rule change invalidates it.
+pub fn pending_page(
+    conn: &Connection,
+    cursor: Option<&PendingCursor>,
+    limit: i64,
+    mapping_revision: i64,
+    namespace: &str,
+) -> Result<(Vec<PendingGroupDto>, Option<PendingCursor>), String> {
+    if !matches!(limit, 20 | 50 | 100) {
+        return Err(error(ERR_INVALID, "limit must be 20, 50 or 100"));
+    }
+    let after = match cursor {
+        Some(cursor) => {
+            cursor.validate(mapping_revision)?;
+            if cursor.limit != limit {
+                return Err(error(ERR_INVALID, "cursor page size differs"));
+            }
+            cursor.after_model.clone()
+        }
+        None => String::new(),
+    };
+    let mut groups = Vec::new();
+    {
+        let mut statement = conn
+            .prepare(
+                "SELECT COALESCE(requested_model,''), COUNT(*), MIN(event_at_ms), MAX(event_at_ms)
+                 FROM workbuddy_import_ledger
+                 WHERE state='pending_classification' AND namespace_id=?4 AND (?3 OR COALESCE(requested_model,'') > ?1)
+                 GROUP BY COALESCE(requested_model,'')
+                 ORDER BY COALESCE(requested_model,'')
+                 LIMIT ?2",
+            )
+            .map_err(budget_error)?;
+        let mut rows = statement
+            .query(rusqlite::params![
+                after,
+                limit + 1,
+                cursor.is_none(),
+                namespace
+            ])
+            .map_err(budget_error)?;
+        while let Some(row) = rows.next().map_err(budget_error)? {
+            groups.push(PendingGroupDto {
+                model_id: row.get(0).map_err(budget_error)?,
+                count: row.get(1).map_err(budget_error)?,
+                first_at_ms: row.get(2).map_err(budget_error)?,
+                last_at_ms: row.get(3).map_err(budget_error)?,
+                reason: if row.get::<_, String>(0).map_err(budget_error)?.is_empty() {
+                    "missing_model"
+                } else {
+                    "no_rule"
+                }
+                .to_owned(),
+            });
+        }
+    }
+    let more = groups.len() as i64 > limit;
+    groups.truncate(limit as usize);
+    let next = more.then(|| PendingCursor {
+        mapping_revision,
+        after_model: groups
+            .last()
+            .map(|group| group.model_id.clone())
+            .unwrap_or_default(),
+        limit,
+    });
+    Ok((groups, next))
 }
 
 /// Rejects a cursor whose identity no longer matches the query it addresses.
@@ -1430,14 +1719,19 @@ fn request_detail_inner(conn: &Connection, request_id: &str) -> Result<RequestDe
                 route_name: String::new(),
                 requested_model: String::new(),
                 upstream_model: String::new(),
-                upstream_protocol: "openai_chat".into(),
+                upstream_protocol: Some("openai_chat".into()),
                 response_model: None,
                 started_at_ms: 0,
                 ended_at_ms: None,
-                stream: false,
+                stream: Some(false),
                 upstream_started: None,
                 http_status: None,
                 outcome: Outcome::Failed,
+                origin: RecordOrigin::Proxy,
+                time_basis: crate::stats::dto::TimeBasis::RequestStart,
+                total_tokens_derived: false,
+                workbuddy_credit_nanos: None,
+                recorded: false,
                 error_kind: None,
                 duration_ms: None,
                 ttfb_ms: None,
@@ -1588,6 +1882,7 @@ fn breakdown_inner(
         .map_err(budget_error)?;
     let mut items = Vec::new();
     let mut metrics = Vec::new();
+    let mut fallback_costs = std::collections::HashMap::new();
     while let Some(row) = rows.next().map_err(budget_error)? {
         let group_key: String = row.get(0).map_err(budget_error)?;
         let label: Option<String> = row.get(1).map_err(budget_error)?;
@@ -1597,11 +1892,12 @@ fn breakdown_inner(
             .unwrap_or(0);
         let metric_value: Option<i64> = row.get(3).map_err(budget_error)?;
         let raw = read_summary_at(row, 4).map_err(budget_error)?;
+        fallback_costs.insert(group_key.clone(), derived_cost_counts(&raw));
         items.push(BreakdownItemDto {
             key: group_key.clone(),
             label: label.unwrap_or_else(|| group_key.clone()),
             provider_count,
-            summary: to_summary(&raw, Vec::new(), 0, 0, 0, 0),
+            summary: to_summary(&raw, Vec::new(), 0, 0, 0, 0, &OriginCounts::default()),
         });
         metrics.push(metric_value);
     }
@@ -1614,24 +1910,34 @@ fn breakdown_inner(
     }
     // Money is accumulated per group with 128-bit addition, in one pass.
     let grouped = scan_costs_grouped(&transaction, filter, group_by, as_of_id)?;
+    let keys: Vec<String> = items.iter().map(|item| item.key.clone()).collect();
+    let origins = grouped_origins(&transaction, filter, group_by, as_of_id, &keys)?;
     for item in items.iter_mut() {
+        let origin = origins.get(&item.key).cloned().unwrap_or_default();
+        item.summary.proxy_record_count = origin.proxy;
+        item.summary.imported_record_count = origin.imported;
+        item.summary.imported_unpriced_count = origin.imported_unpriced;
+        item.summary.credit_nanos =
+            (origin.credit_count > 0).then(|| origin.credit_nanos.to_string());
+        item.summary.credit_record_count = origin.credit_count;
         match grouped.get(&item.key) {
             Some(group) => {
                 item.summary.costs = group.totals.clone().into_dto();
-                item.summary.unpriced_request_count = group.unpriced;
+                item.summary.unpriced_request_count =
+                    group.unpriced.saturating_add(origin.imported_unpriced);
                 item.summary.default_zero_request_count = group.default_zero;
                 item.summary.settled_cost_request_count = group.settled;
                 item.summary.cost_incomplete_request_count = group.incomplete;
+                item.summary.default_zero_request_count = group.default_zero;
+                item.summary.settled_cost_request_count = group.settled;
+                item.summary.cost_known_count = group.settled;
             }
             None => {
                 // No priced rows anywhere: derive the split from the summary.
-                let incomplete = item.summary.usage_partial_count
-                    + item.summary.usage_missing_count
-                    + item.summary.usage_invalid_count;
-                item.summary.unpriced_request_count = (item.summary.finished_count
-                    - item.summary.usage_not_applicable_count
-                    - incomplete)
-                    .max(0);
+                let (unpriced, incomplete) =
+                    fallback_costs.get(&item.key).copied().unwrap_or_default();
+                item.summary.unpriced_request_count =
+                    unpriced.saturating_add(origin.imported_unpriced);
                 item.summary.cost_incomplete_request_count = incomplete;
                 item.summary.default_zero_request_count = 0;
                 item.summary.settled_cost_request_count = 0;
@@ -1670,33 +1976,50 @@ pub struct FilterOptions {
     pub next_key: Option<String>,
 }
 
-pub fn filter_options(
+#[derive(Clone, Copy, Debug)]
+pub struct FilterScope {
+    pub source: SourceScope,
+    pub capture: crate::stats::dto::CaptureMethod,
+}
+
+pub struct FilterOptionsRequest<'a> {
+    pub kind: FilterKind,
+    pub query: &'a str,
+    pub provider_id: Option<&'a str>,
+    pub limit: i64,
+    pub after_key: Option<&'a str>,
+    pub configured: &'a [(String, String)],
+    pub scope: FilterScope,
+}
+
+pub fn filter_options_scoped(
     conn: &Connection,
-    kind: FilterKind,
-    query: &str,
-    provider_id: Option<&str>,
-    limit: i64,
-    after_key: Option<&str>,
-    configured: &[(String, String)],
+    request: FilterOptionsRequest<'_>,
 ) -> Result<FilterOptions, String> {
     let _budget = Budget::install(conn);
-    filter_options_inner(conn, kind, query, provider_id, limit, after_key, configured)
+    filter_options_inner(conn, request)
 }
 
 fn filter_options_inner(
     conn: &Connection,
-    kind: FilterKind,
-    query: &str,
-    provider_id: Option<&str>,
-    limit: i64,
-    after_key: Option<&str>,
-    configured: &[(String, String)],
+    request: FilterOptionsRequest<'_>,
 ) -> Result<FilterOptions, String> {
+    let FilterOptionsRequest {
+        kind,
+        query,
+        provider_id,
+        limit,
+        after_key,
+        configured,
+        scope,
+    } = request;
     let column = match kind {
         FilterKind::Provider => "provider_id",
         FilterKind::Model => "upstream_model",
     };
-    let mut clause = String::from("1=1");
+    let mut clause = String::from("1=1")
+        + &scope_predicate(scope.source, "r")
+        + &capture_predicate(scope.capture, "r");
     let mut params: Vec<Value> = Vec::new();
     if let Some(provider_id) = provider_id {
         clause.push_str(" AND provider_id=?");
@@ -1716,11 +2039,12 @@ fn filter_options_inner(
         params.push(Value::Text(after_key.to_owned()));
     }
     let label = match kind {
-        FilterKind::Provider => {
-            "(SELECT r2.provider_name FROM usage_requests r2 WHERE r2.provider_id=r.provider_id
-               ORDER BY r2.started_at_ms DESC, r2.id DESC LIMIT 1)"
-        }
-        FilterKind::Model => "r.upstream_model",
+        FilterKind::Provider => format!(
+            "(SELECT r2.provider_name FROM usage_requests r2 WHERE r2.provider_id=r.provider_id {} {} ORDER BY r2.started_at_ms DESC,r2.id DESC LIMIT 1)",
+            scope_predicate(scope.source, "r2"),
+            capture_predicate(scope.capture, "r2")
+        ),
+        FilterKind::Model => "r.upstream_model".to_owned(),
     };
     let sql = format!(
         "SELECT r.{column}, {label}, MAX(r.started_at_ms) FROM usage_requests r
@@ -1743,13 +2067,16 @@ fn filter_options_inner(
     }
     drop(rows);
     drop(statement);
-    let has_more = items.len() as i64 > limit;
+    let mut has_more = items.len() as i64 > limit;
     if has_more {
         items.truncate(limit as usize);
     }
     // Provider options also include the currently configured providers so a
     // provider with no traffic can still be selected.
-    if let FilterKind::Provider = kind {
+    if let FilterKind::Provider = kind
+        && scope.source != SourceScope::Builtin
+        && scope.capture != crate::stats::dto::CaptureMethod::Workbuddy
+    {
         for (id, name) in configured {
             if let Some(existing) = items.iter_mut().find(|item| &item.key == id) {
                 existing.historical = false;
@@ -1771,6 +2098,7 @@ fn filter_options_inner(
         items.sort_by(|a, b| a.key.cmp(&b.key));
         items.dedup_by(|a, b| a.key == b.key);
         if items.len() as i64 > limit {
+            has_more = true;
             items.truncate(limit as usize);
         }
     }
@@ -1942,5 +2270,626 @@ mod tests {
             choose_granularity(300 * 86_400_000, Granularity::Auto),
             Granularity::Week
         );
+    }
+}
+
+#[cfg(test)]
+mod scope_tests {
+    use super::*;
+
+    #[test]
+    fn source_and_capture_filters_match_the_product_matrix_on_real_rows() {
+        use crate::stats::dto::CaptureMethod;
+        let conn = Connection::open_in_memory().unwrap();
+        conn.execute_batch("CREATE TABLE usage_requests(record_origin TEXT,source TEXT,started_at_ms INTEGER);
+            INSERT INTO usage_requests VALUES('proxy','relay',1000),('proxy','connection_test',1000),
+            ('workbuddy_builtin','workbuddy_import',1000),('workbuddy_custom','workbuddy_import',1000);").unwrap();
+        for (scope, capture, expected) in [
+            (SourceScope::All, CaptureMethod::All, 3),
+            (SourceScope::Builtin, CaptureMethod::All, 1),
+            (SourceScope::Supplier, CaptureMethod::All, 2),
+            (SourceScope::All, CaptureMethod::Workbuddy, 2),
+            (SourceScope::Supplier, CaptureMethod::Workbuddy, 1),
+            (SourceScope::All, CaptureMethod::Proxy, 1),
+            (SourceScope::Supplier, CaptureMethod::Proxy, 1),
+        ] {
+            let filter = StatsFilter {
+                from_ms: 0,
+                to_ms: 10_000,
+                timezone: "UTC".into(),
+                source_scope: scope,
+                capture_method: capture,
+                ..StatsFilter::default()
+            };
+            filter.validate().unwrap();
+            let sql = FilterSql::build(&filter, "r");
+            let count: i64 = conn
+                .query_row(
+                    &format!("SELECT COUNT(*) FROM usage_requests r WHERE {}", sql.clause),
+                    params_from_iter(sql.params.iter()),
+                    |row| row.get(0),
+                )
+                .unwrap();
+            assert_eq!(count, expected, "{scope:?}/{capture:?}");
+        }
+        let invalid = StatsFilter {
+            from_ms: 0,
+            to_ms: 10_000,
+            timezone: "UTC".into(),
+            source_scope: SourceScope::Builtin,
+            capture_method: CaptureMethod::Proxy,
+            ..StatsFilter::default()
+        };
+        assert!(invalid.validate().is_err());
+        let workbuddy = StatsFilter {
+            capture_method: CaptureMethod::Workbuddy,
+            ..StatsFilter::default()
+        };
+        assert_ne!(workbuddy.key(), StatsFilter::default().key());
+    }
+
+    #[test]
+    fn the_three_scopes_partition_the_fact_table() {
+        // AC058: `all` is exactly `builtin + supplier`. The two halves filter on
+        // disjoint values of the same column, so nothing is counted twice.
+        assert_eq!(scope_predicate(SourceScope::All, ""), "");
+        let supplier = scope_predicate(SourceScope::Supplier, "");
+        let builtin = scope_predicate(SourceScope::Builtin, "");
+        assert!(supplier.contains("record_origin IN ('proxy','workbuddy_custom')"));
+        assert!(builtin.contains("record_origin='workbuddy_builtin'"));
+        assert!(!builtin.contains("workbuddy_custom"));
+        assert!(
+            supplier.contains("workbuddy_custom"),
+            "supplier must include direct custom records"
+        );
+        assert!(
+            !builtin.contains("='proxy'"),
+            "and builtin carries no proxy"
+        );
+    }
+
+    #[test]
+    fn every_builder_prefixes_the_alias_it_was_given() {
+        assert_eq!(
+            scope_predicate(SourceScope::Supplier, "c"),
+            " AND c.record_origin IN ('proxy','workbuddy_custom')"
+        );
+        assert_eq!(
+            scope_predicate(SourceScope::Builtin, "c"),
+            " AND c.record_origin='workbuddy_builtin'"
+        );
+        assert_eq!(scope_predicate(SourceScope::All, "c"), "");
+    }
+
+    #[test]
+    fn all_equals_builtin_plus_supplier_on_real_rows() {
+        let conn = Connection::open_in_memory().unwrap();
+        conn.execute_batch(
+            "CREATE TABLE usage_requests(id INTEGER PRIMARY KEY, record_origin TEXT NOT NULL
+                DEFAULT 'proxy', source TEXT NOT NULL, started_at_ms INTEGER NOT NULL);",
+        )
+        .unwrap();
+        for (origin, source) in [
+            ("proxy", "relay"),
+            ("proxy", "relay"),
+            ("proxy", "connection_test"),
+            ("workbuddy_builtin", "workbuddy_import"),
+            ("workbuddy_custom", "workbuddy_import"),
+        ] {
+            conn.execute(
+                "INSERT INTO usage_requests(record_origin, source, started_at_ms) VALUES(?1,?2,1000)",
+                rusqlite::params![origin, source],
+            )
+            .unwrap();
+        }
+        let count = |scope: SourceScope, include_tests: bool| -> i64 {
+            let sql = format!(
+                "SELECT COUNT(*) FROM usage_requests WHERE started_at_ms>=0 AND started_at_ms<? \
+                 AND (source<>'connection_test' OR ?=1){}",
+                scope_predicate(scope, "")
+            );
+            conn.query_row(
+                &sql,
+                rusqlite::params![i64::MAX, if include_tests { 1 } else { 0 }],
+                |row| row.get(0),
+            )
+            .unwrap()
+        };
+
+        let all = count(SourceScope::All, false);
+        let supplier = count(SourceScope::Supplier, false);
+        let builtin = count(SourceScope::Builtin, false);
+        assert_eq!(all, 4, "three proxy rows and two imports, minus one test");
+        assert_eq!(
+            supplier, 3,
+            "supplier is two proxy records plus one direct custom record"
+        );
+        assert_eq!(builtin, 1, "builtin contains the built-in record only");
+        assert_eq!(all, supplier + builtin, "all = builtin + supplier");
+
+        // `include_tests` is the only thing that decides whether a connection
+        // test is visible, and it applies to the same predicate everywhere.
+        assert_eq!(count(SourceScope::All, true), 5);
+        assert_eq!(count(SourceScope::Supplier, true), 4);
+        assert_eq!(
+            count(SourceScope::Builtin, true),
+            1,
+            "an import is never a test"
+        );
+    }
+
+    #[test]
+    fn an_unknown_scope_is_refused_rather_than_guessed() {
+        // AC058: an illegal combination is rejected, not silently widened.
+        assert_eq!(SourceScope::parse("everything"), None);
+        assert_eq!(SourceScope::parse(""), None);
+        assert_eq!(SourceScope::parse("all"), Some(SourceScope::All));
+
+        let mut filter = StatsFilter {
+            from_ms: 0,
+            to_ms: 1000,
+            ..StatsFilter::default()
+        };
+        assert!(filter.validate().is_ok(), "the default scope is valid");
+        filter.source_scope = SourceScope::Supplier;
+        assert!(filter.validate().is_ok());
+        filter.source_scope = SourceScope::Builtin;
+        assert!(filter.validate().is_ok());
+    }
+}
+
+#[cfg(test)]
+mod origin_count_tests {
+    use super::*;
+
+    /// A database with the columns the summary reads.
+    fn database() -> Connection {
+        let conn = Connection::open_in_memory().unwrap();
+        conn.execute_batch(
+            "CREATE TABLE usage_requests(id INTEGER PRIMARY KEY, request_id TEXT NOT NULL UNIQUE,
+                record_origin TEXT NOT NULL DEFAULT 'proxy', source TEXT NOT NULL,
+                started_at_ms INTEGER NOT NULL, workbuddy_credit_nanos INTEGER);
+             CREATE TABLE usage_costs(request_id TEXT PRIMARY KEY, status TEXT NOT NULL);
+             CREATE TABLE workbuddy_import_ledger(state TEXT,event_at_ms INTEGER);",
+        )
+        .unwrap();
+        conn
+    }
+
+    fn row(conn: &Connection, id: i64, origin: &str, source: &str, credit: Option<i64>) {
+        conn.execute(
+            "INSERT INTO usage_requests(id, request_id, record_origin, source, started_at_ms,
+             workbuddy_credit_nanos) VALUES(?1, ?2, ?3, ?4, 1000, ?5)",
+            rusqlite::params![id, format!("r{id}"), origin, source, credit],
+        )
+        .unwrap();
+    }
+
+    fn filter(scope: SourceScope) -> StatsFilter {
+        StatsFilter {
+            from_ms: 0,
+            to_ms: 10_000,
+            source_scope: scope,
+            ..StatsFilter::default()
+        }
+    }
+
+    #[test]
+    fn a_mixed_result_counts_proxy_and_imported_separately() {
+        // AC059: a mixed report says how much of it is each side.
+        let conn = database();
+        row(&conn, 1, "proxy", "relay", None);
+        row(&conn, 2, "proxy", "relay", None);
+        row(
+            &conn,
+            3,
+            "workbuddy_builtin",
+            "workbuddy_import",
+            Some(1_500_000_000),
+        );
+        row(&conn, 4, "workbuddy_custom", "workbuddy_import", None);
+        conn.execute(
+            "INSERT INTO usage_costs(request_id, status) VALUES('r1','priced')",
+            [],
+        )
+        .unwrap();
+
+        let counts = origin_counts(&conn, &filter(SourceScope::All)).unwrap();
+        assert_eq!((counts.proxy, counts.imported), (2, 2));
+        assert_eq!(
+            counts.imported_unpriced, 2,
+            "both imported histories have unknown money costs"
+        );
+    }
+
+    #[test]
+    fn a_pure_import_result_has_no_proxy_rows() {
+        let conn = database();
+        row(
+            &conn,
+            1,
+            "workbuddy_builtin",
+            "workbuddy_import",
+            Some(2_000_000_000),
+        );
+        row(&conn, 2, "workbuddy_custom", "workbuddy_import", None);
+        let counts = origin_counts(&conn, &filter(SourceScope::Builtin)).unwrap();
+        assert_eq!((counts.proxy, counts.imported), (0, 1));
+        assert_eq!(
+            counts.imported_unpriced, 1,
+            "the selected builtin still has unknown historical money cost"
+        );
+        assert_eq!(counts.credit_count, 1);
+        assert_eq!(counts.credit_nanos, 2_000_000_000);
+
+        // The supplier scope sees the unpriced custom import.
+        let supplier = origin_counts(&conn, &filter(SourceScope::Supplier)).unwrap();
+        assert_eq!((supplier.proxy, supplier.imported), (0, 1));
+        assert_eq!(supplier.imported_unpriced, 1);
+        assert_eq!(supplier.credit_nanos, 0);
+    }
+
+    #[test]
+    fn credit_totals_above_i64_remain_exact() {
+        let conn = database();
+        row(
+            &conn,
+            1,
+            "workbuddy_builtin",
+            "workbuddy_import",
+            Some(i64::MAX),
+        );
+        row(
+            &conn,
+            2,
+            "workbuddy_custom",
+            "workbuddy_import",
+            Some(i64::MAX),
+        );
+        let counts = origin_counts(&conn, &filter(SourceScope::All)).unwrap();
+        assert_eq!(counts.credit_nanos, 18_446_744_073_709_551_614_i128);
+        let summary = to_summary(&RawSummary::default(), Vec::new(), 2, 0, 0, 0, &counts);
+        assert_eq!(
+            summary.credit_nanos.as_deref(),
+            Some("18446744073709551614")
+        );
+        let empty = origin_counts(&conn, &filter(SourceScope::Supplier)).unwrap();
+        assert_eq!(empty.credit_count, 1);
+    }
+
+    #[test]
+    fn credit_is_summed_on_its_own_and_never_added_to_costs() {
+        // AC059: credit is a different unit; it gets its own field and its own
+        // count, and the money totals never see it.
+        let conn = database();
+        row(
+            &conn,
+            1,
+            "workbuddy_builtin",
+            "workbuddy_import",
+            Some(7_000_000_000),
+        );
+        row(
+            &conn,
+            2,
+            "workbuddy_builtin",
+            "workbuddy_import",
+            Some(3_000_000_000),
+        );
+        let counts = origin_counts(&conn, &filter(SourceScope::All)).unwrap();
+        assert_eq!(counts.credit_nanos, 10_000_000_000);
+        assert_eq!(counts.credit_count, 2);
+
+        let raw = RawSummary {
+            request_count: 2,
+            ..RawSummary::default()
+        };
+        let summary = to_summary(&raw, Vec::new(), 2, 0, 0, 0, &counts);
+        assert_eq!(summary.credit_nanos.as_deref(), Some("10000000000"));
+        assert_eq!(summary.credit_record_count, 2);
+        assert!(
+            summary.costs.is_empty(),
+            "credit never becomes a cost total"
+        );
+        assert_eq!(
+            summary.cost_known_count, 0,
+            "imported credits never fabricate settled money rows"
+        );
+        assert_eq!(
+            (summary.proxy_record_count, summary.imported_record_count),
+            (0, 2)
+        );
+    }
+
+    #[test]
+    fn different_currencies_are_never_added_together() {
+        // AC059: the money totals are a list, one entry per currency.
+        let totals = vec![
+            CostTotalDto {
+                currency: Currency::Usd,
+                total_cost_nanos: "1000".into(),
+                priced_request_count: 1,
+            },
+            CostTotalDto {
+                currency: Currency::Cny,
+                total_cost_nanos: "2000".into(),
+                priced_request_count: 1,
+            },
+        ];
+        let raw = RawSummary {
+            request_count: 2,
+            ..RawSummary::default()
+        };
+        let summary = to_summary(&raw, totals, 0, 0, 0, 2, &OriginCounts::default());
+        assert_eq!(summary.costs.len(), 2, "two currencies stay two totals");
+        assert_eq!(summary.costs[0].currency, Currency::Usd);
+        assert_eq!(summary.costs[1].currency, Currency::Cny);
+    }
+}
+
+#[cfg(test)]
+mod paging_tests {
+    use super::*;
+
+    fn filter(scope: SourceScope) -> StatsFilter {
+        StatsFilter {
+            from_ms: 0,
+            to_ms: 1000,
+            source_scope: scope,
+            ..StatsFilter::default()
+        }
+    }
+
+    #[test]
+    fn switching_the_source_scope_invalidates_a_cursor() {
+        // AC061: the scope is part of the query's identity, so a cursor issued
+        // under one scope can never be replayed under another.
+        let all = filter(SourceScope::All);
+        let supplier = filter(SourceScope::Supplier);
+        let builtin = filter(SourceScope::Builtin);
+        assert_ne!(all.key(), supplier.key());
+        assert_ne!(all.key(), builtin.key());
+        assert_ne!(supplier.key(), builtin.key());
+
+        // Everything else being equal, the key is stable.
+        assert_eq!(all.key(), filter(SourceScope::All).key());
+
+        // A cursor embeds the key, so a mismatch is a refusal, not a wrong page.
+        let cursor = RequestCursor {
+            last_started_at_ms: 0,
+            last_id: 0,
+            as_of_id: 0,
+            filter_key: supplier.key(),
+            run_id: "run".into(),
+            maintenance_revision: 0,
+        };
+        assert!(validate_cursor(&cursor, &supplier, "run", 0).is_ok());
+        let error = validate_cursor(&cursor, &builtin, "run", 0).unwrap_err();
+        assert!(error.contains(ERR_CURSOR_EXPIRED), "{error}");
+    }
+
+    #[test]
+    fn a_mapping_change_invalidates_a_pending_cursor() {
+        // AC061: a withdrawal or a rule change bumps the revision, and the
+        // cursor issued before it is refused.
+        let cursor = PendingCursor {
+            mapping_revision: 3,
+            after_model: "custom-local:a".into(),
+            limit: 20,
+        };
+        assert!(cursor.validate(3).is_ok());
+        let error = cursor.validate(4).unwrap_err();
+        assert!(error.contains(ERR_CURSOR_EXPIRED), "{error}");
+
+        // A cursor with an impossible page size is refused as invalid, not as
+        // expired: the two mean different things to the caller.
+        let odd = PendingCursor {
+            mapping_revision: 3,
+            after_model: String::new(),
+            limit: 7,
+        };
+        assert!(odd.validate(3).unwrap_err().contains(ERR_INVALID));
+    }
+
+    #[test]
+    fn a_candidate_arriving_mid_paging_never_shifts_an_existing_page() {
+        // AC061: pages resume strictly after the last model shown, so a group
+        // that appears while the user pages lands later instead of pushing a
+        // group into a page that was already displayed.
+        let folder = tempfile::tempdir().unwrap();
+        let mut conn = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+        crate::stats::store::migrate(&mut conn, folder.path()).unwrap();
+        let insert = |model: &str| {
+            conn.execute(
+                "INSERT INTO workbuddy_import_ledger(entry_key, namespace_id, session_hash,
+                 message_hash, requested_model, event_at_ms, normalized_hash, state,
+                 mapping_revision, created_at_ms, updated_at_ms)
+                 VALUES(?1, ?2, ?1, ?1, ?3, 1000, ?1, 'pending_classification', 1, 1000, 1000)",
+                rusqlite::params![format!("{model:0<64}"), "a".repeat(48), model],
+            )
+            .unwrap();
+        };
+        for model in ["m1", "m2", "m3"] {
+            insert(model);
+        }
+
+        let (first, next) = pending_page(&conn, None, 20, 1, &"a".repeat(48)).unwrap();
+        assert_eq!(
+            first
+                .iter()
+                .map(|g| g.model_id.as_str())
+                .collect::<Vec<_>>(),
+            vec!["m1", "m2", "m3"]
+        );
+        assert!(next.is_none(), "a short page has no successor");
+
+        // A candidate that arrives during paging.
+        insert("m0");
+        let (page, next) = pending_page(&conn, None, 20, 1, &"a".repeat(48)).unwrap();
+        assert_eq!(
+            page.iter().map(|g| g.model_id.as_str()).collect::<Vec<_>>(),
+            vec!["m0", "m1", "m2", "m3"],
+            "a new group simply appears; nothing already shown moves"
+        );
+        assert!(next.is_none());
+
+        // Paging from the first page's cursor resumes strictly after m3.
+        let cursor = PendingCursor {
+            mapping_revision: 1,
+            after_model: "m3".into(),
+            limit: 20,
+        };
+        let (after, _) = pending_page(&conn, Some(&cursor), 20, 1, &"a".repeat(48)).unwrap();
+        assert!(after.is_empty(), "m0 is not re-shown after m3");
+    }
+
+    #[test]
+    fn an_impossible_page_size_is_refused() {
+        let folder = tempfile::tempdir().unwrap();
+        let mut conn = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+        crate::stats::store::migrate(&mut conn, folder.path()).unwrap();
+        let error = pending_page(&conn, None, 7, 1, &"a".repeat(48)).unwrap_err();
+        assert!(error.contains(ERR_INVALID), "{error}");
+    }
+}
+
+#[cfg(test)]
+mod filter_scope_tests {
+    use super::*;
+    use crate::stats::dto::CaptureMethod;
+
+    fn connection() -> Connection {
+        let conn = Connection::open_in_memory().unwrap();
+        conn.execute_batch("CREATE TABLE usage_requests(id INTEGER PRIMARY KEY,provider_id TEXT,provider_name TEXT,
+            upstream_model TEXT,started_at_ms INTEGER,record_origin TEXT,source TEXT);
+            INSERT INTO usage_requests VALUES
+            (1,'proxy','供应商','proxy-model',1,'proxy','relay'),
+            (2,'builtin','WorkBuddy','builtin-model',1,'workbuddy_builtin','workbuddy_import'),
+            (3,'custom','WorkBuddy 自定义','custom-model',1,'workbuddy_custom','workbuddy_import');").unwrap();
+        conn
+    }
+
+    #[test]
+    fn provider_and_model_options_respect_all_valid_source_capture_combinations() {
+        let conn = connection();
+        let configured = vec![("configured".into(), "尚无请求的供应商".into())];
+        for (source, capture, providers, models) in [
+            (SourceScope::All, CaptureMethod::All, 4, 3),
+            (SourceScope::Builtin, CaptureMethod::All, 1, 1),
+            (SourceScope::Supplier, CaptureMethod::All, 3, 2),
+            (SourceScope::All, CaptureMethod::Workbuddy, 2, 2),
+            (SourceScope::Supplier, CaptureMethod::Workbuddy, 1, 1),
+            (SourceScope::All, CaptureMethod::Proxy, 2, 1),
+            (SourceScope::Supplier, CaptureMethod::Proxy, 2, 1),
+        ] {
+            for (kind, expected) in [
+                (FilterKind::Provider, providers),
+                (FilterKind::Model, models),
+            ] {
+                let page = filter_options_scoped(
+                    &conn,
+                    FilterOptionsRequest {
+                        kind,
+                        query: "",
+                        provider_id: None,
+                        limit: 100,
+                        after_key: None,
+                        configured: &configured,
+                        scope: FilterScope { source, capture },
+                    },
+                )
+                .unwrap();
+                assert_eq!(
+                    page.items.len(),
+                    expected,
+                    "{kind:?}/{source:?}/{capture:?}"
+                );
+                if source == SourceScope::Builtin || capture == CaptureMethod::Workbuddy {
+                    assert!(!page.items.iter().any(|item| item.key == "configured"));
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn configured_provider_pagination_does_not_hide_additional_pages() {
+        let conn = connection();
+        let configured: Vec<_> = (0..25)
+            .map(|index| (format!("configured-{index:02}"), format!("供应商{index}")))
+            .collect();
+        let mut after = None;
+        let mut keys = std::collections::BTreeSet::new();
+        for _ in 0..10 {
+            let page = filter_options_scoped(
+                &conn,
+                FilterOptionsRequest {
+                    kind: FilterKind::Provider,
+                    query: "configured",
+                    provider_id: None,
+                    limit: 10,
+                    after_key: after.as_deref(),
+                    configured: &configured,
+                    scope: FilterScope {
+                        source: SourceScope::Supplier,
+                        capture: CaptureMethod::Proxy,
+                    },
+                },
+            )
+            .unwrap();
+            for item in page.items {
+                assert!(keys.insert(item.key));
+            }
+            after = page.next_key;
+            if after.is_none() {
+                break;
+            }
+        }
+        assert_eq!(keys.len(), 25);
+    }
+}
+
+#[cfg(test)]
+mod pending_namespace_tests {
+    use super::{Connection, pending_page};
+    use crate::stats::dto::ERR_INVALID;
+    #[test]
+    fn pending_lists_isolate_namespace_show_missing_models_and_have_no_empty_last_page() {
+        let folder = tempfile::tempdir().unwrap();
+        let mut conn = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+        crate::stats::store::migrate(&mut conn, folder.path()).unwrap();
+        let namespace = "a".repeat(48);
+        let foreign = "b".repeat(48);
+        let insert = |ns: &str, model: Option<&str>| {
+            let key = crate::stats::workbuddy_import::parser::hash_id(&format!("{ns}:{model:?}"));
+            conn.execute("INSERT INTO workbuddy_import_ledger(entry_key,namespace_id,session_hash,message_hash,requested_model,
+                event_at_ms,normalized_hash,state,mapping_revision,created_at_ms,updated_at_ms)
+                VALUES(?1,?2,?1,?1,?3,1000,?1,'pending_classification',1,1000,1000)",rusqlite::params![key,ns,model]).unwrap();
+        };
+        for index in 0..20 {
+            insert(&namespace, Some(&format!("model-{index:02}")));
+        }
+        insert(&foreign, Some("foreign"));
+        let (page, next) = pending_page(&conn, None, 20, 1, &namespace).unwrap();
+        assert_eq!(page.len(), 20);
+        assert!(next.is_none(), "exactly 20 groups have no empty successor");
+        insert(&namespace, None);
+        let (first, next) = pending_page(&conn, None, 20, 1, &namespace).unwrap();
+        assert_eq!(first.len(), 20);
+        assert_eq!(first[0].model_id, "");
+        assert_eq!(first[0].reason, "missing_model");
+        assert!(!first.iter().any(|row| row.model_id == "foreign"));
+        let cursor = next.unwrap();
+        assert!(
+            pending_page(&conn, Some(&cursor), 50, 1, &namespace)
+                .unwrap_err()
+                .contains(ERR_INVALID)
+        );
+        let (last, next) = pending_page(&conn, Some(&cursor), 20, 1, &namespace).unwrap();
+        assert_eq!(last.len(), 1);
+        assert_eq!(last[0].model_id, "model-19");
+        assert!(next.is_none());
+        let (other, _) = pending_page(&conn, None, 20, 1, &foreign).unwrap();
+        assert_eq!(other.len(), 1);
+        assert_eq!(other[0].model_id, "foreign");
     }
 }

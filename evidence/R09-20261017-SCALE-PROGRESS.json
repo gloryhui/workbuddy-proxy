@@ -1,0 +1,110 @@
+{
+  "result": "PROGRESS_SNAPSHOT_NOT_FINAL_ACCEPTANCE",
+  "at": 1792233660.796727,
+  "completed_phases": 6,
+  "required_phases": 12,
+  "phases": [
+    {
+      "phase": "100000-many/trial-1",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix/100000-many/trial-1/report.json",
+      "report_sha256": "3a6cd26080a70ec5853af1b481875a3e2c256e5aeca57bc904c2989dabbd8a9b",
+      "backfill_ms": 52738.802208,
+      "peak_rss_bytes": 19562496,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 353736470528,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh/tmp/workbuddy-scale-snc_40rr",
+        "removed": true,
+        "removed_logical_bytes": 364228808,
+        "retained_evidence_bytes": 211778830,
+        "system_disk_available_bytes": 16739196928
+      }
+    },
+    {
+      "phase": "100000-many/trial-2",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix/100000-many/trial-2/report.json",
+      "report_sha256": "e6dcc125403df2bfb53a7b3dc410aa52073dc4a797db4b73b64642a42137473d",
+      "backfill_ms": 40659.504583,
+      "peak_rss_bytes": 21463040,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 353388253184,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh/tmp/workbuddy-scale-8jv3gwha",
+        "removed": true,
+        "removed_logical_bytes": 365601152,
+        "retained_evidence_bytes": 211713292,
+        "system_disk_available_bytes": 16724840448
+      }
+    },
+    {
+      "phase": "100000-many/trial-3",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix/100000-many/trial-3/report.json",
+      "report_sha256": "b1f249de468fa4177ec0b8894d8db6fcd8c314979dfe3b1ba877488942d67ff8",
+      "backfill_ms": 52353.048708,
+      "peak_rss_bytes": 20168704,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 353159823360,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh/tmp/workbuddy-scale-rogjigyn",
+        "removed": true,
+        "removed_logical_bytes": 368827160,
+        "retained_evidence_bytes": 211705105,
+        "system_disk_available_bytes": 16679993344
+      }
+    },
+    {
+      "phase": "100000-single/trial-1",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix/100000-single/trial-1/report.json",
+      "report_sha256": "1d4823ea1cbdfb9f01057f173fd8e326ad6d919aeeff3f48f1cdc662453c1dab",
+      "backfill_ms": 49985.379041,
+      "peak_rss_bytes": 19529728,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 352950820864,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh/tmp/workbuddy-scale-y5u9u2zy",
+        "removed": true,
+        "removed_logical_bytes": 366466504,
+        "retained_evidence_bytes": 208874763,
+        "system_disk_available_bytes": 18949107712
+      }
+    },
+    {
+      "phase": "100000-single/trial-2",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix/100000-single/trial-2/report.json",
+      "report_sha256": "dfac271dd8577e3c63d83a35ae89b0ac009894294467f5017e76754db97fc04a",
+      "backfill_ms": 49997.166542,
+      "peak_rss_bytes": 19283968,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 352741888000,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh/tmp/workbuddy-scale-69hk12ot",
+        "removed": true,
+        "removed_logical_bytes": 363458856,
+        "retained_evidence_bytes": 208882955,
+        "system_disk_available_bytes": 17956896768
+      }
+    },
+    {
+      "phase": "100000-single/trial-3",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-external-tmp-telemetry-matrix/100000-single/trial-3/report.json",
+      "report_sha256": "58e6e1693a6b36ca643082af7ee2a1915d92dc093cb429cf5d8e5298d596257f",
+      "backfill_ms": 48759.57575,
+      "peak_rss_bytes": 18808832,
+      "cleanup": {
+        "children_stopped_before_cleanup": true,
+        "external_disk_available_bytes": 352532979712,
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-strict-matrix-74tpd7hh/tmp/workbuddy-scale-71idsvxi",
+        "removed": true,
+        "removed_logical_bytes": 363648520,
+        "retained_evidence_bytes": 208858380,
+        "system_disk_available_bytes": 17971343360
+      }
+    }
+  ],
+  "removed_logical_bytes": 2192231000,
+  "retained_evidence_bytes": 1261813325,
+  "system_free_bytes": 17967882240,
+  "external_free_bytes": 351095496704,
+  "coordinator": "dist/workbuddy-import-review/telemetry-external-tmp-matrix-coordinator.json",
+  "pending": "all remaining 1M phases including actual 300s idle; boundary probe is queued after matrix"
+}

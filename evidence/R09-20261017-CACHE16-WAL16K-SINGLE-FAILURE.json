@@ -1,0 +1,119 @@
+{
+  "at": 1792249200.062478,
+  "result": "FAIL_UNCHANGED_600_SECONDS_SINGLE_MILLION_BACKFILL",
+  "core_sha256": "2498694278279c43484f39eddd5fd41024ad39445095fb6de226e439c224636d",
+  "worktree": "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy",
+  "coordinator": "dist/workbuddy-import-review/cache16-wal16k-target-phase-coordinator.json",
+  "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-matrix/1000000-single/trial-1/report.json",
+  "log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-matrix/target-phase.log",
+  "actual_core_kernel_evidence": "evidence/R09-20261017-CACHE16-WAL16K-LIVE-CORE-PROTECTION.json",
+  "core_source_still_matches_build": true,
+  "script_sha256": {
+    "workbuddy_import_performance.py": "bb7f95c00cecbf0d7334cc05c2df0a85dd49a16391a1ea8d5744b9e840b590fe",
+    "workbuddy_import_bench.py": "f9dcc08bbe736466d6cb8bbf843607ac32a7f4a8e69bb4ca904f1d6b57a2b71c",
+    "workbuddy_import_resources.py": "70a9517dbf4c1a6225348826326214a731208a217f3cd9e20986c438e985fbd5",
+    "workbuddy_import_ui_sandbox.py": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+  },
+  "report_counts": {
+    "passed": 11,
+    "failed": 1
+  },
+  "failed_checks": [
+    {
+      "detail": "AssertionError",
+      "name": "scale: phase completed without exception",
+      "ok": false
+    }
+  ],
+  "snapshot": {
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-matrix/1000000-single/trial-1/usage-snapshot.sqlite3",
+    "logical_bytes": 1669652480,
+    "origin_columns": [
+      "record_origin",
+      "count",
+      "sum_input",
+      "sum_output",
+      "sum_total",
+      "sum_credit_nanos"
+    ],
+    "origins": [
+      [
+        "proxy",
+        408,
+        4080,
+        816,
+        4896,
+        null
+      ],
+      [
+        "workbuddy_builtin",
+        876027,
+        87602700,
+        17520540,
+        105123240,
+        998670780000000
+      ]
+    ],
+    "ledger_columns": [
+      "state",
+      "count",
+      "unique_entry_keys"
+    ],
+    "ledger": [
+      [
+        "imported",
+        876027,
+        876027
+      ]
+    ],
+    "checkpoint_columns": [
+      "committed_offset",
+      "observed_size",
+      "last_error_code",
+      "last_completed_at_ms"
+    ],
+    "checkpoints": [
+      [
+        940852998,
+        1074000000,
+        null,
+        null
+      ]
+    ],
+    "imported_money_rows": 0,
+    "scope": "Post-timeout diagnostic snapshot; not an observation of exact fact count at the600s deadline, and not a completed import."
+  },
+  "phase_cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 310766313472,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache16-wal16k-target-jf76xkkq/tmp/workbuddy-scale-bcyekn71",
+    "removed": true,
+    "removed_logical_bytes": 3208807432,
+    "retained_evidence_bytes": 1669685248,
+    "system_disk_available_bytes": 47257567232
+  },
+  "outer_cleanup": {
+    "guard_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache16-wal16k-target-jf76xkkq",
+    "guard_removed": true,
+    "test_input_kept_for_remaining_same_binary_phases": true,
+    "system_free_bytes": 47257567232,
+    "external_free_bytes": 310702682112,
+    "remaining_pids": [],
+    "lsof_exit": 1,
+    "removed_allocated_bytes": 0,
+    "retained_temp_bytes": 0
+  },
+  "one_task_boundary": {
+    "only_one_strict_phase_executed": true,
+    "no_followup_queue_started": true,
+    "no_parameter_fix_or_new_candidate": true,
+    "next_action": "User asked to stop Goal after this task; preserve failure and pause, wait for further instructions."
+  },
+  "live_owned_processes": [],
+  "session_temp_residual": [
+    "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/session-owner.json"
+  ],
+  "session_temp_allocated_bytes": 4096,
+  "system_free_bytes": 47274446848,
+  "external_free_bytes": 310458101760
+}

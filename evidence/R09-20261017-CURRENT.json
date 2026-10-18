@@ -1,0 +1,1375 @@
+{
+  "at": 1792325644.866121,
+  "goal": "COMPLETE",
+  "head": "6102b779871bab0bb8ad646dac5004892adf76be",
+  "current_core_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+  "ui_input_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "user_contract_revision_20261018": {
+    "authority": "Explicit user instruction in this chat: history import may run in background, software remains usable, display committed portion, retain normal future incremental sync. UI uses current remote resolution.",
+    "acceptance_file": "docs/workbuddy-import/ACCEPTANCE.md",
+    "historical_backfill_600s_business_gate": "removed by explicit user requirement; elapsed time remains measured",
+    "still_required": [
+      "nonblocking startup/UI/proxy and query",
+      "committed partial statistics visible with backlog status",
+      "fixed5s sync and ordinary increments<=10s",
+      "accurate final facts/tokens/credits/deduplication",
+      "durable checkpoints and bounded stop/restart",
+      "bounded resources and responsiveness",
+      "current remote resolution native UI evidence"
+    ],
+    "previous_failure_scope": "Original600s contract and old backend failures retained; full12 current revised-contract phases now PASS.",
+    "next_work_before_more_scale_runs": "No additional full scale repeats needed absent source changes/failure; finish four actual million resume cases and final audits/packages.",
+    "goal_remains_paused": false,
+    "new_tests_started": true,
+    "progress_ui_requirement": {
+      "authority": "User explicitly requests progress bar plus remaining quantity for background import on slower/non-SSD machines.",
+      "implementation_status": "IMPLEMENTED_AND_CURRENT18CHECK_PROGRESS_PLUS_NATIVE_DYNAMIC_PASS",
+      "present_backend_fields": [
+        "imported record count",
+        "files_pending",
+        "bytes_processed"
+      ],
+      "missing": [],
+      "required_states": [
+        "discovering/total unknown",
+        "backfilling progress with explicit remaining unit",
+        "paused/error/retry",
+        "caught up, continuing5s incremental sync"
+      ],
+      "io_boundary": "UI polls status only; no source scans from refresh; avoid pre-counting whole JSONL without agreed I/O tradeoff.",
+      "quantity_unit": "CONFIRMED_BY_USER:remaining files and data bytes; show imported record count separately",
+      "goal_remains_paused": false,
+      "progress_basis": "Committed bytes against observed bytes of discovered files; unknown total while discovery is incomplete",
+      "extra_full_record_count_scan": false,
+      "user_choice_recorded_at": 1792288467.6509628
+    }
+  },
+  "current_code_change": "All actual import transactions coordinate with report readers; writer reservations wait<=25ms in75ms handoff.4MiB WAL autocheckpoint; query-only bounded2GiB virtual mmap and128MiB SQLite cache; capped numeric query timing defaultoff.",
+  "remaining": [],
+  "external_boundaries": [
+    "Linux/Windows execution and Windows GUI unavailable locally",
+    "physical Intel hardware and installation not covered",
+    "OS DMG mount permission denied; archive payload checks do not assert mount success"
+  ],
+  "storage": {
+    "temp_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3",
+    "core_cargo_target": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target",
+    "gpui_cargo_target": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target",
+    "latest_completed_round": "current6b focused query pressure and shutdown,2 roots removed",
+    "released_allocated_bytes": 34648064,
+    "retained_temp_bytes_this_round": 0,
+    "system_free_bytes": 51325714432,
+    "external_free_bytes": 430609211392,
+    "unknown_system_temp": "4002 previous project-prefix entries preserved; ownership not established",
+    "completed_rounds_released_allocated_bytes": 140357632,
+    "completed_rounds_retained_temp_bytes": 0,
+    "active_matrix_and_package_tool_allocated_bytes": 387264512,
+    "matrix_phase_removed_logical_bytes": 0,
+    "matrix_phase_retained_evidence_bytes": 0,
+    "failed_million_phase_root_removed": true,
+    "failed_million_phase_removed_logical_bytes": 4928086464,
+    "failed_million_phase_retained_evidence_bytes": 590150112,
+    "completed_new_core_group_roots_removed": 27,
+    "completed_new_core_group_retained_temp_bytes": 0,
+    "latest_native_removed_allocated_bytes": 846024704,
+    "latest_native_retained_report_allocated_bytes": 5533696,
+    "latest_native_temp_paths_remaining_bytes": 0,
+    "latest_round_space_accounting": {
+      "owned_round_roots_removed": 27,
+      "retained_temporary_bytes": 0,
+      "outer_guard_removed_allocated_bytes": 0,
+      "space_accounting_scope": "Inner fixtures already remove source/config/database/executable before outer du; no retrospective total freed-space claim. Outer residual roots0; retained reports are evidence.",
+      "system_free_bytes": 51555315712
+    },
+    "latest_round_completed_temp_bytes": 0,
+    "latest_report": "evidence/R09-20261018-MAPPED-READER-FINAL-STORAGE.json",
+    "active_or_required_allocated_bytes": 146722816,
+    "earlier_native_os_referenced_temp": [
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/WorkBuddy Proxy Review.app",
+        "allocated_bytes": 0,
+        "removed": true,
+        "reason": "OS tccd handle retained; no system process stopped",
+        "lsof": "COMMAND   PID  USER   FD   TYPE DEVICE SIZE/OFF     NODE NAME\ntccd    49484 glory    5r   REG   1,28 14794240 16595754 /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui\ntccd    49484 glory    6r   REG   1,28 14794240 16595754 /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui\n",
+        "cleanup_evidence": "evidence/R09-20261018-MAPPED-READER-NATIVE-CARRIER-CLEANUP.json"
+      }
+    ],
+    "latest_resident_removed_allocated_bytes": 1430982656,
+    "latest_resident_retained_temp_bytes": 0,
+    "native_carrier_cleanup": "evidence/R09-20261018-MAPPED-READER-NATIVE-CARRIER-CLEANUP.json",
+    "latest_copy_cleanup": "evidence/R09-20261018-MAPPED-READER-MATRIX-COPY-CLEANUP.json",
+    "latest_completed_resume": {
+      "case": "many-graceful",
+      "inner_cleanup": {
+        "core_stopped": true,
+        "reference_check": {
+          "lsof_exit": 1,
+          "remaining": ""
+        },
+        "released_logical_bytes": 2989100537,
+        "removed": true,
+        "retained_temp_bytes": 0,
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-s4dr4gc0/tmp/workbuddy-full-resume-xjloi2ub",
+        "system_free_bytes": 51391148032
+      },
+      "outer_cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-s4dr4gc0",
+        "removed": true,
+        "released_allocated_bytes": 0,
+        "retained_temp_bytes": 0,
+        "system_free_bytes": 51391148032
+      }
+    },
+    "dedicated_temp_content_bytes": 0,
+    "dedicated_empty_root_allocated_bytes": 4096,
+    "unknown_system_temp_preserved_allocated_bytes": 6262906880,
+    "final_tool_cleanup": {
+      "exact_path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/package-extractor-empo0u58",
+      "ownership": {
+        "thread": "01a148ae-2068-7800-a8d2-904539bc30d3",
+        "pid": 37235,
+        "created_at": 1792292812.611729,
+        "purpose": "portable official archive reader for owned private DMG, no system install"
+      },
+      "released_allocated_bytes": 8450048,
+      "retained_temp_bytes": 0,
+      "raw_logs_preserved_at": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-cleanup-tool-evidence",
+      "removed": true
+    }
+  },
+  "git": "no commit, push, merge, release, version or dependency change",
+  "prior_snapshot": "evidence/R09-20261018-CURRENT-BEFORE-PLATFORM.json",
+  "scope_note": "Requested local scope fully verified. External platform/install limitations remain explicitly unverified; not an all-platform deployment claim. Current product sources/manifests/old migrations and HEAD unchanged after final tests.",
+  "pending_large_filecount_probe": {
+    "script": "scripts/workbuddy_import_rotation_probe.py",
+    "coordinator": "dist/workbuddy-import-review/cover-query-macos-x64-coordinator.json",
+    "state": "PASS_ARM_AND_X64_NEW_SOURCE",
+    "reason": "original independent R03 asks >1000, scale corpus is exactly1000; do not substitute file counts",
+    "arm_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-local-gates/rotation1137/report.json",
+    "arm_coordinator": "dist/workbuddy-import-review/cover-query-local-gates-coordinator.json",
+    "x64_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-macos-x64/rotation1137/report.json"
+  },
+  "candidate_under_validation": {
+    "state": "PASS_REQUESTED_LOCAL_SCOPE_EXTERNAL_BOUNDARIES_EXPLICIT",
+    "build_coordinator": "dist/workbuddy-import-review/mapped-reader-build-coordinator.json",
+    "validation_coordinator": "dist/workbuddy-import-review/mapped-reader-target-validation-coordinator.json",
+    "change": "All actual import transactions hand off with reports; metadata skips400ms pacing. Reserved writer waits<=25ms for75ms handoff. WAL auto-checkpoint4MiB; query-only reader bounded2GiB virtual mmap plus128MiB SQLite cache. Real SQL,2s budget,500msP95 and10s incremental gates unchanged. Optional capped128 query timing logs defaultoff.",
+    "diagnostic": "same saved partial snapshot:16 import-on reports all succeed232-332ms; diagnostic only, not full-scale PASS",
+    "diagnostic_artifacts": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-diagnostic/report.json",
+    "current_full_runtime": "PASS27_CURRENT_GROUPS",
+    "new_full_resume_probe": "scripts/workbuddy_import_resume_probe.py; all four actual1M single/many x graceful/kill PASS;124 checks",
+    "core_binary_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+    "build_report": "evidence/R09-20261018-MAPPED-READER-BUILD.json",
+    "focused_report": "evidence/R09-20261018-MAPPED-READER-FOCUSED.json",
+    "remaining_pipeline": "dist/workbuddy-import-review/mapped-reader-remaining-coordinator.json",
+    "full_scale_resume_pipeline": "dist/workbuddy-import-review/mapped-reader-full-resume-v2-coordinator.json"
+  },
+  "prior_3d9_source_candidate_checkpoint": {
+    "verified_current_candidate": {
+      "core_unit_tests": 539,
+      "ui_unit_tests": 139,
+      "core_fmt_clippy_release": "PASS",
+      "ui_fmt_clippy_release": "PASS",
+      "core_build_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/report.json",
+      "ui_build_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/report.json",
+      "runtime": "PASS_25_INDEPENDENT_GROUPS",
+      "native_gui": "NOT_RUN_NEW_CANDIDATE",
+      "progress_runtime": "PASS 18 checks; 50k real source backfill interrupted/restarted, append/truncate and pending separation",
+      "progress_runtime_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-probe-v3/progress/report.json",
+      "production_edges": "PASS_65_CHECKS"
+    },
+    "serial_gates": {
+      "report": "evidence/R09-20261018-CORE-GATES.json",
+      "group_count": 25,
+      "state": "PASS",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "current_native_ui": {
+      "report": "evidence/R09-20261018-NATIVE-AUDIT.json",
+      "matrix_cases": 12,
+      "scope": "current remote window sizes, three sources and two languages; explicit locked-Mac resident CmdQ boundary",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "package": {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-package-archive-reader-v3/report.json",
+      "state": "PASS_ACTUAL_DMG_PAYLOAD_IDENTITY_AND_PROTECTED_LIFECYCLE_OS_MOUNT_SEPARATE",
+      "os_mount": "BLOCKED_EXTERNAL_PERMISSION_DENIED",
+      "installed": false,
+      "published": false,
+      "same_validator_arm_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-arm-identity-v2/report.json",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "current_macos_x64": {
+      "state": "PASS_LOCAL_MACOS_X64_ROSETTA_BUILD_TEST_ACTUAL_IMAGE_PAYLOAD_LIFECYCLE_EXTERNAL_LIMITS_RETAINED",
+      "report": "evidence/R09-20261018-MACOS-X64.json",
+      "core_sha256": "37c90f4571e7504f759950264a142a8e836854a033fc2eabfb367ef5a8b6a76d",
+      "ui_sha256": "d9d960a31c17505ccc467a658c653744c7e379bd11206eaa3d214350898e510b",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "scale_revised_contract": {
+      "contract": "2026-10-18-background-progress-resource-v2",
+      "phase_count": 12,
+      "validated_phase_count": 1,
+      "latest_pass_phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-1/report.json",
+      "state": "FAILED_OLD_CORE_QUERY_TIMEOUT_NEW_SOURCE_BUILD_PENDING",
+      "separate_worker_resource_bound": "complete import-only core RSS, conservative worker upper bound; concurrent reporting reader peak measured separately",
+      "coordinator": "dist/workbuddy-import-review/progress-resume-matrix-v2-coordinator.json",
+      "phase_report_pass_count": 6,
+      "remaining_phase_count": 6,
+      "phase_reports": [
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-many/trial-1/report.json",
+          "scale": 100000,
+          "layout": "many",
+          "trial": 1,
+          "checks_passed": 87,
+          "backfill_ms": 18794.465208,
+          "startup_ms": 234.563583,
+          "max_increment_ms": 5551.292584,
+          "query_p95_max_ms": 31.229167,
+          "worker_whole_core_rss_upper_bound_bytes": 36651008,
+          "concurrent_query_whole_core_rss_peak_bytes": 115605504,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440968028160,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-0evltq47",
+            "removed": true,
+            "removed_logical_bytes": 426659384,
+            "retained_evidence_bytes": 211583178,
+            "system_disk_available_bytes": 51639148544
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-g1phrg9r",
+            "released_logical_bytes": 335203960,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51605381120
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-many/trial-2/report.json",
+          "scale": 100000,
+          "layout": "many",
+          "trial": 2,
+          "checks_passed": 89,
+          "backfill_ms": 23719.797709,
+          "startup_ms": 335.635625,
+          "max_increment_ms": 5053.508417,
+          "query_p95_max_ms": 40.315083,
+          "worker_whole_core_rss_upper_bound_bytes": 36765696,
+          "concurrent_query_whole_core_rss_peak_bytes": 117702656,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440628396032,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-7rhfz0hb",
+            "removed": true,
+            "removed_logical_bytes": 426457720,
+            "retained_evidence_bytes": 211546780,
+            "system_disk_available_bytes": 51641978880
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-rda3it49",
+            "released_logical_bytes": 335347320,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51639119872
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-many/trial-3/report.json",
+          "scale": 100000,
+          "layout": "many",
+          "trial": 3,
+          "checks_passed": 87,
+          "backfill_ms": 18196.127083,
+          "startup_ms": 445.93875,
+          "max_increment_ms": 5102.95775,
+          "query_p95_max_ms": 30.846333,
+          "worker_whole_core_rss_upper_bound_bytes": 35733504,
+          "concurrent_query_whole_core_rss_peak_bytes": 99303424,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440405958656,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-g_xwad0g",
+            "removed": true,
+            "removed_logical_bytes": 426851968,
+            "retained_evidence_bytes": 211763395,
+            "system_disk_available_bytes": 51639873536
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-oxtafukq",
+            "released_logical_bytes": 335249016,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51641323520
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-1/report.json",
+          "scale": 100000,
+          "layout": "single",
+          "trial": 1,
+          "checks_passed": 89,
+          "backfill_ms": 23388.993583,
+          "startup_ms": 223.241208,
+          "max_increment_ms": 5626.69775,
+          "query_p95_max_ms": 33.693,
+          "worker_whole_core_rss_upper_bound_bytes": 36323328,
+          "concurrent_query_whole_core_rss_peak_bytes": 140197888,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 446526042112,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache16-wal16k-target-9xayce4r/tmp/workbuddy-scale-g4rckym6",
+            "removed": true,
+            "removed_logical_bytes": 424808648,
+            "retained_evidence_bytes": 208938623,
+            "system_disk_available_bytes": 51857682432
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache16-wal16k-target-9xayce4r/tmp/workbuddy-worker-memory-vbn6axfw",
+            "released_logical_bytes": 332340856,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51845316608
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-2/report.json",
+          "scale": 100000,
+          "layout": "single",
+          "trial": 2,
+          "checks_passed": 91,
+          "backfill_ms": 28788.553333,
+          "startup_ms": 466.451667,
+          "max_increment_ms": 5162.635916,
+          "query_p95_max_ms": 31.847709,
+          "worker_whole_core_rss_upper_bound_bytes": 37224448,
+          "concurrent_query_whole_core_rss_peak_bytes": 138674176,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440096104448,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-afprnd38",
+            "removed": true,
+            "removed_logical_bytes": 427179136,
+            "retained_evidence_bytes": 208663636,
+            "system_disk_available_bytes": 51642011648
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-3aavptc6",
+            "released_logical_bytes": 332324472,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51638706176
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-3/report.json",
+          "scale": 100000,
+          "layout": "single",
+          "trial": 3,
+          "checks_passed": 89,
+          "backfill_ms": 23474.949792,
+          "startup_ms": 444.049333,
+          "max_increment_ms": 5136.889333,
+          "query_p95_max_ms": 35.775292,
+          "worker_whole_core_rss_upper_bound_bytes": 33849344,
+          "concurrent_query_whole_core_rss_peak_bytes": 140705792,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 439822090240,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-5urjx202",
+            "removed": true,
+            "removed_logical_bytes": 424617216,
+            "retained_evidence_bytes": 208540289,
+            "system_disk_available_bytes": 51637600256
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-whgtwkcx",
+            "released_logical_bytes": 332430968,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51640832000
+          }
+        }
+      ],
+      "incomplete_or_failed_phase_reports": [
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/1000000-many/trial-1/report.json",
+          "result": "FAIL"
+        }
+      ],
+      "report_count_scope": "completed current-contract tests with stopped/removed owned roots; final aggregate additionally revalidates every full SQLite snapshot and cross-scale growth",
+      "coordinator_state": "FAIL_PROGRESS_MATRIX",
+      "failure_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/1000000-many/trial-1/report.json",
+      "failure_reason": "stats_dashboard stats_query_timeout during concurrent backfill near278k imported; 1M import-only accuracy/resource probe passed separately",
+      "completed_old_hash_phase_reports": 6,
+      "new_hash_phase_pass_count": 0
+    },
+    "current_ac_audit": {
+      "path": "evidence/R09-20261018-PROGRESS-AC-AUDIT.json",
+      "counts": {
+        "PASS": 77,
+        "NOT_RUN": 2,
+        "BLOCKED_EXTERNAL": 1
+      },
+      "completion_percentage": false,
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "current_x_audit": {
+      "path": "evidence/R09-20261018-PROGRESS-X-AUDIT.json",
+      "counts": {
+        "PASS": 47
+      },
+      "scope": "fixed X rows only; native resident quit/new indeterminate captures/full scale/external platform remain explicit",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    }
+  },
+  "verified_current_candidate": {
+    "core_tests": 553,
+    "core_fmt_clippy_release": "PASS",
+    "build_report": "evidence/R09-20261018-MAPPED-READER-BUILD.json",
+    "ui_tests": 139,
+    "ui_scope": "unchanged8f4/d9d9 artifacts; current backend paired native12+dynamic and candidate resident PASS"
+  },
+  "serial_gates": {
+    "state": "PASS_CURRENT_27_GROUPS",
+    "focused_report": "evidence/R09-20261018-MAPPED-READER-FOCUSED.json",
+    "required_full_groups": 27,
+    "full_coordinator": "dist/workbuddy-import-review/mapped-reader-local-gates-coordinator.json",
+    "group_count": 27,
+    "report": "evidence/R09-20261018-MAPPED-READER-CORE-GATES.json"
+  },
+  "scale_revised_contract": {
+    "state": "PASS_FULL_12_PHASE_MATRIX",
+    "phase_count": 12,
+    "validated_phase_count": 12,
+    "remaining_phase_count": 0,
+    "target_first_coordinator": "dist/workbuddy-import-review/mapped-reader-target-phase-coordinator.json",
+    "coordinator": "dist/workbuddy-import-review/mapped-reader-matrix-coordinator.json",
+    "core_binary_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+    "target_report": "evidence/R09-20261018-MAPPED-READER-MILLION-TARGET.json",
+    "report": "evidence/R09-20261018-MAPPED-READER-FULL-MATRIX.json"
+  },
+  "current_native_ui": {
+    "state": "PASS_CURRENT_PAIR_NATIVE_MATRIX_AND_DYNAMIC_RESIDENT_PACKAGE_SEPARATE",
+    "ui_input_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+    "unchanged_ui_visual_evidence": "evidence/R09-20261018-NATIVE-AUDIT.json",
+    "old_backend_source_candidate": "3d9e774e19773c9245d35527109aa65390bfa71947e9570ff76eb53052cba3d9",
+    "blocker": null,
+    "report": "evidence/R09-20261018-MAPPED-READER-NATIVE.json",
+    "native_actions_sent": true,
+    "scope_after_source_change": "Currentbcaa+unchanged8f4 native matrix12 and dynamic actual200k progress/unknown/fullcheck/retry/mapping/100refresh/7visibility/pagination/input verified; resident CmdQ separate",
+    "last_checked_at": 1792308382.304524,
+    "pending_backend_pair_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+    "current_matrix_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/matrix-validation-v2/report.json",
+    "dynamic_coordinator": "dist/workbuddy-import-review/mapped-reader-native-dynamic-coordinator.json",
+    "resident_native_cmdq": "PASS_CURRENT_ACTIVE_MILLION_BACKFILL",
+    "resident_report": "evidence/R09-20261018-MAPPED-READER-PACKAGE-NATIVE.json",
+    "resident_native_exit_observed_ms": 417.927042,
+    "entire_native_lifecycle_completed_after_pre_key_wall_marker_ms": 2309.869873046875
+  },
+  "current_macos_x64": {
+    "state": "PASS_CURRENT_X64_BUILD_RUNTIME_AND_FINAL_PRIVATE_IMAGE_LOCAL_ROSETTA",
+    "ui_byte_identity_unchanged": true,
+    "coordinator": "dist/workbuddy-import-review/mapped-reader-macos-x64-coordinator.json",
+    "core_sha256": "0d81bb3e465f174555f08dcbde0105eed8cec413012fd37abfc12d8ecdd5062d",
+    "ui_sha256": "d9d960a31c17505ccc467a658c653744c7e379bd11206eaa3d214350898e510b",
+    "report": "evidence/R09-20261018-MAPPED-READER-MACOS-X64.json",
+    "scope_after_source_change": "Actual x86_64 Mach-O builds/tests/runtime on arm64 macOS via installed Rosetta; unchanged d9d9 UI artifact reused with compiler-depfile exclusion. Private final x64 package pending. No physical Intel, Windows/Linux or installation claim.",
+    "next_runner": "dist/workbuddy-import-review/run_mapped_reader_macos_x64.py"
+  },
+  "package": {
+    "state": "PASS_FINAL_ARM_X64_DOCUMENTATION_IMAGES_ARCHIVE_IDENTITY_PROTECTED_LIFECYCLE",
+    "installed": false,
+    "published": false,
+    "scope_after_source_change": "Actual DMG data files/encoded Finder layout/signatures and all nonsignature Mach-O bytes verified; unique QA carrier changes bundle metadata/signatures and adds test-only DYLD headless guard. GUI/tray kernel protection not claimed. No product code bytes changed.",
+    "report": "evidence/R09-20261018-MAPPED-READER-PACKAGE-NATIVE.json",
+    "candidate_dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-private-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-private-macos-arm64.dmg",
+    "candidate_dmg_sha256": "0a9f7f76e00ef66c8f186004ed06505f68f47db278b86a636f48bccbd6619eb9",
+    "final_documentation_payload_pending": false,
+    "final_delivery_coordinator": "dist/workbuddy-import-review/mapped-reader-final-delivery-v3-coordinator.json",
+    "final_images": [
+      {
+        "arch": "arm",
+        "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-arm-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-final-private-macos-arm64.dmg",
+        "sha256": "563fe6986dba2c3b9b28db7f5317c95d3acb3e67567e95c0715e501fbb3b657c",
+        "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-arm-package/report.json",
+        "documentation_files": 264
+      },
+      {
+        "arch": "x64",
+        "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-x64-package/artifacts/workbuddy-proxy-0.5.6-import-review-mapped-reader-final-private-macos-x64.dmg",
+        "sha256": "29ebf1929a81cef443374a9d50bed1aff814ef07df7d0d88f73a3dd78c70dc10",
+        "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-x64-package/report.json",
+        "documentation_files": 264
+      }
+    ]
+  },
+  "static_partial_api_diagnostic": {
+    "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-static-api-diagnostic/report.json",
+    "partial_rows": 521984,
+    "first_ms": 669.945375,
+    "warm_ms_range": [
+      176.2925,
+      183.927833
+    ],
+    "scope": "actual810f API with import disabled; not concurrent/scale acceptance"
+  },
+  "continuous_dashboard_pressure": {
+    "client_count": 2,
+    "discarded_samples": 28097,
+    "error_codes": [],
+    "failed_requests": 0,
+    "maximum_visible_count": 27585,
+    "minimum_visible_count": 1037,
+    "remaining_threads": [],
+    "scope": "Focused200k competing backlog; not formal1M/full12 phase acceptance",
+    "successful_requests_by_client": [
+      18144,
+      18145
+    ],
+    "total_requests": 36289,
+    "wall_ms": 108497.126292,
+    "increment_windows": 20,
+    "max_source_flush_to_query_visible_ms": 6980.129083,
+    "core_binary_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90"
+  },
+  "current_interim_audits": {
+    "ac": "evidence/R09-20261018-MAPPED-READER-DRAFT-AC-AUDIT.json",
+    "x": "evidence/R09-20261018-MAPPED-READER-DRAFT-X-AUDIT.json",
+    "scope": "Current553/139 named-test proof draft; resume-dependent rows remain NOT_RUN until all four real million cases complete."
+  },
+  "prior_reader_yield_serial_gates": {
+    "state": "PASS",
+    "required_groups": 27,
+    "group_count": 27,
+    "coordinator": "dist/workbuddy-import-review/reader-yield-local-gates-coordinator.json",
+    "report": "evidence/R09-20261018-READER-YIELD-CORE-GATES.json"
+  },
+  "prior_reader_yield_scale_failure": {
+    "state": "FAIL_5498_BACKGROUND_QUERY_TIMEOUT_AT_693120",
+    "contract": "2026-10-18-background-progress-resource-v2",
+    "phase_count": 12,
+    "validated_phase_count": 0,
+    "coordinator": "dist/workbuddy-import-review/reader-yield-matrix-coordinator.json",
+    "prior_failure": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/1000000-many/trial-1/report.json",
+    "target_first_coordinator": "dist/workbuddy-import-review/reader-yield-target-phase-coordinator.json",
+    "phase_report_pass_count": 0,
+    "remaining_phase_count": 12,
+    "phase_reports": [],
+    "incomplete_or_failed_phase_reports": [
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-matrix/1000000-many/trial-1/report.json",
+        "result": "FAIL"
+      }
+    ],
+    "report_count_scope": "completed current-contract tests with stopped/removed owned roots; final aggregate additionally revalidates every full SQLite snapshot and cross-scale growth",
+    "coordinator_state": "FAIL_TARGET_PHASE",
+    "failure_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-reader-yield-matrix/1000000-many/trial-1/report.json",
+    "failure_before_request_count": 693120,
+    "failure_query_ms": 2000.679166,
+    "saved_snapshot_imported_rows": 521984,
+    "running_phase_partial_observations": {
+      "source_log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-reader-yield-matrix/target-phase.log",
+      "not_a_phase_pass": true,
+      "full_import_only_worker_resource": {
+        "baseline_bytes": 12189696,
+        "peak_bytes": 39747584,
+        "net_rss_growth_bytes": 27557888,
+        "samples": 3078,
+        "error": null,
+        "sampling_interval_seconds": 0.1,
+        "method": "whole-core peak and net RSS change; not per-thread RSS",
+        "sampler": "libproc rusage_info_v0 with Mach timebase"
+      },
+      "background_observation_count": 7,
+      "latest_success": {
+        "elapsed_ms": 33732.226792,
+        "count_before": 183552,
+        "query_visible": 183552,
+        "count_after": 183552,
+        "status_ms": 36.924083,
+        "query_ms": 69.340458,
+        "progress": {
+          "bytes_committed": 197134848,
+          "bytes_remaining": 876865152,
+          "bytes_total": 1074000000,
+          "files_remaining": 1000,
+          "files_total": 1000,
+          "total_known": true
+        },
+        "complete": false
+      },
+      "max_observed_query_ms": 69.340458
+    }
+  },
+  "previous_reader_yield_pressure": {
+    "client_count": 2,
+    "discarded_samples": 38300,
+    "error_codes": [],
+    "failed_requests": 0,
+    "maximum_visible_count": 22352,
+    "minimum_visible_count": 1037,
+    "remaining_threads": [],
+    "scope": "continuous real dashboard traffic during20 exact-identity increment windows; not the formal1M query percentile matrix",
+    "successful_requests_by_client": [
+      23244,
+      23248
+    ],
+    "total_requests": 46492,
+    "wall_ms": 118651.530833,
+    "increment_windows": 20,
+    "max_source_flush_to_query_visible_ms": 7939.99175,
+    "all_identity_windows_verified_with_live_clients": true,
+    "formal_million_query_percentile_scope": false
+  },
+  "prior6b_scale_failure": {
+    "state": "FAIL_CURRENT6B_BACKGROUND_QUERY_TIMEOUT_AT676603",
+    "contract": "2026-10-18-background-progress-resource-v2",
+    "phase_count": 12,
+    "validated_phase_count": 0,
+    "remaining_phase_count": 12,
+    "target_first_coordinator": "dist/workbuddy-import-review/fact-handoff-v2-target-phase-coordinator.json",
+    "coordinator": "dist/workbuddy-import-review/fact-handoff-v2-matrix-coordinator.json",
+    "core_binary_sha256": "6b1ca331b61c83e6b9dfee85943cb71c6cb084ec8383ceb9e7db842c96300fda",
+    "failure_report": "evidence/R09-20261018-FACT-HANDOFF-WAKE-MILLION-FAIL.json",
+    "failure_before_request_count": 676603,
+    "failure_query_ms": 2000.479667
+  },
+  "native_interleave": {
+    "at": 1792308382.302463,
+    "stopped_own_waiting_orchestrator": 18517,
+    "command": "dist/workbuddy-import-review/package-venv/bin/python -u dist/workbuddy-import-review/run_mapped_reader_remaining.py",
+    "state": "NATIVE_COMPLETE_QUEUE_RESUMED_THEN_PREFLIGHT_SCOPE_CORRECTED",
+    "reason": "Mac now unlocked; reserve serial GUI acceptance slot before later timed gates. Current target/core/tester were not interrupted.",
+    "resume_rule": "After target finishes and GUI test processes stop, sendSIGCONT to this exact orchestrator; if Mac locks again at slot, resume normal queue rather than block independent work.",
+    "completed_at": 1792311461.917166,
+    "new_remaining_pid": 41028,
+    "new_full_resume_pid": 41029
+  },
+  "private_native_slot": {
+    "at": 1792311816.6838279,
+    "state": "PRIVATE_NATIVE_PASS_OWNED_APP_PROCESSES_STOPPED_QUEUE_RESUMED",
+    "stopped_parent_pid": 41028,
+    "verified_command": "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python -u /Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/run_mapped_reader_remaining.py",
+    "active_child_pid": 41033,
+    "active_step": "local_gates",
+    "child_command": "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python -u /Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/run_mapped_reader_local_gates.py",
+    "rule": "Active child continues. After it terminates, run private ARM package/resident native slot. After QA children stop and exact cleanup, SIGCONT this verified parent. If desktop locks, resume parent and leave native pending instead of indefinitely blocking queue.",
+    "resumed_at": 1792312734.0201018,
+    "native_report": "evidence/R09-20261018-MAPPED-READER-PACKAGE-NATIVE.json"
+  },
+  "status_polling": {
+    "state": "PASS",
+    "report": "evidence/R09-20261018-MAPPED-READER-STATUS-POLLING.json"
+  },
+  "full_million_resume": {
+    "result": "PASS_FOUR_FULL_MILLION_RESUME_CASES_NATIVE_PACKAGE_AUDIT_PENDING",
+    "pid": 96281,
+    "started_at": 1792323267.5572171,
+    "core_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+    "scope": "4 actual1M/1GiB resume combinations, single/many x graceful/SIGKILL; no SQL fact seeds, no install or native GUI proof",
+    "steps": [
+      {
+        "name": "single-graceful",
+        "state": "PASS",
+        "started_at": 1792323267.6013281,
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+          "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+          "scripts/workbuddy_import_ui_sandbox.py",
+          "--attest-file",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/single-graceful-protection.json",
+          "--allowed-root",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-u4uypr9r",
+          "--",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "-u",
+          "scripts/workbuddy_import_resume_probe.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+          "--expected-sha256",
+          "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+          "--records",
+          "1000000",
+          "--layout",
+          "single",
+          "--stop-mode",
+          "graceful",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/single-graceful"
+        ],
+        "script_sha256": "e3323c55a009a269bdd44d636d5b6b414d5593c7f000b866853c2a1afcd91010",
+        "guard_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-u4uypr9r",
+        "pid": 96286,
+        "exit_code": 0,
+        "result": "PASS_FULL_CORPUS_RESUME_OTHER_GATES_PENDING",
+        "protection": {
+          "enforced": true,
+          "pid": 96286,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": false,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "command": [
+            "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+            "-u",
+            "scripts/workbuddy_import_resume_probe.py",
+            "--exe",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+            "--expected-sha256",
+            "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+            "--records",
+            "1000000",
+            "--layout",
+            "single",
+            "--stop-mode",
+            "graceful",
+            "--output",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/single-graceful"
+          ],
+          "monotonic_ns": "383690691935166",
+          "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+        },
+        "report_sha256": "da14537997331e33707891d27b92c2d5047ff90b496101a9140c3c63948e9aca",
+        "ended_at": 1792323929.346848,
+        "cleanup": {
+          "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-u4uypr9r",
+          "removed": true,
+          "released_allocated_bytes": 0,
+          "retained_temp_bytes": 0,
+          "system_free_bytes": 51406434304
+        }
+      },
+      {
+        "name": "single-kill",
+        "state": "PASS",
+        "started_at": 1792323929.3869839,
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+          "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+          "scripts/workbuddy_import_ui_sandbox.py",
+          "--attest-file",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/single-kill-protection.json",
+          "--allowed-root",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-ycvvh_3c",
+          "--",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "-u",
+          "scripts/workbuddy_import_resume_probe.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+          "--expected-sha256",
+          "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+          "--records",
+          "1000000",
+          "--layout",
+          "single",
+          "--stop-mode",
+          "kill",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/single-kill"
+        ],
+        "script_sha256": "e3323c55a009a269bdd44d636d5b6b414d5593c7f000b866853c2a1afcd91010",
+        "guard_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-ycvvh_3c",
+        "pid": 99368,
+        "exit_code": 0,
+        "result": "PASS_FULL_CORPUS_RESUME_OTHER_GATES_PENDING",
+        "protection": {
+          "enforced": true,
+          "pid": 99368,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": false,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "command": [
+            "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+            "-u",
+            "scripts/workbuddy_import_resume_probe.py",
+            "--exe",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+            "--expected-sha256",
+            "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+            "--records",
+            "1000000",
+            "--layout",
+            "single",
+            "--stop-mode",
+            "kill",
+            "--output",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/single-kill"
+          ],
+          "monotonic_ns": "384352500657916",
+          "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+        },
+        "report_sha256": "e1edf99eb06034a3a3f75b2d8c84cde1ad426d8ce6d9371e533f540b8ab2f589",
+        "ended_at": 1792324548.361517,
+        "cleanup": {
+          "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-ycvvh_3c",
+          "removed": true,
+          "released_allocated_bytes": 0,
+          "retained_temp_bytes": 0,
+          "system_free_bytes": 51396837376
+        }
+      },
+      {
+        "name": "many-graceful",
+        "state": "PASS",
+        "started_at": 1792324548.3716328,
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+          "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+          "scripts/workbuddy_import_ui_sandbox.py",
+          "--attest-file",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/many-graceful-protection.json",
+          "--allowed-root",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-s4dr4gc0",
+          "--",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "-u",
+          "scripts/workbuddy_import_resume_probe.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+          "--expected-sha256",
+          "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+          "--records",
+          "1000000",
+          "--layout",
+          "many",
+          "--stop-mode",
+          "graceful",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/many-graceful"
+        ],
+        "script_sha256": "e3323c55a009a269bdd44d636d5b6b414d5593c7f000b866853c2a1afcd91010",
+        "guard_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-s4dr4gc0",
+        "pid": 2823,
+        "exit_code": 0,
+        "result": "PASS_FULL_CORPUS_RESUME_OTHER_GATES_PENDING",
+        "protection": {
+          "enforced": true,
+          "pid": 2823,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": false,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "command": [
+            "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+            "-u",
+            "scripts/workbuddy_import_resume_probe.py",
+            "--exe",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+            "--expected-sha256",
+            "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+            "--records",
+            "1000000",
+            "--layout",
+            "many",
+            "--stop-mode",
+            "graceful",
+            "--output",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/many-graceful"
+          ],
+          "monotonic_ns": "384971444881166",
+          "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+        },
+        "report_sha256": "79ac511cdd00ccae49599ba1eb61fdd69ad246ee461e11c1f465a4110ac97a6b",
+        "ended_at": 1792324927.686921,
+        "cleanup": {
+          "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-s4dr4gc0",
+          "removed": true,
+          "released_allocated_bytes": 0,
+          "retained_temp_bytes": 0,
+          "system_free_bytes": 51391148032
+        }
+      },
+      {
+        "name": "many-kill",
+        "state": "PASS",
+        "started_at": 1792324927.735069,
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/source-protection.sb",
+          "/Users/glory/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/bin/python3.12",
+          "scripts/workbuddy_import_ui_sandbox.py",
+          "--attest-file",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/many-kill-protection.json",
+          "--allowed-root",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-bqrzfwnr",
+          "--",
+          "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+          "-u",
+          "scripts/workbuddy_import_resume_probe.py",
+          "--exe",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+          "--expected-sha256",
+          "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+          "--records",
+          "1000000",
+          "--layout",
+          "many",
+          "--stop-mode",
+          "kill",
+          "--output",
+          "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/many-kill"
+        ],
+        "script_sha256": "e3323c55a009a269bdd44d636d5b6b414d5593c7f000b866853c2a1afcd91010",
+        "guard_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-bqrzfwnr",
+        "pid": 4699,
+        "exit_code": 0,
+        "result": "PASS_FULL_CORPUS_RESUME_OTHER_GATES_PENDING",
+        "protection": {
+          "enforced": true,
+          "pid": 4699,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": false,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "command": [
+            "/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/package-venv/bin/python",
+            "-u",
+            "scripts/workbuddy_import_resume_probe.py",
+            "--exe",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+            "--expected-sha256",
+            "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+            "--records",
+            "1000000",
+            "--layout",
+            "many",
+            "--stop-mode",
+            "kill",
+            "--output",
+            "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-full-resume-v2/many-kill"
+          ],
+          "monotonic_ns": "385350776541458",
+          "script_sha256": "ea629e804753bfdf425791ca9ff076f54ae0d89c84b467660637ac549bb2e257"
+        },
+        "report_sha256": "42126097a4de718b6a284a78b6703f91930735fbdd8eff82f46bba378d61e6c2",
+        "ended_at": 1792325333.6472378,
+        "cleanup": {
+          "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-full-resume-guard-bqrzfwnr",
+          "removed": true,
+          "released_allocated_bytes": 0,
+          "retained_temp_bytes": 0,
+          "system_free_bytes": 51385835520
+        }
+      }
+    ],
+    "probe_source_sha256": "e3323c55a009a269bdd44d636d5b6b414d5593c7f000b866853c2a1afcd91010",
+    "measurement_scope": "Real cold-start negative control, fresh-clock early seek/EOF-skip witness, and remaining-suffix plus bounded per-batch64KiB prefetch; raw read counts retained. Prior v1 shortcut failure preserved.",
+    "ended_at": 1792325333.6478238
+  },
+  "final_delivery": {
+    "coordinator": "dist/workbuddy-import-review/mapped-reader-final-delivery-v3-coordinator.json",
+    "state": "PASS_BOTH_PRIVATE_IMAGES_AND_ROOT_CLOSEOUT",
+    "live_pid": 2783,
+    "root_closeout_verifier": "dist/workbuddy-import-review/verify_mapped_reader_final_closeout.py"
+  },
+  "observed_limits": "evidence/R09-20261018-MAPPED-READER-OBSERVED-LIMITS.json",
+  "latest_contract_source_trace": "evidence/R09-20261018-MAPPED-READER-LATEST-CONTRACT-TRACE.json",
+  "final_audits": {
+    "ac": "evidence/R09-20261018-MAPPED-READER-FINAL-AC-AUDIT.json",
+    "x": "evidence/R09-20261018-MAPPED-READER-FINAL-X-AUDIT.json",
+    "ac_counts": {
+      "PASS": 79,
+      "BLOCKED_EXTERNAL": 1
+    },
+    "x_counts": {
+      "PASS": 47
+    }
+  },
+  "handoff": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-final-delivery-v3/HANDOFF.md",
+  "final_closeout": {
+    "report": "evidence/R09-20261018-MAPPED-READER-FINAL-CLOSEOUT.json",
+    "sha256": "5ed0990b26c5a1d52586b0fb1fac4cf1f369898380e45d5d6a5068e95b1874fb",
+    "execution_receipt": "evidence/R09-20261018-MAPPED-READER-FINAL-CLOSEOUT-EXECUTION.json",
+    "result": "PASS_COMPLETE_REQUESTED_LOCAL_SCOPE_EXTERNAL_LIMITS_EXPLICIT",
+    "passed_checks": 480
+  },
+  "goal_completion_record": {
+    "status": "complete",
+    "tokens_used": 4861828,
+    "time_used_seconds": 29527,
+    "unbudgeted": true,
+    "scope": "Requested local implementation/acceptance and explicit external-boundary handoff; no install/publish/commit claim."
+  },
+  "post_acceptance_feedback": {
+    "status": "CLOSED_VERIFIED_AND_INSTALLED_LOCALLY",
+    "latest_requirement": "Only builtin/custom model categories. Duplicate native/log calls prefer the native proxy fact using exact session/message hashes.",
+    "real_restored_custom": 92,
+    "original_builtin_preserved": 49,
+    "database_total": 141,
+    "restored_tokens": 5239250,
+    "custom_credit": "unknown; not fabricated",
+    "tests": {
+      "core": 551,
+      "ui": 137
+    },
+    "real_ui_verified_at": [
+      1440,
+      900
+    ],
+    "closeout": "evidence/POST-ACCEPTANCE-20261019-TWO-MODEL-CLOSEOUT.json",
+    "local_install": "paired tested code installed with consistent private DB/app backup; no public release",
+    "cleanup": {
+      "temporary_residual_bytes": 0,
+      "system_free_bytes": 50931400704
+    }
+  }
+}

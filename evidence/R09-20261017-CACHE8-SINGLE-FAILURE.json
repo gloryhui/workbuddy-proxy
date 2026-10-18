@@ -1,0 +1,13 @@
+{
+  "result": "FAIL_UNCHANGED_600_SECONDS_BACKFILL_GATE",
+  "core_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+  "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-single/trial-1/report.json",
+  "run_log": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache8-telemetry-matrix/1000000-single/trial-1/run.log",
+  "snapshot_imported_facts": 871552,
+  "snapshot_proxy_facts": 408,
+  "checkpoint_offset": 936046848,
+  "source_size": 1074000000,
+  "source_error": null,
+  "preserved_failed_attempt": true,
+  "new_candidate": "Five hot SQL statements use bounded connection prepare_cached; source changed, build and runtime pending. No previous binary acceptance transferred."
+}

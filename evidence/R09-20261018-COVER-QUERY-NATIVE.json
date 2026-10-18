@@ -1,0 +1,334 @@
+{
+  "at": 1792298491.237398,
+  "result": "BLOCKED_EXTERNAL_MAC_LOCKED",
+  "core_sha256": "810fbe7d5c54e033142b5f425e56661f6064c208860eb58664ab58f150a498f8",
+  "ui_input_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "fixture_ready": true,
+  "actual_pid_protection": {
+    "69021": {
+      "kind": "core",
+      "enforced": true,
+      "pid": 69021,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": false,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    },
+    "69072": {
+      "kind": "ui",
+      "enforced": true,
+      "pid": 69072,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": false,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    }
+  },
+  "input_code_identity": {
+    "source": {
+      "sha256": "ca8a98dc04b8468b2617650bbb6a2a0a1b31a4091b7f8e8c14971a13ae7d9e08",
+      "load_commands_end": 4616,
+      "signature_offset": 14661360,
+      "signature_bytes": 114720,
+      "signature_command": 4600,
+      "normalized_bytes": 14661357,
+      "masked_fields": [
+        [
+          2432,
+          8
+        ],
+        [
+          2448,
+          8
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          4600,
+          16
+        ]
+      ],
+      "code_probe_offset": 4696
+    },
+    "runtime": {
+      "sha256": "ca8a98dc04b8468b2617650bbb6a2a0a1b31a4091b7f8e8c14971a13ae7d9e08",
+      "load_commands_end": 4616,
+      "signature_offset": 14661360,
+      "signature_bytes": 132864,
+      "signature_command": 4600,
+      "normalized_bytes": 14661357,
+      "masked_fields": [
+        [
+          2432,
+          8
+        ],
+        [
+          2448,
+          8
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          4600,
+          16
+        ]
+      ],
+      "code_probe_offset": 4696
+    },
+    "normalized_code_equal": true,
+    "code_mutation_detected": true,
+    "signature_only_mutation_ignored": true,
+    "input_ui_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+    "runtime_ui_sha256": "8a110f5bdf480450f0058e0552abfc212271e18c67a3e0e70e122cc9baf6e120",
+    "comparison_copies_created": false,
+    "comparison_copies_removed": true,
+    "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+  },
+  "blocker": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/native-input-blocker.json",
+  "native_actions_sent": false,
+  "screenshots_verified": 0,
+  "all_owned_processes_stopped": true,
+  "real_profiles_unchanged": true,
+  "temporary_cleanup": {
+    "paths": [
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/home",
+        "removed": true,
+        "allocated_bytes": 16384
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/config",
+        "removed": true,
+        "allocated_bytes": 1175552
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/review-core",
+        "removed": true,
+        "allocated_bytes": 8429568
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/WorkBuddy Proxy Review.app",
+        "removed": true,
+        "allocated_bytes": 14802944
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/source-guard.dylib",
+        "removed": true,
+        "allocated_bytes": 36864
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/tmp",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/appdata",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/localappdata",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/xdg-cache",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/xdg-config",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/xdg-data",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/xdg-state",
+        "removed": true,
+        "allocated_bytes": 0
+      }
+    ],
+    "removed_allocated_bytes": 24461312,
+    "retained_allocated_bytes": 36864,
+    "system_free_bytes": 51571281920,
+    "external_free_bytes": 437974466560
+  },
+  "raw_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-golden-ui/coordinator-report.json",
+  "scope": "guarded new-core/UI fixture startup/identity only. No visual/interaction/actualCmdQ acceptance claim; old3d9+8f4 matrix remains old backend scope."
+}

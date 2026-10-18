@@ -1,0 +1,70 @@
+{
+  "notes": "Synthetic independent expected values; do not derive production expectations from implementation. Counts below are imported facts before lifecycle/conflict tests.",
+  "mapped_direct": [
+    "custom-local:direct/model"
+  ],
+  "mapped_proxy": [
+    "custom-local:proxy/model"
+  ],
+  "imported_entry_ids": [
+    "b1",
+    "b2",
+    "d1",
+    "b3",
+    "b4",
+    "b5"
+  ],
+  "excluded_proxy_ids": [
+    "p1"
+  ],
+  "pending_ids": [
+    "u1"
+  ],
+  "ignored_ids": [
+    "ignore1",
+    "ignore2"
+  ],
+  "duplicate_rows": 2,
+  "workbuddy_only": {
+    "record_count": 6,
+    "complete_count": 4,
+    "partial_count": 1,
+    "invalid_count": 1,
+    "input_tokens": 350,
+    "output_tokens": 60,
+    "total_tokens": 410,
+    "cache_read_tokens": 60,
+    "credit_nanos": "2130000000",
+    "credit_known_count": 3,
+    "unpriced_count": 6
+  },
+  "proxy_seed": {
+    "record_count": 1,
+    "input_tokens": 300,
+    "output_tokens": 40,
+    "total_tokens": 340,
+    "cache_read_tokens": 100,
+    "currency": "CNY",
+    "cost_nanos": "123000000",
+    "completed_count": 1
+  },
+  "all": {
+    "record_count": 7,
+    "input_tokens": 650,
+    "output_tokens": 100,
+    "total_tokens": 750,
+    "credit_nanos": "2130000000"
+  },
+  "builtin": {
+    "record_count": 5,
+    "input_tokens": 150,
+    "output_tokens": 30,
+    "total_tokens": 180
+  },
+  "supplier": {
+    "record_count": 2,
+    "input_tokens": 500,
+    "output_tokens": 70,
+    "total_tokens": 570
+  }
+}

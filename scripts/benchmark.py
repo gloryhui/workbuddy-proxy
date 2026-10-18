@@ -49,6 +49,9 @@ def mock_server(directory):
 
 def rss_kib(pid):
     import subprocess
+    if sys.platform == 'darwin':
+        from workbuddy_import_resources import usage
+        return usage(pid)[0] / 1024
     if platform.system() == 'Windows':
         import ctypes
         from ctypes import wintypes

@@ -1,0 +1,708 @@
+{
+  "at": 1792308039.1660302,
+  "scope": "Same saved676k-class synthetic snapshot and reconstructed source; diagnostic comparisons only, not phasePASS. 64MiB first import-on sampling window had OSsample overhead; remaining calls and other variants did not. Cold initial paused queries are retained, not discarded.",
+  "comparisons": [
+    {
+      "label": "64MiB_fact_only",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-query-timing-diagnostic/report.json",
+      "report_sha256": "b28e83c66bb26185a326255f9e174fe3bb7312c6a7392a0f895e55dd51f5ebd5",
+      "core_sha256": "5e4af62e86dfe371f2690083ef75c082eb2bc3a688ec887dd89859345bb9b654",
+      "query_samples": [
+        {
+          "error": "stats_query_timeout",
+          "ms": 2001.533291,
+          "ok": false,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 1255.394208,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 239.524833,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 233.168625,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 237.241875,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "error": "stats_query_timeout",
+          "ms": 2000.804833,
+          "ok": false,
+          "phase": "import_on"
+        },
+        {
+          "count": 681291,
+          "ms": 1369.623917,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682243,
+          "ms": 419.657667,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 683427,
+          "ms": 559.911333,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 683891,
+          "ms": 1901.436125,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 685075,
+          "ms": 278.547875,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 686155,
+          "ms": 282.856834,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687467,
+          "ms": 331.14575,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687803,
+          "ms": 2089.339792,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 688859,
+          "ms": 658.620584,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 689811,
+          "ms": 424.010583,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 691019,
+          "ms": 1183.741833,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 691739,
+          "ms": 1127.518042,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 692923,
+          "ms": 360.410667,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 694107,
+          "ms": 302.48925,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 695547,
+          "ms": 2201.190458,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 696627,
+          "ms": 1840.557458,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 696627,
+          "ms": 243.6905,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 696627,
+          "ms": 241.66675,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 696627,
+          "ms": 243.514291,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 696627,
+          "ms": 243.511125,
+          "ok": true,
+          "phase": "after_import_paused"
+        }
+      ],
+      "import_on_count": 16,
+      "import_on_errors": 1,
+      "import_on_max_ms": 2201.190458,
+      "batch_max_us": 1303007,
+      "cleanup": {
+        "core_stopped": true,
+        "removed": true,
+        "removed_logical_bytes": 2480626940,
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-guarded-concurrent-diagnostic-4vfygagk/tmp/workbuddy-fact-handoff-diagnostic-djr2i_u5",
+        "system_free_bytes": 51549343744
+      }
+    },
+    {
+      "label": "4MiB_fact_only",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-checkpoint4m-diagnostic/report.json",
+      "report_sha256": "bf854260d22c2f90ede04ca0f518a6a5ab0069ea84291a5e6f3d01cd9a207d50",
+      "core_sha256": "3de0403b9c0bd7b6f3c8ed7808459863632bb07323814801bdd50450922edad6",
+      "query_samples": [
+        {
+          "error": "stats_query_timeout",
+          "ms": 2001.488375,
+          "ok": false,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 878.151458,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 233.588625,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 235.799709,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 232.753334,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "error": "stats_query_timeout",
+          "ms": 2000.834542,
+          "ok": false,
+          "phase": "import_on"
+        },
+        {
+          "count": 680931,
+          "ms": 1291.800417,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 681523,
+          "ms": 427.927292,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682243,
+          "ms": 493.286916,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682939,
+          "ms": 441.858208,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 683531,
+          "ms": 290.648167,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 684251,
+          "ms": 806.865417,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 684971,
+          "ms": 1397.949042,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 685563,
+          "ms": 1218.010125,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 686155,
+          "ms": 854.215458,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 686619,
+          "ms": 1061.913125,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687211,
+          "ms": 280.454792,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687803,
+          "ms": 436.008292,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 688395,
+          "ms": 288.289375,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 689091,
+          "ms": 472.558667,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 689811,
+          "ms": 1033.145166,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 690531,
+          "ms": 303.578167,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 690531,
+          "ms": 236.306375,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 690531,
+          "ms": 236.8015,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 690531,
+          "ms": 236.45025,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 690531,
+          "ms": 237.488041,
+          "ok": true,
+          "phase": "after_import_paused"
+        }
+      ],
+      "import_on_count": 16,
+      "import_on_errors": 1,
+      "import_on_max_ms": 2000.834542,
+      "batch_max_us": 270360,
+      "cleanup": {
+        "core_stopped": true,
+        "removed": true,
+        "removed_logical_bytes": 2406931531,
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-guarded-concurrent-diagnostic-vff_ae3t/tmp/workbuddy-fact-handoff-diagnostic-m9leb2ya",
+        "system_free_bytes": 51547983872
+      }
+    },
+    {
+      "label": "4MiB_all_writes",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-all-write-handoff-diagnostic/report.json",
+      "report_sha256": "322e2b75408c33c82313ea1ce13928192dc4e582241af9f9935707f6038cbe6c",
+      "core_sha256": "355c14230fd7c5425c97a3ab7f2845f1a3fed737ae996fa68dcec179deee15aa",
+      "query_samples": [
+        {
+          "error": "stats_query_timeout",
+          "ms": 2001.30525,
+          "ok": false,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 1078.017459,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 213.473084,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 210.204167,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 212.511542,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "error": "stats_query_timeout",
+          "ms": 2000.664334,
+          "ok": false,
+          "phase": "import_on"
+        },
+        {
+          "count": 680931,
+          "ms": 976.463,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 681523,
+          "ms": 278.916041,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682243,
+          "ms": 324.022834,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682707,
+          "ms": 249.554417,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 683067,
+          "ms": 239.238542,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 683763,
+          "ms": 241.686833,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 684379,
+          "ms": 1727.016625,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 684843,
+          "ms": 295.277875,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 685435,
+          "ms": 631.445458,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 685923,
+          "ms": 755.410125,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 686387,
+          "ms": 263.6095,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 686875,
+          "ms": 258.148167,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687467,
+          "ms": 274.898625,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 688163,
+          "ms": 1545.243584,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 688499,
+          "ms": 909.667667,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 688859,
+          "ms": 237.2305,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 688859,
+          "ms": 216.314,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 688859,
+          "ms": 217.181166,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 688859,
+          "ms": 218.498166,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 688859,
+          "ms": 215.503583,
+          "ok": true,
+          "phase": "after_import_paused"
+        }
+      ],
+      "import_on_count": 16,
+      "import_on_errors": 1,
+      "import_on_max_ms": 2000.664334,
+      "batch_max_us": 395064,
+      "cleanup": {
+        "core_stopped": true,
+        "removed": true,
+        "removed_logical_bytes": 2402834097,
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-guarded-concurrent-diagnostic-istwhllf/tmp/workbuddy-fact-handoff-diagnostic-_j0jfuum",
+        "system_free_bytes": 51563081728
+      }
+    },
+    {
+      "label": "4MiB_all_writes_mmap",
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-diagnostic/report.json",
+      "report_sha256": "1fac0c7f2b87eb8d2380ed8ea7062d4dde816c8ba50fc56846cf2691a98ecf06",
+      "core_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+      "query_samples": [
+        {
+          "error": "stats_query_timeout",
+          "ms": 2001.711417,
+          "ok": false,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 1384.03975,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 223.150458,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 218.55275,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 218.691,
+          "ok": true,
+          "phase": "before_import_paused"
+        },
+        {
+          "count": 680315,
+          "ms": 232.313625,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 680907,
+          "ms": 292.71675,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 681475,
+          "ms": 250.078167,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682067,
+          "ms": 253.17125,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682531,
+          "ms": 232.148041,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 682995,
+          "ms": 271.821375,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 683459,
+          "ms": 236.897167,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 684027,
+          "ms": 332.23575,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 684491,
+          "ms": 244.524625,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 684955,
+          "ms": 252.855334,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 685419,
+          "ms": 272.260375,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 685779,
+          "ms": 247.122916,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 686115,
+          "ms": 248.239,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 686579,
+          "ms": 255.728583,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687043,
+          "ms": 263.33575,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687403,
+          "ms": 278.781167,
+          "ok": true,
+          "phase": "import_on"
+        },
+        {
+          "count": 687635,
+          "ms": 232.85875,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 687635,
+          "ms": 221.8315,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 687635,
+          "ms": 224.818667,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 687635,
+          "ms": 223.603584,
+          "ok": true,
+          "phase": "after_import_paused"
+        },
+        {
+          "count": 687635,
+          "ms": 228.472458,
+          "ok": true,
+          "phase": "after_import_paused"
+        }
+      ],
+      "import_on_count": 16,
+      "import_on_errors": 0,
+      "import_on_max_ms": 332.23575,
+      "batch_max_us": 411780,
+      "cleanup": {
+        "core_stopped": true,
+        "removed": true,
+        "removed_logical_bytes": 2400548671,
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-guarded-concurrent-diagnostic-sj7edjnf/tmp/workbuddy-fact-handoff-diagnostic-m7oytjop",
+        "system_free_bytes": 51571179520
+      }
+    }
+  ],
+  "mapped_virtual_memory_proof": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-diagnostic/vmmap.txt",
+  "mapped_memory_scope": "vmmap captured mapped-file1.2GiB virtual/273.1MiB resident at paused diagnostic moment; not import-only worker RSS."
+}

@@ -1,0 +1,49 @@
+{
+  "at": 1792308039.152582,
+  "core": {
+    "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/workbuddy-proxy",
+    "sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90"
+  },
+  "result": "PASS_CORE_MAPPED_READER_BUILD_RUNTIME_PENDING",
+  "core_tests": 553,
+  "original545_named_tests_preserved": true,
+  "guard_regression_scope": "Own later regression now requires all import SQL, including metadata, to wait for active report; discovery/facts resume after release. User10s/500ms/time/row budgets unchanged.",
+  "mmap_wal_freshness_test": "stats::store::tests::bounded_report_page_cache_keeps_wal_snapshots_fresh_and_reader_read_only",
+  "source_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-build/report.json",
+  "steps": [
+    {
+      "name": "core-fmt",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-tests",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "9c4241ffb93ef7094c0b16a850eec618252d1307e138dc1c14cb2395d4530f01"
+    },
+    {
+      "name": "core-clippy",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "115c6e69ff6eec52ee6bb81533b7e16b63ab5b73ac6734d12c5b2931bdbb1591"
+    },
+    {
+      "name": "core-release",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "cc83295380fb457f7b3bb25198dea05903d39db45bf8e5eb4487913a237cdeb2"
+    }
+  ],
+  "cleanup": {
+    "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/progress-build-7ovm2s1s",
+    "remaining_processes": [],
+    "lsof_exit": 1,
+    "removed": true,
+    "released_bytes": 4096,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51562328064,
+    "external_free_bytes": 432698437632
+  }
+}

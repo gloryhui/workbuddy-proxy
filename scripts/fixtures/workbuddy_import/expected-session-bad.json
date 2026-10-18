@@ -1,0 +1,44 @@
+{
+  "fixture": "session-bad.jsonl",
+  "purpose": "Malformed and unsupported lines must be diagnosed with a fixed reason while later valid lines still import (ACCEPTANCE X12, DATA-API section 1).",
+  "synthetic": true,
+  "expectation_source": "hand-computed from the seven fixture lines; not produced by the importer under test",
+  "line_plan": [
+    {"line": 1, "case": "json_syntax_error", "detail": "truncated object, still a complete newline-terminated line"},
+    {"line": 2, "case": "valid", "entry": "good1"},
+    {"line": 3, "case": "malformed", "detail": "sessionId session-other does not match the file stem session-bad"},
+    {"line": 4, "case": "pending_identity", "detail": "providerData.messageId absent; no usage row and no ledger row"},
+    {"line": 5, "case": "invalid_timestamp", "detail": "timestamp is the string not-a-number"},
+    {"line": 6, "case": "pending_classification", "detail": "messageId present but requestModelId absent"},
+    {"line": 7, "case": "valid", "entry": "good2"}
+  ],
+  "imported": {
+    "entry_ids": ["good1", "good2"],
+    "record_count": 2,
+    "complete_count": 2,
+    "partial_count": 0,
+    "invalid_count": 0,
+    "input_tokens": 30,
+    "output_tokens": 15,
+    "total_tokens": 45,
+    "credit_nanos": "250000000",
+    "credit_known_count": 1
+  },
+  "pending_classification": {
+    "count": 1,
+    "entry_ids": ["nomodel1"],
+    "requested_model": null
+  },
+  "diagnostic_counts": {
+    "json_syntax_error": 1,
+    "malformed": 1,
+    "pending_identity": 1,
+    "invalid_timestamp": 1
+  },
+  "duplicate_rows": 0,
+  "conflict_rows": 0,
+  "excluded_proxy_ids": [],
+  "ignored_ids": [],
+  "ledger_rows": 3,
+  "ledger_note": "two imported entries plus one pending_classification candidate; malformed, pending_identity and invalid_timestamp lines create no ledger row"
+}

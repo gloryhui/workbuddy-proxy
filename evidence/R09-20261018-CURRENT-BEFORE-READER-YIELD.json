@@ -1,0 +1,434 @@
+{
+  "at": 1792298974.932798,
+  "goal": "ACTIVE",
+  "head": "6102b779871bab0bb8ad646dac5004892adf76be",
+  "current_core_sha256": "810fbe7d5c54e033142b5f425e56661f6064c208860eb58664ab58f150a498f8",
+  "ui_input_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "user_contract_revision_20261018": {
+    "authority": "Explicit user instruction in this chat: history import may run in background, software remains usable, display committed portion, retain normal future incremental sync. UI uses current remote resolution.",
+    "acceptance_file": "docs/workbuddy-import/ACCEPTANCE.md",
+    "historical_backfill_600s_business_gate": "removed by explicit user requirement; elapsed time remains measured",
+    "still_required": [
+      "nonblocking startup/UI/proxy and query",
+      "committed partial statistics visible with backlog status",
+      "fixed5s sync and ordinary increments<=10s",
+      "accurate final facts/tokens/credits/deduplication",
+      "durable checkpoints and bounded stop/restart",
+      "bounded resources and responsiveness",
+      "current remote resolution native UI evidence"
+    ],
+    "previous_failure_scope": "Original600s-gate report remains FAIL under old contract. No automatic new-contract PASS; scripts still need adaptation and actual new-contract evidence.",
+    "next_work_before_more_scale_runs": "Adapt measurement and aggregator to separate an incomplete healthy background observation from genuine failure; verify availability/partial visibility/increment priority during backlog and resume correctness.",
+    "goal_remains_paused": true,
+    "new_tests_started": false,
+    "progress_ui_requirement": {
+      "authority": "User explicitly requests progress bar plus remaining quantity for background import on slower/non-SSD machines.",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "present_backend_fields": [
+        "imported record count",
+        "files_pending",
+        "bytes_processed"
+      ],
+      "missing": [
+        "actual UI progress bar",
+        "known total data amount for byte progress"
+      ],
+      "required_states": [
+        "discovering/total unknown",
+        "backfilling progress with explicit remaining unit",
+        "paused/error/retry",
+        "caught up, continuing5s incremental sync"
+      ],
+      "io_boundary": "UI polls status only; no source scans from refresh; avoid pre-counting whole JSONL without agreed I/O tradeoff.",
+      "quantity_unit": "CONFIRMED_BY_USER:remaining files and data bytes; show imported record count separately",
+      "goal_remains_paused": true,
+      "progress_basis": "Committed bytes against observed bytes of discovered files; unknown total while discovery is incomplete",
+      "extra_full_record_count_scan": false,
+      "user_choice_recorded_at": 1792288467.6509628
+    }
+  },
+  "current_code_change": "Existing covering index selected for unfiltered imported dashboard aggregates; no changed query/time/row budgets or schema/index definitions. Checkpoint progress API/UI unchanged.",
+  "remaining": [
+    "new-core full12-phase performance matrix, cross-scale resource/1M queries/300s idle",
+    "new-core status polling against complete1M snapshot",
+    "current core/UI native paired acceptance at remote resolution; last Mac lock blocks actual actions",
+    "final80AC/47X evidence audit and refreshed private package docs; external limits explicit"
+  ],
+  "external_boundaries": [
+    "Linux/Windows execution and Windows GUI unavailable locally",
+    "physical Intel hardware and installation not covered",
+    "OS DMG mount permission denied; archive payload checks do not assert mount success"
+  ],
+  "storage": {
+    "temp_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3",
+    "core_cargo_target": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target",
+    "gpui_cargo_target": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target",
+    "latest_completed_round": "resident CmdQ v2 aborted safely after CUA reported Mac locked",
+    "released_allocated_bytes": 34648064,
+    "retained_temp_bytes_this_round": 0,
+    "system_free_bytes": 51532275712,
+    "external_free_bytes": 436757028864,
+    "unknown_system_temp": "4002 previous project-prefix entries preserved; ownership not established",
+    "completed_rounds_released_allocated_bytes": 140357632,
+    "completed_rounds_retained_temp_bytes": 0,
+    "active_matrix_and_package_tool_allocated_bytes": 387264512,
+    "matrix_phase_removed_logical_bytes": 0,
+    "matrix_phase_retained_evidence_bytes": 0,
+    "failed_million_phase_root_removed": true,
+    "failed_million_phase_removed_logical_bytes": 4928086464,
+    "failed_million_phase_retained_evidence_bytes": 590150112,
+    "completed_new_core_group_roots_removed": 26,
+    "completed_new_core_group_retained_temp_bytes": 0,
+    "latest_native_removed_allocated_bytes": 24461312,
+    "latest_native_retained_report_allocated_bytes": 36864,
+    "latest_native_temp_paths_remaining_bytes": 0
+  },
+  "git": "no commit, push, merge, release, version or dependency change",
+  "prior_snapshot": "evidence/R09-20261018-CURRENT-BEFORE-PLATFORM.json",
+  "scope_note": "Current810f candidate build passed only. Old3d9 and x64 source-family results retained under prior checkpoint; they are not promoted to new core. No source/data/real-app changes outside authorized scope.",
+  "pending_large_filecount_probe": {
+    "script": "scripts/workbuddy_import_rotation_probe.py",
+    "coordinator": "dist/workbuddy-import-review/cover-query-macos-x64-coordinator.json",
+    "state": "PASS_ARM_AND_X64_NEW_SOURCE",
+    "reason": "original independent R03 asks >1000, scale corpus is exactly1000; do not substitute file counts",
+    "arm_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-local-gates/rotation1137/report.json",
+    "arm_coordinator": "dist/workbuddy-import-review/cover-query-local-gates-coordinator.json",
+    "x64_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-macos-x64/rotation1137/report.json"
+  },
+  "candidate_under_validation": {
+    "state": "540_AND_26_GROUPS_AND_X64_RUNTIME_PASS_TARGET_1M_RUNNING",
+    "build_coordinator": "dist/workbuddy-import-review/cover-query-build-coordinator.json",
+    "change": "Use existing covering index for imported dashboard aggregates without provider/model/route filters; actual SQLite selected noncovering origin index and cold query exceeded existing2s budget. No budget/schema/dependency changes.",
+    "runtime_gates": "PASS_26_GROUPS",
+    "matrix": "requires all12 phases on new hash; old6 completed phases remain old-hash evidence",
+    "core_sha256": "810fbe7d5c54e033142b5f425e56661f6064c208860eb58664ab58f150a498f8"
+  },
+  "prior_3d9_source_candidate_checkpoint": {
+    "verified_current_candidate": {
+      "core_unit_tests": 539,
+      "ui_unit_tests": 139,
+      "core_fmt_clippy_release": "PASS",
+      "ui_fmt_clippy_release": "PASS",
+      "core_build_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-build/report.json",
+      "ui_build_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-ui-build-v3/report.json",
+      "runtime": "PASS_25_INDEPENDENT_GROUPS",
+      "native_gui": "NOT_RUN_NEW_CANDIDATE",
+      "progress_runtime": "PASS 18 checks; 50k real source backfill interrupted/restarted, append/truncate and pending separation",
+      "progress_runtime_evidence": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-probe-v3/progress/report.json",
+      "production_edges": "PASS_65_CHECKS"
+    },
+    "serial_gates": {
+      "report": "evidence/R09-20261018-CORE-GATES.json",
+      "group_count": 25,
+      "state": "PASS",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "current_native_ui": {
+      "report": "evidence/R09-20261018-NATIVE-AUDIT.json",
+      "matrix_cases": 12,
+      "scope": "current remote window sizes, three sources and two languages; explicit locked-Mac resident CmdQ boundary",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "package": {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-package-archive-reader-v3/report.json",
+      "state": "PASS_ACTUAL_DMG_PAYLOAD_IDENTITY_AND_PROTECTED_LIFECYCLE_OS_MOUNT_SEPARATE",
+      "os_mount": "BLOCKED_EXTERNAL_PERMISSION_DENIED",
+      "installed": false,
+      "published": false,
+      "same_validator_arm_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-arm-identity-v2/report.json",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "current_macos_x64": {
+      "state": "PASS_LOCAL_MACOS_X64_ROSETTA_BUILD_TEST_ACTUAL_IMAGE_PAYLOAD_LIFECYCLE_EXTERNAL_LIMITS_RETAINED",
+      "report": "evidence/R09-20261018-MACOS-X64.json",
+      "core_sha256": "37c90f4571e7504f759950264a142a8e836854a033fc2eabfb367ef5a8b6a76d",
+      "ui_sha256": "d9d960a31c17505ccc467a658c653744c7e379bd11206eaa3d214350898e510b",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "scale_revised_contract": {
+      "contract": "2026-10-18-background-progress-resource-v2",
+      "phase_count": 12,
+      "validated_phase_count": 1,
+      "latest_pass_phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-1/report.json",
+      "state": "FAILED_OLD_CORE_QUERY_TIMEOUT_NEW_SOURCE_BUILD_PENDING",
+      "separate_worker_resource_bound": "complete import-only core RSS, conservative worker upper bound; concurrent reporting reader peak measured separately",
+      "coordinator": "dist/workbuddy-import-review/progress-resume-matrix-v2-coordinator.json",
+      "phase_report_pass_count": 6,
+      "remaining_phase_count": 6,
+      "phase_reports": [
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-many/trial-1/report.json",
+          "scale": 100000,
+          "layout": "many",
+          "trial": 1,
+          "checks_passed": 87,
+          "backfill_ms": 18794.465208,
+          "startup_ms": 234.563583,
+          "max_increment_ms": 5551.292584,
+          "query_p95_max_ms": 31.229167,
+          "worker_whole_core_rss_upper_bound_bytes": 36651008,
+          "concurrent_query_whole_core_rss_peak_bytes": 115605504,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440968028160,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-0evltq47",
+            "removed": true,
+            "removed_logical_bytes": 426659384,
+            "retained_evidence_bytes": 211583178,
+            "system_disk_available_bytes": 51639148544
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-g1phrg9r",
+            "released_logical_bytes": 335203960,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51605381120
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-many/trial-2/report.json",
+          "scale": 100000,
+          "layout": "many",
+          "trial": 2,
+          "checks_passed": 89,
+          "backfill_ms": 23719.797709,
+          "startup_ms": 335.635625,
+          "max_increment_ms": 5053.508417,
+          "query_p95_max_ms": 40.315083,
+          "worker_whole_core_rss_upper_bound_bytes": 36765696,
+          "concurrent_query_whole_core_rss_peak_bytes": 117702656,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440628396032,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-7rhfz0hb",
+            "removed": true,
+            "removed_logical_bytes": 426457720,
+            "retained_evidence_bytes": 211546780,
+            "system_disk_available_bytes": 51641978880
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-rda3it49",
+            "released_logical_bytes": 335347320,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51639119872
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-many/trial-3/report.json",
+          "scale": 100000,
+          "layout": "many",
+          "trial": 3,
+          "checks_passed": 87,
+          "backfill_ms": 18196.127083,
+          "startup_ms": 445.93875,
+          "max_increment_ms": 5102.95775,
+          "query_p95_max_ms": 30.846333,
+          "worker_whole_core_rss_upper_bound_bytes": 35733504,
+          "concurrent_query_whole_core_rss_peak_bytes": 99303424,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440405958656,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-g_xwad0g",
+            "removed": true,
+            "removed_logical_bytes": 426851968,
+            "retained_evidence_bytes": 211763395,
+            "system_disk_available_bytes": 51639873536
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-oxtafukq",
+            "released_logical_bytes": 335249016,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51641323520
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-1/report.json",
+          "scale": 100000,
+          "layout": "single",
+          "trial": 1,
+          "checks_passed": 89,
+          "backfill_ms": 23388.993583,
+          "startup_ms": 223.241208,
+          "max_increment_ms": 5626.69775,
+          "query_p95_max_ms": 33.693,
+          "worker_whole_core_rss_upper_bound_bytes": 36323328,
+          "concurrent_query_whole_core_rss_peak_bytes": 140197888,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 446526042112,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache16-wal16k-target-9xayce4r/tmp/workbuddy-scale-g4rckym6",
+            "removed": true,
+            "removed_logical_bytes": 424808648,
+            "retained_evidence_bytes": 208938623,
+            "system_disk_available_bytes": 51857682432
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache16-wal16k-target-9xayce4r/tmp/workbuddy-worker-memory-vbn6axfw",
+            "released_logical_bytes": 332340856,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51845316608
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-2/report.json",
+          "scale": 100000,
+          "layout": "single",
+          "trial": 2,
+          "checks_passed": 91,
+          "backfill_ms": 28788.553333,
+          "startup_ms": 466.451667,
+          "max_increment_ms": 5162.635916,
+          "query_p95_max_ms": 31.847709,
+          "worker_whole_core_rss_upper_bound_bytes": 37224448,
+          "concurrent_query_whole_core_rss_peak_bytes": 138674176,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 440096104448,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-afprnd38",
+            "removed": true,
+            "removed_logical_bytes": 427179136,
+            "retained_evidence_bytes": 208663636,
+            "system_disk_available_bytes": 51642011648
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-3aavptc6",
+            "released_logical_bytes": 332324472,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51638706176
+          }
+        },
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/100000-single/trial-3/report.json",
+          "scale": 100000,
+          "layout": "single",
+          "trial": 3,
+          "checks_passed": 89,
+          "backfill_ms": 23474.949792,
+          "startup_ms": 444.049333,
+          "max_increment_ms": 5136.889333,
+          "query_p95_max_ms": 35.775292,
+          "worker_whole_core_rss_upper_bound_bytes": 33849344,
+          "concurrent_query_whole_core_rss_peak_bytes": 140705792,
+          "main_cleanup": {
+            "children_stopped_before_cleanup": true,
+            "external_disk_available_bytes": 439822090240,
+            "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-scale-5urjx202",
+            "removed": true,
+            "removed_logical_bytes": 424617216,
+            "retained_evidence_bytes": 208540289,
+            "system_disk_available_bytes": 51637600256
+          },
+          "worker_cleanup": {
+            "child_stopped": true,
+            "normal_exit": true,
+            "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-wal4k-matrix-azijz6j0/tmp/workbuddy-worker-memory-whgtwkcx",
+            "released_logical_bytes": 332430968,
+            "removed": true,
+            "retained_temp_bytes": 0,
+            "system_free_bytes": 51640832000
+          }
+        }
+      ],
+      "incomplete_or_failed_phase_reports": [
+        {
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/1000000-many/trial-1/report.json",
+          "result": "FAIL"
+        }
+      ],
+      "report_count_scope": "completed current-contract tests with stopped/removed owned roots; final aggregate additionally revalidates every full SQLite snapshot and cross-scale growth",
+      "coordinator_state": "FAIL_PROGRESS_MATRIX",
+      "failure_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/1000000-many/trial-1/report.json",
+      "failure_reason": "stats_dashboard stats_query_timeout during concurrent backfill near278k imported; 1M import-only accuracy/resource probe passed separately",
+      "completed_old_hash_phase_reports": 6,
+      "new_hash_phase_pass_count": 0
+    },
+    "current_ac_audit": {
+      "path": "evidence/R09-20261018-PROGRESS-AC-AUDIT.json",
+      "counts": {
+        "PASS": 77,
+        "NOT_RUN": 2,
+        "BLOCKED_EXTERNAL": 1
+      },
+      "completion_percentage": false,
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    },
+    "current_x_audit": {
+      "path": "evidence/R09-20261018-PROGRESS-X-AUDIT.json",
+      "counts": {
+        "PASS": 47
+      },
+      "scope": "fixed X rows only; native resident quit/new indeterminate captures/full scale/external platform remain explicit",
+      "scope_after_source_change": "historical3d9 candidate or unchanged UI scope only; new core verification pending"
+    }
+  },
+  "verified_current_candidate": {
+    "core_tests": 540,
+    "core_fmt_clippy_release": "PASS",
+    "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-build/report.json",
+    "ui_tests": 139,
+    "ui_scope": "unchanged8f4 ARM/d9d9 x64 bytes, prior tests retained; no UI source changes"
+  },
+  "serial_gates": {
+    "state": "PASS",
+    "required_groups": 26,
+    "coordinator": "dist/workbuddy-import-review/cover-query-local-gates-coordinator.json",
+    "group_count": 26,
+    "report": "evidence/R09-20261018-COVER-QUERY-CORE-GATES.json"
+  },
+  "scale_revised_contract": {
+    "state": "FAIL_TARGET_PHASE",
+    "contract": "2026-10-18-background-progress-resource-v2",
+    "phase_count": 12,
+    "validated_phase_count": 0,
+    "coordinator": "dist/workbuddy-import-review/cover-query-matrix-coordinator.json",
+    "prior_failure": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-matrix-v2/1000000-many/trial-1/report.json",
+    "target_first_coordinator": "dist/workbuddy-import-review/cover-query-target-phase-coordinator.json",
+    "phase_report_pass_count": 0,
+    "remaining_phase_count": 12,
+    "phase_reports": [],
+    "incomplete_or_failed_phase_reports": [
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-cover-query-matrix/1000000-many/trial-1/report.json",
+        "result": "FAIL"
+      }
+    ],
+    "report_count_scope": "completed current-contract tests with stopped/removed owned roots; final aggregate additionally revalidates every full SQLite snapshot and cross-scale growth",
+    "coordinator_state": "FAIL_TARGET_PHASE"
+  },
+  "current_native_ui": {
+    "state": "BLOCKED_EXTERNAL_MAC_LOCKED",
+    "ui_input_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+    "unchanged_ui_visual_evidence": "evidence/R09-20261018-NATIVE-AUDIT.json",
+    "old_backend_source_candidate": "3d9e774e19773c9245d35527109aa65390bfa71947e9570ff76eb53052cba3d9",
+    "blocker": "Mac locked at last actual CUA attempt; no automatic transfer of old backend runtime acceptance",
+    "report": "evidence/R09-20261018-COVER-QUERY-NATIVE.json",
+    "native_actions_sent": false
+  },
+  "current_macos_x64": {
+    "state": "PASS_810F_SOURCE_X64_CORE_BUILD_RUNTIME_PRIVATE_PACKAGE_PENDING",
+    "ui_byte_identity_unchanged": true,
+    "coordinator": "dist/workbuddy-import-review/cover-query-macos-x64-coordinator.json",
+    "core_sha256": "0daf057bc5afc5d5f729d88ddb653077386329e87cc00f3ce34e337fb99f8086",
+    "ui_sha256": "d9d960a31c17505ccc467a658c653744c7e379bd11206eaa3d214350898e510b",
+    "report": "evidence/R09-20261018-COVER-QUERY-MACOS-X64.json"
+  },
+  "package": {
+    "state": "NEW_CORE_PRIVATE_PACKAGES_PENDING",
+    "installed": false,
+    "published": false
+  }
+}

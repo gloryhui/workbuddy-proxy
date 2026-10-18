@@ -1,0 +1,249 @@
+{
+  "at": 1792324622.490526,
+  "result": "PASS_FULL_12_PHASE_MATRIX",
+  "core_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+  "aggregate_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/report.json",
+  "aggregate_sha256": "e7a542221000c7389570dba1e106d7ed03c3e2c1c0c371b8a4ec3e8b6973462a",
+  "coordinator": "dist/workbuddy-import-review/mapped-reader-matrix-coordinator.json",
+  "validated_phases": 12,
+  "phases": [
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-1/report.json",
+      "sha256": "cb5453630a03e219bb6c55b7283ba202405dce8edb9acc2e2919f2d52cea25e2",
+      "checks": 93,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-1/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 110408,
+        "unique_imported_ledger": 110000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-2/report.json",
+      "sha256": "0a5a06b418ae41c93110fec04994bb9adf2e9763abe72aaf366c12043846cee3",
+      "checks": 93,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-2/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 110408,
+        "unique_imported_ledger": 110000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-3/report.json",
+      "sha256": "2d76d67c8d3e39bc06925e44e5efcbc6b1c29ffb9e4c3e8947fe7ea53c3ba8c6",
+      "checks": 93,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-3/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 110408,
+        "unique_imported_ledger": 110000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-1/report.json",
+      "sha256": "c1c13006d120a37d60fc8c7628d4a1e0480e322b8bdba521ef764b794cc79a75",
+      "checks": 99,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-1/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 110408,
+        "unique_imported_ledger": 110000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-2/report.json",
+      "sha256": "00467e50fcff300122b20dc7c4ac99ad8e5e2cd0e303860a88c860bf60c19430",
+      "checks": 99,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-2/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 110408,
+        "unique_imported_ledger": 110000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-3/report.json",
+      "sha256": "ceeb84a110ef1cbd7c64a0319d924bab91e2bff01af6833441c3d9a9daf98bee",
+      "checks": 99,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-3/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 110408,
+        "unique_imported_ledger": 110000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-1/report.json",
+      "sha256": "3db43ee6c75b7619ad6755fcfa5f28616075ded1155922c2ae74a0230746e991",
+      "checks": 257,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-1/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 1010408,
+        "unique_imported_ledger": 1010000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-2/report.json",
+      "sha256": "cfddd85ffbee69f491cea0d9219c6410707b2dde20a3d33ad543b96f2793bc26",
+      "checks": 253,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-2/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 1010408,
+        "unique_imported_ledger": 1010000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-3/report.json",
+      "sha256": "99b45deeeda7e1d26beb5c46c3e0f7c28a6deb1fa075f4e08b75412e0869d84b",
+      "checks": 257,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-3/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 1010408,
+        "unique_imported_ledger": 1010000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-1/report.json",
+      "sha256": "6b7b271fbea2755494ea12901bb69b8c2bb2013808ce35ce0fb17cc730caafc7",
+      "checks": 315,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-1/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 1010408,
+        "unique_imported_ledger": 1010000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-2/report.json",
+      "sha256": "43767399477089c81162a0cb56c3a1b354bd3bdfa3f9ca1cf0c13fe35a5bf3e2",
+      "checks": 321,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-2/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 1010408,
+        "unique_imported_ledger": 1010000,
+        "imported_money_rows": 0
+      }
+    },
+    {
+      "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-3/report.json",
+      "sha256": "894f233520b509d0bd20e9ec8a70152aa82abe7dec2f8baf02653959d5d95ded",
+      "checks": 319,
+      "result": "PHASE_PASS_GATE_INCOMPLETE",
+      "strict_snapshot": {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-3/report.json",
+        "completed_proxy_facts": 408,
+        "total_facts": 1010408,
+        "unique_imported_ledger": 1010000,
+        "imported_money_rows": 0
+      }
+    }
+  ],
+  "growth": [
+    {
+      "layout": "many",
+      "trial": 1,
+      "whole_core_peak_growth_bytes": 2457600
+    },
+    {
+      "layout": "many",
+      "trial": 2,
+      "whole_core_peak_growth_bytes": 1638400
+    },
+    {
+      "layout": "many",
+      "trial": 3,
+      "whole_core_peak_growth_bytes": 3096576
+    },
+    {
+      "layout": "single",
+      "trial": 1,
+      "whole_core_peak_growth_bytes": 655360
+    },
+    {
+      "layout": "single",
+      "trial": 2,
+      "whole_core_peak_growth_bytes": 917504
+    },
+    {
+      "layout": "single",
+      "trial": 3,
+      "whole_core_peak_growth_bytes": 917504
+    }
+  ],
+  "summary": [
+    {
+      "scale": 100000,
+      "layout": "many",
+      "backfill_ms": [
+        33535.579958,
+        33448.199875,
+        33459.730083
+      ],
+      "median_backfill_ms": 33459.730083
+    },
+    {
+      "scale": 100000,
+      "layout": "single",
+      "backfill_ms": [
+        48770.951833,
+        48688.789625,
+        48780.336708
+      ],
+      "median_backfill_ms": 48770.951833
+    },
+    {
+      "scale": 1000000,
+      "layout": "many",
+      "backfill_ms": [
+        440656.2115,
+        436210.097084,
+        446522.621541
+      ],
+      "median_backfill_ms": 440656.2115
+    },
+    {
+      "scale": 1000000,
+      "layout": "single",
+      "backfill_ms": [
+        601756.505834,
+        617569.940208,
+        612004.746166
+      ],
+      "median_backfill_ms": 612004.746166
+    }
+  ],
+  "temporary_cleanup": {
+    "guard_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-mapped-reader-matrix-uetew34n",
+    "guard_removed": true,
+    "test_input_kept_for_remaining_same_binary_phases": true,
+    "system_free_bytes": 51426865152,
+    "external_free_bytes": 419720540160
+  },
+  "scope": "Current identical core12 real phases,100k/1M single/many x3; every strict SQLite snapshot validated. Local SSD timing only, no physical HDD performance claim. Other gates have separate evidence; no600s historical import gate."
+}

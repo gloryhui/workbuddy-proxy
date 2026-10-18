@@ -1,0 +1,740 @@
+{
+  "at": 1792324427.720473,
+  "result": "OBSERVED_CURRENT_LOCAL_LIMITS_FROM_12_PASS_PHASES",
+  "core_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+  "scope": "Summary of existing actual measurements only; does not rerun tests or assert physical HDD/other-machine speed. Whole-core import-only RSS conservatively bounds worker; report/mmap RSS is separately exposed. Runtime source-thread/queue/batch counters are observed, not theoretical capacities.",
+  "maxima": {
+    "startup_ms": 705.989541,
+    "increment_visible_ms": 5042.438292,
+    "query_round_p95_ms": 356.55525,
+    "whole_core_import_only_peak_bytes": 40337408,
+    "background_report_whole_core_peak_bytes": 467042304,
+    "post_import_report_whole_core_peak_bytes": 475594752,
+    "source_io_thread_violations": 0,
+    "observed_queue_peak": 1
+  },
+  "phases": [
+    {
+      "scale": 100000,
+      "layout": "many",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-1/report.json",
+      "phase_sha256": "cb5453630a03e219bb6c55b7283ba202405dce8edb9acc2e2919f2d52cea25e2",
+      "startup_ms_with_source_present": 335.592833,
+      "background_import_ms": 33535.579958,
+      "import_only_ms": 24684.738125,
+      "whole_core_import_only_peak_bytes": 37027840,
+      "worker_extra_rss_conservative_bound_bytes": 24150016,
+      "background_report_whole_core_peak_bytes": 75055104,
+      "post_import_report_whole_core_peak_bytes": 82395136,
+      "largest_query_round_p95_ms": 37.919458,
+      "each_increment_ms": [
+        1826.440875,
+        4910.462959,
+        4715.84975,
+        4483.480959,
+        4239.740708,
+        3994.581916,
+        4952.166875,
+        4698.172583,
+        4485.444917,
+        4250.933833,
+        4012.771209,
+        4935.550125,
+        4706.126583,
+        4485.857584,
+        4211.213083,
+        4031.21225,
+        4931.742125,
+        4686.98425,
+        4452.830625,
+        4239.274
+      ],
+      "proxy_comparison": {
+        "detail": "off=51.833ms on=50.776ms increase=-1.057ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 1431,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 1080,
+      "writer_batch_max_us": 152172,
+      "idle_checks": [],
+      "query_round_count": 1,
+      "samples_per_query": [
+        3
+      ]
+    },
+    {
+      "scale": 100000,
+      "layout": "many",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-2/report.json",
+      "phase_sha256": "0a5a06b418ae41c93110fec04994bb9adf2e9763abe72aaf366c12043846cee3",
+      "startup_ms_with_source_present": 332.276708,
+      "background_import_ms": 33448.199875,
+      "import_only_ms": 24378.08075,
+      "whole_core_import_only_peak_bytes": 37584896,
+      "worker_extra_rss_conservative_bound_bytes": 25903104,
+      "background_report_whole_core_peak_bytes": 75153408,
+      "post_import_report_whole_core_peak_bytes": 82690048,
+      "largest_query_round_p95_ms": 37.049625,
+      "each_increment_ms": [
+        2019.066,
+        4877.893667,
+        4860.782959,
+        4501.012458,
+        4314.668334,
+        4052.859542,
+        5004.587,
+        4784.6885,
+        4539.935667,
+        4295.368791,
+        4074.502041,
+        4983.140958,
+        4792.226,
+        4510.069875,
+        4317.11125,
+        4069.35975,
+        4998.398084,
+        4746.273166,
+        4555.809334,
+        4306.856667
+      ],
+      "proxy_comparison": {
+        "detail": "off=52.117ms on=50.714ms increase=-1.402ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 1431,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 1080,
+      "writer_batch_max_us": 132979,
+      "idle_checks": [],
+      "query_round_count": 1,
+      "samples_per_query": [
+        3
+      ]
+    },
+    {
+      "scale": 100000,
+      "layout": "many",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-many/trial-3/report.json",
+      "phase_sha256": "2d76d67c8d3e39bc06925e44e5efcbc6b1c29ffb9e4c3e8947fe7ea53c3ba8c6",
+      "startup_ms_with_source_present": 230.93725,
+      "background_import_ms": 33459.730083,
+      "import_only_ms": 24590.647042,
+      "whole_core_import_only_peak_bytes": 37240832,
+      "worker_extra_rss_conservative_bound_bytes": 25280512,
+      "background_report_whole_core_peak_bytes": 76496896,
+      "post_import_report_whole_core_peak_bytes": 84180992,
+      "largest_query_round_p95_ms": 38.234625,
+      "each_increment_ms": [
+        1964.859375,
+        4903.681834,
+        4835.127666,
+        4505.169125,
+        4314.922209,
+        4060.766208,
+        4958.300917,
+        4664.259625,
+        4473.725542,
+        4234.8285,
+        4023.619417,
+        4952.49875,
+        4704.119125,
+        4451.7125,
+        4236.544,
+        3998.727208,
+        4949.434417,
+        4692.386125,
+        4446.910208,
+        4235.633
+      ],
+      "proxy_comparison": {
+        "detail": "off=51.983ms on=50.818ms increase=-1.164ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 1431,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 1080,
+      "writer_batch_max_us": 142164,
+      "idle_checks": [],
+      "query_round_count": 1,
+      "samples_per_query": [
+        3
+      ]
+    },
+    {
+      "scale": 100000,
+      "layout": "single",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-1/report.json",
+      "phase_sha256": "c1c13006d120a37d60fc8c7628d4a1e0480e322b8bdba521ef764b794cc79a75",
+      "startup_ms_with_source_present": 482.775958,
+      "background_import_ms": 48770.951833,
+      "import_only_ms": 35946.560708,
+      "whole_core_import_only_peak_bytes": 35831808,
+      "worker_extra_rss_conservative_bound_bytes": 23396352,
+      "background_report_whole_core_peak_bytes": 77709312,
+      "post_import_report_whole_core_peak_bytes": 79020032,
+      "largest_query_round_p95_ms": 37.288,
+      "each_increment_ms": [
+        1813.7565,
+        4973.820166,
+        4750.653333,
+        4551.958667,
+        4297.066625,
+        4054.279167,
+        4984.706583,
+        4772.928917,
+        4543.954583,
+        4293.336416,
+        4084.307583,
+        5007.1765,
+        4752.841125,
+        4545.575333,
+        4283.295583,
+        4084.998083,
+        4991.606625,
+        4751.418917,
+        4532.703708,
+        4324.419417
+      ],
+      "proxy_comparison": {
+        "detail": "off=51.990ms on=50.741ms increase=-1.249ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 952,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 862,
+      "writer_batch_max_us": 142597,
+      "idle_checks": [],
+      "query_round_count": 1,
+      "samples_per_query": [
+        3
+      ]
+    },
+    {
+      "scale": 100000,
+      "layout": "single",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-2/report.json",
+      "phase_sha256": "00467e50fcff300122b20dc7c4ac99ad8e5e2cd0e303860a88c860bf60c19430",
+      "startup_ms_with_source_present": 235.955791,
+      "background_import_ms": 48688.789625,
+      "import_only_ms": 36157.415125,
+      "whole_core_import_only_peak_bytes": 35553280,
+      "worker_extra_rss_conservative_bound_bytes": 23740416,
+      "background_report_whole_core_peak_bytes": 77250560,
+      "post_import_report_whole_core_peak_bytes": 79167488,
+      "largest_query_round_p95_ms": 37.757625,
+      "each_increment_ms": [
+        1961.613083,
+        4966.826583,
+        4773.141417,
+        4526.613709,
+        4317.682416,
+        3970.338417,
+        4918.979458,
+        4698.163709,
+        4426.355208,
+        4217.611709,
+        3999.086417,
+        4922.208708,
+        4699.265916,
+        4430.158125,
+        4225.649375,
+        3983.001583,
+        4926.118833,
+        4678.083333,
+        4473.879083,
+        4211.131792
+      ],
+      "proxy_comparison": {
+        "detail": "off=51.979ms on=50.783ms increase=-1.197ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 952,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 862,
+      "writer_batch_max_us": 149895,
+      "idle_checks": [],
+      "query_round_count": 1,
+      "samples_per_query": [
+        3
+      ]
+    },
+    {
+      "scale": 100000,
+      "layout": "single",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/100000-single/trial-3/report.json",
+      "phase_sha256": "ceeb84a110ef1cbd7c64a0319d924bab91e2bff01af6833441c3d9a9daf98bee",
+      "startup_ms_with_source_present": 231.657417,
+      "background_import_ms": 48780.336708,
+      "import_only_ms": 36154.494834,
+      "whole_core_import_only_peak_bytes": 35946496,
+      "worker_extra_rss_conservative_bound_bytes": 23478272,
+      "background_report_whole_core_peak_bytes": 77447168,
+      "post_import_report_whole_core_peak_bytes": 79134720,
+      "largest_query_round_p95_ms": 38.533708,
+      "each_increment_ms": [
+        1839.359666,
+        4976.461375,
+        4732.854792,
+        4425.646583,
+        4212.905834,
+        3998.041583,
+        4906.387125,
+        4693.455834,
+        4451.396958,
+        4213.129666,
+        3978.244625,
+        4945.331875,
+        4687.26925,
+        4430.561375,
+        4222.199667,
+        3966.88475,
+        4921.072459,
+        4695.954208,
+        4522.541542,
+        4343.5305
+      ],
+      "proxy_comparison": {
+        "detail": "off=51.892ms on=50.818ms increase=-1.075ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 952,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 862,
+      "writer_batch_max_us": 159189,
+      "idle_checks": [],
+      "query_round_count": 1,
+      "samples_per_query": [
+        3
+      ]
+    },
+    {
+      "scale": 1000000,
+      "layout": "many",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-1/report.json",
+      "phase_sha256": "3db43ee6c75b7619ad6755fcfa5f28616075ded1155922c2ae74a0230746e991",
+      "startup_ms_with_source_present": 549.667375,
+      "background_import_ms": 440656.2115,
+      "import_only_ms": 373429.790458,
+      "whole_core_import_only_peak_bytes": 39485440,
+      "worker_extra_rss_conservative_bound_bytes": 27426816,
+      "background_report_whole_core_peak_bytes": 464322560,
+      "post_import_report_whole_core_peak_bytes": 475463680,
+      "largest_query_round_p95_ms": 356.55525,
+      "each_increment_ms": [
+        2430.391917,
+        4881.64725,
+        4736.097667,
+        4579.551834,
+        4179.295333,
+        4072.076666,
+        4926.249167,
+        4608.97925,
+        4441.611666,
+        4209.539417,
+        3976.861375,
+        4924.528667,
+        4668.620792,
+        4427.540334,
+        4198.111333,
+        3983.597625,
+        4899.250875,
+        4650.336625,
+        4468.859083,
+        4156.730583
+      ],
+      "proxy_comparison": {
+        "detail": "off=47.144ms on=45.738ms increase=-1.406ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 9759,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 8080,
+      "writer_batch_max_us": 699658,
+      "idle_checks": [
+        {
+          "detail": "seconds=300 bytes_before=1492575520 bytes_after=1492575520",
+          "name": "scale: unchanged file body reads remain zero through idle window",
+          "ok": true
+        },
+        {
+          "detail": "median=0.145%",
+          "name": "scale: idle core CPU median stays below 1 percent of one core",
+          "ok": true
+        }
+      ],
+      "query_round_count": 3,
+      "samples_per_query": [
+        50
+      ]
+    },
+    {
+      "scale": 1000000,
+      "layout": "many",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-2/report.json",
+      "phase_sha256": "cfddd85ffbee69f491cea0d9219c6410707b2dde20a3d33ad543b96f2793bc26",
+      "startup_ms_with_source_present": 705.989541,
+      "background_import_ms": 436210.097084,
+      "import_only_ms": 378010.087666,
+      "whole_core_import_only_peak_bytes": 39223296,
+      "worker_extra_rss_conservative_bound_bytes": 27607040,
+      "background_report_whole_core_peak_bytes": 465174528,
+      "post_import_report_whole_core_peak_bytes": 475217920,
+      "largest_query_round_p95_ms": 346.192334,
+      "each_increment_ms": [
+        2573.829084,
+        4995.20925,
+        4687.404416,
+        4512.223166,
+        4262.8595,
+        4048.028792,
+        4988.208041,
+        4737.610333,
+        4501.430125,
+        4257.4175,
+        4055.777,
+        4979.017292,
+        4746.344584,
+        4509.847208,
+        4286.77325,
+        4032.327667,
+        4980.13475,
+        4752.337042,
+        4500.248375,
+        4269.982208
+      ],
+      "proxy_comparison": {
+        "detail": "off=51.960ms on=50.890ms increase=-1.070ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 9733,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 8080,
+      "writer_batch_max_us": 756814,
+      "idle_checks": [],
+      "query_round_count": 3,
+      "samples_per_query": [
+        50
+      ]
+    },
+    {
+      "scale": 1000000,
+      "layout": "many",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-3/report.json",
+      "phase_sha256": "99b45deeeda7e1d26beb5c46c3e0f7c28a6deb1fa075f4e08b75412e0869d84b",
+      "startup_ms_with_source_present": 465.607167,
+      "background_import_ms": 446522.621541,
+      "import_only_ms": 342499.778625,
+      "whole_core_import_only_peak_bytes": 40337408,
+      "worker_extra_rss_conservative_bound_bytes": 28409856,
+      "background_report_whole_core_peak_bytes": 467042304,
+      "post_import_report_whole_core_peak_bytes": 475594752,
+      "largest_query_round_p95_ms": 347.510833,
+      "each_increment_ms": [
+        4527.828709,
+        4895.671792,
+        4668.178791,
+        4434.489958,
+        4221.613833,
+        3984.819708,
+        4905.008625,
+        4685.817417,
+        4447.922916,
+        4202.039375,
+        3995.409,
+        4919.183458,
+        4665.211792,
+        4339.512375,
+        4185.940959,
+        3968.0575,
+        4921.441333,
+        4667.365041,
+        4431.176291,
+        4178.928875
+      ],
+      "proxy_comparison": {
+        "detail": "off=52.110ms on=50.694ms increase=-1.416ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 9783,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 8080,
+      "writer_batch_max_us": 616374,
+      "idle_checks": [],
+      "query_round_count": 3,
+      "samples_per_query": [
+        50
+      ]
+    },
+    {
+      "scale": 1000000,
+      "layout": "single",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-1/report.json",
+      "phase_sha256": "6b7b271fbea2755494ea12901bb69b8c2bb2013808ce35ce0fb17cc730caafc7",
+      "startup_ms_with_source_present": 479.343209,
+      "background_import_ms": 601756.505834,
+      "import_only_ms": 546683.769334,
+      "whole_core_import_only_peak_bytes": 36487168,
+      "worker_extra_rss_conservative_bound_bytes": 24559616,
+      "background_report_whole_core_peak_bytes": 459243520,
+      "post_import_report_whole_core_peak_bytes": 461225984,
+      "largest_query_round_p95_ms": 350.103458,
+      "each_increment_ms": [
+        2967.031542,
+        4887.303667,
+        4650.712416,
+        4420.451375,
+        4167.935,
+        3946.696375,
+        4871.717417,
+        4649.49125,
+        4422.181875,
+        4169.357292,
+        3950.994792,
+        4899.103125,
+        4628.427125,
+        4421.392958,
+        4192.769334,
+        3968.767,
+        4889.047041,
+        4641.906209,
+        4433.210958,
+        4229.122125
+      ],
+      "proxy_comparison": {
+        "detail": "off=52.110ms on=50.604ms increase=-1.506ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 8377,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 7893,
+      "writer_batch_max_us": 590045,
+      "idle_checks": [],
+      "query_round_count": 3,
+      "samples_per_query": [
+        50
+      ]
+    },
+    {
+      "scale": 1000000,
+      "layout": "single",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-2/report.json",
+      "phase_sha256": "43767399477089c81162a0cb56c3a1b354bd3bdfa3f9ca1cf0c13fe35a5bf3e2",
+      "startup_ms_with_source_present": 469.51475,
+      "background_import_ms": 617569.940208,
+      "import_only_ms": 528583.156709,
+      "whole_core_import_only_peak_bytes": 36470784,
+      "worker_extra_rss_conservative_bound_bytes": 24297472,
+      "background_report_whole_core_peak_bytes": 457408512,
+      "post_import_report_whole_core_peak_bytes": 461848576,
+      "largest_query_round_p95_ms": 350.548292,
+      "each_increment_ms": [
+        2139.449916,
+        4879.523583,
+        4615.2475,
+        4407.907417,
+        4188.834125,
+        3974.705375,
+        4864.186958,
+        4657.465083,
+        4400.336042,
+        4177.578375,
+        3961.652666,
+        5042.438292,
+        4548.761417,
+        4429.966333,
+        4163.561833,
+        3975.68325,
+        4868.022209,
+        4633.509417,
+        4424.735709,
+        4203.059958
+      ],
+      "proxy_comparison": {
+        "detail": "off=52.003ms on=50.652ms increase=-1.351ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 8386,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 7893,
+      "writer_batch_max_us": 726054,
+      "idle_checks": [],
+      "query_round_count": 3,
+      "samples_per_query": [
+        50
+      ]
+    },
+    {
+      "scale": 1000000,
+      "layout": "single",
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-single/trial-3/report.json",
+      "phase_sha256": "894f233520b509d0bd20e9ec8a70152aa82abe7dec2f8baf02653959d5d95ded",
+      "startup_ms_with_source_present": 453.2735,
+      "background_import_ms": 612004.746166,
+      "import_only_ms": 510851.024792,
+      "whole_core_import_only_peak_bytes": 36864000,
+      "worker_extra_rss_conservative_bound_bytes": 24920064,
+      "background_report_whole_core_peak_bytes": 458653696,
+      "post_import_report_whole_core_peak_bytes": 462012416,
+      "largest_query_round_p95_ms": 343.928,
+      "each_increment_ms": [
+        3293.944417,
+        4966.339833,
+        4756.652542,
+        4517.287667,
+        4258.341084,
+        4024.959917,
+        4991.069917,
+        4730.349958,
+        4512.295417,
+        4264.075292,
+        4076.150041,
+        4928.47625,
+        4752.417375,
+        4488.664583,
+        4306.766667,
+        4036.633458,
+        4980.187,
+        4731.793791,
+        4508.343167,
+        4268.706334
+      ],
+      "proxy_comparison": {
+        "detail": "off=51.905ms on=50.653ms increase=-1.252ms",
+        "name": "scale: four concurrent streams keep first-content P95 within budget",
+        "ok": true
+      },
+      "proxy_request_counts": {
+        "off": 200,
+        "on": 200
+      },
+      "source_io_thread_checks": 8381,
+      "source_io_thread_violations": 0,
+      "observed_queue_peak": 1,
+      "writer_batch_count": 7893,
+      "writer_batch_max_us": 682768,
+      "idle_checks": [],
+      "query_round_count": 3,
+      "samples_per_query": [
+        50
+      ]
+    }
+  ],
+  "growth": [
+    {
+      "layout": "many",
+      "trial": 1,
+      "whole_core_peak_growth_bytes": 2457600
+    },
+    {
+      "layout": "many",
+      "trial": 2,
+      "whole_core_peak_growth_bytes": 1638400
+    },
+    {
+      "layout": "many",
+      "trial": 3,
+      "whole_core_peak_growth_bytes": 3096576
+    },
+    {
+      "layout": "single",
+      "trial": 1,
+      "whole_core_peak_growth_bytes": 655360
+    },
+    {
+      "layout": "single",
+      "trial": 2,
+      "whole_core_peak_growth_bytes": 917504
+    },
+    {
+      "layout": "single",
+      "trial": 3,
+      "whole_core_peak_growth_bytes": 917504
+    }
+  ],
+  "idle_windows": [
+    {
+      "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-matrix/1000000-many/trial-1/report.json",
+      "seconds": 300,
+      "cpu_samples": 300,
+      "cpu_median_percent": 0.1451291201550171,
+      "body_bytes_before": 1492575520,
+      "body_bytes_after": 1492575520,
+      "scope": "one actual300s window; not12 windows"
+    }
+  ],
+  "measurement_repetitions": {
+    "scale_layout_trials": 3,
+    "million_query_rounds_per_phase": 3,
+    "million_calls_per_query_per_round": 50,
+    "100k_query_rounds_per_phase": 1,
+    "100k_calls_per_query": 3,
+    "idle300s_windows": 1
+  }
+}

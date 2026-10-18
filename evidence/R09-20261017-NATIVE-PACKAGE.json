@@ -1,0 +1,61 @@
+{
+  "result": "PASS_NATIVE_CLOSE_PRODUCTION_REOPEN_CMD_Q",
+  "host_pid": 70682,
+  "profile_before": {
+    "workbuddy_data": {
+      "mtime_ns": 1792231693515516014,
+      "size": 3328,
+      "ino": 121710119
+    },
+    "proxy_config_macos": {
+      "mtime_ns": 1792231699014450150,
+      "size": 512,
+      "ino": 156860115
+    },
+    "proxy_config_unix": null
+  },
+  "package_binary_sha256": {
+    "Contents/MacOS/workbuddy-proxy": "f2b874d05419b1433ae0efdde2600bd35c77368ea62ddc1814938f07603f9b41",
+    "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui": "6b4971cba09ca063625311bf0329d28ad6af5ff4df04f7cd13e193e1b92b2b18"
+  },
+  "helper": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/native-package-lifecycle-telemetry/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app",
+  "config": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/workbuddy-native-package-a215t9dc/config",
+  "original_package_executable_sha256": {
+    "Contents/MacOS/workbuddy-proxy": "308e7032c41e3dcf265da776639ca202606bba29ad617051cdb07fd35e7ba466",
+    "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui": "200f28d7edacfc5ba6d99632305ec185237c180b08425b1a0b269de150d35d0b"
+  },
+  "signature_stripped_code_sha256": {
+    "Contents/MacOS/workbuddy-proxy": "ae532a3d48bee44a95d156e4593f79e80b06680f2a98565154b8d11c3b2782a0",
+    "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui": "ae6a52d885b3c0435b3b35e7f34fca1a33496da35e4b1de5a22426b0ec494450"
+  },
+  "unique_bundle_identifier": "com.workbuddy.proxy.nativeqa.telemetry.t1792231737147717000.settings",
+  "gui_kernel_guard": false,
+  "scope": "unique bundle metadata QA variant of verified DMG; signature-stripped binaries byte identical; native close/Cmd+Q via CUA, production show notification reopen",
+  "core_pid": 70689,
+  "initial_ui_pid": 70690,
+  "state": "COMPLETE",
+  "native_close_observed": true,
+  "reopened_ui_pid": 71152,
+  "core_reused": true,
+  "stats_runs": [
+    [
+      1792231845893,
+      "normal"
+    ]
+  ],
+  "ended_at": 1792231845.929611,
+  "profile_after": {
+    "workbuddy_data": {
+      "mtime_ns": 1792231693515516014,
+      "size": 3328,
+      "ino": 121710119
+    },
+    "proxy_config_macos": {
+      "mtime_ns": 1792231699014450150,
+      "size": 512,
+      "ino": 156860115
+    },
+    "proxy_config_unix": null
+  },
+  "real_profiles_unchanged": true
+}

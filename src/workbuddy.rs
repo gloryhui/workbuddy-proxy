@@ -15,13 +15,18 @@ struct Document {
 }
 impl Document {
     fn read(path: &Path) -> Result<Self, String> {
-        let bytes = match fs::read(path) {
-            Ok(b) => b,
+        use std::io::Read;
+        let file = match fs::File::open(path) {
+            Ok(file) => file,
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
                 return Ok(Self { root: json!([]) });
             }
             Err(e) => return Err(e.to_string()),
         };
+        let mut bytes = Vec::new();
+        file.take(2 * 1024 * 1024 + 1)
+            .read_to_end(&mut bytes)
+            .map_err(|error| error.to_string())?;
         if bytes.len() > 2 * 1024 * 1024 {
             return Err("WorkBuddy configuration exceeds 2 MiB".into());
         }
@@ -47,6 +52,26 @@ impl Document {
         }
     }
 }
+
+/// Reads the bounded current configuration and returns non-sensitive routing
+/// evidence only. This never writes a profile or reads any transcript.
+pub(crate) fn import_observations(
+    path: &Path,
+    local_key: &str,
+    at_ms: i64,
+) -> Result<Vec<crate::stats::workbuddy_import::classify::ConfigObservation>, String> {
+    let document = Document::read(path)?;
+    let entries = document
+        .entries()
+        .ok_or("Unsupported WorkBuddy configuration format")?;
+    Ok(entries
+        .iter()
+        .map(|entry| {
+            crate::stats::workbuddy_import::classify::observe_current(entry, local_key, at_ms)
+        })
+        .filter(|observation| observation.is_usable())
+        .collect())
+}
 pub(crate) fn backup(path: &Path) -> Result<(), String> {
     if !path.exists() {
         return Ok(());
@@ -64,7 +89,60 @@ pub(crate) fn backup(path: &Path) -> Result<(), String> {
     }
     Ok(())
 }
-fn route(value: &Value) -> Option<String> {
+/// The proxy route id of a WorkBuddy entry, when it has one.
+///
+/// Non-sensitive: it reads the explicit marker or the path shape, never the
+/// key and never a display name.
+/// Hooks the sync path calls around its file mutations.
+///
+/// `prepare` runs **before the config lock is taken and before any file is
+/// written**, so an error there leaves zero WorkBuddy file changes. `finalize`
+/// runs after the files are written and after the lock is released: an error
+/// there means the sync itself succeeded but the attribution could not be
+/// confirmed, which the caller must report as such rather than as a failure.
+pub trait SyncHooks: Send + Sync {
+    /// Runs before anything is written. An error aborts with zero changes.
+    fn prepare(&self) -> Result<(), String>;
+    /// Runs after the files are written. An error means "synced, unconfirmed".
+    fn finalize(&self) -> Result<(), String>;
+}
+
+/// What a sync attempt achieved.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum SyncOutcome {
+    /// The files were written and the attribution was confirmed.
+    Confirmed(usize),
+    /// The files were written, but the attribution was not confirmed.
+    ///
+    /// This is **not** a failed sync: the WorkBuddy file already holds the new
+    /// entries, so the caller reports the partial state instead of retrying.
+    SyncedUnconfirmed { changed: usize, error: String },
+}
+
+impl SyncOutcome {
+    /// How many models were written.
+    pub fn changed(&self) -> usize {
+        match self {
+            SyncOutcome::Confirmed(count)
+            | SyncOutcome::SyncedUnconfirmed { changed: count, .. } => *count,
+        }
+    }
+
+    /// True when the attribution was confirmed.
+    pub fn is_confirmed(&self) -> bool {
+        matches!(self, SyncOutcome::Confirmed(_))
+    }
+
+    /// The fixed error code for an unconfirmed sync, if any.
+    pub fn error_code(&self) -> Option<&'static str> {
+        match self {
+            SyncOutcome::Confirmed(_) => None,
+            SyncOutcome::SyncedUnconfirmed { .. } => Some("attribution_unconfirmed"),
+        }
+    }
+}
+
+pub fn route(value: &Value) -> Option<String> {
     if let Some(id) = value
         .pointer("/_workbuddyProxy/route")
         .and_then(Value::as_str)
@@ -89,26 +167,37 @@ fn installation<'a>(current: &Value, cfg: &'a config::Config) -> Option<&'a Inst
                 && record.expected.as_ref().and_then(route) == current_route)
     })
 }
-// The marker survives reinstalling the proxy and editing the WorkBuddy entry.
-// Older versions wrote no marker: recognize their loopback endpoint plus the
-// generated 48-hex local key (or this installation's key), never the alias alone.
-fn managed_signature(current: &Value, local_key: &str) -> bool {
-    if current
+/// True when the entry carries the explicit proxy marker.
+///
+/// Non-sensitive: a boolean flag only.
+pub fn has_managed_marker(value: &Value) -> bool {
+    value
         .pointer("/_workbuddyProxy/managed")
         .and_then(Value::as_bool)
         == Some(true)
-    {
-        return true;
-    }
-    let Some(key) = current.get("apiKey").and_then(Value::as_str) else {
+}
+
+/// True when the entry declares the `Custom` vendor.
+pub fn is_custom_vendor(value: &Value) -> bool {
+    value.get("vendor").and_then(Value::as_str) == Some("Custom")
+}
+
+/// True when the entry's key is this installation's key or a generated 48-hex key.
+///
+/// Only the shape is compared: the key is never returned, logged or stored.
+pub fn looks_like_local_key(value: &Value, local_key: &str) -> bool {
+    let Some(key) = value.get("apiKey").and_then(Value::as_str) else {
         return false;
     };
-    if current.get("vendor").and_then(Value::as_str) != Some("Custom")
-        || !(key == local_key || (key.len() == 48 && key.bytes().all(|c| c.is_ascii_hexdigit())))
-    {
-        return false;
-    }
-    let Some(url) = current
+    key == local_key || (key.len() == 48 && key.bytes().all(|c| c.is_ascii_hexdigit()))
+}
+
+/// True when the entry points at a loopback endpoint with a proxy path shape.
+///
+/// The only hosts accepted are the loopback addresses themselves; nothing is
+/// guessed from a display name or an alias.
+pub fn is_loopback_endpoint(value: &Value) -> bool {
+    let Some(url) = value
         .get("url")
         .and_then(Value::as_str)
         .and_then(|s| reqwest::Url::parse(s).ok())
@@ -128,6 +217,22 @@ fn managed_signature(current: &Value, local_key: &str) -> bool {
                 .strip_prefix("/r/")
                 .and_then(|p| p.strip_suffix("/v1"))
                 .is_some_and(|id| !id.is_empty() && !id.contains('/')))
+}
+
+/// True when the entry looks like one this installation wrote.
+///
+/// The marker survives reinstalling the proxy and editing the WorkBuddy entry.
+/// Older versions wrote no marker, so their shape is recognised instead: the
+/// `Custom` vendor, a generated 48-hex key (or this installation's key) and a
+/// loopback endpoint. The alias alone is never enough.
+///
+/// This is the **only** such detector in the crate; the importer reuses it
+/// rather than growing a second one.
+pub fn managed_signature(current: &Value, local_key: &str) -> bool {
+    has_managed_marker(current)
+        || (is_custom_vendor(current)
+            && looks_like_local_key(current, local_key)
+            && is_loopback_endpoint(current))
 }
 fn managed(current: &Value, cfg: &config::Config) -> bool {
     installation(current, cfg).is_some() || managed_signature(current, &cfg.local_key)
@@ -254,7 +359,83 @@ impl Bridge {
             self.port.load(std::sync::atomic::Ordering::Relaxed),
         )
     }
-    pub fn configure_workbuddy(&self, path: &Path) -> Result<usize, String> {
+    /// The production command wrapper: durable prepare before any profile write,
+    /// then confirmation against the actual post-write document. No mutex crosses
+    /// an await and a finalize failure is reported as a successful partial sync.
+    pub(crate) async fn sync_workbuddy_with_history(
+        &self,
+        path: &Path,
+        restore: bool,
+    ) -> Result<SyncOutcome, String> {
+        use crate::stats::workbuddy_import::observation::ManagedModel;
+        let (models, local_key) = {
+            let cfg = self.config.lock().unwrap();
+            let mut plan = HashMap::new();
+            for record in &cfg.installed {
+                plan.insert(format!("custom-local:{}", record.id), None);
+            }
+            // Include legacy or orphan managed entries this operation will retire.
+            for observation in import_observations(path, &cfg.local_key, 0)? {
+                if let Some(id) = observation.model_id {
+                    plan.insert(id, None);
+                }
+            }
+            if !restore {
+                for connection in cfg
+                    .workbuddy_connections()?
+                    .into_iter()
+                    .filter(|connection| !connection.api_key.is_empty())
+                {
+                    plan.insert(
+                        format!("custom-local:{}", connection.alias),
+                        Some(connection.id),
+                    );
+                }
+            }
+            let models = plan
+                .into_iter()
+                .map(|(requested_model, route_id)| ManagedModel {
+                    requested_model,
+                    route_id,
+                })
+                .collect();
+            (models, cfg.local_key.clone())
+        };
+        let session = self.stats.prepare_workbuddy_sync(models).await?;
+        let outcome = if restore {
+            self.restore_workbuddy(path)?;
+            SyncOutcome::Confirmed(0)
+        } else {
+            self.configure_workbuddy(path, None)?
+        };
+        let confirmed = match import_observations(path, &local_key, crate::stats::now_ms()) {
+            Ok(observations) => self
+                .stats
+                .finish_workbuddy_sync(&session, observations)
+                .await
+                .unwrap_or(false),
+            Err(_) => false,
+        };
+        if confirmed {
+            Ok(outcome)
+        } else {
+            Ok(SyncOutcome::SyncedUnconfirmed {
+                changed: outcome.changed(),
+                error: "attribution_unconfirmed".into(),
+            })
+        }
+    }
+
+    pub fn configure_workbuddy(
+        &self,
+        path: &Path,
+        hooks: Option<&dyn SyncHooks>,
+    ) -> Result<SyncOutcome, String> {
+        // Prepare before the lock is taken and before any file is touched: an
+        // error here must leave the WorkBuddy file exactly as it was.
+        if let Some(hooks) = hooks {
+            hooks.prepare()?;
+        }
         let mut cfg = self.config.lock().unwrap();
         let mut d = Document::read(path)?;
         let original = d.root.clone();
@@ -378,7 +559,18 @@ impl Bridge {
         }
         let count = active.len();
         *cfg = next;
-        Ok(count)
+        // The lock is released before finalize runs, so nothing here can hold
+        // the config mutex across a later await.
+        drop(cfg);
+        if let Some(hooks) = hooks
+            && let Err(error) = hooks.finalize()
+        {
+            return Ok(SyncOutcome::SyncedUnconfirmed {
+                changed: count,
+                error,
+            });
+        }
+        Ok(SyncOutcome::Confirmed(count))
     }
     pub fn restore_workbuddy(&self, path: &Path) -> Result<(), String> {
         let mut cfg = self.config.lock().unwrap();
@@ -524,7 +716,10 @@ mod tests {
         bridge
             .port
             .store(18080, std::sync::atomic::Ordering::Relaxed);
-        assert_eq!(bridge.configure_workbuddy(&path).unwrap(), 1);
+        assert_eq!(
+            bridge.configure_workbuddy(&path, None).unwrap().changed(),
+            1
+        );
         let document = Document::read(&path).unwrap();
         let entries = document.entries().unwrap();
         assert_eq!(entries.len(), 3);
@@ -552,7 +747,7 @@ mod tests {
         };
         let backups_before = backup_count();
         let metadata = fs::metadata(&path).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(fs::read(&path).unwrap(), bytes);
         assert_eq!(backup_count(), backups_before);
         assert_eq!(
@@ -568,11 +763,11 @@ mod tests {
         // no-op too, so its watcher and byte representation both survive.
         let compact = serde_json::to_vec(&Document::read(&path).unwrap().root).unwrap();
         fs::write(&path, &compact).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(fs::read(&path).unwrap(), compact);
         assert_eq!(backup_count(), backups_before);
         bridge.config.lock().unwrap().providers[0].name = "renamed".into();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(
             Document::read(&path).unwrap().entries().unwrap()[1]["id"],
             "renamed/deepseek-v4.1-flash"
@@ -610,14 +805,14 @@ mod tests {
             .store(18080, std::sync::atomic::Ordering::Relaxed);
         let bytes = fs::read(&path).unwrap();
         let config_bytes = fs::read(dir.path().join("config.json")).unwrap();
-        assert!(bridge.configure_workbuddy(&path).is_err());
+        assert!(bridge.configure_workbuddy(&path, None).is_err());
         assert_eq!(fs::read(&path).unwrap(), bytes);
         assert_eq!(
             fs::read(dir.path().join("config.json")).unwrap(),
             config_bytes
         );
         config::write_json(&path, &json!([old])).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(
             Document::read(&path).unwrap().entries().unwrap()[0]["id"],
             "opencode/same"
@@ -625,6 +820,131 @@ mod tests {
         bridge.restore_workbuddy(&path).unwrap();
         assert!(Document::read(&path).unwrap().entries().unwrap().is_empty());
     }
+
+    /// A hook that fails at exactly one stage.
+    struct StageHook {
+        fail_at: &'static str,
+    }
+
+    impl SyncHooks for StageHook {
+        fn prepare(&self) -> Result<(), String> {
+            if self.fail_at == "prepare" {
+                return Err("prepare refused".into());
+            }
+            Ok(())
+        }
+
+        fn finalize(&self) -> Result<(), String> {
+            if self.fail_at == "finalize" {
+                return Err("finalize refused".into());
+            }
+            Ok(())
+        }
+    }
+
+    fn sync_fixture(dir: &tempfile::TempDir) -> (std::path::PathBuf, Bridge) {
+        let p = dir.path().join("models.json");
+        let old = json!({"otherField":true,"models":[{"id":"other","apiKey":"keep"}]});
+        config::write_json(&p, &old).unwrap();
+        let mut c = config::Config::default();
+        c.providers[0].upstream = "https://example.com/v1".into();
+        c.providers[0].api_key = "test-upstream".into();
+        c.providers[0]
+            .set_models("model-one | First", "default")
+            .unwrap();
+        let bridge = Bridge::new(c, dir.path().into()).unwrap();
+        bridge
+            .port
+            .store(18080, std::sync::atomic::Ordering::Relaxed);
+        (p, bridge)
+    }
+
+    #[test]
+    fn a_failed_prepare_leaves_zero_workbuddy_file_changes() {
+        // AC037: prepare runs before the config lock and before any write, so a
+        // refusal there must leave every file byte-identical.
+        let dir = tempfile::tempdir().unwrap();
+        let (p, bridge) = sync_fixture(&dir);
+        let before = fs::read(&p).unwrap();
+        let config_before = fs::read(dir.path().join("config.json")).ok();
+        let connections_before = bridge
+            .config
+            .lock()
+            .unwrap()
+            .workbuddy_connections()
+            .map(|list| list.len())
+            .unwrap_or(0);
+
+        let hook = StageHook { fail_at: "prepare" };
+        assert!(
+            bridge.configure_workbuddy(&p, Some(&hook)).is_err(),
+            "prepare must abort the sync"
+        );
+
+        assert_eq!(fs::read(&p).unwrap(), before, "zero WorkBuddy file changes");
+        assert_eq!(
+            fs::read(dir.path().join("config.json")).ok(),
+            config_before,
+            "the proxy config is untouched too, including still being absent"
+        );
+        // Nothing was committed in memory either: the connection list is
+        // exactly what it was before the refused sync.
+        let connections_after = bridge
+            .config
+            .lock()
+            .unwrap()
+            .workbuddy_connections()
+            .map(|list| list.len())
+            .unwrap_or(0);
+        assert_eq!(
+            connections_after, connections_before,
+            "nothing was committed in memory"
+        );
+    }
+
+    #[test]
+    fn a_failed_finalize_reports_synced_but_unconfirmed() {
+        // AC037: the file really was written, so this is a partial state to
+        // report, never a failed sync to retry.
+        let dir = tempfile::tempdir().unwrap();
+        let (p, bridge) = sync_fixture(&dir);
+        let hook = StageHook {
+            fail_at: "finalize",
+        };
+        let outcome = bridge.configure_workbuddy(&p, Some(&hook)).unwrap();
+
+        assert!(!outcome.is_confirmed());
+        assert_eq!(outcome.error_code(), Some("attribution_unconfirmed"));
+        assert_eq!(outcome.changed(), 1);
+        assert_eq!(
+            Document::read(&p).unwrap().entries().unwrap().len(),
+            2,
+            "the entry really is on disk"
+        );
+        assert_eq!(
+            bridge
+                .config
+                .lock()
+                .unwrap()
+                .workbuddy_connections()
+                .unwrap()
+                .len(),
+            1,
+            "and the proxy side did commit, so a retry would not re-add it"
+        );
+    }
+
+    #[test]
+    fn a_sync_without_failures_is_confirmed() {
+        let dir = tempfile::tempdir().unwrap();
+        let (p, bridge) = sync_fixture(&dir);
+        let hook = StageHook { fail_at: "none" };
+        let outcome = bridge.configure_workbuddy(&p, Some(&hook)).unwrap();
+        assert!(outcome.is_confirmed());
+        assert_eq!(outcome.error_code(), None);
+        assert_eq!(outcome.changed(), 1);
+    }
+
     #[test]
     fn sync_multiple_preserves_unrelated_and_restores() {
         let dir = tempfile::tempdir().unwrap();
@@ -642,7 +962,7 @@ mod tests {
             .unwrap();
         let a = Bridge::new(c, dir.path().into()).unwrap();
         a.port.store(18080, std::sync::atomic::Ordering::Relaxed);
-        assert_eq!(a.configure_workbuddy(&p).unwrap(), 2);
+        assert_eq!(a.configure_workbuddy(&p, None).unwrap().changed(), 2);
         let d = Document::read(&p).unwrap();
         assert_eq!(d.entries().unwrap().len(), 3);
         assert_eq!(d.entries().unwrap()[1]["supportsReasoning"], true);
@@ -652,15 +972,15 @@ mod tests {
             d.entries().unwrap()[2]["url"]
         );
         a.config.lock().unwrap().providers[0].models.remove(0);
-        assert_eq!(a.configure_workbuddy(&p).unwrap(), 1);
+        assert_eq!(a.configure_workbuddy(&p, None).unwrap().changed(), 1);
         assert_eq!(Document::read(&p).unwrap().entries().unwrap().len(), 2);
         a.restore_workbuddy(&p).unwrap();
         assert_eq!(Document::read(&p).unwrap().root, old);
-        a.configure_workbuddy(&p).unwrap();
+        a.configure_workbuddy(&p, None).unwrap();
         let mut d = Document::read(&p).unwrap();
         d.entries_mut()[1]["name"] = json!("user edited");
         config::write_json(&p, &d.root).unwrap();
-        a.configure_workbuddy(&p).unwrap();
+        a.configure_workbuddy(&p, None).unwrap();
         let mut d = Document::read(&p).unwrap();
         assert_ne!(d.entries().unwrap()[1]["name"], "user edited");
         d.entries_mut()[1]["name"] = json!("edited again");
@@ -683,7 +1003,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("models.json");
         let bridge = Bridge::new(configured(), dir.path().into()).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         let expected = Document::read(&path).unwrap().entries().unwrap()[0].clone();
         let mut edited = expected.clone();
         // Older entries without a marker are still owned by their recorded ID.
@@ -693,13 +1013,13 @@ mod tests {
         edited["apiKey"] = json!("manual-key");
         let unrelated = json!({"id":"other","name":"keep","extra":7});
         config::write_json(&path, &json!([unrelated, edited, edited])).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(
             Document::read(&path).unwrap().root,
             json!([unrelated, expected])
         );
         config::write_json(&path, &json!([unrelated])).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(
             Document::read(&path).unwrap().root,
             json!([unrelated, expected])
@@ -707,12 +1027,12 @@ mod tests {
         config::write_json(&path, &json!([unrelated, edited, edited])).unwrap();
         bridge.restore_workbuddy(&path).unwrap();
         assert_eq!(Document::read(&path).unwrap().root, json!([unrelated]));
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         config::write_json(&path, &json!([unrelated])).unwrap();
         bridge.restore_workbuddy(&path).unwrap();
         assert_eq!(Document::read(&path).unwrap().root, json!([unrelated]));
         assert!(bridge.config.lock().unwrap().installed.is_empty());
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         fs::remove_file(&path).unwrap();
         bridge.restore_workbuddy(&path).unwrap();
         bridge.restore_workbuddy(&path).unwrap();
@@ -745,7 +1065,7 @@ mod tests {
             &json!({"extra":true,"models":[unrelated,legacy,legacy,stale]}),
         )
         .unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         let d = Document::read(&path).unwrap();
         assert_eq!(d.root["extra"], true);
         assert_eq!(d.entries().unwrap().len(), 2);
@@ -756,7 +1076,7 @@ mod tests {
             bridge.config.lock().unwrap().local_key
         );
         let bytes = fs::read(&path).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(fs::read(&path).unwrap(), bytes);
         // Cancel directly after another reinstall, with no installation history.
         let fresh = Bridge::new(configured(), dir.path().into()).unwrap();
@@ -774,7 +1094,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("models.json");
         let old = Bridge::new(configured(), dir.path().into()).unwrap();
-        old.configure_workbuddy(&path).unwrap();
+        old.configure_workbuddy(&path, None).unwrap();
         let mut edited = Document::read(&path).unwrap().entries().unwrap()[0].clone();
         edited["id"] = json!("manually-renamed");
         edited["url"] = json!("https://edited.example/v1");
@@ -782,7 +1102,7 @@ mod tests {
         edited["supportsToolCall"] = json!(false);
         let bridge = Bridge::new(configured(), dir.path().into()).unwrap();
         config::write_json(&path, &json!([edited])).unwrap();
-        bridge.configure_workbuddy(&path).unwrap();
+        bridge.configure_workbuddy(&path, None).unwrap();
         assert_eq!(Document::read(&path).unwrap().entries().unwrap().len(), 1);
         assert_eq!(
             Document::read(&path).unwrap().entries().unwrap()[0]["id"],

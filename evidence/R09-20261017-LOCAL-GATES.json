@@ -1,0 +1,2286 @@
+{
+  "result": "PASS_LOCAL_SERIAL_ATTESTED_OTHER_GATES_PENDING",
+  "core_binary_sha256": "ac03b9053930489272719d2419effee3bb18797a9331ca22deffc42019b10adf",
+  "steps": [
+    {
+      "name": "canonical-fields",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "c7c9612eaf415a90c84bdb5c3956f52b9b32299b3bb3feb28eb14bffaf06827e",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 64886,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/workbuddy_import_canonical.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+          "--output",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/canonical"
+        ],
+        "monotonic_ns": "291579558069583",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "import-integration",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "5fece0c3ae7641af4ccb404974f06417735be9d9ca77afc8ff7fcb7af8834638",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 64988,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/workbuddy_import_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+          "--output",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/integration"
+        ],
+        "monotonic_ns": "291591527977583",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": false,
+      "metadata_drift_observation": "EXTERNAL_TO_ATTESTED_EXEC_TREE"
+    },
+    {
+      "name": "os-faults",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "cf19c1c798addc0762f6eba7f633e0a19e389e287ecdc034dce3fdcc025d63c8",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 65719,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/workbuddy_import_faults.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+          "--output",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/faults"
+        ],
+        "monotonic_ns": "291697540279166",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": false,
+      "metadata_drift_observation": "EXTERNAL_TO_ATTESTED_EXEC_TREE"
+    },
+    {
+      "name": "smoke",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "07ad2128cc58114db1f44f6c050207345d273788419fb3521403b9b1a11c1043",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66370,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/smoke.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291718588758125",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "multi_routing",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "bddf82843cf3122547922aac9c1442848e0ab401429419a36f4493918b35bd39",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66376,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/multi_routing.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291719897398750",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "multimodal_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "9f81fb2847076fa83a6f2d0c5cc2eaeeb73521dbb7ad15e633fe3fafa195d6f3",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66388,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/multimodal_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291720563858500",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "model_discovery",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "7ec2eed360fa54a6813298f0d2c6e49a8790fc7271a423c3bf49dc7a916750fe",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66393,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/model_discovery.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291721338071916",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "model_capabilities_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "f57d9f90814f4214b6cfe6ca2f583911005ad21c8eb2012e24bfe15fe408cf51",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66416,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/model_capabilities_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291722546012333",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "connection_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "e15105e1b4c56756ed31c510cbedbe157bc77cc5f2f5fb24428048af21b87c77",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66424,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/connection_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291723761423875",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "port_change",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "5bc1da48dc8ec62079ebc3d2e094c475601780176397f59ba41f75b66624e470",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66429,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/port_change.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291724655658500",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "native_protocol_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "8bf1f94eb2fd2005a44c28fe3bed125ef9f336b27d5d2badb300b271e330f871",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66435,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/native_protocol_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291725502369333",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "native_discovery_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "291ce901dc16ecd1d11a48b54f63ba10e75f4d2ca6e3d2770736d8e31e0cf6b4",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66447,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/native_discovery_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291726693934416",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "api_key_providers_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "7c96c15710079171755e90ccfd968f9539518d236e1b219a7649a39513641996",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66453,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/api_key_providers_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291727378297583",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "native_resource_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "85c241f7d1cc4e70cfc72d6477c87fb7edfe3a6df7c0a0ea13e915f4f97decbc",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66459,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/native_resource_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291728301873791",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "statistics_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "049e48e8ea2f30d89baf06370d6ac7a2e03b6943ee0ded199060d9eab84d6009",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66474,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/statistics_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291730242670958",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "statistics_pagination_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "d1dc1aafd78781d3aacb287b50415f8985c0b7cf8ddc766d6b252f9cc9dea9be",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66565,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/statistics_pagination_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291741570847833",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "price_catalog_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "a8e4368b1859ebddd91fb206924bae8b82adcb5aa8e2d3d216553858a9e250bb",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66617,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/price_catalog_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291743317763291",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "workbuddy_endpoint_check_test",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "20a6a995ec064c77c5972d77ec6b1832ac12b52ee5f4a428d1ad36c189b4ed49",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66624,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/workbuddy_endpoint_check_test.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy"
+        ],
+        "monotonic_ns": "291744995181333",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "scheduling",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "29025a84e8b4a47be07ff9b38012618237d8f7fd3b2a4ea93bebe4902a679447",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 66671,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/workbuddy_import_scheduling.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+          "--output",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/scheduling"
+        ],
+        "monotonic_ns": "291745657895083",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "shutdown",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "0e1ae61db3d2ab4553f25ce85d92df4885a25c7d06fb9eb25ebbe464afc5e5c6",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 68114,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/workbuddy_import_shutdown.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+          "--output",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/shutdown"
+        ],
+        "monotonic_ns": "291939995252916",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    },
+    {
+      "name": "core-forwarding-bench",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "4ff60a37d3a49986ab9b364e17a833651fb10fdeeed9dd5112067bd84d9b4af7",
+      "kernel_source_protection": {
+        "enforced": true,
+        "pid": 68391,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "command": [
+          "/Users/glory/.local/bin/python3.12",
+          "scripts/benchmark.py",
+          "--exe",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+          "--output",
+          "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/forwarding-benchmark.json"
+        ],
+        "monotonic_ns": "291944635647416",
+        "script_sha256": "26f54dd267970611a000dd34e9d8ed37a7838d6be1922feb9e90e5971fdeeb78"
+      },
+      "real_profiles_unchanged": true,
+      "metadata_drift_observation": "UNCHANGED_OR_UNPROVEN"
+    }
+  ]
+}

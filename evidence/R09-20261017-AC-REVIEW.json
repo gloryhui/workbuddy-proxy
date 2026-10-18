@@ -1,0 +1,1583 @@
+{
+  "scope": "Fixed AC review of current production tests/source and separately attested release evidence. Historical stage reports supplement chronological requirements; no claim of independent reviewer identity.",
+  "core_sha256": "ac03b9053930489272719d2419effee3bb18797a9331ca22deffc42019b10adf",
+  "test_log_sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676",
+  "claims": {
+    "AC006": {
+      "conclusion": "PASS",
+      "review": "完整核心537/0/0ignored和GPUI137/0；新增测试直接调用生产解析/事务/worker/组件，无ignore/空assert绕过。关键生产故障反例和原生路径另有证据。",
+      "passing_current_tests": []
+    },
+    "AC010": {
+      "conclusion": "PASS",
+      "review": "复核真实0..=6迁移构造、重复migrate、费用/FK保留与拒绝迁移不假升；当前537回归中两个测试均通过。",
+      "passing_current_tests": [
+        "every_schema_generation_upgrades_in_place_and_is_idempotent",
+        "v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version"
+      ]
+    },
+    "AC011": {
+      "conclusion": "PASS",
+      "review": "真实v7迁移库接受合法proxy/import；逐项拒绝缺run/stream、非法HTTP/耗时字段及导入usage_costs，断言具体CHECK/trigger错误。",
+      "passing_current_tests": [
+        "proxy_and_import_rows_cannot_mix_transport_or_cost_columns"
+      ]
+    },
+    "AC013": {
+      "conclusion": "PASS",
+      "review": "Checkpoint测试逐项检查旧revision/generation、负值/回退offset、跨namespace，拒绝后revision/offset保持原值。",
+      "passing_current_tests": [
+        "stale_revision_is_refused_without_a_partial_write",
+        "an_old_generation_is_refused",
+        "negative_or_regressing_offsets_are_refused",
+        "a_foreign_namespace_is_refused"
+      ]
+    },
+    "AC020": {
+      "conclusion": "PASS",
+      "review": "读取规范化断言：detail4096优先top-level0；缓存不累加输入、read/write≤input、reasoning≤output。当前core测试及51黄金全字段链通过。",
+      "passing_current_tests": [
+        "the_highest_priority_legal_alias_wins_and_never_gets_zeroed",
+        "cache_counts_are_never_added_to_the_input",
+        "cache_read_and_write_may_not_exceed_the_input",
+        "reasoning_may_not_exceed_the_output"
+      ]
+    },
+    "AC021": {
+      "conclusion": "PASS",
+      "review": "精确decimal规则与canonical已核验：1.14→1140000000，0与缺失区分，9位上限、科学计数/符号/超界拒绝；非法credit不损坏Token。",
+      "passing_current_tests": [
+        "a_two_decimal_credit_is_exact",
+        "nine_fractional_digits_is_the_limit",
+        "scientific_notation_and_signs_are_refused",
+        "an_invalid_credit_never_damages_the_token_values"
+      ]
+    },
+    "AC005": {
+      "conclusion": "PASS",
+      "review": "共享限值及批次边界来自同一DTO；候选携带哈希身份，原始正文不进入强类型通道。S01历史未挂线程边界见S01.05原始报告。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::tests::shared_limits_come_from_the_stats_dto",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::tests::batch_bounds_match_the_design_table",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::tests::candidate_identity_fields_are_hashes_not_raw_ids",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/tests.rs:118",
+        "src/stats/workbuddy_import/tests.rs:128",
+        "src/stats/workbuddy_import/tests.rs:385"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC012": {
+      "conclusion": "PASS",
+      "review": "同键幂等、冲突不改proxy、墓碑终态均有实际SQL断言；迁移测试检查FK为空。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::the_same_key_is_never_written_twice",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::a_conflict_never_touches_the_proxy_fact_row",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::ledger_tests::tombstones_are_terminal",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::store::tests::v7_upgrade_keeps_cost_rows_and_a_refused_step_never_advances_the_version",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:1973",
+        "src/stats/workbuddy_import/store.rs:2115",
+        "src/stats/workbuddy_import/store.rs:2017",
+        "src/stats/store.rs:3681"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC014": {
+      "conclusion": "PASS",
+      "review": "相邻半开区间接受；Rust和SQL触发器均拒绝重叠；关闭重开复用namespace。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::mapping_tests::adjacent_half_open_intervals_are_legal",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::mapping_tests::overlapping_verified_intervals_are_refused_by_rust_and_by_the_trigger",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::mapping_tests::the_namespace_is_created_once_and_reused_after_toggling",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:2547",
+        "src/stats/workbuddy_import/store.rs:2581",
+        "src/stats/workbuddy_import/store.rs:2651"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC015": {
+      "conclusion": "PASS",
+      "review": "v6七条请求及五条费用迁移前后逐字段dump相等，ID顺序不变；报告视图及索引检查保留。",
+      "passing_current_tests": [
+        {
+          "test": "stats::store::tests::a_v6_database_upgrades_without_changing_rows_ids_tokens_or_costs",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/store.rs:3981"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC017": {
+      "conclusion": "PASS",
+      "review": "assistant message与无role function_call纳入；user/reasoning/tool result排除；完整canonical链另验。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::parser::shell_tests::an_assistant_message_is_usage_bearing",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::shell_tests::a_role_less_function_call_is_usage_bearing",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::shell_tests::user_messages_reasoning_and_tool_results_are_excluded",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/parser.rs:638",
+        "src/stats/workbuddy_import/parser.rs:656",
+        "src/stats/workbuddy_import/parser.rs:675"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC018": {
+      "conclusion": "PASS",
+      "review": "身份键使用namespace/session/message；不同消息区分、跨文件同消息一致，不以conversationRequestId去重。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::different_messages_in_one_session_get_different_keys",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::the_same_message_in_two_files_gets_one_key",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::parser::identity_tests::a_conversation_request_id_is_not_a_dedup_key",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/parser.rs:875",
+        "src/stats/workbuddy_import/parser.rs:852",
+        "src/stats/workbuddy_import/parser.rs:892"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC019": {
+      "conclusion": "PASS",
+      "review": "明确覆盖零/缺失/负数/小数/字符串/布尔/整数限值与溢出/total冲突；非法不强转不修正。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::an_explicit_zero_is_preserved",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::missing_fields_stay_unknown_and_are_never_invented",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::negative_values_invalidate_the_whole_record",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::floats_strings_and_booleans_are_never_coerced",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::the_per_field_bound_is_inclusive_and_the_total_bound_too",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::normalize::token_tests::a_contradicting_total_is_invalid_and_never_corrected",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/normalize.rs:563",
+        "src/stats/workbuddy_import/normalize.rs:573",
+        "src/stats/workbuddy_import/normalize.rs:598",
+        "src/stats/workbuddy_import/normalize.rs:610",
+        "src/stats/workbuddy_import/normalize.rs:623",
+        "src/stats/workbuddy_import/normalize.rs:661"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC022": {
+      "conclusion": "PASS",
+      "review": "语义哈希固定有序tuple仅含规范化模型及usage字段，不含源时间/文件路径/正文/JSON序列化顺序；回放改时间及诊断不变，复制文件/响应只计一次。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::parsed_usage_reaches_the_fact_columns_without_losing_credit_or_cache",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:3077",
+        "src/stats/workbuddy_import/store.rs:3585"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC024": {
+      "conclusion": "PASS",
+      "review": "合成权限拒绝不推进offset；release OS写失败及权限恢复另验，HTTP转发未因导入失败改变。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::verify_tests::a_permission_failure_does_not_advance_the_offset",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/reader.rs:2308"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC026": {
+      "conclusion": "PASS",
+      "review": "小文件增长保持append；head替换及缩短识别为不同代，保留账本/重启计数，release rename/truncate补验。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_small_file_that_grew_is_an_append_not_a_replacement",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_replaced_head_is_reported_as_replacement",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fingerprint_tests::a_file_shorter_than_the_remembered_regions_is_a_truncation",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/reader.rs:1441",
+        "src/stats/workbuddy_import/reader.rs:1515",
+        "src/stats/workbuddy_import/reader.rs:1584",
+        "src/stats/workbuddy_import/store.rs:3717"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC027": {
+      "conclusion": "PASS",
+      "review": "4MiB边界包含，50MiB行分块有界，排空后邻接合法行可读；真实退出oversized场景557.540ms。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::the_four_mebibyte_boundary_is_inclusive",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::a_fifty_mebibyte_line_stays_bounded_in_memory",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::line_tests::an_oversized_line_is_drained_and_the_next_line_is_readable",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/reader.rs:1717",
+        "src/stats/workbuddy_import/reader.rs:1757",
+        "src/stats/workbuddy_import/reader.rs:1745"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC028": {
+      "conclusion": "PASS",
+      "review": "三段写入完整JSON仅生成一个候选；坏行推进到完整行尾且不吞后续合法行。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::a_record_written_in_three_writes_is_imported_exactly_once",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::advance_tests::bad_lines_do_not_hide_the_lines_after_them",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/reader.rs:1875",
+        "src/stats/workbuddy_import/reader.rs:2006"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC029": {
+      "conclusion": "PASS",
+      "review": "大文件分片公平轮转，已追平文件先于积压；release X46二十个竞争窗口逐个达标，周期不由UI刷新控制。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::a_growing_large_file_cannot_starve_the_others",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::caught_up_increments_are_served_before_the_backlog",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::fairness_tests::the_cadence_stays_five_seconds_and_independent_of_settings",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/reader.rs:2084",
+        "src/stats/workbuddy_import/reader.rs:2105",
+        "src/stats/workbuddy_import/reader.rs:2206"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC031": {
+      "conclusion": "PASS",
+      "review": "真实worker发现隐藏中间改写，full扫描使用独立offset，不清零增量断点；release测得完整正文重读及无重复。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::runtime::tests::full_scan_rechecks_a_hidden_middle_edit_without_resetting_incremental_offset",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::reader::rescan_tests::a_full_rescan_never_moves_the_incremental_offset",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/runtime/tests.rs:348",
+        "src/stats/workbuddy_import/reader.rs:2480"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC033": {
+      "conclusion": "PASS",
+      "review": "同步路径复用同一代理归属谓词；猜名称或裸localhost不足，既有同步CLI通过。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::classify::classify_tests::the_shared_predicate_is_the_sync_path_predicate",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::classify_tests::a_guessed_name_or_a_bare_loopback_url_is_never_enough",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/classify.rs:519",
+        "src/stats/workbuddy_import/classify.rs:485"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC034": {
+      "conclusion": "PASS",
+      "review": "当前direct配置不反推旧区间；真实观察读取实际配置ID，早于观察的custom留pending。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::classify::observation_tests::a_direct_configuration_proves_nothing_about_history",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::observation_tests::an_older_record_is_outside_a_fresh_observation",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::observer_reads_actual_id_and_leaves_older_custom_record_pending",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/classify.rs:615",
+        "src/stats/workbuddy_import/classify.rs:680",
+        "src/stats/workbuddy_import/runtime/tests/sync_tests.rs:150"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC035": {
+      "conclusion": "PASS",
+      "review": "固定归属证据表区分两路线同模型，custom-local不按名字判proxy；已知代理镜像即使缺本地事实也排除。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_custom_local_model_is_not_proxy_by_its_name",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::the_same_response_model_on_two_routes_is_distinguishable",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::attribution_tests::a_known_proxy_model_stays_excluded_without_a_matching_fact",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/classify.rs:747",
+        "src/stats/workbuddy_import/classify.rs:765",
+        "src/stats/workbuddy_import/classify.rs:781"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC036": {
+      "conclusion": "PASS",
+      "review": "同alias按半开历史区间判direct/proxy，后续改名或删路由不重写已证实过去。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::the_same_alias_is_direct_before_and_proxy_after",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::a_later_name_never_rewrites_an_earlier_interval",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::classify::interval_tests::a_route_rename_or_delete_does_not_touch_history",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/classify.rs:832",
+        "src/stats/workbuddy_import/classify.rs:889",
+        "src/stats/workbuddy_import/classify.rs:915"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC037": {
+      "conclusion": "PASS",
+      "review": "调用真实生产同步路径注入prepare/finalize错误；前者文件零变化，后者明确已同步但归属未确认，不吞错。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::production_prepare_failure_changes_neither_models_nor_proxy_config",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::production_finalize_write_failure_returns_synced_unconfirmed",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/runtime/tests/sync_tests.rs:76",
+        "src/stats/workbuddy_import/runtime/tests/sync_tests.rs:106"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC038": {
+      "conclusion": "PASS",
+      "review": "覆盖写前、写后、ACK前恢复；只证实未来观察，不把不确定gap补为历史direct。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_before_the_write_conflicts_the_prepared_row",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_after_the_write_completes_the_prepared_row",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::recovery_tests::a_crash_before_the_ack_is_resolved_the_same_way",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::observation::tests::restart_after_write_recovers_future_only_and_preserves_uncertain_gap",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:2812",
+        "src/stats/workbuddy_import/store.rs:2840",
+        "src/stats/workbuddy_import/store.rs:2864",
+        "src/stats/workbuddy_import/observation/tests.rs:114"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC039": {
+      "conclusion": "PASS",
+      "review": "预览token随机、单次、过期及revision绑定；撤销保持精确usage，当前retention及墓碑重新核验，不改变proxy事实。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::manual::tests::tokens_are_random_monotonically_expiring_one_use_and_revision_bound",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::manual::tests::direct_confirmation_uses_frozen_half_open_range_and_preserves_exact_usage_on_revoke",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/manual/tests.rs:242",
+        "src/stats/workbuddy_import/manual/tests.rs:446",
+        "src/stats/workbuddy_import/manual/tests.rs:101"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC041": {
+      "conclusion": "PASS",
+      "review": "容量2非阻塞通道满即worker退让，单批等待ACK；release锁DB时代理仍响应，转发/规模指标另验。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::channel_tests::a_full_queue_yields_instead_of_blocking",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::channel_tests::only_one_batch_may_wait_for_an_ack",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/mod.rs:1308",
+        "src/stats/workbuddy_import/mod.rs:1362"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC042": {
+      "conclusion": "PASS",
+      "review": "真实SQLite事务任一条失败回滚事实及offset；发现批次遇旧revision也全批回滚并可重试。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::a_failed_item_rolls_the_whole_batch_back",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::batch_tests::the_offset_never_leads_the_facts",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::writer::discovery::tests::a_stale_metadata_batch_rolls_back_earlier_files_and_can_be_retried",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:3245",
+        "src/stats/workbuddy_import/store.rs:3278",
+        "src/stats/workbuddy_import/runtime/writer/discovery/tests.rs:85"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC043": {
+      "conclusion": "PASS",
+      "review": "ACK丢失、同批回放、复制源及重复工具响应均由唯一账本身份保证一次。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_lost_ack_and_a_repeated_batch_count_exactly_once",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_copied_file_and_a_duplicated_tool_response_count_once",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:3528",
+        "src/stats/workbuddy_import/store.rs:3585"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC044": {
+      "conclusion": "PASS",
+      "review": "重启读持久累计；错误诊断计入需处理，普通ignored不冒充错误；关闭时不假报完成。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::the_counts_survive_a_restart",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::runtime::tests::sync_tests::status_reports_skipped_anomalies_without_counting_ordinary_ignored_messages",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::command_tests::status_reports_durable_counters_and_never_claims_completion_while_off",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:3717",
+        "src/stats/workbuddy_import/runtime/tests/sync_tests.rs:502",
+        "src/stats/workbuddy_import/mod.rs:1909"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC049": {
+      "conclusion": "PASS",
+      "review": "清除导入写终态墓碑，重扫不复活；proxy原清除语义独立保留。",
+      "passing_current_tests": [
+        {
+          "test": "stats::store::tests::a_manual_clear_tombstones_imported_rows_so_a_rescan_cannot_resurrect_them",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::store::tests::a_manual_clear_leaves_proxy_rows_and_their_semantics_alone",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/store.rs:2748",
+        "src/stats/store.rs:2787"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC051": {
+      "conclusion": "PASS",
+      "review": "冻结预览水位+时间边界；预览后新增及晚到均存活，实际删除数与预览一致。",
+      "passing_current_tests": [
+        {
+          "test": "stats::store::tests::rows_added_after_the_preview_survive_the_sweep",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::store::tests::a_late_record_inside_the_watermark_survives_the_cutoff",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::store::tests::the_preview_counts_exactly_what_the_sweep_deletes",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/store.rs:2630",
+        "src/stats/store.rs:2663",
+        "src/stats/store.rs:2604"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC052": {
+      "conclusion": "PASS",
+      "review": "规则任务每批重新读取retention，已过期候选不绕过保留期限；deleted账本不被apply覆盖。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::manual::tests::manual_rules_never_revive_deleted_ledger_entries_and_recheck_current_retention",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/manual/tests.rs:446"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC053": {
+      "conclusion": "PASS",
+      "review": "源消失不删统计，检查点回收保留账本；同文件恢复仍一次。",
+      "passing_current_tests": [
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::deleting_a_source_file_keeps_every_statistic",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::workbuddy_import::store::replay_tests::a_file_that_comes_back_is_not_counted_twice",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/workbuddy_import/store.rs:3873",
+        "src/stats/workbuddy_import/store.rs:3907"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC055": {
+      "conclusion": "PASS",
+      "review": "崩溃恢复只处理proxy in_flight；费用用该请求自己的原快照，导入不被补成HTTP结果。",
+      "passing_current_tests": [
+        {
+          "test": "stats::store::tests::orphan_recovery_only_settles_proxy_in_flight_rows",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::store::tests::startup_repair_settles_abandoned_costs_from_their_own_snapshot",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/store.rs:2523",
+        "src/stats/store.rs:3206"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC058": {
+      "conclusion": "PASS",
+      "review": "实际事实集合逐组合分区，all=builtin+supplier，capture与tests过滤同谓词；非法scope拒绝。",
+      "passing_current_tests": [
+        {
+          "test": "stats::query::scope_tests::all_equals_builtin_plus_supplier_on_real_rows",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::scope_tests::the_three_scopes_partition_the_fact_table",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::scope_tests::source_and_capture_filters_match_the_product_matrix_on_real_rows",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::scope_tests::an_unknown_scope_is_refused_rather_than_guessed",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/query.rs:2365",
+        "src/stats/query.rs:2332",
+        "src/stats/query.rs:2281",
+        "src/stats/query.rs:2422"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC059": {
+      "conclusion": "PASS",
+      "review": "混合/纯导入来源数准确；币种分别聚合，credit用i128独立十进制字符串，超过i64仍精确。",
+      "passing_current_tests": [
+        {
+          "test": "stats::query::origin_count_tests::a_mixed_result_counts_proxy_and_imported_separately",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::origin_count_tests::a_pure_import_result_has_no_proxy_rows",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_is_summed_on_its_own_and_never_added_to_costs",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::origin_count_tests::different_currencies_are_never_added_together",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::origin_count_tests::credit_totals_above_i64_remain_exact",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/query.rs:2478",
+        "src/stats/query.rs:2506",
+        "src/stats/query.rs:2561",
+        "src/stats/query.rs:2605",
+        "src/stats/query.rs:2533"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC061": {
+      "conclusion": "PASS",
+      "review": "来源/归属revision进入cursor校验；并发追加采用固定水位，不移位不重页。",
+      "passing_current_tests": [
+        {
+          "test": "stats::query::paging_tests::switching_the_source_scope_invalidates_a_cursor",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::paging_tests::a_candidate_arriving_mid_paging_never_shifts_an_existing_page",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        },
+        {
+          "test": "stats::query::paging_tests::a_mapping_change_invalidates_a_pending_cursor",
+          "log": "dist/workbuddy-import-review/telemetry-core-tests.log"
+        }
+      ],
+      "source_locations": [
+        "src/stats/query.rs:2644",
+        "src/stats/query.rs:2695",
+        "src/stats/query.rs:2672"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC062": {
+      "conclusion": "PASS",
+      "review": "应用回复前校验资源/请求tag/filter代；scan轮询有预算，旧来源回复不覆盖新选择。",
+      "passing_current_tests": [
+        {
+          "test": "stats_controller::scan_budget_tests::a_stale_reply_cannot_overwrite_a_newer_read",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "stats_controller::scan_budget_tests::a_running_scan_cannot_be_polled_forever",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "stats_controller::tests::a_dashboard_reply_from_the_previous_filter_is_ignored",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        }
+      ],
+      "source_locations": [
+        "gpui/src/stats_controller.rs:1111",
+        "gpui/src/stats_controller.rs:1073",
+        "gpui/src/stats_controller.rs:827"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC067": {
+      "conclusion": "PASS",
+      "review": "来源变更先失效旧资源，同选项零请求；旧代draft/数据不应用，错误payload不伪造空成功。",
+      "passing_current_tests": [
+        {
+          "test": "stats_controller::filter_change_tests::a_change_invalidates_first_and_then_owes_exactly_one_request",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "stats_controller::filter_change_tests::clicking_the_option_that_is_already_selected_changes_nothing",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "stats_controller::tests::a_reply_for_an_older_draft_cannot_close_the_newer_one",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "stats_backend::reply_tests::a_malformed_payload_is_an_error_and_never_an_empty_page",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        }
+      ],
+      "source_locations": [
+        "gpui/src/stats_controller.rs:1148",
+        "gpui/src/stats_controller.rs:1164",
+        "gpui/src/stats_controller.rs:940",
+        "gpui/src/stats_backend.rs:788"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC068": {
+      "conclusion": "PASS",
+      "review": "纯导入成功率和缺失指标为—；无已知费用不绘制伪零货币线，Token趋势保留。",
+      "passing_current_tests": [
+        {
+          "test": "statistics::metric_text_tests::a_pure_import_range_has_no_success_rate",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "statistics::metric_text_tests::an_unknown_metric_reads_as_a_dash_and_never_as_a_zero",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "usage_chart::tests::unpriced_imports_keep_token_plot_without_fabricating_currency_plot",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        }
+      ],
+      "source_locations": [
+        "gpui/src/statistics.rs:4894",
+        "gpui/src/statistics.rs:4870",
+        "gpui/src/usage_chart.rs:687"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC069": {
+      "conclusion": "PASS",
+      "review": "proxy/内置/直连列表标签可区分；未知HTTP/速率/金额显示—，不伪造200或零。",
+      "passing_current_tests": [
+        {
+          "test": "usage_table::source_column_tests::the_three_origins_are_distinguishable",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "usage_table::source_column_tests::an_absent_http_status_is_a_dash_and_never_zero_or_200",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "usage_table::source_column_tests::missing_rates_and_amounts_are_dashes_rather_than_zeros",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        }
+      ],
+      "source_locations": [
+        "gpui/src/usage_table.rs:1269",
+        "gpui/src/usage_table.rs:1292",
+        "gpui/src/usage_table.rs:1316"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC070": {
+      "conclusion": "PASS",
+      "review": "开关失败回滚，暂停保留历史/计数，刷新不触发源读取；首次开启单次提交无额外确认，X45补实际后台独立性。",
+      "passing_current_tests": [
+        {
+          "test": "workbuddy_import::tests::a_failed_switch_rolls_back",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "workbuddy_import::tests::a_plain_refresh_never_reads_the_jsonl",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "workbuddy_import::tests::pausing_keeps_every_counter_and_the_history",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        },
+        {
+          "test": "workbuddy_import::tests::turning_it_on_asks_once_and_needs_no_confirmation",
+          "log": "dist/workbuddy-import-review/ui-event-metrics-tests.log"
+        }
+      ],
+      "source_locations": [
+        "gpui/src/workbuddy_import.rs:621",
+        "gpui/src/workbuddy_import.rs:664",
+        "gpui/src/workbuddy_import.rs:639",
+        "gpui/src/workbuddy_import.rs:603"
+      ],
+      "limitation": "unit evidence verifies the named production paths; scale/native and full release chains are reported separately"
+    },
+    "AC001": {
+      "conclusion": "PASS",
+      "review": "S01.01原始位置/归属核验和本轮status均保留：固定6102b77 worktree续工，主工作区usage_table及UI-UX-renew属用户独立改动；仅授权AGENTS规则同步，没有reset/stash掩盖差异。",
+      "evidence": [
+        {
+          "path": "evidence/S01.01.md",
+          "sha256": "7091b7f865bb35ac50c09a215414ae119ddff77cb4f26d1b14f1428666446121"
+        },
+        {
+          "path": "evidence/R09-20261017-STORAGE.json",
+          "sha256": "383e6b861de5307e5290a424a8603815b4f2c0bfe8aaa26c03179aab5baff5e4"
+        }
+      ]
+    },
+    "AC004": {
+      "conclusion": "PASS",
+      "review": "冻结expected.json明确独立人工数值，canonical经真实reader/parser/writer/query/API匹配7记录/750Token/内置180/供应商570/2.13积分，只有代理CNY0.123；源行全为合成身份/正文/凭据。",
+      "evidence": [
+        {
+          "path": "docs/workbuddy-import/fixtures/expected.json",
+          "sha256": "13a601001e4c59fa6bae02b60ae3ce4ae43b2a952a9ed46b34c48f9cebcb9c93"
+        },
+        {
+          "path": "scripts/workbuddy_import_canonical.py",
+          "sha256": "66c8cd5c563fdfe0fa47c75743907481792f485b080af037ce7c0f9965705837"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/canonical/report.json",
+          "sha256": "43aabbbe5c0497f49d2a31cfeb09815b5e12283e1b6242b7195b17b16c502a69"
+        }
+      ]
+    },
+    "AC007": {
+      "conclusion": "PASS",
+      "review": "最终canonical51与integration157全部通过，SQL/日志/各来源API的合成密钥/正文/工具canary均无泄漏。早期profile守卫失败保留；本结论采用带实际kernel凭据的最终重跑。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/canonical/report.json",
+          "sha256": "43aabbbe5c0497f49d2a31cfeb09815b5e12283e1b6242b7195b17b16c502a69"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        }
+      ]
+    },
+    "AC008": {
+      "conclusion": "PASS",
+      "review": "S01.08原始G00日志包含冻结commit、工具/系统/隔离环境、完整命令和exit；当时只新增类型/自检，未启动导入业务线程。该历史阶段证据与当前最终功能证据分别保留。",
+      "evidence": [
+        {
+          "path": "evidence/S01.08.md",
+          "sha256": "c2c759cc25a48b806bba39ec602e83ad9975a162c0ecb0124b08fd0e2829b70d"
+        },
+        {
+          "path": "dist/workbuddy-import-validation/S01.08/g00-core.txt",
+          "sha256": "64bf266b81fa47b02522a5753c1b26cfaae107a3d835cb126775012f629babdc"
+        },
+        {
+          "path": "dist/workbuddy-import-validation/S01.08/g00-gpui.txt",
+          "sha256": "8b6079a08648f682327e21c3a7cf848d6fe3026f5ad89da417bf75c3c0e7cae0"
+        }
+      ]
+    },
+    "AC016": {
+      "conclusion": "PASS",
+      "review": "S02.08真实冲突表故障：失败后仍v6且3请求/1费用、integrity_check=ok、视图3行；移除故障后同库升级、FK为空。当前537仍执行所有代迁移及失败不假升用例，旧迁移字节不变。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-validation/S02.08/fault-injection.txt",
+          "sha256": "0fe0a098e717048ae40e1f3462c90efc31c78ee6f6bdb64a055f1b5499f58d93"
+        },
+        {
+          "path": "dist/workbuddy-import-validation/S02.08/sql-inspection.txt",
+          "sha256": "195eaffa1bc7fb071349e6ef186bb420911a5b3cbb14100c7b91bfca64517774"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        }
+      ]
+    },
+    "AC023": {
+      "conclusion": "PASS",
+      "review": "未知/坏行按固定诊断继续处理；最终integration实际源链/SQL/日志/API全canary检查通过，候选仅允许规范化字段。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        },
+        {
+          "path": "src/stats/workbuddy_import/parser.rs",
+          "sha256": "678402e4757384fce417f7362a5c307ccfd9ee5a06c671a6e3ab6782203cd4ff"
+        }
+      ]
+    },
+    "AC025": {
+      "conclusion": "PASS",
+      "review": "生产reader当前测试覆盖中文空格目录、严格projects单层、拒绝文件/目录symlink及traces/tool/storage；最终release X46在真实竞争积压下20个新目录及已跟踪追加样本逐个≤10秒。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/scheduling/report.json",
+          "sha256": "133b488ddc73bdff3cc7228716b326c3651a289d6cd837c83a126355d95347e1"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        }
+      ]
+    },
+    "AC030": {
+      "conclusion": "PASS",
+      "review": "当前verify测试在读期间改写/rename替换/truncate/权限拒绝时丢弃整批且不前移offset；release真实rename/truncate/权限恢复后精确5事实并每条有账本，DB锁解除后补齐。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        }
+      ]
+    },
+    "AC032": {
+      "conclusion": "PASS",
+      "review": "当前real_worker测试实测未变化正文读取不增长，读批逐完整行提交/重放及full独立offset通过；S04.08原始checkpoint探针与1字节夹具差异记录保留，按终止符后的契约边界执行。百万300秒空闲另归AC075。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        },
+        {
+          "path": "evidence/S04.08.md",
+          "sha256": "336c1b1bd2bc7e3d0a70f9e79a1c016e7b78785d556f5c573a47878aceeaa7e2"
+        }
+      ]
+    },
+    "AC040": {
+      "conclusion": "PASS",
+      "review": "当前真实worker的manual_commands测试经生产命令逐步核对pending/direct确认/代理排除/撤销后事实与ledger；固定黄金镜像最终为excluded_proxy1/imported2，3事实910Token且代理只计一次。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        },
+        {
+          "path": "src/stats/workbuddy_import/runtime/tests/sync_tests.rs",
+          "sha256": "60a3c5b353c570d547f8d6a16c31b299b1a0ee4679dfd58dcfc9054d6e866bb6"
+        }
+      ]
+    },
+    "AC045": {
+      "conclusion": "PASS",
+      "review": "release DB锁7秒代理仍响应，解锁后精确补入；OS写拒绝后55000条崩溃恢复精确无丢失；X46二十个竞争回填窗口及X47通过，原生X45最大4051.652ms且页面状态不改同步。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/faults/report.json",
+          "sha256": "62ce661f323471be37fa4578688d0dfd132d789c05d06ad24d70724fd32ad89f"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/scheduling/report.json",
+          "sha256": "133b488ddc73bdff3cc7228716b326c3651a289d6cd837c83a126355d95347e1"
+        },
+        {
+          "path": "evidence/R09-20261017-UI-EVENTS.json",
+          "sha256": "9d6c4ed6d9a8a3ea3c9a5dae1f01f5d972106ff62338832d8820d60485bf0a94"
+        }
+      ]
+    },
+    "AC046": {
+      "conclusion": "PASS",
+      "review": "关闭全局统计时真实worker停止源字节增长，保留SQL历史；X47恢复持久断点且合并重复待扫；原生X45页面Off/10s/切页/隐藏/最小化/关闭后核心仍固定同步。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/scheduling/report.json",
+          "sha256": "133b488ddc73bdff3cc7228716b326c3651a289d6cd837c83a126355d95347e1"
+        },
+        {
+          "path": "evidence/R09-20261017-UI-EVENTS.json",
+          "sha256": "9d6c4ed6d9a8a3ea3c9a5dae1f01f5d972106ff62338832d8820d60485bf0a94"
+        }
+      ]
+    },
+    "AC047": {
+      "conclusion": "PASS",
+      "review": "SIGKILL时回填确实未完：5128/55000，重启后55000唯一账本/660000Token/5500000000000纳积分；正常退出idle/import/oversized分别356.391/400.499/557.540ms且exit0，不等全历史结束。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/faults/report.json",
+          "sha256": "62ce661f323471be37fa4578688d0dfd132d789c05d06ad24d70724fd32ad89f"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/shutdown/report.json",
+          "sha256": "fab794d45a915e5e4bd3b34f4aa0fb90391e8035e6e846852e501494b4437c30"
+        }
+      ]
+    },
+    "AC050": {
+      "conclusion": "PASS",
+      "review": "R05最终release53/0：0/7/30/180天精确旧消息及新身份，真实一分钟housekeeping后deleted_retention；7→0及full扫描墓碑不复活。不限期0可导入新的400天身份。",
+      "evidence": [
+        {
+          "path": "evidence/R09-20261017-RETENTION.json",
+          "sha256": "2a49cf96678fc2b215a3bd5a9b3c4c1addb5688860acd7f6f29190c47fd125d1"
+        }
+      ]
+    },
+    "AC054": {
+      "conclusion": "PASS",
+      "review": "当前真实SQL EXPLAIN确认cover索引；pending查询在SQL按水位/范围LIMIT分页，只解码本页候选，没有每页JSONL读取或全量候选反序列化。scope/mapping变化及规则历史stale cursor均拒绝expired。",
+      "evidence": [
+        {
+          "path": "src/stats/query.rs",
+          "sha256": "9ba6e15f6bc3764409b7a9eac1057d5340c3581f13790f6bc729142c63979b72"
+        },
+        {
+          "path": "src/stats/query/dashboard_aggregate/tests.rs",
+          "sha256": "8cfbe33b2da5be5c92386b00a49e6f7257e2c80e989da70d077bb08183f0fe4c"
+        },
+        {
+          "path": "src/stats/workbuddy_import/manual/rules.rs",
+          "sha256": "3ee5047242226acb2c0f2bb4633c475c1296950146783f0e67952d09eb73daeb"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        }
+      ]
+    },
+    "AC056": {
+      "conclusion": "PASS",
+      "review": "最终生产integration157从真实JSONL导入核对多组事实/账本/费用数：黄金3事实910Token、账本excluded1/imported2、导入费用0；canonical六导入+一代理/各来源/币种/详情/重扫与冻结预期一致。清除/保留期限另有53项真实SQL对照。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        },
+        {
+          "path": "evidence/R09-20261017-RETENTION.json",
+          "sha256": "2a49cf96678fc2b215a3bd5a9b3c4c1addb5688860acd7f6f29190c47fd125d1"
+        }
+      ]
+    },
+    "AC057": {
+      "conclusion": "PASS",
+      "review": "当前GPUI137完整测试/Clippy/release通过，新增DTO enum均编译；黄金混合总910=builtin120+supplier790，proxy550保留；S08.01原阶段必要旧UI适配的时间边界保留于原报告。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-clippy.log",
+          "sha256": "f94b1034b0384f66baa00bf2888c0b684834d24fd70cc5691c3475febc5e6f9f"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        },
+        {
+          "path": "evidence/S08.01.md",
+          "sha256": "952d064b9deabd0ad8ac3688c845763a790e058689142004d97aab2ad6a1dacf"
+        }
+      ]
+    },
+    "AC063": {
+      "conclusion": "PASS",
+      "review": "最终私有包的13种旧core协议组合实际运行并正常替换，保留供应商配置/端口；当前UI错误envelope/malformed payload单测拒绝而非空页。capability门槛由生产启动协商执行。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-package-final/verify-private-dmg.log",
+          "sha256": "323c067e649e7d040f101c09a3a488ff40b7ffa77d8f4a922e606e052e3dcbe4"
+        },
+        {
+          "path": "scripts/core_compatibility.py",
+          "sha256": "4a21d8ffeba83bb5186c16d6ccd8c6357b47bb170a4985b5f20b348990a35566"
+        },
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        }
+      ]
+    },
+    "AC064": {
+      "conclusion": "PASS",
+      "review": "最终canonical51及integration157逐字段核验SQL/overview/series/list/detail：已知零、missing、invalid、缓存读写、推理、derived total和1纳积分准确；混合与纯导入均匹配冻结独立预期。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/canonical/report.json",
+          "sha256": "43aabbbe5c0497f49d2a31cfeb09815b5e12283e1b6242b7195b17b16c502a69"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        }
+      ]
+    },
+    "AC065": {
+      "conclusion": "PASS",
+      "review": "原生12图确认来源图标/选中及a11y真实值，竞争回填下鼠标/Right切来源、重复点击和中间插入输入都有事件trace；native包额外Tab焦点蓝框/tooltip截图，源组件全部选项hover/focus/键盘/role/selected测试通过。",
+      "evidence": [
+        {
+          "path": "evidence/R09-20261017-UI-EVENTS.json",
+          "sha256": "9d6c4ed6d9a8a3ea3c9a5dae1f01f5d972106ff62338832d8820d60485bf0a94"
+        },
+        {
+          "path": "evidence/R09-20261017-NATIVE-PACKAGE.json",
+          "sha256": "d6581322003828a594f0b150e3d478faa479b9f84ca160c36599c2f38fa6a818"
+        },
+        {
+          "path": "dist/workbuddy-import-review/native-package-lifecycle-telemetry/tab-focus-before-close.ax.txt",
+          "sha256": "207bc0213d03e7e9af8a58547354be341479bfab3dad2c37985055d0e507f72a"
+        },
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        }
+      ]
+    },
+    "AC066": {
+      "conclusion": "PASS",
+      "review": "当前137测试覆盖1012/1011及560/559布局断点，来源组始终最前不拆；最终12原生图含宽/窄布局，各来源数据同时核验。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "path": "dist/workbuddy-import-review/ui-event-final-audit/report.json",
+          "sha256": "57af4bf936bd0c71db08a9c0bd2b4872856d37f74867e0eb76278f9f6a9c4467"
+        }
+      ]
+    },
+    "AC071": {
+      "conclusion": "PASS",
+      "review": "当前真实manual命令测试拒绝过期/重用token、revision冲突及managed proxy覆盖；UI unsafe_preview_replies_never_enable_confirmation拒绝危险确认，错误映射固定码及中文/英文文案。原生完整异常态操作仍归AC072未完成范围。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        },
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "path": "gpui/src/statistics/mapping_controls.rs",
+          "sha256": "1b206b3cb3f2c166f061f389e9b895684a569e11517986160e4b763857580e4f"
+        }
+      ]
+    },
+    "AC073": {
+      "conclusion": "PASS",
+      "review": "最终真实代理→JSONL镜像→归属账本→查询的黄金链通过：all3/910、builtin1/120、supplier2/790、排除代理镜像1，full扫描不重复；所有请求均本地Mock，不发公网付费调用。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        },
+        {
+          "path": "scripts/workbuddy_import_golden.py",
+          "sha256": "3970cb7d317edc2eaf127a41031e537037d4a3776d7c93a14aaf3f2db8f518a2"
+        }
+      ]
+    },
+    "AC074": {
+      "conclusion": "PASS",
+      "review": "固定种子OS故障矩阵验证实际WAL写上限、55000条不完整回填SIGKILL、重启精确总数/Token/积分/唯一账本，代理写拒绝时继续转发；rename/truncate/权限/DB锁另有实际release覆盖。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/faults/report.json",
+          "sha256": "62ce661f323471be37fa4578688d0dfd132d789c05d06ad24d70724fd32ad89f"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        }
+      ]
+    },
+    "AC076": {
+      "conclusion": "PASS",
+      "review": "当前核心537/0/0ignored与GPUI137/0/0ignored，Clippy -D warnings及release通过；21个真实生产程序串行gate成功，无旧断言降级。GPUI block0.1.6 future-incompat提示为既存，不冒称零提示；脚本修复保留先前失败及准确隔离/资源测量边界。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-clippy.log",
+          "sha256": "d6d3f49e92438d7087cfb24dbcbf1f7e457fd6f9a2e23c0ac3d809a744ad8214"
+        },
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-tests.log",
+          "sha256": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+        },
+        {
+          "path": "dist/workbuddy-import-review/ui-event-metrics-clippy.log",
+          "sha256": "f94b1034b0384f66baa00bf2888c0b684834d24fd70cc5691c3475febc5e6f9f"
+        },
+        {
+          "path": "evidence/R09-20261017-LOCAL-GATES.json",
+          "sha256": "fb5bf3e5ce18a8ad9f352767acc4b3bbb1ea0a8f5987a4ea13d2289840618c50"
+        }
+      ]
+    },
+    "AC078": {
+      "conclusion": "PASS",
+      "review": "隔离v6库升级前后7条旧请求与5条多币种费用逐字段相同；真实profile仅metadata观察，CLI kernel阻止真实内容I/O，原生最终metadata相同；没有替换真实DB或安装应用。GUI全隔离证明边界仍在AC003保留。",
+      "evidence": [
+        {
+          "path": "dist/workbuddy-import-review/telemetry-core-tests.log",
+          "sha256": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676"
+        },
+        {
+          "path": "dist/workbuddy-import-review/telemetry-attested-final/integration/report.json",
+          "sha256": "c27ef6a485b9b085325bf605025b3ead6a01ae2e0ccb18ec40582cf0b150764f"
+        },
+        {
+          "path": "evidence/R09-20261017-NATIVE-PACKAGE.json",
+          "sha256": "d6581322003828a594f0b150e3d478faa479b9f84ca160c36599c2f38fa6a818"
+        }
+      ]
+    },
+    "AC075": {
+      "conclusion": "FAIL",
+      "review": "External-TMP strict matrix passed six 100k phases, then 1M/many hit unchanged 600s backfill timeout. Saved snapshot has 896431 exact unique imported facts/ledger. All fixture processes and temporary roots removed. Same-binary observer diagnostic is in progress; no failure waiver or gate relaxation.",
+      "evidence": [
+        "evidence/R09-20261017-SCALE-FAILURE.json"
+      ]
+    },
+    "AC048": {
+      "conclusion": "PASS",
+      "review": "当前生产遥测反例测试可检测off-worker读，真实release100k/many完整阶段中source_io检查1483次、违规0；队列峰值1、成功writer事务1080批、失败0，真实批耗时样本保留。完整规模/增长预算仍单列AC075。",
+      "phase_report": "dist/workbuddy-import-review/strict-matrix-external-tmp-telemetry/100000-many/trial-1/report.json",
+      "phase_report_sha256": "3a6cd26080a70ec5853af1b481875a3e2c256e5aeca57bc904c2989dabbd8a9b",
+      "runtime_metrics": {
+        "queue_depth": 0,
+        "queue_peak": 1,
+        "recent_batches": [
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 45764
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 128380
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 36168
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 124019
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 31618
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 123236
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 33889
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 116697
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 32515
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 119192
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 30106
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 116118
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 32889
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 125596
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 30766
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 116281
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 30060
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 142348
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 23801
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 143500
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 36304
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 169538
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 44624
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 156118
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 83651
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 169454
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 49634
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 141849
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 43561
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 140018
+          },
+          {
+            "candidates": 128,
+            "committed": true,
+            "elapsed_us": 41393
+          },
+          {
+            "candidates": 116,
+            "committed": true,
+            "elapsed_us": 138904
+          }
+        ],
+        "source_io_thread_checks": 1483,
+        "source_io_thread_violations": 0,
+        "writer_batch_count": 1080,
+        "writer_batch_failures": 0,
+        "writer_batch_max_us": 292383,
+        "writer_batch_total_us": 56194873
+      }
+    },
+    "AC060": {
+      "conclusion": "PASS",
+      "core_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+      "review": "Current release: local-model management key returns 401, deliberately check-invalid oversized response returns stats_result_too_large, normal/after-restore query remains exact and integrity_check=ok. Current 537 tests also cover asynchronous scan enqueue and fixed error codes. Boundary uses a synthetic corrupt row, not a supported importer input.",
+      "evidence": [
+        "evidence/R09-20261017-BOUNDARY.json",
+        "evidence/R09-20261017-CACHE8-BUILD.json"
+      ]
+    }
+  },
+  "current_logs": {
+    "dist/workbuddy-import-review/telemetry-core-tests.log": "55678d8c6386551e8d392b990f627db3022f3a7c76b6e39c61701fde06596676",
+    "dist/workbuddy-import-review/ui-event-metrics-tests.log": "085c4c5571dac1914a12bcb5992b1f1020a79774ecaa7f550a1f1fcf8de3227a"
+  },
+  "current_candidate": {
+    "core_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+    "evidence": "evidence/R09-20261017-CURRENT.json",
+    "note": "prior per-claim source/release scope retained; final current-binary refresh in progress"
+  }
+}

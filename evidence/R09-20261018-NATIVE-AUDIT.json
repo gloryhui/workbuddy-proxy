@@ -1,0 +1,89 @@
+{
+  "at": 1792294531.10336,
+  "result": "PASS_CURRENT_REMOTE_NATIVE_MATRIX_AND_RECORDED_INTERACTIONS_RESIDENT_PACKAGE_SEPARATE",
+  "input_core_sha256": "3d9e774e19773c9245d35527109aa65390bfa71947e9570ff76eb53052cba3d9",
+  "input_ui_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "code_identity": "per-run complete signed QA carrier, all nonsignature code bytes verified against frozen input; actual PID source/config protections enforced",
+  "static_matrix": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-golden-ui/matrix-validation-v2/report.json",
+  "matrix_case_count": 12,
+  "actual_outer_capture_pixels": [
+    [
+      1440,
+      901
+    ],
+    [
+      1100,
+      701
+    ]
+  ],
+  "window_content_points": [
+    [
+      1440,
+      900
+    ],
+    [
+      1100,
+      700
+    ]
+  ],
+  "display_scope": "current remote environment only; physical 1x/2x restoration waived by explicit user instruction",
+  "dynamic_scope_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-native-ui",
+  "checks": {
+    "progress_active_pause_error_recovery": true,
+    "pending_separate_from_unread": true,
+    "hundred_actual_native_refreshes_no_source_body_read": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-native-ui/100-refresh-result.json",
+    "five_native_refresh_rates_and_page_hidden_minimized_samples": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-native-ui/x45-native-summary.json",
+    "source_arrow_keyboard_navigation": "zh-keyboard-source-1100.jpg",
+    "actual_preview_expiry": "mapping-preview-expiry-observation.json",
+    "actual_preview_revision_conflict": "en-mapping-cas-rejected-1100.jpg",
+    "native_apply_exact_facts": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-native-ui/native-mapping-apply-result.json",
+    "native_revoke_exact_facts": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-native-ui/native-mapping-revoke-result.json",
+    "cursor_page1_page2_and_scrolled_detail": [
+      "en-page1-1100.jpg",
+      "en-page2-1100.jpg",
+      "en-detail-top-1100.jpg",
+      "en-detail-bottom-1100.jpg"
+    ],
+    "active_backfill_input_before_after": [
+      "ui-input-backfill-before.json",
+      "ui-input-backfill-after.json"
+    ],
+    "callback_latency_under_100ms": true,
+    "all_last_eight_source_frames_match": true,
+    "separate_settled_source_matrix_frames": {
+      "no_drops": true,
+      "callbacks_under_100ms": true,
+      "settled_selection_matches": true
+    },
+    "settings_close_core_ready": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-golden-ui/native-close-core-alive.json",
+    "explicit_production_gui_reopen": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-golden-ui/native-production-show.json",
+    "reopened_gui_native_cmdq": "native-final-quit-action.json",
+    "core_durable_normal_stop_after_explicit_fixture_control_stop": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-golden-ui/native-shutdown-observation.json"
+  },
+  "raw_negative_observations_retained": [
+    {
+      "artifact": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-native-ui/native-event-budget-result.json",
+      "reason": "overbroad assertion includes earlier click immediately superseded by Right key before next frame; raw false event10 retained; latest keyboard-selected supplier screenshot correct; separately settled matrix and all last8 source frames pass"
+    },
+    {
+      "artifact": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-native-ui/native-shutdown-observation.json",
+      "reason": "old fixture killed headless core by SIGTERM; fixed fixture then verified explicit control-stop normal record, no retroactive PASS"
+    }
+  ],
+  "remaining_boundaries": [
+    "resident packaged tray whole-application CmdQ is not inferred from the headless-core GUI fixture",
+    "this covers seven refresh/visibility scenarios, not every15 cross-product",
+    "source discovery unknown-state native stress capture and native full-check indeterminate capture not separately recorded",
+    "other physical displays, Windows GUI and installation remain separate"
+  ],
+  "package_payload_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-progress-package-archive-reader-v3/report.json",
+  "resident_native_cmdq": {
+    "state": "BLOCKED_EXTERNAL_MAC_LOCKED",
+    "first_attempt": "20261018-progress-resident-native-quit/report.json",
+    "second_attempt": "20261018-progress-resident-native-quit-v2/report.json",
+    "tool_observation": "20261018-progress-resident-native-quit-v2/native-input-blocker.json",
+    "cmdq_sent": false,
+    "owned_root_removed": true,
+    "scope": "no native resident whole-app quit claim; package automated lifecycle separate"
+  }
+}

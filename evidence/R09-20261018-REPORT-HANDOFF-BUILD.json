@@ -1,0 +1,59 @@
+{
+  "at": 1792302692.584863,
+  "result": "PASS_CORE_REPORT_HANDOFF_BUILD_RUNTIME_PENDING",
+  "core": {
+    "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-report-handoff-build-v2/workbuddy-proxy",
+    "sha256": "228f41d84c9f2d54079340d19ed95b4b49e5e98541e7aa2ca6bfc3f1b8738b9d"
+  },
+  "core_unit_tests": 550,
+  "prior_545_tests_preserved": true,
+  "new_tests": [
+    "stats::report_scheduling::tests::a_reserved_import_gets_a_turn_before_the_next_report",
+    "stats::report_scheduling::tests::an_active_report_cannot_be_overlapped_by_an_import_opportunity",
+    "stats::report_scheduling::tests::an_import_error_or_unwind_releases_the_report_admission",
+    "stats::report_scheduling::tests::an_inflight_import_finishes_before_a_report_enters",
+    "stats::report_scheduling::tests::proxy_or_control_work_cannot_leave_reports_waiting_for_an_abandoned_import"
+  ],
+  "core_build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-report-handoff-build-v2/report.json",
+  "steps": [
+    {
+      "name": "core-fmt",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-tests",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "87cfde7fab3245482417992e90113a0cbe171092c1823857453022fd60faab7a"
+    },
+    {
+      "name": "core-clippy",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "3c783ea8f69fdca7b923483cabf76c58b5b46829d1c9c5201dae992bbbed97ee"
+    },
+    {
+      "name": "core-release",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "78ac9eacff32e1114ce3637f5f99c193c1bc9c412e2db1af0cfa621c010c81dc"
+    }
+  ],
+  "source_sha256": {
+    "src/stats/mod.rs": "8c893224a38a8aef32671a44109a8cde447cc08a683f3409047c0bd79ea03f40",
+    "src/stats/report_scheduling.rs": "96728b7a1d6ae0356745c5af4cababded0de484a60bd38d6c338cf77ffb96e0f"
+  },
+  "cleanup": {
+    "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/progress-build-706kjnge",
+    "remaining_processes": [],
+    "lsof_exit": 1,
+    "removed": true,
+    "released_bytes": 4096,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51555545088,
+    "external_free_bytes": 434788085760
+  },
+  "runtime": "FOCUSED32_PRESSURE_AND30_SHUTDOWN_RUNNING_THEN_MILLION_TARGET; not yet passed"
+}

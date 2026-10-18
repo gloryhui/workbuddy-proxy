@@ -1,0 +1,315 @@
+{
+  "at": 1792311461.912891,
+  "result": "PASS_CURRENT_PAIR_NATIVE_MATRIX_AND_DYNAMIC_RESIDENT_PACKAGE_SEPARATE",
+  "core_sha256": "bcaa0836d72cefcf1ecdfba350563fb46db15021b022e66fad413705b0187f90",
+  "ui_input_sha256": "8f476d713d92a5d06e9d96db4f20721ce617cf0c13cfcd8ad045efee03f7921b",
+  "matrix_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-ui/matrix-validation-v2/report.json",
+  "matrix_cases": 12,
+  "native_dynamic_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic",
+  "gui_kernel_protection_claimed": false,
+  "isolation_scope": "Unique QA bundle+full environment/LSEnvironment; actual Core kernel proof only, GUI not claimed kernel protected",
+  "core_actual_pid_protection": {
+    "28726": {
+      "kind": "core",
+      "enforced": true,
+      "pid": 28726,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": false,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    }
+  },
+  "real_profiles_unchanged": true,
+  "progress_states": [
+    "caught-up",
+    "paused",
+    "actual200k valid-row backfill",
+    "actual discovery unknown total",
+    "actual full check indeterminate",
+    "actual missing synthetic root retry",
+    "restored synthetic root recovery"
+  ],
+  "progress_evidence_sha256": {
+    "full-check-indeterminate.ax.txt": "6b225fb3c1e51333c658d8de3df528949c78e07e57938146966dfa44bc4adaa0",
+    "mapping-real-cas-result.ax.txt": "77c59ba8c09bfc3c5b9dc7550ea9e567a3d51a3ce8d3b4f7788a7a9df1fb3a31",
+    "source-error.ax.txt": "27330a4ad6aa2a7ca3fad19a475ccaaaf3ca5816ac500514c4d4655f0bd4ea47",
+    "source-recovered.ax.txt": "1110bf9eb390649df7564348c8a205f9efc971e8d8beaba1fcc91ea55587ba3e",
+    "native-input-arrow.ax.txt": "ea497fc7469035970ab1473091775aa8b551c23fe06694947db5565b94406b1c",
+    "source-keyboard-left-settled.ax.txt": "8f6f8617c5e641be956fedb7e8d3e29464720710cf8c8f3da1a93ca00b0755a6",
+    "source-keyboard-right-space-enter.ax.txt": "c27b24ebd9601f845c98ed13f98da2940d25e2ee8406944d4b2a27d5a7b4fd51"
+  },
+  "ordinary_refresh": {
+    "result": "PASS",
+    "actual_native_clicks": 100,
+    "source_body_bytes_before": 946135168,
+    "source_body_bytes_after": 946135168,
+    "facts_before": [
+      200003,
+      600910,
+      2003420000000
+    ],
+    "facts_after": [
+      200003,
+      600910,
+      2003420000000
+    ],
+    "raw_evidence": [
+      "before-100-native-refresh.json",
+      "100-native-refresh-actions.json",
+      "after-100-native-refresh.json"
+    ]
+  },
+  "refresh_and_visibility": {
+    "result": "PASS_NATIVE_ACTIONS_AND_DATA_SYNC_CURRENT_PAIR",
+    "scenarios": [
+      {
+        "sample": "off",
+        "elapsed_ms": 887.717625,
+        "data_evidence": "x45-off-data.json",
+        "native_ax": "x45-off.ax.txt",
+        "native_image": "x45-off.jpg"
+      },
+      {
+        "sample": "5",
+        "elapsed_ms": 3067.218333,
+        "data_evidence": "x45-5-data.json",
+        "native_ax": "x45-5.ax.txt",
+        "native_image": "x45-5.jpg"
+      },
+      {
+        "sample": "10",
+        "elapsed_ms": 2663.353083,
+        "data_evidence": "x45-10-data.json",
+        "native_ax": "x45-10.ax.txt",
+        "native_image": "x45-10.jpg"
+      },
+      {
+        "sample": "30",
+        "elapsed_ms": 2204.716792,
+        "data_evidence": "x45-30-data.json",
+        "native_ax": "x45-30.ax.txt",
+        "native_image": "x45-30.jpg"
+      },
+      {
+        "sample": "60",
+        "elapsed_ms": 1325.511667,
+        "data_evidence": "x45-60-data.json",
+        "native_ax": "x45-60.ax.txt",
+        "native_image": "x45-60.jpg"
+      },
+      {
+        "sample": "page-hidden",
+        "elapsed_ms": 5285.133666,
+        "data_evidence": "x45-page-hidden-data.json",
+        "native_ax": "x45-page-hidden.ax.txt",
+        "native_image": "x45-page-hidden.jpg"
+      },
+      {
+        "sample": "window-minimized",
+        "elapsed_ms": 2813.7555,
+        "data_evidence": "x45-window-minimized-data.json",
+        "native_ax": "x45-window-minimized.ax.txt",
+        "native_image": "x45-before-minimize.jpg"
+      }
+    ],
+    "worst_ms": 5285.133666,
+    "scope": "Actual native interval/page/minimize actions followed by exact append identity + durable ACK evidence.11,004 synthetic files; formal<=1,000-file timing conditions remain separately covered by core gates/matrix. GUI kernel protection not claimed; actual core kernel proof checked every sample.",
+    "at": 1792311220.552395
+  },
+  "mapping": {
+    "apply_facts": [
+      200004,
+      601270,
+      2006840000000
+    ],
+    "revoke_facts": [
+      200003,
+      600910,
+      2003420000000
+    ],
+    "expired_preview_visible": "mapping-stale-result.jpg",
+    "actual_mapping_revision_conflict_visible": "mapping-real-cas-result.jpg",
+    "concurrent_revision_change": "mapping-real-cas-concurrent-apply.json",
+    "artifact_scope_correction": "Early files named mapping-cas-rejected.* actually record a successful queued apply after an unrelated settings revision change. They are not CAS-rejection evidence. Only mapping-real-cas-result.* plus actual mapping revision5 change prove rejection."
+  },
+  "native_pagination_and_detail": [
+    "native-page1-full.jpg",
+    "native-page2.jpg",
+    "native-detail-narrow-top.jpg",
+    "native-detail-narrow-bottom.jpg"
+  ],
+  "event_metrics": {
+    "samples": 28,
+    "dropped": 0,
+    "max_callback_or_frame_us": 15555,
+    "source_next_frames": 12,
+    "all_selection_matches": true,
+    "kinds": {
+      "model_input_apply": 2,
+      "source_callback": 12,
+      "source_next_frame": 12,
+      "source_repeat": 2
+    },
+    "raw": "event-metrics.json"
+  },
+  "input_scope": "Actual hy3 then Left then x yielded hyx3 while native progress showed193202 imported rows and34 files/6.7MiB remaining. Scope changes intentionally clear model search; raw source-actions inputRetained=false does not claim retention across a source change.",
+  "quit_scope": "Actual settings CmdQ returns0; fixture then stops headless core normally0. This is not whole resident tray application CmdQ proof.",
+  "terminal": {
+    "ui_exit_before_cleanup": 0,
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": 0,
+    "core_exit_after_cleanup": 0
+  },
+  "temporary_cleanup": {
+    "paths": [
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/home",
+        "removed": true,
+        "allocated_bytes": 413716480
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/config",
+        "removed": true,
+        "allocated_bytes": 409075712
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/review-core",
+        "removed": true,
+        "allocated_bytes": 8429568
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/WorkBuddy Proxy Review.app",
+        "removed": true,
+        "allocated_bytes": 14802944
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/tmp",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/appdata",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/localappdata",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-cache",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-config",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-data",
+        "removed": true,
+        "allocated_bytes": 0
+      },
+      {
+        "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-mapped-reader-native-dynamic/xdg-state",
+        "removed": true,
+        "allocated_bytes": 0
+      }
+    ],
+    "removed_allocated_bytes": 846024704,
+    "retained_allocated_bytes": 5533696,
+    "system_free_bytes": 51483799552,
+    "external_free_bytes": 430747758592
+  },
+  "remaining": [
+    "current private package and actual resident whole-app CmdQ",
+    "other11 matrix phases/cross-scale aggregate,27 core groups,x64,status,4 full-million resumes",
+    "final127-row audit; external platform and installation limits remain"
+  ]
+}

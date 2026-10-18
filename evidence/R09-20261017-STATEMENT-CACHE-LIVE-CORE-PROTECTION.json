@@ -1,0 +1,193 @@
+{
+  "result": "PASS_CURRENT_TARGET_CORE_ACTUAL_PID_KERNEL_PROTECTION",
+  "at": 1792242821.434835,
+  "core_sha256": "cc06ee81fb7c6e2ff7bafc935a3eef6d8effcf925512f1d9c4f680c9cf837794",
+  "phase": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-matrix/1000000-single/trial-1",
+  "actual_core_pid": 41965,
+  "command": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-statement-cache-target-xlfvhjod/tmp/workbuddy-scale-h54l9h8z/core-under-test --headless --config-dir /Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-statement-cache-target-xlfvhjod/tmp/workbuddy-scale-h54l9h8z/config",
+  "core_protection": {
+    "enforced": true,
+    "pid": 41965,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O"
+  },
+  "unsandboxed_observer_negative_control": {
+    "enforced": false,
+    "pid": 43423,
+    "sandboxed": false,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          0,
+          1
+        ],
+        "file-write-data": [
+          0,
+          1
+        ],
+        "file-write-create": [
+          0,
+          1
+        ],
+        "file-write-unlink": [
+          0,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          0,
+          1
+        ],
+        "file-write-data": [
+          0,
+          1
+        ],
+        "file-write-create": [
+          0,
+          1
+        ],
+        "file-write-unlink": [
+          0,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          0,
+          1
+        ],
+        "file-write-data": [
+          0,
+          1
+        ],
+        "file-write-create": [
+          0,
+          1
+        ],
+        "file-write-unlink": [
+          0,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O"
+  },
+  "scope": "Permission queries only, no protected file content I/O; PID attests this active phase only."
+}

@@ -1,0 +1,54 @@
+{
+  "at": 1792242557.052122,
+  "result": "BUILD_PASS_STRICT_SINGLE_1M_RUNNING_OTHER_GATES_PENDING",
+  "core_binary_sha256": "cc06ee81fb7c6e2ff7bafc935a3eef6d8effcf925512f1d9c4f680c9cf837794",
+  "core_binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-build/workbuddy-proxy",
+  "change": "Reuse five hot prepared SQL statements through bounded rusqlite connection cache; SQL/bindings/transaction boundaries unchanged. Previous candidate failure kept.",
+  "source": {
+    "file": "src/stats/workbuddy_import/store.rs",
+    "sha256": "5837e920c6493db836c4eff6fca372d74fde3847f31ed396056ed422b0d770a1"
+  },
+  "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-build/report.json",
+  "build_gates": [
+    {
+      "name": "fmt",
+      "state": "PASS"
+    },
+    {
+      "name": "tests",
+      "state": "PASS"
+    },
+    {
+      "name": "clippy",
+      "state": "PASS"
+    },
+    {
+      "name": "release",
+      "state": "PASS"
+    }
+  ],
+  "tests": 537,
+  "strict_target_coordinator": "dist/workbuddy-import-review/statement-cache-target-phase-coordinator.json",
+  "strict_target_tool_session": 38984,
+  "strict_target": {
+    "layout": "single",
+    "records": 1000000,
+    "unchanged_backfill_budget_seconds": 600,
+    "observer": "original SQL COUNT",
+    "full_matrix_pass": false
+  },
+  "prior_candidate_failure": "evidence/R09-20261017-CACHE8-SINGLE-FAILURE.json",
+  "storage": {
+    "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-build-18zu_whe",
+    "removed": true,
+    "removed_allocated_bytes": 4096,
+    "retained_artifact_bytes": 8488659,
+    "system_free_bytes": 18965045248,
+    "external_free_bytes": 338800218112
+  },
+  "acceptance_scope": "New binary requires runtime regression, full twelve-phase scale matrix, production edges, package/platform and unlocked native verification; old f402 evidence is version-specific.",
+  "changed_from_prior_build_sources": [
+    "src/stats/workbuddy_import/store.rs"
+  ],
+  "actual_core_kernel_protection": "evidence/R09-20261017-STATEMENT-CACHE-LIVE-CORE-PROTECTION.json"
+}

@@ -1,0 +1,53 @@
+{
+  "at": 1792243565.996864,
+  "result": "ACTUAL_WRITER_DIAGNOSTIC_CAPTURED_NOT_ACCEPTANCE",
+  "core_sha256": "cc06ee81fb7c6e2ff7bafc935a3eef6d8effcf925512f1d9c4f680c9cf837794",
+  "copied_synthetic_database": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-matrix/1000000-single/trial-1/usage-snapshot.sqlite3",
+  "new_actual_jsonl_facts_observed": 20864,
+  "kernel_protection_enforced": true,
+  "samples": [
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-writer-diagnostic-v2/sample-0.txt",
+      "sha256": "fb0287a9c9ec3697fae4133906b7b20bfdba701c36a997c6c08d295c4dc77468",
+      "writer_thread_samples": 2645,
+      "whole_process_fsync_samples": 1457,
+      "ratio": 0.5508506616257088,
+      "interpretation": "fsync stacks occur under stats-writer; samples are diagnostic, not throughput acceptance"
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-writer-diagnostic-v2/sample-1.txt",
+      "sha256": "b01bb2553b839791071aec4e542b85906f442707ac03a01f54385ef02c89ba46",
+      "writer_thread_samples": 2654,
+      "whole_process_fsync_samples": 1597,
+      "ratio": 0.6017332328560663,
+      "interpretation": "fsync stacks occur under stats-writer; samples are diagnostic, not throughput acceptance"
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-writer-diagnostic-v2/sample-2.txt",
+      "sha256": "d1933ddae764cf8e0f36acfbe37bd561916e29d409d03abb6e16f45866fd58ae",
+      "writer_thread_samples": 2650,
+      "whole_process_fsync_samples": 1849,
+      "ratio": 0.6977358490566038,
+      "interpretation": "fsync stacks occur under stats-writer; samples are diagnostic, not throughput acceptance"
+    }
+  ],
+  "cleanup": {
+    "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/writer-diagnostic-guard-_xv8eqtw",
+    "removed": true,
+    "remaining": [],
+    "removed_allocated_bytes": 1482776576,
+    "retained_temp_bytes": 0,
+    "lsof_exit": 1,
+    "system_free_bytes": 18971234304
+  },
+  "first_attempt_failure_preserved": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-writer-diagnostic/run.log",
+  "first_attempt_reason": "child sandbox disallowed ps at cleanup; samples preserved, outer coordinator cleaned root after child exit",
+  "next_candidate": "Restore import store byte-for-byte to f402; raise enabled PASSIVE WAL auto-checkpoint trigger from1000 to4096 frames. WAL, NORMAL sync,128-row transactions and ACK boundaries retained. Runtime impact unverified.",
+  "source_reference": {
+    "Cargo.lock_libsqlite3_sys": "0.38.2",
+    "source": "/Users/glory/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libsqlite3-sys-0.38.2/sqlite3/sqlite3.c",
+    "api_contract_line": 10330,
+    "actual_default_hook_line": 189668
+  },
+  "inference": "Frequent checkpoint fsync is a likely throughput bottleneck; stack sampling alone does not isolate exact total savings. New strict original-observer run required."
+}

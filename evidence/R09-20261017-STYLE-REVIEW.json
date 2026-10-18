@@ -1,0 +1,115 @@
+{
+  "method": "rustfmt indentation based candidate scan; listed functions require manual boundary/content review, not AST proof",
+  "functions_over_80_candidates": [
+    {
+      "file": "src/stats/workbuddy_import/classify.rs",
+      "name": "classify_contract_check",
+      "start": 305,
+      "end": 441,
+      "nonblank_noncomment_lines": 122,
+      "review_conclusion": "启动合成分类契约自检；固定输入/固定错误码，无用户历史推断。逐组断言保留，非每批读文件或转发路径；接受自检长度例外。",
+      "source_sha256": "ec3843de49c5b83746a305a843e7f8e50d71ebdacad46251cef4fd6ebdcce2e5"
+    },
+    {
+      "file": "src/stats/workbuddy_import/mod.rs",
+      "name": "channel_contract_check",
+      "start": 1180,
+      "end": 1279,
+      "nonblank_noncomment_lines": 95,
+      "review_conclusion": "启动固定容量/非阻塞/ACK窗口自检；固定消息数，无源文件和DB I/O。接受合成自检长度例外，不作为实际运行时队列峰值证据。",
+      "source_sha256": "4782eecc792bfc6ec467a5f87b2eb508e70b442f4fd16fb818dd575d4a6ad6d3"
+    },
+    {
+      "file": "src/stats/workbuddy_import/normalize.rs",
+      "name": "normalize_cache_and_reasoning",
+      "start": 228,
+      "end": 332,
+      "nonblank_noncomment_lines": 92,
+      "review_conclusion": "逐项复核三组固定优先级别名和三种子集约束；无循环随输入增长、I/O或数据库操作，所有分支在同一usage上先验证后赋值。保留相邻决策表以便核对read/write/reasoning不重复计入；接受本轮超80行例外。",
+      "source_sha256": "e3e87ec416bec3b4fb0f68a77c04c67336b775489fd693ba766e2c07075747ea"
+    },
+    {
+      "file": "src/stats/workbuddy_import/normalize.rs",
+      "name": "normalize_contract_check",
+      "start": 442,
+      "end": 539,
+      "nonblank_noncomment_lines": 98,
+      "review_conclusion": "启动固定Token/积分边界自检，直接调用生产纯函数；接受合成自检长度例外，不代替黄金端到端。",
+      "source_sha256": "e3e87ec416bec3b4fb0f68a77c04c67336b775489fd693ba766e2c07075747ea"
+    },
+    {
+      "file": "src/stats/workbuddy_import/parser.rs",
+      "name": "parser_contract_check",
+      "start": 364,
+      "end": 483,
+      "nonblank_noncomment_lines": 119,
+      "review_conclusion": "启动白名单/角色/身份/隐私合成自检；固定字面量，不接触用户正文。接受合成自检长度例外。",
+      "source_sha256": "678402e4757384fce417f7362a5c307ccfd9ee5a06c671a6e3ab6782203cd4ff"
+    },
+    {
+      "file": "src/stats/workbuddy_import/reader.rs",
+      "name": "reader_contract_check",
+      "start": 981,
+      "end": 1232,
+      "nonblank_noncomment_lines": 237,
+      "review_conclusion": "启动读取边界合成自检，纯决策及不存在的probe根；长表含固定路径、指纹、完整行/截断边界，非真实扫描工作循环。接受自检长度例外；该函数执行固定probe的元数据访问，不能把它描述成完全无系统调用。",
+      "source_sha256": "98c043c01bd3a52718be5eb3850f743f0c834225066ae0145915736bf5525425"
+    },
+    {
+      "file": "src/stats/workbuddy_import/store.rs",
+      "name": "commit_batch",
+      "start": 1424,
+      "end": 1512,
+      "nonblank_noncomment_lines": 87,
+      "review_conclusion": "逐项复核Settings CAS、幂等/冲突/墓碑分支、事实+账本写入和最后checkpoint ACK；全部借用同一Transaction，任一?中止调用者事务。保留一个可审查的原子事务流程，未添加第二连接或提前ACK；接受本轮超80行例外。",
+      "source_sha256": "98bd3b97999cd57110ae03447cbd08bb70c25f57690ef814a34fb06606950e18"
+    },
+    {
+      "file": "src/stats/workbuddy_import/store.rs",
+      "name": "mapping_contract_check",
+      "start": 1593,
+      "end": 1895,
+      "nonblank_noncomment_lines": 285,
+      "review_conclusion": "启动内存schema/事务/归属/墓碑合成自检；Connection::open_in_memory创建独立内存库，不打开用户数据库。接受固定自检长度例外，不将其当真实来源配置接线证据。",
+      "source_sha256": "98bd3b97999cd57110ae03447cbd08bb70c25f57690ef814a34fb06606950e18"
+    }
+  ],
+  "scope": "本机自审：新导入模块及新增UI子模块；不是独立外部代码审核。候选扫描不证明所有修改后的既有巨型文件均符合目标。",
+  "module_exceptions": [
+    {
+      "file": "classify.rs",
+      "total_lines": 1007,
+      "reason": "分类/纯匹配部分442行；余下为内联合成测试，保留同处审查边界。"
+    },
+    {
+      "file": "normalize.rs",
+      "total_lines": 1221,
+      "reason": "规范化生产及启动自检540行；其余内联优先级/整数/积分测试。"
+    },
+    {
+      "file": "parser.rs",
+      "total_lines": 1270,
+      "reason": "生产/启动自检621行，包含显式serde白名单类型和身份hash；余下内联语法/隐私测试。接受21行及测试共置例外。"
+    },
+    {
+      "file": "reader.rs",
+      "total_lines": 2585,
+      "reason": "生产/自检1233行，含限制发现、指纹、完整行及优先队列等共用边界；真实调度/文件事务已独立runtime/worker子模块。接受底层组件与内联边界测试共置例外；没有以allow绕过。"
+    },
+    {
+      "file": "store.rs",
+      "total_lines": 4025,
+      "reason": "生产/内存自检1896行；同一schema的账本、checkpoint、归属、设置、批次事务共用调用者Transaction。内存契约自检和大批内联故障测试保留。接受事务边界在同模块便于核对的例外，不把总行数称小于600。"
+    },
+    {
+      "file": "mod.rs",
+      "total_lines": 1976,
+      "reason": "导入公共状态/命令DTO、通道/ACK/调度契约与启动自检仍集中；实际worker/writer/文件/调度/历史/归属任务已拆分。接受公共契约及内联测试共置例外；启动自检仍为生产可达函数，不能全部按测试排除。"
+    },
+    {
+      "file": "types.rs",
+      "total_lines": 878,
+      "reason": "共享常量、受限枚举/DTO、文档与序列化契约自检；无用户源文件/数据库I/O。接受共享合同类型集中及内联测试例外。"
+    }
+  ]
+}

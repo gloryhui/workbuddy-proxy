@@ -1,0 +1,58 @@
+{
+  "spec_version": "1.0",
+  "baseline_commit": "6102b779871bab0bb8ad646dac5004892adf76be",
+  "branch": "codex/workbuddy-usage-import",
+  "schema_version": 6,
+  "stats_api_version": 2,
+  "control_protocol": 10,
+  "files": {
+    "src/stats/mod.rs": "877ac20a98c865af409bcf1cf607d9ff315cb0de7e5f90703e8f03c2a9fe801c",
+    "src/stats/store.rs": "19ac3ed431d94465384b1257aeb7fe369cc5c71998b3629e3b667670ef340bdd",
+    "src/stats/query.rs": "47f7febaa0e68efd654844e38050c817a119bb206bf80bd0d279d65443ed5291",
+    "src/stats/dto.rs": "c98172a80e6cdcd60031cbd6c64eaadd195c0872d7b017fcb74680c88b9fb2cb",
+    "src/stats/event.rs": "85bd2999efe845998535169289267155051a6206fa97ad2c08c8440f6f9bc6e8",
+    "src/stats/collector.rs": "9be9f19012f0b3371208c07454bd5394cd68be2d9f4c6f2f1fc747752069d2b1",
+    "src/stats/pricing.rs": "91429fc78ebf8c96b20efc4ef6f9ed874d250ceb79e2c6007f163651e9ce6f93",
+    "src/workbuddy.rs": "e613b0426fb4a924d7618419816734dcdd046a3d4e3c139e9055ad869b100fb1",
+    "src/config.rs": "eae0b4ac1ee00115bb7ab795546dd294eb51d94236259f7649e85dfa96e9809f",
+    "src/proxy.rs": "b7e90327ee8e94e79b6b42788cab8ff2e0c2c8d56f30b190fc8501d946784eaf",
+    "src/main.rs": "38cc479787d6cd628dde6b3ae0dd6c3de01e4a9b17f98a85f46b57403ad281b2",
+    "src/frontend.rs": "bde92ca0bf1008d474e3de27b09a1786d050e2228160db91c2ed29808f70c23b",
+    "src/session.rs": "bd7dc1392e36bd3cc58ac7612ca5cd9670b12184d85cb4aa9be634c5d1ce6424",
+    "gpui/src/statistics.rs": "dadeb738a68566337a768e4d9de02d5adb65e161cb6392e491da1a0862c9acf8",
+    "gpui/src/stats_backend.rs": "f54ea60439f79250df9c8e9480bdb23c91ef7256891c65def3bfe5adf454e91d",
+    "gpui/src/stats_controller.rs": "b0594ab1908c42eda0292e45d6c00880de24262da12154670b90db3be70bc24a",
+    "gpui/src/usage_table.rs": "1af4cefe1f0ef1f507b98b501cbb38ff04f52e4f388c5217763cc884678d44a7",
+    "gpui/src/usage_chart.rs": "815beb375f8482144ff440fa6121b6d020fc3d323619b930b27e6192fab420e8",
+    "gpui/src/main.rs": "fcb99c5fa002dfa1dbed3858ef2a5be52279533550ff163947fa2928d90a6b8a",
+    "scripts/core_compatibility.py": "d434c800fe593c382c165982ab83ad693d12338433105877a17b5e3ca01ec2c6",
+    ".github/workflows/ci.yml": "fa75ed771f3f1184cc219f717d08b9ecf1284e3ca29c0acc3eb0b468aa922d24",
+    ".github/workflows/desktop.yml": "203c1b4b19d42f9670d4f922b02dd967945620cd450b76cc54823c033c776b1e",
+    "src/stats/migrations/0001.sql": "fad75e10e47a526fb19af8ceaec5135bc673b638c929bd2de171b9cf1d3307dc",
+    "src/stats/migrations/0002.sql": "87d0885a516a2fc68f405e26f32754b33bfde3902d35807b24573b0c1da9a899",
+    "src/stats/migrations/0003.sql": "1234fd8c91bcc6affa67fd8122b88a390c88a6a4b6ebd2493f46183244b7b488",
+    "src/stats/migrations/0004.sql": "7b220222983ed189bf6bd9a81d8390b38e632e8f21cf1305b95653a8128bf897",
+    "src/stats/migrations/0005.sql": "33ceefa977a9e107fc2b5da667430652959d7366645e8e74220e6b2cfe6f14a0",
+    "src/stats/migrations/0006.sql": "bbd8a083a1abcfc8fc845641e7c92ef7f65f36d00d7d3d4d3bde1a6babde6a71",
+    "scripts/gpui_package_test.py": "7f23f52b1c6c21762d3a574a10f858fc351d6832e0261690fc5368da57739e5f",
+    "scripts/statistics_test.py": "c817905250ca94fc8228759a28687943275a594bd6df9662668b15b21a276ada"
+  },
+  "observed_local_workbuddy": {
+    "sqlite_session_usage_rows": 13,
+    "sqlite_request_summary_table_found": false,
+    "jsonl_usage_path": "providerData.rawUsage",
+    "normalized_usage_path": "providerData.usage",
+    "record_types_with_usage": [
+      "message",
+      "function_call"
+    ],
+    "record_identity_fields": [
+      "sessionId",
+      "providerData.messageId"
+    ],
+    "request_model_field": "providerData.requestModelId",
+    "response_model_field": "providerData.model",
+    "observation_date": "2026-10-16",
+    "privacy": "No original conversations, account IDs, credentials, or file paths copied."
+  }
+}

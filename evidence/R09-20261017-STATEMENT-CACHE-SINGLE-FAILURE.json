@@ -1,0 +1,35 @@
+{
+  "at": 1792243304.049324,
+  "result": "FAIL_UNCHANGED_600_SECONDS_SINGLE_1M_BACKFILL",
+  "core_sha256": "cc06ee81fb7c6e2ff7bafc935a3eef6d8effcf925512f1d9c4f680c9cf837794",
+  "report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-matrix/1000000-single/trial-1/report.json",
+  "facts": {
+    "imported": 689726,
+    "proxy": 408,
+    "checkpoint_offset": 740765724,
+    "source_size": 1074000000,
+    "source_error": null
+  },
+  "phase_cleanup": {
+    "children_stopped_before_cleanup": true,
+    "external_disk_available_bytes": 337463676928,
+    "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-statement-cache-target-xlfvhjod/tmp/workbuddy-scale-h54l9h8z",
+    "removed": true,
+    "removed_logical_bytes": 2707588432,
+    "retained_evidence_bytes": 1314504704,
+    "system_disk_available_bytes": 18977722368
+  },
+  "outer_cleanup": {
+    "at": 1792243227.963428,
+    "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-statement-cache-target-xlfvhjod",
+    "processes": [],
+    "lsof_exit": 1,
+    "removed": true,
+    "removed_allocated_bytes": 2154496,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 18974539776
+  },
+  "interpretation": "No measured improvement; throughput differs from prior run, so do not infer a causal regression or fix from uncontrolled whole-run variance. Actual-writer stack diagnostic on a disposable copy is underway; no acceptance claim.",
+  "diagnostic": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-statement-cache-writer-diagnostic",
+  "serial_queue": "stopped without downstream execution"
+}

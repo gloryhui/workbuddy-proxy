@@ -1,0 +1,14 @@
+{
+  "at": 1792308722.078717,
+  "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-fact-handoff-v2-matrix/core-under-test",
+  "ownership_evidence": "dist/workbuddy-import-review/fact-handoff-v2-target-phase-coordinator.json",
+  "terminal_state": "FAIL_TARGET_PHASE",
+  "removed": true,
+  "sha256": "6b1ca331b61c83e6b9dfee85943cb71c6cb084ec8383ceb9e7db842c96300fda",
+  "live_references": [],
+  "lsof_returncode": 1,
+  "session_temp_allocated_bytes": 3036147712,
+  "system_free_bytes": 51550232576,
+  "external_free_bytes": 429662081024,
+  "released_allocated_bytes": 8429568
+}

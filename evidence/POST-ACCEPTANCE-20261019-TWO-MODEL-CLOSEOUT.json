@@ -1,0 +1,112 @@
+{
+  "status": "CLOSED_VERIFIED_AND_INSTALLED_LOCALLY",
+  "updated_at": "2026-10-19T00:46:32.075715+08:00",
+  "head": "6102b779871bab0bb8ad646dac5004892adf76be",
+  "policy": {
+    "model_categories": [
+      "builtin",
+      "custom"
+    ],
+    "model_creator_not_classified": true,
+    "all_custom_logs_import_automatically": true,
+    "cross_source_precedence": "native proxy fact wins on exact hashed WorkBuddy session/message identity",
+    "correlation_headers": [
+      "X-Conversation-ID",
+      "X-Conversation-Message-ID"
+    ],
+    "no_fuzzy_timestamp_model_token_matching": true,
+    "legacy_model_exclusion_rules_inactive": true,
+    "legacy_proxy_without_correlation": "Cannot reconstruct an exact link; no such native facts in this real database."
+  },
+  "versions": {
+    "app": "0.5.6",
+    "schema": 8,
+    "api": 4,
+    "control_protocol": 12
+  },
+  "validation": {
+    "core_tests": 551,
+    "ui_tests": 137,
+    "fmt_and_clippy": "PASS for both components",
+    "v7_92_exclusions_to_v8_automatic_restore": "PASS; copied files/full scan/restart idempotent",
+    "cross_source_orders": [
+      "native-first",
+      "log-first"
+    ],
+    "bounded_130_namespace_resume": "PASS",
+    "native_UI_resolution": [
+      1440,
+      900
+    ],
+    "native_UI": "PASS; all 2920=builtin120+custom2800, native precedence 2 duplicates",
+    "real_UI": "PASS; last 7 days custom filter shows 92 and opens details",
+    "scope_limit": "New functional/migration/native UI/real-data checks; previous million-row/HDD/platform results are not promoted to this source."
+  },
+  "builds": {
+    "core": {
+      "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-build-v7/workbuddy-proxy",
+      "sha256": "24826a5233aaf2904052d554798b437072f84d441a4588c07449909e34b1242b"
+    },
+    "ui": {
+      "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-final-ui-v5/workbuddy-proxy-gpui",
+      "sha256": "0c53dadce6a172f626593c0c9a09aad703406e79c2990af02492c1b9dbe7c469"
+    },
+    "core_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-build-v7/report.json",
+    "ui_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-final-ui-v5/report.json"
+  },
+  "recovery": {
+    "before": {
+      "schema": 7,
+      "facts": {
+        "workbuddy_builtin": 49
+      },
+      "ledger": {
+        "excluded_proxy": 92,
+        "imported": 49
+      }
+    },
+    "after": {
+      "schema": 8,
+      "facts": {
+        "workbuddy_builtin": 49,
+        "workbuddy_custom": 92
+      },
+      "ledger": {
+        "imported": 141
+      }
+    },
+    "restored": {
+      "records": 92,
+      "input_tokens": 5160361,
+      "output_tokens": 78889,
+      "total_tokens": 5239250,
+      "credit_nanos": null,
+      "original_fact_rows_preserved": 49,
+      "normalized_hashes_unchanged": true
+    },
+    "restart_idempotent": true,
+    "backup": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-real-recovery/before",
+    "private_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-real-recovery/report.json",
+    "real_UI_proof": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-real-recovery/ui-acceptance.json",
+    "installed_app": "/Applications/WorkBuddy Proxy.app",
+    "test_processes_stopped": true
+  },
+  "cleanup": {
+    "checked_at": 1792341912.887879,
+    "verified_released_bytes_at_least": 48783360,
+    "superseded_ui_binary_removed": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-final-ui-v4/workbuddy-proxy-gpui",
+    "superseded_ui_release_bytes": "not included in conservative measured total",
+    "session_tmp_removed": true,
+    "session_temp_residual_bytes": 0,
+    "system_free_bytes": 50931400704,
+    "retained": "Final tested core/UI binaries, scripts, reports, screenshots and private rollback backup. Unknown-ownership system temp preserved."
+  },
+  "no_commit_push_merge_publish": true,
+  "local_installation_package": {
+    "dmg": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-local-dmg/workbuddy-proxy-0.5.6-two-model-dedup-20261019-macos-arm64.dmg",
+    "dmg_sha256": "bc536a6ab5d3bd25e678f2ee0b2a510fa20200989e27f36976e2608dd60f0e74",
+    "dmg_bytes": 18010966,
+    "verification_method": "checksum-verified DMG, read-only archive extraction of encoded HFS layout, signed payload code identity; OS Finder mount remains unverified due permission denial",
+    "verification_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261019-two-model-local-dmg/verification-report.json"
+  }
+}

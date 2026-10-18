@@ -1,0 +1,44 @@
+{
+  "at": 1792244914.155342,
+  "result": "BUILD_PASS_DIAGNOSTIC_RUNNING_STRICT_NOT_RUN",
+  "core_sha256": "2498694278279c43484f39eddd5fd41024ad39445095fb6de226e439c224636d",
+  "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-build/workbuddy-proxy",
+  "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-cache16-wal16k-build/report.json",
+  "core_tests": 537,
+  "gates": [
+    {
+      "name": "fmt",
+      "state": "PASS"
+    },
+    {
+      "name": "tests",
+      "state": "PASS"
+    },
+    {
+      "name": "clippy",
+      "state": "PASS"
+    },
+    {
+      "name": "release",
+      "state": "PASS"
+    }
+  ],
+  "change": "Sole-writer page cache16MiB, enabled PASSIVE checkpoint16384 frames (~64MiB at4KiB/page; not hard WAL cap), preserve WAL/NORMAL/128-item transactions/ACK. No source SQL statement caching remains.",
+  "prior_failed_target": "evidence/R09-20261017-WAL4K-SINGLE-FAILURE.json",
+  "controlled_diagnostic": "evidence/R09-20261017-WRITER-CHECKPOINT-AB.json",
+  "diagnostic_queue": "dist/workbuddy-import-review/cache16-wal16k-diagnostic-queue-coordinator.json",
+  "runtime_acceptance": "NOT_RUN",
+  "cleanup": {
+    "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/workbuddy-cache8-build-xu2t5c9l",
+    "removed": true,
+    "removed_allocated_bytes": 4096,
+    "retained_artifact_bytes": 8488659,
+    "system_free_bytes": 19008905216,
+    "external_free_bytes": 335974543360
+  },
+  "runtime_followup": {
+    "result": "FAIL_SINGLE_MILLION600S_BACKFILL",
+    "evidence": "evidence/R09-20261017-CACHE16-WAL16K-SINGLE-FAILURE.json",
+    "build_gates_remain_version_specific_pass": true
+  }
+}

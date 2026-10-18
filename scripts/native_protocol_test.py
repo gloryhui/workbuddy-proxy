@@ -324,7 +324,7 @@ def main():
             (folder / 'config.json').write_text(dumps(config))
             process, log, health = t.start_core(args.exe, folder, port)
             try:
-                assert health['control_protocol'] == 10
+                assert health['control_protocol'] == 12
                 t.wait_for(lambda: t.stats(folder, port, 'stats_health')['state'] == 'ready', 'stats ready')
                 for i, protocol in enumerate(PROTOCOLS):
                     t.stats(folder, port, 'stats_price_save', provider_id='provider-%s' % i, upstream_model=providers[i]['models'][0]['model'],
@@ -360,7 +360,7 @@ def main():
                         return db.execute("SELECT COUNT(*) FROM usage_requests WHERE outcome='completed'").fetchone()[0] == 18
                 t.wait_for(recorded, 'all native request finishes persisted')
                 with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
-                    assert db.execute('PRAGMA user_version').fetchone()[0] == 6
+                    assert db.execute('PRAGMA user_version').fetchone()[0] == 8
                     rows = db.execute("SELECT upstream_protocol,input_tokens,output_tokens,total_tokens,input_breakdown,input_uncached_tokens FROM usage_requests WHERE outcome='completed'").fetchall()
                     assert len(rows) == 18 and set(r[0] for r in rows) == set(PROTOCOLS)
                     assert all(r[1:4] == (100, 20, 120) for r in rows), rows

@@ -5,7 +5,7 @@
 //! window. Everything here is driven by `statistics.rs`; it is not a parallel
 //! implementation kept only for tests.
 
-use crate::stats_dto::{Currency, GroupBy, InputMode, PriceRuleDto, SortMetric};
+use crate::stats_dto::{Currency, GroupBy, InputMode, PriceRuleDto, SortMetric, SourceScope};
 use serde_json::{Value, json};
 
 /// Reject invalid drafts without modifying the last range applied to reports.
@@ -82,6 +82,262 @@ impl QueryIdentity {
 pub struct ReplyGate {
     identity: Option<QueryIdentity>,
     seq: u64,
+    /// Shared with the import panel: bounds how often a running scan is polled.
+    scan_poll: ScanPollBudget,
+}
+
+/// Bounds the polling a running scan may cause.
+///
+/// A scan is asynchronous, so a page has to ask again to see it finish. The
+/// budget makes that finite: the read gate spends one poll per issued read, and
+/// once the budget is gone the page keeps showing the last known state instead
+/// of turning a slow scan into an endless stream of requests.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ScanPollBudget {
+    remaining: u32,
+}
+
+impl ScanPollBudget {
+    /// The most polls one scan may cause.
+    pub const MAX_POLLS: u32 = 60;
+
+    /// A fresh budget.
+    pub fn new() -> Self {
+        Self {
+            remaining: Self::MAX_POLLS,
+        }
+    }
+
+    /// True when another poll may be issued; consumes one.
+    pub fn next_poll(&mut self) -> bool {
+        if self.is_exhausted() {
+            return false;
+        }
+        self.remaining -= 1;
+        true
+    }
+
+    /// True when the budget is spent.
+    pub fn is_exhausted(&self) -> bool {
+        self.remaining == 0
+    }
+}
+
+impl Default for ScanPollBudget {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+/// The capture-method choices in the advanced filter (U05).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum CaptureChoice {
+    /// Every capture method.
+    #[default]
+    All,
+    /// Requests this proxy relayed.
+    Proxy,
+    /// Records read out of a WorkBuddy log.
+    WorkbuddyImport,
+}
+
+impl CaptureChoice {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::All => "all",
+            Self::Proxy => "proxy",
+            Self::WorkbuddyImport => "workbuddy",
+        }
+    }
+}
+
+/// The advanced capture filter, kept consistent with the source scope.
+///
+/// The two controls constrain each other: under the built-in source the capture
+/// method can only be "WorkBuddy import", so the dropdown is shown that way and
+/// disabled, and a proxy value that the source hides is **cleared** rather than
+/// kept in secret. Switching back does not restore it — the hidden condition is
+/// gone for good, which is what the spec asks for.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct CaptureFilter {
+    choice: CaptureChoice,
+    include_tests: bool,
+}
+
+impl CaptureFilter {
+    /// True when test connections may be included at all.
+    ///
+    /// They are only ever meaningful for the proxy's own traffic, so the switch
+    /// is unavailable under the built-in source and under the import capture.
+    pub fn include_tests_available(&self, scope: SourceScope) -> bool {
+        scope != SourceScope::Builtin && self.displayed(scope) != CaptureChoice::WorkbuddyImport
+    }
+
+    /// Applies a new source scope, clearing whatever that scope hides.
+    ///
+    /// Returns true when something changed, which means the page must
+    /// re-request. The hidden value is **dropped**, not remembered: switching
+    /// back does not restore it.
+    pub fn reconcile(&mut self, scope: SourceScope) -> bool {
+        let mut changed = false;
+        if scope == SourceScope::Builtin && self.choice == CaptureChoice::Proxy {
+            self.choice = CaptureChoice::All;
+            changed = true;
+        }
+        if !self.include_tests_available(scope) && self.include_tests {
+            self.include_tests = false;
+            changed = true;
+        }
+        changed
+    }
+
+    /// The choice sent to the core: a locked dropdown always sends `all` and
+    /// lets the source scope do the restricting.
+    pub fn effective(&self, scope: SourceScope) -> CaptureChoice {
+        if self.is_locked(scope) {
+            CaptureChoice::All
+        } else {
+            self.choice
+        }
+    }
+}
+
+/// The source-confirmation flow for one model.
+///
+/// The dialog lives here rather than in the view because a filter change
+/// invalidates it: a preview describes an interval and a rule revision, and both
+/// stop being meaningful the moment the page moves on.
+#[derive(Clone, Debug, Default)]
+pub struct MappingFlow {
+    dialog: Option<crate::workbuddy_import::MappingDialog>,
+}
+
+impl MappingFlow {
+    /// True while a dialog is open.
+    pub fn is_open(&self) -> bool {
+        self.dialog.is_some()
+    }
+
+    /// The open dialog, if any.
+    pub fn dialog(&self) -> Option<&crate::workbuddy_import::MappingDialog> {
+        self.dialog.as_ref()
+    }
+
+    /// Opens the dialog for a model.
+    pub fn open(&mut self, model_id: &str) -> &mut crate::workbuddy_import::MappingDialog {
+        self.dialog = Some(crate::workbuddy_import::MappingDialog::new(model_id));
+        self.dialog.as_mut().expect("just set")
+    }
+
+    /// Closes the dialog. Any preview it held goes with it.
+    pub fn close(&mut self) {
+        if self.is_open() {
+            self.dialog = None;
+        }
+    }
+}
+
+/// What a filter change implies for the page.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum FilterChange {
+    /// Outstanding reads were invalidated and pagination was reset; the page
+    /// may now issue exactly one request. A click on the option that was already
+    /// selected produces **no** change at all, so no request follows.
+    Invalidated,
+}
+
+/// Applies filter changes in the only order that keeps a page consistent.
+///
+/// A change first invalidates every outstanding reply, then resets pagination,
+/// and only then allows **one** new request. Doing it in any other order is how
+/// a slow reply for the previous filters ends up painted over the new ones, or
+/// how a single click produces a burst of requests.
+#[derive(Clone, Debug, Default)]
+pub struct FilterCoordinator {
+    generation: u64,
+    request_pending: bool,
+    /// The source-confirmation flow, closed whenever the page moves on.
+    mapping: MappingFlow,
+}
+
+impl FilterCoordinator {
+    /// A coordinator that has not seen a change yet.
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// The current filter generation.
+    pub fn generation(&self) -> u64 {
+        self.generation
+    }
+
+    /// Records a change and says what the caller must do.
+    pub fn change(&mut self) -> FilterChange {
+        self.generation += 1;
+        self.request_pending = true;
+        // A preview belongs to the page it was taken on, so moving on closes it.
+        self.mapping.close();
+        FilterChange::Invalidated
+    }
+
+    /// Compatibility model used by startup checks.
+    pub fn mapping(&mut self) -> &mut MappingFlow {
+        &mut self.mapping
+    }
+
+    /// Takes the one request owed for the last change.
+    pub fn take_request(&mut self) -> bool {
+        std::mem::take(&mut self.request_pending)
+    }
+}
+
+impl CaptureFilter {
+    /// A filter with every capture method and no test rows.
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// Sets the choice without going through the UI rules.
+    ///
+    /// Used by the startup checks and tests to reach a state the user could
+    /// also reach; the interactive path goes through `reconcile`.
+    #[cfg(test)]
+    pub fn set_choice_for_test(&mut self, choice: CaptureChoice) {
+        self.choice = choice;
+    }
+
+    pub fn select(&mut self, choice: CaptureChoice, scope: SourceScope) -> bool {
+        if self.is_locked(scope) || self.choice == choice {
+            return false;
+        }
+        self.choice = choice;
+        self.reconcile(scope);
+        true
+    }
+
+    pub fn set_include_tests(&mut self, enabled: bool, scope: SourceScope) {
+        self.include_tests = enabled && self.include_tests_available(scope);
+    }
+
+    /// True when test connections are included.
+    pub fn include_tests(&self) -> bool {
+        self.include_tests
+    }
+
+    /// True when the dropdown must be shown disabled.
+    pub fn is_locked(&self, scope: SourceScope) -> bool {
+        scope == SourceScope::Builtin
+    }
+
+    /// The choice actually shown: under the built-in source the only sensible
+    /// answer is the import itself.
+    pub fn displayed(&self, scope: SourceScope) -> CaptureChoice {
+        if self.is_locked(scope) {
+            CaptureChoice::WorkbuddyImport
+        } else {
+            self.choice
+        }
+    }
 }
 
 impl ReplyGate {
@@ -95,6 +351,9 @@ impl ReplyGate {
         cursor: Option<String>,
     ) -> QueryIdentity {
         self.seq += 1;
+        // Every issued read spends one poll from the scan budget, so a page that
+        // keeps asking about a running scan runs out instead of polling forever.
+        self.scan_poll.next_poll();
         let identity = QueryIdentity::new(filter_generation, tab, group_by, sort, cursor, self.seq);
         self.identity = Some(identity.clone());
         identity
@@ -795,5 +1054,179 @@ mod tests {
         assert!(!stack.can_go_back());
         assert!(!stack.can_go_next());
         assert_eq!(stack.current, None);
+    }
+}
+
+#[cfg(test)]
+mod scan_budget_tests {
+    use super::*;
+
+    #[test]
+    fn a_running_scan_cannot_be_polled_forever() {
+        // AC062: the polls a scan may cause are bounded, so a slow scan cannot
+        // turn into an endless stream of requests.
+        let mut budget = ScanPollBudget::new();
+        let mut polls = 0;
+        while budget.next_poll() {
+            polls += 1;
+        }
+        assert_eq!(polls, ScanPollBudget::MAX_POLLS as i32);
+        assert!(budget.is_exhausted());
+        assert!(
+            !budget.next_poll(),
+            "a spent budget never yields another poll"
+        );
+    }
+
+    #[test]
+    fn the_read_gate_spends_the_budget_it_owns() {
+        // The budget is not decoration: every issued read consumes one poll.
+        let mut gate = ReplyGate::default();
+        assert_eq!(gate.scan_poll.remaining, ScanPollBudget::MAX_POLLS);
+        for expected in 1..=3 {
+            gate.issue(
+                1,
+                StatsTab::Rows,
+                GroupBy::Model,
+                SortMetric::TotalTokens,
+                None,
+            );
+            assert_eq!(
+                gate.scan_poll.remaining,
+                ScanPollBudget::MAX_POLLS - expected,
+                "each read spends exactly one poll"
+            );
+        }
+    }
+
+    #[test]
+    fn a_stale_reply_cannot_overwrite_a_newer_read() {
+        // AC062: switching the source (or any filter) issues a new identity, so
+        // a reply that is still in flight for the old one is refused.
+        let mut gate = ReplyGate::default();
+        let old = gate.issue(
+            1,
+            StatsTab::Rows,
+            GroupBy::Model,
+            SortMetric::TotalTokens,
+            None,
+        );
+        assert!(gate.may_apply_seq(old.seq));
+
+        let new = gate.issue(
+            2,
+            StatsTab::Rows,
+            GroupBy::Model,
+            SortMetric::TotalTokens,
+            None,
+        );
+        assert!(gate.may_apply_seq(new.seq));
+        assert!(
+            !gate.may_apply_seq(old.seq),
+            "the slow reply for the previous source is dropped"
+        );
+
+        // Invalidating without issuing also drops everything in flight.
+        gate.invalidate();
+        assert!(!gate.may_apply_seq(new.seq));
+    }
+}
+
+#[cfg(test)]
+mod filter_change_tests {
+    use super::*;
+
+    #[test]
+    fn a_change_invalidates_first_and_then_owes_exactly_one_request() {
+        // AC067: the order is fixed — invalidate, reset pagination, then one
+        // request. A second take finds nothing owed, so a single change cannot
+        // turn into a burst.
+        let mut coordinator = FilterCoordinator::new();
+        assert_eq!(coordinator.generation(), 0);
+        assert_eq!(coordinator.change(), FilterChange::Invalidated);
+        assert_eq!(coordinator.generation(), 1);
+        assert!(coordinator.take_request(), "the change owes one request");
+        assert!(!coordinator.take_request(), "and only one");
+        coordinator.change();
+        assert_eq!(coordinator.generation(), 2);
+        assert!(coordinator.take_request());
+    }
+
+    #[test]
+    fn clicking_the_option_that_is_already_selected_changes_nothing() {
+        // AC067: the component refuses the click, so no generation is opened and
+        // no request can follow.
+        use crate::stats_dto::SourceScope;
+        let mut source = crate::source_filter::SourceFilter::new();
+        let coordinator = FilterCoordinator::new();
+        assert_eq!(
+            source.select(SourceScope::All),
+            crate::source_filter::SelectionOutcome::Unchanged
+        );
+        assert_eq!(coordinator.generation(), 0, "nothing was invalidated");
+    }
+
+    #[test]
+    fn switching_to_builtin_drops_the_hidden_proxy_value_for_good() {
+        // AC067: the value the new scope hides is cleared, and switching back
+        // does not bring it back.
+        let mut capture = CaptureFilter::new();
+        capture.set_choice_for_test(CaptureChoice::Proxy);
+        assert_eq!(capture.displayed(SourceScope::All), CaptureChoice::Proxy);
+
+        assert!(
+            capture.reconcile(SourceScope::Builtin),
+            "the hidden value is cleared"
+        );
+        assert_eq!(
+            capture.displayed(SourceScope::Builtin),
+            CaptureChoice::WorkbuddyImport
+        );
+        assert!(capture.is_locked(SourceScope::Builtin));
+
+        // Back to "all": the dropdown is usable again, but stays on the default.
+        assert!(
+            !capture.reconcile(SourceScope::All),
+            "nothing left to clear"
+        );
+        assert_eq!(capture.displayed(SourceScope::All), CaptureChoice::All);
+    }
+
+    #[test]
+    fn the_test_switch_is_cleared_the_moment_it_becomes_unavailable() {
+        // The switch is only meaningful for the proxy's own traffic, and it
+        // never reads as on where it cannot be used.
+        let capture = CaptureFilter::new();
+        assert!(capture.include_tests_available(SourceScope::All));
+        assert!(capture.include_tests_available(SourceScope::Supplier));
+        assert!(
+            !capture.include_tests_available(SourceScope::Builtin),
+            "the built-in source has no test connections"
+        );
+        assert!(!capture.include_tests(), "and the switch starts off");
+
+        let mut imported = CaptureFilter::new();
+        imported.set_choice_for_test(CaptureChoice::WorkbuddyImport);
+        assert!(!imported.include_tests_available(SourceScope::All));
+        assert!(!imported.include_tests());
+    }
+
+    #[test]
+    fn a_locked_dropdown_refuses_a_change() {
+        let locked = CaptureFilter::new();
+        assert!(locked.is_locked(SourceScope::Builtin));
+        assert_eq!(locked.effective(SourceScope::Builtin), CaptureChoice::All);
+    }
+
+    #[test]
+    fn the_effective_choice_lets_the_source_do_the_restricting() {
+        let mut capture = CaptureFilter::new();
+        capture.set_choice_for_test(CaptureChoice::Proxy);
+        assert_eq!(capture.effective(SourceScope::All), CaptureChoice::Proxy);
+        assert_eq!(
+            capture.effective(SourceScope::Builtin),
+            CaptureChoice::All,
+            "a locked dropdown sends all and lets the scope restrict"
+        );
     }
 }

@@ -1,0 +1,404 @@
+{
+  "at": 1792244763.205537,
+  "result": "A_B_A_DIAGNOSTIC_CAPTURED_NOT_ACCEPTANCE",
+  "rows": [
+    {
+      "tag": "f402-a",
+      "core_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+      "new_source_facts_observed_at_end": 18944,
+      "observation_seconds_after_ready": 19.729762833,
+      "writer_batch_count": 148,
+      "writer_batch_total_us": 17892389,
+      "recent32_mean_ms": 128.83359375,
+      "samples": [
+        {
+          "writer_samples": 2641,
+          "fsync_samples": 1382,
+          "ratio": 0.5232866338508141,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-f402-a/sample-0.txt"
+        },
+        {
+          "writer_samples": 2641,
+          "fsync_samples": 1404,
+          "ratio": 0.5316168118137069,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-f402-a/sample-1.txt"
+        },
+        {
+          "writer_samples": 2643,
+          "fsync_samples": 1397,
+          "ratio": 0.5285660234581915,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-f402-a/sample-2.txt"
+        }
+      ],
+      "actual_core_protection": {
+        "enforced": true,
+        "pid": 54504,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O"
+      },
+      "cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/writer-diagnostic-guard-5_i4s8ox",
+        "removed": true,
+        "remaining": [],
+        "removed_allocated_bytes": 1482776576,
+        "retained_temp_bytes": 0,
+        "lsof_exit": 1,
+        "system_free_bytes": 19006992384
+      }
+    },
+    {
+      "tag": "wal4k-b",
+      "core_sha256": "b62930d6735fca1ef9aa3cf340c7b734cca61d80b9d0c34a55b22cbb38dbc6ce",
+      "new_source_facts_observed_at_end": 21504,
+      "observation_seconds_after_ready": 19.624216166,
+      "writer_batch_count": 168,
+      "writer_batch_total_us": 17915430,
+      "recent32_mean_ms": 109.6264375,
+      "samples": [
+        {
+          "writer_samples": 2637,
+          "fsync_samples": 1148,
+          "ratio": 0.4353431930223739,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-wal4k-b/sample-0.txt"
+        },
+        {
+          "writer_samples": 2642,
+          "fsync_samples": 1448,
+          "ratio": 0.5480696442089327,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-wal4k-b/sample-1.txt"
+        },
+        {
+          "writer_samples": 2642,
+          "fsync_samples": 1265,
+          "ratio": 0.47880393641180924,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-wal4k-b/sample-2.txt"
+        }
+      ],
+      "actual_core_protection": {
+        "enforced": true,
+        "pid": 54757,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O"
+      },
+      "cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/writer-diagnostic-guard-w_xwdd6h",
+        "removed": true,
+        "remaining": [],
+        "removed_allocated_bytes": 1482776576,
+        "retained_temp_bytes": 0,
+        "lsof_exit": 1,
+        "system_free_bytes": 19010449408
+      }
+    },
+    {
+      "tag": "f402-c",
+      "core_sha256": "f402c103b7cdc993e72f88f285402e33e095b1f75dbb621432a21beec11f3e6e",
+      "new_source_facts_observed_at_end": 18432,
+      "observation_seconds_after_ready": 19.504356457999997,
+      "writer_batch_count": 144,
+      "writer_batch_total_us": 17817126,
+      "recent32_mean_ms": 114.85646875,
+      "samples": [
+        {
+          "writer_samples": 2645,
+          "fsync_samples": 1465,
+          "ratio": 0.553875236294896,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-f402-c/sample-0.txt"
+        },
+        {
+          "writer_samples": 2649,
+          "fsync_samples": 1607,
+          "ratio": 0.6066440166100415,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-f402-c/sample-1.txt"
+        },
+        {
+          "writer_samples": 2652,
+          "fsync_samples": 1791,
+          "ratio": 0.6753393665158371,
+          "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261017-writer-checkpoint-ab-f402-c/sample-2.txt"
+        }
+      ],
+      "actual_core_protection": {
+        "enforced": true,
+        "pid": 54940,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O"
+      },
+      "cleanup": {
+        "root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/writer-diagnostic-guard-q5wyv1h2",
+        "removed": true,
+        "remaining": [],
+        "removed_allocated_bytes": 1489072128,
+        "retained_temp_bytes": 0,
+        "lsof_exit": 1,
+        "system_free_bytes": 19010039808
+      }
+    }
+  ],
+  "same_snapshot": "cc06 failed strict synthetic snapshot,689726 imported+408 proxy; each diagnostic has a new private copy and100k deterministic new JSONL message IDs",
+  "limitations": [
+    "Source was written before startup, so end facts are not an exact timed start/end delta; no precise20s throughput claim.",
+    "A/B/A short sampling does not replace original-observer600s backfill or any acceptance gate.",
+    "WAL4096 candidate failed full strict target; observed short diagnostic improvement is insufficient."
+  ],
+  "next_candidate": "16MiB sole-writer page cache plus enabled PASSIVE checkpoint16384 frames (~64MiB at4KiB/page, not hard WAL cap); same NORMAL/transactions/ACK; build underway",
+  "system_free_bytes": 19008086016
+}

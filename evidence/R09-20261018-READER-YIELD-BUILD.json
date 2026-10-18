@@ -1,0 +1,70 @@
+{
+  "recorded_at": 1792300954.2351282,
+  "result": "PASS_CORE_READER_YIELD_BUILD_RUNTIME_PENDING",
+  "core": {
+    "binary": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-reader-yield-build/workbuddy-proxy",
+    "sha256": "54989a654cc8a319e6d75bb2f5c9c3555e17da6012b8393158837f5506d0a7aa"
+  },
+  "core_unit_tests": 545,
+  "build_report": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/20261018-reader-yield-build/report.json",
+  "build_steps": [
+    {
+      "name": "core-fmt",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-tests",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "868bcb5523d5cb06177e4573c634b980ca7cfaae2487f78626dc4867e02c57a2"
+    },
+    {
+      "name": "core-clippy",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "d6d4088251b0910480b5f1338688d98bf3e389ab25b04d7351b087509d4b93bd"
+    },
+    {
+      "name": "core-release",
+      "state": "PASS",
+      "exit_code": 0,
+      "log_sha256": "fffd17531f05ae2870ccccd42da910a9eca5f37f17ad0df9b978e5dc3c82c2f3"
+    }
+  ],
+  "scheduling_sources": {
+    "src/stats/report_scheduling.rs": "b7cec2474fd81176ec751e4a46492c8d6830133070fa8a6e4f0f161c3942d1c2",
+    "src/stats/mod.rs": "82b37663a9da4d56774552dd7e9776d1cbfdc009317055edb26c5253d271510a"
+  },
+  "runtime_state": "RUNNING_SERIAL_GATES_SCALE_NOT_STARTED",
+  "cleanup": {
+    "owned_root": "/Volumes/1TB/Downloads/git/workbuddy-proxy-import-evidence/session-tmp/01a148ae-2068-7800-a8d2-904539bc30d3/progress-build-rjvndysv",
+    "remaining_processes": [],
+    "lsof_exit": 1,
+    "removed": true,
+    "released_bytes": 4096,
+    "retained_temp_bytes": 0,
+    "system_free_bytes": 51542016000,
+    "external_free_bytes": 436246786048
+  },
+  "not_claimed": [
+    "runtime performance improvement",
+    "full12-phase matrix",
+    "new backend/native UI pairing",
+    "new private packages",
+    "external platforms"
+  ],
+  "core_test_preservation": {
+    "old_passing": 540,
+    "new_passing": 545,
+    "missing_prior_tests": [],
+    "new_tests": [
+      "stats::report_scheduling::tests::a_long_scheduler_gap_grants_one_opportunity_without_a_catchup_burst",
+      "stats::report_scheduling::tests::a_report_error_or_unwind_releases_the_activity_guard",
+      "stats::report_scheduling::tests::completed_reports_release_imports_immediately_and_reset_the_window",
+      "stats::report_scheduling::tests::overlapping_report_guards_release_only_after_the_last_reader",
+      "stats::report_scheduling::tests::reports_get_a_bounded_quiet_window_and_imports_keep_progressing"
+    ]
+  }
+}

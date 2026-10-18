@@ -39,6 +39,9 @@ pub enum JobKind {
     SettingsUpdate,
     ProviderMode,
     ClearStart,
+    /// An import read: status, pending list or a preview.
+    WorkbuddyRead,
+    WorkbuddyWrite,
 }
 
 impl JobKind {
@@ -55,6 +58,7 @@ impl JobKind {
                 | JobKind::Prices
                 | JobKind::Settings
                 | JobKind::Maintenance
+                | JobKind::WorkbuddyRead
         )
     }
 }
@@ -86,9 +90,25 @@ pub enum JobKey {
         query: String,
         cursor: String,
     },
+    /// An import read, deduplicated by the resource it reads. Two requests for
+    /// the same resource collapse; two different ones never do.
+    WorkbuddyRead {
+        resource: String,
+    },
 }
 
 impl JobKey {
+    /// The key for one import read.
+    ///
+    /// Reads are keyed by resource, so refreshing the status twice in a row
+    /// collapses into one request while a pending page and a preview never
+    /// overwrite each other.
+    pub fn workbuddy_read(resource: &str) -> Self {
+        JobKey::WorkbuddyRead {
+            resource: resource.to_owned(),
+        }
+    }
+
     /// Coarse kind used for reply dispatch.
     pub fn kind(&self) -> JobKind {
         match self {
@@ -103,6 +123,7 @@ impl JobKey {
             JobKey::ClearPreview => JobKind::ClearPreview,
             JobKey::ProviderMode(_) => JobKind::ProviderMode,
             JobKey::ProviderFilters | JobKey::ModelFilters { .. } => JobKind::Filters,
+            JobKey::WorkbuddyRead { .. } => JobKind::WorkbuddyRead,
         }
     }
 }
@@ -347,6 +368,14 @@ pub fn call(directory: &Path, request: &Value) -> Result<Value, String> {
         .limit(MAX_REPLY_BYTES)
         .read_json()
         .map_err(|_| "Invalid core response")?;
+    parse_message(success, &data)
+}
+
+/// Turns a control reply into its payload.
+///
+/// A malformed payload is an error, never an empty value: showing an empty page
+/// would hide a protocol mismatch behind data that merely looks plausible.
+pub fn parse_message(success: bool, data: &Value) -> Result<Value, String> {
     let message = data["message"]
         .as_str()
         .or_else(|| data["error"]["message"].as_str())
@@ -748,5 +777,42 @@ mod tests {
         let failure = call(dir.path(), &json!({"command": "stats_dashboard"})).unwrap_err();
         assert!(failure.starts_with("stats_invalid_argument"), "{failure}");
         worker.join().unwrap();
+    }
+}
+
+#[cfg(test)]
+mod reply_tests {
+    use super::*;
+
+    #[test]
+    fn a_malformed_payload_is_an_error_and_never_an_empty_page() {
+        // AC063: a reply that cannot be parsed must surface as an error. Showing
+        // an empty page would hide a protocol mismatch behind plausible data.
+        let envelope = serde_json::json!({
+            "success": true,
+            "message": "{ this is not json",
+        });
+        let error = parse_message(true, &envelope).unwrap_err();
+        assert_eq!(error, "Invalid statistics response");
+    }
+
+    #[test]
+    fn a_failed_envelope_keeps_the_core_message() {
+        let envelope = serde_json::json!({
+            "success": false,
+            "error": { "message": "stats_unavailable: busy" },
+        });
+        let error = parse_message(false, &envelope).unwrap_err();
+        assert!(error.contains("stats_unavailable"), "{error}");
+    }
+
+    #[test]
+    fn a_well_formed_payload_still_parses() {
+        let envelope = serde_json::json!({
+            "success": true,
+            "message": "{\"ok\":true}",
+        });
+        let value = parse_message(true, &envelope).unwrap();
+        assert_eq!(value["ok"], true);
     }
 }

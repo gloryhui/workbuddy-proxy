@@ -160,7 +160,7 @@ def main():
             process, log, health = t.start_core(args.exe, directory, port)
             model_ids = {}
             try:
-                assert health['control_protocol'] == 10, health
+                assert health['control_protocol'] == 12, health
                 for ident, protocol, path, settings in cases:
                     fields = {'provider_id': ident, 'upstream': origin + path, 'key': KEY,
                               'protocol': protocol, 'protocol_settings': settings}

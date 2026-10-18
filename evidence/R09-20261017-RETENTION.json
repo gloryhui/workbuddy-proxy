@@ -1,0 +1,411 @@
+{
+  "checks": [
+    {
+      "detail": "[(4, 480, 4560000000)]",
+      "name": "0 days: exact admitted tokens and credits",
+      "ok": true
+    },
+    {
+      "detail": "[('imported', 4)]",
+      "name": "0 days: exact durable admission decisions",
+      "ok": true
+    },
+    {
+      "detail": "[('deleted_retention', 3), ('imported', 1)]",
+      "name": "0 -> 7: production sweep tombstones three old identities",
+      "ok": true
+    },
+    {
+      "detail": "[('deleted_retention', 3), ('imported', 1)]",
+      "name": "7 -> 0: full reread does not revive retention tombstones",
+      "ok": true
+    },
+    {
+      "detail": "[('deleted_retention', 3), ('imported', 2)]",
+      "name": "7 -> 0: a new 400-day identity uses current unlimited policy",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "metadata_unchanged=False; actual snapshots retained",
+      "name": "sandbox: real source/config I/O denied by kernel",
+      "ok": true
+    },
+    {
+      "detail": "[(1, 120, 1140000000)]",
+      "name": "7 days: exact admitted tokens and credits",
+      "ok": true
+    },
+    {
+      "detail": "[('excluded_retention', 3), ('imported', 1)]",
+      "name": "7 days: exact durable admission decisions",
+      "ok": true
+    },
+    {
+      "detail": "[('excluded_retention', 3), ('imported', 1)]",
+      "name": "7 -> 0: valid prior exclusions stay settled",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "7 -> 0: new old identity is admitted exactly once",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "metadata_unchanged=True; actual snapshots retained",
+      "name": "sandbox: real source/config I/O denied by kernel",
+      "ok": true
+    },
+    {
+      "detail": "[(2, 240, 2280000000)]",
+      "name": "30 days: exact admitted tokens and credits",
+      "ok": true
+    },
+    {
+      "detail": "[('excluded_retention', 2), ('imported', 2)]",
+      "name": "30 days: exact durable admission decisions",
+      "ok": true
+    },
+    {
+      "detail": "[('excluded_retention', 2), ('imported', 2)]",
+      "name": "30 -> 0: valid prior exclusions stay settled",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "30 -> 0: new old identity is admitted exactly once",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "metadata_unchanged=True; actual snapshots retained",
+      "name": "sandbox: real source/config I/O denied by kernel",
+      "ok": true
+    },
+    {
+      "detail": "[(3, 360, 3420000000)]",
+      "name": "180 days: exact admitted tokens and credits",
+      "ok": true
+    },
+    {
+      "detail": "[('excluded_retention', 1), ('imported', 3)]",
+      "name": "180 days: exact durable admission decisions",
+      "ok": true
+    },
+    {
+      "detail": "[('excluded_retention', 1), ('imported', 3)]",
+      "name": "180 -> 0: valid prior exclusions stay settled",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "180 -> 0: new old identity is admitted exactly once",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "metadata_unchanged=True; actual snapshots retained",
+      "name": "sandbox: real source/config I/O denied by kernel",
+      "ok": true
+    }
+  ],
+  "error": "",
+  "exe": "/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy/dist/workbuddy-import-review/telemetry-attested-final/workbuddy-proxy",
+  "failed": 0,
+  "isolation": {
+    "catalog_url_is_local": true,
+    "config_dir_inside_sandbox": true,
+    "core_binary_sha256": "ac03b9053930489272719d2419effee3bb18797a9331ca22deffc42019b10adf",
+    "kernel_source_protection": {
+      "enforced": true,
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "pid": 69317,
+      "protected_permissions": {
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "protected_root_exists": {
+        "installed_app": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "workbuddy": true
+      },
+      "sandboxed": true,
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-create": 0,
+        "file-write-data": 0,
+        "file-write-unlink": 0
+      }
+    },
+    "profile_vars_inside_sandbox": true,
+    "real_profile_metadata": {
+      "after": {
+        "proxy_config_macos": {
+          "ino": 156860115,
+          "mtime_ns": 1792231699014450150,
+          "size": 512
+        },
+        "proxy_config_unix": null,
+        "workbuddy_data": {
+          "ino": 121710119,
+          "mtime_ns": 1792231693515516014,
+          "size": 3328
+        }
+      },
+      "before": {
+        "proxy_config_macos": {
+          "ino": 156860115,
+          "mtime_ns": 1792231699014450150,
+          "size": 512
+        },
+        "proxy_config_unix": null,
+        "workbuddy_data": {
+          "ino": 121710119,
+          "mtime_ns": 1792231693515516014,
+          "size": 3328
+        }
+      }
+    },
+    "real_profiles_unchanged": true,
+    "sandbox_is_not_real_home": true,
+    "sandbox_location": "tmp:/workbuddy-retention-matrix-cv57hkbt",
+    "sandbox_outside_real_home": true,
+    "sandbox_under_system_temp": true,
+    "script_sha256": "b7597362185fc3585c8cf6cc70ffff2726b442505a1fcc7428cc8cb02c51f2fd",
+    "source_root_inside_sandbox": true,
+    "temp_vars_inside_sandbox": true
+  },
+  "passed": 53,
+  "result": "PASS_RETENTION_RELEASE_MATRIX",
+  "script": "workbuddy_import_retention_probe.py",
+  "started_at": 1792231638.8978,
+  "task": "R05 current retention release matrix"
+}

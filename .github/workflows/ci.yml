@@ -41,3 +41,12 @@ jobs:
       - run: python scripts/statistics_pagination_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/price_catalog_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/workbuddy_endpoint_check_test.py --exe target/release/workbuddy-proxy
+      - run: python scripts/workbuddy_import_test.py --exe target/release/workbuddy-proxy
+      - run: python scripts/workbuddy_import_faults.py --exe target/release/workbuddy-proxy
+      - name: 保存导入验收报告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workbuddy-import-core-reports
+          path: dist/workbuddy-import-validation/**/report.json
+          if-no-files-found: ignore

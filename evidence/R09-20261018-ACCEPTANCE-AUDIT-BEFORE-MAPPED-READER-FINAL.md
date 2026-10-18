@@ -1,0 +1,90 @@
+# 80AC 原5498候选证据复核（新候选最终复核待补）
+
+> 当前6b1ca331候选已通过553项核心测试、fmt/Clippy/release，以及持续查询32项和退出30项。20窗口最慢6.854秒可查，百万多文件阶段正在运行；其余25组、x64、完整12阶段/状态轮询、原生配对、私有包和最终审计仍未完成。
+
+下表及JSON保留54989a65…的历史范围，该候选后来在百万阶段失败。UI8f476d71…字节未改变。每条状态仅覆盖所述条件。百万阶段正在运行；新后端原生配对、当前私有包及外部平台仍有缺口。此表是证据自审，不是独立复核或交付完成率。
+
+[当前逐项证据](../../evidence/R09-20261018-READER-YIELD-AC-AUDIT.json) · [实时入口](../../evidence/R09-20261017-CURRENT.json) · [原候选证据](../../evidence/R09-20261018-PROGRESS-AC-AUDIT.json)
+
+| 编号 | 状态 | 必过条件 | 证据范围 |
+|---|---|---|---|
+| AC001 | PASS_CURRENT_STATED_SCOPE | 发现其他业务改动时定位归属；不得 reset/stash 掩盖差异。 | 固定6102b77 worktree和用户主工作区改动归属保留，未reset/stash。 |
+| AC002 | PASS_CURRENT_STATED_SCOPE | 版本偏差未解决不得自选迁移编号或覆盖文件。 | Cargo及GPUI清单和锁文件与HEAD字节相同，版本0.5.6；未改依赖或自行分配已有迁移号。 |
+| AC003 | PASS_CURRENT_STATED_SCOPE | fixture 测试不得读写真实 .workbuddy、配置或安装应用。 | All27 current CLI/runtime groups verify actual PID kernel denial for real source/config/app paths and use synthetic fixtures. No current candidate GUI fixture has run; older GUI isolation artifacts remain their original backend scope. Native pairing will require a fresh isolation check. |
+| AC004 | PASS_CURRENT_STATED_SCOPE | 所有样例为合成，无用户正文/账号；明确每项预期而不是生成后自己算自己。 | 冻结expected.json明确独立人工数值，canonical经真实reader/parser/writer/query/API匹配7记录/750Token/内置180/供应商570/2.13积分，只有代理CNY0.123；源行全为合成身份/正文/凭据。 |
+| AC005 | PASS_CURRENT_STATED_SCOPE | 共享 ID/整数限值、禁止 Value 裸传；暂不挂运行线程。 | 共享限值及批次边界来自同一DTO；候选携带哈希身份，原始正文不进入强类型通道。S01历史未挂线程边界见S01.05原始报告。 |
+| AC006 | PASS_CURRENT_STATED_SCOPE | 测试必须调用生产模块，不写另一份导入器；不得使用ignore/空断言制造通过，S01结束仓库仍可编译和跑完整测试。 | 完整核心537/0/0ignored和GPUI137/0；新增测试直接调用生产解析/事务/worker/组件，无ignore/空assert绕过。关键生产故障反例和原生路径另有证据。 |
+| AC007 | PASS_CURRENT_STATED_SCOPE | 日志/DB/API 中不得出现合成密钥、prompt、tool arguments 的 canary。 | 最终canonical51与integration157全部通过，SQL/日志/各来源API的合成密钥/正文/工具canary均无泄漏。早期profile守卫失败保留；本结论采用带实际kernel凭据的最终重跑。 |
+| AC008 | PASS_CURRENT_STATED_SCOPE | 基线报告包含命令、退出码、环境、日志路径；所有新行为仍未启用。 | S01.08原始G00日志包含冻结commit、工具/系统/隔离环境、完整命令和exit；当时只新增类型/自检，未启动导入业务线程。该历史阶段证据与当前最终功能证据分别保留。 |
+| AC009 | PASS_CURRENT_STATED_SCOPE | 旧0001～0006字节完全不变；禁止对真实库执行设计稿。 | 0001至0006迁移逐个与HEAD字节一致；生产验证均在合成隔离库。 |
+| AC010 | PASS_CURRENT_STATED_SCOPE | 0/1/2/3/4/5/6→7和7→7全部通过；错误迁移原库可恢复且版本不假升。 | 复核真实0..=6迁移构造、重复migrate、费用/FK保留与拒绝迁移不假升；当前537回归中两个测试均通过。 |
+| AC011 | PASS_CURRENT_STATED_SCOPE | 非法proxy缺run/stream、非法import带HTTP/费用断言拒绝。 | 真实v7迁移库接受合法proxy/import；逐项拒绝缺run/stream、非法HTTP/耗时字段及导入usage_costs，断言具体CHECK/trigger错误。 |
+| AC012 | PASS_CURRENT_STATED_SCOPE | 同键插入只一行、冲突不覆盖代理、tombstone不丢；FK检查为0行。 | 同键幂等、冲突不改proxy、墓碑终态均有实际SQL断言；迁移测试检查FK为空。 |
+| AC013 | PASS_CURRENT_STATED_SCOPE | 错误revision、旧generation、负offset、跨namespace拒绝且无部分写。 | Checkpoint测试逐项检查旧revision/generation、负值/回退offset、跨namespace，拒绝后revision/offset保持原值。 |
+| AC014 | PASS_CURRENT_STATED_SCOPE | 相邻区间合法，重叠拒绝；关闭再开namespace不变。 | 相邻半开区间接受；Rust和SQL触发器均拒绝重叠；关闭重开复用namespace。 |
+| AC015 | PASS_CURRENT_STATED_SCOPE | 行数、ID、tokens、price snapshots、cost金额逐项相等；并验证索引和视图仍可查询。 | v6七条请求及五条费用迁移前后逐字段dump相等，ID顺序不变；报告视图及索引检查保留。 |
+| AC016 | PASS_CURRENT_STATED_SCOPE | 故障注入、外键、integrity_check通过，提交证据后才进入解析。 | S02.08真实冲突表故障：失败后仍v6且3请求/1费用、integrity_check=ok、视图3行；移除故障后同库升级、FK为空。当前537仍执行所有代迁移及失败不假升用例，旧迁移字节不变。 |
+| AC017 | PASS_CURRENT_STATED_SCOPE | message assistant与无role function_call纳入，user/reasoning/tool result全部排除。 | assistant message与无role function_call纳入；user/reasoning/tool result排除；完整canonical链另验。 |
+| AC018 | PASS_CURRENT_STATED_SCOPE | 同会话不同message分开；跨文件相同消息同键；conversationRequestId不能去重。 | 身份键使用namespace/session/message；不同消息区分、跨文件同消息一致，不以conversationRequestId去重。 |
+| AC019 | PASS_CURRENT_STATED_SCOPE | 零/缺失/负数/小数/字符串/上限/溢出/冲突分别有明确断言。 | 明确覆盖零/缺失/负数/小数/字符串/布尔/整数限值与溢出/total冲突；非法不强转不修正。 |
+| AC020 | PASS_CURRENT_STATED_SCOPE | 高优先4096低优先0得到4096；缓存不重复加输入；推理不超过输出。 | 读取规范化断言：detail4096优先top-level0；缓存不累加输入、read/write≤input、reasoning≤output。当前core测试及51黄金全字段链通过。 |
+| AC021 | PASS_CURRENT_STATED_SCOPE | 1.14→1140000000，0明确保留，缺失null，科学计数/负值/超精度拒绝。 | 精确decimal规则与canonical已核验：1.14→1140000000，0与缺失区分，9位上限、科学计数/符号/超界拒绝；非法credit不损坏Token。 |
+| AC022 | PASS_CURRENT_STATED_SCOPE | normalized semantic hash不依赖JSON顺序/正文；冲突比较不含文件路径或时间。 | 语义哈希固定有序tuple仅含规范化模型及usage字段，不含源时间/文件路径/正文/JSON序列化顺序；回放改时间及诊断不变，复制文件/响应只计一次。 |
+| AC023 | PASS_CURRENT_STATED_SCOPE | 未知格式有诊断且继续文件；canary不出现在候选、日志、API、数据库。 | 未知/坏行按固定诊断继续处理；最终integration实际源链/SQL/日志/API全canary检查通过，候选仅允许规范化字段。 |
+| AC024 | PASS_CURRENT_STATED_SCOPE | 不能用本机“正好能读”代替合成错误用例；无HTTP路径变化。 | 合成权限拒绝不推进offset；release OS写失败及权限恢复另验，HTTP转发未因导入失败改变。 |
+| AC025 | PASS_CURRENT_STATED_SCOPE | 中文空格路径可读；traces/工具结果/外部symlink完全不读。新目录/新小文件达到X46增量门槛。 | 生产reader当前测试覆盖中文空格目录、严格projects单层、拒绝文件/目录symlink及traces/tool/storage；最终release X46在真实竞争积压下20个新目录及已跟踪追加样本逐个≤10秒。 |
+| AC026 | PASS_CURRENT_STATED_SCOPE | 小文件增长不误判；替换/截断generation增加，账本不删。 | 小文件增长保持append；head替换及缩短识别为不同代，保留账本/重启计数，release rename/truncate补验。 |
+| AC027 | PASS_CURRENT_STATED_SCOPE | 4MiB边界和50MiB单行内存有界，完整行可被后续处理。 | 4MiB边界包含，50MiB行分块有界，排空后邻接合法行可读；真实退出oversized场景557.540ms。 |
+| AC028 | PASS_CURRENT_STATED_SCOPE | 分三次写入同一JSON只入一次；坏行后合法行仍可见。 | 三段写入完整JSON仅生成一个候选；坏行推进到完整行尾且不吞后续合法行。 |
+| AC029 | PASS_CURRENT_STATED_SCOPE | 一个持续追加大文件不能永久饿死其他文件。回填其他文件时已追平文件增量不饥饿。 | 大文件分片公平轮转，已追平文件先于积压；release X46二十个竞争窗口逐个达标，周期不由UI刷新控制。 |
+| AC030 | PASS_CURRENT_STATED_SCOPE | 注入rename/truncate/权限错误，不能半批旧数据入库或丢行。 | 当前verify测试在读期间改写/rename替换/truncate/权限拒绝时丢弃整批且不前移offset；release真实rename/truncate/权限恢复后精确5事实并每条有账本，DB锁解除后补齐。 |
+| AC031 | PASS_CURRENT_STATED_SCOPE | 同大小/mtime中间修改在full被发现；full不把incremental游标清0。 | 真实worker发现隐藏中间改写，full扫描使用独立offset，不清零增量断点；release测得完整正文重读及无重复。 |
+| AC032 | PASS_CURRENT_STATED_SCOPE | 未变化文件常规轮次不重读正文，所有checkpoint预期可重放。 | 当前real_worker测试实测未变化正文读取不增长，读批逐完整行提交/重放及full独立offset通过；S04.08原始checkpoint探针与1字节夹具差异记录保留，按终止符后的契约边界执行。百万300秒空闲另归AC075。 |
+| AC033 | PASS_CURRENT_STATED_SCOPE | 没有第二套按名称/localhost猜测的检测器；旧同步测试仍通过。 | 同步路径复用同一代理归属谓词；猜名称或裸localhost不足，既有同步CLI通过。 |
+| AC034 | PASS_CURRENT_STATED_SCOPE | 当前直连配置不倒推历史；无法证明旧区间进入pending。 | 当前direct配置不反推旧区间；真实观察读取实际配置ID，早于观察的custom留pending。 |
+| AC035 | PASS_CURRENT_STATED_SCOPE | custom-local并非全部proxy；同响应模型来自两路线可区分；已知proxy缺记录也排除。 | 固定归属证据表区分两路线同模型，custom-local不按名字判proxy；已知代理镜像即使缺本地事实也排除。 |
+| AC036 | PASS_CURRENT_STATED_SCOPE | direct→proxy同alias时间不同分类正确；不按现有名字覆盖过去。 | 同alias按半开历史区间判direct/proxy，后续改名或删路由不重写已证实过去。 |
+| AC037 | PASS_CURRENT_STATED_SCOPE | prepare失败零WorkBuddy文件变更；finalize失败报告已同步但归属未确认。 | 调用真实生产同步路径注入prepare/finalize错误；前者文件零变化，后者明确已同步但归属未确认，不吞错。 |
+| AC038 | PASS_CURRENT_STATED_SCOPE | 在写前/写后/ACK前崩溃都不会把不确定历史当direct计入。 | 覆盖写前、写后、ACK前恢复；只证实未来观察，不把不确定gap补为历史direct。 |
+| AC039 | PASS_CURRENT_STATED_SCOPE | 过期/重复token、冲突revision拒绝；tombstone不复活；撤销只影响workbuddy行。 | 预览token随机、单次、过期及revision绑定；撤销保持精确usage，当前retention及墓碑重新核验，不改变proxy事实。 |
+| AC040 | PASS_CURRENT_STATED_SCOPE | 代理排除、历史pending、规则确认/撤销逐一提供前后计数。 | 当前真实worker的manual_commands测试经生产命令逐步核对pending/direct确认/代理排除/撤销后事实与ledger；固定黄金镜像最终为excluded_proxy1/imported2，3事实910Token且代理只计一次。 |
+| AC041 | PASS_CURRENT_STATED_SCOPE | 队列满只让worker退让，Proxy begin/finish不阻塞。 | 容量2非阻塞通道满即worker退让，单批等待ACK；release锁DB时代理仍响应，转发/规模指标另验。 |
+| AC042 | PASS_CURRENT_STATED_SCOPE | 任一SQL失败全批rollback；offset不得领先事实。 | 真实SQLite事务任一条失败回滚事实及offset；发现批次遇旧revision也全批回滚并可重试。 |
+| AC043 | PASS_CURRENT_STATED_SCOPE | ACK丢失/重复批/复制文件/重复工具响应都计一次。 | Current65-check production edge probe proves cross-project copies advance both EOF checkpoints while preserving one identity, plus lost ACK/repeat batch current module tests. |
+| AC044 | PASS_CURRENT_STATED_SCOPE | restart后累计数可信，错误文件未处理时状态仍需处理。 | 重启读持久累计；错误诊断计入需处理，普通ignored不冒充错误；关闭时不假报完成。 |
+| AC045 | PARTIAL_CURRENT_NATIVE_PAIR | 持续回填时代理事件仍被写入；DB锁超时不忙等、不丢未ACK批。通过X45～X47，页面状态不改变同步周期。 | Unchanged8f4 UI unit/native artifacts retain original3d9 backend scope. New5498 core runtime gates pass, but actual current backend/native pairing and resident CmdQ remain blocked by Mac lock; no automatic upgrade of prior native or private-package proof. |
+| AC046 | PARTIAL_CURRENT_NATIVE_PAIR | 关闭后源文件读取字节不增长，已有SQL查询仍可用，恢复断点继续。页面刷新关闭/切页/隐藏窗口不暂停同步。 | Unchanged8f4 UI unit/native artifacts retain original3d9 backend scope. New5498 core runtime gates pass, but actual current backend/native pairing and resident CmdQ remain blocked by Mac lock; no automatic upgrade of prior native or private-package proof. |
+| AC047 | PASS_CURRENT_STATED_SCOPE | 中断后重启无丢失无重复，不等待历史全导完才退出。 | SIGKILL时回填确实未完：5128/55000，重启后55000唯一账本/660000Token/5500000000000纳积分；正常退出idle/import/oversized分别356.391/400.499/557.540ms且exit0，不等全历史结束。 |
+| AC048 | INCOMPLETE_RUNTIME_METRICS | 证明worker没在Tokio/UI线程读文件；记录队列峰值与批次耗时。 | Current source/runtime telemetry tests retained, but current million target has not reached its actual queue/batch/OS-worker metric observations; no old-core promotion. |
+| AC049 | PASS_CURRENT_STATED_SCOPE | 重扫同消息不复活，代理原清除语义不变。 | 清除导入写终态墓碑，重扫不复活；proxy原清除语义独立保留。 |
+| AC050 | PASS_CURRENT_STATED_SCOPE | 保留期限缩短再延长不恢复已删除条目；不限期0正确。 | R05最终release53/0：0/7/30/180天精确旧消息及新身份，真实一分钟housekeeping后deleted_retention；7→0及full扫描墓碑不复活。不限期0可导入新的400天身份。 |
+| AC051 | PASS_CURRENT_STATED_SCOPE | 预览后新增/晚到记录留存，删除数量和预览边界一致。 | 冻结预览水位+时间边界；预览后新增及晚到均存活，实际删除数与预览一致。 |
+| AC052 | PASS_CURRENT_STATED_SCOPE | 候选变旧不能绕过retention，deleted状态不可被mapping apply覆盖。 | 规则任务每批重新读取retention，已过期候选不绕过保留期限；deleted账本不被apply覆盖。 |
+| AC053 | PASS_CURRENT_STATED_SCOPE | 删除源文件不删统计；同文件恢复不重复。 | 源消失不删统计，检查点回收保留账本；同文件恢复仍一次。 |
+| AC054 | PASS_CURRENT_STATED_SCOPE | EXPLAIN无每页JSONL读取或全量候选反序列化；旧游标返回expired。 | 当前真实SQL EXPLAIN确认cover索引；pending查询在SQL按水位/范围LIMIT分页，只解码本页候选，没有每页JSONL读取或全量候选反序列化。scope/mapping变化及规则历史stale cursor均拒绝expired。 |
+| AC055 | PASS_CURRENT_STATED_SCOPE | 恢复只处理proxy in_flight；旧费用快照未变。 | 崩溃恢复只处理proxy in_flight；费用用该请求自己的原快照，导入不被补成HTTP结果。 |
+| AC056 | PASS_CURRENT_STATED_SCOPE | 给出每种组合操作后的事实/账本/费用行数，不能只检查HTTP200。 | 最终生产integration157从真实JSONL导入核对多组事实/账本/费用数：黄金3事实910Token、账本excluded1/imported2、导入费用0；canonical六导入+一代理/各来源/币种/详情/重扫与冻结预期一致。清除/保留期限另有53项真实SQL对照。 |
+| AC057 | PASS_CURRENT_STATED_SCOPE | 所有enum match编译；只做旧UI必要适配，不提前新布局；proxy数值原样。 | 当前GPUI137完整测试/Clippy/release通过，新增DTO enum均编译；黄金混合总910=builtin120+supplier790，proxy550保留；S08.01原阶段必要旧UI适配的时间边界保留于原报告。 |
+| AC058 | PASS_CURRENT_STATED_SCOPE | all=builtin+supplier；supplier=proxy+direct（同过滤、排除tests）；非法组合拒绝。 | 实际事实集合逐组合分区，all=builtin+supplier，capture与tests过滤同谓词；非法scope拒绝。 |
+| AC059 | PASS_CURRENT_STATED_SCOPE | 混合和纯导入结果准确；不同币种与credit绝不相加。 | 混合/纯导入来源数准确；币种分别聚合，credit用i128独立十进制字符串，超过i64仍精确。 |
+| AC060 | PASS_CURRENT_STATED_SCOPE | 仍受管理鉴权/1MiB限制；扫描异步入队，错误码固定无SQL路径。 | Current release: local-model management key returns 401, deliberately check-invalid oversized response returns stats_result_too_large, normal/after-restore query remains exact and integrity_check=ok. Current 537 tests also cover asynchronous scan enqueue and fixed error codes. Boundary uses a synthetic corrupt row, not a supported importer input. |
+| AC061 | PASS_CURRENT_STATED_SCOPE | 切来源旧cursor拒绝；并发追加不重复分页；归属撤回旧cursor失效。 | Current production append/as_of frozen205-ID set, actual >2**53 writer IDs, source scope and revoke expiry checked by65-edge probe; native page1/page2 and detail scroll recorded. |
+| AC062 | PASS_CURRENT_STATED_SCOPE | 慢旧回复不能覆盖新source；scan轮询不形成无限请求。 | 应用回复前校验资源/请求tag/filter代；scan轮询有预算，旧来源回复不覆盖新选择。 |
+| AC063 | PARTIAL_CURRENT_NATIVE_PAIR | 不把旧core伪判为兼容；不靠吞反序列化错误显示空页。 | Unchanged8f4 UI unit/native artifacts retain original3d9 backend scope. New5498 core runtime gates pass, but actual current backend/native pairing and resident CmdQ remain blocked by Mac lock; no automatic upgrade of prior native or private-package proof. |
+| AC064 | PASS_CURRENT_STATED_SCOPE | SQL汇总、API响应和fixture期望逐项一致，不能只验证接口存在。 | 最终canonical51及integration157逐字段核验SQL/overview/series/list/detail：已知零、missing、invalid、缓存读写、推理、derived total和1纳积分准确；混合与纯导入均匹配冻结独立预期。 |
+| AC065 | PARTIAL_CURRENT_NATIVE_PAIR | 图标不是fallback加号；hover/focus/键盘/选中a11y齐全。 | Unchanged8f4 UI unit/native artifacts retain original3d9 backend scope. New5498 core runtime gates pass, but actual current backend/native pairing and resident CmdQ remain blocked by Mac lock; no automatic upgrade of prior native or private-package proof. |
+| AC066 | PASS_CURRENT_STATED_SCOPE | A=1012/1011/560/559布局测试；来源组永远最前且不拆开。 | 当前137测试覆盖1012/1011及560/559布局断点，来源组始终最前不拆；最终12原生图含宽/窄布局，各来源数据同时核验。 |
+| AC067 | PASS_CURRENT_STATED_SCOPE | 旧响应/错误/loading不覆盖；同选项点击零新请求。 | 来源变更先失效旧资源，同选项零请求；旧代draft/数据不应用，错误payload不伪造空成功。 |
+| AC068 | PASS_CURRENT_STATED_SCOPE | 导入未知显示—，费用无伪零线；纯导入成功率为—。 | 纯导入成功率和缺失指标为—；无已知费用不绘制伪零货币线，Token趋势保留。 |
+| AC069 | PASS_CURRENT_STATED_SCOPE | proxy/内置/直连可区分，缺HTTP/速率不显示0/200。 | proxy/内置/直连列表标签可区分；未知HTTP/速率/金额显示—，不伪造200或零。 |
+| AC070 | PARTIAL_CURRENT_NATIVE_PAIR | 开关失败回滚，暂停不删历史，普通刷新不读JSONL，首次开启无多余确认。页面刷新与后台同步完全独立，见X45。 | Unchanged8f4 UI unit/native artifacts retain original3d9 backend scope. New5498 core runtime gates pass, but actual current backend/native pairing and resident CmdQ remain blocked by Mac lock; no automatic upgrade of prior native or private-package proof. |
+| AC071 | PASS_CURRENT_STATED_SCOPE | 过期/冲突重预览；不能把proxy证据强改direct；无裸内部错误。 | 当前真实manual命令测试拒绝过期/重用token、revision冲突及managed proxy覆盖；UI unsafe_preview_replies_never_enable_confirmation拒绝危险确认，错误映射固定码及中文/英文文案。原生完整异常态操作仍归AC072未完成范围。 |
+| AC072 | PARTIAL_CURRENT_NATIVE_PAIR | 3来源×2尺寸×2语言截图齐全，额外异常态/键盘/缩放有证据；截图不能替代实际数据断言。 | Unchanged8f4 UI unit/native artifacts retain original3d9 backend scope. New5498 core runtime gates pass, but actual current backend/native pairing and resident CmdQ remain blocked by Mac lock; no automatic upgrade of prior native or private-package proof. |
+| AC073 | PASS_CURRENT_STATED_SCOPE | 三类集合正确且代理只计一次；不发公网付费调用。 | 最终真实代理→JSONL镜像→归属账本→查询的黄金链通过：all3/910、builtin1/120、supplier2/790、排除代理镜像1，full扫描不重复；所有请求均本地Mock，不发公网付费调用。 |
+| AC074 | PASS_CURRENT_STATED_SCOPE | 数据无静默丢失，恢复幂等，代理继续响应；固定种子可复现。 | 固定种子OS故障矩阵验证实际WAL写上限、55000条不完整回填SIGKILL、重启精确总数/Token/积分/唯一账本，代理写拒绝时继续转发；rename/truncate/权限/DB锁另有实际release覆盖。 |
+| AC075 | RUNNING_SCALE | 达到ACCEPTANCE硬门槛；达不到修实现，不擅改门槛。常态增量每次≤10秒可查，不以UI刷新或中位数替代。 | New candidate million target is live; no completed current-candidate phase or full12-phase/cross-scale/query/idle aggregate yet. |
+| AC076 | PASS_CURRENT_STATED_SCOPE | 旧断言不放宽，无新warning；新脚本必须真的执行生产二进制。 | 当前核心537/0/0ignored与GPUI137/0/0ignored，Clippy -D warnings及release通过；21个真实生产程序串行gate成功，无旧断言降级。GPUI block0.1.6 future-incompat提示为既存，不冒称零提示；脚本修复保留先前失败及准确隔离/资源测量边界。 |
+| AC077 | BLOCKED_EXTERNAL | 缺平台标BLOCKED_EXTERNAL，不把编译通过算GUI或打包通过算安装。 | Current ARM build/runtime passed. New scheduling-source x64 build/runtime/package remains pending; Linux/Windows execution, Windows GUI, physical Intel and installation unavailable. OS DMG mount previously denied. Unchanged UI artifact proofs retain their stated scope. |
+| AC078 | PASS_CURRENT_STATED_SCOPE | 代理历史数据/价格/配置前后摘要一致；无真实库/应用替换。 | 隔离v6库升级前后7条旧请求与5条多币种费用逐字段相同；真实profile仅metadata观察，CLI kernel阻止真实内容I/O，原生最终metadata相同；没有替换真实DB或安装应用。GUI全隔离证明边界仍在AC003保留。 |
+| AC079 | INCOMPLETE_FINAL_AUDIT | 每项完成必须有证据链接；没有发布授权就不升版本或制作Release。 | This is an interim condition-by-condition audit, not a final deliverable. Current scale, native pairing and private packages are incomplete; every completed claim links evidence and no Release/version change was made. |
+| AC080 | PASS_CURRENT_STATED_SCOPE | 不自动提交/推送/合main；真实作者和工具贡献准确，禁force/amend/hooks。 | HEAD保持6102b779871bab0bb8ad646dac5004892adf76be，未自动提交/推送/合并/发布；AI共同作者规则已保留。 |
