@@ -1,0 +1,246 @@
+{
+  "pid": 49893,
+  "window": 7865,
+  "steps": [
+    {
+      "step": "00-page1-20",
+      "action": null,
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/00-page1-20.png",
+      "ocr": "ocr/00-page1-20.json",
+      "ax_dump": "logs/ax-00-page1-20.txt",
+      "page_text": "第1/3上一页",
+      "page_size_text": "20 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "times": [
+        "10-19 19:02:28",
+        "10-19 19:02:58",
+        "10-19 19:03:28",
+        "10-19 19:03:58",
+        "10-19 19:04:28",
+        "10-19 19:04:58",
+        "10-19 19:05:28"
+      ],
+      "ax_row_count": 56
+    },
+    {
+      "step": "01-page2-20",
+      "action": "下一页",
+      "press": "PRESS 下一页 err=0",
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/01-page2-20.png",
+      "ocr": "ocr/01-page2-20.json",
+      "ax_dump": "logs/ax-01-page2-20.txt",
+      "page_text": "第1/3上一页",
+      "page_size_text": "20 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "times": [
+        "10-19 19:02:28",
+        "10-19 19:02:58",
+        "10-19 19:03:28",
+        "10-19 19:03:58",
+        "10-19 19:04:28",
+        "10-19 19:04:58",
+        "10-19 19:05:28"
+      ],
+      "ax_row_count": 56
+    },
+    {
+      "step": "02-page3-20",
+      "action": "下一页",
+      "press": "PRESS 下一页 err=0",
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/02-page3-20.png",
+      "ocr": "ocr/02-page3-20.json",
+      "ax_dump": "logs/ax-02-page3-20.txt",
+      "page_text": "第2/3 上一页",
+      "page_size_text": "20 条/页",
+      "row_suffixes": [
+        "0034",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0040"
+      ],
+      "times": [
+        "10-19 18:52:28",
+        "10-19 18:52:58",
+        "10-19 18:53:28",
+        "10-19 18:53:58",
+        "10-19 18:54:28",
+        "10-19 18:54:58",
+        "10-19 18:55:28"
+      ],
+      "ax_row_count": 56
+    },
+    {
+      "step": "03-prev-page2-20",
+      "action": "上一页",
+      "press": "PRESS 上一页 err=0",
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/03-prev-page2-20.png",
+      "ocr": "ocr/03-prev-page2-20.json",
+      "ax_dump": "logs/ax-03-prev-page2-20.txt",
+      "page_text": "第1/3上一页",
+      "page_size_text": "20 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "times": [
+        "10-19 19:02:28",
+        "10-19 19:02:58",
+        "10-19 19:03:28",
+        "10-19 19:03:58",
+        "10-19 19:04:28",
+        "10-19 19:04:58",
+        "10-19 19:05:28"
+      ],
+      "ax_row_count": 56
+    },
+    {
+      "step": "04-page3-20-again",
+      "action": "下一页",
+      "press": "PRESS 下一页 err=0",
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/04-page3-20-again.png",
+      "ocr": "ocr/04-page3-20-again.json",
+      "ax_dump": "logs/ax-04-page3-20-again.txt",
+      "page_text": "第2/3 上一页",
+      "page_size_text": "20 条/页",
+      "row_suffixes": [
+        "0034",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0040"
+      ],
+      "times": [
+        "10-19 18:52:28",
+        "10-19 18:52:58",
+        "10-19 18:53:28",
+        "10-19 18:53:58",
+        "10-19 18:54:28",
+        "10-19 18:54:58",
+        "10-19 18:55:28"
+      ],
+      "ax_row_count": 56
+    },
+    {
+      "step": "05-page1-50",
+      "action": "20 条/页",
+      "press": "PRESS 20 条/页 err=0",
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/05-page1-50.png",
+      "ocr": "ocr/05-page1-50.json",
+      "ax_dump": "logs/ax-05-page1-50.txt",
+      "page_text": "第1/2上一页",
+      "page_size_text": "50 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "times": [
+        "10-19 19:02:28",
+        "10-19 19:02:58",
+        "10-19 19:03:28",
+        "10-19 19:03:58",
+        "10-19 19:04:28",
+        "10-19 19:04:58",
+        "10-19 19:05:28"
+      ],
+      "ax_row_count": 56
+    },
+    {
+      "step": "06-page2-50",
+      "action": "下一页",
+      "press": "PRESS 下一页 err=0",
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/06-page2-50.png",
+      "ocr": "ocr/06-page2-50.json",
+      "ax_dump": "logs/ax-06-page2-50.txt",
+      "page_text": "第2/2 上一页",
+      "page_size_text": "50 条/页",
+      "row_suffixes": [
+        "0004",
+        "0005",
+        "0006",
+        "0007",
+        "0008",
+        "0009",
+        "0010"
+      ],
+      "times": [
+        "10-19 18:37:28",
+        "10-19 18:37:58",
+        "10-19 18:38:28",
+        "10-19 18:38:58",
+        "10-19 18:39:28",
+        "10-19 18:39:58",
+        "10-19 18:40:28"
+      ],
+      "ax_row_count": 56
+    },
+    {
+      "step": "07-page1-100",
+      "action": "50 条/页",
+      "press": "PRESS 50 条/页 err=0",
+      "pager_y": 431,
+      "image_result": "OK 1440x901",
+      "image": "shots/07-page1-100.png",
+      "ocr": "ocr/07-page1-100.json",
+      "ax_dump": "logs/ax-07-page1-100.txt",
+      "page_text": "第1/1 上一页",
+      "page_size_text": "100条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "times": [
+        "10-19 19:02:28",
+        "10-19 19:02:58",
+        "10-19 19:03:28",
+        "10-19 19:03:58",
+        "10-19 19:04:28",
+        "10-19 19:04:58",
+        "10-19 19:05:28"
+      ],
+      "ax_row_count": 56
+    }
+  ]
+}

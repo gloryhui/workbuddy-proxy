@@ -1,0 +1,145 @@
+{
+  "task": "UI-T07-L03-PAGESIZE-001",
+  "fixture_rows": 60,
+  "result": "PASS_WITH_GUI_SNAPSHOT_CAVEAT",
+  "steps": [
+    {
+      "step": "00-page1-20",
+      "action": null,
+      "page": "第1/3上一页",
+      "page_size": "20 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "image": "shots/00-page1-20.png",
+      "sha256": "f7e89d861039a370a5649b0abc68c20eed80cfa3b3fed8f81e7262cf248c407a",
+      "bytes": 262065
+    },
+    {
+      "step": "01-page2-20",
+      "action": "下一页",
+      "page": "第1/3上一页",
+      "page_size": "20 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "image": "shots/01-page2-20.png",
+      "sha256": "41fa9e0e3d78c529908ba06738243c6d49778ddca92129b58e8b0f44a2c8c469",
+      "bytes": 262404
+    },
+    {
+      "step": "02-page3-20",
+      "action": "下一页",
+      "page": "第2/3 上一页",
+      "page_size": "20 条/页",
+      "row_suffixes": [
+        "0034",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0040"
+      ],
+      "image": "shots/02-page3-20.png",
+      "sha256": "e06000f2df3fcebaee841ba46935f2030eea7fb8a4f7fb052f8e03f3ba1617e8",
+      "bytes": 262927
+    },
+    {
+      "step": "03-prev-page2-20",
+      "action": "上一页",
+      "page": "第1/3上一页",
+      "page_size": "20 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "image": "shots/03-prev-page2-20.png",
+      "sha256": "5545f15c9dda8cdbe58026980bcffa0029f0ca6d9a5360550b8ed30e1b67252a",
+      "bytes": 262124
+    },
+    {
+      "step": "04-page3-20-again",
+      "action": "下一页",
+      "page": "第2/3 上一页",
+      "page_size": "20 条/页",
+      "row_suffixes": [
+        "0034",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0040"
+      ],
+      "image": "shots/04-page3-20-again.png",
+      "sha256": "e06000f2df3fcebaee841ba46935f2030eea7fb8a4f7fb052f8e03f3ba1617e8",
+      "bytes": 262927
+    },
+    {
+      "step": "05-page1-50",
+      "action": "20 条/页",
+      "page": "第1/2上一页",
+      "page_size": "50 条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "image": "shots/05-page1-50.png",
+      "sha256": "ef263d783c7163c9f37ad0bdaa92a207d985fbc3d7438093f0fb0242b84c15e4",
+      "bytes": 262428
+    },
+    {
+      "step": "06-page2-50",
+      "action": "下一页",
+      "page": "第2/2 上一页",
+      "page_size": "50 条/页",
+      "row_suffixes": [
+        "0004",
+        "0005",
+        "0006",
+        "0007",
+        "0008",
+        "0009",
+        "0010"
+      ],
+      "image": "shots/06-page2-50.png",
+      "sha256": "a16320facdf8ab399e3157543a156c4406f2684180725c902aef4c9c01d75998",
+      "bytes": 259891
+    },
+    {
+      "step": "07-page1-100",
+      "action": "50 条/页",
+      "page": "第1/1 上一页",
+      "page_size": "100条/页",
+      "row_suffixes": [
+        "0054",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "0060"
+      ],
+      "image": "shots/07-page1-100.png",
+      "sha256": "13f2d0d534597038eba4d5a5ef15325a900ef6821eaa8664f3b6bb02c286cee0",
+      "bytes": 262137
+    }
+  ],
+  "note": "The first Next-page AX snapshot remained on page 1/3; a subsequent Next action displayed page 2/3. Screenshots are mapped to observed contents, not intended labels."
+}
