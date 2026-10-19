@@ -69,10 +69,13 @@ impl SeriesKind {
     /// Input blue, output green, cache read purple, cache write orange.
     pub fn color(self) -> u32 {
         match self {
-            SeriesKind::Input => 0x2f6fd0,
-            SeriesKind::Output => 0x2f9e63,
+            // DESIGN_SPEC §2.2 series palette. Cache write is deliberately a
+            // light neutral: it is the least reliable series and must not
+            // compete with the measured ones.
+            SeriesKind::Input => 0x3b6fe0,
+            SeriesKind::Output => 0x2e9e6b,
             SeriesKind::CacheRead => 0x7b5cd6,
-            SeriesKind::CacheWrite => 0xd9822b,
+            SeriesKind::CacheWrite => 0xb6bcc8,
         }
     }
 }

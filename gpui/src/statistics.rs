@@ -184,8 +184,9 @@ fn stats_heading(text: &'static str) -> Div {
 
 fn stats_card(id: &'static str) -> Stateful<Div> {
     // Unlike the model-management `card()`, statistics cards size to their
-    // content; only the chart and the table get explicit heights.
-    crate::ui_components::content_card(id)
+    // content; only the chart and the table get explicit heights. DESIGN_SPEC
+    // §3 fixes card padding at 16–20, so 16 replaces the shared 12.
+    crate::ui_components::content_card(id).p(px(16.))
 }
 
 pub struct Statistics {
@@ -2158,25 +2159,46 @@ impl Statistics {
 
 /// Filter row and the page header.
 impl Statistics {
-    fn header(&self, _cx: &mut Context<Self>) -> AnyElement {
+    fn header(&self, cx: &mut Context<Self>) -> AnyElement {
         div()
             .flex()
-            .items_center()
+            .items_start()
+            .justify_between()
             .gap_3()
             .w_full()
             .child(
                 div()
-                    .text_size(px(18.))
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .child(self.t("使用统计", "Usage statistics")),
+                    .flex()
+                    .flex_col()
+                    .gap_1()
+                    .min_w_0()
+                    .child(
+                        div()
+                            .text_size(px(crate::theme::font::PAGE_TITLE))
+                            .line_height(px(crate::theme::line_height::PAGE_TITLE))
+                            .font_weight(FontWeight::SEMIBOLD)
+                            .text_color(rgb(crate::theme::color::TEXT_1))
+                            .child(self.t("使用统计", "Usage statistics")),
+                    )
+                    .child(
+                        Label::new(self.t(
+                            "查看 AI 模型的请求级使用情况、缓存命中和成本聚合",
+                            "Request-level usage, cache hits and cost aggregation",
+                        ))
+                        .text_size(px(crate::theme::font::BODY))
+                        .text_color(rgb(crate::theme::color::TEXT_3)),
+                    ),
             )
+            // The switch keeps its own 108×32 frame; this wrapper gives it a
+            // flex row with an explicit height so the absolutely positioned
+            // separators and focus ring inside it never see a zero-height line.
             .child(
-                Label::new(self.t(
-                    "汇总内置及自定义模型用量，同次调用优先本机代理明细",
-                    "Built-in and custom usage; exact duplicates prefer native proxy details",
-                ))
-                .text_size(px(11.))
-                .text_color(rgb(MUTED)),
+                div()
+                    .flex()
+                    .items_center()
+                    .flex_shrink_0()
+                    .h(px(32.))
+                    .child(self.source_group(cx)),
             )
             .into_any_element()
     }
@@ -2610,13 +2632,28 @@ impl Statistics {
     fn filters(&self, cx: &mut Context<Self>) -> AnyElement {
         let tests_available = self.capture.include_tests_available(self.source_scope());
         // Render the shared slot budget directly: fixed dimensions and the
-        // explicit one/two/wrapped rows from UI-SPEC U04.
-        let budget = crate::source_filter::layout(self.filters_width as i32);
+        // explicit one/two/wrapped rows from UI-SPEC U04. The source switch
+        // moved into the page header (DESIGN_SPEC §4.1.1), so the budget is
+        // computed for the width that column frees and the Source slot itself
+        // is skipped here; every other slot keeps its order and width.
+        let budget = crate::source_filter::layout(
+            self.filters_width as i32
+                + crate::source_filter::GROUP_WIDTH
+                + crate::source_filter::GAP,
+        );
         let rows = budget
             .rows
             .iter()
+            .map(|slots| {
+                slots
+                    .iter()
+                    .copied()
+                    .filter(|slot| *slot != crate::source_filter::FilterSlot::Source)
+                    .collect::<Vec<_>>()
+            })
+            .filter(|slots| !slots.is_empty())
             .enumerate()
-            .map(|(index, slots)| self.filter_row(index, slots, cx))
+            .map(|(index, slots)| self.filter_row(index, &slots, cx))
             .collect::<Vec<_>>();
         stats_card("stats-filters")
             .on_prepaint({
@@ -2820,6 +2857,12 @@ impl Statistics {
                 .into_any_element();
         };
         let (points, cost_points) = ChartPoint::split_series(&dashboard.series, self.currency);
+        // The bucket width comes from the series itself, so the cost card's
+        // subtitle describes the range that is actually plotted.
+        let bucket_ms = cost_points
+            .first()
+            .map(|point| (point.end_ms - point.start_ms).max(0))
+            .unwrap_or(0);
         let incomplete = points.iter().any(|point| {
             point.collection_warning || point.quality == crate::stats_dto::SeriesQuality::Unknown
         });
@@ -2884,12 +2927,37 @@ impl Statistics {
                     )
                     .into_any_element()
             }));
-        stats_card("stats-trends")
+        // DESIGN_SPEC §4.1.4: two cards side by side — usage trend and
+        // estimated cost — each with its own header. Both plots, the legend,
+        // the warning, the gaps and the currency select keep their semantics.
+        let bucket_text = if bucket_ms <= 0 {
+            self.t("按区间汇总", "Per interval").to_owned()
+        } else if bucket_ms % 86_400_000 == 0 {
+            if self.zh {
+                format!("按 {} 天汇总", bucket_ms / 86_400_000)
+            } else {
+                format!("Per {}-day bucket", bucket_ms / 86_400_000)
+            }
+        } else if bucket_ms % 3_600_000 == 0 {
+            if self.zh {
+                format!("按 {} 小时汇总", bucket_ms / 3_600_000)
+            } else {
+                format!("Per {}-hour bucket", bucket_ms / 3_600_000)
+            }
+        } else if self.zh {
+            format!("按 {} 分钟汇总", (bucket_ms / 60_000).max(1))
+        } else {
+            format!("Per {}-minute bucket", (bucket_ms / 60_000).max(1))
+        };
+        let token_card = stats_card("stats-trends")
+            .flex_1()
+            .min_w_0()
             .child(
                 div()
                     .flex()
                     .items_center()
                     .justify_between()
+                    .gap_2()
                     .child(stats_heading(self.t("使用趋势", "Usage trend")))
                     .when(incomplete, |this| {
                         this.child(
@@ -2897,15 +2965,15 @@ impl Statistics {
                                 "部分时段记录不全，空白区间暂无可靠统计",
                                 "Some intervals are incomplete; gaps have no reliable data",
                             ))
-                            .text_size(px(10.))
+                            .text_size(px(crate::theme::font::SMALL))
                             .text_color(rgb(WARN)),
                         )
                     }),
             )
             .child(
                 div()
-                    .text_size(px(10.))
-                    .text_color(rgb(MUTED))
+                    .text_size(px(crate::theme::font::LABEL))
+                    .text_color(rgb(crate::theme::color::TEXT_3))
                     .child(self.t(
                         "缓存读/写是输入的子集，图例可独立开关，不可相加",
                         "Cache read/write are input subsets; toggle them, never sum them",
@@ -2920,36 +2988,39 @@ impl Statistics {
                     .aria_label(token_summary.clone())
                     .child(token_chart),
             )
-            .child(legend)
+            .child(legend);
+        let cost_card = stats_card("stats-cost-trend")
+            .flex_1()
+            .min_w_0()
             .child(
                 div()
                     .flex()
                     .items_center()
                     .justify_between()
-                    .pt_2()
-                    .border_t_1()
-                    .border_color(rgb(BORDER))
+                    .gap_2()
+                    .child(stats_heading(self.t("估算费用", "Estimated cost")))
                     .child(
-                        Label::new(self.t("估算费用", "Estimated cost"))
-                            .text_size(px(11.))
-                            .text_color(rgb(MUTED)),
-                    )
-                    .child(
-                        div().w(px(88.)).h(px(28.)).child(
+                        div().w(px(96.)).h(px(32.)).child(
                             Select::new(&self.currency_select)
                                 .w_full()
-                                .h(px(28.))
+                                .h(px(32.))
                                 .small()
                                 .accessibility_label(self.t("费用币种", "Cost currency")),
                         ),
                     ),
             )
-            .when(has_cost, |this| {
-                this.child(
+            .child(
+                div()
+                    .text_size(px(crate::theme::font::LABEL))
+                    .text_color(rgb(crate::theme::color::TEXT_3))
+                    .child(bucket_text),
+            )
+            .when(has_cost, |card| {
+                card.child(
                     div()
                         .id("cost-chart-host")
                         .w_full()
-                        .h(px(140.))
+                        .h(px(250.))
                         .min_h_0()
                         .aria_label(self.t(
                             "费用趋势图，按币种单独显示",
@@ -2958,14 +3029,26 @@ impl Statistics {
                         .child(cost_chart),
                 )
             })
-            .when(!has_cost, |this| {
-                this.child(
+            .when(!has_cost, |card| {
+                card.child(
                     Label::new(self.t("当前币种暂无费用数据", "No cost data for this currency"))
-                        .text_size(px(11.))
-                        .text_color(rgb(MUTED)),
+                        .text_size(px(crate::theme::font::LABEL))
+                        .text_color(rgb(crate::theme::color::TEXT_3)),
                 )
-            })
-            .into_any_element()
+            });
+        let pair = div().flex().w_full().gap(px(12.));
+        if self.filters_width >= CHART_SIDE_BY_SIDE_WIDTH {
+            pair.flex_row()
+                .items_start()
+                .child(token_card)
+                .child(cost_card)
+                .into_any_element()
+        } else {
+            pair.flex_col()
+                .child(token_card)
+                .child(cost_card)
+                .into_any_element()
+        }
     }
 
     /// Tabs, table and pagination.
@@ -3258,11 +3341,11 @@ impl Statistics {
             .pl_4()
             .pr_0()
             .py_2()
-            .gap_2()
+            .gap_3()
             .bg(rgb(BG))
             .child(self.header(cx))
-            .child(self.health_bar(cx))
             .child(self.filters(cx))
+            .child(self.health_bar(cx))
             .children(self.warnings())
             .children(self.import_notices(cx))
             .child(
@@ -3386,22 +3469,24 @@ impl Statistics {
             || health.write_failures_current_run > 0
             || health.loss_scope == LossScope::LossObserved;
         let _ = cx;
+        // DESIGN_SPEC §4.1.2: a plain status line under the filter bar, not a
+        // separate grey card. Every fact, alert and colour keeps its meaning.
         div()
             .flex()
             .flex_wrap()
             .items_center()
-            .gap_3()
-            .px_3()
-            .py_2()
-            .rounded_md()
-            .bg(rgb(PANEL))
+            .gap_2()
             .child(
                 div()
                     .flex()
                     .items_center()
                     .gap_2()
                     .child(div().size(px(6.)).rounded_full().bg(rgb(color)))
-                    .child(Label::new(label).text_size(px(11.)).text_color(rgb(color))),
+                    .child(
+                        Label::new(label)
+                            .text_size(px(crate::theme::font::LABEL))
+                            .text_color(rgb(color)),
+                    ),
             )
             .child(
                 Label::new(if self.error.is_some() {
@@ -3411,7 +3496,7 @@ impl Statistics {
                 } else {
                     self.t("正常", "OK")
                 })
-                .text_size(px(11.))
+                .text_size(px(crate::theme::font::LABEL))
                 .text_color(rgb(if self.error.is_some() || attention {
                     WARN
                 } else {
@@ -3420,27 +3505,27 @@ impl Statistics {
             )
             .child(
                 Label::new(self.import_health_text())
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(MUTED)),
             )
-            .children(
-                facts
-                    .into_iter()
-                    .map(|fact| Label::new(fact).text_size(px(11.)).text_color(rgb(MUTED))),
-            )
+            .children(facts.into_iter().map(|fact| {
+                Label::new(fact)
+                    .text_size(px(crate::theme::font::LABEL))
+                    .text_color(rgb(MUTED))
+            }))
             .child(
                 Label::new(match &self.last_updated {
                     Some(at) => format!("{} {at}", self.t("更新于", "Updated")),
                     None => self.t("尚未刷新", "Not refreshed").to_owned(),
                 })
-                .text_size(px(11.))
+                .text_size(px(crate::theme::font::LABEL))
                 .text_color(rgb(MUTED)),
             )
-            .children(
-                alerts
-                    .into_iter()
-                    .map(|alert| Label::new(alert).text_size(px(11.)).text_color(rgb(WARN))),
-            )
+            .children(alerts.into_iter().map(|alert| {
+                Label::new(alert)
+                    .text_size(px(crate::theme::font::LABEL))
+                    .text_color(rgb(WARN))
+            }))
             .into_any_element()
     }
 }
@@ -4788,6 +4873,9 @@ pub fn compact_number(value: i64) -> String {
 }
 
 /// The smallest width a single metric may occupy.
+/// Content width at which the two chart cards sit side by side (DESIGN_SPEC
+/// §4.1.4). Below it they stack, which keeps 1100×700 readable.
+pub const CHART_SIDE_BY_SIDE_WIDTH: f32 = 840.;
 pub const METRIC_MIN_WIDTH: i32 = 160;
 /// The gap between metrics.
 pub const METRIC_GAP: i32 = 12;

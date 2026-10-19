@@ -174,47 +174,77 @@ fn cards(summary: &SummaryDto, zh: bool) -> Vec<Card> {
     cards
 }
 
-fn columns(available: f32) -> usize {
-    if available >= 1_000. {
-        5
-    } else if available >= 600. {
-        3
-    } else {
-        2
-    }
+/// How many metric cards fit in the grid. The design caps the row at four; the
+/// card's own minimum width decides when fewer fit, so the row is always filled
+/// instead of wrapping early.
+fn columns(grid_width: f32) -> usize {
+    let unit = METRIC_MIN_WIDTH as f32 + METRIC_GAP as f32;
+    (((grid_width + METRIC_GAP as f32) / unit).floor() as usize).clamp(1, 4)
 }
+
+/// The hero column width fixed by DESIGN_SPEC §4.1.3.
+const HERO_WIDTH: f32 = 260.;
+/// The design's metric row height.
+const METRIC_HEIGHT: f32 = 92.;
+/// Below this the hero moves above the grid instead of beside it.
+const HERO_BESIDE_WIDTH: f32 = 720.;
 
 impl Statistics {
     fn metric_card(&self, index: usize, card: Card, width: f32) -> AnyElement {
         let title = title(card.id, self.zh);
         let tooltip = card.exact.clone();
+        // The design emphasises the cache-read number: it is the value the
+        // reader is meant to compare against the input tokens.
+        let value_color = if card.id == MetricId::CacheRead {
+            crate::theme::color::PRIMARY_DARK
+        } else {
+            crate::theme::color::TEXT_1
+        };
         div()
             .id(("stats-metric", index))
             .role(Role::Group)
             .aria_label(format!("{title} {}", card.value))
             .flex()
             .flex_col()
+            .justify_between()
             .flex_shrink_0()
             .w(px(width))
             .min_w(px(METRIC_MIN_WIDTH as f32))
+            // The design fixes the row at 92px, but a value such as
+            // "USD 0.0010 / CNY 0.0050" or a two-line hint may need more; the
+            // card grows instead of clipping.
+            .min_h(px(METRIC_HEIGHT))
             .gap_1()
-            .p_3()
-            .rounded(px(8.))
-            .bg(rgb(BG))
+            .p_4()
+            .bg(rgb(crate::theme::color::WHITE))
+            .border_1()
+            .border_color(rgb(crate::theme::color::BORDER))
+            .rounded(px(crate::theme::radius::CARD))
             .tooltip(move |window, cx| {
                 gpui_kit::component::tooltip::Tooltip::new(tooltip.clone()).build(window, cx)
             })
-            .child(Label::new(title).text_size(px(11.)).text_color(rgb(MUTED)))
+            .child(
+                Label::new(title)
+                    .text_size(px(crate::theme::font::LABEL))
+                    .text_color(rgb(crate::theme::color::TEXT_3)),
+            )
             .child(
                 div()
-                    .text_size(px(16.))
+                    // Two currencies or a long amount would overflow a 22px
+                    // card, so long values step down to the card-title size.
+                    .text_size(px(if card.value.chars().count() > 14 {
+                        crate::theme::font::CARD_TITLE
+                    } else {
+                        crate::theme::font::KPI
+                    }))
                     .font_weight(FontWeight::SEMIBOLD)
+                    .text_color(rgb(value_color))
                     .child(card.value),
             )
             .child(
                 Label::new(card.hint)
-                    .text_size(px(10.))
-                    .text_color(rgb(MUTED)),
+                    .text_size(px(crate::theme::font::SMALL))
+                    .text_color(rgb(crate::theme::color::TEXT_3)),
             )
             .into_any_element()
     }
@@ -229,47 +259,92 @@ impl Statistics {
         };
         let summary = &dashboard.summary;
         let main = usage_table::compact(summary.total_tokens, self.zh);
-        let columns = columns(self.filters_width);
-        let width = ((self.filters_width - (columns - 1) as f32 * METRIC_GAP as f32)
-            / columns as f32)
+        let beside = self.filters_width >= HERO_BESIDE_WIDTH;
+        // When the hero sits beside the grid it owns a fixed column; the metric
+        // cards share what is left. Either way the numbers come from the
+        // measured content width, never from a hard-coded guess.
+        let grid_width = if beside {
+            self.filters_width - HERO_WIDTH - METRIC_GAP as f32
+        } else {
+            self.filters_width
+        };
+        let columns = columns(grid_width);
+        // One pixel of slack keeps floating point rounding from wrapping a row
+        // that the budget says fits.
+        let width = (((grid_width - (columns - 1) as f32 * METRIC_GAP as f32) / columns as f32)
             .floor()
+            - 1.)
             .max(METRIC_MIN_WIDTH as f32);
         let metrics = cards(summary, self.zh)
             .into_iter()
             .enumerate()
-            .map(|(index, card)| self.metric_card(index, card, width));
-        stats_card("stats-overview")
+            .map(|(index, card)| self.metric_card(index, card, width))
+            .collect::<Vec<_>>();
+        let hero = div()
+            .id("stats-total-tokens")
+            .role(Role::Group)
+            .aria_label(format!("{} {main}", self.t("Token 总用量", "Total tokens")))
+            .flex()
+            .flex_col()
+            .justify_between()
+            .gap_2()
+            .p_4()
+            .rounded(px(crate::theme::radius::CARD))
+            .bg(rgb(crate::theme::color::HERO_BG))
+            .when(beside, |card| {
+                card.w(px(HERO_WIDTH)).min_h(px(METRIC_HEIGHT * 2. + 12.))
+            })
+            .when(!beside, |card| card.w_full())
+            .child(
+                Label::new(self.t("Token 总用量", "Total tokens"))
+                    .text_size(px(crate::theme::font::CARD_TITLE))
+                    .font_weight(FontWeight::SEMIBOLD)
+                    .text_color(rgb(crate::theme::color::PRIMARY_DARK)),
+            )
             .child(
                 div()
-                    .id("stats-total-tokens")
-                    .role(Role::Group)
-                    .aria_label(format!("{} {main}", self.t("Token 总用量", "Total tokens")))
+                    .text_size(px(crate::theme::font::HERO))
+                    .line_height(px(crate::theme::line_height::HERO))
+                    .font_weight(FontWeight::BOLD)
+                    .text_color(rgb(crate::theme::color::PRIMARY_DARK))
+                    .child(main),
+            )
+            .child(
+                div()
                     .flex()
                     .flex_col()
                     .gap_1()
-                    .child(stats_heading(self.t("Token 总用量", "Total tokens")))
-                    .child(
-                        div()
-                            .text_size(px(28.))
-                            .font_weight(FontWeight::BOLD)
-                            .child(main),
-                    )
                     .child(
                         Label::new(format!(
                             "{}/{} {}",
                             summary.usage_complete_count,
                             summary.usage_eligible_count,
-                            self.t("条记录用量完整", "records with complete usage")
+                            self.t("个请求用量完整", "requests with complete usage")
                         ))
-                        .text_size(px(11.))
-                        .text_color(rgb(MUTED)),
+                        .text_size(px(crate::theme::font::LABEL))
+                        .text_color(rgb(crate::theme::color::TEXT_2)),
+                    )
+                    .child(
+                        Label::new(self.t(
+                            "只统计已结束且用量完整的请求",
+                            "Finished requests with complete usage only",
+                        ))
+                        .text_size(px(crate::theme::font::LABEL))
+                        .text_color(rgb(crate::theme::color::TEXT_3)),
                     ),
-            )
+            );
+        stats_card("stats-overview")
+            .gap_3()
+            .when(beside, |card| {
+                card.flex_row().items_start().gap(px(METRIC_GAP as f32))
+            })
+            .child(hero)
             .child(
                 div()
                     .flex()
                     .flex_wrap()
                     .gap(px(METRIC_GAP as f32))
+                    .when(beside, |grid| grid.flex_1().min_w_0())
                     .children(metrics),
             )
             .into_any_element()
@@ -312,9 +387,20 @@ mod tests {
         }
     }
     #[test]
-    fn actual_layout_obeys_the_three_metric_breakpoints() {
-        for (width, expected) in [(1_000., 5), (999., 3), (600., 3), (599., 2)] {
-            assert_eq!(columns(width), expected);
+    fn actual_layout_obeys_the_metric_breakpoints() {
+        // The grid area decides the row: four cards from 160px each plus gaps,
+        // then three, two and one as the page narrows.
+        for (grid, expected) in [
+            (1_200., 4),
+            (676., 4),
+            (675., 3),
+            (504., 3),
+            (503., 2),
+            (332., 2),
+            (331., 1),
+            (0., 1),
+        ] {
+            assert_eq!(columns(grid), expected, "grid {grid}");
         }
     }
 }

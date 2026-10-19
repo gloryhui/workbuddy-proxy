@@ -1003,6 +1003,75 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 - 本轮专用目录 `/Volumes/1TB/tmp/ui-ux-t05/session-t05/`；构建/测试的 `TMPDIR/TMP/TEMP` 指向其下 `tmp/`，未执行 `cargo clean`，未在系统盘新建 Cargo 目录。
 - 夹具在本轮内停止并确认进程退出后，删除合成 `config.json`、`instance.json`、`gpui-drafts.json`、锁文件、隔离 HOME/XDG 目录与临时 Prompt 文件；保留截图、`logs/mock-commands.jsonl`、构建/测试日志、几何测量与夹具脚本，均位于 `/Volumes/1TB`，未进入仓库。
 
+#### T06 — 统计总览、筛选与图表
+
+**状态：** DONE（代码 / 静态 / 固定数据集前后对照 / macOS 真实 GUI 代表切片）。A01、A03、A05（错误态）有直接证据；A02 的日期草稿与应用、A04 的币种切换与图例开关为 **NOT RUN**；A05 的「已暂停」未确认；Windows GUI 仍 **BLOCKED**。
+
+**开工前置确认（本轮，全部符合）**
+
+| 项 | 要求 | 实测 | 结论 |
+|---|---|---|---|
+| HEAD / 分支 | `bf811b9c5e2a2a185170b6ed72dcfabebfd54784` / `codex/ui-redesign` | 一致（T05 提交） | 符合 |
+| 供应商 / 账号 | OpenCode Go（账号 1） | `opencode-go` → `"OpenCode Go (账号 1)"` | 符合 |
+| 模型 / 档位 / 权限 | deepseek-v4.1-flash / High / Full Access | 一致（`danger-full-access`，审批提示关闭） | 符合 |
+| 保护文件 | `gpui/src/usage_table.rs` = `ff14cd5c…a275f3` | 全程一致，未编辑/格式化/暂存/提交 | 符合 |
+| 旧任务 / 排队 | 无 | 无遗留夹具进程、无排队消息 | 符合 |
+
+**改动文件**
+
+| 文件 | 改动 | 语义边界 |
+|---|---|---|
+| `gpui/src/statistics.rs` | 页头（22/600 标题＋13 副标题＋右上来源切换）、筛选卡（来源槽位移至页头，其余槽位与顺序不变）、采集健康行（灰底条 → 设计的内联状态行，移动至筛选下方）、`stats_card` 内边距 16、图表区拆成两张并排卡片 | 回调、请求调度、刷新策略、筛选语义、日期草稿、健康/告警字段、加载/错误/暂停处理均未改 |
+| `gpui/src/statistics/overview.rs` | 左侧 hero 大卡（hero-bg、44/600、两行说明）＋右侧指标卡 4 列网格（白底/边框/圆角 12/22/600），列数由可用宽度与 160px 最小宽推导，窄窗 3/2/1 列；卡片最小高 92 并按内容增高；长数值（双币种）降为 15px | 9 项指标、未知「—」、tooltip 精确值、aria 标签、hint 文案全部保留 |
+| `gpui/src/usage_chart.rs` | 系列色改为 DESIGN_SPEC §2.2：输入 `#3B6FE0`、输出 `#2E9E6B`、缓存读 `#7B5CD6`、缓存写 `#B6BCC8` | 曲线、断线、真实零点、Tooltip、币种与 `ChartMode` 逻辑未改 |
+| `gpui/src/usage_table.rs` | **未改**（哈希不变） | T07 才动 |
+| `docs/UI-UX-renew/IMPLEMENTATION_STATUS.md` | 本记录 | — |
+
+未改：`gpui/src/main.rs`、窗口宿主、`stats_backend`/`stats_dto`/`src/stats/*`（查询与聚合）、`source_filter.rs`（U03/U04 契约与测试原样）、依赖与 `Cargo.lock`。
+
+**固定数据集（隔离真实核心 + 播种 SQLite，`gui/seed_stats.py`）**
+
+8 条记录覆盖：完整且已定价（含缓存读/写，输入＝未缓存+读+写）、实测全零、失败未定价、用量不全（partial）、连接测试、内置导入、自定义导入各 1 条；费用行 3 条（USD×2、CNY×1），导入行保持「费用未知」。预期值：总量 4200（＝输入 3000＋输出 1200，**不含**缓存读 300/写 300）、记录 7、代理成功率 80.0%（仅代理 5 条中 4 成功）、缓存读 300、缓存创建 300、完整率 85.7%、USD 0.0010、CNY 0.0050、WorkBuddy 点数 —。
+
+**A01—A05 结果（改造前 `bf811b9` 与改造后同数据集逐项对照）**
+
+| ID | 结果 | 证据 |
+|---|---|---|
+| A01 | **PASS** | 全部来源/内置模型/自定义模型三态前后逐值一致：4200·7·80.0%·3000·1200·300·300·85.7% ↔ 500·1·—·300·200·0·0·100.0%·未定价 ↔ 3700·6·80.0%·2700·1000·300·300·83.3%；1＋6＝7 自洽；供应商/模型/状态筛选控件与顺序未改（`filters()` 仅跳过已移入页头的来源槽，`rebuild_choices`/`sync_filter_state` 未触碰，官方（内置）来源下供应商筛选保持原有可用性与结果）。截图 `A01`/`A02`/`A03`，日志 `logs/kpi-{before,after}-{all,builtin,supplier}.txt` |
+| A02 | **PARTIAL / 关键项 NOT RUN** | 刷新周期（关闭/5/10/30/60 秒）与日期控件结构、草稿(`draft_text`)/应用值(`applied`)、防抖(`debounce_until`)与 `generation` 闸门代码未改，T06 未新增轮询；「快速连续切换筛选不展示过期结果」依赖既有 `generation`/`gate` 机制，本轮仅通过切换来源时观察单次刷新，未做快速连击与日期草稿的应用/取消实测 |
+| A03 | **PASS** | 同一数据集改造前后 KPI **逐字节一致**（上表三态）；缓存读/写为输入子集不重复相加（4200 ≈ 3000+1200，若重复计为 4800）；内置（纯导入）区间成功率为「—」、费用为「未定价」，自定义区间缓存读为实测 `0`，记录用量不全的 `fixture-4` 在明细中显示「输入 250 · 输出 — · 总 Token — · 命中率 — · 用量不全」，导入行显示「未定价」——未知/零/未定价/用量不全四态可区分 |
+| A04 | **PARTIAL** | 图表拆为「使用趋势」「估算费用」两张并排卡片（窄窗纵向堆叠），各自坐标轴与标题，图例四项（缓存写为设计的中性浅色）、橙色「部分时段记录不全」提示保留；12:00–13:00 无数据桶形成真实断线（`A04`）；币种下拉与图例点击为现有 `Select`/`div.on_click` 绑定，**币种切换与图例开关本轮未实测**（AX 无法展开该下拉/图例不在无障碍树内），仅静态核对代码路径未改、KPI 已同时给出 USD/CNY 两组总量 |
+| A05 | **PARTIAL** | 「统计服务暂时不可用，请稍后再试。＋重试」错误态真实出现（`A10`，停止核心后刷新），此前数据保留、底部状态栏显示「无法连接核心，代理状态未知」；真实告警「部分用量：1」「上次退出异常，中断区间的记录可能不全」来自真实计数；健康行按 state/enabled 取色取词，无固定「正常」；**「已暂停」（`stats_settings.enabled=0`）已设置但截图停留在图表区，未取到「已暂停」字样 → 未确认**；「降级/迁移」未构造 |
+
+**自动验证（`TMPDIR/TMP/TEMP=/Volumes/1TB/tmp/ui-ux-t06/session-t06/tmp`；`CARGO_TARGET_DIR=/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`；未执行 `cargo clean`）**
+
+| 检查 | 命令 | 退出码 | 结果 |
+|---|---|---:|---|
+| 格式 | `rustfmt --edition 2024`（T06 改动文件）＋ `cargo fmt --check` | 0 | PASS；未对 `usage_table.rs` 运行 rustfmt |
+| 编译 | `cargo check --locked --bin workbuddy-proxy-gpui` | 0 | PASS |
+| Clippy | `cargo clippy --locked --all-targets -- -D warnings` | 0 | PASS |
+| 测试 | `cargo test --locked` | 0 | **138 passed / 0 failed**（含 `overview` 指标构成与列数断点、`statistics` 几何断言） |
+| Release | `cargo build --release --locked` | 0 | PASS |
+| 空白 | `git diff --check` | 0 | PASS |
+| 保护文件 | `shasum -a 256 gpui/src/usage_table.rs` | — | `ff14cd5c…a275f3` |
+
+二进制：改造前（HEAD）`51520d9e…10b73`，改造后 `f546996c0eb49bb58fd31659ae3d46bc711dcb90b18cf5bf3341d1829be47de5`；核心为本 worktree `src/` 构建。
+
+**隔离夹具与证据**
+
+- 真实核心 `--headless --config-dir <隔离目录>`，统计库 `usage.sqlite3` 由本轮脚本播种（`gui/seed_stats.py`，只写本轮副本）；配置为 T04 合成供应商列表；未使用真实 WorkBuddy 配置/数据库，未发上游请求，未触发同步/重启/保存。所有夹具进程在本轮内停止。
+- 截图（`gui/shots/`）：`A01-stats-overview`、`A02-stats-builtin`、`A03-stats-supplier`、`A04-stats-charts`、`A04b-stats-charts-lower`、`A05-stats-narrow-1100x700`、`A09-stats-paused`、`A10-stats-core-stopped`，以及改造前对照 `B01`–`B06b`；KPI 文本对照存于 `logs/kpi-*.txt`。
+- 修复的缺陷：来源切换移入页头后其绝对定位分隔线使行高塌陷到 0，控件被绘制到窗口之上（AX 帧 y=-3、不可见）；加显式 32px 高的 flex 包裹后恢复正常（实测三态切换生效）。
+- 限制：改造期间窗口位置被系统多次移动；鼠标/键盘事件须先确认焦点（夹具脚本对按键有前台保护，滚动与点击仅在确认夹具窗口在前台时发送）。
+
+**未测项 / 剩余风险**
+
+1. A02：快速连续切换筛选、日期草稿的取消/应用、刷新周期切换未实测。
+2. A04：币种切换与图例独立开关未实测（AX 树无法触达）。
+3. A05：降级/迁移、加载中态未构造；「已暂停」未确认。
+4. Windows GUI：BLOCKED（无实机）。
+5. 设计未覆盖处（来源切换文案仍为「全部来源/内置模型/自定义模型」＝差异 D09 待用户确认；筛选控件高度受差异 D16 的 rem 基准影响）保留原行为并登记。
+
 | 任务 | 状态 | 依赖 | 备注 |
 |---|---|---|---|
 | T00 | DONE（静态） | — | B04 NOT RUN；不阻止 T01 |
@@ -1011,7 +1080,7 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 | T03 窗口骨架 | DONE（代码/静态；macOS GUI 骨架与交互证据；S01—S04 部分项 NOT RUN） | T02 | 224px 侧栏 / 36px 顶部行 / 30px 状态栏；D04 只登记，D13 已落地 |
 | T04 供应商页 + 协议弹窗 | DONE（代码/静态；macOS GUI 代表切片；P02 实际调用与保存/复制/清空未执行） | T03 | 右栏拆两卡 300px；Responses `none` 保留；草稿/持久化边界未变；D16 仍未解决 |
 | T05 模型选择/编辑/同步确认 | DONE（代码/静态；macOS GUI 代表切片；P04 键盘指针矩阵与“仅同步/同步并重启”未执行） | T04 | 选择弹窗计数用真实语义；能力联动与原生协议限制保留；草稿/持久化边界未变 |
-| T06 统计总览/筛选/图表 | TODO | T04 | 保留统计语义、轮询策略 |
+| T06 统计总览/筛选/图表 | DONE（代码/静态/固定数据集前后对照；A02/A04 部分未测） | T04 | 来源切换移入页头；KPI hero＋4 列；图表拆两张；系列色按设计 |
 | T07 日志/聚合表格/分页 | TODO | T06；T00 已记录 usage_table | 在既有 diff 上做两行 Token/列宽 |
 | T08 成本定价/采集存储/价格弹窗 | TODO | T07 | 价格快照、危险操作 |
 | T09 双平台矩阵/回归 | TODO | T05—T08 | Windows 无环境则 BLOCKED |
@@ -1023,6 +1092,8 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 - **T01 更新**：上述 gpui 检查已实际执行并通过（§8.3）；V03/V04 GUI 仍 **NOT RUN**。
 - **T02 更新**：`cargo check`/`fmt`/`clippy`/`test`/`release build`/`git diff --check` 已执行并通过（§8.3）；C01—C06 的 GUI/鼠标/键盘/IME 交互仍 **NOT RUN**。
 - **T03 更新**：`cargo check`/`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build` 已执行并通过；macOS 真实 GPUI 窗口已在隔离夹具中启动并取得骨架、切换与状态源截图（§8.3、§8.5）。S01/S02/S03/S04 的部分交互仍为 **NOT RUN**（详见 §8.5），不得据此声称四项全部通过。
+- **T06 更新**：`rustfmt`+`cargo fmt --check`/`check`/`clippy --all-targets`/`test`（138 passed）/`release build`/`git diff --check` 全部通过；隔离真实核心＋播种统计库，同一数据集下改造前后 KPI 逐值一致（4200/7/80.0%/3000/1200/300/300/85.7%/USD 0.0010/CNY 0.0050/点数 —），内置区间 500/1/未定价、自定义区间 3700/6 自洽。
+- **T06 未执行**：快速连击筛选、日期草稿应用/取消、币种切换、图例开关、已暂停/降级/加载中态（标注 NOT RUN，未伪称通过）。Windows GUI：**BLOCKED**。
 - **T05 更新**：`cargo check`/`rustfmt`+`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build`/`git diff --check` 已执行并通过（§8.3 T05）。macOS 隔离夹具（本地 Mock 控制面）取得选择模型弹窗全部动作、编辑模型自动/手动/非法校验、原生协议限制、同步与取消同步与删除确认框截图；`config.json` SHA-256 全程不变。
 - **T05 未执行**：P04 的 Shift/⌘ 连选、Delete/Backspace、⌘A、双击（键盘前台被其他应用占用）；「仅同步」「同步并重启」、复制/添加供应商、正式保存（副作用禁止）。Windows GUI：**BLOCKED**。
 - **T04 更新**：`cargo check`/`rustfmt`+`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build`/`git diff --check` 已执行并通过（§8.3 T04）。macOS 真实 GPUI 隔离夹具已取得供应商页、最小窗口、四种协议弹窗、API Key 显隐、长 URL、端口校验与确认、日志独立滚动截图；`config.json` SHA-256 在应用到草稿/长 URL/端口流程中全程不变。
