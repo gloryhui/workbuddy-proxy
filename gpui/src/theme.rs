@@ -133,6 +133,8 @@ pub mod size {
     pub const BUTTON_HEIGHT: f32 = 32.;
     /// DESIGN_SPEC §3 "按钮通用：内边距 0 14".
     pub const BUTTON_PADDING_X: f32 = 14.;
+    /// Tighter horizontal padding for buttons that share a narrow rail.
+    pub const BUTTON_X_TIGHT: f32 = 8.;
     pub const ICON_BUTTON: f32 = 32.;
     pub const DIALOG_ICON_BUTTON: f32 = 28.;
     /// DESIGN_SPEC §5: the shared protocol editor's mapping labels sit in a

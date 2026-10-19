@@ -2162,14 +2162,19 @@ impl Proxy {
                         .overflow_y_scroll()
                         .children(rows),
                 )
+                // Three actions in a 188px card: a single row cannot hold
+                // icon + label in both locales, so add owns one row and the
+                // other two share the next. Nothing is clipped and every id,
+                // callback, disabled state, tooltip and a11y label is kept.
                 .child(
                     div()
                         .flex()
-                        .items_center()
-                        .gap_2()
+                        .flex_col()
+                        .gap(px(crate::theme::space::SMALL))
                         .w_full()
-                        .h(px(crate::theme::size::FOOTER_HEIGHT))
+                        .min_h(px(crate::theme::size::FOOTER_HEIGHT))
                         .px_2()
+                        .py_2()
                         .flex_shrink_0()
                         .border_t_1()
                         .border_color(rgb(crate::theme::color::BORDER))
@@ -2182,7 +2187,8 @@ impl Proxy {
                                 false,
                             )
                             .icon(IconName::Plus)
-                            .flex_1()
+                            .w_full()
+                            .px(px(crate::theme::size::BUTTON_X_TIGHT))
                             .tooltip(self.t("新增供应商", "Add provider"))
                             .accessibility_label(self.t("新增供应商", "Add provider"))
                             .on_click(cx.listener(|this, _, _, cx| {
@@ -2191,41 +2197,56 @@ impl Proxy {
                             })),
                         )
                         .child(
-                            crate::ui_components::button(
-                                "provider-copy",
-                                crate::ui_components::ButtonKind::Ghost,
-                                self.t("复制", "Copy"),
-                                self.busy || selected.is_empty(),
-                                false,
-                            )
-                            .icon(IconName::Copy)
-                            .flex_1()
-                            .tooltip(self.t("复制供应商", "Duplicate provider"))
-                            .accessibility_label(self.t("复制供应商", "Duplicate provider"))
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                let mut steps = this.dirty_steps(cx);
-                                steps.push(
-                                    json!({"command":"duplicate","provider_id":this.selected()}),
-                                );
-                                this.send("duplicate", steps, cx);
-                            })),
-                        )
-                        .child(
-                            crate::ui_components::button(
-                                "provider-delete",
-                                crate::ui_components::ButtonKind::DangerOutline,
-                                self.t("删除", "Delete"),
-                                self.busy || selected.is_empty(),
-                                false,
-                            )
-                            .icon(IconName::Delete)
-                            .flex_1()
-                            .tooltip(self.t("删除供应商", "Delete provider"))
-                            .accessibility_label(self.t("删除供应商", "Delete provider"))
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.delete_open = true;
-                                cx.notify();
-                            })),
+                            div()
+                                .flex()
+                                .items_center()
+                                .gap_2()
+                                .w_full()
+                                .child(
+                                    crate::ui_components::button(
+                                        "provider-copy",
+                                        crate::ui_components::ButtonKind::Ghost,
+                                        self.t("复制", "Copy"),
+                                        self.busy || selected.is_empty(),
+                                        false,
+                                    )
+                                    .icon(IconName::Copy)
+                                    .flex_1()
+                                    .min_w_0()
+                                    .px(px(crate::theme::size::BUTTON_X_TIGHT))
+                                    .tooltip(self.t("复制供应商", "Duplicate provider"))
+                                    .accessibility_label(self.t(
+                                        "复制供应商",
+                                        "Duplicate provider",
+                                    ))
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        let mut steps = this.dirty_steps(cx);
+                                        steps.push(json!({"command":"duplicate","provider_id":this.selected()}));
+                                        this.send("duplicate", steps, cx);
+                                    })),
+                                )
+                                .child(
+                                    crate::ui_components::button(
+                                        "provider-delete",
+                                        crate::ui_components::ButtonKind::DangerOutline,
+                                        self.t("删除", "Delete"),
+                                        self.busy || selected.is_empty(),
+                                        false,
+                                    )
+                                    .icon(IconName::Delete)
+                                    .flex_1()
+                                    .min_w_0()
+                                    .px(px(crate::theme::size::BUTTON_X_TIGHT))
+                                    .tooltip(self.t("删除供应商", "Delete provider"))
+                                    .accessibility_label(self.t(
+                                        "删除供应商",
+                                        "Delete provider",
+                                    ))
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.delete_open = true;
+                                        cx.notify();
+                                    })),
+                                ),
                         ),
                 )
             });
