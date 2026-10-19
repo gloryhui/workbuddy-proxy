@@ -76,6 +76,9 @@ impl AssetSource for Assets {
             r#"<path d="M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 1l1 5M4 12l1 5a8 8 0 0 0 13 1"/>"#
         } else if path.contains("minus") {
             r#"<path d="M5 12h14"/>"#
+        } else if path.contains("info") {
+            // T03 status bar: the design pairs the tray hint with an info mark.
+            r#"<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>"#
         } else if path.contains("close") || path.contains("/x.") {
             r#"<path d="m6 6 12 12M6 18 18 6"/>"#
         } else {
@@ -125,6 +128,20 @@ mod tests {
                 "{path} rounds its caps"
             );
         }
+    }
+
+    #[test]
+    fn the_status_bar_info_icon_is_its_own_shape_and_never_the_plus() {
+        // T03 adds the status bar's info mark. Like the source icons it needs
+        // its own branch, otherwise a typo in the path would silently render the
+        // generic plus and mislabel the tray hint.
+        let info = load("icons/info.svg");
+        assert!(info.contains("<circle"), "info must be its own shape");
+        assert!(
+            !info.contains(r#"d="M5 12h14M12 5v14""#),
+            "info must not be the plus fallback"
+        );
+        assert!(info.contains(r#"viewBox="0 0 24 24""#));
     }
 
     #[test]

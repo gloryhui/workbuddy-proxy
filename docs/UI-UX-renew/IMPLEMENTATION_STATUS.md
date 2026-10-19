@@ -15,13 +15,14 @@
 2. **已有修改保护**：`gpui/src/usage_table.rs` 是进入本 worktree 前已有的未提交修改（`22 insertions / 5 deletions`），本轮未触碰、未格式化、未重置；当前 SHA-256 为 `ff14cd5c47ff9cc450b4b5ecfcfa6981a02797c2370eb3eab91a786377a275f3`。
 3. **设计资料缺项已确认**：12 张 PNG 和 1 个 12 页 PDF 存在；**没有 HTML 画板，没有 Windows 旧界面截图**。PDF 是画板的局部裁切/放大页，不是额外画板。现有旧截图是 macOS v0.5.5。
 4. **D01—D09 已逐项登记**；D10—D15 是 T00 额外发现的语义/结构差异，保留以便后续跟踪。
-5. **T00 未执行构建/测试；T01 已执行 gpui fmt/clippy/test/release build（§8.3）。GUI 与双平台验收仍未运行**；B04 为 `NOT RUN`，Windows 为 `BLOCKED`（无 Windows 环境），Mac GUI 为 `NOT RUN`。不得把本文件中的静态核查当作 GUI 通过。
-6. **T00 状态为 DONE（仅静态核查与施工记录）**；T01 已完成代码与静态检查（V03/V04 NOT RUN）；T02 已完成代码与静态核对（C01—C06 的 GUI/IME 交互 NOT RUN）；T03—T10 仍为 `TODO`。
+5. **T00 未执行构建/测试；T01/T02/T03 已执行 gpui fmt/clippy/test/release build（§8.3）。T03 首次启动了真实 GPUI 窗口**（隔离夹具、合成 30 供应商配置），取得骨架与状态源截图；B04 仍为 `NOT RUN`（未跑完整隔离代理/Mock 链路），Windows 为 `BLOCKED`（无 Windows 环境）。不得把静态核查当作 GUI 通过，也不得据本轮 macOS 证据宣称 Windows GUI 已验收。
+6. **任务状态**：T00 DONE（静态）；T01 DONE（代码/静态，V03/V04 NOT RUN）；T02 DONE（代码/静态，C01—C06 交互 NOT RUN）；T03 DONE（代码/静态 + macOS GUI 骨架与交互证据，S01—S04 部分项 NOT RUN，见 §8.5）；T04—T10 仍为 `TODO`。
 7. **字体探测是部分失败/非结论**：CoreText 查询未命中的名称不能当作“系统未安装”或无可用字体的结论；T01 必须用 GPUI 运行时字体表与真实布局复核。
 8. **T01 已落盘**：仅新增 `gpui/src/theme.rs` 并接入 `gpui/src/main.rs`；页面、业务逻辑与 `usage_table.rs` 未改；详见 §8.3。
 9. **T02 已落盘**：新增 `gpui/src/ui_components.rs`，并在 `ui.rs`/`statistics.rs` 的真实调用点接入 Button/Input/Select/Checkbox/Segmented/Card/Table/Dialog/Pager/Tag；未改业务、配置、统计、协议或依赖，`usage_table.rs` 哈希未变；详见 §8.3。
+10. **T03 已落盘**：`gpui/src/ui.rs` 重建窗口骨架（224px 固定侧栏、36px 顶部六动作行、30px 可信状态栏），`gpui/src/assets.rs` 增加状态栏 info 图标；未改 `main.rs`/主题/依赖/协议/代理/统计语义，`usage_table.rs` 哈希仍为 `ff14cd5c…`；D13 已用真实核心状态落地，D04 只登记；详见 §8.3—§8.5。
 
-本轮要求项索引：功能映射 §4；D01—D09 §3.3—§3.4；B01—B04 §8.2；T01—T10 §8.3。
+本轮要求项索引：功能映射 §4；D01—D09 §3.3—§3.4；B01—B04 §8.2；T01—T10 §8.3；T03 验收结果 §8.5。
 
 ## 1. 基线与工作区保护
 
@@ -129,6 +130,8 @@
 - 统计页：无固定状态栏；页头 18px；KPI 为 1 个总 Token 区 + 9 张卡；图表在单卡内先 Token 后费用；明细卡为三个普通按钮 + 表格；底部是成本定价、采集与存储两张折叠卡。
 - 这些都与 DESIGN_SPEC 的 224px 侧栏、36px 顶部图标行、30px 状态栏、260px+4 列 KPI、两张并排图表卡、300px 右栏、两卡拆分不同；T03/T04/T06/T07/T08 分别处理。
 
+> **T03 更新（本条以上为 T00 记录的改造前状态）**：侧栏、顶部行与底部栏已按 §8.3 重建 —— 品牌移入 224px 固定侧栏，顶部只剩 36px 右对齐六动作行，底部新增 30px 可信状态栏。中栏/右栏内部仍是改造前布局，留给 T04/T06/T07/T08。
+
 ## 3. 设计资料核查
 
 ### 3.1 实际存在的材料
@@ -166,7 +169,7 @@
 | 差异 D01 | 顶部为电源、刷新、全屏、账号等动作 | 实际六个位置是：开机启动（`autostart`）、检查更新（`check_update`）、语言（globe 下拉）、恢复默认窗口尺寸（`restore_window_size`）、GitHub 主页、提交反馈。第 1/2/4/6 个图标外观与动作不是字面对应；tooltip 和无障碍名称已反映真实动作 | 保留六个真实动作；T03 只调整位置/视觉，不按图标改功能；S04 逐项验证动作；用户确认视觉与动作映射后关闭 |
 | 差异 D02 | 同步并重启，Windows 与 macOS 相同 | 自动重启仅 macOS：`gpui/src/workbuddy_restart.rs` 在非 macOS 直接返回错误；UI 对 sync/unsync/port/startup 的重启按钮使用 `cfg!(target_os = "macos")` 禁用并显示说明 | Windows 保留禁用和说明；不得伪造可用状态；D02 不计入跨平台视觉缺陷；T05/T08/X06 复核 |
 | 差异 D03 | 协议映射六项（minimal/low/medium/high/xhigh/max） | `protocol_options.rs` 的 `EFFORTS` 有 7 项，`Responses` 额外显示 `none` 映射行；`Editor::load/read` 对 Responses 读写 `responses_efforts`；其他协议隐藏 `none` | 保留 Responses 的 `none` 行；T04 调整弹窗滚动/高度，验证载入、草稿提交和 `max` 显式映射；验收 D01—D03 |
-| 差异 D04 | 标题栏必须原生 | 当前使用 Kit `TitleBar`：macOS 透明标题栏 + 原生红绿灯；Windows 最小化/最大化/关闭由 Kit `ControlIcon` 绘制，非完全原生；标题栏高 34px | T03 保留当前 Kit 集成，只记录冲突，不改窗口宿主；用户明确接受现状或确认原生改造范围后才能关闭；未关闭前不得宣称完整设计验收 |
+| 差异 D04 | 标题栏必须原生 | 当前使用 Kit `TitleBar`：macOS 透明标题栏 + 原生红绿灯；Windows 最小化/最大化/关闭由 Kit `ControlIcon` 绘制，非完全原生；标题栏高 34px | **T03 已按约定只登记、未关闭**：`main.rs`、`TitleBar::window_options()`、窗口生命周期与恢复行为均未改动（静态断言 `window_host_untouched = true`）；打开状态保持，仍需用户明确接受现状或确认原生改造范围后才能关闭 |
 | 差异 D05 | 两端字形完全一致 | 设计本身使用平台字体列表；当前项目未设置 `font_family`，使用 `.SystemUIFont`；本次字体查询部分失败/非结论：PingFang SC/Menlo/Monaco 命中，Segoe UI/Consolas/SF Mono 未命中，未命中不等于未安装 | 默认平台系统字体，允许字形差异；T01 用 GPUI `all_font_names()` 和实际布局重新解析并回落；不打包字体；若要求同字体，另行确认许可、体积和回落 |
 | 差异 D06 | 1280×800 基准 | 项目默认 1440×900，最小 1100×700；设计 PNG 是 1280×800（数据统计长图 1280×1540、成本页 1280×1010）；系统标题栏/内容区需分开测量 | 长页面滚动，不缩小整页塞入一屏；T03/T06/T08 在 1100×700、1280×800 内容区、1440×900 窗口分别记录；不用窗口尺寸冒充内容区 |
 | 差异 D07 | 所有界面都有设计 | 未覆盖：供应商统计/模型统计表、请求详情、日期面板、启动检查/端口/取消同步/删除等确认框、导入面板、空/错/加载状态、部分悬停/按下状态、深色主题、Windows 标题栏差异 | 保留现有功能和样式，加 `TODO(design)`；T02/T04/T05/T07/T08 逐处登记；不得删除入口或新造产品功能 |
@@ -182,7 +185,7 @@ D09 是本轮要求完整列出的最后一项；D10—D15 是 T00 额外发现�
 | 差异 D10 | KPI 数量 | 设计为左侧总 Token + 8 张卡；实际 `statistics/overview.rs` 为总 Token + 9 张卡，额外包含 `WorkBuddy credits`（点数） | 保留点数功能，不删卡凑截图；T06 按设计排 8 张的同时为点数确定位置或单独登记布局；A03 以真实 9 项核对 |
 | 差异 D11 | 请求日志列 | 设计 9 列：时间、供应商、模型、请求标识、Token/命中率、费用、耗时、tok/s、状态；实际 `REQUEST_COLUMNS = 11`，另有“来源”列和“点数”列；设计中来源是供应商下的 pill | 保留来源列与点数；T07 设计列宽/两行 Token 时考虑 11 列；L01/L02/L05 逐项验证；不得为 9 列删除数据 |
 | 差异 D12 | 图表布局 | 设计为“使用趋势”和“估算费用”两张并排卡片；实际在同一张趋势卡内先 Token 图、后费用图（垂直排列） | T06 改布局但保持 `UsagePlot`/`ChartMode`/图例/断线/币种语义；A04 复验 |
-| 差异 D13 | 底部状态栏与运行状态 | 设计为 30px 全宽状态栏，左绿点“本地代理运行中”，右侧托盘说明；实际没有状态栏，只有右下角 16px 托盘提示；右侧服务卡的“运行中”是硬编码 `Tag::secondary()`，不绑定真实健康状态 | T03 新增状态栏时必须使用可信状态源（例如 `snapshot` 的地址/核心响应），不能硬编码；未知/异常不得显示为正常；S04/A05 |
+| 差异 D13 | 底部状态栏与运行状态 | 设计为 30px 全宽状态栏，左绿点“本地代理运行中”，右侧托盘说明；实际没有状态栏，只有右下角 16px 托盘提示；右侧服务卡的“运行中”是硬编码 `Tag::secondary()`，不绑定真实健康状态 | **T03 已落地**：新增 30px 全宽状态栏 + `CoreState`，状态只由 `poll` 的真实 reply 推导（无 snapshot ⇒ 不可达，未收到 ⇒ 未知，地址为空 ⇒ 未知）；右侧服务卡同一硬编码 Tag 一并改为同一可信源。真实 GUI 以 `SIGSTOP`/`SIGCONT` 隔离核心反证三态（§8.3）。剩余：代理/上游转发健康仍未纳入该状态栏，见 §8.6 |
 | 差异 D14 | 右侧设置与日志卡片 | 设计为两张卡（全局设置、日志）；实际是一个 `322px` 卡“全局设置与日志” | T04 拆分两卡，保留全部动作；右栏基准 300px；P01/P03/S04 |
 | 差异 D15 | 自动刷新默认值 | 设计显示 5 秒；实际 `refresh_interval` 默认 `0`（关闭），手动刷新按钮存在；可选 0/5/10/30/60 秒 | 这是行为默认值，不在 T00 擅自改为 5 秒；T06 先保留现状并登记，是否改默认需用户确认；A02/A05 |
 
@@ -626,12 +629,151 @@ T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 - 磁盘：`/Volumes/1TB` 可用约 **385 GiB**，系统盘可用约 **48 GiB**。
 - T03 起点：在 `ui.rs` 建立固定侧栏 224px、顶部图标行 36px、底部状态栏 30px；复用 T02 wrapper；保留六个真实动作；状态栏数据源必须可信（D13）；不迁移供应商/统计整页。
 
+#### T03 — 窗口骨架与固定区域
+
+**状态：** DONE（代码 / 静态 / macOS 真实 GUI 骨架与交互证据）。S01、S02 有真实 GUI 证据；S03 的窗口尺寸部分有 GUI 证据、语言切换为 GUI `NOT RUN`；S04 的六个动作映射为静态证据、状态源有真实 GUI 证据。详见本节与 §8.5。
+
+**开工前置确认（本轮，全部符合，否则应停止）**
+
+| 项 | 要求 | 实测 | 结论 |
+|---|---|---|---|
+| 供应商 / 账号 | OpenCode Go（账号 1） | `providers.opencode-go`，`displayName` = `OpenCode Go (账号 1)` | 符合 |
+| 模型 | DeepSeek V4.1 Flash | 运行时元数据 `provider=opencode-go`、`model=deepseek-v4.1-flash` | 符合 |
+| 推理档位 | Max | `modelSelection.lastUsed.reasoningEffort = max`；`agent-default-model.reasoningEffort = max` | 符合 |
+| 权限 | 完全权限 | `permissions.sandbox = danger-full-access`、`permissions.approval = never` | 符合 |
+| 工作区 | 独立 worktree + 分支 | `/Volumes/1TB/codex/worktrees/ui-redesign/workbuddy-proxy`，`codex/ui-redesign` | 符合 |
+| 基线 | `c1aad4f…` | HEAD = `c1aad4f6b0de64317a49ea35faa4d55f125ae78c` | 符合 |
+
+**改动文件（仅 2 个代码文件 + 本记录）**
+
+| 文件 | 改动 | 说明 |
+|---|---|---|
+| `gpui/src/ui.rs` | 骨架重构 | 224px 固定侧栏、36px 顶部图标行、30px 状态栏、可信核心状态源 |
+| `gpui/src/assets.rs` | 新增 `info` 图标分支与 1 项测试 | 状态栏托盘提示图标；有独立分支，不会落入通用加号兜底 |
+| `docs/UI-UX-renew/IMPLEMENTATION_STATUS.md` | 本记录 | — |
+
+未改：`gpui/src/main.rs`（`TitleBar::window_options`、窗口宿主、34px 标题栏、默认 1440×900、最小 1100×700、恢复行为）、`gpui/src/theme.rs`、`gpui/src/ui_components.rs`、`gpui/src/statistics.rs`、`gpui/src/usage_table.rs`、根 `src/`、`native/`、依赖与 `Cargo.lock`。
+
+**核心布局（窗口骨架，DESIGN_SPEC §2）**
+
+```text
+root(flex col, size_full)
+ ├ Kit TitleBar（34px，未改；D04 只登记）
+ └ content(flex col, size_full, bg page)
+    ├ middle(flex row, flex_1, min_h_0)
+    │   ├ sidebar(224px, flex_shrink_0, h_full, 内边距 18/12, bg-bar, 右边框 1px)
+    │   │    ├ 品牌区（34px mark + 应用名 15/600 + 副标题 11 text-3，版本取自 CARGO_PKG_VERSION）
+    │   │    ├ 导航项「数据统计」（高 38，选中态 primary-tint + primary-dark）
+    │   │    └ 供应商面板（白底 / 1px 边框 / 圆角 12 / 占满剩余高度）
+    │   │         ├ 标题行（高 40，标题 + chevron；Providers 页选中色；tooltip 保留）
+    │   │         ├ 供应商列表（flex_1 min_h_0 overflow_y_scroll，行高 34、圆点 7、右侧计数）
+    │   │         └ 工具条（高 44，flex_shrink_0，上边框，添加/复制/删除 三个等宽按钮）
+    │   └ main column(flex_1 min_w_0 min_h_0, 内边距 6/24/16, 子块间距 14)
+    │        ├ 顶部图标行（h 36，justify_end，六个真实动作）
+    │        └ 页面内容（flex_1 min_h_0：center [+ right]，页面自身滚动）
+    └ status bar（h 30，flex_shrink_0，横贯整个窗口宽度，上边框）
+```
+
+- 只有页面内容区与供应商列表滚动；侧栏工具条与状态栏是滚动区的兄弟节点，因此不随滚动移动。
+- 供应商面板标题行的展开/折叠语义与基线一致（折叠时列表与工具条一并隐藏，与原 `Sidebar` footer 行为相同）。
+
+**S03 内容区与窗口边界（实测，2x Retina 截图回读）**
+
+| 窗口（逻辑） | Kit 标题栏 | 状态栏 | 内容区（标题栏下沿 → 状态栏上沿） | 侧栏 |
+|---|---:|---:|---:|---:|
+| 1440 × 901（默认） | 34（含 1px 边框） | 30（含 1px 边框） | **838.5** | 224 |
+| 1280 × 800 | 34 | 30 | **737.5** | 224 |
+| 1100 × 700（最小） | 34 | 30 | **637.5** | 224 |
+
+内容区高度 = 窗口高度 − 34 − 30；三个尺寸下侧栏、标题栏、状态栏均不随窗口变化，且窄窗口下页面重排而非挤出窗口。窗口系统装饰与 Kit 标题栏不计入设计内容区高度。
+
+**六个顶部动作（严格沿用既有回调，未按图标外观改语义）**
+
+| 位置 | ID | 动作 | 回调（与基线逐字相同） | 禁用条件 | tooltip / 无障碍名称 |
+|---:|---|---|---|---|---|
+| 1 | `autostart` | 开机启动 | `send("autostart", {"command":"autostart","enabled":…})` | `self.busy` | 保留且随状态变化 |
+| 2 | `check-update` | 检查更新 | `send("check_update", {"force":true})` | `self.busy` | 保留 |
+| 3 | `language` | 切换语言（下拉） | `language_menu` → `set_language` → `send("language")` | `self.busy` | 保留 |
+| 4 | `restore-window-size` | 恢复默认窗口尺寸 | `restore_window_size` → `window.resize(1440×900)` | `self.resetting_window` | 保留 |
+| 5 | `project-homepage` | GitHub 主页 | `cx.open_url(PROJECT_URL)` | 无 | 保留 |
+| 6 | `submit-feedback` | 提交反馈 | `cx.open_url(FEEDBACK_URL)` | 无 | 保留 |
+
+D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/语言/全屏/GitHub/账号，实际动作仍为开机启动/检查更新/语言/恢复尺寸/GitHub/反馈；本轮只把按钮从旧的约 24px 提升到设计规定的 32×32，图标尺寸随 Kit 的 0.75 比例。
+
+**状态栏数据源（D13 落地）**
+
+- 新增私有枚举 `CoreState { Unknown, Responding, Unreachable }` 与字段 `Proxy::core_state`，只在 `tick` 处理 `reply.tag == "poll"` 时更新：该次 poll 带回 snapshot ⇒ `Responding`，没有带回 ⇒ `Unreachable`；未收到过 poll 结果 ⇒ `Unknown`。
+- 显示前再做一次收口：`Responding` 但 `proxy_address` 为空时降级为 `Unknown`，避免"核心在答但代理地址未知"被显示成正常。
+- 三态文案与圆点：`本地代理运行中`（primary-dark 圆点）/ `代理状态未知，等待核心响应`（text-3 圆点）/ `无法连接核心，代理状态未知`（danger 圆点 + danger 文字）。没有任何"运行中"字符串被硬编码到正常路径。
+- 右侧原「本地代理」服务卡的硬编码 `Tag::secondary()("运行中")` 一并改为同一可信源（`core_tag()`）：`Success/运行中`、`Secondary/状态未知`、`Danger/未响应`。这是 T03 内 D13 状态源的最小收口，未迁移该卡片的其他内容（T04 范围）。
+
+**自动验证（环境：`TMPDIR/TMP/TEMP=/Volumes/1TB/tmp/ui-ux-t03/session-t03/tmp`；`CARGO_TARGET_DIR=/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`；未执行 `cargo clean`）**
+
+| 检查 | 命令 | 退出码 | 结果 / 日志 |
+|---|---|---:|---|
+| 编译 | `cargo check --manifest-path gpui/Cargo.toml --locked --bin workbuddy-proxy-gpui` | 0 | PASS |
+| 格式 | `cargo fmt --manifest-path gpui/Cargo.toml --check` | 0 | PASS；`logs/` 见清理小节 |
+| Clippy | `cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings` | 0 | PASS；`logs/clippy.log` |
+| 测试 | `cargo test --manifest-path gpui/Cargo.toml --locked` | 0 | **138 passed / 0 failed**（T02 为 137，新增 1 项 info 图标测试）；`logs/test.log` |
+| Release 构建 | `cargo build --manifest-path gpui/Cargo.toml --release --locked` | 0 | PASS；1m 16s；`logs/build.log` |
+| 静态验收 | `verify.py`（S01—S04 代码级断言 + 工作区保护） | 0 | 全部为 true；`logs/static-verify.json` |
+
+- 格式化只对改动的 `ui.rs`、`assets.rs` 运行 `rustfmt --edition 2024`；**未运行 `cargo fmt`**，以免触碰 `usage_table.rs`。`cargo fmt --check` 随后为 0。
+- Clippy/build 的剩余告警仅为依赖 future-incompat `block v0.1.6`，无本次代码告警。
+- `usage_table.rs` 在全部命令前后 SHA-256 一致：`ff14cd5c47ff9cc450b4b5ecfcfa6981a02797c2370eb3eab91a786377a275f3`。
+
+**真实 macOS GUI 证据（隔离夹具，非真实配置）**
+
+夹具用合成 `config.json`（**30 个供应商 / FX02 长列表**，含超长名称与超长模型 ID），隔离 `HOME`/`APPDATA`/`LOCALAPPDATA`/XDG/`TMPDIR`，核心 `--headless --config-dir … --port …`，上游指向未被监听的 loopback 端口且**全程未发送任何代理请求**；未启动真实 WorkBuddy，未读写真实配置/统计库，未触发真实开机启动/端口/同步。
+
+| 截图 | 场景 | 观察到的证据 |
+|---|---|---|
+| `01-default-1440x900.png` | 默认窗口 + 30 项长列表 | 侧栏 224；列表溢出后被裁剪（最后一行仅约 19.5px 高）；工具条固定在面板底部；顶部六图标右对齐；底部 30px 状态栏 |
+| `02-1280x800.png` | 1280×800 | 同上；页面在窄宽度重排 |
+| `03-min-1100x700.png` | 最小窗口 1100×700 | 无布局挤出窗口；侧栏与状态栏完整；工具条仍可达 |
+| `04-providers-page.png` | 点击面板标题行 | 切到供应商页；标题行与选中行 primary-tint；`展开供应商列表` tooltip 与实际折叠状态一致 |
+| `06-provider-switch-05.png` | 点击「供应商 05」 | 选中态迁移到该行；中间表单名称与模型列表（`mock-model-p05-*`）随之切换；无错误重置 |
+| `07-core-unreachable-statusbar.png` | 对**隔离核心** `SIGSTOP` 后 | 状态栏变 `● 无法连接核心，代理状态未知`（圆点 RGB 实测 `(221,156,131)`） |
+| `08-core-recovered-statusbar.png` | `SIGCONT` 恢复后 | 状态栏回到 `● 本地代理运行中`（圆点 RGB 实测 `(54,139,121)`） |
+| `09-restored-1440x900.png` | 点击「恢复默认窗口尺寸」 | 窗口由 1280×800 实测变为 **1440×900**，位置不变 |
+
+- 07/08 是 D13 与 S04 "底部状态来自实际数据、未知/异常不显示为正常" 的**直接反证**：同一窗口、同一代码，仅改变核心可用性，圆点颜色与文案随之改变。
+- 测量方式：2x 截图回读像素（`measure.py`、`geometry.json`），不是照抄源码常量。
+- 供应商选中态只在供应商管理页出现（`page == Providers && id == selected`），与基线语义一致；统计页下所有行均为普通底色。
+
+#### 8.5 T03 验收结果（S01—S04）
+
+| ID | 结果 | 依据 / 未做部分 |
+|---|---|---|
+| S01 | **PASS（部分项 NOT RUN）** | 列表独立滚动 + 工具条固定在 30 项长列表下由截图证实；非 busy 状态点击切换供应商、当前项高亮、表单/模型随切换更新由截图证实；添加/复制/删除的回调、禁用规则、tooltip、无障碍名称由静态断言证实。**busy 状态下切换页面/供应商的真实 GUI 验证 NOT RUN**：多次尝试受窗口焦点、唤醒重置与遮挡干扰，最终截图无法确认目标页面；仅保留回调入口 busy guard 的代码与静态检查证据，不计为交互通过。添加/复制/删除三个按钮的真实点击与结果也为 **NOT RUN**（隔离写入和核心副作用）。 |
+| S02 | **PASS（部分项 NOT RUN）** | 状态栏是滚动区的兄弟节点且 `flex_shrink_0`，三尺寸下实测固定；统计页与供应商表单的滚动在 1280/1100 截图可见且状态栏未移动。**右侧日志区域的滚动 NOT RUN**（需要更长的合成日志才能滚出可视区）。 |
+| S03 | **PASS（语言切换 NOT RUN）** | 最小 1100×700 无挤出窗口（截图）；恢复默认尺寸实测 1280×800 → 1440×900；`main.rs` 未改动，默认/最小尺寸与 `TitleBar::window_options`、恢复语义静态断言通过。**中文/英文切换的 GUI 交互 NOT RUN**：语言控件在顶部图标行第 3 位仍可见且 `set_language` 路径未被 T03 修改，但本轮用 System Events 注入的点击（单次/双次/不同间距）均未能打开 GPUI 下拉菜单，故不声称通过。 |
+| S04 | **PASS（部分项 NOT RUN）** | 六个动作的 ID、回调、禁用条件、tooltip/无障碍名称与基线逐字一致（静态断言）；底部状态与右侧状态卡均来自真实核心状态，`SIGSTOP`/`SIGCONT` 反证（截图 + 圆点像素）。**busy 状态下动作禁用的真实 GUI 验证 NOT RUN**：自动化无法稳定保持 GPUI 窗口焦点，未取得可靠截图；逐个触发顶部动作也未全部执行：`autostart` 会调用真实系统级开机启动集成、`check-update` 会访问网络、GitHub/反馈会打开浏览器，按本轮约束不触发；`restore-window-size` 已实际点击并通过。**代理状态切换 NOT RUN**：没有在隔离环境构造可控的上游/健康切换。 |
+
+不得把本节的静态断言当作 GUI 通过；标为 NOT RUN 的项在 T09/T10 前仍需真实交互证据。
+
+#### 8.6 T03 未验证项与剩余风险
+
+1. 语言下拉菜单的 GUI 打开与中英切换未取得证据（见 S03），需要人工或具备更多输入注入能力的环境复核。
+2. busy 状态下侧栏供应商行和顶部动作禁用行为仅有代码/静态证据；自动化窗口焦点、唤醒与遮挡问题使 GUI 复验无法形成可靠证据（见 S01/S04），后续需在稳定的隔离 GUI 环境复核。
+3. 状态栏覆盖的是"核心是否响应"，不是"上游/代理是否可转发"；上游健康仍由统计页采集健康栏与日志表达，本轮未扩展该语义。
+4. 侧栏面板标题行在设计稿中还有一个前置图标，本轮未新增对应资源，只保留 chevron（真实可折叠语义），记为 TODO(design)。
+5. 面板折叠时列表与工具条一并隐藏，与基线 `Sidebar` footer 行为一致；若设计要求折叠时工具条仍可达，需要在 T04/T09 明确并修改。
+6. `NAV_ROW_HEIGHT`、`PROVIDER_ROW_HEIGHT`、`FOOTER_HEIGHT`、`STATUS_BAR_HEIGHT` 等 token 已存在但 `TOP_ICON_ROW_HEIGHT` 之外的部分仅由本骨架消费；T04 起继续复用。
+7. D04 仍未关闭：Windows 上 Kit 自绘最小化/最大化/关闭与"原生标题栏"要求的冲突本轮只登记、未改窗口宿主。
+
+#### 8.7 T03 清理与磁盘
+
+- 本轮专用临时目录 `/Volumes/1TB/tmp/ui-ux-t03/session-t03/tmp` 与 GUI 夹具临时目录均在本轮内清空；隔离夹具停止并确认进程退出后，删除本轮合成配置、SQLite 数据、草稿及临时自动化脚本。保留构建/测试日志、测量数据和截图（包括标记为 NOT RUN 的 busy 验证尝试），未将证据放入仓库。
+- 证据（截图、测量 JSON、静态断言 JSON、构建日志）保留在 `/Volumes/1TB/tmp/ui-ux-t03/session-t03/`，未进入仓库，未提交。
+- 本轮未执行 `cargo clean`，始终复用 `/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`。
+
 | 任务 | 状态 | 依赖 | 备注 |
 |---|---|---|---|
 | T00 | DONE（静态） | — | B04 NOT RUN；不阻止 T01 |
 | T01 主题、字体、视觉 token | DONE（代码/静态；V03/V04 NOT RUN） | T00 | `theme.rs` + `main.rs`；页面未迁移 |
 | T02 公共组件与状态 | DONE（代码/静态；C01—C06 交互 NOT RUN） | T01 | `ui_components.rs`；调用点部分迁移 |
-| T03 窗口骨架 | TODO | T02 | 侧栏/顶部/状态栏；D04 只登记 |
+| T03 窗口骨架 | DONE（代码/静态；macOS GUI 骨架与交互证据；S01—S04 部分项 NOT RUN） | T02 | 224px 侧栏 / 36px 顶部行 / 30px 状态栏；D04 只登记，D13 已落地 |
 | T04 供应商页 + 协议弹窗 | TODO | T03 | 代表切片；保留 Responses none |
 | T05 模型选择/编辑/同步确认 | TODO | T04 | 键盘、草稿、平台禁用 |
 | T06 统计总览/筛选/图表 | TODO | T04 | 保留统计语义、轮询策略 |
@@ -645,7 +787,9 @@ T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 - **T00 基线**：`cargo fmt --check`、`cargo clippy`、`cargo test`、`cargo build`：**NOT RUN**。T00 只做静态核查，没有运行 `cargo clean`。
 - **T01 更新**：上述 gpui 检查已实际执行并通过（§8.3）；V03/V04 GUI 仍 **NOT RUN**。
 - **T02 更新**：`cargo check`/`fmt`/`clippy`/`test`/`release build`/`git diff --check` 已执行并通过（§8.3）；C01—C06 的 GUI/鼠标/键盘/IME 交互仍 **NOT RUN**。
-- macOS GUI 截图/交互：**NOT RUN**。
+- **T03 更新**：`cargo check`/`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build` 已执行并通过；macOS 真实 GPUI 窗口已在隔离夹具中启动并取得骨架、切换与状态源截图（§8.3、§8.5）。S01/S02/S03/S04 的部分交互仍为 **NOT RUN**（详见 §8.5），不得据此声称四项全部通过。
+- macOS GUI 截图/交互：**T03 已部分执行**（仅窗口骨架、供应商切换、恢复尺寸、状态源三态；语言下拉未打开、破坏性动作未触发）。
+- Windows GUI、DPI、输入法、窗口生命周期：**BLOCKED**（当前环境没有 Windows 实机；不能以编译代替 GUI）。本机为 macOS，因此不宣称 Windows GUI 已验收。
 - 字体探测：**部分失败/非结论**；CoreText 未命中的名称只作候选线索，不能作为 V03 通过证据，也不能据此宣称运行时不可用。
 - Windows GUI、DPI、输入法、窗口生命周期：**BLOCKED**（当前环境没有 Windows 实机；不能以编译代替 GUI）。
 - 真实 WorkBuddy 同步/重启、真实开机启动、真实端口变更、真实上游请求：**NOT RUN**，本阶段明确禁止。
@@ -661,9 +805,9 @@ T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 5. **等宽数字不生效**：`tnum` 是否被目标字体支持需实测；不能为了等宽数字改数值格式或截断值。
 6. **业务语义被设计稿带偏**：来源“官方/供应商”与实际“内置/自定义”、9 个 KPI（含 WorkBuddy 点数）、11 列日志（来源/点数）、默认刷新 0 秒，都必须保留真实语义；不得删功能凑截图。
 7. **平台能力被误改**：Windows 自动重启禁用、端口变更禁用、同步说明必须保留；不能为了“同步并重启”改 Windows 生命周期。
-8. **标题栏 D04 未定**：Windows 控件由 Kit 绘制；T10 前必须有用户结论，否则只能“部分完成/待验收”。
-9. **状态栏数据源**：当前“运行中”是硬编码 Tag；T03 必须找到可信状态源（如 `snapshot`/核心响应），未知/异常不能显示为正常。
-10. **长页面/小窗口**：1100×700 下协议弹窗、价格弹窗、日期面板、明细表、右栏日志都可能溢出；T02/T04/T06/T07/T08 逐项验证滚动与可达性。
+8. **标题栏 D04 未定**：Windows 控件由 Kit 绘制；T03 只登记未改（`main.rs` 零改动）；T10 前必须有用户结论，否则只能“部分完成/待验收”。
+9. **状态栏数据源（T03 已收口）**：原“运行中”是硬编码 Tag；T03 已改为由 `poll` 真实 reply 推导的 `CoreState`，未知/不可达有独立文案与颜色，并以隔离核心 `SIGSTOP`/`SIGCONT` 反证。剩余风险：只反映“核心是否响应”，不反映上游/转发健康（§8.6）。
+10. **长页面/小窗口**：1100×700 下协议弹窗、价格弹窗、日期面板、明细表、右栏日志都可能溢出；T03 只覆盖骨架与供应商列表，T04/T06/T07/T08 仍需逐项验证滚动与可达性。
 11. **设计资料不完整**：无 HTML、无 Windows 旧截图、PDF 只是局部；不能据此推断未覆盖行为，也不能伪造 Windows 证据。
 12. **旧截图版本错位**：v0.5.5 截图早于当前 HEAD 的部分功能；只能作参考，不能当当前基线或 Windows 基线。
 13. **选择模型弹窗键盘能力有限**：主模型表的多选键盘不自动存在于 picker；T05 不能声称已覆盖未实现的键盘语义。

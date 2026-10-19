@@ -12,7 +12,6 @@ use gpui_kit::component::{
     list::ListItem,
     menu::{DropdownMenu, PopupMenuItem},
     select::{SearchableVec, SelectEvent, SelectItem, SelectState},
-    sidebar::{Sidebar, SidebarMenu, SidebarMenuItem},
     table::TableState,
 };
 use gpui_kit::prelude::FluentBuilder;
@@ -35,23 +34,51 @@ pub enum Page {
     Statistics,
 }
 
+/// Trusted relay health shown by the T03 window skeleton (difference D13).
+///
+/// The value is derived only from the real `poll` reply that the window already
+/// consumes, so the status bar can never claim a healthy relay on its own. A
+/// missing or failed reply stays visibly unknown instead of reading as normal.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum CoreState {
+    /// No poll reply yet, or the reply carried no relay address.
+    Unknown,
+    /// The most recent poll returned a snapshot, so the core answered.
+    Responding,
+    /// The most recent poll did not return a snapshot, so the core did not answer.
+    Unreachable,
+}
+
 const BG: u32 = 0xf4f7fb;
 const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
 const BORDER: u32 = 0xe2e9f1;
-const SIDEBAR_WIDTH: f32 = 168. * 1.2;
-// Small icons are 14px in GPUI Kit; custom button sizes use 75% for icons.
-const APP_ICON_SIZE: f32 = 14. * 1.3;
-const APP_CONTROL_SIZE: f32 = APP_ICON_SIZE / 0.75;
+// T03 skeleton geometry comes from the T01 tokens in `theme`: 224px sidebar,
+// 36px top icon row, 30px status bar, 34px provider rows. Only the brand mark
+// and the provider panel's title row have no token and stay local. Page bodies
+// keep their own values until T04–T08 migrate them.
+const BRAND_MARK_SIZE: f32 = 34.;
+const BRAND_MARK_RADIUS: f32 = 10.;
+const PROVIDER_PANEL_HEADER_HEIGHT: f32 = 40.;
 const PROJECT_URL: &str = "https://github.com/gloryhui/workbuddy-proxy";
 const FEEDBACK_URL: &str = "https://github.com/gloryhui/workbuddy-proxy/issues/new";
 
+/// Sidebar navigation label. DESIGN_SPEC §2 defines the selected item as
+/// primary-dark and 600 over a primary-tint row; unselected items stay regular.
 fn navigation_title(text: &'static str, active: bool) -> Label {
     Label::new(text)
         .text_size(px(15.))
         .line_height(px(20.))
-        .font_weight(FontWeight::BOLD)
-        .text_color(rgb(if active { 0x006b83 } else { INK }))
+        .font_weight(if active {
+            FontWeight::SEMIBOLD
+        } else {
+            FontWeight::NORMAL
+        })
+        .text_color(rgb(if active {
+            crate::theme::color::PRIMARY_DARK
+        } else {
+            crate::theme::color::TEXT_1
+        }))
 }
 #[derive(Clone)]
 struct Choice {
@@ -146,6 +173,9 @@ pub struct Proxy {
     zh: bool,
     busy: bool,
     polling: bool,
+    /// Last real core health observed by `tick`'s poll loop; the window skeleton
+    /// reports this instead of a hardcoded "running" label (difference D13).
+    core_state: CoreState,
     metadata_polling: bool,
     metadata_context: Value,
     last_metadata: Instant,
@@ -307,9 +337,8 @@ impl Proxy {
         let items = choices(self.zh, true);
         let selected = self.cfg.language.clone();
         let owner = cx.entity().downgrade();
-        crate::ui_components::icon_button_sized(
+        crate::ui_components::icon_button(
             "language",
-            APP_CONTROL_SIZE,
             Icon::default().path("icons/globe.svg"),
             self.t("切换界面语言", "Change interface language"),
             self.t("界面语言", "Interface language"),
@@ -333,16 +362,17 @@ impl Proxy {
         .into_any_element()
     }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
+        // The design's top icon row is 36px tall and right-aligned in the main
+        // area. The six actions, their callbacks, disabled rules, tooltips and
+        // accessibility names are unchanged from the pre-T03 window (D01).
         div()
             .flex()
-            .h(px(26.))
-            .mr(px(-3.))
+            .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
             .items_center()
             .gap_3()
             .child(
-                crate::ui_components::icon_button_sized(
+                crate::ui_components::icon_button(
                     "autostart",
-                    APP_CONTROL_SIZE,
                     Icon::default().path("icons/autostart.svg"),
                     if self.cfg.autostart {
                         self.t(
@@ -371,9 +401,8 @@ impl Proxy {
                 })),
             )
             .child(
-                crate::ui_components::named_icon_button_sized(
+                crate::ui_components::named_icon_button(
                     "check-update",
-                    APP_CONTROL_SIZE,
                     IconName::RefreshCw,
                     self.t("检查更新", "Check updates"),
                     self.t("检查更新", "Check updates"),
@@ -398,9 +427,8 @@ impl Proxy {
                     .child(self.language_menu(cx)),
             )
             .child(
-                crate::ui_components::icon_button_sized(
+                crate::ui_components::icon_button(
                     "restore-window-size",
-                    APP_CONTROL_SIZE,
                     Icon::default().path("icons/restore-size.svg"),
                     self.t(
                         "恢复默认窗口尺寸（1440 × 900）",
@@ -412,9 +440,8 @@ impl Proxy {
                 .on_click(cx.listener(|this, _, window, cx| this.restore_window_size(window, cx))),
             )
             .child(
-                crate::ui_components::icon_button_sized(
+                crate::ui_components::icon_button(
                     "project-homepage",
-                    APP_CONTROL_SIZE,
                     Icon::default().path("icons/github.svg"),
                     self.t("GitHub 项目主页", "GitHub project"),
                     self.t("GitHub 项目主页", "GitHub project"),
@@ -423,9 +450,8 @@ impl Proxy {
                 .on_click(|_, _, cx| cx.open_url(PROJECT_URL)),
             )
             .child(
-                crate::ui_components::icon_button_sized(
+                crate::ui_components::icon_button(
                     "submit-feedback",
-                    APP_CONTROL_SIZE,
                     Icon::default().path("icons/feedback.svg"),
                     self.t("提交反馈", "Submit feedback"),
                     self.t("提交反馈", "Submit feedback"),
@@ -673,6 +699,7 @@ impl Proxy {
             zh,
             busy: false,
             polling: false,
+            core_state: CoreState::Unknown,
             metadata_polling: false,
             metadata_context: Value::Null,
             last_metadata: Instant::now() - Duration::from_secs(10),
@@ -1264,6 +1291,15 @@ impl Proxy {
             }
             if reply.tag == "poll" {
                 self.polling = false;
+                // D13: the skeleton reads the relay state from this very poll
+                // reply, so a core that stops answering can never keep showing
+                // as healthy. A poll only carries a snapshot when the core
+                // answered with valid JSON.
+                self.core_state = if reply.snapshot.is_some() {
+                    CoreState::Responding
+                } else {
+                    CoreState::Unreachable
+                };
             } else {
                 self.busy = false;
                 match &reply.result {
@@ -1611,7 +1647,7 @@ impl Proxy {
         let width = if self.table_width > px(0.) {
             self.table_width
         } else {
-            window.viewport_size().width - px(448. + SIDEBAR_WIDTH)
+            window.viewport_size().width - px(448. + crate::theme::size::SIDEBAR_WIDTH)
         };
         let column_width = ((width - crate::model_table::EDIT_COLUMN_WIDTH) / 2.).max(px(120.));
         let data = self.model_table.read(cx).delegate();
@@ -1749,6 +1785,130 @@ impl Proxy {
         cx.notify();
     }
 
+    /// Resolved relay state for the window skeleton.
+    ///
+    /// A responding core only counts as running when the snapshot also carried a
+    /// relay address, so an empty poll result stays visibly unknown instead of
+    /// being rounded up to healthy.
+    fn core_state(&self) -> CoreState {
+        match self.core_state {
+            CoreState::Responding if self.proxy_address.is_empty() => CoreState::Unknown,
+            state => state,
+        }
+    }
+
+    /// Short relay label plus tag style for the existing provider-page service
+    /// card, which used to print a hardcoded "running" tag (difference D13).
+    fn core_tag(&self) -> (crate::ui_components::TagKind, &'static str) {
+        match self.core_state() {
+            CoreState::Responding => (
+                crate::ui_components::TagKind::Success,
+                self.t("运行中", "Running"),
+            ),
+            CoreState::Unknown => (
+                crate::ui_components::TagKind::Secondary,
+                self.t("状态未知", "Unknown"),
+            ),
+            CoreState::Unreachable => (
+                crate::ui_components::TagKind::Danger,
+                self.t("未响应", "Not responding"),
+            ),
+        }
+    }
+
+    /// Fixed 30px status bar across the bottom of the window (DESIGN_SPEC §2).
+    ///
+    /// It is a sibling of the scrolling page area, so it stays put while any
+    /// page scrolls, and both its dot colour and its text come from the real
+    /// core state (D13): a core that has not answered yet, or that stopped
+    /// answering, reads as unknown or unreachable and never as running.
+    fn status_bar(&self) -> AnyElement {
+        let (dot, text, text_color) = match self.core_state() {
+            CoreState::Responding => (
+                crate::theme::color::PRIMARY_DARK,
+                self.t("本地代理运行中", "Local relay running"),
+                crate::theme::color::TEXT_3,
+            ),
+            CoreState::Unknown => (
+                crate::theme::color::TEXT_3,
+                self.t(
+                    "代理状态未知，等待核心响应",
+                    "Relay status unknown; waiting for the core",
+                ),
+                crate::theme::color::TEXT_3,
+            ),
+            CoreState::Unreachable => (
+                crate::theme::color::DANGER,
+                self.t(
+                    "无法连接核心，代理状态未知",
+                    "Core not responding; relay status unknown",
+                ),
+                crate::theme::color::DANGER,
+            ),
+        };
+        div()
+            .flex()
+            .items_center()
+            .justify_between()
+            .flex_shrink_0()
+            .w_full()
+            .h(px(crate::theme::size::STATUS_BAR_HEIGHT))
+            .px(px(crate::theme::space::PAGE_X))
+            .bg(rgb(crate::theme::color::BG_BAR))
+            .border_t_1()
+            .border_color(rgb(crate::theme::color::BORDER))
+            .child(
+                div()
+                    .id("status-relay")
+                    .flex()
+                    .items_center()
+                    .gap_2()
+                    .aria_label(text)
+                    .child(
+                        div()
+                            .flex_shrink_0()
+                            .size(px(crate::theme::size::STATUS_DOT))
+                            .rounded_full()
+                            .bg(rgb(dot)),
+                    )
+                    .child(
+                        div()
+                            .text_size(px(crate::theme::font::LABEL))
+                            .text_color(rgb(text_color))
+                            .child(text),
+                    ),
+            )
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .gap_2()
+                    .child(
+                        Icon::default()
+                            .path("icons/info.svg")
+                            .with_size(px(13.))
+                            .text_color(rgb(crate::theme::color::TEXT_3)),
+                    )
+                    .child(
+                        div()
+                            .text_size(px(crate::theme::font::LABEL))
+                            .text_color(rgb(crate::theme::color::TEXT_3))
+                            .child(self.t(
+                                "关闭窗口后，代理仍在托盘运行",
+                                "Close this window to keep the relay running in the tray",
+                            )),
+                    ),
+            )
+            .into_any_element()
+    }
+
+    /// Fixed 224px window sidebar (DESIGN_SPEC §2, T03).
+    ///
+    /// Three fixed blocks — brand, navigation and the provider panel — with the
+    /// provider list as the only scrolling region, so add/copy/delete stay
+    /// reachable however long the list grows. Every callback, disabled rule,
+    /// tooltip and accessibility name is the one the pre-T03 sidebar used; the
+    /// rows only changed their presentation.
     fn sidebar(&mut self, cx: &mut Context<Self>) -> AnyElement {
         let selected = self.selected();
         let rows = self
@@ -1764,61 +1924,146 @@ impl Proxy {
                     .filter(|s| !s.is_empty())
                     .unwrap_or_else(|| p.name.clone());
                 let count = draft.map_or(p.models.len(), |d| d.models.len());
-                SidebarMenuItem::new(name.clone())
-                    .pl_6()
-                    .text_size(px(12.))
-                    .accessibility_label(name)
-                    .active(active)
-                    .font_weight(if active {
-                        FontWeight::SEMIBOLD
-                    } else {
-                        FontWeight::NORMAL
+                div()
+                    .id(SharedString::from(format!("provider-{id}")))
+                    .flex()
+                    .items_center()
+                    .gap_2()
+                    .flex_shrink_0()
+                    .h(px(crate::theme::size::PROVIDER_ROW_HEIGHT))
+                    .px_2()
+                    .rounded(px(crate::theme::radius::CONTROL))
+                    .when(active, |this| {
+                        this.bg(rgb(crate::theme::color::PRIMARY_TINT))
                     })
-                    .disable(self.busy)
-                    .suffix(move |_, _| {
-                        crate::ui_components::tag(
-                            crate::ui_components::TagKind::Secondary,
-                            count.to_string(),
-                        )
+                    .when(!active, |this| this.bg(rgb(crate::theme::color::BG_PAGE)))
+                    // The pre-T03 `SidebarMenuItem` was disabled as a whole while
+                    // busy: no click handler ran and the row read as muted. Keep
+                    // both halves so the row cannot act or look active.
+                    .when(self.busy, |this| this.opacity(0.55))
+                    .when(!self.busy, |this| {
+                        this.hover(|this| this.bg(rgb(crate::theme::color::PRIMARY_TINT)))
                     })
+                    .role(Role::TreeItem)
+                    .aria_label(name.clone())
+                    .aria_selected(active)
+                    .child(
+                        div()
+                            .flex_shrink_0()
+                            .size(px(crate::theme::size::PROVIDER_DOT))
+                            .rounded_full()
+                            .bg(rgb(crate::theme::color::PRIMARY)),
+                    )
+                    .child(
+                        div()
+                            .flex_1()
+                            .min_w_0()
+                            .text_ellipsis()
+                            .text_size(px(crate::theme::font::LABEL))
+                            .font_weight(if active {
+                                FontWeight::SEMIBOLD
+                            } else {
+                                FontWeight::NORMAL
+                            })
+                            .child(name),
+                    )
+                    .child(
+                        div()
+                            .flex_shrink_0()
+                            .text_size(px(crate::theme::font::SMALL))
+                            .text_color(rgb(crate::theme::color::TEXT_3))
+                            .child(count.to_string()),
+                    )
                     .on_click(cx.listener(move |this, _, window, cx| {
+                        // Keep the baseline "whole row disabled while busy"
+                        // behaviour: returning here leaves the page, the
+                        // selected provider and the drafts untouched. Without
+                        // this guard `switch_page` would still run before
+                        // `switch_provider` silently returned.
+                        if this.busy {
+                            return;
+                        }
                         this.switch_page(Page::Providers, window, cx);
                         this.switch_provider(id.clone(), window, cx)
                     }))
+                    .into_any_element()
             })
             .collect::<Vec<_>>();
         let statistics_active = self.page == Page::Statistics;
-        let models_active = self.page == Page::Providers;
-        let header = div()
-            .w_full()
+        let providers_active = self.page == Page::Providers;
+
+        // Brand block. The mark moved here from the old window header; the
+        // version is still read from the build.
+        let subtitle = self.t(
+            "轻量转发 · 多模型管理",
+            "Lightweight relay · Multiple models",
+        );
+        let subtitle_text = format!("{subtitle} · v{}", env!("CARGO_PKG_VERSION"));
+        let version_range = subtitle.len()..subtitle_text.len();
+        let brand = div()
+            .flex()
+            .items_center()
+            .gap_2()
+            .flex_shrink_0()
+            .child(
+                div()
+                    .flex_shrink_0()
+                    .size(px(BRAND_MARK_SIZE))
+                    .rounded(px(BRAND_MARK_RADIUS))
+                    .bg(rgb(crate::theme::color::PRIMARY))
+                    .overflow_hidden()
+                    .child(img("brand.png").size(px(BRAND_MARK_SIZE))),
+            )
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .flex_1()
+                    .min_w_0()
+                    .child(
+                        div()
+                            .text_size(px(crate::theme::font::CARD_TITLE))
+                            .font_weight(FontWeight::SEMIBOLD)
+                            .child("WorkBuddy Proxy"),
+                    )
+                    .child(
+                        // DESIGN_SPEC §2 wraps this subtitle: the design itself
+                        // breaks after "轻量转发 · 多模型管理 ·" and shows the
+                        // whole build version on a second line inside the 224px
+                        // sidebar. Ellipsising it hid the version, so the text
+                        // wraps instead of being truncated.
+                        div()
+                            .text_size(px(crate::theme::font::SMALL))
+                            .text_color(rgb(crate::theme::color::TEXT_3))
+                            .child(StyledText::new(subtitle_text).with_highlights([(
+                                version_range,
+                                HighlightStyle {
+                                    color: Some(rgb(crate::theme::color::TEXT_3).into()),
+                                    ..Default::default()
+                                },
+                            )])),
+                    ),
+            );
+        // Provider panel: fixed title row, scrollable list, fixed tool row.
+        let panel = div()
             .flex()
             .flex_col()
-            .gap_1()
-            .child(
-                Button::new("nav-statistics")
-                    .ghost()
-                    .w_full()
-                    .h(px(40.))
-                    .justify_start()
-                    .when(statistics_active, |button| {
-                        button.bg(rgb(0xc5ebf4)).text_color(rgb(0x006b83))
-                    })
-                    .accessibility_label(self.t("数据统计", "Statistics"))
-                    .child(div().flex().flex_1().items_center().child(navigation_title(
-                        self.t("数据统计", "Statistics"),
-                        statistics_active,
-                    )))
-                    .on_click(cx.listener(|this, _, window, cx| {
-                        this.switch_page(Page::Statistics, window, cx)
-                    })),
-            )
+            .flex_1()
+            .min_h_0()
+            .w_full()
+            .overflow_hidden()
+            .bg(rgb(crate::theme::color::WHITE))
+            .border_1()
+            .border_color(rgb(crate::theme::color::BORDER))
+            .rounded(px(crate::theme::radius::CARD))
             .child(
                 Button::new("nav-providers")
                     .ghost()
                     .w_full()
-                    .h(px(40.))
-                    .when(models_active, |button| {
-                        button.bg(rgb(0xc5ebf4)).text_color(rgb(0x006b83))
+                    .h(px(PROVIDER_PANEL_HEADER_HEIGHT))
+                    .flex_shrink_0()
+                    .when(providers_active, |button| {
+                        button.bg(rgb(crate::theme::color::PRIMARY_TINT))
                     })
                     .accessibility_label(self.t("供应商管理", "Providers"))
                     .tooltip(if self.providers_expanded {
@@ -1834,7 +2079,7 @@ impl Proxy {
                             .justify_between()
                             .child(navigation_title(
                                 self.t("供应商管理", "Providers"),
-                                models_active,
+                                providers_active,
                             ))
                             .child(
                                 Icon::new(if self.providers_expanded {
@@ -1850,78 +2095,120 @@ impl Proxy {
                         this.switch_page(Page::Providers, window, cx);
                         cx.notify();
                     })),
-            );
-        Sidebar::new("providers")
-            .collapsible(false)
-            .w(px(SIDEBAR_WIDTH))
-            .border_1()
-            .border_color(rgb(0xcbdbe6))
-            .rounded(px(12.))
-            .header(header)
-            .when(self.providers_expanded, |sidebar| {
-                sidebar.child(SidebarMenu::new().children(rows)).footer(
+            )
+            .when(self.providers_expanded, |this| {
+                this.child(
                     div()
+                        .id("provider-list")
+                        .flex()
+                        .flex_col()
+                        .gap_1()
+                        .flex_1()
+                        .min_h_0()
+                        .p_2()
+                        .overflow_y_scroll()
+                        .children(rows),
+                )
+                .child(
+                    div()
+                        .flex()
+                        .items_center()
+                        .gap_2()
                         .w_full()
-                        .pl_4()
-                        .pr_2()
-                        .py_2()
+                        .h(px(crate::theme::size::FOOTER_HEIGHT))
+                        .px_2()
+                        .flex_shrink_0()
                         .border_t_1()
-                        .border_color(rgb(BORDER))
+                        .border_color(rgb(crate::theme::color::BORDER))
                         .child(
-                            div()
-                                .flex()
-                                .items_center()
-                                .justify_between()
-                                .gap_2()
-                                .child(
-                                    Button::new("provider-add")
-                                        .small()
-                                        .ghost()
-                                        .icon(IconName::Plus)
-                                        .tooltip(self.t("新增供应商", "Add provider"))
-                                        .accessibility_label(self.t("新增供应商", "Add provider"))
-                                        .disabled(self.busy)
-                                        .on_click(cx.listener(|this, _, _, cx| {
-                                            this.capture(cx);
-                                            this.send("add", vec![json!({"command":"add"})], cx);
-                                        })),
-                                )
-                                .child(
-                                    Button::new("provider-copy")
-                                        .small()
-                                        .ghost()
-                                        .icon(IconName::Copy)
-                                        .tooltip(self.t("复制供应商", "Duplicate provider"))
-                                        .accessibility_label(
-                                            self.t("复制供应商", "Duplicate provider"),
-                                        )
-                                        .disabled(self.busy || selected.is_empty())
-                                        .on_click(cx.listener(|this, _, _, cx| {
-                                            let mut steps = this.dirty_steps(cx);
-                                            steps.push(
+                            crate::ui_components::button(
+                                "provider-add",
+                                crate::ui_components::ButtonKind::Ghost,
+                                self.t("添加", "Add"),
+                                self.busy,
+                                false,
+                            )
+                            .icon(IconName::Plus)
+                            .flex_1()
+                            .tooltip(self.t("新增供应商", "Add provider"))
+                            .accessibility_label(self.t("新增供应商", "Add provider"))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.capture(cx);
+                                this.send("add", vec![json!({"command":"add"})], cx);
+                            })),
+                        )
+                        .child(
+                            crate::ui_components::button(
+                                "provider-copy",
+                                crate::ui_components::ButtonKind::Ghost,
+                                self.t("复制", "Copy"),
+                                self.busy || selected.is_empty(),
+                                false,
+                            )
+                            .icon(IconName::Copy)
+                            .flex_1()
+                            .tooltip(self.t("复制供应商", "Duplicate provider"))
+                            .accessibility_label(self.t("复制供应商", "Duplicate provider"))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                let mut steps = this.dirty_steps(cx);
+                                steps.push(
                                     json!({"command":"duplicate","provider_id":this.selected()}),
                                 );
-                                            this.send("duplicate", steps, cx);
-                                        })),
-                                )
-                                .child(
-                                    Button::new("provider-delete")
-                                        .small()
-                                        .ghost()
-                                        .icon(IconName::Delete)
-                                        .tooltip(self.t("删除供应商", "Delete provider"))
-                                        .accessibility_label(
-                                            self.t("删除供应商", "Delete provider"),
-                                        )
-                                        .disabled(self.busy || selected.is_empty())
-                                        .on_click(cx.listener(|this, _, _, cx| {
-                                            this.delete_open = true;
-                                            cx.notify();
-                                        })),
-                                ),
+                                this.send("duplicate", steps, cx);
+                            })),
+                        )
+                        .child(
+                            crate::ui_components::button(
+                                "provider-delete",
+                                crate::ui_components::ButtonKind::DangerOutline,
+                                self.t("删除", "Delete"),
+                                self.busy || selected.is_empty(),
+                                false,
+                            )
+                            .icon(IconName::Delete)
+                            .flex_1()
+                            .tooltip(self.t("删除供应商", "Delete provider"))
+                            .accessibility_label(self.t("删除供应商", "Delete provider"))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.delete_open = true;
+                                cx.notify();
+                            })),
                         ),
                 )
-            })
+            });
+        div()
+            .flex()
+            .flex_col()
+            .gap(px(crate::theme::space::SECTION_GAP))
+            .flex_shrink_0()
+            .w(px(crate::theme::size::SIDEBAR_WIDTH))
+            .h_full()
+            .px(px(crate::theme::space::SIDEBAR_X))
+            .py(px(crate::theme::space::SIDEBAR_Y))
+            .bg(rgb(crate::theme::color::BG_BAR))
+            .border_r_1()
+            .border_color(rgb(crate::theme::color::BORDER))
+            .child(brand)
+            .child(
+                Button::new("nav-statistics")
+                    .ghost()
+                    .w_full()
+                    .h(px(crate::theme::size::NAV_ROW_HEIGHT))
+                    .flex_shrink_0()
+                    .justify_start()
+                    .when(statistics_active, |button| {
+                        button.bg(rgb(crate::theme::color::PRIMARY_TINT))
+                    })
+                    .accessibility_label(self.t("数据统计", "Statistics"))
+                    .child(div().flex().flex_1().items_center().child(navigation_title(
+                        self.t("数据统计", "Statistics"),
+                        statistics_active,
+                    )))
+                    .on_click(cx.listener(|this, _, window, cx| {
+                        this.switch_page(Page::Statistics, window, cx)
+                    })),
+            )
+            .child(panel)
             .into_any_element()
     }
     fn center(&mut self, cx: &mut Context<Self>) -> AnyElement {
@@ -2056,7 +2343,13 @@ impl Proxy {
                                     .text_size(px(12.))
                                     .font_weight(FontWeight::SEMIBOLD),
                             )
-                            .child(crate::ui_components::tag(crate::ui_components::TagKind::Secondary, self.t("运行中", "Running"))),
+                            .child({
+                                // D13: this tag used to print a hardcoded
+                                // "running" state. It now reports the same
+                                // trusted core state as the status bar.
+                                let (kind, label) = self.core_tag();
+                                crate::ui_components::tag(kind, label)
+                            }),
                     )
                     .child(
                         Label::new(self.proxy_address.clone())
@@ -2560,6 +2853,11 @@ impl Render for Proxy {
         };
         let right = self.right(cx);
         self.manage_dialog(window, cx);
+        let status_bar = self.status_bar();
+        // Window skeleton (DESIGN_SPEC §2): the fixed 224px sidebar sits beside
+        // the main column (36px top icon row over the page body), and the 30px
+        // status bar spans the full window width underneath both. Only the page
+        // bodies scroll; the sidebar tool row and the status bar stay put.
         let content = div()
             .relative()
             .key_context("Proxy")
@@ -2573,79 +2871,39 @@ impl Render for Proxy {
             .bg(rgb(BG))
             .text_color(rgb(INK))
             .text_size(px(13.))
-            .px_3()
-            .pt_2()
-            .pb_1()
-            .gap_1()
             .child(
-                div()
-                    .flex()
-                    .items_start()
-                    .justify_between()
-                    .h(px(48.))
-                    .mb_2()
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_3()
-                            .child(img("brand.png").size(px(36.)))
-                            .child(
-                                div()
-                                    .flex()
-                                    .flex_col()
-                                    .gap_1()
-                                    .child(
-                                        div()
-                                            .text_size(px(22.))
-                                            .line_height(px(26.))
-                                            .font_weight(FontWeight::BOLD)
-                                            .child("WorkBuddy Proxy"),
-                                    )
-                                    .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(
-                                        {
-                                            let subtitle = self.t(
-                                                "轻量转发 · 多模型管理",
-                                                "Lightweight relay · Multiple models",
-                                            );
-                                            let text = format!(
-                                                "{subtitle} · v{}",
-                                                env!("CARGO_PKG_VERSION")
-                                            );
-                                            let version_range = subtitle.len()..text.len();
-                                            StyledText::new(text).with_highlights([(
-                                                version_range,
-                                                HighlightStyle {
-                                                    color: Some(rgb(0x8a98a7).into()),
-                                                    ..Default::default()
-                                                },
-                                            )])
-                                        },
-                                    )),
-                            ),
-                    )
-                    .child(self.app_controls(cx)),
-            )
-            .child(
-                div()
-                    .flex()
-                    .gap_3()
-                    .flex_1()
-                    .min_h_0()
-                    .child(sidebar)
-                    .child(center)
-                    .when(self.page == Page::Providers, |this| this.child(right)),
-            )
-            .child(
-                div().flex().justify_end().h(px(16.)).items_center().child(
-                    Label::new(self.t(
-                        "关闭窗口后，代理仍在托盘运行",
-                        "Close this window to keep the relay running in the tray",
-                    ))
-                    .text_size(px(10.))
-                    .text_color(rgb(MUTED)),
+                div().flex().flex_1().min_h_0().child(sidebar).child(
+                    div()
+                        .flex()
+                        .flex_col()
+                        .flex_1()
+                        .min_w_0()
+                        .min_h_0()
+                        .px(px(crate::theme::space::PAGE_X))
+                        .pt(px(crate::theme::space::PAGE_TOP))
+                        .pb(px(crate::theme::space::PAGE_BOTTOM))
+                        .gap(px(crate::theme::space::SECTION_GAP))
+                        .child(
+                            div()
+                                .flex()
+                                .items_center()
+                                .justify_end()
+                                .flex_shrink_0()
+                                .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
+                                .child(self.app_controls(cx)),
+                        )
+                        .child(
+                            div()
+                                .flex()
+                                .gap_3()
+                                .flex_1()
+                                .min_h_0()
+                                .child(center)
+                                .when(self.page == Page::Providers, |this| this.child(right)),
+                        ),
                 ),
-            );
+            )
+            .child(status_bar);
         div()
             .size_full()
             .flex()
