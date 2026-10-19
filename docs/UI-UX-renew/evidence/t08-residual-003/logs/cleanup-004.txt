@@ -1,0 +1,7 @@
+# T08 修复轮清理记录 2026-10-20 01:33:58 +0800
+
+- 停止：GUI（SIGTERM 已确认退出）；隔离 core 与 mock 由 fixture.py stop 停止；ps 无 t08-residual-004/workbuddy-proxy-gpui/mock_catalog.py 进程；lsof 无对本 TMP 的引用。
+- 删除：.../tmp/t08-residual-004（2.4 MB：工具副本、隔离 config/DB、mock、探针图）。
+- 系统 /tmp：名称过滤 t08/workbuddy/gpui/mock 无遗留。
+- 保留：证据目录 9.9 MB；共享 target/、gpui/target/；L05 保留目录 45 MB（未触碰）。
+- 系统盘：/dev/disk3s3s1   460Gi    13Gi   195Gi     7%    484k  2.0G    0%   /

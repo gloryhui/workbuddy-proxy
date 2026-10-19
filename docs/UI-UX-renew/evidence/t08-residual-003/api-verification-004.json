@@ -1,0 +1,88 @@
+{
+  "settings": {
+    "api_version": 4,
+    "default_currency": "CNY",
+    "enabled": true,
+    "generated_at_ms": 1792431114353,
+    "generation": "526ae4ede218fb769f17614e6483b2516ae5c2b19334c395:0",
+    "request_tag": "t08",
+    "retention_days": 180,
+    "revision": 1
+  },
+  "r03_created": {
+    "api_version": 4,
+    "catalog_sync": {
+      "catalog_count": 2,
+      "last_success_day": "2026-10-20",
+      "targets_key": "919a5ef415d22298d43fdc31b765bc93c4637d1bfa9079a45b76e7e63591e96c",
+      "unmatched_count": 24,
+      "updated_at_ms": 1792429381390,
+      "updated_count": 1
+    },
+    "generated_at_ms": 1792431114362,
+    "generation": "526ae4ede218fb769f17614e6483b2516ae5c2b19334c395:0",
+    "items": [
+      {
+        "cache_read_rate_nanos": "90000000",
+        "cache_write_rate_nanos": "100000000",
+        "created_at_ms": 1792430747504,
+        "currency": "USD",
+        "input_mode": "flat",
+        "input_rate_nanos": "700000000",
+        "label": "r03-paste",
+        "output_rate_nanos": "800000000",
+        "price_id": "ba6577c9a81d568fef152ff9",
+        "provider_id": "a00000000001",
+        "referenced": false,
+        "revision": 1,
+        "rule_id": "ba6577c9a81d568fef152ff9",
+        "upstream_model": "r03-input-004"
+      }
+    ],
+    "next_rule_id": null,
+    "request_tag": "t08"
+  },
+  "r04_edited": {
+    "api_version": 4,
+    "catalog_sync": {
+      "catalog_count": 2,
+      "last_success_day": "2026-10-20",
+      "targets_key": "919a5ef415d22298d43fdc31b765bc93c4637d1bfa9079a45b76e7e63591e96c",
+      "unmatched_count": 24,
+      "updated_at_ms": 1792429381390,
+      "updated_count": 1
+    },
+    "generated_at_ms": 1792431114371,
+    "generation": "526ae4ede218fb769f17614e6483b2516ae5c2b19334c395:0",
+    "items": [
+      {
+        "cache_read_rate_nanos": "52000000",
+        "cache_write_rate_nanos": "62000000",
+        "created_at_ms": 1792429381537,
+        "currency": "USD",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "350000000",
+        "label": "r04-edited",
+        "output_rate_nanos": "420000000",
+        "price_id": "0ac9e8af00d9662708ce9ad8",
+        "provider_id": "a00000000022",
+        "referenced": false,
+        "revision": 2,
+        "rule_id": "0ac9e8af00d9662708ce9ad8",
+        "upstream_model": "model-22"
+      }
+    ],
+    "next_rule_id": null,
+    "request_tag": "t08"
+  },
+  "price_rules_total": 26,
+  "db": {
+    "usage_requests": 20,
+    "usage_costs": [
+      20,
+      "default_zero",
+      "0"
+    ],
+    "price_rules": 26
+  }
+}

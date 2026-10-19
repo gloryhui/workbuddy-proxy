@@ -1,0 +1,806 @@
+{
+  "providers": [
+    "opencode",
+    "Provider B",
+    "Provider C",
+    "Provider 04",
+    "Provider 05",
+    "Provider 06",
+    "Provider 07",
+    "Provider 08",
+    "Provider 09",
+    "Provider 10",
+    "Provider 11",
+    "Provider 12",
+    "Provider 13",
+    "Provider 14",
+    "Provider 15",
+    "Provider 16",
+    "Provider 17",
+    "Provider 18",
+    "Provider 19",
+    "Provider 20",
+    "Provider 21",
+    "Provider 22",
+    "Provider 23",
+    "Provider 24",
+    "Provider 25"
+  ],
+  "models": [
+    "deepseek-v4.1-flash",
+    "model-02",
+    "model-03",
+    "model-04",
+    "model-05",
+    "model-06",
+    "model-07",
+    "model-08",
+    "model-09",
+    "model-10",
+    "model-11",
+    "model-12",
+    "model-13",
+    "model-14",
+    "model-15",
+    "model-16",
+    "model-17",
+    "model-18",
+    "model-19",
+    "model-20",
+    "model-21",
+    "model-22",
+    "model-23",
+    "model-24",
+    "model-25"
+  ],
+  "usage_rows": 20,
+  "price_rules": [
+    {
+      "index": 1,
+      "provider_id": "a00000000001",
+      "model": "deepseek-v4.1-flash",
+      "currency": "CNY",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "31000000",
+        "cache_write_rate_nanos": "41000000",
+        "created_at_ms": 1792429381372,
+        "currency": "CNY",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "110000000",
+        "label": "models.dev · opencode/deepseek-v4.1-flash",
+        "output_rate_nanos": "210000000",
+        "price_id": "cd6059c10469d4be639e09c5",
+        "provider_id": "a00000000001",
+        "referenced": false,
+        "request_tag": "t08-price-01",
+        "revision": 1,
+        "rule_id": "cd6059c10469d4be639e09c5",
+        "upstream_model": "deepseek-v4.1-flash"
+      }
+    },
+    {
+      "index": 2,
+      "provider_id": "a00000000002",
+      "model": "model-02",
+      "currency": "USD",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "32000000",
+        "cache_write_rate_nanos": "42000000",
+        "created_at_ms": 1792429381381,
+        "currency": "USD",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "120000000",
+        "label": "manual",
+        "output_rate_nanos": "220000000",
+        "price_id": "12a0839794a5567fe4b72455",
+        "provider_id": "a00000000002",
+        "referenced": false,
+        "request_tag": "t08-price-02",
+        "revision": 1,
+        "rule_id": "12a0839794a5567fe4b72455",
+        "upstream_model": "model-02"
+      }
+    },
+    {
+      "index": 3,
+      "provider_id": "a00000000003",
+      "model": "model-03",
+      "currency": "CNY",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "33000000",
+        "cache_write_rate_nanos": "43000000",
+        "created_at_ms": 1792429381388,
+        "currency": "CNY",
+        "input_mode": "flat",
+        "input_rate_nanos": "130000000",
+        "label": "models.dev · Provider C/model-03",
+        "output_rate_nanos": "230000000",
+        "price_id": "0e3b93d599c3afc8df638e58",
+        "provider_id": "a00000000003",
+        "referenced": false,
+        "request_tag": "t08-price-03",
+        "revision": 1,
+        "rule_id": "0e3b93d599c3afc8df638e58",
+        "upstream_model": "model-03"
+      }
+    },
+    {
+      "index": 4,
+      "provider_id": "a00000000004",
+      "model": "model-04",
+      "currency": "USD",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "34000000",
+        "cache_write_rate_nanos": "44000000",
+        "created_at_ms": 1792429381397,
+        "currency": "USD",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "140000000",
+        "label": "manual",
+        "output_rate_nanos": "240000000",
+        "price_id": "b75cec21101c3e09d7938844",
+        "provider_id": "a00000000004",
+        "referenced": false,
+        "request_tag": "t08-price-04",
+        "revision": 1,
+        "rule_id": "b75cec21101c3e09d7938844",
+        "upstream_model": "model-04"
+      }
+    },
+    {
+      "index": 5,
+      "provider_id": "a00000000005",
+      "model": "model-05",
+      "currency": "CNY",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "35000000",
+        "cache_write_rate_nanos": "45000000",
+        "created_at_ms": 1792429381405,
+        "currency": "CNY",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "150000000",
+        "label": "models.dev · Provider 05/model-05",
+        "output_rate_nanos": "250000000",
+        "price_id": "5ea497492d2b04a1c81ce765",
+        "provider_id": "a00000000005",
+        "referenced": false,
+        "request_tag": "t08-price-05",
+        "revision": 1,
+        "rule_id": "5ea497492d2b04a1c81ce765",
+        "upstream_model": "model-05"
+      }
+    },
+    {
+      "index": 6,
+      "provider_id": "a00000000006",
+      "model": "model-06",
+      "currency": "USD",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "36000000",
+        "cache_write_rate_nanos": "46000000",
+        "created_at_ms": 1792429381412,
+        "currency": "USD",
+        "input_mode": "flat",
+        "input_rate_nanos": "160000000",
+        "label": "manual",
+        "output_rate_nanos": "260000000",
+        "price_id": "c013bf307d4c943734373e4b",
+        "provider_id": "a00000000006",
+        "referenced": false,
+        "request_tag": "t08-price-06",
+        "revision": 1,
+        "rule_id": "c013bf307d4c943734373e4b",
+        "upstream_model": "model-06"
+      }
+    },
+    {
+      "index": 7,
+      "provider_id": "a00000000007",
+      "model": "model-07",
+      "currency": "CNY",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "37000000",
+        "cache_write_rate_nanos": "47000000",
+        "created_at_ms": 1792429381420,
+        "currency": "CNY",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "170000000",
+        "label": "models.dev · Provider 07/model-07",
+        "output_rate_nanos": "270000000",
+        "price_id": "990cdb8f470ebc088f74b358",
+        "provider_id": "a00000000007",
+        "referenced": false,
+        "request_tag": "t08-price-07",
+        "revision": 1,
+        "rule_id": "990cdb8f470ebc088f74b358",
+        "upstream_model": "model-07"
+      }
+    },
+    {
+      "index": 8,
+      "provider_id": "a00000000008",
+      "model": "model-08",
+      "currency": "USD",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "38000000",
+        "cache_write_rate_nanos": "48000000",
+        "created_at_ms": 1792429381428,
+        "currency": "USD",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "180000000",
+        "label": "manual",
+        "output_rate_nanos": "280000000",
+        "price_id": "40f326dff1b1f41e09a70fdd",
+        "provider_id": "a00000000008",
+        "referenced": false,
+        "request_tag": "t08-price-08",
+        "revision": 1,
+        "rule_id": "40f326dff1b1f41e09a70fdd",
+        "upstream_model": "model-08"
+      }
+    },
+    {
+      "index": 9,
+      "provider_id": "a00000000009",
+      "model": "model-09",
+      "currency": "CNY",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "39000000",
+        "cache_write_rate_nanos": "49000000",
+        "created_at_ms": 1792429381436,
+        "currency": "CNY",
+        "input_mode": "flat",
+        "input_rate_nanos": "190000000",
+        "label": "models.dev · Provider 09/model-09",
+        "output_rate_nanos": "290000000",
+        "price_id": "d8d552acfc3438b8660c8416",
+        "provider_id": "a00000000009",
+        "referenced": false,
+        "request_tag": "t08-price-09",
+        "revision": 1,
+        "rule_id": "d8d552acfc3438b8660c8416",
+        "upstream_model": "model-09"
+      }
+    },
+    {
+      "index": 10,
+      "provider_id": "a00000000010",
+      "model": "model-10",
+      "currency": "USD",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "40000000",
+        "cache_write_rate_nanos": "50000000",
+        "created_at_ms": 1792429381444,
+        "currency": "USD",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "200000000",
+        "label": "manual",
+        "output_rate_nanos": "300000000",
+        "price_id": "429d49b8f489bb043f562560",
+        "provider_id": "a00000000010",
+        "referenced": false,
+        "request_tag": "t08-price-10",
+        "revision": 1,
+        "rule_id": "429d49b8f489bb043f562560",
+        "upstream_model": "model-10"
+      }
+    },
+    {
+      "index": 11,
+      "provider_id": "a00000000011",
+      "model": "model-11",
+      "currency": "CNY",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "41000000",
+        "cache_write_rate_nanos": "51000000",
+        "created_at_ms": 1792429381451,
+        "currency": "CNY",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "210000000",
+        "label": "models.dev · Provider 11/model-11",
+        "output_rate_nanos": "310000000",
+        "price_id": "771796362e3fb6f4906eb22f",
+        "provider_id": "a00000000011",
+        "referenced": false,
+        "request_tag": "t08-price-11",
+        "revision": 1,
+        "rule_id": "771796362e3fb6f4906eb22f",
+        "upstream_model": "model-11"
+      }
+    },
+    {
+      "index": 12,
+      "provider_id": "a00000000012",
+      "model": "model-12",
+      "currency": "USD",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "42000000",
+        "cache_write_rate_nanos": "52000000",
+        "created_at_ms": 1792429381459,
+        "currency": "USD",
+        "input_mode": "flat",
+        "input_rate_nanos": "220000000",
+        "label": "manual",
+        "output_rate_nanos": "320000000",
+        "price_id": "f2af09fd9a97b0752b214ec8",
+        "provider_id": "a00000000012",
+        "referenced": false,
+        "request_tag": "t08-price-12",
+        "revision": 1,
+        "rule_id": "f2af09fd9a97b0752b214ec8",
+        "upstream_model": "model-12"
+      }
+    },
+    {
+      "index": 13,
+      "provider_id": "a00000000013",
+      "model": "model-13",
+      "currency": "CNY",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "43000000",
+        "cache_write_rate_nanos": "53000000",
+        "created_at_ms": 1792429381467,
+        "currency": "CNY",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "230000000",
+        "label": "models.dev · Provider 13/model-13",
+        "output_rate_nanos": "330000000",
+        "price_id": "38441ff283880fbfe2d520b3",
+        "provider_id": "a00000000013",
+        "referenced": false,
+        "request_tag": "t08-price-13",
+        "revision": 1,
+        "rule_id": "38441ff283880fbfe2d520b3",
+        "upstream_model": "model-13"
+      }
+    },
+    {
+      "index": 14,
+      "provider_id": "a00000000014",
+      "model": "model-14",
+      "currency": "USD",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "44000000",
+        "cache_write_rate_nanos": "54000000",
+        "created_at_ms": 1792429381475,
+        "currency": "USD",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "240000000",
+        "label": "manual",
+        "output_rate_nanos": "340000000",
+        "price_id": "c2274f3781e18db9f91fa3a2",
+        "provider_id": "a00000000014",
+        "referenced": false,
+        "request_tag": "t08-price-14",
+        "revision": 1,
+        "rule_id": "c2274f3781e18db9f91fa3a2",
+        "upstream_model": "model-14"
+      }
+    },
+    {
+      "index": 15,
+      "provider_id": "a00000000015",
+      "model": "model-15",
+      "currency": "CNY",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "45000000",
+        "cache_write_rate_nanos": "55000000",
+        "created_at_ms": 1792429381482,
+        "currency": "CNY",
+        "input_mode": "flat",
+        "input_rate_nanos": "250000000",
+        "label": "models.dev · Provider 15/model-15",
+        "output_rate_nanos": "350000000",
+        "price_id": "5fbe64810b0a8553a04e8732",
+        "provider_id": "a00000000015",
+        "referenced": false,
+        "request_tag": "t08-price-15",
+        "revision": 1,
+        "rule_id": "5fbe64810b0a8553a04e8732",
+        "upstream_model": "model-15"
+      }
+    },
+    {
+      "index": 16,
+      "provider_id": "a00000000016",
+      "model": "model-16",
+      "currency": "USD",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "46000000",
+        "cache_write_rate_nanos": "56000000",
+        "created_at_ms": 1792429381490,
+        "currency": "USD",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "260000000",
+        "label": "manual",
+        "output_rate_nanos": "360000000",
+        "price_id": "356596d46b0a83222f743710",
+        "provider_id": "a00000000016",
+        "referenced": false,
+        "request_tag": "t08-price-16",
+        "revision": 1,
+        "rule_id": "356596d46b0a83222f743710",
+        "upstream_model": "model-16"
+      }
+    },
+    {
+      "index": 17,
+      "provider_id": "a00000000017",
+      "model": "model-17",
+      "currency": "CNY",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "47000000",
+        "cache_write_rate_nanos": "57000000",
+        "created_at_ms": 1792429381498,
+        "currency": "CNY",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "270000000",
+        "label": "models.dev · Provider 17/model-17",
+        "output_rate_nanos": "370000000",
+        "price_id": "a341ff19c65df15595b5f853",
+        "provider_id": "a00000000017",
+        "referenced": false,
+        "request_tag": "t08-price-17",
+        "revision": 1,
+        "rule_id": "a341ff19c65df15595b5f853",
+        "upstream_model": "model-17"
+      }
+    },
+    {
+      "index": 18,
+      "provider_id": "a00000000018",
+      "model": "model-18",
+      "currency": "USD",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "48000000",
+        "cache_write_rate_nanos": "58000000",
+        "created_at_ms": 1792429381505,
+        "currency": "USD",
+        "input_mode": "flat",
+        "input_rate_nanos": "280000000",
+        "label": "manual",
+        "output_rate_nanos": "380000000",
+        "price_id": "2661508815b553d8120db433",
+        "provider_id": "a00000000018",
+        "referenced": false,
+        "request_tag": "t08-price-18",
+        "revision": 1,
+        "rule_id": "2661508815b553d8120db433",
+        "upstream_model": "model-18"
+      }
+    },
+    {
+      "index": 19,
+      "provider_id": "a00000000019",
+      "model": "model-19",
+      "currency": "CNY",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "49000000",
+        "cache_write_rate_nanos": "59000000",
+        "created_at_ms": 1792429381513,
+        "currency": "CNY",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "290000000",
+        "label": "models.dev · Provider 19/model-19",
+        "output_rate_nanos": "390000000",
+        "price_id": "6323b91f9012b9f3ba76290d",
+        "provider_id": "a00000000019",
+        "referenced": false,
+        "request_tag": "t08-price-19",
+        "revision": 1,
+        "rule_id": "6323b91f9012b9f3ba76290d",
+        "upstream_model": "model-19"
+      }
+    },
+    {
+      "index": 20,
+      "provider_id": "a00000000020",
+      "model": "model-20",
+      "currency": "USD",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "50000000",
+        "cache_write_rate_nanos": "60000000",
+        "created_at_ms": 1792429381520,
+        "currency": "USD",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "300000000",
+        "label": "manual",
+        "output_rate_nanos": "400000000",
+        "price_id": "370635d51ecf6e063b7648a7",
+        "provider_id": "a00000000020",
+        "referenced": false,
+        "request_tag": "t08-price-20",
+        "revision": 1,
+        "rule_id": "370635d51ecf6e063b7648a7",
+        "upstream_model": "model-20"
+      }
+    },
+    {
+      "index": 21,
+      "provider_id": "a00000000021",
+      "model": "model-21",
+      "currency": "CNY",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "51000000",
+        "cache_write_rate_nanos": "61000000",
+        "created_at_ms": 1792429381529,
+        "currency": "CNY",
+        "input_mode": "flat",
+        "input_rate_nanos": "310000000",
+        "label": "models.dev · Provider 21/model-21",
+        "output_rate_nanos": "410000000",
+        "price_id": "f6093e96543c81ed270b3006",
+        "provider_id": "a00000000021",
+        "referenced": false,
+        "request_tag": "t08-price-21",
+        "revision": 1,
+        "rule_id": "f6093e96543c81ed270b3006",
+        "upstream_model": "model-21"
+      }
+    },
+    {
+      "index": 22,
+      "provider_id": "a00000000022",
+      "model": "model-22",
+      "currency": "USD",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "52000000",
+        "cache_write_rate_nanos": "62000000",
+        "created_at_ms": 1792429381537,
+        "currency": "USD",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "320000000",
+        "label": "manual",
+        "output_rate_nanos": "420000000",
+        "price_id": "0ac9e8af00d9662708ce9ad8",
+        "provider_id": "a00000000022",
+        "referenced": false,
+        "request_tag": "t08-price-22",
+        "revision": 1,
+        "rule_id": "0ac9e8af00d9662708ce9ad8",
+        "upstream_model": "model-22"
+      }
+    },
+    {
+      "index": 23,
+      "provider_id": "a00000000023",
+      "model": "model-23",
+      "currency": "CNY",
+      "mode": "disjoint",
+      "ruled": {
+        "cache_read_rate_nanos": "53000000",
+        "cache_write_rate_nanos": "63000000",
+        "created_at_ms": 1792429381545,
+        "currency": "CNY",
+        "input_mode": "disjoint",
+        "input_rate_nanos": "330000000",
+        "label": "models.dev · Provider 23/model-23",
+        "output_rate_nanos": "430000000",
+        "price_id": "f731cbb26c69eddf04bd2fba",
+        "provider_id": "a00000000023",
+        "referenced": false,
+        "request_tag": "t08-price-23",
+        "revision": 1,
+        "rule_id": "f731cbb26c69eddf04bd2fba",
+        "upstream_model": "model-23"
+      }
+    },
+    {
+      "index": 24,
+      "provider_id": "a00000000024",
+      "model": "model-24",
+      "currency": "USD",
+      "mode": "flat",
+      "ruled": {
+        "cache_read_rate_nanos": "54000000",
+        "cache_write_rate_nanos": "64000000",
+        "created_at_ms": 1792429381553,
+        "currency": "USD",
+        "input_mode": "flat",
+        "input_rate_nanos": "340000000",
+        "label": "manual",
+        "output_rate_nanos": "440000000",
+        "price_id": "8550df055defdf5f8e45c008",
+        "provider_id": "a00000000024",
+        "referenced": false,
+        "request_tag": "t08-price-24",
+        "revision": 1,
+        "rule_id": "8550df055defdf5f8e45c008",
+        "upstream_model": "model-24"
+      }
+    },
+    {
+      "index": 25,
+      "provider_id": "a00000000025",
+      "model": "model-25",
+      "currency": "CNY",
+      "mode": "read_discount",
+      "ruled": {
+        "cache_read_rate_nanos": "55000000",
+        "cache_write_rate_nanos": "65000000",
+        "created_at_ms": 1792429381561,
+        "currency": "CNY",
+        "input_mode": "read_discount",
+        "input_rate_nanos": "350000000",
+        "label": "models.dev · Provider 25/model-25",
+        "output_rate_nanos": "450000000",
+        "price_id": "0b064f18463b67dca515b46a",
+        "provider_id": "a00000000025",
+        "referenced": false,
+        "request_tag": "t08-price-25",
+        "revision": 1,
+        "rule_id": "0b064f18463b67dca515b46a",
+        "upstream_model": "model-25"
+      }
+    }
+  ],
+  "first_price_page": {
+    "total": 20,
+    "items": [
+      {
+        "rule_id": "0ac9e8af00d9662708ce9ad8",
+        "upstream_model": "model-22",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "0b064f18463b67dca515b46a",
+        "upstream_model": "model-25",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "0e3b93d599c3afc8df638e58",
+        "upstream_model": "model-03",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "12a0839794a5567fe4b72455",
+        "upstream_model": "model-02",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "2661508815b553d8120db433",
+        "upstream_model": "model-18",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "356596d46b0a83222f743710",
+        "upstream_model": "model-16",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "370635d51ecf6e063b7648a7",
+        "upstream_model": "model-20",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "38441ff283880fbfe2d520b3",
+        "upstream_model": "model-13",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "40f326dff1b1f41e09a70fdd",
+        "upstream_model": "model-08",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "429d49b8f489bb043f562560",
+        "upstream_model": "model-10",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "5ea497492d2b04a1c81ce765",
+        "upstream_model": "model-05",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "5fbe64810b0a8553a04e8732",
+        "upstream_model": "model-15",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "6323b91f9012b9f3ba76290d",
+        "upstream_model": "model-19",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "771796362e3fb6f4906eb22f",
+        "upstream_model": "model-11",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "8550df055defdf5f8e45c008",
+        "upstream_model": "model-24",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "990cdb8f470ebc088f74b358",
+        "upstream_model": "model-07",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "a341ff19c65df15595b5f853",
+        "upstream_model": "model-17",
+        "currency": "CNY"
+      },
+      {
+        "rule_id": "b75cec21101c3e09d7938844",
+        "upstream_model": "model-04",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "c013bf307d4c943734373e4b",
+        "upstream_model": "model-06",
+        "currency": "USD"
+      },
+      {
+        "rule_id": "c2274f3781e18db9f91fa3a2",
+        "upstream_model": "model-14",
+        "currency": "USD"
+      }
+    ],
+    "next_rule_id": "c2274f3781e18db9f91fa3a2"
+  },
+  "settings": {
+    "api_version": 4,
+    "default_currency": "CNY",
+    "enabled": true,
+    "generated_at_ms": 1792429381577,
+    "generation": "526ae4ede218fb769f17614e6483b2516ae5c2b19334c395:0",
+    "request_tag": "t08",
+    "retention_days": 180,
+    "revision": 1
+  },
+  "provider_settings": {
+    "a00000000001": {
+      "api_version": 4,
+      "generated_at_ms": 1792429381585,
+      "generation": "526ae4ede218fb769f17614e6483b2516ae5c2b19334c395:0",
+      "provider_id": "a00000000001",
+      "request_tag": "t08",
+      "revision": 0,
+      "usage_mode": "request"
+    },
+    "a00000000002": {
+      "api_version": 4,
+      "generated_at_ms": 1792429381593,
+      "generation": "526ae4ede218fb769f17614e6483b2516ae5c2b19334c395:0",
+      "provider_id": "a00000000002",
+      "request_tag": "t08",
+      "revision": 0,
+      "usage_mode": "request"
+    },
+    "a00000000003": {
+      "api_version": 4,
+      "generated_at_ms": 1792429381600,
+      "generation": "526ae4ede218fb769f17614e6483b2516ae5c2b19334c395:0",
+      "provider_id": "a00000000003",
+      "request_tag": "t08",
+      "revision": 0,
+      "usage_mode": "request"
+    }
+  },
+  "mock_catalog_url": "http://127.0.0.1:54618/api.json",
+  "page_size": 20
+}

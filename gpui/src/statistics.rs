@@ -3548,154 +3548,225 @@ impl Statistics {
         &self,
         id: &'static str,
         title: &'static str,
+        subtitle: Option<&'static str>,
         open: bool,
         cx: &mut Context<Self>,
         which: u8,
     ) -> AnyElement {
-        Button::new(id)
-            .small()
-            .ghost()
-            .icon(if open {
-                IconName::ChevronDown
-            } else {
-                IconName::ChevronRight
+        // DESIGN_SPEC §4.2: one collapsed row per section, chevron + title and
+        // an optional one-line hint. The hint is a label, not part of the
+        // clickable toggle, so it never changes the collapse target.
+        div()
+            .flex()
+            .items_center()
+            .gap_2()
+            .child(
+                Button::new(id)
+                    .small()
+                    .ghost()
+                    .icon(if open {
+                        IconName::ChevronDown
+                    } else {
+                        IconName::ChevronRight
+                    })
+                    .label(title)
+                    .on_click(cx.listener(move |this, _, _, cx| {
+                        match which {
+                            0 => this.pricing_open = !this.pricing_open,
+                            _ => this.storage_open = !this.storage_open,
+                        }
+                        cx.notify();
+                    })),
+            )
+            .when_some(subtitle, |this, subtitle| {
+                this.child(
+                    Label::new(subtitle)
+                        .text_size(px(11.))
+                        .text_color(rgb(MUTED)),
+                )
             })
-            .label(title)
-            .on_click(cx.listener(move |this, _, _, cx| {
-                match which {
-                    0 => this.pricing_open = !this.pricing_open,
-                    _ => this.storage_open = !this.storage_open,
-                }
-                cx.notify();
-            }))
             .into_any_element()
     }
 
     fn pricing_section(&self, cx: &mut Context<Self>) -> AnyElement {
         let open = self.pricing_open;
-        let mut body = div()
-            .flex()
-            .flex_col()
-            .gap_2()
-            .child(
-                Label::new(self.t(
-                    "按当前供应商筛选；输入精确模型ID搜索价格",
-                    "Prices follow provider filter; search by exact model ID",
-                ))
-                .text_size(px(11.)),
-            )
-            .child(Input::new(&self.price_search).w(px(240.)));
-        body = body.child(
-            div()
-                .flex()
-                .gap_2()
-                .child(
-                    Button::new("price-add-top")
-                        .small()
-                        .primary()
-                        .label(self.t("新建价格规则", "New price rule"))
-                        .on_click(cx.listener(|this, _, window, cx| this.new_price(window, cx))),
-                )
-                .child(
-                    Button::new("price-reload")
-                        .small()
-                        .ghost()
-                        .label(self.t("刷新价格", "Reload prices"))
-                        .on_click(cx.listener(|this, _, _, cx| this.request_prices(cx))),
-                )
-                .child(
-                    Button::new("price-sync-models-dev")
-                        .small()
-                        .label(if self.price_sync_pending {
-                            self.t("正在更新价格…", "Updating prices…")
-                        } else {
-                            self.t("手动更新价格", "Update prices now")
-                        })
-                        .disabled(self.price_sync_pending)
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            let tag = format!("price-sync-{}", this.generation);
-                            let request = crate::stats_backend::command(
-                                "stats_prices_update",
-                                &tag,
-                                json!({}),
-                            );
-                            match this.backend.submit_write(JobKind::PriceSync, tag, request) {
-                                Ok(_) => this.price_sync_pending = true,
-                                Err(error) => this.error = Some(error),
-                            }
-                            cx.notify();
-                        })),
-                ),
-        );
-        body = body.child(Label::new(self.t(
-            "每日从 models.dev 更新；同模型价格直接覆盖手工调整，历史调用金额保持不变。",
-            "Daily models.dev updates overwrite matching manual prices; recorded costs stay unchanged.",
-        )).text_size(px(11.)).text_color(rgb(MUTED)));
-        if let Some(sync) = &self.price_sync
-            && let Some(day) = &sync.last_success_day
-        {
-            body = body.child(
-                Label::new(format!(
+        let sync_note = self.price_sync.as_ref().and_then(|sync| {
+            sync.last_success_day.as_ref().map(|day| {
+                format!(
                     "{} {day} · {} {} · {} {}",
                     self.t("价格更新于", "Prices updated"),
                     self.t("更新", "Updated"),
                     sync.updated_count,
                     self.t("未匹配", "Unmatched"),
                     sync.unmatched_count,
-                ))
-                .text_size(px(11.))
-                .text_color(rgb(MUTED)),
+                )
+            })
+        });
+        // DESIGN_SPEC §4.2 price table: model (+ rule id), source/mapping,
+        // currency, input/output price per million, actions. Data semantics are
+        // unchanged: the same DTO fields and the same save/delete callbacks.
+        let header = div()
+            .flex()
+            .items_center()
+            .h(px(32.))
+            .px(px(12.))
+            .gap(px(16.))
+            .bg(rgb(0xf7f9fc))
+            .border_b(px(1.))
+            .border_color(rgb(BORDER))
+            .text_size(px(11.))
+            .text_color(rgb(MUTED))
+            .child(div().flex_1().min_w_0().child(self.t("模型", "Model")))
+            .child(
+                div()
+                    .flex_1()
+                    .min_w_0()
+                    .child(self.t("来源 / 映射", "Source / mapping")),
+            )
+            .child(div().w(px(80.)).child(self.t("币种", "Currency")))
+            .child(div().flex_1().min_w_0().child(self.t(
+                "价格 / 百万 Token（输入 / 输出）",
+                "Price / million tokens (input / output)",
+            )))
+            .child(
+                div()
+                    .w(px(110.))
+                    .flex()
+                    .justify_end()
+                    .child(self.t("操作", "Actions")),
             );
-        }
+        let mut table = div()
+            .flex()
+            .flex_col()
+            .w_full()
+            .min_w_0()
+            .border_1()
+            .border_color(rgb(BORDER))
+            .rounded(px(8.))
+            .overflow_hidden()
+            .child(header);
         if self.prices_loading {
-            body = body.child(Label::new(self.t("加载中…", "Loading…")).text_size(px(11.)));
+            table = table.child(
+                div().px(px(12.)).py(px(16.)).child(
+                    Label::new(self.t("加载中…", "Loading…"))
+                        .text_size(px(11.))
+                        .text_color(rgb(MUTED)),
+                ),
+            );
         } else if self.prices.is_empty() {
-            body = body.child(
-                Label::new(self.t(
-                    "没有匹配的价格规则，可手动更新或新建。未匹配模型暂按默认币种记录0元。",
-                    "No matching price rules. Update prices or add a rule; unmatched models default to zero.",
-                ))
-                .text_size(px(11.))
-                .text_color(rgb(MUTED)),
+            table = table.child(
+                div().px(px(12.)).py(px(16.)).child(
+                    Label::new(self.t(
+                        "没有匹配的价格规则，可手动更新或新建。未匹配模型暂按默认币种记录0元。",
+                        "No matching price rules. Update prices or add a rule; unmatched models default to zero.",
+                    ))
+                    .text_size(px(11.))
+                    .text_color(rgb(MUTED)),
+                ),
             );
         } else {
             for (index, rule) in self.prices.iter().enumerate() {
-                body = body.child(
+                let short_id: String = rule.rule_id.chars().take(12).collect();
+                // The price DTO has no separate source column; the label is the
+                // existing user-visible source/annotation. An empty label is the
+                // manual rule, not a blank cell.
+                let source_label = if rule.label.trim().is_empty() {
+                    self.t("手工", "Manual").to_owned()
+                } else {
+                    rule.label.clone()
+                };
+                let provider_name = self
+                    .configured_providers
+                    .iter()
+                    .find(|(id, _)| id == &rule.provider_id)
+                    .map(|(_, name)| name.clone())
+                    .filter(|name| !name.is_empty());
+                let mapping_line = match provider_name {
+                    Some(name) => format!("{name} / {}", rule.upstream_model),
+                    None => rule.upstream_model.clone(),
+                };
+                table = table.child(
                     div()
                         .flex()
                         .items_center()
-                        .justify_between()
-                        .gap_3()
-                        .text_size(px(11.))
+                        .gap(px(16.))
+                        .px(px(12.))
+                        .py(px(10.))
+                        .border_b(px(1.))
+                        .border_color(rgb(0xeef2f7))
                         .child(
-                            Label::new(format!(
-                                "{} / {} · {} · {}",
-                                rule.provider_id,
-                                rule.upstream_model,
-                                rule.label,
-                                rule.currency.as_str()
-                            ))
-                            .text_color(rgb(INK)),
-                        )
-                        .child(
-                            Label::new(format!(
-                                "{} / {} · {}",
-                                usage_table::amount(
-                                    Some(&rule.input_rate_nanos),
-                                    Some(rule.currency)
+                            div()
+                                .flex()
+                                .flex_col()
+                                .flex_1()
+                                .min_w_0()
+                                .gap(px(2.))
+                                .child(
+                                    Label::new(rule.upstream_model.clone())
+                                        .text_size(px(12.))
+                                        .text_color(rgb(INK)),
+                                )
+                                .child(
+                                    Label::new(short_id)
+                                        .text_size(px(10.))
+                                        .text_color(rgb(MUTED)),
                                 ),
-                                usage_table::amount(
-                                    Some(&rule.output_rate_nanos),
-                                    Some(rule.currency)
-                                ),
-                                rule.input_mode
-                            ))
-                            .text_color(rgb(MUTED)),
                         )
                         .child(
                             div()
                                 .flex()
-                                .items_center()
+                                .flex_col()
+                                .flex_1()
+                                .min_w_0()
+                                .gap(px(2.))
+                                .child(
+                                    Label::new(source_label)
+                                        .text_size(px(11.))
+                                        .text_color(rgb(INK)),
+                                )
+                                .child(
+                                    Label::new(mapping_line)
+                                        .text_size(px(10.))
+                                        .text_color(rgb(MUTED)),
+                                ),
+                        )
+                        .child(div().w(px(80.)).child(crate::ui_components::tag(
+                            crate::ui_components::TagKind::Secondary,
+                            rule.currency.as_str(),
+                        )))
+                        .child(
+                            div()
+                                .flex()
+                                .flex_col()
+                                .flex_1()
+                                .min_w_0()
+                                .gap(px(2.))
+                                .child(
+                                    Label::new(format!(
+                                        "{} / {}",
+                                        usage_table::amount(
+                                            Some(&rule.input_rate_nanos),
+                                            Some(rule.currency)
+                                        ),
+                                        usage_table::amount(
+                                            Some(&rule.output_rate_nanos),
+                                            Some(rule.currency)
+                                        ),
+                                    ))
+                                    .text_size(px(12.))
+                                    .text_color(rgb(INK)),
+                                )
+                                .child(
+                                    Label::new(format!("{}", rule.input_mode))
+                                        .text_size(px(10.))
+                                        .text_color(rgb(MUTED)),
+                                ),
+                        )
+                        .child(
+                            div()
+                                .w(px(110.))
+                                .flex()
+                                .justify_end()
                                 .gap_1()
                                 .child(
                                     Button::new(("price-edit", index))
@@ -3726,73 +3797,187 @@ impl Statistics {
                 );
             }
         }
-        body = body.child(
-            div()
-                .flex()
-                .items_center()
-                .gap_2()
-                .child(
-                    Label::new(format!(
-                        "{} {} · {} {}",
-                        self.t("第", "Page"),
-                        self.prices_cursors.page_number(),
-                        self.prices.len(),
-                        self.t("条", "rows")
-                    ))
-                    .text_size(px(11.)),
-                )
-                .child(
-                    Button::new("prices-prev")
-                        .small()
-                        .ghost()
-                        .label(self.t("上一页", "Previous"))
-                        .disabled(self.prices_loading || !self.prices_cursors.can_go_back())
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            if let Some(previous) = this.prices_cursors.back() {
-                                this.prices_cursors.begin_page(previous);
-                                this.request_price_page(format!("prices-{}", this.generation), cx);
-                            }
-                        })),
-                )
-                .child(
-                    Button::new("prices-page-size")
-                        .small()
-                        .ghost()
-                        .label(format!(
-                            "{} {}",
-                            self.prices_page_size,
-                            self.t("条/页", "per page")
-                        ))
-                        .disabled(self.prices_loading)
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            this.prices_page_size = match this.prices_page_size {
-                                20 => 50,
-                                50 => 100,
-                                _ => 20,
-                            };
-                            this.request_prices(cx);
-                        })),
-                )
-                .child(
-                    Button::new("prices-next")
-                        .small()
-                        .ghost()
-                        .label(self.t("下一页", "Next"))
-                        .disabled(self.prices_loading || !self.prices_cursors.can_go_next())
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            if let Some(next) = this.prices_cursors.forward() {
-                                this.prices_cursors.begin_page(next);
-                                this.request_price_page(format!("prices-{}", this.generation), cx);
-                            }
-                        })),
-                ),
-        );
+        let body = div()
+            .flex()
+            .flex_col()
+            .gap_3()
+            .child(
+                div()
+                    .flex()
+                    .flex_wrap()
+                    .items_center()
+                    .justify_between()
+                    .gap_2()
+                    .child(
+                        div()
+                            .flex()
+                            .flex_wrap()
+                            .items_center()
+                            .gap_2()
+                            .child(
+                                Input::new(&self.price_search)
+                                    .w(px(240.))
+                                    .prefix(Icon::new(IconName::Search)),
+                            )
+                            .child(
+                                Button::new("price-add-top")
+                                    .small()
+                                    .primary()
+                                    .icon(IconName::Plus)
+                                    .label(self.t("新建价格规则", "New price rule"))
+                                    .on_click(cx.listener(|this, _, window, cx| {
+                                        this.new_price(window, cx)
+                                    })),
+                            )
+                            .child(
+                                Button::new("price-reload")
+                                    .small()
+                                    .outline()
+                                    .icon(IconName::RefreshCw)
+                                    .label(self.t("刷新价格", "Reload prices"))
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.request_prices(cx)
+                                    })),
+                            )
+                            .child(
+                                Button::new("price-sync-models-dev")
+                                    .small()
+                                    .outline()
+                                    .label(if self.price_sync_pending {
+                                        self.t("正在更新价格…", "Updating prices…")
+                                    } else {
+                                        self.t("手动更新价格", "Update prices now")
+                                    })
+                                    .disabled(self.price_sync_pending)
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        let tag = format!("price-sync-{}", this.generation);
+                                        let request = crate::stats_backend::command(
+                                            "stats_prices_update",
+                                            &tag,
+                                            json!({}),
+                                        );
+                                        match this
+                                            .backend
+                                            .submit_write(JobKind::PriceSync, tag, request)
+                                        {
+                                            Ok(_) => this.price_sync_pending = true,
+                                            Err(error) => this.error = Some(error),
+                                        }
+                                        cx.notify();
+                                    })),
+                            ),
+                    )
+                    .when_some(sync_note, |this, note| {
+                        this.child(
+                            Label::new(note)
+                                .text_size(px(11.))
+                                .text_color(rgb(MUTED)),
+                        )
+                    }),
+            )
+            .child(
+                Label::new(self.t(
+                    "每日从 models.dev 更新；同模型价格直接覆盖手工调整，历史调用金额保持不变。",
+                    "Daily models.dev updates overwrite matching manual prices; recorded costs stay unchanged.",
+                ))
+                .text_size(px(11.))
+                .text_color(rgb(MUTED)),
+            )
+            .child(table)
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .child(
+                        Label::new(if self.zh {
+                            format!(
+                                "第 {} 页 · {} 条",
+                                self.prices_cursors.page_number(),
+                                self.prices.len()
+                            )
+                        } else {
+                            format!(
+                                "Page {} · {} rows",
+                                self.prices_cursors.page_number(),
+                                self.prices.len()
+                            )
+                        })
+                        .text_size(px(11.))
+                        .text_color(rgb(MUTED)),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .items_center()
+                            .gap_2()
+                            .child(
+                                Button::new("prices-prev")
+                                    .small()
+                                    .ghost()
+                                    .label(self.t("上一页", "Previous"))
+                                    .disabled(
+                                        self.prices_loading || !self.prices_cursors.can_go_back(),
+                                    )
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        if let Some(previous) = this.prices_cursors.back() {
+                                            this.prices_cursors.begin_page(previous);
+                                            this.request_price_page(
+                                                format!("prices-{}", this.generation),
+                                                cx,
+                                            );
+                                        }
+                                    })),
+                            )
+                            .child(
+                                Button::new("prices-page-size")
+                                    .small()
+                                    .ghost()
+                                    .label(format!(
+                                        "{} {}",
+                                        self.prices_page_size,
+                                        self.t("条/页", "per page")
+                                    ))
+                                    .disabled(self.prices_loading)
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.prices_page_size = match this.prices_page_size {
+                                            20 => 50,
+                                            50 => 100,
+                                            _ => 20,
+                                        };
+                                        this.request_prices(cx);
+                                    })),
+                            )
+                            .child(
+                                Button::new("prices-next")
+                                    .small()
+                                    .ghost()
+                                    .label(self.t("下一页", "Next"))
+                                    .disabled(
+                                        self.prices_loading || !self.prices_cursors.can_go_next(),
+                                    )
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        if let Some(next) = this.prices_cursors.forward() {
+                                            this.prices_cursors.begin_page(next);
+                                            this.request_price_page(
+                                                format!("prices-{}", this.generation),
+                                                cx,
+                                            );
+                                        }
+                                    })),
+                            ),
+                    ),
+            );
         // Repricing history with the current price was removed: every request
         // keeps the snapshot it was admitted with.
         stats_card("stats-pricing")
             .child(self.section_toggle(
                 "pricing-toggle",
                 self.t("成本定价", "Cost pricing"),
+                Some(self.t(
+                    "按当前供应商筛选；输入精确模型 ID 搜索价格",
+                    "Prices follow the provider filter; search by exact model ID",
+                )),
                 open,
                 cx,
                 0,
@@ -3813,21 +3998,26 @@ impl Statistics {
             .filter(|task| task.status == MaintenanceStatus::Running);
         let maintenance_label = self.t("维护任务", "Maintenance");
         let rows_label = self.t("行已处理", "rows processed");
-        let body = div()
+        let wide = self.filters_width >= STORAGE_SIDE_BY_SIDE_WIDTH;
+
+        // DESIGN_SPEC §4.2: left column keeps the three settings, right column
+        // the provider capture-mode table. Narrow windows stack the columns;
+        // no control is hidden in either arrangement.
+        let settings_column = div()
             .flex()
             .flex_col()
-            .gap_2()
+            .gap_4()
+            .flex_1()
+            .min_w_0()
             .child(
                 div()
                     .flex()
                     .items_center()
                     .gap_2()
                     .child(
-                        Label::new(self.t(
-                            "缺价默认币种（仅新请求）",
-                            "Default currency for new unpriced requests",
-                        ))
-                        .text_size(px(11.)),
+                        div()
+                            .w(px(88.))
+                            .child(self.filter_label(self.t("缺省默认币种", "Default currency"))),
                     )
                     .children([Currency::Cny, Currency::Usd].into_iter().map(|currency| {
                         Button::new((
@@ -3849,124 +4039,240 @@ impl Statistics {
                         .on_click(cx.listener(move |this, _, _, cx| {
                             this.save_default_currency(currency, cx)
                         }))
-                    })),
-            )
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .gap_3()
+                    }))
                     .child(
-                        Checkbox::new("collect-enabled")
-                            .label(self.t("启用摘要采集", "Enable summary collection"))
-                            .checked(enabled)
-                            .small()
-                            .on_change(cx.listener(move |this, value: &bool, _, cx| {
-                                this.update_settings(*value, retention, revision, cx);
-                            })),
-                    )
-                    .child(
-                        Label::new(self.t(
-                            "暂停只影响新请求，已接纳的请求仍会结算",
-                            "Pausing only stops new requests; admitted ones still settle",
-                        ))
-                        .text_size(px(11.))
-                        .text_color(rgb(MUTED)),
-                    ),
-            )
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .gap_2()
-                    .child(
-                        Label::new(self.t("保留天数", "Retention days"))
+                        Label::new(self.t("仅新请求", "new requests only"))
                             .text_size(px(11.))
                             .text_color(rgb(MUTED)),
-                    )
-                    .child(
-                        Button::new("retention-30")
-                            .small()
-                            .ghost()
-                            .label("30")
-                            .on_click(cx.listener(move |this, _, _, cx| {
-                                this.update_settings(enabled, 30, revision, cx)
-                            })),
-                    )
-                    .child(
-                        Button::new("retention-90")
-                            .small()
-                            .ghost()
-                            .label("90")
-                            .on_click(cx.listener(move |this, _, _, cx| {
-                                this.update_settings(enabled, 90, revision, cx)
-                            })),
-                    )
-                    .child(
-                        Button::new("retention-180")
-                            .small()
-                            .ghost()
-                            .label("180")
-                            .on_click(cx.listener(move |this, _, _, cx| {
-                                this.update_settings(enabled, 180, revision, cx)
-                            })),
-                    )
-                    .child(
-                        Button::new("retention-365")
-                            .small()
-                            .ghost()
-                            .label("365")
-                            .on_click(cx.listener(move |this, _, _, cx| {
-                                this.update_settings(enabled, 365, revision, cx)
-                            })),
-                    )
-                    .child(
-                        Button::new("retention-forever")
-                            .small()
-                            .ghost()
-                            .label(self.t("永久", "Forever"))
-                            .on_click(cx.listener(move |this, _, _, cx| {
-                                this.update_settings(enabled, 0, revision, cx)
-                            })),
-                    )
-                    .child(
-                        Label::new(format!(
-                            "{} {} · {} {}",
-                            self.t("当前", "now"),
-                            retention,
-                            self.t("天", "days"),
-                            self.t("(0=永久)", "(0=forever)")
-                        ))
-                        .text_size(px(11.))
-                        .text_color(rgb(MUTED)),
                     ),
-            )
-            .child(
-                div().flex().items_center().gap_2().child(
-                    Button::new("provider-modes-refresh")
-                        .small()
-                        .ghost()
-                        .icon(IconName::RefreshCw)
-                        .label(self.t("刷新供应商采集模式", "Reload provider modes"))
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            for (id, _) in this
-                                .configured_providers
-                                .iter()
-                                .skip(this.storage_page * this.storage_page_size)
-                                .take(this.storage_page_size)
-                            {
-                                this.provider_modes.remove(id);
-                            }
-                            this.request_provider_modes(cx);
-                            cx.notify();
-                        })),
-                ),
             )
             .child(
                 div()
                     .flex()
+                    .items_start()
+                    .gap_3()
+                    .child(
+                        div()
+                            .w(px(88.))
+                            .pt(px(2.))
+                            .child(self.filter_label(self.t("摘要采集", "Summary collection"))),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .gap_1()
+                            .child(
+                                Checkbox::new("collect-enabled")
+                                    .label(self.t("启用摘要采集", "Enable summary collection"))
+                                    .checked(enabled)
+                                    .small()
+                                    .on_change(cx.listener(move |this, value: &bool, _, cx| {
+                                        this.update_settings(*value, retention, revision, cx);
+                                    })),
+                            )
+                            .child(
+                                Label::new(self.t(
+                                    "暂停只影响新请求，已接纳的请求仍会结算",
+                                    "Pausing only stops new requests; admitted ones still settle",
+                                ))
+                                .text_size(px(11.))
+                                .text_color(rgb(MUTED)),
+                            ),
+                    ),
+            )
+            .child(
+                div()
+                    .flex()
+                    .items_start()
+                    .gap_3()
+                    .child(
+                        div()
+                            .w(px(88.))
+                            .pt(px(4.))
+                            .child(self.filter_label(self.t("保留天数", "Retention days"))),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .gap_2()
+                            .child(
+                                div().flex().items_center().gap_2().children(
+                                    [
+                                        (30i64, self.t("30 天", "30 days")),
+                                        (90, self.t("90 天", "90 days")),
+                                        (180, self.t("180 天", "180 days")),
+                                        (365, self.t("365 天", "365 days")),
+                                        (0, self.t("永久", "Forever")),
+                                    ]
+                                    .into_iter()
+                                    .map(|(days, label)| {
+                                        let active = retention == days;
+                                        let id = if days == 0 {
+                                            "retention-forever".to_owned()
+                                        } else {
+                                            format!("retention-{days}")
+                                        };
+                                        let button = Button::new(id).small().label(label).on_click(
+                                            cx.listener(move |this, _, _, cx| {
+                                                this.update_settings(enabled, days, revision, cx)
+                                            }),
+                                        );
+                                        if active {
+                                            button.primary().outline()
+                                        } else {
+                                            button.ghost()
+                                        }
+                                    }),
+                                ),
+                            )
+                            .child(
+                                Label::new(format!(
+                                    "{} {} · {}",
+                                    self.t("当前", "now"),
+                                    if retention == 0 {
+                                        self.t("永久", "forever").to_owned()
+                                    } else {
+                                        format!("{} {}", retention, self.t("天", "days"))
+                                    },
+                                    self.t("(0 = 永久)", "(0 = forever)")
+                                ))
+                                .text_size(px(11.))
+                                .text_color(rgb(MUTED)),
+                            ),
+                    ),
+            );
+
+        let mode_rows = self
+            .configured_providers
+            .iter()
+            .enumerate()
+            .skip(self.storage_page * self.storage_page_size)
+            .take(self.storage_page_size)
+            .map(|(index, (key, name))| {
+                let id = key.clone();
+                let mode_settings = self.provider_modes.get(&id).cloned();
+                let mode = mode_settings
+                    .as_ref()
+                    .map_or(UsageMode::default(), |settings| settings.usage_mode);
+                let mode_revision = mode_settings
+                    .as_ref()
+                    .map_or(0, |settings| settings.revision);
+                let label = if name.is_empty() {
+                    key.clone()
+                } else {
+                    name.clone()
+                };
+                div()
+                    .flex()
                     .items_center()
-                    .gap_2()
+                    .justify_between()
+                    .gap_3()
+                    .px(px(12.))
+                    .py(px(10.))
+                    .border_b(px(1.))
+                    .border_color(rgb(0xeef2f7))
+                    .child(Label::new(label).text_size(px(12.)).text_color(rgb(INK)))
+                    .child(
+                        Checkbox::new(("provider-mode", index))
+                            .label(self.t(
+                                "请求上游返回用量（request）",
+                                "Request upstream usage (request mode)",
+                            ))
+                            .checked(mode == UsageMode::Request)
+                            .disabled(
+                                mode_settings.is_none()
+                                    || self.backend.is_busy(&JobKey::ProviderMode(id.clone())),
+                            )
+                            .small()
+                            .on_change(cx.listener(move |this, value: &bool, _, cx| {
+                                this.set_provider_mode(id.clone(), *value, mode_revision, cx);
+                            })),
+                    )
+                    .into_any_element()
+            })
+            .collect::<Vec<_>>();
+        let modes_table = div()
+            .flex()
+            .flex_col()
+            .w_full()
+            .min_w_0()
+            .border_1()
+            .border_color(rgb(BORDER))
+            .rounded(px(8.))
+            .overflow_hidden()
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .h(px(32.))
+                    .px(px(12.))
+                    .bg(rgb(0xf7f9fc))
+                    .border_b(px(1.))
+                    .border_color(rgb(BORDER))
+                    .text_size(px(11.))
+                    .text_color(rgb(MUTED))
+                    .child(self.t("供应商", "Provider"))
+                    .child(self.t("用量采集方式", "Capture mode")),
+            )
+            .children(if mode_rows.is_empty() {
+                vec![
+                    div()
+                        .px(px(12.))
+                        .py(px(16.))
+                        .child(
+                            Label::new(self.t("暂无供应商", "No providers"))
+                                .text_size(px(11.))
+                                .text_color(rgb(MUTED)),
+                        )
+                        .into_any_element(),
+                ]
+            } else {
+                mode_rows
+            });
+
+        let modes_column = div()
+            .flex()
+            .flex_col()
+            .gap_3()
+            .flex_1()
+            .min_w_0()
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .child(stats_heading(
+                        self.t("供应商采集模式", "Provider capture modes"),
+                    ))
+                    .child(
+                        Button::new("provider-modes-refresh")
+                            .small()
+                            .ghost()
+                            .icon(IconName::RefreshCw)
+                            .label(self.t("刷新供应商采集模式", "Reload provider modes"))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                for (id, _) in this
+                                    .configured_providers
+                                    .iter()
+                                    .skip(this.storage_page * this.storage_page_size)
+                                    .take(this.storage_page_size)
+                                {
+                                    this.provider_modes.remove(id);
+                                }
+                                this.request_provider_modes(cx);
+                                cx.notify();
+                            })),
+                    ),
+            )
+            .child(modes_table)
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .justify_between()
                     .child(
                         Label::new(format!(
                             "{} {}/{}",
@@ -3977,116 +4283,88 @@ impl Statistics {
                                 .div_ceil(self.storage_page_size)
                                 .max(1)
                         ))
-                        .text_size(px(11.)),
+                        .text_size(px(11.))
+                        .text_color(rgb(MUTED)),
                     )
                     .child(
-                        Button::new("storage-prev")
-                            .small()
-                            .ghost()
-                            .label(self.t("上一页", "Previous"))
-                            .disabled(self.storage_page == 0)
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.storage_page = this.storage_page.saturating_sub(1);
-                                this.request_provider_modes(cx);
-                                cx.notify();
-                            })),
-                    )
-                    .child(
-                        Button::new("storage-page-size")
-                            .small()
-                            .ghost()
-                            .label(format!(
-                                "{} {}",
-                                self.storage_page_size,
-                                self.t("条/页", "per page")
-                            ))
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.storage_page_size = match this.storage_page_size {
-                                    20 => 50,
-                                    50 => 100,
-                                    _ => 20,
-                                };
-                                this.storage_page = 0;
-                                this.request_provider_modes(cx);
-                                cx.notify();
-                            })),
-                    )
-                    .child(
-                        Button::new("storage-next")
-                            .small()
-                            .ghost()
-                            .label(self.t("下一页", "Next"))
-                            .disabled(
-                                (self.storage_page + 1) * self.storage_page_size
-                                    >= self.configured_providers.len(),
+                        div()
+                            .flex()
+                            .items_center()
+                            .gap_2()
+                            .child(
+                                Button::new("storage-prev")
+                                    .small()
+                                    .ghost()
+                                    .label(self.t("上一页", "Previous"))
+                                    .disabled(self.storage_page == 0)
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.storage_page = this.storage_page.saturating_sub(1);
+                                        this.request_provider_modes(cx);
+                                        cx.notify();
+                                    })),
                             )
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.storage_page += 1;
-                                this.request_provider_modes(cx);
-                                cx.notify();
-                            })),
+                            .child(
+                                Button::new("storage-page-size")
+                                    .small()
+                                    .ghost()
+                                    .label(format!(
+                                        "{} {}",
+                                        self.storage_page_size,
+                                        self.t("条/页", "per page")
+                                    ))
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.storage_page_size = match this.storage_page_size {
+                                            20 => 50,
+                                            50 => 100,
+                                            _ => 20,
+                                        };
+                                        this.storage_page = 0;
+                                        this.request_provider_modes(cx);
+                                        cx.notify();
+                                    })),
+                            )
+                            .child(
+                                Button::new("storage-next")
+                                    .small()
+                                    .ghost()
+                                    .label(self.t("下一页", "Next"))
+                                    .disabled(
+                                        (self.storage_page + 1) * self.storage_page_size
+                                            >= self.configured_providers.len(),
+                                    )
+                                    .on_click(cx.listener(|this, _, _, cx| {
+                                        this.storage_page += 1;
+                                        this.request_provider_modes(cx);
+                                        cx.notify();
+                                    })),
+                            ),
                     ),
-            )
-            .child(
-                div().flex().flex_col().gap_1().children(
-                    self.configured_providers
-                        .iter()
-                        .enumerate()
-                        .skip(self.storage_page * self.storage_page_size)
-                        .take(self.storage_page_size)
-                        .map(|(index, (key, name))| {
-                            let id = key.clone();
-                            let settings = self.provider_modes.get(&id).cloned();
-                            let mode = settings
-                                .as_ref()
-                                .map_or(UsageMode::default(), |settings| settings.usage_mode);
-                            let revision =
-                                settings.as_ref().map_or(0, |settings| settings.revision);
-                            let label = if name.is_empty() {
-                                key.clone()
-                            } else {
-                                name.clone()
-                            };
-                            div()
-                                .flex()
-                                .items_center()
-                                .justify_between()
-                                .gap_3()
-                                .child(Label::new(label).text_size(px(11.)).text_color(rgb(INK)))
-                                .child(
-                                    Checkbox::new(("provider-mode", index))
-                                        .label(self.t(
-                                            "请求上游返回用量（request）",
-                                            "Request upstream usage (request mode)",
-                                        ))
-                                        .checked(mode == UsageMode::Request)
-                                        .disabled(
-                                            settings.is_none()
-                                                || self
-                                                    .backend
-                                                    .is_busy(&JobKey::ProviderMode(id.clone())),
-                                        )
-                                        .small()
-                                        .on_change(cx.listener(
-                                            move |this, value: &bool, _, cx| {
-                                                this.set_provider_mode(
-                                                    id.clone(),
-                                                    *value,
-                                                    revision,
-                                                    cx,
-                                                );
-                                            },
-                                        )),
-                                )
-                                .into_any_element()
-                        }),
-                ),
-            )
+            );
+
+        let columns = div()
+            .flex()
+            .gap(px(24.))
+            .when(wide, |this| this.flex_row())
+            .when(!wide, |this| this.flex_col())
+            .child(settings_column)
+            .child(modes_column);
+
+        let danger = div()
+            .flex()
+            .flex_col()
+            .gap_2()
+            .w_full()
+            .child(div().h(px(1.)).w_full().bg(rgb(BORDER)).mt_2())
             .child(
                 div()
                     .flex()
                     .items_center()
-                    .gap_2()
+                    .justify_between()
+                    .child(
+                        Label::new(self.t("危险操作", "Danger zone"))
+                            .text_size(px(11.))
+                            .text_color(rgb(MUTED)),
+                    )
                     .child(
                         crate::ui_components::button(
                             "clear-preview",
@@ -4096,18 +4374,18 @@ impl Statistics {
                             false,
                         )
                         .on_click(cx.listener(|this, _, _, cx| this.preview_clear(cx))),
-                    )
-                    .when_some(progress, |this, task| {
-                        this.child(
-                            Label::new(format!(
-                                "{} {} · {} {}",
-                                maintenance_label, task.kind, task.affected_rows, rows_label
-                            ))
-                            .text_size(px(11.))
-                            .text_color(rgb(MUTED)),
-                        )
-                    }),
+                    ),
             )
+            .when_some(progress, |this, task| {
+                this.child(
+                    Label::new(format!(
+                        "{} {} · {} {}",
+                        maintenance_label, task.kind, task.affected_rows, rows_label
+                    ))
+                    .text_size(px(11.))
+                    .text_color(rgb(MUTED)),
+                )
+            })
             .when_some(self.clear_preview.clone(), |this, preview| {
                 let token = preview.confirmed;
                 this.child(
@@ -4145,21 +4423,27 @@ impl Statistics {
                         ),
                 )
             });
+
+        let body = div()
+            .flex()
+            .flex_col()
+            .gap_4()
+            .child(columns)
+            .child(self.import_controls(cx))
+            .child(danger);
         stats_card("stats-storage")
             .child(self.section_toggle(
                 "storage-toggle",
                 self.t("采集与存储", "Collection & storage"),
+                None,
                 open,
                 cx,
                 1,
             ))
-            .when(open, |this| {
-                this.child(body).child(self.import_controls(cx))
-            })
+            .when(open, |this| this.child(body))
             .into_any_element()
     }
 }
-
 impl Statistics {
     /// Opens the native price form.
     pub(crate) fn open_price_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {
@@ -4200,6 +4484,17 @@ impl Statistics {
     }
 
     fn price_body(&self, cx: &mut Context<Self>) -> AnyElement {
+        // DESIGN_SPEC §4.3: each price field carries the selected currency's
+        // symbol. The symbol follows the currency control, never a stale draft.
+        let symbol = match self
+            .price_currency
+            .read(cx)
+            .selected_value()
+            .map(String::as_str)
+        {
+            Some("USD") => "$",
+            _ => "¥",
+        };
         crate::ui_components::dialog_body()
             .w_full()
             .gap_3()
@@ -4258,7 +4553,7 @@ impl Statistics {
                             .flex()
                             .flex_col()
                             .gap_1()
-                            .flex_1()
+                            .flex_grow(3.)
                             .child(self.filter_label(self.t("计价方式", "Pricing mode")))
                             .child(Select::new(&self.price_mode).w_full().small()),
                     )
@@ -4267,7 +4562,7 @@ impl Statistics {
                             .flex()
                             .flex_col()
                             .gap_1()
-                            .w(px(120.))
+                            .flex_grow(2.)
                             .child(self.filter_label(self.t("币种", "Currency")))
                             .child(Select::new(&self.price_currency).w_full().small()),
                     ),
@@ -4283,7 +4578,9 @@ impl Statistics {
                             .gap_1()
                             .flex_1()
                             .child(self.filter_label(self.t("输入价 / 百万", "Input / million")))
-                            .child(Input::new(&self.price_input)),
+                            .child(Input::new(&self.price_input).prefix(
+                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                            )),
                     )
                     .child(
                         div()
@@ -4292,7 +4589,9 @@ impl Statistics {
                             .gap_1()
                             .flex_1()
                             .child(self.filter_label(self.t("输出价 / 百万", "Output / million")))
-                            .child(Input::new(&self.price_output)),
+                            .child(Input::new(&self.price_output).prefix(
+                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                            )),
                     )
                     .child(
                         div()
@@ -4305,7 +4604,9 @@ impl Statistics {
                                     self.t("缓存读价 / 百万", "Cache read / million"),
                                 ),
                             )
-                            .child(Input::new(&self.price_read)),
+                            .child(Input::new(&self.price_read).prefix(
+                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                            )),
                     )
                     .child(
                         div()
@@ -4318,7 +4619,9 @@ impl Statistics {
                                     self.t("缓存写价 / 百万", "Cache write / million"),
                                 ),
                             )
-                            .child(Input::new(&self.price_write)),
+                            .child(Input::new(&self.price_write).prefix(
+                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                            )),
                     ),
             )
             .child(
@@ -4348,6 +4651,7 @@ impl Statistics {
                 crate::ui_components::dialog_footer().child(
                     Button::new("price-save")
                         .primary()
+                        .icon(IconName::Check)
                         .label(if self.price_draft.pending {
                             self.t("保存中…", "Saving…")
                         } else {
@@ -4888,6 +5192,10 @@ pub fn compact_number(value: i64) -> String {
 /// Content width at which the two chart cards sit side by side (DESIGN_SPEC
 /// §4.1.4). Below it they stack, which keeps 1100×700 readable.
 pub const CHART_SIDE_BY_SIDE_WIDTH: f32 = 840.;
+/// Content width at which the storage settings and the provider capture-mode
+/// table stay side by side (DESIGN_SPEC §4.2). Below it they stack so the
+/// 1100×700 window still reaches every control.
+pub const STORAGE_SIDE_BY_SIDE_WIDTH: f32 = 980.;
 pub const METRIC_MIN_WIDTH: i32 = 160;
 /// The gap between metrics.
 pub const METRIC_GAP: i32 = 12;
