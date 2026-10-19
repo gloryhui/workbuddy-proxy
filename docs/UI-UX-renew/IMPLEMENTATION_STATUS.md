@@ -186,8 +186,9 @@ D09 是本轮要求完整列出的最后一项；D10—D15 是 T00 额外发现�
 | 差异 D11 | 请求日志列 | 设计 9 列：时间、供应商、模型、请求标识、Token/命中率、费用、耗时、tok/s、状态；实际 `REQUEST_COLUMNS = 11`，另有“来源”列和“点数”列；设计中来源是供应商下的 pill | 保留来源列与点数；T07 设计列宽/两行 Token 时考虑 11 列；L01/L02/L05 逐项验证；不得为 9 列删除数据 |
 | 差异 D12 | 图表布局 | 设计为“使用趋势”和“估算费用”两张并排卡片；实际在同一张趋势卡内先 Token 图、后费用图（垂直排列） | T06 改布局但保持 `UsagePlot`/`ChartMode`/图例/断线/币种语义；A04 复验 |
 | 差异 D13 | 底部状态栏与运行状态 | 设计为 30px 全宽状态栏，左绿点“本地代理运行中”，右侧托盘说明；实际没有状态栏，只有右下角 16px 托盘提示；右侧服务卡的“运行中”是硬编码 `Tag::secondary()`，不绑定真实健康状态 | **T03 已落地**：新增 30px 全宽状态栏 + `CoreState`，状态只由 `poll` 的真实 reply 推导（无 snapshot ⇒ 不可达，未收到 ⇒ 未知，地址为空 ⇒ 未知）；右侧服务卡同一硬编码 Tag 一并改为同一可信源。真实 GUI 以 `SIGSTOP`/`SIGCONT` 隔离核心反证三态（§8.3）。剩余：代理/上游转发健康仍未纳入该状态栏，见 §8.6 |
-| 差异 D14 | 右侧设置与日志卡片 | 设计为两张卡（全局设置、日志）；实际是一个 `322px` 卡“全局设置与日志” | T04 拆分两卡，保留全部动作；右栏基准 300px；P01/P03/S04 |
+| 差异 D14 | 右侧设置与日志卡片 | 设计为两张卡（全局设置、日志）；实际是一个 `322px` 卡“全局设置与日志” | **T04 已落地**：拆为“全局设置”与“日志”两卡，右栏基准 300px（实测白底卡 298px），日志区独立滚动（§8.3 夹具二）；全部动作与回调保留 |
 | 差异 D15 | 自动刷新默认值 | 设计显示 5 秒；实际 `refresh_interval` 默认 `0`（关闭），手动刷新按钮存在；可选 0/5/10/30/60 秒 | 这是行为默认值，不在 T00 擅自改为 5 秒；T06 先保留现状并登记，是否改默认需用户确认；A02/A05 |
+| 差异 D16 | 控件高度基准（rem） | 设计 §3：输入框 36、按钮 32、映射输入 34。T04 实测：按钮 32（`ui_components::button` 显式像素后）✓；单行 `Input`/`Select` 26–28。根因：Kit 用 `theme.font_size`（T01 设为 13）作为窗口 rem（`gpui-component/src/root.rs`），`input_h(Size::Small)=h_6=1.5rem≈19.5` 加内边距/边框，且单行输入忽略调用方 `.h()`；设计稿实测供应商预设选择器 37.5 逻辑像素高 | 影响所有页面（统计页同样如此），不能在供应商页单独修。建议在共享层一次性解决（窗口 rem 恢复 16 并按页面显式设文字尺寸，或让 Kit 支持单行输入显式高度），T09/T10 前需用户确认取舍；T04 只保证结构/顺序/分组/颜色/对齐，不声称 36px 通过 |
 
 其余纯视觉/布局差异（侧栏 201.6 vs 224；右栏 322 vs 300；统计标题 18 vs 22；明细标签“用量明细” vs “请求日志”；顶部行 26/48 vs 36；内容区 padding 12 vs 6/24/16；供应商底部图标按钮 vs 文字按钮；请求日志行高未显式 56/表头 32；Token 单元格当前仍是一行五段而非设计的两行）归入 T03/T04/T06/T07 的施工清单，不单独编号；若其中涉及数据语义，再升为 D16+。
 
@@ -323,7 +324,7 @@ D09 是本轮要求完整列出的最后一项；D10—D15 是 T00 额外发现�
 | T01 | `gpui/src/theme.rs` | `gpui/src/main.rs`（`mod theme`、`Theme::update` 接线） | 只做 token、字体、圆角、颜色；不迁移页面 |
 | T02 | `gpui/src/ui_components.rs`（实际结构确定为单文件薄封装） | `gpui/src/main.rs`（`mod ui_components`）、`ui.rs`、`statistics.rs` 的真实调用点 | 不重写 InputState/SelectState；不建第二套输入系统；未迁移整页 |
 | T03 | 如需补充图标，`gpui/src/assets.rs` + `assets/icons/*.svg` | `gpui/src/ui.rs` 的骨架、侧栏、顶部、状态栏；必要时 `main.rs` 布局常量 | 保留六个动作和窗口生命周期；D04 只登记 |
-| T04 | 如需补充图标 | `gpui/src/ui.rs` 连接设置/右栏；`gpui/src/protocol_options.rs` 显示层 | 保留协议 Editor 的解析/校验/草稿语义 |
+| T04 | 未新增图标（复用现有 `IconName`） | `gpui/src/ui.rs` 连接设置/右栏；`gpui/src/protocol_options.rs` 显示层；`gpui/src/model_table.rs` 单元显示；`gpui/src/ui_components.rs` 按钮高度；`gpui/src/theme.rs` 追加 token | 保留协议 Editor 的解析/校验/草稿语义；实测改动见 §8.3 T04 |
 | T05 | 无 | `gpui/src/ui.rs` 选择模型/编辑模型/同步确认；`gpui/src/model_options.rs`、`gpui/src/model_table.rs` | 键盘、选择、草稿、能力联动、平台禁用全部保留 |
 | T06 | 无 | `gpui/src/statistics.rs`、`gpui/src/statistics/overview.rs`、`gpui/src/statistics/source_controls.rs`、`gpui/src/usage_chart.rs`、`gpui/src/source_filter.rs`（视觉层） | 不改查询、筛选语义、轮询策略、指标计算 |
 | T07 | 无 | `gpui/src/usage_table.rs`（在既有 diff 之上）；`gpui/src/statistics.rs` 明细容器 | 先保留既有改动；两行 Token、最小列宽、行高、横向滚动 |
@@ -768,13 +769,147 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 - 证据（截图、测量 JSON、静态断言 JSON、构建日志）保留在 `/Volumes/1TB/tmp/ui-ux-t03/session-t03/`，未进入仓库，未提交。
 - 本轮未执行 `cargo clean`，始终复用 `/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`。
 
+#### T04 — 供应商页面与协议弹窗代表切片
+
+**状态：** DONE（代码 / 静态 / macOS 真实 GUI 代表切片证据）。P01、P03、D01、D02、D03 有真实 GUI 证据；P02 只有入口/禁用规则的静态与截图证据，实际点击为 **NOT RUN**。Windows GUI 仍 **BLOCKED**。
+
+**开工前置确认（本轮，全部符合，否则应停止）**
+
+| 项 | 要求 | 实测 | 结论 |
+|---|---|---|---|
+| 供应商 / 账号 | OpenCode Go（账号 1） | `cordis.patch.yml` → `llm-pi-ai.providers.opencode-go.displayName = "OpenCode Go (账号 1)"` | 符合 |
+| 模型 | DeepSeek V4.1 Flash | `agent-default-model.provider = opencode-go`、`model = deepseek-v4.1-flash` | 符合 |
+| 推理档位 | High | `agent-default-model.reasoningEffort = high` | 符合 |
+| 权限 | 完全权限 | 会话文件策略 `danger-full-access`，审批提示关闭（自动拒绝升级） | 符合 |
+| 工作区 | 独立 worktree + 分支 | `/Volumes/1TB/codex/worktrees/ui-redesign/workbuddy-proxy`、`codex/ui-redesign` | 符合 |
+| 基线 | `6f19c42…` | HEAD = `6f19c426af1c9b5bc57d061bd0828a2827a65be0` | 符合 |
+| 保护文件 | `gpui/src/usage_table.rs` 不得变动 | SHA-256 全程为 `ff14cd5c47ff9cc450b4b5ecfcfa6981a02797c2370eb3eab91a786377a275f3` | 符合 |
+
+**改动文件**
+
+| 文件 | 改动 | 说明 |
+|---|---|---|
+| `gpui/src/ui.rs` | 供应商页布局、右栏拆卡、端口输入、协议弹窗宽度 | 回调、`draft` 规则与 `protocol_payload` 未改 |
+| `gpui/src/protocol_options.rs` | 共用协议 Editor 视觉 | 顶部字段按协议切换、映射区标题/提示框/等宽标签列 |
+| `gpui/src/model_table.rs` | 模型 ID 等宽、截断值 tooltip | 显示截断不再丢失实际值（FX03） |
+| `gpui/src/ui_components.rs` | 按钮显式 32px 高 / 14px 内边距 | T02 包装层缺失的设计值（见差异 D16） |
+| `gpui/src/theme.rs` | 新增 token | `BUTTON_PADDING_X`、`MAPPING_LABEL_WIDTH`、`MAPPING_INPUT_HEIGHT`、`EFFORT_SELECT_WIDTH`、`DIALOG_PROTOCOL_WIDTH` |
+| `gpui/src/usage_table.rs` | 未改 | 哈希不变，T07 才动 |
+| `docs/UI-UX-renew/IMPLEMENTATION_STATUS.md` | 本记录 | — |
+
+未改：`gpui/src/main.rs`（窗口宿主、默认/最小尺寸、恢复行为）、`gpui/src/state.rs`（草稿结构）、`gpui/src/statistics.rs`（统计页尚未迁移）、代理协议语义、核心/后端、数据库结构、依赖与 `Cargo.lock`。
+
+**布局（DESIGN_SPEC §4.3 / §5）**
+
+```text
+主区
+ ├ 连接设置卡片（padding 16、间距 12）
+ │   ├ 卡片头：连接设置 15/600 ＋ 右「修改后保存」11 text-3
+ │   ├ 供应商预设（12 标签 ＋ 整宽下拉）
+ │   ├ 供应商名称 ｜ API Key（两个等宽 flex_1 列）
+ │   ├ 上游协议（12 标签；下拉 flex_1 ＋ 协议选项 Normal 按钮）
+ │   ├ API 地址（12 标签；等宽字体输入 ＋ 11px 提示）
+ │   ├ 模型列表（标题 ＋ 获取模型 Outline / ＋ / ×）
+ │   ├ 模型表（播 DataTable）＋ 键盘提示 11px
+ │   └ 底部操作行：思考强度 ＋ 200px 下拉 ｜ 右对齐 测试连接 Outline ＋ 保存 Primary
+ └ 右栏 300（自身不滚动，只有日志卡内部滚动）
+     ├ 全局设置卡：同步 WorkBuddy / 取消同步 ＋ 说明 ＋ 本地代理子卡
+     │   （运行点＋可信状态、等宽代理地址、本地端口输入＋应用端口、供应商/模型/请求计数）
+     └ 日志卡：标题＋清空/复制图标按钮 ＋ 独立滚动的等宽 11px 文本区
+协议弹窗（宽 600，四种协议共用 protocol_options::Editor）
+ ├ OpenAI Chat/Responses：API Key 认证 ＋ 思考模式 ＋ 思考强度映射
+ ├ Anthropic：默认最大输出 Token ＋ Anthropic-Version 只读行 ＋ 思考模式 ＋ 映射
+ ├ Gemini：思考模式 ＋ 映射
+ └ 映射区：「思考强度映射」标题 ＋ 浅灰提示框 ＋ 等宽 84px 标签列 ＋ 输入
+```
+
+- 供应商预设/名称/API Key/URL/协议/模型表/思考强度/两个动作的相对顺序与设计一致；协议选项按钮为 Normal（白底）而非 Outline，与设计稿一致。
+- 右栏由原「全局设置与日志」单卡拆为两张卡（差异 D14 落地），基准宽 300px（实测白底卡 298px：300 减 1px 边框，行 500 处白底区间 957–1254）。
+- 日志区由卡片自身 `flex_1 min_h_0` 承载，`Textarea` 内部滚动；页面与日志互不影响（证据见下）。
+- 底层逻辑未动：`confirm_protocol` 仍只写 `drafts.providers[id].protocol_settings`；`save`/`test`/`fetch`/`confirm_port`/`confirm_startup_sync`/`sync`/`unsync`/日志复制与清空仍是原回调。
+
+**验收结果（P01—P03、D01—D03）**
+
+| ID | 结果 | 依据 / 未做部分 |
+|---|---|---|
+| P01 | **PASS（保存写入与 IME NOT RUN）** | 真实 GUI：预设、名称/API Key、协议/选项、地址与提示、模型列表、思考强度、操作按钮按设计排列；API Key 显隐见 C02 证据；切换供应商往返后草稿保留（长 URL 113 字符读回逐字节一致）。**保存按钮未点击**：本轮约束禁止触发保存副作用，只核对入口与禁用规则（`save` 在任意弹窗打开时直接返回，按钮 `disabled(busy)`） |
+| P02 | **入口 PASS / 实际调用 NOT RUN** | 获取模型为 Outline 按钮、测试连接为 Outline 且 `disabled(busy || models.is_empty())`，回调仍是原 `send("fetch"…)` / `test()`；本轮不点亮，因为会触发上游网络请求（约束禁止），未做 Mock 成功/失败/延迟矩阵 |
+| P03 | **PASS（复制/清空未点击）** | 长 URL 完整输入并保留（见 P01）；端口 `99999` → 右栏错误“请输入 1–65535 的端口号”；端口 `52000` → 呈现“修改端口并重启 WorkBuddy？”确认弹窗（同意并重启 / 取消），**取消**后端口输入回填 `54163`、弹窗关闭、隔离核心仍在 54163 监听、`config.json` SHA-256 不变；清空/复制日志入口存在且保持原回调。复制清空本身未点击（约束禁止副作用动作） |
+| D01 | **PASS** | 四种协议逐个打开：OpenAI Chat（API Key 认证 ＋ 原生 effort）、Responses（**含 `none` 映射行**，值 `none`，`max=xhigh`，无输出限制字段）、Anthropic（默认最大输出 Token `8192` ＋ `Anthropic-Version: 2023-06-01` ＋ 固定预算）、Gemini（仅思考模式 ＋ 思考档位，`high=high`）；同一 Editor 渲染，未丢既有设置 |
+| D02 | **PASS** | 模式选择后预算仍非空且模式为“未配置” → “请选择思考模式或清空映射 / Select a thinking mode or clear the mappings”，弹窗**不关闭**、草稿保留；预算填 `abcXYZ` → “预算须为正整数 / Budget must be positive tokens”，弹窗不关闭；Anthropic 三种模式与 Gemini 三种模式的菜单项、说明文字与顺序与设计一致；非法输入未触发任何持久化 |
+| D03 | **PASS** | 应用合法预算（low=2048）→ 弹窗关闭、`config.json` SHA-256 全程不变（`76e5689d…`，与初始值逐字节相同）、重开弹窗读到 `2048`、切供应商往返后仍为 `2048`；草稿按基线写入 `gpui-drafts.json`（`base` 指向当前配置哈希），**配置字段结构未改变**。正式保存未执行（约束禁止） |
+
+**自动验证（环境：`TMPDIR/TMP/TEMP=/Volumes/1TB/tmp/ui-ux-t04/session-t04/tmp`；`CARGO_TARGET_DIR=/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`；未执行 `cargo clean`）**
+
+| 检查 | 命令 | 退出码 | 结果 / 日志 |
+|---|---|---:|---|
+| 编译 | `cargo check --manifest-path gpui/Cargo.toml --locked --bin workbuddy-proxy-gpui` | 0 | PASS；`logs/check-1.log`、`logs/check-2.log` |
+| 格式 | `rustfmt --edition 2024`（仅改动文件）＋ `cargo fmt --manifest-path gpui/Cargo.toml --check` | 0 | PASS；未对 `usage_table.rs` 运行 rustfmt |
+| Clippy | `cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings` | 0 | PASS；`logs/clippy.log`、最终源码复跑 `logs/clippy-final.log`；仅依赖 `block v0.1.6` 的 future-incompat 提示 |
+| 测试 | `cargo test --manifest-path gpui/Cargo.toml --locked` | 0 | **138 passed / 0 failed**；`logs/test.log`、最终源码复跑 `logs/test-final.log` |
+| Release 构建 | `cargo build --manifest-path gpui/Cargo.toml --release --locked` | 0 | PASS；`logs/build.log`、`logs/build2.log` |
+| Git 空白 | `git diff --check` | 0 | PASS |
+| 保护文件 | `shasum -a 256 gpui/src/usage_table.rs` | — | `ff14cd5c…a275f3`，与基线一致 |
+
+- UI 二进制（含未提交改动）：`/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui`，SHA-256 `58ca8fd5348a35d87ac363e658e491b779d34dbb8b19437a42c696daaa852d2d`（构建时间 2026-10-19，未提交，版本 0.5.6）。
+- 核心二进制：`/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy`，SHA-256 `24826a5233aaf2904052d554798b437072f84d441a4588c07449909e34b1242b`；worktree 中 `src/`、`native/`、`Cargo.toml`、`Cargo.lock` 与 `main` 无差异，故复用该 0.5.6 核心不会掩盖本次改动。
+
+**真实 macOS GUI 证据（隔离夹具，非真实配置 / 非真实上游）**
+
+夹具一（`gui/`）：合成 `config.json`（5 个供应商：openai_chat、长名称/长 URL/长模型 ID、openai_responses 含 `none` 映射、anthropic_messages 固定预算、gemini_generate_content 思考档位），隔离 `HOME`/`APPDATA`/`LOCALAPPDATA`/XDG/`TMPDIR`，核心 `--headless --config-dir … --port 54163` 仅监听 loopback，GPUI `--config-dir`；全程未启动真实 WorkBuddy、未读写真实配置/统计库、未触发开机启动/同步/端口变更/真实上游请求。
+
+| 截图（`shots/`） | 场景 | 观察到的证据 |
+|---|---|---|
+| `T04-01-providers-1280x800.png` | 供应商页 1280×800 | 连接设置分区顺序与设计一致；右栏 300px 两卡分离；日志卡独占剩余高度 |
+| `T04-02-providers-long-values-1280x800.png` | 长名称供应商 | 侧栏长名称省略号，表单内长名称/长 URL 完整输入，模型表长 ID 省略号 |
+| `T04-03-providers-min-1100x700.png` | 最小窗口 1100×700 | 无布局挤出窗口；两卡均可达；表单自身滚动 |
+| `T04-04-proto-openai-min-1100x700.png` | 最小窗口内协议弹窗 | 弹窗完整可见、内容可滚动、应用到草稿可达 |
+| `T04-05-proto-menu.png` | 上游协议下拉展开 | 四项：OpenAI Chat Completions / OpenAI Responses / Anthropic Messages / Gemini GenerateContent，当前项带勾选 |
+| `T04-06-proto-openai.png` | OpenAI Chat 弹窗 | API Key 认证 ＋ 思考模式 ＋ 映射（minimal…max，无 `none`） |
+| `T04-07-proto-openai-authmenu.png` | 认证下拉展开 | 协议默认 / Protocol default（勾选）＋ Azure API Key |
+| `T04-08-proto-responses.png` | Responses 弹窗 | **`none` 行存在且为 `none`**，`max=xhigh`，无输出限制字段 |
+| `T04-09-proto-anthropic.png` | Anthropic 弹窗 | 默认最大输出 Token 8192、`Anthropic-Version: 2023-06-01` 只读行、固定预算、low=1024/high=8192 |
+| `T04-10-proto-anthropic-modemenu.png` | Anthropic 模式菜单 | 未配置 / 固定预算 / 自适应 |
+| `T04-11-proto-error-mode.png` | 未配置模式 + 非空映射 | 弹窗内红色错误“请选择思考模式或清空映射”，弹窗未关闭 |
+| `T04-12-proto-error-budget.png` | 非法预算 | 输入 `abcXYZ` 保留在草稿，红色错误“预算须为正整数”，弹窗未关闭 |
+| `T04-13-proto-gemini.png` | Gemini 弹窗 | 仅思考模式（思考档位）＋ high=high 映射 |
+| `T04-14-proto-gemini-modemenu.png` | Gemini 模式菜单 | 未配置 / 固定预算 / 思考档位 |
+| `T04-15-apikey-masked.png` / `T04-16-apikey-shown.png` | API Key 显隐 | 同一字段：掩码圆点＋眼睛图标 → 明文＋眼睛划除图标，值不变 |
+| `T04-17-long-url-typed.png` / `T04-18-long-url-after-switch.png` | 长 URL | 等宽输入框完整持有 113 字符；切走再切回后 AX 读回逐字节一致 |
+| `T04-19-port-invalid.png` | 端口 `99999` | 右栏错误“请输入 1–65535 的端口号”，无确认弹窗 |
+| `T04-20-port-confirm.png` | 端口 `52000` | 确认弹窗“修改端口并重启 WorkBuddy？”＋ 同意并重启 / 取消（未执行同意） |
+| `T04-21-port-cancelled.png` | 取消端口变更 | 弹窗关闭、端口回填 `54163`、核心仍在 54163 监听、配置未变 |
+| `T04-22-log-long-tail.png` / `T04-23-log-scrolled.png` | 日志独立滚动 | 60 行合成日志；滚轮上滚后日志区内容变化（区域哈希不同），同帧表单区哈希不变 |
+
+夹具二（`gui-log/`）：**本地 Mock 控制面**（`mock_core.py`）按真实 `/_control/action` 契约返回含 60 行合成日志的快照，用于在无真实代理流量的前提下验证日志区滚动；未启动真实核心、未发送任何请求。
+
+- 采集方式：窗口级截图（`screencapture -l <CGWindowID>`），因此不受其他应用窗口遮挡影响；交互通过 macOS AX（`AXPress` / `AXFocused` / `AXValue`）与真实鼠标/滚轮事件（CGEvent）完成。
+- 显示器在取证过程中由 5K HiDPI 切换为 1920×1080（1x）；最终一套证据全部为 1:1 逻辑像素，早期 2x 截图已删除，避免混用两种比例。
+- 输入方式限制：本环境该窗口无法稳定保持键盘前台（`NSRunningApplication.activate` 与 System Events `set frontmost` 均不生效，改用 AX `AXFrontmost`），因此长 URL 的"完整输入"以 AX 取值路径复核；**真实键盘逐字输入在切换显示器之前已单独通过**（读回逐字节一致，见 `logs/long-url-readback.txt`），最终一套截图使用 AX 取值路径。
+
+**未测项与剩余风险**
+
+1. **保存/同步/获取模型/测试连接/复制/清空日志的真实点击未执行**（约束禁止副作用动作）；只核对了入口、禁用规则与回调不变，P02 的实际请求矩阵仍为 NOT RUN。
+2. **中文输入法、Tab/Enter/Escape 键盘路径、剪贴板** 未做真实 GUI 交互（窗口前台不稳定）；`C02/C03/C05` 在 T02 已登记为 NOT RUN，T04 未改变结论。
+3. **差异 D16（控件高度基准）仍未解决**：设计 §3 输入框 36 / 按钮 32 / 映射输入 34；实测按钮 32（本轮显式像素修正）✓，单行 Input/Select 为 26–28。根因是 Kit 用 `theme.font_size`（T01 设为 13）作为窗口 rem，`input_h(Size::Small)` = `h_6` = 1.5rem ≈ 19.5 加内边距/边框，且单行输入会忽略调用方 `.h()`；设计稿实测供应商预设选择器 37.5 逻辑像素高。该偏差影响所有页面（统计页同样受影响），不能在供应商页单独修，**必须在 T09/T10 前于共享层一次性解决**并复验全部页面。
+4. **协议弹窗宽度**取 600（设计约 596.5，规范区间 520–660）；选择器的弹层宽度沿用 Kit 行为，未与设计逐像素比对。
+5. **`gpui-drafts.json`** 仍由基线机制在草稿变化时写入（`tick` 的脏检查），这是"应用到草稿"的固有语义；`config.json` 不受影响。正式保存链路未在隔离环境点击验证。
+6. Windows GUI、DPI、输入法、窗口生命周期：**BLOCKED**（无实机）；本记录不得被解读为 Windows 通过。
+7. 侧栏底部“添加/复制/删除”在 1280×800 下第三个按钮右缘略被裁切，属 T03 骨架范围，本轮未改，登记给 T09/T10。
+
+**清理与磁盘**
+
+- 本轮专用目录 `/Volumes/1TB/tmp/ui-ux-t04/session-t04/`；构建/测试的 `TMPDIR/TMP/TEMP` 指向其下 `tmp/`，未在系统盘创建 Cargo 目录，未执行 `cargo clean`。
+- 两套隔离夹具在本轮内停止并确认进程退出后，删除其合成配置、`instance.json`、`gpui-drafts.json`、`usage.sqlite3*`、锁文件、启动日志、Mock 脚本与隔离 HOME/XDG 目录。
+- 保留：截图（`gui/shots/`）、采集与校验日志（`logs/`）、几何测量（`logs/geometry.txt`、`logs/design-measure.txt`）、夹具生成脚本（`gui/`、`tools/winctl.swift`）与设计裁切图（`design/`）。全部位于 `/Volumes/1TB`，未进入仓库。
+
 | 任务 | 状态 | 依赖 | 备注 |
 |---|---|---|---|
 | T00 | DONE（静态） | — | B04 NOT RUN；不阻止 T01 |
 | T01 主题、字体、视觉 token | DONE（代码/静态；V03/V04 NOT RUN） | T00 | `theme.rs` + `main.rs`；页面未迁移 |
 | T02 公共组件与状态 | DONE（代码/静态；C01—C06 交互 NOT RUN） | T01 | `ui_components.rs`；调用点部分迁移 |
 | T03 窗口骨架 | DONE（代码/静态；macOS GUI 骨架与交互证据；S01—S04 部分项 NOT RUN） | T02 | 224px 侧栏 / 36px 顶部行 / 30px 状态栏；D04 只登记，D13 已落地 |
-| T04 供应商页 + 协议弹窗 | TODO | T03 | 代表切片；保留 Responses none |
+| T04 供应商页 + 协议弹窗 | DONE（代码/静态；macOS GUI 代表切片；P02 实际调用与保存/复制/清空未执行） | T03 | 右栏拆两卡 300px；Responses `none` 保留；草稿/持久化边界未变；D16 仍未解决 |
 | T05 模型选择/编辑/同步确认 | TODO | T04 | 键盘、草稿、平台禁用 |
 | T06 统计总览/筛选/图表 | TODO | T04 | 保留统计语义、轮询策略 |
 | T07 日志/聚合表格/分页 | TODO | T06；T00 已记录 usage_table | 在既有 diff 上做两行 Token/列宽 |
@@ -788,6 +923,8 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 - **T01 更新**：上述 gpui 检查已实际执行并通过（§8.3）；V03/V04 GUI 仍 **NOT RUN**。
 - **T02 更新**：`cargo check`/`fmt`/`clippy`/`test`/`release build`/`git diff --check` 已执行并通过（§8.3）；C01—C06 的 GUI/鼠标/键盘/IME 交互仍 **NOT RUN**。
 - **T03 更新**：`cargo check`/`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build` 已执行并通过；macOS 真实 GPUI 窗口已在隔离夹具中启动并取得骨架、切换与状态源截图（§8.3、§8.5）。S01/S02/S03/S04 的部分交互仍为 **NOT RUN**（详见 §8.5），不得据此声称四项全部通过。
+- **T04 更新**：`cargo check`/`rustfmt`+`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build`/`git diff --check` 已执行并通过（§8.3 T04）。macOS 真实 GPUI 隔离夹具已取得供应商页、最小窗口、四种协议弹窗、API Key 显隐、长 URL、端口校验与确认、日志独立滚动截图；`config.json` SHA-256 在应用到草稿/长 URL/端口流程中全程不变。
+- **T04 未执行**：保存、同步、获取模型、测试连接、复制/清空日志的真实点击（约束禁止副作用动作，P02 实际调用 NOT RUN）；中文输入法与 Tab/Enter/Escape 键盘路径（窗口无法稳定保持键盘前台）。Windows GUI：**BLOCKED**。
 - macOS GUI 截图/交互：**T03 已部分执行**（仅窗口骨架、供应商切换、恢复尺寸、状态源三态；语言下拉未打开、破坏性动作未触发）。
 - Windows GUI、DPI、输入法、窗口生命周期：**BLOCKED**（当前环境没有 Windows 实机；不能以编译代替 GUI）。本机为 macOS，因此不宣称 Windows GUI 已验收。
 - 字体探测：**部分失败/非结论**；CoreText 未命中的名称只作候选线索，不能作为 V03 通过证据，也不能据此宣称运行时不可用。

@@ -1,8 +1,10 @@
 //! Typed native provider controls; all edits remain drafts until Save.
+use crate::theme::{color, font, line_height, radius, size, space};
 use crate::upstream_config::{ProtocolSettings, ReasoningMode, UpstreamProtocol};
 use gpui_kit::{
     component::{
         input::{Input, InputState},
+        label::Label,
         select::{Select, SelectItem, SelectState},
     },
     *,
@@ -150,15 +152,134 @@ impl Editor {
         settings.validate(self.protocol)?;
         Ok(settings)
     }
-    pub fn render(&self, zh: bool) -> AnyElement {
+    /// 12px muted field label, as in the design's protocol dialogs.
+    fn field_label(text: String) -> Label {
+        Label::new(text)
+            .text_size(px(font::LABEL))
+            .line_height(px(line_height::LABEL))
+            .text_color(rgb(color::TEXT_3))
+    }
+
+    /// Renders the shared protocol editor (DESIGN_SPEC §5).
+    ///
+    /// One component serves all four protocols: only the leading fields differ
+    /// (authentication / output limit + version / none), while the thinking
+    /// mode, the mapping explanation and the monospace mapping column are
+    /// shared. The Responses protocol keeps its explicit `none` mapping row.
+    /// `mono` is the resolved monospace family from the active theme.
+    pub fn render(&self, zh: bool, mono: SharedString) -> AnyElement {
         let t = |cn: &str, en: &str| if zh { cn.to_owned() } else { en.to_owned() };
-        div().id("protocol-options-fields").flex().flex_col().gap_3().overflow_y_scroll().flex_1().min_h_0()
-            .children(matches!(self.protocol, UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses).then(|| div().child(t("API Key 认证", "API Key authentication")).child(Select::new(&self.authentication).accessibility_label(t("API Key 认证", "API Key authentication")))))
-            .children((self.protocol==UpstreamProtocol::AnthropicMessages).then(||div().child(t("默认最大输出 Token","Default maximum output tokens")).child(Input::new(&self.limit).aria_label(t("默认最大输出 Token","Default maximum output tokens")))))
-            .children((self.protocol==UpstreamProtocol::AnthropicMessages).then(||div().child("Anthropic-Version: 2023-06-01")))
-            .child(div().child(t("思考模式","Thinking mode")).child(Select::new(&self.mode).accessibility_label(t("思考模式","Thinking mode"))))
-            .child(div().text_sm().child(t("按供应商文档填写映射，留空表示不配置。预算模式填正整数；档位模式填原生 level。Responses 留空沿用原生 effort，max 必须显式映射。","Use the provider's documented mapping. Budget: positive tokens; level: native level. Empty = unconfigured. Responses uses native efforts by default; max needs an explicit mapping.")))
-            .children(EFFORTS.into_iter().zip(&self.mapping).filter(|(effort,_)|*effort!="none"||self.protocol==UpstreamProtocol::OpenaiResponses).map(|(effort,state)|div().flex().gap_3().items_center().child(div().w(px(90.)).child(effort)).child(div().flex_1().child(Input::new(state).aria_label(format!("{effort} mapping"))))))
+        let openai = matches!(
+            self.protocol,
+            UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses
+        );
+        let anthropic = self.protocol == UpstreamProtocol::AnthropicMessages;
+        let authentication = t("API Key 认证", "API Key authentication");
+        let limit = t("默认最大输出 Token", "Default maximum output tokens");
+        let mode = t("思考模式", "Thinking mode");
+        div()
+            .id("protocol-options-fields")
+            .flex()
+            .flex_col()
+            .gap(px(space::CARD_GAP))
+            .overflow_y_scroll()
+            .flex_1()
+            .min_h_0()
+            .children(openai.then(|| {
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(space::SMALL))
+                    .child(Self::field_label(authentication.clone()))
+                    .child(
+                        Select::new(&self.authentication)
+                            .w_full()
+                            .accessibility_label(authentication.clone()),
+                    )
+            }))
+            .children(anthropic.then(|| {
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(space::SMALL))
+                    .child(Self::field_label(limit.clone()))
+                    .child(
+                        Input::new(&self.limit)
+                            .w_full()
+                            .h(px(size::INPUT_HEIGHT))
+                            .aria_label(limit.clone()),
+                    )
+            }))
+            .children(anthropic.then(|| {
+                Label::new("Anthropic-Version: 2023-06-01")
+                    .text_size(px(font::BODY))
+                    .line_height(px(line_height::BODY))
+                    .text_color(rgb(color::TEXT_2))
+            }))
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(space::SMALL))
+                    .child(Self::field_label(mode.clone()))
+                    .child(
+                        Select::new(&self.mode)
+                            .w_full()
+                            .accessibility_label(mode.clone()),
+                    ),
+            )
+            .child(
+                div()
+                    .font_weight(FontWeight::SEMIBOLD)
+                    .text_size(px(font::BODY))
+                    .line_height(px(line_height::BODY))
+                    .child(t("思考强度映射", "Thinking effort mapping")),
+            )
+            .child(
+                div()
+                    .p(px(space::CARD_SM))
+                    .rounded(px(radius::CONTROL))
+                    .bg(rgb(color::BG_PAGE))
+                    .border_1()
+                    .border_color(rgb(color::BORDER))
+                    .child(
+                        Label::new(t(
+                            "按供应商文档填写映射，留空表示不配置。预算模式填正整数；档位模式填原生 level。Responses 留空沿用原生 effort，max 必须显式映射。",
+                            "Use the provider's documented mapping. Budget: positive tokens; level: native level. Empty = unconfigured. Responses uses native efforts by default; max needs an explicit mapping.",
+                        ))
+                        .text_size(px(font::LABEL))
+                        .line_height(px(line_height::LABEL))
+                        .text_color(rgb(color::TEXT_2)),
+                    ),
+            )
+            .children(
+                EFFORTS
+                    .into_iter()
+                    .zip(&self.mapping)
+                    .filter(|(effort, _)| {
+                        *effort != "none" || self.protocol == UpstreamProtocol::OpenaiResponses
+                    })
+                    .map(|(effort, state)| {
+                        div()
+                            .flex()
+                            .items_center()
+                            .gap(px(space::CARD_GAP))
+                            .child(
+                                Label::new(effort)
+                                    .w(px(size::MAPPING_LABEL_WIDTH))
+                                    .flex_shrink_0()
+                                    .font_family(mono.clone())
+                                    .text_size(px(font::LABEL))
+                                    .line_height(px(line_height::LABEL))
+                                    .text_color(rgb(color::TEXT_2)),
+                            )
+                            .child(div().flex_1().child(
+                                Input::new(state)
+                                    .h(px(size::MAPPING_INPUT_HEIGHT))
+                                    .aria_label(format!("{effort} mapping")),
+                            ))
+                    }),
+            )
             .into_any_element()
     }
 }

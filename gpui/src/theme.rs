@@ -131,8 +131,17 @@ pub mod size {
     pub const INPUT_HEIGHT: f32 = 36.;
     pub const SELECT_HEIGHT: f32 = 36.;
     pub const BUTTON_HEIGHT: f32 = 32.;
+    /// DESIGN_SPEC §3 "按钮通用：内边距 0 14".
+    pub const BUTTON_PADDING_X: f32 = 14.;
     pub const ICON_BUTTON: f32 = 32.;
     pub const DIALOG_ICON_BUTTON: f32 = 28.;
+    /// DESIGN_SPEC §5: the shared protocol editor's mapping labels sit in a
+    /// fixed monospace column and its mapping inputs are one step shorter than
+    /// the standard field.
+    pub const MAPPING_LABEL_WIDTH: f32 = 84.;
+    pub const MAPPING_INPUT_HEIGHT: f32 = 34.;
+    /// Provider page: the thinking-effort select width in the design's action row.
+    pub const EFFORT_SELECT_WIDTH: f32 = 200.;
     pub const LIST_ROW_HEIGHT: f32 = 36.;
     pub const SEGMENT_BUTTON_HEIGHT: f32 = 32.;
     pub const TABLE_HEADER_HEIGHT: f32 = 32.;
@@ -149,6 +158,9 @@ pub mod size {
     pub const PROGRESS_HEIGHT: f32 = 4.;
     pub const DIALOG_MIN_WIDTH: f32 = 520.;
     pub const DIALOG_MAX_WIDTH: f32 = 660.;
+    /// The three shared protocol dialogs in the design are ~596px wide, inside
+    /// the §3 dialog range. The model picker/editor keep their own width (T05).
+    pub const DIALOG_PROTOCOL_WIDTH: f32 = 600.;
 }
 
 /// Border widths and focus treatment.

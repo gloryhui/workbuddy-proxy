@@ -4,8 +4,11 @@ use crate::{state::Selection, ui::Proxy};
 use gpui_kit::component::{
     ActiveTheme, Disableable, Icon, Sizable,
     button::{Button, ButtonVariants},
+    label::Label,
     table::{Column, TableDelegate, TableState},
+    tooltip::Tooltip,
 };
+use gpui_kit::prelude::StatefulInteractiveElement as _;
 use gpui_kit::*;
 use serde_json::Value;
 
@@ -73,7 +76,7 @@ impl TableDelegate for Models {
         i: usize,
         col: usize,
         _: &mut Window,
-        _: &mut Context<TableState<Self>>,
+        cx: &mut Context<TableState<Self>>,
     ) -> impl IntoElement {
         if col == 2 {
             let owner = self.owner.clone();
@@ -102,9 +105,26 @@ impl TableDelegate for Models {
         } else {
             id
         };
-        gpui_kit::component::label::Label::new(value.to_owned())
+        // Long display names and model IDs are ellipsised inside their column.
+        // The full value stays reachable on hover, so trimming the display never
+        // hides what was actually configured (FX03), and the model ID keeps the
+        // design's monospace code treatment (DESIGN_SPEC §1.2).
+        let full = value.to_owned();
+        let text = if col == 1 {
+            Label::new(value.to_owned())
+                .w_full()
+                .text_ellipsis()
+                .font_family(cx.theme().mono_font_family.clone())
+        } else {
+            Label::new(value.to_owned()).w_full().text_ellipsis()
+        };
+        div()
+            .id(("model-cell", i * 2 + col))
             .w_full()
-            .text_ellipsis()
+            .min_w_0()
+            .overflow_hidden()
+            .tooltip(move |window, cx| Tooltip::new(full.clone()).build(window, cx))
+            .child(text)
             .into_any_element()
     }
     // The three explicit columns fill the container without Kit's 12px trailing cell.

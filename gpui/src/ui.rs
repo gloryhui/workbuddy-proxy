@@ -5,7 +5,7 @@ use crate::{
     statistics::Statistics,
 };
 use gpui_kit::component::{
-    Disableable, ElementExt, Icon, IconName, Selectable, Sizable, TitleBar, WindowExt,
+    ActiveTheme, Disableable, ElementExt, Icon, IconName, Selectable, Sizable, TitleBar, WindowExt,
     button::{Button, ButtonVariants},
     input::{Input, InputEvent, InputState, Textarea, TextareaState},
     label::Label,
@@ -246,10 +246,40 @@ fn label(s: impl Into<SharedString>) -> Label {
         .text_color(rgb(MUTED))
         .mb_2()
 }
-// Layout surfaces are not interactive controls. GroupBox adds nested intrinsic-
-// height wrappers, so flexible table/log panels use GPUI layout containers.
+/// Provider-page field label (DESIGN_SPEC §1.2): 12px muted, with no incidental
+/// margin so the gap to its control comes from the layout tokens.
+fn field_label(s: impl Into<SharedString>) -> Label {
+    Label::new(s)
+        .text_size(px(crate::theme::font::LABEL))
+        .line_height(px(crate::theme::line_height::LABEL))
+        .text_color(rgb(crate::theme::color::TEXT_3))
+}
+/// Muted 11px helper line (URL hint, model-list keyboard hint).
+fn hint_line(s: impl Into<SharedString>) -> Label {
+    Label::new(s)
+        .text_size(px(crate::theme::font::SMALL))
+        .text_color(rgb(crate::theme::color::TEXT_3))
+}
+/// Layout surfaces are not interactive controls. GroupBox adds nested intrinsic-
+/// height wrappers, so flexible table/log panels use GPUI layout containers.
 fn card(id: &'static str) -> Stateful<Div> {
     crate::ui_components::panel_card(id)
+}
+/// Right-rail card: content-sized like `content_card`, but with the design's
+/// larger card padding (DESIGN_SPEC §3 "Card：内边距 16–20").
+fn rail_card(id: &'static str) -> Stateful<Div> {
+    div()
+        .id(id)
+        .flex()
+        .flex_col()
+        .min_h_0()
+        .w_full()
+        .bg(rgb(crate::theme::color::WHITE))
+        .border_1()
+        .border_color(rgb(crate::theme::color::BORDER))
+        .rounded(px(crate::theme::radius::CARD))
+        .p(px(crate::theme::space::CARD_LG))
+        .gap(px(crate::theme::space::CARD_GAP))
 }
 
 impl Proxy {
@@ -506,7 +536,7 @@ impl Proxy {
     fn effort_menu(&self) -> AnyElement {
         crate::ui_components::select(&self.effort_select, self.busy)
             .id("effort")
-            .w(px(220.))
+            .w(px(crate::theme::size::EFFORT_SELECT_WIDTH))
             .menu_width(px(240.))
             .accessibility_label(self.t("思考强度", "Thinking effort"))
             .into_any_element()
@@ -1647,7 +1677,14 @@ impl Proxy {
         let width = if self.table_width > px(0.) {
             self.table_width
         } else {
-            window.viewport_size().width - px(448. + crate::theme::size::SIDEBAR_WIDTH)
+            // First frame, before the model table's own prepaint reports its
+            // bounds: page padding + right rail + rail gap + card padding.
+            let chrome = crate::theme::space::PAGE_X * 2.
+                + crate::theme::size::RIGHT_RAIL_WIDTH
+                + crate::theme::space::CARD_GAP
+                + crate::theme::space::CARD_SM * 2.
+                + 2.;
+            window.viewport_size().width - px(chrome + crate::theme::size::SIDEBAR_WIDTH)
         };
         let column_width = ((width - crate::model_table::EDIT_COLUMN_WIDTH) / 2.).max(px(120.));
         let data = self.model_table.read(cx).delegate();
@@ -1692,7 +1729,9 @@ impl Proxy {
                     owner: owner.clone(),
                 }
             });
-            let width = if self.picker.is_some() || self.editing.is_some() || self.protocol_open {
+            let width = if self.protocol_open {
+                crate::theme::size::DIALOG_PROTOCOL_WIDTH
+            } else if self.picker.is_some() || self.editing.is_some() {
                 720.
             } else {
                 480.
@@ -1797,25 +1836,31 @@ impl Proxy {
         }
     }
 
-    /// Short relay label plus tag style for the existing provider-page service
-    /// card, which used to print a hardcoded "running" tag (difference D13).
-    fn core_tag(&self) -> (crate::ui_components::TagKind, &'static str) {
+    /// Trusted relay indicator for the provider page's service sub-card.
+    ///
+    /// T03 replaced the hardcoded "running" tag with this trusted source; T04
+    /// renders it as the design's dot plus label instead of a tag pill. The
+    /// state resolution and wording are unchanged, and the dot colour comes
+    /// from the same theme tokens.
+    fn core_indicator(&self) -> (u32, &'static str, u32) {
         match self.core_state() {
             CoreState::Responding => (
-                crate::ui_components::TagKind::Success,
+                crate::theme::color::PRIMARY_DARK,
                 self.t("运行中", "Running"),
+                crate::theme::color::PRIMARY_DARK,
             ),
             CoreState::Unknown => (
-                crate::ui_components::TagKind::Secondary,
+                crate::theme::color::TEXT_3,
                 self.t("状态未知", "Unknown"),
+                crate::theme::color::TEXT_3,
             ),
             CoreState::Unreachable => (
-                crate::ui_components::TagKind::Danger,
+                crate::theme::color::DANGER,
                 self.t("未响应", "Not responding"),
+                crate::theme::color::DANGER,
             ),
         }
     }
-
     /// Fixed 30px status bar across the bottom of the window (DESIGN_SPEC §2).
     ///
     /// It is a sibling of the scrolling page area, so it stays put while any
@@ -2239,205 +2284,17 @@ impl Proxy {
                 )
                 .into_any_element();
         }
-        card("provider-settings").flex_1().min_w_0().min_h_0().gap_3().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
-        .child(div().id("provider-form").flex().flex_col().flex_1().min_h_0().overflow_y_scroll().gap_3()
-        .child(div().child(label(self.t("供应商预设", "Provider preset"))).child(self.preset_menu()))
-        .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(crate::ui_components::text_input(&self.name, self.busy))).child(div().flex_1().child(label("API Key")).child(crate::ui_components::masked_input(&self.key, self.busy))))
-        .child(div().flex().gap_3().items_center().child(label(self.t("上游协议","Upstream protocol"))).child(crate::ui_components::select(&self.protocol_select, self.busy).w(px(260.)).accessibility_label(self.t("上游协议","Upstream protocol")))
-            .child(Button::new("protocol-options").small().label(self.t("协议选项","Protocol options")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|{
-                let draft=this.drafts.providers.get(&this.selected()).cloned().unwrap_or_default();
-                this.protocol_options.load(draft.protocol,&draft.protocol_settings,window,cx);this.protocol_open=true;this.error=false;cx.notify();
-            }))))
-        .child(div().child(label(self.t("API 地址","API URL"))).child(crate::ui_components::text_input(&self.url, self.busy)))
-        .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.url_hint()))
-        .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().primary().outline().icon(IconName::RefreshCw).label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string(),"protocol":this.protocol_payload()["protocol"],"protocol_settings":this.protocol_payload()["protocol_settings"]})],cx);})))
-        .child(Button::new("model-add").small().ghost().icon(IconName::Plus).tooltip(self.t("添加模型","Add model")).accessibility_label(self.t("添加模型","Add model")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.edit(this.models.len(),true,window,cx))))
-        .child(Button::new("model-remove").small().ghost().icon(IconName::Minus).tooltip(self.t("删除模型","Remove models")).accessibility_label(self.t("删除模型","Remove models")).disabled(self.busy||self.selection.rows.is_empty()).on_click(cx.listener(|this,_,window,cx|this.remove_models(&RemoveModels,window,cx))))))
-        .child(div().key_context("ModelList").track_focus(&self.table_focus).flex_1().min_h(px(140.)).on_action(cx.listener(Self::remove_models)).on_action(cx.listener(Self::select_models)).on_action(cx.listener(Self::edit_selected)).on_prepaint({
-            let owner = cx.entity().downgrade();
-            move |bounds, _, cx| {
-                let width = (bounds.size.width - px(2.)).max(px(240.));
-                let _ = owner.update(cx, |this, cx| {
-                    if this.table_width != width { this.table_width = width; cx.notify(); }
-                });
-            }
-        }).child(crate::ui_components::table(&self.model_table)))
-        .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑","Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit")))
-        )
-        .child(div().flex_shrink_0().flex().items_center().gap_3().child(div().text_size(px(12.)).text_color(rgb(MUTED)).child(self.t("思考强度","Thinking effort"))).child(self.effort_menu()))
-        .child(div().flex_shrink_0().flex().gap_2().child(crate::ui_components::button("save", crate::ui_components::ButtonKind::Primary, self.t("保存","Save"), self.busy, self.busy).icon(IconName::Check).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
-        .child(crate::ui_components::button("test", crate::ui_components::ButtonKind::Outline, self.t("测试连接","Test connection"), self.busy||self.models.is_empty(), self.busy).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
-    }
-    fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
-        card("global-settings")
-            .w(px(322.))
-            .flex_shrink_0()
-            .gap_3()
-            .child(
-                div()
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .text_size(px(15.))
-                    .child(self.t("全局设置与日志", "Settings & logs")),
-            )
-            .when(self.error && self.editing.is_none(), |this| {
-                this.child(
-                    Label::new(self.status.clone())
-                        .text_size(px(11.))
-                        .text_color(rgb(0xca4960)),
-                )
-            })
-            .child(
-                div()
-                    .flex()
-                    .gap_2()
-                    .child(
-                        Button::new("sync")
-                            .small()
-                            .primary()
-                            .icon(IconName::RefreshCw)
-                            .label(self.t("同步 WorkBuddy", "Sync WorkBuddy"))
-                            .disabled(self.busy)
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.sync_open = true;
-                                cx.notify();
-                            })),
-                    )
-                    .child(
-                        Button::new("restore")
-                            .small()
-                            .ghost()
-                            .icon(IconName::Delete)
-                            .label(self.t("取消同步", "Unsync"))
-                            .tooltip(self.t(
-                                "移除代理同步到 WorkBuddy 的模型",
-                                "Remove proxy models synced to WorkBuddy",
-                            ))
-                            .disabled(self.busy)
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.unsync_open = true;
-                                cx.notify();
-                            })),
-                    ),
-            )
-            .child(Label::new(self.t(
-                "新增或修改模型后，旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy，再继续原会话。",
-                "After model changes, fully quit and reopen WorkBuddy if an existing conversation reports a missing URL or key; then continue that conversation.",
-            )).text_size(px(11.)).text_color(rgb(MUTED)))
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap_2()
-                    .p_3()
-                    .rounded(px(9.))
-                    .bg(rgb(0xf0f7fa))
-                    .border_1()
-                    .border_color(rgb(BORDER))
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .justify_between()
-                            .child(
-                                Label::new(self.t("本地代理", "Local relay"))
-                                    .text_size(px(12.))
-                                    .font_weight(FontWeight::SEMIBOLD),
-                            )
-                            .child({
-                                // D13: this tag used to print a hardcoded
-                                // "running" state. It now reports the same
-                                // trusted core state as the status bar.
-                                let (kind, label) = self.core_tag();
-                                crate::ui_components::tag(kind, label)
-                            }),
-                    )
-                    .child(
-                        Label::new(self.proxy_address.clone())
-                            .text_size(px(12.))
-                            .text_color(rgb(0x007e99)),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_2()
-                            .child(
-                                div()
-                                    .w(px(60.))
-                                    .text_size(px(12.))
-                                    .text_color(rgb(MUTED))
-                                    .child(self.t("本地端口", "Local port")),
-                            )
-                            .child(
-                                div()
-                                    .flex_1()
-                                    .child(crate::ui_components::compact_input(&self.port, self.busy)),
-                            )
-                            .child(
-                                Button::new("port-apply")
-                                    .small()
-                                    .ghost()
-                                    .icon(IconName::Check)
-                                    .tooltip(self.t("应用端口", "Apply port"))
-                                    .accessibility_label(self.t("应用端口", "Apply port"))
-                                    .disabled(self.busy)
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        match this
-                                            .port
-                                            .read(cx)
-                                            .value()
-                                            .parse::<u16>()
-                                            .ok()
-                                            .filter(|p| *p > 0)
-                                        {
-                                            Some(port) => {
-                                                let current = this.proxy_address.parse::<reqwest::Url>().ok().and_then(|u| u.port_or_known_default()).unwrap_or(this.cfg.port);
-                                                if port != current {
-                                                    this.pending_port = Some(port);
-                                                    cx.notify();
-                                                }
-                                            }
-                                            None => {
-                                                this.error = true;
-                                                this.status = this
-                                                    .t(
-                                                        "请输入 1–65535 的端口号",
-                                                        "Enter a port from 1 to 65535",
-                                                    )
-                                                    .into();
-                                                cx.notify();
-                                            }
-                                        }
-                                    })),
-                            ),
-                    )
-                    .child(
-                        div().flex().gap_3().children(
-                            [
-                                self.t("供应商", "Providers"),
-                                self.t("模型", "Models"),
-                                self.t("请求", "Requests"),
-                            ]
-                            .into_iter()
-                            .zip(self.proxy_counts)
-                            .map(|(name, count)| {
-                                div()
-                                    .flex_1()
-                                    .flex()
-                                    .flex_col()
-                                    .gap_1()
-                                    .child(
-                                        Label::new(count.to_string())
-                                            .font_weight(FontWeight::SEMIBOLD)
-                                            .text_size(px(15.)),
-                                    )
-                                    .child(
-                                        Label::new(name).text_color(rgb(MUTED)).text_size(px(10.)),
-                                    )
-                            }),
-                        ),
-                    ),
-            )
+        let mono = cx.theme().mono_font_family.clone();
+        // Connection settings (DESIGN_SPEC §4.3): preset, name/API key, protocol
+        // and options, URL with its hint, the model list, thinking effort and the
+        // two actions. Every callback and draft rule below is the pre-existing
+        // one; only the visual structure changed.
+        card("provider-settings")
+            .flex_1()
+            .min_w_0()
+            .min_h_0()
+            .p(px(crate::theme::space::CARD_SM))
+            .gap(px(crate::theme::space::CARD_GAP))
             .child(
                 div()
                     .flex()
@@ -2445,37 +2302,506 @@ impl Proxy {
                     .justify_between()
                     .child(
                         div()
+                            .text_size(px(crate::theme::font::CARD_TITLE))
+                            .font_weight(FontWeight::SEMIBOLD)
+                            .child(self.t("连接设置", "Connection settings")),
+                    )
+                    .child(hint_line(self.t("修改后保存", "Save changes to apply"))),
+            )
+            .child(
+                div()
+                    .id("provider-form")
+                    .flex()
+                    .flex_col()
+                    .flex_1()
+                    .min_h_0()
+                    .overflow_y_scroll()
+                    .gap(px(crate::theme::space::CARD_GAP))
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .gap(px(crate::theme::space::SMALL))
+                            .child(field_label(self.t("供应商预设", "Provider preset")))
+                            .child(self.preset_menu()),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .gap(px(crate::theme::space::CARD_GAP))
+                            .child(
+                                div()
+                                    .flex_1()
+                                    .min_w_0()
+                                    .flex()
+                                    .flex_col()
+                                    .gap(px(crate::theme::space::SMALL))
+                                    .child(field_label(self.t("供应商名称", "Provider name")))
+                                    .child(crate::ui_components::text_input(&self.name, self.busy)),
+                            )
+                            .child(
+                                div()
+                                    .flex_1()
+                                    .min_w_0()
+                                    .flex()
+                                    .flex_col()
+                                    .gap(px(crate::theme::space::SMALL))
+                                    .child(field_label("API Key"))
+                                    .child(crate::ui_components::masked_input(&self.key, self.busy)),
+                            ),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .gap(px(crate::theme::space::SMALL))
+                            .child(field_label(self.t("上游协议", "Upstream protocol")))
+                            .child(
+                                div()
+                                    .flex()
+                                    .items_center()
+                                    .gap(px(crate::theme::space::CARD_GAP))
+                                    .child(
+                                        div().flex_1().min_w_0().child(
+                                            crate::ui_components::select(
+                                                &self.protocol_select,
+                                                self.busy,
+                                            )
+                                            .w_full()
+                                            .accessibility_label(
+                                                self.t("上游协议", "Upstream protocol"),
+                                            ),
+                                        ),
+                                    )
+                                    .child(
+                                        crate::ui_components::button(
+                                            "protocol-options",
+                                            crate::ui_components::ButtonKind::Normal,
+                                            self.t("协议选项", "Protocol options"),
+                                            self.busy,
+                                            false,
+                                        )
+                                        .on_click(cx.listener(|this, _, window, cx| {
+                                            let draft = this
+                                                .drafts
+                                                .providers
+                                                .get(&this.selected())
+                                                .cloned()
+                                                .unwrap_or_default();
+                                            this.protocol_options.load(
+                                                draft.protocol,
+                                                &draft.protocol_settings,
+                                                window,
+                                                cx,
+                                            );
+                                            this.protocol_open = true;
+                                            this.error = false;
+                                            cx.notify();
+                                        })),
+                                    ),
+                            ),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .gap(px(crate::theme::space::SMALL))
+                            .child(field_label(self.t("API 地址", "API URL")))
+                            .child(
+                                crate::ui_components::text_input(&self.url, self.busy)
+                                    .font_family(mono.clone()),
+                            )
+                            .child(hint_line(self.url_hint())),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .items_center()
+                            .justify_between()
+                            .pt(px(crate::theme::space::TIGHT))
+                            .child(
+                                div()
+                                    .font_weight(FontWeight::SEMIBOLD)
+                                    .text_size(px(crate::theme::font::BODY))
+                                    .child(self.t("模型列表", "Models")),
+                            )
+                            .child(
+                                div()
+                                    .flex()
+                                    .items_center()
+                                    .gap(px(crate::theme::space::ROW_GAP))
+                                    .child(
+                                        crate::ui_components::button(
+                                            "fetch",
+                                            crate::ui_components::ButtonKind::Outline,
+                                            self.t("获取模型", "Fetch models"),
+                                            self.busy,
+                                            false,
+                                        )
+                                        .icon(IconName::RefreshCw)
+                                        .on_click(cx.listener(|this, _, _, cx|{
+                                            this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string(),"protocol":this.protocol_payload()["protocol"],"protocol_settings":this.protocol_payload()["protocol_settings"]})],cx);
+                                        })),
+                                    )
+                                    .child(
+                                        crate::ui_components::named_icon_button(
+                                            "model-add",
+                                            IconName::Plus,
+                                            self.t("添加模型", "Add model"),
+                                            self.t("添加模型", "Add model"),
+                                            self.busy,
+                                        )
+                                        .on_click(cx.listener(|this, _, window, cx| {
+                                            this.edit(this.models.len(), true, window, cx)
+                                        })),
+                                    )
+                                    .child(
+                                        crate::ui_components::named_icon_button(
+                                            "model-remove",
+                                            IconName::Close,
+                                            self.t("删除模型", "Remove models"),
+                                            self.t("删除模型", "Remove models"),
+                                            self.busy || self.selection.rows.is_empty(),
+                                        )
+                                        .on_click(cx.listener(|this, _, window, cx| {
+                                            this.remove_models(&RemoveModels, window, cx)
+                                        })),
+                                    ),
+                            ),
+                    )
+                    .child(
+                        div()
+                            .key_context("ModelList")
+                            .track_focus(&self.table_focus)
+                            .flex_1()
+                            .min_h(px(140.))
+                            .on_action(cx.listener(Self::remove_models))
+                            .on_action(cx.listener(Self::select_models))
+                            .on_action(cx.listener(Self::edit_selected))
+                            .on_prepaint({
+                                let owner = cx.entity().downgrade();
+                                move |bounds, _, cx| {
+                                    let width = (bounds.size.width - px(2.)).max(px(240.));
+                                    let _ = owner.update(cx, |this, cx| {
+                                        if this.table_width != width {
+                                            this.table_width = width;
+                                            cx.notify();
+                                        }
+                                    });
+                                }
+                            })
+                            .child(crate::ui_components::table(&self.model_table)),
+                    )
+                    .child(hint_line(self.t(
+                        "Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑",
+                        "Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit",
+                    ))),
+            )
+            .child(
+                div()
+                    .flex_shrink_0()
+                    .flex()
+                    .items_center()
+                    .gap(px(crate::theme::space::CARD_GAP))
+                    .child(field_label(self.t("思考强度", "Thinking effort")))
+                    .child(self.effort_menu())
+                    .child(div().flex_1())
+                    .child(
+                        crate::ui_components::button(
+                            "test",
+                            crate::ui_components::ButtonKind::Outline,
+                            self.t("测试连接", "Test connection"),
+                            self.busy || self.models.is_empty(),
+                            self.busy,
+                        )
+                        .on_click(cx.listener(|this, _, _, cx| this.test(cx))),
+                    )
+                    .child(
+                        crate::ui_components::button(
+                            "save",
+                            crate::ui_components::ButtonKind::Primary,
+                            self.t("保存", "Save"),
+                            self.busy,
+                            self.busy,
+                        )
+                        .icon(IconName::Check)
+                        .on_click(cx.listener(|this, _, window, cx| this.save(&Save, window, cx))),
+                    ),
+            )
+            .into_any_element()
+    }
+    /// Right rail (DESIGN_SPEC §4.3): the global-settings card above the log
+    /// card, at the design's 300px base width. The rail itself does not scroll;
+    /// the log area inside its card does.
+    fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
+        div()
+            .w(px(crate::theme::size::RIGHT_RAIL_WIDTH))
+            .flex_shrink_0()
+            .flex()
+            .flex_col()
+            .gap(px(crate::theme::space::SECTION_GAP))
+            .child(self.global_settings_card(cx))
+            .child(self.log_card(cx))
+            .into_any_element()
+    }
+
+    /// Global settings card: the WorkBuddy sync actions, the local-relay
+    /// sub-card (status, address, port confirmation entry, live counters) and
+    /// the platform note. All callbacks are the pre-existing ones.
+    fn global_settings_card(&mut self, cx: &mut Context<Self>) -> AnyElement {
+        let (dot, text, text_color) = self.core_indicator();
+        let mono = cx.theme().mono_font_family.clone();
+        rail_card("global-settings")
+            .flex_shrink_0()
+            .child(
+                div()
+                    .text_size(px(crate::theme::font::CARD_TITLE))
+                    .font_weight(FontWeight::SEMIBOLD)
+                    .child(self.t("全局设置", "Global settings")),
+            )
+            .when(self.error && self.editing.is_none(), |this| {
+                this.child(
+                    Label::new(self.status.clone())
+                        .text_size(px(crate::theme::font::SMALL))
+                        .text_color(rgb(crate::theme::color::DANGER)),
+                )
+            })
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .gap(px(crate::theme::space::ROW_GAP))
+                    .child(
+                        crate::ui_components::button(
+                            "sync",
+                            crate::ui_components::ButtonKind::Primary,
+                            self.t("同步 WorkBuddy", "Sync WorkBuddy"),
+                            self.busy,
+                            false,
+                        )
+                        .icon(IconName::RefreshCw)
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            this.sync_open = true;
+                            cx.notify();
+                        })),
+                    )
+                    .child(
+                        crate::ui_components::button(
+                            "restore",
+                            crate::ui_components::ButtonKind::Normal,
+                            self.t("取消同步", "Unsync"),
+                            self.busy,
+                            false,
+                        )
+                        .icon(IconName::Delete)
+                        .tooltip(self.t(
+                            "移除代理同步到 WorkBuddy 的模型",
+                            "Remove proxy models synced to WorkBuddy",
+                        ))
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            this.unsync_open = true;
+                            cx.notify();
+                        })),
+                    ),
+            )
+            .child(
+                Label::new(self.t(
+                    "新增或修改模型后，旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy，再继续原会话。",
+                    "After model changes, fully quit and reopen WorkBuddy if an existing conversation reports a missing URL or key; then continue that conversation.",
+                ))
+                .text_size(px(crate::theme::font::SMALL))
+                .line_height(px(16.))
+                .text_color(rgb(crate::theme::color::TEXT_3)),
+            )
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(crate::theme::space::CARD_GAP))
+                    .p(px(crate::theme::space::CARD_SM))
+                    .rounded(px(crate::theme::radius::TABLE))
+                    .bg(rgb(crate::theme::color::BG_PAGE))
+                    .child(
+                        div()
+                            .flex()
+                            .items_center()
+                            .justify_between()
+                            .child(
+                                Label::new(self.t("本地代理", "Local relay"))
+                                    .text_size(px(crate::theme::font::BODY)),
+                            )
+                            .child(
+                                // D13: this entry used to print a hardcoded
+                                // "running" state. It reports the same trusted
+                                // core state as the status bar, rendered as the
+                                // design's dot plus label (T04).
+                                div()
+                                    .flex()
+                                    .items_center()
+                                    .gap(px(crate::theme::space::SMALL))
+                                    .child(
+                                        div()
+                                            .w(px(crate::theme::size::STATUS_DOT))
+                                            .h(px(crate::theme::size::STATUS_DOT))
+                                            .rounded_full()
+                                            .bg(rgb(dot)),
+                                    )
+                                    .child(
+                                        Label::new(text)
+                                            .text_size(px(crate::theme::font::SMALL))
+                                            .text_color(rgb(text_color)),
+                                    ),
+                            ),
+                    )
+                    .child(
+                        Label::new(self.proxy_address.clone())
+                            .font_family(mono.clone())
+                            .text_size(px(crate::theme::font::BODY))
+                            .text_color(rgb(crate::theme::color::PRIMARY_DARK)),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .items_center()
+                            .gap(px(crate::theme::space::ROW_GAP))
+                            .child(
+                                div()
+                                    .w(px(60.))
+                                    .text_size(px(crate::theme::font::LABEL))
+                                    .text_color(rgb(crate::theme::color::TEXT_3))
+                                    .child(self.t("本地端口", "Local port")),
+                            )
+                            .child(
+                                div().w(px(110.)).child(
+                                    crate::ui_components::text_input(&self.port, self.busy)
+                                        .aria_label(self.t("本地端口", "Local port")),
+                                ),
+                            )
+                            .child(
+                                crate::ui_components::named_icon_button(
+                                    "port-apply",
+                                    IconName::Check,
+                                    self.t("应用端口", "Apply port"),
+                                    self.t("应用端口", "Apply port"),
+                                    self.busy,
+                                )
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    match this
+                                        .port
+                                        .read(cx)
+                                        .value()
+                                        .parse::<u16>()
+                                        .ok()
+                                        .filter(|p| *p > 0)
+                                    {
+                                        Some(port) => {
+                                            let current = this.proxy_address.parse::<reqwest::Url>().ok().and_then(|u| u.port_or_known_default()).unwrap_or(this.cfg.port);
+                                            if port != current {
+                                                this.pending_port = Some(port);
+                                                cx.notify();
+                                            }
+                                        }
+                                        None => {
+                                            this.error = true;
+                                            this.status = this
+                                                .t(
+                                                    "请输入 1–65535 的端口号",
+                                                    "Enter a port from 1 to 65535",
+                                                )
+                                                .into();
+                                            cx.notify();
+                                        }
+                                    }
+                                })),
+                            ),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .gap(px(crate::theme::space::CARD_GAP))
+                            .children(
+                                [
+                                    self.t("供应商", "Providers"),
+                                    self.t("模型", "Models"),
+                                    self.t("请求", "Requests"),
+                                ]
+                                .into_iter()
+                                .zip(self.proxy_counts)
+                                .map(|(name, count)| {
+                                    div()
+                                        .flex_1()
+                                        .flex()
+                                        .flex_col()
+                                        .gap(px(crate::theme::space::TIGHT))
+                                        .child(
+                                            Label::new(count.to_string())
+                                                .font_weight(FontWeight::SEMIBOLD)
+                                                .text_size(px(crate::theme::font::CARD_TITLE)),
+                                        )
+                                        .child(
+                                            Label::new(name)
+                                                .text_size(px(crate::theme::font::SMALL))
+                                                .text_color(rgb(crate::theme::color::TEXT_3)),
+                                        )
+                                }),
+                            ),
+                    ),
+            )
+            .into_any_element()
+    }
+
+    /// Log card with its own scrolling text area; the clear and copy entries
+    /// keep their original callbacks and payload.
+    fn log_card(&mut self, cx: &mut Context<Self>) -> AnyElement {
+        let mono = cx.theme().mono_font_family.clone();
+        rail_card("log-panel")
+            .flex_1()
+            .min_h_0()
+            .child(
+                div()
+                    .flex_shrink_0()
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .child(
+                        div()
+                            .text_size(px(crate::theme::font::CARD_TITLE))
                             .font_weight(FontWeight::SEMIBOLD)
                             .child(self.t("日志", "Logs")),
                     )
                     .child(
                         div()
                             .flex()
-                            .gap_2()
+                            .items_center()
+                            .gap(px(crate::theme::space::SMALL))
                             .child(
-                                Button::new("clear-logs")
-                                    .small()
-                                    .ghost()
-                                    .icon(IconName::Delete)
-                                    .tooltip(self.t("清空日志", "Clear logs"))
-                                    .accessibility_label(self.t("清空日志", "Clear logs"))
-                                    .disabled(self.busy)
-                                    .on_click(cx.listener(|this, _, _, cx| {
+                                crate::ui_components::named_icon_button(
+                                    "clear-logs",
+                                    IconName::Delete,
+                                    self.t("清空日志", "Clear logs"),
+                                    self.t("清空日志", "Clear logs"),
+                                    self.busy,
+                                )
+                                .on_click(cx.listener(
+                                    |this, _, _, cx| {
                                         this.send(
                                             "clear_logs",
                                             vec![json!({"command":"clear_logs"})],
                                             cx,
                                         )
-                                    })),
+                                    },
+                                )),
                             )
                             .child(
-                                Button::new("copy-logs")
-                                    .small()
-                                    .ghost()
-                                    .icon(IconName::Copy)
-                                    .tooltip(self.t("复制日志", "Copy logs"))
-                                    .accessibility_label(self.t("复制日志", "Copy logs"))
-                                    .on_click(cx.listener(|this, _, _, cx| {
+                                crate::ui_components::named_icon_button(
+                                    "copy-logs",
+                                    IconName::Copy,
+                                    self.t("复制日志", "Copy logs"),
+                                    self.t("复制日志", "Copy logs"),
+                                    false,
+                                )
+                                .on_click(cx.listener(
+                                    |this, _, _, cx| {
                                         cx.write_to_clipboard(ClipboardItem::new_string(format!(
                                             "{}\n\n{}",
                                             this.summary, this.log_text
@@ -2483,24 +2809,21 @@ impl Proxy {
                                         this.status = this.t("日志已复制", "Logs copied").into();
                                         this.error = false;
                                         cx.notify();
-                                    })),
+                                    },
+                                )),
                             ),
                     ),
             )
             .child(
-                div()
-                    .flex_1()
-                    .min_h_0()
-                    .bg(rgb(0xf8fafc))
-                    .rounded(px(9.))
-                    .text_size(px(11.))
-                    .child(
-                        Textarea::new(&self.logs)
-                            .readonly(true)
-                            .text_size(px(11.))
-                            .line_height(px(16.))
-                            .h_full(),
-                    ),
+                div().flex_1().min_h_0().child(
+                    Textarea::new(&self.logs)
+                        .readonly(true)
+                        .bordered(false)
+                        .font_family(mono)
+                        .text_size(px(crate::theme::font::SMALL))
+                        .line_height(px(16.))
+                        .h_full(),
+                ),
             )
             .into_any_element()
     }
@@ -2510,7 +2833,10 @@ impl Proxy {
                 .child(crate::ui_components::dialog_title(
                     self.t("上游协议选项", "Upstream protocol options"),
                 ))
-                .child(self.protocol_options.render(self.zh))
+                .child(
+                    self.protocol_options
+                        .render(self.zh, cx.theme().mono_font_family.clone()),
+                )
                 .when(self.error, |this| {
                     this.child(Label::new(self.status.clone()).text_color(rgb(0xc03c45)))
                 })

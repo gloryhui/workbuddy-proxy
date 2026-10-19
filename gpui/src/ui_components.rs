@@ -37,6 +37,11 @@ pub enum ButtonKind {
 
 /// Standard labelled button. A busy button is both disabled and loading, so a
 /// second click cannot reach the caller's handler while work is in flight.
+///
+/// The height and horizontal padding are absolute pixels from DESIGN_SPEC §3
+/// ("按钮通用：高 32，内边距 0 14"). The Kit's `small()` shorthand is
+/// rem-relative, and this profile installs a 13px base font size, which made
+/// every labelled button render ~19.5px tall instead of the specified 32px.
 pub fn button(
     id: impl Into<ElementId>,
     kind: ButtonKind,
@@ -46,6 +51,8 @@ pub fn button(
 ) -> Button {
     let button = Button::new(id)
         .small()
+        .h(px(size::BUTTON_HEIGHT))
+        .px(px(size::BUTTON_PADDING_X))
         .label(label)
         .disabled(disabled || busy)
         .loading(busy);
