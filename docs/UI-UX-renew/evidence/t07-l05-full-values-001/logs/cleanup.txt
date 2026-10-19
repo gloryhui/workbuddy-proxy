@@ -1,0 +1,44 @@
+=== cleanup 2026-10-19 21:21:55 +0800
+--- processes before
+66120 /Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/bin/core-current --headless --config-dir /Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/run/config --port 64679
+--- core stop via control API
+stop -> b'OK'
+--- processes after stop
+(none)
+
+--- sizes before removal
+113M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001
+ 22M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/src-pre-t07
+ 46M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/crops
+ 36M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/bin
+9.0M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/run
+ 88K	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/logs
+--- system disk before
+/dev/disk3s3s1   460Gi    13Gi   200Gi     6%    484k  2.1G    0%   /
+--- removal at 2026-10-19 21:22:04
+removing (this task's own build tree and scratch crops, both idle):
+ 22M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/src-pre-t07
+ 46M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/crops
+removed
+--- tmp dir tree after removal
+total 0
+drwxr-xr-x@  7 shile  staff  224 Oct 19 21:22 .
+drwxr-xr-x@  3 shile  staff   96 Oct 19 20:19 ..
+drwxr-xr-x@  7 shile  staff  224 Oct 19 20:32 bin
+drwxr-xr-x@ 16 shile  staff  512 Oct 19 21:19 logs
+drwxr-xr-x@  4 shile  staff  128 Oct 19 20:19 ref
+drwxr-xr-x@ 30 shile  staff  960 Oct 19 20:36 run
+drwxr-xr-x@  2 shile  staff   64 Oct 19 20:32 tmp
+--- TMPDIR scratch dir contents (should be empty)
+total 0
+drwxr-xr-x@ 2 shile  staff   64 Oct 19 20:32 .
+drwxr-xr-x@ 7 shile  staff  224 Oct 19 21:22 ..
+--- sizes after removal
+ 45M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001
+ 36M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/bin
+9.0M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/run
+ 88K	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/logs
+--- system disk after
+/dev/disk3s3s1   460Gi    13Gi   200Gi     6%    484k  2.1G    0%   /
+--- evidence dir size
+ 27M	/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/docs/UI-UX-renew/evidence/t07-l05-full-values-001

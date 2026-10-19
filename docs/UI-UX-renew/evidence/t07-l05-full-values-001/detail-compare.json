@@ -1,0 +1,1361 @@
+{
+ "rows": [
+  {
+   "name": "r01-complete-default-zero",
+   "id": 1,
+   "tag": "r01-complete-default-zero",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "否",
+     "pre": "否",
+     "current": "否",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0001-r01",
+     "pre": "t07l05-0001-r01",
+     "current": "t07l05-0001-r01",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 00:00:05",
+     "pre": "10-19 00:00:05",
+     "current": "10-19 00:00:05",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "Provider 01 · Route 01",
+     "pre": "Provider 01 · Route 01",
+     "current": "Provider 01 · Route 01",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-01",
+     "pre": "model-01",
+     "current": "model-01",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-01",
+     "pre": "model-01",
+     "current": "model-01",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-01",
+     "pre": "model-01",
+     "current": "model-01",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP 200 · 已完成",
+     "pre": "HTTP 200 · 已完成",
+     "current": "HTTP 200 · 已完成",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "完整 · —",
+     "pre": "完整 · —",
+     "current": "完整 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓1200 ↑300 R0 W0 Σ1500",
+     "pre": "↓1200 ↑300 R0 W0 Σ1500",
+     "current": "↓1200 ↑300 R0 W0 Σ1500",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+     "pre": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+     "current": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "0.0%",
+     "pre": "0.0%",
+     "current": "0.0%",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "600.0",
+     "pre": "600.0",
+     "current": "600.0",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "CNY ¥0",
+     "pre": "CNY ¥0",
+     "current": "CNY ¥0",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "本次单价",
+    "记录时间"
+   ],
+   "extra_current": [
+    "本次单价",
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r02-priced-streaming",
+   "id": 2,
+   "tag": "r02-priced-streaming",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "是",
+     "pre": "是",
+     "current": "是",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0002-r02",
+     "pre": "t07l05-0002-r02",
+     "current": "t07l05-0002-r02",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 02:15:00",
+     "pre": "10-19 02:15:00",
+     "current": "10-19 02:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "Provider 02 · Route 02",
+     "pre": "Provider 02 · Route 02",
+     "current": "Provider 02 · Route 02",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-02",
+     "pre": "model-02",
+     "current": "model-02",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-02",
+     "pre": "model-02",
+     "current": "model-02",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-02",
+     "pre": "model-02",
+     "current": "model-02",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP 200 · 已完成",
+     "pre": "HTTP 200 · 已完成",
+     "current": "HTTP 200 · 已完成",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "完整 · —",
+     "pre": "完整 · —",
+     "current": "完整 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓1000 ↑500 R600 W0 Σ1500",
+     "pre": "↓1000 ↑500 R600 W0 Σ1500",
+     "current": "↓1000 ↑500 R600 W0 Σ1500",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 2.50 s · 首内容 300 ms · TTFB 200 ms",
+     "pre": "总 2.50 s · 首内容 300 ms · TTFB 200 ms",
+     "current": "总 2.50 s · 首内容 300 ms · TTFB 200 ms",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "60.0%",
+     "pre": "60.0%",
+     "current": "60.0%",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "227.3",
+     "pre": "227.3",
+     "current": "227.3",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "CNY ¥1.2345",
+     "pre": "CNY ¥1.2345",
+     "current": "CNY ¥1.2345",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "本次单价",
+    "记录时间"
+   ],
+   "extra_current": [
+    "本次单价",
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r05-zero-usage",
+   "id": 5,
+   "tag": "r05-zero-usage",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "否",
+     "pre": "否",
+     "current": "否",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0005-r05",
+     "pre": "t07l05-0005-r05",
+     "current": "t07l05-0005-r05",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 05:15:00",
+     "pre": "10-19 05:15:00",
+     "current": "10-19 05:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "Provider 05 · Route 05",
+     "pre": "Provider 05 · Route 05",
+     "current": "Provider 05 · Route 05",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-05",
+     "pre": "model-05",
+     "current": "model-05",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-05",
+     "pre": "model-05",
+     "current": "model-05",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-05",
+     "pre": "model-05",
+     "current": "model-05",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP 200 · 已完成",
+     "pre": "HTTP 200 · 已完成",
+     "current": "HTTP 200 · 已完成",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "完整 · —",
+     "pre": "完整 · —",
+     "current": "完整 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓0 ↑0 R0 W0 Σ0",
+     "pre": "↓0 ↑0 R0 W0 Σ0",
+     "current": "↓0 ↑0 R0 W0 Σ0",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 900 ms · 首内容 200 ms · TTFB 100 ms",
+     "pre": "总 900 ms · 首内容 200 ms · TTFB 100 ms",
+     "current": "总 900 ms · 首内容 200 ms · TTFB 100 ms",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "0.0",
+     "pre": "0.0",
+     "current": "0.0",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "CNY ¥0",
+     "pre": "CNY ¥0",
+     "current": "CNY ¥0",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "本次单价",
+    "记录时间"
+   ],
+   "extra_current": [
+    "本次单价",
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r06-partial-usage",
+   "id": 6,
+   "tag": "r06-partial-usage",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "是",
+     "pre": "是",
+     "current": "是",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0006-r06",
+     "pre": "t07l05-0006-r06",
+     "current": "t07l05-0006-r06",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 06:15:00",
+     "pre": "10-19 06:15:00",
+     "current": "10-19 06:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "Provider 06 · Route 06",
+     "pre": "Provider 06 · Route 06",
+     "current": "Provider 06 · Route 06",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-06",
+     "pre": "model-06",
+     "current": "model-06",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-06",
+     "pre": "model-06",
+     "current": "model-06",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-06",
+     "pre": "model-06",
+     "current": "model-06",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP 200 · 已完成",
+     "pre": "HTTP 200 · 已完成",
+     "current": "HTTP 200 · 已完成",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "部分 · —",
+     "pre": "部分 · —",
+     "current": "部分 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓1000 ↑— R— W— Σ—",
+     "pre": "↓1000 ↑— R— W— Σ—",
+     "current": "↓1000 ↑— R— W— Σ—",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 1.20 s · 首内容 400 ms · TTFB 300 ms",
+     "pre": "总 1.20 s · 首内容 400 ms · TTFB 300 ms",
+     "current": "总 1.20 s · 首内容 400 ms · TTFB 300 ms",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "用量不全",
+     "pre": "用量不全",
+     "current": "用量不全",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "本次单价",
+    "记录时间"
+   ],
+   "extra_current": [
+    "本次单价",
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r07-failed-unpriced",
+   "id": 7,
+   "tag": "r07-failed-unpriced",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "否",
+     "pre": "否",
+     "current": "否",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0007-r07",
+     "pre": "t07l05-0007-r07",
+     "current": "t07l05-0007-r07",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 07:15:00",
+     "pre": "10-19 07:15:00",
+     "current": "10-19 07:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "Provider 07 · Route 07",
+     "pre": "Provider 07 · Route 07",
+     "current": "Provider 07 · Route 07",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-07",
+     "pre": "model-07",
+     "current": "model-07",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-07",
+     "pre": "model-07",
+     "current": "model-07",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-07",
+     "pre": "model-07",
+     "current": "model-07",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP 429 · 上游拒绝",
+     "pre": "HTTP 429 · 上游拒绝",
+     "current": "HTTP 429 · 上游拒绝",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "缺失 · —",
+     "pre": "缺失 · —",
+     "current": "缺失 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓— ↑— R— W— Σ—",
+     "pre": "↓— ↑— R— W— Σ—",
+     "current": "↓— ↑— R— W— Σ—",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 800 ms · 首内容 300 ms · TTFB 150 ms",
+     "pre": "总 800 ms · 首内容 300 ms · TTFB 150 ms",
+     "current": "总 800 ms · 首内容 300 ms · TTFB 150 ms",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "未定价",
+     "pre": "未定价",
+     "current": "未定价",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "记录时间"
+   ],
+   "extra_current": [
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r09-in-flight",
+   "id": 9,
+   "tag": "r09-in-flight",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "是",
+     "pre": "是",
+     "current": "是",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0009-r09",
+     "pre": "t07l05-0009-r09",
+     "current": "t07l05-0009-r09",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 09:15:00",
+     "pre": "10-19 09:15:00",
+     "current": "10-19 09:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "Provider 09 · Route 09",
+     "pre": "Provider 09 · Route 09",
+     "current": "Provider 09 · Route 09",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-09",
+     "pre": "model-09",
+     "current": "model-09",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-09",
+     "pre": "model-09",
+     "current": "model-09",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-09",
+     "pre": "model-09",
+     "current": "model-09",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP — · 进行中",
+     "pre": "HTTP — · 进行中",
+     "current": "HTTP — · 进行中",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "缺失 · —",
+     "pre": "缺失 · —",
+     "current": "缺失 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓— ↑— R— W— Σ—",
+     "pre": "↓— ↑— R— W— Σ—",
+     "current": "↓— ↑— R— W— Σ—",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 — · 首内容 — · TTFB —",
+     "pre": "总 — · 首内容 — · TTFB —",
+     "current": "总 — · 首内容 — · TTFB —",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "未定价",
+     "pre": "未定价",
+     "current": "未定价",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "记录时间"
+   ],
+   "extra_current": [
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r10-cancelled",
+   "id": 10,
+   "tag": "r10-cancelled-unsupported",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "是",
+     "pre": "是",
+     "current": "是",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0010-r10",
+     "pre": "t07l05-0010-r10",
+     "current": "t07l05-0010-r10",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 10:15:00",
+     "pre": "10-19 10:15:00",
+     "current": "10-19 10:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "Provider 10 · Route 10",
+     "pre": "Provider 10 · Route 10",
+     "current": "Provider 10 · Route 10",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-10",
+     "pre": "model-10",
+     "current": "model-10",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-10",
+     "pre": "model-10",
+     "current": "model-10",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-10",
+     "pre": "model-10",
+     "current": "model-10",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP 499 · 已取消",
+     "pre": "HTTP 499 · 已取消",
+     "current": "HTTP 499 · 已取消",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "无效 · —",
+     "pre": "无效 · —",
+     "current": "无效 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓— ↑— R— W— Σ—",
+     "pre": "↓— ↑— R— W— Σ—",
+     "current": "↓— ↑— R— W— Σ—",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 700 ms · 首内容 300 ms · TTFB 200 ms",
+     "pre": "总 700 ms · 首内容 300 ms · TTFB 200 ms",
+     "current": "总 700 ms · 首内容 300 ms · TTFB 200 ms",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "本次价格快照按普通输入、缓存读取或缓存写入分别计费，但本次调用的用量拆分或缓存单价不足/不兼容，无法可靠估算费用。这不代表请求失败，也不代表费用为 0。修改当前价格不会重算历史明细。",
+     "pre": "本次价格快照按普通输入、缓存读取或缓存写入分别计费，但本次调用的用量拆分或缓存单价不足/不兼容，无法可靠估算费用。这不代表请求失败，也不代表费用为 0。修改当前价格不会重算历史明细。",
+     "current": "本次价格快照按普通输入、缓存读取或缓存写入分别计费，但本次调用的用量拆分或缓存单价不足/不兼容，无法可靠估算费用。这不代表请求失败，也不代表费用为 0。修改当前价格不会重算历史明细。",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "本次单价",
+    "记录时间"
+   ],
+   "extra_current": [
+    "本次单价",
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r11-import-builtin",
+   "id": 11,
+   "tag": "r11-import-builtin-credit",
+   "values": {
+    "来源": {
+     "expected": "内置",
+     "pre": "内置",
+     "current": "内置",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "WorkBuddy JSONL",
+     "pre": "WorkBuddy JSONL",
+     "current": "WorkBuddy JSONL",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "消息记录时间",
+     "pre": "消息记录时间",
+     "current": "消息记录时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "1.14",
+     "pre": "1.14",
+     "current": "1.14",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0011-r11",
+     "pre": "t07l05-0011-r11",
+     "current": "t07l05-0011-r11",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 11:15:00",
+     "pre": "10-19 11:15:00",
+     "current": "10-19 11:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "WorkBuddy 内置 · Route 11",
+     "pre": "WorkBuddy 内置 · Route 11",
+     "current": "WorkBuddy 内置 · Route 11",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "wb-model-alpha",
+     "pre": "wb-model-alpha",
+     "current": "wb-model-alpha",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "wb-model-alpha",
+     "pre": "wb-model-alpha",
+     "current": "wb-model-alpha",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "wb-model-alpha",
+     "pre": "wb-model-alpha",
+     "current": "wb-model-alpha",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP — · 已记录",
+     "pre": "HTTP — · 已记录",
+     "current": "HTTP — · 已记录",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "完整 · —",
+     "pre": "完整 · —",
+     "current": "完整 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓2000 ↑1000 R500 W0 Σ3000",
+     "pre": "↓2000 ↑1000 R500 W0 Σ3000",
+     "current": "↓2000 ↑1000 R500 W0 Σ3000",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 — · 首内容 — · TTFB —",
+     "pre": "总 — · 首内容 — · TTFB —",
+     "current": "总 — · 首内容 — · TTFB —",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "25.0%",
+     "pre": "25.0%",
+     "current": "25.0%",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "未定价",
+     "pre": "未定价",
+     "current": "未定价",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "记录时间"
+   ],
+   "extra_current": [
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r12-import-custom",
+   "id": 12,
+   "tag": "r12-import-custom-credit-zero",
+   "values": {
+    "来源": {
+     "expected": "自定义",
+     "pre": "自定义",
+     "current": "自定义",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "WorkBuddy JSONL",
+     "pre": "WorkBuddy JSONL",
+     "current": "WorkBuddy JSONL",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "消息记录时间",
+     "pre": "消息记录时间",
+     "current": "消息记录时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "0",
+     "pre": "0",
+     "current": "0",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0012-r12",
+     "pre": "t07l05-0012-r12",
+     "current": "t07l05-0012-r12",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 12:15:00",
+     "pre": "10-19 12:15:00",
+     "current": "10-19 12:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "WorkBuddy 自定义 · Route 12",
+     "pre": "WorkBuddy 自定义 · Route 12",
+     "current": "WorkBuddy 自定义 · Route 12",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "wb-model-beta",
+     "pre": "wb-model-beta",
+     "current": "wb-model-beta",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "wb-model-beta",
+     "pre": "wb-model-beta",
+     "current": "wb-model-beta",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "wb-model-beta",
+     "pre": "wb-model-beta",
+     "current": "wb-model-beta",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP — · 已记录",
+     "pre": "HTTP — · 已记录",
+     "current": "HTTP — · 已记录",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "部分 · —",
+     "pre": "部分 · —",
+     "current": "部分 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓300 ↑— R— W— Σ—",
+     "pre": "↓300 ↑— R— W— Σ—",
+     "current": "↓300 ↑— R— W— Σ—",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 — · 首内容 — · TTFB —",
+     "pre": "总 — · 首内容 — · TTFB —",
+     "current": "总 — · 首内容 — · TTFB —",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "未定价",
+     "pre": "未定价",
+     "current": "未定价",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "记录时间"
+   ],
+   "extra_current": [
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "name": "r16-legacy-long-names",
+   "id": 16,
+   "tag": "r16-legacy-long-names",
+   "values": {
+    "来源": {
+     "expected": "代理",
+     "pre": "代理",
+     "current": "代理",
+     "verdict": "PASS"
+    },
+    "采集方式": {
+     "expected": "代理采集",
+     "pre": "代理采集",
+     "current": "代理采集",
+     "verdict": "PASS"
+    },
+    "时间依据": {
+     "expected": "请求开始时间",
+     "pre": "请求开始时间",
+     "current": "请求开始时间",
+     "verdict": "PASS"
+    },
+    "总量口径": {
+     "expected": "记录报告值",
+     "pre": "记录报告值",
+     "current": "记录报告值",
+     "verdict": "PASS"
+    },
+    "WorkBuddy 点数": {
+     "expected": "—",
+     "pre": "—",
+     "current": "—",
+     "verdict": "PASS"
+    },
+    "流式响应": {
+     "expected": "是",
+     "pre": "是",
+     "current": "是",
+     "verdict": "PASS"
+    },
+    "请求标识": {
+     "expected": "t07l05-0016-r16",
+     "pre": "t07l05-0016-r16",
+     "current": "t07l05-0016-r16",
+     "verdict": "PASS"
+    },
+    "时间": {
+     "expected": "10-19 16:15:00",
+     "pre": "10-19 16:15:00",
+     "current": "10-19 16:15:00",
+     "verdict": "PASS"
+    },
+    "供应商 / 路由": {
+     "expected": "供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 · Route 16",
+     "pre": "供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 · Route 16",
+     "current": "供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 · Route 16",
+     "verdict": "PASS"
+    },
+    "请求模型": {
+     "expected": "model-extremely-long-name-for-truncation-check-0123456789",
+     "pre": "model-extremely-long-name-for-truncation-check-0123456789",
+     "current": "model-extremely-long-name-for-truncation-check-0123456789",
+     "verdict": "PASS"
+    },
+    "上游模型": {
+     "expected": "model-extremely-long-name-for-truncation-check-0123456789",
+     "pre": "model-extremely-long-name-for-truncation-check-0123456789",
+     "current": "model-extremely-long-name-for-truncation-check-0123456789",
+     "verdict": "PASS"
+    },
+    "上游协议": {
+     "expected": "OpenAI Chat Completions",
+     "pre": "OpenAI Chat Completions",
+     "current": "OpenAI Chat Completions",
+     "verdict": "PASS"
+    },
+    "响应声明模型": {
+     "expected": "model-extremely-long-name-for-truncation-check-0123456789",
+     "pre": "model-extremely-long-name-for-truncation-check-0123456789",
+     "current": "model-extremely-long-name-for-truncation-check-0123456789",
+     "verdict": "PASS"
+    },
+    "状态": {
+     "expected": "HTTP 200 · 已完成",
+     "pre": "HTTP 200 · 已完成",
+     "current": "HTTP 200 · 已完成",
+     "verdict": "PASS"
+    },
+    "用量": {
+     "expected": "完整 · —",
+     "pre": "完整 · —",
+     "current": "完整 · —",
+     "verdict": "PASS"
+    },
+    "Token": {
+     "expected": "↓999 ↑1 R500 W499 Σ1000",
+     "pre": "↓999 ↑1 R500 W499 Σ1000",
+     "current": "↓999 ↑1 R500 W499 Σ1000",
+     "verdict": "PASS"
+    },
+    "性能": {
+     "expected": "总 2.00 s · 首内容 300 ms · TTFB 100 ms",
+     "pre": "总 2.00 s · 首内容 300 ms · TTFB 100 ms",
+     "current": "总 2.00 s · 首内容 300 ms · TTFB 100 ms",
+     "verdict": "PASS"
+    },
+    "缓存命中率": {
+     "expected": "50.1%",
+     "pre": "50.1%",
+     "current": "50.1%",
+     "verdict": "PASS"
+    },
+    "tok/s": {
+     "expected": "0.6",
+     "pre": "0.6",
+     "current": "0.6",
+     "verdict": "PASS"
+    },
+    "估算费用": {
+     "expected": "历史金额（来源不明）",
+     "pre": "历史金额（来源不明）",
+     "current": "历史金额（来源不明）",
+     "verdict": "PASS"
+    }
+   },
+   "extra_pre": [
+    "本次单价",
+    "记录时间"
+   ],
+   "extra_current": [
+    "本次单价",
+    "记录时间"
+   ],
+   "verdict": "PASS"
+  }
+ ],
+ "summary": {
+  "rows": 10,
+  "passed": 10,
+  "fields": 20
+ }
+}

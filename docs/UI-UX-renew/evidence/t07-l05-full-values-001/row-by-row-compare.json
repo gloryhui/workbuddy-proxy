@@ -1,0 +1,4351 @@
+{
+ "fixture": "t07-l05-full-values-001",
+ "baseline_commit": "796fcac86c4acc26d0b5fb51873b3a5de67414b5",
+ "current_commit": "f39096ea1575958622802c151c7197f106d59f92",
+ "dataset": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/run/config/usage.sqlite3",
+ "rows": [
+  {
+   "id": 1,
+   "tag": "r01-complete-default-zero",
+   "request_id": "t07l05-0001-r01",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 00:00:05",
+     "pre": {
+      "texts": [
+       "10-19 00:00:05"
+      ],
+      "chosen": "10-19 00:00:05",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 00:00:05"
+      ],
+      "chosen": "10-19 00:00:05",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 01",
+     "pre": {
+      "texts": [
+       "Provider01"
+      ],
+      "chosen": "Provider01",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider01"
+      ],
+      "chosen": "Provider01",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-01",
+     "pre": {
+      "texts": [
+       "LO-lapow"
+      ],
+      "chosen": "LO-lapow",
+      "match": null
+     },
+     "current": {
+      "texts": [
+       "model-01",
+       "LO-lapou"
+      ],
+      "chosen": "model-01",
+      "match": "exact"
+     },
+     "verdict": "ONE_SIDE_UNREAD"
+    },
+    "total_tokens": {
+     "expected": "1500",
+     "pre": {
+      "texts": [
+       "1500"
+      ],
+      "chosen": "1500",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1500|益入1200|金出200",
+       "1500"
+      ],
+      "chosen": "1500|益入1200|金出200",
+      "match": "contains"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "1200",
+     "pre": {
+      "texts": [
+       "1200"
+      ],
+      "chosen": "1200",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1200"
+      ],
+      "chosen": "1200",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "300",
+     "pre": {
+      "texts": [
+       "300"
+      ],
+      "chosen": "300",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "300"
+      ],
+      "chosen": "300",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "0.0%",
+     "pre": {
+      "texts": [
+       "0.0%"
+      ],
+      "chosen": "0.0%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0.0%"
+      ],
+      "chosen": "0.0%",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "¥0",
+     "pre": {
+      "texts": [
+       "¥0"
+      ],
+      "chosen": "¥0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "KO",
+       "¥0"
+      ],
+      "chosen": "¥0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "500 ms",
+     "pre": {
+      "texts": [
+       "500 ms"
+      ],
+      "chosen": "500 ms",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "500 ms",
+       "500ms"
+      ],
+      "chosen": "500 ms",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "600.0",
+     "pre": {
+      "texts": [
+       "600.0"
+      ],
+      "chosen": "600.0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "600.0"
+      ],
+      "chosen": "600.0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200•完成",
+       "200・完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0001-.."
+    ]
+   },
+   "verdict": "PASS_WITH_OCR_NOTES"
+  },
+  {
+   "id": 2,
+   "tag": "r02-priced-streaming",
+   "request_id": "t07l05-0002-r02",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 02:15:00",
+     "pre": {
+      "texts": [
+       "10-19 02:15:00"
+      ],
+      "chosen": "10-19 02:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 02:15:00"
+      ],
+      "chosen": "10-19 02:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 02",
+     "pre": {
+      "texts": [
+       "Provider02"
+      ],
+      "chosen": "Provider02",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider02"
+      ],
+      "chosen": "Provider02",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-02",
+     "pre": {
+      "texts": [
+       "model-02"
+      ],
+      "chosen": "model-02",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-02",
+       "ZO-lapow"
+      ],
+      "chosen": "model-02",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "1500",
+     "pre": {
+      "texts": [
+       "1500"
+      ],
+      "chosen": "1500",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1500",
+       "1500"
+      ],
+      "chosen": "1500",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "1000",
+     "pre": {
+      "texts": [
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1000",
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "500",
+     "pre": {
+      "texts": [
+       "500"
+      ],
+      "chosen": "500",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "500",
+       "500"
+      ],
+      "chosen": "500",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "600",
+     "pre": {
+      "texts": [
+       "600"
+      ],
+      "chosen": "600",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "600",
+       "600"
+      ],
+      "chosen": "600",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "60.0%",
+     "pre": {
+      "texts": [
+       "60.0%"
+      ],
+      "chosen": "60.0%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "60.0%",
+       "60.0%"
+      ],
+      "chosen": "60.0%",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "¥1.2345",
+     "pre": {
+      "texts": [
+       "¥1,2345"
+      ],
+      "chosen": "¥1,2345",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "¥1.2345",
+       "¥1.2345"
+      ],
+      "chosen": "¥1.2345",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "-"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "2.50 s",
+     "pre": {
+      "texts": [
+       "2.50s"
+      ],
+      "chosen": "2.50s",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "2.50s"
+      ],
+      "chosen": "2.50s",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "227.3",
+     "pre": {
+      "texts": [
+       "227.3"
+      ],
+      "chosen": "227.3",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "227.3"
+      ],
+      "chosen": "227.3",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200•完成",
+       "200・完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0002-.."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 3,
+   "tag": "r03-priced-usd-full-hit",
+   "request_id": "t07l05-0003-r03",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 03:15:00",
+     "pre": {
+      "texts": [
+       "10-19 03:15:00"
+      ],
+      "chosen": "10-19 03:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 03:15:00"
+      ],
+      "chosen": "10-19 03:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 03",
+     "pre": {
+      "texts": [
+       "Provider03"
+      ],
+      "chosen": "Provider03",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider03"
+      ],
+      "chosen": "Provider03",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-03",
+     "pre": {
+      "texts": [
+       "model-03"
+      ],
+      "chosen": "model-03",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-03"
+      ],
+      "chosen": "model-03",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "1000",
+     "pre": {
+      "texts": [
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1000",
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "800",
+     "pre": {
+      "texts": [
+       "800"
+      ],
+      "chosen": "800",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "800",
+       "800"
+      ],
+      "chosen": "800",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "200",
+     "pre": {
+      "texts": [
+       "200"
+      ],
+      "chosen": "200",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200",
+       "200"
+      ],
+      "chosen": "200",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "800",
+     "pre": {
+      "texts": [
+       "800"
+      ],
+      "chosen": "800",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "800",
+       "800"
+      ],
+      "chosen": "800",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "100.0%",
+     "pre": {
+      "texts": [
+       "100.0%"
+      ],
+      "chosen": "100.0%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "100.0%",
+       "100.0%"
+      ],
+      "chosen": "100.0%",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "$0.12345",
+     "pre": {
+      "texts": [
+       "$0.12345"
+      ],
+      "chosen": "$0.12345",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "$0.12345"
+      ],
+      "chosen": "$0.12345",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "1.00 s",
+     "pre": {
+      "texts": [
+       "1.00 s"
+      ],
+      "chosen": "1.00 s",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1.00s"
+      ],
+      "chosen": "1.00s",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "200.0",
+     "pre": {
+      "texts": [
+       "200.0"
+      ],
+      "chosen": "200.0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200.0"
+      ],
+      "chosen": "200.0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200・完成"
+      ],
+      "chosen": "200・完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0003-..."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 4,
+   "tag": "r04-tiny-amount-cache-write",
+   "request_id": "t07l05-0004-r04",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 04:15:00",
+     "pre": {
+      "texts": [
+       "10-19 04:15:00"
+      ],
+      "chosen": "10-19 04:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 04:15:00"
+      ],
+      "chosen": "10-19 04:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 04",
+     "pre": {
+      "texts": [
+       "Provider04"
+      ],
+      "chosen": "Provider04",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider04"
+      ],
+      "chosen": "Provider04",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-04",
+     "pre": {
+      "texts": [
+       "to-lapow"
+      ],
+      "chosen": "to-lapow",
+      "match": null
+     },
+     "current": {
+      "texts": [
+       "to-lapow"
+      ],
+      "chosen": "to-lapow",
+      "match": null
+     },
+     "verdict": "OCR_LIMITED"
+    },
+    "total_tokens": {
+     "expected": "15",
+     "pre": {
+      "texts": [
+       "15"
+      ],
+      "chosen": "15",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "15",
+       "15"
+      ],
+      "chosen": "15",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "10",
+     "pre": {
+      "texts": [
+       "10"
+      ],
+      "chosen": "10",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10",
+       "10"
+      ],
+      "chosen": "10",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "5",
+     "pre": {
+      "texts": [
+       "5"
+      ],
+      "chosen": "5",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "5",
+       "5"
+      ],
+      "chosen": "5",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "5",
+     "pre": {
+      "texts": [
+       "5"
+      ],
+      "chosen": "5",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "5",
+       "5"
+      ],
+      "chosen": "5",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "50.0%",
+     "pre": {
+      "texts": [
+       "50.0%"
+      ],
+      "chosen": "50.0%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "50.0%ー",
+       "50.0%"
+      ],
+      "chosen": "50.0%ー",
+      "match": "contains"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "¥<0.0001",
+     "pre": {
+      "texts": [
+       "¥<0.0001"
+      ],
+      "chosen": "¥<0.0001",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "¥<0.0001"
+      ],
+      "chosen": "¥<0.0001",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "100 ms",
+     "pre": {
+      "texts": [
+       "100ms"
+      ],
+      "chosen": "100ms",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "100 ms",
+       "100ms"
+      ],
+      "chosen": "100 ms",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "50.0",
+     "pre": {
+      "texts": [
+       "50.0"
+      ],
+      "chosen": "50.0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "50.0"
+      ],
+      "chosen": "50.0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200•完成",
+       "200・完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0004-..."
+    ]
+   },
+   "verdict": "PASS_WITH_OCR_NOTES"
+  },
+  {
+   "id": 5,
+   "tag": "r05-zero-usage",
+   "request_id": "t07l05-0005-r05",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 05:15:00",
+     "pre": {
+      "texts": [
+       "10-19 05:15:00"
+      ],
+      "chosen": "10-19 05:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 05:15:00"
+      ],
+      "chosen": "10-19 05:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 05",
+     "pre": {
+      "texts": [
+       "Provider05"
+      ],
+      "chosen": "Provider05",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider05"
+      ],
+      "chosen": "Provider05",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-05",
+     "pre": {
+      "texts": [
+       "model-05"
+      ],
+      "chosen": "model-05",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-05"
+      ],
+      "chosen": "model-05",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "O"
+      ],
+      "chosen": "输入0｜输出0｜緩存读01总 Token O｜命中率一",
+      "match": "contains"
+     },
+     "current": {
+      "texts": [
+       "0",
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0",
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "01"
+      ],
+      "chosen": "01",
+      "match": "contains"
+     },
+     "current": {
+      "texts": [
+       "0",
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "¥0",
+     "pre": {
+      "texts": [
+       "¥0"
+      ],
+      "chosen": "¥0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "¥0"
+      ],
+      "chosen": "¥0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "900 ms",
+     "pre": {
+      "texts": [
+       "900 ms",
+       "900ms"
+      ],
+      "chosen": "900 ms",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "900ms",
+       "900 ms"
+      ],
+      "chosen": "900ms",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "0.0",
+     "pre": {
+      "texts": [
+       "0.0"
+      ],
+      "chosen": "0.0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0.0"
+      ],
+      "chosen": "0.0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200・完成",
+       "200•完成"
+      ],
+      "chosen": "200・完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0005-.."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 6,
+   "tag": "r06-partial-usage",
+   "request_id": "t07l05-0006-r06",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 06:15:00",
+     "pre": {
+      "texts": [
+       "10-19 06:15:00"
+      ],
+      "chosen": "10-19 06:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 06:15:00"
+      ],
+      "chosen": "10-19 06:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 06",
+     "pre": {
+      "texts": [
+       "Provider06"
+      ],
+      "chosen": "Provider06",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider06"
+      ],
+      "chosen": "Provider06",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-06",
+     "pre": {
+      "texts": [
+       "model-06",
+       "90-lapow"
+      ],
+      "chosen": "model-06",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "90-lapow",
+       "model-06"
+      ],
+      "chosen": "model-06",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "一",
+       "ー"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "1000",
+     "pre": {
+      "texts": [
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1000",
+       "1000",
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "浹一",
+       "浹一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "一",
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "用量不全",
+     "pre": {
+      "texts": [
+       "用量不全"
+      ],
+      "chosen": "用量不全",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "用量不全"
+      ],
+      "chosen": "用量不全",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "1.20 s",
+     "pre": {
+      "texts": [
+       "1.20 s",
+       "1.20s"
+      ],
+      "chosen": "1.20 s",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1.20s"
+      ],
+      "chosen": "1.20s",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200・完成"
+      ],
+      "chosen": "200・完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200・完成",
+       "200•完成"
+      ],
+      "chosen": "200・完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0006-.."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 7,
+   "tag": "r07-failed-unpriced",
+   "request_id": "t07l05-0007-r07",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 07:15:00",
+     "pre": {
+      "texts": [
+       "10-19 07:15:00"
+      ],
+      "chosen": "10-19 07:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 07:15:00"
+      ],
+      "chosen": "10-19 07:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 07",
+     "pre": {
+      "texts": [
+       "Provider07"
+      ],
+      "chosen": "Provider07",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider07"
+      ],
+      "chosen": "Provider07",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-07",
+     "pre": {
+      "texts": [
+       "model-07"
+      ],
+      "chosen": "model-07",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-07"
+      ],
+      "chosen": "model-07",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "谏一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "未定价",
+     "pre": {
+      "texts": [
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "未定价",
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "ー"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "800 ms",
+     "pre": {
+      "texts": [
+       "800 ms"
+      ],
+      "chosen": "800 ms",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "800 ms"
+      ],
+      "chosen": "800 ms",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "429 · 失败",
+     "pre": {
+      "texts": [
+       "429・失敗"
+      ],
+      "chosen": "429・失敗",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "429•失敗",
+       "429・失敗"
+      ],
+      "chosen": "429•失敗",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.",
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0007-.."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 8,
+   "tag": "r08-failed-not-sent",
+   "request_id": "t07l05-0008-r08",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 08:15:00",
+     "pre": {
+      "texts": [
+       "10-19 08:15:00"
+      ],
+      "chosen": "10-19 08:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 08:15:00"
+      ],
+      "chosen": "10-19 08:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 08",
+     "pre": {
+      "texts": [
+       "Provider08"
+      ],
+      "chosen": "Provider08",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider08"
+      ],
+      "chosen": "Provider08",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-08",
+     "pre": {
+      "texts": [
+       "80-lapow",
+       "model-08"
+      ],
+      "chosen": "model-08",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-08"
+      ],
+      "chosen": "model-08",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "浹一"
+      ],
+      "chosen": "浹一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "¥0",
+     "pre": {
+      "texts": [
+       "¥0"
+      ],
+      "chosen": "¥0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "¥0"
+      ],
+      "chosen": "¥0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "300 ms",
+     "pre": {
+      "texts": [
+       "300ms"
+      ],
+      "chosen": "300ms",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "300ms"
+      ],
+      "chosen": "300ms",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "— · 失败",
+     "pre": {
+      "texts": [
+       "一•失敗"
+      ],
+      "chosen": "一•失敗",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "一•失敗"
+      ],
+      "chosen": "一•失敗",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0008-..."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 9,
+   "tag": "r09-in-flight",
+   "request_id": "t07l05-0009-r09",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 09:15:00",
+     "pre": {
+      "texts": [
+       "10-19 09:15:00"
+      ],
+      "chosen": "10-19 09:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 09:15:00"
+      ],
+      "chosen": "10-19 09:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 09",
+     "pre": {
+      "texts": [
+       "Provider09"
+      ],
+      "chosen": "Provider09",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider09"
+      ],
+      "chosen": "Provider09",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-09",
+     "pre": {
+      "texts": [
+       "model-09"
+      ],
+      "chosen": "model-09",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "60-lapow"
+      ],
+      "chosen": "60-lapow",
+      "match": null
+     },
+     "verdict": "ONE_SIDE_UNREAD"
+    },
+    "total_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "谏一"
+      ],
+      "chosen": "谏一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "未定价",
+     "pre": {
+      "texts": [
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "— · 进行中",
+     "pre": {
+      "texts": [
+       "一•进行中"
+      ],
+      "chosen": "一•进行中",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "一、进行中"
+      ],
+      "chosen": "一、进行中",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0009-..."
+    ]
+   },
+   "verdict": "PASS_WITH_OCR_NOTES"
+  },
+  {
+   "id": 10,
+   "tag": "r10-cancelled-unsupported",
+   "request_id": "t07l05-0010-r10",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 10:15:00",
+     "pre": {
+      "texts": [
+       "10-19 10:15:00"
+      ],
+      "chosen": "10-19 10:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 10:15:00"
+      ],
+      "chosen": "10-19 10:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 10",
+     "pre": {
+      "texts": [
+       "Provider10"
+      ],
+      "chosen": "Provider10",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider10"
+      ],
+      "chosen": "Provider10",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-10",
+     "pre": {
+      "texts": [
+       "model-10"
+      ],
+      "chosen": "model-10",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-10"
+      ],
+      "chosen": "model-10",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー",
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一",
+       "ー"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "浹一"
+      ],
+      "chosen": "浹一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "缓存计费数据不足",
+     "pre": {
+      "texts": [
+       "缓存计费数据不足"
+      ],
+      "chosen": "缓存计费数据不足",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "缓存计费数据不足",
+       "缓存计费数据不足"
+      ],
+      "chosen": "缓存计费数据不足",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "700 ms",
+     "pre": {
+      "texts": [
+       "700 ms"
+      ],
+      "chosen": "700 ms",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "700 ms",
+       "700ms"
+      ],
+      "chosen": "700 ms",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "499 · 已取消",
+     "pre": {
+      "texts": [
+       "499・已取消"
+      ],
+      "chosen": "499・已取消",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "499・已取消"
+      ],
+      "chosen": "499・已取消",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.",
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0010-.",
+     "t07105-0010-.."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 11,
+   "tag": "r11-import-builtin-credit",
+   "request_id": "t07l05-0011-r11",
+   "view": "builtin",
+   "values": {
+    "time": {
+     "expected": "10-19 11:15:00",
+     "pre": {
+      "texts": [
+       "10-19 11:15:00"
+      ],
+      "chosen": "10-19 11:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 11:15:00"
+      ],
+      "chosen": "10-19 11:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "WorkBuddy 内置",
+     "pre": {
+      "texts": [
+       "WorkBudd..."
+      ],
+      "chosen": "WorkBudd...",
+      "match": "prefix"
+     },
+     "current": {
+      "texts": [
+       "WorkBuddy内置"
+      ],
+      "chosen": "WorkBuddy内置",
+      "match": "exact"
+     },
+     "verdict": "DISPLAY_TRUNCATED"
+    },
+    "source": {
+     "expected": "内置",
+     "pre": {
+      "texts": [
+       "内置"
+      ],
+      "chosen": "内置",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "内置"
+      ],
+      "chosen": "内置",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "wb-model-alpha",
+     "pre": {
+      "texts": [
+       "wb-model-alpha"
+      ],
+      "chosen": "wb-model-alpha",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "wb-model-alpha",
+       "eudle-apou-qM"
+      ],
+      "chosen": "wb-model-alpha",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "3000",
+     "pre": {
+      "texts": [
+       "3000",
+       "3000"
+      ],
+      "chosen": "3000",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "3000",
+       "3000"
+      ],
+      "chosen": "3000",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "2000",
+     "pre": {
+      "texts": [
+       "2000",
+       "2000"
+      ],
+      "chosen": "2000",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "2000",
+       "2000"
+      ],
+      "chosen": "2000",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "1000",
+     "pre": {
+      "texts": [
+       "1000",
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1000",
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "500",
+     "pre": {
+      "texts": [
+       "500",
+       "500"
+      ],
+      "chosen": "500",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "500ー",
+       "500"
+      ],
+      "chosen": "500ー",
+      "match": "contains"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "25.0%",
+     "pre": {
+      "texts": [
+       "25.0%",
+       "25.0%"
+      ],
+      "chosen": "25.0%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "25.0%",
+       "25.0%"
+      ],
+      "chosen": "25.0%",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "未定价",
+     "pre": {
+      "texts": [
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "未定价",
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "1.14",
+     "pre": {
+      "texts": [
+       "1.14"
+      ],
+      "chosen": "1.14",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1.14",
+       "1.14"
+      ],
+      "chosen": "1.14",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "— · 已记录",
+     "pre": {
+      "texts": [
+       "一•已记录"
+      ],
+      "chosen": "一•已记录",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "一•已记录"
+      ],
+      "chosen": "一•已记录",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0011-..",
+     "t07105-0011-..."
+    ]
+   },
+   "verdict": "PASS_WITH_OCR_NOTES"
+  },
+  {
+   "id": 12,
+   "tag": "r12-import-custom-credit-zero",
+   "request_id": "t07l05-0012-r12",
+   "view": "custom",
+   "values": {
+    "time": {
+     "expected": "10-19 12:15:00",
+     "pre": {
+      "texts": [
+       "10-19 12:15:00"
+      ],
+      "chosen": "10-19 12:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 12:15:00"
+      ],
+      "chosen": "10-19 12:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "WorkBuddy 自定义",
+     "pre": {
+      "texts": [
+       "WorkBudd..."
+      ],
+      "chosen": "WorkBudd...",
+      "match": "prefix"
+     },
+     "current": {
+      "texts": [
+       "WorkBuddy自定义"
+      ],
+      "chosen": "WorkBuddy自定义",
+      "match": "exact"
+     },
+     "verdict": "DISPLAY_TRUNCATED"
+    },
+    "source": {
+     "expected": "自定义",
+     "pre": {
+      "texts": [
+       "自定义"
+      ],
+      "chosen": "自定义",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "自定义"
+      ],
+      "chosen": "自定义",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "wb-model-beta",
+     "pre": {
+      "texts": [
+       "wb-model-beta"
+      ],
+      "chosen": "wb-model-beta",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "wb-model-beta"
+      ],
+      "chosen": "wb-model-beta",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "300",
+     "pre": {
+      "texts": [
+       "300"
+      ],
+      "chosen": "300",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "300"
+      ],
+      "chosen": "300",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "浹一"
+      ],
+      "chosen": "浹一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "—",
+     "pre": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "未定价",
+     "pre": {
+      "texts": [
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "未定价"
+      ],
+      "chosen": "未定价",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "— · 已记录",
+     "pre": {
+      "texts": [
+       "一•已记录",
+       "一、已记录"
+      ],
+      "chosen": "一•已记录",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "一、已记录"
+      ],
+      "chosen": "一、已记录",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0012-.."
+    ]
+   },
+   "verdict": "PASS_WITH_OCR_NOTES"
+  },
+  {
+   "id": 13,
+   "tag": "r13-large-compact",
+   "request_id": "t07l05-0013-r13",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 13:15:00",
+     "pre": {
+      "texts": [
+       "10-19 13:15:00"
+      ],
+      "chosen": "10-19 13:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 13:15:00"
+      ],
+      "chosen": "10-19 13:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 13",
+     "pre": {
+      "texts": [
+       "Provider13"
+      ],
+      "chosen": "Provider13",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider13"
+      ],
+      "chosen": "Provider13",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-13",
+     "pre": {
+      "texts": [
+       "model-13"
+      ],
+      "chosen": "model-13",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-13"
+      ],
+      "chosen": "model-13",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "2.22亿",
+     "pre": {
+      "texts": [
+       "2.22亿"
+      ],
+      "chosen": "2.22亿",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "2.22亿"
+      ],
+      "chosen": "2.22亿",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "1.23亿",
+     "pre": {
+      "texts": [
+       "1.23亿"
+      ],
+      "chosen": "1.23亿",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1.23亿"
+      ],
+      "chosen": "1.23亿",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "9877万",
+     "pre": {
+      "texts": [
+       "9877万"
+      ],
+      "chosen": "9877万",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "9877万"
+      ],
+      "chosen": "9877万",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "6173万",
+     "pre": {
+      "texts": [
+       "6173万"
+      ],
+      "chosen": "6173万",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "6173万"
+      ],
+      "chosen": "6173万",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "50.0%",
+     "pre": {
+      "texts": [
+       "50.（"
+      ],
+      "chosen": "50.（",
+      "match": "prefix"
+     },
+     "current": {
+      "texts": [
+       "50.0%"
+      ],
+      "chosen": "50.0%",
+      "match": "exact"
+     },
+     "verdict": "DISPLAY_TRUNCATED"
+    },
+    "amount": {
+     "expected": "¥2.2200",
+     "pre": {
+      "texts": [
+       "¥2,2200"
+      ],
+      "chosen": "¥2,2200",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "¥2.2200"
+      ],
+      "chosen": "¥2.2200",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "5.00 s",
+     "pre": {
+      "texts": [
+       "5.00s"
+      ],
+      "chosen": "5.00s",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "5.00s"
+      ],
+      "chosen": "5.00s",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "19753086.4",
+     "pre": {
+      "texts": [
+       "19753.."
+      ],
+      "chosen": "19753..",
+      "match": "prefix"
+     },
+     "current": {
+      "texts": [
+       "19753..."
+      ],
+      "chosen": "19753...",
+      "match": "prefix"
+     },
+     "verdict": "DISPLAY_TRUNCATED"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00."
+    ],
+    "current": [
+     "t07105-0013-.."
+    ]
+   },
+   "verdict": "PASS_WITH_OCR_NOTES"
+  },
+  {
+   "id": 14,
+   "tag": "r14-interrupted",
+   "request_id": "t07l05-0014-r14",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 14:15:00",
+     "pre": {
+      "texts": [
+       "10-19 14:15:00"
+      ],
+      "chosen": "10-19 14:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 14:15:00"
+      ],
+      "chosen": "10-19 14:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 14",
+     "pre": {
+      "texts": [
+       "Provider14"
+      ],
+      "chosen": "Provider14",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider14"
+      ],
+      "chosen": "Provider14",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-14",
+     "pre": {
+      "texts": [
+       "model-14"
+      ],
+      "chosen": "model-14",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-14"
+      ],
+      "chosen": "model-14",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "600",
+     "pre": {
+      "texts": [
+       "600"
+      ],
+      "chosen": "600",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "600"
+      ],
+      "chosen": "600",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "500",
+     "pre": {
+      "texts": [
+       "500"
+      ],
+      "chosen": "500",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "500"
+      ],
+      "chosen": "500",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "100",
+     "pre": {
+      "texts": [
+       "100"
+      ],
+      "chosen": "100",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "100"
+      ],
+      "chosen": "100",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "01"
+      ],
+      "chosen": "01",
+      "match": "contains"
+     },
+     "current": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "0.0%",
+     "pre": {
+      "texts": [
+       "0.0%"
+      ],
+      "chosen": "0.0%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0.0%"
+      ],
+      "chosen": "0.0%",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "用量不全",
+     "pre": {
+      "texts": [
+       "用量不全"
+      ],
+      "chosen": "用量不全",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "用量不全"
+      ],
+      "chosen": "用量不全",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "一"
+      ],
+      "chosen": "一",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "160 ms",
+     "pre": {
+      "texts": [
+       "160 ms"
+      ],
+      "chosen": "160 ms",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "160 ms"
+      ],
+      "chosen": "160 ms",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "1250.0",
+     "pre": {
+      "texts": [
+       "1250.0"
+      ],
+      "chosen": "1250.0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1250.0"
+      ],
+      "chosen": "1250.0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "500 · 中断",
+     "pre": {
+      "texts": [
+       "500•中断"
+      ],
+      "chosen": "500•中断",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "500•中断"
+      ],
+      "chosen": "500•中断",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00."
+    ],
+    "current": [
+     "t07105-0014-..."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 15,
+   "tag": "r15-earliest-below-floor",
+   "request_id": "t07l05-0015-r15",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 15:15:00",
+     "pre": {
+      "texts": [
+       "10-19 15:15:00"
+      ],
+      "chosen": "10-19 15:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 15:15:00"
+      ],
+      "chosen": "10-19 15:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "Provider 15",
+     "pre": {
+      "texts": [
+       "Provider15"
+      ],
+      "chosen": "Provider15",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "Provider15"
+      ],
+      "chosen": "Provider15",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-15",
+     "pre": {
+      "texts": [
+       "model-15"
+      ],
+      "chosen": "model-15",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "model-15"
+      ],
+      "chosen": "model-15",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "total_tokens": {
+     "expected": "50",
+     "pre": {
+      "texts": [
+       "50"
+      ],
+      "chosen": "50",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "50"
+      ],
+      "chosen": "50",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "42",
+     "pre": {
+      "texts": [
+       "42"
+      ],
+      "chosen": "42",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "42"
+      ],
+      "chosen": "42",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "8",
+     "pre": {
+      "texts": [
+       "8"
+      ],
+      "chosen": "8",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "8"
+      ],
+      "chosen": "8",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "0",
+     "pre": {
+      "texts": [
+       "01"
+      ],
+      "chosen": "01",
+      "match": "contains"
+     },
+     "current": {
+      "texts": [
+       "0"
+      ],
+      "chosen": "0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "0.0%",
+     "pre": {
+      "texts": [
+       "0.0%"
+      ],
+      "chosen": "0.0%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0.0%"
+      ],
+      "chosen": "0.0%",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "¥<0.0001",
+     "pre": {
+      "texts": [
+       "¥<0.0001"
+      ],
+      "chosen": "¥<0.0001",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "¥<0.0001"
+      ],
+      "chosen": "¥<0.0001",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "ー"
+      ],
+      "chosen": "ー",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "1.00 s",
+     "pre": {
+      "texts": [
+       "1.00s"
+      ],
+      "chosen": "1.00s",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1.00s"
+      ],
+      "chosen": "1.00s",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "8.0",
+     "pre": {
+      "texts": [
+       "8.0"
+      ],
+      "chosen": "8.0",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "8.0"
+      ],
+      "chosen": "8.0",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "201 · 完成",
+     "pre": {
+      "texts": [
+       "201•完成"
+      ],
+      "chosen": "201•完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "201•完成"
+      ],
+      "chosen": "201•完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00.."
+    ],
+    "current": [
+     "t07105-0015-.."
+    ]
+   },
+   "verdict": "PASS"
+  },
+  {
+   "id": 16,
+   "tag": "r16-legacy-long-names",
+   "request_id": "t07l05-0016-r16",
+   "view": "all-sources",
+   "values": {
+    "time": {
+     "expected": "10-19 16:15:00",
+     "pre": {
+      "texts": [
+       "10-19 16:15:00"
+      ],
+      "chosen": "10-19 16:15:00",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "10-19 16:15:00"
+      ],
+      "chosen": "10-19 16:15:00",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "provider": {
+     "expected": "供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789",
+     "pre": {
+      "texts": [
+       "供应商名称.."
+      ],
+      "chosen": "供应商名称..",
+      "match": "prefix"
+     },
+     "current": {
+      "texts": [
+       "供应商名称超长测试…"
+      ],
+      "chosen": "供应商名称超长测试…",
+      "match": "prefix"
+     },
+     "verdict": "DISPLAY_TRUNCATED"
+    },
+    "source": {
+     "expected": "代理",
+     "pre": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "代理"
+      ],
+      "chosen": "代理",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "model": {
+     "expected": "model-extremely-long-name-for-truncation-check-0123456789",
+     "pre": {
+      "texts": [
+       "model-extremely-lon..."
+      ],
+      "chosen": "model-extremely-lon...",
+      "match": "prefix"
+     },
+     "current": {
+      "texts": [
+       "model-extremely-long..."
+      ],
+      "chosen": "model-extremely-long...",
+      "match": "prefix"
+     },
+     "verdict": "DISPLAY_TRUNCATED"
+    },
+    "total_tokens": {
+     "expected": "1000",
+     "pre": {
+      "texts": [
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1000"
+      ],
+      "chosen": "1000",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "input_tokens": {
+     "expected": "999",
+     "pre": {
+      "texts": [
+       "999"
+      ],
+      "chosen": "999",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "999"
+      ],
+      "chosen": "999",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "output_tokens": {
+     "expected": "1",
+     "pre": {
+      "texts": [
+       "1"
+      ],
+      "chosen": "1",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "1"
+      ],
+      "chosen": "1",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "cache_read": {
+     "expected": "500",
+     "pre": {
+      "texts": [
+       "500"
+      ],
+      "chosen": "500",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "500"
+      ],
+      "chosen": "500",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "hit_rate": {
+     "expected": "50.1%",
+     "pre": {
+      "texts": [
+       "50.1%"
+      ],
+      "chosen": "50.1%",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "50.1%"
+      ],
+      "chosen": "50.1%",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "amount": {
+     "expected": "历史金额（来源不明）",
+     "pre": {
+      "texts": [
+       "历史金额（来源不."
+      ],
+      "chosen": "历史金额（来源不.",
+      "match": "prefix"
+     },
+     "current": {
+      "texts": [
+       "历史金额（来源不明）"
+      ],
+      "chosen": "历史金额（来源不明）",
+      "match": "exact"
+     },
+     "verdict": "DISPLAY_TRUNCATED"
+    },
+    "credit": {
+     "expected": "—",
+     "pre": {
+      "texts": [],
+      "chosen": null,
+      "match": "weak"
+     },
+     "current": {
+      "texts": [
+       "－"
+      ],
+      "chosen": "－",
+      "match": "weak"
+     },
+     "verdict": "PASS"
+    },
+    "latency": {
+     "expected": "2.00 s",
+     "pre": {
+      "texts": [
+       "2.00s"
+      ],
+      "chosen": "2.00s",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "2.00s"
+      ],
+      "chosen": "2.00s",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "speed": {
+     "expected": "0.6",
+     "pre": {
+      "texts": [
+       "0.6"
+      ],
+      "chosen": "0.6",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "0.6"
+      ],
+      "chosen": "0.6",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    },
+    "status": {
+     "expected": "200 · 完成",
+     "pre": {
+      "texts": [
+       "200・完成"
+      ],
+      "chosen": "200・完成",
+      "match": "exact"
+     },
+     "current": {
+      "texts": [
+       "200•完成"
+      ],
+      "chosen": "200•完成",
+      "match": "exact"
+     },
+     "verdict": "PASS"
+    }
+   },
+   "request_id_reading": {
+    "pre": [
+     "t07105-00..."
+    ],
+    "current": [
+     "t07105-0016-.."
+    ]
+   },
+   "verdict": "PASS_WITH_OCR_NOTES"
+  }
+ ],
+ "summary": {
+  "values": 224,
+  "verdicts": {
+   "PASS": 214,
+   "ONE_SIDE_UNREAD": 2,
+   "OCR_LIMITED": 1,
+   "DISPLAY_TRUNCATED": 7
+  },
+  "fields": {
+   "time": {
+    "PASS": 16
+   },
+   "provider": {
+    "PASS": 13,
+    "DISPLAY_TRUNCATED": 3
+   },
+   "source": {
+    "PASS": 16
+   },
+   "model": {
+    "ONE_SIDE_UNREAD": 2,
+    "PASS": 12,
+    "OCR_LIMITED": 1,
+    "DISPLAY_TRUNCATED": 1
+   },
+   "total_tokens": {
+    "PASS": 16
+   },
+   "input_tokens": {
+    "PASS": 16
+   },
+   "output_tokens": {
+    "PASS": 16
+   },
+   "cache_read": {
+    "PASS": 16
+   },
+   "hit_rate": {
+    "PASS": 15,
+    "DISPLAY_TRUNCATED": 1
+   },
+   "amount": {
+    "PASS": 15,
+    "DISPLAY_TRUNCATED": 1
+   },
+   "credit": {
+    "PASS": 16
+   },
+   "latency": {
+    "PASS": 16
+   },
+   "speed": {
+    "PASS": 15,
+    "DISPLAY_TRUNCATED": 1
+   },
+   "status": {
+    "PASS": 16
+   }
+  },
+  "rows_pass": 9,
+  "rows_total": 16
+ }
+}

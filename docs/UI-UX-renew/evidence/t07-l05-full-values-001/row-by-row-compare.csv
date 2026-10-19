@@ -1,0 +1,225 @@
+﻿row_id,tag,request_id,view,field,expected,pre_text,pre_match,current_text,current_match,verdict
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,time,10-19 00:00:05,10-19 00:00:05,exact,10-19 00:00:05,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,provider,Provider 01,Provider01,exact,Provider01,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,source,代理,代理,exact,代理,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,model,model-01,LO-lapow,,model-01 | LO-lapou,exact,ONE_SIDE_UNREAD
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,total_tokens,1500,1500,exact,1500|益入1200|金出200 | 1500,contains,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,input_tokens,1200,1200,exact,1200,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,output_tokens,300,300,exact,300,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,cache_read,0,0,exact,0,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,hit_rate,0.0%,0.0%,exact,0.0%,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,amount,¥0,¥0,exact,KO | ¥0,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,credit,—,,weak,ー,weak,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,latency,500 ms,500 ms,exact,500 ms | 500ms,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,speed,600.0,600.0,exact,600.0,exact,PASS
+1,r01-complete-default-zero,t07l05-0001-r01,all-sources,status,200 · 完成,200•完成,exact,200•完成 | 200・完成,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,time,10-19 02:15:00,10-19 02:15:00,exact,10-19 02:15:00,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,provider,Provider 02,Provider02,exact,Provider02,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,source,代理,代理,exact,代理,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,model,model-02,model-02,exact,model-02 | ZO-lapow,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,total_tokens,1500,1500,exact,1500 | 1500,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,input_tokens,1000,1000,exact,1000 | 1000,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,output_tokens,500,500,exact,500 | 500,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,cache_read,600,600,exact,600 | 600,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,hit_rate,60.0%,60.0%,exact,60.0% | 60.0%,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,amount,¥1.2345,"¥1,2345",exact,¥1.2345 | ¥1.2345,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,credit,—,,weak,一 | -,weak,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,latency,2.50 s,2.50s,exact,2.50s,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,speed,227.3,227.3,exact,227.3,exact,PASS
+2,r02-priced-streaming,t07l05-0002-r02,all-sources,status,200 · 完成,200•完成,exact,200•完成 | 200・完成,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,time,10-19 03:15:00,10-19 03:15:00,exact,10-19 03:15:00,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,provider,Provider 03,Provider03,exact,Provider03,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,source,代理,代理,exact,代理,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,model,model-03,model-03,exact,model-03,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,total_tokens,1000,1000,exact,1000 | 1000,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,input_tokens,800,800,exact,800 | 800,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,output_tokens,200,200,exact,200 | 200,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,cache_read,800,800,exact,800 | 800,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,hit_rate,100.0%,100.0%,exact,100.0% | 100.0%,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,amount,$0.12345,$0.12345,exact,$0.12345,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,credit,—,,weak,一,weak,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,latency,1.00 s,1.00 s,exact,1.00s,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,speed,200.0,200.0,exact,200.0,exact,PASS
+3,r03-priced-usd-full-hit,t07l05-0003-r03,all-sources,status,200 · 完成,200・完成,exact,200•完成,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,time,10-19 04:15:00,10-19 04:15:00,exact,10-19 04:15:00,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,provider,Provider 04,Provider04,exact,Provider04,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,source,代理,代理,exact,代理,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,model,model-04,to-lapow,,to-lapow,,OCR_LIMITED
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,total_tokens,15,15,exact,15 | 15,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,input_tokens,10,10,exact,10 | 10,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,output_tokens,5,5,exact,5 | 5,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,cache_read,5,5,exact,5 | 5,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,hit_rate,50.0%,50.0%,exact,50.0%ー | 50.0%,contains,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,amount,¥<0.0001,¥<0.0001,exact,¥<0.0001,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,credit,—,,weak,ー,weak,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,latency,100 ms,100ms,exact,100 ms | 100ms,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,speed,50.0,50.0,exact,50.0,exact,PASS
+4,r04-tiny-amount-cache-write,t07l05-0004-r04,all-sources,status,200 · 完成,200•完成,exact,200•完成 | 200・完成,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,time,10-19 05:15:00,10-19 05:15:00,exact,10-19 05:15:00,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,provider,Provider 05,Provider05,exact,Provider05,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,source,代理,代理,exact,代理,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,model,model-05,model-05,exact,model-05,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,total_tokens,0,O,contains,0 | 0,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,input_tokens,0,0,exact,0 | 0,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,output_tokens,0,0,exact,0,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,cache_read,0,01,contains,0 | 0,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,hit_rate,—,一,weak,一 | 一,weak,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,amount,¥0,¥0,exact,¥0,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,credit,—,,weak,一,weak,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,latency,900 ms,900 ms | 900ms,exact,900ms | 900 ms,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,speed,0.0,0.0,exact,0.0,exact,PASS
+5,r05-zero-usage,t07l05-0005-r05,all-sources,status,200 · 完成,200•完成,exact,200・完成 | 200•完成,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,time,10-19 06:15:00,10-19 06:15:00,exact,10-19 06:15:00,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,provider,Provider 06,Provider06,exact,Provider06,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,source,代理,代理,exact,代理,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,model,model-06,model-06 | 90-lapow,exact,90-lapow | model-06,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,total_tokens,—,一,weak,一 | 一 | ー,weak,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,input_tokens,1000,1000,exact,1000 | 1000 | 1000,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,output_tokens,—,一,weak,,weak,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,cache_read,—,一,weak,一 | 浹一 | 浹一,weak,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,hit_rate,—,一,weak,一 | 一 | 一,weak,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,amount,用量不全,用量不全,exact,用量不全,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,credit,—,,weak,一,weak,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,latency,1.20 s,1.20 s | 1.20s,exact,1.20s,exact,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,speed,—,,weak,,weak,PASS
+6,r06-partial-usage,t07l05-0006-r06,all-sources,status,200 · 完成,200・完成,exact,200・完成 | 200•完成,exact,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,time,10-19 07:15:00,10-19 07:15:00,exact,10-19 07:15:00,exact,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,provider,Provider 07,Provider07,exact,Provider07,exact,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,source,代理,代理,exact,代理,exact,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,model,model-07,model-07,exact,model-07,exact,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,total_tokens,—,,weak,一 | 一,weak,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,input_tokens,—,,weak,一 | 一,weak,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,output_tokens,—,,weak,一,weak,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,cache_read,—,,weak,一 | 谏一,weak,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,hit_rate,—,,weak,一 | 一,weak,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,amount,未定价,未定价,exact,未定价 | 未定价,exact,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,credit,—,,weak,一 | ー,weak,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,latency,800 ms,800 ms,exact,800 ms,exact,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,speed,—,,weak,,weak,PASS
+7,r07-failed-unpriced,t07l05-0007-r07,all-sources,status,429 · 失败,429・失敗,exact,429•失敗 | 429・失敗,exact,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,time,10-19 08:15:00,10-19 08:15:00,exact,10-19 08:15:00,exact,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,provider,Provider 08,Provider08,exact,Provider08,exact,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,source,代理,代理,exact,代理,exact,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,model,model-08,80-lapow | model-08,exact,model-08,exact,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,total_tokens,—,,weak,ー,weak,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,input_tokens,—,,weak,ー,weak,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,output_tokens,—,,weak,,weak,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,cache_read,—,,weak,浹一,weak,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,hit_rate,—,,weak,一,weak,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,amount,¥0,¥0,exact,¥0,exact,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,credit,—,,weak,一,weak,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,latency,300 ms,300ms,exact,300ms,exact,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,speed,—,,weak,,weak,PASS
+8,r08-failed-not-sent,t07l05-0008-r08,all-sources,status,— · 失败,一•失敗,exact,一•失敗,exact,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,time,10-19 09:15:00,10-19 09:15:00,exact,10-19 09:15:00,exact,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,provider,Provider 09,Provider09,exact,Provider09,exact,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,source,代理,代理,exact,代理,exact,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,model,model-09,model-09,exact,60-lapow,,ONE_SIDE_UNREAD
+9,r09-in-flight,t07l05-0009-r09,all-sources,total_tokens,—,一,weak,一,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,input_tokens,—,一,weak,一,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,output_tokens,—,一,weak,,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,cache_read,—,一,weak,谏一,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,hit_rate,—,一,weak,一,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,amount,未定价,未定价,exact,未定价,exact,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,credit,—,,weak,ー,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,latency,—,,weak,,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,speed,—,,weak,,weak,PASS
+9,r09-in-flight,t07l05-0009-r09,all-sources,status,— · 进行中,一•进行中,exact,一、进行中,exact,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,time,10-19 10:15:00,10-19 10:15:00,exact,10-19 10:15:00,exact,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,provider,Provider 10,Provider10,exact,Provider10,exact,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,source,代理,代理,exact,代理,exact,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,model,model-10,model-10,exact,model-10,exact,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,total_tokens,—,一,weak,ー | ー,weak,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,input_tokens,—,一,weak,一 | ー,weak,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,output_tokens,—,一,weak,,weak,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,cache_read,—,一,weak,浹一,weak,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,hit_rate,—,一,weak,一,weak,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,amount,缓存计费数据不足,缓存计费数据不足,exact,缓存计费数据不足 | 缓存计费数据不足,exact,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,credit,—,,weak,ー,weak,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,latency,700 ms,700 ms,exact,700 ms | 700ms,exact,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,speed,—,,weak,,weak,PASS
+10,r10-cancelled-unsupported,t07l05-0010-r10,all-sources,status,499 · 已取消,499・已取消,exact,499・已取消,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,time,10-19 11:15:00,10-19 11:15:00,exact,10-19 11:15:00,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,provider,WorkBuddy 内置,WorkBudd...,prefix,WorkBuddy内置,exact,DISPLAY_TRUNCATED
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,source,内置,内置,exact,内置,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,model,wb-model-alpha,wb-model-alpha,exact,wb-model-alpha | eudle-apou-qM,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,total_tokens,3000,3000 | 3000,exact,3000 | 3000,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,input_tokens,2000,2000 | 2000,exact,2000 | 2000,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,output_tokens,1000,1000 | 1000,exact,1000 | 1000,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,cache_read,500,500 | 500,exact,500ー | 500,contains,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,hit_rate,25.0%,25.0% | 25.0%,exact,25.0% | 25.0%,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,amount,未定价,未定价,exact,未定价 | 未定价,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,credit,1.14,1.14,exact,1.14 | 1.14,exact,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,latency,—,,weak,,weak,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,speed,—,,weak,,weak,PASS
+11,r11-import-builtin-credit,t07l05-0011-r11,builtin,status,— · 已记录,一•已记录,exact,一•已记录,exact,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,time,10-19 12:15:00,10-19 12:15:00,exact,10-19 12:15:00,exact,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,provider,WorkBuddy 自定义,WorkBudd...,prefix,WorkBuddy自定义,exact,DISPLAY_TRUNCATED
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,source,自定义,自定义,exact,自定义,exact,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,model,wb-model-beta,wb-model-beta,exact,wb-model-beta,exact,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,total_tokens,—,一,weak,ー,weak,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,input_tokens,300,300,exact,300,exact,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,output_tokens,—,一,weak,,weak,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,cache_read,—,一,weak,浹一,weak,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,hit_rate,—,一,weak,一,weak,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,amount,未定价,未定价,exact,未定价,exact,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,credit,0,0,exact,0,exact,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,latency,—,,weak,,weak,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,speed,—,,weak,,weak,PASS
+12,r12-import-custom-credit-zero,t07l05-0012-r12,custom,status,— · 已记录,一•已记录 | 一、已记录,exact,一、已记录,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,time,10-19 13:15:00,10-19 13:15:00,exact,10-19 13:15:00,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,provider,Provider 13,Provider13,exact,Provider13,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,source,代理,代理,exact,代理,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,model,model-13,model-13,exact,model-13,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,total_tokens,2.22亿,2.22亿,exact,2.22亿,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,input_tokens,1.23亿,1.23亿,exact,1.23亿,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,output_tokens,9877万,9877万,exact,9877万,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,cache_read,6173万,6173万,exact,6173万,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,hit_rate,50.0%,50.（,prefix,50.0%,exact,DISPLAY_TRUNCATED
+13,r13-large-compact,t07l05-0013-r13,all-sources,amount,¥2.2200,"¥2,2200",exact,¥2.2200,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,credit,—,,weak,一,weak,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,latency,5.00 s,5.00s,exact,5.00s,exact,PASS
+13,r13-large-compact,t07l05-0013-r13,all-sources,speed,19753086.4,19753..,prefix,19753...,prefix,DISPLAY_TRUNCATED
+13,r13-large-compact,t07l05-0013-r13,all-sources,status,200 · 完成,200•完成,exact,200•完成,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,time,10-19 14:15:00,10-19 14:15:00,exact,10-19 14:15:00,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,provider,Provider 14,Provider14,exact,Provider14,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,source,代理,代理,exact,代理,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,model,model-14,model-14,exact,model-14,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,total_tokens,600,600,exact,600,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,input_tokens,500,500,exact,500,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,output_tokens,100,100,exact,100,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,cache_read,0,01,contains,0,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,hit_rate,0.0%,0.0%,exact,0.0%,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,amount,用量不全,用量不全,exact,用量不全,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,credit,—,,weak,一,weak,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,latency,160 ms,160 ms,exact,160 ms,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,speed,1250.0,1250.0,exact,1250.0,exact,PASS
+14,r14-interrupted,t07l05-0014-r14,all-sources,status,500 · 中断,500•中断,exact,500•中断,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,time,10-19 15:15:00,10-19 15:15:00,exact,10-19 15:15:00,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,provider,Provider 15,Provider15,exact,Provider15,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,source,代理,代理,exact,代理,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,model,model-15,model-15,exact,model-15,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,total_tokens,50,50,exact,50,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,input_tokens,42,42,exact,42,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,output_tokens,8,8,exact,8,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,cache_read,0,01,contains,0,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,hit_rate,0.0%,0.0%,exact,0.0%,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,amount,¥<0.0001,¥<0.0001,exact,¥<0.0001,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,credit,—,,weak,ー,weak,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,latency,1.00 s,1.00s,exact,1.00s,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,speed,8.0,8.0,exact,8.0,exact,PASS
+15,r15-earliest-below-floor,t07l05-0015-r15,all-sources,status,201 · 完成,201•完成,exact,201•完成,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,time,10-19 16:15:00,10-19 16:15:00,exact,10-19 16:15:00,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,provider,供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789,供应商名称..,prefix,供应商名称超长测试…,prefix,DISPLAY_TRUNCATED
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,source,代理,代理,exact,代理,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,model,model-extremely-long-name-for-truncation-check-0123456789,model-extremely-lon...,prefix,model-extremely-long...,prefix,DISPLAY_TRUNCATED
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,total_tokens,1000,1000,exact,1000,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,input_tokens,999,999,exact,999,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,output_tokens,1,1,exact,1,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,cache_read,500,500,exact,500,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,hit_rate,50.1%,50.1%,exact,50.1%,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,amount,历史金额（来源不明）,历史金额（来源不.,prefix,历史金额（来源不明）,exact,DISPLAY_TRUNCATED
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,credit,—,,weak,－,weak,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,latency,2.00 s,2.00s,exact,2.00s,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,speed,0.6,0.6,exact,0.6,exact,PASS
+16,r16-legacy-long-names,t07l05-0016-r16,all-sources,status,200 · 完成,200・完成,exact,200•完成,exact,PASS

@@ -1,0 +1,201 @@
+﻿dialog,row_id,field,expected,pre,current,verdict
+r01-complete-default-zero,1,来源,代理,代理,代理,PASS
+r01-complete-default-zero,1,采集方式,代理采集,代理采集,代理采集,PASS
+r01-complete-default-zero,1,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r01-complete-default-zero,1,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r01-complete-default-zero,1,WorkBuddy 点数,—,—,—,PASS
+r01-complete-default-zero,1,流式响应,否,否,否,PASS
+r01-complete-default-zero,1,请求标识,t07l05-0001-r01,t07l05-0001-r01,t07l05-0001-r01,PASS
+r01-complete-default-zero,1,时间,10-19 00:00:05,10-19 00:00:05,10-19 00:00:05,PASS
+r01-complete-default-zero,1,供应商 / 路由,Provider 01 · Route 01,Provider 01 · Route 01,Provider 01 · Route 01,PASS
+r01-complete-default-zero,1,请求模型,model-01,model-01,model-01,PASS
+r01-complete-default-zero,1,上游模型,model-01,model-01,model-01,PASS
+r01-complete-default-zero,1,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r01-complete-default-zero,1,响应声明模型,model-01,model-01,model-01,PASS
+r01-complete-default-zero,1,状态,HTTP 200 · 已完成,HTTP 200 · 已完成,HTTP 200 · 已完成,PASS
+r01-complete-default-zero,1,用量,完整 · —,完整 · —,完整 · —,PASS
+r01-complete-default-zero,1,Token,↓1200 ↑300 R0 W0 Σ1500,↓1200 ↑300 R0 W0 Σ1500,↓1200 ↑300 R0 W0 Σ1500,PASS
+r01-complete-default-zero,1,性能,总 500 ms · 首内容 200 ms · TTFB 100 ms,总 500 ms · 首内容 200 ms · TTFB 100 ms,总 500 ms · 首内容 200 ms · TTFB 100 ms,PASS
+r01-complete-default-zero,1,缓存命中率,0.0%,0.0%,0.0%,PASS
+r01-complete-default-zero,1,tok/s,600.0,600.0,600.0,PASS
+r01-complete-default-zero,1,估算费用,CNY ¥0,CNY ¥0,CNY ¥0,PASS
+r02-priced-streaming,2,来源,代理,代理,代理,PASS
+r02-priced-streaming,2,采集方式,代理采集,代理采集,代理采集,PASS
+r02-priced-streaming,2,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r02-priced-streaming,2,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r02-priced-streaming,2,WorkBuddy 点数,—,—,—,PASS
+r02-priced-streaming,2,流式响应,是,是,是,PASS
+r02-priced-streaming,2,请求标识,t07l05-0002-r02,t07l05-0002-r02,t07l05-0002-r02,PASS
+r02-priced-streaming,2,时间,10-19 02:15:00,10-19 02:15:00,10-19 02:15:00,PASS
+r02-priced-streaming,2,供应商 / 路由,Provider 02 · Route 02,Provider 02 · Route 02,Provider 02 · Route 02,PASS
+r02-priced-streaming,2,请求模型,model-02,model-02,model-02,PASS
+r02-priced-streaming,2,上游模型,model-02,model-02,model-02,PASS
+r02-priced-streaming,2,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r02-priced-streaming,2,响应声明模型,model-02,model-02,model-02,PASS
+r02-priced-streaming,2,状态,HTTP 200 · 已完成,HTTP 200 · 已完成,HTTP 200 · 已完成,PASS
+r02-priced-streaming,2,用量,完整 · —,完整 · —,完整 · —,PASS
+r02-priced-streaming,2,Token,↓1000 ↑500 R600 W0 Σ1500,↓1000 ↑500 R600 W0 Σ1500,↓1000 ↑500 R600 W0 Σ1500,PASS
+r02-priced-streaming,2,性能,总 2.50 s · 首内容 300 ms · TTFB 200 ms,总 2.50 s · 首内容 300 ms · TTFB 200 ms,总 2.50 s · 首内容 300 ms · TTFB 200 ms,PASS
+r02-priced-streaming,2,缓存命中率,60.0%,60.0%,60.0%,PASS
+r02-priced-streaming,2,tok/s,227.3,227.3,227.3,PASS
+r02-priced-streaming,2,估算费用,CNY ¥1.2345,CNY ¥1.2345,CNY ¥1.2345,PASS
+r05-zero-usage,5,来源,代理,代理,代理,PASS
+r05-zero-usage,5,采集方式,代理采集,代理采集,代理采集,PASS
+r05-zero-usage,5,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r05-zero-usage,5,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r05-zero-usage,5,WorkBuddy 点数,—,—,—,PASS
+r05-zero-usage,5,流式响应,否,否,否,PASS
+r05-zero-usage,5,请求标识,t07l05-0005-r05,t07l05-0005-r05,t07l05-0005-r05,PASS
+r05-zero-usage,5,时间,10-19 05:15:00,10-19 05:15:00,10-19 05:15:00,PASS
+r05-zero-usage,5,供应商 / 路由,Provider 05 · Route 05,Provider 05 · Route 05,Provider 05 · Route 05,PASS
+r05-zero-usage,5,请求模型,model-05,model-05,model-05,PASS
+r05-zero-usage,5,上游模型,model-05,model-05,model-05,PASS
+r05-zero-usage,5,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r05-zero-usage,5,响应声明模型,model-05,model-05,model-05,PASS
+r05-zero-usage,5,状态,HTTP 200 · 已完成,HTTP 200 · 已完成,HTTP 200 · 已完成,PASS
+r05-zero-usage,5,用量,完整 · —,完整 · —,完整 · —,PASS
+r05-zero-usage,5,Token,↓0 ↑0 R0 W0 Σ0,↓0 ↑0 R0 W0 Σ0,↓0 ↑0 R0 W0 Σ0,PASS
+r05-zero-usage,5,性能,总 900 ms · 首内容 200 ms · TTFB 100 ms,总 900 ms · 首内容 200 ms · TTFB 100 ms,总 900 ms · 首内容 200 ms · TTFB 100 ms,PASS
+r05-zero-usage,5,缓存命中率,—,—,—,PASS
+r05-zero-usage,5,tok/s,0.0,0.0,0.0,PASS
+r05-zero-usage,5,估算费用,CNY ¥0,CNY ¥0,CNY ¥0,PASS
+r06-partial-usage,6,来源,代理,代理,代理,PASS
+r06-partial-usage,6,采集方式,代理采集,代理采集,代理采集,PASS
+r06-partial-usage,6,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r06-partial-usage,6,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r06-partial-usage,6,WorkBuddy 点数,—,—,—,PASS
+r06-partial-usage,6,流式响应,是,是,是,PASS
+r06-partial-usage,6,请求标识,t07l05-0006-r06,t07l05-0006-r06,t07l05-0006-r06,PASS
+r06-partial-usage,6,时间,10-19 06:15:00,10-19 06:15:00,10-19 06:15:00,PASS
+r06-partial-usage,6,供应商 / 路由,Provider 06 · Route 06,Provider 06 · Route 06,Provider 06 · Route 06,PASS
+r06-partial-usage,6,请求模型,model-06,model-06,model-06,PASS
+r06-partial-usage,6,上游模型,model-06,model-06,model-06,PASS
+r06-partial-usage,6,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r06-partial-usage,6,响应声明模型,model-06,model-06,model-06,PASS
+r06-partial-usage,6,状态,HTTP 200 · 已完成,HTTP 200 · 已完成,HTTP 200 · 已完成,PASS
+r06-partial-usage,6,用量,部分 · —,部分 · —,部分 · —,PASS
+r06-partial-usage,6,Token,↓1000 ↑— R— W— Σ—,↓1000 ↑— R— W— Σ—,↓1000 ↑— R— W— Σ—,PASS
+r06-partial-usage,6,性能,总 1.20 s · 首内容 400 ms · TTFB 300 ms,总 1.20 s · 首内容 400 ms · TTFB 300 ms,总 1.20 s · 首内容 400 ms · TTFB 300 ms,PASS
+r06-partial-usage,6,缓存命中率,—,—,—,PASS
+r06-partial-usage,6,tok/s,—,—,—,PASS
+r06-partial-usage,6,估算费用,用量不全,用量不全,用量不全,PASS
+r07-failed-unpriced,7,来源,代理,代理,代理,PASS
+r07-failed-unpriced,7,采集方式,代理采集,代理采集,代理采集,PASS
+r07-failed-unpriced,7,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r07-failed-unpriced,7,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r07-failed-unpriced,7,WorkBuddy 点数,—,—,—,PASS
+r07-failed-unpriced,7,流式响应,否,否,否,PASS
+r07-failed-unpriced,7,请求标识,t07l05-0007-r07,t07l05-0007-r07,t07l05-0007-r07,PASS
+r07-failed-unpriced,7,时间,10-19 07:15:00,10-19 07:15:00,10-19 07:15:00,PASS
+r07-failed-unpriced,7,供应商 / 路由,Provider 07 · Route 07,Provider 07 · Route 07,Provider 07 · Route 07,PASS
+r07-failed-unpriced,7,请求模型,model-07,model-07,model-07,PASS
+r07-failed-unpriced,7,上游模型,model-07,model-07,model-07,PASS
+r07-failed-unpriced,7,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r07-failed-unpriced,7,响应声明模型,model-07,model-07,model-07,PASS
+r07-failed-unpriced,7,状态,HTTP 429 · 上游拒绝,HTTP 429 · 上游拒绝,HTTP 429 · 上游拒绝,PASS
+r07-failed-unpriced,7,用量,缺失 · —,缺失 · —,缺失 · —,PASS
+r07-failed-unpriced,7,Token,↓— ↑— R— W— Σ—,↓— ↑— R— W— Σ—,↓— ↑— R— W— Σ—,PASS
+r07-failed-unpriced,7,性能,总 800 ms · 首内容 300 ms · TTFB 150 ms,总 800 ms · 首内容 300 ms · TTFB 150 ms,总 800 ms · 首内容 300 ms · TTFB 150 ms,PASS
+r07-failed-unpriced,7,缓存命中率,—,—,—,PASS
+r07-failed-unpriced,7,tok/s,—,—,—,PASS
+r07-failed-unpriced,7,估算费用,未定价,未定价,未定价,PASS
+r09-in-flight,9,来源,代理,代理,代理,PASS
+r09-in-flight,9,采集方式,代理采集,代理采集,代理采集,PASS
+r09-in-flight,9,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r09-in-flight,9,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r09-in-flight,9,WorkBuddy 点数,—,—,—,PASS
+r09-in-flight,9,流式响应,是,是,是,PASS
+r09-in-flight,9,请求标识,t07l05-0009-r09,t07l05-0009-r09,t07l05-0009-r09,PASS
+r09-in-flight,9,时间,10-19 09:15:00,10-19 09:15:00,10-19 09:15:00,PASS
+r09-in-flight,9,供应商 / 路由,Provider 09 · Route 09,Provider 09 · Route 09,Provider 09 · Route 09,PASS
+r09-in-flight,9,请求模型,model-09,model-09,model-09,PASS
+r09-in-flight,9,上游模型,model-09,model-09,model-09,PASS
+r09-in-flight,9,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r09-in-flight,9,响应声明模型,model-09,model-09,model-09,PASS
+r09-in-flight,9,状态,HTTP — · 进行中,HTTP — · 进行中,HTTP — · 进行中,PASS
+r09-in-flight,9,用量,缺失 · —,缺失 · —,缺失 · —,PASS
+r09-in-flight,9,Token,↓— ↑— R— W— Σ—,↓— ↑— R— W— Σ—,↓— ↑— R— W— Σ—,PASS
+r09-in-flight,9,性能,总 — · 首内容 — · TTFB —,总 — · 首内容 — · TTFB —,总 — · 首内容 — · TTFB —,PASS
+r09-in-flight,9,缓存命中率,—,—,—,PASS
+r09-in-flight,9,tok/s,—,—,—,PASS
+r09-in-flight,9,估算费用,未定价,未定价,未定价,PASS
+r10-cancelled,10,来源,代理,代理,代理,PASS
+r10-cancelled,10,采集方式,代理采集,代理采集,代理采集,PASS
+r10-cancelled,10,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r10-cancelled,10,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r10-cancelled,10,WorkBuddy 点数,—,—,—,PASS
+r10-cancelled,10,流式响应,是,是,是,PASS
+r10-cancelled,10,请求标识,t07l05-0010-r10,t07l05-0010-r10,t07l05-0010-r10,PASS
+r10-cancelled,10,时间,10-19 10:15:00,10-19 10:15:00,10-19 10:15:00,PASS
+r10-cancelled,10,供应商 / 路由,Provider 10 · Route 10,Provider 10 · Route 10,Provider 10 · Route 10,PASS
+r10-cancelled,10,请求模型,model-10,model-10,model-10,PASS
+r10-cancelled,10,上游模型,model-10,model-10,model-10,PASS
+r10-cancelled,10,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r10-cancelled,10,响应声明模型,model-10,model-10,model-10,PASS
+r10-cancelled,10,状态,HTTP 499 · 已取消,HTTP 499 · 已取消,HTTP 499 · 已取消,PASS
+r10-cancelled,10,用量,无效 · —,无效 · —,无效 · —,PASS
+r10-cancelled,10,Token,↓— ↑— R— W— Σ—,↓— ↑— R— W— Σ—,↓— ↑— R— W— Σ—,PASS
+r10-cancelled,10,性能,总 700 ms · 首内容 300 ms · TTFB 200 ms,总 700 ms · 首内容 300 ms · TTFB 200 ms,总 700 ms · 首内容 300 ms · TTFB 200 ms,PASS
+r10-cancelled,10,缓存命中率,—,—,—,PASS
+r10-cancelled,10,tok/s,—,—,—,PASS
+r10-cancelled,10,估算费用,本次价格快照按普通输入、缓存读取或缓存写入分别计费，但本次调用的用量拆分或缓存单价不足/不兼容，无法可靠估算费用。这不代表请求失败，也不代表费用为 0。修改当前价格不会重算历史明细。,本次价格快照按普通输入、缓存读取或缓存写入分别计费，但本次调用的用量拆分或缓存单价不足/不兼容，无法可靠估算费用。这不代表请求失败，也不代表费用为 0。修改当前价格不会重算历史明细。,本次价格快照按普通输入、缓存读取或缓存写入分别计费，但本次调用的用量拆分或缓存单价不足/不兼容，无法可靠估算费用。这不代表请求失败，也不代表费用为 0。修改当前价格不会重算历史明细。,PASS
+r11-import-builtin,11,来源,内置,内置,内置,PASS
+r11-import-builtin,11,采集方式,WorkBuddy JSONL,WorkBuddy JSONL,WorkBuddy JSONL,PASS
+r11-import-builtin,11,时间依据,消息记录时间,消息记录时间,消息记录时间,PASS
+r11-import-builtin,11,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r11-import-builtin,11,WorkBuddy 点数,1.14,1.14,1.14,PASS
+r11-import-builtin,11,流式响应,—,—,—,PASS
+r11-import-builtin,11,请求标识,t07l05-0011-r11,t07l05-0011-r11,t07l05-0011-r11,PASS
+r11-import-builtin,11,时间,10-19 11:15:00,10-19 11:15:00,10-19 11:15:00,PASS
+r11-import-builtin,11,供应商 / 路由,WorkBuddy 内置 · Route 11,WorkBuddy 内置 · Route 11,WorkBuddy 内置 · Route 11,PASS
+r11-import-builtin,11,请求模型,wb-model-alpha,wb-model-alpha,wb-model-alpha,PASS
+r11-import-builtin,11,上游模型,wb-model-alpha,wb-model-alpha,wb-model-alpha,PASS
+r11-import-builtin,11,上游协议,—,—,—,PASS
+r11-import-builtin,11,响应声明模型,wb-model-alpha,wb-model-alpha,wb-model-alpha,PASS
+r11-import-builtin,11,状态,HTTP — · 已记录,HTTP — · 已记录,HTTP — · 已记录,PASS
+r11-import-builtin,11,用量,完整 · —,完整 · —,完整 · —,PASS
+r11-import-builtin,11,Token,↓2000 ↑1000 R500 W0 Σ3000,↓2000 ↑1000 R500 W0 Σ3000,↓2000 ↑1000 R500 W0 Σ3000,PASS
+r11-import-builtin,11,性能,总 — · 首内容 — · TTFB —,总 — · 首内容 — · TTFB —,总 — · 首内容 — · TTFB —,PASS
+r11-import-builtin,11,缓存命中率,25.0%,25.0%,25.0%,PASS
+r11-import-builtin,11,tok/s,—,—,—,PASS
+r11-import-builtin,11,估算费用,未定价,未定价,未定价,PASS
+r12-import-custom,12,来源,自定义,自定义,自定义,PASS
+r12-import-custom,12,采集方式,WorkBuddy JSONL,WorkBuddy JSONL,WorkBuddy JSONL,PASS
+r12-import-custom,12,时间依据,消息记录时间,消息记录时间,消息记录时间,PASS
+r12-import-custom,12,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r12-import-custom,12,WorkBuddy 点数,0,0,0,PASS
+r12-import-custom,12,流式响应,—,—,—,PASS
+r12-import-custom,12,请求标识,t07l05-0012-r12,t07l05-0012-r12,t07l05-0012-r12,PASS
+r12-import-custom,12,时间,10-19 12:15:00,10-19 12:15:00,10-19 12:15:00,PASS
+r12-import-custom,12,供应商 / 路由,WorkBuddy 自定义 · Route 12,WorkBuddy 自定义 · Route 12,WorkBuddy 自定义 · Route 12,PASS
+r12-import-custom,12,请求模型,wb-model-beta,wb-model-beta,wb-model-beta,PASS
+r12-import-custom,12,上游模型,wb-model-beta,wb-model-beta,wb-model-beta,PASS
+r12-import-custom,12,上游协议,—,—,—,PASS
+r12-import-custom,12,响应声明模型,wb-model-beta,wb-model-beta,wb-model-beta,PASS
+r12-import-custom,12,状态,HTTP — · 已记录,HTTP — · 已记录,HTTP — · 已记录,PASS
+r12-import-custom,12,用量,部分 · —,部分 · —,部分 · —,PASS
+r12-import-custom,12,Token,↓300 ↑— R— W— Σ—,↓300 ↑— R— W— Σ—,↓300 ↑— R— W— Σ—,PASS
+r12-import-custom,12,性能,总 — · 首内容 — · TTFB —,总 — · 首内容 — · TTFB —,总 — · 首内容 — · TTFB —,PASS
+r12-import-custom,12,缓存命中率,—,—,—,PASS
+r12-import-custom,12,tok/s,—,—,—,PASS
+r12-import-custom,12,估算费用,未定价,未定价,未定价,PASS
+r16-legacy-long-names,16,来源,代理,代理,代理,PASS
+r16-legacy-long-names,16,采集方式,代理采集,代理采集,代理采集,PASS
+r16-legacy-long-names,16,时间依据,请求开始时间,请求开始时间,请求开始时间,PASS
+r16-legacy-long-names,16,总量口径,记录报告值,记录报告值,记录报告值,PASS
+r16-legacy-long-names,16,WorkBuddy 点数,—,—,—,PASS
+r16-legacy-long-names,16,流式响应,是,是,是,PASS
+r16-legacy-long-names,16,请求标识,t07l05-0016-r16,t07l05-0016-r16,t07l05-0016-r16,PASS
+r16-legacy-long-names,16,时间,10-19 16:15:00,10-19 16:15:00,10-19 16:15:00,PASS
+r16-legacy-long-names,16,供应商 / 路由,供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 · Route 16,供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 · Route 16,供应商名称超长测试-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 · Route 16,PASS
+r16-legacy-long-names,16,请求模型,model-extremely-long-name-for-truncation-check-0123456789,model-extremely-long-name-for-truncation-check-0123456789,model-extremely-long-name-for-truncation-check-0123456789,PASS
+r16-legacy-long-names,16,上游模型,model-extremely-long-name-for-truncation-check-0123456789,model-extremely-long-name-for-truncation-check-0123456789,model-extremely-long-name-for-truncation-check-0123456789,PASS
+r16-legacy-long-names,16,上游协议,OpenAI Chat Completions,OpenAI Chat Completions,OpenAI Chat Completions,PASS
+r16-legacy-long-names,16,响应声明模型,model-extremely-long-name-for-truncation-check-0123456789,model-extremely-long-name-for-truncation-check-0123456789,model-extremely-long-name-for-truncation-check-0123456789,PASS
+r16-legacy-long-names,16,状态,HTTP 200 · 已完成,HTTP 200 · 已完成,HTTP 200 · 已完成,PASS
+r16-legacy-long-names,16,用量,完整 · —,完整 · —,完整 · —,PASS
+r16-legacy-long-names,16,Token,↓999 ↑1 R500 W499 Σ1000,↓999 ↑1 R500 W499 Σ1000,↓999 ↑1 R500 W499 Σ1000,PASS
+r16-legacy-long-names,16,性能,总 2.00 s · 首内容 300 ms · TTFB 100 ms,总 2.00 s · 首内容 300 ms · TTFB 100 ms,总 2.00 s · 首内容 300 ms · TTFB 100 ms,PASS
+r16-legacy-long-names,16,缓存命中率,50.1%,50.1%,50.1%,PASS
+r16-legacy-long-names,16,tok/s,0.6,0.6,0.6,PASS
+r16-legacy-long-names,16,估算费用,历史金额（来源不明）,历史金额（来源不明）,历史金额（来源不明）,PASS

@@ -1,0 +1,47 @@
+=== collected 2026-10-19 21:10:52 +0800
+--- worktree: /Users/shile/Downloads/git/workbuddy-proxy-ui-redesign
+--- branch: codex/ui-redesign
+--- HEAD: f39096ea1575958622802c151c7197f106d59f92
+--- expected HEAD: f39096ea1575958622802c151c7197f106d59f92
+--- baseline commit (T07 before): 796fcac86c4acc26d0b5fb51873b3a5de67414b5
+--- T07 change commit: f5e69e719a9b597b1bf57a952373bcb24ffddcdf
+
+--- git status --porcelain (non-docs paths must be empty)
+?? "docs/UI-UX-renew/WorkBuddy Proxy \350\247\206\350\247\211\351\207\215\350\256\276\350\256\241.pdf"
+?? "docs/UI-UX-renew/\344\270\212\346\270\270\345\215\217\350\256\256\344\270\213\346\213\211@2x.png"
+?? "docs/UI-UX-renew/\344\276\233\345\272\224\345\225\206\347\256\241\347\220\206@2x.png"
+?? "docs/UI-UX-renew/\345\215\217\350\256\256\351\200\211\351\241\271 \302\267 Anthropic@2x.png"
+?? "docs/UI-UX-renew/\345\215\217\350\256\256\351\200\211\351\241\271 \302\267 Gemini@2x.png"
+?? "docs/UI-UX-renew/\345\215\217\350\256\256\351\200\211\351\241\271 \302\267 OpenAI@2x.png"
+?? "docs/UI-UX-renew/\345\220\214\346\255\245 WorkBuddy \347\241\256\350\256\244@2x.png"
+?? "docs/UI-UX-renew/\346\210\220\346\234\254\345\256\232\344\273\267 \302\267 \351\207\207\351\233\206\344\270\216\345\255\230\345\202\250\357\274\210\345\261\225\345\274\200\357\274\211@2x.png"
+?? "docs/UI-UX-renew/\346\225\260\346\215\256\347\273\237\350\256\241@2x.png"
+?? "docs/UI-UX-renew/\346\226\260\345\273\272\344\273\267\346\240\274\350\247\204\345\210\231@2x.png"
+?? "docs/UI-UX-renew/\347\274\226\350\276\221\344\273\267\346\240\274@2x.png"
+?? "docs/UI-UX-renew/\347\274\226\350\276\221\346\250\241\345\236\213@2x.png"
+?? "docs/UI-UX-renew/\351\200\211\346\213\251\346\250\241\345\236\213\345\274\271\347\252\227@2x.png"
+
+--- product source diff (must be empty)
+--- product source diff name-only:
+--- untracked outside the new evidence dir (must list only pre-existing material)
+
+--- binaries
+efcc0a1f44491581d8867b34b1be2fac6f2d01e78df808f8571b7054fb5ed49c  gpui/target/release/workbuddy-proxy-gpui
+22cacc663af1293252611001e589b6bc49cde885234e42a5e6a200b53697d4ca  target/release/workbuddy-proxy
+-rwxr-xr-x@ 1 shile  staff  14633424 Oct 19 20:27 gpui/target/release/workbuddy-proxy-gpui
+-rwxr-xr-x@ 1 shile  staff   8379136 Oct 19 19:01 target/release/workbuddy-proxy
+--- task binary copies
+05fa35297b3e152f47d66e1ceab44b4d11688c4c84ac0d83ca6f470ea7a454c1  /Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/bin/gpui-pre-t07
+efcc0a1f44491581d8867b34b1be2fac6f2d01e78df808f8571b7054fb5ed49c  /Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/bin/gpui-current
+22cacc663af1293252611001e589b6bc49cde885234e42a5e6a200b53697d4ca  /Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001/bin/core-current
+
+--- source sha256 used for each binary
+pre-t07  gpui/src/usage_table.rs 03d7c7942a8ced5e9afe35b1a949e89a13f8422105a05c2898cdcbe9c6fe4657
+current  gpui/src/usage_table.rs 62e6c6ea6b88bf625bd8334184333932f00cefbe1bd91ebe07bc040be4b361c8
+
+--- disk
+/dev/disk3s3s1   460Gi    13Gi   200Gi     6%    484k  2.1G    0%   /
+--- rust toolchain
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+--- task tmp dir size
+ 70M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-l05-full-values-001

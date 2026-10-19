@@ -1,0 +1,104 @@
+{
+  "labels": [
+    "pre-t07",
+    "current"
+  ],
+  "views": {
+    "pre-t07": {
+      "all-sources": [
+        "10-all-sources-00",
+        "10-all-sources-01",
+        "10-all-sources-02",
+        "10-all-sources-03",
+        "10-all-sources-04",
+        "10-all-sources-05"
+      ],
+      "builtin": [
+        "20-builtin-00",
+        "20-builtin-01",
+        "20-builtin-02",
+        "20-builtin-03",
+        "20-builtin-04",
+        "20-builtin-05"
+      ],
+      "custom": [
+        "30-custom-00",
+        "30-custom-01",
+        "30-custom-02",
+        "30-custom-03",
+        "30-custom-04",
+        "30-custom-05"
+      ]
+    },
+    "current": {
+      "all-sources": [
+        "10-all-sources-00",
+        "10-all-sources-01",
+        "10-all-sources-02",
+        "10-all-sources-03",
+        "10-all-sources-04",
+        "10-all-sources-05"
+      ],
+      "builtin": [
+        "20-builtin-00",
+        "20-builtin-01",
+        "20-builtin-02",
+        "20-builtin-03",
+        "20-builtin-04",
+        "20-builtin-05"
+      ],
+      "custom": [
+        "30-custom-00",
+        "30-custom-01",
+        "30-custom-02",
+        "30-custom-03",
+        "30-custom-04",
+        "30-custom-05"
+      ]
+    }
+  },
+  "observations": {
+    "pre-t07": {
+      "rows_seen": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "screens": 18
+    },
+    "current": {
+      "rows_seen": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "screens": 18
+    }
+  }
+}
