@@ -1,0 +1,12 @@
+core:
+22cacc663af1293252611001e589b6bc49cde885234e42a5e6a200b53697d4ca  target/release/workbuddy-proxy
+  size=8379136 mtime=Oct 19 19:01:01 2026
+0.5.6
+gpui:
+efcc0a1f44491581d8867b34b1be2fac6f2d01e78df808f8571b7054fb5ed49c  gpui/target/release/workbuddy-proxy-gpui
+  size=14633424 mtime=Oct 19 19:04:29 2026
+0.5.6
+rustc:
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+worktree HEAD: 192f038ea5a993c4d8e922ede2bc97c4bc060022
+branch: codex/ui-redesign

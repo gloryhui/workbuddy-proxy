@@ -1,0 +1,1464 @@
+{
+  "pid": 56707,
+  "window": 8070,
+  "steps": [
+    {
+      "step": "01-requests-p1",
+      "action": "用量明细",
+      "note": "request log baseline: 60 rows at 20/page is 3 pages",
+      "press": "press title=用量明细 matches=1 pressed=1 frame=[550,431 58x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "page_size": 20,
+        "rows_page": "1/3",
+        "header": "供应商",
+        "first_row": "model-27",
+        "visible_labels": [
+          "model-27",
+          "Provider 25",
+          "model-27",
+          "Provider 25",
+          "model-26",
+          "Provider 25",
+          "model-26",
+          "Provider 25",
+          "model-25",
+          "Provider 25",
+          "model-25",
+          "Provider 24",
+          "model-74"
+        ]
+      },
+      "expect": {
+        "rows_page": "1/3",
+        "page_size": 20
+      },
+      "image": "shots/01-requests-p1.png",
+      "ocr": "ocr/01-requests-p1.json",
+      "ax_dump": "logs/ax-01-requests-p1.txt",
+      "passed": true
+    },
+    {
+      "step": "02-providers-p1-tokens",
+      "action": "供应商统计",
+      "note": "provider grouping, default sort=tokens",
+      "press": "press title=供应商统计 matches=1 pressed=1 frame=[616,431 69x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/02-providers-p1-tokens.png",
+      "ocr": "ocr/02-providers-p1-tokens.json",
+      "ax_dump": "logs/ax-02-providers-p1-tokens.txt",
+      "passed": true
+    },
+    {
+      "step": "03-providers-p2-tokens",
+      "action": "下一页",
+      "note": "provider page 2 (5 groups)",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1528,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 18",
+        "visible_labels": [
+          "Provider 18",
+          "Provider 17",
+          "Provider 09",
+          "Provider 08",
+          "Provider 04"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 18",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/03-providers-p2-tokens.png",
+      "ocr": "ocr/03-providers-p2-tokens.json",
+      "ax_dump": "logs/ax-03-providers-p2-tokens.txt",
+      "passed": true
+    },
+    {
+      "step": "04-providers-p2-next-boundary",
+      "action": "下一页",
+      "note": "Next on the last page",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1528,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 18",
+        "visible_labels": [
+          "Provider 18",
+          "Provider 17",
+          "Provider 09",
+          "Provider 08",
+          "Provider 04"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 18",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/04-providers-p2-next-boundary.png",
+      "ocr": "ocr/04-providers-p2-next-boundary.json",
+      "ax_dump": "logs/ax-04-providers-p2-next-boundary.txt",
+      "passed": true,
+      "next_button_info": "title=下一页 enabled [1528,431 46x19]\nmatches=1"
+    },
+    {
+      "step": "05-providers-back-p1",
+      "action": "上一页",
+      "note": "Previous returns to page 1",
+      "press": "press title=上一页 matches=1 pressed=1 frame=[1476,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/05-providers-back-p1.png",
+      "ocr": "ocr/05-providers-back-p1.json",
+      "ax_dump": "logs/ax-05-providers-back-p1.txt",
+      "passed": true
+    },
+    {
+      "step": "06-providers-sort-requests-p1",
+      "action": "请求数",
+      "note": "sort=requests re-queries providers",
+      "press": "press title=请求数 matches=1 pressed=1 frame=[850,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 25",
+        "visible_labels": [
+          "Provider 25",
+          "Provider 10",
+          "Provider 11",
+          "Provider 12",
+          "Provider 13",
+          "Provider 14",
+          "Provider 15",
+          "Provider 16",
+          "Provider 01",
+          "Provider 02",
+          "Provider 03",
+          "Provider 04"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 25",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/06-providers-sort-requests-p1.png",
+      "ocr": "ocr/06-providers-sort-requests-p1.json",
+      "ax_dump": "logs/ax-06-providers-sort-requests-p1.txt",
+      "passed": true
+    },
+    {
+      "step": "07-providers-p2-requests",
+      "action": "下一页",
+      "note": "provider requests page 2",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1528,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 20",
+        "visible_labels": [
+          "Provider 20",
+          "Provider 21",
+          "Provider 22",
+          "Provider 23",
+          "Provider 24"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 20",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/07-providers-p2-requests.png",
+      "ocr": "ocr/07-providers-p2-requests.json",
+      "ax_dump": "logs/ax-07-providers-p2-requests.txt",
+      "passed": true
+    },
+    {
+      "step": "08-providers-sort-tokens-reset-p1",
+      "action": "总 Token",
+      "note": "sort=tokens resets to page 1",
+      "press": "press title=总 Token matches=1 pressed=1 frame=[783,431 59x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/08-providers-sort-tokens-reset-p1.png",
+      "ocr": "ocr/08-providers-sort-tokens-reset-p1.json",
+      "ax_dump": "logs/ax-08-providers-sort-tokens-reset-p1.txt",
+      "passed": true
+    },
+    {
+      "step": "09-providers-size-50",
+      "action": "20 条/页",
+      "note": "50/page keeps 25 groups on one page",
+      "press": "press title=20 条/页 matches=1 pressed=1 frame=[1580,431 59x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 50,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 50
+      },
+      "image": "shots/09-providers-size-50.png",
+      "ocr": "ocr/09-providers-size-50.json",
+      "ax_dump": "logs/ax-09-providers-size-50.txt",
+      "passed": true
+    },
+    {
+      "step": "10-providers-size-100",
+      "action": "50 条/页",
+      "note": "100/page",
+      "press": "press title=50 条/页 matches=1 pressed=1 frame=[1580,431 59x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 100,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 100
+      },
+      "image": "shots/10-providers-size-100.png",
+      "ocr": "ocr/10-providers-size-100.json",
+      "ax_dump": "logs/ax-10-providers-size-100.txt",
+      "passed": true
+    },
+    {
+      "step": "11-providers-size-20",
+      "action": "100 条/页",
+      "note": "back to 20/page",
+      "press": "press title=100 条/页 matches=1 pressed=1 frame=[1575,431 64x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/11-providers-size-20.png",
+      "ocr": "ocr/11-providers-size-20.json",
+      "ax_dump": "logs/ax-11-providers-size-20.txt",
+      "passed": true
+    },
+    {
+      "step": "12-providers-p2-before-tab",
+      "action": "下一页",
+      "note": "leave providers on page 2",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1528,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 18",
+        "visible_labels": [
+          "Provider 18",
+          "Provider 17",
+          "Provider 09",
+          "Provider 08",
+          "Provider 04"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 18",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/12-providers-p2-before-tab.png",
+      "ocr": "ocr/12-providers-p2-before-tab.json",
+      "ax_dump": "logs/ax-12-providers-p2-before-tab.txt",
+      "passed": true
+    },
+    {
+      "step": "13-models-p1-tokens",
+      "action": "模型统计",
+      "note": "model grouping starts on page 1 with sort=tokens; provider cursor not reused",
+      "press": "press title=模型统计 matches=1 pressed=1 frame=[691,431 58x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 27,
+        "page_size": 20,
+        "header": "模型",
+        "first_row": "model-20",
+        "visible_labels": [
+          "model-20",
+          "model-16",
+          "model-15",
+          "model-14",
+          "model-13",
+          "model-02",
+          "model-27",
+          "model-26",
+          "model-25",
+          "model-24",
+          "model-23",
+          "model-22"
+        ]
+      },
+      "expect": {
+        "header": "模型",
+        "first_row": "model-20",
+        "groups_total": 27,
+        "page_size": 20
+      },
+      "image": "shots/13-models-p1-tokens.png",
+      "ocr": "ocr/13-models-p1-tokens.json",
+      "ax_dump": "logs/ax-13-models-p1-tokens.txt",
+      "passed": true
+    },
+    {
+      "step": "14-models-p2-tokens",
+      "action": "下一页",
+      "note": "model page 2 (7 groups)",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1528,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 27,
+        "page_size": 20,
+        "header": "模型",
+        "first_row": "model-03",
+        "visible_labels": [
+          "model-03",
+          "model-11",
+          "model-10",
+          "model-01",
+          "model-09",
+          "model-08",
+          "model-07"
+        ]
+      },
+      "expect": {
+        "header": "模型",
+        "first_row": "model-03",
+        "groups_total": 27,
+        "page_size": 20
+      },
+      "image": "shots/14-models-p2-tokens.png",
+      "ocr": "ocr/14-models-p2-tokens.json",
+      "ax_dump": "logs/ax-14-models-p2-tokens.txt",
+      "passed": true
+    },
+    {
+      "step": "15-models-back-p1",
+      "action": "上一页",
+      "note": "model Previous",
+      "press": "press title=上一页 matches=1 pressed=1 frame=[1476,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 27,
+        "page_size": 20,
+        "header": "模型",
+        "first_row": "model-20",
+        "visible_labels": [
+          "model-20",
+          "model-16",
+          "model-15",
+          "model-14",
+          "model-13",
+          "model-02",
+          "model-27",
+          "model-26",
+          "model-25",
+          "model-24",
+          "model-23",
+          "model-22"
+        ]
+      },
+      "expect": {
+        "header": "模型",
+        "first_row": "model-20",
+        "groups_total": 27,
+        "page_size": 20
+      },
+      "image": "shots/15-models-back-p1.png",
+      "ocr": "ocr/15-models-back-p1.json",
+      "ax_dump": "logs/ax-15-models-back-p1.txt",
+      "passed": true
+    },
+    {
+      "step": "16-models-sort-requests-p1",
+      "action": "请求数",
+      "note": "model sort=requests",
+      "press": "press title=请求数 matches=1 pressed=1 frame=[850,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 27,
+        "page_size": 20,
+        "header": "模型",
+        "first_row": "model-01",
+        "visible_labels": [
+          "model-01",
+          "model-02",
+          "model-03",
+          "model-04",
+          "model-05",
+          "model-06",
+          "model-07",
+          "model-08",
+          "model-00",
+          "model-10",
+          "model-11",
+          "model-12"
+        ]
+      },
+      "expect": {
+        "header": "模型",
+        "first_row": "model-01",
+        "groups_total": 27,
+        "page_size": 20
+      },
+      "image": "shots/16-models-sort-requests-p1.png",
+      "ocr": "ocr/16-models-sort-requests-p1.json",
+      "ax_dump": "logs/ax-16-models-sort-requests-p1.txt",
+      "passed": true
+    },
+    {
+      "step": "17-models-p2-requests",
+      "action": "下一页",
+      "note": "model requests page 2",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1528,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 27,
+        "page_size": 20,
+        "header": "模型",
+        "first_row": "model-21",
+        "visible_labels": [
+          "model-21",
+          "model-22",
+          "model-23",
+          "model-24",
+          "model-25",
+          "model-26",
+          "model-27"
+        ]
+      },
+      "expect": {
+        "header": "模型",
+        "first_row": "model-21",
+        "groups_total": 27,
+        "page_size": 20
+      },
+      "image": "shots/17-models-p2-requests.png",
+      "ocr": "ocr/17-models-p2-requests.json",
+      "ax_dump": "logs/ax-17-models-p2-requests.txt",
+      "passed": true
+    },
+    {
+      "step": "18-models-sort-tokens-reset-p1",
+      "action": "总 Token",
+      "note": "model sort=tokens resets page",
+      "press": "press title=总 Token matches=1 pressed=1 frame=[783,431 59x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 27,
+        "page_size": 20,
+        "header": "模型",
+        "first_row": "model-20",
+        "visible_labels": [
+          "model-20",
+          "model-16",
+          "model-15",
+          "model-14",
+          "model-13",
+          "model-02",
+          "model-27",
+          "model-26",
+          "model-25",
+          "model-24",
+          "model-23",
+          "model-22"
+        ]
+      },
+      "expect": {
+        "header": "模型",
+        "first_row": "model-20",
+        "groups_total": 27,
+        "page_size": 20
+      },
+      "image": "shots/18-models-sort-tokens-reset-p1.png",
+      "ocr": "ocr/18-models-sort-tokens-reset-p1.json",
+      "ax_dump": "logs/ax-18-models-sort-tokens-reset-p1.txt",
+      "passed": true
+    },
+    {
+      "step": "19-models-p2-again",
+      "action": "下一页",
+      "note": "leave models on page 2",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1528,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 27,
+        "page_size": 20,
+        "header": "模型",
+        "first_row": "model-03",
+        "visible_labels": [
+          "model-03",
+          "model-11",
+          "model-10",
+          "model-01",
+          "model-09",
+          "model-08",
+          "model-07"
+        ]
+      },
+      "expect": {
+        "header": "模型",
+        "first_row": "model-03",
+        "groups_total": 27,
+        "page_size": 20
+      },
+      "image": "shots/19-models-p2-again.png",
+      "ocr": "ocr/19-models-p2-again.json",
+      "ax_dump": "logs/ax-19-models-p2-again.txt",
+      "passed": true
+    },
+    {
+      "step": "20-providers-p1-after-models",
+      "action": "供应商统计",
+      "note": "switching grouping resets to page 1 (cursor stacks are not shared)",
+      "press": "press title=供应商统计 matches=1 pressed=1 frame=[614,431 69x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/20-providers-p1-after-models.png",
+      "ocr": "ocr/20-providers-p1-after-models.json",
+      "ax_dump": "logs/ax-20-providers-p1-after-models.txt",
+      "passed": true
+    },
+    {
+      "step": "21-requests-p1-isolation",
+      "action": "用量明细",
+      "note": "request log still starts on page 1",
+      "press": "press title=用量明细 matches=1 pressed=1 frame=[550,431 58x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "page_size": 20,
+        "rows_page": "1/3",
+        "header": "供应商",
+        "first_row": "model-27",
+        "visible_labels": [
+          "model-27",
+          "Provider 25",
+          "model-27",
+          "Provider 25",
+          "model-26",
+          "Provider 25",
+          "model-26",
+          "Provider 25",
+          "model-25",
+          "Provider 25",
+          "model-25",
+          "Provider 24",
+          "model-74"
+        ]
+      },
+      "expect": {
+        "rows_page": "1/3",
+        "page_size": 20
+      },
+      "image": "shots/21-requests-p1-isolation.png",
+      "ocr": "ocr/21-requests-p1-isolation.json",
+      "ax_dump": "logs/ax-21-requests-p1-isolation.txt",
+      "passed": true
+    },
+    {
+      "step": "22-requests-p2-isolation",
+      "action": "下一页",
+      "note": "request log Next moves only the request log",
+      "press": "press title=下一页 matches=1 pressed=1 frame=[1593,431 46x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "page_size": 20,
+        "rows_page": "2/3",
+        "header": "供应商",
+        "first_row": "model-16",
+        "visible_labels": [
+          "model-16",
+          "model-15",
+          "Provider 16",
+          "model-14",
+          "Provider 16",
+          "model-13",
+          "Provider 15",
+          "model-12",
+          "model-12"
+        ]
+      },
+      "expect": {
+        "rows_page": "2/3",
+        "page_size": 20
+      },
+      "image": "shots/22-requests-p2-isolation.png",
+      "ocr": "ocr/22-requests-p2-isolation.json",
+      "ax_dump": "logs/ax-22-requests-p2-isolation.txt",
+      "passed": true
+    },
+    {
+      "step": "23-providers-p1-after-rows-p2",
+      "action": "供应商统计",
+      "note": "the request-log page 2 does not move the grouping cursor",
+      "press": "press title=供应商统计 matches=1 pressed=1 frame=[616,431 69x19]",
+      "press_rc": 0,
+      "settled": true,
+      "state": {
+        "groups_total": 25,
+        "page_size": 20,
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "visible_labels": [
+          "Provider 07",
+          "Provider 03",
+          "Provider 02",
+          "Provider 01",
+          "Provider 24",
+          "Provider 06",
+          "Provider 05",
+          "Provider 25",
+          "Provider 16",
+          "Provider 15",
+          "Provider 14",
+          "Provider 13"
+        ]
+      },
+      "expect": {
+        "header": "供应商",
+        "first_row": "Provider 07",
+        "groups_total": 25,
+        "page_size": 20
+      },
+      "image": "shots/23-providers-p1-after-rows-p2.png",
+      "ocr": "ocr/23-providers-p1-after-rows-p2.json",
+      "ax_dump": "logs/ax-23-providers-p1-after-rows-p2.txt",
+      "passed": true
+    }
+  ],
+  "preflight": {
+    "pager_visible": true,
+    "next_button": [
+      "AXButton title=上一页 desc= value= enabled [1476,431 46x19]",
+      "AXButton title=下一页 desc= value= enabled [1528,431 46x19]"
+    ]
+  },
+  "passed": 23,
+  "total": 23,
+  "reanalysis": {
+    "reason": "Vision returned the traditional 分組 glyph in one capture",
+    "steps": {
+      "01-requests-p1": {
+        "state": {
+          "page_size": 20,
+          "rows_page": "1/3",
+          "header": "供应商",
+          "first_row": "model-27",
+          "visible_labels": [
+            "model-27",
+            "Provider 25",
+            "model-27",
+            "Provider 25",
+            "model-26",
+            "Provider 25",
+            "model-26",
+            "Provider 25",
+            "model-25",
+            "Provider 25",
+            "model-25",
+            "Provider 24",
+            "model-74"
+          ]
+        },
+        "expect": {
+          "rows_page": "1/3",
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "02-providers-p1-tokens": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "03-providers-p2-tokens": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 18",
+          "visible_labels": [
+            "Provider 18",
+            "Provider 17",
+            "Provider 09",
+            "Provider 08",
+            "Provider 04"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 18",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "04-providers-p2-next-boundary": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 18",
+          "visible_labels": [
+            "Provider 18",
+            "Provider 17",
+            "Provider 09",
+            "Provider 08",
+            "Provider 04"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 18",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "05-providers-back-p1": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "06-providers-sort-requests-p1": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 25",
+          "visible_labels": [
+            "Provider 25",
+            "Provider 10",
+            "Provider 11",
+            "Provider 12",
+            "Provider 13",
+            "Provider 14",
+            "Provider 15",
+            "Provider 16",
+            "Provider 01",
+            "Provider 02",
+            "Provider 03",
+            "Provider 04"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 25",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "07-providers-p2-requests": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 20",
+          "visible_labels": [
+            "Provider 20",
+            "Provider 21",
+            "Provider 22",
+            "Provider 23",
+            "Provider 24"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 20",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "08-providers-sort-tokens-reset-p1": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "09-providers-size-50": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 50,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 50
+        },
+        "passed": true
+      },
+      "10-providers-size-100": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 100,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 100
+        },
+        "passed": true
+      },
+      "11-providers-size-20": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "12-providers-p2-before-tab": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 18",
+          "visible_labels": [
+            "Provider 18",
+            "Provider 17",
+            "Provider 09",
+            "Provider 08",
+            "Provider 04"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 18",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "13-models-p1-tokens": {
+        "state": {
+          "groups_total": 27,
+          "page_size": 20,
+          "header": "模型",
+          "first_row": "model-20",
+          "visible_labels": [
+            "model-20",
+            "model-16",
+            "model-15",
+            "model-14",
+            "model-13",
+            "model-02",
+            "model-27",
+            "model-26",
+            "model-25",
+            "model-24",
+            "model-23",
+            "model-22"
+          ]
+        },
+        "expect": {
+          "header": "模型",
+          "first_row": "model-20",
+          "groups_total": 27,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "14-models-p2-tokens": {
+        "state": {
+          "groups_total": 27,
+          "page_size": 20,
+          "header": "模型",
+          "first_row": "model-03",
+          "visible_labels": [
+            "model-03",
+            "model-11",
+            "model-10",
+            "model-01",
+            "model-09",
+            "model-08",
+            "model-07"
+          ]
+        },
+        "expect": {
+          "header": "模型",
+          "first_row": "model-03",
+          "groups_total": 27,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "15-models-back-p1": {
+        "state": {
+          "groups_total": 27,
+          "page_size": 20,
+          "header": "模型",
+          "first_row": "model-20",
+          "visible_labels": [
+            "model-20",
+            "model-16",
+            "model-15",
+            "model-14",
+            "model-13",
+            "model-02",
+            "model-27",
+            "model-26",
+            "model-25",
+            "model-24",
+            "model-23",
+            "model-22"
+          ]
+        },
+        "expect": {
+          "header": "模型",
+          "first_row": "model-20",
+          "groups_total": 27,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "16-models-sort-requests-p1": {
+        "state": {
+          "groups_total": 27,
+          "page_size": 20,
+          "header": "模型",
+          "first_row": "model-01",
+          "visible_labels": [
+            "model-01",
+            "model-02",
+            "model-03",
+            "model-04",
+            "model-05",
+            "model-06",
+            "model-07",
+            "model-08",
+            "model-00",
+            "model-10",
+            "model-11",
+            "model-12"
+          ]
+        },
+        "expect": {
+          "header": "模型",
+          "first_row": "model-01",
+          "groups_total": 27,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "17-models-p2-requests": {
+        "state": {
+          "groups_total": 27,
+          "page_size": 20,
+          "header": "模型",
+          "first_row": "model-21",
+          "visible_labels": [
+            "model-21",
+            "model-22",
+            "model-23",
+            "model-24",
+            "model-25",
+            "model-26",
+            "model-27"
+          ]
+        },
+        "expect": {
+          "header": "模型",
+          "first_row": "model-21",
+          "groups_total": 27,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "18-models-sort-tokens-reset-p1": {
+        "state": {
+          "groups_total": 27,
+          "page_size": 20,
+          "header": "模型",
+          "first_row": "model-20",
+          "visible_labels": [
+            "model-20",
+            "model-16",
+            "model-15",
+            "model-14",
+            "model-13",
+            "model-02",
+            "model-27",
+            "model-26",
+            "model-25",
+            "model-24",
+            "model-23",
+            "model-22"
+          ]
+        },
+        "expect": {
+          "header": "模型",
+          "first_row": "model-20",
+          "groups_total": 27,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "19-models-p2-again": {
+        "state": {
+          "groups_total": 27,
+          "page_size": 20,
+          "header": "模型",
+          "first_row": "model-03",
+          "visible_labels": [
+            "model-03",
+            "model-11",
+            "model-10",
+            "model-01",
+            "model-09",
+            "model-08",
+            "model-07"
+          ]
+        },
+        "expect": {
+          "header": "模型",
+          "first_row": "model-03",
+          "groups_total": 27,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "20-providers-p1-after-models": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "21-requests-p1-isolation": {
+        "state": {
+          "page_size": 20,
+          "rows_page": "1/3",
+          "header": "供应商",
+          "first_row": "model-27",
+          "visible_labels": [
+            "model-27",
+            "Provider 25",
+            "model-27",
+            "Provider 25",
+            "model-26",
+            "Provider 25",
+            "model-26",
+            "Provider 25",
+            "model-25",
+            "Provider 25",
+            "model-25",
+            "Provider 24",
+            "model-74"
+          ]
+        },
+        "expect": {
+          "rows_page": "1/3",
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "22-requests-p2-isolation": {
+        "state": {
+          "page_size": 20,
+          "rows_page": "2/3",
+          "header": "供应商",
+          "first_row": "model-16",
+          "visible_labels": [
+            "model-16",
+            "model-15",
+            "Provider 16",
+            "model-14",
+            "Provider 16",
+            "model-13",
+            "Provider 15",
+            "model-12",
+            "model-12"
+          ]
+        },
+        "expect": {
+          "rows_page": "2/3",
+          "page_size": 20
+        },
+        "passed": true
+      },
+      "23-providers-p1-after-rows-p2": {
+        "state": {
+          "groups_total": 25,
+          "page_size": 20,
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "visible_labels": [
+            "Provider 07",
+            "Provider 03",
+            "Provider 02",
+            "Provider 01",
+            "Provider 24",
+            "Provider 06",
+            "Provider 05",
+            "Provider 25",
+            "Provider 16",
+            "Provider 15",
+            "Provider 14",
+            "Provider 13"
+          ]
+        },
+        "expect": {
+          "header": "供应商",
+          "first_row": "Provider 07",
+          "groups_total": 25,
+          "page_size": 20
+        },
+        "passed": true
+      }
+    },
+    "passed": 23,
+    "total": 23
+  }
+}

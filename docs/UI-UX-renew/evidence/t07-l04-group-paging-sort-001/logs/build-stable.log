@@ -1,0 +1,8 @@
+=== stable build core Mon Oct 19 19:54:01 CST 2026
+    Finished `release` profile [optimized] target(s) in 0.31s
+CORE_EXIT=0
+=== stable build gpui Mon Oct 19 19:54:01 CST 2026
+    Finished `release` profile [optimized] target(s) in 0.75s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+GPUI_EXIT=0

@@ -1,0 +1,20 @@
+-rwxr-xr-x@ 1 shile  staff  2774416 Oct 19 18:55 target/release/deps/libserde_derive-bef2d240a6faf685.dylib
+-rwxr-xr-x@ 1 shile  staff  2790864 Oct 19 18:52 target/release/deps/libserde_derive-f07b4a39624f82dc.dylib
+-rwxr-xr-x@ 1 shile  staff  1912480 Oct 19 18:55 target/release/deps/libtokio_macros-45f6aba56e397ef3.dylib
+-rwxr-xr-x@ 1 shile  staff  1928960 Oct 19 18:52 target/release/deps/libtokio_macros-51f9f532549ec167.dylib
+-rwxr-xr-x@ 1 shile  staff  2294768 Oct 19 18:55 target/release/deps/libyoke_derive-09aaa8bbb6ba3336.dylib
+-rwxr-xr-x@ 1 shile  staff  2311248 Oct 19 18:52 target/release/deps/libyoke_derive-26adbf5672a6c250.dylib
+-rwxr-xr-x@ 1 shile  staff  2510384 Oct 19 18:52 target/release/deps/libzerofrom_derive-6c77746e7ca662fc.dylib
+-rwxr-xr-x@ 1 shile  staff  2493888 Oct 19 18:55 target/release/deps/libzerofrom_derive-e75587f93851f2b2.dylib
+-rwxr-xr-x@ 1 shile  staff  2177744 Oct 19 18:52 target/release/deps/libzerovec_derive-528b706512528342.dylib
+-rwxr-xr-x@ 1 shile  staff  2161280 Oct 19 18:55 target/release/deps/libzerovec_derive-d30ec2e8d80433f7.dylib
+target/release/deps/libserde_derive-bef2d240a6faf685.dylib
+target/release/deps/libserde_derive-f07b4a39624f82dc.dylib
+target/release/deps/libtokio_macros-45f6aba56e397ef3.dylib
+target/release/deps/libtokio_macros-51f9f532549ec167.dylib
+target/release/deps/libyoke_derive-09aaa8bbb6ba3336.dylib
+target/release/deps/libyoke_derive-26adbf5672a6c250.dylib
+target/release/deps/libzerofrom_derive-6c77746e7ca662fc.dylib
+target/release/deps/libzerofrom_derive-e75587f93851f2b2.dylib
+target/release/deps/libzerovec_derive-528b706512528342.dylib
+target/release/deps/libzerovec_derive-d30ec2e8d80433f7.dylib

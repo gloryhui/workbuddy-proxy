@@ -1,0 +1,57 @@
+   Compiling tokio v1.53.2
+   Compiling zerofrom v0.1.8
+   Compiling ppv-lite86 v0.2.21
+   Compiling serde v1.0.229
+   Compiling libsqlite3-sys v0.38.2
+   Compiling sha2 v0.10.9
+   Compiling fs2 v0.4.3
+error: /Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/target/release/deps/libserde_derive-f07b4a39624f82dc.dylib: dlopen(/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/target/release/deps/libserde_derive-f07b4a39624f82dc.dylib, 0x0005): tried: '/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/target/release/deps/libserde_derive-f07b4a39624f82dc.dylib' (mis-aligned LINKEDIT string pool, fileOffset=0x002A3CA4), '/System/Volumes/Preboot/Cryptexes/OS/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/target/release/deps/libserde_derive-f07b4a39624f82dc.dylib' (no such file), '/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/target/release/deps/libserde_derive-f07b4a39624f82dc.dylib' (mis-aligned LINKEDIT string pool, fileOffset=0x002A3CA4)
+   --> /Users/shile/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs:274:1
+    |
+274 | extern crate serde_derive;
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0463]: can't find crate for `zerofrom_derive`
+  --> /Users/shile/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zerofrom-0.1.8/src/lib.rs:33:9
+   |
+33 | pub use zerofrom_derive::ZeroFrom;
+   |         ^^^^^^^^^^^^^^^ can't find crate
+
+error[E0432]: unresolved import `crate::ZeroFrom`
+ --> /Users/shile/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zerofrom-0.1.8/src/macro_impls.rs:9:5
+  |
+9 | use crate::ZeroFrom;
+  |     ^^^^^^^^^^^^^^^
+
+Some errors have detailed explanations: E0432, E0463.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `zerofrom` (lib) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error[E0463]: can't find crate for `tokio_macros`
+   --> /Users/shile/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.2/src/lib.rs:664:13
+    |
+664 |     pub use tokio_macros::select_priv_declare_output_enum;
+    |             ^^^^^^^^^^^^ can't find crate
+
+error[E0463]: can't find crate for `tokio_macros`
+   --> /Users/shile/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.2/src/lib.rs:670:13
+    |
+670 |     pub use tokio_macros::select_priv_clean_pattern;
+    |             ^^^^^^^^^^^^ can't find crate
+
+error[E0463]: can't find crate for `tokio_macros`
+   --> /Users/shile/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.2/src/lib.rs:685:21
+    |
+685 |             pub use tokio_macros::main_rt as main;
+    |                     ^^^^^^^^^^^^ can't find crate
+
+error[E0463]: can't find crate for `tokio_macros`
+   --> /Users/shile/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.2/src/lib.rs:688:21
+    |
+688 |             pub use tokio_macros::test_rt as test;
+    |                     ^^^^^^^^^^^^ can't find crate
+
+error: could not compile `serde` (lib) due to 1 previous error
+For more information about this error, try `rustc --explain E0463`.
+error: could not compile `tokio` (lib) due to 4 previous errors
+EXIT=101
