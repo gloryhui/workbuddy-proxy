@@ -124,7 +124,10 @@ pub mod radius {
 
 /// Control, row and container dimensions from DESIGN_SPEC §1.3 and §2.
 pub mod size {
-    pub const SIDEBAR_WIDTH: f32 = 224.;
+    /// 256 keeps the three provider actions on one line: the row needs
+    /// ~193px (widest label is the English "Delete"), plus footer padding,
+    /// card border and both 18px sidebar insets.
+    pub const SIDEBAR_WIDTH: f32 = 256.;
     pub const RIGHT_RAIL_WIDTH: f32 = 300.;
     pub const TOP_ICON_ROW_HEIGHT: f32 = 36.;
     pub const STATUS_BAR_HEIGHT: f32 = 30.;

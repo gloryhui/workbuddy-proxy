@@ -182,11 +182,15 @@ fn stats_heading(text: &'static str) -> Div {
         .child(text)
 }
 
+/// Card padding from DESIGN_SPEC §3 (16–20). `stats_card` applies it and the
+/// filter card's width probe subtracts exactly the same value, so the KPI grid
+/// is budgeted against the width it really gets.
+const CARD_PAD: f32 = 16.;
+
 fn stats_card(id: &'static str) -> Stateful<Div> {
     // Unlike the model-management `card()`, statistics cards size to their
-    // content; only the chart and the table get explicit heights. DESIGN_SPEC
-    // §3 fixes card padding at 16–20, so 16 replaces the shared 12.
-    crate::ui_components::content_card(id).p(px(16.))
+    // content; only the chart and the table get explicit heights.
+    crate::ui_components::content_card(id).p(px(CARD_PAD))
 }
 
 pub struct Statistics {
@@ -2661,8 +2665,14 @@ impl Statistics {
                 move |bounds, _, cx| {
                     // Content width excludes the specified padding and both
                     // one-point card borders.
+                    // The U04 filter budget still assumes
+                    // `source_filter::PADDING`, while statistics cards are
+                    // padded by CARD_PAD; the difference is subtracted here so
+                    // the KPI grid is budgeted against the width it really
+                    // gets instead of silently over-reporting it.
                     let available = f32::from(bounds.size.width)
                         - (crate::source_filter::PADDING * 2) as f32
+                        - (CARD_PAD - crate::source_filter::PADDING as f32) * 2.
                         - 2.;
                     let _ = owner.update(cx, |this, cx| {
                         if (this.filters_width - available).abs() > 0.5 {
