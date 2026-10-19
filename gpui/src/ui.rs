@@ -7,16 +7,13 @@ use crate::{
 use gpui_kit::component::{
     Disableable, ElementExt, Icon, IconName, Selectable, Sizable, TitleBar, WindowExt,
     button::{Button, ButtonVariants},
-    checkbox::Checkbox,
-    dialog::{DialogContent, DialogFooter},
     input::{Input, InputEvent, InputState, Textarea, TextareaState},
     label::Label,
     list::ListItem,
     menu::{DropdownMenu, PopupMenuItem},
-    select::{SearchableVec, Select, SelectEvent, SelectItem, SelectState},
+    select::{SearchableVec, SelectEvent, SelectItem, SelectState},
     sidebar::{Sidebar, SidebarMenu, SidebarMenuItem},
-    table::{DataTable, TableState},
-    tag::Tag,
+    table::TableState,
 };
 use gpui_kit::prelude::FluentBuilder;
 use gpui_kit::*;
@@ -222,18 +219,7 @@ fn label(s: impl Into<SharedString>) -> Label {
 // Layout surfaces are not interactive controls. GroupBox adds nested intrinsic-
 // height wrappers, so flexible table/log panels use GPUI layout containers.
 fn card(id: &'static str) -> Stateful<Div> {
-    div()
-        .id(id)
-        .flex()
-        .flex_col()
-        .min_h_0()
-        .h_full()
-        .bg(rgb(0xffffff))
-        .border_1()
-        .border_color(rgb(BORDER))
-        .rounded(px(12.))
-        .p_4()
-        .gap_3()
+    crate::ui_components::panel_card(id)
 }
 
 impl Proxy {
@@ -321,29 +307,30 @@ impl Proxy {
         let items = choices(self.zh, true);
         let selected = self.cfg.language.clone();
         let owner = cx.entity().downgrade();
-        Button::new("language")
-            .with_size(px(APP_CONTROL_SIZE))
-            .ghost()
-            .icon(Icon::default().path("icons/globe.svg"))
-            .tooltip(self.t("切换界面语言", "Change interface language"))
-            .accessibility_label(self.t("界面语言", "Interface language"))
-            .disabled(self.busy)
-            .dropdown_menu_with_anchor(Anchor::TopRight, move |mut menu, _, _| {
-                for item in &items {
-                    let code = item.code.clone();
-                    let owner = owner.clone();
-                    menu = menu.item(
-                        PopupMenuItem::new(item.title.clone())
-                            .checked(code == selected)
-                            .on_click(move |_, window, cx| {
-                                let _ = owner
-                                    .update(cx, |this, cx| this.set_language(&code, window, cx));
-                            }),
-                    );
-                }
-                menu.min_w(px(180.))
-            })
-            .into_any_element()
+        crate::ui_components::icon_button_sized(
+            "language",
+            APP_CONTROL_SIZE,
+            Icon::default().path("icons/globe.svg"),
+            self.t("切换界面语言", "Change interface language"),
+            self.t("界面语言", "Interface language"),
+            self.busy,
+        )
+        .dropdown_menu_with_anchor(Anchor::TopRight, move |mut menu, _, _| {
+            for item in &items {
+                let code = item.code.clone();
+                let owner = owner.clone();
+                menu = menu.item(
+                    PopupMenuItem::new(item.title.clone())
+                        .checked(code == selected)
+                        .on_click(move |_, window, cx| {
+                            let _ =
+                                owner.update(cx, |this, cx| this.set_language(&code, window, cx));
+                        }),
+                );
+            }
+            menu.min_w(px(180.))
+        })
+        .into_any_element()
     }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
         div()
@@ -353,14 +340,11 @@ impl Proxy {
             .items_center()
             .gap_3()
             .child(
-                Button::new("autostart")
-                    .with_size(px(APP_CONTROL_SIZE))
-                    .ghost()
-                    .icon(Icon::default().path("icons/autostart.svg"))
-                    .selected(self.cfg.autostart)
-                    .toggled(self.cfg.autostart)
-                    .when(self.cfg.autostart, |button| button.primary())
-                    .tooltip(if self.cfg.autostart {
+                crate::ui_components::icon_button_sized(
+                    "autostart",
+                    APP_CONTROL_SIZE,
+                    Icon::default().path("icons/autostart.svg"),
+                    if self.cfg.autostart {
                         self.t(
                             "开机启动：已开启（点击关闭）",
                             "Launch at login: on (click to disable)",
@@ -370,33 +354,38 @@ impl Proxy {
                             "开机启动：已关闭（点击开启）",
                             "Launch at login: off (click to enable)",
                         )
-                    })
-                    .accessibility_label(self.t("开机启动", "Launch at login"))
-                    .disabled(self.busy)
-                    .on_click(cx.listener(|this, _, _, cx| {
-                        let enabled = !this.cfg.autostart;
-                        this.send(
-                            "autostart",
-                            vec![json!({"command":"autostart","enabled":enabled})],
-                            cx,
-                        );
-                    })),
+                    },
+                    self.t("开机启动", "Launch at login"),
+                    self.busy,
+                )
+                .selected(self.cfg.autostart)
+                .toggled(self.cfg.autostart)
+                .when(self.cfg.autostart, |button| button.primary())
+                .on_click(cx.listener(|this, _, _, cx| {
+                    let enabled = !this.cfg.autostart;
+                    this.send(
+                        "autostart",
+                        vec![json!({"command":"autostart","enabled":enabled})],
+                        cx,
+                    );
+                })),
             )
             .child(
-                Button::new("check-update")
-                    .with_size(px(APP_CONTROL_SIZE))
-                    .ghost()
-                    .icon(IconName::RefreshCw)
-                    .tooltip(self.t("检查更新", "Check updates"))
-                    .accessibility_label(self.t("检查更新", "Check updates"))
-                    .disabled(self.busy)
-                    .on_click(cx.listener(|this, _, _, cx| {
-                        this.send(
-                            "check_update",
-                            vec![json!({"command":"check_update","force":true})],
-                            cx,
-                        )
-                    })),
+                crate::ui_components::named_icon_button_sized(
+                    "check-update",
+                    APP_CONTROL_SIZE,
+                    IconName::RefreshCw,
+                    self.t("检查更新", "Check updates"),
+                    self.t("检查更新", "Check updates"),
+                    self.busy,
+                )
+                .on_click(cx.listener(|this, _, _, cx| {
+                    this.send(
+                        "check_update",
+                        vec![json!({"command":"check_update","force":true})],
+                        cx,
+                    )
+                })),
             )
             .child(
                 div()
@@ -409,37 +398,40 @@ impl Proxy {
                     .child(self.language_menu(cx)),
             )
             .child(
-                Button::new("restore-window-size")
-                    .with_size(px(APP_CONTROL_SIZE))
-                    .ghost()
-                    .icon(Icon::default().path("icons/restore-size.svg"))
-                    .tooltip(self.t(
+                crate::ui_components::icon_button_sized(
+                    "restore-window-size",
+                    APP_CONTROL_SIZE,
+                    Icon::default().path("icons/restore-size.svg"),
+                    self.t(
                         "恢复默认窗口尺寸（1440 × 900）",
                         "Restore default window size (1440 × 900)",
-                    ))
-                    .accessibility_label(self.t("恢复默认窗口尺寸", "Restore default window size"))
-                    .disabled(self.resetting_window)
-                    .on_click(
-                        cx.listener(|this, _, window, cx| this.restore_window_size(window, cx)),
                     ),
+                    self.t("恢复默认窗口尺寸", "Restore default window size"),
+                    self.resetting_window,
+                )
+                .on_click(cx.listener(|this, _, window, cx| this.restore_window_size(window, cx))),
             )
             .child(
-                Button::new("project-homepage")
-                    .with_size(px(APP_CONTROL_SIZE))
-                    .ghost()
-                    .icon(Icon::default().path("icons/github.svg"))
-                    .tooltip(self.t("GitHub 项目主页", "GitHub project"))
-                    .accessibility_label(self.t("GitHub 项目主页", "GitHub project"))
-                    .on_click(|_, _, cx| cx.open_url(PROJECT_URL)),
+                crate::ui_components::icon_button_sized(
+                    "project-homepage",
+                    APP_CONTROL_SIZE,
+                    Icon::default().path("icons/github.svg"),
+                    self.t("GitHub 项目主页", "GitHub project"),
+                    self.t("GitHub 项目主页", "GitHub project"),
+                    false,
+                )
+                .on_click(|_, _, cx| cx.open_url(PROJECT_URL)),
             )
             .child(
-                Button::new("submit-feedback")
-                    .with_size(px(APP_CONTROL_SIZE))
-                    .ghost()
-                    .icon(Icon::default().path("icons/feedback.svg"))
-                    .tooltip(self.t("提交反馈", "Submit feedback"))
-                    .accessibility_label(self.t("提交反馈", "Submit feedback"))
-                    .on_click(|_, _, cx| cx.open_url(FEEDBACK_URL)),
+                crate::ui_components::icon_button_sized(
+                    "submit-feedback",
+                    APP_CONTROL_SIZE,
+                    Icon::default().path("icons/feedback.svg"),
+                    self.t("提交反馈", "Submit feedback"),
+                    self.t("提交反馈", "Submit feedback"),
+                    false,
+                )
+                .on_click(|_, _, cx| cx.open_url(FEEDBACK_URL)),
             )
             .into_any_element()
     }
@@ -486,19 +478,16 @@ impl Proxy {
         }).detach();
     }
     fn effort_menu(&self) -> AnyElement {
-        Select::new(&self.effort_select)
+        crate::ui_components::select(&self.effort_select, self.busy)
             .id("effort")
-            .small()
             .w(px(220.))
             .menu_width(px(240.))
             .accessibility_label(self.t("思考强度", "Thinking effort"))
-            .disabled(self.busy)
             .into_any_element()
     }
     fn preset_menu(&self) -> AnyElement {
-        Select::new(&self.preset_select)
+        crate::ui_components::select(&self.preset_select, self.busy)
             .id("provider-preset")
-            .small()
             .w_full()
             .menu_width(px(420.))
             .search_placeholder(self.t(
@@ -506,7 +495,6 @@ impl Proxy {
                 "Search providers, regions or plans",
             ))
             .accessibility_label(self.t("供应商预设", "Provider preset"))
-            .disabled(self.busy)
             .into_any_element()
     }
     fn sync_preset(&mut self, window: &mut Window, cx: &mut Context<Self>) {
@@ -1787,7 +1775,12 @@ impl Proxy {
                         FontWeight::NORMAL
                     })
                     .disable(self.busy)
-                    .suffix(move |_, _| Tag::secondary().small().child(count.to_string()))
+                    .suffix(move |_, _| {
+                        crate::ui_components::tag(
+                            crate::ui_components::TagKind::Secondary,
+                            count.to_string(),
+                        )
+                    })
                     .on_click(cx.listener(move |this, _, window, cx| {
                         this.switch_page(Page::Providers, window, cx);
                         this.switch_provider(id.clone(), window, cx)
@@ -1962,13 +1955,13 @@ impl Proxy {
         card("provider-settings").flex_1().min_w_0().min_h_0().gap_3().child(div().flex().items_center().justify_between().child(div().text_size(px(15.)).font_weight(FontWeight::SEMIBOLD).child(self.t("连接设置","Connection settings"))).child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("修改后保存","Save changes to apply"))))
         .child(div().id("provider-form").flex().flex_col().flex_1().min_h_0().overflow_y_scroll().gap_3()
         .child(div().child(label(self.t("供应商预设", "Provider preset"))).child(self.preset_menu()))
-        .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(Input::new(&self.name).disabled(self.busy))).child(div().flex_1().child(label("API Key")).child(Input::new(&self.key).mask_toggle().disabled(self.busy))))
-        .child(div().flex().gap_3().items_center().child(label(self.t("上游协议","Upstream protocol"))).child(Select::new(&self.protocol_select).w(px(260.)).accessibility_label(self.t("上游协议","Upstream protocol")).disabled(self.busy))
+        .child(div().flex().gap_3().child(div().w_2_5().child(label(self.t("供应商名称","Provider name"))).child(crate::ui_components::text_input(&self.name, self.busy))).child(div().flex_1().child(label("API Key")).child(crate::ui_components::masked_input(&self.key, self.busy))))
+        .child(div().flex().gap_3().items_center().child(label(self.t("上游协议","Upstream protocol"))).child(crate::ui_components::select(&self.protocol_select, self.busy).w(px(260.)).accessibility_label(self.t("上游协议","Upstream protocol")))
             .child(Button::new("protocol-options").small().label(self.t("协议选项","Protocol options")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|{
                 let draft=this.drafts.providers.get(&this.selected()).cloned().unwrap_or_default();
                 this.protocol_options.load(draft.protocol,&draft.protocol_settings,window,cx);this.protocol_open=true;this.error=false;cx.notify();
             }))))
-        .child(div().child(label(self.t("API 地址","API URL"))).child(Input::new(&self.url).disabled(self.busy)))
+        .child(div().child(label(self.t("API 地址","API URL"))).child(crate::ui_components::text_input(&self.url, self.busy)))
         .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.url_hint()))
         .child(div().flex().items_center().justify_between().pt_1().child(div().font_weight(FontWeight::SEMIBOLD).child(self.t("模型列表","Models"))).child(div().flex().gap_2().child(Button::new("fetch").small().primary().outline().icon(IconName::RefreshCw).label(self.t("获取模型","Fetch models")).disabled(self.busy).on_click(cx.listener(|this,_,_,cx|{this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string(),"protocol":this.protocol_payload()["protocol"],"protocol_settings":this.protocol_payload()["protocol_settings"]})],cx);})))
         .child(Button::new("model-add").small().ghost().icon(IconName::Plus).tooltip(self.t("添加模型","Add model")).accessibility_label(self.t("添加模型","Add model")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.edit(this.models.len(),true,window,cx))))
@@ -1981,12 +1974,12 @@ impl Proxy {
                     if this.table_width != width { this.table_width = width; cx.notify(); }
                 });
             }
-        }).child(DataTable::new(&self.model_table).small().header_row_height(px(32.)).scrollbar_visible(true,true)))
+        }).child(crate::ui_components::table(&self.model_table)))
         .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t("Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑","Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit")))
         )
         .child(div().flex_shrink_0().flex().items_center().gap_3().child(div().text_size(px(12.)).text_color(rgb(MUTED)).child(self.t("思考强度","Thinking effort"))).child(self.effort_menu()))
-        .child(div().flex_shrink_0().flex().gap_2().child(Button::new("save").small().primary().icon(IconName::Check).label(self.t("保存","Save")).disabled(self.busy).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
-        .child(Button::new("test").small().primary().outline().label(self.t("测试连接","Test connection")).disabled(self.busy||self.models.is_empty()).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
+        .child(div().flex_shrink_0().flex().gap_2().child(crate::ui_components::button("save", crate::ui_components::ButtonKind::Primary, self.t("保存","Save"), self.busy, self.busy).icon(IconName::Check).on_click(cx.listener(|this,_,window,cx|this.save(&Save,window,cx))))
+        .child(crate::ui_components::button("test", crate::ui_components::ButtonKind::Outline, self.t("测试连接","Test connection"), self.busy||self.models.is_empty(), self.busy).on_click(cx.listener(|this,_,_,cx|this.test(cx))))).into_any_element()
     }
     fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
         card("global-settings")
@@ -2063,7 +2056,7 @@ impl Proxy {
                                     .text_size(px(12.))
                                     .font_weight(FontWeight::SEMIBOLD),
                             )
-                            .child(Tag::secondary().small().child(self.t("运行中", "Running"))),
+                            .child(crate::ui_components::tag(crate::ui_components::TagKind::Secondary, self.t("运行中", "Running"))),
                     )
                     .child(
                         Label::new(self.proxy_address.clone())
@@ -2085,7 +2078,7 @@ impl Proxy {
                             .child(
                                 div()
                                     .flex_1()
-                                    .child(Input::new(&self.port).small().disabled(self.busy)),
+                                    .child(crate::ui_components::compact_input(&self.port, self.busy)),
                             )
                             .child(
                                 Button::new("port-apply")
@@ -2220,21 +2213,16 @@ impl Proxy {
     }
     fn dialog_body(&mut self, window: &Window, cx: &mut Context<Self>) -> Option<AnyElement> {
         let content = if self.protocol_open {
-            DialogContent::new()
-                .w_full()
-                .h((window.viewport_size().height - px(210.)).clamp(px(360.), px(570.)))
-                .gap_3()
-                .child(
-                    div()
-                        .text_lg()
-                        .child(self.t("上游协议选项", "Upstream protocol options")),
-                )
+            crate::ui_components::dialog_body_sized(window.viewport_size().height, 210., 360., 570.)
+                .child(crate::ui_components::dialog_title(
+                    self.t("上游协议选项", "Upstream protocol options"),
+                ))
                 .child(self.protocol_options.render(self.zh))
                 .when(self.error, |this| {
                     this.child(Label::new(self.status.clone()).text_color(rgb(0xc03c45)))
                 })
                 .child(
-                    DialogFooter::new().child(
+                    crate::ui_components::dialog_footer().child(
                         Button::new("protocol-apply")
                             .primary()
                             .label(self.t("应用到草稿", "Apply to draft"))
@@ -2249,29 +2237,14 @@ impl Proxy {
         } else if self.picker.is_some() {
             self.picker_dialog(cx)
         } else if self.editing.is_some() {
-            DialogContent::new()
-                .w_full()
-                .h((window.viewport_size().height - px(210.)).clamp(px(360.), px(570.)))
-                .gap_3()
+            crate::ui_components::dialog_body_sized(window.viewport_size().height, 210., 360., 570.)
+                .child(crate::ui_components::dialog_title(if self.new_model {
+                    self.t("添加模型", "Add model")
+                } else {
+                    self.t("编辑模型", "Edit model")
+                }))
                 .child(
-                    div()
-                        .text_lg()
-                        .font_weight(FontWeight::SEMIBOLD)
-                        .child(if self.new_model {
-                            self.t("添加模型", "Add model")
-                        } else {
-                            self.t("编辑模型", "Edit model")
-                        }),
-                )
-                .child(
-                    div()
-                        .id("model-editor-fields")
-                        .flex()
-                        .flex_col()
-                        .gap_3()
-                        .flex_1()
-                        .min_h_0()
-                        .overflow_y_scroll()
+                    crate::ui_components::scrollable_form("model-editor-fields")
                         .child(
                             div()
                                 .child(label(self.t("显示名", "Display name")))
@@ -2292,7 +2265,7 @@ impl Proxy {
                     )
                 })
                 .child(
-                    DialogFooter::new()
+                    crate::ui_components::dialog_footer()
                         .child(
                             Button::new("edit-cancel")
                                 .label(self.t("取消", "Cancel"))
@@ -2309,14 +2282,14 @@ impl Proxy {
                 )
                 .into_any_element()
         } else if let Some(port) = self.pending_port {
-            DialogContent::new().w_full().gap_4()
+            crate::ui_components::dialog_body().w_full().gap_4()
                 .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("修改端口并重启 WorkBuddy？", "Change port and restart WorkBuddy?")))
                 .child(Label::new(format!("{} → 127.0.0.1:{port}", self.proxy_address)).text_color(rgb(INK)))
                 .child(Label::new(self.t(
                     "更改端口后必须重启 WorkBuddy，让现有会话读取新的连接地址。重启会中断正在执行的任务，请先保存工作。取消不会应用端口变更。",
                     "WorkBuddy must restart to let existing conversations read the new address. This interrupts running tasks; save your work first. Cancel leaves the port unchanged.")).text_color(rgb(MUTED)))
                 .when(!cfg!(target_os = "macos"), |this| this.child(Label::new(self.t("此平台暂不支持自动重启，无法执行此端口变更。", "Automatic restart is unavailable on this platform; the port cannot be changed here.")).text_color(rgb(MUTED))))
-                .child(DialogFooter::new()
+                .child(crate::ui_components::dialog_footer()
                     .child(Button::new("port-restart-confirm").primary().label(self.t("同意并重启", "Agree and restart"))
                         .disabled(self.busy || !cfg!(target_os = "macos"))
                         .on_click(cx.listener(|this, _, _, cx| this.confirm_port(cx))))
@@ -2325,13 +2298,13 @@ impl Proxy {
                 .into_any_element()
         } else if self.startup_sync_open {
             let report = self.startup_report.as_ref()?;
-            DialogContent::new().w_full().gap_4()
+            crate::ui_components::dialog_body().w_full().gap_4()
                 .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("WorkBuddy 连接地址不一致", "WorkBuddy endpoint mismatch")))
                 .child(Label::new(format!("{} {}", self.t("当前代理地址：", "Current proxy:"), report.expected_address)).text_color(rgb(INK)))
                 .child(Label::new(format!("{} {} / {} · {}", self.t("地址不一致的模型：", "Mismatched models:"), report.mismatch_count, report.checked_count, report.actual_addresses.join(", "))).text_color(rgb(MUTED)))
                 .child(Label::new(self.t("是否按已保存的供应商配置同步并重启 WorkBuddy？重启会中断正在执行的任务，请先保存工作。取消将保留现有配置。", "Sync saved provider settings and restart WorkBuddy? Restart interrupts running tasks; save your work first. Cancel keeps the existing configuration.")).text_color(rgb(MUTED)))
                 .when(!cfg!(target_os = "macos"), |this| this.child(Label::new(self.t("此平台暂不支持自动重启，请手动同步后重启 WorkBuddy。", "Automatic restart is unavailable on this platform; sync and restart WorkBuddy manually.")).text_color(rgb(MUTED))))
-                .child(DialogFooter::new()
+                .child(crate::ui_components::dialog_footer()
                     .child(Button::new("startup-sync-restart").primary().label(self.t("同步并重启 WorkBuddy", "Sync and restart WorkBuddy"))
                         .disabled(self.busy || !cfg!(target_os = "macos"))
                         .on_click(cx.listener(|this, _, _, cx| this.confirm_startup_sync(cx))))
@@ -2339,7 +2312,7 @@ impl Proxy {
                         .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
                 .into_any_element()
         } else if self.unsync_open {
-            DialogContent::new().w_full().gap_4()
+            crate::ui_components::dialog_body().w_full().gap_4()
                 .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("取消同步 WorkBuddy", "Unsync WorkBuddy")))
                 .child(Label::new(self.t(
                     "将移除代理同步的模型，并恢复已备份的原有条目。重启 WorkBuddy 可让现有会话读取修改，但会中断正在执行的任务，请先保存工作。",
@@ -2347,7 +2320,7 @@ impl Proxy {
                 .when(!cfg!(target_os = "macos"), |this| this.child(Label::new(self.t(
                     "此平台暂不支持自动重启；仅移除后请手动重开 WorkBuddy。",
                     "Automatic restart is unavailable on this platform; remove the models, then reopen WorkBuddy manually.")).text_color(rgb(MUTED))))
-                .child(DialogFooter::new()
+                .child(crate::ui_components::dialog_footer()
                     .child(Button::new("unsync-restart").primary().label(self.t("移除并重启", "Remove and restart"))
                         .disabled(self.busy || !cfg!(target_os = "macos"))
                         .on_click(cx.listener(|this, _, _, cx| this.unsync(true, cx))))
@@ -2357,7 +2330,7 @@ impl Proxy {
                         .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
                 .into_any_element()
         } else if self.sync_open {
-            DialogContent::new()
+            crate::ui_components::dialog_body()
                 .w_full().gap_4()
                 .child(div().text_lg().font_weight(FontWeight::SEMIBOLD)
                     .child(self.t("同步 WorkBuddy", "Sync WorkBuddy")))
@@ -2369,7 +2342,7 @@ impl Proxy {
                     "此平台暂不支持自动重启；仅同步后请手动重开 WorkBuddy。",
                     "Automatic restart is not supported on this platform yet. Sync, then reopen WorkBuddy manually.",
                 )).text_color(rgb(MUTED))))
-                .child(DialogFooter::new()
+                .child(crate::ui_components::dialog_footer()
                     .child(Button::new("sync-restart").primary()
                         .label(self.t("同步并重启", "Sync and restart"))
                         .disabled(self.busy || !cfg!(target_os = "macos"))
@@ -2382,8 +2355,8 @@ impl Proxy {
                         .on_click(cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)))))
                 .into_any_element()
         } else if self.delete_open {
-            DialogContent::new().w_full().gap_4().child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("删除供应商？","Delete provider?"))).child(div().text_color(rgb(MUTED)).child(self.t("将移除此供应商及其保存的 Key 和模型。","This removes the provider and its saved key and models.")))
-            .child(DialogFooter::new().child(Button::new("delete-cancel").label(self.t("取消","Cancel")).on_click(cx.listener(|this,_,window,cx|this.dismiss(&Dismiss,window,cx)))).child(Button::new("delete-confirm").danger().label(self.t("删除","Delete")).on_click(cx.listener(|this,_,_,cx|{this.delete_open=false;this.send("delete",vec![json!({"command":"delete","provider_id":this.selected()})],cx);})))) .into_any_element()
+            crate::ui_components::dialog_body().w_full().gap_4().child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(self.t("删除供应商？","Delete provider?"))).child(div().text_color(rgb(MUTED)).child(self.t("将移除此供应商及其保存的 Key 和模型。","This removes the provider and its saved key and models.")))
+            .child(crate::ui_components::dialog_footer().child(Button::new("delete-cancel").label(self.t("取消","Cancel")).on_click(cx.listener(|this,_,window,cx|this.dismiss(&Dismiss,window,cx)))).child(Button::new("delete-confirm").danger().label(self.t("删除","Delete")).on_click(cx.listener(|this,_,_,cx|{this.delete_open=false;this.send("delete",vec![json!({"command":"delete","provider_id":this.selected()})],cx);})))) .into_any_element()
         } else {
             return None;
         };
@@ -2395,7 +2368,7 @@ impl Proxy {
         let count = filtered.len();
         let chosen = self.picked.len();
         let total = self.picker.as_ref().map_or(0, Vec::len);
-        DialogContent::new()
+        crate::ui_components::dialog_body()
             .w_full()
             .h(px(550.))
             .gap_3()
@@ -2513,23 +2486,24 @@ impl Proxy {
                                             .h(px(36.))
                                             .accessibility_label(id.clone())
                                             .child(
-                                                Checkbox::new(("candidate-check", i))
-                                                    .accessibility_id(format!("candidate-{i}"))
-                                                    .label(id)
-                                                    .checked(checked)
-                                                    .disabled(existing)
-                                                    .small()
-                                                    .w_full()
-                                                    .on_change(cx.listener(
-                                                        move |this, checked: &bool, _, cx| {
-                                                            if *checked {
-                                                                this.picked.insert(i);
-                                                            } else {
-                                                                this.picked.remove(&i);
-                                                            }
-                                                            cx.notify();
-                                                        },
-                                                    )),
+                                                crate::ui_components::checkbox(
+                                                    ("candidate-check", i),
+                                                    id,
+                                                    checked,
+                                                    existing,
+                                                )
+                                                .accessibility_id(format!("candidate-{i}"))
+                                                .w_full()
+                                                .on_change(cx.listener(
+                                                    move |this, checked: &bool, _, cx| {
+                                                        if *checked {
+                                                            this.picked.insert(i);
+                                                        } else {
+                                                            this.picked.remove(&i);
+                                                        }
+                                                        cx.notify();
+                                                    },
+                                                )),
                                             )
                                             .suffix(move |_, _| {
                                                 Label::new(if existing {
@@ -2557,7 +2531,7 @@ impl Proxy {
                     )),
             )
             .child(
-                DialogFooter::new()
+                crate::ui_components::dialog_footer()
                     .child(
                         Button::new("picker-cancel")
                             .label(self.t("取消", "Cancel"))

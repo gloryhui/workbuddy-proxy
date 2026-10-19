@@ -30,12 +30,11 @@ use gpui_kit::component::{
     button::{Button, ButtonVariants},
     calendar::{Calendar, CalendarEvent, CalendarState, Date},
     checkbox::Checkbox,
-    dialog::{DialogContent, DialogFooter},
     input::{Input, InputEvent, InputState},
     label::Label,
     popover::Popover,
     select::{Select, SelectEvent, SelectItem, SelectState},
-    table::{DataTable, TableEvent, TableState},
+    table::{TableEvent, TableState},
 };
 use gpui_kit::prelude::FluentBuilder;
 use gpui_kit::*;
@@ -186,18 +185,7 @@ fn stats_heading(text: &'static str) -> Div {
 fn stats_card(id: &'static str) -> Stateful<Div> {
     // Unlike the model-management `card()`, statistics cards size to their
     // content; only the chart and the table get explicit heights.
-    div()
-        .id(id)
-        .flex()
-        .flex_col()
-        .w_full()
-        .min_w_0()
-        .bg(rgb(0xffffff))
-        .border_1()
-        .border_color(rgb(BORDER))
-        .rounded(px(12.))
-        .p_3()
-        .gap(px(6.))
+    crate::ui_components::content_card(id)
 }
 
 pub struct Statistics {
@@ -1880,7 +1868,7 @@ impl Statistics {
         let zh = self.zh;
         let title = if zh { "用量详情" } else { "Usage detail" };
         let Some(detail) = &self.details else {
-            return DialogContent::new()
+            return crate::ui_components::dialog_body()
                 .w_full()
                 .gap_3()
                 .child(
@@ -2134,7 +2122,7 @@ impl Statistics {
                 usage_table::timestamp(detail.updated_at_ms, zh)
             ),
         ));
-        DialogContent::new()
+        crate::ui_components::dialog_body()
             .w_full()
             .gap_3()
             .child(
@@ -2155,7 +2143,7 @@ impl Statistics {
             )
             .child(div().flex().flex_col().gap_2().children(rows))
             .child(
-                DialogFooter::new().child(
+                crate::ui_components::dialog_footer().child(
                     Button::new("detail-close")
                         .label(if zh { "关闭" } else { "Close" })
                         .on_click(cx.listener(|this, _, window, cx| {
@@ -2984,12 +2972,8 @@ impl Statistics {
     fn details(&self, cx: &mut Context<Self>) -> AnyElement {
         let tab_button = |id: &'static str, tab: Tab, label: String| {
             let active = self.tab == tab;
-            Button::new(id)
-                .small()
-                .when(!active, |button| button.ghost())
-                .when(active, |button| button.primary().outline())
-                .label(label)
-                .on_click(cx.listener(move |this, _, window, cx| {
+            crate::ui_components::segment_button(id, label, active, false).on_click(cx.listener(
+                move |this, _, window, cx| {
                     if this.tab == tab {
                         return;
                     }
@@ -3006,7 +2990,8 @@ impl Statistics {
                     }
                     let _ = window;
                     cx.notify();
-                }))
+                },
+            ))
         };
         let page = match self.tab {
             Tab::Requests => {
@@ -3040,16 +3025,8 @@ impl Statistics {
                 }))
         };
         let table: AnyElement = match self.tab {
-            Tab::Requests => DataTable::new(&self.usage_table)
-                .small()
-                .header_row_height(px(32.))
-                .scrollbar_visible(true, true)
-                .into_any_element(),
-            _ => DataTable::new(&self.group_table)
-                .small()
-                .header_row_height(px(32.))
-                .scrollbar_visible(true, true)
-                .into_any_element(),
+            Tab::Requests => crate::ui_components::table(&self.usage_table).into_any_element(),
+            _ => crate::ui_components::table(&self.group_table).into_any_element(),
         };
         stats_card("stats-details")
             .child(
@@ -3177,14 +3154,13 @@ impl Statistics {
                             })
                             .when(self.tab == Tab::Requests, |this| {
                                 this.child(
-                                    Button::new("page-prev")
-                                        .small()
-                                        .ghost()
-                                        .label(self.t("上一页", "Previous"))
-                                        .disabled(
-                                            self.loading_rows || !self.rows_cursors.can_go_back(),
-                                        )
-                                        .on_click(cx.listener(|this, _, _, cx| {
+                                    crate::ui_components::pager_button(
+                                        "page-prev",
+                                        self.t("上一页", "Previous"),
+                                        self.loading_rows || !self.rows_cursors.can_go_back(),
+                                    )
+                                    .on_click(cx.listener(
+                                        |this, _, _, cx| {
                                             // The stack holds the start cursor of each
                                             // page, so popping restores exactly the
                                             // previous page (1 -> 2 -> 3 -> 2 -> 1).
@@ -3192,18 +3168,21 @@ impl Statistics {
                                                 this.rows_cursors.begin_page(previous);
                                                 this.request_rows(cx);
                                             }
-                                        })),
+                                        },
+                                    )),
                                 )
                                 .child(
-                                    Button::new("page-size")
-                                        .small()
-                                        .ghost()
-                                        .label(format!(
+                                    crate::ui_components::pager_button(
+                                        "page-size",
+                                        format!(
                                             "{} {}",
                                             self.page_size,
                                             self.t("条/页", "per page")
-                                        ))
-                                        .on_click(cx.listener(|this, _, _, cx| {
+                                        ),
+                                        false,
+                                    )
+                                    .on_click(cx.listener(
+                                        |this, _, _, cx| {
                                             this.page_size = match this.page_size {
                                                 20 => 50,
                                                 50 => 100,
@@ -3212,22 +3191,23 @@ impl Statistics {
                                             this.reset_pagination();
                                             this.request_rows(cx);
                                             cx.notify();
-                                        })),
+                                        },
+                                    )),
                                 )
                                 .child(
-                                    Button::new("page-next")
-                                        .small()
-                                        .ghost()
-                                        .label(self.t("下一页", "Next"))
-                                        .disabled(
-                                            self.loading_rows || !self.rows_cursors.can_go_next(),
-                                        )
-                                        .on_click(cx.listener(|this, _, _, cx| {
+                                    crate::ui_components::pager_button(
+                                        "page-next",
+                                        self.t("下一页", "Next"),
+                                        self.loading_rows || !self.rows_cursors.can_go_next(),
+                                    )
+                                    .on_click(cx.listener(
+                                        |this, _, _, cx| {
                                             if let Some(cursor) = this.rows_cursors.forward() {
                                                 this.rows_cursors.begin_page(cursor);
                                                 this.request_rows(cx);
                                             }
-                                        })),
+                                        },
+                                    )),
                                 )
                             }),
                     ),
@@ -4011,12 +3991,14 @@ impl Statistics {
                     .items_center()
                     .gap_2()
                     .child(
-                        Button::new("clear-preview")
-                            .small()
-                            .danger()
-                            .outline()
-                            .label(self.t("清除历史统计…", "Clear history…"))
-                            .on_click(cx.listener(|this, _, _, cx| this.preview_clear(cx))),
+                        crate::ui_components::button(
+                            "clear-preview",
+                            crate::ui_components::ButtonKind::DangerOutline,
+                            self.t("清除历史统计…", "Clear history…"),
+                            false,
+                            false,
+                        )
+                        .on_click(cx.listener(|this, _, _, cx| this.preview_clear(cx))),
                     )
                     .when_some(progress, |this, task| {
                         this.child(
@@ -4121,7 +4103,7 @@ impl Statistics {
     }
 
     fn price_body(&self, cx: &mut Context<Self>) -> AnyElement {
-        DialogContent::new()
+        crate::ui_components::dialog_body()
             .w_full()
             .gap_3()
             .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(
@@ -4266,7 +4248,7 @@ impl Statistics {
                 )
             })
             .child(
-                DialogFooter::new().child(
+                crate::ui_components::dialog_footer().child(
                     Button::new("price-save")
                         .primary()
                         .label(if self.price_draft.pending {

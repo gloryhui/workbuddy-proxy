@@ -4,9 +4,10 @@
 - 编制日期：2026-10-19。
 - 工作区：`/Volumes/1TB/codex/worktrees/ui-redesign/workbuddy-proxy`。
 - 当前分支：`codex/ui-redesign`。
-- 当前 HEAD：`cbb3a9191a4284765c324a40075e2e727062b3c0`（`cbb3a91`）。
+- T00 基线 HEAD：`cbb3a9191a4284765c324a40075e2e727062b3c0`（`cbb3a91`）。
 - 当前版本：`0.5.6`（根 `Cargo.toml`、`gpui/Cargo.toml`）。
-- 本阶段性质：只做基线核查与施工记录；未修改应用代码；未提交、未推送；未启动真实 WorkBuddy；未读写真实配置、数据库或开机启动；未向真实上游发请求。
+- T00 阶段性质：只做基线核查与施工记录；未修改应用代码；未提交、未推送；未启动真实 WorkBuddy；未读写真实配置、数据库或开机启动；未向真实上游发请求。
+- 当前进度：T00 已记录；T01 基线提交为 `aae634e`；T02 代码、静态核对和自动化验证已完成（C01—C06 GUI/IME 交互仍待验收）。
 
 ## 0. 结论摘要
 
@@ -15,9 +16,10 @@
 3. **设计资料缺项已确认**：12 张 PNG 和 1 个 12 页 PDF 存在；**没有 HTML 画板，没有 Windows 旧界面截图**。PDF 是画板的局部裁切/放大页，不是额外画板。现有旧截图是 macOS v0.5.5。
 4. **D01—D09 已逐项登记**；D10—D15 是 T00 额外发现的语义/结构差异，保留以便后续跟踪。
 5. **T00 未执行构建/测试；T01 已执行 gpui fmt/clippy/test/release build（§8.3）。GUI 与双平台验收仍未运行**；B04 为 `NOT RUN`，Windows 为 `BLOCKED`（无 Windows 环境），Mac GUI 为 `NOT RUN`。不得把本文件中的静态核查当作 GUI 通过。
-6. **T00 状态为 DONE（仅静态核查与施工记录）**；T01 代码与静态检查已完成（V03/V04 NOT RUN）；T02—T10 仍为 `TODO`。
+6. **T00 状态为 DONE（仅静态核查与施工记录）**；T01 已完成代码与静态检查（V03/V04 NOT RUN）；T02 已完成代码与静态核对（C01—C06 的 GUI/IME 交互 NOT RUN）；T03—T10 仍为 `TODO`。
 7. **字体探测是部分失败/非结论**：CoreText 查询未命中的名称不能当作“系统未安装”或无可用字体的结论；T01 必须用 GPUI 运行时字体表与真实布局复核。
 8. **T01 已落盘**：仅新增 `gpui/src/theme.rs` 并接入 `gpui/src/main.rs`；页面、业务逻辑与 `usage_table.rs` 未改；详见 §8.3。
+9. **T02 已落盘**：新增 `gpui/src/ui_components.rs`，并在 `ui.rs`/`statistics.rs` 的真实调用点接入 Button/Input/Select/Checkbox/Segmented/Card/Table/Dialog/Pager/Tag；未改业务、配置、统计、协议或依赖，`usage_table.rs` 哈希未变；详见 §8.3。
 
 本轮要求项索引：功能映射 §4；D01—D09 §3.3—§3.4；B01—B04 §8.2；T01—T10 §8.3。
 
@@ -316,7 +318,7 @@ D09 是本轮要求完整列出的最后一项；D10—D15 是 T00 额外发现�
 | 任务 | 拟新增 | 拟修改 | 说明 |
 |---|---|---|---|
 | T01 | `gpui/src/theme.rs` | `gpui/src/main.rs`（`mod theme`、`Theme::update` 接线） | 只做 token、字体、圆角、颜色；不迁移页面 |
-| T02 | `gpui/src/ui_components/`（只封装实际重复的视觉） | 需要逐步替换的 `ui.rs`、`statistics.rs` 局部 | 不重写 InputState/SelectState；不建第二套输入系统 |
+| T02 | `gpui/src/ui_components.rs`（实际结构确定为单文件薄封装） | `gpui/src/main.rs`（`mod ui_components`）、`ui.rs`、`statistics.rs` 的真实调用点 | 不重写 InputState/SelectState；不建第二套输入系统；未迁移整页 |
 | T03 | 如需补充图标，`gpui/src/assets.rs` + `assets/icons/*.svg` | `gpui/src/ui.rs` 的骨架、侧栏、顶部、状态栏；必要时 `main.rs` 布局常量 | 保留六个动作和窗口生命周期；D04 只登记 |
 | T04 | 如需补充图标 | `gpui/src/ui.rs` 连接设置/右栏；`gpui/src/protocol_options.rs` 显示层 | 保留协议 Editor 的解析/校验/草稿语义 |
 | T05 | 无 | `gpui/src/ui.rs` 选择模型/编辑模型/同步确认；`gpui/src/model_options.rs`、`gpui/src/model_table.rs` | 键盘、选择、草稿、能力联动、平台禁用全部保留 |
@@ -486,7 +488,7 @@ T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 | B03 | 盘点设计材料和旧截图，登记 D01—D08 | **PASS** | 12 PNG + 12 页 PDF 实数；无 HTML；无 Windows 截图；Mac v0.5.5 旧截图 5 张 + 协议验证 2 张；D01—D08 及 D09—D15 已登记 |
 | B04 | 启动隔离配置和 Mock，停止后检查测试目录 | **NOT RUN** | 只核查了已有隔离启动方式（核心 `--headless --config-dir --port`、GPUI `--config-dir`、现有夹具脚本）；按本阶段约束未启动任何进程，未读写真实配置/数据库/开机启动，未发真实上游请求 |
 
-### 8.3 T01 记录与 T02—T10 状态
+### 8.3 T01/T02 记录与 T03—T10 状态
 
 #### T01 — 统一主题、字体与视觉参数
 
@@ -555,11 +557,80 @@ T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 6. `theme.rs` 使用模块级 `#![allow(dead_code)]`，因为 token 会被 T02—T08 逐步消费；T10 前应复核未使用 token，不能让它掩盖页面问题。
 7. D04 标题栏未改；T10 前仍需用户对“原生标题栏”给结论。
 
+#### T02 — 控件薄封装与状态一致性
+
+- 状态：`DONE（代码与静态核对；C01—C06 的 GUI/IME 交互 NOT RUN）`
+- 基线：branch `codex/ui-redesign`；T01 已提交 `aae634e`；`usage_table.rs` 哈希仍为 `ff14cd5c...`；Kit `0.7.3`。
+- 修改文件：新增 `gpui/src/ui_components.rs`；修改 `gpui/src/main.rs`（`mod ui_components;`）、`gpui/src/ui.rs`、`gpui/src/statistics.rs`；更新本文件。未改 `usage_table.rs`、`state.rs`、核心、配置、统计/计价逻辑、协议语义、依赖版本；未做 T03 骨架，未迁移整页。
+- 复用的状态/回调：`InputState`、`SelectState`、`Selection`、`on_click`/`on_change` 与现有订阅全部留在调用点；wrapper 返回 Kit 控件，不复制内部状态、不建立第二套输入系统。
+- 对应验收 ID：C01—C06。
+
+**组件映射与真实调用点**
+
+| Kit 控件 | 薄封装 | 已接入的真实调用点 | 验收 |
+|---|---|---|---|
+| Button | `button`/`ButtonKind`（Primary/Outline/Normal/Danger/DangerOutline/Ghost） | `ui.rs` 保存/测试连接；`statistics.rs` 清除历史危险按钮 | C01 |
+| 图标 Button | `icon_button`/`icon_button_sized`/`named_icon_button`/`named_icon_button_sized` | `ui.rs::app_controls` 的六个顶部动作（包含语言菜单） | C01/C06 |
+| Input | `text_input`/`masked_input`/`compact_input` | `ui.rs` 供应商名称、API Key、API 地址、本地端口 | C02 |
+| Select | `select`（泛型透传 `SelectState`） | `ui.rs` 思考强度、供应商预设、上游协议 | C03 |
+| Checkbox | `checkbox` | `ui.rs` 选择模型弹窗已有模型禁用项 | C04 |
+| Segmented | `segment_button`/`segmented_row` | `statistics.rs::details` 请求日志/供应商统计/模型统计标签 | C04 |
+| Card | `panel_card`/`content_card` | `ui.rs::card` 与 `statistics.rs::stats_card`（两页所有卡片经由此处） | C01/C05 |
+| Table 外框 | `table`（统一 `small`、32px 表头、双滚动条） | `ui.rs` 模型表；`statistics.rs` 请求日志与分组表 | C05/L |
+| Dialog | `dialog_body`/`dialog_body_sized`/`dialog_footer`/`scrollable_form`/`dialog_title` | `ui.rs` 协议选项、编辑模型；`statistics.rs` 价格、详情等弹窗（11 处 body / 10 处 footer） | C05 |
+| Pager | `pager_button`/`pager_status` | `statistics.rs::details` 上一页/条每页/下一页 | C01 |
+| Tag | `tag`/`TagKind` | `ui.rs` 供应商计数、运行中标签 | C01/C06 |
+
+**C01—C06 逐项结果**
+
+| ID | 静态核对 | GUI / 鼠标 / 键盘 / IME |
+|---|---|---|
+| C01 按钮状态与事件只执行一次 | **PASS（静态）**：`button` 始终写入 `disabled(disabled || busy)` 与 `loading(busy)`；Kit 自带 `disabled_legacy_button_keeps_existing_pointer_blocking`、`loading_button_keeps_existing_pointer_blocking`、`loading_button_without_callback_still_blocks_parent_activation` 测试证明禁用/加载会阻断指针与父级激活；`on_click` 未被包装或复制 | **NOT RUN** |
+| C02 中文组合输入/粘贴/选区/API Key 显隐 | **PASS（静态）**：`text_input`/`masked_input` 只把原 `InputState` 交给 Kit；`mask_toggle` 保留；没有新建输入状态或文本缓存 | **NOT RUN** |
+| C03 下拉鼠标/方向键/Enter/Escape/边缘弹层 | **PASS（静态）**：`select` 只附加 `.small()`/`.disabled()`；`SelectState`、`SelectEvent::Confirm` 与 8 处订阅保持原位；未改菜单尺寸/锚点配置 | **NOT RUN** |
+| C04 Checkbox/Segmented 禁用语义 | **PASS（静态）**：`checkbox` 转发 `checked/disabled`；选择模型已有项仍 `disabled(existing)`；`segment_button` 转发 `disabled`，三个统计标签仍为 `false`，与原逻辑一致 | **NOT RUN** |
+| C05 长 Dialog 焦点与滚动 | **PASS（静态）**：协议/编辑模型弹窗使用 `dialog_body_sized` + `scrollable_form`；价格/详情弹窗使用 `dialog_body`/`dialog_footer`；`window.open_dialog` 的 `close_button`、`overlay_closable`、`on_ok`、`on_close` 与焦点设置未改 | **NOT RUN** |
+| C06 图标 Tooltip/可访问名称 | **PASS（静态）**：迁移的顶部六个图标与语言按钮由 wrapper 强制 tooltip + accessibility label；扫描 `ui.rs`/`statistics.rs` 的纯图标按钮，缺失 tooltip/aria 的数量为 0；带可见 `label` 的图标按钮依赖可见文本作为名称（如“同步 WorkBuddy”“获取模型”），不计为纯图标按钮 | **NOT RUN**（悬停/读屏未执行） |
+
+**T02 验证命令**
+
+环境：`TMPDIR`、`TMP`、`TEMP` 均指向 `/Volumes/1TB/tmp/ui-ux-t02/session-t02/tmp`；`CARGO_TARGET_DIR=/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`；未执行 `cargo clean`。
+
+| 检查 | 命令 | 退出码 | 结果 / 日志 |
+|---|---|---:|---|
+| 模块编译 | `cargo check --manifest-path gpui/Cargo.toml --locked` | 0 | PASS；`logs/check-module-2.log`、`logs/check-integration-2.log` |
+| 格式 | `cargo fmt --manifest-path gpui/Cargo.toml --check` | 0 | PASS；`logs/fmt.log` |
+| 新模块格式 | `rustfmt --edition 2024 --check gpui/src/ui_components.rs` | 0 | PASS；`logs/rustfmt-ui-components.log` |
+| Clippy | `cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings` | 0 | PASS；`logs/clippy.log` |
+| 测试 | `cargo test --manifest-path gpui/Cargo.toml --locked` | 0 | 137 passed / 0 failed；`logs/test.log` |
+| Release 构建 | `cargo build --manifest-path gpui/Cargo.toml --release --locked` | 0 | PASS；1m 13s；`logs/build.log` |
+| Git 空白 | `git diff --check` | 0 | PASS；`logs/diff-check.log` |
+
+- Clippy/build 的剩余告警仅为依赖 future-incompat：`block v0.1.6`；没有本次代码告警。
+- `ui_components.rs` 编译为无警告；`InputState`/`SelectState` 均为原实体，未新增状态字段。
+- `usage_table.rs` 在全部命令前后 SHA-256 一致：`ff14cd5c47ff9cc450b4b5ecfcfa6981a02797c2370eb3eab91a786377a275f3`。
+- 测试策略：复用现有 137 项 gpui 测试；未新增机械断言，未创建测试专用展示页，也未增加产品菜单或永久调试入口。
+
+**T02 未验证项与剩余风险**
+
+1. C01—C06 全部 GUI/鼠标/键盘/IME/悬停/滚动/读屏验收均 **NOT RUN**；没有启动 GPUI、没有截图、没有隔离夹具运行。
+2. 只有部分调用点迁移到 wrapper：仍直接调用 `Button::new` 68 处、`Input::new` 13 处、`Select::new` 5 处、`Checkbox::new` 4 处；T03—T08 继续迁移，T02 未整页重写。
+3. 供应商名称/Key/URL 输入改为统一 36px 字段高度；真实 GUI 视觉与 IME 行为待 V03/V04，不能在 T02 声明通过。
+4. 带可见 label 的图标按钮没有单独 tooltip（依赖标签）；C06 的悬停/读屏语义仍需 GUI 验证。
+5. `ui_components.rs` 使用 `#![allow(dead_code)]`，因为部分封装要等 T03—T08 消费；T10 前必须复核。
+6. 未改窗口骨架，T03 才开始侧栏/顶部/状态栏；D04（标题栏）与 D13（状态栏可信数据源）仍开放。
+
+**T02 清理与下一步**
+
+- 本轮临时目录 `/Volumes/1TB/tmp/ui-ux-t02/session-t02/tmp` 为空（0B），已删除；验证日志约 **60K** 保留在 `/Volumes/1TB/tmp/ui-ux-t02/session-t02/logs/`。
+- 磁盘：`/Volumes/1TB` 可用约 **385 GiB**，系统盘可用约 **48 GiB**。
+- T03 起点：在 `ui.rs` 建立固定侧栏 224px、顶部图标行 36px、底部状态栏 30px；复用 T02 wrapper；保留六个真实动作；状态栏数据源必须可信（D13）；不迁移供应商/统计整页。
+
 | 任务 | 状态 | 依赖 | 备注 |
 |---|---|---|---|
 | T00 | DONE（静态） | — | B04 NOT RUN；不阻止 T01 |
 | T01 主题、字体、视觉 token | DONE（代码/静态；V03/V04 NOT RUN） | T00 | `theme.rs` + `main.rs`；页面未迁移 |
-| T02 公共组件与状态 | TODO | T01 | 只薄封装；不重写输入/下拉状态 |
+| T02 公共组件与状态 | DONE（代码/静态；C01—C06 交互 NOT RUN） | T01 | `ui_components.rs`；调用点部分迁移 |
 | T03 窗口骨架 | TODO | T02 | 侧栏/顶部/状态栏；D04 只登记 |
 | T04 供应商页 + 协议弹窗 | TODO | T03 | 代表切片；保留 Responses none |
 | T05 模型选择/编辑/同步确认 | TODO | T04 | 键盘、草稿、平台禁用 |
@@ -573,6 +644,7 @@ T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 
 - **T00 基线**：`cargo fmt --check`、`cargo clippy`、`cargo test`、`cargo build`：**NOT RUN**。T00 只做静态核查，没有运行 `cargo clean`。
 - **T01 更新**：上述 gpui 检查已实际执行并通过（§8.3）；V03/V04 GUI 仍 **NOT RUN**。
+- **T02 更新**：`cargo check`/`fmt`/`clippy`/`test`/`release build`/`git diff --check` 已执行并通过（§8.3）；C01—C06 的 GUI/鼠标/键盘/IME 交互仍 **NOT RUN**。
 - macOS GUI 截图/交互：**NOT RUN**。
 - 字体探测：**部分失败/非结论**；CoreText 未命中的名称只作候选线索，不能作为 V03 通过证据，也不能据此宣称运行时不可用。
 - Windows GUI、DPI、输入法、窗口生命周期：**BLOCKED**（当前环境没有 Windows 实机；不能以编译代替 GUI）。
@@ -600,10 +672,13 @@ T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 16. **T01 基础字号风险**：`Theme.font_size` 改为 13 会影响未显式设置字号的 Kit 控件；V03/V04 未运行前不能判定视觉通过。
 17. **T01 token 提前定义**：`theme.rs` 使用模块级 `#![allow(dead_code)]`，为 T02—T08 预留 token；T10 前必须复核消费情况，避免掩盖页面问题。
 18. **T01 运行时字体未观察**：`all_font_names()` 只在 GPUI 启动时执行；本阶段未启动 GUI，实际选中的 macOS family 和 Windows 候选均未取得证据。
+19. **T02 封装覆盖不完整**：仍有 68 处 `Button::new`、13 处 `Input::new`、5 处 `Select::new`、4 处 `Checkbox::new` 直接调用；T03—T08 必须继续迁移，不能让两套写法长期并存。
+20. **T02 字段高度变化**：供应商名称/Key/URL 统一为 36px token 高度；真实 GUI 视觉与 IME 未验证。
+21. **T02 wrapper 预留代码**：`ui_components.rs` 的 `#![allow(dead_code)]` 会掩盖未消费封装；T10 前复核。
 
 ## 10. T01 的准确起点
 
-> T01 已按本节起点完成；以下保留为 T00 时的计划。T02 的准确起点见 §8.3 的 T01 记录。
+> T01、T02 已按本节起点完成；以下保留为 T00 时的计划。T03 的起点见 §8.3 的 T02 记录。
 
 前置检查（每个任务开始都做）：
 

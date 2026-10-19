@@ -32,6 +32,7 @@ mod stats_controller;
 mod stats_dto;
 mod theme;
 mod ui;
+mod ui_components;
 #[allow(dead_code)]
 #[path = "../../src/protocol/config.rs"]
 mod upstream_config;
