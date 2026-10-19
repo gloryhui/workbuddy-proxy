@@ -1,0 +1,36 @@
+# L02 baseline 2026-10-19 23:12:52 +0800
+
+codex/ui-redesign
+0664001459e4dea0325c67cd03725e8c65b427bd
+
+ M docs/UI-UX-renew/IMPLEMENTATION_STATUS.md
+?? docs/UI-UX-renew/ACCEPTANCE.md
+?? docs/UI-UX-renew/AGENT_TASK.md
+?? docs/UI-UX-renew/DESIGN_SPEC.md
+?? docs/UI-UX-renew/IMPLEMENTATION_PROMPT.md
+?? docs/UI-UX-renew/TASK_BREAKDOWN.md
+?? "docs/UI-UX-renew/WorkBuddy Proxy \350\247\206\350\247\211\351\207\215\350\256\276\350\256\241.pdf"
+?? docs/UI-UX-renew/evidence/t07-l02-residual-002/
+?? "docs/UI-UX-renew/\344\270\212\346\270\270\345\215\217\350\256\256\344\270\213\346\213\211@2x.png"
+?? "docs/UI-UX-renew/\344\276\233\345\272\224\345\225\206\347\256\241\347\220\206@2x.png"
+?? "docs/UI-UX-renew/\345\215\217\350\256\256\351\200\211\351\241\271 \302\267 Anthropic@2x.png"
+?? "docs/UI-UX-renew/\345\215\217\350\256\256\351\200\211\351\241\271 \302\267 Gemini@2x.png"
+?? "docs/UI-UX-renew/\345\215\217\350\256\256\351\200\211\351\241\271 \302\267 OpenAI@2x.png"
+?? "docs/UI-UX-renew/\345\220\214\346\255\245 WorkBuddy \347\241\256\350\256\244@2x.png"
+?? "docs/UI-UX-renew/\346\210\220\346\234\254\345\256\232\344\273\267 \302\267 \351\207\207\351\233\206\344\270\216\345\255\230\345\202\250\357\274\210\345\261\225\345\274\200\357\274\211@2x.png"
+?? "docs/UI-UX-renew/\346\225\260\346\215\256\347\273\237\350\256\241@2x.png"
+?? "docs/UI-UX-renew/\346\226\260\345\273\272\344\273\267\346\240\274\350\247\204\345\210\231@2x.png"
+?? "docs/UI-UX-renew/\347\274\226\350\276\221\344\273\267\346\240\274@2x.png"
+?? "docs/UI-UX-renew/\347\274\226\350\276\221\346\250\241\345\236\213@2x.png"
+?? "docs/UI-UX-renew/\351\200\211\346\213\251\346\250\241\345\236\213\345\274\271\347\252\227@2x.png"
+
+## product diff (should be empty)
+
+## binaries
+efcc0a1f44491581d8867b34b1be2fac6f2d01e78df808f8571b7054fb5ed49c  gpui/target/release/workbuddy-proxy-gpui
+22cacc663af1293252611001e589b6bc49cde885234e42a5e6a200b53697d4ca  target/release/workbuddy-proxy
+-rwxr-xr-x@ 1 shile  staff  14633424 Oct 19 20:27 gpui/target/release/workbuddy-proxy-gpui
+-rwxr-xr-x@ 1 shile  staff   8379136 Oct 19 19:01 target/release/workbuddy-proxy
+
+## disk before cleanup
+/dev/disk3s3s1   460Gi    13Gi   200Gi     6%    484k  2.1G    0%   /

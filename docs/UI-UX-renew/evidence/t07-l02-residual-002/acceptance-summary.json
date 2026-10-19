@@ -1,0 +1,173 @@
+{
+  "task": "UI-T07-L02-RESIDUAL-002",
+  "expected_token_min_width": 240,
+  "design_drag_floors": {
+    "time": 110,
+    "provider": 96,
+    "model": 88,
+    "request": 80,
+    "tokens": 240,
+    "cost": 96,
+    "latency": 56,
+    "speed": 48,
+    "status": 92
+  },
+  "sizes": {
+    "1100x700": [
+      {
+        "screen": "1100-scroll-left",
+        "token_header_x": 798,
+        "token_data_x": 798,
+        "cost_header_x": 306,
+        "status_header_x": null,
+        "time_header_x": 316,
+        "token_width_from_headers": null,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1100-scroll-right",
+        "token_header_x": 356,
+        "token_data_x": 356,
+        "cost_header_x": 306,
+        "status_header_x": 950,
+        "time_header_x": null,
+        "token_width_from_headers": null,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1100-drag-min-240",
+        "token_header_x": 458,
+        "token_data_x": 458,
+        "cost_header_x": 306,
+        "status_header_x": 954,
+        "time_header_x": null,
+        "token_width_from_headers": null,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1100-drag-min-240-again",
+        "token_header_x": 458,
+        "token_data_x": 458,
+        "cost_header_x": 306,
+        "status_header_x": 954,
+        "time_header_x": null,
+        "token_width_from_headers": null,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1100-drag-restored-340",
+        "token_header_x": 458,
+        "token_data_x": 458,
+        "cost_header_x": 306,
+        "status_header_x": null,
+        "time_header_x": null,
+        "token_width_from_headers": null,
+        "header_data_sync_delta": 0
+      }
+    ],
+    "1280x800": [
+      {
+        "screen": "1280-scroll-left",
+        "token_header_x": 798,
+        "token_data_x": 798,
+        "cost_header_x": 1134,
+        "status_header_x": null,
+        "time_header_x": 318,
+        "token_width_from_headers": 336,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1280-scroll-right",
+        "token_header_x": 536,
+        "token_data_x": 536,
+        "cost_header_x": 872,
+        "status_header_x": 1130,
+        "time_header_x": null,
+        "token_width_from_headers": 336,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1280-drag-min-240",
+        "token_header_x": 634,
+        "token_data_x": 634,
+        "cost_header_x": 872,
+        "status_header_x": 1130,
+        "time_header_x": null,
+        "token_width_from_headers": 238,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1280-drag-min-240-again",
+        "token_header_x": 634,
+        "token_data_x": 634,
+        "cost_header_x": 872,
+        "status_header_x": 1130,
+        "time_header_x": null,
+        "token_width_from_headers": 238,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1280-drag-restored-340",
+        "token_header_x": 634,
+        "token_data_x": 634,
+        "cost_header_x": 970,
+        "status_header_x": null,
+        "time_header_x": null,
+        "token_width_from_headers": 336,
+        "header_data_sync_delta": 0
+      }
+    ],
+    "1440x900": [
+      {
+        "screen": "1440-scroll-left",
+        "token_header_x": 797,
+        "token_data_x": 797,
+        "cost_header_x": 1134,
+        "status_header_x": null,
+        "time_header_x": 316,
+        "token_width_from_headers": 337,
+        "header_data_sync_delta": 0
+      },
+      {
+        "screen": "1440-scroll-right",
+        "token_header_x": 695,
+        "token_data_x": 697,
+        "cost_header_x": 1032,
+        "status_header_x": 1289,
+        "time_header_x": null,
+        "token_width_from_headers": 337,
+        "header_data_sync_delta": 2
+      },
+      {
+        "screen": "1440-drag-min-240",
+        "token_header_x": 795,
+        "token_data_x": null,
+        "cost_header_x": 1038,
+        "status_header_x": 1293,
+        "time_header_x": 312,
+        "token_width_from_headers": 243,
+        "header_data_sync_delta": null
+      },
+      {
+        "screen": "1440-drag-min-240-again",
+        "token_header_x": 795,
+        "token_data_x": null,
+        "cost_header_x": 1038,
+        "status_header_x": 1293,
+        "time_header_x": 312,
+        "token_width_from_headers": 243,
+        "header_data_sync_delta": null
+      },
+      {
+        "screen": "1440-drag-restored-340",
+        "token_header_x": 791,
+        "token_data_x": 793,
+        "cost_header_x": 1132,
+        "status_header_x": null,
+        "time_header_x": 312,
+        "token_width_from_headers": 341,
+        "header_data_sync_delta": 2
+      }
+    ]
+  }
+}
