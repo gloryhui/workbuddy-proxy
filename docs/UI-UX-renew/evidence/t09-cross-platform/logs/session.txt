@@ -1,0 +1,17 @@
+pid=64227 wid=9732
+[
+  {
+    "bounds" : {
+      "Height" : 901,
+      "Width" : 1440,
+      "X" : 240,
+      "Y" : 76
+    },
+    "id" : 9732,
+    "layer" : 0,
+    "name" : ""
+  }
+]
+resize size=0 origin=0 frame=[0,30 1100x700]
+resize size=0 origin=0 frame=[0,30 1280x800]
+resize size=0 origin=0 frame=[0,30 1440x900]
