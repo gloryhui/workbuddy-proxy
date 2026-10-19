@@ -903,6 +903,106 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 - 两套隔离夹具在本轮内停止并确认进程退出后，删除其合成配置、`instance.json`、`gpui-drafts.json`、`usage.sqlite3*`、锁文件、启动日志、Mock 脚本与隔离 HOME/XDG 目录。
 - 保留：截图（`gui/shots/`）、采集与校验日志（`logs/`）、几何测量（`logs/geometry.txt`、`logs/design-measure.txt`）、夹具生成脚本（`gui/`、`tools/winctl.swift`）与设计裁切图（`design/`）。全部位于 `/Volumes/1TB`，未进入仓库。
 
+#### T05 — 模型选择、编辑模型与同步确认
+
+**状态：** DONE（代码 / 静态 / macOS 真实 GUI 代表切片）。P05 的 F2 与取消/确认、P06 的自动/手动与限制联动、D04 全部动作、D05 的取消、D06 的既有确认框均有隔离 GUI 证据；P04 的指针/键盘多选矩阵、D05 的“仅同步/同步并重启”为 **NOT RUN**；Windows GUI 仍 **BLOCKED**。
+
+**开工前置确认（本轮，全部符合）**
+
+| 项 | 要求 | 实测 | 结论 |
+|---|---|---|---|
+| 供应商 / 账号 | OpenCode Go（账号 1） | `cordis.patch.yml` → `opencode-go.displayName = "OpenCode Go (账号 1)"` | 符合 |
+| 模型 | deepseek-v4.1-flash | `agent-default-model.model = deepseek-v4.1-flash` | 符合 |
+| 推理档位 | High | `agent-default-model.reasoningEffort = high` | 符合 |
+| 权限 | Full Access | 会话 `danger-full-access`，审批提示关闭 | 符合 |
+| 工作区 / 分支 | 独立 worktree | `/Volumes/1TB/codex/worktrees/ui-redesign/workbuddy-proxy`、`codex/ui-redesign` | 符合 |
+| 基线 | `2c910607…` | HEAD = `2c910607e4f128edb18ad305a5ed20720a476701`（T04 提交） | 符合 |
+| 保护文件 | `gpui/src/usage_table.rs` 不变 | SHA-256 全程 `ff14cd5c47ff9cc450b4b5ecfcfa6981a02797c2370eb3eab91a786377a275f3` | 符合 |
+
+**改动文件**
+
+| 文件 | 改动 | 说明 |
+|---|---|---|
+| `gpui/src/ui.rs` | 选择模型弹窗、编辑模型弹窗、同步/取消同步/启动检查/端口/删除确认框的视觉层；新增 `body_line`/`body_hint` 辅助 | 回调、草稿与平台分支未改 |
+| `gpui/src/model_options.rs` | 能力编辑器视觉：字段标签、来源/图片提示、能力与档位复选框、token/上下文输入、下划线联动 | `OptionsEditor::load/apply_automatic/refresh/read` 语义未改 |
+| `gpui/src/usage_table.rs` | 未改 | 哈希不变，T07 才动 |
+| `docs/UI-UX-renew/IMPLEMENTATION_STATUS.md` | 本记录 | — |
+
+未改：`gpui/src/main.rs`（`KeyBinding` 六个绑定与窗口宿主）、`gpui/src/state.rs`（`Selection` 与草稿结构）、`gpui/src/model_table.rs`（T04 已定稿）、协议/核心/后端、依赖与 `Cargo.lock`。
+
+**设计与实现要点**
+
+- **选择模型弹窗**：标题 18/600 ＋ 右侧真实的「已选 {本供应商已有模型数} / {候选总数} · {待添加} 待添加」，不照抄设计稿数字；搜索框（占位「搜索模型 ID」）；四个 32px 动作按钮（全选当前筛选 / 反选当前筛选 / 清空选择 / 仅看已勾选，后者激活时用 Outline 反馈，登记 TODO(design)）；候选列表边框圆角容器、36px 行高、已存在模型灰底＋「已添加」＋禁用复选框；底部「已有模型保留，确认添加后仍需保存。」；页脚 取消 / 确认添加 (N)（N=0 时禁用）。
+- **编辑模型弹窗**：显示名/模型 ID 使用共用字段样式；「WorkBuddy 模型能力」分区；自动识别勾选＋来源提示；六个能力复选框；说明文案；默认思考强度；支持的思考强度；最大输入/输出 tokens 与默认/可选上下文长度两列布局；页脚 取消 / 确认。
+- **确认框**：同步 WorkBuddy（同步并重启 / 仅同步 / 取消）、取消同步（移除并重启 / 仅移除 / 取消）、启动检查、端口变更、删除供应商，全部复用 18px 标题、32px 按钮与 token 文本色；非 macOS 下「重启」类按钮保持禁用并附平台说明（`cfg!(target_os = "macos")` 原样保留）。
+
+**验收结果（P04—P07、D04—D06）**
+
+| ID | 结果 | 依据 / 未做部分 |
+|---|---|---|
+| P04 | **STATIC PASS / GUI NOT RUN** | `Selection::click(i, shift, control\|platform)`、`click_model`（双击且无修饰键才进入编辑）、`remove_models`、`select_models` 与 `main.rs` 的 ModelList 绑定（delete/backspace → RemoveModels、cmd/ctrl-a → SelectModels、f2/enter → EditModel）均未改动；本轮自动化期间键盘前台被其他应用占用，Shift/⌘ 连选、Delete/Backspace 移除、⌘A 全选、双击均未真实执行 |
+| P05 | **PARTIAL PASS** | F2 在选中行打开编辑弹窗（`T05-11`）；取消关闭且不改变草稿；确认成功写入草稿（`deepseek-v4.1-flash` 的 `capabilities` 由确认流程写为 `null`＝自动识别）；非法输入时确认不提交（`T05-13`）。双击与 Enter 打开、单次打开语义未真实执行 |
+| P06 | **PASS（本轮可测部分）** | 自动识别开启时能力字段禁用并显示来源「已自动填充 · models.dev 原厂模型信息」（`T05-11`），未知来源显示「暂未找到可信能力信息，可手动设置」＋「图片能力尚未确认，未自动开启」（原生协议弹窗）；取消自动识别后字段可编辑、提示切换为「使用手动设置，自动识别不会覆盖」（`T05-12`）；取消「思考模式」后「仅思考模式/允许关闭思考」随即禁用；原生协议（Anthropic Messages）下「自定义协议」保持禁用且不可勾选（`T05-14`）；把「可选上下文长度」填成 `abc` 后确认 → 红色「Token 数须为正整数，留空使用默认值」，弹窗不关闭、非法值保留在草稿 |
+| P07 | **PARTIAL** | 切页与切换供应商在整轮取证中反复执行且不丢草稿、不误保存；删除供应商的确认框已呈现并取消（`T05-17`）。复制供应商、添加供应商、空列表再加未执行（避免副作用/未构造空夹具） |
+| D04 | **PASS** | 隔离 Mock 控制面返回 10 个候选：初始「已选 2 / 10 · 0 待添加」，已存在模型行显示灰底＋「已添加」且复选框禁用；勾选 2 个 → 反选 → 8 个；清空 → 0；勾选 2 个后「仅看已勾选」只显示已添加＋已勾选 3 行；空搜索下「全选当前筛选」得 9（10 候选剔除 1 个已存在，不重复添加）；确认添加后模型表由 2 增至 4，`config.json` SHA-256 全程不变（`99a624f4…`），草稿文件更新；取消则完全不变（`T05-03`） |
+| D05 | **PARTIAL PASS** | 同步确认框保留三个动作与平台限制说明（`T05-15`）；**取消**后弹窗关闭、`config.json` 与草稿均不变；「仅同步」「同步并重启」未执行（会写入并重启 WorkBuddy，本轮禁止）；Windows 分支静态保持禁用＋说明 |
+| D06 | **PASS** | 取消同步（移除并重启 / 仅移除 / 取消，`T05-16`）与删除供应商（取消 / 删除，`T05-17`）确认框、启动地址检查框、端口确认框均沿用原步骤与文案；取消后配置与草稿逐字节不变；设计未覆盖处保留原行为并登记 TODO(design) |
+
+**自动验证（`TMPDIR/TMP/TEMP=/Volumes/1TB/tmp/ui-ux-t05/session-t05/tmp`；`CARGO_TARGET_DIR=/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`；未执行 `cargo clean`）**
+
+| 检查 | 命令 | 退出码 | 结果 / 日志 |
+|---|---|---:|---|
+| 编译 | `cargo check --manifest-path gpui/Cargo.toml --locked --bin workbuddy-proxy-gpui` | 0 | PASS；`logs/check.log` |
+| 格式 | `rustfmt --edition 2024`（改动文件）＋ `cargo fmt --check` | 0 | PASS；未对 `usage_table.rs` 运行 rustfmt |
+| Clippy | `cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings` | 0 | PASS；`logs/clippy.log` |
+| 测试 | `cargo test --manifest-path gpui/Cargo.toml --locked` | 0 | **138 passed / 0 failed**；`logs/test.log` |
+| Release 构建 | `cargo build --manifest-path gpui/Cargo.toml --release --locked` | 0 | PASS；`logs/build.log` |
+| Git 空白 | `git diff --check` | 0 | PASS |
+| 保护文件 | `shasum -a 256 gpui/src/usage_table.rs` | — | `ff14cd5c…a275f3`，与基线一致 |
+
+- 编译来源为本 worktree（`gpui/Cargo.toml` + `gpui/src/*`，`readlink -f` 校验），未复用主检出源码。
+- UI 二进制（含未提交改动）：`/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui`，SHA-256 `51520d9e58d9bfc39b524885be49ab6c069d475df3031307f4cf247647910b73`（2026-10-19 构建，未提交）。
+
+**隔离 GUI 证据（`gui/shots/`，全部为窗口级截图）**
+
+| 截图 | 场景 | 观察到的证据 |
+|---|---|---|
+| `T05-01-providers-1280x800.png` | 供应商页 1280×800 | 模型列表含自动识别模型与手动能力模型；布局为 T04 定稿 |
+| `T05-02-pickmodels-initial.png` | 选择模型弹窗初始 | 「已选 2 / 10 · 0 待添加」；已存在行灰底＋「已添加」＋禁用勾选；确认按钮禁用 |
+| `T05-03-picker-cancelled-unchanged.png` | 取消选择模型 | 弹窗关闭，草稿与 `config.json` 均未变化 |
+| `T05-04-pickmodels-selected.png` | 勾选 2 个候选 | 确认添加 (2) 可用 |
+| `T05-05-pickmodels-invert.png` | 反选当前筛选 | 计数变为 8（10 候选剔除已存在与已勾选项的镜像） |
+| `T05-06-pickmodels-only-picked.png` | 仅看已勾选 | 仅显示已添加＋已勾选行 |
+| `T05-07-picker-confirmed.png` | 确认添加 | 模型表增加 2 行；`config.json` 未变 |
+| `T05-08-pickmodels-search.png` | 搜索 `glm` | 列表缩减为 4 个匹配候选 |
+| `T05-09-pickmodels-select-all.png` | 全选当前筛选（筛选态） | 4 个匹配项全部勾选 |
+| `T05-10-pickmodels-cleared.png` | 清空选择 | 计数归零 |
+| `T05-11-editmodel-auto.png` | 编辑模型（自动识别） | 能力/档位/token 字段禁用；「已自动填充 · models.dev 原厂模型信息」 |
+| `T05-12-editmodel-manual.png` | 编辑模型（手动） | 取消自动识别后字段可编辑，提示切换为手动语义 |
+| `T05-13-editmodel-invalid-token.png` | 非法 token | 红色「Token 数须为正整数，留空使用默认值」，弹窗不关闭、非法值保留 |
+| `T05-14-editmodel-native-restriction.png` | 原生协议限制 | 原生协议下「自定义协议」禁用；「思考模式」未选时相关档位禁用 |
+| `T05-15-syncconfirm.png` | 同步 WorkBuddy 确认 | 同步并重启 / 仅同步 / 取消，取消后无写入 |
+| `T05-16-unsyncconfirm.png` | 取消同步确认 | 移除并重启 / 仅移除 / 取消 |
+| `T05-17-deleteconfirm.png` | 删除供应商确认 | 取消 / 删除（危险色） |
+
+- 夹具：`gui/mock_core.py` 实现真实 `/_control/action` 契约的只读分支（`poll`/`fetch`/`model_metadata`/`workbuddy_check`），`fetch` 返回 10 个合成候选，`model_metadata` 返回 `models.dev:canonical` 能力与 `image_known=true`；其余命令一律不回写。全程未启动真实核心、未读写真实 WorkBuddy 配置/数据库、未发送任何上游请求、未触发同步/重启/保存/删除。
+- `logs/mock-commands.jsonl` 记录夹具收到的每一条命令，可核对只有读路径被使用。
+- 限制：取证期间自动化环境的键盘前台多次被其他应用（Excel/ChatGPT）占用；为此在夹具控制脚本中加入「非夹具前台则拒绝发送按键」的保护。P04 的指针/键盘矩阵因此标为 **NOT RUN**，F2 打开编辑弹窗是在窗口仍持有前台时取得的证据。一次误发按键导致早期运行中某供应商的草稿模型列表被清空（`config.json` 未被触碰，重启夹具后草稿恢复），已排除与本次代码改动的关系；最终一套证据来自重启后的干净夹具。
+
+**未测项与剩余风险**
+
+1. **P04 指针/键盘矩阵**：Shift 连选、Ctrl/⌘ 多选、Delete/Backspace 移除、⌘A 全选、双击打开均未在真实 GUI 执行（窗口无法稳定持有键盘前台）。
+2. **D05 的「仅同步」「同步并重启」**、P07 的复制/添加供应商、正式保存：会写入配置或重启 WorkBuddy，本轮未执行。
+3. **Windows GUI**：BLOCKED（无实机）；仅静态确认 `cfg!(target_os = "macos")` 禁用分支与说明文案保留。
+4. **中文输入法**：未测（同 T02/T04 结论）。
+5. **差异 D16（控件高度基准）依旧存在**：本轮新迁移的按钮为显式 32px，单行输入/下拉仍为 26–28px；共识是共享层一次性解决（见差异 D16）。
+6. 「仅看已勾选」激活态用 Outline 表示、已添加行底色用 `BG_TABLE_HEAD`（设计稿为略偏青的 #F3F8F7），均登记 TODO(design)。
+
+**清理与磁盘**
+
+- 本轮专用目录 `/Volumes/1TB/tmp/ui-ux-t05/session-t05/`；构建/测试的 `TMPDIR/TMP/TEMP` 指向其下 `tmp/`，未执行 `cargo clean`，未在系统盘新建 Cargo 目录。
+- 夹具在本轮内停止并确认进程退出后，删除合成 `config.json`、`instance.json`、`gpui-drafts.json`、锁文件、隔离 HOME/XDG 目录与临时 Prompt 文件；保留截图、`logs/mock-commands.jsonl`、构建/测试日志、几何测量与夹具脚本，均位于 `/Volumes/1TB`，未进入仓库。
+
 | 任务 | 状态 | 依赖 | 备注 |
 |---|---|---|---|
 | T00 | DONE（静态） | — | B04 NOT RUN；不阻止 T01 |
@@ -910,7 +1010,7 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 | T02 公共组件与状态 | DONE（代码/静态；C01—C06 交互 NOT RUN） | T01 | `ui_components.rs`；调用点部分迁移 |
 | T03 窗口骨架 | DONE（代码/静态；macOS GUI 骨架与交互证据；S01—S04 部分项 NOT RUN） | T02 | 224px 侧栏 / 36px 顶部行 / 30px 状态栏；D04 只登记，D13 已落地 |
 | T04 供应商页 + 协议弹窗 | DONE（代码/静态；macOS GUI 代表切片；P02 实际调用与保存/复制/清空未执行） | T03 | 右栏拆两卡 300px；Responses `none` 保留；草稿/持久化边界未变；D16 仍未解决 |
-| T05 模型选择/编辑/同步确认 | TODO | T04 | 键盘、草稿、平台禁用 |
+| T05 模型选择/编辑/同步确认 | DONE（代码/静态；macOS GUI 代表切片；P04 键盘指针矩阵与“仅同步/同步并重启”未执行） | T04 | 选择弹窗计数用真实语义；能力联动与原生协议限制保留；草稿/持久化边界未变 |
 | T06 统计总览/筛选/图表 | TODO | T04 | 保留统计语义、轮询策略 |
 | T07 日志/聚合表格/分页 | TODO | T06；T00 已记录 usage_table | 在既有 diff 上做两行 Token/列宽 |
 | T08 成本定价/采集存储/价格弹窗 | TODO | T07 | 价格快照、危险操作 |
@@ -923,6 +1023,8 @@ D01 的图标外观差异保持登记状态：设计稿画的是电源/刷新/�
 - **T01 更新**：上述 gpui 检查已实际执行并通过（§8.3）；V03/V04 GUI 仍 **NOT RUN**。
 - **T02 更新**：`cargo check`/`fmt`/`clippy`/`test`/`release build`/`git diff --check` 已执行并通过（§8.3）；C01—C06 的 GUI/鼠标/键盘/IME 交互仍 **NOT RUN**。
 - **T03 更新**：`cargo check`/`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build` 已执行并通过；macOS 真实 GPUI 窗口已在隔离夹具中启动并取得骨架、切换与状态源截图（§8.3、§8.5）。S01/S02/S03/S04 的部分交互仍为 **NOT RUN**（详见 §8.5），不得据此声称四项全部通过。
+- **T05 更新**：`cargo check`/`rustfmt`+`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build`/`git diff --check` 已执行并通过（§8.3 T05）。macOS 隔离夹具（本地 Mock 控制面）取得选择模型弹窗全部动作、编辑模型自动/手动/非法校验、原生协议限制、同步与取消同步与删除确认框截图；`config.json` SHA-256 全程不变。
+- **T05 未执行**：P04 的 Shift/⌘ 连选、Delete/Backspace、⌘A、双击（键盘前台被其他应用占用）；「仅同步」「同步并重启」、复制/添加供应商、正式保存（副作用禁止）。Windows GUI：**BLOCKED**。
 - **T04 更新**：`cargo check`/`rustfmt`+`fmt --check`/`clippy --all-targets`/`test`（138 passed）/`release build`/`git diff --check` 已执行并通过（§8.3 T04）。macOS 真实 GPUI 隔离夹具已取得供应商页、最小窗口、四种协议弹窗、API Key 显隐、长 URL、端口校验与确认、日志独立滚动截图；`config.json` SHA-256 在应用到草稿/长 URL/端口流程中全程不变。
 - **T04 未执行**：保存、同步、获取模型、测试连接、复制/清空日志的真实点击（约束禁止副作用动作，P02 实际调用 NOT RUN）；中文输入法与 Tab/Enter/Escape 键盘路径（窗口无法稳定保持键盘前台）。Windows GUI：**BLOCKED**。
 - macOS GUI 截图/交互：**T03 已部分执行**（仅窗口骨架、供应商切换、恢复尺寸、状态源三态；语言下拉未打开、破坏性动作未触发）。

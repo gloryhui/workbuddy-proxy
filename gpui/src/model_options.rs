@@ -1,13 +1,13 @@
 //! Per-model WorkBuddy capability editor, independent from request overrides.
+use crate::theme::{color, font, line_height, space};
 use crate::{
     capabilities::{ContextWindow, EFFORTS, ModelCapabilities},
     ui::Proxy,
 };
 use gpui_kit::component::{
-    Disableable, Sizable,
-    checkbox::Checkbox,
-    input::{Input, InputState},
-    select::{Select, SelectItem, SelectState},
+    input::InputState,
+    label::Label,
+    select::{SelectItem, SelectState},
 };
 use gpui_kit::*;
 use serde_json::Value;
@@ -246,6 +246,24 @@ impl Flag {
     }
 }
 
+/// 12px muted label/explanation used by the model editor.
+fn caption(text: impl Into<SharedString>) -> Label {
+    Label::new(text)
+        .text_size(px(font::LABEL))
+        .line_height(px(line_height::LABEL))
+        .text_color(rgb(color::TEXT_3))
+}
+/// A labelled field column (label above control, shared 12px gap).
+fn field(label: Label, control: impl IntoElement) -> Div {
+    div()
+        .flex_1()
+        .min_w_0()
+        .flex()
+        .flex_col()
+        .gap(px(space::SMALL))
+        .child(label)
+        .child(control)
+}
 pub fn render(owner: &Proxy, cx: &mut Context<Proxy>) -> AnyElement {
     let editor = &owner.model_options;
     let disabled = editor.automatic;
@@ -257,31 +275,28 @@ pub fn render(owner: &Proxy, cx: &mut Context<Proxy>) -> AnyElement {
         (Flag::DisableThinking, "允许关闭思考", "Allow thinking off"),
         (Flag::CustomProtocol, "自定义协议", "Custom protocol"),
     ];
-    let checks = div()
-        .flex()
-        .flex_wrap()
-        .gap_3()
-        .children(flags.into_iter().enumerate().map(|(i, (flag, cn, en))| {
+    let checks = div().flex().flex_wrap().gap(px(space::CARD_GAP)).children(
+        flags.into_iter().enumerate().map(|(i, (flag, cn, en))| {
             let unavailable = disabled
                 || (matches!(flag, Flag::CustomProtocol) && owner.native_protocol())
                 || (matches!(flag, Flag::OnlyReasoning | Flag::DisableThinking)
                     && !editor.value.supports_reasoning)
                 || (matches!(flag, Flag::DisableThinking) && editor.value.only_reasoning);
-            Checkbox::new(("model-capability", i))
-                .small()
-                .label(owner.t(cn, en))
-                .checked(
-                    flag.get(&editor.value)
-                        && !(matches!(flag, Flag::CustomProtocol) && owner.native_protocol()),
-                )
-                .disabled(unavailable)
-                .on_change(cx.listener(move |this, enabled: &bool, _, cx| {
-                    flag.set(&mut this.model_options.value, *enabled);
-                    cx.notify();
-                }))
-        }));
+            crate::ui_components::checkbox(
+                ("model-capability", i),
+                owner.t(cn, en),
+                flag.get(&editor.value)
+                    && !(matches!(flag, Flag::CustomProtocol) && owner.native_protocol()),
+                unavailable,
+            )
+            .on_change(cx.listener(move |this, enabled: &bool, _, cx| {
+                flag.set(&mut this.model_options.value, *enabled);
+                cx.notify();
+            }))
+        }),
+    );
     let reasoning_disabled = disabled || !editor.value.supports_reasoning;
-    let effort_checks = div().flex().flex_wrap().gap_3().children(
+    let effort_checks = div().flex().flex_wrap().gap(px(space::CARD_GAP)).children(
         EFFORTS
             .iter()
             .zip([
@@ -294,37 +309,37 @@ pub fn render(owner: &Proxy, cx: &mut Context<Proxy>) -> AnyElement {
             .enumerate()
             .map(|(i, (effort, (cn, en)))| {
                 let effort = (*effort).to_owned();
-                Checkbox::new(("model-supported-effort", i))
-                    .small()
-                    .label(owner.t(cn, en))
-                    .checked(editor.value.reasoning.supported_efforts.contains(&effort))
-                    .disabled(reasoning_disabled)
-                    .on_change(cx.listener(move |this, enabled: &bool, _, cx| {
-                        let efforts = &mut this.model_options.value.reasoning.supported_efforts;
-                        efforts.retain(|s| s != &effort);
-                        if *enabled {
-                            efforts.push(effort.clone());
-                        }
-                        efforts.sort_by_key(|s| EFFORTS.iter().position(|v| *v == s).unwrap_or(5));
-                        cx.notify();
-                    }))
+                crate::ui_components::checkbox(
+                    ("model-supported-effort", i),
+                    owner.t(cn, en),
+                    editor.value.reasoning.supported_efforts.contains(&effort),
+                    reasoning_disabled,
+                )
+                .on_change(cx.listener(move |this, enabled: &bool, _, cx| {
+                    let efforts = &mut this.model_options.value.reasoning.supported_efforts;
+                    efforts.retain(|s| s != &effort);
+                    if *enabled {
+                        efforts.push(effort.clone());
+                    }
+                    efforts.sort_by_key(|s| EFFORTS.iter().position(|v| *v == s).unwrap_or(5));
+                    cx.notify();
+                }))
             }),
     );
-    let limits = div().flex().gap_3().children(
+    let limits = div().flex().gap(px(space::CARD_GAP)).children(
         [
             (0, "最大输入 tokens", "Max input tokens"),
             (1, "最大输出 tokens", "Max output tokens"),
         ]
         .into_iter()
         .map(|(i, cn, en)| {
-            div()
-                .flex_1()
-                .min_w_0()
-                .child(div().mb_1().child(owner.t(cn, en)))
-                .child(Input::new(&editor.limits[i]).disabled(disabled))
+            field(
+                caption(owner.t(cn, en)),
+                crate::ui_components::text_input(&editor.limits[i], disabled),
+            )
         }),
     );
-    let context = div().flex().gap_3().children(
+    let context = div().flex().gap(px(space::CARD_GAP)).children(
         [
             (2, "默认上下文长度", "Default context length"),
             (
@@ -335,46 +350,104 @@ pub fn render(owner: &Proxy, cx: &mut Context<Proxy>) -> AnyElement {
         ]
         .into_iter()
         .map(|(i, cn, en)| {
-            div()
-                .flex_1()
-                .min_w_0()
-                .child(div().mb_1().child(owner.t(cn, en)))
-                .child(Input::new(&editor.limits[i]).disabled(disabled))
+            field(
+                caption(owner.t(cn, en)),
+                crate::ui_components::text_input(&editor.limits[i], disabled),
+            )
         }),
     );
-    div().flex().flex_col().gap_3().text_size(px(12.))
-        .child(div().font_weight(FontWeight::SEMIBOLD).child(owner.t("WorkBuddy 模型能力", "WorkBuddy model capabilities")))
-        .child(Checkbox::new("model-capabilities-auto").small()
-            .label(owner.t("自动识别模型能力（取消后自定义）", "Detect capabilities automatically (uncheck to customize)"))
-            .checked(editor.automatic).on_change(cx.listener(|this, enabled: &bool, window, cx| {
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(space::CARD_GAP))
+        .text_size(px(font::BODY))
+        .child(
+            div()
+                .font_weight(FontWeight::SEMIBOLD)
+                .text_size(px(font::BODY))
+                .child(owner.t("WorkBuddy 模型能力", "WorkBuddy model capabilities")),
+        )
+        .child(
+            crate::ui_components::checkbox(
+                "model-capabilities-auto",
+                owner.t(
+                    "自动识别模型能力（取消后自定义）",
+                    "Detect capabilities automatically (uncheck to customize)",
+                ),
+                editor.automatic,
+                false,
+            )
+            .on_change(cx.listener(|this, enabled: &bool, window, cx| {
                 if *enabled {
                     let model = this.model_id_for_options(cx);
                     let zh = this.is_chinese();
                     this.model_options.load(&Value::Null, &model, zh, window, cx);
-                } else { this.model_options.automatic = false; }
+                } else {
+                    this.model_options.automatic = false;
+                }
                 cx.notify();
-            })))
-        .child(div().text_color(rgb(0x6b7c90)).text_size(px(11.)).child(if editor.automatic {
+            })),
+        )
+        .child(caption(if editor.automatic {
             match editor.source.as_str() {
-                "upstream" => owner.t("已自动填充 · 供应商模型信息", "Auto-filled · Provider model metadata"),
-                "models.dev:provider" => owner.t("已自动填充 · models.dev 供应商目录", "Auto-filled · models.dev provider catalog"),
-                "models.dev:canonical" => owner.t("已自动填充 · models.dev 原厂模型信息", "Auto-filled · models.dev canonical model"),
-                "builtin" => owner.t("使用内置能力预设，自动尝试补齐", "Built-in defaults; checking for additional metadata"),
-                _ => owner.t("暂未找到可信能力信息，可手动设置", "No confirmed metadata yet; manual settings are available"),
+                "upstream" => {
+                    owner.t("已自动填充 · 供应商模型信息", "Auto-filled · Provider model metadata")
+                }
+                "models.dev:provider" => owner.t(
+                    "已自动填充 · models.dev 供应商目录",
+                    "Auto-filled · models.dev provider catalog",
+                ),
+                "models.dev:canonical" => owner.t(
+                    "已自动填充 · models.dev 原厂模型信息",
+                    "Auto-filled · models.dev canonical model",
+                ),
+                "builtin" => owner.t(
+                    "使用内置能力预设，自动尝试补齐",
+                    "Built-in defaults; checking for additional metadata",
+                ),
+                _ => owner.t(
+                    "暂未找到可信能力信息，可手动设置",
+                    "No confirmed metadata yet; manual settings are available",
+                ),
             }
-        } else { owner.t("使用手动设置，自动识别不会覆盖", "Manual settings take precedence over detected capabilities") }))
-        .children((editor.automatic && !editor.image_known).then(|| div().text_color(rgb(0x6b7c90)).text_size(px(11.)).child(owner.t(
-            "图片能力尚未确认，未自动开启", "Image capability is unknown and has not been enabled automatically"
-        ))))
+        } else {
+            owner.t(
+                "使用手动设置，自动识别不会覆盖",
+                "Manual settings take precedence over detected capabilities",
+            )
+        }))
+        .children((editor.automatic && !editor.image_known).then(|| {
+            caption(owner.t(
+                "图片能力尚未确认，未自动开启",
+                "Image capability is unknown and has not been enabled automatically",
+            ))
+        }))
         .child(checks)
-        .child(div().text_color(rgb(0x6b7c90)).text_size(px(11.)).child(owner.t(
+        .child(caption(owner.t(
             "图片输入用于附件和读图工具；其他媒体格式按上游接口透传。自定义协议同步完整 Chat Completions 地址。",
-            "Image input enables attachments and image tools. Other media follows the upstream format. Custom protocol uses the full Chat Completions URL."
+            "Image input enables attachments and image tools. Other media follows the upstream format. Custom protocol uses the full Chat Completions URL.",
         )))
-        .child(div().child(div().mb_1().child(owner.t("默认思考强度", "Default thinking effort")))
-            .child(Select::new(&editor.default_effort).small().w_full().disabled(reasoning_disabled)))
-        .child(div().child(div().mb_1().child(owner.t("支持的思考强度", "Supported thinking efforts"))).child(effort_checks))
-        .child(limits).child(context)
+        .child(
+            div()
+                .flex()
+                .flex_col()
+                .gap(px(space::SMALL))
+                .child(caption(owner.t("默认思考强度", "Default thinking effort")))
+                .child(
+                    crate::ui_components::select(&editor.default_effort, reasoning_disabled)
+                        .w_full(),
+                ),
+        )
+        .child(
+            div()
+                .flex()
+                .flex_col()
+                .gap(px(space::SMALL))
+                .child(caption(owner.t("支持的思考强度", "Supported thinking efforts")))
+                .child(effort_checks),
+        )
+        .child(limits)
+        .child(context)
         .into_any_element()
 }
 
