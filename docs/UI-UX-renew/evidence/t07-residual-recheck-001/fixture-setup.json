@@ -1,0 +1,34 @@
+{
+  "core_pid": 15890,
+  "gpui_pid": null,
+  "port": 58286,
+  "config": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-residual-recheck-001/run/config",
+  "db": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t07-residual-recheck-001/run/config/usage.sqlite3",
+  "rows": 45,
+  "origins": {
+    "proxy": 43,
+    "workbuddy_builtin": 1,
+    "workbuddy_custom": 1
+  },
+  "run_id": "cf7b344c7fcfaa02875ddb51037446d802b38c40d48d8f54",
+  "started_at": "10-19 08:02:00",
+  "ended_at": "10-19 09:30:00",
+  "views": [
+    {
+      "view": "all-sources",
+      "api_total_rows": 43,
+      "api_returned": 20
+    },
+    {
+      "view": "builtin",
+      "api_total_rows": 1,
+      "api_returned": 1
+    },
+    {
+      "view": "custom",
+      "api_total_rows": 44,
+      "api_returned": 20
+    }
+  ],
+  "created_ms": 1792420791983
+}
