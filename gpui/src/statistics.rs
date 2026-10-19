@@ -3118,7 +3118,9 @@ impl Statistics {
                 }))
         };
         let table: AnyElement = match self.tab {
-            Tab::Requests => crate::ui_components::table(&self.usage_table).into_any_element(),
+            // DESIGN_SPEC §4.1.5: the request log is a 56px-row table with a
+            // 32px header. The aggregate tables keep the shared 30px rows.
+            Tab::Requests => crate::ui_components::log_table(&self.usage_table).into_any_element(),
             _ => crate::ui_components::table(&self.group_table).into_any_element(),
         };
         stats_card("stats-details")

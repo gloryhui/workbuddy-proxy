@@ -243,6 +243,13 @@ pub fn table<D: TableDelegate>(state: &Entity<TableState<D>>) -> DataTable<D> {
         .scrollbar_visible(true, true)
 }
 
+/// Request-log table: DESIGN_SPEC §4.1.5 fixes a 56px body row while the
+/// header keeps the shared 32px height. Only the log uses this; the aggregate
+/// tables stay on the default 30px rows.
+pub fn log_table<D: TableDelegate>(state: &Entity<TableState<D>>) -> DataTable<D> {
+    table(state).with_size(px(size::TABLE_ROW_HEIGHT))
+}
+
 /// Dialog body container: full width, shared gaps.
 pub fn dialog_body() -> DialogContent {
     DialogContent::new().w_full().gap_3()

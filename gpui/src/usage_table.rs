@@ -415,34 +415,52 @@ fn cell(
         .into_any_element()
 }
 
-/// Keep labels visually secondary without making users decode glyphs. Each
-/// label/value pair stays together on one line; exact values remain in the tooltip.
+/// Fixed proportional slots align labels across rows regardless of value
+/// length. Keep every pair on one line; clipped values stay in the tooltip.
+/// Token and cache-hit text never wrap, cross a column or overlap its
+/// neighbour, and the exact values stay reachable below.
 fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
-    let fields = [
+    // Per-locale slot weights, kept from the original fix: Chinese labels are
+    // wider than the English ones, so the two layouts weight them separately.
+    let line1 = if zh {
+        [1.25, 1.0, 1.0]
+    } else {
+        [1.1, 1.05, 1.15]
+    };
+    let line2 = if zh { [1.0, 1.35] } else { [1.05, 1.3] };
+    let hit = cache_rate(item.cache_read_tokens, item.input_tokens);
+    let first = [
+        (
+            if zh { "总Token" } else { "Total" },
+            compact(item.total_tokens, zh),
+            true,
+        ),
         (
             if zh { "输入" } else { "In" },
             compact(item.input_tokens, zh),
+            false,
         ),
         (
             if zh { "输出" } else { "Out" },
             compact(item.output_tokens, zh),
+            false,
         ),
+    ];
+    let second = [
+        (if zh { "命中率" } else { "Hit" }, percent(hit)),
         (
             if zh { "缓存读" } else { "Cache read" },
             compact(item.cache_read_tokens, zh),
         ),
-        (
-            if zh { "总Token" } else { "Total" },
-            compact(item.total_tokens, zh),
-        ),
-        (
-            if zh { "命中率" } else { "Hit rate" },
-            percent(cache_rate(item.cache_read_tokens, item.input_tokens)),
-        ),
     ];
-    let description = fields
+    let description = first
         .iter()
-        .map(|(label, value)| format!("{label} {value}"))
+        .map(|(label, value, _)| format!("{label} {value}"))
+        .chain(
+            second
+                .iter()
+                .map(|(label, value)| format!("{label} {value}")),
+        )
         .collect::<Vec<_>>()
         .join(" | ");
     let hint = format!(
@@ -460,57 +478,257 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         } else {
             "Cache hit = cache read / input (missing or zero input: —)"
         },
-        percent(cache_rate(item.cache_read_tokens, item.input_tokens)),
+        percent(hit),
     );
+    // DESIGN_SPEC §3: 44–110 wide, 4 high, rounded 2; ≥80% primary-dark,
+    // otherwise warning. An unknown rate shows the empty track only.
+    let bar =
+        div()
+            .flex_shrink_0()
+            .w(px(64.))
+            .h(px(4.))
+            .rounded(px(2.))
+            .bg(rgb(0xe6e9ef))
+            .overflow_hidden()
+            .when_some(hit, |this, value| {
+                let fill = (value.clamp(0., 1.) * 64.).max(2.);
+                this.child(div().w(px(fill as f32)).h_full().rounded(px(2.)).bg(rgb(
+                    if value >= 0.8 {
+                        crate::theme::color::PRIMARY_DARK
+                    } else {
+                        crate::theme::color::WARNING
+                    },
+                )))
+            });
+    let pair = |index: usize,
+                label: &'static str,
+                value: String,
+                emphasize: bool,
+                weights: &[f32; 3],
+                separator: bool| {
+        div()
+            .flex()
+            .flex_1()
+            .flex_grow(weights[index])
+            .min_w_0()
+            .overflow_hidden()
+            .items_baseline()
+            .gap(px(2.))
+            .when(separator, |this| {
+                this.child(
+                    Label::new("·")
+                        .flex_shrink_0()
+                        .text_size(px(10.))
+                        .text_color(rgb(0xc4ceda)),
+                )
+            })
+            .child(
+                Label::new(label)
+                    .flex_shrink_0()
+                    .text_size(px(10.))
+                    .text_color(rgb(0x6b7c90)),
+            )
+            .child(
+                Label::new(value)
+                    .flex_1()
+                    .min_w_0()
+                    .text_ellipsis()
+                    .text_size(px(12.))
+                    .text_color(rgb(0x19334d))
+                    .when(emphasize, |this| this.font_weight(FontWeight::SEMIBOLD)),
+            )
+    };
     div()
         .id(("usage-tokens", row))
         .w_full()
         .min_w_0()
+        .min_h(px(crate::theme::size::TABLE_ROW_HEIGHT))
         .overflow_hidden()
         .flex()
-        .items_baseline()
+        .flex_col()
+        .justify_center()
         .gap(px(2.))
         .whitespace_nowrap()
         .aria_label(description)
         .tooltip(move |window, cx| {
             gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
         })
-        .children(
-            fields
-                .into_iter()
-                .enumerate()
-                .map(|(index, (label, value))| {
-                    div()
-                        .flex()
-                        .items_baseline()
-                        .gap(px(2.))
-                        .flex_shrink_0()
-                        .when(index > 0, |this| {
-                            this.child(Label::new("|").text_size(px(10.)).text_color(rgb(0xc4ceda)))
-                        })
-                        .child(
-                            Label::new(label)
-                                .text_size(px(10.))
-                                .text_color(rgb(0x6b7c90)),
-                        )
-                        .child(
-                            Label::new(value)
-                                .text_size(px(12.))
-                                .text_color(rgb(0x19334d)),
-                        )
-                }),
+        .child(
+            div()
+                .flex()
+                .w_full()
+                .min_w_0()
+                .items_baseline()
+                .gap(px(2.))
+                .children(first.into_iter().enumerate().map(
+                    |(index, (label, value, emphasize))| {
+                        pair(index, label, value, emphasize, &line1, index > 0)
+                    },
+                )),
+        )
+        .child(
+            div()
+                .flex()
+                .w_full()
+                .min_w_0()
+                .items_center()
+                .gap(px(4.))
+                .child(bar)
+                .children(
+                    second
+                        .into_iter()
+                        .enumerate()
+                        .map(|(index, (label, value))| {
+                            let weights = [line2[0], line2[1], line2[1]];
+                            pair(index, label, value, false, &weights, false)
+                        }),
+                ),
         )
         .into_any_element()
 }
 
-pub const REQUEST_COLUMNS: usize = 11;
+/// Provider cell: the captured provider name plus the origin pill the design
+/// puts inside this column. Both values keep their own tooltip text.
+fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+    let hint = format!(
+        "{}\nID: {}\n{}\n{}",
+        item.provider_name,
+        item.provider_id,
+        origin_text(item.origin, zh),
+        if zh {
+            "请求发生时的名称快照，改名或删除供应商不会改变历史记录"
+        } else {
+            "Name captured at request time; renaming or deleting the provider does not change history"
+        }
+    );
+    div()
+        .id(("usage-provider", row))
+        .w_full()
+        .min_w_0()
+        .min_h(px(crate::theme::size::TABLE_ROW_HEIGHT))
+        .overflow_hidden()
+        .flex()
+        .items_center()
+        .gap(px(6.))
+        .tooltip(move |window, cx| {
+            gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
+        })
+        .child(
+            Label::new(item.provider_name.clone())
+                .flex_1()
+                .min_w_0()
+                .text_ellipsis()
+                .text_size(px(12.))
+                .text_color(rgb(0x19334d)),
+        )
+        .child(
+            crate::ui_components::tag(
+                match item.origin {
+                    RecordOrigin::Proxy => crate::ui_components::TagKind::Primary,
+                    _ => crate::ui_components::TagKind::Secondary,
+                },
+                origin_text(item.origin, zh),
+            )
+            .flex_shrink_0(),
+        )
+        .into_any_element()
+}
+
+/// Estimated cost cell: the amount on the first line and the WorkBuddy credit
+/// on the second, so the eleven DTO fields survive the nine-column design.
+fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+    let status = item
+        .cost
+        .as_ref()
+        .map_or(CostStatus::Unpriced, |cost| cost.status);
+    let label = cost_label(status, zh);
+    let (amount_text, muted) = if label.is_empty()
+        || matches!(status, CostStatus::DefaultZero | CostStatus::NotApplicable)
+    {
+        (
+            amount(
+                item.cost
+                    .as_ref()
+                    .and_then(|cost| cost.total_cost_nanos.as_deref()),
+                item.cost.as_ref().and_then(|cost| cost.currency),
+            ),
+            false,
+        )
+    } else {
+        (label, true)
+    };
+    let credit = item
+        .workbuddy_credit_nanos
+        .as_deref()
+        .and_then(format_credit_nanos)
+        .unwrap_or_else(|| "—".into());
+    let cost_note = if muted {
+        cost_hint(status, zh)
+    } else if zh {
+        "估算值，不是实际账单".to_owned()
+    } else {
+        "Estimate, not a real invoice".to_owned()
+    };
+    let hint = format!(
+        "{}\n{} {}\n{}",
+        cost_note,
+        if zh { "点数" } else { "Credits" },
+        credit,
+        if zh {
+            "点数来自日志记录值，不代表账号余额"
+        } else {
+            "Credits are logged values, not the account balance"
+        }
+    );
+    div()
+        .id(("usage-cost", row))
+        .w_full()
+        .min_w_0()
+        .min_h(px(crate::theme::size::TABLE_ROW_HEIGHT))
+        .overflow_hidden()
+        .flex()
+        .flex_col()
+        .justify_center()
+        .gap(px(2.))
+        .whitespace_nowrap()
+        .aria_label(format!("{amount_text} · {credit}"))
+        .tooltip(move |window, cx| {
+            gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
+        })
+        .child(
+            Label::new(amount_text)
+                .w_full()
+                .min_w_0()
+                .text_ellipsis()
+                .text_size(px(12.))
+                .text_color(rgb(if muted { 0x8a98a7 } else { 0x19334d })),
+        )
+        .child(
+            Label::new(format!("{} {credit}", if zh { "点数" } else { "Credits" }))
+                .w_full()
+                .min_w_0()
+                .text_ellipsis()
+                .text_size(px(10.))
+                .text_color(rgb(0x6b7c90)),
+        )
+        .into_any_element()
+}
+
+/// The nine columns DESIGN_SPEC §4.1.5 fixes: time, provider (with the
+/// origin pill), model, request, tokens/cache hit, estimated cost (with the
+/// WorkBuddy credit on its second line), latency, tok/s and status. The
+/// 11-field DTO keeps every value: source moved into the provider cell and
+/// credits into the cost cell, so nothing is dropped or re-derived.
+pub const REQUEST_COLUMNS: usize = 9;
 // Time is just wide enough for MM-DD HH:MM:SS at the table's 12px font.
-const MIN_WIDTHS: [f32; REQUEST_COLUMNS] =
-    [110., 100., 68., 112., 80., 340., 110., 66., 60., 102., 90.];
-const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] = [
-    110., 100., 180., 350., 110., 460., 140., 82., 78., 130., 90.,
-];
-const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 0., 1., 2., 0.2, 2., 0.3, 0.1, 0.1, 0.3, 0.];
+// The token column keeps the user's 360px floor: at that width the two-row
+// cell holds "总Token 1.2M | 输入 1.0M | 输出 200.0K" plus the hit-rate bar.
+const MIN_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 148., 118., 104., 360., 132., 66., 60., 104.];
+const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] =
+    [110., 220., 260., 200., 460., 180., 82., 78., 132.];
+const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 1.2, 1.8, 0.2, 2.0, 0.4, 0.1, 0.1, 0.3];
+/// Drag floors: the smallest width the user may shrink a column to.
+const DRAG_FLOORS: [f32; REQUEST_COLUMNS] = [110., 96., 88., 80., 240., 96., 56., 48., 92.];
 
 /// Fit automatic columns into the measured host. Explicit user widths win;
 /// when minimum readable widths cannot fit, keep horizontal scrolling.
@@ -521,13 +739,7 @@ fn fitted_widths(
     let mut widths = MIN_WIDTHS;
     for i in 1..REQUEST_COLUMNS {
         if let Some(width) = custom[i] {
-            widths[i] = width.max(if i == 5 {
-                180.
-            } else if i == 1 {
-                80.
-            } else {
-                60.
-            });
+            widths[i] = width.max(DRAG_FLOORS[i]);
         }
     }
     let mut remaining = (available - widths.iter().sum::<f32>()).max(0.);
@@ -549,8 +761,8 @@ fn fitted_widths(
         }
     }
     // On very wide windows, use surplus for names rather than numeric columns.
-    if remaining > 0. && custom[3].is_none() {
-        widths[3] += remaining;
+    if remaining > 0. && custom[2].is_none() {
+        widths[2] += remaining;
     }
     widths
 }
@@ -580,21 +792,18 @@ impl UsageRows {
         if self.zh {
             [
                 ("time", "时间"),
-                ("source", "来源"),
                 ("provider", "供应商"),
                 ("model", "模型"),
                 ("request", "请求标识"),
-                ("tokens", "Token / 缓存命中率"),
+                ("tokens", "Token / 缓存命中"),
                 ("cost", "估算费用"),
                 ("latency", "耗时"),
                 ("speed", "tok/s"),
                 ("status", "状态"),
-                ("credits", "点数"),
             ]
         } else {
             [
                 ("time", "Time"),
-                ("source", "Source"),
                 ("provider", "Provider"),
                 ("model", "Model"),
                 ("request", "Request"),
@@ -603,7 +812,6 @@ impl UsageRows {
                 ("latency", "Latency"),
                 ("speed", "tok/s"),
                 ("status", "Status"),
-                ("credits", "Credits"),
             ]
         }
     }
@@ -623,15 +831,7 @@ impl TableDelegate for UsageRows {
         let width = fitted_widths(self.available_width, &self.custom_widths)[index];
         Column::new(id, title)
             .width(px(width))
-            .min_width(px(if index == 0 {
-                110.
-            } else if id == "source" {
-                80.
-            } else if id == "tokens" {
-                180.
-            } else {
-                60.
-            }))
+            .min_width(px(DRAG_FLOORS[index]))
             .resizable(index != 0)
             .selectable(false)
     }
@@ -681,41 +881,8 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-time", row),
             ),
-            1 => cell(
-                origin_text(item.origin, zh).into(),
-                Some(
-                    if item.origin == RecordOrigin::Proxy {
-                        if zh { "代理采集" } else { "Proxy capture" }
-                    } else if zh {
-                        "WorkBuddy 导入"
-                    } else {
-                        "WorkBuddy import"
-                    }
-                    .into(),
-                ),
-                match item.origin {
-                    RecordOrigin::Proxy => 0x356fc0,
-                    RecordOrigin::WorkbuddyBuiltin => 0x7354a0,
-                    RecordOrigin::WorkbuddyCustom => 0x397e67,
-                },
-                ("usage-source", row),
-            ),
+            1 => provider_cell(item, row, zh),
             2 => cell(
-                item.provider_name.clone(),
-                Some(format!(
-                    "{}\nID: {}\n{}",
-                    item.provider_name,
-                    item.provider_id,
-                    if zh {
-                        "请求发生时的名称快照，改名或删除供应商不会改变历史记录"
-                    } else {
-                        "Name captured at request time; renaming or deleting the provider does not change history"
-                    }
-                )),
-                0x19334d,
-                ("usage-provider", row),
-            ),
-            3 => cell(
                 item.upstream_model.clone(),
                 Some(format!(
                     "{}\n{}\n{}{}",
@@ -727,7 +894,7 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-model", row),
             ),
-            4 => cell(
+            3 => cell(
                 if item.request_id.len() > 12 {
                     format!("{}…", &item.request_id[..12])
                 } else {
@@ -748,46 +915,9 @@ impl TableDelegate for UsageRows {
                 0x6b7c90,
                 ("usage-request", row),
             ),
-            5 => token_cell(item, row, zh),
-            6 => {
-                let status = item
-                    .cost
-                    .as_ref()
-                    .map_or(CostStatus::Unpriced, |cost| cost.status);
-                let label = cost_label(status, zh);
-                if label.is_empty()
-                    || matches!(status, CostStatus::DefaultZero | CostStatus::NotApplicable)
-                {
-                    let text = amount(
-                        item.cost
-                            .as_ref()
-                            .and_then(|cost| cost.total_cost_nanos.as_deref()),
-                        item.cost.as_ref().and_then(|cost| cost.currency),
-                    );
-                    cell(
-                        text.clone(),
-                        Some(format!(
-                            "{}\n{}",
-                            text,
-                            if zh {
-                                "估算值，不是实际账单"
-                            } else {
-                                "Estimate, not a real invoice"
-                            }
-                        )),
-                        0x19334d,
-                        ("usage-cost", row),
-                    )
-                } else {
-                    cell(
-                        label,
-                        Some(cost_hint(status, zh)),
-                        0x8a98a7,
-                        ("usage-cost", row),
-                    )
-                }
-            }
-            7 => cell(
+            4 => token_cell(item, row, zh),
+            5 => cost_cell(item, row, zh),
+            6 => cell(
                 duration(item.duration_ms),
                 Some(format!(
                     "{} {}\n{} {}\n{} {}",
@@ -801,27 +931,11 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-latency", row),
             ),
-            8 => cell(
+            7 => cell(
                 rate_text(item),
                 Some(rate_hint(item.stream, zh).into()),
                 0x19334d,
                 ("usage-speed", row),
-            ),
-            10 => cell(
-                item.workbuddy_credit_nanos
-                    .as_deref()
-                    .and_then(format_credit_nanos)
-                    .unwrap_or_else(|| "—".into()),
-                Some(
-                    if zh {
-                        "日志记录值，不代表账号余额"
-                    } else {
-                        "Logged usage; not account balance"
-                    }
-                    .into(),
-                ),
-                0x19334d,
-                ("usage-credit", row),
             ),
             _ => {
                 let (text, _) = usage_label(item.usage_status, zh);
@@ -1199,7 +1313,8 @@ mod tests {
                 (widths.iter().sum::<f32>() - available.max(MIN_WIDTHS.iter().sum())).abs() < 0.1
             );
             assert_eq!(widths[0], 110.);
-            assert!(widths[6] <= 140. && widths[7] <= 82. && widths[8] <= 78.);
+            // Latency, tok/s and cost stay compact; the status column is text.
+            assert!(widths[5] <= 180. && widths[6] <= 82. && widths[7] <= 78.);
             assert!(
                 widths
                     .iter()
@@ -1211,19 +1326,11 @@ mod tests {
 
     #[test]
     fn user_columns_are_preserved_while_remaining_columns_fit() {
-        let custom = [
-            Some(400.),
-            None,
-            Some(120.),
-            Some(200.),
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
-        ];
+        // Nine design columns: time, provider, model, request, tokens, cost,
+        // latency, speed, status. Two of them are dragged here.
+        let mut custom = [None; super::REQUEST_COLUMNS];
+        custom[2] = Some(120.);
+        custom[3] = Some(200.);
         for available in [1280., 1454.] {
             let widths = fitted_widths(available, &custom);
             assert_eq!(widths[0], 110.); // Time is always fixed.
