@@ -1,0 +1,293 @@
+{
+  "task": "UI-T07-L01-THREE-SIZES-001",
+  "sizes": [
+    {
+      "size": "1100x700",
+      "window_requested": [
+        1100,
+        700
+      ],
+      "ax_window_frame": [
+        0,
+        30,
+        1100,
+        700
+      ],
+      "png_size": [
+        1100,
+        700
+      ],
+      "window_matches_request": true,
+      "application_content": [
+        1100,
+        670
+      ],
+      "table_viewport_width": 747,
+      "ax_row_heights": [
+        56
+      ],
+      "token_measured_rows": 0,
+      "token_two_lines_ok": false,
+      "token_overlap_rows": [],
+      "token_outside_column_rows": [],
+      "left_has_source": true,
+      "left_has_credits_label": false,
+      "left_has_large": false,
+      "left_has_unknown": true,
+      "middle_has_amount": true,
+      "right_has_status": true,
+      "page2_text": "第 2/3",
+      "page2_changed_rows": true,
+      "rows_scroll_changed_rows": false,
+      "left_ids": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "scroll_ids": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "page2_ids": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "pager_frame": [
+        1013,
+        260,
+        46,
+        19
+      ]
+    },
+    {
+      "size": "1280x800",
+      "window_requested": [
+        1280,
+        800
+      ],
+      "ax_window_frame": [
+        0,
+        30,
+        1280,
+        800
+      ],
+      "png_size": [
+        1280,
+        800
+      ],
+      "window_matches_request": true,
+      "application_content": [
+        1280,
+        770
+      ],
+      "table_viewport_width": 927,
+      "ax_row_heights": [
+        56
+      ],
+      "token_measured_rows": 0,
+      "token_two_lines_ok": false,
+      "token_overlap_rows": [],
+      "token_outside_column_rows": [],
+      "left_has_source": true,
+      "left_has_credits_label": true,
+      "left_has_large": true,
+      "left_has_unknown": true,
+      "middle_has_amount": true,
+      "right_has_status": true,
+      "page2_text": "第2/3 上一页",
+      "page2_changed_rows": true,
+      "rows_scroll_changed_rows": true,
+      "left_ids": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "scroll_ids": [
+        1,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "page2_ids": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "pager_frame": [
+        1193,
+        360,
+        46,
+        19
+      ]
+    },
+    {
+      "size": "1440x900",
+      "window_requested": [
+        1440,
+        900
+      ],
+      "ax_window_frame": [
+        0,
+        30,
+        1440,
+        900
+      ],
+      "png_size": [
+        1440,
+        900
+      ],
+      "window_matches_request": true,
+      "application_content": [
+        1440,
+        870
+      ],
+      "table_viewport_width": 1087,
+      "ax_row_heights": [
+        56
+      ],
+      "token_measured_rows": 0,
+      "token_two_lines_ok": false,
+      "token_overlap_rows": [],
+      "token_outside_column_rows": [],
+      "left_has_source": true,
+      "left_has_credits_label": true,
+      "left_has_large": true,
+      "left_has_unknown": true,
+      "middle_has_amount": true,
+      "right_has_status": true,
+      "page2_text": "第2/3 上一页 20条/页",
+      "page2_changed_rows": true,
+      "rows_scroll_changed_rows": false,
+      "left_ids": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "scroll_ids": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "page2_ids": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "pager_frame": [
+        1353,
+        460,
+        46,
+        19
+      ]
+    }
+  ],
+  "builtin_1440": {
+    "screen": "size-1440x900-07-builtin",
+    "has_large_2_22yi": false,
+    "has_large_1_23yi": false,
+    "has_large_9877wan": false,
+    "has_source_pill": true,
+    "has_credits_label": true,
+    "has_credits_value": true,
+    "has_unknown_token": false,
+    "has_unknown_value": true,
+    "has_unpriced": true,
+    "has_incomplete_usage": false,
+    "has_cache_breakdown": false,
+    "has_status_completed": false,
+    "has_status_failed": false,
+    "has_status_in_flight": false,
+    "has_status_cancelled": false,
+    "has_page_text": true,
+    "request_suffixes": [
+      39
+    ],
+    "texts": [
+      "WorkBuddy Proxy",
+      "WorkBuddy Proxy",
+      "轻量转发，多模型管理•vO.5.6",
+      "数据统计",
+      "供应商管理",
+      "缓存读/写是输入的子集，图例可独立开关，不可相加",
+      "2000",
+      "1500",
+      "1000",
+      "500",
+      "00:00",
+      "07:00",
+      "一输入 一输出 一缓存读 一缓存写",
+      "用量明细）",
+      "时间",
+      "10-19 09:18:00",
+      "供应商统计 模型统计",
+      "供应商",
+      "WorkBuddy 内置",
+      "模型",
+      "wb-model-alpha",
+      "内置",
+      "+添加",
+      "石复制",
+      "亩删除",
+      "● 本地代理运行中",
+      "请求标识",
+      "t07101-0039-…..",
+      "按区间汇总",
+      "当前币种暂无费用数据",
+      "22:00",
+      "Token／缓存命中",
+      "总 Token 3000",
+      "•輸入2000",
+      "•输出1000",
+      "命中率25.0%",
+      "緩存读500",
+      "C",
+      "80",
+      "第1/1 上一页",
+      "20条/页",
+      "耗时",
+      "下一页",
+      "tok/s",
+      "估算费用",
+      "未定价",
+      "点数 1.14",
+      "① 关闭窗口后，代理仍在托盘运行"
+    ]
+  }
+}
