@@ -161,6 +161,8 @@ class Sandbox:
             'workbuddy_data': self.real_home / '.workbuddy',
             'proxy_config_macos': self.real_home / 'Library/Application Support/WorkBuddyProxy',
             'proxy_config_unix': self.real_home / '.config/workbuddy-proxy',
+            'proxy_config_windows': Path(os.environ.get('APPDATA') or
+                                         self.real_home / 'AppData/Roaming') / 'WorkBuddyProxy',
         }
         self._real_before = {name: snapshot(path) for name, path in self._real_watch.items()}
 
@@ -208,7 +210,11 @@ class Sandbox:
             'sandbox_location': short_location(self.root),
             'sandbox_under_system_temp': SYSTEM_TEMP == self.root or SYSTEM_TEMP in self.root.parents,
             'sandbox_is_not_real_home': self.root != self.real_home,
-            'sandbox_outside_real_home': self.real_home not in self.root.parents,
+            # Windows normally places TEMP inside USERPROFILE. Protect actual
+            # application data roots without rejecting that standard layout.
+            'sandbox_outside_real_data_roots': all(
+                path.resolve() != self.root and path.resolve() not in self.root.parents
+                for path in self._real_watch.values()),
             'profile_vars_inside_sandbox': all(inside(env[name]) for name in PROFILE_VARS),
             'temp_vars_inside_sandbox': all(inside(env[name]) for name in TEMP_VARS),
             'config_dir_inside_sandbox': inside(env['WORKBUDDY_PROXY_CONFIG_DIR']),

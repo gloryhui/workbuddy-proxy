@@ -118,7 +118,7 @@ backlog_len失败不能unwrap_or(0)并据此称“无待办”，应保留故障
 
 ## 8. 直接执行任务
 
-继续`/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics`、`codex/usage-statistics`，先完整读**主工作区**本报告及证据，不用开发worktree旧副本。
+继续由 `git worktree list --porcelain` 核实的统计开发 worktree、`codex/usage-statistics`，先完整读**主工作区**本报告及证据，不用开发worktree旧副本。
 
 本轮目标：**S01旧库迁移 → S02批量恢复 → S03/S04恢复完整性与资源上限 → S05测试稳定性 → U06/U07实际GUI → 完整回归和证据**。保留已确认改善的价格、单条故障恢复、锁预算、清理和分页金额；不推倒重写。
 

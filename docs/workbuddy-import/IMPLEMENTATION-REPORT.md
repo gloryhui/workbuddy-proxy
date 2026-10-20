@@ -29,7 +29,7 @@
 
 [80AC](ACCEPTANCE-AUDIT.md)和[47X](CROSS-CUTTING-AUDIT.md)逐项列出条件、当前命名测试/真实检查及证据。Linux/Windows执行和Windows GUI、物理Intel、OS挂载/安装均未完成，明确保留外部边界，不能称全平台完成。候选镜像已验证代码身份/生命周期；最终ARM/x64文档镜像须独立核对每份文档SHA、签名/代码身份和保护下生命周期，实际结果由`dist/workbuddy-import-review/mapped-reader-final-{arm,x64}-package-archive-coordinator.json`及[CURRENT入口](../../evidence/R09-20261017-CURRENT.json)记录，不以打包代替安装。
 
-所有历史失败、原候选哈希及原始报告保留。临时目录固定外置盘，复用已有Cargo缓存；每轮停等本轮子进程并确认无引用后只删除确切自有路径，报告清理/残留/系统盘余量。
+所有历史失败、原候选哈希及原始报告保留。临时目录使用系统默认位置或用户指定的本机可写目录，按平台配置环境变量并复用本机兼容的 Cargo 缓存；每轮停等本轮子进程并确认无引用后只删除确切自有路径，报告清理/残留/系统盘余量。
 
 ## 历史候选记录（以下“当前/待验/未完成”均指当时哈希）
 

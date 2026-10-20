@@ -18,7 +18,10 @@ def compiler():
     if found:
         return found
     for key in ('ProgramFiles(x86)', 'ProgramFiles'):
-        path = Path(os.environ.get(key, 'C:/Program Files (x86)')) / 'Inno Setup 6/ISCC.exe'
+        directory = os.environ.get(key)
+        if not directory:
+            continue
+        path = Path(directory) / 'Inno Setup 6/ISCC.exe'
         if path.is_file():
             return str(path)
     raise SystemExit('Inno Setup 6 is required only on the Windows build machine')

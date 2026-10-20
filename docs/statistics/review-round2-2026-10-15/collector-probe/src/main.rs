@@ -1,9 +1,11 @@
 #![allow(dead_code)]
+#[path = "../../../../../src/stats/dto.rs"]
+pub mod review_dto;
+#[path = "../../../../../src/stats/collector.rs"]
+pub mod review_collector;
 mod stats {
-    #[path = "/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics/src/stats/dto.rs"]
-    pub mod dto;
-    #[path = "/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics/src/stats/collector.rs"]
-    pub mod collector;
+    pub use crate::review_dto as dto;
+    pub use crate::review_collector as collector;
 }
 use stats::collector::{Collector,Protocol,UsageAccumulator};
 use stats::dto::UsageReason;

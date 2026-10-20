@@ -8,14 +8,14 @@
 
 > 价格表应该可以随便改；统计明细必须有本次单价、总价等数据，与价格表解耦；拿不到模型价格就默认0元。
 
-请在现有worktree `/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics` 继续实现，不重置、不覆盖已有修复、不新建另一套分支。
+请在现有worktree 统计开发 worktree（通过 `git worktree list --porcelain` 核实 `codex/usage-statistics` 对应目录） 继续实现，不重置、不覆盖已有修复、不新建另一套分支。
 
 先阅读主工作区的最新文件（开发worktree旧副本可能尚未同步）：
 
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/PRICING-DECISION.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/schema.sql`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/API.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/validate_design.py`
+- `docs/statistics/PRICING-DECISION.md`
+- `docs/statistics/schema.sql`
+- `docs/statistics/API.md`
+- `docs/statistics/validate_design.py`
 
 只复制本次设计修订所需文档进入开发worktree；保留你已经完成的F01–F09和正在开发的F10/F11。价格冲突以用户新口径及PRICING-DECISION为准，其他审查任务继续完成。
 

@@ -25,3 +25,5 @@ cargo run --quiet --locked --manifest-path docs/statistics/review-round6-2026-10
 helper引用开发worktree的statistics_test辅助函数；默认EXE为主工作区target/release/workbuddy-proxy，可用WBP_REVIEW_WORKTREE/WBP_REVIEW_EXE覆盖。先构建对应核心。所有进程、配置、Key、Mock、触发器和SIGKILL均为脚本自己的临时隔离实例。
 
 Writer探针带Cargo.lock并直接引用实际源码，journal/config为最小桩。诊断exit0不代表产品正确；实际结果区分已改善与仍失败。迁移失败结果保存了核心回传的完整SQL，仅为假数据样例，用于证明错误信息边界缺陷。
+
+路径约定：helper 默认从自身文件定位仓库，不依赖当前目录；支持 `WBP_REVIEW_WORKTREE`、`WBP_REVIEW_EXE` 和本机 `CARGO_TARGET_DIR` 覆盖，Windows 默认二进制自动加 `.exe`，命令中的 `python3` 改为 `python`。Rust 探针相对引用所在仓库源码，审查其他 worktree 时应使用该 worktree 内的副本；探针依赖历史接口与缺陷行为，复跑前核对版本，旧结果不代表当前版本通过。

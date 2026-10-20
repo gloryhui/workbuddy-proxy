@@ -93,7 +93,7 @@ recover_collection只把区间记录结果计入recorded；孤立结算失败虽
 
 ## 8. 直接执行的下一轮任务
 
-继续现有worktree `/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics`、分支`codex/usage-statistics`。先读**主工作区**本报告、第四轮报告和PRICING-DECISION/API，不用开发worktree旧副本覆盖最新设计。
+继续现有worktree 由 `git worktree list --porcelain` 核实的统计开发 worktree、分支`codex/usage-statistics`。先读**主工作区**本报告、第四轮报告和PRICING-DECISION/API，不用开发worktree旧副本覆盖最新设计。
 
 顺序：**U05可靠补偿 → U02有界修复/U04接口收尾 → U06 PriceDraft及测试 → U07完整页面控制器和交互 → 回归/性能/交付。** U01、U03已确认改善，不再推倒重写。
 

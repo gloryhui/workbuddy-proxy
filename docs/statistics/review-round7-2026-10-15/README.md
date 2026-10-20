@@ -20,3 +20,5 @@ python3 docs/statistics/review-round7-2026-10-15/missing_start_probe.py
 helper引用开发worktree的statistics_test辅助函数。默认EXE为主工作区target/release/workbuddy-proxy，先构建对应版本，可通过WBP_REVIEW_WORKTREE/WBP_REVIEW_EXE覆盖。旧数据为正式schema和真实调用模板构造，开启FK；数据库、配置、Key、Mock、进程和故障均属于脚本自己的临时隔离实例，未接触用户配置或真实供应商。
 
 探针是观测资料，不能把exit0当产品验收；结果分别明确已改善和仍失败，控制器/人工界面验收另行完成。
+
+路径约定：helper 默认从自身文件定位仓库，不依赖当前目录；支持 `WBP_REVIEW_WORKTREE`、`WBP_REVIEW_EXE` 和本机 `CARGO_TARGET_DIR` 覆盖，Windows 默认二进制自动加 `.exe`，命令中的 `python3` 改为 `python`。Rust 探针相对引用所在仓库源码，审查其他 worktree 时应使用该 worktree 内的副本；探针依赖历史接口与缺陷行为，复跑前核对版本，旧结果不代表当前版本通过。

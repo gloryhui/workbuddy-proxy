@@ -19,12 +19,14 @@ python3 docs/statistics/review-round4-2026-10-15/paging_probe.py
 python3 docs/statistics/review-round4-2026-10-15/orphan_probe.py
 ```
 
-helper依赖开发worktree的statistics_test辅助函数。默认核心路径为主工作区`target/release/workbuddy-proxy`，先构建对应版本；`WBP_REVIEW_WORKTREE`/`WBP_REVIEW_EXE`可覆盖。故障触发器和SIGKILL仅针对脚本自己的临时实例。
+helper依赖开发worktree的statistics_test辅助函数。默认核心路径为脚本所在仓库的`target/release/workbuddy-proxy`，先构建对应版本；`WBP_REVIEW_WORKTREE`/`WBP_REVIEW_EXE`可覆盖。故障触发器和SIGKILL仅针对脚本自己的临时实例。
 
-直接Writer探针带Cargo.lock，`#[path]`引用实际开发worktree源码，journal/config为最小桩：
+直接Writer探针带Cargo.lock，`#[path]`相对引用本仓库源码，journal/config为最小桩：
 
 ```sh
 cargo run --quiet --locked --manifest-path docs/statistics/review-round4-2026-10-15/store-probe/Cargo.toml
 ```
 
 诊断脚本输出是事实观察，不把exit0当产品验收通过。常规113核心/37GPUI测试、两端fmt/clippy、核心release也已重新执行，完整终端输出未全部保存。本轮没有百万行、MSRV、Windows、真实计费和人工像素布局新证据。
+
+路径约定：helper 默认从自身文件定位仓库，不依赖当前目录；支持 `WBP_REVIEW_WORKTREE`、`WBP_REVIEW_EXE` 和本机 `CARGO_TARGET_DIR` 覆盖，Windows 默认二进制自动加 `.exe`，命令中的 `python3` 改为 `python`。Rust 探针相对引用所在仓库源码，审查其他 worktree 时应使用该 worktree 内的副本；探针依赖历史接口与缺陷行为，复跑前核对版本，旧结果不代表当前版本通过。

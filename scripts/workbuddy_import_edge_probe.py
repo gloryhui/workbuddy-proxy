@@ -85,7 +85,6 @@ def wait_task(fixture, task_id, description):
 
 
 def run(args):
-    assert os.environ.get('TMPDIR', '').startswith('/Volumes/1TB/')
     output = Path(args.output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     report = Report('R09 production edges X01/X03/X12/X16/X34/X41/X42', args.exe, Path(__file__).name)

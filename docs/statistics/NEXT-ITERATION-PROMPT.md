@@ -10,15 +10,15 @@
 
 ## 1. 工作区和必读资料
 
-主工作区：`/Volumes/1TB/Downloads/git/workbuddy-proxy`。
+主工作区：主仓库（通过 `git worktree list --porcelain` 核实）。
 
-继续使用已有独立worktree：`/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics`，分支`codex/usage-statistics`。先检查实际HEAD/status/worktree列表及生效AGENTS.md。审查时HEAD=e1725c3，功能代码均未提交；保留全部已有实现和用户修改，不reset、不stash、不重新复制整个主工作区，不创建相互冲突的第二套实现。
+继续使用已有独立worktree：统计开发 worktree（通过 `git worktree list --porcelain` 核实 `codex/usage-statistics` 对应目录），分支`codex/usage-statistics`。先检查实际HEAD/status/worktree列表及生效AGENTS.md。审查时HEAD=e1725c3，功能代码均未提交；保留全部已有实现和用户修改，不reset、不stash、不重新复制整个主工作区，不创建相互冲突的第二套实现。
 
 **先读取最新审查资料（在主工作区，开发worktree原副本没有这两份新文件）：**
 
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/REVIEW-2026-10-15.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/NEXT-ITERATION-PROMPT.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/review-2026-10-15/`
+- `docs/statistics/REVIEW-2026-10-15.md`
+- `docs/statistics/NEXT-ITERATION-PROMPT.md`
+- `docs/statistics/review-2026-10-15/`
 
 必要时只复制这些审查资料到当前开发worktree，不覆盖原设计/现有源码。再读开发worktree中的REQUIREMENTS.md、API.md、DEVELOPMENT.md、IMPLEMENTATION-STATUS.md及实际源码。
 

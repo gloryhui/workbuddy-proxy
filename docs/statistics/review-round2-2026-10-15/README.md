@@ -13,14 +13,14 @@
 
 ## 复现专项观察
 
-Python探针使用开发worktree的`scripts/statistics_test.py`辅助函数；已保存本地[helper.py](helper.py)，不依赖原临时目录。默认使用上述worktree和主工作区`target/release/workbuddy-proxy`，可用`WBP_REVIEW_WORKTREE`、`WBP_REVIEW_EXE`覆盖。必须先对审查版本构建release。脚本仅启动临时实例，使用假Key和本地Mock；结果会覆盖本目录对应JSON，复跑前自行保留旧证据。
+Python探针使用开发worktree的`scripts/statistics_test.py`辅助函数；已保存本地[helper.py](helper.py)，不依赖原临时目录。默认使用脚本所在仓库和该仓库的`target/release/workbuddy-proxy`（Windows 自动加`.exe`），尊重本机`CARGO_TARGET_DIR`；可用`WBP_REVIEW_WORKTREE`、`WBP_REVIEW_EXE`覆盖。相对环境变量路径从当前工作目录解析。必须先对审查版本构建release。脚本仅启动临时实例，使用假Key和本地Mock；结果会覆盖本目录对应JSON，复跑前自行保留旧证据。
 
 ```sh
 python3 docs/statistics/review-round2-2026-10-15/api_probe.py
 python3 docs/statistics/review-round2-2026-10-15/group_probe.py
 ```
 
-三个Rust探针保存各自Cargo.toml、Cargo.lock和main.rs，通过绝对`#[path]`直接引用实际开发worktree源码，不是重写产品逻辑。路径变更时先调整`#[path]`。Writer探针只有journal/config的最小桩，直接调用真实Writer；它缩短busy_timeout至30ms以限制复核时间，2474ms是该设置下的观测，不是生产2秒配置的实测值。
+三个Rust探针保存各自Cargo.toml、Cargo.lock和main.rs，通过相对`#[path]`直接引用本仓库源码，不是重写产品逻辑。审查其他worktree时应从该worktree内的探针副本运行。探针依赖历史版本接口；当前版本编译不兼容时应按版本核对，不能把旧观察当作新版本通过。Writer探针只有journal/config的最小桩，直接调用真实Writer；它缩短busy_timeout至30ms以限制复核时间，2474ms是该设置下的观测，不是生产2秒配置的实测值。
 
 ```sh
 cargo run --quiet --locked --manifest-path docs/statistics/review-round2-2026-10-15/scheduler-probe/Cargo.toml
@@ -35,7 +35,6 @@ Scheduler探针断言的是“观察到当前缺陷”；退出0只表示复现�
 在开发worktree中执行，GPUI额外设置`RUST_MIN_STACK=67108864`；核心复用主工作区target缓存。测试范围的完整解释见审查报告。
 
 ```sh
-export CARGO_TARGET_DIR=/Volumes/1TB/Downloads/git/workbuddy-proxy/target
 cargo test --locked --quiet
 cargo build --release --locked
 cargo fmt --all -- --check
@@ -43,7 +42,9 @@ cargo clippy --locked --all-targets -- -D warnings
 RUST_MIN_STACK=67108864 cargo test --manifest-path gpui/Cargo.toml --locked --quiet
 cargo fmt --manifest-path gpui/Cargo.toml --all -- --check
 RUST_MIN_STACK=67108864 cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings
-python3 scripts/statistics_test.py --exe /Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy
+python3 scripts/statistics_test.py --exe target/release/workbuddy-proxy
 ```
 
 主工作区的`python3 docs/statistics/validate_design.py`验证v2设计SQL；它不能证明实际Rust v1→v2迁移已实现。
+
+以上为 POSIX Shell 示例；Windows 使用 `python`，可执行文件加 `.exe`，环境变量使用 PowerShell 的 `$env:RUST_MIN_STACK = "67108864"` 等语法。缓存与临时目录按根 `AGENTS.md` 和本机配置选择。

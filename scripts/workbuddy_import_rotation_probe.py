@@ -68,7 +68,6 @@ def caught_up(fixture, count):
 
 
 def run(args):
-    assert os.environ.get('TMPDIR', '').startswith('/Volumes/1TB/')
     output = Path(args.output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     sandbox = Sandbox(prefix='workbuddy-rotation-1137-')

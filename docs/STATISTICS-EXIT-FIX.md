@@ -36,7 +36,8 @@ cargo test --manifest-path gpui/Cargo.toml --quiet
 cargo clippy --manifest-path gpui/Cargo.toml --all-targets -- -D warnings
 cargo build --manifest-path gpui/Cargo.toml --release --locked
 python3 scripts/statistics_test.py --exe target/release/workbuddy-proxy
-python3 scripts/gpui_package_test.py --exe /path/to/packaged/workbuddy-proxy --output /tmp/lifecycle.json
+# Windows 使用 python，可执行文件名加 .exe；打包目录按本机实际路径替换
+python3 scripts/gpui_package_test.py --exe "dist/packaged/workbuddy-proxy" --output bench-results/lifecycle.json
 ```
 
 实际 ⌘Q 检查在最后一条命令中追加 `--wait-for-cmd-q`，等待 `READY_FOR_CMD_Q` 后操作隔离的设置窗口。`--exe` 旁必须有匹配 GPUI helper 或完整 app 目录。

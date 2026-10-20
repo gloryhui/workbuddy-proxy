@@ -471,7 +471,14 @@ Windows 包内有 `Diagnose.cmd`，可查看无界面启动诊断。启动日志
 <details>
 <summary><strong>构建、验证、无界面运行与打包命令</strong></summary>
 
+以下命令从仓库根目录执行，路径均相对于当前检出目录。Windows 使用 `python`（或 `py -3`）替代 `python3`，可执行文件名加 `.exe`。Linux 可构建和验证无界面核心；桌面适配与安装包目前面向 Windows 和 macOS。
+
+Cargo 默认复用当前仓库的 `target/`、`gpui/target/`；如需共享 worktree 缓存，可在本机配置 `CARGO_TARGET_DIR`。临时文件默认使用系统临时目录；需要其他磁盘时，在启动构建或 Python 进程前设置 `TMPDIR`、`TMP`、`TEMP` 为本机存在且可写的目录。项目不要求特定外置盘、盘符或用户目录；平台专用的签名、沙箱和打包脚本仍需在对应平台运行。
+
+`docs/` 和 `evidence/` 中带日期的日志、报告及 GUI 自动化脚本是历史快照，其中的旧机器路径只用于追溯，不是当前配置或执行要求。复跑时以当前 `AGENTS.md`、本节和脚本参数为准；归档的原生 GUI 脚本需先按目标平台迁移，不能直接作为跨平台测试入口，也不能用旧结果代替新验收。
+
 ```sh
+python3 scripts/path_portability_test.py
 cargo test --locked
 cargo clippy --locked --all-targets -- -D warnings
 cargo build --release --locked

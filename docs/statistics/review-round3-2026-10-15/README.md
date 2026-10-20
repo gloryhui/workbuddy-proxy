@@ -13,7 +13,7 @@ Python复现（从主工作区执行）：
 python3 docs/statistics/review-round3-2026-10-15/api_probe.py
 ```
 
-脚本使用同目录helper及开发worktree中的statistics_test辅助函数，默认EXE为主工作区`target/release/workbuddy-proxy`；`WBP_REVIEW_WORKTREE`/`WBP_REVIEW_EXE`可覆盖。先构建审查版本核心。会覆盖同目录API JSON，所以保留历史证据后再复跑。故障注入只针对临时测试库，脚本正常清理进程/临时目录，不接触用户数据库。
+脚本使用同目录helper及开发worktree中的statistics_test辅助函数，默认EXE为脚本所在仓库的`target/release/workbuddy-proxy`；`WBP_REVIEW_WORKTREE`/`WBP_REVIEW_EXE`可覆盖。先构建审查版本核心。会覆盖同目录API JSON，所以保留历史证据后再复跑。故障注入只针对临时测试库，脚本正常清理进程/临时目录，不接触用户数据库。
 
 Writer探针：
 
@@ -21,6 +21,8 @@ Writer探针：
 cargo run --quiet --locked --manifest-path docs/statistics/review-round3-2026-10-15/store-probe/Cargo.toml
 ```
 
-其`#[path]`固定到开发worktree，journal/config为最小桩，Writer/SQL/维护逻辑均用实际产品源码。输出是缺陷观测，退出0不是产品行为通过；修复后应在正式测试中断言预期删除范围/条数，而非保留缺陷结果。
+其`#[path]`相对引用本仓库源码，journal/config为最小桩，Writer/SQL/维护逻辑均用实际产品源码。输出是缺陷观测，退出0不是产品行为通过；修复后应在正式测试中断言预期删除范围/条数，而非保留缺陷结果。
 
 本轮重新执行110核心/37GPUI/37统计集成、两端fmt/clippy、核心release和五类兼容回归。完整常规测试终端输出未全部保存，本目录保留专项原始结果及五类回归日志。GPU像素布局、Rust1.88、Windows、真实供应商、三类百万行性能未在本轮重新验证。
+
+路径约定：helper 默认从自身文件定位仓库，不依赖当前目录；支持 `WBP_REVIEW_WORKTREE`、`WBP_REVIEW_EXE` 和本机 `CARGO_TARGET_DIR` 覆盖，Windows 默认二进制自动加 `.exe`，命令中的 `python3` 改为 `python`。Rust 探针相对引用所在仓库源码，审查其他 worktree 时应使用该 worktree 内的副本；探针依赖历史接口与缺陷行为，复跑前核对版本，旧结果不代表当前版本通过。

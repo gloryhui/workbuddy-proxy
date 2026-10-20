@@ -40,7 +40,6 @@ def count(fixture):
 
 
 def run(args):
-    assert os.environ['TMPDIR'].startswith('/Volumes/1TB/')
     output = Path(args.output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     sandbox = Sandbox(prefix='workbuddy-progress-')

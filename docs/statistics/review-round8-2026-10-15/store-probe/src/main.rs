@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 mod journal { pub fn now_ms()->u64 {std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_millis() as u64} }
 mod config {pub fn token()->String{format!("{:032x}",crate::journal::now_ms())}}
-#[path="/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics/src/stats/mod.rs"]
+#[path="../../../../../src/stats/mod.rs"]
 mod stats;
 use std::{sync::Arc,fs};
 use stats::{store::{Writer,RecoveryScan,scan_recovery_batch},event::Counters};

@@ -1,5 +1,7 @@
 # WorkBuddy Proxy UI 改造施工状态
 
+> 路径说明（2026-10-20）：下文已执行记录中的绝对路径是当时机器的历史证据，不是当前机器的运行要求。后续执行以根 `AGENTS.md` 和实际平台为准；第 7.3 节及后续编译指引已改用本机目录，不能因旧卷未挂载而阻塞验证。Shell 示例采用 POSIX 语法，Windows 应使用等效 PowerShell 调用。
+
 - 文档用途：T00 基线核查、功能映射、差异登记、后续任务起点。
 - 编制日期：2026-10-19。
 - 工作区：`/Volumes/1TB/codex/worktrees/ui-redesign/workbuddy-proxy`。
@@ -423,7 +425,7 @@ workbuddy-proxy-gpui --version
 
 ### 7.3 T01+ 安全启动方案（未执行）
 
-1. 在 `/Volumes/1TB` 下创建本会话专用目录（例如 `/Volumes/1TB/tmp/ui-ux-t01-<timestamp>/`），并设置：
+1. 在操作系统临时目录或用户指定的本机可写目录下创建本会话专用目录（通过 Python `tempfile.mkdtemp()` 等平台接口生成），并设置：
    - `TMPDIR`、`TMP`、`TEMP` 指向该目录下的 `tmp/`。
    - 配置目录 `config/`、隔离 HOME `home/`、Mock 端口、日志目录。
 2. 生成合成 `config.json`（演示 Key、loopback 上游、合成供应商/模型），不读取真实 `~/Library/Application Support/WorkBuddyProxy` 或 `%APPDATA%\WorkBuddyProxy`。
@@ -443,8 +445,8 @@ workbuddy-proxy-gpui --version
    等待 `"$DIR/config/gpui.json"`；截图/交互只在这个进程。
 6. 上游请求只指向本地 Mock；不启动真实 WorkBuddy；不点会修改真实开机启动/端口/同步的确认按钮。需要验证这些弹窗时，只用隔离配置并记录“Mock/未执行真实系统集成”。
 7. 停止：优先写 `"$DIR/config/gpui-stop.json"` 让 GPUI 退出；再按已有夹具的 `_control/stop` 或托盘退出路径停止核心；等待 PID 退出后再清理。
-8. 清理：只删除本轮创建的 `$DIR`；先 `ps`/`lsof` 确认无进程引用；保留报告/截图/日志到 `validation/<date>/`。使用 `try/finally` 或 `trap`。
-9. 构建/测试若执行：复用 `/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`（`CARGO_TARGET_DIR`），不运行 `cargo clean`；构建进程退出后再清理临时目录。
+8. 清理：只删除本轮创建的会话目录；先等待子进程退出，并使用平台进程工具核实引用（如 Unix 的 `ps`/`lsof`、Windows 的进程与句柄检查）；保留报告/截图/日志到 `validation/<date>/`。使用所用语言或 Shell 的 `try/finally`、`trap` 等清理机制。
+9. 构建/测试若执行：复用当前检出目录的 `gpui/target/` 或本机 `CARGO_TARGET_DIR` 配置的兼容缓存，不运行 `cargo clean`；构建进程退出后再清理临时目录。
 
 T00 没有启动上述任何进程，因此 B04 为 `NOT RUN`。
 
@@ -1158,7 +1160,7 @@ T01 第一步：
 3. 本任务不迁移页面、不改 `usage_table.rs`、不改统计/代理/配置逻辑；页面样式在 T03—T08 逐步替换。
 4. T01 完成后：
    - V01/V02 可用源码扫描与静态核对；V03/V04 必须等真实 GUI 运行，未运行就标 `NOT RUN`。
-   - 若需要编译，遵守：`TMPDIR/TMP/TEMP` 指向 `/Volumes/1TB` 会话目录；`CARGO_TARGET_DIR=/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target`；不执行 `cargo clean`；进程退出后清理。
+   - 若需要编译，遵守当前根 `AGENTS.md`：使用系统临时目录或用户指定的本机可写目录，按平台设置 `TMPDIR`/`TMP`/`TEMP`；复用当前检出的 `gpui/target/` 或本机配置的兼容缓存；不执行 `cargo clean`；进程退出后清理。
 5. T02 的入口是 `gpui/src/ui_components/`，只封装实际重复的 Button/Input/Select/Checkbox/Segmented/Card/Table/Dialog/Pager/Tag；不要先改 `ui.rs` 全部页面。
 
 ## 11. 静态核查命令与证据

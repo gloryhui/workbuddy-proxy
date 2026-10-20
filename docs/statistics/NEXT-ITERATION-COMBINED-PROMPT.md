@@ -10,19 +10,19 @@
 
 继续使用独立worktree：
 
-`/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics`
+统计开发 worktree（通过 `git worktree list --porcelain` 核实 `codex/usage-statistics` 对应目录）
 
 分支`codex/usage-statistics`；审查时HEAD=e1725c3，功能修改尚未提交。检查实际git status、HEAD、worktree列表和AGENTS.md，保留现有实现/用户修改，不reset、不stash、不新建平行实现。
 
 最新审查与价格设计保存在**主工作区**，先读这些文件，不能误读开发worktree旧副本：
 
-1. `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/REVIEW-ROUND2-2026-10-15.md`
-2. `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/PRICING-DECISION.md`
-3. `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/PRICING-CHANGE-PROMPT.md`
-4. `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/schema.sql`
-5. `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/API.md`
-6. `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/REQUIREMENTS.md`
-7. `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/review-round2-2026-10-15/`
+1. `docs/statistics/REVIEW-ROUND2-2026-10-15.md`
+2. `docs/statistics/PRICING-DECISION.md`
+3. `docs/statistics/PRICING-CHANGE-PROMPT.md`
+4. `docs/statistics/schema.sql`
+5. `docs/statistics/API.md`
+6. `docs/statistics/REQUIREMENTS.md`
+7. `docs/statistics/review-round2-2026-10-15/`
 
 只同步本次所需设计/审查资料，不覆盖当前IMPLEMENTATION-STATUS或正在修改的源码。更新进度为“第二轮复核后的修复与价格改造中”，保留旧测试证据和已修成果。
 

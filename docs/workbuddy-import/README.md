@@ -6,8 +6,8 @@
 
 ## 工作位置与基线
 
-- 原仓库：`/Volumes/1TB/Downloads/git/workbuddy-proxy`，保持原分支和工作区。
-- 开发 worktree：`/Volumes/1TB/codex/worktrees/workbuddy-usage-import/workbuddy-proxy`。
+- 原仓库：本机主检出目录，通过 `git worktree list --porcelain` 核实，保持原分支和工作区。
+- 开发 worktree：通过 `git worktree list --porcelain` 核实 `codex/workbuddy-usage-import` 对应的本机目录，不要求固定盘符或绝对路径。
 - 开发分支：`codex/workbuddy-usage-import`。
 - 固定基线：`6102b779871bab0bb8ad646dac5004892adf76be`，v0.5.6。
 - 基线 SQLite schema=6，统计 API=2，管理协议=10；目标分别为 7、3、11。

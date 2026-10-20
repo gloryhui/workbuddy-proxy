@@ -2,7 +2,7 @@
 
 你负责按已经冻结的设计实现 WorkBuddy 本地 JSONL 用量导入。本任务不需要你重新设计产品或决定架构。先完整读取本目录 README、DESIGN、DATA-API、UI-SPEC、TASKS、ACCEPTANCE、COMMANDS、PROGRESS，以及worktree根AGENTS.md；任何局部摘要都不能替代契约。
 
-工作目录必须为 `/Users/glory/.codex/worktrees/workbuddy-usage-import/workbuddy-proxy`，分支 `codex/workbuddy-usage-import`，基线 `6102b779871bab0bb8ad646dac5004892adf76be`。不要在原main目录写代码，不创建另一套临时实现，不合入自动更新等无关分支。开始前执行只读Git核验，保护已有设计文件。
+工作目录使用 `git worktree list --porcelain` 核实的本机导入开发 worktree，不要求固定绝对路径；分支 `codex/workbuddy-usage-import`，基线 `6102b779871bab0bb8ad646dac5004892adf76be`。不要在原main目录写代码，不创建另一套临时实现，不合入自动更新等无关分支。开始前执行只读Git核验，保护已有设计文件。
 
 严格依次执行 S01.01 → S01.02 → … → S10.08 共80项。每次只处理一个子任务，完成该项修改、测试、范围自查和证据记录后才能处理下一项；每8项做阶段关卡。不得跳过schema/解析测试直接写UI；不得一次改完所有文件再补勾任务。
 

@@ -1,9 +1,10 @@
 from pathlib import Path
 import os,sys,json,time,tempfile,threading,http.client,sqlite3,contextlib
-WORKTREE=Path(os.environ.get('WBP_REVIEW_WORKTREE','/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics'))
+WORKTREE=Path(os.environ.get('WBP_REVIEW_WORKTREE') or Path(__file__).resolve().parents[3]).expanduser().resolve()
 sys.path.insert(0,str(WORKTREE/'scripts'))
 import statistics_test as t
-EXE=os.environ.get('WBP_REVIEW_EXE','/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy')
+TARGET=Path(os.environ.get('CARGO_TARGET_DIR') or WORKTREE/'target').expanduser().resolve()
+EXE=os.environ.get('WBP_REVIEW_EXE') or str(TARGET/'release'/('workbuddy-proxy.exe' if os.name=='nt' else 'workbuddy-proxy'))
 RESULTS=[]
 class Mock(t.BaseHTTPRequestHandler):
     protocol_version='HTTP/1.1'

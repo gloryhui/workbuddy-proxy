@@ -117,12 +117,12 @@ edit_price只回填四项数字、model和label，没有回填price_currency/pri
 
 先读以下主工作区最新文件，勿用开发worktree旧副本替代：
 
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/REVIEW-ROUND3-2026-10-15.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/NEXT-ITERATION-COMBINED-PROMPT.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/PRICING-DECISION.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/API.md`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/schema.sql`
-- `/Volumes/1TB/Downloads/git/workbuddy-proxy/docs/statistics/review-round3-2026-10-15/`
+- `docs/statistics/REVIEW-ROUND3-2026-10-15.md`
+- `docs/statistics/NEXT-ITERATION-COMBINED-PROMPT.md`
+- `docs/statistics/PRICING-DECISION.md`
+- `docs/statistics/API.md`
+- `docs/statistics/schema.sql`
+- `docs/statistics/review-round3-2026-10-15/`
 
 保留已通过修复，先补能捕获旧缺陷的失败回归，再改源码。探针只是审查观察，不能把“成功复现缺陷”的exit0当产品通过。不要只更新进度声明、只修价格表、只跑现有37项就宣称闭环。
 
@@ -132,4 +132,4 @@ edit_price只回填四项数字、model和label，没有回填price_currency/pri
 
 最终执行核心/GPUI fmt、test、clippy、release；statistics集成、smoke、多路由、连接、核心兼容、模型能力、设置生命周期；加入本报告维护/结算/故障/表单/控制器回归。补新价格模型三类10万/100万性能，记录超时预算、i128金额、转发P95/RSS。Rust1.88、Windows、真实供应商、三尺寸人工界面如无条件单列未验证，不能以Mock/本机编译替代。
 
-最后给T01–T08逐项闭环表、实际测试命令/结果、schema/API/control版本、worktree/分支/git status。继续使用`/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics`、`codex/usage-statistics`；不reset/stash、不覆盖用户修改、不改主工作区业务代码、不提交/推送/发布/安装、不操作真实用户配置/数据库。需要提交时另按用户授权及AGENTS署名规则执行。
+最后给T01–T08逐项闭环表、实际测试命令/结果、schema/API/control版本、worktree/分支/git status。继续使用由 `git worktree list --porcelain` 核实的统计开发 worktree、`codex/usage-statistics`；不reset/stash、不覆盖用户修改、不改主工作区业务代码、不提交/推送/发布/安装、不操作真实用户配置/数据库。需要提交时另按用户授权及AGENTS署名规则执行。

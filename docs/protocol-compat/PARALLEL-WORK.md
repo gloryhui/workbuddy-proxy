@@ -13,9 +13,9 @@
 
 ## 目录隔离
 
-- 任务书准备目录：`/Users/glory/.codex/worktrees/protocol-compat/workbuddy-proxy`，分支codex/protocol-compat；调研SHA为e1725c3d14c6dfed24cd4edc0150c1c052ab4bed。
+- 任务书准备目录：通过 `git worktree list --porcelain` 核实的 `codex/protocol-compat` worktree，分支codex/protocol-compat；调研SHA为e1725c3d14c6dfed24cd4edc0150c1c052ab4bed。
 - 正式实施目录：依赖门禁满足后新建，在IMPLEMENTATION-STATUS中登记；业务代码/编译/测试只在此目录。
-- 统计目录：`/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics`，分支codex/usage-statistics。不编辑、不执行其测试、不启停其进程、不切换/归档/清理该worktree。
+- 统计目录：通过 `git worktree list --porcelain` 核实的 `codex/usage-statistics` worktree，分支codex/usage-statistics。不编辑、不执行其测试、不启停其进程、不切换/归档/清理该worktree。
 - 主目录README与未跟踪docs/statistics不复制、不stash、不reset、不覆盖、不提交。
 - 每次shell mutation显式指定实施worktree的workdir。使用独立临时config-dir/数据库/动态端口，只清理由自己创建且确认身份的PID；禁止按进程名全杀。
 - 不自动向统计聊天发消息。有疑问记录待核对项，不代替用户调度另一个DeepSeek。

@@ -132,4 +132,4 @@ T07剩余：价格列表GUI仍只请求首100条，不用next；默认币种虽�
 
 更新IMPLEMENTATION-STATUS：T03/T07不能沿用错误“已完成”声明，旧v2需修正不能宣称无数据影响。最终给U01–U07闭环、测试命令/结果、未验证项、schema/API/control版本、worktree/分支/git status。上下文不足时保存精确断点；不得以既有37项通过或一次轮次结束替代未完成需求。
 
-继续`/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics`、`codex/usage-statistics`；不reset/stash、不覆盖用户修改、不改主工作区业务代码、不提交/推送/发布/安装、不操作真实用户配置/数据库。无需逐批询问是否继续。
+继续由 `git worktree list --porcelain` 核实的统计开发 worktree、`codex/usage-statistics`；不reset/stash、不覆盖用户修改、不改主工作区业务代码、不提交/推送/发布/安装、不操作真实用户配置/数据库。无需逐批询问是否继续。

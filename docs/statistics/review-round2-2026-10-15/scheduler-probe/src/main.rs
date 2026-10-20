@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-#[path = "/Volumes/1TB/Downloads/git/workbuddy-proxy-usage-statistics/gpui/src/stats_backend.rs"]
+#[path = "../../../../../gpui/src/stats_backend.rs"]
 mod backend;
 use backend::{JobKind,StatsScheduler};
 use serde_json::json;
