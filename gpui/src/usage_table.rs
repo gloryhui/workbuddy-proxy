@@ -64,34 +64,15 @@ pub fn compact(value: Option<i64>, zh: bool) -> String {
     format!("{text}{unit}")
 }
 
-/// The source column's text.
-///
-/// The three origins are distinguishable at a glance: a relayed call, a record
-/// imported from WorkBuddy's own log, and a confirmed direct use of a custom
-/// vendor.
+/// Model-source classification, matching the heading's built-in/custom filter.
+/// Proxy capture and imported custom-vendor records are both non-built-in;
+/// capture method stays separate in the request details.
 pub fn origin_text(origin: RecordOrigin, zh: bool) -> &'static str {
-    match origin {
-        RecordOrigin::Proxy => {
-            if zh {
-                "代理"
-            } else {
-                "Proxy"
-            }
-        }
-        RecordOrigin::WorkbuddyBuiltin => {
-            if zh {
-                "内置"
-            } else {
-                "Built-in"
-            }
-        }
-        RecordOrigin::WorkbuddyCustom => {
-            if zh {
-                "自定义"
-            } else {
-                "Custom"
-            }
-        }
+    match (origin, zh) {
+        (RecordOrigin::WorkbuddyBuiltin, true) => "内置",
+        (RecordOrigin::WorkbuddyBuiltin, false) => "Built-in",
+        (RecordOrigin::Proxy | RecordOrigin::WorkbuddyCustom, true) => "自定义",
+        (RecordOrigin::Proxy | RecordOrigin::WorkbuddyCustom, false) => "Custom",
     }
 }
 
@@ -627,8 +608,10 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .child(
             crate::ui_components::tag(
                 match item.origin {
-                    RecordOrigin::Proxy => crate::ui_components::TagKind::Primary,
-                    _ => crate::ui_components::TagKind::Secondary,
+                    RecordOrigin::WorkbuddyBuiltin => crate::ui_components::TagKind::Primary,
+                    RecordOrigin::Proxy | RecordOrigin::WorkbuddyCustom => {
+                        crate::ui_components::TagKind::Secondary
+                    }
                 },
                 origin_text(item.origin, zh),
             )
@@ -1380,9 +1363,8 @@ mod source_column_tests {
     use crate::stats_dto::{Currency, Outcome, RecordOrigin};
 
     #[test]
-    fn the_three_origins_are_distinguishable() {
-        // AC069: a relayed call, an imported built-in record and a confirmed
-        // direct use must not read the same.
+    fn model_source_labels_match_the_builtin_and_custom_filter_partition() {
+        // Capture provenance must not introduce a third model-source category.
         let zh = [
             RecordOrigin::Proxy,
             RecordOrigin::WorkbuddyBuiltin,
@@ -1395,11 +1377,12 @@ mod source_column_tests {
             RecordOrigin::WorkbuddyCustom,
         ]
         .map(|origin| origin_text(origin, false));
-        assert_eq!(zh, ["代理", "内置", "自定义"]);
-        assert_eq!(en, ["Proxy", "Built-in", "Custom"]);
+        assert_eq!(zh, ["自定义", "内置", "自定义"]);
+        assert_eq!(en, ["Custom", "Built-in", "Custom"]);
         assert_ne!(zh[0], zh[1]);
         assert_ne!(zh[1], zh[2]);
-        assert_ne!(zh[0], zh[2]);
+        assert_eq!(zh[0], zh[2]);
+        assert_eq!(en[0], en[2]);
     }
 
     #[test]

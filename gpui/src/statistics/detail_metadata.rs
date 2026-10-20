@@ -32,7 +32,7 @@ fn metadata(
     };
     vec![
         (
-            text("来源", "Source"),
+            text("模型来源", "Model source"),
             crate::usage_table::origin_text(origin, zh).into(),
         ),
         (text("采集方式", "Capture method"), capture.into()),
