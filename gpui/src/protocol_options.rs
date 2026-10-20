@@ -81,6 +81,20 @@ impl Editor {
             mapping: std::array::from_fn(|_| cx.new(|cx| InputState::new(window, cx))),
         }
     }
+    /// First control that exists inside the dialog for the loaded protocol.
+    ///
+    /// The modal focus trap only engages while focus is inside the dialog, so
+    /// opening the protocol editor must focus a rendered control rather than
+    /// the window root. Otherwise Tab can leave the modal and Enter can reach
+    /// background controls (the X03 focus-escape bug).
+    pub fn initial_focus(&self, cx: &App) -> FocusHandle {
+        if initial_focus_uses_limit(self.protocol) {
+            self.limit.read(cx).focus_handle(cx)
+        } else {
+            self.mode.read(cx).focus_handle(cx)
+        }
+    }
+
     pub fn load(
         &mut self,
         protocol: UpstreamProtocol,
@@ -283,6 +297,12 @@ impl Editor {
             .into_any_element()
     }
 }
+/// Anthropic shows the output-limit input first; the other protocols show the
+/// thinking-mode select first.
+fn initial_focus_uses_limit(protocol: UpstreamProtocol) -> bool {
+    matches!(protocol, UpstreamProtocol::AnthropicMessages)
+}
+
 fn parse(
     protocol: UpstreamProtocol,
     limit: &str,
@@ -368,5 +388,19 @@ mod tests {
         )
         .unwrap();
         assert_eq!(s.responses_efforts["max"], "xhigh");
+    }
+
+    #[::core::prelude::v1::test]
+    fn modal_initial_focus_target_matches_rendered_protocol_controls() {
+        assert!(initial_focus_uses_limit(
+            UpstreamProtocol::AnthropicMessages
+        ));
+        for protocol in [
+            UpstreamProtocol::OpenaiChat,
+            UpstreamProtocol::OpenaiResponses,
+            UpstreamProtocol::GeminiGenerateContent,
+        ] {
+            assert!(!initial_focus_uses_limit(protocol), "{protocol:?}");
+        }
     }
 }

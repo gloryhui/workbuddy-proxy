@@ -1,0 +1,7 @@
+config_before=a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef draft_before=d5549b31650b365f8f66af01833222443083f19b2853b1dee33530b4fda9626f
+role=AXWindow title= desc= value=
+role=AXWindow title= desc= value=
+role=AXWindow title= desc= value=
+config_after=a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef draft_after=d5549b31650b365f8f66af01833222443083f19b2853b1dee33530b4fda9626f
+providers 25 new_empty []
+draft_selected a00000000001

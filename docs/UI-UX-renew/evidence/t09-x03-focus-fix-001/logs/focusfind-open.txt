@@ -1,0 +1,1 @@
+FOCUS role=AXWindow title= desc= value=

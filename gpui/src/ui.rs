@@ -1744,7 +1744,12 @@ impl Proxy {
             } else {
                 480.
             };
-            let focus = if self.picker.is_some() {
+            let focus = if self.protocol_open {
+                // Focus a control rendered inside the protocol dialog; focusing
+                // the window root would leave the modal focus trap inactive and
+                // let Tab/Enter reach background controls (T09 X03).
+                self.protocol_options.initial_focus(cx)
+            } else if self.picker.is_some() {
                 self.search.read(cx).focus_handle(cx)
             } else if self.editing.is_some() {
                 self.edit_model.read(cx).focus_handle(cx)

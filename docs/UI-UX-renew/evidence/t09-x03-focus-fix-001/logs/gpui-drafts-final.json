@@ -1,0 +1,681 @@
+{
+  "base": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+  "selected": "a00000000001",
+  "providers": {
+    "a00000000001": {
+      "name": "opencode",
+      "key": "",
+      "upstream": "https://opencode.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000001",
+          "name": "deepseek-v4.1-flash",
+          "model": "deepseek-v4.1-flash",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000002": {
+      "name": "Provider B",
+      "key": "",
+      "upstream": "https://provider02.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000002",
+          "name": "model-02",
+          "model": "model-02",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000003": {
+      "name": "Provider C",
+      "key": "",
+      "upstream": "https://provider03.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000003",
+          "name": "model-03",
+          "model": "model-03",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000004": {
+      "name": "Provider 04",
+      "key": "",
+      "upstream": "https://provider04.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000004",
+          "name": "model-04",
+          "model": "model-04",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000005": {
+      "name": "Provider 05",
+      "key": "",
+      "upstream": "https://provider05.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000005",
+          "name": "model-05",
+          "model": "model-05",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000006": {
+      "name": "Provider 06",
+      "key": "",
+      "upstream": "https://provider06.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000006",
+          "name": "model-06",
+          "model": "model-06",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000007": {
+      "name": "Provider 07",
+      "key": "",
+      "upstream": "https://provider07.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000007",
+          "name": "model-07",
+          "model": "model-07",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000008": {
+      "name": "Provider 08",
+      "key": "",
+      "upstream": "https://provider08.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000008",
+          "name": "model-08",
+          "model": "model-08",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000009": {
+      "name": "Provider 09",
+      "key": "",
+      "upstream": "https://provider09.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000009",
+          "name": "model-09",
+          "model": "model-09",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000010": {
+      "name": "Provider 10",
+      "key": "",
+      "upstream": "https://provider10.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000010",
+          "name": "model-10",
+          "model": "model-10",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000011": {
+      "name": "Provider 11",
+      "key": "",
+      "upstream": "https://provider11.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000011",
+          "name": "model-11",
+          "model": "model-11",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000012": {
+      "name": "Provider 12",
+      "key": "",
+      "upstream": "https://provider12.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000012",
+          "name": "model-12",
+          "model": "model-12",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000013": {
+      "name": "Provider 13",
+      "key": "",
+      "upstream": "https://provider13.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000013",
+          "name": "model-13",
+          "model": "model-13",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000014": {
+      "name": "Provider 14",
+      "key": "",
+      "upstream": "https://provider14.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000014",
+          "name": "model-14",
+          "model": "model-14",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000015": {
+      "name": "Provider 15",
+      "key": "",
+      "upstream": "https://provider15.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000015",
+          "name": "model-15",
+          "model": "model-15",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000016": {
+      "name": "Provider 16",
+      "key": "",
+      "upstream": "https://provider16.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000016",
+          "name": "model-16",
+          "model": "model-16",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000017": {
+      "name": "Provider 17",
+      "key": "",
+      "upstream": "https://provider17.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000017",
+          "name": "model-17",
+          "model": "model-17",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000018": {
+      "name": "Provider 18",
+      "key": "",
+      "upstream": "https://provider18.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000018",
+          "name": "model-18",
+          "model": "model-18",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000019": {
+      "name": "Provider 19",
+      "key": "",
+      "upstream": "https://provider19.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000019",
+          "name": "model-19",
+          "model": "model-19",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000020": {
+      "name": "Provider 20",
+      "key": "",
+      "upstream": "https://provider20.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000020",
+          "name": "model-20",
+          "model": "model-20",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000021": {
+      "name": "Provider 21",
+      "key": "",
+      "upstream": "https://provider21.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000021",
+          "name": "model-21",
+          "model": "model-21",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000022": {
+      "name": "Provider 22",
+      "key": "",
+      "upstream": "https://provider22.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000022",
+          "name": "model-22",
+          "model": "model-22",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000023": {
+      "name": "Provider 23",
+      "key": "",
+      "upstream": "https://provider23.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000023",
+          "name": "model-23",
+          "model": "model-23",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000024": {
+      "name": "Provider 24",
+      "key": "",
+      "upstream": "https://provider24.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000024",
+          "name": "model-24",
+          "model": "model-24",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    },
+    "a00000000025": {
+      "name": "Provider 25",
+      "key": "",
+      "upstream": "https://provider25.test/v1",
+      "protocol": "openai_chat",
+      "protocol_settings": {
+        "authentication": "protocol_default",
+        "anthropic_version": "2023-06-01",
+        "default_max_output_tokens": 4096,
+        "reasoning_profile": {
+          "mode": "none",
+          "budgets": {},
+          "levels": {}
+        },
+        "responses_efforts": {}
+      },
+      "effort": "default",
+      "models": [
+        {
+          "id": "b00000000025",
+          "name": "model-25",
+          "model": "model-25",
+          "reasoning_effort": "default",
+          "capabilities": null
+        }
+      ]
+    }
+  }
+}

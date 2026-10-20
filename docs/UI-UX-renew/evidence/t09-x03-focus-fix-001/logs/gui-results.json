@@ -1,0 +1,61 @@
+{
+  "head": "660c5dc06af6481a7b97b70411f66776b8940328",
+  "binary_sha256": "1cdc7dc5d2fe9bd312bbb67c076385ef42f5385c4e2fc7b8be0055fd749352ed",
+  "root_cause": "protocol dialog focused window root instead of a control inside the dialog; focus trap inactive -> Tab reached background add-provider, Enter created and persisted an empty provider",
+  "fix": "focus protocol Editor initial control (Anthropic limit input, otherwise thinking-mode select) and add mapping unit test",
+  "config_sha256": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+  "drafts_sha256": "d5549b31650b365f8f66af01833222443083f19b2853b1dee33530b4fda9626f",
+  "providers": 25,
+  "empty_providers": [],
+  "draft_selected": "a00000000001",
+  "sequences": [
+    {
+      "name": "run1-tab3-enter",
+      "tabs": 3,
+      "enter": true,
+      "config_before": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+      "config_after": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+      "dialog_after": "closed (existing apply/confirm)",
+      "providers_after": 25,
+      "empty_provider_created": false
+    },
+    {
+      "name": "run2-tab3-enter",
+      "tabs": 3,
+      "enter": true,
+      "config_before": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+      "config_after": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+      "dialog_after": "closed (existing apply/confirm)",
+      "providers_after": 25,
+      "empty_provider_created": false
+    },
+    {
+      "name": "run2-escape",
+      "tabs": 0,
+      "escape": true,
+      "config_after": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+      "dialog_after": "closed",
+      "providers_after": 25,
+      "empty_provider_created": false
+    },
+    {
+      "name": "run3-tab20-enter",
+      "tabs": 20,
+      "enter": true,
+      "config_after": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+      "dialog_after": "closed (existing apply/confirm)",
+      "providers_after": 25,
+      "empty_provider_created": false
+    },
+    {
+      "name": "run4-tab7-space",
+      "tabs": 7,
+      "space": true,
+      "config_after": "a424698d2b6f56467adce07a8331476efa9aebe038d1ae027a93cc2ea45d59ef",
+      "dialog_after": "closed (Apply-to-draft button activated by Space)",
+      "providers_after": 25,
+      "empty_provider_created": false
+    }
+  ],
+  "focus_ax": "AXFocusedUIElement returns AXWindow; GPUI accesskit did not expose the inner focused control, so focus is evidenced by screenshots/keyboard behavior and no background write."
+}

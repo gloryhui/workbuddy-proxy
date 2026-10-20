@@ -1,0 +1,11 @@
+   Compiling workbuddy-proxy-gpui v0.5.6 (/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/gpui)
+    Finished `test` profile [unoptimized] target(s) in 4.79s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/main.rs (gpui/target/debug/deps/workbuddy_proxy_gpui-de16c114058e8cf4)
+
+running 2 tests
+test protocol_options::tests::modal_initial_focus_target_matches_rendered_protocol_controls ... ok
+test protocol_options::tests::typed_profile_controls_preserve_explicit_budgets_and_reject_invalid_modes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 137 filtered out; finished in 0.00s

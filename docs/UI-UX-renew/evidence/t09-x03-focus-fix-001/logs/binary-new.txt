@@ -1,0 +1,1 @@
+1cdc7dc5d2fe9bd312bbb67c076385ef42f5385c4e2fc7b8be0055fd749352ed  gpui/target/release/workbuddy-proxy-gpui
