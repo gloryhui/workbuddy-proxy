@@ -1,0 +1,28 @@
+diff --git a/gpui/src/statistics.rs b/gpui/src/statistics.rs
+index eaaabaa..e10184a 100644
+--- a/gpui/src/statistics.rs
++++ b/gpui/src/statistics.rs
+@@ -546,7 +546,8 @@ impl Statistics {
+             generation: 0,
+             applied: 0,
+             debounce_until: None,
+-            refresh_interval: 0,
++            // Refresh the displayed report independently of background collection.
++            refresh_interval: 5,
+             last_refresh: Instant::now() - Duration::from_secs(3600),
+             pending_dashboard: false,
+             pending_rows: false,
+@@ -2542,8 +2543,11 @@ impl Statistics {
+                     .outline()
+                     .icon(Icon::default().path("icons/clock.svg"))
+                     .label(label)
+-                    .tooltip(self.t("自动刷新间隔", "Auto refresh interval"))
+-                    .accessibility_label(self.t("自动刷新间隔", "Auto refresh interval")),
++                    .tooltip(self.t(
++                        "统计页面自动刷新间隔；仅刷新已采集的数据，不改变后台采集频率",
++                        "Report refresh interval; refreshes collected data without changing background collection frequency",
++                    ))
++                    .accessibility_label(self.t("统计页面自动刷新间隔", "Report auto refresh interval")),
+             )
+             .on_open_change(move |open, _, cx| {
+                 let _ = owner.update(cx, |this, cx| {

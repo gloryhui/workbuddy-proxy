@@ -1,0 +1,14 @@
+{
+  "states": {
+    "01-default-five-seconds": 20,
+    "03-auto-refreshed-21": 21,
+    "04-off-21": 21,
+    "05-off-still-21": 21,
+    "06-resumed-22": 22
+  },
+  "config_unchanged": true,
+  "deleted_bytes": 15661339,
+  "tmp_entries": [],
+  "disk_free_bytes": 209193488384,
+  "binary_sha256": "b60b27aed055cf680708f1f194ead5fc1a594331615423585cdf326c1ef92928"
+}

@@ -1,0 +1,91 @@
+Window: "", App: WorkBuddy Proxy D15.
+0 standard window Secondary Actions: Raise
+	1 container
+		2 button 数据统计
+		3 button 供应商管理
+		4 row (selectable) opencode, Secondary Actions: Pick
+		5 row (selectable) Provider B, Secondary Actions: Pick
+		6 row (selectable) Provider C, Secondary Actions: Pick
+		7 row (selectable) Provider 04, Secondary Actions: Pick
+		8 row (selectable) Provider 05, Secondary Actions: Pick
+		9 row (selectable) Provider 06, Secondary Actions: Pick
+		10 row (selectable) Provider 07, Secondary Actions: Pick
+		11 row (selectable) Provider 08, Secondary Actions: Pick
+		12 row (selectable) Provider 09, Secondary Actions: Pick
+		13 row (selectable) Provider 10, Secondary Actions: Pick
+		14 row (selectable) Provider 11, Secondary Actions: Pick
+		15 row (selectable) Provider 12, Secondary Actions: Pick
+		16 row (selectable) Provider 13, Secondary Actions: Pick
+		17 row (selectable) Provider 14, Secondary Actions: Pick
+		18 row (selectable) Provider 15, Secondary Actions: Pick
+		19 row (selectable) Provider 16, Secondary Actions: Pick
+		20 row (selectable) Provider 17, Secondary Actions: Pick
+		21 row (selectable) Provider 18, Secondary Actions: Pick
+		22 row (selectable) Provider 19, Secondary Actions: Pick
+		23 row (selectable) Provider 20, Secondary Actions: Pick
+		24 row (selectable) Provider 21, Secondary Actions: Pick
+		25 row (selectable) Provider 22, Secondary Actions: Pick
+		26 row (selectable) Provider 23, Secondary Actions: Pick
+		27 row (selectable) Provider 24, Secondary Actions: Pick
+		28 row (selectable) Provider 25, Secondary Actions: Pick
+		29 button 新增供应商
+		30 button 复制供应商
+		31 button 删除供应商
+		32 toggle button (settable, boolean) 开机启动, Value: off
+		33 button 检查更新
+		34 button 界面语言
+		35 button 恢复默认窗口尺寸
+		36 button GitHub 项目主页
+		37 button 提交反馈
+		38 来源
+			39 radio button (selectable, settable, boolean) 全部来源
+			40 radio button (selectable, settable, boolean) 内置模型
+			41 radio button (selectable, settable, boolean) 自定义模型
+		42 pop up button (settable) 供应商筛选, Value: 全部供应商
+		43 pop up button (settable) 模型筛选, Value: 全部模型
+		44 pop up button (settable) 请求状态, Value: 全部状态
+		45 button 统计页面自动刷新间隔
+		46 button 选择日期范围
+		47 button 刷新统计
+		48 button 更多筛选
+		49 container 尚未导入 WorkBuddy 内置及自定义模型用量。
+			50 button 设置导入
+		51 container Token 总用量 2.22万
+		52 container 用量记录 20
+		53 container 代理成功率 100.0%
+		54 container 输入 Token 2.02万
+		55 container 输出 Token 2000
+		56 container 缓存读取 0
+		57 container 缓存创建 0
+		58 container 已记录用量完整率 100.0%
+		59 container 代理估算费用 CNY 0
+		60 container WorkBuddy 点数 —
+		61 pop up button (settable) 费用币种, Value: USD
+		62 button 用量明细
+		63 button 供应商统计
+		64 button 模型统计
+		65 button 上一页
+		66 button 20 条/页
+		67 button 下一页
+		68 row usage-row-0
+		69 row usage-row-1
+		70 row usage-row-2
+		71 row usage-row-3
+		72 row usage-row-4
+		73 row usage-row-5
+		74 row usage-row-6
+		75 button 成本定价
+		76 button 采集与存储
+		77 dialog
+			78 button 关闭
+			79 button 5秒
+			80 button 10秒
+			81 button 30秒
+			82 button 60秒
+	83 close button
+	84 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	85 minimize button
+86 menu bar
+	87 WorkBuddy Proxy D15
+
+The focused UI element is 0 standard window Secondary Actions: Raise

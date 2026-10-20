@@ -1,0 +1,15 @@
+{
+  "core_pid": 19383,
+  "mock_pid": 19382,
+  "mock_port": 63708,
+  "gpui_pid": 19387,
+  "port": 63709,
+  "config": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d15-gui-001/run/config",
+  "db": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d15-gui-001/run/config/usage.sqlite3",
+  "usage_rows": 20,
+  "prices": 25,
+  "mock_mode": "ok",
+  "created_ms": 1792468457295,
+  "bundle": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d15-gui-001/WorkBuddy Proxy D15.app",
+  "config_sha_before": "f1ee4958bc002fca454971d76ec20db11093df2fe0a8f1782cd27d15c13430c0"
+}
