@@ -140,11 +140,9 @@ pub mod size {
     pub const BUTTON_X_TIGHT: f32 = 8.;
     pub const ICON_BUTTON: f32 = 32.;
     pub const DIALOG_ICON_BUTTON: f32 = 28.;
-    /// DESIGN_SPEC §5: the shared protocol editor's mapping labels sit in a
-    /// fixed monospace column and its mapping inputs are one step shorter than
-    /// the standard field.
+    /// The shared protocol editor's mapping labels use a fixed monospace column.
+    /// Mapping fields use the same 36px height as other inputs (D16 decision).
     pub const MAPPING_LABEL_WIDTH: f32 = 84.;
-    pub const MAPPING_INPUT_HEIGHT: f32 = 34.;
     /// Provider page: the thinking-effort select width in the design's action row.
     pub const EFFORT_SELECT_WIDTH: f32 = 200.;
     pub const LIST_ROW_HEIGHT: f32 = 36.;

@@ -1,0 +1,114 @@
+Window: "", App: WorkBuddy Proxy D16.
+0 standard window Secondary Actions: Raise
+	1 container (showing 23-123 of 123 items)
+		2 row (selectable) Provider 22, Secondary Actions: Pick
+		3 row (selectable) Provider 23, Secondary Actions: Pick
+		4 row (selectable) Provider 24, Secondary Actions: Pick
+		5 row (selectable) Provider 25, Secondary Actions: Pick
+		6 button 新增供应商
+		7 button 复制供应商
+		8 button 删除供应商
+		9 toggle button (settable, boolean) 开机启动, Value: off
+		10 button 检查更新
+		11 button 界面语言
+		12 button 恢复默认窗口尺寸
+		13 button GitHub 项目主页
+		14 button 提交反馈
+		15 来源
+			16 radio button (selectable, settable, boolean) 全部来源
+			17 radio button (selectable, settable, boolean) 内置模型
+			18 radio button (selectable, settable, boolean) 自定义模型
+		19 pop up button (settable) 供应商筛选, Value: 全部供应商
+		20 pop up button (settable) 模型筛选, Value: 全部模型
+		21 pop up button (settable) 请求状态, Value: 全部状态
+		22 button 自动刷新间隔
+		23 button 选择日期范围
+		24 button 刷新统计
+		25 button 更多筛选
+		26 pop up button (settable) 采集方式, Value: 全部
+		27 text field (settable) 搜索供应商
+		28 text field (settable) 搜索模型
+		29 pop up button (settable) 用量完整性, Value: 全部用量
+		30 checkbox (settable, boolean) 包含测试连接, Value: off
+		31 container 尚未导入 WorkBuddy 内置及自定义模型用量。
+			32 button 设置导入
+		33 container Token 总用量 2.22万
+		34 container 用量记录 20
+		35 container 代理成功率 100.0%
+		36 container 输入 Token 2.02万
+		37 container 输出 Token 2000
+		38 container 缓存读取 0
+		39 container 缓存创建 0
+		40 container 已记录用量完整率 100.0%
+		41 container 代理估算费用 CNY 0
+		42 container WorkBuddy 点数 —
+		43 pop up button (settable) 费用币种, Value: USD
+		44 button 用量明细
+		45 button 供应商统计
+		46 button 模型统计
+		47 button 上一页
+		48 button 20 条/页
+		49 button 下一页
+		50 row usage-row-0
+		51 row usage-row-1
+		52 row usage-row-2
+		53 row usage-row-3
+		54 row usage-row-4
+		55 row usage-row-5
+		56 row usage-row-6
+		57 button 成本定价
+		58 text field (settable) 精确模型ID
+		59 button 新建价格规则
+		60 button 刷新价格
+		61 button 手动更新价格
+		62 button 编辑
+		63 button 删除
+		64 button 编辑
+		65 button 删除
+		66 button 编辑
+		67 button 删除
+		68 button 编辑
+		69 button 删除
+		70 button 编辑
+		71 button 删除
+		72 button 编辑
+		73 button 删除
+		74 button 编辑
+		75 button 删除
+		76 button 编辑
+		77 button 删除
+		78 button 编辑
+		79 button 删除
+		80 button 编辑
+		81 button 删除
+		82 button 编辑
+		83 button (settable, unknown) 删除
+		84 button (settable, unknown) 编辑
+		85 button (settable, unknown) 删除
+		86 button (settable, unknown) 编辑
+		87 button (settable, unknown) 删除
+		88 button (settable, unknown) 编辑
+		89 button (settable, unknown) 删除
+		90 button (settable, unknown) 编辑
+		91 button (settable, unknown) 删除
+		92 button (settable, unknown) 编辑
+		93 button (settable, unknown) 删除
+		94 button (settable, unknown) 编辑
+		95 button (settable, unknown) 删除
+		96 button (settable, unknown) 编辑
+		97 button (settable, unknown) 删除
+		98 button (settable, unknown) 编辑
+		99 button (settable, unknown) 删除
+		100 button (settable, unknown) 编辑
+		101 button (settable, unknown) 删除
+		102 button (settable, unknown) 上一页
+		103 button (settable, unknown) 20 条/页
+		104 button (settable, unknown) 下一页
+		105 button (settable, unknown) 采集与存储
+	106 close button
+	107 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	108 minimize button
+109 menu bar
+	110 WorkBuddy Proxy D16
+
+The focused UI element is 0 standard window Secondary Actions: Raise

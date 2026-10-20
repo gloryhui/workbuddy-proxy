@@ -30,10 +30,10 @@ use gpui_kit::component::{
     button::{Button, ButtonVariants},
     calendar::{Calendar, CalendarEvent, CalendarState, Date},
     checkbox::Checkbox,
-    input::{Input, InputEvent, InputState},
+    input::{InputEvent, InputState},
     label::Label,
     popover::Popover,
-    select::{Select, SelectEvent, SelectItem, SelectState},
+    select::{SelectEvent, SelectItem, SelectState},
     table::{TableEvent, TableState},
 };
 use gpui_kit::prelude::FluentBuilder;
@@ -2384,13 +2384,17 @@ impl Statistics {
                                 self.t("支持日期与时间（本地时间）", "Date and time (local)"),
                             ))
                             .child(self.filter_label(self.t("开始时间", "Start")))
-                            .child(Input::new(&self.custom_from).small().w_full())
+                            .child(
+                                crate::ui_components::compact_input(&self.custom_from, false)
+                                    .w_full(),
+                            )
                             .child(self.filter_label(self.t("结束时间", "End")))
                             .child(
-                                Input::new(&self.custom_to)
-                                    .small()
-                                    .w_full()
-                                    .disabled(self.draft_follow_now),
+                                crate::ui_components::compact_input(
+                                    &self.custom_to,
+                                    self.draft_follow_now,
+                                )
+                                .w_full(),
                             )
                             .child(
                                 Checkbox::new("date-follow-now")
@@ -2612,13 +2616,13 @@ impl Statistics {
                 div()
                     .flex()
                     .items_center()
-                    .h(px(28.))
+                    .h(px(crate::theme::size::INPUT_HEIGHT))
                     .gap_2()
                     .child(
                         div()
                             .flex_1()
                             .min_w_0()
-                            .child(Input::new(input).small().w_full().h(px(28.))),
+                            .child(crate::ui_components::compact_input(input, false).w_full()),
                     )
                     .when(has_next, |row| {
                         row.child(
@@ -2730,15 +2734,16 @@ impl Statistics {
                                     self.filter_label(self.t("用量完整性", "Usage completeness")),
                                 )
                                 .child(
-                                    div().w(px(140.)).h(px(28.)).child(
-                                        Select::new(&self.usage_select)
-                                            .w_full()
-                                            .h(px(28.))
-                                            .small()
-                                            .accessibility_label(
-                                                self.t("用量完整性", "Usage completeness"),
-                                            ),
-                                    ),
+                                    div()
+                                        .w(px(140.))
+                                        .h(px(crate::theme::size::SELECT_HEIGHT))
+                                        .child(
+                                            crate::ui_components::select(&self.usage_select, false)
+                                                .w_full()
+                                                .accessibility_label(
+                                                    self.t("用量完整性", "Usage completeness"),
+                                                ),
+                                        ),
                                 ),
                         )
                         .child(
@@ -3034,13 +3039,14 @@ impl Statistics {
                     .gap_2()
                     .child(stats_heading(self.t("估算费用", "Estimated cost")))
                     .child(
-                        div().w(px(96.)).h(px(32.)).child(
-                            Select::new(&self.currency_select)
-                                .w_full()
-                                .h(px(32.))
-                                .small()
-                                .accessibility_label(self.t("费用币种", "Cost currency")),
-                        ),
+                        div()
+                            .w(px(96.))
+                            .h(px(crate::theme::size::SELECT_HEIGHT))
+                            .child(
+                                crate::ui_components::select(&self.currency_select, false)
+                                    .w_full()
+                                    .accessibility_label(self.t("费用币种", "Cost currency")),
+                            ),
                     ),
             )
             .child(
@@ -3849,7 +3855,7 @@ impl Statistics {
                             .items_center()
                             .gap_2()
                             .child(
-                                Input::new(&self.price_search)
+                                crate::ui_components::text_input(&self.price_search, false)
                                     .w(px(240.))
                                     .prefix(Icon::new(IconName::Search)),
                             )
@@ -4562,10 +4568,11 @@ impl Statistics {
                     .gap_1()
                     .child(self.filter_label(self.t("供应商", "Provider")))
                     .child(
-                        Select::new(&self.price_provider)
-                            .w_full()
-                            .small()
-                            .disabled(self.price_draft.identity_locked()),
+                        crate::ui_components::select(
+                            &self.price_provider,
+                            self.price_draft.identity_locked(),
+                        )
+                        .w_full(),
                     ),
             )
             .child(
@@ -4581,9 +4588,10 @@ impl Statistics {
                     } else {
                         self.t("上游模型 ID", "Upstream model ID")
                     }))
-                    .child(
-                        Input::new(&self.price_model).disabled(self.price_draft.identity_locked()),
-                    ),
+                    .child(crate::ui_components::text_input(
+                        &self.price_model,
+                        self.price_draft.identity_locked(),
+                    )),
             )
             .child(
                 div()
@@ -4596,7 +4604,7 @@ impl Statistics {
                             .gap_1()
                             .flex_grow(3.)
                             .child(self.filter_label(self.t("计价方式", "Pricing mode")))
-                            .child(Select::new(&self.price_mode).w_full().small()),
+                            .child(crate::ui_components::select(&self.price_mode, false).w_full()),
                     )
                     .child(
                         div()
@@ -4605,7 +4613,9 @@ impl Statistics {
                             .gap_1()
                             .flex_grow(2.)
                             .child(self.filter_label(self.t("币种", "Currency")))
-                            .child(Select::new(&self.price_currency).w_full().small()),
+                            .child(
+                                crate::ui_components::select(&self.price_currency, false).w_full(),
+                            ),
                     ),
             )
             .child(
@@ -4619,9 +4629,11 @@ impl Statistics {
                             .gap_1()
                             .flex_1()
                             .child(self.filter_label(self.t("输入价 / 百万", "Input / million")))
-                            .child(Input::new(&self.price_input).prefix(
-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                            )),
+                            .child(
+                                crate::ui_components::text_input(&self.price_input, false).prefix(
+                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                                ),
+                            ),
                     )
                     .child(
                         div()
@@ -4630,9 +4642,11 @@ impl Statistics {
                             .gap_1()
                             .flex_1()
                             .child(self.filter_label(self.t("输出价 / 百万", "Output / million")))
-                            .child(Input::new(&self.price_output).prefix(
-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                            )),
+                            .child(
+                                crate::ui_components::text_input(&self.price_output, false).prefix(
+                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                                ),
+                            ),
                     )
                     .child(
                         div()
@@ -4645,9 +4659,11 @@ impl Statistics {
                                     self.t("缓存读价 / 百万", "Cache read / million"),
                                 ),
                             )
-                            .child(Input::new(&self.price_read).prefix(
-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                            )),
+                            .child(
+                                crate::ui_components::text_input(&self.price_read, false).prefix(
+                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                                ),
+                            ),
                     )
                     .child(
                         div()
@@ -4660,9 +4676,11 @@ impl Statistics {
                                     self.t("缓存写价 / 百万", "Cache write / million"),
                                 ),
                             )
-                            .child(Input::new(&self.price_write).prefix(
-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                            )),
+                            .child(
+                                crate::ui_components::text_input(&self.price_write, false).prefix(
+                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+                                ),
+                            ),
                     ),
             )
             .child(
@@ -4671,7 +4689,7 @@ impl Statistics {
                     .flex_col()
                     .gap_1()
                     .child(self.filter_label(self.t("备注", "Label")))
-                    .child(Input::new(&self.price_label)),
+                    .child(crate::ui_components::text_input(&self.price_label, false)),
             )
             .child(
                 Label::new(self.t(

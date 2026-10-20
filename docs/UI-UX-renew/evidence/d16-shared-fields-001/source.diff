@@ -1,0 +1,397 @@
+diff --git a/gpui/src/protocol_options.rs b/gpui/src/protocol_options.rs
+index 9db074e..350b9ff 100644
+--- a/gpui/src/protocol_options.rs
++++ b/gpui/src/protocol_options.rs
+@@ -3,9 +3,9 @@ use crate::theme::{color, font, line_height, radius, size, space};
+ use crate::upstream_config::{ProtocolSettings, ReasoningMode, UpstreamProtocol};
+ use gpui_kit::{
+     component::{
+-        input::{Input, InputState},
++        input::InputState,
+         label::Label,
+-        select::{Select, SelectItem, SelectState},
++        select::{SelectItem, SelectState},
+     },
+     *,
+ };
+@@ -206,7 +206,7 @@ impl Editor {
+                     .gap(px(space::SMALL))
+                     .child(Self::field_label(authentication.clone()))
+                     .child(
+-                        Select::new(&self.authentication)
++                        crate::ui_components::select(&self.authentication, false)
+                             .w_full()
+                             .accessibility_label(authentication.clone()),
+                     )
+@@ -218,9 +218,8 @@ impl Editor {
+                     .gap(px(space::SMALL))
+                     .child(Self::field_label(limit.clone()))
+                     .child(
+-                        Input::new(&self.limit)
++                        crate::ui_components::text_input(&self.limit, false)
+                             .w_full()
+-                            .h(px(size::INPUT_HEIGHT))
+                             .aria_label(limit.clone()),
+                     )
+             }))
+@@ -237,7 +236,7 @@ impl Editor {
+                     .gap(px(space::SMALL))
+                     .child(Self::field_label(mode.clone()))
+                     .child(
+-                        Select::new(&self.mode)
++                        crate::ui_components::select(&self.mode, false)
+                             .w_full()
+                             .accessibility_label(mode.clone()),
+                     ),
+@@ -288,8 +287,7 @@ impl Editor {
+                                     .text_color(rgb(color::TEXT_2)),
+                             )
+                             .child(div().flex_1().child(
+-                                Input::new(state)
+-                                    .h(px(size::MAPPING_INPUT_HEIGHT))
++                                crate::ui_components::text_input(state, false)
+                                     .aria_label(format!("{effort} mapping")),
+                             ))
+                     }),
+diff --git a/gpui/src/statistics.rs b/gpui/src/statistics.rs
+index 1abdeac..eaaabaa 100644
+--- a/gpui/src/statistics.rs
++++ b/gpui/src/statistics.rs
+@@ -30,10 +30,10 @@ use gpui_kit::component::{
+     button::{Button, ButtonVariants},
+     calendar::{Calendar, CalendarEvent, CalendarState, Date},
+     checkbox::Checkbox,
+-    input::{Input, InputEvent, InputState},
++    input::{InputEvent, InputState},
+     label::Label,
+     popover::Popover,
+-    select::{Select, SelectEvent, SelectItem, SelectState},
++    select::{SelectEvent, SelectItem, SelectState},
+     table::{TableEvent, TableState},
+ };
+ use gpui_kit::prelude::FluentBuilder;
+@@ -2384,13 +2384,17 @@ impl Statistics {
+                                 self.t("支持日期与时间（本地时间）", "Date and time (local)"),
+                             ))
+                             .child(self.filter_label(self.t("开始时间", "Start")))
+-                            .child(Input::new(&self.custom_from).small().w_full())
++                            .child(
++                                crate::ui_components::compact_input(&self.custom_from, false)
++                                    .w_full(),
++                            )
+                             .child(self.filter_label(self.t("结束时间", "End")))
+                             .child(
+-                                Input::new(&self.custom_to)
+-                                    .small()
+-                                    .w_full()
+-                                    .disabled(self.draft_follow_now),
++                                crate::ui_components::compact_input(
++                                    &self.custom_to,
++                                    self.draft_follow_now,
++                                )
++                                .w_full(),
+                             )
+                             .child(
+                                 Checkbox::new("date-follow-now")
+@@ -2612,13 +2616,13 @@ impl Statistics {
+                 div()
+                     .flex()
+                     .items_center()
+-                    .h(px(28.))
++                    .h(px(crate::theme::size::INPUT_HEIGHT))
+                     .gap_2()
+                     .child(
+                         div()
+                             .flex_1()
+                             .min_w_0()
+-                            .child(Input::new(input).small().w_full().h(px(28.))),
++                            .child(crate::ui_components::compact_input(input, false).w_full()),
+                     )
+                     .when(has_next, |row| {
+                         row.child(
+@@ -2730,15 +2734,16 @@ impl Statistics {
+                                     self.filter_label(self.t("用量完整性", "Usage completeness")),
+                                 )
+                                 .child(
+-                                    div().w(px(140.)).h(px(28.)).child(
+-                                        Select::new(&self.usage_select)
+-                                            .w_full()
+-                                            .h(px(28.))
+-                                            .small()
+-                                            .accessibility_label(
+-                                                self.t("用量完整性", "Usage completeness"),
+-                                            ),
+-                                    ),
++                                    div()
++                                        .w(px(140.))
++                                        .h(px(crate::theme::size::SELECT_HEIGHT))
++                                        .child(
++                                            crate::ui_components::select(&self.usage_select, false)
++                                                .w_full()
++                                                .accessibility_label(
++                                                    self.t("用量完整性", "Usage completeness"),
++                                                ),
++                                        ),
+                                 ),
+                         )
+                         .child(
+@@ -3034,13 +3039,14 @@ impl Statistics {
+                     .gap_2()
+                     .child(stats_heading(self.t("估算费用", "Estimated cost")))
+                     .child(
+-                        div().w(px(96.)).h(px(32.)).child(
+-                            Select::new(&self.currency_select)
+-                                .w_full()
+-                                .h(px(32.))
+-                                .small()
+-                                .accessibility_label(self.t("费用币种", "Cost currency")),
+-                        ),
++                        div()
++                            .w(px(96.))
++                            .h(px(crate::theme::size::SELECT_HEIGHT))
++                            .child(
++                                crate::ui_components::select(&self.currency_select, false)
++                                    .w_full()
++                                    .accessibility_label(self.t("费用币种", "Cost currency")),
++                            ),
+                     ),
+             )
+             .child(
+@@ -3849,7 +3855,7 @@ impl Statistics {
+                             .items_center()
+                             .gap_2()
+                             .child(
+-                                Input::new(&self.price_search)
++                                crate::ui_components::text_input(&self.price_search, false)
+                                     .w(px(240.))
+                                     .prefix(Icon::new(IconName::Search)),
+                             )
+@@ -4562,10 +4568,11 @@ impl Statistics {
+                     .gap_1()
+                     .child(self.filter_label(self.t("供应商", "Provider")))
+                     .child(
+-                        Select::new(&self.price_provider)
+-                            .w_full()
+-                            .small()
+-                            .disabled(self.price_draft.identity_locked()),
++                        crate::ui_components::select(
++                            &self.price_provider,
++                            self.price_draft.identity_locked(),
++                        )
++                        .w_full(),
+                     ),
+             )
+             .child(
+@@ -4581,9 +4588,10 @@ impl Statistics {
+                     } else {
+                         self.t("上游模型 ID", "Upstream model ID")
+                     }))
+-                    .child(
+-                        Input::new(&self.price_model).disabled(self.price_draft.identity_locked()),
+-                    ),
++                    .child(crate::ui_components::text_input(
++                        &self.price_model,
++                        self.price_draft.identity_locked(),
++                    )),
+             )
+             .child(
+                 div()
+@@ -4596,7 +4604,7 @@ impl Statistics {
+                             .gap_1()
+                             .flex_grow(3.)
+                             .child(self.filter_label(self.t("计价方式", "Pricing mode")))
+-                            .child(Select::new(&self.price_mode).w_full().small()),
++                            .child(crate::ui_components::select(&self.price_mode, false).w_full()),
+                     )
+                     .child(
+                         div()
+@@ -4605,7 +4613,9 @@ impl Statistics {
+                             .gap_1()
+                             .flex_grow(2.)
+                             .child(self.filter_label(self.t("币种", "Currency")))
+-                            .child(Select::new(&self.price_currency).w_full().small()),
++                            .child(
++                                crate::ui_components::select(&self.price_currency, false).w_full(),
++                            ),
+                     ),
+             )
+             .child(
+@@ -4619,9 +4629,11 @@ impl Statistics {
+                             .gap_1()
+                             .flex_1()
+                             .child(self.filter_label(self.t("输入价 / 百万", "Input / million")))
+-                            .child(Input::new(&self.price_input).prefix(
+-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+-                            )),
++                            .child(
++                                crate::ui_components::text_input(&self.price_input, false).prefix(
++                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
++                                ),
++                            ),
+                     )
+                     .child(
+                         div()
+@@ -4630,9 +4642,11 @@ impl Statistics {
+                             .gap_1()
+                             .flex_1()
+                             .child(self.filter_label(self.t("输出价 / 百万", "Output / million")))
+-                            .child(Input::new(&self.price_output).prefix(
+-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+-                            )),
++                            .child(
++                                crate::ui_components::text_input(&self.price_output, false).prefix(
++                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
++                                ),
++                            ),
+                     )
+                     .child(
+                         div()
+@@ -4645,9 +4659,11 @@ impl Statistics {
+                                     self.t("缓存读价 / 百万", "Cache read / million"),
+                                 ),
+                             )
+-                            .child(Input::new(&self.price_read).prefix(
+-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+-                            )),
++                            .child(
++                                crate::ui_components::text_input(&self.price_read, false).prefix(
++                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
++                                ),
++                            ),
+                     )
+                     .child(
+                         div()
+@@ -4660,9 +4676,11 @@ impl Statistics {
+                                     self.t("缓存写价 / 百万", "Cache write / million"),
+                                 ),
+                             )
+-                            .child(Input::new(&self.price_write).prefix(
+-                                Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
+-                            )),
++                            .child(
++                                crate::ui_components::text_input(&self.price_write, false).prefix(
++                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
++                                ),
++                            ),
+                     ),
+             )
+             .child(
+@@ -4671,7 +4689,7 @@ impl Statistics {
+                     .flex_col()
+                     .gap_1()
+                     .child(self.filter_label(self.t("备注", "Label")))
+-                    .child(Input::new(&self.price_label)),
++                    .child(crate::ui_components::text_input(&self.price_label, false)),
+             )
+             .child(
+                 Label::new(self.t(
+diff --git a/gpui/src/statistics/source_controls.rs b/gpui/src/statistics/source_controls.rs
+index 14191c8..341a783 100644
+--- a/gpui/src/statistics/source_controls.rs
++++ b/gpui/src/statistics/source_controls.rs
+@@ -90,14 +90,17 @@ impl Statistics {
+             .gap_1()
+             .child(self.filter_label(self.t("采集方式", "Capture method")))
+             .child(
+-                div().w(px(164.)).h(px(32.)).child(
+-                    Select::new(&self.capture_select)
++                div()
++                    .w(px(164.))
++                    .h(px(crate::theme::size::SELECT_HEIGHT))
++                    .child(
++                        crate::ui_components::select(
++                            &self.capture_select,
++                            self.capture.is_locked(self.source_scope()),
++                        )
+                         .w_full()
+-                        .h(px(32.))
+-                        .small()
+-                        .disabled(self.capture.is_locked(self.source_scope()))
+                         .accessibility_label(self.t("采集方式", "Capture method")),
+-                ),
++                    ),
+             )
+             .into_any_element()
+     }
+@@ -266,17 +269,18 @@ impl Statistics {
+         };
+         div()
+             .w(px(slot.width() as f32))
+-            .h(px(32.))
++            .h(px(crate::theme::size::SELECT_HEIGHT))
++            .flex()
++            .flex_col()
++            .justify_center()
+             .flex_shrink_0()
+             .child(control)
+             .into_any_element()
+     }
+ 
+     fn filter_select(&self, state: &Entity<ChoiceState>, label: &'static str) -> AnyElement {
+-        Select::new(state)
+-            .small()
++        crate::ui_components::select(state, false)
+             .w_full()
+-            .h(px(32.))
+             .accessibility_label(label)
+             .into_any_element()
+     }
+diff --git a/gpui/src/theme.rs b/gpui/src/theme.rs
+index e8e4570..9a3f078 100644
+--- a/gpui/src/theme.rs
++++ b/gpui/src/theme.rs
+@@ -140,11 +140,9 @@ pub mod size {
+     pub const BUTTON_X_TIGHT: f32 = 8.;
+     pub const ICON_BUTTON: f32 = 32.;
+     pub const DIALOG_ICON_BUTTON: f32 = 28.;
+-    /// DESIGN_SPEC §5: the shared protocol editor's mapping labels sit in a
+-    /// fixed monospace column and its mapping inputs are one step shorter than
+-    /// the standard field.
++    /// The shared protocol editor's mapping labels use a fixed monospace column.
++    /// Mapping fields use the same 36px height as other inputs (D16 decision).
+     pub const MAPPING_LABEL_WIDTH: f32 = 84.;
+-    pub const MAPPING_INPUT_HEIGHT: f32 = 34.;
+     /// Provider page: the thinking-effort select width in the design's action row.
+     pub const EFFORT_SELECT_WIDTH: f32 = 200.;
+     pub const LIST_ROW_HEIGHT: f32 = 36.;
+diff --git a/gpui/src/ui_components.rs b/gpui/src/ui_components.rs
+index a782da0..343d2d8 100644
+--- a/gpui/src/ui_components.rs
++++ b/gpui/src/ui_components.rs
+@@ -142,9 +142,9 @@ pub fn named_icon_button_sized(
+ /// Text input at the design's 36px field height. The caller's `InputState` is
+ /// passed through untouched.
+ pub fn text_input(state: &Entity<InputState>, disabled: bool) -> Input {
+-    Input::new(state)
+-        .h(px(size::INPUT_HEIGHT))
+-        .disabled(disabled)
++    // Input::h is an inherent multi-line-only API in Kit 0.7.3. Use Styled::h
++    // so the single-line field's final style overrides its rem-based size.
++    Styled::h(Input::new(state), px(size::INPUT_HEIGHT)).disabled(disabled)
+ }
+ 
+ /// Masked input (API keys) with the same field metrics and mask toggle.
+@@ -152,9 +152,9 @@ pub fn masked_input(state: &Entity<InputState>, disabled: bool) -> Input {
+     text_input(state, disabled).mask_toggle()
+ }
+ 
+-/// Compact filter/search input for the existing dense filter rows.
++/// Filter/search input with compact text and the shared 36px hit area.
+ pub fn compact_input(state: &Entity<InputState>, disabled: bool) -> Input {
+-    Input::new(state).small().disabled(disabled)
++    text_input(state, disabled).small()
+ }
+ 
+ /// Select wrapper; the state, items and keyboard behavior stay with the caller.
+@@ -163,7 +163,10 @@ where
+     D: SearchableListDelegate + 'static,
+     <D::Item as SearchableListItem>::Value: PartialEq + Clone,
+ {
+-    Select::new(state).small().disabled(disabled)
++    Select::new(state)
++        .small()
++        .h(px(size::SELECT_HEIGHT))
++        .disabled(disabled)
+ }
+ 
+ /// Checkbox wrapper. The caller keeps ownership of `on_change`.

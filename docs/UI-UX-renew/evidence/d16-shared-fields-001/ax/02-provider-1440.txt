@@ -1,0 +1,68 @@
+Window: "", App: WorkBuddy Proxy D16.
+0 standard window Secondary Actions: Raise
+	1 container
+		2 button 数据统计
+		3 button 供应商管理
+		4 row (selected) opencode, Secondary Actions: Pick
+		5 row (selectable) Provider B, Secondary Actions: Pick
+		6 row (selectable) Provider C, Secondary Actions: Pick
+		7 row (selectable) Provider 04, Secondary Actions: Pick
+		8 row (selectable) Provider 05, Secondary Actions: Pick
+		9 row (selectable) Provider 06, Secondary Actions: Pick
+		10 row (selectable) Provider 07, Secondary Actions: Pick
+		11 row (selectable) Provider 08, Secondary Actions: Pick
+		12 row (selectable) Provider 09, Secondary Actions: Pick
+		13 row (selectable) Provider 10, Secondary Actions: Pick
+		14 row (selectable) Provider 11, Secondary Actions: Pick
+		15 row (selectable) Provider 12, Secondary Actions: Pick
+		16 row (selectable) Provider 13, Secondary Actions: Pick
+		17 row (selectable) Provider 14, Secondary Actions: Pick
+		18 row (selectable) Provider 15, Secondary Actions: Pick
+		19 row (selectable) Provider 16, Secondary Actions: Pick
+		20 row (selectable) Provider 17, Secondary Actions: Pick
+		21 row (selectable) Provider 18, Secondary Actions: Pick
+		22 row (selectable) Provider 19, Secondary Actions: Pick
+		23 row (selectable) Provider 20, Secondary Actions: Pick
+		24 row (selectable) Provider 21, Secondary Actions: Pick
+		25 row (selectable) Provider 22, Secondary Actions: Pick
+		26 row (selectable) Provider 23, Secondary Actions: Pick
+		27 row (selectable) Provider 24, Secondary Actions: Pick
+		28 row (selectable) Provider 25, Secondary Actions: Pick
+		29 button 新增供应商
+		30 button 复制供应商
+		31 button 删除供应商
+		32 toggle button (settable, boolean) 开机启动, Value: off
+		33 button 检查更新
+		34 button 界面语言
+		35 button 恢复默认窗口尺寸
+		36 button GitHub 项目主页
+		37 button 提交反馈
+		38 pop up button (settable) 供应商预设, Value: 自定义地址
+		39 text field (settable) 填写供应商名称, Value: opencode
+		40 text field 填写 API Key
+			41 button
+		42 pop up button (settable) 上游协议, Value: OpenAI Chat Completions
+		43 button 协议选项
+		44 text field (settable) 填写供应商提供的 API 基础地址, Value: http://127.0.0.1:62140/v1
+		45 button 获取模型
+		46 button 添加模型
+		47 button 删除模型
+		48 row model-0
+			49 button 编辑模型
+		50 pop up button (settable) 思考强度, Value: 跟随 WorkBuddy
+		51 button 测试连接
+		52 button 保存
+		53 button 同步 WorkBuddy
+		54 button 取消同步
+		55 text field (settable) 本地端口, Value: 0
+		56 button 应用端口
+		57 button 清空日志
+		58 button 复制日志
+		59 text entry area (settable) 11:46:52：本地服务已启动：http://127.0.0.1:62142/v1
+	60 close button
+	61 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	62 minimize button
+63 menu bar
+	64 WorkBuddy Proxy D16
+
+The focused UI element is 0 standard window Secondary Actions: Raise

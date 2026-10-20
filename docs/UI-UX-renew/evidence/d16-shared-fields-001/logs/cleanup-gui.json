@@ -1,0 +1,88 @@
+{
+  "cap": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003",
+  "files": [
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/WorkBuddy Proxy D16.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 14649920
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/gpui.lock",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/config.json",
+      "bytes": 6716
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/instance.json",
+      "bytes": 108
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/startup.log",
+      "bytes": 49
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/usage.sqlite3-shm",
+      "bytes": 32768
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/model-catalog.json",
+      "bytes": 791
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/usage.sqlite3-wal",
+      "bytes": 856992
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/instance.lock",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/gpui-drafts.json",
+      "bytes": 18021
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/gpui.json",
+      "bytes": 41
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/config/usage.sqlite3",
+      "bytes": 4096
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/WorkBuddy Proxy D16.app/Contents/Info.plist",
+      "bytes": 617
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/core.log",
+      "bytes": 41
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/mock-ready",
+      "bytes": 5
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/mock.log",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/mock-mode",
+      "bytes": 2
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/run/run.json",
+      "bytes": 471
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/owner.txt",
+      "bytes": 21
+    },
+    {
+      "path": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/d16-gui-003/stop",
+      "bytes": 32
+    }
+  ],
+  "bytes": 15570691,
+  "references": "",
+  "removed": true
+}

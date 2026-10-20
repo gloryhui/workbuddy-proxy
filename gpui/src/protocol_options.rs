@@ -3,9 +3,9 @@ use crate::theme::{color, font, line_height, radius, size, space};
 use crate::upstream_config::{ProtocolSettings, ReasoningMode, UpstreamProtocol};
 use gpui_kit::{
     component::{
-        input::{Input, InputState},
+        input::InputState,
         label::Label,
-        select::{Select, SelectItem, SelectState},
+        select::{SelectItem, SelectState},
     },
     *,
 };
@@ -206,7 +206,7 @@ impl Editor {
                     .gap(px(space::SMALL))
                     .child(Self::field_label(authentication.clone()))
                     .child(
-                        Select::new(&self.authentication)
+                        crate::ui_components::select(&self.authentication, false)
                             .w_full()
                             .accessibility_label(authentication.clone()),
                     )
@@ -218,9 +218,8 @@ impl Editor {
                     .gap(px(space::SMALL))
                     .child(Self::field_label(limit.clone()))
                     .child(
-                        Input::new(&self.limit)
+                        crate::ui_components::text_input(&self.limit, false)
                             .w_full()
-                            .h(px(size::INPUT_HEIGHT))
                             .aria_label(limit.clone()),
                     )
             }))
@@ -237,7 +236,7 @@ impl Editor {
                     .gap(px(space::SMALL))
                     .child(Self::field_label(mode.clone()))
                     .child(
-                        Select::new(&self.mode)
+                        crate::ui_components::select(&self.mode, false)
                             .w_full()
                             .accessibility_label(mode.clone()),
                     ),
@@ -288,8 +287,7 @@ impl Editor {
                                     .text_color(rgb(color::TEXT_2)),
                             )
                             .child(div().flex_1().child(
-                                Input::new(state)
-                                    .h(px(size::MAPPING_INPUT_HEIGHT))
+                                crate::ui_components::text_input(state, false)
                                     .aria_label(format!("{effort} mapping")),
                             ))
                     }),

@@ -1,0 +1,4 @@
+   Compiling workbuddy-proxy-gpui v0.5.6 (/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign/gpui)
+    Finished `release` profile [optimized] target(s) in 59.01s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`

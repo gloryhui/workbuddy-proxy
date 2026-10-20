@@ -90,14 +90,17 @@ impl Statistics {
             .gap_1()
             .child(self.filter_label(self.t("采集方式", "Capture method")))
             .child(
-                div().w(px(164.)).h(px(32.)).child(
-                    Select::new(&self.capture_select)
+                div()
+                    .w(px(164.))
+                    .h(px(crate::theme::size::SELECT_HEIGHT))
+                    .child(
+                        crate::ui_components::select(
+                            &self.capture_select,
+                            self.capture.is_locked(self.source_scope()),
+                        )
                         .w_full()
-                        .h(px(32.))
-                        .small()
-                        .disabled(self.capture.is_locked(self.source_scope()))
                         .accessibility_label(self.t("采集方式", "Capture method")),
-                ),
+                    ),
             )
             .into_any_element()
     }
@@ -266,17 +269,18 @@ impl Statistics {
         };
         div()
             .w(px(slot.width() as f32))
-            .h(px(32.))
+            .h(px(crate::theme::size::SELECT_HEIGHT))
+            .flex()
+            .flex_col()
+            .justify_center()
             .flex_shrink_0()
             .child(control)
             .into_any_element()
     }
 
     fn filter_select(&self, state: &Entity<ChoiceState>, label: &'static str) -> AnyElement {
-        Select::new(state)
-            .small()
+        crate::ui_components::select(state, false)
             .w_full()
-            .h(px(32.))
             .accessibility_label(label)
             .into_any_element()
     }

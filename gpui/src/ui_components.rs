@@ -142,9 +142,9 @@ pub fn named_icon_button_sized(
 /// Text input at the design's 36px field height. The caller's `InputState` is
 /// passed through untouched.
 pub fn text_input(state: &Entity<InputState>, disabled: bool) -> Input {
-    Input::new(state)
-        .h(px(size::INPUT_HEIGHT))
-        .disabled(disabled)
+    // Input::h is an inherent multi-line-only API in Kit 0.7.3. Use Styled::h
+    // so the single-line field's final style overrides its rem-based size.
+    Styled::h(Input::new(state), px(size::INPUT_HEIGHT)).disabled(disabled)
 }
 
 /// Masked input (API keys) with the same field metrics and mask toggle.
@@ -152,9 +152,9 @@ pub fn masked_input(state: &Entity<InputState>, disabled: bool) -> Input {
     text_input(state, disabled).mask_toggle()
 }
 
-/// Compact filter/search input for the existing dense filter rows.
+/// Filter/search input with compact text and the shared 36px hit area.
 pub fn compact_input(state: &Entity<InputState>, disabled: bool) -> Input {
-    Input::new(state).small().disabled(disabled)
+    text_input(state, disabled).small()
 }
 
 /// Select wrapper; the state, items and keyboard behavior stay with the caller.
@@ -163,7 +163,10 @@ where
     D: SearchableListDelegate + 'static,
     <D::Item as SearchableListItem>::Value: PartialEq + Clone,
 {
-    Select::new(state).small().disabled(disabled)
+    Select::new(state)
+        .small()
+        .h(px(size::SELECT_HEIGHT))
+        .disabled(disabled)
 }
 
 /// Checkbox wrapper. The caller keeps ownership of `on_change`.
