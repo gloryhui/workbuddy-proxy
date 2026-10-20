@@ -34,7 +34,7 @@ Model dialog Enter uses the same validation/submission as Confirm; missing IDs k
 
 Log entries use single newlines and a 16px line height. New content scrolls to the bottom after layout; polls without new content preserve the viewport. The existing core keeps its latest 100 entries rather than growing memory without a bound.
 
-Global header icon controls are ordered Launch at login, Check updates, Language, Restore default size, GitHub and Feedback. Language uses a globe menu; the version appears as muted text at the end of the subtitle. Connection settings offer a searchable [provider preset catalog](PROVIDER-PRESETS.md) above the name and key fields. Presets fill the form and remain editable until saved.
+The shared 36px title toolbar contains Launch at login, Check updates, Language, Restore default size, GitHub and Feedback, in that order. It uses the page background without a separator or duplicate application title. macOS retains its left traffic lights; Windows retains its right minimize/maximize/close controls. The action buttons are excluded from the title-bar drag region. Language uses a globe menu; the version appears as muted text at the end of the sidebar subtitle. Connection settings offer a searchable [provider preset catalog](PROVIDER-PRESETS.md) above the name and key fields. Presets fill the form and remain editable until saved.
 
 ## Windows installation
 

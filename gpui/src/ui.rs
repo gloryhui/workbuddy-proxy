@@ -5,7 +5,8 @@ use crate::{
     statistics::Statistics,
 };
 use gpui_kit::component::{
-    ActiveTheme, ElementExt, Icon, IconName, Selectable, Sizable, TitleBar, WindowExt,
+    ActiveTheme, ElementExt, Icon, IconName, InteractiveElementExt as _, Selectable, Sizable,
+    TitleBar, WindowExt,
     button::{Button, ButtonVariants},
     input::{InputEvent, InputState, Textarea, TextareaState},
     label::Label,
@@ -53,7 +54,7 @@ const BG: u32 = 0xf7f8f9;
 const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
 // T03 skeleton geometry comes from the T01 tokens in `theme`: 224px sidebar,
-// 36px top icon row, 30px status bar, 34px provider rows. Only the brand mark
+// 36px title toolbar, 30px status bar, 34px provider rows. Only the brand mark
 // and the provider panel's title row have no token and stay local. Page bodies
 // keep their own values until T04–T08 migrate them.
 const BRAND_MARK_SIZE: f32 = 34.;
@@ -401,10 +402,18 @@ impl Proxy {
         // Match the original six glyphs and 34px center-to-center spacing.
         // Their real actions, tooltips and disabled rules remain unchanged.
         div()
+            .id("titlebar-actions")
             .flex()
+            .flex_shrink_0()
             .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
             .items_center()
             .gap(px(2.))
+            // Exclude actions from the TitleBar's native Windows drag hitbox
+            // and prevent macOS mouse movement/double clicks from dragging or
+            // zooming the window while the user operates a toolbar button.
+            .occlude()
+            .on_mouse_down(MouseButton::Left, |_, _, cx| cx.stop_propagation())
+            .on_double_click(|_, _, cx| cx.stop_propagation())
             .child(
                 crate::ui_components::design_header_button(
                     "autostart",
@@ -3459,15 +3468,6 @@ impl Render for Proxy {
                         .child(
                             div()
                                 .flex()
-                                .items_center()
-                                .justify_end()
-                                .flex_shrink_0()
-                                .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
-                                .child(self.app_controls(cx)),
-                        )
-                        .child(
-                            div()
-                                .flex()
                                 .gap_3()
                                 .flex_1()
                                 .min_h_0()
@@ -3481,7 +3481,25 @@ impl Render for Proxy {
             .size_full()
             .flex()
             .flex_col()
-            .child(TitleBar::new().child(Label::new("WorkBuddy Proxy").text_size(px(12.))))
+            .child(
+                TitleBar::new()
+                    .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
+                    .bg(rgb(BG))
+                    .border_b_0()
+                    // Kit reserves macOS traffic lights on the left and adds
+                    // native Windows min/max/close hit areas on the right.
+                    .child(div().flex_1().min_w_0().h_full())
+                    .child(
+                        div()
+                            .h_full()
+                            .pr(px(if cfg!(target_os = "macos") {
+                                crate::theme::space::PAGE_X
+                            } else {
+                                8.
+                            }))
+                            .child(self.app_controls(cx)),
+                    ),
+            )
             .child(content.flex_1().min_h_0())
     }
 }
