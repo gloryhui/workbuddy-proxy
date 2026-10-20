@@ -1,0 +1,34 @@
+{
+  "product_commit": "d831f37",
+  "counts": {
+    "gpui/src": {
+      "files": 13,
+      "insertions": 4057,
+      "deletions": 1596
+    },
+    "src": {
+      "files": 3,
+      "insertions": 91,
+      "deletions": 5
+    }
+  },
+  "checked_relative_links": 100,
+  "unique_targets": 72,
+  "missing": [],
+  "trailer_checks": [
+    {
+      "commit": "40dadaa",
+      "trailers": "Co-authored-by: Codex <codex@openai.com>"
+    },
+    {
+      "commit": "68ca6ff",
+      "trailers": "Co-authored-by: Codex <codex@openai.com>"
+    },
+    {
+      "commit": "d831f37",
+      "trailers": "Co-authored-by: Codex <codex@openai.com>"
+    }
+  ],
+  "tmp_bytes": 0,
+  "disk_free_bytes": 209191276544
+}

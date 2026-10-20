@@ -1,10 +1,10 @@
 # WorkBuddy Proxy UI 改造交付报告
 
-**T10 / 最终交付与审计（更新轮：文档审计）**
+**T10 / 最终交付与审计（补充：2026-10-20 用户决策落地）**
 **工作区：** `/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign`
-**分支 / 产品代码审计基线：** `codex/ui-redesign` / `1dbebac8b245d2ad237ae43943f3748293361dd8`（T10 文档更新为快照后的后续提交，由 Codex 复核/本地提交）
+**分支 / 当前产品代码基线：** `codex/ui-redesign` / `d831f37`（下方保留初次T10历史快照，最新范围见用户决策补充）
 **报告日期：** 2026-10-20
-**提交状态：** 本轮文档经 Codex 独立复核后本地提交；不推送。本文记录审计基线快照，文档提交不改变产品代码验证范围。
+**提交状态：** 用户已改为 Codex 直接实现/复核/验证/本地提交；不再使用 DSH，不推送。D01/D16/D15 产品提交为 `40dadaa` / `68ca6ff` / `d831f37`。
 
 ## 结论
 
@@ -12,11 +12,27 @@
 - **Windows 验收：BLOCKED**（本机无 Windows x64 实机/VM/远程/Wine；无 Windows 编译或 GUI 证据）。
 - **macOS 验收：PARTIAL**（SC01—SC12 均有 macOS 中文证据；X03 与 X05 已修复/补证并独立复核，但仅限各自声明的 macOS 子集；英文、Retina、DPI、真实 IME 未测）。
 - **完整设计验收：不通过 / 待验收**。本报告不宣称 full acceptance，也不使用“测试都通过”。
-- **仍阻止完整验收的问题：** Windows 全矩阵/DPI 缺失；英文/Retina/IME 未测；T05 仅同步/重启、T06 A02/A04/A05 等未闭合；D04 标题栏、D16 控件高度待用户/设计确认；F01 provenance、F03 旧迁移归档版本对应性仍 PARTIAL。X03/X05/R06 B 已修复，但结论只覆盖各自报告声明的 macOS 隔离范围。
+- **仍阻止完整验收的问题：** Windows 全矩阵/DPI 缺失；英文/Retina/IME 未测；T05 仅同步/重启、T06 A02/A04/A05 等未闭合；D16 修改后的最小窗口复验尚缺；D04/D09 选择已确认，D01/D15/D16 已落地；F01 provenance、F03 旧迁移归档版本对应性仍 PARTIAL。X03/X05/R06 B 已修复，但结论只覆盖各自报告声明的 macOS 隔离范围。
+
+## 2026-10-20 用户决策补充（当前有效）
+
+详见 [决策与交付记录](DECISIONS_20261020.md)。
+
+| 决策 | 最新结果 | 验证/边界 |
+|---|---|---|
+| D01 顶部图标 | 保留六项真实动作，改为更直观的火箭、云下载、向内箭头、反馈气泡 | [实现与复核](../d01-icons-001/REPORT.md)，动作/tooltip/aria保持 |
+| D04 Windows标题栏 | 用户接受Kit绘制，设计选择关闭 | Windows实机/DPI仍BLOCKED |
+| D09 来源命名 | 用户确认“内置模型/自定义模型”，保持现有文案 | 当前AX可见；无需源码变更 |
+| D15 页面刷新 | 默认5秒；提示仅刷新已采集统计，不改采集频率 | [20→21、关闭保持21、恢复→22](../d15-report-refresh-001/REPORT.md)；后台JSONL固定5秒保留 |
+| D16 控件高度 | 共享Input/Select统一36px，映射字段也36px；按钮原尺寸 | [多表单复验](../d16-shared-fields-001/REPORT.md)；本轮1100×700边框调整失败，最小窗口复验尚缺 |
+
+最新产品源码累计 `cbb3a91..d831f37`：16文件，+4148/−1601；其中GPUI13文件，+4057/−1596，根src3文件+91/−5。至此29个提交（含历史文档提交）。依赖清单和lock无变更。D15/D16最终各139个现有GPUI测试通过、release构建通过；此结果不替代旧验收矩阵。最终二进制SHA256见[D15结果](../d15-report-refresh-001/logs/results.json)。
+
+新证据使用本机缓存、隔离假配置和CUA；子进程退出后按精确CAP清理，会话tmp为空。受保护状态文档和未跟踪设计原件保持原哈希。
 
 ## 实施范围
 
-### 基线与最终版本
+### 初次T10基线（历史快照）
 
 | 项 | 值 |
 |---|---|
@@ -55,6 +71,8 @@
 - 未跟踪设计资料与规划文档**未删除/未改写**；本轮 T10 报告更新仅修改 `FINAL_REPORT.md` 与 `logs/verification.md`，独立复核记录见 `CODEX_REVIEW.md`。
 
 ## 画面与功能
+
+下方SC01—SC12矩阵为初次T10历史覆盖；D01/D15/D16的当前构建证据见上方补充，不把历史三档截图当成36px修改后的全矩阵复验。
 
 ### SC01—SC12 实现位置与证据
 
@@ -110,22 +128,22 @@
 
 | ID | 文件/函数 | 设计要求 | 当前行为 | 原因 | 影响 | 处理结论/待定 |
 |---|---|---|---|---|---|---|
-| 差异 D01 | `ui.rs::app_controls` | 顶部电源/刷新/全屏/账号 | 六个真实动作：开机启动/检查更新/语言/恢复窗口/GitHub/反馈 | 图标与动作非字面对应 | 用户需靠 tooltip/aria 理解动作，视觉映射有认知差异 | 保留真实动作；**待用户确认视觉映射** |
+| 差异 D01 | `ui.rs::app_controls`、`assets.rs` | 保留现有动作，图标更直观 | 六动作保持；火箭/云下载/向内箭头/反馈气泡 | 用户确认 | 降低图标与动作理解成本 | **已落地** `40dadaa`；[证据](../d01-icons-001/REPORT.md) |
 | 差异 D02 | `workbuddy_restart.rs`、`ui.rs` | Windows/macOS 均可“同步并重启” | 自动重启仅 macOS；非 macOS 返回错误、按钮禁用+说明 | 平台能力限制 | Windows 用户无法自动重启，需手动重开 | **Windows 保持禁用说明**；未实机验证 |
 | 差异 D03 | `protocol_options.rs` | 六项 effort 映射 | Responses 额外 `none`，共 7 项 | 保留既有映射 | 仅 Responses 多一行，其他协议不受影响 | 保留；验收 D01 已测 |
-| 差异 D04 | `main.rs`、`TitleBar::window_options()` | 标题栏必须原生 | macOS 透明标题栏+原生红绿灯；Windows 由 Kit `ControlIcon` 绘制 | 沿用 Kit 标题栏 | Windows 标题栏非完全原生，平台观感差异 | **未关闭**；需用户接受或确认原生改造范围 |
+| 差异 D04 | `main.rs`、`TitleBar::window_options()` | 用户接受Kit绘制的Windows标题栏 | macOS原生红绿灯；Windows Kit绘制 | 用户2026-10-20确认 | 保留平台装饰差异 | **设计选择已关闭**；Windows实测仍BLOCKED |
 | 差异 D05 | `theme.rs` 字体解析 | 两端字形完全一致 | 平台系统字体；macOS 系统 sans+SF Mono/Menlo/Monaco，Windows 候选 Segoe UI Variable/Segoe UI/YaHei UI | 平台字体策略 | 字形存在平台差异；未逐字核对 | 允许差异；**GUI 字形未核对** |
-| 差异 D06 | 窗口尺寸 | 1280×800 基准 | 默认 1440×900、最小 1100×700 | 既有窗口策略 | 与设计基准不同，长页需滚动 | 三档已截图；不整页缩小 |
+| 差异 D06 | 窗口尺寸 | 1280×800 基准 | 默认 1440×900、最小 1100×700 | 既有窗口策略 | 与设计基准不同，长页需滚动 | 历史三档已截图；D16修改后最小窗口仍需复验 |
 | 差异 D07 | 全局 | 所有界面有设计 | 聚合表/详情/日期/导入/空错加载/深色/Windows 标题栏等无设计 | 设计材料缺项 | 这些状态的视觉对照不完整 | 保留现状 + TODO(design)；**未关闭** |
 | 差异 D08 | 文案 | 完全照稿 | 动态值绑定真实状态；部分旧文案保留 | 数据动态 | 与设计示例文案不完全一致，但语义保留 | 仅静态文案照稿 |
-| 差异 D09 | `statistics` 来源筛选 | “全部来源/官方/供应商” | “全部来源/内置模型/自定义模型” | 既有 `SourceScope` 语义 | “官方”可能被误解为官方计费 | 保留并登记；**待用户确认命名** |
+| 差异 D09 | `statistics`来源筛选 | 用户选定“内置模型/自定义模型” | 已使用该文案 | 对应SourceScope语义 | 避免“官方”计费误解 | **已确认并保持**；无需源码改动 |
 | 差异 D10 | `overview.rs` | 总 Token + 8 卡 | 总 Token + 9 卡（含 WorkBuddy 点数） | 保留点数功能 | 多一张卡，布局与设计不同 | 保留；A03 按 9 项核对 |
 | 差异 D11 | `usage_table.rs` | 9 列 | 11 列（来源、点数） | 保留既有数据 | 表格更宽、列更多 | 保留；L01/L02/L05 覆盖部分 |
 | 差异 D12 | `usage_chart.rs` | 趋势/费用两张并排卡 | 已拆两张并排，窄窗纵向堆叠 | 已落地 | 符合设计方向；窄窗高度增加 | A04 PARTIAL（币种/图例交互未测） |
 | 差异 D13 | `ui.rs` 状态栏 | 30px 全宽状态栏 | 已落地，状态由真实 `CoreState` 推导 | 已落地 | 代理/上游转发健康仍未纳入 | 三态反证有证据；后续可扩展 |
 | 差异 D14 | `ui.rs` 右栏 | 全局设置/日志两卡 | 已拆两卡，300px，独立滚动 | 已落地 | 右侧日志滚动未实测 | 右侧日志滚动 **NOT RUN** |
-| 差异 D15 | `statistics.rs` 刷新间隔 | 设计 5 秒 | 默认 0（关闭），可选 0/5/10/30/60 | 行为默认值 | 用户需手动刷新，非设计默认 | **待用户确认是否改默认** |
-| 差异 D16 | Kit `Input` 高度 | 输入 36 / 按钮 32 / 映射 34 | 按钮 32；单行 Input/Select 26–28 | Kit rem/内边距 | 表单密度低于设计，影响全局 | **未解决**；需共享层方案/用户取舍 |
+| 差异 D15 | `statistics.rs`刷新间隔 | 页面默认5秒；采集独立 | 页面默认5，可选关闭/5/10/30/60；后台JSONL固定5秒 | 用户确认保留当前采集 | 页面刷新不控制后台采集 | **已落地** `d831f37`；[证据](../d15-report-refresh-001/REPORT.md) |
+| 差异 D16 | `ui_components`及表单调用 | 用户确认共享36px | 应用自有Input/Select（含映射）统一36px；按钮保持原尺寸 | Kit单行Input需Styled::h覆盖 | 全局表单密度调整 | **已落地** `68ca6ff`；[证据](../d16-shared-fields-001/REPORT.md)；最小窗口复验尚缺 |
 | T08 R06 | `statistics.rs` 清除历史 | 失败明确、数据保留、可恢复 | A：token 过期→明确错误、20 行保留、core ready；B：trigger abort→本地化“清理失败/数据保留/可重试”，移除 trigger 后重试→事件 completed、health ready、数据按确认删除 | B 原先通用错误/原始 trigger/degraded 不恢复，已修复 | 用户能区分失败与成功；失败不泄漏原始 SQLite；数据保留 | **A PASS / B PASS（macOS 隔离夹具）**（[修复报告](../t08-r06-error-recovery-fix-001/REPORT.md)、[复核](../t08-r06-error-recovery-fix-001/CODEX_REVIEW.md)） |
 | T09 X03 | `protocol_options.rs`、`ui.rs` | 弹窗键盘焦点隔离 | Tab/Enter/Escape 不再触达背景；协议弹窗初始焦点在内部控件；隔离 config 不变 | 原窗口根焦点使 focus trap 未激活，已修复 | 仅 OpenAI Chat 弹窗 GUI 验证；其它 Dialog/Shift+Tab/平台未测 | **PASS（限 macOS 中文/非 Retina/1440×900）**（[报告](../t09-x03-focus-fix-001/REPORT.md)、[复核](../t09-x03-focus-fix-001/CODEX_REVIEW.md)） |
 | T09 X05 | 统计页/供应商页/弹窗/日志 | 固定数据重复交互无明显卡顿/增长/重复请求 | corrected 10 轮：筛选每轮 AX+KPI 验证、mock +10、FD/窗口/config/DB 稳定；旧预备测量已 superseded | 旧脚本坐标漏加 y=30，筛选未真正改变；已用 corrected 脚本重跑 | 仅单会话 10 轮原始采样；无性能阈值/soak/无泄漏结论 | **PASS（限 macOS 中文/非 Retina/1440×900、10 轮合成数据）**（[报告](../t09-x05-repeat-001/REPORT.md)、[复核](../t09-x05-repeat-001/CODEX_REVIEW.md)） |
@@ -141,9 +159,6 @@
 |---|---|---|---|---|
 | `ui_components.rs` 选择模型 | “仅看已勾选”用 Outline；已添加行底色 `BG_TABLE_HEAD`（设计 #F3F8F7） | 保留现有反馈 | 视觉细节差异 | 设计色值确认 |
 | `ui.rs` 侧栏 | 设计标题行有前置图标，当前只有 chevron | 保留真实折叠语义 | 视觉差异 | 图标资源 |
-| `ui.rs` 顶部 | 六个动作图标与设计字面不对应（D01） | tooltip/aria 反映真实动作 | 认知差异 | 用户确认映射 |
-| `theme.rs`/Kit | 单行 Input 高度 26–28 vs 设计 36（D16） | 保留 Kit 行为 | 全局控件高度/密度 | 共享层方案/用户取舍 |
-| `main.rs`/TitleBar | Windows 标题栏由 Kit 绘制（D04） | 只登记 | 平台一致性 | 用户接受或原生改造范围 |
 | 全局 | 设计未覆盖聚合表/详情/日期/导入/空错加载/深色（D07） | 保留现有行为 | 未逐像素对照 | 补充设计材料 |
 
 > 代码中 `grep -rn "TODO(design)" gpui/src` 为 **0**；上表是状态文档/差异表登记的待定设计项，不是代码注释。
@@ -177,7 +192,7 @@
 |---|---|---|
 | B01—B03 | PASS | 基线/功能映射/设计材料已记录；B02 静态 |
 | B04 | PARTIAL | T00 未跑；T07/T08/T09 已实际运行隔离 core/mock 并清理，非 T00 原始验收 |
-| V01—V02 | PASS（静态） | token/尺寸集中；D16 高度未解决 |
+| V01—V02 | PASS（静态与部分macOS） | token集中；D16已统一36px，多表单已复验，修改后最小窗口仍待 |
 | V03—V04 | NOT RUN | 两平台字体/重开语言未测 |
 | C01—C06 | NOT RUN/PARTIAL | 静态可用；C02 剪贴板 PASS、C05 Escape PASS；X03 Tab/Enter 限 OpenAI Chat 协议弹窗 PASS，其它控件/平台未测 |
 | S01—S04 | PARTIAL | 骨架/滚动/状态源有证据；busy、日志滚动、语言切换等未测 |
@@ -205,9 +220,9 @@
 
 - **Mock/合成数据：** T07/T08/T09 使用隔离 config/DB/本地 mock；T09 补充使用 `127.0.0.1` mock + 虚构 Key；未读写真实配置/Key/历史，未发真实上游请求。T09 X03 旧失败证据中的唯一写入是隔离合成 config（空供应商），已停机保留证据；修复后验证未再写入，未触碰真实用户数据。
 - **自动化/人工：** axdrive AX/点击/截图、CGEvent、Vision OCR；人工对照设计与截图。OCR 有误读，AX/API/DB 交叉核对。
-- **未执行及原因：** Windows 全矩阵/DPI（无环境）；英文/Retina/真实 IME（无环境）；X03 其它 Dialog/Shift+Tab/跨平台回归；X05 长时 soak/性能阈值；T05 仅同步/重启；T06 A02/A04/A05；T08 B 的重启恢复（仅验证了 UI 重试）；本轮构建/测试/GUI（文档审计，不运行）。
-- **标题栏/字体：** macOS 原生红绿灯+透明标题栏；Windows Kit 绘制（D04 未关闭）；平台字体候选静态核对，D05 GUI 字形未逐字核对。
-- **下一步准确起点：** 在具备 Windows x64 实机/VM 的环境补跑 Windows 100/125/150/200% DPI、英文/中文 SC01—SC12；在 macOS 补 Retina/英文/IME；补 X03 其它 Dialog/Shift+Tab 回归、X05 长时 soak、T05/T06 未测项；确认 D04/D16；复核 F01/F03。**不能宣称 full acceptance。**
+- **未执行及原因：** Windows 全矩阵/DPI（无环境）；英文/Retina/真实 IME（无环境）；X03 其它 Dialog/Shift+Tab/跨平台回归；X05 长时 soak/性能阈值；T05 仅同步/重启；T06 A02/A04/A05；T08 B 的重启恢复（仅验证了 UI 重试）；初次T10快照未运行构建/测试/GUI（本次D15/D16补充已实际运行，范围见各报告）。
+- **标题栏/字体：** macOS 原生红绿灯+透明标题栏；Windows Kit 绘制（D04用户已接受，实测仍缺）；平台字体候选静态核对，D05 GUI 字形未逐字核对。
+- **下一步准确起点：** 在具备 Windows x64 实机/VM 的环境补跑 Windows 100/125/150/200% DPI、英文/中文 SC01—SC12；在 macOS 补 Retina/英文/IME；补 X03 其它 Dialog/Shift+Tab 回归、X05 长时 soak、T05/T06 未测项；补D16修改后最小窗口复验；复核 F01/F03。**不能宣称 full acceptance。**
 
 ## 提交与 trailer 审计
 
