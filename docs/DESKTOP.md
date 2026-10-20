@@ -16,7 +16,7 @@ GPUI and GPUI Kit are Apache-2.0 software. https://github.com/zed-industries/zed
 
 ## Component coverage
 
-All settings-page interactive controls use GPUI Kit 0.7.3: `Button`, `Input` (including mask toggle), `Select`, `Checkbox`, `Sidebar`/`SidebarMenuItem`, virtualized `DataTable`, `ListItem`, `Dialog`/`DialogContent`/`DialogFooter`, `Label`, `Tag`, `TitleBar`. Provider counts appear in a compact tag; the active provider uses the shared teal theme. Existing models in discovery are checked and disabled, with an Added label.
+All settings-page interactive controls use GPUI Kit 0.7.3: `Button`, `Input` (including mask toggle), `Select`, `Checkbox`, `Sidebar`/`SidebarMenuItem`, virtualized `DataTable`, `ListItem`, `Dialog`/`DialogContent`/`DialogFooter`, `Label`, `Tag`, `TitleBar`. Provider counts appear in a compact tag; the active provider follows the selected skin, with monochrome as the default. Existing models in discovery are checked and disabled, with an Added label.
 
 Layout-only surfaces and spacing use GPUI containers. A GroupBox was evaluated but its nested intrinsic-height wrappers clipped flexible log panels, so the settings surfaces retain flexible layout containers. They are not OS-native input or list controls. Native tray integration remains small and resident; closing settings releases the GPUI process.
 
@@ -40,7 +40,7 @@ Model dialog Enter uses the same validation/submission as Confirm; missing IDs k
 
 Log entries use single newlines and a 16px line height. New content scrolls to the bottom after layout; polls without new content preserve the viewport. The existing core keeps its latest 100 entries rather than growing memory without a bound.
 
-The shared 36px title toolbar contains Launch at login, Check updates, Language, Restore default size, GitHub and Feedback, in that order. It uses the page background without a separator or duplicate application title. macOS retains its left traffic lights; Windows retains its right minimize/maximize/close controls. The action buttons are excluded from the title-bar drag region. Language uses a globe menu; the version appears as muted text at the end of the sidebar subtitle. Connection settings offer a searchable [provider preset catalog](PROVIDER-PRESETS.md) above the name and key fields. Presets fill the form and remain editable until saved.
+The shared 36px title toolbar contains Skins, Launch at login, Check updates, Language, Restore default size, GitHub and Feedback, in that order. It uses the page background without a separator or duplicate application title. macOS retains its left traffic lights; Windows retains its right minimize/maximize/close controls. The action buttons are excluded from the title-bar drag region. Language uses a globe menu; the version appears as muted text at the end of the sidebar subtitle. Connection settings offer a searchable [provider preset catalog](PROVIDER-PRESETS.md) above the name and key fields. Presets fill the form and remain editable until saved.
 
 ## Windows installation
 
