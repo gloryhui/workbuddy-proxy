@@ -1,0 +1,13 @@
+{
+  "core_pid": 72829,
+  "mock_pid": 71947,
+  "mock_port": 63295,
+  "gpui_pid": null,
+  "port": 63942,
+  "config": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t09-macos-supplement-001/run/config",
+  "db": "/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/t09-macos-supplement-001/run/config/usage.sqlite3",
+  "usage_rows": 20,
+  "prices": 25,
+  "mock_mode": "ok",
+  "created_ms": 1792458896882
+}

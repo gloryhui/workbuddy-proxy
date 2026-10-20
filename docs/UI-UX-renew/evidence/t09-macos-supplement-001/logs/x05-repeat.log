@@ -1,0 +1,9 @@
+picker cycle 1 checkboxes=1
+picker cycle 2 checkboxes=1
+picker cycle 3 checkboxes=1
+protocol menu cycle 1
+protocol menu cycle 2
+protocol menu cycle 3
+sync dialog cycle 1 actions=1
+sync dialog cycle 2 actions=1
+72945 136224 02:22

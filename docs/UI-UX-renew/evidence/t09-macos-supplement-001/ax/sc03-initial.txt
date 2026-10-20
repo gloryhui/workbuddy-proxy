@@ -1,0 +1,7 @@
+AXApplication title=workbuddy-proxy-gpui desc= value= enabled [0,0 0x0]
+  AXWindow title= desc= value= enabled [240,76 1440x901]
+    AXGroup title= desc= value= enabled [240,76 1440x901]
+    AXButton title= desc= value= enabled [248,84 16x16]
+    AXButton title= desc= value= enabled [294,84 16x16]
+      AXGroup title= desc= value= enabled [295,85 14x14]
+    AXButton title= desc= value= enabled [271,84 16x16]
