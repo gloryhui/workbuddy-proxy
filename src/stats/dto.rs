@@ -48,6 +48,7 @@ pub const ERR_INVALID: &str = "stats_invalid_argument";
 pub const ERR_TIMEOUT: &str = "stats_query_timeout";
 pub const ERR_BUSY: &str = "stats_busy";
 pub const ERR_UNAVAILABLE: &str = "stats_unavailable";
+pub const ERR_MAINTENANCE_FAILED: &str = "stats_maintenance_failed";
 pub const ERR_CURSOR_EXPIRED: &str = "stats_cursor_expired";
 /// A command that used to exist and was deliberately withdrawn: repricing
 /// history with the *current* price contradicts the per-call price snapshot.

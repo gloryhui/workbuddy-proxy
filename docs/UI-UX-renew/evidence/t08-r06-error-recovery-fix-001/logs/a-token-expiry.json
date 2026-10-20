@@ -1,0 +1,6 @@
+{
+  "preview_rows": 0,
+  "start_after_61s": "HTTP 400 for stats_clear_start: {\"message\":\"stats_invalid_argument: the clear confirmation expired; preview again\"}",
+  "health_state": "ready",
+  "error_code": null
+}

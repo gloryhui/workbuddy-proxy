@@ -1,0 +1,97 @@
+diff --git a/gpui/src/statistics.rs b/gpui/src/statistics.rs
+index c39d1db..1abdeac 100644
+--- a/gpui/src/statistics.rs
++++ b/gpui/src/statistics.rs
+@@ -9,10 +9,10 @@
+ use crate::{
+     stats_backend::{JobKey, JobKind, StatsReply, StatsScheduler},
+     stats_dto::{
+-        BreakdownDto, ClearPreviewDto, CostStatus, Currency, DashboardDto, FilterOptionDto,
+-        GroupBy, HealthDto, MaintenanceDto, MaintenanceStatus, PriceRuleDto, ProviderSettingsDto,
+-        RequestCursor, RequestDetailDto, RequestRowDto, SettingsDto, SortMetric, UsageMode,
+-        WarningCode,
++        BreakdownDto, ClearPreviewDto, CostStatus, Currency, DashboardDto, ERR_MAINTENANCE_FAILED,
++        FilterOptionDto, GroupBy, HealthDto, MaintenanceDto, MaintenanceStatus, PriceRuleDto,
++        ProviderSettingsDto, RequestCursor, RequestDetailDto, RequestRowDto, SettingsDto,
++        SortMetric, UsageMode, WarningCode,
+     },
+     stats_dto::{HealthState, LossScope},
+     usage_chart::{ChartMode, ChartPoint, SeriesKind, UsagePlot},
+@@ -311,6 +311,7 @@ pub struct Statistics {
+     /// draft never touches the report filters.
+     price_draft: crate::stats_controller::PriceDraft,
+     maintenance: Option<MaintenanceDto>,
++    maintenance_error: Option<String>,
+     clear_preview: Option<ClearPreviewDto>,
+     clear_token: Option<String>,
+     pricing_open: bool,
+@@ -632,6 +633,7 @@ impl Statistics {
+             price_closing: false,
+             price_draft: crate::stats_controller::PriceDraft::blank(String::new(), 0),
+             maintenance: None,
++            maintenance_error: None,
+             clear_preview: None,
+             clear_token: None,
+             pricing_open: false,
+@@ -1781,6 +1783,28 @@ impl Statistics {
+         }
+         if tag.starts_with("maintenance-") {
+             if let Ok(status) = serde_json::from_value::<MaintenanceDto>(value) {
++                if status.status == MaintenanceStatus::Failed {
++                    // A failed clear must not look like a successful one, and
++                    // the raw SQLite/trigger text stays in the core log only.
++                    let message = self
++                        .t(
++                            "清理失败，历史数据仍保留；请检查存储后重新预览并重试。",
++                            "Cleanup failed; history is preserved. Check storage, preview again and retry.",
++                        )
++                        .to_owned();
++                    self.maintenance_error = Some(message.clone());
++                    self.error = Some(message);
++                    self.maintenance = Some(status);
++                    // Reads are intentionally unavailable while degraded; the
++                    // health snapshot can still tell the user what happened.
++                    self.request_health(cx);
++                    cx.notify();
++                    return;
++                }
++                if status.status == MaintenanceStatus::Completed {
++                    self.maintenance_error = None;
++                    self.error = None;
++                }
+                 if status.status != MaintenanceStatus::Running {
+                     self.refresh(cx);
+                     self.request_prices(cx);
+@@ -3475,7 +3499,17 @@ impl Statistics {
+             ));
+         }
+         if let Some(code) = health.error_code.as_ref() {
+-            alerts.push(code.clone());
++            let alert = if code == ERR_MAINTENANCE_FAILED {
++                self.t(
++                    "统计维护失败；现有记录已保留",
++                    "Statistics maintenance failed; existing records are preserved",
++                )
++                .to_owned()
++            } else {
++                self.t("统计数据暂不可用", "Statistics temporarily unavailable")
++                    .to_owned()
++            };
++            alerts.push(alert);
+         }
+         let attention = matches!(health.state, HealthState::Degraded | HealthState::Migrating)
+             || health.write_failures_current_run > 0
+@@ -4376,6 +4410,13 @@ impl Statistics {
+                         .on_click(cx.listener(|this, _, _, cx| this.preview_clear(cx))),
+                     ),
+             )
++            .when_some(self.maintenance_error.clone(), |this, message| {
++                this.child(
++                    Label::new(message)
++                        .text_size(px(11.))
++                        .text_color(rgb(0xa4424a)),
++                )
++            })
+             .when_some(progress, |this, task| {
+                 this.child(
+                     Label::new(format!(

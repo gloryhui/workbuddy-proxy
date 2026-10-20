@@ -1,0 +1,2 @@
+9823273191cb06c3f39c46e6f6ec7f4d72fcdc30959c84bd692186adb5f8daa9  target/release/workbuddy-proxy
+5cd6b5a04246be9542b62f4a754799f5c5230877a3729c375657f61f745fa2c2  gpui/target/release/workbuddy-proxy-gpui

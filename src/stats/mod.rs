@@ -29,10 +29,11 @@ pub mod workbuddy_import;
 
 use crate::stats::collector::Protocol;
 use crate::stats::dto::{
-    API_VERSION, ClearPreviewDto, ERR_BUSY, ERR_INVALID, ERR_OPERATION_REMOVED, ERR_UNAVAILABLE,
-    FilterKind, FilterOptionsDto, Granularity, GroupBy, HealthDto, HealthState, LossScope,
-    MaintenanceDto, MaintenanceKind, MaintenanceStatus, PriceListDto, ProviderSettingsDto,
-    RequestDetailDto, SettingsDto, SortMetric, Source, StatsFilter, UsageMode, error,
+    API_VERSION, ClearPreviewDto, ERR_BUSY, ERR_INVALID, ERR_MAINTENANCE_FAILED,
+    ERR_OPERATION_REMOVED, ERR_UNAVAILABLE, FilterKind, FilterOptionsDto, Granularity, GroupBy,
+    HealthDto, HealthState, LossScope, MaintenanceDto, MaintenanceKind, MaintenanceStatus,
+    PriceListDto, ProviderSettingsDto, RequestDetailDto, SettingsDto, SortMetric, Source,
+    StatsFilter, UsageMode, error,
 };
 use crate::stats::event::{Counters, EventQueue, RequestGuard, RequestMeta};
 use crate::stats::query::RuntimeFlags;
@@ -1588,6 +1589,7 @@ fn writer_thread(
         );
     }
     let mut degraded_recorded = false;
+    let mut maintenance_failed = false;
     let mut probe_backoff = PROBE_BACKOFF_MIN;
     let mut next_probe = Instant::now();
     // Finish events whose row could not be written; retried after recovery so
@@ -1755,13 +1757,27 @@ fn writer_thread(
                 Ok(remaining) => {
                     inner.maintenance_revision.fetch_add(1, Ordering::Relaxed);
                     publish_facts(&inner, &writer.db_stats);
+                    if !remaining && maintenance_failed && degraded_since.is_none() {
+                        // A later maintenance attempt (the UI's retry) completed
+                        // successfully. Only clear the degradation caused by a
+                        // maintenance failure; a write/scan degradation keeps its
+                        // own recovery probe and must not be hidden here.
+                        maintenance_failed = false;
+                        inner.set_state(HealthState::Ready, None);
+                    }
                     if remaining && Instant::now() < deadline {
                         continue;
                     }
                 }
                 Err(failure) => {
+                    // The health payload is public. Keep the fixed code, never
+                    // the raw SQLite/trigger text (which can contain SQL/paths).
                     eprintln!("statistics maintenance failed: {}", failure.message);
-                    inner.set_state(HealthState::Degraded, Some(failure.message.clone()));
+                    maintenance_failed = true;
+                    inner.set_state(
+                        HealthState::Degraded,
+                        Some(ERR_MAINTENANCE_FAILED.to_owned()),
+                    );
                 }
             }
         }

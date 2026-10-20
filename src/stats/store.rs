@@ -2777,6 +2777,75 @@ mod tests {
     }
 
     #[test]
+    fn maintenance_failure_keeps_rows_and_retry_can_complete() {
+        let folder = tempfile::tempdir().unwrap();
+        let (mut writer, _) = Writer::open(
+            folder.path(),
+            "maintenance-failure",
+            Arc::new(Counters::default()),
+        )
+        .unwrap();
+        seed_imported_row(&writer, &"7".repeat(64));
+        writer
+            .conn
+            .execute(
+                "CREATE TRIGGER r06_abort_delete BEFORE DELETE ON usage_requests \
+                 BEGIN SELECT RAISE(ABORT, 'synthetic delete abort'); END",
+                [],
+            )
+            .unwrap();
+        let task_id = writer
+            .insert_maintenance(MaintenanceKind::Clear, 1000)
+            .unwrap();
+        let mut task = clear_task();
+        task.task_id = task_id;
+        writer.maintenance = Some(task);
+
+        assert!(writer.maintenance_step().is_err());
+        let rows: i64 = writer
+            .conn
+            .query_row("SELECT COUNT(*) FROM usage_requests", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(rows, 1, "failed clear preserves history");
+        let (status, error): (String, Option<String>) = writer
+            .conn
+            .query_row(
+                "SELECT status, error_code FROM stats_maintenance_events WHERE id=?1",
+                rusqlite::params![task_id],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+            .unwrap();
+        assert_eq!(status, "failed");
+        assert_eq!(error.as_deref(), Some("maintenance_failed"));
+
+        writer
+            .conn
+            .execute("DROP TRIGGER r06_abort_delete", [])
+            .unwrap();
+        let retry_id = writer
+            .insert_maintenance(MaintenanceKind::Clear, 1001)
+            .unwrap();
+        let mut retry = clear_task();
+        retry.task_id = retry_id;
+        writer.maintenance = Some(retry);
+        assert!(!writer.maintenance_step().unwrap());
+        let rows: i64 = writer
+            .conn
+            .query_row("SELECT COUNT(*) FROM usage_requests", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(rows, 0, "retry removes the preserved history");
+        let status: String = writer
+            .conn
+            .query_row(
+                "SELECT status FROM stats_maintenance_events WHERE id=?1",
+                rusqlite::params![retry_id],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(status, "completed");
+    }
+
+    #[test]
     fn a_retention_sweep_tombstones_imported_rows_with_its_own_state() {
         // AC050: the automatic sweep marks `deleted_retention`, so it is
         // distinguishable from a manual clear and equally permanent.

@@ -1,0 +1,246 @@
+diff --git a/gpui/src/statistics.rs b/gpui/src/statistics.rs
+index c39d1db..69a9027 100644
+--- a/gpui/src/statistics.rs
++++ b/gpui/src/statistics.rs
+@@ -9,10 +9,10 @@
+ use crate::{
+     stats_backend::{JobKey, JobKind, StatsReply, StatsScheduler},
+     stats_dto::{
+-        BreakdownDto, ClearPreviewDto, CostStatus, Currency, DashboardDto, FilterOptionDto,
+-        GroupBy, HealthDto, MaintenanceDto, MaintenanceStatus, PriceRuleDto, ProviderSettingsDto,
+-        RequestCursor, RequestDetailDto, RequestRowDto, SettingsDto, SortMetric, UsageMode,
+-        WarningCode,
++        BreakdownDto, ClearPreviewDto, CostStatus, Currency, DashboardDto, ERR_MAINTENANCE_FAILED,
++        FilterOptionDto, GroupBy, HealthDto, MaintenanceDto, MaintenanceStatus, PriceRuleDto,
++        ProviderSettingsDto, RequestCursor, RequestDetailDto, RequestRowDto, SettingsDto,
++        SortMetric, UsageMode, WarningCode,
+     },
+     stats_dto::{HealthState, LossScope},
+     usage_chart::{ChartMode, ChartPoint, SeriesKind, UsagePlot},
+@@ -311,6 +311,7 @@ pub struct Statistics {
+     /// draft never touches the report filters.
+     price_draft: crate::stats_controller::PriceDraft,
+     maintenance: Option<MaintenanceDto>,
++    maintenance_error: Option<String>,
+     clear_preview: Option<ClearPreviewDto>,
+     clear_token: Option<String>,
+     pricing_open: bool,
+@@ -632,6 +633,7 @@ impl Statistics {
+             price_closing: false,
+             price_draft: crate::stats_controller::PriceDraft::blank(String::new(), 0),
+             maintenance: None,
++            maintenance_error: None,
+             clear_preview: None,
+             clear_token: None,
+             pricing_open: false,
+@@ -1781,6 +1783,28 @@ impl Statistics {
+         }
+         if tag.starts_with("maintenance-") {
+             if let Ok(status) = serde_json::from_value::<MaintenanceDto>(value) {
++                if status.status == MaintenanceStatus::Failed {
++                    // A failed clear must not look like a successful one, and
++                    // the raw SQLite/trigger text stays in the core log only.
++                    let message = self
++                        .t(
++                            "清理失败，历史数据仍保留；请检查存储后重新预览并重试。",
++                            "Cleanup failed; history is preserved. Check storage, preview again and retry.",
++                        )
++                        .to_owned();
++                    self.maintenance_error = Some(message.clone());
++                    self.error = Some(message);
++                    self.maintenance = Some(status);
++                    // Reads are intentionally unavailable while degraded; the
++                    // health snapshot can still tell the user what happened.
++                    self.request_health(cx);
++                    cx.notify();
++                    return;
++                }
++                if status.status == MaintenanceStatus::Completed {
++                    self.maintenance_error = None;
++                    self.error = None;
++                }
+                 if status.status != MaintenanceStatus::Running {
+                     self.refresh(cx);
+                     self.request_prices(cx);
+@@ -3475,7 +3499,17 @@ impl Statistics {
+             ));
+         }
+         if let Some(code) = health.error_code.as_ref() {
+-            alerts.push(code.clone());
++            let alert = if code == ERR_MAINTENANCE_FAILED {
++                self.t(
++                    "清理失败，数据已保留；可重试",
++                    "Cleanup failed; data preserved; retry available",
++                )
++                .to_owned()
++            } else {
++                self.t("统计数据暂不可用", "Statistics temporarily unavailable")
++                    .to_owned()
++            };
++            alerts.push(alert);
+         }
+         let attention = matches!(health.state, HealthState::Degraded | HealthState::Migrating)
+             || health.write_failures_current_run > 0
+@@ -4376,6 +4410,13 @@ impl Statistics {
+                         .on_click(cx.listener(|this, _, _, cx| this.preview_clear(cx))),
+                     ),
+             )
++            .when_some(self.maintenance_error.clone(), |this, message| {
++                this.child(
++                    Label::new(message)
++                        .text_size(px(11.))
++                        .text_color(rgb(0xa4424a)),
++                )
++            })
+             .when_some(progress, |this, task| {
+                 this.child(
+                     Label::new(format!(
+diff --git a/src/stats/dto.rs b/src/stats/dto.rs
+index fd31d54..9804c4c 100644
+--- a/src/stats/dto.rs
++++ b/src/stats/dto.rs
+@@ -48,6 +48,7 @@ pub const ERR_INVALID: &str = "stats_invalid_argument";
+ pub const ERR_TIMEOUT: &str = "stats_query_timeout";
+ pub const ERR_BUSY: &str = "stats_busy";
+ pub const ERR_UNAVAILABLE: &str = "stats_unavailable";
++pub const ERR_MAINTENANCE_FAILED: &str = "stats_maintenance_failed";
+ pub const ERR_CURSOR_EXPIRED: &str = "stats_cursor_expired";
+ /// A command that used to exist and was deliberately withdrawn: repricing
+ /// history with the *current* price contradicts the per-call price snapshot.
+diff --git a/src/stats/mod.rs b/src/stats/mod.rs
+index 1cf7f7b..b3566c7 100644
+--- a/src/stats/mod.rs
++++ b/src/stats/mod.rs
+@@ -29,10 +29,11 @@ pub mod workbuddy_import;
+
+ use crate::stats::collector::Protocol;
+ use crate::stats::dto::{
+-    API_VERSION, ClearPreviewDto, ERR_BUSY, ERR_INVALID, ERR_OPERATION_REMOVED, ERR_UNAVAILABLE,
+-    FilterKind, FilterOptionsDto, Granularity, GroupBy, HealthDto, HealthState, LossScope,
+-    MaintenanceDto, MaintenanceKind, MaintenanceStatus, PriceListDto, ProviderSettingsDto,
+-    RequestDetailDto, SettingsDto, SortMetric, Source, StatsFilter, UsageMode, error,
++    API_VERSION, ClearPreviewDto, ERR_BUSY, ERR_INVALID, ERR_MAINTENANCE_FAILED,
++    ERR_OPERATION_REMOVED, ERR_UNAVAILABLE, FilterKind, FilterOptionsDto, Granularity, GroupBy,
++    HealthDto, HealthState, LossScope, MaintenanceDto, MaintenanceKind, MaintenanceStatus,
++    PriceListDto, ProviderSettingsDto, RequestDetailDto, SettingsDto, SortMetric, Source,
++    StatsFilter, UsageMode, error,
+ };
+ use crate::stats::event::{Counters, EventQueue, RequestGuard, RequestMeta};
+ use crate::stats::query::RuntimeFlags;
+@@ -1588,6 +1589,7 @@ fn writer_thread(
+         );
+     }
+     let mut degraded_recorded = false;
++    let mut maintenance_failed = false;
+     let mut probe_backoff = PROBE_BACKOFF_MIN;
+     let mut next_probe = Instant::now();
+     // Finish events whose row could not be written; retried after recovery so
+@@ -1755,13 +1757,27 @@ fn writer_thread(
+                 Ok(remaining) => {
+                     inner.maintenance_revision.fetch_add(1, Ordering::Relaxed);
+                     publish_facts(&inner, &writer.db_stats);
++                    if !remaining && maintenance_failed && degraded_since.is_none() {
++                        // A later maintenance attempt (the UI's retry) completed
++                        // successfully. Only clear the degradation caused by a
++                        // maintenance failure; a write/scan degradation keeps its
++                        // own recovery probe and must not be hidden here.
++                        maintenance_failed = false;
++                        inner.set_state(HealthState::Ready, None);
++                    }
+                     if remaining && Instant::now() < deadline {
+                         continue;
+                     }
+                 }
+                 Err(failure) => {
++                    // The health payload is public. Keep the fixed code, never
++                    // the raw SQLite/trigger text (which can contain SQL/paths).
+                     eprintln!("statistics maintenance failed: {}", failure.message);
+-                    inner.set_state(HealthState::Degraded, Some(failure.message.clone()));
++                    maintenance_failed = true;
++                    inner.set_state(
++                        HealthState::Degraded,
++                        Some(ERR_MAINTENANCE_FAILED.to_owned()),
++                    );
+                 }
+             }
+         }
+diff --git a/src/stats/store.rs b/src/stats/store.rs
+index fbc3c48..21d59fa 100644
+--- a/src/stats/store.rs
++++ b/src/stats/store.rs
+@@ -2776,6 +2776,75 @@ mod tests {
+         );
+     }
+
++    #[test]
++    fn maintenance_failure_keeps_rows_and_retry_can_complete() {
++        let folder = tempfile::tempdir().unwrap();
++        let (mut writer, _) = Writer::open(
++            folder.path(),
++            "maintenance-failure",
++            Arc::new(Counters::default()),
++        )
++        .unwrap();
++        seed_imported_row(&writer, &"7".repeat(64));
++        writer
++            .conn
++            .execute(
++                "CREATE TRIGGER r06_abort_delete BEFORE DELETE ON usage_requests \
++                 BEGIN SELECT RAISE(ABORT, 'synthetic delete abort'); END",
++                [],
++            )
++            .unwrap();
++        let task_id = writer
++            .insert_maintenance(MaintenanceKind::Clear, 1000)
++            .unwrap();
++        let mut task = clear_task();
++        task.task_id = task_id;
++        writer.maintenance = Some(task);
++
++        assert!(writer.maintenance_step().is_err());
++        let rows: i64 = writer
++            .conn
++            .query_row("SELECT COUNT(*) FROM usage_requests", [], |row| row.get(0))
++            .unwrap();
++        assert_eq!(rows, 1, "failed clear preserves history");
++        let (status, error): (String, Option<String>) = writer
++            .conn
++            .query_row(
++                "SELECT status, error_code FROM stats_maintenance_events WHERE id=?1",
++                rusqlite::params![task_id],
++                |row| Ok((row.get(0)?, row.get(1)?)),
++            )
++            .unwrap();
++        assert_eq!(status, "failed");
++        assert_eq!(error.as_deref(), Some("maintenance_failed"));
++
++        writer
++            .conn
++            .execute("DROP TRIGGER r06_abort_delete", [])
++            .unwrap();
++        let retry_id = writer
++            .insert_maintenance(MaintenanceKind::Clear, 1001)
++            .unwrap();
++        let mut retry = clear_task();
++        retry.task_id = retry_id;
++        writer.maintenance = Some(retry);
++        assert!(!writer.maintenance_step().unwrap());
++        let rows: i64 = writer
++            .conn
++            .query_row("SELECT COUNT(*) FROM usage_requests", [], |row| row.get(0))
++            .unwrap();
++        assert_eq!(rows, 0, "retry removes the preserved history");
++        let status: String = writer
++            .conn
++            .query_row(
++                "SELECT status FROM stats_maintenance_events WHERE id=?1",
++                rusqlite::params![retry_id],
++                |row| row.get(0),
++            )
++            .unwrap();
++        assert_eq!(status, "completed");
++    }
++
+     #[test]
+     fn a_retention_sweep_tombstones_imported_rows_with_its_own_state() {
+         // AC050: the automatic sweep marks `deleted_retention`, so it is

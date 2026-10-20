@@ -1,0 +1,37 @@
+{
+  "health": {
+    "api_version": 4,
+    "request_tag": "t08",
+    "generated_at_ms": 1792462965432,
+    "generation": "5813f67937614fcd73b1d8f43c688263a1ff5aaeba10e0ac:0",
+    "state": "degraded",
+    "enabled": true,
+    "schema_version": 8,
+    "collection_started_at_ms": 1792462907081,
+    "earliest_record_at_ms": 1792462617146,
+    "retention_days": 180,
+    "record_count": 20,
+    "db_bytes": 4096,
+    "wal_bytes": 865232,
+    "queue_depth": 0,
+    "queue_capacity": 1024,
+    "pending_requests": 0,
+    "dropped_requests_current_run": 0,
+    "write_failures_current_run": 0,
+    "last_commit_at_ms": null,
+    "loss_scope": "no_loss_observed_in_current_run",
+    "error_code": "stats_maintenance_failed",
+    "settings_revision": 1,
+    "timezone": "Asia/Shanghai"
+  },
+  "rows": 20,
+  "costs": 20,
+  "events": [
+    [
+      1,
+      "failed",
+      "maintenance_failed",
+      0
+    ]
+  ]
+}
