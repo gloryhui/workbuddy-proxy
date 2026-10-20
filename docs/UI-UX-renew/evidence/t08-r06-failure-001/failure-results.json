@@ -1,0 +1,44 @@
+{
+  "A": {
+    "preview_rows": 20,
+    "confirm_delay_s": 62,
+    "rows_after": 20,
+    "ui_error": "stats_invalid_argument: the clear confirmation expired; preview again",
+    "health_state": "ready",
+    "maintenance_events": [
+      [
+        1,
+        "retention",
+        "completed",
+        null,
+        0
+      ]
+    ]
+  },
+  "B": {
+    "trigger": "BEFORE DELETE ON usage_requests RAISE(ABORT,'t08 synthetic delete abort')",
+    "rows_after": 20,
+    "costs_after": 20,
+    "maintenance_events": [
+      [
+        1,
+        "retention",
+        "completed",
+        null,
+        0
+      ],
+      [
+        2,
+        "clear",
+        "failed",
+        "maintenance_failed",
+        0
+      ]
+    ],
+    "ui_error": "stats_unavailable: statistics database is not ready",
+    "health_state": "degraded",
+    "health_error_code": "t08 synthetic delete abort",
+    "health_record_count": 20,
+    "ui_preview_after_failure": true
+  }
+}

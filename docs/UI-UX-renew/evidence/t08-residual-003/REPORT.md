@@ -1,7 +1,7 @@
 # T08 成本定价、采集存储与价格弹窗（含 Codex 复核修复）
 
 **任务 ID：** UI-T08-RESIDUAL-003（修复轮 TMP：t08-residual-004）
-**结论：** **PASS（R01—R06；本轮四项复核修复均完成）**。修复了定价表“来源/映射”丢失 label、分页总量误导文案、1100 工具栏可达性（已验证无裁切）、以及 R03/R04 输入未生效的补证（四个价格框可输入，R03 保存非零 output，R04 修改价格/备注并核对快照）。产品源码仅改 `gpui/src/statistics.rs`，未改根 `src/`、数据库、计价/快照、设置 revision 或危险操作语义；未提交、未推送。
+**结论：** R01—R05 **PASS**。R06 先前的预览/取消/确认/维护完成路径 **PASS**；后续失败路径补测为 A（确认令牌过期）**PASS**、B（合成 SQLite 删除 abort）**PARTIAL**，因此 T08 的 R06 完整验收仍为 **PARTIAL**。详见 [T08-R06-FAILURE-001](../t08-r06-failure-001/REPORT.md)。本轮定价表 label、分页文案、1100 工具栏可达性和 R03/R04 输入补证均已完成。产品源码仅改 `gpui/src/statistics.rs`，未改根 `src/`、数据库、计价/快照、设置 revision 或危险操作语义；未提交、未推送。
 **平台：** macOS 27.0.1，Apple M1，1920×1080 非 Retina；中文；窗口 1440×900 与 1100×700。未测 Windows、英文、其它 DPI。
 
 ## 1. 范围与基线
@@ -38,7 +38,7 @@
 | R03 | **PASS（输入补证）** | 非法 `abc` → 弹窗保留并报 `input: amount must be a plain decimal number`（`1440-r03-invalid.png`）；取消不落库；本轮新建 `r03-input-004`，通过粘贴填入四价 **0.7 / 0.8 / 0.09 / 0.10** 与备注 `r03-paste`（`1100-r03-input-filled-004.png`），切换 USD 后四个 `$` 前缀同步（`1100-r03-usd-prefix-004.png`），保存成功（`1100-r03-saved-004.png`）。API：`input=700000000, output=800000000, read=90000000, write=100000000, currency=USD`，**output 非零**。 |
 | R04 | **PASS（输入补证）** | 编辑 `model-22`：修改输入价 0.32→**0.35**、备注 manual→**r04-edited**（`1100-r04-edited-004.png`），保存后 API 返回 `input_rate_nanos=350000000, label=r04-edited, revision=2`（`1100-r04-saved-004.png`）；身份字段锁定；切 CNY 后四个 `¥` 前缀同步（`1100-r04-cny-prefix-004.png`）。历史 20 条 `usage_costs` 保存前后均为 `default_zero/0`，快照未重算（`api-verification-004.json`）。 |
 | R05 | **PASS**（沿用上一轮证据） | 默认币种 USD、保留 365 天、摘要采集关闭、Provider B 模式 observe，API revision 4（`1440-r05-settings.png`、`1100-settings-narrow.png`、`api-verification.json`）。本轮新库未重跑 R05；旧证据保留。 |
-| R06 | **PASS（预览/确认/完成）**；失败路径 NOT RUN | 预览显示 20 行且确认前 DB 仍 20；确认后 DB 0（`1440-r06-preview.png`、`1440-r06-done.png`）。失败（token 过期/维护错误）未模拟。 |
+| R06 | **PARTIAL** | 已有证据：预览/取消/确认/完成 PASS；预览后令牌过期再确认 PASS。新增合成 SQLite 删除 abort 场景：数据库保留 20 行请求与 20 条费用，但 UI 展示泛化内部错误码并将原始 abort 文本放入健康栏，移除 trigger 后仍 degraded；见 `../t08-r06-failure-001/REPORT.md`。 |
 
 ## 5. 历史快照与设置语义
 
@@ -50,7 +50,7 @@
 - **前台激活**：未用 `System Events` 置前时折叠/滚动/点击无效；所有 PASS 均在激活后采集。
 - **输入方式**：原生 CGEvent 逐字符 `type` 在价格/备注输入框焦点不稳（上一轮 output=0 的原因）；本轮改用**点击输入框 + ⌘A + 剪贴板 ⌘V**，四个价格与备注均成功写入。该限制只影响自动化手法，不影响产品；未验证项不再标 PASS。
 - **OCR**：表头/页文本偶发误读；结论以截图 + AX frame + API/DB 三方对照。
-- 未测：Windows、macOS 英文、Retina/非 100% 缩放；R02 失败详情（仅健康行）、R06 失败路径；新建规则供应商下拉的纯键盘可达性。
+- 未测：Windows、macOS 英文、Retina/非 100% 缩放；R02 失败详情（仅健康行）；R06 在真实磁盘/权限故障下的恢复，以及 B 失败后的重启恢复；新建规则供应商下拉的纯键盘可达性。
 
 ## 7. 构建与检查
 
