@@ -1,0 +1,28 @@
+{
+  "head": "344b896d062f1f92f8f74be4c06a29a3f9b18eaa",
+  "fixture": "20 usage rows (all completed), 25 providers/models, 25 prices; fresh CAP",
+  "initial": {
+    "ax_status": "全部状态",
+    "image_kpi_20_agents": true
+  },
+  "menu_open": {
+    "ax_status": "全部状态",
+    "note": "菜单项不在 AX 树中；截图确认 全部状态/已完成/失败 依次可见"
+  },
+  "failed": {
+    "ax_status": "失败",
+    "image_zero_agents": true,
+    "health_unfiltered_records": 20
+  },
+  "completed": {
+    "ax_status": "已完成",
+    "image_20_agents": true
+  },
+  "restored": {
+    "ax_status": "全部状态",
+    "image_20_agents": true
+  },
+  "coordinate_explanation": "窗口内容从屏幕 y=30 开始；截图里的菜单项 全部状态/已完成/失败 在屏幕 y≈250/272/295，而非 220/242/265。10 轮脚本用 y=265 命中“已完成”，y=220 落在菜单上方，因此没有恢复。",
+  "ten_cycle_fact": "10 轮 measurements 的 initial/final 都是“已完成”；这是此前中止/重跑留下的状态，不是干净基线；脚本没有在每轮用 AX 验证状态。",
+  "conclusion": "最小验证证明修正坐标后 AX 能读到 失败→已完成→全部状态；但 10 轮循环的筛选恢复未被 AX 证实，X05 筛选覆盖判 PARTIAL。10 轮耗时/RSS/请求数据保持原样，不重算。"
+}

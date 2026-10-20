@@ -1,0 +1,68 @@
+{
+  "cycle_s": {
+    "min": 9.144,
+    "max": 9.804,
+    "mean": 9.289
+  },
+  "provider_A_s": {
+    "min": 0.475,
+    "max": 0.496,
+    "mean": 0.485
+  },
+  "protocol_s": {
+    "min": 0.834,
+    "max": 0.867,
+    "mean": 0.85
+  },
+  "picker_s": {
+    "min": 1.447,
+    "max": 1.543,
+    "mean": 1.484
+  },
+  "provider_B_A_s": {
+    "min": 0.746,
+    "max": 0.803,
+    "mean": 0.777
+  },
+  "filter_s": {
+    "min": 4.899,
+    "max": 5.339,
+    "mean": 4.989
+  },
+  "scroll_s": {
+    "min": 0.507,
+    "max": 0.639,
+    "mean": 0.547
+  },
+  "cycles": 10,
+  "total_cycle_s": 92.889,
+  "filter_verified_cycles": 10,
+  "filter_all_verified": true,
+  "gui_rss_delta_kb": 1456,
+  "gui_rss_max_kb": 129520,
+  "core_rss_delta_kb": 144,
+  "core_rss_max_kb": 15760,
+  "gui_cpu_delta_s": 10.78,
+  "core_cpu_delta_s": 0.24,
+  "gui_fd_initial": 42,
+  "gui_fd_final": 42,
+  "core_fd_initial": 25,
+  "core_fd_final": 25,
+  "gui_threads_initial": 10,
+  "gui_threads_final": 10,
+  "core_threads_initial": 6,
+  "core_threads_final": 7,
+  "windows_initial": 1,
+  "windows_final": 1,
+  "mock_requests_initial": 2,
+  "mock_requests_final": 12,
+  "mock_requests_delta": 10,
+  "rows_initial": 20,
+  "rows_final": 20,
+  "costs_initial": 20,
+  "costs_final": 20,
+  "config_sha256": "b09c3fe93673d4361da93a22e94c86d22307f5a4627b4cd3bad7af5b1c191e72",
+  "config_unchanged": true,
+  "initial_filter": "全部状态",
+  "final_filter": "全部状态"
+}

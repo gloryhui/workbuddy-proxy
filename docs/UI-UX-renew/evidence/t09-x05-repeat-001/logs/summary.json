@@ -1,0 +1,64 @@
+{
+  "cycle_s": {
+    "min": 6.749,
+    "max": 6.998,
+    "mean": 6.855
+  },
+  "provider_A_s": {
+    "min": 0.475,
+    "max": 0.497,
+    "mean": 0.487
+  },
+  "protocol_s": {
+    "min": 0.832,
+    "max": 0.965,
+    "mean": 0.86
+  },
+  "picker_s": {
+    "min": 1.461,
+    "max": 1.575,
+    "mean": 1.489
+  },
+  "provider_B_A_s": {
+    "min": 0.753,
+    "max": 0.889,
+    "mean": 0.779
+  },
+  "stats_filter_s": {
+    "min": 2.458,
+    "max": 2.706,
+    "mean": 2.528
+  },
+  "scroll_s": {
+    "min": 0.53,
+    "max": 0.556,
+    "mean": 0.542
+  },
+  "cycles": 10,
+  "total_cycle_s": 68.55,
+  "gui_rss_delta_kb": 96,
+  "gui_rss_max_kb": 140096,
+  "gui_cpu_delta_s": 10.15,
+  "core_rss_delta_kb": 32,
+  "core_rss_max_kb": 17360,
+  "core_cpu_delta_s": 0.17,
+  "gui_fd_initial": 41,
+  "gui_fd_final": 41,
+  "core_fd_initial": 25,
+  "core_fd_final": 25,
+  "gui_threads_initial": 10,
+  "gui_threads_final": 10,
+  "core_threads_initial": 6,
+  "core_threads_final": 7,
+  "windows_initial": 1,
+  "windows_final": 1,
+  "mock_requests_initial": 13,
+  "mock_requests_final": 23,
+  "mock_requests_delta": 10,
+  "rows_initial": 20,
+  "rows_final": 20,
+  "costs_initial": 20,
+  "costs_final": 20,
+  "config_sha256": "4a8ccf8e1d73ba1683a05631d6a571fca7dfbc367e4c229b26f9374dbc795108",
+  "config_unchanged": true
+}
