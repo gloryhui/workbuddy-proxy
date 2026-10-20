@@ -38,14 +38,18 @@ def main():
                 shutil.copy(args.gpui,internal/'workbuddy-settings.exe')
             shutil.copy('docs/DESKTOP.md',root/'DESKTOP.md')
         shutil.copy('README.md',root/'README.md');shutil.copy('LICENSE',root/'LICENSE');shutil.copy('CHANGELOG.md',root/'CHANGELOG.md')
-        (root/'assets').mkdir();shutil.copy('assets/icon-128.png',root/'assets/icon-128.png')
-        shutil.copytree('docs',root/'docs')
         if args.platform.startswith('macos'):
-            # Keep the installer window to two items. Documentation travels inside the app.
+            # Ship user guidance and licenses, never development screenshots or evidence.
             documentation=resources/'Documentation';documentation.mkdir()
-            for filename in ['README.md','LICENSE','CHANGELOG.md']+(['DESKTOP.md'] if args.gpui else []):
+            for filename in ['README.md','LICENSE','CHANGELOG.md']:
                 shutil.copy(root/filename,documentation/filename)
-            shutil.copytree(root/'docs',documentation/'docs')
+            for filename in ['DESKTOP.md','GPUI-NOTICES.md','LICENSE-APACHE-GPUI.txt',
+                             'third-party/magpie-LICENSE.txt','MODEL-CAPABILITIES.md',
+                             'PROVIDER-PRESETS.md','protocol-compat/USAGE.md',
+                             'protocol-compat/CONTRACTS.md']:
+                destination=documentation/'docs'/filename
+                destination.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copy(Path('docs')/filename,destination)
             subprocess.run(['codesign','--force','--sign','-',str(app)],check=True)
             subprocess.run(['codesign','--verify','--strict',str(app)],check=True)
             try:
@@ -67,6 +71,8 @@ def main():
             print(dmg)
         if args.platform.startswith('macos'):
             return
+        (root/'assets').mkdir();shutil.copy('assets/icon-128.png',root/'assets/icon-128.png')
+        shutil.copytree('docs',root/'docs')
         archive=out/(name+'.zip')
         with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
             for path in sorted(root.rglob('*')):
