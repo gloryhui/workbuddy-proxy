@@ -34,13 +34,13 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/macos-zh-v0.5.5.jpg" width="1180" alt="v0.5.5 供应商管理：上游协议、模型管理、WorkBuddy 同步和本地代理设置">
+  <img src="docs/screenshots/windows-providers-20261021.png" width="1180" alt="Windows 当前 main 供应商管理：黑白皮肤、协议选择、模型列表、全局设置和日志">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/statistics-zh-v0.5.5.jpg" width="1180" alt="WorkBuddy Proxy v0.5.5 数据统计：筛选、Token 汇总、费用与使用趋势">
+  <img src="docs/screenshots/windows-overview-20261021.png" width="1180" alt="Windows 当前 main 统计概览：过去七天、Token 与积分汇总、缺失时段虚线和费用趋势">
 </p>
-<p align="center"><sub>v0.5.5 界面实拍 · 隔离演示配置与本机模拟上游 · 用量与费用为合成示例数据</sub></p>
+<p align="center"><sub>2026-10-21 · Windows 10 当前 main 实拍 · 默认黑白皮肤 · 隔离演示配置，用量、费用与积分均为合成示例</sub></p>
 
 ---
 
@@ -170,9 +170,34 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 点击标题栏里位于“开机启动”前的**衣服图标**，选择黑白、蓝白、紫藤、玫瑰、琥珀或青绿。默认采用**黑白浅色主题**，切换后即时生效并自动保存，重启后恢复上次选择。成功、警告、错误状态和图表系列保留各自的语义颜色。
 
+<details>
+<summary><strong>查看皮肤设置实拍</strong></summary>
+
+![Windows 皮肤设置：默认黑白以及蓝白、紫藤、玫瑰、琥珀、青绿六种配色](docs/screenshots/windows-skins-20261021.png)
+
+</details>
+
 ### 统计请求明细
 
 用量明细的筛选区、表头和底部分页固定，列表内容单独滚动。供应商与模型分列，展示输入 / 输出 / 缓存读 / 总 Token / 命中率、费用或积分、耗时和 tok/s；支持分页与拖动列宽。独立工具收费显示可读工具名称，并在“内置 / 自定义”前加“工具”标签。
+
+<details>
+<summary><strong>查看明细与独立工具收费实拍</strong></summary>
+
+![Windows 用量明细：固定筛选和分页、图片生成工具名称、工具标签、Token 不适用及独立积分](docs/screenshots/windows-usage-details-20261021.png)
+
+</details>
+
+### 汇总分析
+
+按供应商或模型分组查看请求数、Token、缓存命中率、费用与积分，支持按总 Token 或请求数排序。独立工具收费保留积分，Token 和用量覆盖显示为不适用的“—”。
+
+<details>
+<summary><strong>查看供应商汇总实拍</strong></summary>
+
+![Windows 汇总分析：两个演示供应商的 Token 和费用，以及 WorkBuddy 独立收费积分](docs/screenshots/windows-summary-20261021.png)
+
+</details>
 
 ### 模型发现与选择
 
@@ -185,7 +210,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 </details>
 
-截图均由 v0.5.5 的 macOS Release 构建实际截取，使用隔离配置、本机模拟服务和演示 Key；统计记录与价格为合成示例，不代表真实调用、官方报价或账号可用权限。
+以上截图拍摄于 2026-10-21，来自当前 main 的 Windows 10 原生 GPUI 界面，使用隔离配置、演示 Key 和合成统计记录；未使用真实 WorkBuddy 配置或调用历史。截图展示 main 分支功能，正式下载附件以 Release 更新记录为准。拍摄信息与旧版 macOS 截图见[截图说明](docs/screenshots/README.md)。
 
 ### Release 更新检测
 
