@@ -73,23 +73,23 @@
 
 ## 下载与安装
 
-### v0.5.6 正式版
+### v0.5.7 正式版
 
-GitHub 当前正式版为 **v0.5.6（2026-10-16）**，提供四协议接入、本地统计与价格快照，以及 Anthropic / Azure 预设。[查看正式版更新记录](CHANGELOG.md#v056--2026-10-16)。
+**v0.5.7（2026-10-21）** 新增六套皮肤、WorkBuddy 用量与独立收费导入，重整统计布局，修复工具积分漏计及缺失用量误报，并改进缺失日期的趋势显示。[查看更新记录](CHANGELOG.md#v057--2026-10-21)。
 
-本文功能说明对应当前 **main 分支**，包含后续的界面调整、皮肤设置、工具积分修复和趋势图改进；正式下载附件的功能以对应 Release 更新记录为准。
+提供 Windows x64、Mac Apple Silicon 和 Mac Intel 安装包，保留四协议接入、逐请求价格快照及 Anthropic / Azure 预设。
 
 | 系统 | 下载 | 体积 | 安装方式 |
 | --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/workbuddy-proxy-0.5.6-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
-| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/workbuddy-proxy-0.5.6-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
-| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/workbuddy-proxy-0.5.6-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/workbuddy-proxy-0.5.7-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/workbuddy-proxy-0.5.7-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/workbuddy-proxy-0.5.7-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
 Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
 Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.6/SHA256SUMS.txt)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/SHA256SUMS.txt)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 

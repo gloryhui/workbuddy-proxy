@@ -3059,31 +3059,38 @@ mod tests {
         }
         let started = Instant::now();
         let handle = StatsHandle::start(dir.path().to_path_buf());
-        assert!(
-            wait_for_state(&handle, HealthState::Ready, Duration::from_secs(25)),
-            "the writer never became ready"
-        );
-        // Progress must not be delayed by the failure backoff.
-        let deadline = Instant::now() + Duration::from_secs(20);
-        let mut pending = i64::MAX;
-        while Instant::now() < deadline {
-            pending = query_one(
+        // Shared CI disks can take longer to repair all 20k rows, especially
+        // on Intel macOS. Assert bounded *lack of progress* instead: a healthy
+        // scan keeps committing batches, while the old 30s failure backoff
+        // still violates this 25s stall bound. Keep a total bound as well.
+        let deadline = started + Duration::from_secs(120);
+        let mut progress_deadline = started + Duration::from_secs(25);
+        let mut pending = 20000;
+        loop {
+            let remaining: i64 = query_one(
                 dir.path(),
                 "SELECT COUNT(*) FROM usage_costs WHERE status='pending'",
                 &[],
             );
-            if pending == 0 {
+            assert!(remaining <= pending, "repair must not create pending rows");
+            if remaining < pending {
+                pending = remaining;
+                progress_deadline = Instant::now() + Duration::from_secs(25);
+            }
+            if pending == 0 && handle.state() == HealthState::Ready {
                 break;
             }
+            assert!(
+                Instant::now() < progress_deadline && Instant::now() < deadline,
+                "legacy repair stalled with {pending} rows after {:?}; state {:?}",
+                started.elapsed(),
+                handle.state()
+            );
             std::thread::sleep(Duration::from_millis(50));
         }
         assert_eq!(pending, 0, "20000 legacy rows must be repaired promptly");
-        assert!(
-            started.elapsed() < Duration::from_secs(25),
-            "the repair took {:?}",
-            started.elapsed()
-        );
         assert_eq!(handle.state(), HealthState::Ready);
+        handle.shutdown();
     }
 
     /// A healthy collector stays Ready while its asynchronous writer has queued

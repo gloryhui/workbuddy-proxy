@@ -43,20 +43,27 @@ def imported(fixture):
     return fixture.rows("SELECT COUNT(*) FROM usage_requests WHERE record_origin='workbuddy_builtin'")[0][0]
 
 
-def restart(fixture, exe):
+def restart(fixture, exe, process_options=None):
     if fixture.process.poll() is None:
         raise AssertionError('restart attempted before the old core exited')
     fixture.log.close()
     fixture.log = (fixture.sandbox.root / 'golden-core.log').open('ab')
     fixture.process = subprocess.Popen([str(fixture.exe), '--headless', '--config-dir',
         str(fixture.sandbox.config_dir)], cwd=fixture.sandbox.root,
-        env=fixture.sandbox.environment(), stdout=fixture.log, stderr=fixture.log)
+        env=fixture.sandbox.environment(), stdout=fixture.log, stderr=fixture.log,
+        **(process_options or {}))
     fixture.until(fixture.ready, 'unlimited core restart')
 
 
 def disk_write_refusal(fixture, exe, report):
+    # Schema migrations now write more than FILE_LIMIT to the initial WAL.
+    # Bootstrap normally, then constrain only the importer-under-test process;
+    # otherwise the test fails before it can exercise a runtime write refusal.
     fixture.start(exe)
     report.facts['core_binary_sha256'] = fixture.binary_sha256
+    fixture.post('/_control/stop', {}, fixture.key)
+    fixture.process.wait(timeout=10)
+    restart(fixture, exe, process_options={'preexec_fn': file_limit})
     fixture.enable()
     write_corpus(fixture, 'write-failure', 5_000)
     deadline = time.monotonic() + 30
@@ -123,7 +130,7 @@ def partial_backfill_crash(fixture, exe, report):
 def run(sandbox, exe, report):
     if os.name != 'posix':
         raise AssertionError('OS write-refusal probe requires POSIX RLIMIT_FSIZE')
-    fixture = Golden(sandbox, process_options={'preexec_fn': file_limit})
+    fixture = Golden(sandbox)
     try:
         disk_write_refusal(fixture, exe, report)
         partial_backfill_crash(fixture, exe, report)
