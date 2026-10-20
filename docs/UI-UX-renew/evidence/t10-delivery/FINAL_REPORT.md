@@ -2,17 +2,17 @@
 
 **T10 / 最终交付与审计（更新轮：文档审计）**
 **工作区：** `/Users/shile/Downloads/git/workbuddy-proxy-ui-redesign`
-**分支 / HEAD：** `codex/ui-redesign` / `e1496909c912b1259923e061fe296c59972a0665`
+**分支 / 产品代码审计基线：** `codex/ui-redesign` / `1dbebac8b245d2ad237ae43943f3748293361dd8`（T10 文档更新为快照后的后续提交，由 Codex 复核/本地提交）
 **报告日期：** 2026-10-20
-**提交状态：** 本报告不提交、不推送；本轮不构建、不运行测试/GUI，等待 Codex 独立复核。
+**提交状态：** 本轮文档经 Codex 独立复核后本地提交；不推送。本文记录审计基线快照，文档提交不改变产品代码验证范围。
 
 ## 结论
 
-- **代码实施：完成**（T01—T08 代码已提交；T07 macOS 验收已闭合，T08 R06 失败路径为 PARTIAL）。
+- **代码实施：完成**（T01—T08 代码已提交；T07 macOS 验收已闭合；T08 R06 A/B 在 macOS 隔离夹具中均 PASS，B 的修复见 `t08-r06-error-recovery-fix-001`）。
 - **Windows 验收：BLOCKED**（本机无 Windows x64 实机/VM/远程/Wine；无 Windows 编译或 GUI 证据）。
-- **macOS 验收：PARTIAL**（SC01—SC12 均有 macOS 中文证据；X03 FAIL、X05 PARTIAL；英文、Retina、DPI、真实 IME 未测）。
+- **macOS 验收：PARTIAL**（SC01—SC12 均有 macOS 中文证据；X03 与 X05 已修复/补证并独立复核，但仅限各自声明的 macOS 子集；英文、Retina、DPI、真实 IME 未测）。
 - **完整设计验收：不通过 / 待验收**。本报告不宣称 full acceptance，也不使用“测试都通过”。
-- **仍阻止完整验收的问题：** Windows 全矩阵/DPI 缺失；X03 焦点逃逸/未预期写入（隔离合成 config，需产品修复后回归）；X05 无性能基线；T08 R06 B 的错误文案/降级状态 PARTIAL；T05 仅同步/重启、T06 A02/A04/A05 等未闭合；英文/Retina/IME 未测；D04 标题栏、D16 控件高度待定；F01 provenance、F03 迁移版本对应性为 PARTIAL。
+- **仍阻止完整验收的问题：** Windows 全矩阵/DPI 缺失；英文/Retina/IME 未测；T05 仅同步/重启、T06 A02/A04/A05 等未闭合；D04 标题栏、D16 控件高度待用户/设计确认；F01 provenance、F03 旧迁移归档版本对应性仍 PARTIAL。X03/X05/R06 B 已修复，但结论只覆盖各自报告声明的 macOS 隔离范围。
 
 ## 实施范围
 
@@ -21,33 +21,36 @@
 | 项 | 值 |
 |---|---|
 | T00 基线 | `cbb3a9191a4284765c324a40075e2e727062b3c0`（`cbb3a91`，T00 静态基线） |
-| 最终版本 | `e1496909c912b1259923e061fe296c59972a0665`（`codex/ui-redesign`） |
-| 提交区间 | 21 个提交：`aae634e` → `e149690` |
-| 未提交修改标识 | `IMPLEMENTATION_STATUS.md`（` M`，既有受保护状态文档）；未跟踪设计 PNG/PDF、ACCEPTANCE/AGENT_TASK/DESIGN_SPEC/IMPLEMENTATION_PROMPT/TASK_BREAKDOWN；本轮修改的 T10 两文件未提交 |
-| 产品源码未提交 diff | **无**（`git diff HEAD -- gpui/src src` 为空） |
+| 产品代码审计基线 | `1dbebac8b245d2ad237ae43943f3748293361dd8`（`codex/ui-redesign`；T10 文档更新在快照后） |
+| 提交区间（至审计基线） | 25 个提交：`aae634e` → `1dbebac` |
+| 审计快照时未提交标识 | `IMPLEMENTATION_STATUS.md`（` M`，既有受保护状态文档）；未跟踪设计 PNG/PDF、ACCEPTANCE/AGENT_TASK/DESIGN_SPEC/IMPLEMENTATION_PROMPT/TASK_BREAKDOWN；T10 两文件在快照时未提交，更新交由 Codex 复核/本地提交 |
+| 产品源码未提交 diff（快照时） | **无**（`git diff 1dbebac -- gpui/src src` 为空） |
 
 ### 新增 / 修改文件（代码）
 
-`git diff --stat cbb3a91..HEAD -- gpui/src`：**12 个文件，+3,890 / −1,544**；根 `src/` **0 文件**；`Cargo.toml`/`gpui/Cargo.toml`/`gpui/Cargo.lock` **无 diff**。
+`git diff --stat cbb3a91..1dbebac -- gpui/src`：**12 个文件，+3,971 / −1,545**；根 `src/`：**3 个文件，+91 / −5**（R06 维护恢复）；合计 **15 个文件，+4,062 / −1,550**；`Cargo.toml`/`gpui/Cargo.toml`/`gpui/Cargo.lock` **无 diff**。
 
 | 文件 | 变更 | 作用 |
 |---|---|---|
 | `gpui/src/theme.rs` | +406 | 集中视觉 token（颜色/字体/字号/间距/圆角/阴影/表格参数） |
 | `gpui/src/ui_components.rs` | +335 | Button/Input/Select/Checkbox/Segmented/Card/Table/Dialog/Pager/Tag 薄封装 |
 | `gpui/src/ui.rs` | 大改（见 diff stat） | 224px 侧栏、36px 顶部六动作、30px 状态栏、供应商页/右栏/确认框 |
-| `gpui/src/statistics.rs` | 大改（见 diff stat） | 统计总览、筛选、日志、定价/采集存储、价格弹窗、详情 |
+| `gpui/src/statistics.rs` | 大改（见 diff stat） | 统计总览、筛选、日志、定价/采集存储、价格弹窗、详情；R06 维护失败本地化/恢复 |
+| `src/stats/dto.rs` | +1 | 固定安全码 `stats_maintenance_failed` |
+| `src/stats/mod.rs` | +21/−5 | 维护失败不泄漏原始错误；重试成功恢复 Ready |
+| `src/stats/store.rs` | +69 | 维护失败数据保留/重试完成回归测试 |
 | `gpui/src/statistics/overview.rs` | +160 | KPI hero + 卡片布局 |
 | `gpui/src/usage_chart.rs` | +9 | 趋势/费用拆分与系列样式 |
 | `gpui/src/usage_table.rs` | +457 | 11 列、两行 Token、来源/点数合并、列宽/横向滚动 |
 | `gpui/src/model_options.rs` | +217 | 选择/编辑模型弹窗与能力字段 |
 | `gpui/src/model_table.rs` | +26 | 模型表动作与行高 |
-| `gpui/src/protocol_options.rs` | +137 | 四种协议弹窗与 Responses `none` |
+| `gpui/src/protocol_options.rs` | +163 / −8 | 四种协议弹窗、Responses `none`、X03 弹窗内初始焦点 |
 | `gpui/src/main.rs` | +30 | 主题/标题栏接入；默认/最小尺寸未改 |
 | `gpui/src/assets.rs` | +17 | 状态栏 info 图标 |
 
 ### 保护的既有修改
 
-- `gpui/src/usage_table.rs` 进入 worktree 前已有未提交修改（+22/−5，Token 槽位/最小宽度）；已在 T07 提交 `f5e69e7` 中保留并纳入，当前无该文件未提交 diff。
+- `gpui/src/usage_table.rs` 进入 worktree 前已有未提交修改（+22/−5，Token 槽位/最小宽度）；已在 T07 提交 `f5e69e7` 中保留并纳入，审计快照时无该文件未提交 diff。
 - `docs/UI-UX-renew/IMPLEMENTATION_STATUS.md` 的既有未提交修改**未纳入任何提交**，本轮只读，未改内容。
 - 未跟踪设计资料与规划文档**未删除/未改写**；本轮 T10 报告更新仅修改 `FINAL_REPORT.md` 与 `logs/verification.md`，独立复核记录见 `CODEX_REVIEW.md`。
 
@@ -55,7 +58,7 @@
 
 ### SC01—SC12 实现位置与证据
 
-状态口径：**NEW**=本轮/新证据；**REUSE**=既有证据（注明阶段）；**NOT RUN**=未执行；**BLOCKED**=Windows 缺失。链接均为当前工作区文件。
+状态口径：**NEW**=本轮/新证据；**REUSE**=既有证据（注明阶段）；**NOT RUN**=未执行；**BLOCKED**=Windows 缺失。链接均为本工作区文件。
 
 | 画面 | 代码位置 | macOS 证据 | 状态边界 |
 |---|---|---|---|
@@ -85,7 +88,7 @@
 
 | 检查 | 平台 | 版本 | 结果 | 证据 |
 |---|---|---|---|---|
-| `git diff --check` | macOS | HEAD e149690 | **PASS（exit 0）** | [verification.md](logs/verification.md) |
+| `git diff --check` | macOS | 审计快照 1dbebac | **PASS（exit 0）** | [verification.md](logs/verification.md) |
 | `cargo build/test/clippy/fmt` | — | — | **NOT RUN（本轮）** | 本任务为报告审计，用户明确不构建/不运行测试；无可声称的新代码验证 |
 | GUI/主矩阵/DPI/IME | — | — | **NOT RUN（本轮）** | 不启动 GUI；使用已归档证据 |
 
@@ -97,6 +100,9 @@
 | T08 test | macOS | 138 passed | [test.log](../t08-residual-003/logs/test.log) |
 | T08 clippy | macOS | exit 0 | [clippy.log](../t08-residual-003/logs/clippy.log) |
 | T07 前后构建 | macOS | exit 0 | [build-pre-t07](../t07-l05-full-values-001/logs/build-pre-t07.log)、[build-current](../t07-l05-full-values-001/logs/build-current-restore.log) |
+| T08 R06 修复 | macOS / stable 1.99.1 | fmt/139 GPUI/552 core serial/release build PASS | [R06 报告](../t08-r06-error-recovery-fix-001/REPORT.md) |
+| T09 X03 修复 | macOS / stable 1.99.1 | fmt/139 GPUI/release build PASS | [X03 报告](../t09-x03-focus-fix-001/REPORT.md) |
+| T09 X05 corrected | macOS / 审计时既有构建 | 10 轮 AX+KPI；无构建 | [X05 报告](../t09-x05-repeat-001/REPORT.md) |
 
 > 历史日志来自旧提交/旧夹具，不能冒充本轮构建；本轮只执行只读审计命令。
 
@@ -120,7 +126,9 @@
 | 差异 D14 | `ui.rs` 右栏 | 全局设置/日志两卡 | 已拆两卡，300px，独立滚动 | 已落地 | 右侧日志滚动未实测 | 右侧日志滚动 **NOT RUN** |
 | 差异 D15 | `statistics.rs` 刷新间隔 | 设计 5 秒 | 默认 0（关闭），可选 0/5/10/30/60 | 行为默认值 | 用户需手动刷新，非设计默认 | **待用户确认是否改默认** |
 | 差异 D16 | Kit `Input` 高度 | 输入 36 / 按钮 32 / 映射 34 | 按钮 32；单行 Input/Select 26–28 | Kit rem/内边距 | 表单密度低于设计，影响全局 | **未解决**；需共享层方案/用户取舍 |
-| T08 R06 | `statistics.rs` 清除历史 | 失败明确、数据保留 | A：token 过期→明确错误、20 行保留、core ready；B：trigger abort→维护 failed、数据保留，但通用错误+原始 abort 文本、core degraded | B 未模拟前未知 | B 的错误不具体且健康状态不恢复，用户难判断后续操作 | **A PASS / B PARTIAL**（[报告](../t08-r06-failure-001/REPORT.md)） |
+| T08 R06 | `statistics.rs` 清除历史 | 失败明确、数据保留、可恢复 | A：token 过期→明确错误、20 行保留、core ready；B：trigger abort→本地化“清理失败/数据保留/可重试”，移除 trigger 后重试→事件 completed、health ready、数据按确认删除 | B 原先通用错误/原始 trigger/degraded 不恢复，已修复 | 用户能区分失败与成功；失败不泄漏原始 SQLite；数据保留 | **A PASS / B PASS（macOS 隔离夹具）**（[修复报告](../t08-r06-error-recovery-fix-001/REPORT.md)、[复核](../t08-r06-error-recovery-fix-001/CODEX_REVIEW.md)） |
+| T09 X03 | `protocol_options.rs`、`ui.rs` | 弹窗键盘焦点隔离 | Tab/Enter/Escape 不再触达背景；协议弹窗初始焦点在内部控件；隔离 config 不变 | 原窗口根焦点使 focus trap 未激活，已修复 | 仅 OpenAI Chat 弹窗 GUI 验证；其它 Dialog/Shift+Tab/平台未测 | **PASS（限 macOS 中文/非 Retina/1440×900）**（[报告](../t09-x03-focus-fix-001/REPORT.md)、[复核](../t09-x03-focus-fix-001/CODEX_REVIEW.md)） |
+| T09 X05 | 统计页/供应商页/弹窗/日志 | 固定数据重复交互无明显卡顿/增长/重复请求 | corrected 10 轮：筛选每轮 AX+KPI 验证、mock +10、FD/窗口/config/DB 稳定；旧预备测量已 superseded | 旧脚本坐标漏加 y=30，筛选未真正改变；已用 corrected 脚本重跑 | 仅单会话 10 轮原始采样；无性能阈值/soak/无泄漏结论 | **PASS（限 macOS 中文/非 Retina/1440×900、10 轮合成数据）**（[报告](../t09-x05-repeat-001/REPORT.md)、[复核](../t09-x05-repeat-001/CODEX_REVIEW.md)） |
 | T07 L03 | `statistics.rs` 分页/详情 | 详情对应当前行、页大小重算 | 5 次跨页详情与 20/50/100 页大小、边界均 PASS | 已补测 | 无未闭合值错误；仅 macOS 中文 | **已闭合**（[报告](../t07-l03-details-002/REPORT.md)） |
 | T07 L04 | `statistics.rs::details` | 分组分页/排序 | 23/23 步 PASS，API/DB 对照一致 | 已补测 | 无未闭合缺陷 | **已闭合**（[报告](../t07-l04-group-paging-sort-001/REPORT.md)） |
 | T07 L05 | `usage_table`/格式 | 前后逐值对照 | 224 值无底层变化（7 截断/3 OCR 误读）、详情 200/200 PASS | 已补测 | 仅显示截断/OCR 差异，不影响值 | **已闭合**（[报告](../t07-l05-full-values-001/REPORT.md)） |
@@ -144,9 +152,9 @@
 
 | ID | 状态 | 依据（不推断） |
 |---|---|---|
-| F01 | **PARTIAL** | `src`/Cargo diff 为 0，`gpui/src` 12 文件，`git diff --check` exit 0；`IMPLEMENTATION_STATUS.md` 与设计资料未纳入提交。`usage_table.rs` 的既有未提交修改被纳入 `f5e69e7`，该提交未区分原作者；“未被回滚”有证据，“未被冒领”无法仅凭记录确认，需复核裁定。 |
-| F02 | **PASS** | 差异表 D01—D16（及 T05/T06/T07/T08 项）均具文件/函数、设计要求、当前行为、原因、**独立影响列**与待定结论；`grep TODO(design) gpui/src` 为 0，文档 TODO 表已保留，搜索与差异核对均有记录。 |
-| F03 | **PARTIAL** | 报告内链接经脚本校验存在；T08 退出码/trace 与版本标注可核对。相邻迁移归档 `VALIDATION_EVIDENCE.json` 记录 **433** 文件、T04 **61**/T05 **38**/T06 **50**、errors 为空；`SHA256SUMS` 顶层 15 项本机 `shasum -c` 全部 OK。**但** 归档清单的路径是旧机 `/Volumes/git/...`（迁移记录，不是当前路径）；T04 `record.md` 自述 HEAD `6f19c42`，T05/T06 无 record/HEAD，构建日志只显示旧 `/Volumes/1TB/...` 路径，无法据此断言与当前 HEAD `e1496909` 的版本对应。故归档可核对性通过、版本对应性 **未证**。 |
+| F01 | **PARTIAL** | `gpui/src` 12 文件、根 `src` 3 文件（R06）均已提交；`git diff --check` exit 0；`IMPLEMENTATION_STATUS.md` 与设计资料未纳入提交。`usage_table.rs` 的既有未提交修改被纳入 `f5e69e7`，该提交未区分原作者；“未被回滚”有证据，“未被冒领”无法仅凭记录确认，需复核裁定。 |
+| F02 | **PASS** | 差异表 D01—D16（及 T05/T06/T07/T08/T09 X03/X05 项）均具文件/函数、设计要求、当前行为、原因、**独立影响列**与待定结论；`grep TODO(design) gpui/src` 为 0，文档 TODO 表已保留，搜索与差异核对均有记录。 |
+| F03 | **PARTIAL** | 报告内链接经 DSH 脚本 67 个/Codex 独立核对 88 个 Markdown 相对链接，均 0 缺失；T08 退出码/trace 与版本标注可核对。相邻迁移归档 `VALIDATION_EVIDENCE.json` 记录 **433** 文件、T04 **61**/T05 **38**/T06 **50**、errors 为空；`SHA256SUMS` 顶层 15 项本机 `shasum -c` 全部 OK。**但** 归档清单的路径是旧机 `/Volumes/git/...`（迁移记录，不是当前路径）；T04 `record.md` 自述 HEAD `6f19c42`，T05/T06 无 record/HEAD，构建日志只显示旧 `/Volumes/1TB/...` 路径，无法据此断言与审计基线 `1dbebac` 的版本对应。故归档可核对性通过、版本对应性 **未证**。 |
 | F04 | **PASS（报告层面）** | 本报告已含 SC01—SC12、验收 ID 状态、未测单列、BLOCKED/FAIL/PARTIAL 明示；未把代码完成等同跨平台完成。**F04 PASS 仅表示报告覆盖完整，整体验收仍不通过/待验收。** |
 
 ## 迁移归档核对（F03 依据）
@@ -171,7 +179,7 @@
 | B04 | PARTIAL | T00 未跑；T07/T08/T09 已实际运行隔离 core/mock 并清理，非 T00 原始验收 |
 | V01—V02 | PASS（静态） | token/尺寸集中；D16 高度未解决 |
 | V03—V04 | NOT RUN | 两平台字体/重开语言未测 |
-| C01—C06 | NOT RUN/PARTIAL | 静态可用；C02 剪贴板 PASS、C05 Escape PASS，其余交互未测；X03 Tab/Enter FAIL |
+| C01—C06 | NOT RUN/PARTIAL | 静态可用；C02 剪贴板 PASS、C05 Escape PASS；X03 Tab/Enter 限 OpenAI Chat 协议弹窗 PASS，其它控件/平台未测 |
 | S01—S04 | PARTIAL | 骨架/滚动/状态源有证据；busy、日志滚动、语言切换等未测 |
 | P01—P07 | PARTIAL/NOT RUN | 供应商页字段/草稿 PASS；保存/测试连接/多选/复制等未执行 |
 | D01—D04 | PASS | 协议、校验、草稿、模型选择已测 |
@@ -181,12 +189,12 @@
 | A02/A04/A05 | PARTIAL | 刷新/日期/图表/告警部分未测 |
 | L01—L05 | PASS（macOS） | L01/L02 已有；L03 详情/页大小、L04 23/23、L05 224 值/200 字段已闭合 |
 | R01—R05 | PASS | T08 |
-| R06 | PARTIAL | A PASS / B PARTIAL（失败文案/降级） |
+| R06 | PASS（macOS 隔离夹具） | A PASS；B 修复后本地化失败/数据保留/重试恢复 Ready，见修复报告与复核 |
 | X01 | **BLOCKED** | Windows 0 画面；macOS 覆盖补充但英文/Retina 缺 |
 | X02 | **BLOCKED/NOT RUN** | 无 Windows DPI；macOS 非 Retina |
-| X03 | **FAIL** | Tab 焦点逃逸 + Enter 在隔离 config 新增空供应商；Escape PASS；IME NOT RUN |
+| X03 | **PASS（限 macOS 中文/非 Retina/1440×900，OpenAI Chat 协议弹窗）** | 修复后 Tab/Enter/Escape 不触达背景；其它 Dialog/Shift+Tab/IME 未测 |
 | X04 | PASS（macOS） | 最小化/恢复、关闭重开、多实例、core 存活 |
-| X05 | PARTIAL | 有限重复稳定；无性能基线 |
+| X05 | **PASS（限 macOS/10 轮/合成数据）** | corrected 10 轮逐轮 AX+KPI；无性能阈值、长期 soak 或“无泄漏”结论 |
 | X06 | PARTIAL（静态） | 自动重启仅 macOS；D04 未实测 |
 | F01 | PARTIAL | provenance/归属不可证 |
 | F02 | PASS | 影响列/差异字段/TODO 搜索已补齐 |
@@ -195,25 +203,25 @@
 
 ## 验证边界
 
-- **Mock/合成数据：** T07/T08/T09 使用隔离 config/DB/本地 mock；T09 补充使用 `127.0.0.1` mock + 虚构 Key；未读写真实配置/Key/历史，未发真实上游请求。T09 X03 的唯一写入是本轮合成 config（空供应商），已停机保留证据，未触碰真实用户数据。
+- **Mock/合成数据：** T07/T08/T09 使用隔离 config/DB/本地 mock；T09 补充使用 `127.0.0.1` mock + 虚构 Key；未读写真实配置/Key/历史，未发真实上游请求。T09 X03 旧失败证据中的唯一写入是隔离合成 config（空供应商），已停机保留证据；修复后验证未再写入，未触碰真实用户数据。
 - **自动化/人工：** axdrive AX/点击/截图、CGEvent、Vision OCR；人工对照设计与截图。OCR 有误读，AX/API/DB 交叉核对。
-- **未执行及原因：** Windows 全矩阵/DPI（无环境）；英文/Retina/真实 IME（无环境）；X03 修复回归（本轮不修产品）；X05 性能基线；T05 仅同步/重启；T06 A02/A04/A05；T08 B 的恢复/重启验证；本轮构建/测试/GUI（文档审计，不运行）。
+- **未执行及原因：** Windows 全矩阵/DPI（无环境）；英文/Retina/真实 IME（无环境）；X03 其它 Dialog/Shift+Tab/跨平台回归；X05 长时 soak/性能阈值；T05 仅同步/重启；T06 A02/A04/A05；T08 B 的重启恢复（仅验证了 UI 重试）；本轮构建/测试/GUI（文档审计，不运行）。
 - **标题栏/字体：** macOS 原生红绿灯+透明标题栏；Windows Kit 绘制（D04 未关闭）；平台字体候选静态核对，D05 GUI 字形未逐字核对。
-- **下一步准确起点：** 在具备 Windows x64 实机/VM 的环境补跑 Windows 100/125/150/200% DPI、英文/中文 SC01—SC12；在 macOS 补 Retina/英文/IME；修复 X03 焦点逃逸并回归；补 T08 B 错误文案/降级恢复、T05/T06 未测项；然后交独立复核。**不能宣称 full acceptance。**
+- **下一步准确起点：** 在具备 Windows x64 实机/VM 的环境补跑 Windows 100/125/150/200% DPI、英文/中文 SC01—SC12；在 macOS 补 Retina/英文/IME；补 X03 其它 Dialog/Shift+Tab 回归、X05 长时 soak、T05/T06 未测项；确认 D04/D16；复核 F01/F03。**不能宣称 full acceptance。**
 
 ## 提交与 trailer 审计
 
 - 近 3 个提交：
-  - `e149690` test(ui): supplement T09 macOS evidence — **恰 1 条** `Co-authored-by: Codex <codex@openai.com>`，末尾。
-  - `afba1fb` test(ui): document T08 R06 failure paths — **恰 1 条**，末尾。
-  - `99ebb17` test(ui): complete T07-L03 detail acceptance — **恰 1 条**，末尾。
-- 区间 `cbb3a91..HEAD` 共 21 个提交；早期 `36c5853`、`bf811b9`、`2c91060` 缺少该 trailer，**不重写历史**，记录为规范缺口。
-- 保护内容未纳入提交：`IMPLEMENTATION_STATUS.md`（` M`）、未跟踪设计 PNG/PDF、ACCEPTANCE/AGENT_TASK/DESIGN_SPEC/IMPLEMENTATION_PROMPT/TASK_BREAKDOWN；本轮仅改 T10 两文件，未暂存。
+  - `1dbebac` docs(ui): add corrected X05 repeat baseline — **恰 1 条** `Co-authored-by: Codex <codex@openai.com>`，末尾。
+  - `344b896` fix(stats): recover safely after maintenance failure — **恰 1 条**，末尾。
+  - `29e834a` fix(ui): keep protocol dialog focus modal — **恰 1 条**，末尾。
+- 区间 `cbb3a91..1dbebac` 共 25 个提交；早期 `36c5853`、`bf811b9`、`2c91060` 缺少该 trailer，**不重写历史**，记录为规范缺口。
+- 保护内容未纳入提交：`IMPLEMENTATION_STATUS.md`（` M`）、未跟踪设计 PNG/PDF、ACCEPTANCE/AGENT_TASK/DESIGN_SPEC/IMPLEMENTATION_PROMPT/TASK_BREAKDOWN；审计快照时仅改 T10 两文件，未暂存；更新交由 Codex 复核/本地提交。
 
 ## 安全边界与清理
 
 - 本轮为**文档审计**：不构建、不运行测试/GUI、不创建临时目录/进程、无网络、无真实配置/DB/Key 读写。
-- 环境（只读）：macOS 27.0.1（26A434），arm64；默认 rustc 1.88.0，stable rustc/cargo 1.99.1；CLT `/Library/Developer/CommandLineTools`；git 2.55.0；系统盘约 195 GiB 可用。
+- 环境（只读）：macOS 27.0.1（26A434），arm64；默认 rustc 1.88.0，stable rustc/cargo 1.99.1；CLT `/Library/Developer/CommandLineTools`；git 2.55.0；系统盘约 193 GiB 可用。
 - 旧报告中的 `/Volumes/1TB` 是**另一台电脑**的卷，本机不适用，不作为本轮环境或阻塞原因；旧迁移 manifest 的 `/Volumes/git` 是迁移记录，不是当前路径。
 - 清理：本轮无临时文件/进程可清理；未运行清理命令；未触碰旧证据、`target/`、`gpui/target/`。
 
@@ -223,7 +231,9 @@
 - 本轮只读验证：[logs/verification.md](logs/verification.md)
 - T09 初始矩阵（历史）：[MATRIX](../t09-cross-platform/MATRIX.md)、[REPORT](../t09-cross-platform/REPORT.md)、[CODEX_REVIEW](../t09-cross-platform/CODEX_REVIEW.md)
 - T09 macOS 补充：[REPORT](../t09-macos-supplement-001/REPORT.md)、[CODEX_REVIEW](../t09-macos-supplement-001/CODEX_REVIEW.md)、[shots](../t09-macos-supplement-001/shots)、[ax](../t09-macos-supplement-001/ax)
-- T08 R06：[REPORT](../t08-r06-failure-001/REPORT.md)、[CODEX_REVIEW](../t08-r06-failure-001/CODEX_REVIEW.md)
+- T09 X03 修复：[REPORT](../t09-x03-focus-fix-001/REPORT.md)、[CODEX_REVIEW](../t09-x03-focus-fix-001/CODEX_REVIEW.md)
+- T09 X05 corrected：[REPORT](../t09-x05-repeat-001/REPORT.md)、[CODEX_REVIEW](../t09-x05-repeat-001/CODEX_REVIEW.md)、[corrected](../t09-x05-repeat-001/corrected)
+- T08 R06 失败路径：[REPORT](../t08-r06-failure-001/REPORT.md)、[CODEX_REVIEW](../t08-r06-failure-001/CODEX_REVIEW.md)；修复与复核：[REPORT](../t08-r06-error-recovery-fix-001/REPORT.md)、[CODEX_REVIEW](../t08-r06-error-recovery-fix-001/CODEX_REVIEW.md)
 - T07：[L03 详情](../t07-l03-details-002/REPORT.md)、[L03 复核](../t07-l03-details-002/CODEX_REVIEW.md)、[L04](../t07-l04-group-paging-sort-001/REPORT.md)、[L05](../t07-l05-full-values-001/REPORT.md)、[L05 复核](../t07-l05-full-values-001/CODEX_REVIEW.md)
 - T08 交付：[REPORT](../t08-residual-003/REPORT.md)、[CODEX_REVIEW](../t08-residual-003/CODEX_REVIEW.md)
 - 状态/映射：[IMPLEMENTATION_STATUS.md](../../IMPLEMENTATION_STATUS.md)（只读）、[ACCEPTANCE.md](../../ACCEPTANCE.md)、[TASK_BREAKDOWN.md](../../TASK_BREAKDOWN.md)
