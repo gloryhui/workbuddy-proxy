@@ -399,129 +399,73 @@ fn cell(
         .into_any_element()
 }
 
-/// Fixed proportional slots align labels across rows regardless of value
-/// length. Keep every pair on one line; clipped values stay in the tooltip.
-/// Token and cache-hit text never wrap, cross a column or overlap its
-/// neighbour, and the exact values stay reachable below.
+/// Compact two-line reading order: total, input/output, then cache hit/read.
+/// Values stay together instead of spreading into proportional pseudo-columns.
 fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
-    // Per-locale slot weights, kept from the original fix: Chinese labels are
-    // wider than the English ones, so the two layouts weight them separately.
-    let line1 = if zh {
-        [1.25, 1.0, 1.0]
-    } else {
-        [1.1, 1.05, 1.15]
-    };
-    let line2 = if zh { [1.0, 1.35] } else { [1.05, 1.3] };
     let hit = cache_rate(item.cache_read_tokens, item.input_tokens);
-    let first = [
-        (
-            if zh { "总Token" } else { "Total" },
-            compact(item.total_tokens, zh),
-            true,
-        ),
-        (
-            if zh { "输入" } else { "In" },
-            compact(item.input_tokens, zh),
-            false,
-        ),
-        (
-            if zh { "输出" } else { "Out" },
-            compact(item.output_tokens, zh),
-            false,
-        ),
-    ];
-    let second = [
-        (if zh { "命中率" } else { "Hit" }, percent(hit)),
-        (
-            if zh { "缓存读" } else { "Cache read" },
-            compact(item.cache_read_tokens, zh),
-        ),
-    ];
-    let description = first
-        .iter()
-        .map(|(label, value, _)| format!("{label} {value}"))
-        .chain(
-            second
-                .iter()
-                .map(|(label, value)| format!("{label} {value}")),
-        )
-        .collect::<Vec<_>>()
-        .join(" | ");
+    let total = compact(item.total_tokens, zh);
+    let breakdown = format!(
+        "· {} {} · {} {}",
+        if zh { "输入" } else { "In" },
+        compact(item.input_tokens, zh),
+        if zh { "输出" } else { "Out" },
+        compact(item.output_tokens, zh),
+    );
+    let cache = format!(
+        "{} {}",
+        if zh { "缓存读" } else { "Cache read" },
+        compact(item.cache_read_tokens, zh),
+    );
+    let hit_text = percent(hit);
+    let description = format!(
+        "{} {total} | {breakdown} | {} {hit_text} | {cache}",
+        if zh { "总 Token" } else { "Total tokens" },
+        if zh {
+            "缓存命中率"
+        } else {
+            "Cache hit rate"
+        },
+    );
     let hint = format!(
-        "{} {}\n{} {}\n{} {}\n{} {}\n{} {}",
+        "{} {}\n{} {}\n{} {}\n{} {}\n{} {}\n{} {}",
+        if zh { "总 Token" } else { "Total tokens" },
+        exact(item.total_tokens),
         if zh { "输入" } else { "Input" },
         exact(item.input_tokens),
         if zh { "输出" } else { "Output" },
         exact(item.output_tokens),
-        if zh { "缓存读" } else { "Cache read" },
+        if zh { "缓存读取" } else { "Cache read" },
         exact(item.cache_read_tokens),
-        if zh { "总 Token" } else { "Total" },
-        exact(item.total_tokens),
+        if zh { "缓存创建" } else { "Cache write" },
+        exact(item.cache_write_tokens),
         if zh {
             "缓存命中率 = 缓存读 ÷ 输入（缺失或输入为 0 显示 —）"
         } else {
             "Cache hit = cache read / input (missing or zero input: —)"
         },
-        percent(hit),
+        hit_text,
     );
-    // DESIGN_SPEC §3: 44–110 wide, 4 high, rounded 2; ≥80% primary-dark,
-    // otherwise warning. An unknown rate shows the empty track only.
-    let bar =
-        div()
-            .flex_shrink_0()
-            .w(px(64.))
-            .h(px(4.))
-            .rounded(px(2.))
-            .bg(rgb(0xe6e9ef))
-            .overflow_hidden()
-            .when_some(hit, |this, value| {
-                let fill = (value.clamp(0., 1.) * 64.).max(2.);
-                this.child(div().w(px(fill as f32)).h_full().rounded(px(2.)).bg(rgb(
-                    if value >= 0.8 {
-                        crate::theme::color::PRIMARY_DARK
-                    } else {
-                        crate::theme::color::WARNING
-                    },
-                )))
-            });
-    let pair = |index: usize,
-                label: &'static str,
-                value: String,
-                emphasize: bool,
-                weights: &[f32; 3],
-                separator: bool| {
-        div()
-            .flex()
-            .flex_1()
-            .flex_grow(weights[index])
-            .min_w_0()
-            .overflow_hidden()
-            .items_baseline()
-            .gap(px(2.))
-            .when(separator, |this| {
-                this.child(
-                    Label::new("·")
-                        .flex_shrink_0()
-                        .text_size(px(10.))
-                        .text_color(rgb(0xc4ceda)),
-                )
-            })
-            .child(
-                Label::new(label)
-                    .flex_shrink_0()
-                    .text_size(px(10.))
-                    .text_color(rgb(0x6b7c90)),
-            )
-            .child(
-                Label::new(value)
-                    .flex_1()
-                    .min_w_0()
-                    .text_ellipsis()
-                    .text_size(px(12.))
-                    .text_color(rgb(0x19334d))
-                    .when(emphasize, |this| this.font_weight(FontWeight::SEMIBOLD)),
-            )
+    let hit_color = match hit {
+        Some(value) if value >= 0.8 => crate::theme::color::PRIMARY_DARK,
+        Some(_) => crate::theme::color::WARNING,
+        None => crate::theme::color::TEXT_3,
     };
+    let bar = div()
+        .flex_shrink_0()
+        .w(px(44.))
+        .h(px(4.))
+        .rounded_full()
+        .bg(rgb(crate::theme::color::BORDER))
+        .overflow_hidden()
+        .when_some(hit.filter(|value| *value > 0.), |track, value| {
+            track.child(
+                div()
+                    .w(px((value.clamp(0., 1.) * 44.) as f32))
+                    .h_full()
+                    .rounded_full()
+                    .bg(rgb(hit_color)),
+            )
+        });
     div()
         .id(("usage-tokens", row))
         .w_full()
@@ -531,7 +475,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .flex()
         .flex_col()
         .justify_center()
-        .gap(px(2.))
+        .gap(px(4.))
         .whitespace_nowrap()
         .aria_label(description)
         .tooltip(move |window, cx| {
@@ -542,13 +486,26 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                 .flex()
                 .w_full()
                 .min_w_0()
-                .items_baseline()
-                .gap(px(2.))
-                .children(first.into_iter().enumerate().map(
-                    |(index, (label, value, emphasize))| {
-                        pair(index, label, value, emphasize, &line1, index > 0)
-                    },
-                )),
+                .items_center()
+                .h(px(18.))
+                .gap(px(6.))
+                .child(
+                    Label::new(total)
+                        .flex_shrink_0()
+                        .text_size(px(12.))
+                        .line_height(px(18.))
+                        .font_weight(FontWeight::SEMIBOLD)
+                        .text_color(rgb(crate::theme::color::TEXT_1)),
+                )
+                .child(
+                    Label::new(breakdown)
+                        .flex_1()
+                        .min_w_0()
+                        .text_ellipsis()
+                        .text_size(px(12.))
+                        .line_height(px(18.))
+                        .text_color(rgb(crate::theme::color::TEXT_3)),
+                ),
         )
         .child(
             div()
@@ -556,16 +513,25 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                 .w_full()
                 .min_w_0()
                 .items_center()
-                .gap(px(4.))
+                .h(px(16.))
+                .gap(px(6.))
                 .child(bar)
-                .children(
-                    second
-                        .into_iter()
-                        .enumerate()
-                        .map(|(index, (label, value))| {
-                            let weights = [line2[0], line2[1], line2[1]];
-                            pair(index, label, value, false, &weights, false)
-                        }),
+                .child(
+                    Label::new(hit_text)
+                        .w(px(42.))
+                        .flex_shrink_0()
+                        .text_size(px(12.))
+                        .line_height(px(16.))
+                        .text_color(rgb(hit_color)),
+                )
+                .child(
+                    Label::new(cache)
+                        .flex_1()
+                        .min_w_0()
+                        .text_ellipsis()
+                        .text_size(px(12.))
+                        .line_height(px(16.))
+                        .text_color(rgb(crate::theme::color::TEXT_3)),
                 ),
         )
         .into_any_element()
@@ -708,7 +674,7 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
 pub const REQUEST_COLUMNS: usize = 9;
 // Time is just wide enough for MM-DD HH:MM:SS at the table's 12px font.
 // The token column keeps the user's 360px floor: at that width the two-row
-// cell holds "总Token 1.2M | 输入 1.0M | 输出 200.0K" plus the hit-rate bar.
+// cell holds a compact total/input/output line above cache hit/read details.
 const MIN_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 148., 118., 104., 360., 132., 66., 60., 104.];
 const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] =
     [110., 220., 260., 200., 460., 180., 82., 78., 132.];
@@ -781,7 +747,7 @@ impl UsageRows {
                 ("provider", "供应商"),
                 ("model", "模型"),
                 ("request", "请求标识"),
-                ("tokens", "Token / 缓存命中"),
+                ("tokens", "Token / 缓存命中率"),
                 ("cost", "估算费用"),
                 ("latency", "耗时"),
                 ("speed", "tok/s"),
@@ -793,7 +759,7 @@ impl UsageRows {
                 ("provider", "Provider"),
                 ("model", "Model"),
                 ("request", "Request"),
-                ("tokens", "Tokens / cache hit"),
+                ("tokens", "Tokens / cache hit rate"),
                 ("cost", "Est. cost"),
                 ("latency", "Latency"),
                 ("speed", "tok/s"),
