@@ -8,7 +8,7 @@
   #error PackageName is required
 #endif
 #ifndef DisplayVersion
-  #define DisplayVersion "0.5.6"
+  #define DisplayVersion "0.5.7"
 #endif
 
 [Setup]
