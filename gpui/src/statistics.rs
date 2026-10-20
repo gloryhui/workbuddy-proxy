@@ -77,7 +77,7 @@ pub enum RangePreset {
 impl RangePreset {
     fn title(self, zh: bool) -> &'static str {
         match (self, zh) {
-            (Self::Today, true) => "当天",
+            (Self::Today, true) => "今天",
             (Self::Today, false) => "Today",
             (Self::Day, true) => "1天",
             (Self::Day, false) => "24 hours",
