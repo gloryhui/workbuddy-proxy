@@ -12,7 +12,7 @@ use crate::stats::dto::{
 
 /// Parser/normalizer contract version written to `usage_requests.parser_version`
 /// for imported rows (DATA-API section 3.1).
-pub const PARSER_VERSION: i64 = 2;
+pub const PARSER_VERSION: i64 = 3;
 
 /// Domain prefix of the length-prefixed entry-key hash (DATA-API section 1).
 pub const ENTRY_KEY_DOMAIN: &[u8] = b"wbp-wb-message-v1";
@@ -305,6 +305,9 @@ pub struct Candidate {
     pub upstream_model: Option<String>,
     /// Only an explicitly reported response model, otherwise `None`.
     pub response_model: Option<String>,
+    /// Validated generation tool name from the saved billing stage, for display only.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tool_name: Option<String>,
     pub usage: NormalizedUsage,
 }
 
@@ -627,7 +630,7 @@ fn check_bounds() -> Result<usize, &'static str> {
     {
         return Err("workbuddy_import_limits_drifted");
     }
-    if PARSER_VERSION != 2 || ENTRY_KEY_DOMAIN != b"wbp-wb-message-v1" {
+    if PARSER_VERSION != 3 || ENTRY_KEY_DOMAIN != b"wbp-wb-message-v1" {
         return Err("workbuddy_import_identity_contract_drifted");
     }
     Ok(1)
@@ -766,6 +769,7 @@ fn probe_candidate() -> Candidate {
         event_at_ms: 0,
         upstream_model: None,
         response_model: None,
+        tool_name: None,
         usage: NormalizedUsage::missing(),
     }
 }

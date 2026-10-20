@@ -331,7 +331,7 @@ fn main() {
         .with_assets(assets::Assets)
         .run(move |cx| {
             gpui_kit::init(cx);
-            theme::install(cx);
+            theme::apply_skin(theme::load_skin(&dir), cx);
             cx.bind_keys([
                 KeyBinding::new("cmd-s", ui::Save, Some("Proxy")),
                 KeyBinding::new("ctrl-s", ui::Save, Some("Proxy")),

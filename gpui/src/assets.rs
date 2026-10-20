@@ -48,7 +48,9 @@ impl AssetSource for Assets {
         }
         // The three source icons have their own branches *before* the shared
         // fallback, so none of them can ever be served the generic plus shape.
-        let shape = if path.contains("stats-source-all") {
+        let shape = if path == "icons/skin-shirt.svg" {
+            r#"<path d="m8 3-6 4 3 5 3-2v11h8V10l3 2 3-5-6-4"/><path d="M8 3a4 4 0 0 0 8 0"/>"#
+        } else if path.contains("stats-source-all") {
             // A 2x2 grid: every source.
             r#"<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/>"#
         } else if path.contains("stats-source-builtin") {

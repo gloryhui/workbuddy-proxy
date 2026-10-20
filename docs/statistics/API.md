@@ -29,6 +29,7 @@
   "route_id":null,
   "outcome":null,
   "usage_status":null,
+  "record_kind":"all",
   "include_tests":false
 }
 ```
@@ -37,6 +38,7 @@
 - timezone 用于分桶和显示，不改变 UTC 时间过滤边界。GUI 按所选时区把本地日期转换为UTC，不能简单减固定8小时处理所有地区。
 - ID/model 为精确匹配字符串，非空且<=160 Unicode标量，禁止控制字符；null代表全部，空字符串不等价全部。
 - outcome/usage_status 取 schema.sql 的固定枚举。普通 UI 以单选为准，第一版不支持任意数组组合。
+- `record_kind` 默认 `all`，可选 `model`、`tool`、`other_charge`。只把真实 WorkBuddy 导入记录中的独立收费项归为工具/其他收费；同名的普通代理模型仍属于模型用量。该条件统一作用于总览、序列、明细、汇总与游标校验，和内置/自定义来源相互独立。
 - source 默认 relay；include_tests=true 时允许 relay+connection_test，不是只看测试。
 - 所有统计接口共用同一个 validated `StatsFilter` → SQL predicate builder；不能为图表/表格分别手写不同默认条件。
 
@@ -237,3 +239,5 @@ summary中的unpriced_request_count改为default_zero_request_count；default_ze
 增加结构化Job类别或专用StatsBackend：有限队列、3s查询超时、统计DTO、独立Reply分支，统计查询不加载config、不调用snapshot、不触发capture/save、不覆盖代理状态。保持现有控制连接 `.proxy(None)`、禁止重定向和message大小限制。
 
 统计只读命令加入 `Bridge::command` 的静默命令判定，不能每10秒污染界面事件日志。统计写操作返回维护/设置结果，不改普通转发status字符串。
+
+独立 WorkBuddy 收费项的 `usage_status` 为 `not_applicable`，Token 列保持 NULL，不计入 `usage_missing_count`、缺失告警或 `usage_eligible_count`；积分仍参与各层级总计。既有记录在 schema v11 升级时修正。

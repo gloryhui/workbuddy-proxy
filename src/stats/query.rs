@@ -211,6 +211,7 @@ impl FilterSql {
             scope_predicate(filter.source_scope, alias)
                 + &capture_predicate(filter.capture_method, alias)
         );
+        clause.push_str(&record_kind_predicate(filter.record_kind, alias));
         let mut params = vec![
             Value::Integer(filter.from_ms),
             Value::Integer(filter.to_ms),
@@ -232,6 +233,27 @@ impl FilterSql {
             }
         }
         Self { clause, params }
+    }
+}
+
+/// Classify only genuine imported charge records, never a proxy model whose
+/// user-configured name happens to share the internal prefix.
+fn record_kind_predicate(kind: crate::stats::dto::RecordKind, alias: &str) -> String {
+    use crate::stats::dto::RecordKind;
+    let prefix = if alias.is_empty() {
+        String::new()
+    } else {
+        format!("{alias}.")
+    };
+    let charge = format!(
+        "({prefix}record_origin<>'proxy' AND {prefix}source='workbuddy_import' AND substr({prefix}requested_model,1,17)='workbuddy-credit:')"
+    );
+    let tool = format!("({charge} AND {prefix}requested_model='workbuddy-credit:generation_tool')");
+    match kind {
+        RecordKind::All => String::new(),
+        RecordKind::Model => format!(" AND NOT {charge}"),
+        RecordKind::Tool => format!(" AND {tool}"),
+        RecordKind::OtherCharge => format!(" AND {charge} AND NOT {tool}"),
     }
 }
 
@@ -310,6 +332,7 @@ struct RawSummary {
     reasoning_known_count: i64,
     avg_duration_ms: Option<f64>,
     proxy_cost_incomplete_count: i64,
+    proxy_token_not_applicable_count: i64,
 }
 
 const SUMMARY_COLUMNS: &str = "
@@ -321,7 +344,7 @@ const SUMMARY_COLUMNS: &str = "
   SUM(CASE WHEN outcome='rejected' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome='cancelled' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome='interrupted' THEN 1 ELSE 0 END),
-  SUM(CASE WHEN outcome='recorded' OR (outcome<>'in_flight' AND upstream_started=1) THEN 1 ELSE 0 END),
+  SUM(CASE WHEN (outcome='recorded' AND usage_status<>'not_applicable') OR (outcome<>'in_flight' AND upstream_started=1) THEN 1 ELSE 0 END),
   SUM(CASE WHEN (usage_status='complete' AND outcome<>'in_flight') THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome<>'in_flight' AND usage_status='partial' THEN 1 ELSE 0 END),
   SUM(CASE WHEN outcome<>'in_flight' AND usage_status='missing' THEN 1 ELSE 0 END),
@@ -340,7 +363,8 @@ const SUMMARY_COLUMNS: &str = "
   SUM(CASE WHEN (usage_status='complete' AND outcome<>'in_flight') THEN reasoning_tokens END),
   SUM(CASE WHEN (usage_status='complete' AND outcome<>'in_flight') AND reasoning_tokens IS NOT NULL THEN 1 ELSE 0 END),
   AVG(CASE WHEN outcome='completed' THEN duration_ms END),
-  SUM(CASE WHEN outcome NOT IN ('in_flight','recorded') AND usage_status IN ('partial','missing','invalid') THEN 1 ELSE 0 END)
+  SUM(CASE WHEN outcome NOT IN ('in_flight','recorded') AND usage_status IN ('partial','missing','invalid') THEN 1 ELSE 0 END),
+  SUM(CASE WHEN record_origin='proxy' AND outcome<>'in_flight' AND usage_status='not_applicable' THEN 1 ELSE 0 END)
 ";
 
 fn read_summary(row: &rusqlite::Row<'_>, base: usize) -> rusqlite::Result<RawSummary> {
@@ -374,6 +398,7 @@ fn read_summary(row: &rusqlite::Row<'_>, base: usize) -> rusqlite::Result<RawSum
         reasoning_known_count: row.get::<_, Option<i64>>(at(25))?.unwrap_or(0),
         avg_duration_ms: row.get(at(26))?,
         proxy_cost_incomplete_count: row.get::<_, Option<i64>>(at(27))?.unwrap_or(0),
+        proxy_token_not_applicable_count: row.get::<_, Option<i64>>(at(28))?.unwrap_or(0),
     })
 }
 
@@ -806,7 +831,7 @@ fn scan_costs(
 /// Counts the unpriced/incomplete buckets from an already-computed summary.
 fn derived_cost_counts(raw: &RawSummary) -> (i64, i64) {
     let incomplete = raw.proxy_cost_incomplete_count;
-    let unpriced = (raw.finished_count - raw.usage_not_applicable_count - incomplete).max(0);
+    let unpriced = (raw.finished_count - raw.proxy_token_not_applicable_count - incomplete).max(0);
     (unpriced, incomplete)
 }
 
@@ -939,6 +964,7 @@ fn series_inner(
         .join(",");
     let mut extra =
         scope_predicate(filter.source_scope, "") + &capture_predicate(filter.capture_method, "");
+    extra.push_str(&record_kind_predicate(filter.record_kind, "r"));
     params.push(Value::Integer(if filter.include_tests { 1 } else { 0 }));
     for (column, value) in [
         ("provider_id", filter.provider_id.as_deref()),
@@ -972,7 +998,7 @@ fn series_inner(
            SUM(CASE WHEN {complete} AND r.cache_read_tokens IS NOT NULL THEN 1 ELSE 0 END),
            SUM(CASE WHEN {complete} AND r.cache_write_tokens IS NOT NULL THEN 1 ELSE 0 END),
            SUM(CASE WHEN r.outcome<>'in_flight' AND r.usage_status='partial' THEN 1 ELSE 0 END),
-           SUM(CASE WHEN r.outcome='recorded' OR (r.outcome<>'in_flight' AND r.upstream_started=1) THEN 1 ELSE 0 END),
+           SUM(CASE WHEN (r.outcome='recorded' AND r.usage_status<>'not_applicable') OR (r.outcome<>'in_flight' AND r.upstream_started=1) THEN 1 ELSE 0 END),
            SUM(CASE WHEN {complete} AND r.cache_read_tokens IS NOT NULL THEN r.input_tokens END),
            SUM(CASE WHEN r.outcome='in_flight' THEN 1 ELSE 0 END),
            SUM(CASE WHEN r.outcome<>'in_flight' AND r.usage_status IN ('missing','invalid') THEN 1 ELSE 0 END)

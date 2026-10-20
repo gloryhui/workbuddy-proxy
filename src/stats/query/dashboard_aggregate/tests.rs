@@ -199,6 +199,123 @@ fn all_source_capture_filters_match_original_summary_and_series_with_real_constr
 }
 
 #[test]
+fn record_types_share_exact_scope_across_dashboard_series_rows_groups_and_cursors() {
+    use crate::stats::dto::RecordKind;
+    let conn = database();
+    for (id, model, credit) in [
+        (101, "workbuddy-credit:generation_tool", 5_710_000_000_i64),
+        (201, "workbuddy-credit:generation_tool", 5_710_000_000),
+        (102, "workbuddy-credit:team_member", 2_000_000_000),
+        // A proxy model with an identical name is still a model request.
+        (1, "workbuddy-credit:generation_tool", 0),
+    ] {
+        conn.execute("UPDATE usage_requests SET requested_model=?1,upstream_model=?1,workbuddy_credit_nanos=CASE WHEN record_origin='proxy' THEN NULL ELSE ?2 END WHERE request_id=?3",
+            params![model, credit, format!("row-{id}")]).unwrap();
+    }
+    let mut fields = filter(SourceScope::All, CaptureMethod::All, true);
+    conn.execute(
+        "UPDATE usage_requests SET provider_id='p1' WHERE request_id='row-201'",
+        [],
+    )
+    .unwrap();
+    for (kind, expected) in [
+        (RecordKind::All, 144),
+        (RecordKind::Model, 141),
+        (RecordKind::Tool, 2),
+        (RecordKind::OtherCharge, 1),
+    ] {
+        fields.record_kind = kind;
+        compare(&conn, &fields);
+        let flags = RuntimeFlags {
+            enabled: true,
+            dropped_current_run: 0,
+            unclean_exit: false,
+            observe_mode_providers: 0,
+        };
+        let dashboard = dashboard(
+            &conn,
+            &fields,
+            Granularity::Hour,
+            &flags,
+            "generation",
+            "record-types",
+            0,
+        )
+        .unwrap();
+        assert_eq!(dashboard.summary.request_count, expected);
+        assert_eq!(
+            dashboard
+                .series
+                .iter()
+                .map(|bucket| bucket.request_count)
+                .sum::<i64>(),
+            expected
+        );
+        let rows = requests(&conn, &fields, 1, None).unwrap();
+        assert_eq!(rows.total_rows, expected);
+        for by in [GroupBy::Provider, GroupBy::Model] {
+            let groups = breakdown(&conn, &fields, by, SortMetric::TotalTokens, 100, None).unwrap();
+            assert_eq!(
+                groups
+                    .items
+                    .iter()
+                    .map(|group| group.summary.request_count)
+                    .sum::<i64>(),
+                expected
+            );
+        }
+        if kind == RecordKind::Tool {
+            assert_eq!(
+                dashboard.summary.credit_nanos.as_deref(),
+                Some("11420000000")
+            );
+            let cursor = rows.next_cursor.unwrap();
+            let second = requests(&conn, &fields, 1, Some(&cursor)).unwrap();
+            assert_ne!(rows.items[0].request_id, second.items[0].request_id);
+            let mut different = fields.clone();
+            different.record_kind = RecordKind::Model;
+            assert!(validate_cursor(&cursor, &fields, "", 0).is_ok());
+            assert!(validate_cursor(&cursor, &different, "", 0).is_err());
+            let group_page = breakdown(
+                &conn,
+                &fields,
+                GroupBy::Provider,
+                SortMetric::TotalTokens,
+                1,
+                None,
+            )
+            .unwrap();
+            let group_cursor = group_page.next_cursor.unwrap();
+            assert!(
+                validate_breakdown_cursor(
+                    &group_cursor,
+                    &fields,
+                    GroupBy::Provider,
+                    SortMetric::TotalTokens,
+                    "",
+                    0
+                )
+                .is_ok()
+            );
+            assert!(
+                validate_breakdown_cursor(
+                    &group_cursor,
+                    &different,
+                    GroupBy::Provider,
+                    SortMetric::TotalTokens,
+                    "",
+                    0
+                )
+                .is_err()
+            );
+            fields.source_scope = SourceScope::Builtin;
+            assert_eq!(requests(&conn, &fields, 10, None).unwrap().total_rows, 1);
+            fields.source_scope = SourceScope::All;
+        }
+    }
+}
+
+#[test]
 fn exact_credit_above_i64_and_missing_cache_are_not_zero_or_currency() {
     let conn = database();
     let fields = filter(SourceScope::Builtin, CaptureMethod::All, false);
@@ -283,4 +400,105 @@ fn imported_dashboard_scopes_use_the_covering_index_without_fact_lookups() {
             compare(&conn, &fields);
         }
     }
+}
+
+#[test]
+fn token_inapplicable_charges_keep_exact_credits_without_hiding_real_missing_usage() {
+    use crate::stats::dto::{RecordKind, UsageStatus, WarningCode};
+    let conn = database();
+    conn.execute("DELETE FROM usage_requests WHERE request_id NOT IN ('row-1','row-2','row-101','row-102','row-103','row-104')",[]).unwrap();
+    for id in [101, 102] {
+        conn.execute("UPDATE usage_requests SET requested_model='workbuddy-credit:generation_tool',upstream_model='workbuddy-credit:generation_tool',usage_status='not_applicable',input_tokens=NULL,output_tokens=NULL,total_tokens=NULL,cache_read_tokens=NULL,cache_write_tokens=NULL,reasoning_tokens=NULL,workbuddy_credit_nanos=5710000000 WHERE request_id=?1",[format!("row-{id}")]).unwrap();
+    }
+    conn.execute("UPDATE usage_requests SET usage_status='complete',input_tokens=100,output_tokens=20,total_tokens=120,workbuddy_credit_nanos=19070000000 WHERE request_id='row-103'",[]).unwrap();
+    conn.execute("UPDATE usage_requests SET usage_status='missing',input_tokens=NULL,output_tokens=NULL,total_tokens=NULL,cache_read_tokens=NULL,cache_write_tokens=NULL,reasoning_tokens=NULL,workbuddy_credit_nanos=NULL WHERE request_id IN ('row-1','row-104')",[]).unwrap();
+    conn.execute("UPDATE usage_requests SET outcome='completed',usage_status='complete',input_tokens=100,output_tokens=20,total_tokens=120 WHERE request_id='row-2'",[]).unwrap();
+    let flags = RuntimeFlags {
+        enabled: true,
+        dropped_current_run: 0,
+        unclean_exit: false,
+        observe_mode_providers: 0,
+    };
+    let mut fields = filter(SourceScope::All, CaptureMethod::All, true);
+    for (kind, count, missing, na, credits) in [
+        (RecordKind::All, 6, 2, 2, Some("30490000000")),
+        (RecordKind::Tool, 2, 0, 2, Some("11420000000")),
+        (RecordKind::Model, 4, 2, 0, Some("19070000000")),
+    ] {
+        fields.record_kind = kind;
+        compare(&conn, &fields);
+        let value = dashboard(
+            &conn,
+            &fields,
+            Granularity::Hour,
+            &flags,
+            "generation",
+            "applicability",
+            0,
+        )
+        .unwrap();
+        assert_eq!(value.summary.request_count, count);
+        assert_eq!(value.summary.usage_missing_count, missing);
+        assert_eq!(value.summary.usage_not_applicable_count, na);
+        assert_eq!(value.summary.usage_eligible_count, count - na);
+        assert_eq!(value.summary.credit_nanos.as_deref(), credits);
+        assert_eq!(
+            value.summary.unpriced_request_count,
+            if kind == RecordKind::All {
+                5
+            } else if kind == RecordKind::Model {
+                3
+            } else {
+                2
+            }
+        );
+        assert_eq!(
+            value
+                .warnings
+                .iter()
+                .filter(|w| w.code == WarningCode::UsageMissing)
+                .map(|w| w.request_count)
+                .sum::<i64>(),
+            missing
+        );
+        for by in [GroupBy::Provider, GroupBy::Model] {
+            let groups = breakdown(&conn, &fields, by, SortMetric::TotalTokens, 100, None).unwrap();
+            assert_eq!(
+                groups
+                    .items
+                    .iter()
+                    .map(|v| v.summary.usage_missing_count)
+                    .sum::<i64>(),
+                missing
+            );
+            assert_eq!(
+                groups
+                    .items
+                    .iter()
+                    .map(|v| v.summary.usage_not_applicable_count)
+                    .sum::<i64>(),
+                na
+            );
+        }
+        if kind == RecordKind::Tool {
+            assert!(value.summary.total_tokens.is_none());
+            assert!(value.summary.usage_coverage.is_none());
+            assert!(
+                requests(&conn, &fields, 10, None)
+                    .unwrap()
+                    .items
+                    .iter()
+                    .all(|r| r.usage_status == UsageStatus::NotApplicable)
+            );
+        } else {
+            assert_eq!(value.summary.total_tokens, Some(240));
+        }
+    }
+    fields.record_kind = RecordKind::All;
+    fields.usage_status = Some(UsageStatus::NotApplicable);
+    compare(&conn, &fields);
+    assert_eq!(requests(&conn, &fields, 10, None).unwrap().total_rows, 2);
+    fields.usage_status = Some(UsageStatus::Missing);
+    compare(&conn, &fields);
+    assert_eq!(requests(&conn, &fields, 10, None).unwrap().total_rows, 2);
 }

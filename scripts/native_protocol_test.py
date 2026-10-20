@@ -268,6 +268,7 @@ def chat(port, alias, messages, stream):
     if not stream:
         value = json.loads(raw)
         assert value['usage']['prompt_tokens'] == 100 and value['usage']['completion_tokens'] == 20
+        assert value['usage']['total_tokens'] == 120
         return value['choices'][0]['message'], value['choices'][0]['finish_reason']
     message = {'role': 'assistant', 'content': ''}; calls = {}; ids = set(); finishes = []; done = 0; usage = None
     for frame in raw.decode().split('\n\n'):
@@ -290,6 +291,7 @@ def chat(port, alias, messages, stream):
             for key in ['name', 'arguments']: current['function'][key] += call.get('function', {}).get(key, '')
     assert done == 1 and len(finishes) == 1 and len(ids) == 1, (done, finishes, ids)
     assert usage['prompt_tokens'] == 100 and usage['completion_tokens'] == 20
+    assert usage['total_tokens'] == 120
     if calls: message['tool_calls'] = [calls[i] for i in sorted(calls)]
     return message, finishes[0]
 
@@ -360,7 +362,7 @@ def main():
                         return db.execute("SELECT COUNT(*) FROM usage_requests WHERE outcome='completed'").fetchone()[0] == 18
                 t.wait_for(recorded, 'all native request finishes persisted')
                 with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
-                    assert db.execute('PRAGMA user_version').fetchone()[0] == 9
+                    assert db.execute('PRAGMA user_version').fetchone()[0] == 11
                     rows = db.execute("SELECT upstream_protocol,input_tokens,output_tokens,total_tokens,input_breakdown,input_uncached_tokens FROM usage_requests WHERE outcome='completed'").fetchall()
                     assert len(rows) == 18 and set(r[0] for r in rows) == set(PROTOCOLS)
                     assert all(r[1:4] == (100, 20, 120) for r in rows), rows

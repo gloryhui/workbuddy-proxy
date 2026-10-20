@@ -1218,6 +1218,7 @@ pub struct CommitItem {
     pub requested_model: Option<String>,
     pub upstream_model: Option<String>,
     pub response_model: Option<String>,
+    pub tool_name: Option<String>,
     pub usage: NormalizedUsage,
     pub mapping_id: Option<String>,
     pub event_at_ms: i64,
@@ -1234,9 +1235,19 @@ impl CommitItem {
     /// The semantic hash is independent of the file path, timestamp, JSON key
     /// order, chat content and diagnostic observations.
     pub fn from_candidate(
-        candidate: Candidate,
+        mut candidate: Candidate,
         attribution: Attribution,
     ) -> Result<Self, StoreError> {
+        // Old pending/prepared payloads may still carry the former Missing
+        // state. Normalize them too when replaying or changing attribution.
+        if candidate.requested_model.as_deref().is_some_and(|model| {
+            model.starts_with("workbuddy-credit:") && model.len() > "workbuddy-credit:".len()
+        }) && candidate.usage.status == crate::stats::dto::UsageStatus::Missing
+            && candidate.usage.has_no_token_values()
+        {
+            candidate.usage.status = crate::stats::dto::UsageStatus::NotApplicable;
+            candidate.usage.reason = None;
+        }
         let normalized_hash = semantic_hash(
             &candidate.requested_model,
             &candidate.upstream_model,
@@ -1260,6 +1271,7 @@ impl CommitItem {
             requested_model: candidate.requested_model,
             upstream_model: candidate.upstream_model,
             response_model: candidate.response_model,
+            tool_name: candidate.tool_name,
             usage: candidate.usage,
             mapping_id: None,
             event_at_ms: candidate.event_at_ms,
@@ -1277,12 +1289,23 @@ fn semantic_hash(
     response_model: &Option<String>,
     usage: &NormalizedUsage,
 ) -> Result<String, StoreError> {
+    // Keep v2/v3 receipt hashes stable: Token applicability is a presentation
+    // correction, not a different bill. Real amount/Token changes still conflict.
+    let status = if requested_model.as_deref().is_some_and(|model| {
+        model.starts_with("workbuddy-credit:") && model.len() > "workbuddy-credit:".len()
+    }) && usage.status == crate::stats::dto::UsageStatus::NotApplicable
+        && usage.has_no_token_values()
+    {
+        crate::stats::dto::UsageStatus::Missing
+    } else {
+        usage.status
+    };
     let semantic = serde_json::to_string(&(
         "wbp-wb-usage-v1",
         requested_model,
         upstream_model,
         response_model,
-        usage.status,
+        status,
         usage.reason,
         usage.input_tokens,
         usage.output_tokens,
@@ -1341,7 +1364,7 @@ pub(super) fn insert_fact_row(
          record_origin, time_basis, response_model, usage_reason, parser_version,
          input_tokens, output_tokens, total_tokens, cache_read_tokens, cache_write_tokens,
          reasoning_tokens, input_breakdown, total_tokens_derived, workbuddy_credit_nanos)
-         VALUES(?1,'workbuddy_import',?6,?7,?8,?2,
+         VALUES(?1,'workbuddy_import',?6,?7,?8,COALESCE(?23,?2),
          ?2, COALESCE(?9,?2), ?3, ?3, 'recorded', ?10,
          'workbuddy_jsonl', ?4, ?4, NULL, ?5, 'message_timestamp',?11,?12,?13,
          ?14,?15,?16,?17,?18,?19,?20,?21,?22)",
@@ -1368,6 +1391,7 @@ pub(super) fn insert_fact_row(
             usage.input_breakdown.as_str(),
             usage.total_tokens_derived,
             usage.workbuddy_credit_nanos,
+            item.tool_name,
         ],
     )?;
     Ok(())
@@ -1416,6 +1440,18 @@ pub fn resolve_replay(
         return Ok(ReplayOutcome::Duplicate);
     }
     if existing.normalized_hash == item.normalized_hash {
+        if existing.state == LedgerState::Imported
+            && item.requested_model.as_deref() == Some("workbuddy-credit:generation_tool")
+            && let Some(name) = &item.tool_name
+        {
+            // A label is not billing identity or usage. Fill only the synthetic
+            // route's missing name, without withdrawing or recounting a charge.
+            tx.execute(
+                "UPDATE usage_requests SET route_name=?2,parser_version=?3,updated_at_ms=?4
+                 WHERE request_id=?1 AND record_origin<>'proxy' AND route_name=requested_model",
+                params![item.entry_key, name, PARSER_VERSION, now_ms],
+            )?;
+        }
         if existing.state == LedgerState::PendingClassification && existing.candidate_json.is_none()
         {
             return rehydrate(tx, item, mapping_revision, now_ms).map(ReplayOutcome::Rehydrated);
@@ -1891,6 +1927,7 @@ pub fn mapping_contract_check() -> Result<usize, &'static str> {
             requested_model: Some("custom-local:probe".into()),
             upstream_model: None,
             response_model: None,
+            tool_name: None,
             usage: NormalizedUsage::missing(),
             mapping_id: None,
             event_at_ms: 5,
@@ -1906,6 +1943,7 @@ pub fn mapping_contract_check() -> Result<usize, &'static str> {
             requested_model: Some("custom-local:probe".into()),
             upstream_model: None,
             response_model: None,
+            tool_name: None,
             usage: NormalizedUsage::missing(),
             mapping_id: None,
             event_at_ms: 5,
@@ -3157,6 +3195,7 @@ mod batch_tests {
             requested_model: Some("custom-local:batch".into()),
             upstream_model: None,
             response_model: None,
+            tool_name: None,
             usage: NormalizedUsage::missing(),
             mapping_id: None,
             event_at_ms: 5,
@@ -3602,6 +3641,7 @@ mod replay_tests {
             requested_model: Some("custom-local:replay".into()),
             upstream_model: None,
             response_model: None,
+            tool_name: None,
             usage: NormalizedUsage::missing(),
             mapping_id: None,
             event_at_ms: 5,

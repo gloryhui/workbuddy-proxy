@@ -204,12 +204,8 @@ fn columns(grid_width: f32) -> usize {
     (((grid_width + METRIC_GAP as f32) / unit).floor() as usize).clamp(1, 4)
 }
 
-/// The hero column width fixed by DESIGN_SPEC §4.1.3.
-const HERO_WIDTH: f32 = 260.;
 /// The design's metric row height.
 const METRIC_HEIGHT: f32 = 124.;
-/// Below this the hero moves above the grid instead of beside it.
-const HERO_BESIDE_WIDTH: f32 = 720.;
 
 impl Statistics {
     fn metric_card(&self, index: usize, card: Card, width: f32) -> AnyElement {
@@ -218,7 +214,7 @@ impl Statistics {
         // The design emphasises the cache-read number: it is the value the
         // reader is meant to compare against the input tokens.
         let value_color = if card.id == MetricId::CacheRead {
-            crate::theme::color::PRIMARY_DARK
+            crate::theme::palette().dark
         } else {
             crate::theme::color::TEXT_1
         };
@@ -277,94 +273,58 @@ impl Statistics {
                 .into_any_element();
         };
         let summary = &dashboard.summary;
-        let main = usage_table::compact(summary.total_tokens, self.zh);
-        let beside = self.filters_width >= HERO_BESIDE_WIDTH;
-        // When the hero sits beside the grid it owns a fixed column; the metric
-        // cards share what is left. Either way the numbers come from the
-        // measured content width, never from a hard-coded guess.
-        let grid_width = if beside {
-            self.filters_width - HERO_WIDTH - METRIC_GAP as f32
-        } else {
-            self.filters_width
-        };
-        let columns = columns(grid_width);
-        // One pixel of slack keeps floating point rounding from wrapping a row
-        // that the budget says fits.
-        let width = (((grid_width - (columns - 1) as f32 * METRIC_GAP as f32) / columns as f32)
-            .floor()
+        let count = columns(self.filters_width);
+        let width = ((self.filters_width - (count - 1) as f32 * METRIC_GAP as f32) / count as f32
             - 1.)
+            .floor()
             .max(METRIC_MIN_WIDTH as f32);
         let metrics = cards(summary, self.zh)
             .into_iter()
+            .filter(|card| match card.id {
+                MetricId::UsageRecords | MetricId::CacheRead => true,
+                MetricId::WorkbuddyCredit => summary.credit_record_count > 0,
+                MetricId::EstimatedCost | MetricId::ProxySuccessRate => {
+                    summary.proxy_record_count > 0
+                }
+                _ => false,
+            })
             .enumerate()
             .map(|(index, card)| self.metric_card(index, card, width))
             .collect::<Vec<_>>();
-        let hero = div()
-            .id("stats-total-tokens")
-            .role(Role::Group)
-            .aria_label(format!("{} {main}", self.t("Token 总用量", "Total tokens")))
+        let total = div()
+            .w(px(width))
+            .min_w(px(METRIC_MIN_WIDTH as f32))
+            .h(px(METRIC_HEIGHT))
             .flex()
             .flex_col()
             .justify_between()
-            .gap_2()
             .p_4()
             .rounded(px(crate::theme::radius::CARD))
-            .bg(rgb(crate::theme::color::HERO_BG))
-            .when(beside, |card| {
-                card.w(px(HERO_WIDTH))
-                    .h(px(METRIC_HEIGHT * 2. + METRIC_GAP as f32))
-            })
-            .when(!beside, |card| card.w_full())
+            .bg(rgb(crate::theme::palette().tint))
             .child(
                 Label::new(self.t("Token 总用量", "Total tokens"))
-                    .text_size(px(crate::theme::font::CARD_TITLE))
+                    .text_size(px(12.))
+                    .text_color(rgb(INK)),
+            )
+            .child(
+                Label::new(usage_table::compact(summary.total_tokens, self.zh))
+                    .text_size(px(26.))
                     .font_weight(FontWeight::SEMIBOLD)
-                    .text_color(rgb(crate::theme::color::PRIMARY_DARK)),
+                    .text_color(rgb(crate::theme::palette().dark)),
             )
             .child(
-                div()
-                    .text_size(px(crate::theme::font::HERO))
-                    .line_height(px(crate::theme::line_height::HERO))
-                    .font_weight(FontWeight::BOLD)
-                    .text_color(rgb(crate::theme::color::PRIMARY_DARK))
-                    .child(main),
-            )
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap_1()
-                    .child(
-                        Label::new(format!(
-                            "{}/{} {}",
-                            summary.usage_complete_count,
-                            summary.usage_eligible_count,
-                            self.t("个请求用量完整", "requests with complete usage")
-                        ))
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(crate::theme::color::TEXT_2)),
-                    )
-                    .child(
-                        Label::new(self.t(
-                            "只统计已结束且用量完整的请求",
-                            "Finished requests with complete usage only",
-                        ))
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(crate::theme::color::TEXT_3)),
-                    ),
+                Label::new(self.t("当前筛选范围", "Current filter range"))
+                    .text_size(px(crate::theme::font::LABEL))
+                    .text_color(rgb(MUTED)),
             );
         stats_card("stats-overview")
-            .gap_3()
-            .when(beside, |card| {
-                card.flex_row().items_start().gap(px(METRIC_GAP as f32))
-            })
-            .child(hero)
+            .flex_shrink_0()
             .child(
                 div()
                     .flex()
                     .flex_wrap()
                     .gap(px(METRIC_GAP as f32))
-                    .when(beside, |grid| grid.flex_1().min_w_0())
+                    .child(total)
                     .children(metrics),
             )
             .into_any_element()

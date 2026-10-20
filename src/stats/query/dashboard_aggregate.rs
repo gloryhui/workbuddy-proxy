@@ -4,7 +4,7 @@
 use super::*;
 
 const IMPORT_COLUMNS: &str = "
- COUNT(*), 0, 0, 0, 0, 0, 0, 0, COUNT(*),
+ COUNT(*), 0, 0, 0, 0, 0, 0, 0, COUNT(*) FILTER(WHERE usage_status<>'not_applicable'),
  COUNT(*) FILTER(WHERE usage_status='complete'),
  COUNT(*) FILTER(WHERE usage_status='partial'),
  COUNT(*) FILTER(WHERE usage_status='missing'),
@@ -21,7 +21,7 @@ const IMPORT_COLUMNS: &str = "
  SUM(input_uncached_tokens) FILTER(WHERE input_breakdown='disjoint'),
  COUNT(*) FILTER(WHERE input_breakdown='disjoint'),
  SUM(reasoning_tokens) FILTER(WHERE usage_status='complete'),
- COUNT(reasoning_tokens) FILTER(WHERE usage_status='complete'), NULL, 0,
+ COUNT(reasoning_tokens) FILTER(WHERE usage_status='complete'), NULL, 0, 0,
  COUNT(workbuddy_credit_nanos),
  COALESCE(SUM(workbuddy_credit_nanos / 1000000000),0),
  COALESCE(SUM(workbuddy_credit_nanos % 1000000000),0)";
@@ -76,7 +76,8 @@ impl Accumulator {
             cache_write_known_count,
             input_breakdown_known_count,
             reasoning_known_count,
-            proxy_cost_incomplete_count
+            proxy_cost_incomplete_count,
+            proxy_token_not_applicable_count
         );
         macro_rules! nullable {
             ($($field:ident),+ $(,)?) => { $(self.raw.$field = nullable_add(self.raw.$field, row.$field)?;)+ };
@@ -129,7 +130,7 @@ fn proxy_bucket(conn: &Connection, filter: &StatsFilter) -> Result<(RawSummary, 
     conn.prepare_cached(&query)
         .map_err(budget_error)?
         .query_row(params_from_iter(sql.params.iter()), |row| {
-            Ok((read_summary(row, 0)?, row.get(28)?))
+            Ok((read_summary(row, 0)?, row.get(29)?))
         })
         .map_err(budget_error)
 }
@@ -155,9 +156,9 @@ fn imported_bucket(
                 imported: raw.request_count,
                 // Schema v7 prohibits both inserting and updating costs for imports.
                 imported_unpriced: raw.request_count,
-                credit_count: row.get(28)?,
-                credit_nanos: i128::from(row.get::<_, i64>(29)?) * 1_000_000_000
-                    + i128::from(row.get::<_, i64>(30)?),
+                credit_count: row.get(29)?,
+                credit_nanos: i128::from(row.get::<_, i64>(30)?) * 1_000_000_000
+                    + i128::from(row.get::<_, i64>(31)?),
                 ..OriginCounts::default()
             };
             Ok((raw, origin))
@@ -173,6 +174,7 @@ fn imported_query(filter: &StatsFilter) -> (String, Vec<Value>) {
     // provider/model/route filter is set; use the existing time-covering index.
     // Selective identity filters retain the planner's original index choices.
     let table = if filter.provider_id.is_none()
+        && filter.record_kind == crate::stats::dto::RecordKind::All
         && filter.upstream_model.is_none()
         && filter.route_id.is_none()
     {
@@ -219,6 +221,7 @@ pub(super) fn aggregate(
 
 fn pending_import_count(conn: &Connection, filter: &StatsFilter) -> Result<i64, String> {
     if filter.source_scope != SourceScope::All
+        || filter.record_kind != crate::stats::dto::RecordKind::All
         || filter.capture_method == crate::stats::dto::CaptureMethod::Proxy
         || filter.provider_id.is_some()
         || filter.upstream_model.is_some()

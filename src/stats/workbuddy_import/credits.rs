@@ -36,6 +36,22 @@ fn valid_id(id: &str) -> Result<(), MalformedReason> {
     Ok(())
 }
 
+/// The SDK writes generation-tool:<tool name>:<call id>. Keep just the tool
+/// name; the billing identity and raw call id must never become display text.
+pub(super) fn tool_name(source: &str, stage: &str) -> Option<String> {
+    if source != "generation_tool" {
+        return None;
+    }
+    let (name, call) = stage.strip_prefix("generation-tool:")?.split_once(':')?;
+    (!call.is_empty()
+        && !name.is_empty()
+        && name.len() <= 80
+        && name
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b"_.-".contains(&b)))
+    .then(|| name.to_owned())
+}
+
 pub(super) fn evaluate(row: Charge, stem: &str, namespace: &str, now: i64) -> ParseDisposition {
     let session = row.session_id.as_deref().unwrap_or(stem);
     if session != stem {
@@ -79,6 +95,7 @@ pub(super) fn evaluate(row: Charge, stem: &str, namespace: &str, now: i64) -> Pa
         stage.as_bytes(),
     ]);
     let mut usage = NormalizedUsage::missing();
+    usage.status = crate::stats::dto::UsageStatus::NotApplicable;
     match super::normalize::parse_credit_nanos(credit.as_str()) {
         Ok(value) => usage.workbuddy_credit_nanos = Some(value),
         Err(_) => usage.diagnostics.credit_invalid = true,
@@ -94,6 +111,7 @@ pub(super) fn evaluate(row: Charge, stem: &str, namespace: &str, now: i64) -> Pa
         requested_model: Some(model.clone()),
         upstream_model: Some(model),
         response_model: None,
+        tool_name: tool_name(source, stage),
         event_at_ms: timestamp,
         usage,
     }))
@@ -133,6 +151,53 @@ mod tests {
     }
 
     #[test]
+    fn only_saved_generation_stages_provide_a_bounded_tool_name() {
+        assert_eq!(
+            tool_name("generation_tool", "generation-tool:ImageGen:call"),
+            Some("ImageGen".into())
+        );
+        assert_eq!(
+            tool_name("generation_tool", "generation-tool:Future.Tool:call"),
+            Some("Future.Tool".into())
+        );
+        for stage in [
+            "image:first",
+            "generation-tool:ImageGen:",
+            "generation-tool::call",
+            "generation-tool:private name:call",
+        ] {
+            assert_eq!(tool_name("generation_tool", stage), None);
+        }
+        assert_eq!(
+            tool_name("team_member", "generation-tool:ImageGen:call"),
+            None
+        );
+        assert_eq!(
+            tool_name(
+                "generation_tool",
+                &format!("generation-tool:{}:call", "x".repeat(81))
+            ),
+            None
+        );
+        let named = candidate(&event(
+            "generation_tool",
+            "generation-tool:ImageGen:call",
+            "request",
+            json!(5.71),
+        ));
+        assert_eq!(named.tool_name.as_deref(), Some("ImageGen"));
+        let mut unnamed = named.clone();
+        unnamed.tool_name = None;
+        let a = CommitItem::from_candidate(named, Attribution::Builtin).unwrap();
+        let b = CommitItem::from_candidate(unnamed, Attribution::Builtin).unwrap();
+        assert_eq!(a.entry_key, b.entry_key);
+        assert_eq!(
+            a.normalized_hash, b.normalized_hash,
+            "display names are not billing semantics"
+        );
+    }
+
+    #[test]
     fn a_generation_receipt_has_exact_credit_but_no_fabricated_tokens() {
         let value = candidate(&event("generation_tool", "image:1", "request", json!(5.71)));
         assert_eq!(value.usage.workbuddy_credit_nanos, Some(5_710_000_000));
@@ -140,7 +205,10 @@ mod tests {
             value.requested_model.as_deref(),
             Some("workbuddy-credit:generation_tool")
         );
-        assert_eq!(value.usage.status, crate::stats::dto::UsageStatus::Missing);
+        assert_eq!(
+            value.usage.status,
+            crate::stats::dto::UsageStatus::NotApplicable
+        );
         assert!(value.usage.has_no_token_values());
         assert_eq!(value.event_at_ms, 100);
     }
@@ -183,6 +251,49 @@ mod tests {
             ))
             .entry_key
         );
+    }
+
+    #[test]
+    fn applicability_keeps_legacy_receipt_hashes_but_amount_changes_still_conflict() {
+        let current = candidate(&event("generation_tool", "image:1", "request", json!(5.71)));
+        let mut legacy = current.clone();
+        legacy.usage.status = crate::stats::dto::UsageStatus::Missing;
+        let u = &legacy.usage;
+        let old_hash = parser::hash_id(
+            &serde_json::to_string(&(
+                "wbp-wb-usage-v1",
+                &legacy.requested_model,
+                &legacy.upstream_model,
+                &legacy.response_model,
+                u.status,
+                u.reason,
+                u.input_tokens,
+                u.output_tokens,
+                u.total_tokens,
+                u.total_tokens_derived,
+                u.cache_read_tokens,
+                u.cache_write_tokens,
+                u.reasoning_tokens,
+                u.input_breakdown,
+                u.workbuddy_credit_nanos,
+            ))
+            .unwrap(),
+        );
+        let updated = CommitItem::from_candidate(current, Attribution::Builtin).unwrap();
+        assert_eq!(updated.normalized_hash, old_hash);
+        let replay = CommitItem::from_candidate(legacy, Attribution::Pending).unwrap();
+        assert_eq!(replay.normalized_hash, old_hash);
+        assert_eq!(
+            replay.usage.status,
+            crate::stats::dto::UsageStatus::NotApplicable
+        );
+        let changed = CommitItem::from_candidate(
+            candidate(&event("generation_tool", "image:1", "request", json!(6.71))),
+            Attribution::Builtin,
+        )
+        .unwrap();
+        assert_eq!(updated.entry_key, changed.entry_key);
+        assert_ne!(updated.normalized_hash, changed.normalized_hash);
     }
 
     #[test]

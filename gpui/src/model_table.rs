@@ -2,8 +2,7 @@
 //! Application selection retains Shift/Ctrl/Command semantics.
 use crate::{state::Selection, ui::Proxy};
 use gpui_kit::component::{
-    ActiveTheme, Disableable, Icon, Sizable,
-    button::{Button, ButtonVariants},
+    ActiveTheme, Icon,
     label::Label,
     table::{Column, TableDelegate, TableState},
     tooltip::Tooltip,
@@ -85,18 +84,18 @@ impl TableDelegate for Models {
             } else {
                 "Edit model"
             };
-            return Button::new(("model-edit", i))
-                .small()
-                .ghost()
-                .icon(Icon::default().path("icons/model-edit.svg"))
-                .tooltip(label)
-                .accessibility_label(label)
-                .disabled(self.busy)
-                .on_click(move |_, window, cx| {
-                    cx.stop_propagation();
-                    let _ = owner.update(cx, |this, cx| this.edit_model_row(i, window, cx));
-                })
-                .into_any_element();
+            return crate::ui_components::icon_button(
+                ("model-edit", i),
+                Icon::default().path("icons/model-edit.svg"),
+                label,
+                label,
+                self.busy,
+            )
+            .on_click(move |_, window, cx| {
+                cx.stop_propagation();
+                let _ = owner.update(cx, |this, cx| this.edit_model_row(i, window, cx));
+            })
+            .into_any_element();
         }
         let row = &self.rows[i];
         let id = row["model"].as_str().unwrap_or("");
@@ -124,7 +123,7 @@ impl TableDelegate for Models {
             .min_w_0()
             .overflow_hidden()
             .tooltip(move |window, cx| Tooltip::new(full.clone()).build(window, cx))
-            .child(text)
+            .child(text.text_size(px(crate::theme::font::BODY)))
             .into_any_element()
     }
     // The three explicit columns fill the container without Kit's 12px trailing cell.

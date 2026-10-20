@@ -238,8 +238,7 @@ impl Statistics {
             } else {
                 self.t("检查本地新增记录", "Check newly saved local records")
             };
-            Button::new(("wb-check", full as usize))
-                .small()
+            stats_button(("wb-check", full as usize))
                 .h(px(28.))
                 .outline()
                 .label(label)
@@ -248,6 +247,7 @@ impl Statistics {
                 .on_click(cx.listener(move |this, _, _, cx| this.import_write(None, full, cx)))
         });
         let toggle = Checkbox::new("wb-import-enabled")
+            .large()
             .label(self.t("导入本机 WorkBuddy 用量", "Import local WorkBuddy usage"))
             .checked(self.import.is_enabled())
             .disabled(disabled)
@@ -305,7 +305,7 @@ impl Statistics {
                     self.t(zh, en),
                     self.import.counters().value(index)
                 ))
-                .text_size(px(11.))
+                .text_size(px(crate::theme::font::LABEL))
             });
         div()
             .id("workbuddy-import-controls")
@@ -320,22 +320,22 @@ impl Statistics {
                 self.t("WorkBuddy 本地用量", "WorkBuddy local usage"),
             ))
             .child(self.import_actions(cx))
-            .child(Label::new(note).text_size(px(11.)).text_color(rgb(MUTED)))
+            .child(Label::new(note).text_size(px(crate::theme::font::LABEL)).text_color(rgb(MUTED)))
             .child(
                 Label::new(self.import_status_line())
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(MUTED)),
             )
             .child(self.import_progress())
             .child(div().flex().flex_wrap().gap_3().children(counters))
-            .child(Button::new("wb-import-diagnostics").small().ghost()
+            .child(stats_button("wb-import-diagnostics").ghost()
                 .label(self.t("自动分类与去重说明","Classification and deduplication"))
                 .on_click(cx.listener(|this,_,window,cx|this.open_mapping_dialog(window,cx))))
-            .when(self.import.counters().conflict>0,|this|this.child(Label::new(self.t("同一记录的内容发生变化，冲突记录不计入统计，请检查源文件后完整核对。","Conflicting record content is excluded and requires a full check after reviewing source files.")).text_size(px(11.)).text_color(rgb(WARN))))
+            .when(self.import.counters().conflict>0,|this|this.child(Label::new(self.t("同一记录的内容发生变化，冲突记录不计入统计，请检查源文件后完整核对。","Conflicting record content is excluded and requires a full check after reviewing source files.")).text_size(px(crate::theme::font::LABEL)).text_color(rgb(WARN))))
             .when_some(self.import_ui.error.clone(), |this, error| {
                 this.child(
                     Label::new(crate::workbuddy_import::error_text(&error, self.zh))
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(WARN)),
                 )
             })

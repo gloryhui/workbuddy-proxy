@@ -19,7 +19,7 @@ use std::{
 };
 
 /// Schema version understood by this build.
-pub const SCHEMA_VERSION: i64 = 9;
+pub const SCHEMA_VERSION: i64 = 11;
 const MIGRATION_0001: &str = include_str!("migrations/0001.sql");
 const MIGRATION_0002: &str = include_str!("migrations/0002.sql");
 const MIGRATION_0003: &str = include_str!("migrations/0003.sql");
@@ -29,6 +29,11 @@ const MIGRATION_0006: &str = include_str!("migrations/0006.sql");
 const MIGRATION_0007: &str = include_str!("migrations/0007.sql");
 const MIGRATION_0008: &str = include_str!("migrations/0008.sql");
 const MIGRATION_0009: &str = include_str!("migrations/0009.sql");
+const MIGRATION_0010: &str = include_str!("migrations/0010.sql");
+const MIGRATION_0011: &str = include_str!("migrations/0011.sql");
+#[cfg(test)]
+#[path = "store/token_applicability_tests.rs"]
+mod token_applicability_tests;
 const WRITE_RETRIES: usize = 2;
 /// Single lock wait before our own retry loop takes over (was 2000 ms, which
 /// multiplied into seconds per batch under a held lock).
@@ -206,6 +211,15 @@ pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
     }
     if version < 9 {
         apply_step(conn, 9, MIGRATION_0009)?;
+    }
+    if version < 10 {
+        apply_step(conn, 10, MIGRATION_0010)?;
+    }
+    if version < 11 {
+        conn.pragma_update(None, "foreign_keys", "OFF")?;
+        let upgraded = apply_step(conn, 11, MIGRATION_0011);
+        conn.pragma_update(None, "foreign_keys", "ON")?;
+        upgraded?;
     }
     conn.execute_batch(include_str!("report_indexes.sql"))?;
     Ok(())

@@ -20,15 +20,17 @@ use crate::{
 };
 mod event_metrics;
 mod import_controls;
+mod layout;
 mod mapping_controls;
 mod overview;
+mod preferences;
 mod source_controls;
 
 use chrono::{Local, TimeZone as _};
 use gpui_kit::component::{
     Disableable, ElementExt, Icon, IconName, Sizable, WindowExt,
     button::{Button, ButtonVariants},
-    calendar::{Calendar, CalendarEvent, CalendarState, Date},
+    calendar::{CalendarEvent, CalendarState, Date},
     checkbox::Checkbox,
     input::{InputEvent, InputState},
     label::Label,
@@ -53,17 +55,25 @@ const OK: u32 = 0x2f8f5b;
 const WARN: u32 = 0xb7791f;
 const PANEL: u32 = 0xffffff;
 
+/// Explicit logical-pixel metrics avoid rem-relative Small buttons shrinking
+/// below the neighbouring filters on both Windows and macOS.
+fn stats_button(id: impl Into<ElementId>) -> Button {
+    crate::ui_components::action_button(id).px(px(10.))
+}
+
 /// Debounce applied after any filter change before a query is sent.
 const DEBOUNCE: Duration = Duration::from_millis(250);
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum Tab {
     Requests,
     Providers,
     Models,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum RangePreset {
     Today,
     Day,
@@ -194,6 +204,11 @@ fn stats_card(id: &'static str) -> Stateful<Div> {
 }
 
 pub struct Statistics {
+    preferences_dir: PathBuf,
+    saved_preferences: preferences::Preferences,
+    view: preferences::View,
+    summary_tab: Tab,
+    preferences_error: bool,
     zh: bool,
     visible: bool,
     backend: StatsScheduler,
@@ -242,6 +257,8 @@ pub struct Statistics {
     model: String,
     outcome: String,
     usage: String,
+    record_kind: crate::stats_dto::RecordKind,
+    kind_select: Entity<ChoiceState>,
     include_tests: bool,
     more_filters_open: bool,
     filters_width: f32,
@@ -361,7 +378,8 @@ impl Statistics {
     }
 
     pub fn new(dir: PathBuf, zh: bool, window: &mut Window, cx: &mut Context<Self>) -> Self {
-        let backend = StatsScheduler::new(dir);
+        let preferences = preferences::Preferences::load(&dir);
+        let backend = StatsScheduler::new(dir.clone());
         let provider_search = cx.new(|cx| InputState::new(window, cx));
         let model_search = cx.new(|cx| InputState::new(window, cx));
         let price_search = cx.new(|cx| InputState::new(window, cx));
@@ -540,6 +558,11 @@ impl Statistics {
             }
         });
         let mut this = Self {
+            preferences_dir: dir,
+            saved_preferences: preferences.clone(),
+            view: preferences::View::Details,
+            summary_tab: Tab::Providers,
+            preferences_error: false,
             zh,
             visible: false,
             backend,
@@ -556,6 +579,8 @@ impl Statistics {
             model: String::new(),
             outcome: String::new(),
             usage: String::new(),
+            record_kind: crate::stats_dto::RecordKind::All,
+            kind_select: cx.new(|cx| SelectState::new(layout::kind_choices(zh), None, window, cx)),
             include_tests: false,
             more_filters_open: false,
             filters_width: 760.,
@@ -673,14 +698,14 @@ impl Statistics {
             group_table,
             _timer: timer,
         };
+        this.restore_preferences(preferences, window, cx);
         this.subscribe(window, cx);
         this.rebuild_choices(window, cx);
         // The bar opens on its default scope: reconcile the capture dropdown
         // with it and open the first filter generation, which the first
         // dashboard request settles. Reconciling the default is a no-op by
         // construction, which is exactly the point: nothing is hidden yet.
-        let reconciled = this.capture.reconcile(this.source_scope());
-        debug_assert!(!reconciled, "the default scope hides nothing");
+        this.capture.reconcile(this.source_scope());
         this.coordinator.change();
         this
     }
@@ -764,10 +789,7 @@ impl Statistics {
         }
         self.visible = visible;
         if !visible {
-            self.source = crate::source_filter::SourceFilter::new();
-            self.capture = crate::stats_controller::CaptureFilter::new();
-            self.include_tests = false;
-            self.scope_reset_pending = true;
+            self.persist_preferences();
 
             self.backend.cancel_reads();
             self.rows_gate.invalidate();
@@ -834,6 +856,10 @@ impl Statistics {
                 cx,
             );
         });
+        self.kind_select.update(cx, |state, cx| {
+            state.set_items(layout::kind_choices(self.zh), window, cx);
+            state.set_selected_value(&self.record_kind.as_str().to_owned(), window, cx);
+        });
         let outcomes = vec![
             choice("", self.t("全部状态", "All states")),
             choice("completed", self.t("已完成", "Completed")),
@@ -876,10 +902,13 @@ impl Statistics {
         models.extend(
             self.model_options
                 .iter()
-                .map(|m| choice(m.key.clone(), m.key.clone())),
+                .map(|m| choice(m.key.clone(), usage_table::model_label(&m.key, self.zh))),
         );
         if !self.model.is_empty() && !models.iter().any(|p| p.code == self.model) {
-            models.push(choice(self.model.clone(), self.model.clone()));
+            models.push(choice(
+                self.model.clone(),
+                usage_table::model_label(&self.model, self.zh),
+            ));
         }
         for (select, items) in [
             (&self.outcome_select, outcomes),
@@ -984,6 +1013,7 @@ impl Statistics {
             "include_tests": self.capture.include_tests(),
             "source_scope": self.source_scope(),
             "capture_method": self.capture.effective(self.source_scope()).as_str(),
+            "record_kind": self.record_kind,
         })
     }
 
@@ -1199,6 +1229,16 @@ impl Statistics {
             return;
         }
         let mut dirty = false;
+        let kind = self
+            .kind_select
+            .read(cx)
+            .selected_value()
+            .and_then(|value| crate::stats_dto::RecordKind::parse(value))
+            .unwrap_or_default();
+        if kind != self.record_kind {
+            self.record_kind = kind;
+            dirty = true;
+        }
         if self.date_open {
             let text = (
                 self.custom_from.read(cx).value().to_string(),
@@ -1373,6 +1413,7 @@ impl Statistics {
         }
         if self.visible && !window.has_active_dialog(cx) {
             self.sync_filter_state(window, cx);
+            self.persist_preferences();
         }
         // Leaving the page cancels the debounce instead of firing a query the
         // user no longer sees.
@@ -1719,10 +1760,16 @@ impl Statistics {
                     },
                 )];
                 for option in &self.model_options {
-                    items.push(choice(option.key.clone(), option.key.clone()));
+                    items.push(choice(
+                        option.key.clone(),
+                        usage_table::model_label(&option.key, self.zh),
+                    ));
                 }
                 if !self.model.is_empty() && !items.iter().any(|item| item.code == self.model) {
-                    items.push(choice(self.model.clone(), self.model.clone()));
+                    items.push(choice(
+                        self.model.clone(),
+                        usage_table::model_label(&self.model, self.zh),
+                    ));
                 }
                 self.model_select.update(cx, |state, cx| {
                     state.set_items(items, window, cx);
@@ -1868,7 +1915,7 @@ impl Statistics {
         window.open_dialog(cx, move |dialog, _window, _cx| {
             let close_owner = owner.clone();
             dialog
-                .w(px(560.))
+                .w(px(680.))
                 .close_button(true)
                 .overlay_closable(true)
                 .child(body.clone())
@@ -1914,7 +1961,7 @@ impl Statistics {
                 .gap_3()
                 .child(
                     div()
-                        .text_lg()
+                        .text_size(px(crate::theme::font::DIALOG_TITLE))
                         .font_weight(FontWeight::SEMIBOLD)
                         .child(title),
                 )
@@ -1930,8 +1977,13 @@ impl Statistics {
                 .flex()
                 .justify_between()
                 .gap_3()
-                .text_size(px(12.))
-                .child(Label::new(name).flex_shrink_0().text_color(rgb(MUTED)))
+                .text_size(px(crate::theme::font::BODY))
+                .child(
+                    Label::new(name)
+                        .text_size(px(crate::theme::font::BODY))
+                        .flex_shrink_0()
+                        .text_color(rgb(MUTED)),
+                )
                 .child(
                     div()
                         .flex_1()
@@ -1984,7 +2036,11 @@ impl Statistics {
                 } else {
                     "Provider / route".into()
                 },
-                format!("{} · {}", item.provider_name, item.route_name),
+                format!(
+                    "{} · {}",
+                    item.provider_name,
+                    usage_table::route_text(item, zh)
+                ),
             ),
             row(
                 if zh {
@@ -1992,7 +2048,7 @@ impl Statistics {
                 } else {
                     "Requested model".into()
                 },
-                item.requested_model.clone(),
+                usage_table::requested_text(item, zh),
             ),
             row(
                 if zh {
@@ -2000,7 +2056,7 @@ impl Statistics {
                 } else {
                     "Upstream model".into()
                 },
-                item.upstream_model.clone(),
+                usage_table::model_text(item, zh),
             ),
             row(
                 if zh {
@@ -2049,14 +2105,18 @@ impl Statistics {
             ),
             row(
                 if zh { "Token".into() } else { "Tokens".into() },
-                format!(
-                    "↓{} ↑{} R{} W{} Σ{}",
-                    usage_table::exact(item.input_tokens),
-                    usage_table::exact(item.output_tokens),
-                    usage_table::exact(item.cache_read_tokens),
-                    usage_table::exact(item.cache_write_tokens),
-                    usage_table::exact(item.total_tokens)
-                ),
+                if item.usage_status == crate::stats_dto::UsageStatus::NotApplicable {
+                    if zh { "不适用" } else { "Not applicable" }.into()
+                } else {
+                    format!(
+                        "↓{} ↑{} R{} W{} Σ{}",
+                        usage_table::exact(item.input_tokens),
+                        usage_table::exact(item.output_tokens),
+                        usage_table::exact(item.cache_read_tokens),
+                        usage_table::exact(item.cache_write_tokens),
+                        usage_table::exact(item.total_tokens)
+                    )
+                },
             ),
             row(
                 if zh {
@@ -2168,13 +2228,13 @@ impl Statistics {
             .gap_3()
             .child(
                 div()
-                    .text_lg()
+                    .text_size(px(crate::theme::font::DIALOG_TITLE))
                     .font_weight(FontWeight::SEMIBOLD)
                     .child(title),
             )
             .child(
                 div()
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(MUTED))
                     .child(if zh {
                         "只保存统计摘要：不包含聊天正文、工具参数、图片或密钥"
@@ -2185,7 +2245,7 @@ impl Statistics {
             .child(div().flex().flex_col().gap_2().children(rows))
             .child(
                 crate::ui_components::dialog_footer().child(
-                    Button::new("detail-close")
+                    stats_button("detail-close")
                         .label(if zh { "关闭" } else { "Close" })
                         .on_click(cx.listener(|this, _, window, cx| {
                             this.detail_open = false;
@@ -2208,6 +2268,7 @@ impl Statistics {
             .gap_3()
             .w_full()
             .mb(px(8.))
+            .flex_shrink_0()
             .child(
                 div()
                     .flex()
@@ -2337,7 +2398,7 @@ impl Statistics {
         div()
             .flex()
             .flex_col()
-            .w(px(554.))
+            .w(px(600.))
             .gap_3()
             .child(
                 div().flex().gap_2().children(
@@ -2352,8 +2413,7 @@ impl Statistics {
                     .into_iter()
                     .enumerate()
                     .map(|(ix, preset)| {
-                        Button::new(("date-preset", ix))
-                            .small()
+                        stats_button(("date-preset", ix))
                             .outline()
                             .label(preset.title(self.zh))
                             .when(self.draft_preset == preset, |button| button.primary())
@@ -2402,7 +2462,7 @@ impl Statistics {
                             )
                             .child(
                                 Checkbox::new("date-follow-now")
-                                    .small()
+                                    .large()
                                     .label(
                                         self.t("结束时间跟随当前时刻", "End follows current time"),
                                     )
@@ -2425,7 +2485,7 @@ impl Statistics {
                             .when_some(self.date_error.clone(), |this, error| {
                                 this.child(
                                     Label::new(error)
-                                        .text_size(px(11.))
+                                        .text_size(px(crate::theme::font::LABEL))
                                         .text_color(rgb(0xa4424a)),
                                 )
                             })
@@ -2435,8 +2495,7 @@ impl Statistics {
                                     .gap_2()
                                     .mt_2()
                                     .child(
-                                        Button::new("date-cancel")
-                                            .small()
+                                        stats_button("date-cancel")
                                             .outline()
                                             .label(self.t("取消", "Cancel"))
                                             .on_click(cx.listener(|this, _, _, cx| {
@@ -2446,8 +2505,7 @@ impl Statistics {
                                             })),
                                     )
                                     .child(
-                                        Button::new("date-apply")
-                                            .small()
+                                        stats_button("date-apply")
                                             .primary()
                                             .label(self.t("确定", "Apply"))
                                             .on_click(cx.listener(|this, _, _, cx| {
@@ -2464,7 +2522,7 @@ impl Statistics {
                                     ),
                             ),
                     )
-                    .child(Calendar::new(&self.calendar).first_day_of_week(chrono::Weekday::Mon)),
+                    .child(crate::ui_components::calendar(&self.calendar, self.zh)),
             )
             .into_any_element()
     }
@@ -2498,9 +2556,8 @@ impl Statistics {
         Popover::new("stats-date-range")
             .open(self.date_open)
             .trigger(
-                Button::new("stats-date-trigger")
-                    .small()
-                    .h(px(34.))
+                stats_button("stats-date-trigger")
+                    .h(px(crate::theme::size::SELECT_HEIGHT))
                     .w_full()
                     .outline()
                     .bg(rgb(0xffffff))
@@ -2542,9 +2599,8 @@ impl Statistics {
         Popover::new("stats-auto-refresh")
             .open(self.refresh_open)
             .trigger(
-                Button::new("stats-auto-trigger")
-                    .small()
-                    .h(px(34.))
+                stats_button("stats-auto-trigger")
+                    .h(px(crate::theme::size::SELECT_HEIGHT))
                     .w_full()
                     .outline()
                     .bg(rgb(0xffffff))
@@ -2582,8 +2638,7 @@ impl Statistics {
                                 } else {
                                     format!("{seconds}{}", this.t("秒", "s"))
                                 };
-                                Button::new(("refresh-interval", seconds as usize))
-                                    .small()
+                                stats_button(("refresh-interval", seconds as usize))
                                     .ghost()
                                     .w_full()
                                     .label(label)
@@ -2643,15 +2698,16 @@ impl Statistics {
                     )
                     .when(has_next, |row| {
                         row.child(
-                            Button::new(if provider {
+                            stats_button(if provider {
                                 "provider-search-more"
                             } else {
                                 "model-search-more"
                             })
-                            .small()
                             .size(px(28.))
                             .outline()
-                            .icon(IconName::ChevronDown)
+                            .child(crate::ui_components::action_icon(
+                                Icon::new(IconName::ChevronDown).size(px(16.)),
+                            ))
                             .tooltip(more_label)
                             .accessibility_label(more_label)
                             .on_click(cx.listener(
@@ -2685,12 +2741,19 @@ impl Statistics {
         let slots = crate::source_filter::SLOTS
             .iter()
             .copied()
-            .filter(|slot| *slot != crate::source_filter::FilterSlot::Source)
+            .filter(|slot| {
+                !matches!(
+                    slot,
+                    crate::source_filter::FilterSlot::Source
+                        | crate::source_filter::FilterSlot::Status
+                )
+            })
             .collect::<Vec<_>>();
         div()
             .id("stats-filters")
             .flex()
             .flex_col()
+            .flex_shrink_0()
             .w_full()
             .on_prepaint({
                 let owner = cx.entity().downgrade();
@@ -2718,6 +2781,9 @@ impl Statistics {
                         .border_t_1()
                         .border_color(rgb(BORDER))
                         .child(self.capture_control())
+                        .child(div().w(px(150.)).child(
+                            crate::ui_components::select(&self.outcome_select, false).w_full(),
+                        ))
                         .child(self.filter_search(true, cx))
                         .child(self.filter_search(false, cx))
                         .child(
@@ -2744,7 +2810,7 @@ impl Statistics {
                         .child(
                             div().flex().items_center().h(px(28.)).child(
                                 Checkbox::new("include-tests")
-                                    .small()
+                                    .large()
                                     .label(self.t("包含测试连接", "Include connection tests"))
                                     .checked(self.capture.include_tests())
                                     .disabled(!tests_available)
@@ -2761,7 +2827,7 @@ impl Statistics {
             .when_some(self.error.clone(), |this, error| {
                 this.child(
                     Label::new(crate::i18n::message(&error, self.zh))
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(0xa4424a)),
                 )
             })
@@ -2769,7 +2835,9 @@ impl Statistics {
     }
 
     fn filter_label(&self, text: &'static str) -> Label {
-        Label::new(text).text_size(px(11.)).text_color(rgb(MUTED))
+        Label::new(text)
+            .text_size(px(crate::theme::font::LABEL))
+            .text_color(rgb(MUTED))
     }
 
     /// Quality banner. Every entry comes from real counters; an absent warning
@@ -2856,7 +2924,7 @@ impl Statistics {
                     .flex()
                     .items_center()
                     .gap_2()
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .child(div().w(px(6.)).h(px(6.)).rounded(px(3.)).bg(rgb(0xd9822b)))
                     .child(Label::new(text).text_color(rgb(0x8a5a1f)))
                     .into_any_element()
@@ -2897,6 +2965,7 @@ impl Statistics {
             mode: ChartMode::Tokens,
             currency: self.currency,
         };
+        let token_continuity = token_chart.continuity_note();
         let token_summary = UsagePlot {
             id: ElementId::Name("usage-token-chart-summary".into()),
             points: points.clone(),
@@ -2907,6 +2976,7 @@ impl Statistics {
         }
         .summary();
         let has_cost = cost_points.iter().any(|point| point.cost_nanos.is_some());
+        let show_cost = series.iter().any(|point| !point.costs.is_empty());
         let cost_chart = UsagePlot {
             id: ElementId::Name("usage-cost-chart".into()),
             // Keep the actual time buckets on an empty currency axis. Their
@@ -2921,6 +2991,7 @@ impl Statistics {
             mode: ChartMode::Cost,
             currency: self.currency,
         };
+        let cost_continuity = cost_chart.continuity_note();
         let legend = div()
             .flex()
             .flex_wrap()
@@ -2952,7 +3023,7 @@ impl Statistics {
                     )
                     .child(
                         Label::new(kind.label(self.zh))
-                            .text_size(px(11.))
+                            .text_size(px(crate::theme::font::LABEL))
                             .text_color(rgb(INK)),
                     )
                     .into_any_element()
@@ -2992,12 +3063,9 @@ impl Statistics {
                     .child(stats_heading(self.t("使用趋势", "Usage trend")))
                     .when(incomplete, |this| {
                         this.child(
-                            Label::new(self.t(
-                                "部分时段记录不全，空白区间暂无可靠统计",
-                                "Some intervals are incomplete; gaps have no reliable data",
-                            ))
-                            .text_size(px(crate::theme::font::SMALL))
-                            .text_color(rgb(WARN)),
+                            Label::new(self.t("部分时段记录不全", "Some intervals are incomplete"))
+                                .text_size(px(crate::theme::font::SMALL))
+                                .text_color(rgb(WARN)),
                         )
                     }),
             )
@@ -3010,6 +3078,14 @@ impl Statistics {
                         "Cache read/write are input subsets; toggle them, never sum them",
                     )),
             )
+            .when_some(token_continuity, |card, note| {
+                card.child(
+                    Label::new(note)
+                        .text_size(px(crate::theme::font::SMALL))
+                        .line_height(px(18.))
+                        .text_color(rgb(MUTED)),
+                )
+            })
             .child(
                 div()
                     .id("token-chart-host")
@@ -3048,6 +3124,14 @@ impl Statistics {
                     .text_color(rgb(crate::theme::color::TEXT_3))
                     .child(bucket_text),
             )
+            .when_some(cost_continuity, |card, note| {
+                card.child(
+                    Label::new(note)
+                        .text_size(px(crate::theme::font::SMALL))
+                        .line_height(px(18.))
+                        .text_color(rgb(MUTED)),
+                )
+            })
             .child(
                 div()
                     .id("cost-chart-host")
@@ -3089,7 +3173,7 @@ impl Statistics {
                     .child(div().w(px(10.)).h(px(3.)).rounded(px(2.)).bg(rgb(0xc2185b)))
                     .child(
                         Label::new(self.t("估算费用", "Estimated cost"))
-                            .text_size(px(11.))
+                            .text_size(px(crate::theme::font::LABEL))
                             .text_color(rgb(INK)),
                     ),
             );
@@ -3098,12 +3182,12 @@ impl Statistics {
             pair.flex_row()
                 .items_stretch()
                 .child(token_card)
-                .child(cost_card)
+                .when(show_cost, |pair| pair.child(cost_card))
                 .into_any_element()
         } else {
             pair.flex_col()
                 .child(token_card)
-                .child(cost_card)
+                .when(show_cost, |pair| pair.child(cost_card))
                 .into_any_element()
         }
     }
@@ -3112,12 +3196,17 @@ impl Statistics {
     fn details(&self, cx: &mut Context<Self>) -> AnyElement {
         let tab_button = |id: &'static str, tab: Tab, label: String| {
             let active = self.tab == tab;
-            crate::ui_components::segment_button(id, label, active, false).on_click(cx.listener(
-                move |this, _, window, cx| {
+            stats_button(id)
+                .label(label)
+                .when(active, |button| button.primary().outline())
+                .when(!active, |button| button.ghost())
+                .on_click(cx.listener(move |this, _, window, cx| {
                     if this.tab == tab {
                         return;
                     }
                     this.tab = tab;
+                    this.summary_tab = tab;
+                    this.persist_preferences();
                     this.reset_pagination();
                     // Leaving a tab invalidates its outstanding read at once:
                     // the reply that is already in flight must not land in the
@@ -3130,29 +3219,11 @@ impl Statistics {
                     }
                     let _ = window;
                     cx.notify();
-                },
-            ))
-        };
-        let page = match self.tab {
-            Tab::Requests => {
-                if self.total_rows > 0 {
-                    let pages = (self.total_rows + self.page_size - 1) / self.page_size;
-                    format!(
-                        "{} {}/{}",
-                        self.t("第", "page"),
-                        self.rows_cursors.page_number() as i64,
-                        pages
-                    )
-                } else {
-                    String::new()
-                }
-            }
-            _ => format!("{} {}", self.total_groups, self.t("个分组", "groups")),
+                }))
         };
         let sort_button = |id: &'static str, sort: SortMetric, label: String| {
             let active = self.group_sort == sort;
-            Button::new(id)
-                .small()
+            stats_button(id)
                 .when(!active, |button| button.ghost())
                 .when(active, |button| button.primary().outline())
                 .label(label)
@@ -3166,177 +3237,71 @@ impl Statistics {
         };
         let table: AnyElement = match self.tab {
             // DESIGN_SPEC §4.1.5: the request log is a 56px-row table with a
-            // 32px header. The aggregate tables keep the shared 30px rows.
+            // 32px header. Aggregate rows use a readable 36px height.
             Tab::Requests => crate::ui_components::log_table(&self.usage_table).into_any_element(),
-            _ => crate::ui_components::table(&self.group_table).into_any_element(),
+            _ => crate::ui_components::table(&self.group_table)
+                .with_size(px(36.))
+                .into_any_element(),
         };
         stats_card("stats-details")
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_2()
-                            .child(tab_button(
-                                "tab-requests",
-                                Tab::Requests,
-                                self.t("用量明细", "Usage records").to_owned(),
-                            ))
-                            .child(tab_button(
-                                "tab-providers",
-                                Tab::Providers,
-                                self.t("供应商统计", "Providers").to_owned(),
-                            ))
-                            .child(tab_button(
-                                "tab-models",
-                                Tab::Models,
-                                self.t("模型统计", "Models").to_owned(),
-                            ))
-                            .when(self.tab != Tab::Requests, |this| {
-                                this.child(
-                                    div()
-                                        .flex()
-                                        .items_center()
-                                        .gap_2()
-                                        .child(
-                                            Label::new(self.t("排序", "Sort"))
-                                                .text_size(px(11.))
-                                                .text_color(rgb(MUTED)),
-                                        )
-                                        .child(sort_button(
-                                            "sort-tokens",
-                                            SortMetric::TotalTokens,
-                                            self.t("总 Token", "Total tokens").to_owned(),
-                                        ))
-                                        .child(sort_button(
-                                            "sort-requests",
-                                            SortMetric::RequestCount,
-                                            self.t("请求数", "Requests").to_owned(),
-                                        )),
-                                )
-                            }),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_2()
-                            .child(Label::new(page).text_size(px(11.)).text_color(rgb(MUTED)))
-                            // The grouping listing owns its own cursor chain, so
-                            // walking providers/models never moves the request
-                            // log and vice versa.
-                            .when(self.tab != Tab::Requests, |this| {
-                                let group_by = match self.tab {
-                                    Tab::Models => GroupBy::Model,
-                                    _ => GroupBy::Provider,
-                                };
-                                this.child(
-                                    Button::new("groups-prev")
-                                        .small()
-                                        .ghost()
-                                        .label(self.t("上一页", "Previous"))
-                                        .disabled(self.group_cursor_stack.is_empty())
-                                        .on_click(cx.listener(move |this, _, _, cx| {
-                                            if this.loading_rows {
-                                                return;
-                                            }
-                                            if let Some(previous) = this.group_cursor_stack.pop() {
-                                                this.group_next_cursor =
-                                                    this.group_current_cursor.clone();
-                                                this.group_current_cursor = previous;
-                                                this.request_groups(cx);
-                                            }
-                                        })),
-                                )
-                                .child(
-                                    Button::new("groups-next")
-                                        .small()
-                                        .ghost()
-                                        .label(self.t("下一页", "Next"))
-                                        .disabled(self.group_next_cursor.is_none())
-                                        .on_click(cx.listener(move |this, _, _, cx| {
-                                            if this.loading_rows {
-                                                return;
-                                            }
-                                            let Some(next) = this.group_next_cursor.clone() else {
-                                                return;
-                                            };
-                                            this.group_cursor_stack
-                                                .push(this.group_current_cursor.clone());
-                                            this.group_current_cursor = Some(next);
-                                            this.group_next_cursor = None;
-                                            let _ = group_by;
-                                            this.request_groups(cx);
-                                        })),
-                                )
-                            })
-                            .when(self.tab != Tab::Requests, |this| {
-                                this.child(
-                                    Label::new(self.t("10 条/页", "10 per page"))
-                                        .text_size(px(11.))
-                                        .text_color(rgb(MUTED)),
-                                )
-                            })
-                            .when(self.tab == Tab::Requests, |this| {
-                                this.child(
-                                    crate::ui_components::pager_button(
-                                        "page-prev",
-                                        self.t("上一页", "Previous"),
-                                        !self.rows_cursors.can_go_back(),
+            .flex_1()
+            .min_h_0()
+            .overflow_hidden()
+            .gap_2()
+            .when(self.tab != Tab::Requests, |panel| {
+                panel.child(
+                    div()
+                        .flex()
+                        .flex_shrink_0()
+                        .flex_wrap()
+                        .items_center()
+                        .justify_between()
+                        .child(
+                            div()
+                                .flex()
+                                .items_center()
+                                .gap_2()
+                                .child(tab_button(
+                                    "tab-providers",
+                                    Tab::Providers,
+                                    self.t("供应商统计", "Providers").to_owned(),
+                                ))
+                                .child(tab_button(
+                                    "tab-models",
+                                    Tab::Models,
+                                    self.t("模型统计", "Models").to_owned(),
+                                ))
+                                .when(self.tab != Tab::Requests, |this| {
+                                    this.child(
+                                        div()
+                                            .flex()
+                                            .items_center()
+                                            .gap_2()
+                                            .child(
+                                                Label::new(self.t("排序", "Sort"))
+                                                    .text_size(px(crate::theme::font::LABEL))
+                                                    .text_color(rgb(MUTED)),
+                                            )
+                                            .child(sort_button(
+                                                "sort-tokens",
+                                                SortMetric::TotalTokens,
+                                                self.t("总 Token", "Total tokens").to_owned(),
+                                            ))
+                                            .child(sort_button(
+                                                "sort-requests",
+                                                SortMetric::RequestCount,
+                                                self.t("请求数", "Requests").to_owned(),
+                                            )),
                                     )
-                                    .on_click(cx.listener(
-                                        |this, _, _, cx| {
-                                            if this.loading_rows {
-                                                return;
-                                            }
-                                            // The stack holds the start cursor of each
-                                            // page, so popping restores exactly the
-                                            // previous page (1 -> 2 -> 3 -> 2 -> 1).
-                                            if let Some(previous) = this.rows_cursors.back() {
-                                                this.rows_cursors.begin_page(previous);
-                                                this.request_rows(cx);
-                                            }
-                                        },
-                                    )),
-                                )
-                                .child(
-                                    Label::new(self.t("10 条/页", "10 per page"))
-                                        .text_size(px(11.))
-                                        .text_color(rgb(MUTED)),
-                                )
-                                .child(
-                                    crate::ui_components::pager_button(
-                                        "page-next",
-                                        self.t("下一页", "Next"),
-                                        !self.rows_cursors.can_go_next(),
-                                    )
-                                    .on_click(cx.listener(
-                                        |this, _, _, cx| {
-                                            if this.loading_rows {
-                                                return;
-                                            }
-                                            if let Some(cursor) = this.rows_cursors.forward() {
-                                                this.rows_cursors.begin_page(cursor);
-                                                this.request_rows(cx);
-                                            }
-                                        },
-                                    )),
-                                )
-                            }),
-                    ),
-            )
+                                }),
+                        ),
+                )
+            })
             .child(
                 div()
                     .id("stats-table-host")
                     .w_full()
-                    .h(px(crate::theme::size::TABLE_HEADER_HEIGHT
-                        + crate::theme::size::TABLE_ROW_HEIGHT * 10.
-                        + 14.))
-                    .flex_shrink_0()
+                    .flex_1()
                     .min_h_0()
                     .overflow_hidden()
                     .on_prepaint({
@@ -3354,6 +3319,137 @@ impl Statistics {
                     })
                     .child(table),
             )
+            .child(self.details_pagination(cx))
+            .into_any_element()
+    }
+    fn details_pagination(&self, cx: &mut Context<Self>) -> AnyElement {
+        let page = match self.tab {
+            Tab::Requests => {
+                if self.total_rows > 0 {
+                    let pages = (self.total_rows + self.page_size - 1) / self.page_size;
+                    format!(
+                        "{} {}/{}",
+                        self.t("第", "page"),
+                        self.rows_cursors.page_number() as i64,
+                        pages
+                    )
+                } else {
+                    String::new()
+                }
+            }
+            _ => format!("{} {}", self.total_groups, self.t("个分组", "groups")),
+        };
+        div()
+            .flex()
+            .items_center()
+            .gap_2()
+            .flex_wrap()
+            .flex_shrink_0()
+            .child(
+                Label::new(page)
+                    .text_size(px(crate::theme::font::LABEL))
+                    .text_color(rgb(MUTED)),
+            )
+            // The grouping listing owns its own cursor chain, so
+            // walking providers/models never moves the request
+            // log and vice versa.
+            .when(self.tab != Tab::Requests, |this| {
+                let group_by = match self.tab {
+                    Tab::Models => GroupBy::Model,
+                    _ => GroupBy::Provider,
+                };
+                this.child(
+                    stats_button("groups-prev")
+                        .ghost()
+                        .label(self.t("上一页", "Previous"))
+                        .disabled(self.group_cursor_stack.is_empty())
+                        .on_click(cx.listener(move |this, _, _, cx| {
+                            if this.loading_rows {
+                                return;
+                            }
+                            if let Some(previous) = this.group_cursor_stack.pop() {
+                                this.group_next_cursor = this.group_current_cursor.clone();
+                                this.group_current_cursor = previous;
+                                this.request_groups(cx);
+                            }
+                        })),
+                )
+                .child(
+                    stats_button("groups-next")
+                        .ghost()
+                        .label(self.t("下一页", "Next"))
+                        .disabled(self.group_next_cursor.is_none())
+                        .on_click(cx.listener(move |this, _, _, cx| {
+                            if this.loading_rows {
+                                return;
+                            }
+                            let Some(next) = this.group_next_cursor.clone() else {
+                                return;
+                            };
+                            this.group_cursor_stack
+                                .push(this.group_current_cursor.clone());
+                            this.group_current_cursor = Some(next);
+                            this.group_next_cursor = None;
+                            let _ = group_by;
+                            this.request_groups(cx);
+                        })),
+                )
+            })
+            .when(self.tab != Tab::Requests, |this| {
+                this.child(
+                    Label::new(self.t("10 条/页", "10 per page"))
+                        .text_size(px(crate::theme::font::LABEL))
+                        .text_color(rgb(MUTED)),
+                )
+            })
+            .when(self.tab == Tab::Requests, |this| {
+                this.child(
+                    crate::ui_components::pager_button(
+                        "page-prev",
+                        self.t("上一页", "Previous"),
+                        !self.rows_cursors.can_go_back(),
+                    )
+                    .with_size(px(crate::theme::size::BUTTON_HEIGHT))
+                    .h(px(crate::theme::size::BUTTON_HEIGHT))
+                    .px(px(10.))
+                    .on_click(cx.listener(|this, _, _, cx| {
+                        if this.loading_rows {
+                            return;
+                        }
+                        // The stack holds the start cursor of each
+                        // page, so popping restores exactly the
+                        // previous page (1 -> 2 -> 3 -> 2 -> 1).
+                        if let Some(previous) = this.rows_cursors.back() {
+                            this.rows_cursors.begin_page(previous);
+                            this.request_rows(cx);
+                        }
+                    })),
+                )
+                .child(
+                    Label::new(self.t("10 条/页", "10 per page"))
+                        .text_size(px(crate::theme::font::LABEL))
+                        .text_color(rgb(MUTED)),
+                )
+                .child(
+                    crate::ui_components::pager_button(
+                        "page-next",
+                        self.t("下一页", "Next"),
+                        !self.rows_cursors.can_go_next(),
+                    )
+                    .with_size(px(crate::theme::size::BUTTON_HEIGHT))
+                    .h(px(crate::theme::size::BUTTON_HEIGHT))
+                    .px(px(10.))
+                    .on_click(cx.listener(|this, _, _, cx| {
+                        if this.loading_rows {
+                            return;
+                        }
+                        if let Some(cursor) = this.rows_cursors.forward() {
+                            this.rows_cursors.begin_page(cursor);
+                            this.request_rows(cx);
+                        }
+                    })),
+                )
+            })
             .into_any_element()
     }
 }
@@ -3367,29 +3463,25 @@ impl Render for Statistics {
 impl Statistics {
     pub fn render_page(&mut self, cx: &mut Context<Self>) -> AnyElement {
         div()
-            .id("statistics-scroll")
-            .track_scroll(&self.page_scroll)
+            .id("statistics-page")
             .flex()
             .flex_col()
             .flex_1()
             .min_w_0()
             .min_h_0()
-            .overflow_y_scroll()
+            .overflow_hidden()
             .pl_0()
             .pr_0()
             .py_0()
             .gap_3()
             .bg(rgb(BG))
             .child(self.header(cx))
+            .child(self.view_tabs(cx))
             .child(self.filters(cx))
-            .child(self.health_bar(cx))
-            .children(self.warnings())
-            .children(self.import_notices(cx))
-            .child(div().w_full().child(self.overview(cx)))
-            .child(div().w_full().child(self.trends(cx)))
-            .child(div().w_full().child(self.details(cx)))
-            .child(self.pricing_section(cx))
-            .child(self.storage_section(cx))
+            .when(self.view != preferences::View::Settings, |page| {
+                page.child(self.compact_status(cx))
+            })
+            .child(self.report_body(cx))
             .into_any_element()
     }
 }
@@ -3549,14 +3641,16 @@ impl Statistics {
             .items_center()
             .gap_2()
             .child(
-                Button::new(id)
-                    .small()
+                stats_button(id)
                     .ghost()
-                    .icon(if open {
-                        IconName::ChevronDown
-                    } else {
-                        IconName::ChevronRight
-                    })
+                    .child(crate::ui_components::action_icon(
+                        Icon::new(if open {
+                            IconName::ChevronDown
+                        } else {
+                            IconName::ChevronRight
+                        })
+                        .size(px(16.)),
+                    ))
                     .label(title)
                     .on_click(cx.listener(move |this, _, _, cx| {
                         match which {
@@ -3569,7 +3663,7 @@ impl Statistics {
             .when_some(subtitle, |this, subtitle| {
                 this.child(
                     Label::new(subtitle)
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(MUTED)),
                 )
             })
@@ -3602,7 +3696,7 @@ impl Statistics {
             .bg(rgb(0xf7f9fc))
             .border_b(px(1.))
             .border_color(rgb(BORDER))
-            .text_size(px(11.))
+            .text_size(px(crate::theme::font::LABEL))
             .text_color(rgb(MUTED))
             .child(div().flex_1().min_w_0().child(self.t("模型", "Model")))
             .child(
@@ -3637,7 +3731,7 @@ impl Statistics {
             table = table.child(
                 div().px(px(12.)).py(px(16.)).child(
                     Label::new(self.t("加载中…", "Loading…"))
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(MUTED)),
                 ),
             );
@@ -3648,7 +3742,7 @@ impl Statistics {
                         "没有匹配的价格规则，可手动更新或新建。未匹配模型暂按默认币种记录0元。",
                         "No matching price rules. Update prices or add a rule; unmatched models default to zero.",
                     ))
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(MUTED)),
                 ),
             );
@@ -3696,7 +3790,7 @@ impl Statistics {
                                 )
                                 .child(
                                     Label::new(short_id)
-                                        .text_size(px(10.))
+                                        .text_size(px(crate::theme::font::LABEL))
                                         .text_color(rgb(MUTED)),
                                 ),
                         )
@@ -3709,19 +3803,21 @@ impl Statistics {
                                 .gap(px(2.))
                                 .child(
                                     Label::new(source_label)
-                                        .text_size(px(11.))
+                                        .text_size(px(crate::theme::font::LABEL))
                                         .text_color(rgb(INK)),
                                 )
                                 .child(
                                     Label::new(mapping_line)
-                                        .text_size(px(10.))
+                                        .text_size(px(crate::theme::font::LABEL))
                                         .text_color(rgb(MUTED)),
                                 ),
                         )
-                        .child(div().w(px(80.)).child(crate::ui_components::tag(
-                            crate::ui_components::TagKind::Secondary,
-                            rule.currency.as_str(),
-                        )))
+                        .child(div().w(px(80.)).flex().items_center().child(
+                            crate::ui_components::tag(
+                                crate::ui_components::TagKind::Secondary,
+                                rule.currency.as_str(),
+                            ),
+                        ))
                         .child(
                             div()
                                 .flex()
@@ -3746,7 +3842,7 @@ impl Statistics {
                                 )
                                 .child(
                                     Label::new(format!("{}", rule.input_mode))
-                                        .text_size(px(10.))
+                                        .text_size(px(crate::theme::font::LABEL))
                                         .text_color(rgb(MUTED)),
                                 ),
                         )
@@ -3757,8 +3853,7 @@ impl Statistics {
                                 .justify_end()
                                 .gap_1()
                                 .child(
-                                    Button::new(("price-edit", index))
-                                        .small()
+                                    stats_button(("price-edit", index))
                                         .ghost()
                                         .label(self.t("编辑", "Edit"))
                                         .on_click(cx.listener({
@@ -3769,8 +3864,7 @@ impl Statistics {
                                         })),
                                 )
                                 .child(
-                                    Button::new(("price-delete", index))
-                                        .small()
+                                    stats_button(("price-delete", index))
                                         .ghost()
                                         .label(self.t("删除", "Delete"))
                                         .on_click(cx.listener({
@@ -3808,28 +3902,25 @@ impl Statistics {
                                     .prefix(Icon::new(IconName::Search)),
                             )
                             .child(
-                                Button::new("price-add-top")
-                                    .small()
+                                stats_button("price-add-top")
                                     .primary()
-                                    .icon(IconName::Plus)
+                                    .child(crate::ui_components::action_icon(Icon::new(IconName::Plus).size(px(16.))))
                                     .label(self.t("新建价格规则", "New price rule"))
                                     .on_click(cx.listener(|this, _, window, cx| {
                                         this.new_price(window, cx)
                                     })),
                             )
                             .child(
-                                Button::new("price-reload")
-                                    .small()
+                                stats_button("price-reload")
                                     .outline()
-                                    .icon(IconName::RefreshCw)
+                                    .child(crate::ui_components::action_icon(Icon::new(IconName::RefreshCw).size(px(16.))))
                                     .label(self.t("刷新价格", "Reload prices"))
                                     .on_click(cx.listener(|this, _, _, cx| {
                                         this.request_prices(cx)
                                     })),
                             )
                             .child(
-                                Button::new("price-sync-models-dev")
-                                    .small()
+                                stats_button("price-sync-models-dev")
                                     .outline()
                                     .label(if self.price_sync_pending {
                                         self.t("正在更新价格…", "Updating prices…")
@@ -3858,7 +3949,7 @@ impl Statistics {
                     .when_some(sync_note, |this, note| {
                         this.child(
                             Label::new(note)
-                                .text_size(px(11.))
+                                .text_size(px(crate::theme::font::LABEL))
                                 .text_color(rgb(MUTED)),
                         )
                     }),
@@ -3868,7 +3959,7 @@ impl Statistics {
                     "每日从 models.dev 更新；同模型价格直接覆盖手工调整，历史调用金额保持不变。",
                     "Daily models.dev updates overwrite matching manual prices; recorded costs stay unchanged.",
                 ))
-                .text_size(px(11.))
+                .text_size(px(crate::theme::font::LABEL))
                 .text_color(rgb(MUTED)),
             )
             .child(table)
@@ -3891,7 +3982,7 @@ impl Statistics {
                                 self.prices.len()
                             )
                         })
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(MUTED)),
                     )
                     .child(
@@ -3900,8 +3991,7 @@ impl Statistics {
                             .items_center()
                             .gap_2()
                             .child(
-                                Button::new("prices-prev")
-                                    .small()
+                                stats_button("prices-prev")
                                     .ghost()
                                     .label(self.t("上一页", "Previous"))
                                     .disabled(
@@ -3918,8 +4008,7 @@ impl Statistics {
                                     })),
                             )
                             .child(
-                                Button::new("prices-page-size")
-                                    .small()
+                                stats_button("prices-page-size")
                                     .ghost()
                                     .label(format!(
                                         "{} {}",
@@ -3937,8 +4026,7 @@ impl Statistics {
                                     })),
                             )
                             .child(
-                                Button::new("prices-next")
-                                    .small()
+                                stats_button("prices-next")
                                     .ghost()
                                     .label(self.t("下一页", "Next"))
                                     .disabled(
@@ -4008,7 +4096,7 @@ impl Statistics {
                             .child(self.filter_label(self.t("缺省默认币种", "Default currency"))),
                     )
                     .children([Currency::Cny, Currency::Usd].into_iter().map(|currency| {
-                        Button::new((
+                        stats_button((
                             "stats-default-currency",
                             if currency == Currency::Cny {
                                 0usize
@@ -4016,7 +4104,6 @@ impl Statistics {
                                 1usize
                             },
                         ))
-                        .small()
                         .outline()
                         .label(currency.as_str())
                         .disabled(
@@ -4030,7 +4117,7 @@ impl Statistics {
                     }))
                     .child(
                         Label::new(self.t("仅新请求", "new requests only"))
-                            .text_size(px(11.))
+                            .text_size(px(crate::theme::font::LABEL))
                             .text_color(rgb(MUTED)),
                     ),
             )
@@ -4054,7 +4141,7 @@ impl Statistics {
                                 Checkbox::new("collect-enabled")
                                     .label(self.t("启用摘要采集", "Enable summary collection"))
                                     .checked(enabled)
-                                    .small()
+                                    .large()
                                     .on_change(cx.listener(move |this, value: &bool, _, cx| {
                                         this.update_settings(*value, retention, revision, cx);
                                     })),
@@ -4064,7 +4151,7 @@ impl Statistics {
                                     "暂停只影响新请求，已接纳的请求仍会结算",
                                     "Pausing only stops new requests; admitted ones still settle",
                                 ))
-                                .text_size(px(11.))
+                                .text_size(px(crate::theme::font::LABEL))
                                 .text_color(rgb(MUTED)),
                             ),
                     ),
@@ -4102,7 +4189,7 @@ impl Statistics {
                                         } else {
                                             format!("retention-{days}")
                                         };
-                                        let button = Button::new(id).small().label(label).on_click(
+                                        let button = stats_button(id).label(label).on_click(
                                             cx.listener(move |this, _, _, cx| {
                                                 this.update_settings(enabled, days, revision, cx)
                                             }),
@@ -4126,7 +4213,7 @@ impl Statistics {
                                     },
                                     self.t("(0 = 永久)", "(0 = forever)")
                                 ))
-                                .text_size(px(11.))
+                                .text_size(px(crate::theme::font::LABEL))
                                 .text_color(rgb(MUTED)),
                             ),
                     ),
@@ -4173,7 +4260,7 @@ impl Statistics {
                                 mode_settings.is_none()
                                     || self.backend.is_busy(&JobKey::ProviderMode(id.clone())),
                             )
-                            .small()
+                            .large()
                             .on_change(cx.listener(move |this, value: &bool, _, cx| {
                                 this.set_provider_mode(id.clone(), *value, mode_revision, cx);
                             })),
@@ -4200,7 +4287,7 @@ impl Statistics {
                     .bg(rgb(0xf7f9fc))
                     .border_b(px(1.))
                     .border_color(rgb(BORDER))
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(MUTED))
                     .child(self.t("供应商", "Provider"))
                     .child(self.t("用量采集方式", "Capture mode")),
@@ -4212,7 +4299,7 @@ impl Statistics {
                         .py(px(16.))
                         .child(
                             Label::new(self.t("暂无供应商", "No providers"))
-                                .text_size(px(11.))
+                                .text_size(px(crate::theme::font::LABEL))
                                 .text_color(rgb(MUTED)),
                         )
                         .into_any_element(),
@@ -4236,10 +4323,11 @@ impl Statistics {
                         self.t("供应商采集模式", "Provider capture modes"),
                     ))
                     .child(
-                        Button::new("provider-modes-refresh")
-                            .small()
+                        stats_button("provider-modes-refresh")
                             .ghost()
-                            .icon(IconName::RefreshCw)
+                            .child(crate::ui_components::action_icon(
+                                Icon::new(IconName::RefreshCw).size(px(16.)),
+                            ))
                             .label(self.t("刷新供应商采集模式", "Reload provider modes"))
                             .on_click(cx.listener(|this, _, _, cx| {
                                 for (id, _) in this
@@ -4271,7 +4359,7 @@ impl Statistics {
                                 .div_ceil(self.storage_page_size)
                                 .max(1)
                         ))
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(MUTED)),
                     )
                     .child(
@@ -4280,8 +4368,7 @@ impl Statistics {
                             .items_center()
                             .gap_2()
                             .child(
-                                Button::new("storage-prev")
-                                    .small()
+                                stats_button("storage-prev")
                                     .ghost()
                                     .label(self.t("上一页", "Previous"))
                                     .disabled(self.storage_page == 0)
@@ -4292,8 +4379,7 @@ impl Statistics {
                                     })),
                             )
                             .child(
-                                Button::new("storage-page-size")
-                                    .small()
+                                stats_button("storage-page-size")
                                     .ghost()
                                     .label(format!(
                                         "{} {}",
@@ -4312,8 +4398,7 @@ impl Statistics {
                                     })),
                             )
                             .child(
-                                Button::new("storage-next")
-                                    .small()
+                                stats_button("storage-next")
                                     .ghost()
                                     .label(self.t("下一页", "Next"))
                                     .disabled(
@@ -4350,7 +4435,7 @@ impl Statistics {
                     .justify_between()
                     .child(
                         Label::new(self.t("危险操作", "Danger zone"))
-                            .text_size(px(11.))
+                            .text_size(px(crate::theme::font::LABEL))
                             .text_color(rgb(MUTED)),
                     )
                     .child(
@@ -4367,7 +4452,7 @@ impl Statistics {
             .when_some(self.maintenance_error.clone(), |this, message| {
                 this.child(
                     Label::new(message)
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(0xa4424a)),
                 )
             })
@@ -4377,7 +4462,7 @@ impl Statistics {
                         "{} {} · {} {}",
                         maintenance_label, task.kind, task.affected_rows, rows_label
                     ))
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(MUTED)),
                 )
             })
@@ -4398,7 +4483,7 @@ impl Statistics {
                                 },
                                 preview.row_count
                             ))
-                            .text_size(px(11.))
+                            .text_size(px(crate::theme::font::LABEL))
                             .text_color(rgb(0xa4424a)),
                         )
                         .child(
@@ -4406,12 +4491,11 @@ impl Statistics {
                                 "保留去重标记，不修改 WorkBuddy 源文件。",
                                 "Deduplication markers remain; WorkBuddy source files are unchanged.",
                             ))
-                            .text_size(px(11.))
+                            .text_size(px(crate::theme::font::LABEL))
                             .text_color(rgb(MUTED)),
                         )
                         .child(
-                            Button::new("clear-confirm")
-                                .small()
+                            stats_button("clear-confirm")
                                 .danger()
                                 .label(self.t("确认清除", "Confirm clear"))
                                 .on_click(cx.listener(|this, _, _, cx| this.confirm_clear(cx))),
@@ -4493,16 +4577,19 @@ impl Statistics {
         crate::ui_components::dialog_body()
             .w_full()
             .gap_3()
-            .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(
-                if self.price_draft.is_editing() {
-                    self.t("编辑价格", "Edit price")
-                } else {
-                    self.t("新建价格规则", "New price rule")
-                },
-            ))
             .child(
                 div()
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::DIALOG_TITLE))
+                    .font_weight(FontWeight::SEMIBOLD)
+                    .child(if self.price_draft.is_editing() {
+                        self.t("编辑价格", "Edit price")
+                    } else {
+                        self.t("新建价格规则", "New price rule")
+                    }),
+            )
+            .child(
+                div()
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(MUTED))
                     .child(self.t(
                         "价格是每百万 Token 的估算单价，不是实际账单",
@@ -4644,21 +4731,23 @@ impl Statistics {
                     "保存后只影响新请求；每个请求保留自己的单价快照",
                     "Saving only affects new requests; each request keeps its own price snapshot",
                 ))
-                .text_size(px(11.))
+                .text_size(px(crate::theme::font::LABEL))
                 .text_color(rgb(MUTED)),
             )
             .when_some(self.price_draft.error.clone(), |this, error| {
                 this.child(
                     Label::new(error)
-                        .text_size(px(11.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .text_color(rgb(0xa4424a)),
                 )
             })
             .child(
                 crate::ui_components::dialog_footer().child(
-                    Button::new("price-save")
+                    stats_button("price-save")
                         .primary()
-                        .icon(IconName::Check)
+                        .child(crate::ui_components::action_icon(
+                            Icon::new(IconName::Check).size(px(16.)),
+                        ))
                         .label(if self.price_draft.pending {
                             self.t("保存中…", "Saving…")
                         } else {

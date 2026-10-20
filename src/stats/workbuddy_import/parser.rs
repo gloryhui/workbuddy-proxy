@@ -416,6 +416,7 @@ pub fn evaluate(line: &[u8], file_stem: &str, namespace_id: &str, now_ms: i64) -
         event_at_ms: identity.event_at_ms,
         upstream_model: identity.upstream_model,
         response_model: identity.response_model,
+        tool_name: None,
         usage,
     }))
 }

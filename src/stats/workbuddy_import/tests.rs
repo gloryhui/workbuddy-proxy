@@ -78,6 +78,7 @@ fn candidate_with(usage: NormalizedUsage) -> super::types::Candidate {
         event_at_ms: 1_792_108_800_000,
         upstream_model: Some("hy3".into()),
         response_model: None,
+        tool_name: None,
         usage,
     }
 }
@@ -110,7 +111,7 @@ fn contract_check_reports_every_invariant() {
 
 #[test]
 fn parser_version_and_entry_domain_are_frozen() {
-    assert_eq!(PARSER_VERSION, 2);
+    assert_eq!(PARSER_VERSION, 3);
     assert_eq!(ENTRY_KEY_DOMAIN, b"wbp-wb-message-v1");
 }
 

@@ -151,7 +151,11 @@ impl Statistics {
             .rounded(px(8.))
             .text_size(px(13.))
             .cursor_pointer()
-            .bg(rgb(if selected { 0x00b29c } else { 0xf1f2f5 }))
+            .bg(rgb(if selected {
+                crate::theme::palette().primary
+            } else {
+                0xf1f2f5
+            }))
             .text_color(rgb(if selected { 0xffffff } else { 0x5c6679 }))
             .when(selected, |button| button.font_weight(FontWeight::SEMIBOLD))
             .when(!selected, |button| {
@@ -200,7 +204,9 @@ impl Statistics {
             .role(Role::RadioGroup)
             .aria_label(self.t("模型来源", "Model source"))
             .track_focus(&self.source_focus)
-            .when(focused, |group| group.border_color(rgb(0x00b29c)))
+            .when(focused, |group| {
+                group.border_color(rgb(crate::theme::palette().primary))
+            })
             .tooltip(move |window, cx| {
                 gpui_kit::component::tooltip::Tooltip::new(label).build(window, cx)
             })
@@ -226,7 +232,18 @@ impl Statistics {
             .flex_wrap()
             .w_full()
             .gap(px(crate::source_filter::GAP as f32))
+            .child(
+                div().w(px(132.)).flex_shrink_0().child(
+                    self.filter_select(&self.kind_select, self.t("记录类型", "Record type")),
+                ),
+            )
             .children(slots.iter().map(|slot| self.filter_control(*slot, cx)))
+            .child(
+                stats_button("reset-stats-filters")
+                    .ghost()
+                    .label(self.t("清除筛选", "Clear filters"))
+                    .on_click(cx.listener(|this, _, window, cx| this.reset_filters(window, cx))),
+            )
             .into_any_element()
     }
 
@@ -253,7 +270,9 @@ impl Statistics {
             FilterSlot::RefreshButton => self.filter_refresh(cx),
             FilterSlot::More => self.filter_more(cx),
         };
-        let width = if self.zh {
+        let width = if matches!(slot, FilterSlot::RefreshButton | FilterSlot::More) {
+            crate::theme::size::SELECT_HEIGHT
+        } else if self.zh {
             match slot {
                 FilterSlot::Provider | FilterSlot::Model => 128.,
                 FilterSlot::Status => 108.,
@@ -278,7 +297,7 @@ impl Statistics {
     fn filter_select(&self, state: &Entity<ChoiceState>, label: &'static str) -> AnyElement {
         crate::ui_components::select(state, false)
             .w_full()
-            .h(px(34.))
+            .h(px(crate::theme::size::SELECT_HEIGHT))
             .rounded(px(8.))
             .bg(rgb(0xffffff))
             .border_color(rgb(0xe1e5eb))
@@ -289,9 +308,9 @@ impl Statistics {
     }
 
     fn filter_refresh(&self, cx: &mut Context<Self>) -> AnyElement {
-        Button::new("stats-refresh")
-            .small()
-            .size(px(32.))
+        stats_button("stats-refresh")
+            .size(px(crate::theme::size::SELECT_HEIGHT))
+            .p_0()
             .ghost()
             .child(img("design/header-refresh.png").size(px(16.)))
             .tooltip(self.t("刷新统计", "Refresh statistics"))
@@ -318,16 +337,21 @@ impl Statistics {
             || !self.provider_query.is_empty()
             || !self.model_query.is_empty()
             || self.import.counters().needs_attention();
-        Button::new("stats-more-filters")
-            .small()
-            .size(px(32.))
+        stats_button("stats-more-filters")
+            .size(px(crate::theme::size::SELECT_HEIGHT))
+            .p_0()
             .ghost()
-            .icon(if self.more_filters_open {
-                IconName::ChevronUp
-            } else {
-                IconName::ChevronDown
+            .child(crate::ui_components::action_icon(
+                Icon::new(if self.more_filters_open {
+                    IconName::ChevronUp
+                } else {
+                    IconName::ChevronDown
+                })
+                .size(px(16.)),
+            ))
+            .when(active, |button| {
+                button.text_color(rgb(crate::theme::palette().dark))
             })
-            .when(active, |button| button.text_color(rgb(0x356fc0)))
             .tooltip(if self.more_filters_open {
                 self.t("收起更多筛选", "Hide more filters")
             } else {

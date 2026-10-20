@@ -1,8 +1,8 @@
 //! Native multi-series usage chart.
 //!
 //! One coordinate system, one hover state and a single tooltip for every visible
-//! series. Values stay `Option<i64>`: a bucket without confirmed usage breaks
-//! the line instead of falling to zero. Quality is conveyed through a compact
+//! series. Values stay `Option<i64>`: unknown intervals are crossed with a
+//! labelled dashed guide instead of falling to zero. Quality uses a compact
 //! warning and the shared native tooltip, leaving the plot background white.
 use crate::{
     stats_dto::{Currency, SeriesPointDto, SeriesQuality},
@@ -15,6 +15,7 @@ use gpui_kit::base::plot::{
 use gpui_kit::component::plot::tooltip::{CrossLine, Dot, Tooltip};
 use gpui_kit::*;
 use std::collections::BTreeSet;
+mod continuity;
 
 /// Order matters: it drives the legend and the tooltip rows.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -317,7 +318,7 @@ impl UsagePlot {
             .iter()
             .filter(|point| point.complete_count > 0)
             .count();
-        if self.zh {
+        let summary = if self.zh {
             format!(
                 "{} 个时间桶，其中 {} 个有完整用量",
                 self.points.len(),
@@ -329,6 +330,10 @@ impl UsagePlot {
                 self.points.len(),
                 known
             )
+        };
+        match self.continuity_note() {
+            Some(note) => format!("{summary}; {note}"),
+            None => summary,
         }
     }
 }
@@ -450,25 +455,28 @@ impl Plot for UsagePlot {
             ChartMode::Cost => vec![&cost],
         };
         for entry in series {
-            // Each contiguous known run becomes its own line, so missing
-            // buckets break the series instead of being bridged.
-            let mut run: Vec<usize> = Vec::new();
-            let mut runs: Vec<Vec<usize>> = Vec::new();
-            for index in 0..count {
-                if entry.ys[index].is_some() {
-                    run.push(index);
-                } else if !run.is_empty() {
-                    runs.push(std::mem::take(&mut run));
-                }
-            }
-            if !run.is_empty() {
-                runs.push(run);
-            }
+            let segments = continuity::segments(&entry.ys);
             let stroke = match self.mode {
                 ChartMode::Tokens => entry.kind.color(),
                 ChartMode::Cost => 0xc2185b,
             };
-            for run in runs {
+            // Guides use only the two measured endpoints. Missing buckets stay
+            // None in the series and tooltip; no interpolated values are made.
+            for (left, right) in segments.bridges {
+                let mut path = PathBuilder::stroke(px(2.)).dash_array(&[px(6.), px(4.)]);
+                let endpoint = |index: usize| {
+                    point(
+                        rect.origin.x + px(xs[index].unwrap()),
+                        rect.origin.y + px(entry.ys[index].unwrap()),
+                    )
+                };
+                path.move_to(endpoint(left));
+                path.line_to(endpoint(right));
+                if let Ok(path) = path.build() {
+                    window.paint_path(path, rgb(stroke).opacity(0.65));
+                }
+            }
+            for run in segments.runs {
                 let single = run.len() == 1;
                 let xs = xs.clone();
                 let ys = entry.ys.clone();
@@ -602,6 +610,9 @@ impl Plot for UsagePlot {
             }
         };
         tooltip = tooltip.plain_row(if self.zh { "数据覆盖" } else { "Coverage" }, quality);
+        for (label, explanation) in self.gap_hints(state.index) {
+            tooltip = tooltip.plain_row(label, explanation);
+        }
         if bucket.collection_warning {
             tooltip = tooltip.plain_row(
                 if self.zh {
@@ -791,6 +802,99 @@ mod tests {
         assert_eq!(chart[1].input, None);
         assert!(chart[1].collection_warning);
         assert_eq!(chart[0].center_ms, 1_800_000);
+    }
+
+    fn continuity_plot(values: &[Option<i64>]) -> UsagePlot {
+        let points = values
+            .iter()
+            .enumerate()
+            .map(|(index, value)| {
+                point(
+                    index as i64 * 3_600_000,
+                    i64::from(value.is_some()),
+                    *value,
+                    if value.is_some() {
+                        SeriesQuality::Known
+                    } else {
+                        SeriesQuality::Unknown
+                    },
+                    value.is_none(),
+                )
+            })
+            .collect::<Vec<_>>();
+        UsagePlot {
+            id: "continuity-test".into(),
+            points: ChartPoint::from_series(&points, crate::stats_dto::Currency::Usd),
+            visible: BTreeSet::from([super::SeriesKind::Input]),
+            zh: true,
+            mode: ChartMode::Tokens,
+            currency: crate::stats_dto::Currency::Usd,
+        }
+    }
+
+    #[test]
+    fn tooltip_explains_gaps_without_interpolating_or_changing_totals() {
+        let plot = continuity_plot(&[Some(100), None, None, Some(400)]);
+        let note = plot.continuity_note().unwrap();
+        assert!(note.contains("虚线") && note.contains("不代表"));
+        assert!(plot.gap_hints(0).is_empty() && plot.gap_hints(3).is_empty());
+        for index in [1, 2] {
+            let hints = plot.gap_hints(index);
+            assert_eq!(hints.len(), 1);
+            assert_eq!(hints[0].0, "输入缺失区间");
+            assert!(hints[0].1.contains("缺失值未知"));
+            assert_eq!(plot.points[index].input, None);
+        }
+        assert_eq!(plot.points.iter().filter_map(|p| p.input).sum::<i64>(), 500);
+        assert!(plot.summary().contains("虚线"));
+    }
+
+    #[test]
+    fn single_zero_sample_has_a_hint_but_empty_or_continuous_series_do_not() {
+        let plot = continuity_plot(&[None, Some(0), None]);
+        assert!(plot.continuity_note().unwrap().contains("仅 1 个数据点"));
+        assert!(plot.gap_hints(0).is_empty() && plot.gap_hints(2).is_empty());
+        assert!(continuity_plot(&[None, None]).continuity_note().is_none());
+        assert!(
+            continuity_plot(&[Some(0), Some(0)])
+                .continuity_note()
+                .is_none()
+        );
+        let mut english = plot;
+        english.zh = false;
+        assert!(
+            english
+                .continuity_note()
+                .unwrap()
+                .contains("only 1 data point")
+        );
+    }
+
+    #[test]
+    fn cache_and_currency_gaps_use_their_own_values_and_visible_series() {
+        let mut plot = continuity_plot(&[Some(100), Some(200), Some(300)]);
+        plot.points[0].cache_read = Some(0);
+        plot.points[2].cache_read = Some(30);
+        plot.visible.insert(super::SeriesKind::CacheRead);
+        assert!(plot.continuity_note().unwrap().contains("虚线"));
+        assert_eq!(plot.gap_hints(1)[0].0, "缓存读缺失区间");
+        plot.visible.remove(&super::SeriesKind::CacheRead);
+        assert!(plot.gap_hints(1).is_empty());
+        assert!(plot.continuity_note().is_none());
+        plot.mode = ChartMode::Cost;
+        plot.currency = crate::stats_dto::Currency::Cny;
+        assert!(
+            plot.continuity_note().is_none(),
+            "Token data is not currency data"
+        );
+        plot.points[1].cost_nanos = Some(0);
+        assert!(plot.continuity_note().unwrap().starts_with("CNY 仅 1"));
+        assert!(plot.gap_hints(0).is_empty());
+        plot.points[1].cost_nanos = None;
+        plot.points[0].cost_nanos = Some(100);
+        plot.points[2].cost_nanos = Some(300);
+        assert_eq!(plot.gap_hints(1)[0].0, "CNY缺失区间");
+        assert_eq!(plot.points[1].cost_nanos, None);
     }
 
     #[test]

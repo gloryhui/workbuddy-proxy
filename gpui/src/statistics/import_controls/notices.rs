@@ -88,13 +88,12 @@ impl Statistics {
                 div()
                     .flex_1()
                     .min_w_0()
-                    .text_size(px(11.))
+                    .text_size(px(crate::theme::font::LABEL))
                     .text_color(rgb(if warning { WARN } else { MUTED }))
                     .child(text),
             )
             .child(
-                Button::new(("workbuddy-notice-action", index))
-                    .small()
+                stats_button(("workbuddy-notice-action", index))
                     .ghost()
                     .label(action)
                     .disabled(

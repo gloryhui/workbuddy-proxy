@@ -458,6 +458,15 @@ stats_enum!(#[derive(Default)] CaptureMethod {
     Workbuddy => "workbuddy",
 });
 
+// Record categories are orthogonal to model origin and capture method.
+stats_enum!(#[derive(Default)] RecordKind {
+    #[default]
+    All => "all",
+    Model => "model",
+    Tool => "tool",
+    OtherCharge => "other_charge",
+});
+
 /// Common read filter shared by dashboard, requests, breakdown and reprice.
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
@@ -469,6 +478,7 @@ pub struct StatsFilter {
     #[serde(default)]
     pub source_scope: SourceScope,
     pub capture_method: CaptureMethod,
+    pub record_kind: RecordKind,
     /// IANA timezone name. Empty asks the core for the local zone.
     pub timezone: String,
     pub provider_id: Option<String>,
@@ -553,6 +563,9 @@ impl StatsFilter {
         // invalidate every cursor issued under the old one.
         push("scope", self.source_scope.as_str());
         push("capture", self.capture_method.as_str());
+        if self.record_kind != RecordKind::All {
+            push("record_kind", self.record_kind.as_str());
+        }
         hasher
             .finalize()
             .iter()

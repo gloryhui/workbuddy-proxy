@@ -1,3 +1,4 @@
+mod skin_controls;
 use crate::{
     backend::{Backend, Job},
     config::{self, Config},
@@ -74,7 +75,7 @@ fn navigation_title(text: &'static str, active: bool) -> Label {
             FontWeight::NORMAL
         })
         .text_color(rgb(if active {
-            crate::theme::color::PRIMARY_DARK
+            crate::theme::palette().dark
         } else {
             crate::theme::color::TEXT_1
         }))
@@ -219,6 +220,8 @@ pub struct Proxy {
     startup_sync_open: bool,
     pending_port: Option<u16>,
     resetting_window: bool,
+    skin_open: bool,
+    skin_error: bool,
     wake: String,
     last_poll: Instant,
     last_dirty: String,
@@ -385,13 +388,17 @@ impl Proxy {
             for item in &items {
                 let code = item.code.clone();
                 let owner = owner.clone();
+                let title = item.title.clone();
                 menu = menu.item(
-                    PopupMenuItem::new(item.title.clone())
-                        .checked(code == selected)
-                        .on_click(move |_, window, cx| {
-                            let _ =
-                                owner.update(cx, |this, cx| this.set_language(&code, window, cx));
-                        }),
+                    PopupMenuItem::element(move |_, _| {
+                        div().min_h(px(32.)).flex().items_center().child(
+                            Label::new(title.clone()).text_size(px(crate::theme::font::BODY)),
+                        )
+                    })
+                    .checked(code == selected)
+                    .on_click(move |_, window, cx| {
+                        let _ = owner.update(cx, |this, cx| this.set_language(&code, window, cx));
+                    }),
                 );
             }
             menu.min_w(px(180.))
@@ -414,6 +421,7 @@ impl Proxy {
             .occlude()
             .on_mouse_down(MouseButton::Left, |_, _, cx| cx.stop_propagation())
             .on_double_click(|_, _, cx| cx.stop_propagation())
+            .child(self.skin_control(cx))
             .child(
                 crate::ui_components::design_header_button(
                     "autostart",
@@ -778,6 +786,8 @@ impl Proxy {
             startup_sync_open: false,
             pending_port: None,
             resetting_window: false,
+            skin_open: false,
+            skin_error: false,
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
@@ -1854,9 +1864,9 @@ impl Proxy {
     fn core_indicator(&self) -> (u32, &'static str, u32) {
         match self.core_state() {
             CoreState::Responding => (
-                crate::theme::color::PRIMARY_DARK,
+                crate::theme::color::SUCCESS,
                 self.t("运行中", "Running"),
-                crate::theme::color::PRIMARY_DARK,
+                crate::theme::color::SUCCESS,
             ),
             CoreState::Unknown => (
                 crate::theme::color::TEXT_3,
@@ -1879,7 +1889,7 @@ impl Proxy {
     fn status_bar(&self) -> AnyElement {
         let (dot, text, text_color) = match self.core_state() {
             CoreState::Responding => (
-                crate::theme::color::PRIMARY_DARK,
+                crate::theme::color::SUCCESS,
                 self.t("本地代理运行中", "Local relay running"),
                 crate::theme::color::TEXT_3,
             ),
@@ -1987,16 +1997,14 @@ impl Proxy {
                     .h(px(crate::theme::size::PROVIDER_ROW_HEIGHT))
                     .px_2()
                     .rounded(px(crate::theme::radius::CONTROL))
-                    .when(active, |this| {
-                        this.bg(rgb(crate::theme::color::PRIMARY_TINT))
-                    })
+                    .when(active, |this| this.bg(rgb(crate::theme::palette().tint)))
                     .when(!active, |this| this.bg(rgb(crate::theme::color::BG_PAGE)))
                     // The pre-T03 `SidebarMenuItem` was disabled as a whole while
                     // busy: no click handler ran and the row read as muted. Keep
                     // both halves so the row cannot act or look active.
                     .when(self.busy, |this| this.opacity(0.55))
                     .when(!self.busy, |this| {
-                        this.hover(|this| this.bg(rgb(crate::theme::color::PRIMARY_TINT)))
+                        this.hover(|this| this.bg(rgb(crate::theme::palette().tint)))
                     })
                     .role(Role::TreeItem)
                     .aria_label(name.clone())
@@ -2006,7 +2014,7 @@ impl Proxy {
                             .flex_shrink_0()
                             .size(px(crate::theme::size::PROVIDER_DOT))
                             .rounded_full()
-                            .bg(rgb(crate::theme::color::PRIMARY)),
+                            .bg(rgb(crate::theme::palette().primary)),
                     )
                     .child(
                         div()
@@ -2064,7 +2072,7 @@ impl Proxy {
                     .flex_shrink_0()
                     .size(px(BRAND_MARK_SIZE))
                     .rounded(px(BRAND_MARK_RADIUS))
-                    .bg(rgb(crate::theme::color::PRIMARY))
+                    .bg(rgb(crate::theme::palette().primary))
                     .overflow_hidden()
                     .child(img("brand.png").size(px(BRAND_MARK_SIZE))),
             )
@@ -2120,7 +2128,7 @@ impl Proxy {
                     .h(px(crate::theme::size::NAV_ROW_HEIGHT))
                     .flex_shrink_0()
                     .when(providers_active, |button| {
-                        button.bg(rgb(crate::theme::color::PRIMARY_TINT))
+                        button.bg(rgb(crate::theme::palette().tint))
                     })
                     .accessibility_label(self.t("供应商管理", "Providers"))
                     .tooltip(if self.providers_expanded {
@@ -2144,7 +2152,7 @@ impl Proxy {
                                 } else {
                                     IconName::ChevronRight
                                 })
-                                .size_3(),
+                                .with_size(px(16.)),
                             ),
                     )
                     .on_click(cx.listener(|this, _, window, cx| {
@@ -2166,23 +2174,18 @@ impl Proxy {
                         .overflow_y_scroll()
                         .children(rows),
                 )
-                // Measured with the real button helper: zh 52/52/52, en
-                // 51/57/69 (the widest label is the English "Delete"), each
-                // including the 16px icon, its gap and 8px side padding. The
-                // row needs ~193px, so SIDEBAR_WIDTH grew from 224 to 256: the
-                // three actions stay on one line, inside the rail, and every
-                // id, callback, disabled state, tooltip and a11y label is
-                // unchanged.
+                // Three equal tracks keep all provider actions on one line.
+                // The compact padding reserves space for 13px English labels
+                // and 16px icons without reducing the shared 32px hit height.
                 .child(
                     div()
-                        .flex()
-                        .flex_row()
+                        .grid()
+                        .grid_cols(3)
                         .items_center()
-                        .justify_between()
-                        .gap_2()
+                        .gap(px(4.))
                         .w_full()
                         .min_h(px(crate::theme::size::FOOTER_HEIGHT))
-                        .px_2()
+                        .px(px(4.))
                         .py_2()
                         .flex_shrink_0()
                         .border_t_1()
@@ -2195,9 +2198,10 @@ impl Proxy {
                                 self.busy,
                                 false,
                             )
-                            .icon(IconName::Plus)
-                            .flex_shrink_0()
-                            .px(px(crate::theme::size::BUTTON_X_TIGHT))
+                            .child(crate::ui_components::action_icon(IconName::Plus))
+                            .w_full()
+                            .min_w_0()
+                            .px(px(1.))
                             .tooltip(self.t("新增供应商", "Add provider"))
                             .accessibility_label(self.t("新增供应商", "Add provider"))
                             .on_click(cx.listener(|this, _, _, cx| {
@@ -2213,9 +2217,10 @@ impl Proxy {
                                 self.busy || selected.is_empty(),
                                 false,
                             )
-                            .icon(IconName::Copy)
-                            .flex_shrink_0()
-                            .px(px(crate::theme::size::BUTTON_X_TIGHT))
+                            .child(crate::ui_components::action_icon(IconName::Copy))
+                            .w_full()
+                            .min_w_0()
+                            .px(px(1.))
                             .tooltip(self.t("复制供应商", "Duplicate provider"))
                             .accessibility_label(self.t("复制供应商", "Duplicate provider"))
                             .on_click(cx.listener(|this, _, _, cx| {
@@ -2234,9 +2239,10 @@ impl Proxy {
                                 self.busy || selected.is_empty(),
                                 false,
                             )
-                            .icon(IconName::Delete)
-                            .flex_shrink_0()
-                            .px(px(crate::theme::size::BUTTON_X_TIGHT))
+                            .child(crate::ui_components::action_icon(IconName::Delete))
+                            .w_full()
+                            .min_w_0()
+                            .px(px(1.))
                             .tooltip(self.t("删除供应商", "Delete provider"))
                             .accessibility_label(self.t("删除供应商", "Delete provider"))
                             .on_click(cx.listener(|this, _, _, cx| {
@@ -2267,7 +2273,7 @@ impl Proxy {
                     .flex_shrink_0()
                     .justify_start()
                     .when(statistics_active, |button| {
-                        button.bg(rgb(crate::theme::color::PRIMARY_TINT))
+                        button.bg(rgb(crate::theme::palette().tint))
                     })
                     .accessibility_label(self.t("数据统计", "Statistics"))
                     .child(div().flex().flex_1().items_center().child(navigation_title(
@@ -2281,7 +2287,10 @@ impl Proxy {
             .child(panel)
             .into_any_element()
     }
-    fn center(&mut self, cx: &mut Context<Self>) -> AnyElement {
+    fn center(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
+        // Keep the two action groups intact. Automatic flex wrapping can measure
+        // this footer as one row while placing controls below its bounds.
+        let stacked_actions = window.viewport_size().width < px(1280.);
         if self.selected().is_empty() {
             return card("empty-provider")
                 .flex_1()
@@ -2300,7 +2309,7 @@ impl Proxy {
                     "Configure an API URL, key and models to get started",
                 )))
                 .child(
-                    Button::new("first-provider")
+                    crate::ui_components::action_button("first-provider")
                         .primary()
                         .label(self.t("添加供应商", "Add provider"))
                         .on_click(cx.listener(|this, _, _, cx| {
@@ -2463,7 +2472,7 @@ impl Proxy {
                                             self.busy,
                                             false,
                                         )
-                                        .icon(IconName::RefreshCw)
+                                        .child(crate::ui_components::action_icon(IconName::RefreshCw))
                                         .on_click(cx.listener(|this, _, _, cx|{
                                             this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string(),"protocol":this.protocol_payload()["protocol"],"protocol_settings":this.protocol_payload()["protocol_settings"]})],cx);
                                         })),
@@ -2524,14 +2533,32 @@ impl Proxy {
             )
             .child(
                 div()
+                    .id("provider-actions")
+                    .w_full()
                     .flex_shrink_0()
                     .flex()
                     .items_center()
+                    .justify_between()
                     .gap(px(crate::theme::space::CARD_GAP))
-                    .child(field_label(self.t("思考强度", "Thinking effort")))
-                    .child(self.effort_menu())
-                    .child(div().flex_1())
+                    .h(px(if stacked_actions { 84. } else { 36. }))
+                    .when(stacked_actions, |this| this.flex_col().items_stretch())
                     .child(
+                        div()
+                            .flex()
+                            .flex_shrink_0()
+                            .items_center()
+                            .gap(px(crate::theme::space::CARD_GAP))
+                            .child(field_label(self.t("思考强度", "Thinking effort")))
+                            .child(self.effort_menu()),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .flex_shrink_0()
+                            .items_center()
+                            .justify_end()
+                            .gap(px(crate::theme::space::CARD_GAP))
+                            .child(
                         crate::ui_components::button(
                             "test",
                             crate::ui_components::ButtonKind::Outline,
@@ -2540,8 +2567,8 @@ impl Proxy {
                             self.busy,
                         )
                         .on_click(cx.listener(|this, _, _, cx| this.test(cx))),
-                    )
-                    .child(
+                            )
+                            .child(
                         crate::ui_components::button(
                             "save",
                             crate::ui_components::ButtonKind::Primary,
@@ -2549,8 +2576,9 @@ impl Proxy {
                             self.busy,
                             self.busy,
                         )
-                        .icon(IconName::Check)
+                        .child(crate::ui_components::action_icon(IconName::Check))
                         .on_click(cx.listener(|this, _, window, cx| this.save(&Save, window, cx))),
+                            ),
                     ),
             )
             .into_any_element()
@@ -2593,6 +2621,8 @@ impl Proxy {
             })
             .child(
                 div()
+                    .id("workbuddy-sync-actions")
+                    .w_full()
                     .flex()
                     .items_center()
                     .gap(px(crate::theme::space::ROW_GAP))
@@ -2604,7 +2634,8 @@ impl Proxy {
                             self.busy,
                             false,
                         )
-                        .icon(IconName::RefreshCw)
+                        .px(px(crate::theme::size::BUTTON_X_TIGHT))
+                        .child(crate::ui_components::action_icon(IconName::RefreshCw))
                         .on_click(cx.listener(|this, _, _, cx| {
                             this.sync_open = true;
                             cx.notify();
@@ -2618,7 +2649,8 @@ impl Proxy {
                             self.busy,
                             false,
                         )
-                        .icon(IconName::Delete)
+                        .px(px(crate::theme::size::BUTTON_X_TIGHT))
+                        .child(crate::ui_components::action_icon(IconName::Delete))
                         .tooltip(self.t(
                             "移除代理同步到 WorkBuddy 的模型",
                             "Remove proxy models synced to WorkBuddy",
@@ -2682,7 +2714,7 @@ impl Proxy {
                         Label::new(self.proxy_address.clone())
                             .font_family(mono.clone())
                             .text_size(px(crate::theme::font::BODY))
-                            .text_color(rgb(crate::theme::color::PRIMARY_DARK)),
+                            .text_color(rgb(crate::theme::palette().dark)),
                     )
                     .child(
                         div()
@@ -2885,7 +2917,7 @@ impl Proxy {
                 )
                 .into_any_element()
         } else if self.picker.is_some() {
-            self.picker_dialog(cx)
+            self.picker_dialog(window, cx)
         } else if self.editing.is_some() {
             crate::ui_components::dialog_body_sized(window.viewport_size().height, 210., 360., 570.)
                 .child(crate::ui_components::dialog_title(if self.new_model {
@@ -3211,7 +3243,7 @@ impl Proxy {
         Some(content)
     }
 
-    fn picker_dialog(&mut self, cx: &mut Context<Self>) -> AnyElement {
+    fn picker_dialog(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
         let filtered = self.filtered(cx);
         let count = filtered.len();
         let chosen = self.picked.len();
@@ -3235,7 +3267,7 @@ impl Proxy {
         };
         crate::ui_components::dialog_body()
             .w_full()
-            .h(px(550.))
+            .h((window.viewport_size().height - px(210.)).clamp(px(260.), px(550.)))
             .gap(px(crate::theme::space::CARD_GAP))
             .child(
                 div()
@@ -3430,7 +3462,7 @@ impl Render for Proxy {
         self.refresh_table(window, cx);
         let sidebar = self.sidebar(cx);
         let center = match self.page {
-            Page::Providers => self.center(cx),
+            Page::Providers => self.center(window, cx),
             Page::Statistics => self.statistics.clone().into_any_element(),
         };
         let right = self.right(cx);

@@ -126,13 +126,13 @@ impl Statistics {
             });
         let label = format!("{title}. {detail}");
         div().flex().flex_col().w_full().gap_1()
-            .child(Label::new(title).text_size(px(11.)).text_color(rgb(MUTED)))
+            .child(Label::new(title).text_size(px(crate::theme::font::LABEL)).text_color(rgb(MUTED)))
             .child(Progress::new("wb-import-progress").small().w_full()
                 .value(if known { snapshot.map_or(0., Snapshot::percent) } else { 0. })
                 .loading(snapshot.is_some() && enabled && !error && !known)
                 .accessibility_label(label))
-            .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(detail))
-            .child(div().text_size(px(11.)).text_color(rgb(MUTED)).child(self.t(
+            .child(div().text_size(px(crate::theme::font::LABEL)).text_color(rgb(MUTED)).child(detail))
+            .child(div().text_size(px(crate::theme::font::LABEL)).text_color(rgb(MUTED)).child(self.t(
                 "按最近发现的文件快照计算；已去重副本与异常记录不计入未读积压。",
                 "Based on the last discovered file snapshot; deduplicated copies and anomalies are separate from unread backlog.")))
             .into_any_element()

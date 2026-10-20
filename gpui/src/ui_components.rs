@@ -35,6 +35,22 @@ pub enum ButtonKind {
     Ghost,
 }
 
+/// Shared logical-pixel action profile. Custom size keeps button text at
+/// the theme body size instead of the rem-relative Small text variant.
+pub fn action_button(id: impl Into<ElementId>) -> Button {
+    Button::new(id)
+        .with_size(px(size::BUTTON_HEIGHT))
+        .h(px(size::BUTTON_HEIGHT))
+        .px(px(size::BUTTON_PADDING_X))
+        .rounded(px(radius::CONTROL))
+}
+
+/// Add icons as content: Button::icon resizes its icon during rendering,
+/// overriding even an explicitly sized Icon in gpui-component 0.7.3.
+pub fn action_icon(icon: impl Into<Icon>) -> Icon {
+    icon.into().with_size(px(16.))
+}
+
 /// Standard labelled button. A busy button is both disabled and loading, so a
 /// second click cannot reach the caller's handler while work is in flight.
 ///
@@ -49,8 +65,7 @@ pub fn button(
     disabled: bool,
     busy: bool,
 ) -> Button {
-    let button = Button::new(id)
-        .small()
+    let button = action_button(id)
         .h(px(size::BUTTON_HEIGHT))
         .px(px(size::BUTTON_PADDING_X))
         .label(label)
@@ -97,7 +112,9 @@ pub fn icon_button_sized(
     Button::new(id)
         .with_size(px(button_size))
         .ghost()
-        .icon(icon)
+        .size(px(button_size))
+        .p_0()
+        .child(action_icon(icon))
         .tooltip(tooltip)
         .accessibility_label(accessibility_label)
         .disabled(disabled)
@@ -154,7 +171,9 @@ pub fn named_icon_button_sized(
     Button::new(id)
         .with_size(px(button_size))
         .ghost()
-        .icon(icon)
+        .size(px(button_size))
+        .p_0()
+        .child(action_icon(icon))
         .tooltip(tooltip)
         .accessibility_label(accessibility_label)
         .disabled(disabled)
@@ -165,7 +184,9 @@ pub fn named_icon_button_sized(
 pub fn text_input(state: &Entity<InputState>, disabled: bool) -> Input {
     // Input::h is an inherent multi-line-only API in Kit 0.7.3. Use Styled::h
     // so the single-line field's final style overrides its rem-based size.
-    Styled::h(Input::new(state), px(size::INPUT_HEIGHT)).disabled(disabled)
+    Styled::h(Input::new(state).large(), px(size::INPUT_HEIGHT))
+        .text_size(px(font::BODY))
+        .disabled(disabled)
 }
 
 /// Masked input (API keys) with the same field metrics and mask toggle.
@@ -175,7 +196,7 @@ pub fn masked_input(state: &Entity<InputState>, disabled: bool) -> Input {
 
 /// Filter/search input with compact text and the shared 36px hit area.
 pub fn compact_input(state: &Entity<InputState>, disabled: bool) -> Input {
-    text_input(state, disabled).small()
+    text_input(state, disabled)
 }
 
 /// Select wrapper; the state, items and keyboard behavior stay with the caller.
@@ -185,7 +206,7 @@ where
     <D::Item as SearchableListItem>::Value: PartialEq + Clone,
 {
     Select::new(state)
-        .small()
+        .large()
         .h(px(size::SELECT_HEIGHT))
         .disabled(disabled)
 }
@@ -201,7 +222,8 @@ pub fn checkbox(
         .label(label.into())
         .checked(checked)
         .disabled(disabled)
-        .small()
+        .large()
+        .text_size(px(font::BODY))
 }
 
 /// One button in a segmented control. The row helper below only supplies the
@@ -212,8 +234,7 @@ pub fn segment_button(
     active: bool,
     disabled: bool,
 ) -> Button {
-    Button::new(id)
-        .small()
+    action_button(id)
         .label(label)
         .disabled(disabled)
         .when(active, |button| button.primary().outline())
@@ -259,17 +280,17 @@ pub fn content_card(id: impl Into<ElementId>) -> Stateful<Div> {
         .gap(px(6.))
 }
 
-/// Table frame with the shared 32px header and both scrollbars visible.
+/// Table frame with the shared 32px header, 36px rows and both scrollbars visible.
 pub fn table<D: TableDelegate>(state: &Entity<TableState<D>>) -> DataTable<D> {
     DataTable::new(state)
-        .small()
+        .with_size(px(size::LIST_ROW_HEIGHT))
         .header_row_height(px(size::TABLE_HEADER_HEIGHT))
         .scrollbar_visible(true, true)
 }
 
 /// Request-log table: DESIGN_SPEC §4.1.5 fixes a 56px body row while the
 /// header keeps the shared 32px height. Only the log uses this; the aggregate
-/// tables stay on the default 30px rows.
+/// tables stay on the shared 36px rows.
 pub fn log_table<D: TableDelegate>(state: &Entity<TableState<D>>) -> DataTable<D> {
     table(state).with_size(px(size::TABLE_ROW_HEIGHT))
 }
@@ -322,11 +343,7 @@ pub fn pager_button(
     label: impl Into<SharedString>,
     disabled: bool,
 ) -> Button {
-    Button::new(id)
-        .small()
-        .ghost()
-        .label(label)
-        .disabled(disabled)
+    action_button(id).ghost().label(label).disabled(disabled)
 }
 
 /// Muted pager/status label.
@@ -355,5 +372,84 @@ pub fn tag(kind: TagKind, label: impl Into<SharedString>) -> Tag {
         TagKind::Warning => Tag::warning(),
         TagKind::Danger => Tag::danger(),
     };
-    tag.small().child(label.into().to_string())
+    tag.small()
+        .text_size(px(font::TAG))
+        .h(px(20.))
+        .px(px(5.))
+        .child(label.into().to_string())
+}
+
+/// Use the Kit's existing calendar state, keyboard handling and date selection,
+/// with explicit typography for all days, month/year pickers and navigation.
+/// Styling only the facade's outer element cannot override its tiny day labels.
+pub fn calendar(
+    state: &Entity<gpui_kit::component::calendar::CalendarState>,
+    zh: bool,
+) -> impl IntoElement {
+    use gpui_kit::base::{Calendar, CalendarItemKind as Kind};
+    Calendar::new(("calendar", state.entity_id()), state)
+        .first_day_of_week(chrono::Weekday::Mon)
+        .label(move |kind, value| {
+            match kind {
+                Kind::Previous => "‹".to_owned(),
+                Kind::Next => "›".to_owned(),
+                Kind::MonthToggle | Kind::Month if zh => format!("{value}月"),
+                Kind::MonthToggle | Kind::Month => [
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
+                    "Dec",
+                ]
+                .get((value - 1) as usize)
+                .unwrap_or(&"")
+                .to_string(),
+                Kind::Weekday => if zh {
+                    ["日", "一", "二", "三", "四", "五", "六"]
+                } else {
+                    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+                }
+                .get(value as usize)
+                .unwrap_or(&"")
+                .to_string(),
+                _ => value.to_string(),
+            }
+            .into()
+        })
+        .item(|item, state, _, _| {
+            let heading = matches!(state.kind(), Kind::MonthToggle | Kind::YearToggle);
+            let weekday = state.kind() == Kind::Weekday;
+            item.size(px(36.))
+                .flex()
+                .items_center()
+                .justify_center()
+                .rounded(px(radius::CONTROL))
+                .text_size(px(if weekday { font::LABEL } else { font::BODY }))
+                .text_color(rgb(color::TEXT_1))
+                .when(heading, |item| {
+                    item.w_auto().px(px(8.)).font_weight(FontWeight::SEMIBOLD)
+                })
+                .when(matches!(state.kind(), Kind::Month | Kind::Year), |item| {
+                    item.w_full()
+                })
+                .when(weekday || state.is_muted(), |item| {
+                    item.text_color(rgb(color::TEXT_3))
+                })
+                .when(state.is_disabled(), |item| item.opacity(0.5))
+                .when(state.is_in_range() || state.is_today(), |item| {
+                    item.bg(rgb(crate::theme::palette().tint))
+                })
+                .when(
+                    !weekday && !state.is_disabled() && !state.is_active(),
+                    |item| item.hover(|style| style.bg(rgb(crate::theme::palette().tint))),
+                )
+                .when(state.is_active(), |item| {
+                    item.bg(rgb(crate::theme::palette().primary))
+                        .text_color(rgb(color::WHITE))
+                })
+                .into_any_element()
+        })
+        .w(px(280.))
+        .flex_shrink_0()
+        .p(px(12.))
+        .border_1()
+        .border_color(rgb(color::BORDER))
+        .rounded(px(radius::CARD))
 }

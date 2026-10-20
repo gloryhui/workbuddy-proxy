@@ -38,9 +38,9 @@ fn from_fact(
     use rusqlite::OptionalExtension;
     let value=tx.query_row("SELECT upstream_model,response_model,usage_status,usage_reason,
         input_tokens,output_tokens,total_tokens,total_tokens_derived,cache_read_tokens,cache_write_tokens,
-        reasoning_tokens,input_breakdown,workbuddy_credit_nanos FROM usage_requests
+        reasoning_tokens,input_breakdown,workbuddy_credit_nanos,route_name FROM usage_requests
         WHERE request_id=?1 AND record_origin IN ('workbuddy_builtin','workbuddy_custom')",params![ledger.entry_key],|row| {
-        Ok((row.get::<_,Option<String>>(0)?,row.get::<_,Option<String>>(1)?,serde_json::json!({
+        Ok((row.get::<_,Option<String>>(0)?,row.get::<_,Option<String>>(1)?,row.get::<_,String>(13)?,serde_json::json!({
             "status":row.get::<_,String>(2)?,"reason":row.get::<_,Option<String>>(3)?,
             "input_tokens":row.get::<_,Option<i64>>(4)?,"output_tokens":row.get::<_,Option<i64>>(5)?,
             "total_tokens":row.get::<_,Option<i64>>(6)?,"total_tokens_derived":row.get::<_,bool>(7)?,
@@ -50,7 +50,7 @@ fn from_fact(
         })))
     }).optional()?;
     value
-        .map(|(upstream_model, response_model, usage)| {
+        .map(|(upstream_model, response_model, route_name, usage)| {
             Ok(Candidate {
                 entry_key: ledger.entry_key.clone(),
                 session_hash: ledger.session_hash.clone(),
@@ -59,6 +59,10 @@ fn from_fact(
                 event_at_ms: ledger.event_at_ms,
                 upstream_model,
                 response_model,
+                tool_name: (ledger.requested_model.as_deref()
+                    == Some("workbuddy-credit:generation_tool")
+                    && route_name != "workbuddy-credit:generation_tool")
+                    .then_some(route_name),
                 usage: serde_json::from_value::<NormalizedUsage>(usage)
                     .map_err(|_| store::StoreError::CandidateNotAllowed)?,
             })
@@ -110,6 +114,7 @@ fn reclassify(
         event_at_ms: ledger.event_at_ms,
         upstream_model: None,
         response_model: None,
+        tool_name: None,
         usage: NormalizedUsage::missing(),
     };
     let (attribution, mapping_id) = store::attribute_candidate(

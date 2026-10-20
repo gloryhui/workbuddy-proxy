@@ -18,9 +18,14 @@ use gpui_kit::component::{
 use gpui_kit::prelude::FluentBuilder;
 use gpui_kit::*;
 
+mod charge_labels;
+pub use charge_labels::{
+    is_charge, is_tool_charge, model_label, model_text, requested_text, route_text,
+};
+
 pub fn muted(text: impl Into<SharedString>) -> Label {
     Label::new(text)
-        .text_size(px(11.))
+        .text_size(px(crate::theme::font::LABEL))
         .text_color(rgb(0x6b7c90))
 }
 
@@ -313,9 +318,18 @@ pub fn usage_label(status: UsageStatus, zh: bool) -> (String, Tag) {
         UsageStatus::Partial => (if zh { "部分" } else { "Partial" }, Tag::warning()),
         UsageStatus::Missing => (if zh { "缺失" } else { "Missing" }, Tag::secondary()),
         UsageStatus::Invalid => (if zh { "无效" } else { "Invalid" }, Tag::danger()),
-        UsageStatus::NotApplicable => (if zh { "不适用" } else { "N/A" }, Tag::secondary()),
+        UsageStatus::NotApplicable => (
+            if zh { "Token 不适用" } else { "Tokens N/A" },
+            Tag::secondary(),
+        ),
     };
-    (text.to_owned(), tag.small())
+    (
+        text.to_owned(),
+        tag.small()
+            .text_size(px(crate::theme::font::TAG))
+            .h(px(20.))
+            .px(px(5.)),
+    )
 }
 
 pub fn cost_label(status: CostStatus, zh: bool) -> String {
@@ -378,7 +392,7 @@ fn cell(
     id: (&'static str, usize),
 ) -> AnyElement {
     let text = Label::new(primary)
-        .text_size(px(12.))
+        .text_size(px(crate::theme::font::BODY))
         .text_color(rgb(color))
         .w_full()
         .text_ellipsis();
@@ -402,6 +416,19 @@ fn cell(
 /// Compact two-line reading order: total, input/output, then cache hit/read.
 /// Values stay together instead of spreading into proportional pseudo-columns.
 fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+    if is_charge(item) {
+        return div()
+            .flex()
+            .flex_col()
+            .gap_1()
+            .child(muted(if zh { "Token 不适用" } else { "Tokens N/A" }))
+            .child(muted(if zh {
+                "独立收费项"
+            } else {
+                "Standalone charge"
+            }))
+            .into_any_element();
+    }
     let hit = cache_rate(item.cache_read_tokens, item.input_tokens);
     let total = compact(item.total_tokens, zh);
     let breakdown = format!(
@@ -446,7 +473,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         hit_text,
     );
     let hit_color = match hit {
-        Some(value) if value >= 0.8 => crate::theme::color::PRIMARY_DARK,
+        Some(value) if value >= 0.8 => crate::theme::color::SUCCESS,
         Some(_) => crate::theme::color::WARNING,
         None => crate::theme::color::TEXT_3,
     };
@@ -492,7 +519,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                 .child(
                     Label::new(total)
                         .flex_shrink_0()
-                        .text_size(px(12.))
+                        .text_size(px(crate::theme::font::BODY))
                         .line_height(px(18.))
                         .font_weight(FontWeight::SEMIBOLD)
                         .text_color(rgb(crate::theme::color::TEXT_1)),
@@ -502,7 +529,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                         .flex_1()
                         .min_w_0()
                         .text_ellipsis()
-                        .text_size(px(12.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .line_height(px(18.))
                         .text_color(rgb(crate::theme::color::TEXT_3)),
                 ),
@@ -520,7 +547,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                     Label::new(hit_text)
                         .w(px(42.))
                         .flex_shrink_0()
-                        .text_size(px(12.))
+                        .text_size(px(crate::theme::font::BODY))
                         .line_height(px(16.))
                         .text_color(rgb(hit_color)),
                 )
@@ -529,7 +556,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                         .flex_1()
                         .min_w_0()
                         .text_ellipsis()
-                        .text_size(px(12.))
+                        .text_size(px(crate::theme::font::LABEL))
                         .line_height(px(16.))
                         .text_color(rgb(crate::theme::color::TEXT_3)),
                 ),
@@ -568,9 +595,21 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                 .flex_1()
                 .min_w_0()
                 .text_ellipsis()
-                .text_size(px(12.))
+                .text_size(px(crate::theme::font::BODY))
                 .text_color(rgb(0x19334d)),
         )
+        .when(is_tool_charge(item), |this| {
+            this.child(
+                crate::ui_components::tag(
+                    crate::ui_components::TagKind::Secondary,
+                    if zh { "工具" } else { "Tool" },
+                )
+                .text_size(px(crate::theme::font::TAG))
+                .h(px(20.))
+                .px(px(5.))
+                .flex_shrink_0(),
+            )
+        })
         .child(
             crate::ui_components::tag(
                 match item.origin {
@@ -581,6 +620,9 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                 },
                 origin_text(item.origin, zh),
             )
+            .text_size(px(crate::theme::font::TAG))
+            .h(px(20.))
+            .px(px(5.))
             .flex_shrink_0(),
         )
         .into_any_element()
@@ -589,6 +631,37 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
 /// Estimated cost cell: the amount on the first line and the WorkBuddy credit
 /// on the second, so the eleven DTO fields survive the nine-column design.
 fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+    if item.source == Source::JsonlImport && item.origin.is_imported() {
+        let credit = item
+            .workbuddy_credit_nanos
+            .as_deref()
+            .and_then(format_credit_nanos);
+        let value = credit.map_or_else(
+            || {
+                if zh {
+                    "积分未记录"
+                } else {
+                    "Credits not recorded"
+                }
+                .to_owned()
+            },
+            |credit| format!("{credit} {}", if zh { "积分" } else { "credits" }),
+        );
+        return div()
+            .id(("usage-cost", row))
+            .flex()
+            .flex_col()
+            .justify_center()
+            .h_full()
+            .gap_1()
+            .child(strong(value))
+            .child(crate::usage_table::muted(if zh {
+                "日志记录值"
+            } else {
+                "Logged amount"
+            }))
+            .into_any_element();
+    }
     let status = item
         .cost
         .as_ref()
@@ -652,7 +725,7 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                 .w_full()
                 .min_w_0()
                 .text_ellipsis()
-                .text_size(px(12.))
+                .text_size(px(crate::theme::font::BODY))
                 .text_color(rgb(if muted { 0x8a98a7 } else { 0x19334d })),
         )
         .child(
@@ -660,7 +733,7 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                 .w_full()
                 .min_w_0()
                 .text_ellipsis()
-                .text_size(px(10.))
+                .text_size(px(crate::theme::font::LABEL))
                 .text_color(rgb(0x6b7c90)),
         )
         .into_any_element()
@@ -776,7 +849,7 @@ impl UsageRows {
                 ("model", "模型"),
                 ("request", "请求标识"),
                 ("tokens", "Token / 缓存命中率"),
-                ("cost", "估算费用"),
+                ("cost", "费用 / 积分"),
                 ("latency", "耗时"),
                 ("speed", "tok/s"),
                 ("status", "状态"),
@@ -788,7 +861,7 @@ impl UsageRows {
                 ("model", "Model"),
                 ("request", "Request"),
                 ("tokens", "Tokens / cache hit rate"),
-                ("cost", "Est. cost"),
+                ("cost", "Cost / credits"),
                 ("latency", "Latency"),
                 ("speed", "tok/s"),
                 ("status", "Status"),
@@ -867,13 +940,19 @@ impl TableDelegate for UsageRows {
             ),
             1 => provider_cell(item, row, zh),
             2 => cell(
-                item.upstream_model.clone(),
+                model_text(item, zh),
                 Some(format!(
                     "{}\n{}\n{}{}",
                     item.provider_name,
-                    item.route_name,
-                    if zh { "请求模型 " } else { "requested " },
-                    item.requested_model
+                    route_text(item, zh),
+                    if is_charge(item) {
+                        if zh { "收费项 " } else { "Charge " }
+                    } else if zh {
+                        "请求模型 "
+                    } else {
+                        "requested "
+                    },
+                    requested_text(item, zh)
                 )),
                 0x19334d,
                 ("usage-model", row),
@@ -1079,8 +1158,12 @@ impl TableDelegate for GroupRows {
         let summary = &item.summary;
         match col {
             0 => cell(
-                item.label.clone(),
-                Some(format!("{}\n{}", item.key, item.provider_count)),
+                model_label(&item.label, zh),
+                Some(format!(
+                    "{}\n{}",
+                    model_label(&item.key, zh),
+                    item.provider_count
+                )),
                 0x19334d,
                 ("group-key", row),
             ),
@@ -1131,6 +1214,26 @@ impl TableDelegate for GroupRows {
                 ("group-cache", row),
             ),
             4 => {
+                if summary.proxy_record_count == 0
+                    && let Some(credit) = summary
+                        .credit_nanos
+                        .as_deref()
+                        .and_then(format_credit_nanos)
+                {
+                    return cell(
+                        format!("{credit} {}", if zh { "积分" } else { "credits" }),
+                        Some(
+                            if zh {
+                                "日志记录值"
+                            } else {
+                                "Logged amount"
+                            }
+                            .into(),
+                        ),
+                        0x19334d,
+                        ("group-cost", row),
+                    );
+                }
                 let text = if summary.costs.is_empty() {
                     if summary.unpriced_request_count > 0 {
                         if zh { "未定价" } else { "Unpriced" }.to_owned()

@@ -27,7 +27,9 @@ providerData.messageId 表示模型响应的已保存标识，**不是已证明�
 
 v2 的 `credit-usage` 只读取 `timestamp`、可选 `sessionId` 和 `providerData` 中的 `credit/source/stageId/conversationRequestId`。缺 sessionId 时使用文件 stem；显式不匹配仍拒绝。收费身份使用独立 hash 域及 namespace + conversationRequestId + stageId，不使用随机历史 id、模型 messageId、金额或相近时间推断。跨批次、文件副本、重扫及重启都通过同一账本去重；同阶段金额不一致仍为 conflict。缺阶段/请求标识不猜测收费身份。
 
-独立收费以 `workbuddy-credit:<source>` 单列内置收费项（WorkBuddy 支持 generation_tool、team_member），参与 WorkBuddy 积分总计，不伪造 Token、模型推理次数、HTTP 状态或货币费用。生成工具包含图片生成/编辑、视频生成和音频转录，金额以 WorkBuddy 已保存的收费回执为准，不再次累加工具结果。完整原文、图片、工具参数仍不保存。
+独立收费以 `workbuddy-credit:<source>` 单列内置收费项（WorkBuddy 支持 generation_tool、team_member），参与 WorkBuddy 积分总计，Token 状态为 `not_applicable`，不计入缺失告警和用量完整率分母；不伪造 Token、模型推理次数、HTTP 状态或货币费用。生成工具包含图片生成/编辑、视频生成和音频转录，金额以 WorkBuddy 已保存的收费回执为准，不再次累加工具结果。完整原文、图片、工具参数仍不保存。
+
+v3 从 `generation-tool:<tool name>:<call id>` 的已保存收费阶段提取具体工具名，仅接受不超过 80 字节的 ASCII 字母、数字、下划线、点和连字符；只保留工具名，不保存 call id 或工具正文。`Candidate.tool_name` 为可选显示元数据，不参与收费语义 hash；持久化到合成收费路由的 `route_name` 名称快照。重扫只在收费语义完全一致、原名称仍为内部类别标识时补充名称，不新增记录、不改金额、Token 或收费身份。界面显示“图片生成 (ImageGen)”等具体名称；无可靠名称时显示“生成工具”，其他收费显示“团队子代理”或“其他收费项”。仅生成工具收费行在“内置／自定义”前显示“工具”标签，普通模型和团队子代理不加该标签。筛选键仍保留内部标识，但选项、汇总和明细使用可读名称。
 
 ## 2. Token 规范化算法（固定优先级）
 
@@ -55,7 +57,7 @@ credit 接受非负普通十进制、最多 9 位小数，乘 10^9 后 checked i
 
 ## 3. SQLite v7
 
-当前实现升级到 schema v9 / parser v2：迁移仅为既有文件安排有界完整重扫，不重置增量游标，不删除事实、namespace 或清除墓碑。正常重扫补录过去忽略的收费阶段；模型行去重身份和原有语义 hash 保持兼容。对 parser v1 已导入且积分原本为 NULL 的记录，仅当其余语义字段完全一致时补齐新识别的 usage.credit；已知积分、Token 冲突、proxy 明细和删除墓碑不会被覆盖。升级前由现有 SQLite backup 流程保留一致性备份。
+当前实现为 schema v11 / parser v3：v9 迁移为既有文件安排有界完整重扫，补录过去忽略的收费阶段；v10 同样安排重扫以补充工具显示名称，不改变表结构。不重置增量游标，不删除事实、namespace 或清除墓碑。模型行去重身份和原有语义 hash 保持兼容。对 parser v1 已导入且积分原本为 NULL 的记录，仅当其余语义字段完全一致时补齐新识别的 usage.credit；已知积分、Token 冲突、proxy 明细和删除墓碑不会被覆盖。升级前由现有 SQLite backup 流程保留一致性备份。
 
 `schema-v7.sql` 是**待实施迁移的可执行设计稿**，只可在临时数据库验证；业务编码阶段按 S02 将其落实为 migrations/0007.sql 并通过 Rust 实际迁移。不可直接执行到用户数据库。本文件语义契约优先；设计稿与实现不一致时必须修正并重跑验证，不可跳过。
 
@@ -63,7 +65,7 @@ credit 接受非负普通十进制、最多 9 位小数，乘 10^9 后 checked i
 
 新增 `record_origin`（proxy/workbuddy_builtin/workbuddy_custom，旧数据默认 proxy）、`time_basis`（request_start/message_timestamp，旧数据默认 request_start）、`total_tokens_derived`（bool）、`workbuddy_credit_nanos`（nullable 非负整数）。保留原 source，扩展 workbuddy_import；usage_source 扩展 workbuddy_jsonl；outcome 扩展 recorded（仅表示日志存在，不表示成功）。
 
-导入行约束：source=workbuddy_import、record_origin 为 workbuddy_*、outcome=recorded、run_id=NULL、stream=NULL、upstream_protocol=NULL、upstream_started=NULL、HTTP/耗时/首内容/TTFB/error_kind=NULL、time_basis=message_timestamp。started_at_ms 与 ended_at_ms 均用源事件 timestamp；duration_ms 必须 NULL；不能拿两时间相减伪造 0ms。usage_source=workbuddy_jsonl（包括 missing/invalid）；新导入的 parser_version 为导入契约版本 2，未改变的历史行保留原版本。
+导入行约束：source=workbuddy_import、record_origin 为 workbuddy_*、outcome=recorded、run_id=NULL、stream=NULL、upstream_protocol=NULL、upstream_started=NULL、HTTP/耗时/首内容/TTFB/error_kind=NULL、time_basis=message_timestamp。started_at_ms 与 ended_at_ms 均用源事件 timestamp；duration_ms 必须 NULL；不能拿两时间相减伪造 0ms。usage_source=workbuddy_jsonl（包括 missing/invalid）；新导入的 parser_version 为导入契约版本 3，未改变的历史行保留原版本。
 
 代理行：保留 run_id FK、stream、protocol 原 NOT NULL 的逻辑约束和原 source/outcome/usage_source 集合，time_basis=request_start，workbuddy_credit_nanos=NULL。不因允许导入 null 而放松 proxy 行完整性。
 
@@ -224,3 +226,5 @@ status增加`skipped`：按文件持久diagnostics汇总语法、时间、身份
 - `source_io_thread_checks`、`source_io_thread_violations`：在真实文件快照/发现/配置观察I/O边界检查调用OS线程名称是否为独立`workbuddy-import`，记录检查数与违例数。它们不是读取字节计数；正文I/O仍由独立`source_body_bytes_read`证明。
 
 每次进程启动重新计量；不可将运行期计数当持久历史。严格规模脚本记录这些实际数值并检查非零观测、有界队列/样本和零错误线程调用；不能再用常量容量或单元测试总耗时替代实际峰值/批次耗时。
+
+Schema v11 放宽独立导入收费的 Token 适用性约束，升级时把既有收费项的 `missing` 修正为 `not_applicable`，不需要源日志仍然存在。积分、收费身份、去重 hash 和墓碑保持不变，普通模型缺失告警保留。
