@@ -672,13 +672,13 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
 /// 11-field DTO keeps every value: source moved into the provider cell and
 /// credits into the cost cell, so nothing is dropped or re-derived.
 pub const REQUEST_COLUMNS: usize = 9;
-// Time is just wide enough for MM-DD HH:MM:SS at the table's 12px font.
-// The token column keeps the user's 360px floor: at that width the two-row
-// cell holds a compact total/input/output line above cache hit/read details.
-const MIN_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 148., 118., 104., 360., 132., 66., 60., 104.];
+// Stable viewport-based sizing keeps refreshes and page changes from moving
+// column boundaries. The compact token cell fits in 240px; names get most
+// surplus space while all nine columns fit the default ~1100px table host.
+const PREFERRED_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 168., 156., 92., 240., 112., 64., 56., 92.];
 const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] =
-    [110., 220., 260., 200., 460., 180., 82., 78., 132.];
-const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 1.2, 1.8, 0.2, 2.0, 0.4, 0.1, 0.1, 0.3];
+    [110., 240., 320., 136., 280., 148., 76., 68., 112.];
+const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 3., 4., 0.5, 0.25, 0.25, 0.1, 0.1, 0.4];
 /// Drag floors: the smallest width the user may shrink a column to.
 const DRAG_FLOORS: [f32; REQUEST_COLUMNS] = [110., 96., 88., 80., 240., 96., 56., 48., 92.];
 
@@ -688,10 +688,28 @@ fn fitted_widths(
     available: f32,
     custom: &[Option<f32>; REQUEST_COLUMNS],
 ) -> [f32; REQUEST_COLUMNS] {
-    let mut widths = MIN_WIDTHS;
+    let mut widths = PREFERRED_WIDTHS;
     for i in 1..REQUEST_COLUMNS {
         if let Some(width) = custom[i] {
             widths[i] = width.max(DRAG_FLOORS[i]);
+        }
+    }
+    // Between the preferred sizes and the readable floors, shrink unlocked
+    // columns in proportion to their available room. Keep explicit user sizes.
+    let deficit = (widths.iter().sum::<f32>() - available).max(0.);
+    if deficit > 0. {
+        let capacity: f32 = (1..REQUEST_COLUMNS)
+            .filter(|&i| custom[i].is_none())
+            .map(|i| (widths[i] - DRAG_FLOORS[i]).max(0.))
+            .sum();
+        if capacity > 0. {
+            let shrink = deficit.min(capacity);
+            for i in 1..REQUEST_COLUMNS {
+                if custom[i].is_none() {
+                    let room = (widths[i] - DRAG_FLOORS[i]).max(0.);
+                    widths[i] -= shrink * room / capacity;
+                }
+            }
         }
     }
     let mut remaining = (available - widths.iter().sum::<f32>()).max(0.);
@@ -712,9 +730,19 @@ fn fitted_widths(
             }
         }
     }
-    // On very wide windows, use surplus for names rather than numeric columns.
-    if remaining > 0. && custom[2].is_none() {
-        widths[2] += remaining;
+    // Once numeric columns reach their useful widths, share very wide-window
+    // surplus between unlocked name columns rather than stretching Token.
+    let name_weight: f32 = [1, 2]
+        .into_iter()
+        .filter(|&i| custom[i].is_none())
+        .map(|i| FLEX_WEIGHTS[i])
+        .sum();
+    if remaining > 0. && name_weight > 0. {
+        for i in [1, 2] {
+            if custom[i].is_none() {
+                widths[i] += remaining * FLEX_WEIGHTS[i] / name_weight;
+            }
+        }
     }
     widths
 }
@@ -818,7 +846,7 @@ impl TableDelegate for UsageRows {
     ) -> impl IntoElement {
         let zh = self.zh;
         let item = &self.rows[row];
-        match col {
+        let content = match col {
             0 => cell(
                 timestamp(item.started_at_ms, zh),
                 Some(format!(
@@ -913,7 +941,21 @@ impl TableDelegate for UsageRows {
                     ("usage-status", row),
                 )
             }
-        }
+        };
+        // Kit cells include horizontal padding inside the declared column
+        // width. Clamp delegate content to that inner width so labels cannot
+        // paint into the gutter or appear joined to the next column.
+        let padding = gpui_kit::component::Size::Size(px(crate::theme::size::TABLE_ROW_HEIGHT))
+            .table_cell_padding();
+        let inner_width = (fitted_widths(self.available_width, &self.custom_widths)[col]
+            - f32::from(padding.left + padding.right))
+        .max(0.);
+        div()
+            .w(px(inner_width))
+            .h_full()
+            .min_w_0()
+            .overflow_hidden()
+            .child(content)
     }
 
     fn render_empty(
@@ -1165,8 +1207,8 @@ mod tests {
     // Explicit imports only: `use super::*` would pull GPUI's `#[gpui::test]`
     // attribute into scope and shadow the built-in `#[test]` macro.
     use super::{
-        MIN_WIDTHS, amount, cache_rate, compact, duration, fitted_widths, format_credit_nanos,
-        outcome_label, output_rate, percent,
+        PREFERRED_WIDTHS, amount, cache_rate, compact, duration, fitted_widths,
+        format_credit_nanos, outcome_label, output_rate, percent,
     };
     use crate::stats_dto::{Currency, ErrorKind, Outcome};
 
@@ -1263,18 +1305,23 @@ mod tests {
 
     #[test]
     fn automatic_columns_fit_default_viewport_and_keep_numeric_columns_compact() {
-        for available in [1134., 1454., 2400.] {
+        for available in [938., 1098., 1100., 1134., 1454., 2400.] {
             let widths = fitted_widths(available, &[None; super::REQUEST_COLUMNS]);
-            assert!(
-                (widths.iter().sum::<f32>() - available.max(MIN_WIDTHS.iter().sum())).abs() < 0.1
-            );
+            assert!((widths.iter().sum::<f32>() - available).abs() < 0.1);
             assert_eq!(widths[0], 110.);
             // Latency, tok/s and cost stay compact; the status column is text.
-            assert!(widths[5] <= 180. && widths[6] <= 82. && widths[7] <= 78.);
+            assert!(
+                widths[4] <= 280.,
+                "compact Token column must not consume spare name space"
+            );
+            if available >= PREFERRED_WIDTHS.iter().sum() {
+                assert!(widths[1] >= 168. && widths[2] >= 156.);
+            }
+            assert!(widths[5] <= 148. && widths[6] <= 76. && widths[7] <= 68.);
             assert!(
                 widths
                     .iter()
-                    .zip(MIN_WIDTHS)
+                    .zip(super::DRAG_FLOORS)
                     .all(|(width, min)| *width >= min)
             );
         }
@@ -1294,17 +1341,18 @@ mod tests {
             assert_eq!(widths[3], 200.);
             // If both names were manually sized, unused space is preferable
             // to stretching compact numeric columns beyond their auto caps.
-            let minimum =
-                MIN_WIDTHS.iter().sum::<f32>() + (120. - MIN_WIDTHS[2]) + (200. - MIN_WIDTHS[3]);
+            let minimum = PREFERRED_WIDTHS.iter().sum::<f32>()
+                + (120. - PREFERRED_WIDTHS[2])
+                + (200. - PREFERRED_WIDTHS[3]);
             assert!(widths.iter().sum::<f32>() <= available.max(minimum) + 0.1);
-            assert!(widths[4] >= MIN_WIDTHS[4]);
+            assert!(widths[4] >= PREFERRED_WIDTHS[4]);
         }
     }
 
     #[test]
     fn narrow_windows_scroll_instead_of_hiding_or_crushing_columns() {
         let widths = fitted_widths(800., &[None; super::REQUEST_COLUMNS]);
-        assert_eq!(widths, MIN_WIDTHS);
+        assert_eq!(widths, super::DRAG_FLOORS);
         assert!(widths.iter().sum::<f32>() > 800.);
     }
 
