@@ -1232,6 +1232,34 @@ pub fn reader_contract_check() -> Result<usize, &'static str> {
 }
 
 #[cfg(test)]
+mod test_fs {
+    use std::path::Path;
+
+    pub fn symlink(original: &Path, link: &Path) -> bool {
+        #[cfg(unix)]
+        let result = std::os::unix::fs::symlink(original, link);
+        #[cfg(windows)]
+        let result = if original.is_dir() {
+            std::os::windows::fs::symlink_dir(original, link)
+        } else {
+            std::os::windows::fs::symlink_file(original, link)
+        };
+        match result {
+            Ok(()) => true,
+            // Windows requires Developer Mode or the symlink privilege. Only
+            // this unavailable capability skips a symlink assertion; other
+            // failures still fail the test, and missing-file tests run apart.
+            #[cfg(windows)]
+            Err(error) if error.raw_os_error() == Some(1314) => {
+                eprintln!("symlink test skipped: Windows symlink privilege is unavailable");
+                false
+            }
+            Err(error) => panic!("cannot create test symlink: {error}"),
+        }
+    }
+}
+
+#[cfg(test)]
 mod discovery_tests {
     use super::*;
     use std::fs;
@@ -1301,13 +1329,16 @@ mod discovery_tests {
         fs::write(outside.path().join("external.jsonl"), "{}\n").unwrap();
         fs::create_dir_all(folder.path().join("projects/demo")).unwrap();
         fs::write(folder.path().join("projects/demo/real.jsonl"), "{}\n").unwrap();
-        std::os::unix::fs::symlink(
-            outside.path().join("external.jsonl"),
-            folder.path().join("projects/demo/linked.jsonl"),
-        )
-        .unwrap();
-        std::os::unix::fs::symlink(outside.path(), folder.path().join("projects/external"))
-            .unwrap();
+        if !test_fs::symlink(
+            &outside.path().join("external.jsonl"),
+            &folder.path().join("projects/demo/linked.jsonl"),
+        ) {
+            return;
+        }
+        assert!(test_fs::symlink(
+            outside.path(),
+            &folder.path().join("projects/external"),
+        ));
 
         let root = ReaderRoot::new(folder.path());
         assert_eq!(found(&root), vec!["projects/demo/real.jsonl".to_string()]);
@@ -1315,11 +1346,10 @@ mod discovery_tests {
         // A symlinked `projects` directory itself is not entered either.
         let aliased = tempfile::tempdir().unwrap();
         fs::create_dir_all(aliased.path().join("elsewhere")).unwrap();
-        std::os::unix::fs::symlink(
-            folder.path().join("projects"),
-            aliased.path().join("projects"),
-        )
-        .unwrap();
+        assert!(test_fs::symlink(
+            &folder.path().join("projects"),
+            &aliased.path().join("projects"),
+        ));
         assert!(found(&ReaderRoot::new(aliased.path())).is_empty());
     }
 
@@ -1554,7 +1584,12 @@ mod fingerprint_tests {
         );
         // Touching the mtime without changing bytes must not fake a change.
         let later = std::time::SystemTime::now() + std::time::Duration::from_secs(60);
-        fs::File::open(&path).unwrap().set_modified(later).unwrap();
+        fs::OpenOptions::new()
+            .write(true)
+            .open(&path)
+            .unwrap()
+            .set_modified(later)
+            .unwrap();
         assert_eq!(
             classify_change(&path, &stored).unwrap(),
             FileChange::Unchanged
@@ -1593,18 +1628,26 @@ mod fingerprint_tests {
     }
 
     #[test]
-    fn a_symlink_or_a_missing_file_is_never_read() {
+    fn a_symlink_is_never_read() {
         let folder = tempfile::tempdir().unwrap();
         let real = write(&folder, "0123456789");
         let stored = checkpoint(&real, 10);
 
         let link = folder.path().join("linked.jsonl");
-        std::os::unix::fs::symlink(&real, &link).unwrap();
+        if !test_fs::symlink(&real, &link) {
+            return;
+        }
         assert_eq!(
             classify_change(&link, &stored).unwrap(),
             FileChange::Replaced
         );
+    }
 
+    #[test]
+    fn a_missing_file_is_never_read() {
+        let folder = tempfile::tempdir().unwrap();
+        let real = write(&folder, "0123456789");
+        let stored = checkpoint(&real, 10);
         fs::remove_file(&real).unwrap();
         assert!(
             classify_change(&real, &stored).is_err(),
@@ -2222,6 +2265,7 @@ mod verify_tests {
     use super::*;
     use std::fs;
     use std::io::Write;
+    #[cfg(unix)]
     use std::os::unix::fs::PermissionsExt;
 
     const NOW: i64 = 1_792_108_800_000;
@@ -2304,6 +2348,7 @@ mod verify_tests {
         );
     }
 
+    #[cfg(unix)]
     #[test]
     fn a_permission_failure_does_not_advance_the_offset() {
         // AC030: a permission error must leave the offset alone so the lines are
@@ -2325,14 +2370,42 @@ mod verify_tests {
         assert_eq!(found.base_offset, 0, "the offset never moved");
     }
 
+    #[cfg(windows)]
     #[test]
-    fn a_missing_file_or_a_symlink_is_unreadable() {
+    fn a_sharing_violation_does_not_advance_the_offset() {
+        use std::os::windows::fs::OpenOptionsExt;
+
+        let folder = tempfile::tempdir().unwrap();
+        let (path, stored) = setup(&folder, &format!("{}\n", record("b1")));
+        let exclusive = fs::OpenOptions::new()
+            .read(true)
+            .share_mode(0)
+            .open(&path)
+            .unwrap();
+        let outcome = batch(&path, &stored);
+        drop(exclusive);
+        assert_eq!(outcome, Err(BatchRejection::Unreadable));
+
+        let found = batch(&path, &stored).unwrap();
+        assert_eq!(found.imported(), 1);
+        assert_eq!(found.base_offset, 0, "the offset never moved");
+    }
+
+    #[test]
+    fn a_symlink_is_rejected_before_reading() {
         let folder = tempfile::tempdir().unwrap();
         let (path, stored) = setup(&folder, &format!("{}\n", record("b1")));
         let link = folder.path().join("linked.jsonl");
-        std::os::unix::fs::symlink(&path, &link).unwrap();
+        if !test_fs::symlink(&path, &link) {
+            return;
+        }
         assert_eq!(batch(&link, &stored), Err(BatchRejection::SourceChanged));
+    }
 
+    #[test]
+    fn a_missing_file_is_unreadable() {
+        let folder = tempfile::tempdir().unwrap();
+        let (path, stored) = setup(&folder, &format!("{}\n", record("b1")));
         fs::remove_file(&path).unwrap();
         assert_eq!(batch(&path, &stored), Err(BatchRejection::Unreadable));
     }

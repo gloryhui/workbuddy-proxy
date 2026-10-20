@@ -374,14 +374,15 @@ async fn automatic_import_write_failure_preserves_checkpoint_and_retries() {
     let config = folder.path().join("config");
     let root = folder.path().join("workbuddy");
     std::fs::create_dir_all(root.join("projects/demo")).unwrap();
+    let path = root.join("projects/demo/fault.jsonl");
+    std::fs::write(&path, "").unwrap();
     let running = start(&config, &root, 0).await;
+    // Establish the checkpoint before injecting the failed transaction. A new
+    // file's first batch may otherwise roll back its checkpoint creation too.
+    wait_number(&config, "SELECT COUNT(*) FROM workbuddy_import_files", 1).await;
     let conn = Connection::open(config.join("usage.sqlite3")).unwrap();
     conn.execute_batch("CREATE TRIGGER inject_import_failure BEFORE INSERT ON usage_requests WHEN NEW.record_origin<>'proxy' BEGIN SELECT RAISE(ABORT,'injected'); END;").unwrap();
-    std::fs::write(
-        root.join("projects/demo/fault.jsonl"),
-        line("fault", "custom-local:model", now_ms()) + "\n",
-    )
-    .unwrap();
+    std::fs::write(&path, line("fault", "custom-local:model", now_ms()) + "\n").unwrap();
     let deadline = Instant::now() + Duration::from_secs(10);
     loop {
         let status = command(&running.0, json!({"command":"stats_workbuddy_status"})).await;

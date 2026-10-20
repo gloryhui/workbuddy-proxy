@@ -371,10 +371,10 @@ fn first_installed(installed: &[String], candidates: &[&str]) -> Option<SharedSt
 fn resolve_sans(installed: &[String]) -> Option<SharedString> {
     #[cfg(target_os = "windows")]
     {
-        return first_installed(
+        first_installed(
             installed,
             &["Segoe UI Variable", "Segoe UI", "Microsoft YaHei UI"],
-        );
+        )
     }
     #[cfg(not(target_os = "windows"))]
     {

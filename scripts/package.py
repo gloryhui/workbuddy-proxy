@@ -9,6 +9,21 @@ import subprocess
 import tempfile
 import zipfile
 
+USER_DOCS = (
+    'DESKTOP.md', 'GPUI-NOTICES.md', 'LICENSE-APACHE-GPUI.txt',
+    'third-party/magpie-LICENSE.txt', 'MODEL-CAPABILITIES.md',
+    'PROVIDER-PRESETS.md', 'protocol-compat/USAGE.md',
+    'protocol-compat/CONTRACTS.md',
+)
+
+
+def copy_user_docs(destination):
+    for filename in USER_DOCS:
+        target = destination / filename
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(Path('docs') / filename, target)
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--platform',choices=['macos-arm64','macos-x64','windows-x64'],required=True);p.add_argument('--output',default='dist');p.add_argument('--version',default='0.5.6');p.add_argument('--gpui',required=True);p.add_argument('--variant',default='');args=p.parse_args()
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
@@ -43,13 +58,7 @@ def main():
             documentation=resources/'Documentation';documentation.mkdir()
             for filename in ['README.md','LICENSE','CHANGELOG.md']:
                 shutil.copy(root/filename,documentation/filename)
-            for filename in ['DESKTOP.md','GPUI-NOTICES.md','LICENSE-APACHE-GPUI.txt',
-                             'third-party/magpie-LICENSE.txt','MODEL-CAPABILITIES.md',
-                             'PROVIDER-PRESETS.md','protocol-compat/USAGE.md',
-                             'protocol-compat/CONTRACTS.md']:
-                destination=documentation/'docs'/filename
-                destination.parent.mkdir(parents=True,exist_ok=True)
-                shutil.copy(Path('docs')/filename,destination)
+            copy_user_docs(documentation/'docs')
             subprocess.run(['codesign','--force','--sign','-',str(app)],check=True)
             subprocess.run(['codesign','--verify','--strict',str(app)],check=True)
             try:
@@ -72,7 +81,7 @@ def main():
         if args.platform.startswith('macos'):
             return
         (root/'assets').mkdir();shutil.copy('assets/icon-128.png',root/'assets/icon-128.png')
-        shutil.copytree('docs',root/'docs')
+        copy_user_docs(root/'docs')
         archive=out/(name+'.zip')
         with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
             for path in sorted(root.rglob('*')):

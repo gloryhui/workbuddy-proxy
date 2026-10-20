@@ -395,7 +395,9 @@ async fn full_scan_rechecks_a_hidden_middle_edit_without_resetting_incremental_o
         .replace("\"prompt_tokens\":100", "\"prompt_tokens\":101")
         .replace("\"total_tokens\":120", "\"total_tokens\":121");
     std::fs::write(&path, lines.join("\n") + "\n").unwrap();
-    std::fs::File::open(&path)
+    std::fs::OpenOptions::new()
+        .write(true)
+        .open(&path)
         .unwrap()
         .set_modified(modified)
         .unwrap();
