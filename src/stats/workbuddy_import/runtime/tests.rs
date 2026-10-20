@@ -5,6 +5,8 @@ use crate::stats::{StatsHandle, dto::HealthState};
 use serde_json::json;
 use std::io::Write;
 
+mod credit_tests;
+
 struct Running(StatsHandle);
 impl Drop for Running {
     fn drop(&mut self) {

@@ -19,7 +19,7 @@ use std::{
 };
 
 /// Schema version understood by this build.
-pub const SCHEMA_VERSION: i64 = 8;
+pub const SCHEMA_VERSION: i64 = 9;
 const MIGRATION_0001: &str = include_str!("migrations/0001.sql");
 const MIGRATION_0002: &str = include_str!("migrations/0002.sql");
 const MIGRATION_0003: &str = include_str!("migrations/0003.sql");
@@ -28,6 +28,7 @@ const MIGRATION_0005: &str = include_str!("migrations/0005.sql");
 const MIGRATION_0006: &str = include_str!("migrations/0006.sql");
 const MIGRATION_0007: &str = include_str!("migrations/0007.sql");
 const MIGRATION_0008: &str = include_str!("migrations/0008.sql");
+const MIGRATION_0009: &str = include_str!("migrations/0009.sql");
 const WRITE_RETRIES: usize = 2;
 /// Single lock wait before our own retry loop takes over (was 2000 ms, which
 /// multiplied into seconds per batch under a held lock).
@@ -202,6 +203,9 @@ pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
     if version < 8 {
         conn.pragma_update(None, "foreign_keys", "ON")?;
         apply_step(conn, 8, MIGRATION_0008)?;
+    }
+    if version < 9 {
+        apply_step(conn, 9, MIGRATION_0009)?;
     }
     conn.execute_batch(include_str!("report_indexes.sql"))?;
     Ok(())

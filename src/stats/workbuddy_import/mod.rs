@@ -5,6 +5,7 @@
 //! statistics writer, including sync intents and manual attribution tasks.
 
 pub mod classify;
+mod credits;
 pub(super) mod history;
 pub(crate) mod manual;
 pub mod normalize;

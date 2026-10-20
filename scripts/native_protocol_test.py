@@ -360,7 +360,7 @@ def main():
                         return db.execute("SELECT COUNT(*) FROM usage_requests WHERE outcome='completed'").fetchone()[0] == 18
                 t.wait_for(recorded, 'all native request finishes persisted')
                 with closing(sqlite3.connect(folder / 'usage.sqlite3')) as db, db:
-                    assert db.execute('PRAGMA user_version').fetchone()[0] == 8
+                    assert db.execute('PRAGMA user_version').fetchone()[0] == 9
                     rows = db.execute("SELECT upstream_protocol,input_tokens,output_tokens,total_tokens,input_breakdown,input_uncached_tokens FROM usage_requests WHERE outcome='completed'").fetchall()
                     assert len(rows) == 18 and set(r[0] for r in rows) == set(PROTOCOLS)
                     assert all(r[1:4] == (100, 20, 120) for r in rows), rows

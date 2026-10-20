@@ -12,7 +12,7 @@ use crate::stats::dto::{
 
 /// Parser/normalizer contract version written to `usage_requests.parser_version`
 /// for imported rows (DATA-API section 3.1).
-pub const PARSER_VERSION: i64 = 1;
+pub const PARSER_VERSION: i64 = 2;
 
 /// Domain prefix of the length-prefixed entry-key hash (DATA-API section 1).
 pub const ENTRY_KEY_DOMAIN: &[u8] = b"wbp-wb-message-v1";
@@ -627,7 +627,7 @@ fn check_bounds() -> Result<usize, &'static str> {
     {
         return Err("workbuddy_import_limits_drifted");
     }
-    if PARSER_VERSION != 1 || ENTRY_KEY_DOMAIN != b"wbp-wb-message-v1" {
+    if PARSER_VERSION != 2 || ENTRY_KEY_DOMAIN != b"wbp-wb-message-v1" {
         return Err("workbuddy_import_identity_contract_drifted");
     }
     Ok(1)

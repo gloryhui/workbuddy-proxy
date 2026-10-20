@@ -743,12 +743,12 @@ def probe_upgrade_rollback(_sandbox: 'Sandbox', exe: Path, report: 'Report') -> 
         handle.close()
 
     after = summarise_database(db)
-    if after['user_version'] != 8:
+    if after['user_version'] != 9:
         # A migration that did not run must show why, or the next person has to
         # rediscover it from scratch.
         tail = log.read_text(encoding='utf-8', errors='replace')[-600:] if log.exists() else ''
         print('[note] upgrade did not run; core log tail:\n%s' % tail)
-    report.check('upgrade: the database is now schema 8', after['user_version'] == 8,
+    report.check('upgrade: the database is now schema 9', after['user_version'] == 9,
                  'user_version=%r' % after['user_version'])
     # The core appends its own run row when it starts, so the assertion is that
     # the original history is still there — not that the table stopped growing.
@@ -780,12 +780,12 @@ def probe_upgrade_rollback(_sandbox: 'Sandbox', exe: Path, report: 'Report') -> 
     # The refusal is proven by the database being left exactly as it was: no
     # import tables added, no version stamped down.
     # "Untouched" means the refused database is exactly as it was left: same
-    # tables, same version stamp. It already carries schema 8's tables from the
+    # tables, same version stamp. It already carries schema 9's tables from the
     # successful upgrade above, so counting them is not the test — comparing the
     # table set before and after the refusal is.
     tables_now = count_rows(db, "SELECT COUNT(*) FROM sqlite_master WHERE type='table'", stopped=True)
     report.check('rollback: a newer schema is refused rather than touched',
-                 tables_now == tables_before_refusal and after['user_version'] == 8,
+                 tables_now == tables_before_refusal and after['user_version'] == 9,
                  'tables=%d before=%d' % (tables_now, tables_before_refusal))
     report.check('rollback: the refused database is left at its own version',
                  summarise_database(db)['user_version'] == 99,

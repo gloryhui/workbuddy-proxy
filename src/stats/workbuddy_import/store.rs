@@ -1237,25 +1237,12 @@ impl CommitItem {
         candidate: Candidate,
         attribution: Attribution,
     ) -> Result<Self, StoreError> {
-        let usage = &candidate.usage;
-        let semantic = serde_json::to_string(&(
-            "wbp-wb-usage-v1",
+        let normalized_hash = semantic_hash(
             &candidate.requested_model,
             &candidate.upstream_model,
             &candidate.response_model,
-            usage.status,
-            usage.reason,
-            usage.input_tokens,
-            usage.output_tokens,
-            usage.total_tokens,
-            usage.total_tokens_derived,
-            usage.cache_read_tokens,
-            usage.cache_write_tokens,
-            usage.reasoning_tokens,
-            usage.input_breakdown,
-            usage.workbuddy_credit_nanos,
-        ))
-        .map_err(|_| StoreError::CandidateNotAllowed)?;
+            &candidate.usage,
+        )?;
         let candidate_json =
             serde_json::to_string(&candidate).map_err(|_| StoreError::CandidateNotAllowed)?;
         if candidate_json.len() > MAX_CANDIDATE_BYTES {
@@ -1276,12 +1263,39 @@ impl CommitItem {
             usage: candidate.usage,
             mapping_id: None,
             event_at_ms: candidate.event_at_ms,
-            normalized_hash: super::parser::hash_id(&semantic),
+            normalized_hash,
             attribution,
             candidate_json: Some(candidate_json),
             origin,
         })
     }
+}
+
+fn semantic_hash(
+    requested_model: &Option<String>,
+    upstream_model: &Option<String>,
+    response_model: &Option<String>,
+    usage: &NormalizedUsage,
+) -> Result<String, StoreError> {
+    let semantic = serde_json::to_string(&(
+        "wbp-wb-usage-v1",
+        requested_model,
+        upstream_model,
+        response_model,
+        usage.status,
+        usage.reason,
+        usage.input_tokens,
+        usage.output_tokens,
+        usage.total_tokens,
+        usage.total_tokens_derived,
+        usage.cache_read_tokens,
+        usage.cache_write_tokens,
+        usage.reasoning_tokens,
+        usage.input_breakdown,
+        usage.workbuddy_credit_nanos,
+    ))
+    .map_err(|_| StoreError::CandidateNotAllowed)?;
+    Ok(super::parser::hash_id(&semantic))
 }
 
 /// What one batch commit produced.
@@ -1407,6 +1421,32 @@ pub fn resolve_replay(
             return rehydrate(tx, item, mapping_revision, now_ms).map(ReplayOutcome::Rehydrated);
         }
         return Ok(ReplayOutcome::Duplicate);
+    }
+    if existing.state == LedgerState::Imported && item.usage.workbuddy_credit_nanos.is_some() {
+        let mut previous_usage = item.usage.clone();
+        previous_usage.workbuddy_credit_nanos = None;
+        if semantic_hash(
+            &item.requested_model,
+            &item.upstream_model,
+            &item.response_model,
+            &previous_usage,
+        )? == existing.normalized_hash
+        {
+            // Parser v1 did not read usage.credit. Only fill an unknown credit
+            // when every previously accepted semantic field still matches.
+            // Known amounts, tombstones and changed Token data never enter.
+            let changed = tx.execute(
+                "UPDATE usage_requests SET workbuddy_credit_nanos=?2,parser_version=?3,updated_at_ms=?4
+                 WHERE request_id=?1 AND record_origin<>'proxy'
+                   AND parser_version<2 AND workbuddy_credit_nanos IS NULL",
+                params![item.entry_key,item.usage.workbuddy_credit_nanos,PARSER_VERSION,now_ms],
+            )?;
+            if changed == 1 {
+                tx.execute("UPDATE workbuddy_import_ledger SET normalized_hash=?2,updated_at_ms=?3 WHERE entry_key=?1",
+                    params![item.entry_key,item.normalized_hash,now_ms])?;
+                return Ok(ReplayOutcome::Duplicate);
+            }
+        }
     }
     // A proxy exclusion carries no workbuddy detail to withdraw, and its state
     // is left alone: an import never rewrites a proxy decision.

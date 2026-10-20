@@ -2,7 +2,7 @@
 //!
 //! One complete line in, one typed shell out. The parser only ever looks at the
 //! whitelisted keys of DATA-API section 1: `type`, `role`, `sessionId`,
-//! `timestamp` and `providerData`. Everything else — chat content, tool
+//! `timestamp`, `providerData` and `_fromSubAgent`. Everything else — chat content, tool
 //! arguments, images, ids — is skipped by serde and never materialised, so a
 //! private transcript can never travel further than this function.
 //!
@@ -161,6 +161,8 @@ pub struct RawUsage {
 #[serde(rename_all = "camelCase")]
 pub struct NormalizedUsageFields {
     #[serde(default)]
+    pub credit: Option<NumberText>,
+    #[serde(default)]
     pub input_tokens: Option<NumberLiteral>,
     #[serde(default)]
     pub output_tokens: Option<NumberLiteral>,
@@ -176,6 +178,14 @@ pub struct NormalizedUsageFields {
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 struct RawProvider {
+    #[serde(default)]
+    credit: Option<NumberText>,
+    #[serde(default)]
+    source: Option<String>,
+    #[serde(default)]
+    stage_id: Option<String>,
+    #[serde(default)]
+    conversation_request_id: Option<String>,
     #[serde(default)]
     message_id: Option<String>,
     #[serde(default)]
@@ -196,6 +206,8 @@ struct RawProvider {
 #[derive(Clone, Debug, Default, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct RawLine {
+    #[serde(rename = "_fromSubAgent", default)]
+    from_sub_agent: bool,
     #[serde(rename = "type", default)]
     kind: Option<String>,
     #[serde(default)]
@@ -262,10 +274,15 @@ pub enum Shell {
 
 /// Parses one complete line into its shell.
 ///
-/// Only `message` with `role=assistant` and `function_call` with a missing or
-/// `assistant` role are usage-bearing. `reasoning`, `function_call_result`, user
-/// messages and every other type are `NotUsage` (DATA-API section 1).
+/// Model shells accept `message` with `role=assistant`, and `function_call` or
+/// `model-usage` with a missing or `assistant` role. Forwarded child messages,
+/// reasoning and tool results are `NotUsage`. Standalone credit receipts are
+/// handled separately by `evaluate` (DATA-API section 1).
 pub fn parse_shell(line: &[u8]) -> Result<Shell, ShellError> {
+    parse_line(line).map(shell_from_line)
+}
+
+fn parse_line(line: &[u8]) -> Result<RawLine, ShellError> {
     // serde happily reads a sequence into a struct (fields in order), so an
     // array like `[]` would silently become an empty shell. A JSONL record must
     // be an object.
@@ -277,23 +294,31 @@ pub fn parse_shell(line: &[u8]) -> Result<Shell, ShellError> {
     if !trimmed.starts_with(b"{") {
         return Err(ShellError::JsonSyntax);
     }
-    let raw: RawLine = serde_json::from_slice(line).map_err(|_| ShellError::JsonSyntax)?;
+    serde_json::from_slice(line).map_err(|_| ShellError::JsonSyntax)
+}
+
+fn shell_from_line(raw: RawLine) -> Shell {
+    // Team-member credit receipts account for forwarded child messages. The
+    // copies on the leader's history are not independent model charges.
+    if raw.from_sub_agent {
+        return Shell::NotUsage;
+    }
     let kind = raw.kind.as_deref().unwrap_or_default();
     let role = raw.role.as_deref();
     let usage_bearing = match kind {
         "message" => role == Some("assistant"),
-        "function_call" => role.is_none() || role == Some("assistant"),
+        "function_call" | "model-usage" => role.is_none() || role == Some("assistant"),
         _ => false,
     };
     if !usage_bearing {
-        return Ok(Shell::NotUsage);
+        return Shell::NotUsage;
     }
     let provider = raw.provider_data.unwrap_or_default();
     let timestamp = match raw.timestamp {
         Some(NumberLiteral::Integer(value)) => Some(value),
         _ => None,
     };
-    Ok(Shell::Usage(Box::new(UsageShell {
+    Shell::Usage(Box::new(UsageShell {
         session_id: raw.session_id,
         message_id: provider.message_id,
         requested_model: provider.request_model_id,
@@ -304,7 +329,7 @@ pub fn parse_shell(line: &[u8]) -> Result<Shell, ShellError> {
         timestamp_malformed: matches!(raw.timestamp, Some(NumberLiteral::Other)),
         raw_usage: provider.raw_usage,
         usage: provider.usage,
-    })))
+    }))
 }
 
 /// Parses one complete line end to end into its final disposition.
@@ -321,15 +346,39 @@ pub fn parse_shell(line: &[u8]) -> Result<Shell, ShellError> {
 ///    `missing` or `invalid`, because the row is still written with its status
 ///    and reason instead of being silently dropped.
 pub fn evaluate(line: &[u8], file_stem: &str, namespace_id: &str, now_ms: i64) -> ParseDisposition {
-    let shell = match parse_shell(line) {
-        Ok(shell) => shell,
+    let raw = match parse_line(line) {
+        Ok(raw) => raw,
         Err(ShellError::JsonSyntax) => return ParseDisposition::JsonSyntaxError,
     };
+    if raw.kind.as_deref() == Some("credit-usage") {
+        let provider = raw.provider_data.unwrap_or_default();
+        return super::credits::evaluate(
+            super::credits::Charge {
+                session_id: raw.session_id,
+                timestamp: raw.timestamp,
+                credit: provider.credit,
+                source: provider.source,
+                stage_id: provider.stage_id,
+                conversation_request_id: provider.conversation_request_id,
+            },
+            file_stem,
+            namespace_id,
+            now_ms,
+        );
+    }
+    let is_model_receipt = raw.kind.as_deref() == Some("model-usage");
+    let shell = shell_from_line(raw);
     let Shell::Usage(shell) = shell else {
         return ParseDisposition::Ignored;
     };
     if !shell.has_any_usage_object() {
         return ParseDisposition::IgnoredNoUsage;
+    }
+    let mut shell = shell;
+    // WorkBuddy's response_done receipts omit sessionId; unlike normal
+    // assistant messages, model-usage records belong to the enclosing file.
+    if shell.session_id.is_none() && is_model_receipt {
+        shell.session_id = Some(file_stem.to_owned());
     }
     let identity = match identify(&shell, file_stem, namespace_id, now_ms) {
         Identity::Ready(identity) => identity,
@@ -344,6 +393,21 @@ pub fn evaluate(line: &[u8], file_stem: &str, namespace_id: &str, now_ms: i64) -
         shell.usage.as_ref(),
     );
     normalize::normalize_credit(&mut usage, shell.raw_usage.as_ref());
+    if shell
+        .raw_usage
+        .as_ref()
+        .and_then(|raw| raw.credit.as_ref())
+        .is_none()
+        && let Some(credit) = shell.usage.as_ref().and_then(|usage| usage.credit.as_ref())
+    {
+        normalize::normalize_credit(
+            &mut usage,
+            Some(&RawUsage {
+                credit: Some(credit.clone()),
+                ..Default::default()
+            }),
+        );
+    }
     ParseDisposition::Candidate(Box::new(Candidate {
         entry_key: identity.entry_key,
         session_hash: identity.session_hash,
