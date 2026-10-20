@@ -16,29 +16,73 @@ async fn command(handle: &StatsHandle, payload: serde_json::Value) -> serde_json
     serde_json::from_str(&handle.command(&payload).await.unwrap()).unwrap()
 }
 
+async fn wait_for_startup(handle: &StatsHandle) {
+    let deadline = Instant::now() + Duration::from_secs(5);
+    // Reopening a non-empty database can leave a bounded recovery scan pending.
+    // Degraded is transitional here, so wait for Ready just as during migration.
+    loop {
+        let state = handle.state();
+        if matches!(state, HealthState::Migrating | HealthState::Degraded)
+            && Instant::now() < deadline
+        {
+            tokio::time::sleep(Duration::from_millis(10)).await;
+            continue;
+        }
+        assert_eq!(
+            state,
+            HealthState::Ready,
+            "statistics startup error: {:?}",
+            handle.inner.error_code.lock().unwrap()
+        );
+        return;
+    }
+}
+
+#[tokio::test]
+async fn startup_waits_for_pending_recovery_before_returning_ready() {
+    let folder = tempfile::tempdir().unwrap();
+    let (inner, _control) = StatsHandle::initialize(folder.path().into());
+    // Hold the same state that a non-empty database publishes while its
+    // bounded startup scan is pending, without racing the real writer thread.
+    inner.set_state(
+        HealthState::Degraded,
+        Some("stats_recovery_pending".to_owned()),
+    );
+    let handle = StatsHandle { inner };
+    let mut startup = Box::pin(wait_for_startup(&handle));
+    std::future::poll_fn(|context| {
+        assert!(std::future::Future::poll(startup.as_mut(), context).is_pending());
+        std::task::Poll::Ready(())
+    })
+    .await;
+    handle.inner.set_state(HealthState::Ready, None);
+    startup.await;
+}
+
 async fn start(config: &Path, root: &Path, retention: i64) -> Running {
     std::fs::create_dir_all(config).unwrap();
-    let handle =
-        StatsHandle::start_with_import_root(config.into(), Some(reader::ReaderRoot::new(root)));
-    let deadline = Instant::now() + Duration::from_secs(5);
-    while handle.state() == HealthState::Migrating && Instant::now() < deadline {
-        tokio::time::sleep(Duration::from_millis(10)).await;
-    }
-    assert_eq!(handle.state(), HealthState::Ready);
-    let settings = command(&handle, json!({"command":"stats_settings_get"})).await;
+    // Own shutdown before any assertion/await so failed startup also stops the
+    // writer before the caller's temporary profile is removed.
+    let running = Running(StatsHandle::start_with_import_root(
+        config.into(),
+        Some(reader::ReaderRoot::new(root)),
+    ));
+    let handle = &running.0;
+    wait_for_startup(handle).await;
+    let settings = command(handle, json!({"command":"stats_settings_get"})).await;
     let settings = command(
-        &handle,
+        handle,
         json!({"command":"stats_settings_update","enabled":true,
             "retention_days":retention,"expected_revision":settings["revision"]}),
     )
     .await;
     command(
-        &handle,
+        handle,
         json!({"command":"stats_workbuddy_settings_update","enabled":true,
             "expected_revision":settings["revision"]}),
     )
     .await;
-    Running(handle)
+    running
 }
 
 fn line(session: &str, model: &str, at: i64) -> String {
