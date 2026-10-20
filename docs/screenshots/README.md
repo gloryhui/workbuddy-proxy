@@ -6,6 +6,7 @@
 - 来源：当前 main 的本地 Windows 构建，包含皮肤设置、统计布局、独立工具收费和趋势缺失区间等后续改进。不是 GitHub v0.5.6 正式安装附件的界面记录。
 - 平台：Windows 10 专业版 22H2（19045），默认黑白浅色皮肤。
 - 拍摄方式：Windows GDI（Pillow ImageGrab），通过演示进程 PID 限定目标并裁取原生窗口边界；PNG 原始像素，未重绘、拼接或修改界面内容。
+- 后续 Windows 截图优先复用这一方式：[操作步骤与限制](../WINDOWS-SCREENSHOTS.md)，[截图脚本](../../scripts/windows_screenshot.py)。
 - 隔离：独立临时配置与 HOME / USERPROFILE / APPDATA / LOCALAPPDATA，演示 Key、loopback 地址、24 条合成代理记录及 2 条合成图片生成收费记录。未读取或展示真实密钥、账号配置或调用历史。
 - 数据示例：26 条记录，工具积分合计 6.4；七天趋势故意留出一天无记录，演示缺失区间虚线。Token、费用、积分及速率均为合成示例，不代表真实账单、服务表现或官方报价。
 

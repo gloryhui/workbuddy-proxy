@@ -26,3 +26,11 @@ Co-authored-by: Codex <codex@openai.com>
 - 只删除本会话创建、创建归属明确且确认不再使用的确切目录或文件。清理前记录路径及归属证据，检查进程与引用；不得按 `wbp-*`、`workbuddy-*`、`gpui-*` 等前缀直接批量删除，不得影响其他会话、用户数据或在用构建缓存。
 - 当前测试安全结束后，核查系统临时目录中的项目遗留文件，仅清理已确认由本会话创建且闲置的部分。归属不明确或仍被引用的内容应保留并说明；不得为清理而重置代码或删除必要报告、交付产物。
 - 每轮完成后报告清理了哪些临时文件、释放空间、仍保留的临时文件大小，以及系统盘当前剩余空间。
+
+## Windows 截图优先方式
+
+- 用户已指定：Windows 原生应用截图优先使用 **GDI / Pillow `ImageGrab`**。本项目已于 2026-10-21 实测成功，不要每次重新从此前反复超时的 Windows Graphics Capture 通道开始。
+- 使用 [`scripts/windows_screenshot.py`](scripts/windows_screenshot.py)，按当前目标进程 PID 选取唯一可见窗口，启用 DPI 感知，用 DWM 原生窗口边界裁取 PNG；具体流程见 [`docs/WINDOWS-SCREENSHOTS.md`](docs/WINDOWS-SCREENSHOTS.md)。Python / Pillow 的位置通过当前环境发现，不写死盘符或用户路径。
+- GDI 抓取的是屏幕上的可见像素。目标窗口需位于已解锁的本地交互桌面、保持前台且无遮挡；不能依赖它抓取最小化、被遮挡或离屏的窗口。多屏使用 `all_screens=True` 和实际物理坐标，无需预先关闭副屏。
+- README 等公开图片使用隔离演示配置与合成记录，检查每张截图的实际内容、尺寸和隐私，再替换文档资源；截图失败不得把旧图或重绘图冒充新实拍。
+- 若其他截图通道报 `FrameArrived timed out` / `window capture timed out`，记录错误并优先切回上述已验证的 GDI 方式；不要在环境没有变化时反复重启、重复相同调用，或直接归因于多显示器。
