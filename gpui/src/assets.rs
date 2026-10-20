@@ -22,6 +22,10 @@ impl AssetSource for Assets {
         } else if path.contains("stats-source-supplier") {
             // Three connected nodes: the supplier's route.
             r#"<circle cx="5" cy="12" r="2.5"/><circle cx="12" cy="5.5" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M7.3 10.8 9.8 7.5M14.2 7.5l2.5 3.3M7.5 12h9"/>"#
+        } else if path.contains("check-update") {
+            // A cloud with a download arrow: check for a software update, not
+            // refresh the statistics data.
+            r#"<path d="M12 13v8l-4-4"/><path d="m12 21 4-4"/><path d="M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284"/>"#
         } else if path.contains("eye-off") {
             r#"<path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.2A11 11 0 0 1 12 5c5 0 9 7 9 7a15 15 0 0 1-2.5 3.2M6.5 6.5C4.3 8.2 3 12 3 12s4 7 9 7a10 10 0 0 0 5.5-1.6"/>"#
         } else if path.contains("eye") {
@@ -43,15 +47,20 @@ impl AssetSource for Assets {
         } else if path.contains("calendar") {
             r#"<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h.01M12 15h.01M16 15h.01M8 18h.01M12 18h.01"/>"#
         } else if path.contains("autostart") {
-            r#"<path d="M12 2v10M18.36 5.64a9 9 0 1 1-12.73 0"/>"#
+            // Launch at login: a rocket reads as launch, not proxy start/stop.
+            r#"<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>"#
         } else if path.contains("globe") {
             r#"<circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M2 12h20"/>"#
         } else if path.contains("github") {
             r#"<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77a5.07 5.07 0 0 0-.09-3.77S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/>"#
         } else if path.contains("feedback") {
-            r#"<path d="M2 21a8 8 0 0 1 10.821-7.487M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506Z"/><circle cx="10" cy="8" r="5"/>"#
+            // Feedback is a message bubble with text lines, not an account/edit
+            // glyph.
+            r#"<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M13 8H7"/><path d="M17 12H7"/>"#
         } else if path.contains("restore-size") {
-            r#"<path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/>"#
+            // Inward diagonal arrows: restore the default window size. The old
+            // four-corner frame read as enter-fullscreen.
+            r#"<path d="m14 10 7-7"/><path d="M20 10h-6V4"/><path d="m3 21 7-7"/><path d="M4 14h6v6"/>"#
         } else if path.contains("window-minimize") {
             r#"<path d="M5 12h14"/>"#
         } else if path.contains("window-maximize") {

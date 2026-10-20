@@ -401,8 +401,9 @@ impl Proxy {
     }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
         // The design's top icon row is 36px tall and right-aligned in the main
-        // area. The six actions, their callbacks, disabled rules, tooltips and
-        // accessibility names are unchanged from the pre-T03 window (D01).
+        // area. The six actions, their order, callbacks, disabled rules,
+        // tooltips and accessibility names are unchanged (D01); only the four
+        // ambiguous glyphs are redrawn as launch/update/restore/feedback shapes.
         div()
             .flex()
             .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
@@ -439,9 +440,9 @@ impl Proxy {
                 })),
             )
             .child(
-                crate::ui_components::named_icon_button(
+                crate::ui_components::icon_button(
                     "check-update",
-                    IconName::RefreshCw,
+                    Icon::default().path("icons/check-update.svg"),
                     self.t("检查更新", "Check updates"),
                     self.t("检查更新", "Check updates"),
                     self.busy,
