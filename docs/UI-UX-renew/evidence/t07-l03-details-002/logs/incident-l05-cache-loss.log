@@ -1,0 +1,14 @@
+== incident: remove only task-created files at session tmp root ==
+6.1M	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/config
+4.0K	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/core.log
+4.0K	/Users/shile/Library/Caches/workbuddy-proxy-ui-redesign/01a153a0-15c3-7b61-a9e4-834a1ea9702e/tmp/run.json
+root now:
+total 0
+drwxr-xr-x@ 2 shile  staff  64 Oct 20 08:50 .
+drwxr-xr-x@ 3 shile  staff  96 Oct 20 08:49 ..
+
+## 事件补充（准确记录）
+- 原因：本任务首次运行前，`fixture.py` 的 `CAP` 常量仍指向会话缓存根 `.../tmp`，`RUN=CAP`；`setup()` 在 `RUN.exists()` 时执行 `shutil.rmtree(RUN)`，删除了该根下的 `t07-l05-full-values-001`。
+- 发现：此后 `ls .../tmp` 仅剩本任务误写的 `config/core.log/home/run.json/tmp`；`t07-l05-full-values-001` 已不存在。
+- 影响：L05 本机缓存运行副本（旧 GPUI/core 二进制、隔离 DB、日志，约 45 MB，按 T07 报告记录）丢失，无法从本机恢复；worktree 证据目录 `docs/UI-UX-renew/evidence/t07-l05-full-values-001/` 完整保留（报告/截图/日志/JSON）。
+- 未尝试恢复或改动其它缓存；未删除 `target/`、`gpui/target/` 或其它目录。此后 CAP 已精确改为 `.../tmp/t07-l03-details-002`，清理仅对该 CAP 执行。

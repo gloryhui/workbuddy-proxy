@@ -1,0 +1,434 @@
+{
+  "pid": 65389,
+  "wid": 9878,
+  "expected_page1": [
+    "t07l03-0060",
+    "t07l03-0059"
+  ],
+  "steps": [
+    {
+      "name": "01-page1-row1",
+      "page": 1,
+      "row_index": 0,
+      "row_frame": [
+        311,
+        403,
+        1087,
+        56
+      ],
+      "expected_request_id": "t07l03-0060",
+      "actual_fields": {
+        "来源": "代理",
+        "采集方式": "代理采集",
+        "时间依据": "请求开始时间",
+        "总量口径": "记录报告值",
+        "WorkBuddy 点数": "—",
+        "流式响应": "否",
+        "请求标识": "t07l03-0060",
+        "时间": "10-20 08:20:13",
+        "供应商 / 路由": "Synthetic Provider · Synthetic Route",
+        "请求模型": "synth-model-b",
+        "上游模型": "synth-model-b",
+        "上游协议": "OpenAI Chat Completions",
+        "响应声明模型": "synth-model-b",
+        "状态": "HTTP 200 · 已完成",
+        "用量": "完整 · —",
+        "Token": "↓1060 ↑100 R0 W0 Σ1160",
+        "性能": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+        "缓存命中率": "0.0%",
+        "tok/s": "200.0 · 非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。",
+        "估算费用": "CNY ¥0",
+        "本次单价": "未配置价格，按 0 计算",
+        "记录时间": "10-20 08:20:13 → 10-20 08:20:14"
+      },
+      "checks": {
+        "request_id": [
+          "t07l03-0060",
+          "t07l03-0060"
+        ],
+        "provider_route": [
+          true,
+          true
+        ],
+        "requested_model": [
+          "synth-model-b",
+          "synth-model-b"
+        ],
+        "upstream_model": [
+          "synth-model-b",
+          "synth-model-b"
+        ],
+        "status": [
+          true,
+          true
+        ],
+        "tokens": [
+          true,
+          true
+        ],
+        "time_present": [
+          true,
+          true
+        ],
+        "cost_present": [
+          true,
+          true
+        ],
+        "api_request_id": [
+          "t07l03-0060",
+          "t07l03-0060"
+        ]
+      },
+      "screenshot": "shots/01-page1-row1.png",
+      "ocr": "ocr/01-page1-row1.json",
+      "page_text": "第 1/3 上一页",
+      "all_match": true,
+      "closed_clean": true
+    },
+    {
+      "name": "02-page1-row2",
+      "page": 1,
+      "row_index": 1,
+      "row_frame": [
+        311,
+        459,
+        1087,
+        56
+      ],
+      "expected_request_id": "t07l03-0059",
+      "actual_fields": {
+        "来源": "代理",
+        "采集方式": "代理采集",
+        "时间依据": "请求开始时间",
+        "总量口径": "记录报告值",
+        "WorkBuddy 点数": "—",
+        "流式响应": "否",
+        "请求标识": "t07l03-0059",
+        "时间": "10-20 08:19:43",
+        "供应商 / 路由": "Synthetic Provider · Synthetic Route",
+        "请求模型": "synth-model-a",
+        "上游模型": "synth-model-a",
+        "上游协议": "OpenAI Chat Completions",
+        "响应声明模型": "synth-model-a",
+        "状态": "HTTP 200 · 已完成",
+        "用量": "完整 · —",
+        "Token": "↓1059 ↑100 R0 W0 Σ1159",
+        "性能": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+        "缓存命中率": "0.0%",
+        "tok/s": "200.0 · 非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。",
+        "估算费用": "CNY ¥0",
+        "本次单价": "未配置价格，按 0 计算",
+        "记录时间": "10-20 08:19:43 → 10-20 08:19:44"
+      },
+      "checks": {
+        "request_id": [
+          "t07l03-0059",
+          "t07l03-0059"
+        ],
+        "provider_route": [
+          true,
+          true
+        ],
+        "requested_model": [
+          "synth-model-a",
+          "synth-model-a"
+        ],
+        "upstream_model": [
+          "synth-model-a",
+          "synth-model-a"
+        ],
+        "status": [
+          true,
+          true
+        ],
+        "tokens": [
+          true,
+          true
+        ],
+        "time_present": [
+          true,
+          true
+        ],
+        "cost_present": [
+          true,
+          true
+        ],
+        "api_request_id": [
+          "t07l03-0059",
+          "t07l03-0059"
+        ]
+      },
+      "screenshot": "shots/02-page1-row2.png",
+      "ocr": "ocr/02-page1-row2.json",
+      "page_text": "第 1/3 上一页",
+      "all_match": true,
+      "closed_clean": true
+    },
+    {
+      "name": "03-page2-row1",
+      "page": 2,
+      "row_index": 0,
+      "row_frame": [
+        311,
+        403,
+        1087,
+        56
+      ],
+      "expected_request_id": "t07l03-0040",
+      "actual_fields": {
+        "来源": "代理",
+        "采集方式": "代理采集",
+        "时间依据": "请求开始时间",
+        "总量口径": "记录报告值",
+        "WorkBuddy 点数": "—",
+        "流式响应": "否",
+        "请求标识": "t07l03-0040",
+        "时间": "10-20 08:10:13",
+        "供应商 / 路由": "Synthetic Provider · Synthetic Route",
+        "请求模型": "synth-model-b",
+        "上游模型": "synth-model-b",
+        "上游协议": "OpenAI Chat Completions",
+        "响应声明模型": "synth-model-b",
+        "状态": "HTTP 200 · 已完成",
+        "用量": "完整 · —",
+        "Token": "↓1040 ↑100 R0 W0 Σ1140",
+        "性能": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+        "缓存命中率": "0.0%",
+        "tok/s": "200.0 · 非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。",
+        "估算费用": "CNY ¥0",
+        "本次单价": "未配置价格，按 0 计算",
+        "记录时间": "10-20 08:10:13 → 10-20 08:10:14"
+      },
+      "checks": {
+        "request_id": [
+          "t07l03-0040",
+          "t07l03-0040"
+        ],
+        "provider_route": [
+          true,
+          true
+        ],
+        "requested_model": [
+          "synth-model-b",
+          "synth-model-b"
+        ],
+        "upstream_model": [
+          "synth-model-b",
+          "synth-model-b"
+        ],
+        "status": [
+          true,
+          true
+        ],
+        "tokens": [
+          true,
+          true
+        ],
+        "time_present": [
+          true,
+          true
+        ],
+        "cost_present": [
+          true,
+          true
+        ],
+        "api_request_id": [
+          "t07l03-0040",
+          "t07l03-0040"
+        ]
+      },
+      "screenshot": "shots/03-page2-row1.png",
+      "ocr": "ocr/03-page2-row1.json",
+      "page_text": "第2/3 上一页",
+      "all_match": true,
+      "closed_clean": true
+    },
+    {
+      "name": "04-page3-row1",
+      "page": 3,
+      "row_index": 0,
+      "row_frame": [
+        311,
+        403,
+        1087,
+        56
+      ],
+      "expected_request_id": "t07l03-0020",
+      "actual_fields": {
+        "来源": "代理",
+        "采集方式": "代理采集",
+        "时间依据": "请求开始时间",
+        "总量口径": "记录报告值",
+        "WorkBuddy 点数": "—",
+        "流式响应": "否",
+        "请求标识": "t07l03-0020",
+        "时间": "10-20 08:00:13",
+        "供应商 / 路由": "Synthetic Provider · Synthetic Route",
+        "请求模型": "synth-model-b",
+        "上游模型": "synth-model-b",
+        "上游协议": "OpenAI Chat Completions",
+        "响应声明模型": "synth-model-b",
+        "状态": "HTTP 200 · 已完成",
+        "用量": "完整 · —",
+        "Token": "↓1020 ↑100 R0 W0 Σ1120",
+        "性能": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+        "缓存命中率": "0.0%",
+        "tok/s": "200.0 · 非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。",
+        "估算费用": "CNY ¥0",
+        "本次单价": "未配置价格，按 0 计算",
+        "记录时间": "10-20 08:00:13 → 10-20 08:00:14"
+      },
+      "checks": {
+        "request_id": [
+          "t07l03-0020",
+          "t07l03-0020"
+        ],
+        "provider_route": [
+          true,
+          true
+        ],
+        "requested_model": [
+          "synth-model-b",
+          "synth-model-b"
+        ],
+        "upstream_model": [
+          "synth-model-b",
+          "synth-model-b"
+        ],
+        "status": [
+          true,
+          true
+        ],
+        "tokens": [
+          true,
+          true
+        ],
+        "time_present": [
+          true,
+          true
+        ],
+        "cost_present": [
+          true,
+          true
+        ],
+        "api_request_id": [
+          "t07l03-0020",
+          "t07l03-0020"
+        ]
+      },
+      "screenshot": "shots/04-page3-row1.png",
+      "ocr": "ocr/04-page3-row1.json",
+      "page_text": "第 3/3 上一页",
+      "all_match": true,
+      "closed_clean": true
+    },
+    {
+      "name": "05-page1-row2-again",
+      "page": 1,
+      "row_index": 1,
+      "row_frame": [
+        311,
+        459,
+        1087,
+        56
+      ],
+      "expected_request_id": "t07l03-0059",
+      "actual_fields": {
+        "来源": "代理",
+        "采集方式": "代理采集",
+        "时间依据": "请求开始时间",
+        "总量口径": "记录报告值",
+        "WorkBuddy 点数": "—",
+        "流式响应": "否",
+        "请求标识": "t07l03-0059",
+        "时间": "10-20 08:19:43",
+        "供应商 / 路由": "Synthetic Provider · Synthetic Route",
+        "请求模型": "synth-model-a",
+        "上游模型": "synth-model-a",
+        "上游协议": "OpenAI Chat Completions",
+        "响应声明模型": "synth-model-a",
+        "状态": "HTTP 200 · 已完成",
+        "用量": "完整 · —",
+        "Token": "↓1059 ↑100 R0 W0 Σ1159",
+        "性能": "总 500 ms · 首内容 200 ms · TTFB 100 ms",
+        "缓存命中率": "0.0%",
+        "tok/s": "200.0 · 非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。",
+        "估算费用": "CNY ¥0",
+        "本次单价": "未配置价格，按 0 计算",
+        "记录时间": "10-20 08:19:43 → 10-20 08:19:44"
+      },
+      "checks": {
+        "request_id": [
+          "t07l03-0059",
+          "t07l03-0059"
+        ],
+        "provider_route": [
+          true,
+          true
+        ],
+        "requested_model": [
+          "synth-model-a",
+          "synth-model-a"
+        ],
+        "upstream_model": [
+          "synth-model-a",
+          "synth-model-a"
+        ],
+        "status": [
+          true,
+          true
+        ],
+        "tokens": [
+          true,
+          true
+        ],
+        "time_present": [
+          true,
+          true
+        ],
+        "cost_present": [
+          true,
+          true
+        ],
+        "api_request_id": [
+          "t07l03-0059",
+          "t07l03-0059"
+        ]
+      },
+      "screenshot": "shots/05-page1-row2-again.png",
+      "ocr": "ocr/05-page1-row2-again.json",
+      "page_text": "第 1/3 上一页",
+      "all_match": true,
+      "closed_clean": true
+    }
+  ],
+  "page_sizes": [],
+  "page_size_menu": [
+    "数据统计 desc= value= enabled [18,132 219x38]",
+    "供应商管理 desc= value= enabled [19,185 217x40]",
+    "新增供应商 desc= value= enabled [25,849 53x32]",
+    "复制供应商 desc= value= enabled [100,849 53x32]",
+    "删除供应商 desc= value= enabled [175,849 55x32]",
+    "检查更新 desc= value= enabled [1205,72 32x32]",
+    "界面语言 desc= value= enabled [1258,72 32x32]",
+    "恢复默认窗口尺寸 desc= value= enabled [1300,72 32x32]",
+    "GitHub 项目主页 desc= value= enabled [1342,72 32x32]",
+    "提交反馈 desc= value= enabled [1384,72 32x32]",
+    "自动刷新间隔 desc= value= enabled [762,-600 88x32]",
+    "选择日期范围 desc= value= enabled [858,-600 168x32]",
+    "刷新统计 desc= value= enabled [1034,-600 32x32]",
+    "更多筛选 desc= value= enabled [1074,-600 32x32]",
+    "设置导入 desc= value= enabled [1352,-449 58x19]",
+    "用量明细 desc= value= enabled [310,345 60x19]",
+    "供应商统计 desc= value= enabled [376,345 69x19]",
+    "模型统计 desc= value= enabled [451,345 58x19]",
+    "上一页 desc= value= enabled [1236,345 46x19]",
+    "50 条/页 desc= value= enabled [1288,345 59x19]",
+    "下一页 desc= value= enabled [1353,345 46x19]",
+    "成本定价 desc= value= enabled [310,814 72x19]",
+    "采集与存储 desc= value= enabled [310,877 83x19]",
+    " desc= value= enabled [8,38 16x16]",
+    " desc= value= enabled [54,38 16x16]",
+    " desc= value= enabled [31,38 16x16]"
+  ]
+}

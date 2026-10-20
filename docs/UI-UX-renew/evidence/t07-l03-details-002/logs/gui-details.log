@@ -1,0 +1,6 @@
+{"name": "01-page1-row1", "page": 1, "expected_request_id": "t07l03-0060", "all_match": true, "page_text": "第 1/3 上一页"}
+{"name": "02-page1-row2", "page": 1, "expected_request_id": "t07l03-0059", "all_match": true, "page_text": "第 1/3 上一页"}
+{"name": "03-page2-row1", "page": 2, "expected_request_id": "t07l03-0040", "all_match": true, "page_text": "第2/3 上一页"}
+{"name": "04-page3-row1", "page": 3, "expected_request_id": "t07l03-0020", "all_match": true, "page_text": "第 3/3 上一页"}
+{"name": "05-page1-row2-again", "page": 1, "expected_request_id": "t07l03-0059", "all_match": true, "page_text": "第 1/3 上一页"}
+DONE 5 page_sizes []

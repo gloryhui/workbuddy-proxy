@@ -1,0 +1,12 @@
+{"detail_cases": 5, "all_pass": true, "pages_all_pass": true}
+01-page1-row1 t07l03-0060 True {}
+02-page1-row2 t07l03-0059 True {}
+03-page2-row1 t07l03-0040 True {}
+04-page3-row1 t07l03-0020 True {}
+05-page1-row2-again t07l03-0059 True {}
+06-page-size-50 '第1/2 上一页' True
+07-page-size-100 '第1/1 上一页' True
+08-page-size-20 '第1/3 上一页' True
+09-page3-20 '第3/3 上一页' True
+10-page3-next-disabled '第3/3 上一页' True
+11-page1-prev-disabled '第1/3 上一页' True
