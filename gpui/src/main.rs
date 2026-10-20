@@ -50,14 +50,14 @@ pub(crate) fn default_window_size() -> Size<Pixels> {
 }
 
 /// The source group's geometry is part of the layout contract: three buttons
-/// fill the group exactly, and the group never resizes.
+/// fill the labelled track, including its fixed inset.
 fn check_source_group_geometry() {
     assert_eq!(
         source_filter::GROUP_WIDTH,
-        source_filter::ITEM_WIDTH * source_filter::OPTIONS.len() as i32,
+        source_filter::ITEM_WIDTHS.iter().sum::<i32>() + 6,
         "three options must fill the group"
     );
-    assert_eq!(source_filter::GROUP_HEIGHT, 32);
+    assert_eq!(source_filter::GROUP_HEIGHT, source_filter::ITEM_HEIGHT + 6);
     assert_eq!(source_filter::ICON_SIZE, 16);
 }
 

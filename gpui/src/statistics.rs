@@ -45,7 +45,7 @@ use std::{
     time::{Duration, Instant},
 };
 
-const BG: u32 = 0xf4f7fb;
+const BG: u32 = 0xf7f8f9;
 const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
 const BORDER: u32 = 0xe2e9f1;
@@ -2202,10 +2202,12 @@ impl Statistics {
     fn header(&self, cx: &mut Context<Self>) -> AnyElement {
         div()
             .flex()
-            .items_start()
+            .items_end()
+            .flex_wrap()
             .justify_between()
             .gap_3()
             .w_full()
+            .mb(px(8.))
             .child(
                 div()
                     .flex()
@@ -2217,7 +2219,7 @@ impl Statistics {
                             .text_size(px(crate::theme::font::PAGE_TITLE))
                             .line_height(px(crate::theme::line_height::PAGE_TITLE))
                             .font_weight(FontWeight::SEMIBOLD)
-                            .text_color(rgb(crate::theme::color::TEXT_1))
+                            .text_color(rgb(0x242e3f))
                             .child(self.t("使用统计", "Usage statistics")),
                     )
                     .child(
@@ -2225,21 +2227,11 @@ impl Statistics {
                             "查看 AI 模型的请求级使用情况、缓存命中和成本聚合",
                             "Request-level usage, cache hits and cost aggregation",
                         ))
-                        .text_size(px(crate::theme::font::BODY))
+                        .text_size(px(12.))
                         .text_color(rgb(crate::theme::color::TEXT_3)),
                     ),
             )
-            // The switch keeps its own 108×32 frame; this wrapper gives it a
-            // flex row with an explicit height so the absolutely positioned
-            // separators and focus ring inside it never see a zero-height line.
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .flex_shrink_0()
-                    .h(px(32.))
-                    .child(self.source_group(cx)),
-            )
+            .child(self.source_group(cx))
             .into_any_element()
     }
 
@@ -2508,10 +2500,13 @@ impl Statistics {
             .trigger(
                 Button::new("stats-date-trigger")
                     .small()
-                    .h(px(32.))
+                    .h(px(34.))
                     .w_full()
                     .outline()
-                    .icon(IconName::Calendar)
+                    .bg(rgb(0xffffff))
+                    .border_color(rgb(0xe1e5eb))
+                    .text_color(rgb(0x5c6679))
+                    .rounded(px(8.))
                     .label(self.range.title(self.zh))
                     .tooltip(tooltip)
                     .accessibility_label(self.t("选择日期范围", "Choose date range")),
@@ -2542,18 +2537,25 @@ impl Statistics {
         let label = if self.refresh_interval == 0 {
             self.t("关闭", "Off").to_owned()
         } else {
-            format!("{}{}", self.refresh_interval, self.t("秒", "s"))
+            format!("{} {}", self.refresh_interval, self.t("秒", "s"))
         };
         Popover::new("stats-auto-refresh")
             .open(self.refresh_open)
             .trigger(
                 Button::new("stats-auto-trigger")
                     .small()
-                    .h(px(32.))
+                    .h(px(34.))
                     .w_full()
                     .outline()
-                    .icon(Icon::default().path("icons/clock.svg"))
-                    .label(label)
+                    .bg(rgb(0xffffff))
+                    .border_color(rgb(0xe1e5eb))
+                    .text_color(rgb(0x5c6679))
+                    .rounded(px(8.))
+                    .child(
+                        div().flex().items_center().gap(px(6.))
+                            .child(img("design/header-refresh.png").size(px(16.)))
+                            .child(Label::new(label)),
+                    )
                     .tooltip(self.t(
                         "统计页面自动刷新间隔；仅刷新已采集的数据，不改变后台采集频率",
                         "Report refresh interval; refreshes collected data without changing background collection frequency",
@@ -2678,45 +2680,23 @@ impl Statistics {
 
     fn filters(&self, cx: &mut Context<Self>) -> AnyElement {
         let tests_available = self.capture.include_tests_available(self.source_scope());
-        // Render the shared slot budget directly: fixed dimensions and the
-        // explicit one/two/wrapped rows from UI-SPEC U04. The source switch
-        // moved into the page header (DESIGN_SPEC §4.1.1), so the budget is
-        // computed for the width that column frees and the Source slot itself
-        // is skipped here; every other slot keeps its order and width.
-        let budget = crate::source_filter::layout(
-            self.filters_width as i32
-                + crate::source_filter::GROUP_WIDTH
-                + crate::source_filter::GAP,
-        );
-        let rows = budget
-            .rows
+        // The source switch belongs in the heading. The remaining controls
+        // wrap naturally; no empty client/source column or enclosing card.
+        let slots = crate::source_filter::SLOTS
             .iter()
-            .map(|slots| {
-                slots
-                    .iter()
-                    .copied()
-                    .filter(|slot| *slot != crate::source_filter::FilterSlot::Source)
-                    .collect::<Vec<_>>()
-            })
-            .filter(|slots| !slots.is_empty())
-            .enumerate()
-            .map(|(index, slots)| self.filter_row(index, &slots, cx))
+            .copied()
+            .filter(|slot| *slot != crate::source_filter::FilterSlot::Source)
             .collect::<Vec<_>>();
-        stats_card("stats-filters")
+        div()
+            .id("stats-filters")
+            .flex()
+            .flex_col()
+            .w_full()
             .on_prepaint({
                 let owner = cx.entity().downgrade();
                 move |bounds, _, cx| {
-                    // Content width excludes the specified padding and both
-                    // one-point card borders.
-                    // The U04 filter budget still assumes
-                    // `source_filter::PADDING`, while statistics cards are
-                    // padded by CARD_PAD; the difference is subtracted here so
-                    // the KPI grid is budgeted against the width it really
-                    // gets instead of silently over-reporting it.
-                    let available = f32::from(bounds.size.width)
-                        - (crate::source_filter::PADDING * 2) as f32
-                        - (CARD_PAD - crate::source_filter::PADDING as f32) * 2.
-                        - 2.;
+                    // KPI/chart cards still have their original inner padding.
+                    let available = f32::from(bounds.size.width) - CARD_PAD * 2. - 2.;
                     let _ = owner.update(cx, |this, cx| {
                         if (this.filters_width - available).abs() > 0.5 {
                             this.filters_width = available;
@@ -2726,7 +2706,7 @@ impl Statistics {
                 }
             })
             .gap_2()
-            .children(rows)
+            .child(self.filter_row(0, &slots, cx))
             .when(self.more_filters_open, |this| {
                 this.child(
                     div()
@@ -2892,18 +2872,17 @@ impl Statistics {
         )
     }
 
-    /// Overview: one primary confirmed-token card plus secondary metrics.
-    /// Token chart, optional cost chart and the legend.
+    /// Both trend canvases stay visible, including when a currency is unpriced.
     fn trends(&self, cx: &mut Context<Self>) -> AnyElement {
-        let Some(dashboard) = self.dashboard.clone() else {
-            return stats_card("stats-trends")
-                .child(usage_table::strong(self.t("暂无趋势数据", "No trend data")))
-                .into_any_element();
-        };
-        let (points, cost_points) = ChartPoint::split_series(&dashboard.series, self.currency);
+        let series = self
+            .dashboard
+            .as_ref()
+            .map(|d| d.series.as_slice())
+            .unwrap_or_default();
+        let (points, cost_points) = ChartPoint::split_series(series, self.currency);
         // The bucket width comes from the series itself, so the cost card's
         // subtitle describes the range that is actually plotted.
-        let bucket_ms = cost_points
+        let bucket_ms = points
             .first()
             .map(|point| (point.end_ms - point.start_ms).max(0))
             .unwrap_or(0);
@@ -2930,7 +2909,13 @@ impl Statistics {
         let has_cost = cost_points.iter().any(|point| point.cost_nanos.is_some());
         let cost_chart = UsagePlot {
             id: ElementId::Name("usage-cost-chart".into()),
-            points: cost_points,
+            // Keep the actual time buckets on an empty currency axis. Their
+            // costs remain None, so no zero/free-cost line is fabricated.
+            points: if cost_points.is_empty() {
+                points.clone()
+            } else {
+                cost_points
+            },
             visible: BTreeSet::new(),
             zh: self.zh,
             mode: ChartMode::Cost,
@@ -2941,6 +2926,7 @@ impl Statistics {
             .flex_wrap()
             .items_center()
             .justify_center()
+            .h(px(18.))
             .gap_3()
             .children(SeriesKind::ALL.into_iter().map(|kind| {
                 let active = self.visible_series.contains(&kind);
@@ -3001,6 +2987,7 @@ impl Statistics {
                     .flex()
                     .items_center()
                     .justify_between()
+                    .h(px(crate::theme::size::SELECT_HEIGHT))
                     .gap_2()
                     .child(stats_heading(self.t("使用趋势", "Usage trend")))
                     .when(incomplete, |this| {
@@ -3041,6 +3028,7 @@ impl Statistics {
                     .flex()
                     .items_center()
                     .justify_between()
+                    .h(px(crate::theme::size::SELECT_HEIGHT))
                     .gap_2()
                     .child(stats_heading(self.t("估算费用", "Estimated cost")))
                     .child(
@@ -3060,31 +3048,55 @@ impl Statistics {
                     .text_color(rgb(crate::theme::color::TEXT_3))
                     .child(bucket_text),
             )
-            .when(has_cost, |card| {
-                card.child(
-                    div()
-                        .id("cost-chart-host")
-                        .w_full()
-                        .h(px(250.))
-                        .min_h_0()
-                        .aria_label(self.t(
-                            "费用趋势图，按币种单独显示",
-                            "Cost trend chart, one currency at a time",
-                        ))
-                        .child(cost_chart),
-                )
-            })
-            .when(!has_cost, |card| {
-                card.child(
-                    Label::new(self.t("当前币种暂无费用数据", "No cost data for this currency"))
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(crate::theme::color::TEXT_3)),
-                )
-            });
+            .child(
+                div()
+                    .id("cost-chart-host")
+                    .relative()
+                    .w_full()
+                    .h(px(250.))
+                    .min_h_0()
+                    .aria_label(self.t(
+                        "费用趋势图，按币种单独显示",
+                        "Cost trend chart, one currency at a time",
+                    ))
+                    .child(cost_chart)
+                    .when(!has_cost, |plot| {
+                        plot.child(
+                            div()
+                                .absolute()
+                                .inset_0()
+                                .flex()
+                                .items_center()
+                                .justify_center()
+                                .child(
+                                    Label::new(self.t(
+                                        "当前币种暂无费用数据",
+                                        "No cost data for this currency",
+                                    ))
+                                    .text_size(px(12.))
+                                    .text_color(rgb(crate::theme::color::TEXT_3)),
+                                ),
+                        )
+                    }),
+            )
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .justify_center()
+                    .h(px(18.))
+                    .gap_1()
+                    .child(div().w(px(10.)).h(px(3.)).rounded(px(2.)).bg(rgb(0xc2185b)))
+                    .child(
+                        Label::new(self.t("估算费用", "Estimated cost"))
+                            .text_size(px(11.))
+                            .text_color(rgb(INK)),
+                    ),
+            );
         let pair = div().flex().w_full().gap(px(12.));
         if self.filters_width >= CHART_SIDE_BY_SIDE_WIDTH {
             pair.flex_row()
-                .items_start()
+                .items_stretch()
                 .child(token_card)
                 .child(cost_card)
                 .into_any_element()
@@ -3363,9 +3375,9 @@ impl Statistics {
             .min_w_0()
             .min_h_0()
             .overflow_y_scroll()
-            .pl_4()
+            .pl_0()
             .pr_0()
-            .py_2()
+            .py_0()
             .gap_3()
             .bg(rgb(BG))
             .child(self.header(cx))
@@ -3477,57 +3489,37 @@ impl Statistics {
             || health.write_failures_current_run > 0
             || health.loss_scope == LossScope::LossObserved;
         let _ = cx;
-        // DESIGN_SPEC §4.1.2: a plain status line under the filter bar, not a
-        // separate grey card. Every fact, alert and colour keeps its meaning.
+        let state = if self.error.is_some() {
+            self.t("数据更新失败", "Update failed")
+        } else if attention {
+            self.t("需关注", "Needs attention")
+        } else {
+            self.t("正常", "OK")
+        };
+        let mut summary = vec![
+            label.to_owned(),
+            state.to_owned(),
+            self.import_health_text(),
+        ];
+        summary.extend(facts);
+        summary.push(match &self.last_updated {
+            Some(at) => format!("{} {at}", self.t("更新于", "Updated")),
+            None => self.t("尚未刷新", "Not refreshed").to_owned(),
+        });
         div()
             .flex()
             .flex_wrap()
             .items_center()
             .gap_2()
+            .child(div().size(px(6.)).rounded_full().bg(rgb(color)))
             .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .gap_2()
-                    .child(div().size(px(6.)).rounded_full().bg(rgb(color)))
-                    .child(
-                        Label::new(label)
-                            .text_size(px(crate::theme::font::LABEL))
-                            .text_color(rgb(color)),
-                    ),
-            )
-            .child(
-                Label::new(if self.error.is_some() {
-                    self.t("数据更新失败", "Update failed")
-                } else if attention {
-                    self.t("需关注", "Needs attention")
-                } else {
-                    self.t("正常", "OK")
-                })
-                .text_size(px(crate::theme::font::LABEL))
-                .text_color(rgb(if self.error.is_some() || attention {
-                    WARN
-                } else {
-                    MUTED
-                })),
-            )
-            .child(
-                Label::new(self.import_health_text())
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED)),
-            )
-            .children(facts.into_iter().map(|fact| {
-                Label::new(fact)
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED))
-            }))
-            .child(
-                Label::new(match &self.last_updated {
-                    Some(at) => format!("{} {at}", self.t("更新于", "Updated")),
-                    None => self.t("尚未刷新", "Not refreshed").to_owned(),
-                })
-                .text_size(px(crate::theme::font::LABEL))
-                .text_color(rgb(MUTED)),
+                Label::new(summary.join(" · "))
+                    .text_size(px(12.))
+                    .text_color(rgb(if self.error.is_some() || attention {
+                        WARN
+                    } else {
+                        0x8a93a5
+                    })),
             )
             .children(alerts.into_iter().map(|alert| {
                 Label::new(alert)

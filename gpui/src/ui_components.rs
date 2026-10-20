@@ -103,6 +103,27 @@ pub fn icon_button_sized(
         .disabled(disabled)
 }
 
+/// Header glyph sampled from the original 2× design. Keep Kit interaction,
+/// focus, tooltips and disabled behavior while displaying the exact bitmap.
+pub fn design_header_button(
+    id: impl Into<ElementId>,
+    asset: &'static str,
+    tooltip: impl Into<SharedString>,
+    accessibility_label: impl Into<SharedString>,
+    disabled: bool,
+) -> Button {
+    Button::new(id)
+        .with_size(px(32.))
+        .w(px(32.))
+        .h(px(32.))
+        .p_0()
+        .ghost()
+        .child(img(asset).size(px(16.)).flex_shrink_0())
+        .tooltip(tooltip)
+        .accessibility_label(accessibility_label)
+        .disabled(disabled)
+}
+
 /// `IconName` variant of [`icon_button`].
 pub fn named_icon_button(
     id: impl Into<ElementId>,

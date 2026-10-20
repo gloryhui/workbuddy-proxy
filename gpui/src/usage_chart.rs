@@ -184,6 +184,25 @@ fn nice_max(value: f64) -> f64 {
     step * base
 }
 
+/// Keep zero-cost plots readable, with distinct numeric ticks. Axis labels use
+/// enough decimal places for the chosen step rather than the money-cell cutoff.
+fn cost_axis_max(value: f64) -> f64 {
+    nice_max(if value == 0. {
+        20_000_000.
+    } else {
+        value.max(4.)
+    })
+}
+
+fn cost_axis_label(nanos: f64, maximum: f64) -> String {
+    if nanos == 0. {
+        return "0".into();
+    }
+    let step = maximum / 4. / 1_000_000_000.;
+    let precision = (-step.log10().floor()).clamp(4., 9.) as usize;
+    format!("{:.*}", precision, nanos / 1_000_000_000.)
+}
+
 /// One series projected into plot pixels.
 struct ScreenSeries {
     kind: SeriesKind,
@@ -234,6 +253,13 @@ impl UsagePlot {
             }
         }
         max
+    }
+
+    fn axis_max(&self) -> Option<f64> {
+        self.series_max().map(|value| match self.mode {
+            ChartMode::Tokens => nice_max(value),
+            ChartMode::Cost => cost_axis_max(value),
+        })
     }
 
     /// Maps a bucket to the plot width by its real UTC centre time, so a 23 or
@@ -322,7 +348,7 @@ impl Plot for UsagePlot {
         // Horizontal grid plus value labels.
         let mut labels = Vec::new();
         // The axis snaps to a readable 1/2/5 × 10^n maximum.
-        let ymax = self.series_max().map(nice_max);
+        let ymax = self.axis_max();
         for step in 0..=4 {
             let ratio = step as f32 / 4.;
             let y = rect.origin.y + px(height * (1. - ratio));
@@ -343,7 +369,7 @@ impl Plot for UsagePlot {
             let value = ymax.map_or(0., |max| max * ratio as f64);
             let text = match self.mode {
                 ChartMode::Tokens => compact(Some(value.round() as i64), self.zh),
-                ChartMode::Cost => crate::stats_dto::format_amount(value.round() as i64),
+                ChartMode::Cost => cost_axis_label(value, ymax.unwrap_or(1.)),
             };
             labels.push(
                 PlotText::new(
@@ -508,7 +534,7 @@ impl Plot for UsagePlot {
                 ),
             );
         let mut dots = Vec::new();
-        let ymax = self.series_max().map(nice_max);
+        let ymax = self.axis_max();
         let mut add_dot = |value: Option<i64>, color: u32| {
             if let (Some(value), Some(ymax)) = (value, ymax) {
                 let y = PAD_TOP + rect.size.height.as_f32() * (1. - (value as f64 / ymax) as f32);
@@ -642,7 +668,8 @@ mod tests {
     // Explicit imports only: a glob import would bring GPUI's `#[gpui::test]`
     // attribute into scope and shadow the built-in `#[test]` macro.
     use super::{
-        ChartMode, ChartPoint, SeriesQuality, UsagePlot, bucket_label, nice_max, tick_indices,
+        ChartMode, ChartPoint, SeriesQuality, UsagePlot, bucket_label, cost_axis_label,
+        cost_axis_max, nice_max, tick_indices,
     };
     use crate::stats_dto::SeriesPointDto;
     use gpui_kit::{Bounds, ElementId, point as position, px, size};
@@ -657,6 +684,20 @@ mod tests {
         assert_eq!(nice_max(1100.0), 2000.0);
         assert_eq!(nice_max(0.0), 1.0);
         assert_eq!(nice_max(f64::NAN), 1.0);
+    }
+
+    #[test]
+    fn currency_ticks_remain_distinct_for_zero_and_sub_cent_costs() {
+        assert_eq!(cost_axis_max(0.), 20_000_000.);
+        for maximum in [0., 1., 1_000., 9_000_000., 3_000_000_000.] {
+            let top = cost_axis_max(maximum);
+            let ticks = (0..=4)
+                .map(|i| cost_axis_label(top * i as f64 / 4., top))
+                .collect::<std::collections::BTreeSet<_>>();
+            assert_eq!(ticks.len(), 5, "distinct ticks for {maximum} nanos");
+        }
+        assert_eq!(cost_axis_label(20_000_000., 20_000_000.), "0.0200");
+        assert_eq!(cost_axis_label(0., 20_000_000.), "0");
     }
 
     fn point(

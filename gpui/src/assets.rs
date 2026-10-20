@@ -8,6 +8,41 @@ impl AssetSource for Assets {
                 "../../assets/icon-128.png"
             ))));
         }
+        // Original 2× design glyphs, embedded for identical Mac/Windows rendering.
+        let design: Option<&'static [u8]> = match path {
+            "design/header-power.png" => Some(include_bytes!("../assets/design/header-power.png")),
+            "design/header-refresh.png" => {
+                Some(include_bytes!("../assets/design/header-refresh.png"))
+            }
+            "design/header-globe.png" => Some(include_bytes!("../assets/design/header-globe.png")),
+            "design/header-fullscreen.png" => {
+                Some(include_bytes!("../assets/design/header-fullscreen.png"))
+            }
+            "design/header-github.png" => {
+                Some(include_bytes!("../assets/design/header-github.png"))
+            }
+            "design/header-user.png" => Some(include_bytes!("../assets/design/header-user.png")),
+            "design/source-all.png" => Some(include_bytes!("../assets/design/source-all.png")),
+            "design/source-all-selected.png" => {
+                Some(include_bytes!("../assets/design/source-all-selected.png"))
+            }
+            "design/source-builtin.png" => {
+                Some(include_bytes!("../assets/design/source-builtin.png"))
+            }
+            "design/source-builtin-selected.png" => Some(include_bytes!(
+                "../assets/design/source-builtin-selected.png"
+            )),
+            "design/source-custom.png" => {
+                Some(include_bytes!("../assets/design/source-custom.png"))
+            }
+            "design/source-custom-selected.png" => Some(include_bytes!(
+                "../assets/design/source-custom-selected.png"
+            )),
+            _ => None,
+        };
+        if let Some(bytes) = design {
+            return Ok(Some(Cow::Borrowed(bytes)));
+        }
         if !path.ends_with(".svg") {
             return Ok(None);
         }
@@ -107,6 +142,31 @@ mod tests {
     fn load(path: &str) -> String {
         let bytes = Assets.load(path).unwrap().unwrap();
         String::from_utf8(bytes.to_vec()).unwrap()
+    }
+
+    #[test]
+    fn embedded_design_glyphs_load_without_local_files_on_either_platform() {
+        for name in [
+            "header-power",
+            "header-refresh",
+            "header-globe",
+            "header-fullscreen",
+            "header-github",
+            "header-user",
+            "source-all",
+            "source-builtin",
+            "source-custom",
+            "source-all-selected",
+            "source-builtin-selected",
+            "source-custom-selected",
+        ] {
+            let path = format!("design/{name}.png");
+            let png = Assets.load(&path).unwrap().expect("embedded design asset");
+            assert_eq!(&png[..8], b"\x89PNG\r\n\x1a\n", "{path}");
+            assert_eq!(u32::from_be_bytes(png[16..20].try_into().unwrap()), 32);
+            assert_eq!(u32::from_be_bytes(png[20..24].try_into().unwrap()), 32);
+        }
+        assert!(Assets.load("design/missing.png").unwrap().is_none());
     }
 
     #[test]

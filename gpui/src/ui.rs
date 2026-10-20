@@ -49,10 +49,9 @@ enum CoreState {
     Unreachable,
 }
 
-const BG: u32 = 0xf4f7fb;
+const BG: u32 = 0xf7f8f9;
 const INK: u32 = 0x19334d;
 const MUTED: u32 = 0x6b7c90;
-const BORDER: u32 = 0xe2e9f1;
 // T03 skeleton geometry comes from the T01 tokens in `theme`: 224px sidebar,
 // 36px top icon row, 30px status bar, 34px provider rows. Only the brand mark
 // and the provider panel's title row have no token and stay local. Page bodies
@@ -374,9 +373,9 @@ impl Proxy {
         let items = choices(self.zh, true);
         let selected = self.cfg.language.clone();
         let owner = cx.entity().downgrade();
-        crate::ui_components::icon_button(
+        crate::ui_components::design_header_button(
             "language",
-            Icon::default().path("icons/globe.svg"),
+            "design/header-globe.png",
             self.t("切换界面语言", "Change interface language"),
             self.t("界面语言", "Interface language"),
             self.busy,
@@ -399,19 +398,17 @@ impl Proxy {
         .into_any_element()
     }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
-        // The design's top icon row is 36px tall and right-aligned in the main
-        // area. The six actions, their order, callbacks, disabled rules,
-        // tooltips and accessibility names are unchanged (D01); only the four
-        // ambiguous glyphs are redrawn as launch/update/restore/feedback shapes.
+        // Match the original six glyphs and 34px center-to-center spacing.
+        // Their real actions, tooltips and disabled rules remain unchanged.
         div()
             .flex()
             .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
             .items_center()
-            .gap_3()
+            .gap(px(2.))
             .child(
-                crate::ui_components::icon_button(
+                crate::ui_components::design_header_button(
                     "autostart",
-                    Icon::default().path("icons/autostart.svg"),
+                    "design/header-power.png",
                     if self.cfg.autostart {
                         self.t(
                             "开机启动：已开启（点击关闭）",
@@ -428,7 +425,6 @@ impl Proxy {
                 )
                 .selected(self.cfg.autostart)
                 .toggled(self.cfg.autostart)
-                .when(self.cfg.autostart, |button| button.primary())
                 .on_click(cx.listener(|this, _, _, cx| {
                     let enabled = !this.cfg.autostart;
                     this.send(
@@ -439,9 +435,9 @@ impl Proxy {
                 })),
             )
             .child(
-                crate::ui_components::icon_button(
+                crate::ui_components::design_header_button(
                     "check-update",
-                    Icon::default().path("icons/check-update.svg"),
+                    "design/header-refresh.png",
                     self.t("检查更新", "Check updates"),
                     self.t("检查更新", "Check updates"),
                     self.busy,
@@ -454,20 +450,11 @@ impl Proxy {
                     )
                 })),
             )
+            .child(self.language_menu(cx))
             .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .gap_2()
-                    .pl_3()
-                    .border_l_1()
-                    .border_color(rgb(BORDER))
-                    .child(self.language_menu(cx)),
-            )
-            .child(
-                crate::ui_components::icon_button(
+                crate::ui_components::design_header_button(
                     "restore-window-size",
-                    Icon::default().path("icons/restore-size.svg"),
+                    "design/header-fullscreen.png",
                     self.t(
                         "恢复默认窗口尺寸（1440 × 900）",
                         "Restore default window size (1440 × 900)",
@@ -478,9 +465,9 @@ impl Proxy {
                 .on_click(cx.listener(|this, _, window, cx| this.restore_window_size(window, cx))),
             )
             .child(
-                crate::ui_components::icon_button(
+                crate::ui_components::design_header_button(
                     "project-homepage",
-                    Icon::default().path("icons/github.svg"),
+                    "design/header-github.png",
                     self.t("GitHub 项目主页", "GitHub project"),
                     self.t("GitHub 项目主页", "GitHub project"),
                     false,
@@ -488,9 +475,9 @@ impl Proxy {
                 .on_click(|_, _, cx| cx.open_url(PROJECT_URL)),
             )
             .child(
-                crate::ui_components::icon_button(
+                crate::ui_components::design_header_button(
                     "submit-feedback",
-                    Icon::default().path("icons/feedback.svg"),
+                    "design/header-user.png",
                     self.t("提交反馈", "Submit feedback"),
                     self.t("提交反馈", "Submit feedback"),
                     false,

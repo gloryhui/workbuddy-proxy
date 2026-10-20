@@ -1,20 +1,19 @@
-//! The source filter: exactly one of "all sources", "built-in models" or
-//! "supplier models".
+//! The source filter: exactly one of "all models", "built-in models" or
+//! "custom models".
 //!
 //! It is its own component rather than three buttons glued into the filter bar,
-//! because the group has rules the rest of the bar does not: it is always first,
+//! because the group has rules the rest of the bar does not: it keeps its options together,
 //! it never wraps, it never splits, and it can never end up with nothing
 //! selected.
 use crate::stats_dto::SourceScope;
 use gpui_kit::{Role, SharedString};
 
-/// The width the group occupies, fixed by the layout spec.
-pub const GROUP_WIDTH: i32 = 108;
-/// The height of the group and of every button in it.
-pub const GROUP_HEIGHT: i32 = 32;
-/// The width of one button: three of them fill the group exactly.
-pub const ITEM_WIDTH: i32 = 36;
-/// The icon inside a button.
+/// Chinese labelled group, including its 3px track inset on each side.
+pub const GROUP_WIDTH: i32 = 325;
+pub const GROUP_HEIGHT: i32 = 38;
+pub const ITEM_HEIGHT: i32 = 32;
+pub const ITEM_WIDTHS: [i32; 3] = [102, 102, 115];
+pub const ITEM_WIDTHS_EN: [i32; 3] = [112, 140, 148];
 pub const ICON_SIZE: i32 = 16;
 
 /// One selectable source, in the order the spec lists them.
@@ -24,36 +23,31 @@ pub struct SourceOption {
     pub scope: SourceScope,
     /// The asset key the icon is loaded from.
     pub asset: &'static str,
-    /// Unselected icon colour from UI-SPEC U03.
-    pub color: u32,
+    /// White counterpart used on the selected green button.
+    pub selected_asset: &'static str,
     /// The full label, used for the tooltip and for accessibility.
     pub label: &'static str,
-    /// The shorter label a narrow layout may show.
-    pub short_label: &'static str,
 }
 
 /// Every option, in order: all, built-in, supplier.
 pub const OPTIONS: &[SourceOption] = &[
     SourceOption {
         scope: SourceScope::All,
-        asset: "icons/stats-source-all.svg",
-        color: 0x356fc0,
-        label: "全部来源 / All sources",
-        short_label: "全部",
+        asset: "design/source-all.png",
+        selected_asset: "design/source-all-selected.png",
+        label: "全部模型 / All models",
     },
     SourceOption {
         scope: SourceScope::Builtin,
-        asset: "icons/stats-source-builtin.svg",
-        color: 0x268563,
+        asset: "design/source-builtin.png",
+        selected_asset: "design/source-builtin-selected.png",
         label: "内置模型 / Built-in models",
-        short_label: "内置",
     },
     SourceOption {
         scope: SourceScope::Supplier,
-        asset: "icons/stats-source-supplier.svg",
-        color: 0xb64270,
+        asset: "design/source-custom.png",
+        selected_asset: "design/source-custom-selected.png",
         label: "自定义模型 / Custom models",
-        short_label: "自定义",
     },
 ];
 
@@ -185,7 +179,7 @@ impl SourceFilter {
                 .iter()
                 .find(|option| option.scope == scope)
                 .map(|option| option.label)
-                .unwrap_or("全部来源 / All sources"),
+                .unwrap_or("全部模型 / All models"),
         )
     }
 
@@ -232,13 +226,6 @@ impl FilterSlot {
 
 /// The gap between two controls.
 pub const GAP: i32 = 8;
-/// The padding inside the filter card.
-pub const PADDING: i32 = 12;
-/// The width at which everything fits on one line, from the spec.
-pub const SINGLE_ROW_WIDTH: i32 = 1012;
-/// Below this the bar still keeps a whole source group but wraps the rest.
-pub const NARROW_WIDTH: i32 = 560;
-
 /// Every slot, in order.
 pub const SLOTS: &[FilterSlot] = &[
     FilterSlot::Source,
@@ -250,72 +237,6 @@ pub const SLOTS: &[FilterSlot] = &[
     FilterSlot::RefreshButton,
     FilterSlot::More,
 ];
-
-/// How the filter bar is laid out for a given available width.
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct FilterLayout {
-    /// The slots of each row, in order.
-    pub rows: Vec<Vec<FilterSlot>>,
-}
-
-impl FilterLayout {
-    /// True when everything fits on one line.
-    #[cfg(test)]
-    pub fn is_single_row(&self) -> bool {
-        self.rows.len() == 1
-    }
-}
-
-/// Lays the filter bar out for the width the card actually has.
-///
-/// The width is the **card's** available width, not the window's, and the answer
-/// is computed rather than guessed: nothing here subtracts a magic 108 from some
-/// other number, which is what used to make the English labels overflow.
-pub fn layout(available: i32) -> FilterLayout {
-    if available >= SINGLE_ROW_WIDTH {
-        return FilterLayout {
-            rows: vec![SLOTS.to_vec()],
-        };
-    }
-    if available >= NARROW_WIDTH {
-        // Two rows, split exactly where the spec says: the identity controls
-        // first, the timing controls second.
-        return FilterLayout {
-            rows: vec![
-                vec![
-                    FilterSlot::Source,
-                    FilterSlot::Provider,
-                    FilterSlot::Model,
-                    FilterSlot::Status,
-                ],
-                vec![
-                    FilterSlot::Refresh,
-                    FilterSlot::DateRange,
-                    FilterSlot::RefreshButton,
-                    FilterSlot::More,
-                ],
-            ],
-        };
-    }
-    // Very narrow: the source group stays whole on the first row and the rest
-    // wraps in order, one control per row when it has to.
-    let mut rows: Vec<Vec<FilterSlot>> = vec![vec![FilterSlot::Source]];
-    let mut current: Vec<FilterSlot> = Vec::new();
-    let mut used = GROUP_WIDTH + GAP;
-    for slot in SLOTS.iter().copied().filter(|s| *s != FilterSlot::Source) {
-        let needed = slot.width() + GAP;
-        if used + needed > available && !current.is_empty() {
-            rows.push(std::mem::take(&mut current));
-            used = 0;
-        }
-        current.push(slot);
-        used += needed;
-    }
-    if !current.is_empty() {
-        rows.push(current);
-    }
-    FilterLayout { rows }
-}
 
 #[cfg(test)]
 mod tests {
@@ -461,89 +382,8 @@ mod tests {
     }
 
     #[test]
-    fn the_bar_is_one_row_at_1012_and_two_rows_at_1011() {
-        // AC066: the boundary itself fits; one pixel less wraps.
-        assert!(layout(1012).is_single_row());
-        assert_eq!(layout(1012).rows.len(), 1);
-        assert_eq!(layout(1011).rows.len(), 2);
-        assert!(!layout(1011).is_single_row());
-    }
-
-    #[test]
-    fn the_two_row_split_is_exactly_the_spec_order() {
-        let budget = layout(1011);
-        assert_eq!(
-            budget.rows[0],
-            vec![
-                FilterSlot::Source,
-                FilterSlot::Provider,
-                FilterSlot::Model,
-                FilterSlot::Status
-            ],
-            "identity controls first"
-        );
-        assert_eq!(
-            budget.rows[1],
-            vec![
-                FilterSlot::Refresh,
-                FilterSlot::DateRange,
-                FilterSlot::RefreshButton,
-                FilterSlot::More
-            ],
-            "timing and actions second"
-        );
-        // And the same split holds right down to the narrow boundary.
-        assert_eq!(layout(560).rows, budget.rows);
-    }
-
-    #[test]
-    fn the_source_group_is_always_first_and_never_split() {
-        // AC066: whatever the width, the group leads and stays in one piece.
-        for available in [0, 100, 559, 560, 800, 1011, 1012, 2000] {
-            let budget = layout(available);
-            assert_eq!(
-                budget.rows[0].first(),
-                Some(&FilterSlot::Source),
-                "at {available} the source group must lead"
-            );
-            let rows_with_source = budget
-                .rows
-                .iter()
-                .filter(|row| row.contains(&FilterSlot::Source))
-                .count();
-            assert_eq!(
-                rows_with_source, 1,
-                "at {available} the group must not split"
-            );
-        }
-    }
-
-    #[test]
-    fn below_560_the_source_group_still_stays_whole_and_the_rest_wraps() {
-        let budget = layout(559);
-        assert_eq!(budget.rows[0], vec![FilterSlot::Source]);
-        assert!(budget.rows.len() > 2, "the remaining controls wrap further");
-        // Every control still appears, in order, exactly once.
-        let mut seen: Vec<FilterSlot> = budget.rows.iter().flatten().copied().collect();
-        assert_eq!(seen.len(), SLOTS.len());
-        seen.sort_by_key(|slot| SLOTS.iter().position(|s| s == slot).unwrap());
-        assert_eq!(seen, SLOTS.to_vec());
-    }
-
-    #[test]
-    fn every_slot_appears_exactly_once_at_every_width() {
-        for available in [0, 320, 559, 560, 1011, 1012, 4000] {
-            let budget = layout(available);
-            let mut seen: Vec<FilterSlot> = budget.rows.iter().flatten().copied().collect();
-            assert_eq!(seen.len(), SLOTS.len(), "at {available} nothing is lost");
-            seen.sort_by_key(|slot| SLOTS.iter().position(|s| s == slot).unwrap());
-            assert_eq!(seen, SLOTS.to_vec(), "at {available} the order is kept");
-        }
-    }
-
-    #[test]
     fn the_reserved_widths_match_the_layout_spec() {
-        assert_eq!(FilterSlot::Source.width(), 108);
+        assert_eq!(FilterSlot::Source.width(), GROUP_WIDTH);
         assert_eq!(FilterSlot::Provider.width(), 136);
         assert_eq!(FilterSlot::Model.width(), 180);
         assert_eq!(FilterSlot::Status.width(), 112);
@@ -552,18 +392,18 @@ mod tests {
         assert_eq!(FilterSlot::RefreshButton.width(), 32);
         assert_eq!(FilterSlot::More.width(), 32);
         assert_eq!(GAP, 8);
-        assert_eq!(PADDING, 12);
         assert_eq!(SLOTS.len(), 8);
     }
 
     #[test]
     fn the_group_geometry_matches_the_layout_spec() {
-        assert_eq!(ITEM_WIDTH * OPTIONS.len() as i32, GROUP_WIDTH);
-        assert_eq!(GROUP_HEIGHT, 32);
+        assert_eq!(ITEM_WIDTHS.iter().sum::<i32>() + 6, GROUP_WIDTH);
+        assert_eq!(GROUP_HEIGHT, ITEM_HEIGHT + 6);
         assert_eq!(ICON_SIZE, 16);
         for option in OPTIONS {
-            assert!(option.asset.starts_with("icons/stats-source-"));
-            assert!(option.asset.ends_with(".svg"));
+            assert!(option.asset.starts_with("design/source-"));
+            assert!(option.asset.ends_with(".png"));
+            assert!(option.selected_asset.ends_with("-selected.png"));
         }
     }
 }
