@@ -130,7 +130,7 @@ series 示例只列一桶；实际必须覆盖整个筛选范围。桶起止是U
 
 ## 5. stats_requests
 
-请求：`command,request_tag,filter,page_size,cursor`；page_size=20/50/100，cursor初次为null。
+请求：`command,request_tag,filter,page_size,cursor`；page_size=10/20/50/100，cursor初次为null。UI 明细固定每页 10 条。
 
 内层返回：
 

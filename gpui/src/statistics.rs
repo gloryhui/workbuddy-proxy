@@ -605,7 +605,7 @@ impl Statistics {
             groups_gate: crate::stats_controller::ReplyGate::default(),
             health: None,
             maintenance_poll: Instant::now(),
-            page_size: 20,
+            page_size: 10,
             frozen_range: None,
             custom_range: (local_midnight_days_ago(0), now_ms()),
             rows_cursors: crate::stats_controller::CursorStack::default(),
@@ -1313,6 +1313,10 @@ impl Statistics {
     }
 
     fn refresh(&mut self, cx: &mut Context<Self>) {
+        self.refresh_report(true, cx);
+    }
+
+    fn refresh_report(&mut self, reset_page: bool, cx: &mut Context<Self>) {
         // Following the clock can eventually exceed the core's 366 day cap.
         // Keep the last valid data instead of sending an invalid range.
         let (from, to) = self.compute_range();
@@ -1327,7 +1331,14 @@ impl Statistics {
             self.last_refresh = Instant::now();
             return;
         }
-        self.reset_pagination();
+        // Periodic reads must not return a reader on page two to page one.
+        // Keep that page's frozen range and cursor until an explicit refresh
+        // or filter change; the live first page still follows the clock.
+        if reset_page {
+            self.reset_pagination();
+        } else if self.rows_cursors.page_number() == 1 && self.group_current_cursor.is_none() {
+            self.frozen_range = Some(self.compute_range());
+        }
         self.request_dashboard(cx);
         // The import panel refreshes with the rest of the statistics; its read
         // is keyed by resource, so two refreshes in a row collapse into one.
@@ -1381,7 +1392,7 @@ impl Statistics {
             && !self.pending_rows
             && self.last_refresh.elapsed() >= Duration::from_secs(self.refresh_interval)
         {
-            self.refresh(cx);
+            self.refresh_report(false, cx);
         }
         // Provider modes are filled in one per tick so the list converges
         // without ever queueing a job per provider at once.
@@ -2767,16 +2778,6 @@ impl Statistics {
                         ),
                 )
             })
-            .when(
-                self.debounce_until.is_some() || self.loading_dashboard,
-                |this| {
-                    this.child(
-                        Label::new(self.t("正在更新…", "Updating…"))
-                            .text_size(px(11.))
-                            .text_color(rgb(MUTED)),
-                    )
-                },
-            )
             .when_some(self.error.clone(), |this, error| {
                 this.child(
                     Label::new(crate::i18n::message(&error, self.zh))
@@ -3226,10 +3227,11 @@ impl Statistics {
                                         .small()
                                         .ghost()
                                         .label(self.t("上一页", "Previous"))
-                                        .disabled(
-                                            self.loading_rows || self.group_cursor_stack.is_empty(),
-                                        )
+                                        .disabled(self.group_cursor_stack.is_empty())
                                         .on_click(cx.listener(move |this, _, _, cx| {
+                                            if this.loading_rows {
+                                                return;
+                                            }
                                             if let Some(previous) = this.group_cursor_stack.pop() {
                                                 this.group_next_cursor =
                                                     this.group_current_cursor.clone();
@@ -3243,10 +3245,11 @@ impl Statistics {
                                         .small()
                                         .ghost()
                                         .label(self.t("下一页", "Next"))
-                                        .disabled(
-                                            self.loading_rows || self.group_next_cursor.is_none(),
-                                        )
+                                        .disabled(self.group_next_cursor.is_none())
                                         .on_click(cx.listener(move |this, _, _, cx| {
+                                            if this.loading_rows {
+                                                return;
+                                            }
                                             let Some(next) = this.group_next_cursor.clone() else {
                                                 return;
                                             };
@@ -3261,24 +3264,9 @@ impl Statistics {
                             })
                             .when(self.tab != Tab::Requests, |this| {
                                 this.child(
-                                    Button::new("group-page-size")
-                                        .small()
-                                        .ghost()
-                                        .label(format!(
-                                            "{} {}",
-                                            self.page_size,
-                                            self.t("条/页", "per page")
-                                        ))
-                                        .on_click(cx.listener(|this, _, _, cx| {
-                                            this.page_size = match this.page_size {
-                                                20 => 50,
-                                                50 => 100,
-                                                _ => 20,
-                                            };
-                                            this.reset_group_pagination();
-                                            this.groups_gate.invalidate();
-                                            this.request_groups(cx);
-                                        })),
+                                    Label::new(self.t("10 条/页", "10 per page"))
+                                        .text_size(px(11.))
+                                        .text_color(rgb(MUTED)),
                                 )
                             })
                             .when(self.tab == Tab::Requests, |this| {
@@ -3286,10 +3274,13 @@ impl Statistics {
                                     crate::ui_components::pager_button(
                                         "page-prev",
                                         self.t("上一页", "Previous"),
-                                        self.loading_rows || !self.rows_cursors.can_go_back(),
+                                        !self.rows_cursors.can_go_back(),
                                     )
                                     .on_click(cx.listener(
                                         |this, _, _, cx| {
+                                            if this.loading_rows {
+                                                return;
+                                            }
                                             // The stack holds the start cursor of each
                                             // page, so popping restores exactly the
                                             // previous page (1 -> 2 -> 3 -> 2 -> 1).
@@ -3301,36 +3292,21 @@ impl Statistics {
                                     )),
                                 )
                                 .child(
-                                    crate::ui_components::pager_button(
-                                        "page-size",
-                                        format!(
-                                            "{} {}",
-                                            self.page_size,
-                                            self.t("条/页", "per page")
-                                        ),
-                                        false,
-                                    )
-                                    .on_click(cx.listener(
-                                        |this, _, _, cx| {
-                                            this.page_size = match this.page_size {
-                                                20 => 50,
-                                                50 => 100,
-                                                _ => 20,
-                                            };
-                                            this.reset_pagination();
-                                            this.request_rows(cx);
-                                            cx.notify();
-                                        },
-                                    )),
+                                    Label::new(self.t("10 条/页", "10 per page"))
+                                        .text_size(px(11.))
+                                        .text_color(rgb(MUTED)),
                                 )
                                 .child(
                                     crate::ui_components::pager_button(
                                         "page-next",
                                         self.t("下一页", "Next"),
-                                        self.loading_rows || !self.rows_cursors.can_go_next(),
+                                        !self.rows_cursors.can_go_next(),
                                     )
                                     .on_click(cx.listener(
                                         |this, _, _, cx| {
+                                            if this.loading_rows {
+                                                return;
+                                            }
                                             if let Some(cursor) = this.rows_cursors.forward() {
                                                 this.rows_cursors.begin_page(cursor);
                                                 this.request_rows(cx);
@@ -3345,7 +3321,10 @@ impl Statistics {
                 div()
                     .id("stats-table-host")
                     .w_full()
-                    .h(px(400.))
+                    .h(px(crate::theme::size::TABLE_HEADER_HEIGHT
+                        + crate::theme::size::TABLE_ROW_HEIGHT * 10.
+                        + 14.))
+                    .flex_shrink_0()
                     .min_h_0()
                     .overflow_hidden()
                     .on_prepaint({
@@ -3394,36 +3373,9 @@ impl Statistics {
             .child(self.health_bar(cx))
             .children(self.warnings())
             .children(self.import_notices(cx))
-            .child(
-                div()
-                    .w_full()
-                    .opacity(if self.debounce_until.is_some() || self.loading_dashboard {
-                        0.55
-                    } else {
-                        1.0
-                    })
-                    .child(self.overview(cx)),
-            )
-            .child(
-                div()
-                    .w_full()
-                    .opacity(if self.debounce_until.is_some() || self.loading_dashboard {
-                        0.55
-                    } else {
-                        1.0
-                    })
-                    .child(self.trends(cx)),
-            )
-            .child(
-                div()
-                    .w_full()
-                    .opacity(if self.debounce_until.is_some() || self.loading_rows {
-                        0.55
-                    } else {
-                        1.0
-                    })
-                    .child(self.details(cx)),
-            )
+            .child(div().w_full().child(self.overview(cx)))
+            .child(div().w_full().child(self.trends(cx)))
+            .child(div().w_full().child(self.details(cx)))
             .child(self.pricing_section(cx))
             .child(self.storage_section(cx))
             .into_any_element()

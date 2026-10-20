@@ -293,8 +293,10 @@ impl Statistics {
             .icon(IconName::RefreshCw)
             .tooltip(self.t("刷新统计", "Refresh statistics"))
             .accessibility_label(self.t("刷新统计", "Refresh statistics"))
-            .disabled(self.loading_dashboard || self.loading_rows)
             .on_click(cx.listener(|this, _, _, cx| {
+                if this.loading_dashboard || this.loading_rows {
+                    return;
+                }
                 this.generation += 1;
                 this.debounce_until = None;
                 this.applied = this.generation;

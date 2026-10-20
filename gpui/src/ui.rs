@@ -59,7 +59,6 @@ const BORDER: u32 = 0xe2e9f1;
 // keep their own values until T04–T08 migrate them.
 const BRAND_MARK_SIZE: f32 = 34.;
 const BRAND_MARK_RADIUS: f32 = 10.;
-const PROVIDER_PANEL_HEADER_HEIGHT: f32 = 40.;
 const PROJECT_URL: &str = "https://github.com/gloryhui/workbuddy-proxy";
 const FEEDBACK_URL: &str = "https://github.com/gloryhui/workbuddy-proxy/issues/new";
 
@@ -2107,19 +2106,22 @@ impl Proxy {
         let panel = div()
             .flex()
             .flex_col()
-            .flex_1()
             .min_h_0()
             .w_full()
             .overflow_hidden()
-            .bg(rgb(crate::theme::color::WHITE))
-            .border_1()
-            .border_color(rgb(crate::theme::color::BORDER))
             .rounded(px(crate::theme::radius::CARD))
+            .when(self.providers_expanded, |panel| {
+                panel
+                    .flex_1()
+                    .bg(rgb(crate::theme::color::WHITE))
+                    .border_1()
+                    .border_color(rgb(crate::theme::color::BORDER))
+            })
             .child(
                 Button::new("nav-providers")
                     .ghost()
                     .w_full()
-                    .h(px(PROVIDER_PANEL_HEADER_HEIGHT))
+                    .h(px(crate::theme::size::NAV_ROW_HEIGHT))
                     .flex_shrink_0()
                     .when(providers_active, |button| {
                         button.bg(rgb(crate::theme::color::PRIMARY_TINT))

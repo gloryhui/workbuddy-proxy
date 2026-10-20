@@ -404,6 +404,9 @@ fn cell(
     div()
         .id(id)
         .w_full()
+        .h_full()
+        .flex()
+        .items_center()
         .min_w_0()
         .overflow_hidden()
         .when_some(hint, |this, hint| {
@@ -542,7 +545,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .id(("usage-tokens", row))
         .w_full()
         .min_w_0()
-        .min_h(px(crate::theme::size::TABLE_ROW_HEIGHT))
+        .h_full()
         .overflow_hidden()
         .flex()
         .flex_col()
@@ -605,7 +608,7 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .id(("usage-provider", row))
         .w_full()
         .min_w_0()
-        .min_h(px(crate::theme::size::TABLE_ROW_HEIGHT))
+        .h_full()
         .overflow_hidden()
         .flex()
         .items_center()
@@ -684,7 +687,7 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .id(("usage-cost", row))
         .w_full()
         .min_w_0()
-        .min_h(px(crate::theme::size::TABLE_ROW_HEIGHT))
+        .h_full()
         .overflow_hidden()
         .flex()
         .flex_col()
@@ -840,13 +843,17 @@ impl TableDelegate for UsageRows {
         &mut self,
         row: usize,
         _: &mut Window,
-        cx: &mut Context<TableState<Self>>,
+        _cx: &mut Context<TableState<Self>>,
     ) -> Stateful<Div> {
         let owner = self.owner.clone();
         div()
             .id(("usage-row", row))
             .accessibility_id(format!("usage-row-{row}"))
-            .bg(cx.theme().background)
+            .bg(rgb(if row.is_multiple_of(2) {
+                0xffffff
+            } else {
+                0xf8fafc
+            }))
             .on_click(move |_, window, cx| {
                 cx.stop_propagation();
                 let _ = owner.update(cx, |this, cx| this.open_detail(row, window, cx));

@@ -1,4 +1,5 @@
-//! The nine actual metric cards, in U08 order. Each source uses this one
+//! Seven metric cards alongside the two-row total-token hero. Input and output
+//! share one card without combining their counters. Each source uses this one
 //! composition path; numeric tooltips retain exact values and distinct units.
 use super::*;
 use crate::stats_dto::SummaryDto;
@@ -20,14 +21,18 @@ fn number(value: Option<i64>) -> String {
 
 fn title(id: MetricId, zh: bool) -> &'static str {
     if zh {
-        return id.title();
+        return match id {
+            MetricId::InputTokens => "输入 / 输出 Token",
+            MetricId::CacheRead => "缓存读取 / 创建",
+            _ => id.title(),
+        };
     }
     match id {
         MetricId::UsageRecords => "Usage records",
         MetricId::ProxySuccessRate => "Proxy success rate",
-        MetricId::InputTokens => "Input tokens",
+        MetricId::InputTokens => "Input / output tokens",
         MetricId::OutputTokens => "Output tokens",
-        MetricId::CacheRead => "Cache read",
+        MetricId::CacheRead => "Cache read / write",
         MetricId::CacheWrite => "Cache write",
         MetricId::RecordedCoverage => "Recorded usage completeness",
         MetricId::EstimatedCost => "Proxy estimated cost",
@@ -36,35 +41,52 @@ fn title(id: MetricId, zh: bool) -> &'static str {
 }
 
 fn token_cards(summary: &SummaryDto, zh: bool) -> Vec<Card> {
-    let mut cards = Vec::with_capacity(4);
-    for (id, value) in [
-        (MetricId::InputTokens, summary.input_tokens),
-        (MetricId::OutputTokens, summary.output_tokens),
-        (MetricId::CacheRead, summary.cache_read_tokens),
-        (MetricId::CacheWrite, summary.cache_write_tokens),
-    ] {
-        cards.push(Card {
-            id,
-            value: usage_table::compact(value, zh),
-            exact: number(value),
-            hint: match id {
-                MetricId::CacheRead => format!(
-                    "{} {}",
-                    text(zh, "命中率", "Hit rate"),
-                    usage_table::percent(summary.cache_hit_rate)
-                ),
-                MetricId::CacheWrite => {
-                    text(zh, "输入子集，不可相加", "Input subset; never add twice").into()
-                }
-                _ => text(
-                    zh,
-                    "只汇总用量完整的已记录条目",
-                    "Complete recorded usage only",
-                )
-                .into(),
-            },
-        });
-    }
+    let mut cards = vec![Card {
+        id: MetricId::InputTokens,
+        value: format!(
+            "{} / {}",
+            usage_table::compact(summary.input_tokens, zh),
+            usage_table::compact(summary.output_tokens, zh)
+        ),
+        exact: format!(
+            "{} {}\n{} {}",
+            text(zh, "输入", "Input"),
+            number(summary.input_tokens),
+            text(zh, MetricId::OutputTokens.title(), "Output tokens"),
+            number(summary.output_tokens)
+        ),
+        hint: text(
+            zh,
+            "输入 / 输出，各自独立计数",
+            "Input / output, counted separately",
+        )
+        .into(),
+    }];
+    cards.push(Card {
+        id: MetricId::CacheRead,
+        value: format!(
+            "{} / {}",
+            usage_table::compact(summary.cache_read_tokens, zh),
+            usage_table::compact(summary.cache_write_tokens, zh)
+        ),
+        exact: format!(
+            "{} {}\n{} {}\n{}",
+            text(zh, MetricId::CacheRead.title(), "Cache read"),
+            number(summary.cache_read_tokens),
+            text(zh, MetricId::CacheWrite.title(), "Cache write"),
+            number(summary.cache_write_tokens),
+            text(
+                zh,
+                "缓存是输入的子集，不可重复相加",
+                "Cache is a subset of input; never add twice"
+            )
+        ),
+        hint: format!(
+            "{} {}",
+            text(zh, "命中率", "Hit rate"),
+            usage_table::percent(summary.cache_hit_rate)
+        ),
+    });
     cards
 }
 
@@ -185,7 +207,7 @@ fn columns(grid_width: f32) -> usize {
 /// The hero column width fixed by DESIGN_SPEC §4.1.3.
 const HERO_WIDTH: f32 = 260.;
 /// The design's metric row height.
-const METRIC_HEIGHT: f32 = 92.;
+const METRIC_HEIGHT: f32 = 124.;
 /// Below this the hero moves above the grid instead of beside it.
 const HERO_BESIDE_WIDTH: f32 = 720.;
 
@@ -210,10 +232,7 @@ impl Statistics {
             .flex_shrink_0()
             .w(px(width))
             .min_w(px(METRIC_MIN_WIDTH as f32))
-            // The design fixes the row at 92px, but a value such as
-            // "USD 0.0010 / CNY 0.0050" or a two-line hint may need more; the
-            // card grows instead of clipping.
-            .min_h(px(METRIC_HEIGHT))
+            .h(px(METRIC_HEIGHT))
             .gap_1()
             .p_4()
             .bg(rgb(crate::theme::color::WHITE))
@@ -292,7 +311,8 @@ impl Statistics {
             .rounded(px(crate::theme::radius::CARD))
             .bg(rgb(crate::theme::color::HERO_BG))
             .when(beside, |card| {
-                card.w(px(HERO_WIDTH)).min_h(px(METRIC_HEIGHT * 2. + 12.))
+                card.w(px(HERO_WIDTH))
+                    .h(px(METRIC_HEIGHT * 2. + METRIC_GAP as f32))
             })
             .when(!beside, |card| card.w_full())
             .child(
@@ -356,10 +376,10 @@ mod tests {
     use super::{cards, columns};
     use crate::{statistics::MetricId, stats_dto::SummaryDto};
     #[test]
-    fn actual_metric_composition_is_exactly_nine_unique_cards_with_honest_unknowns() {
+    fn actual_metric_composition_preserves_separate_counters_in_seven_cards() {
         for zh in [true, false] {
             let values = cards(&SummaryDto::default(), zh);
-            assert_eq!(values.len(), 9);
+            assert_eq!(values.len(), 7);
             let ids: Vec<_> = values.iter().map(|card| card.id).collect();
             assert_eq!(
                 ids,
@@ -367,23 +387,31 @@ mod tests {
                     MetricId::UsageRecords,
                     MetricId::ProxySuccessRate,
                     MetricId::InputTokens,
-                    MetricId::OutputTokens,
                     MetricId::CacheRead,
-                    MetricId::CacheWrite,
                     MetricId::RecordedCoverage,
                     MetricId::EstimatedCost,
                     MetricId::WorkbuddyCredit
                 ]
             );
             assert_eq!(values[1].value, "—");
-            assert_eq!(values[8].value, "—");
+            assert_eq!(values[2].value, "— / —");
+            assert_eq!(values[3].value, "— / —");
+            assert_eq!(values[6].value, "—");
             let mut summary = SummaryDto {
                 credit_nanos: Some("1140000000".into()),
+                input_tokens: Some(1200),
+                output_tokens: Some(0),
+                cache_read_tokens: Some(600),
+                cache_write_tokens: Some(20),
                 ..SummaryDto::default()
             };
-            assert_eq!(cards(&summary, zh)[8].value, "1.14");
+            let populated = cards(&summary, zh);
+            assert!(populated[2].value.ends_with(" / 0"));
+            assert!(populated[2].exact.contains("1200"));
+            assert_eq!(populated[3].value, "600 / 20");
+            assert_eq!(populated[6].value, "1.14");
             summary.credit_nanos = Some("0".into());
-            assert_eq!(cards(&summary, zh)[8].value, "0");
+            assert_eq!(cards(&summary, zh)[6].value, "0");
         }
     }
     #[test]

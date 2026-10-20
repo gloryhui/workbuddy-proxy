@@ -622,8 +622,8 @@ impl StatsHandle {
                     .get("page_size")
                     .and_then(serde_json::Value::as_i64)
                     .unwrap_or(20);
-                if !matches!(page_size, 20 | 50 | 100) {
-                    return Err(error(ERR_INVALID, "page_size must be 20, 50 or 100"));
+                if !matches!(page_size, 10 | 20 | 50 | 100) {
+                    return Err(error(ERR_INVALID, "page_size must be 10, 20, 50 or 100"));
                 }
                 let cursor = match payload.get("cursor") {
                     Some(serde_json::Value::Null) | None => None,
@@ -2907,6 +2907,58 @@ mod tests {
         let conn = store::open_connection(&dir.path().join("usage.sqlite3"), true).unwrap();
         let error = run_read(&conn, &handle.inner, job).unwrap_err();
         assert!(error.contains(dto::ERR_CURSOR_EXPIRED), "{error}");
+        handle.shutdown();
+    }
+
+    #[tokio::test]
+    async fn ten_record_pages_cover_all_requests_without_duplicates() {
+        let dir = temporary_dir();
+        let handle = StatsHandle::start(dir.path().to_path_buf());
+        assert!(wait_ready(&handle));
+        for _ in 0..21 {
+            let mut guard = handle
+                .begin(spec("ten-record-pages"), Protocol::Sse, false)
+                .unwrap();
+            guard.mark_upstream_started();
+            guard.finish(dto::Outcome::Completed, None);
+        }
+        let filter = json!({"from_ms":now_ms()-3_600_000,"to_ms":now_ms()+1000,"timezone":"UTC"});
+        let mut request = json!({"command":"stats_requests","filter":filter,"page_size":10});
+        let mut first = None;
+        for _ in 0..200 {
+            let page: dto::RequestPageDto =
+                serde_json::from_str(&handle.command(&request).await.unwrap()).unwrap();
+            if page.total_rows == 21 {
+                first = Some(page);
+                break;
+            }
+            std::thread::sleep(Duration::from_millis(20));
+        }
+        let mut page = first.expect("all requests must be persisted");
+        let mut seen = std::collections::BTreeSet::new();
+        for expected in [10, 10, 1] {
+            assert_eq!(page.items.len(), expected);
+            assert_eq!(page.page_size, 10);
+            for row in &page.items {
+                assert!(seen.insert(row.id), "a cursor repeated a request");
+            }
+            if let Some(cursor) = page.next_cursor.take() {
+                request["cursor"] = serde_json::to_value(cursor).unwrap();
+                page = serde_json::from_str(&handle.command(&request).await.unwrap()).unwrap();
+            } else {
+                assert_eq!(seen.len(), 21);
+                break;
+            }
+        }
+        assert_eq!(seen.len(), 21);
+        request["page_size"] = json!(11);
+        assert!(
+            handle
+                .command(&request)
+                .await
+                .unwrap_err()
+                .contains(dto::ERR_INVALID)
+        );
         handle.shutdown();
     }
 
