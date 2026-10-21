@@ -1,0 +1,79 @@
+name: 问题反馈 / Bug report
+description: 报告可复现缺陷，或提供与项目有关的问题排查信息。
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先阅读 [README / FAQ](https://github.com/gloryhui/workbuddy-proxy/blob/main/README.md#常见问题)、[支持规则](https://github.com/gloryhui/workbuddy-proxy/blob/main/SUPPORT.md)和[贡献指南](https://github.com/gloryhui/workbuddy-proxy/blob/main/CONTRIBUTING.md)，并搜索已有 Issue。
+        **禁止上传 API Key、Authorization、访问令牌、真实对话内容、个人隐私、完整 `config.json`、`models.json`、`gpui-drafts.json` 或私密数据库（含 WAL / SHM）及备份。日志与截图提交前必须脱敏。**
+        疑似安全漏洞请按 [SECURITY.md](https://github.com/gloryhui/workbuddy-proxy/blob/main/SECURITY.md)确认私密渠道可用后报告，不在此处公开利用细节。复现可用假 Key、本机模拟上游和合成数据，不要求公网服务、商业账号或真实密钥。
+        免费反馈按可用时间处理，无固定响应或修复时限；提交或确认收到不代表承诺修复。
+  - type: input
+    id: version
+    attributes:
+      label: WorkBuddy Proxy 版本
+      description: 填写 Release 标签或源码 commit；请勿只写“最新版”。
+      placeholder: Release 标签 / commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 系统与运行环境
+      description: 填写操作系统版本及架构，涉及 WorkBuddy 时补充其版本。桌面包面向 Windows 10/11、macOS 12+；Linux 主要用于无界面开发 / 测试。
+      placeholder: |
+        系统及版本：
+        架构（x64 / arm64 等）：
+        安装包 / 源码构建 / 无界面运行：
+        WorkBuddy 版本（相关时填写）：
+    validations:
+      required: true
+  - type: textarea
+    id: upstream
+    attributes:
+      label: 上游与错误信息（相关时填写）
+      description: 填写供应商、协议、脱敏 URL 类型 / 路径结构或模型 ID、HTTP 状态或错误类别。不要粘贴含凭据或私人域名的 URL；与上游无关可留空。
+      placeholder: |
+        供应商：
+        协议（Chat Completions / Responses / Anthropic Messages / Gemini GenerateContent）：
+        地址类型 / 脱敏路径结构（如 HTTPS 网关 /v1 或本机 loopback）：
+        模型 ID（必要且脱敏）：
+        错误状态 / 类别：
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 最小重现步骤
+      description: 说明前提和操作顺序，尽量用隔离配置及合成数据；无法稳定复现时说明已知条件和已尝试的排查。
+      placeholder: |
+        1. 准备……
+        2. 执行……
+        3. 观察……
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果
+      description: 说明预期发生什么。
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+      description: 说明实际发生什么，错误文字请先脱敏。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 脱敏日志 / 截图（可选）
+      description: 仅提供与问题有关的最小片段或截图，检查密钥、令牌、对话、路径及隐私；不要上传完整配置、私密数据库或备份。
+  - type: textarea
+    id: impact
+    attributes:
+      label: 影响范围与发生频率
+      description: 例如仅某个模型、所有请求、同步或启动；是否每次发生，有无可用的绕过办法。不确定可说明未知。
+    validations:
+      required: true

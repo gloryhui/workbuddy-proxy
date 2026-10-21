@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 使用说明与常见问题
+    url: https://github.com/gloryhui/workbuddy-proxy/blob/main/README.md#常见问题
+    about: 提交前先查阅安装、配置、协议与常见问题。
+  - name: 搜索已有问题与建议
+    url: https://github.com/gloryhui/workbuddy-proxy/issues?q=is%3Aissue
+    about: 包括已关闭的 Issue；同一问题优先补充已有讨论。
+  - name: 支持范围与普通使用问题
+    url: https://github.com/gloryhui/workbuddy-proxy/blob/main/SUPPORT.md
+    about: 了解处理规则；普通问题仍可通过空白 Issue 提交必要且脱敏的信息。
+  - name: 安全漏洞私密报告指南
+    url: https://github.com/gloryhui/workbuddy-proxy/blob/main/SECURITY.md
+    about: 先确认私密渠道可用；未启用时需维护者配置，勿在公开 Issue 中披露利用细节或密钥。

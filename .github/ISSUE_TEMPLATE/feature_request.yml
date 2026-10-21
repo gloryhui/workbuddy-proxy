@@ -1,0 +1,38 @@
+name: 功能建议 / Feature request
+description: 描述用户场景、痛点、期望效果与替代方案。
+title: "[Feature] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先查阅 [README](https://github.com/gloryhui/workbuddy-proxy/blob/main/README.md)、[支持规则](https://github.com/gloryhui/workbuddy-proxy/blob/main/SUPPORT.md)和[贡献指南](https://github.com/gloryhui/workbuddy-proxy/blob/main/CONTRIBUTING.md)，并搜索已有建议。
+        项目由个人业余维护，提交、标签、讨论或确认收到不代表承诺实现、合并或按期交付；建议可能延期或不被采纳。
+        **禁止上传 API Key、Authorization、访问令牌、真实对话内容、个人隐私、完整 `config.json`、`models.json`、`gpui-drafts.json`、私密数据库及备份。** 使用合成示例说明，不要求真实密钥、商业账号或公网服务。疑似漏洞请按 [SECURITY.md](https://github.com/gloryhui/workbuddy-proxy/blob/main/SECURITY.md)走私密报告。
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 用户场景
+      description: 谁在什么场景下需要这项能力？希望完成什么任务？
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 当前痛点
+      description: 当前如何处理，具体遇到什么困难？
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 期望效果
+      description: 描述可观察的结果；如有方案，可作为参考，不必限定实现方式。
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 可替代方案
+      description: 已尝试或考虑过哪些现有功能、手动流程或其他办法？暂无替代方案可说明“暂无”。
+    validations:
+      required: true
