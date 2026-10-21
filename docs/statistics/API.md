@@ -132,7 +132,7 @@ series 示例只列一桶；实际必须覆盖整个筛选范围。桶起止是U
 
 ## 5. stats_requests
 
-请求：`command,request_tag,filter,page_size,cursor`；page_size=10/20/50/100，cursor初次为null。UI 明细固定每页 10 条。
+请求：`command,request_tag,filter,page_size,cursor,page?`；page_size=10/20/50/100，cursor初次为null。UI 可调整每页条数并保存本地偏好，可输入页码按回车或点击跳转。
 
 内层返回：
 
@@ -160,7 +160,9 @@ series 示例只列一桶；实际必须覆盖整个筛选范围。桶起止是U
 ```
 
 - 实际items为page_size行示例只列一行，next_cursor只在有更多行时返回，故服务端查询limit=page_size+1。
-- 固定 `id<=as_of_id` 防止新请求插进翻页结果，按时间/id keyset；GUI维护之前页游标栈实现上一页。
+- 固定 `id<=as_of_id` 防止新请求插进翻页结果，顺序翻页按时间/id keyset；GUI 保留有界页游标记录以便返回。
+- 可选 `page` 为从 1 开始的整数，用于页码直达；携带现有 cursor 时只复用其快照边界，重新定位目标页。请求明细先按索引扫描轻量时间/id 键定位，再读取该页详情，不逐页发请求。深页直达仍有与跳过键数量相关的成本，保留查询预算。
+- 页码直达响应回显 `page`；旧核心若不支持并忽略此字段，GUI 会提示更新/重启，不把旧页误显示为目标页。非法、溢出或不存在的页返回 `stats_invalid_argument`，GUI 保留原页和数据。
 - 游标不是历史MVCC快照：已有进行中请求仍会完成、本次历史价格和金额冻结、保留策略会删除旧行。总览与列表不同查询间可能有短暂变化，应显示各自更新时间。
 - 核心重启、筛选改变、清理/保留删除导致maintenance_revision变化时，返回cursor_expired，GUI回第一页并说明“统计已更新”。
 - 普通新增/请求完成不会使游标失效。含outcome/usage_status筛选时最终状态变化可能改变成员；刷新回第一页，翻页时可出现总数变化，不承诺冻结状态。需要严格冻结报表属于后续功能。
@@ -176,7 +178,7 @@ series 示例只列一桶；实际必须覆盖整个筛选范围。桶起止是U
 
 ## 7. stats_breakdown
 
-请求：`command,request_tag,filter,group_by,sort,limit,cursor`。
+请求：`command,request_tag,filter,group_by,sort,limit,cursor,page?`。`page` 与明细列表的页码直达约定相同；汇总在聚合结果上定位。分组计数达到上限时总数是下界，UI 显示 `≥` 并仍允许继续翻页或直接跳转。
 
 - group_by=provider/model；sort=total_tokens/request_count；limit默认20、最大100。
 - 每组包含 key、label、provider_count、最近名称快照、与dashboard同口径summary。按排序指标DESC、key ASC稳定排序；无完整用量组排最后。

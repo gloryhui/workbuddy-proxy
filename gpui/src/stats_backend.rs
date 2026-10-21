@@ -166,12 +166,16 @@ pub struct StatsScheduler {
     jobs: SyncSender<StatsJob>,
     replies: Receiver<StatsReply>,
     pending: std::sync::Mutex<Pending>,
+    wake: async_channel::Sender<()>,
+    wake_receiver: async_channel::Receiver<()>,
 }
 
 impl StatsScheduler {
     pub fn new(dir: PathBuf) -> Self {
         let (jobs, requests) = mpsc::sync_channel::<StatsJob>(8);
         let (results, replies) = mpsc::sync_channel(64);
+        let (wake, wake_receiver) = async_channel::bounded(1);
+        let reply_wake = wake.clone();
         std::thread::Builder::new()
             .name("statistics-control".into())
             .stack_size(512 * 1024)
@@ -190,6 +194,7 @@ impl StatsScheduler {
                     {
                         break;
                     }
+                    let _ = reply_wake.try_send(());
                 }
             })
             .expect("Cannot start statistics worker");
@@ -197,7 +202,15 @@ impl StatsScheduler {
             jobs,
             replies,
             pending: std::sync::Mutex::new(Pending::default()),
+            wake,
+            wake_receiver,
         }
+    }
+
+    /// Wake the window on new work and completed replies instead of waiting
+    /// for its periodic maintenance timer. Bursts collapse to a single wake.
+    pub fn wake_receiver(&self) -> async_channel::Receiver<()> {
+        self.wake_receiver.clone()
     }
 
     /// Queues a read intent, replacing any older intent for the *same resource*.
@@ -216,6 +229,7 @@ impl StatsScheduler {
                 request,
             },
         );
+        let _ = self.wake.try_send(());
         seq
     }
 
@@ -235,6 +249,7 @@ impl StatsScheduler {
             tag,
             request,
         });
+        let _ = self.wake.try_send(());
         Ok(seq)
     }
 
@@ -257,7 +272,11 @@ impl StatsScheduler {
                 } else if let Some(key) = pending
                     .reads
                     .keys()
-                    .find(|key| !pending.in_flight.contains_key(*key))
+                    .filter(|key| !pending.in_flight.contains_key(*key))
+                    .min_by_key(|key| match key {
+                        JobKey::Rows | JobKey::Groups | JobKey::Detail(_) => 0,
+                        _ => 1,
+                    })
                     .cloned()
                 {
                     pending.reads.remove(&key)
@@ -302,6 +321,11 @@ impl StatsScheduler {
             if *count == 0 {
                 pending.in_flight.remove(key);
             }
+        }
+        // A newer intent for the same resource could not leave while this
+        // one was in flight. Dispatch it now instead of waiting for the timer.
+        if !pending.reads.is_empty() || !pending.writes.is_empty() {
+            let _ = self.wake.try_send(());
         }
     }
 
@@ -407,11 +431,14 @@ impl StatsScheduler {
     fn for_tests() -> (Self, Receiver<StatsJob>) {
         let (jobs, requests) = mpsc::sync_channel::<StatsJob>(2);
         let (_results, replies) = mpsc::sync_channel(8);
+        let (wake, wake_receiver) = async_channel::bounded(1);
         (
             Self {
                 jobs,
                 replies,
                 pending: std::sync::Mutex::new(Pending::default()),
+                wake,
+                wake_receiver,
             },
             requests,
         )
@@ -420,6 +447,45 @@ impl StatsScheduler {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn completion_wakes_a_newer_intent_waiting_on_the_same_resource() {
+        let (scheduler, jobs) = super::StatsScheduler::for_tests();
+        let wake = scheduler.wake_receiver();
+        let first = scheduler.submit_read(super::JobKey::Rows, "old".into(), serde_json::json!({}));
+        wake.try_recv().unwrap();
+        scheduler.pump();
+        assert_eq!(jobs.try_recv().unwrap().seq, first);
+        let newest =
+            scheduler.submit_read(super::JobKey::Rows, "new".into(), serde_json::json!({}));
+        wake.try_recv().unwrap();
+        scheduler.pump();
+        assert!(jobs.try_recv().is_err());
+        scheduler.complete(&super::JobKey::Rows);
+        wake.try_recv()
+            .expect("completion must wake the queued replacement");
+        scheduler.pump();
+        assert_eq!(jobs.try_recv().unwrap().seq, newest);
+    }
+
+    #[test]
+    fn interactive_pages_wake_immediately_and_precede_background_reads() {
+        let (scheduler, jobs) = super::StatsScheduler::for_tests();
+        let wake = scheduler.wake_receiver();
+        scheduler.submit_read(
+            super::JobKey::Dashboard,
+            "dash".into(),
+            serde_json::json!({}),
+        );
+        for _ in 0..100 {
+            scheduler.submit_read(super::JobKey::Rows, "rows".into(), serde_json::json!({}));
+        }
+        assert!(wake.try_recv().is_ok());
+        assert!(wake.try_recv().is_err(), "one wake is enough for a burst");
+        scheduler.pump();
+        assert_eq!(jobs.try_recv().unwrap().key, super::JobKey::Rows);
+        assert_eq!(jobs.try_recv().unwrap().key, super::JobKey::Dashboard);
+    }
+
     use super::*;
     use std::io::{Read, Write};
     use std::net::TcpListener;

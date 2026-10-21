@@ -23,6 +23,7 @@ mod import_controls;
 mod layout;
 mod mapping_controls;
 mod overview;
+mod pagination;
 mod preferences;
 mod source_controls;
 
@@ -290,6 +291,8 @@ pub struct Statistics {
     filter_key: String,
     tab: Tab,
     page_size: i64,
+    page_size_select: Entity<ChoiceState>,
+    page_input: Entity<InputState>,
     /// The window captured when the query was (re)started. Pagination is bound
     /// to the exact filter it began with, so `now` is never recomputed while
     /// walking pages.
@@ -300,12 +303,10 @@ pub struct Statistics {
     custom_to: Entity<InputState>,
     /// Request-log pagination: the cursor of the current page, the one the core
     /// offered next, and the history needed to walk back (1 -> 2 -> 3 -> 2 -> 1).
-    rows_cursors: crate::stats_controller::CursorStack<RequestCursor>,
+    rows_cursors: pagination::Pager<RequestCursor>,
     /// The grouping listing keeps its own cursor chain: sharing the request
     /// cursors made "next" on one tab move the other.
-    group_cursor_stack: Vec<Option<crate::stats_dto::BreakdownCursor>>,
-    group_current_cursor: Option<crate::stats_dto::BreakdownCursor>,
-    group_next_cursor: Option<crate::stats_dto::BreakdownCursor>,
+    group_pages: pagination::Pager<crate::stats_dto::BreakdownCursor>,
     group_sort: SortMetric,
     loading_dashboard: bool,
     loading_rows: bool,
@@ -380,6 +381,28 @@ impl Statistics {
     pub fn new(dir: PathBuf, zh: bool, window: &mut Window, cx: &mut Context<Self>) -> Self {
         let preferences = preferences::Preferences::load(&dir);
         let backend = StatsScheduler::new(dir.clone());
+        let page_input = cx.new(|cx| InputState::new(window, cx).placeholder("1"));
+        let page_size_select = cx.new(|cx| {
+            SelectState::new(
+                pagination::PAGE_SIZES
+                    .into_iter()
+                    .map(|size| {
+                        choice(
+                            size.to_string(),
+                            if zh {
+                                format!("{size} 条/页")
+                            } else {
+                                format!("{size} per page")
+                            },
+                        )
+                    })
+                    .collect::<Vec<_>>(),
+                None,
+                window,
+                cx,
+            )
+        });
+        let wake = backend.wake_receiver();
         let provider_search = cx.new(|cx| InputState::new(window, cx));
         let model_search = cx.new(|cx| InputState::new(window, cx));
         let price_search = cx.new(|cx| InputState::new(window, cx));
@@ -546,9 +569,20 @@ impl Statistics {
         });
         let timer = cx.spawn_in(window, async move |this, cx| {
             loop {
-                cx.background_executor()
-                    .timer(Duration::from_millis(250))
-                    .await;
+                let mut timer =
+                    Box::pin(cx.background_executor().timer(Duration::from_millis(250)));
+                let mut notified = Box::pin(wake.recv());
+                std::future::poll_fn(|context| {
+                    use std::future::Future;
+                    if notified.as_mut().poll(context).is_ready()
+                        || timer.as_mut().poll(context).is_ready()
+                    {
+                        std::task::Poll::Ready(())
+                    } else {
+                        std::task::Poll::Pending
+                    }
+                })
+                .await;
                 if this
                     .update_in(cx, |this, window, cx| this.tick(window, cx))
                     .is_err()
@@ -631,12 +665,12 @@ impl Statistics {
             health: None,
             maintenance_poll: Instant::now(),
             page_size: 10,
+            page_size_select,
+            page_input,
             frozen_range: None,
             custom_range: (local_midnight_days_ago(0), now_ms()),
-            rows_cursors: crate::stats_controller::CursorStack::default(),
-            group_cursor_stack: Vec::new(),
-            group_current_cursor: None,
-            group_next_cursor: None,
+            rows_cursors: pagination::Pager::default(),
+            group_pages: pagination::Pager::default(),
             group_sort: SortMetric::TotalTokens,
             loading_dashboard: false,
             loading_rows: false,
@@ -711,6 +745,30 @@ impl Statistics {
     }
 
     fn subscribe(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        cx.subscribe_in(&self.page_input, window, |this, _, event, _, cx| {
+            if matches!(event, InputEvent::PressEnter { .. }) {
+                this.jump_to_input(cx);
+            }
+        })
+        .detach();
+
+        cx.subscribe_in(&self.page_size_select, window, |this, _, event, _, cx| {
+            if let SelectEvent::Confirm(Some(code)) = event
+                && let Ok(size) = code.parse::<i64>()
+                && pagination::PAGE_SIZES.contains(&size)
+                && size != this.page_size
+            {
+                this.page_size = size;
+                this.rows_gate.invalidate();
+                this.groups_gate.invalidate();
+                this.pending_rows = false;
+                this.reset_pagination();
+                this.request_listing(cx);
+                this.persist_preferences();
+            }
+        })
+        .detach();
+
         cx.on_focus(&self.source_focus, window, |this, _, cx| {
             this.source.set_focused(true);
             cx.notify();
@@ -974,9 +1032,7 @@ impl Statistics {
     /// The grouping listing restarts whenever its grouping or sort changes: the
     /// cursors belong to the old ordering.
     fn reset_group_pagination(&mut self) {
-        self.group_cursor_stack.clear();
-        self.group_current_cursor = None;
-        self.group_next_cursor = None;
+        self.group_pages.reset();
     }
 
     fn reset_pagination(&mut self) {
@@ -1055,18 +1111,20 @@ impl Statistics {
             "filter": self.filter(),
             "page_size": self.page_size,
         });
-        if let Some(cursor) = &self.rows_cursors.current
+        if let Some(cursor) = self.rows_cursors.cursor()
             && let Ok(value) = serde_json::to_value(cursor)
         {
             fields["cursor"] = value;
+        }
+        if let Some(page) = self.rows_cursors.seek_page() {
+            fields["page"] = json!(page);
         }
         let request = crate::stats_backend::command("stats_requests", &tag, fields);
         // The identity is recorded before the request leaves, so a reply that
         // arrives after the filters change is recognisably stale.
         let cursor_key = self
             .rows_cursors
-            .current
-            .as_ref()
+            .cursor()
             .and_then(|cursor| serde_json::to_string(cursor).ok());
         let identity = self.rows_gate.issue(
             self.generation,
@@ -1100,10 +1158,13 @@ impl Statistics {
         });
         // The grouping page must send its own cursor, or every "next" repeats
         // the first page.
-        if let Some(cursor) = &self.group_current_cursor
+        if let Some(cursor) = self.group_pages.cursor()
             && let Ok(value) = serde_json::to_value(cursor)
         {
             fields["cursor"] = value;
+        }
+        if let Some(page) = self.group_pages.seek_page() {
+            fields["page"] = json!(page);
         }
         let request = crate::stats_backend::command("stats_breakdown", &tag, fields);
         // The identity records the grouping, sort and cursor this page was
@@ -1113,8 +1174,8 @@ impl Statistics {
             crate::stats_controller::StatsTab::Groups,
             group_by,
             self.group_sort,
-            self.group_current_cursor
-                .as_ref()
+            self.group_pages
+                .cursor()
                 .and_then(|cursor| serde_json::to_string(cursor).ok()),
         );
         let seq = self.backend.submit_read(JobKey::Groups, tag, request);
@@ -1374,10 +1435,10 @@ impl Statistics {
         // Periodic reads must not return a reader on page two to page one.
         // Keep that page's frozen range and cursor until an explicit refresh
         // or filter change; the live first page still follows the clock.
-        if reset_page {
+        if reset_page
+            || (self.rows_cursors.page_number() == 1 && self.group_pages.page_number() == 1)
+        {
             self.reset_pagination();
-        } else if self.rows_cursors.page_number() == 1 && self.group_current_cursor.is_none() {
-            self.frozen_range = Some(self.compute_range());
         }
         self.request_dashboard(cx);
         // The import panel refreshes with the rest of the statistics; its read
@@ -1531,6 +1592,20 @@ impl Statistics {
             return;
         }
         let result = result.and_then(|value| {
+            let requested_page = match kind {
+                JobKind::Rows => self.rows_cursors.seek_page(),
+                JobKind::Groups => self.group_pages.seek_page(),
+                _ => None,
+            };
+            if requested_page.is_some_and(|page| value["page"].as_u64() != Some(page as u64)) {
+                return Err(self
+                    .t(
+                        "页码跳转需要更新并重启后台核心",
+                        "Update and restart the core to jump to a page",
+                    )
+                    .to_owned());
+            }
+
             let valid = match kind {
                 JobKind::Dashboard => {
                     serde_json::from_value::<DashboardDto>(value.clone()).map(|_| ())
@@ -1580,6 +1655,8 @@ impl Statistics {
                 }
                 if rows_reply {
                     self.pending_rows = false;
+                    self.rows_cursors.fail();
+                    self.group_pages.fail();
                 }
                 if kind == JobKind::PriceSave {
                     // Keep the dialog open with every typed value so the failure
@@ -1676,7 +1753,7 @@ impl Statistics {
                         self.groups = page.items;
                         // The core's own cursor is what makes the next page
                         // reachable; without it "next" re-requested page one.
-                        self.group_next_cursor = page.next_cursor;
+                        self.group_pages.finish_page(page.next_cursor);
                         self.group_table.update(cx, |table, cx| {
                             table.delegate_mut().rows = self.groups.clone();
                             table.delegate_mut().group_by = page.group_by;
@@ -1688,6 +1765,13 @@ impl Statistics {
                     }
                 }
             }
+            let page = match self.tab {
+                Tab::Requests => self.rows_cursors.page_number(),
+                _ => self.group_pages.page_number(),
+            };
+            self.page_input.update(cx, |state, cx| {
+                state.set_value(page.to_string(), window, cx)
+            });
             return;
         }
         if tag.starts_with("filters-") {
@@ -3323,22 +3407,28 @@ impl Statistics {
             .into_any_element()
     }
     fn details_pagination(&self, cx: &mut Context<Self>) -> AnyElement {
-        let page = match self.tab {
-            Tab::Requests => {
-                if self.total_rows > 0 {
-                    let pages = (self.total_rows + self.page_size - 1) / self.page_size;
-                    format!(
-                        "{} {}/{}",
-                        self.t("第", "page"),
-                        self.rows_cursors.page_number() as i64,
-                        pages
-                    )
-                } else {
-                    String::new()
-                }
-            }
-            _ => format!("{} {}", self.total_groups, self.t("个分组", "groups")),
+        let (page, total, previous, next) = match self.tab {
+            Tab::Requests => (
+                self.rows_cursors.page_number(),
+                self.total_rows,
+                self.rows_cursors.can_go_back(),
+                self.rows_cursors.can_go_next(),
+            ),
+            _ => (
+                self.group_pages.page_number(),
+                self.total_groups,
+                self.group_pages.can_go_back(),
+                self.group_pages.can_go_next(),
+            ),
         };
+        let pages = pagination::pages(total, self.page_size);
+        let count_prefix =
+            if self.tab != Tab::Requests && total > crate::stats_dto::MAX_COUNTED_GROUPS {
+                "≥"
+            } else {
+                ""
+            };
+        let busy = self.loading_rows;
         div()
             .flex()
             .items_center()
@@ -3346,110 +3436,56 @@ impl Statistics {
             .flex_wrap()
             .flex_shrink_0()
             .child(
-                Label::new(page)
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED)),
+                Label::new(format!(
+                    "{} {}/{}{} · {}{} {}",
+                    self.t("第", "Page"),
+                    page,
+                    count_prefix,
+                    pages,
+                    count_prefix,
+                    total.max(0),
+                    self.t("条", "rows")
+                ))
+                .text_size(px(crate::theme::font::LABEL))
+                .text_color(rgb(MUTED)),
             )
-            // The grouping listing owns its own cursor chain, so
-            // walking providers/models never moves the request
-            // log and vice versa.
-            .when(self.tab != Tab::Requests, |this| {
-                let group_by = match self.tab {
-                    Tab::Models => GroupBy::Model,
-                    _ => GroupBy::Provider,
-                };
-                this.child(
-                    stats_button("groups-prev")
-                        .ghost()
-                        .label(self.t("上一页", "Previous"))
-                        .disabled(self.group_cursor_stack.is_empty())
-                        .on_click(cx.listener(move |this, _, _, cx| {
-                            if this.loading_rows {
-                                return;
-                            }
-                            if let Some(previous) = this.group_cursor_stack.pop() {
-                                this.group_next_cursor = this.group_current_cursor.clone();
-                                this.group_current_cursor = previous;
-                                this.request_groups(cx);
-                            }
-                        })),
+            .child(
+                crate::ui_components::pager_button(
+                    "page-prev",
+                    self.t("上一页", "Previous"),
+                    busy || !previous,
                 )
-                .child(
-                    stats_button("groups-next")
-                        .ghost()
-                        .label(self.t("下一页", "Next"))
-                        .disabled(self.group_next_cursor.is_none())
-                        .on_click(cx.listener(move |this, _, _, cx| {
-                            if this.loading_rows {
-                                return;
-                            }
-                            let Some(next) = this.group_next_cursor.clone() else {
-                                return;
-                            };
-                            this.group_cursor_stack
-                                .push(this.group_current_cursor.clone());
-                            this.group_current_cursor = Some(next);
-                            this.group_next_cursor = None;
-                            let _ = group_by;
-                            this.request_groups(cx);
-                        })),
+                .on_click(
+                    cx.listener(move |this, _, _, cx| {
+                        this.navigate_page(page.saturating_sub(1), cx)
+                    }),
+                ),
+            )
+            .child(
+                crate::ui_components::pager_button(
+                    "page-next",
+                    self.t("下一页", "Next"),
+                    busy || !next,
                 )
-            })
-            .when(self.tab != Tab::Requests, |this| {
-                this.child(
-                    Label::new(self.t("10 条/页", "10 per page"))
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(MUTED)),
-                )
-            })
-            .when(self.tab == Tab::Requests, |this| {
-                this.child(
-                    crate::ui_components::pager_button(
-                        "page-prev",
-                        self.t("上一页", "Previous"),
-                        !self.rows_cursors.can_go_back(),
-                    )
-                    .with_size(px(crate::theme::size::BUTTON_HEIGHT))
-                    .h(px(crate::theme::size::BUTTON_HEIGHT))
-                    .px(px(10.))
-                    .on_click(cx.listener(|this, _, _, cx| {
-                        if this.loading_rows {
-                            return;
-                        }
-                        // The stack holds the start cursor of each
-                        // page, so popping restores exactly the
-                        // previous page (1 -> 2 -> 3 -> 2 -> 1).
-                        if let Some(previous) = this.rows_cursors.back() {
-                            this.rows_cursors.begin_page(previous);
-                            this.request_rows(cx);
-                        }
-                    })),
-                )
-                .child(
-                    Label::new(self.t("10 条/页", "10 per page"))
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(MUTED)),
-                )
-                .child(
-                    crate::ui_components::pager_button(
-                        "page-next",
-                        self.t("下一页", "Next"),
-                        !self.rows_cursors.can_go_next(),
-                    )
-                    .with_size(px(crate::theme::size::BUTTON_HEIGHT))
-                    .h(px(crate::theme::size::BUTTON_HEIGHT))
-                    .px(px(10.))
-                    .on_click(cx.listener(|this, _, _, cx| {
-                        if this.loading_rows {
-                            return;
-                        }
-                        if let Some(cursor) = this.rows_cursors.forward() {
-                            this.rows_cursors.begin_page(cursor);
-                            this.request_rows(cx);
-                        }
-                    })),
-                )
-            })
+                .on_click(cx.listener(move |this, _, _, cx| this.navigate_page(page + 1, cx))),
+            )
+            .child(
+                div()
+                    .w(px(125.))
+                    .child(crate::ui_components::select(&self.page_size_select, busy)),
+            )
+            .child(Label::new(self.t("跳至", "Go to")).text_size(px(crate::theme::font::LABEL)))
+            .child(div().w(px(70.)).child(crate::ui_components::text_input(
+                &self.page_input,
+                busy || total == 0,
+            )))
+            .child(
+                stats_button("page-go")
+                    .ghost()
+                    .label(self.t("跳转", "Go"))
+                    .disabled(busy || total == 0)
+                    .on_click(cx.listener(|this, _, _, cx| this.jump_to_input(cx))),
+            )
             .into_any_element()
     }
 }

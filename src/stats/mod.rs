@@ -222,6 +222,7 @@ enum ReadJob {
         filter: Box<StatsFilter>,
         page_size: i64,
         cursor: Option<Box<dto::RequestCursor>>,
+        page: Option<i64>,
         generation: String,
         tag: String,
         now: i64,
@@ -238,6 +239,7 @@ enum ReadJob {
         sort: SortMetric,
         limit: i64,
         cursor: Option<Box<dto::BreakdownCursor>>,
+        page: Option<i64>,
         generation: String,
         tag: String,
         now: i64,
@@ -640,11 +642,23 @@ impl StatsHandle {
                         self.inner.maintenance_revision.load(Ordering::Relaxed),
                     )?;
                 }
+                let page = payload
+                    .get("page")
+                    .filter(|value| !value.is_null())
+                    .map(|value| {
+                        let page = value
+                            .as_i64()
+                            .ok_or_else(|| error(ERR_INVALID, "invalid page number"))?;
+                        query::page_offset(page, page_size)?;
+                        Ok::<_, String>(page)
+                    })
+                    .transpose()?;
                 let tag = tag(payload);
                 self.read(ReadJob::Requests {
                     filter: Box::new(filter),
                     page_size,
                     cursor,
+                    page,
                     generation: self.inner.generation(),
                     tag,
                     now: now_ms(),
@@ -700,6 +714,17 @@ impl StatsHandle {
                         self.inner.maintenance_revision.load(Ordering::Relaxed),
                     )?;
                 }
+                let page = payload
+                    .get("page")
+                    .filter(|value| !value.is_null())
+                    .map(|value| {
+                        let page = value
+                            .as_i64()
+                            .ok_or_else(|| error(ERR_INVALID, "invalid page number"))?;
+                        query::page_offset(page, limit)?;
+                        Ok::<_, String>(page)
+                    })
+                    .transpose()?;
                 let tag = tag(payload);
                 self.read(ReadJob::Breakdown {
                     filter: Box::new(filter),
@@ -707,6 +732,7 @@ impl StatsHandle {
                     sort,
                     limit,
                     cursor,
+                    page,
                     generation: self.inner.generation(),
                     tag,
                     now: now_ms(),
@@ -1358,33 +1384,36 @@ fn run_read(
             filter,
             page_size,
             cursor,
+            page: requested_page,
             generation,
             tag,
             now,
         } => serialize(
-            query::requests(conn, &filter, page_size, cursor.as_deref()).and_then(|page| {
-                let dto = dto::RequestPageDto {
-                    api_version: API_VERSION,
-                    request_tag: tag,
-                    generated_at_ms: now,
-                    generation,
-                    timezone: query::resolve_timezone(&filter.timezone)
-                        .map(|(_, name)| name)
-                        .unwrap_or_else(|_| "UTC".into()),
-                    filter_key: filter.key(),
-                    as_of_id: page.as_of_id,
-                    total_rows: page.total_rows,
-                    page_size,
-                    items: page.items,
-                    next_cursor: page.next_cursor.map(|mut cursor| {
-                        cursor.run_id = inner.run_id.clone();
-                        cursor.maintenance_revision = revision;
-                        cursor
-                    }),
-                };
-                serde_json::to_string(&dto)
-                    .map_err(|_| error(ERR_UNAVAILABLE, "cannot serialize rows"))
-            }),
+            query::requests_at_page(conn, &filter, page_size, cursor.as_deref(), requested_page)
+                .and_then(|page| {
+                    let dto = dto::RequestPageDto {
+                        api_version: API_VERSION,
+                        request_tag: tag,
+                        generated_at_ms: now,
+                        generation,
+                        timezone: query::resolve_timezone(&filter.timezone)
+                            .map(|(_, name)| name)
+                            .unwrap_or_else(|_| "UTC".into()),
+                        filter_key: filter.key(),
+                        page: requested_page,
+                        as_of_id: page.as_of_id,
+                        total_rows: page.total_rows,
+                        page_size,
+                        items: page.items,
+                        next_cursor: page.next_cursor.map(|mut cursor| {
+                            cursor.run_id = inner.run_id.clone();
+                            cursor.maintenance_revision = revision;
+                            cursor
+                        }),
+                    };
+                    serde_json::to_string(&dto)
+                        .map_err(|_| error(ERR_UNAVAILABLE, "cannot serialize rows"))
+                }),
         ),
         ReadJob::Detail {
             request_id,
@@ -1424,36 +1453,45 @@ fn run_read(
             sort,
             limit,
             cursor,
+            page: requested_page,
             generation,
             tag,
             now,
         } => serialize(
-            query::breakdown(conn, &filter, group_by, sort, limit, cursor.as_deref()).and_then(
-                |page| {
-                    let dto = dto::BreakdownDto {
-                        api_version: API_VERSION,
-                        request_tag: tag,
-                        generated_at_ms: now,
-                        generation,
-                        timezone: query::resolve_timezone(&filter.timezone)
-                            .map(|(_, name)| name)
-                            .unwrap_or_else(|_| "UTC".into()),
-                        filter_key: filter.key(),
-                        group_by,
-                        sort,
-                        as_of_id: page.as_of_id,
-                        total_groups: page.total_groups,
-                        items: page.items,
-                        next_cursor: page.next_cursor.map(|mut cursor| {
-                            cursor.run_id = inner.run_id.clone();
-                            cursor.maintenance_revision = revision;
-                            cursor
-                        }),
-                    };
-                    serde_json::to_string(&dto)
-                        .map_err(|_| error(ERR_UNAVAILABLE, "cannot serialize breakdown"))
-                },
-            ),
+            query::breakdown_at_page(
+                conn,
+                &filter,
+                group_by,
+                sort,
+                limit,
+                cursor.as_deref(),
+                requested_page,
+            )
+            .and_then(|page| {
+                let dto = dto::BreakdownDto {
+                    api_version: API_VERSION,
+                    request_tag: tag,
+                    generated_at_ms: now,
+                    generation,
+                    timezone: query::resolve_timezone(&filter.timezone)
+                        .map(|(_, name)| name)
+                        .unwrap_or_else(|_| "UTC".into()),
+                    filter_key: filter.key(),
+                    group_by,
+                    sort,
+                    page: requested_page,
+                    as_of_id: page.as_of_id,
+                    total_groups: page.total_groups,
+                    items: page.items,
+                    next_cursor: page.next_cursor.map(|mut cursor| {
+                        cursor.run_id = inner.run_id.clone();
+                        cursor.maintenance_revision = revision;
+                        cursor
+                    }),
+                };
+                serde_json::to_string(&dto)
+                    .map_err(|_| error(ERR_UNAVAILABLE, "cannot serialize breakdown"))
+            }),
         ),
         ReadJob::Filters {
             scope,
@@ -2894,6 +2932,7 @@ mod tests {
         query::validate_cursor(&cursor, &filter, &handle.inner.run_id, 0).unwrap();
         let job = ReadJob::Requests {
             filter: Box::new(filter),
+            page: None,
             page_size: 20,
             cursor: Some(Box::new(cursor)),
             generation: String::new(),

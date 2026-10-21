@@ -26,6 +26,9 @@ pub const ERR_WORKBUDDY_SCAN_BUSY: &str = "stats_workbuddy_scan_busy";
 /// Statistics API version. Bumped to 2 with the per-call price snapshot: the
 /// request detail no longer returns a mutable `rule` and every place is a
 /// decimal string of nano units.
+/// Group totals above this are reported as a lower bound to bound counting work.
+pub const MAX_COUNTED_GROUPS: i64 = 1000;
+
 pub const API_VERSION: u32 = 4;
 /// Longest accepted `[from_ms, to_ms)` range.
 pub const MAX_RANGE_MS: i64 = 366 * 86_400_000;
@@ -832,6 +835,10 @@ pub struct RequestPageDto {
     pub generation: String,
     pub timezone: String,
     pub filter_key: String,
+    /// Echo a direct-page request so a new UI cannot silently show the wrong
+    /// page when connected to an older core that ignores unknown fields.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub page: Option<i64>,
     pub as_of_id: i64,
     pub total_rows: i64,
     pub page_size: i64,
@@ -926,6 +933,10 @@ pub struct BreakdownDto {
     pub filter_key: String,
     pub group_by: GroupBy,
     pub sort: SortMetric,
+    /// Echo a direct-page request so a new UI cannot silently show the wrong
+    /// page when connected to an older core that ignores unknown fields.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub page: Option<i64>,
     pub as_of_id: i64,
     pub total_groups: i64,
     pub items: Vec<BreakdownItemDto>,

@@ -12,6 +12,7 @@ import sqlite3
 import tempfile
 import threading
 import time
+import statistics
 import statistics_test as t
 
 
@@ -43,7 +44,7 @@ def main():
                         db.execute("INSERT INTO stats_model_prices(price_id,provider_id,upstream_model,currency,input_mode,input_rate_nanos,output_rate_nanos,cache_read_rate_nanos,cache_write_rate_nanos,label,revision,created_at_ms,updated_at_ms) VALUES(?,?,?,'CNY','flat',2000000000,8000000000,0,0,'fixture',1,?,?)",('price-%04d'%i,'provider-a','history-model-%03d'%i,t.now_ms(),t.now_ms()))
                 filt={'from_ms':t.now_ms()-3600000,'to_ms':t.now_ms()+60000,'timezone':'UTC'}
                 def stats(command,**fields):return t.stats(folder,port,command,**fields)
-                for size in [20,50,100]:
+                for size in [10,20,50,100]:
                     for group in [None,'provider','model']:
                         cursors=[None];ids=[]
                         for page in range(3):
@@ -63,7 +64,17 @@ def main():
                             if cursors[page]:fields['cursor']=cursors[page]
                             value=stats('stats_breakdown',group_by=group,sort='total_tokens',limit=size,**fields) if group else stats('stats_requests',page_size=size,**fields)
                             assert [r['key' if group else 'request_id'] for r in value['items']]==ids[page]
-                        print('PASS real %s pages 1->2->3->2->1 size %s'%(group or 'requests',size),flush=True)
+                        for jump in [3,1,2]:
+                            fields=dict(filter=filt,cursor=cursors[1],page=jump)
+                            value=stats('stats_breakdown',group_by=group,sort='total_tokens',limit=size,**fields) if group else stats('stats_requests',page_size=size,**fields)
+                            assert value['page']==jump
+                            assert value['as_of_id']==cursors[1]['as_of_id']
+                            assert [r['key' if group else 'request_id'] for r in value['items']]==ids[jump-1]
+                        for bad_page in [0,-1,1.5,'2',999999,9223372036854775807]:
+                            fields=dict(filter=filt,cursor=cursors[1],page=bad_page)
+                            error=t.action(folder,port,'stats_breakdown',group_by=group,sort='total_tokens',limit=size,expect_error=True,**fields) if group else t.action(folder,port,'stats_requests',page_size=size,expect_error=True,**fields)
+                            assert 'stats_invalid' in str(error),error
+                        print('PASS real %s sequential/back/direct 3->1->2 and invalid pages size %s'%(group or 'requests',size),flush=True)
                     # The pricing view keeps exactly one page, using the core's
                     # next cursor. Cover backtracking as well as the partial end
                     # page; a full page alone must not imply another page exists.
@@ -88,6 +99,24 @@ def main():
                     assert [row['price_id'] for row in exact['items']]==['price-0320']
                     assert exact['next_rule_id'] is None
                     print('PASS real prices fixed pages 1->2->3->2->1, final page and filter reset size %s'%size,flush=True)
+                frozen=stats('stats_requests',filter=filt,page_size=100)
+                with closing(sqlite3.connect(folder/'usage.sqlite3')) as db,db:
+                    req['request_id']=cost['request_id']='post-snapshot'
+                    keys=list(req);db.execute('INSERT INTO usage_requests ('+','.join(keys)+') VALUES ('+','.join('?' for _ in keys)+')',[req[k] for k in keys])
+                    keys=list(cost);db.execute('INSERT INTO usage_costs ('+','.join(keys)+') VALUES ('+','.join('?' for _ in keys)+')',[cost[k] for k in keys])
+                last=stats('stats_requests',filter=filt,page_size=100,cursor=frozen['next_cursor'],page=4)
+                assert last['as_of_id']==frozen['as_of_id']
+                assert len(last['items'])==22 and all(row['request_id']!='post-snapshot' for row in last['items'])
+                assert last['next_cursor'] is None
+                changed=dict(filt,record_kind='tool')
+                expired=t.action(folder,port,'stats_requests',filter=changed,page_size=100,cursor=frozen['next_cursor'],page=2,expect_error=True)
+                assert 'stats_cursor_expired' in str(expired),expired
+                timings=[]
+                for _ in range(20):
+                    started=time.perf_counter()
+                    stats('stats_requests',filter=filt,page_size=100,cursor=frozen['next_cursor'])
+                    timings.append((time.perf_counter()-started)*1000)
+                print('PASS frozen snapshot, partial final page and filter expiry; real-core cursor API median %.2f ms, max %.2f ms on 323 synthetic rows'%(statistics.median(timings),max(timings)),flush=True)
                 for command,kind,key in [('stats_filters','provider','key'),('stats_filters','model','key'),('stats_prices_list',None,'price_id')]:
                     after=None;seen=[]
                     while True:

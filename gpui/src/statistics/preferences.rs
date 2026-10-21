@@ -34,6 +34,7 @@ pub(super) struct Preferences {
     pub include_tests: bool,
     pub more_filters: bool,
     pub refresh_seconds: u64,
+    pub page_size: i64,
     pub currency: Currency,
 }
 
@@ -55,6 +56,7 @@ impl Default for Preferences {
             include_tests: false,
             more_filters: false,
             refresh_seconds: 5,
+            page_size: 10,
             currency: Currency::Usd,
         }
     }
@@ -93,6 +95,9 @@ impl Preferences {
         }
         if ![0, 5, 10, 30, 60].contains(&self.refresh_seconds) {
             self.refresh_seconds = 5;
+        }
+        if !super::pagination::PAGE_SIZES.contains(&self.page_size) {
+            self.page_size = 10;
         }
         self
     }
@@ -147,6 +152,10 @@ impl Statistics {
         self.record_kind = saved.record_kind;
         self.more_filters_open = saved.more_filters;
         self.refresh_interval = saved.refresh_seconds;
+        self.page_size = saved.page_size;
+        self.page_size_select.update(cx, |state, cx| {
+            state.set_selected_value(&saved.page_size.to_string(), window, cx)
+        });
         self.currency = saved.currency;
         self.rebuild_choices(window, cx);
         for (select, value) in [
@@ -180,6 +189,7 @@ impl Statistics {
             include_tests: self.capture.include_tests(),
             more_filters: self.more_filters_open,
             refresh_seconds: self.refresh_interval,
+            page_size: self.page_size,
             currency: self.currency,
         };
         if saved != self.saved_preferences && !self.preferences_error {
@@ -200,6 +210,25 @@ mod tests {
         statistics::{RangePreset, Tab},
         stats_dto::{CaptureMethod, SourceScope},
     };
+
+    #[test]
+    fn page_size_is_saved_and_invalid_or_legacy_values_use_ten() {
+        let dir = tempfile::tempdir().unwrap();
+        let saved = Preferences {
+            page_size: 100,
+            ..Default::default()
+        };
+        saved.save(dir.path()).unwrap();
+        assert_eq!(Preferences::load(dir.path()).page_size, 100);
+        let invalid = Preferences {
+            page_size: 0,
+            ..Default::default()
+        };
+        invalid.save(dir.path()).unwrap();
+        assert_eq!(Preferences::load(dir.path()).page_size, 10);
+        std::fs::write(dir.path().join(FILE), b"{}").unwrap();
+        assert_eq!(Preferences::load(dir.path()).page_size, 10);
+    }
 
     #[test]
     fn reopens_view_and_filters_without_saving_cursors_or_provider_secrets() {

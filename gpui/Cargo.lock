@@ -7960,6 +7960,7 @@ version = "0.5.7"
 dependencies = [
  "accesskit",
  "anyhow",
+ "async-channel",
  "cc",
  "chrono",
  "fs2",

@@ -28,7 +28,7 @@ pub const QUERY_BUDGET: Duration = Duration::from_secs(2);
 /// Rows allowed to match one query before the caller must narrow the range.
 pub const ROW_BUDGET: i64 = MAX_MATCHING_ROWS;
 /// Groups reported for one breakdown page; the total is capped at this + 1.
-pub const MAX_GROUPS: i64 = 1000;
+pub const MAX_GROUPS: i64 = super::dto::MAX_COUNTED_GROUPS;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Bucket {
@@ -1261,7 +1261,30 @@ pub fn requests(
     // The first page counts the matching rows anyway, so that count doubles as
     // the row-budget check instead of adding a second full scan.
     let _budget = Budget::install(conn);
-    requests_inner(conn, filter, page_size, cursor)
+    requests_inner(conn, filter, page_size, cursor, None)
+}
+
+/// Direct jumps seek only ordered request keys; ordinary next-page reads keep
+/// their keyset cursor. A supplied cursor freezes the same snapshot on a jump.
+pub fn requests_at_page(
+    conn: &Connection,
+    filter: &StatsFilter,
+    page_size: i64,
+    cursor: Option<&RequestCursor>,
+    page: Option<i64>,
+) -> Result<RequestPage, String> {
+    if page.is_none() {
+        return requests(conn, filter, page_size, cursor);
+    }
+    let _budget = Budget::install(conn);
+    requests_inner(conn, filter, page_size, cursor, page)
+}
+
+pub fn page_offset(page: i64, size: i64) -> Result<i64, String> {
+    page.checked_sub(1)
+        .filter(|_| page > 0 && size > 0)
+        .and_then(|page| page.checked_mul(size))
+        .ok_or_else(|| error(ERR_INVALID, "invalid page number"))
 }
 
 const ROW_COLUMNS: &str =
@@ -1524,6 +1547,7 @@ fn requests_inner(
     filter: &StatsFilter,
     page_size: i64,
     cursor: Option<&RequestCursor>,
+    page: Option<i64>,
 ) -> Result<RequestPage, String> {
     let sql = FilterSql::build(filter, "");
     let transaction = conn.unchecked_transaction().map_err(budget_error)?;
@@ -1553,14 +1577,31 @@ fn requests_inner(
                 .map_err(budget_error)?
         }
     };
+    let offset = page.map(|page| page_offset(page, page_size)).transpose()?;
+    let seek = if let Some(offset) = offset.filter(|offset| *offset > 0) {
+        let mut seek_params = sql.params.clone();
+        seek_params.push(Value::Integer(as_of_id));
+        seek_params.push(Value::Integer(offset - 1));
+        transaction.query_row(
+            &format!("SELECT started_at_ms,id FROM usage_requests WHERE {} AND id<=? ORDER BY started_at_ms DESC,id DESC LIMIT 1 OFFSET ?", sql.clause),
+            params_from_iter(seek_params.iter()),
+            |row| Ok((row.get::<_, i64>(0)?, row.get::<_, i64>(1)?)),
+        ).optional().map_err(budget_error)?
+            .ok_or_else(|| error(ERR_INVALID, "page is out of range"))?
+            .into()
+    } else if page.is_none() {
+        cursor.map(|cursor| (cursor.last_started_at_ms, cursor.last_id))
+    } else {
+        None
+    };
     let mut clause = format!("{} AND r.id<=?", sql.clause);
     let mut params = sql.params.clone();
     params.push(Value::Integer(as_of_id));
-    if let Some(cursor) = cursor {
+    if let Some((last_started_at_ms, last_id)) = seek {
         clause.push_str(" AND (r.started_at_ms<? OR (r.started_at_ms=? AND r.id<?))");
-        params.push(Value::Integer(cursor.last_started_at_ms));
-        params.push(Value::Integer(cursor.last_started_at_ms));
-        params.push(Value::Integer(cursor.last_id));
+        params.push(Value::Integer(last_started_at_ms));
+        params.push(Value::Integer(last_started_at_ms));
+        params.push(Value::Integer(last_id));
     }
     let query = format!(
         "SELECT {ROW_COLUMNS} FROM usage_requests r
@@ -1578,6 +1619,9 @@ fn requests_inner(
     }
     drop(rows);
     drop(statement);
+    if page.is_some_and(|page| page > 1) && items.is_empty() {
+        return Err(error(ERR_INVALID, "page is out of range"));
+    }
     let has_more = items.len() as i64 > page_size;
     if has_more {
         items.truncate(page_size as usize);
@@ -1802,7 +1846,23 @@ pub fn breakdown(
     // The grouped aggregation is bounded by `limit`; an extra guard scan would
     // double the cost without changing the answer.
     let _budget = Budget::install(conn);
-    breakdown_inner(conn, filter, group_by, sort, limit, cursor)
+    breakdown_inner(conn, filter, group_by, sort, limit, cursor, None)
+}
+
+pub fn breakdown_at_page(
+    conn: &Connection,
+    filter: &StatsFilter,
+    group_by: GroupBy,
+    sort: SortMetric,
+    limit: i64,
+    cursor: Option<&BreakdownCursor>,
+    page: Option<i64>,
+) -> Result<BreakdownPage, String> {
+    if page.is_none() {
+        return breakdown(conn, filter, group_by, sort, limit, cursor);
+    }
+    let _budget = Budget::install(conn);
+    breakdown_inner(conn, filter, group_by, sort, limit, cursor, page)
 }
 
 fn breakdown_inner(
@@ -1812,6 +1872,7 @@ fn breakdown_inner(
     sort: SortMetric,
     limit: i64,
     cursor: Option<&BreakdownCursor>,
+    page: Option<i64>,
 ) -> Result<BreakdownPage, String> {
     let key = match group_by {
         GroupBy::Provider => "provider_id",
@@ -1868,7 +1929,7 @@ fn breakdown_inner(
     // the inner WHERE raised "misuse of aggregate"; the CTE makes the metric an
     // ordinary column that can be compared.
     let mut outer = String::new();
-    if let Some(cursor) = cursor {
+    if let Some(cursor) = cursor.filter(|_| page.is_none()) {
         match cursor.last_metric {
             Some(last_metric) => {
                 // Ordering is `metric DESC, key ASC` with NULL metrics last, so
@@ -1899,9 +1960,14 @@ fn breakdown_inner(
          )
          SELECT * FROM grouped {outer}
          ORDER BY (metric_value IS NULL) ASC, metric_value DESC, group_key ASC
-         LIMIT ?"
+         LIMIT ? OFFSET ?"
     );
     params.push(Value::Integer(limit + 1));
+    params.push(Value::Integer(
+        page.map(|page| page_offset(page, limit))
+            .transpose()?
+            .unwrap_or(0),
+    ));
     let mut statement = transaction.prepare(&query).map_err(budget_error)?;
     let mut rows = statement
         .query(params_from_iter(params.iter()))
@@ -1929,6 +1995,9 @@ fn breakdown_inner(
     }
     drop(rows);
     drop(statement);
+    if page.is_some_and(|page| page > 1) && items.is_empty() {
+        return Err(error(ERR_INVALID, "page is out of range"));
+    }
     let has_more = items.len() as i64 > limit;
     if has_more {
         items.truncate(limit as usize);
