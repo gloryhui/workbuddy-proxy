@@ -4,11 +4,11 @@
 
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
-| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
+| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/*, usage_table.rs, usage_chart.rs | 部分：导航/筛选已验，报表内容与完整视觉待续 |
 | 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 部分：侧栏/双卡/运行中心/日志交互通过；完整视觉与无障碍待续 |
-| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
-| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
-| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
+| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs, usage_chart.rs | 部分：导航/筛选已验，报表内容与完整视觉待续 |
+| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/*, usage_table.rs, usage_chart.rs | 部分：导航/筛选已验，报表内容与完整视觉待续 |
+| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/*, usage_table.rs, usage_chart.rs | 部分：导航/筛选已验，报表内容与完整视觉待续 |
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -52,3 +52,5 @@
 右栏高保真 context `54:298` / `54:320` 已读取：`ui/relay.rs` 运行中心与日志、`ui_components::TerminalLogs` 的本地深色原生编辑器投影。两尺寸/计数/复制/日志滚动/端口取消的真实回归见 `baseline_and_qa.md`。
 
 外观高保真 context `64:335` 已读取，并沿用 V2 variables 新增显式可选的 Studio Indigo；六套旧键、默认 Mono 及 appearance version 1 保持。Kit Textarea 的延迟 Input 覆盖选区已通过真实补验定位、修复，见实施记录小功能 8。
+
+统计导航/筛选高保真 `52:79` / `52:87` 已实现并做两尺寸回归：原生tabs、主筛选/完整来源组、更多有界浮层；设置页不再显示报表筛选。概览KPI/图表/计费、明细/分析内容和完整视觉仍待续，不能以控件回归替代整帧验收。

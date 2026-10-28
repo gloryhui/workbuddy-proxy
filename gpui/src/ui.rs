@@ -2631,10 +2631,7 @@ impl Render for Proxy {
                 "管理上游协议、凭证和 WorkBuddy 可用模型",
                 "Manage upstream protocols, credentials and WorkBuddy models",
             ),
-            Page::Statistics => self.t(
-                "掌握模型请求、Token 消耗与缓存表现",
-                "Explore model requests, token usage and cache performance",
-            ),
+            Page::Statistics => self.statistics.read(cx).page_subtitle(),
         };
         let heading = div()
             .flex()

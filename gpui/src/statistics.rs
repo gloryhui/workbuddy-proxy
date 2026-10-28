@@ -2351,22 +2351,22 @@ impl Statistics {
             View::Overview => self.t("用量概览", "Usage overview"),
             View::Details => self.t("用量明细", "Usage records"),
             View::Summary => self.t("汇总分析", "Usage analysis"),
-            View::Settings => self.t("统计设置", "Statistics settings"),
+            View::Settings => self.t("成本与采集", "Costs & collection"),
         }
     }
 
-    fn header(&self, cx: &mut Context<Self>) -> AnyElement {
-        div()
-            .flex()
-            .items_end()
-            .flex_wrap()
-            .justify_between()
-            .gap_3()
-            .w_full()
-            .mb(px(8.))
-            .flex_shrink_0()
-            .child(self.source_group(cx))
-            .into_any_element()
+    pub fn page_subtitle(&self) -> &'static str {
+        if self.view == preferences::View::Settings {
+            self.t(
+                "管理估算价格、存储策略和 WorkBuddy 本地用量",
+                "Manage estimated pricing, storage and local WorkBuddy usage",
+            )
+        } else {
+            self.t(
+                "掌握模型请求、Token 消耗与缓存表现",
+                "Explore model requests, token usage and cache performance",
+            )
+        }
     }
 
     fn write_date_draft(&mut self, range: (i64, i64), window: &mut Window, cx: &mut Context<Self>) {
@@ -2630,14 +2630,32 @@ impl Statistics {
             .open(self.date_open)
             .trigger(
                 stats_button("stats-date-trigger")
-                    .h(px(crate::theme::size::SELECT_HEIGHT))
+                    .h(px(42.))
                     .w_full()
                     .outline()
                     .bg(rgb(0xffffff))
-                    .border_color(rgb(0xe1e5eb))
-                    .text_color(rgb(0x5c6679))
-                    .rounded(px(8.))
-                    .label(self.range.title(self.zh))
+                    .border_color(rgb(BORDER))
+                    .text_color(rgb(crate::theme::color::TEXT_2))
+                    .rounded(px(10.))
+                    .child(
+                        div()
+                            .w_full()
+                            .flex()
+                            .items_center()
+                            .justify_between()
+                            .gap(px(6.))
+                            .child(
+                                Label::new(self.range.title(self.zh))
+                                    .text_size(px(12.))
+                                    .text_color(rgb(crate::theme::color::TEXT_2)),
+                            )
+                            .child(
+                                Icon::default()
+                                    .path("studio/stats-chevron.svg")
+                                    .with_size(px(16.))
+                                    .text_color(rgb(MUTED)),
+                            ),
+                    )
                     .tooltip(tooltip)
                     .accessibility_label(self.t("选择日期范围", "Choose date range")),
             )
@@ -2665,25 +2683,30 @@ impl Statistics {
         let owner = cx.entity().downgrade();
         let content_owner = owner.clone();
         let label = if self.refresh_interval == 0 {
-            self.t("关闭", "Off").to_owned()
+            self.t("自动刷新 · 关闭", "Auto refresh · Off").to_owned()
         } else {
-            format!("{} {}", self.refresh_interval, self.t("秒", "s"))
+            format!(
+                "{} · {} {}",
+                self.t("自动刷新", "Auto refresh"),
+                self.refresh_interval,
+                self.t("秒", "s")
+            )
         };
         Popover::new("stats-auto-refresh")
             .open(self.refresh_open)
             .trigger(
                 stats_button("stats-auto-trigger")
-                    .h(px(crate::theme::size::SELECT_HEIGHT))
+                    .h(px(42.))
                     .w_full()
                     .outline()
                     .bg(rgb(0xffffff))
-                    .border_color(rgb(0xe1e5eb))
-                    .text_color(rgb(0x5c6679))
-                    .rounded(px(8.))
+                    .border_color(rgb(BORDER))
+                    .text_color(rgb(crate::theme::color::TEXT_2))
+                    .rounded(px(10.))
                     .child(
-                        div().flex().items_center().gap(px(6.))
-                            .child(img("design/header-refresh.png").size(px(16.)))
-                            .child(Label::new(label)),
+                        div().w_full().flex().items_center().justify_between().gap(px(6.))
+                            .child(Label::new(label).text_size(px(12.)).text_color(rgb(crate::theme::color::TEXT_2)))
+                            .child(Icon::default().path("studio/stats-chevron.svg").with_size(px(16.)).text_color(rgb(MUTED))),
                     )
                     .tooltip(self.t(
                         "统计页面自动刷新间隔；仅刷新已采集的数据，不改变后台采集频率",
@@ -2808,20 +2831,7 @@ impl Statistics {
     }
 
     fn filters(&self, cx: &mut Context<Self>) -> AnyElement {
-        let tests_available = self.capture.include_tests_available(self.source_scope());
-        // The source switch belongs in the heading. The remaining controls
-        // wrap naturally; no empty client/source column or enclosing card.
-        let slots = crate::source_filter::SLOTS
-            .iter()
-            .copied()
-            .filter(|slot| {
-                !matches!(
-                    slot,
-                    crate::source_filter::FilterSlot::Source
-                        | crate::source_filter::FilterSlot::Status
-                )
-            })
-            .collect::<Vec<_>>();
+        let slots = crate::source_filter::SLOTS;
         div()
             .id("stats-filters")
             .flex()
@@ -2842,61 +2852,7 @@ impl Statistics {
                 }
             })
             .gap_2()
-            .child(self.filter_row(0, &slots, cx))
-            .when(self.more_filters_open, |this| {
-                this.child(
-                    div()
-                        .flex()
-                        .flex_wrap()
-                        .items_end()
-                        .gap_3()
-                        .pt_3()
-                        .border_t_1()
-                        .border_color(rgb(BORDER))
-                        .child(self.capture_control())
-                        .child(div().w(px(150.)).child(
-                            crate::ui_components::select(&self.outcome_select, false).w_full(),
-                        ))
-                        .child(self.filter_search(true, cx))
-                        .child(self.filter_search(false, cx))
-                        .child(
-                            div()
-                                .flex()
-                                .flex_col()
-                                .gap_1()
-                                .child(
-                                    self.filter_label(self.t("用量完整性", "Usage completeness")),
-                                )
-                                .child(
-                                    div()
-                                        .w(px(140.))
-                                        .h(px(crate::theme::size::SELECT_HEIGHT))
-                                        .child(
-                                            crate::ui_components::select(&self.usage_select, false)
-                                                .w_full()
-                                                .accessibility_label(
-                                                    self.t("用量完整性", "Usage completeness"),
-                                                ),
-                                        ),
-                                ),
-                        )
-                        .child(
-                            div().flex().items_center().h(px(28.)).child(
-                                Checkbox::new("include-tests")
-                                    .large()
-                                    .label(self.t("包含测试连接", "Include connection tests"))
-                                    .checked(self.capture.include_tests())
-                                    .disabled(!tests_available)
-                                    .on_change(cx.listener(|this, enabled: &bool, _, cx| {
-                                        this.capture
-                                            .set_include_tests(*enabled, this.source_scope());
-                                        this.include_tests = this.capture.include_tests();
-                                        this.mark_dirty(cx);
-                                    })),
-                            ),
-                        ),
-                )
-            })
+            .child(self.filter_row(0, slots, cx))
             .when_some(self.error.clone(), |this, error| {
                 this.child(
                     Label::new(crate::i18n::message(&error, self.zh))
@@ -2904,6 +2860,99 @@ impl Statistics {
                         .text_color(rgb(0xa4424a)),
                 )
             })
+            .into_any_element()
+    }
+
+    pub(super) fn more_filter_panel(&self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
+        let tests_available = self.capture.include_tests_available(self.source_scope());
+        div()
+            .flex()
+            .flex_wrap()
+            .items_end()
+            .gap_3()
+            .pt_3()
+            .border_t_1()
+            .border_color(rgb(BORDER))
+            .child(
+                div()
+                    .w_full()
+                    .flex()
+                    .items_center()
+                    .justify_between()
+                    .child(
+                        Label::new(self.t("更多筛选", "More filters"))
+                            .text_size(px(15.))
+                            .font_weight(FontWeight::SEMIBOLD),
+                    )
+                    .child(
+                        stats_button("stats-more-close")
+                            .ghost()
+                            .label(self.t("完成", "Done"))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                this.more_filters_open = false;
+                                cx.notify();
+                            })),
+                    ),
+            )
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap_1()
+                    .child(self.filter_label(self.t("记录类型", "Record type")))
+                    .child(div().w(px(164.)).child(
+                        self.filter_select(&self.kind_select, self.t("记录类型", "Record type")),
+                    )),
+            )
+            .child(self.capture_control())
+            .child(
+                div()
+                    .w(px(150.))
+                    .child(crate::ui_components::select(&self.outcome_select, false).w_full()),
+            )
+            .child(self.filter_search(true, cx))
+            .child(self.filter_search(false, cx))
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap_1()
+                    .child(self.filter_label(self.t("用量完整性", "Usage completeness")))
+                    .child(
+                        div()
+                            .w(px(140.))
+                            .h(px(crate::theme::size::SELECT_HEIGHT))
+                            .child(
+                                crate::ui_components::select(&self.usage_select, false)
+                                    .w_full()
+                                    .accessibility_label(
+                                        self.t("用量完整性", "Usage completeness"),
+                                    ),
+                            ),
+                    ),
+            )
+            .child(
+                div().flex().items_center().h(px(28.)).child(
+                    Checkbox::new("include-tests")
+                        .large()
+                        .label(self.t("包含测试连接", "Include connection tests"))
+                        .checked(self.capture.include_tests())
+                        .disabled(!tests_available)
+                        .on_change(cx.listener(|this, enabled: &bool, _, cx| {
+                            this.capture
+                                .set_include_tests(*enabled, this.source_scope());
+                            this.include_tests = this.capture.include_tests();
+                            this.mark_dirty(cx);
+                        })),
+                ),
+            )
+            .id("stats-more-filter-content")
+            .w(px((f32::from(window.viewport_size().width) - 48.).min(740.)))
+            .max_h(px(
+                (f32::from(window.viewport_size().height) - 160.).max(160.)
+            ))
+            .overflow_y_scroll()
+            .p(px(8.))
             .into_any_element()
     }
 
@@ -3500,11 +3549,8 @@ impl Statistics {
             .py_0()
             .gap_3()
             .bg(rgb(BG))
-            .child(self.header(cx))
-            .child(self.view_tabs(cx))
-            .child(self.filters(cx))
             .when(self.view != preferences::View::Settings, |page| {
-                page.child(self.compact_status(cx))
+                page.child(self.view_tabs(cx)).child(self.filters(cx))
             })
             .child(self.report_body(cx))
             .into_any_element()

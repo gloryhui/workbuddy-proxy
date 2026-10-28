@@ -11,3 +11,5 @@ The sidebar exports added from node `54:4` on 2026-10-28 are `brand.png`, `nav-{
 Provider content `54:203` supplies `profile-edit.svg` (16px, layer `75:408`) and `model-edit.svg` (15px, model row edit slot `54:264`). They are embedded in native buttons in `ui/providers.rs` and `model_table.rs`, with their SVG dimensions preserved.
 
 Runtime center `54:298` supplies `runtime-activity.svg` (19px, layer `54:299`) and `runtime-copy.svg` (16px, layer `54:305`). Logs `54:320` supplies `log-terminal.svg` (19px, layer `54:321`). These original exports are embedded in native GPUI elements; the status, address, counters and log text come from the existing core snapshot.
+
+Statistics filter row `52:87` supplies `stats-refresh.svg` (18px, layer `52:104`) and `stats-chevron.svg` (16px, layers `52:90/94/98/102`). They are embedded in the existing refresh and date/interval controls; the native model/provider Select controls keep their own keyboard and focus engine.

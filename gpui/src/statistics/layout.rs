@@ -57,44 +57,106 @@ impl Statistics {
             .items_center()
             .justify_between()
             .flex_wrap()
-            .gap_2()
+            .gap(px(12.))
             .flex_shrink_0()
-            .pb_2()
-            .border_b_1()
-            .border_color(rgb(BORDER))
             .child(
-                div().flex().items_center().gap_2().children(
+                div().flex().items_center().gap(px(20.)).children(
                     [
-                        ("view-overview", View::Overview, self.t("概览", "Overview")),
+                        (
+                            "view-overview",
+                            View::Overview,
+                            self.t("概览", "Overview"),
+                            87.,
+                        ),
                         (
                             "view-details",
                             View::Details,
                             self.t("用量明细", "Usage records"),
+                            if self.zh { 113. } else { 130. },
                         ),
                         (
                             "view-summary",
                             View::Summary,
                             self.t("汇总分析", "Analysis"),
+                            113.,
                         ),
                     ]
                     .into_iter()
-                    .map(|(id, view, label)| {
-                        stats_button(id)
-                            .when(self.view == view, |button| button.primary().outline())
-                            .when(self.view != view, |button| button.ghost())
-                            .label(label)
+                    .map(|(id, view, label, width)| {
+                        let active = self.view == view;
+                        let ink = if active { INK } else { MUTED };
+                        Button::new(id)
+                            .custom(
+                                gpui_kit::component::button::ButtonCustomVariant::new(cx)
+                                    .color(
+                                        rgb(if active {
+                                            crate::theme::color::WHITE
+                                        } else {
+                                            BG
+                                        })
+                                        .into(),
+                                    )
+                                    .foreground(rgb(ink).into())
+                                    .hover(rgb(crate::theme::color::BG_TABLE_HEAD).into())
+                                    .active(rgb(crate::theme::palette().tint).into()),
+                            )
+                            .with_size(px(42.))
+                            .w(px(width))
+                            .h(px(42.))
+                            .p_0()
+                            .rounded(px(10.))
+                            .toggled(active)
+                            .accessibility_label(label)
+                            .child(
+                                div()
+                                    .relative()
+                                    .size_full()
+                                    .flex()
+                                    .items_center()
+                                    .justify_center()
+                                    .child(
+                                        Label::new(label)
+                                            .text_size(px(14.))
+                                            .text_color(rgb(ink))
+                                            .font_weight(if active {
+                                                FontWeight::BOLD
+                                            } else {
+                                                FontWeight::MEDIUM
+                                            }),
+                                    )
+                                    .when(active, |tab| {
+                                        tab.child(
+                                            div()
+                                                .absolute()
+                                                .bottom_0()
+                                                .left(px(12.))
+                                                .right(px(12.))
+                                                .h(px(3.))
+                                                .rounded(px(2.))
+                                                .bg(rgb(crate::theme::palette().primary)),
+                                        )
+                                    }),
+                            )
                             .on_click(cx.listener(move |this, _, _, cx| this.select_view(view, cx)))
                     }),
                 ),
             )
             .child(
-                stats_button("view-settings")
-                    .when(self.view == View::Settings, |button| {
-                        button.primary().outline()
-                    })
-                    .when(self.view != View::Settings, |button| button.ghost())
-                    .label(self.t("统计设置", "Statistics settings"))
-                    .on_click(cx.listener(|this, _, _, cx| this.select_view(View::Settings, cx))),
+                div()
+                    .flex()
+                    .items_center()
+                    .flex_wrap()
+                    .gap(px(8.))
+                    .child(self.compact_status(cx))
+                    .child(self.filter_more(cx))
+                    .child(
+                        stats_button("reset-stats-filters")
+                            .ghost()
+                            .label(self.t("清除筛选", "Clear filters"))
+                            .on_click(
+                                cx.listener(|this, _, window, cx| this.reset_filters(window, cx)),
+                            ),
+                    ),
             )
             .into_any_element()
     }

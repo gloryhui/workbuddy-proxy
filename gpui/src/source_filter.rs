@@ -8,12 +8,14 @@
 use crate::stats_dto::SourceScope;
 use gpui_kit::{Role, SharedString};
 
-/// Chinese labelled group, including its 3px track inset on each side.
-pub const GROUP_WIDTH: i32 = 325;
-pub const GROUP_HEIGHT: i32 = 38;
-pub const ITEM_HEIGHT: i32 = 32;
-pub const ITEM_WIDTHS: [i32; 3] = [102, 102, 115];
-pub const ITEM_WIDTHS_EN: [i32; 3] = [112, 140, 148];
+/// Chinese labelled group, including its 4px track inset and two inter-option gaps.
+pub const GROUP_WIDTH: i32 = 391;
+pub const GROUP_HEIGHT: i32 = 41;
+pub const ITEM_HEIGHT: i32 = 33;
+pub const ITEM_WIDTHS: [i32; 3] = [120, 122, 129];
+pub const ITEM_WIDTHS_EN: [i32; 3] = [120, 130, 121];
+pub const GROUP_INSET: i32 = 4;
+pub const GROUP_GAP: i32 = 6;
 pub const ICON_SIZE: i32 = 16;
 
 /// One selectable source, in the order the spec lists them.
@@ -198,15 +200,13 @@ impl SourceFilter {
 /// One control in the filter bar, in the order the spec fixes.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum FilterSlot {
-    /// The source group. Always first, never split.
+    /// The source group. Kept together at the end of the primary row.
     Source,
     Provider,
     Model,
-    Status,
     Refresh,
     DateRange,
     RefreshButton,
-    More,
 }
 
 impl FilterSlot {
@@ -214,28 +214,25 @@ impl FilterSlot {
     pub fn width(self) -> i32 {
         match self {
             FilterSlot::Source => GROUP_WIDTH,
-            FilterSlot::Provider => 136,
-            FilterSlot::Model => 180,
-            FilterSlot::Status => 112,
-            FilterSlot::Refresh => 88,
-            FilterSlot::DateRange => 168,
-            FilterSlot::RefreshButton | FilterSlot::More => 32,
+            FilterSlot::Provider => 174,
+            FilterSlot::Model => 156,
+            FilterSlot::Refresh => 178,
+            FilterSlot::DateRange => 108,
+            FilterSlot::RefreshButton => 42,
         }
     }
 }
 
 /// The gap between two controls.
-pub const GAP: i32 = 8;
+pub const GAP: i32 = 14;
 /// Every slot, in order.
 pub const SLOTS: &[FilterSlot] = &[
-    FilterSlot::Source,
-    FilterSlot::Provider,
     FilterSlot::Model,
-    FilterSlot::Status,
-    FilterSlot::Refresh,
+    FilterSlot::Provider,
     FilterSlot::DateRange,
+    FilterSlot::Refresh,
     FilterSlot::RefreshButton,
-    FilterSlot::More,
+    FilterSlot::Source,
 ];
 
 #[cfg(test)]
@@ -384,21 +381,22 @@ mod tests {
     #[test]
     fn the_reserved_widths_match_the_layout_spec() {
         assert_eq!(FilterSlot::Source.width(), GROUP_WIDTH);
-        assert_eq!(FilterSlot::Provider.width(), 136);
-        assert_eq!(FilterSlot::Model.width(), 180);
-        assert_eq!(FilterSlot::Status.width(), 112);
-        assert_eq!(FilterSlot::Refresh.width(), 88);
-        assert_eq!(FilterSlot::DateRange.width(), 168);
-        assert_eq!(FilterSlot::RefreshButton.width(), 32);
-        assert_eq!(FilterSlot::More.width(), 32);
-        assert_eq!(GAP, 8);
-        assert_eq!(SLOTS.len(), 8);
+        assert_eq!(FilterSlot::Provider.width(), 174);
+        assert_eq!(FilterSlot::Model.width(), 156);
+        assert_eq!(FilterSlot::Refresh.width(), 178);
+        assert_eq!(FilterSlot::DateRange.width(), 108);
+        assert_eq!(FilterSlot::RefreshButton.width(), 42);
+        assert_eq!(GAP, 14);
+        assert_eq!(SLOTS.len(), 6);
     }
 
     #[test]
     fn the_group_geometry_matches_the_layout_spec() {
-        assert_eq!(ITEM_WIDTHS.iter().sum::<i32>() + 6, GROUP_WIDTH);
-        assert_eq!(GROUP_HEIGHT, ITEM_HEIGHT + 6);
+        assert_eq!(
+            ITEM_WIDTHS.iter().sum::<i32>() + 2 * GROUP_INSET + 2 * GROUP_GAP,
+            GROUP_WIDTH
+        );
+        assert_eq!(GROUP_HEIGHT, ITEM_HEIGHT + 2 * GROUP_INSET);
         assert_eq!(ICON_SIZE, 16);
         for option in OPTIONS {
             assert!(option.asset.starts_with("design/source-"));

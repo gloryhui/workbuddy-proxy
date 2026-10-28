@@ -55,10 +55,15 @@ pub(crate) fn default_window_size() -> Size<Pixels> {
 fn check_source_group_geometry() {
     assert_eq!(
         source_filter::GROUP_WIDTH,
-        source_filter::ITEM_WIDTHS.iter().sum::<i32>() + 6,
+        source_filter::ITEM_WIDTHS.iter().sum::<i32>()
+            + 2 * source_filter::GROUP_INSET
+            + 2 * source_filter::GROUP_GAP,
         "three options must fill the group"
     );
-    assert_eq!(source_filter::GROUP_HEIGHT, source_filter::ITEM_HEIGHT + 6);
+    assert_eq!(
+        source_filter::GROUP_HEIGHT,
+        source_filter::ITEM_HEIGHT + 2 * source_filter::GROUP_INSET
+    );
     assert_eq!(source_filter::ICON_SIZE, 16);
 }
 
