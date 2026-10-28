@@ -27,6 +27,7 @@ mod overview;
 mod pagination;
 mod preferences;
 mod recent;
+mod settings_layout;
 mod source_controls;
 mod trends;
 
@@ -243,6 +244,10 @@ pub struct Statistics {
     mapping_ui: mapping_controls::MappingUi,
     page_scroll: ScrollHandle,
     analysis_scroll: ScrollHandle,
+    settings_scroll: ScrollHandle,
+    price_rows_scroll: ScrollHandle,
+    settings_anchors: [ScrollAnchor; 3],
+    settings_section: usize,
     mapping_from: Entity<InputState>,
     mapping_to: Entity<InputState>,
     /// The filter generation and the one request it owes.
@@ -345,6 +350,7 @@ pub struct Statistics {
     prices: Vec<PriceRuleDto>,
     price_sync: Option<crate::stats_dto::PriceSyncDto>,
     price_sync_pending: bool,
+    price_sync_error: Option<String>,
     price_open: bool,
     /// True while the dialog is being closed because a save was confirmed.
     price_closing: bool,
@@ -355,7 +361,6 @@ pub struct Statistics {
     maintenance_error: Option<String>,
     clear_preview: Option<ClearPreviewDto>,
     clear_token: Option<String>,
-    pricing_open: bool,
     storage_open: bool,
     draft_generation: u64,
     provider_search: Entity<InputState>,
@@ -403,6 +408,9 @@ impl Statistics {
 
     pub fn new(dir: PathBuf, zh: bool, window: &mut Window, cx: &mut Context<Self>) -> Self {
         let preferences = preferences::Preferences::load(&dir);
+        let settings_scroll = ScrollHandle::new();
+        let settings_anchors =
+            std::array::from_fn(|_| ScrollAnchor::for_handle(settings_scroll.clone()));
         let backend = StatsScheduler::new(dir.clone());
         let page_input = cx.new(|cx| InputState::new(window, cx).placeholder("1"));
         let page_size_select =
@@ -658,6 +666,10 @@ impl Statistics {
             mapping_ui: mapping_controls::MappingUi::default(),
             page_scroll: ScrollHandle::new(),
             analysis_scroll: ScrollHandle::new(),
+            settings_scroll,
+            price_rows_scroll: ScrollHandle::new(),
+            settings_anchors,
+            settings_section: 0,
             mapping_from,
             mapping_to,
             coordinator: crate::stats_controller::FilterCoordinator::new(),
@@ -697,6 +709,7 @@ impl Statistics {
             prices: Vec::new(),
             price_sync: None,
             price_sync_pending: false,
+            price_sync_error: None,
             price_open: false,
             price_closing: false,
             price_draft: crate::stats_controller::PriceDraft::blank(String::new(), 0),
@@ -704,8 +717,7 @@ impl Statistics {
             maintenance_error: None,
             clear_preview: None,
             clear_token: None,
-            pricing_open: false,
-            storage_open: false,
+            storage_open: true,
             draft_generation: 0,
             provider_search,
             model_search,
@@ -1259,6 +1271,7 @@ impl Statistics {
     }
 
     fn request_price_page(&mut self, tag: String, cx: &mut Context<Self>) {
+        self.price_rows_scroll.set_offset(point(px(0.), px(0.)));
         // Never leave the previous page's rows/actions under the new page
         // number, or reuse its next cursor after a failed read.
         self.prices.clear();
@@ -1514,7 +1527,7 @@ impl Statistics {
         // Provider modes are filled in one per tick so the list converges
         // without ever queueing a job per provider at once.
         self.poll_import_status(cx);
-        if foreground && self.storage_open {
+        if foreground && self.view == preferences::View::Settings && self.storage_open {
             self.request_provider_modes(cx);
         }
         // Maintenance progress is polled at most every two seconds and only
@@ -1674,6 +1687,7 @@ impl Statistics {
             Err(failure) => {
                 if kind == JobKind::PriceSync {
                     self.price_sync_pending = false;
+                    self.price_sync_error = Some(failure.clone());
                 }
                 if kind == JobKind::Prices {
                     self.prices_loading = false;
@@ -1910,6 +1924,7 @@ impl Statistics {
         }
         if kind == JobKind::PriceSync {
             self.price_sync_pending = false;
+            self.price_sync_error = None;
             self.price_sync = value
                 .get("catalog_sync")
                 .cloned()
@@ -3484,7 +3499,7 @@ impl Statistics {
     }
 }
 
-/// P1 sections live in the same file but stay collapsed by default.
+/// Legacy storage group retained while the Studio settings cards migrate.
 impl Statistics {
     fn section_toggle(
         &self,
@@ -3493,7 +3508,6 @@ impl Statistics {
         subtitle: Option<&'static str>,
         open: bool,
         cx: &mut Context<Self>,
-        which: u8,
     ) -> AnyElement {
         // DESIGN_SPEC §4.2: one collapsed row per section, chevron + title and
         // an optional one-line hint. The hint is a label, not part of the
@@ -3515,10 +3529,7 @@ impl Statistics {
                     ))
                     .label(title)
                     .on_click(cx.listener(move |this, _, _, cx| {
-                        match which {
-                            0 => this.pricing_open = !this.pricing_open,
-                            _ => this.storage_open = !this.storage_open,
-                        }
+                        this.storage_open = !this.storage_open;
                         cx.notify();
                     })),
             )
@@ -3529,398 +3540,6 @@ impl Statistics {
                         .text_color(rgb(MUTED)),
                 )
             })
-            .into_any_element()
-    }
-
-    fn pricing_section(&self, cx: &mut Context<Self>) -> AnyElement {
-        let open = self.pricing_open;
-        let sync_note = self.price_sync.as_ref().and_then(|sync| {
-            sync.last_success_day.as_ref().map(|day| {
-                format!(
-                    "{} {day} · {} {} · {} {}",
-                    self.t("价格更新于", "Prices updated"),
-                    self.t("更新", "Updated"),
-                    sync.updated_count,
-                    self.t("未匹配", "Unmatched"),
-                    sync.unmatched_count,
-                )
-            })
-        });
-        // DESIGN_SPEC §4.2 price table: model (+ rule id), source/mapping,
-        // currency, input/output price per million, actions. Data semantics are
-        // unchanged: the same DTO fields and the same save/delete callbacks.
-        let header = div()
-            .flex()
-            .items_center()
-            .h(px(32.))
-            .px(px(12.))
-            .gap(px(16.))
-            .bg(rgb(0xf7f9fc))
-            .border_b(px(1.))
-            .border_color(rgb(BORDER))
-            .text_size(px(crate::theme::font::LABEL))
-            .text_color(rgb(MUTED))
-            .child(div().flex_1().min_w_0().child(self.t("模型", "Model")))
-            .child(
-                div()
-                    .flex_1()
-                    .min_w_0()
-                    .child(self.t("来源 / 映射", "Source / mapping")),
-            )
-            .child(div().w(px(80.)).child(self.t("币种", "Currency")))
-            .child(div().flex_1().min_w_0().child(self.t(
-                "价格 / 百万 Token（输入 / 输出）",
-                "Price / million tokens (input / output)",
-            )))
-            .child(
-                div()
-                    .w(px(110.))
-                    .flex()
-                    .justify_end()
-                    .child(self.t("操作", "Actions")),
-            );
-        let mut table = div()
-            .flex()
-            .flex_col()
-            .w_full()
-            .min_w_0()
-            .border_1()
-            .border_color(rgb(BORDER))
-            .rounded(px(8.))
-            .overflow_hidden()
-            .child(header);
-        if self.prices_loading {
-            table = table.child(
-                div().px(px(12.)).py(px(16.)).child(
-                    Label::new(self.t("加载中…", "Loading…"))
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(MUTED)),
-                ),
-            );
-        } else if self.prices.is_empty() {
-            table = table.child(
-                div().px(px(12.)).py(px(16.)).child(
-                    Label::new(self.t(
-                        "没有匹配的价格规则，可手动更新或新建。未匹配模型暂按默认币种记录0元。",
-                        "No matching price rules. Update prices or add a rule; unmatched models default to zero.",
-                    ))
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED)),
-                ),
-            );
-        } else {
-            for (index, rule) in self.prices.iter().enumerate() {
-                let short_id: String = rule.rule_id.chars().take(12).collect();
-                // The price DTO has no separate source column; the label is the
-                // existing user-visible source/annotation. An empty label is the
-                // manual rule, not a blank cell.
-                let source_label = if rule.label.trim().is_empty() {
-                    self.t("手工", "Manual").to_owned()
-                } else {
-                    rule.label.clone()
-                };
-                let provider_name = self
-                    .configured_providers
-                    .iter()
-                    .find(|(id, _)| id == &rule.provider_id)
-                    .map(|(_, name)| name.clone())
-                    .filter(|name| !name.is_empty());
-                let mapping_line = match provider_name {
-                    Some(name) => format!("{name} / {}", rule.upstream_model),
-                    None => rule.upstream_model.clone(),
-                };
-                table = table.child(
-                    div()
-                        .flex()
-                        .items_center()
-                        .gap(px(16.))
-                        .px(px(12.))
-                        .py(px(10.))
-                        .border_b(px(1.))
-                        .border_color(rgb(0xeef2f7))
-                        .child(
-                            div()
-                                .flex()
-                                .flex_col()
-                                .flex_1()
-                                .min_w_0()
-                                .gap(px(2.))
-                                .child(
-                                    Label::new(rule.upstream_model.clone())
-                                        .text_size(px(12.))
-                                        .text_color(rgb(INK)),
-                                )
-                                .child(
-                                    Label::new(short_id)
-                                        .text_size(px(crate::theme::font::LABEL))
-                                        .text_color(rgb(MUTED)),
-                                ),
-                        )
-                        .child(
-                            div()
-                                .flex()
-                                .flex_col()
-                                .flex_1()
-                                .min_w_0()
-                                .gap(px(2.))
-                                .child(
-                                    Label::new(source_label)
-                                        .text_size(px(crate::theme::font::LABEL))
-                                        .text_color(rgb(INK)),
-                                )
-                                .child(
-                                    Label::new(mapping_line)
-                                        .text_size(px(crate::theme::font::LABEL))
-                                        .text_color(rgb(MUTED)),
-                                ),
-                        )
-                        .child(div().w(px(80.)).flex().items_center().child(
-                            crate::ui_components::tag(
-                                crate::ui_components::TagKind::Secondary,
-                                rule.currency.as_str(),
-                            ),
-                        ))
-                        .child(
-                            div()
-                                .flex()
-                                .flex_col()
-                                .flex_1()
-                                .min_w_0()
-                                .gap(px(2.))
-                                .child(
-                                    Label::new(format!(
-                                        "{} / {}",
-                                        usage_table::amount(
-                                            Some(&rule.input_rate_nanos),
-                                            Some(rule.currency)
-                                        ),
-                                        usage_table::amount(
-                                            Some(&rule.output_rate_nanos),
-                                            Some(rule.currency)
-                                        ),
-                                    ))
-                                    .text_size(px(12.))
-                                    .text_color(rgb(INK)),
-                                )
-                                .child(
-                                    Label::new(format!("{}", rule.input_mode))
-                                        .text_size(px(crate::theme::font::LABEL))
-                                        .text_color(rgb(MUTED)),
-                                ),
-                        )
-                        .child(
-                            div()
-                                .w(px(110.))
-                                .flex()
-                                .justify_end()
-                                .gap_1()
-                                .child(
-                                    stats_button(("price-edit", index))
-                                        .ghost()
-                                        .label(self.t("编辑", "Edit"))
-                                        .on_click(cx.listener({
-                                            let rule = rule.clone();
-                                            move |this, _, window, cx| {
-                                                this.edit_price(&rule, window, cx);
-                                            }
-                                        })),
-                                )
-                                .child(
-                                    stats_button(("price-delete", index))
-                                        .ghost()
-                                        .label(self.t("删除", "Delete"))
-                                        .on_click(cx.listener({
-                                            let (price_id, revision) =
-                                                (rule.rule_id.clone(), rule.revision);
-                                            move |this, _, _, cx| {
-                                                this.delete_price(price_id.clone(), revision, cx);
-                                            }
-                                        })),
-                                ),
-                        ),
-                );
-            }
-        }
-        let body = div()
-            .flex()
-            .flex_col()
-            .gap_3()
-            .child(
-                div()
-                    .flex()
-                    .flex_wrap()
-                    .items_center()
-                    .justify_between()
-                    .gap_2()
-                    .child(
-                        div()
-                            .flex()
-                            .flex_wrap()
-                            .items_center()
-                            .gap_2()
-                            .child(
-                                crate::ui_components::text_input(&self.price_search, false)
-                                    .w(px(240.))
-                                    .prefix(Icon::new(IconName::Search)),
-                            )
-                            .child(
-                                stats_button("price-add-top")
-                                    .primary()
-                                    .child(crate::ui_components::action_icon(Icon::new(IconName::Plus).size(px(16.))))
-                                    .label(self.t("新建价格规则", "New price rule"))
-                                    .on_click(cx.listener(|this, _, window, cx| {
-                                        this.new_price(window, cx)
-                                    })),
-                            )
-                            .child(
-                                stats_button("price-reload")
-                                    .outline()
-                                    .child(crate::ui_components::action_icon(Icon::new(IconName::RefreshCw).size(px(16.))))
-                                    .label(self.t("刷新价格", "Reload prices"))
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.request_prices(cx)
-                                    })),
-                            )
-                            .child(
-                                stats_button("price-sync-models-dev")
-                                    .outline()
-                                    .label(if self.price_sync_pending {
-                                        self.t("正在更新价格…", "Updating prices…")
-                                    } else {
-                                        self.t("手动更新价格", "Update prices now")
-                                    })
-                                    .disabled(self.price_sync_pending)
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        let tag = format!("price-sync-{}", this.generation);
-                                        let request = crate::stats_backend::command(
-                                            "stats_prices_update",
-                                            &tag,
-                                            json!({}),
-                                        );
-                                        match this
-                                            .backend
-                                            .submit_write(JobKind::PriceSync, tag, request)
-                                        {
-                                            Ok(_) => this.price_sync_pending = true,
-                                            Err(error) => this.error = Some(error),
-                                        }
-                                        cx.notify();
-                                    })),
-                            ),
-                    )
-                    .when_some(sync_note, |this, note| {
-                        this.child(
-                            Label::new(note)
-                                .text_size(px(crate::theme::font::LABEL))
-                                .text_color(rgb(MUTED)),
-                        )
-                    }),
-            )
-            .child(
-                Label::new(self.t(
-                    "每日从 models.dev 更新；同模型价格直接覆盖手工调整，历史调用金额保持不变。",
-                    "Daily models.dev updates overwrite matching manual prices; recorded costs stay unchanged.",
-                ))
-                .text_size(px(crate::theme::font::LABEL))
-                .text_color(rgb(MUTED)),
-            )
-            .child(table)
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(
-                        Label::new(if self.zh {
-                            format!(
-                                "第 {} 页 · {} 条",
-                                self.prices_cursors.page_number(),
-                                self.prices.len()
-                            )
-                        } else {
-                            format!(
-                                "Page {} · {} rows",
-                                self.prices_cursors.page_number(),
-                                self.prices.len()
-                            )
-                        })
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(MUTED)),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_2()
-                            .child(
-                                stats_button("prices-prev")
-                                    .ghost()
-                                    .label(self.t("上一页", "Previous"))
-                                    .disabled(
-                                        self.prices_loading || !self.prices_cursors.can_go_back(),
-                                    )
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        if let Some(previous) = this.prices_cursors.back() {
-                                            this.prices_cursors.begin_page(previous);
-                                            this.request_price_page(
-                                                format!("prices-{}", this.generation),
-                                                cx,
-                                            );
-                                        }
-                                    })),
-                            )
-                            .child(
-                                stats_button("prices-page-size")
-                                    .ghost()
-                                    .label(format!(
-                                        "{} {}",
-                                        self.prices_page_size,
-                                        self.t("条/页", "per page")
-                                    ))
-                                    .disabled(self.prices_loading)
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.prices_page_size = match this.prices_page_size {
-                                            20 => 50,
-                                            50 => 100,
-                                            _ => 20,
-                                        };
-                                        this.request_prices(cx);
-                                    })),
-                            )
-                            .child(
-                                stats_button("prices-next")
-                                    .ghost()
-                                    .label(self.t("下一页", "Next"))
-                                    .disabled(
-                                        self.prices_loading || !self.prices_cursors.can_go_next(),
-                                    )
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        if let Some(next) = this.prices_cursors.forward() {
-                                            this.prices_cursors.begin_page(next);
-                                            this.request_price_page(
-                                                format!("prices-{}", this.generation),
-                                                cx,
-                                            );
-                                        }
-                                    })),
-                            ),
-                    ),
-            );
-        // Repricing history with the current price was removed: every request
-        // keeps the snapshot it was admitted with.
-        stats_card("stats-pricing")
-            .child(self.section_toggle(
-                "pricing-toggle",
-                self.t("成本定价", "Cost pricing"),
-                Some(self.t(
-                    "按当前供应商筛选；输入精确模型 ID 搜索价格",
-                    "Prices follow the provider filter; search by exact model ID",
-                )),
-                open,
-                cx,
-                0,
-            ))
-            .when(open, |this| this.child(body))
             .into_any_element()
     }
 
@@ -4373,13 +3992,13 @@ impl Statistics {
             .child(self.import_controls(cx))
             .child(danger);
         stats_card("stats-storage")
+            .anchor_scroll(Some(self.settings_anchors[1].clone()))
             .child(self.section_toggle(
                 "storage-toggle",
                 self.t("采集与存储", "Collection & storage"),
                 None,
                 open,
                 cx,
-                1,
             ))
             .when(open, |this| this.child(body))
             .into_any_element()

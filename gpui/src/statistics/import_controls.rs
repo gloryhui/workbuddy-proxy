@@ -309,6 +309,7 @@ impl Statistics {
             });
         div()
             .id("workbuddy-import-controls")
+            .anchor_scroll(Some(self.settings_anchors[2].clone()))
             .flex()
             .flex_col()
             .w_full()

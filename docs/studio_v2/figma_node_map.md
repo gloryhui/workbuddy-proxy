@@ -6,13 +6,13 @@
 | --- | --- | --- | --- |
 | 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, layout.rs, source_controls.rs, usage_chart.rs | 部分：导航/筛选、四KPI/详细指标/空值已验；四KPI/趋势/计费/最近请求已验，整帧最终审计待续 |
 | 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 部分：侧栏/双卡/运行中心/日志交互通过；完整视觉与无障碍待续 |
-| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs, usage_chart.rs | 部分：导航/筛选已验，报表内容与完整视觉待续 |
-| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/*, usage_table.rs, usage_chart.rs | 部分：导航/筛选已验，报表内容与完整视觉待续 |
-| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/*, usage_table.rs, usage_chart.rs | 部分：导航/筛选已验，报表内容与完整视觉待续 |
+| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 部分：八列/来源筛选/分页/详情/窄窗首末列已验，整帧最终审计待续 |
+| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：表卡/两指标卡/真实排序/分组分页/两尺寸已验，完整视觉与无障碍待续 |
+| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, layout.rs, import_controls.rs | 部分：分区导航/价格卡CRUD与游标/快照/失败提示已验，采集及导入双卡和完整视觉待续 |
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
+| 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics.rs::price_body, stats_backend.rs | 部分：真实新建/取消/保存与历史快照保护已验，模态框视觉待施工 |
 | 60:475 | 10 / STUDIO V2 · 请求详情 | statistics.rs, detail_metadata, usage_table.rs | 部分：最近请求入口/正确ID/Esc已验，详情整帧视觉待续 |
 | 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -26,7 +26,7 @@
 | 67:338 | 20 / STUDIO V2 · OpenCode Go 供应商 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 67:548 | 21 / STUDIO V2 · 思考强度菜单 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 68:350 | 22 / STUDIO V2 · 取消同步确认 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 69:359 | 23 / STUDIO V2 · 编辑模型价格 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics.rs::price_body, stats_backend.rs | 部分：真实编辑/取消/保存和费率revision已验，模态框视觉待施工 |
 | 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:605 | 25 / STUDIO V2 · 编辑供应商资料 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:843 | 26 / STUDIO V2 · 复制供应商草稿 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -64,3 +64,5 @@
 明细表高保真 `56:209` 与分析整帧 `57:8` 已读取。明细按V2八列实现：时间、供应商、模型、Token使用量、缓存命中、费用/积分、耗时、状态；请求ID保留在时间提示和原详情，tok/s保留在耗时提示及原详情。时间排序是核心真实的最新优先说明，没有添加空菜单。分析表本批只补原生首/末列访问，六列聚合和原排序/分页保持，整帧内容仍待后续。
 
 汇总分析 `57:8` 的表卡 `57:225`、Token构成 `57:275` 与缓存/覆盖 `57:287` 已原生落地到 `statistics/analysis.rs`；真实分组/排序/服务端分页保持。表体43px行、38px表头，底部两卡用既有dashboard字段，窄窗正文独立滚动与纵排。没有使用稿中的静态509万、86.3%或100%冒充真实数据。
+
+设置高保真 `58:223` / `58:272` / `58:301` 本轮已读取。三项导航已以原生ScrollAnchor接入；价格面板优先落地到 `statistics/settings_layout.rs`，保留精确搜索、20/50/100游标分页和原生CRUD/更新菜单，新增独立价格同步失败反馈。采集/存储与本地导入当前仍是原控件组，后续拆双卡；价格模态框 `60:249` / `69:359` 的完整视觉也未在本批施工。上述阶段记录为历史进度，当前范围以主表及最新实施记录为准。

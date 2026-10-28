@@ -327,18 +327,40 @@ impl Statistics {
                 .child(self.recent_card(cx))
                 .into_any_element(),
             View::Settings => div()
-                .id("statistics-settings-scroll")
                 .flex()
                 .flex_col()
                 .flex_1()
                 .min_h_0()
-                .overflow_y_scroll()
-                .gap_3()
-                .child(self.health_bar(cx))
-                .children(self.warnings())
-                .children(self.import_notices(cx))
-                .child(self.pricing_section(cx))
-                .child(self.storage_section(cx))
+                .gap(px(12.))
+                .child(self.settings_navigation(cx))
+                .child(
+                    div()
+                        .id("statistics-settings-scroll")
+                        .track_scroll(&self.settings_scroll)
+                        .flex()
+                        .flex_col()
+                        .flex_1()
+                        .min_h_0()
+                        .overflow_y_scroll()
+                        .gap(px(18.))
+                        .on_prepaint({
+                            let owner = cx.entity().downgrade();
+                            move |bounds, _, cx| {
+                                let available = f32::from(bounds.size.width) - CARD_PAD * 2. - 2.;
+                                let _ = owner.update(cx, |this, cx| {
+                                    if (this.filters_width - available).abs() > 0.5 {
+                                        this.filters_width = available;
+                                        cx.notify();
+                                    }
+                                });
+                            }
+                        })
+                        .child(self.health_bar(cx))
+                        .children(self.warnings())
+                        .children(self.import_notices(cx))
+                        .child(self.pricing_section(cx))
+                        .child(self.storage_section(cx)),
+                )
                 .into_any_element(),
         }
     }
