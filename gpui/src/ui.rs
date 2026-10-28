@@ -377,9 +377,9 @@ impl Proxy {
         let items = choices(self.zh, true);
         let selected = self.cfg.language.clone();
         let owner = cx.entity().downgrade();
-        crate::ui_components::design_header_button(
+        crate::ui_components::system_button(
             "language",
-            "design/header-globe.png",
+            "studio/language.svg",
             self.t("切换界面语言", "Change interface language"),
             self.t("界面语言", "Interface language"),
             self.busy,
@@ -406,15 +406,16 @@ impl Proxy {
         .into_any_element()
     }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
-        // Match the original six glyphs and 34px center-to-center spacing.
-        // Their real actions, tooltips and disabled rules remain unchanged.
+        // Figma 103:442: all seven original actions, in their original order.
+        // The shared native buttons retain focus, tooltips and disabled rules.
         div()
             .id("titlebar-actions")
+            .w(px(crate::theme::size::SYSTEM_TOOLBAR_WIDTH))
             .flex()
             .flex_shrink_0()
             .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
             .items_center()
-            .gap(px(2.))
+            .gap(px(crate::theme::size::SYSTEM_GAP))
             // Exclude actions from the TitleBar's native Windows drag hitbox
             // and prevent macOS mouse movement/double clicks from dragging or
             // zooming the window while the user operates a toolbar button.
@@ -423,9 +424,9 @@ impl Proxy {
             .on_double_click(|_, _, cx| cx.stop_propagation())
             .child(self.skin_control(cx))
             .child(
-                crate::ui_components::design_header_button(
+                crate::ui_components::system_button(
                     "autostart",
-                    "design/header-power.png",
+                    "studio/autostart.svg",
                     if self.cfg.autostart {
                         self.t(
                             "开机启动：已开启（点击关闭）",
@@ -452,9 +453,9 @@ impl Proxy {
                 })),
             )
             .child(
-                crate::ui_components::design_header_button(
+                crate::ui_components::system_button(
                     "check-update",
-                    "design/header-refresh.png",
+                    "studio/updates.svg",
                     self.t("检查更新", "Check updates"),
                     self.t("检查更新", "Check updates"),
                     self.busy,
@@ -469,9 +470,9 @@ impl Proxy {
             )
             .child(self.language_menu(cx))
             .child(
-                crate::ui_components::design_header_button(
+                crate::ui_components::system_button(
                     "restore-window-size",
-                    "design/header-fullscreen.png",
+                    "studio/restore.svg",
                     self.t(
                         "恢复默认窗口尺寸（1440 × 900）",
                         "Restore default window size (1440 × 900)",
@@ -482,9 +483,9 @@ impl Proxy {
                 .on_click(cx.listener(|this, _, window, cx| this.restore_window_size(window, cx))),
             )
             .child(
-                crate::ui_components::design_header_button(
+                crate::ui_components::system_button(
                     "project-homepage",
-                    "design/header-github.png",
+                    "studio/github.svg",
                     self.t("GitHub 项目主页", "GitHub project"),
                     self.t("GitHub 项目主页", "GitHub project"),
                     false,
@@ -492,9 +493,9 @@ impl Proxy {
                 .on_click(|_, _, cx| cx.open_url(PROJECT_URL)),
             )
             .child(
-                crate::ui_components::design_header_button(
+                crate::ui_components::system_button(
                     "submit-feedback",
-                    "design/header-user.png",
+                    "studio/feedback.svg",
                     self.t("提交反馈", "Submit feedback"),
                     self.t("提交反馈", "Submit feedback"),
                     false,

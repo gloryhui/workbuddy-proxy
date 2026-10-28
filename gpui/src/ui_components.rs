@@ -120,9 +120,9 @@ pub fn icon_button_sized(
         .disabled(disabled)
 }
 
-/// Header glyph sampled from the original 2× design. Keep Kit interaction,
-/// focus, tooltips and disabled behavior while displaying the exact bitmap.
-pub fn design_header_button(
+/// Studio V2's exported vectors at their native 20px size, inside Kit buttons.
+/// Keep Kit focus, tooltips and disabled semantics for all seven system actions.
+pub fn system_button(
     id: impl Into<ElementId>,
     asset: &'static str,
     tooltip: impl Into<SharedString>,
@@ -130,12 +130,19 @@ pub fn design_header_button(
     disabled: bool,
 ) -> Button {
     Button::new(id)
-        .with_size(px(32.))
-        .w(px(32.))
-        .h(px(32.))
+        .with_size(px(size::SYSTEM_BUTTON))
+        .w(px(size::SYSTEM_BUTTON))
+        .h(px(size::SYSTEM_BUTTON))
         .p_0()
         .ghost()
-        .child(img(asset).size(px(16.)).flex_shrink_0())
+        .rounded(px(9.))
+        .child(
+            Icon::default()
+                .path(asset)
+                .with_size(px(size::SYSTEM_ICON))
+                .flex_shrink_0(),
+        )
+        .text_color(rgb(color::TEXT_3))
         .tooltip(tooltip)
         .accessibility_label(accessibility_label)
         .disabled(disabled)

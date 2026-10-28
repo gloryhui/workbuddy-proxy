@@ -7,16 +7,13 @@ impl Proxy {
         let content_owner = owner.clone();
         Popover::new("skin-settings")
             .open(self.skin_open)
-            .trigger(
-                crate::ui_components::icon_button(
-                    "skin-settings-trigger",
-                    Icon::default().path("icons/skin-shirt.svg"),
-                    self.t("皮肤设置", "Appearance"),
-                    self.t("皮肤设置", "Appearance"),
-                    false,
-                )
-                .text_color(rgb(0x5c6679)),
-            )
+            .trigger(crate::ui_components::system_button(
+                "skin-settings-trigger",
+                "studio/skin.svg",
+                self.t("皮肤设置", "Appearance"),
+                self.t("皮肤设置", "Appearance"),
+                false,
+            ))
             .on_open_change(move |open, _, cx| {
                 let _ = owner.update(cx, |this, cx| {
                     this.skin_open = *open;

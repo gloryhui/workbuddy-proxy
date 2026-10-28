@@ -127,6 +127,11 @@ pub mod size {
     pub const SIDEBAR_WIDTH: f32 = 256.;
     pub const RIGHT_RAIL_WIDTH: f32 = 300.;
     pub const TOP_ICON_ROW_HEIGHT: f32 = 36.;
+    /// Studio V2 SystemToolbar (Figma 103:442): seven 36px targets, six gaps.
+    pub const SYSTEM_BUTTON: f32 = 36.;
+    pub const SYSTEM_ICON: f32 = 20.;
+    pub const SYSTEM_GAP: f32 = 8.;
+    pub const SYSTEM_TOOLBAR_WIDTH: f32 = 300.;
     pub const STATUS_BAR_HEIGHT: f32 = 30.;
     pub const INPUT_HEIGHT: f32 = 36.;
     pub const SELECT_HEIGHT: f32 = 36.;

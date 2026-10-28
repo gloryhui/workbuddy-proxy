@@ -8,6 +8,20 @@ impl AssetSource for Assets {
                 "../../assets/icon-128.png"
             ))));
         }
+        // Original Studio V2 vectors from the shared seven-action toolbar.
+        let studio: Option<&'static [u8]> = match path {
+            "studio/skin.svg" => Some(include_bytes!("../assets/studio/skin.svg")),
+            "studio/autostart.svg" => Some(include_bytes!("../assets/studio/autostart.svg")),
+            "studio/updates.svg" => Some(include_bytes!("../assets/studio/updates.svg")),
+            "studio/language.svg" => Some(include_bytes!("../assets/studio/language.svg")),
+            "studio/restore.svg" => Some(include_bytes!("../assets/studio/restore.svg")),
+            "studio/github.svg" => Some(include_bytes!("../assets/studio/github.svg")),
+            "studio/feedback.svg" => Some(include_bytes!("../assets/studio/feedback.svg")),
+            _ => None,
+        };
+        if let Some(bytes) = studio {
+            return Ok(Some(Cow::Borrowed(bytes)));
+        }
         // Original 2× design glyphs, embedded for identical Mac/Windows rendering.
         let design: Option<&'static [u8]> = match path {
             "design/header-power.png" => Some(include_bytes!("../assets/design/header-power.png")),
