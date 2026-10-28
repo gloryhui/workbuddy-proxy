@@ -73,9 +73,9 @@ pub mod color {
     /// rgba(20, 30, 50, .38), encoded as RGBA for Kit's overlay colour.
     pub const SCRIM_RGBA: u32 = 0x141e3261;
 
-    pub const CHART_INPUT: u32 = 0x3b6fe0;
+    pub const CHART_INPUT: u32 = 0x6c61f8;
     pub const CHART_OUTPUT: u32 = 0x2e9e6b;
-    pub const CHART_CACHE_READ: u32 = 0x7b5cd6;
+    pub const CHART_CACHE_READ: u32 = 0x28b7a6;
     pub const CHART_CACHE_WRITE: u32 = 0xb6bcc8;
     pub const CHART_COST: u32 = 0xc2185b;
 
@@ -378,7 +378,7 @@ pub fn install(cx: &mut App) {
         colors.red_light = rgb(color::DANGER_BG).into();
         colors.green = rgb(color::SUCCESS).into();
         colors.green_light = rgb(color::SUCCESS_TINT).into();
-        colors.blue = rgb(color::CHART_INPUT).into();
+        colors.blue = rgb(0x3b6fe0).into();
         colors.blue_light = rgb(0xdbeafe).into();
         colors.yellow = rgb(color::WARNING).into();
         colors.yellow_light = rgb(color::BG_TABLE_HEAD).into();
