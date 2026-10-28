@@ -8,7 +8,7 @@
 
 use crate::theme::{color, font, radius, size};
 use gpui_kit::component::{
-    Disableable, Icon, IconName, Sizable,
+    Disableable, ElementExt, Icon, IconName, Sizable,
     button::{Button, ButtonCustomVariant, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
@@ -587,33 +587,40 @@ pub fn terminal_logs(
 }
 
 impl RenderOnce for TerminalLogs {
-    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
-        let editor = RenderOnce::render(
-            Textarea::new(&self.state)
-                .readonly(true)
-                .bordered(false)
-                .aria_label(self.label)
-                .font_family(self.mono)
-                .text_size(px(12.))
-                .line_height(px(20.))
-                .bg(rgb(color::TERMINAL))
-                .text_color(rgb(color::TERMINAL_TEXT))
-                .h_full(),
-            window,
-            cx,
-        )
-        .into_any_element();
-        self.state.update(cx, |state, _| {
-            state.set_editor_style(gpui_kit::base::input::InputEditorStyle {
-                foreground: rgb(color::TERMINAL_TEXT).into(),
-                muted_foreground: rgb(color::SIDEBAR_MUTED).into(),
-                background: rgb(color::TERMINAL).into(),
-                border: rgb(color::TERMINAL_LINE).into(),
-                selection: rgb(crate::theme::sidebar_selection()).into(),
-                caret: rgb(color::SIDEBAR_TEXT).into(),
-                ..Default::default()
-            });
-        });
-        editor
+    fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
+        let state = self.state.clone();
+        div()
+            .size_full()
+            .child(
+                Textarea::new(&self.state)
+                    .readonly(true)
+                    .bordered(false)
+                    .aria_label(self.label)
+                    .font_family(self.mono)
+                    .text_size(px(12.))
+                    .line_height(px(20.))
+                    .bg(rgb(color::TERMINAL))
+                    .text_color(rgb(color::TERMINAL_TEXT))
+                    .h_full(),
+            )
+            // Textarea returns a deferred Kit Input, which installs the global
+            // palette in its own render. Project after that child's prepaint,
+            // before the editor paints; assigning during Textarea::render is
+            // too early. This does not notify or schedule another frame.
+            .on_prepaint(move |_, _, cx| {
+                state.update(cx, |state, _| {
+                    state.set_editor_style(gpui_kit::base::input::InputEditorStyle {
+                        foreground: rgb(color::TERMINAL_TEXT).into(),
+                        muted_foreground: rgb(color::SIDEBAR_MUTED).into(),
+                        background: rgb(color::TERMINAL).into(),
+                        border: rgb(color::TERMINAL_LINE).into(),
+                        // A translucent accent keeps the light log glyphs
+                        // readable across all seven palettes.
+                        selection: Hsla::from(rgb(crate::theme::sidebar_selection())).opacity(0.35),
+                        caret: rgb(color::SIDEBAR_TEXT).into(),
+                        ..Default::default()
+                    });
+                });
+            })
     }
 }

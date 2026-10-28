@@ -12,6 +12,7 @@ pub enum Skin {
     Teal,
     #[default]
     Monochrome,
+    StudioIndigo,
 }
 
 #[derive(Clone, Copy)]
@@ -24,13 +25,14 @@ pub struct Palette {
 }
 
 impl Skin {
-    pub const ALL: [Self; 6] = [
+    pub const ALL: [Self; 7] = [
         Self::Monochrome,
         Self::Blue,
         Self::Violet,
         Self::Rose,
         Self::Amber,
         Self::Teal,
+        Self::StudioIndigo,
     ];
 
     pub fn label(self, zh: bool) -> &'static str {
@@ -47,6 +49,8 @@ impl Skin {
             (Self::Teal, false) => "Teal",
             (Self::Monochrome, true) => "黑白",
             (Self::Monochrome, false) => "Mono",
+            (Self::StudioIndigo, true) => "Studio 靛蓝",
+            (Self::StudioIndigo, false) => "Studio Indigo",
         }
     }
 
@@ -58,6 +62,8 @@ impl Skin {
             Self::Amber => (0xb45309, 0x92400e, 0xfffbeb, 0xfde68a, 0xfef3c7),
             Self::Teal => (0x0f766e, 0x115e59, 0xf0fdfa, 0x99f6e4, 0xccfbf1),
             Self::Monochrome => (0x27272a, 0x18181b, 0xf4f4f5, 0xd4d4d8, 0xe4e4e7),
+            // Opt-in V2 variables: accent, accent-dark, soft-blue, line-strong.
+            Self::StudioIndigo => (0x655cf4, 0x4f46d9, 0xf4f6ff, 0xd8dde9, 0xf4f6ff),
         };
         Palette {
             primary,
@@ -129,6 +135,32 @@ mod tests {
         }
         assert_eq!(std::fs::read(config).unwrap(), b"provider fixture");
         assert_eq!(std::fs::read_dir(dir.path()).unwrap().count(), 2);
+    }
+
+    #[test]
+    fn legacy_appearance_files_load_without_migration_or_rewriting() {
+        let dir = tempfile::tempdir().unwrap();
+        for (key, expected) in [
+            ("blue", Skin::Blue),
+            ("violet", Skin::Violet),
+            ("rose", Skin::Rose),
+            ("amber", Skin::Amber),
+            ("teal", Skin::Teal),
+            ("monochrome", Skin::Monochrome),
+        ] {
+            let bytes = format!(r#"{{"version":1,"skin":"{key}"}}"#).into_bytes();
+            let path = dir.path().join("appearance.json");
+            std::fs::write(&path, &bytes).unwrap();
+            assert_eq!(load_skin(dir.path()), expected);
+            assert_eq!(std::fs::read(&path).unwrap(), bytes);
+        }
+        assert_eq!(Skin::default(), Skin::Monochrome);
+        save_skin(dir.path(), Skin::StudioIndigo).unwrap();
+        let value: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(dir.path().join("appearance.json")).unwrap())
+                .unwrap();
+        assert_eq!(value["version"], 1);
+        assert_eq!(value["skin"], "studio_indigo");
     }
 
     #[test]

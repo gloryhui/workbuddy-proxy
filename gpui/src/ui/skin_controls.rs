@@ -56,6 +56,9 @@ impl Proxy {
                     let label = skin.label(self.zh);
                     crate::ui_components::action_button(("skin-preset", skin as usize))
                         .w_full()
+                        .when(skin == crate::theme::Skin::StudioIndigo, |button| {
+                            button.col_span(2)
+                        })
                         .h(px(56.))
                         .px(px(10.))
                         .bg(rgb(if selected == skin {

@@ -4,7 +4,7 @@
 
 | 功能 | 原实现落点 | 当前状态 / 必须补验 |
 | --- | --- | --- |
-| 六套皮肤、保存失败不切换 | theme/skin.rs、ui/skin_controls.rs | 源码确认；默认黑白与旧值保持；待 GUI |
+| 六套旧皮肤 + 可选 Studio 靛蓝、保存失败不切换 | theme/skin.rs、ui/skin_controls.rs | macOS 七项选择/原键保存、默认 Mono、配置 SHA 不变、Studio 重开恢复 Passed；非法目录保存失败由既有自动测试覆盖 |
 | 开机启动、失败回滚 | ui.rs::app_controls、核心 action | 源码确认；待隔离验证，不能修改用户真实登录项 |
 | 检查更新、busy/error | ui.rs::app_controls、tick | 源码确认；待 mock 与 GUI |
 | 系统/中文/English | ui.rs::language_menu、set_language | macOS 隔离 GUI 菜单/中英实际切换 Passed；跟随系统待验 |
@@ -25,8 +25,8 @@
 | CNY/USD/积分、价格快照与规则 CRUD | statistics.rs、stats_backend.rs | 源码确认；待 GUI |
 | 采集、保留天数、本地导入去重 | statistics/import_controls*、workbuddy_import.rs | 源码确认；待自动回归与 GUI |
 | 真实代理状态、计数、端口 | ui/relay.rs、core_state、status_bar | macOS 合成2供应商/6模型/1请求、暂停核心未响应/恢复、复制完整端点 Passed；端口0/65536拒绝、确认Esc/取消不重启 Passed；真实重启/回滚待验 |
-| 最近 100 条日志、清空/复制/滚动 | ui.rs::snapshot、ui/relay.rs、ui_components::TerminalLogs | macOS 深色只读选择/复制/清空、无新日志5秒不抢首部、新日志到底 Passed；100条上限源码确认 |
+| 最近 100 条日志、清空/复制/滚动 | ui.rs::snapshot、ui/relay.rs、ui_components::TerminalLogs | macOS 深色只读/复制/清空、无新日志不抢首部/新日志到底 Passed；Studio 补验发现选区覆盖后已修复，Mono/Studio 实拍选区可读；100条上限源码确认 |
 | 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | 正常关窗 UI 退出/核心 health 200/重开恢复 Passed；托盘唤醒及单实例待验 |
-| 六皮肤/中英/HiDPI/无障碍 | theme.rs、ui_components.rs | 待 macOS GUI；Windows 未实际验证 |
+| 外观/中英/HiDPI/无障碍 | theme.rs、ui_components.rs | macOS 七主题选择与中英两尺寸 Passed；完整 HiDPI/IME/无障碍及 Windows/Intel Mac 未实际验证 |
 
 此矩阵随每个小功能提交更新；不将核心未改动当作运行回归通过。

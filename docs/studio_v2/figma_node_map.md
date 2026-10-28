@@ -19,7 +19,7 @@
 | 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 61:1111 | 11 / STUDIO V2 · 协议选项 · Gemini | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
-| 64:335 | 14 / STUDIO V2 · 外观与主题 | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
+| 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 部分：旧六主题+可选 Studio、保存/恢复/深色选区通过；完整视觉待续 |
 | 66:320 | 17 / STUDIO V2 · 上游协议下拉 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 66:538 | 18 / STUDIO V2 · 供应商预设搜索 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 66:760 | 19 / STUDIO V2 · API Key 显示演示 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -50,3 +50,5 @@
 首批已读取高保真 design context 和渲染：`103:442`、`71:364`、`54:2`。`54:2` 变量已读取，包括 sidebar `#111525`、canvas `#F7F8FC`、ink `#161C2C`、accent `#655CF4`、success `#11976F`。工具栏自身未单独绑定变量（variable defs 返回空对象），尺寸来自共享组件 context。后续阶段按需读取对应画板，不能把 metadata 清单视为已实现。
 
 右栏高保真 context `54:298` / `54:320` 已读取：`ui/relay.rs` 运行中心与日志、`ui_components::TerminalLogs` 的本地深色原生编辑器投影。两尺寸/计数/复制/日志滚动/端口取消的真实回归见 `baseline_and_qa.md`。
+
+外观高保真 context `64:335` 已读取，并沿用 V2 variables 新增显式可选的 Studio Indigo；六套旧键、默认 Mono 及 appearance version 1 保持。Kit Textarea 的延迟 Input 覆盖选区已通过真实补验定位、修复，见实施记录小功能 8。

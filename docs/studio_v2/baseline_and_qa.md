@@ -127,3 +127,47 @@
 - 两尺寸截图为 [1440×900 中文](screenshots/runtime-1440x900.png)、[1100×700 English](screenshots/runtime-1100x700.png)，合成配置，原图只裁去底部 1 行原生窗口框。主代理截图核对发现端口 IconName fallback 呈加号，改用已有设计导出的真实设置矢量，最终截图单独补验。
 - 主 GUI/基准进程已退出并等待，清理本批隔离配置/数据库/程序副本约 108,412 KiB，子代理临时文件保留 0；最终矢量复验清理另行记录。主构建日志目录继续用于下一批，结束时统一清理。Windows/Intel Mac/HiDPI 和完整无障碍仍未实际验证，40 张画板整体不能视为完成。
 - 最终齿轮版（SHA256 前缀 `d3f36711`）真实点击/打开/Esc 关闭通过，已覆盖两张最终截图；设置程序 14,843,664 bytes。补验进程均退出并等待，额外清理专属隔离目录约 46,772 KiB，保留临时文件 0。
+
+## 小功能 8：可选 Studio 靛蓝外观（2026-10-29，北京时间）
+
+- 官方 MCP 读取外观画板 `64:335`，沿用现有原生外观弹层；新增 `Skin::StudioIndigo`，主色 `#655cf4`、深色 `#4f46d9`、浅色 `#f4f6ff` 与边线 `#d8dde9` 使用已读取的 V2 变量。新增项在六个旧选项之后占两列，以完整显示中英文名和选中标记。
+- 迁移策略：没有自动迁移或重写。无外观文件、损坏/未知配置及新安装仍按既有逻辑默认黑白；六个旧序列化名称和顺序保持，读取旧文件不改写。新增方案仅在用户手动选择后以现有 `appearance.json` version 1、`skin: studio_indigo` 保存，不改变供应商配置或核心协议。旧版本若不认识此新值，会按其既有失败回退逻辑显示黑白。
+- 新增兼容回归用真实旧键 `blue/violet/rose/amber/teal/monochrome` 加载并逐字节确认文件未改写，确认默认仍 Mono、新方案仍使用 version 1。既有 roundtrip 与文字对比度测试一并覆盖第七项。
+- 外观实测补验发现：日志虽然默认文字可读，但全选后呈近白底、浅灰字，推翻了初验「选区可读」的判断。根因是 Kit `Textarea::render` 只返回延迟渲染的 Input，内部 Input 随后覆盖了过早写入的 editor selection。改为在原生 Textarea 子树完成 prepaint 后、实际 paint 前赋同一局部 editor palette，使用 35% 透明主题色选区；不替换状态、编辑器、焦点或滚动，不调用 notify 或安排额外帧。修复后重新做真实选区/只读/复制/滚动回归。
+
+
+- GPUI fmt / 159 tests / clippy / release Passed；未升级依赖或改版本号。新增兼容测试与原对比度/持久化测试 Passed。真实隔离 GUI 七次选择分别保存正确旧键/新键且 version 均为 1，选择前后合成供应商 config.json 的 SHA256 完全一致；无外观文件默认 Mono，关闭 UI 后核心继续，重开恢复 Studio。
+- 最终选区版（SHA256 前缀 `fc4cc1ba`）实测 Mono 深灰选区、Studio 半透明靛蓝选区均可读；原生 Cmd+C/只读输入保持，原剪贴板文本内存保存并恢复。注入 35 条记录，回首部 4 秒无新增仍保留位置，再注入 1 条自动到底，全部 Passed。设置程序大小 14,844,160 bytes；核心仍为 8,428,096 bytes。
+
+
+- 最终截图：[1440×900 Studio 与真实日志选区](screenshots/indigo-1440x900.png)、[1100×700 English 七项外观弹层](screenshots/appearance-1100x700.png)。主代理已查看；仅裁底部 1 行原生窗口框，均为最终选区修复版的合成隔离数据，没有重绘。
+- [indigo-gui.json](benchmarks/indigo-gui.json) 使用最终版、默认 Mono、同机 release/200 请求/1 供应商64模型：核心/UI/托盘 idle RSS 14.47/73.41/27.16 MiB，核心+UI 87.88 MiB，峰值 135.91 MiB；核心/UI 记录就绪 432.064/1045.709 ms，请求 p50/p95 0.181/0.228 ms。核心到 UI 标记间隔为 613.645 ms，上一批 603.413 ms；此次总就绪时间增加主要伴随核心就绪延后，不能仅凭这一轮归因于主题。与基线合计 89.14 MiB、UI 75.27 MiB 接近，仍不从单次波动声称趋势；UI 标记不是首帧/可交互。
+- 初版 GUI 正常关闭/重开进程退出 0，核心继续健康；最终版验收以终止测试 UI 退出 -15、核心正常退出 0，均已等待。剪贴板已恢复。本批隔离 HOME/配置/数据库/程序副本及问题旧图清理 109,416 KiB，临时文件保留 0；主代理确认无引用后清理本轮构建日志/提交信息草稿/已应用补丁 60 KiB。加上运行中心/齿轮复验，本 goal turn 清理累计约 264,660 KiB（258 MiB），本会话临时文件剩余 0。另两项归属未明的历史空目录占用 0 KiB，保留不动；兼容 Cargo 缓存和交付截图/JSON/报告保留。系统盘当前剩余 40.61 GiB。
+- Goal 继续 active：下一批推进统计概览/明细/分析/设置的 V2 控件与布局、协议/模型弹窗和完整逐帧回归；已读取统计 tabs/filter/section navigation 的高保真 context（52:79、52:87、58:215）。Windows/Intel Mac、完整 IME/无障碍以及所有画板验收仍未完成。
+
+### 尚未实际验证的平台及目标机命令
+
+当前仅在 macOS arm64 验证。Windows 10/11、Intel Mac、HiDPI/完整 IME/辅助功能尚未实际验证。目标机需使用对应原生工具链及 README 的构建依赖；从仓库根运行，复用该平台兼容缓存：
+
+```text
+cargo fmt --all --check
+cargo test --locked
+cargo clippy --locked --all-targets -- -D warnings
+cargo build --release --locked
+cargo fmt --manifest-path gpui/Cargo.toml --all --check
+cargo test --manifest-path gpui/Cargo.toml --locked
+cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings
+cargo build --manifest-path gpui/Cargo.toml --release --locked
+python scripts/benchmark.py --help
+```
+
+将对应平台的核心与 GPUI 程序放在本轮隔离目录中，设置隔离 HOME/配置并保护真实 WorkBuddy 数据，随后按该平台 Shell 引用会话变量 `isolatedCore`、`qaOutput` 运行 `scripts/benchmark.py --exe <isolatedCore> --gui --models 64 --requests 200 --output <qaOutput>/gui.json`。尖括号是待替换变量标记，不是可直接执行的路径。报告核心/UI/托盘分别的 RSS，禁止把 UI 记录就绪当作首帧。
+
+Windows 实拍继续使用已验证的 GDI/Pillow 路径，在已解锁且窗口前台无遮挡的交互桌面运行。以下变量均由目标机会话发现和创建；不能借用旧 PID 或覆盖已有截图：
+
+```powershell
+$targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json') -Raw | ConvertFrom-Json).pid
+& $capturePython scripts/windows_screenshot.py --pid $targetProcessId --output (Join-Path $qaOutput 'studio-v2.png') --activate
+```
+
+按 1440×900/1100×700、中英文、各外观、100%/150%/200% DPI、IME 输入与组合态、键盘、系统拖动/最小化/全屏/关闭及托盘单实例唤醒逐项记录。截图失败必须保留失败事实；不可把 macOS 图片或重绘图标成 Windows 实拍。每轮停止并等待测试子进程后，仅清理本轮明确归属的临时数据，保留 PNG/JSON/报告。
