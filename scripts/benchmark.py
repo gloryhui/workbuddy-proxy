@@ -81,21 +81,53 @@ def percentiles(values):
         'p95':round(values[min(len(values)-1,int(len(values)*.95))],3)}
 
 
+def settings_pid(directory, timeout=10):
+    """Wait for the on-demand GPUI child, not the resident tray controller."""
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            pid = json.loads(Path(directory, 'gpui.json').read_text(encoding='utf-8'))['pid']
+            if type(pid) is int and pid > 0:
+                rss_kib(pid)  # Reject stale records whose process already exited.
+                return pid
+        except (OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError):
+            pass
+        if time.monotonic() >= deadline:
+            raise AssertionError('GPUI did not become ready; refusing a GUI benchmark without its RSS')
+        time.sleep(.025)
+
+
+def measured_pids(core_pid, ui_pid=None):
+    # The separate resident tray is reported explicitly, outside core + UI.
+    return {core_pid} if ui_pid is None else {core_pid, ui_pid}
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--output',required=True)
     p.add_argument('--requests',type=int,default=200);p.add_argument('--models',type=int,default=64);p.add_argument('--gui',action='store_true');args=p.parse_args()
     with tempfile.TemporaryDirectory(prefix='workbuddy-proxy-bench-') as folder, mock_server(folder) as upstream_port:
+        started=time.perf_counter()
         process,port,log=start(args.exe,folder,f'http://127.0.0.1:{upstream_port}/v1',args.gui)
+        core_ready_ms=round((time.perf_counter()-started)*1000,3)
+        ui_pid=None
+        done=None
+        watcher=None
         try:
             instance=json.loads(Path(folder,'instance.json').read_text(encoding='utf-8'))
+            core_pid=instance.get('pid',process.pid)
+            ui_pid=settings_pid(folder) if args.gui else None
+            ui_ready_ms=round((time.perf_counter()-started)*1000,3) if args.gui else None
             assert 1<=args.models<=256
             req=urllib.request.Request(f'http://127.0.0.1:{port}/_control/action',data=json.dumps({'command':'save','models':'\n'.join(f'bench-model-{i}' for i in range(args.models))}).encode(),headers={'Authorization':'Bearer '+instance['management_key'],'Content-Type':'application/json'})
             with urllib.request.urlopen(req,timeout=5) as r:r.read()
             saved=json.loads(Path(folder,'config.json').read_text(encoding='utf-8'))['providers'][0]['models'][-1]
             real_model=saved['model'];alias=saved['alias']
-            pids=set([process.pid,instance.get('pid',process.pid)])
+            pids=measured_pids(core_pid,ui_pid)
             total_rss=lambda:sum(rss_kib(pid) for pid in pids)
-            time.sleep(1);idle=total_rss();core_idle=rss_kib(instance.get('pid',process.pid));peak=[idle];done=threading.Event()
+            time.sleep(1);idle=total_rss();core_idle=rss_kib(core_pid)
+            ui_idle=rss_kib(ui_pid) if ui_pid is not None else None
+            tray_idle=rss_kib(process.pid) if process.pid not in pids else None
+            peak=[idle];done=threading.Event()
             def sample():
                 while not done.wait(.15):
                     try: peak.append(total_rss())
@@ -123,14 +155,34 @@ def main():
                 'configured_providers':1,'configured_models':args.models,'alias_rewrite':True,
                 'binary_bytes':Path(args.exe).stat().st_size,'idle_rss_mib':round(idle/1024,2),
                 'core_idle_rss_mib':round(core_idle/1024,2),'measured_process_count':len(pids),
+                'ui_idle_rss_mib':round(ui_idle/1024,2) if ui_idle is not None else None,
+                'tray_idle_rss_mib':round(tray_idle/1024,2) if tray_idle is not None else None,
+                'core_ready_ms':core_ready_ms,'ui_record_ready_ms':ui_ready_ms,
                 'sampled_peak_rss_mib':round(max(peak)/1024,2),'post_load_rss_mib':round(settled/1024,2),
                 'small_request_count':args.requests,'direct_loopback_ms':percentiles(direct),
                 'proxied_loopback_ms':percentiles(proxied),
                 'median_proxy_overhead_ms':round(statistics.median(proxied)-statistics.median(direct),3),
                 'large_request_size_mib':1,'large_concurrency':4,'large_requests':80,'large_seconds':round(large_seconds,3),
-                'notes':'RSS sums the core and settings PIDs while native GUI is open (shared pages can be counted twice); headless has one PID. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.'}
+                'notes':'RSS sums instance.json core and gpui.json settings PIDs (shared pages can be counted twice); tray RSS is separate, headless has one PID. UI readiness is the gpui.json marker, not first paint or interactivity. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.'}
             Path(args.output).parent.mkdir(parents=True,exist_ok=True);Path(args.output).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
-        finally: stop(process,port,folder,log)
+        finally:
+            if done is not None:
+                done.set()
+            if watcher is not None:
+                watcher.join()
+            if args.gui:
+                Path(folder, 'gpui-stop.json').write_text('{}', encoding='utf-8')
+            try:
+                stop(process,port,folder,log)
+            finally:
+                if ui_pid is not None:
+                    # Core shutdown also asks GPUI to quit. Wait for the UI's
+                    # Drop acknowledgement before TemporaryDirectory cleans up.
+                    deadline=time.monotonic()+5
+                    while Path(folder, 'gpui.json').exists():
+                        if time.monotonic() >= deadline:
+                            raise AssertionError('GPUI did not release its instance record')
+                        time.sleep(.025)
 
 
 if __name__=='__main__':
