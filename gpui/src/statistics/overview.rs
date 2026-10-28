@@ -1,9 +1,10 @@
-//! Seven metric cards alongside the two-row total-token hero. Input and output
-//! share one card without combining their counters. Each source uses this one
-//! composition path; numeric tooltips retain exact values and distinct units.
+//! Studio primary KPIs and the retained seven-metric detail view. Every value
+//! comes from the existing summary; inputs, cache counters, credits and currency
+//! totals retain their separate units and unknown-value semantics.
 use super::*;
 use crate::stats_dto::SummaryDto;
 
+#[derive(Clone)]
 struct Card {
     id: MetricId,
     value: String,
@@ -196,75 +197,170 @@ fn cards(summary: &SummaryDto, zh: bool) -> Vec<Card> {
     cards
 }
 
-/// How many metric cards fit in the grid. The design caps the row at four; the
-/// card's own minimum width decides when fewer fit, so the row is always filled
-/// instead of wrapping early.
-fn columns(grid_width: f32) -> usize {
-    let unit = METRIC_MIN_WIDTH as f32 + METRIC_GAP as f32;
-    (((grid_width + METRIC_GAP as f32) / unit).floor() as usize).clamp(1, 4)
+/// Primary V2 layout: 454px hero plus three readable metrics at 1120px;
+/// compact workspaces stack the hero above the three-card row.
+fn kpi_widths(width: f32) -> (f32, f32, bool) {
+    let width = width.max(0.);
+    let wide = width >= 1000.;
+    let hero = if wide { (width * 0.405).floor() } else { width };
+    let metric = if wide {
+        (width - hero - 3. * METRIC_GAP as f32) / 3.
+    } else {
+        (width - 2. * METRIC_GAP as f32).max(0.) / 3.
+    };
+    (hero, metric, wide)
 }
 
-/// The design's metric row height.
-const METRIC_HEIGHT: f32 = 124.;
+/// One bar per existing time bucket, without converting unknown usage to zero.
+fn spark_heights(samples: &[Option<i64>]) -> Vec<Option<f32>> {
+    let samples = &samples[samples.len().saturating_sub(14)..];
+    let peak = samples
+        .iter()
+        .flatten()
+        .copied()
+        .filter(|value| *value > 0)
+        .max();
+    samples
+        .iter()
+        .map(|value| match value {
+            Some(value) if *value >= 0 => {
+                Some(peak.map_or(0., |peak| (*value as f64 / peak as f64 * 76.) as f32))
+            }
+            _ => None,
+        })
+        .collect()
+}
 
 impl Statistics {
-    fn metric_card(&self, index: usize, card: Card, width: f32) -> AnyElement {
-        let title = title(card.id, self.zh);
-        let tooltip = card.exact.clone();
-        // The design emphasises the cache-read number: it is the value the
-        // reader is meant to compare against the input tokens.
-        let value_color = if card.id == MetricId::CacheRead {
-            crate::theme::palette().dark
-        } else {
-            crate::theme::color::TEXT_1
-        };
+    fn primary_metric(
+        &self,
+        label: &'static str,
+        value: String,
+        hint: String,
+        exact: String,
+        icon: &'static str,
+        width: f32,
+    ) -> AnyElement {
         div()
-            .id(("stats-metric", index))
-            .role(Role::Group)
-            .aria_label(format!("{title} {}", card.value))
+            .id(icon)
+            .w(px(width))
+            .min_w(px(METRIC_MIN_WIDTH as f32))
+            .h(px(168.))
+            .flex_shrink_0()
             .flex()
             .flex_col()
             .justify_between()
-            .flex_shrink_0()
-            .w(px(width))
-            .min_w(px(METRIC_MIN_WIDTH as f32))
-            .h(px(METRIC_HEIGHT))
-            .gap_1()
-            .p_4()
-            .bg(rgb(crate::theme::color::WHITE))
+            .p(px(16.))
+            .rounded(px(16.))
             .border_1()
-            .border_color(rgb(crate::theme::color::BORDER))
-            .rounded(px(crate::theme::radius::CARD))
+            .border_color(rgb(BORDER))
+            .bg(rgb(crate::theme::color::WHITE))
+            .role(Role::Group)
+            .aria_label(format!("{label} {value}"))
             .tooltip(move |window, cx| {
-                gpui_kit::component::tooltip::Tooltip::new(tooltip.clone()).build(window, cx)
+                gpui_kit::component::tooltip::Tooltip::new(exact.clone()).build(window, cx)
             })
             .child(
-                Label::new(title)
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(crate::theme::color::TEXT_3)),
-            )
-            .child(
                 div()
-                    // Two currencies or a long amount would overflow a 22px
-                    // card, so long values step down to the card-title size.
-                    .text_size(px(if card.value.chars().count() > 14 {
-                        crate::theme::font::CARD_TITLE
-                    } else {
-                        crate::theme::font::KPI
-                    }))
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .text_color(rgb(value_color))
-                    .child(card.value),
+                    .flex()
+                    .items_center()
+                    .gap(px(9.))
+                    .child(
+                        Icon::default()
+                            .path(icon)
+                            .with_size(px(18.))
+                            .text_color(rgb(crate::theme::palette().primary)),
+                    )
+                    .child(Label::new(label).text_size(px(12.)).text_color(rgb(MUTED))),
             )
             .child(
-                Label::new(card.hint)
-                    .text_size(px(crate::theme::font::SMALL))
-                    .text_color(rgb(crate::theme::color::TEXT_3)),
+                Label::new(value)
+                    .text_size(px(34.))
+                    .font_weight(FontWeight::BOLD)
+                    .text_color(rgb(INK)),
             )
+            .child(Label::new(hint).text_size(px(11.)).text_color(rgb(MUTED)))
             .into_any_element()
     }
 
-    pub(super) fn overview(&self, _cx: &mut Context<Self>) -> AnyElement {
+    fn metric_details(&self, summary: &SummaryDto, cx: &App) -> AnyElement {
+        let snapshot = cards(summary, self.zh);
+        let zh = self.zh;
+        let label = self.t("查看详细指标", "View detailed metrics");
+        Popover::new("stats-metric-details")
+            .trigger(
+                Button::new("stats-metric-details-trigger")
+                    .custom(
+                        gpui_kit::component::button::ButtonCustomVariant::new(cx)
+                            .color(rgb(crate::theme::color::TERMINAL).into())
+                            .foreground(rgb(crate::theme::color::TERMINAL_TEXT).into())
+                            .hover(rgb(crate::theme::color::SIDEBAR_HOVER).into())
+                            .active(rgb(crate::theme::color::SIDEBAR_ACTIVE).into()),
+                    )
+                    .with_size(px(28.))
+                    .size(px(28.))
+                    .p_0()
+                    .accessibility_label(label)
+                    .child(
+                        Label::new("⋯")
+                            .text_size(px(22.))
+                            .text_color(rgb(crate::theme::color::TERMINAL_TEXT)),
+                    ),
+            )
+            .content(move |_, window, _| {
+                div()
+                    .id("stats-metric-details-content")
+                    .w(px(460.))
+                    .max_h(px(
+                        (f32::from(window.viewport_size().height) - 180.).max(180.)
+                    ))
+                    .overflow_y_scroll()
+                    .flex()
+                    .flex_col()
+                    .gap(px(12.))
+                    .p(px(12.))
+                    .children(snapshot.iter().map(|card| {
+                        div()
+                            .flex()
+                            .flex_col()
+                            .flex_shrink_0()
+                            .gap(px(4.))
+                            .border_b_1()
+                            .border_color(rgb(BORDER))
+                            .pb(px(10.))
+                            .child(
+                                div()
+                                    .flex()
+                                    .items_center()
+                                    .justify_between()
+                                    .gap(px(12.))
+                                    .child(
+                                        Label::new(title(card.id, zh))
+                                            .text_size(px(12.))
+                                            .text_color(rgb(MUTED)),
+                                    )
+                                    .child(
+                                        Label::new(card.value.clone())
+                                            .text_size(px(16.))
+                                            .font_weight(FontWeight::SEMIBOLD),
+                                    ),
+                            )
+                            .child(
+                                Label::new(card.hint.clone())
+                                    .text_size(px(11.))
+                                    .text_color(rgb(MUTED)),
+                            )
+                            .child(
+                                Label::new(card.exact.clone())
+                                    .text_size(px(11.))
+                                    .text_color(rgb(MUTED)),
+                            )
+                    }))
+            })
+            .into_any_element()
+    }
+
+    pub(super) fn overview(&self, cx: &mut Context<Self>) -> AnyElement {
         let Some(dashboard) = self.dashboard.as_ref() else {
             return stats_card("stats-overview")
                 .child(usage_table::strong(
@@ -273,67 +369,181 @@ impl Statistics {
                 .into_any_element();
         };
         let summary = &dashboard.summary;
-        let count = columns(self.filters_width);
-        let width = ((self.filters_width - (count - 1) as f32 * METRIC_GAP as f32) / count as f32
-            - 1.)
-            .floor()
-            .max(METRIC_MIN_WIDTH as f32);
-        let metrics = cards(summary, self.zh)
+        // filters_width is the existing chart's padded content width; the V2
+        // cards themselves fill its whole parent without another outer card.
+        let (hero_width, metric_width, wide) = kpi_widths(self.filters_width + CARD_PAD * 2. + 2.);
+        let compact_total = usage_table::compact(summary.total_tokens, self.zh);
+        let (amount, unit) = ["万", "亿", "k", "M", "B"]
             .into_iter()
-            .filter(|card| match card.id {
-                MetricId::UsageRecords | MetricId::CacheRead => true,
-                MetricId::WorkbuddyCredit => summary.credit_record_count > 0,
-                MetricId::EstimatedCost | MetricId::ProxySuccessRate => {
-                    summary.proxy_record_count > 0
-                }
-                _ => false,
+            .find_map(|unit| {
+                compact_total
+                    .strip_suffix(unit)
+                    .map(|amount| (amount, unit))
             })
-            .enumerate()
-            .map(|(index, card)| self.metric_card(index, card, width))
-            .collect::<Vec<_>>();
-        let total = div()
-            .w(px(width))
-            .min_w(px(METRIC_MIN_WIDTH as f32))
-            .h(px(METRIC_HEIGHT))
+            .unwrap_or((&compact_total, ""));
+        let total_exact = format!(
+            "{} {}",
+            self.t("Token 总用量", "Total tokens"),
+            number(summary.total_tokens)
+        );
+        let summary_cards = cards(summary, self.zh);
+        let mut total = div()
+            .id("stats-token-hero")
+            .relative()
+            .w(px(hero_width))
+            .h(px(168.))
+            .flex_shrink_0()
             .flex()
             .flex_col()
             .justify_between()
-            .p_4()
-            .rounded(px(crate::theme::radius::CARD))
-            .bg(rgb(crate::theme::palette().tint))
+            .p(px(24.))
+            .rounded(px(16.))
+            .bg(rgb(crate::theme::color::TERMINAL))
+            .role(Role::Group)
+            .aria_label(total_exact.clone())
+            .tooltip(move |window, cx| {
+                gpui_kit::component::tooltip::Tooltip::new(total_exact.clone()).build(window, cx)
+            })
             .child(
-                Label::new(self.t("Token 总用量", "Total tokens"))
-                    .text_size(px(12.))
-                    .text_color(rgb(INK)),
+                div().flex().items_center().justify_between().child(
+                    Label::new("TOKEN VOLUME")
+                        .text_size(px(11.))
+                        .text_color(rgb(crate::theme::color::TERMINAL_TEXT)),
+                ),
             )
-            .child(
-                Label::new(usage_table::compact(summary.total_tokens, self.zh))
-                    .text_size(px(26.))
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .text_color(rgb(crate::theme::palette().dark)),
-            )
-            .child(
-                Label::new(self.t("当前筛选范围", "Current filter range"))
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED)),
-            );
-        stats_card("stats-overview")
-            .flex_shrink_0()
             .child(
                 div()
                     .flex()
-                    .flex_wrap()
-                    .gap(px(METRIC_GAP as f32))
-                    .child(total)
-                    .children(metrics),
+                    .items_end()
+                    .gap(px(14.))
+                    .child(
+                        Label::new(amount.to_string())
+                            .text_size(px(47.))
+                            .line_height(px(58.))
+                            .font_weight(FontWeight::BOLD)
+                            .text_color(rgb(crate::theme::color::WHITE)),
+                    )
+                    .child(
+                        Label::new(unit)
+                            .text_size(px(21.))
+                            .line_height(px(35.))
+                            .font_weight(FontWeight::BOLD)
+                            .text_color(rgb(crate::theme::color::WHITE)),
+                    ),
             )
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(7.))
+                    .child(
+                        div()
+                            .w(px(145.))
+                            .h(px(2.))
+                            .bg(rgb(crate::theme::sidebar_accent())),
+                    )
+                    .child(
+                        Label::new(self.t(
+                            "当前筛选范围内的 Token 用量",
+                            "Token usage in the current filter range",
+                        ))
+                        .text_size(px(12.))
+                        .text_color(rgb(crate::theme::color::TERMINAL_TEXT)),
+                    ),
+            );
+        total = total.child(
+            div()
+                .absolute()
+                .right(px(16.))
+                .top(px(12.))
+                .child(self.metric_details(summary, cx)),
+        );
+        let samples = dashboard
+            .series
+            .iter()
+            .rev()
+            .take(14)
+            .rev()
+            .map(|point| {
+                if point.quality == crate::stats_dto::SeriesQuality::Unknown {
+                    None
+                } else {
+                    point.total_tokens
+                }
+            })
+            .collect::<Vec<_>>();
+        let heights = spark_heights(&samples);
+        if hero_width >= 400. && heights.iter().flatten().any(|height| *height > 0.) {
+            total = total.child(
+                div()
+                    .id("stats-token-sparkline")
+                    .absolute()
+                    .right(px(20.))
+                    .top(px(35.))
+                    .h(px(76.))
+                    .w(px(190.))
+                    .flex()
+                    .items_end()
+                    .gap(px(6.))
+                    .role(Role::Group)
+                    .aria_label(self.t(
+                        "最近14个时间桶的Token，未知留空",
+                        "Tokens in the latest 14 time buckets; unknowns stay blank",
+                    ))
+                    .children(heights.into_iter().map(|height| {
+                        div()
+                            .w(px(8.))
+                            .h(px(height.unwrap_or(0.)))
+                            .rounded(px(3.))
+                            .bg(rgb(crate::theme::sidebar_accent()))
+                    })),
+            );
+        }
+        let metrics = div().flex().gap(px(METRIC_GAP as f32)).children([
+            self.primary_metric(
+                self.t("用量记录", "Usage records"),
+                summary_cards[0].value.clone(),
+                summary_cards[0].hint.clone(),
+                summary_cards[0].exact.clone(),
+                "studio/kpi-grid.svg",
+                metric_width,
+            ),
+            self.primary_metric(
+                self.t("代理成功率", "Proxy success rate"),
+                summary_cards[1].value.clone(),
+                self.t("仅统计代理请求", "Proxy requests only").into(),
+                summary_cards[1].exact.clone(),
+                "studio/kpi-shield.svg",
+                metric_width,
+            ),
+            self.primary_metric(
+                self.t("缓存命中率", "Cache hit rate"),
+                usage_table::percent(summary.cache_hit_rate),
+                format!(
+                    "{} {}",
+                    self.t("缓存读取", "Cache read"),
+                    usage_table::compact(summary.cache_read_tokens, self.zh)
+                ),
+                summary_cards[3].exact.clone(),
+                "studio/kpi-activity.svg",
+                metric_width,
+            ),
+        ]);
+        div()
+            .id("stats-overview")
+            .w_full()
+            .flex()
+            .gap(px(METRIC_GAP as f32))
+            .when(!wide, |row| row.flex_col())
+            .child(total)
+            .child(metrics)
             .into_any_element()
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{cards, columns};
+    use super::{cards, kpi_widths, spark_heights};
     use crate::{statistics::MetricId, stats_dto::SummaryDto};
     #[test]
     fn actual_metric_composition_preserves_separate_counters_in_seven_cards() {
@@ -375,20 +585,37 @@ mod tests {
         }
     }
     #[test]
-    fn actual_layout_obeys_the_metric_breakpoints() {
-        // The grid area decides the row: four cards from 160px each plus gaps,
-        // then three, two and one as the page narrows.
-        for (grid, expected) in [
-            (1_200., 4),
-            (676., 4),
-            (675., 3),
-            (504., 3),
-            (503., 2),
-            (332., 2),
-            (331., 1),
-            (0., 1),
-        ] {
-            assert_eq!(columns(grid), expected, "grid {grid}");
+    fn actual_kpi_layout_fits_both_supported_workspace_widths() {
+        for width in [780., 1000., 1120., 1280.] {
+            let (hero, metric, wide) = kpi_widths(width);
+            assert!(
+                metric >= super::super::METRIC_MIN_WIDTH as f32,
+                "readable metric width at {width}"
+            );
+            let row = if wide {
+                hero + 3. * metric + 48.
+            } else {
+                3. * metric + 32.
+            };
+            assert!((row - width).abs() < 0.01);
+            assert!(hero <= width);
         }
+        assert!(!kpi_widths(780.).2);
+        assert!(kpi_widths(1120.).2);
+    }
+    #[test]
+    fn sparkline_preserves_unknowns_and_only_uses_the_latest_real_buckets() {
+        assert_eq!(
+            spark_heights(&[Some(0), None, Some(10), Some(20)]),
+            vec![Some(0.), None, Some(38.), Some(76.)]
+        );
+        assert_eq!(
+            spark_heights(&[None, Some(-1), Some(0)]),
+            vec![None, None, Some(0.)]
+        );
+        let mut samples = vec![Some(999); 10];
+        samples.extend([Some(20); 14]);
+        assert_eq!(spark_heights(&samples), vec![Some(76.); 14]);
+        assert!(spark_heights(&[]).is_empty());
     }
 }

@@ -13,3 +13,5 @@ Provider content `54:203` supplies `profile-edit.svg` (16px, layer `75:408`) and
 Runtime center `54:298` supplies `runtime-activity.svg` (19px, layer `54:299`) and `runtime-copy.svg` (16px, layer `54:305`). Logs `54:320` supplies `log-terminal.svg` (19px, layer `54:321`). These original exports are embedded in native GPUI elements; the status, address, counters and log text come from the existing core snapshot.
 
 Statistics filter row `52:87` supplies `stats-refresh.svg` (18px, layer `52:104`) and `stats-chevron.svg` (16px, layers `52:90/94/98/102`). They are embedded in the existing refresh and date/interval controls; the native model/provider Select controls keep their own keyboard and focus engine.
+
+Overview KPI grid `52:107` supplies `kpi-grid.svg`, `kpi-shield.svg`, and `kpi-activity.svg` (18px each; layers `52:130`, `52:139`, `52:146`). The main Token surface and cards are native GPUI. The hero's bar area uses real recent dashboard time buckets; it never embeds the design's fixed decorative values as usage data.

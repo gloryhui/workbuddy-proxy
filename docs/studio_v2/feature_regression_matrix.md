@@ -19,7 +19,7 @@
 | 模型发现 4096、总量 256、手动编辑 | model_table.rs、ui/providers.rs | macOS 新增/编辑取消/空模型/256 禁用/128 行虚拟化 Passed；发现上限及全部错误态待续 |
 | Shift/Cmd/Ctrl 多选、快捷键、焦点/IME | state.rs、model_table.rs、main.rs | macOS Shift/Cmd 多选、Delete/Backspace、Cmd+S、编辑聚焦 Passed；Windows Ctrl/完整 IME 待验 |
 | 同步/取消、重启提示及失败回滚 | ui.rs、workbuddy_restart.rs、核心 | 源码确认；只对合成 WorkBuddy 目录验证 |
-| 概览/明细/汇总/设置、全部/内置/自定义 | statistics/*、source_filter.rs | macOS 三报表/设置返回、合成记录2/0/2来源与方向键、日期取消/应用、刷新/清除及更多浮层 Passed；报表内容 V2 视觉待续 |
+| 概览/明细/汇总/设置、全部/内置/自定义 | statistics/*、source_filter.rs | macOS 三报表/设置返回、2/0/2来源、日期/刷新/更多浮层 Passed；概览四KPI/七详细指标/空值及小窗滚动 Passed，图表/计费/最近请求布局待续 |
 | 日期、分页、每页条数、固定表头 | statistics/pagination.rs、usage_table.rs | 日期草稿取消/应用 Passed，保留服务端分页/虚拟表体；1100右列横向取回未可靠验证，记录问题图待续 |
 | 未知/缺失、缓存、Token 完整性 | usage_chart/continuity.rs、usage_table.rs | 源码确认；保留现有统计语义，待自动回归 |
 | CNY/USD/积分、价格快照与规则 CRUD | statistics.rs、stats_backend.rs | 源码确认；待 GUI |

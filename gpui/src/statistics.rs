@@ -5363,9 +5363,9 @@ pub const CHART_SIDE_BY_SIDE_WIDTH: f32 = 840.;
 /// table stay side by side (DESIGN_SPEC §4.2). Below it they stack so the
 /// 1100×700 window still reaches every control.
 pub const STORAGE_SIDE_BY_SIDE_WIDTH: f32 = 980.;
-pub const METRIC_MIN_WIDTH: i32 = 160;
+pub const METRIC_MIN_WIDTH: i32 = 180;
 /// The gap between metrics.
-pub const METRIC_GAP: i32 = 12;
+pub const METRIC_GAP: i32 = 16;
 
 #[cfg(test)]
 mod date_range_tests {
@@ -5487,8 +5487,8 @@ mod metric_text_tests {
 
     #[test]
     fn the_metric_row_geometry_matches_the_spec() {
-        assert_eq!(METRIC_MIN_WIDTH, 160);
-        assert_eq!(METRIC_GAP, 12);
+        assert_eq!(METRIC_MIN_WIDTH, 180);
+        assert_eq!(METRIC_GAP, 16);
     }
 }
 
