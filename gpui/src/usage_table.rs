@@ -413,153 +413,129 @@ fn cell(
         .into_any_element()
 }
 
-/// Compact two-line reading order: total, input/output, then cache hit/read.
-/// Values stay together instead of spreading into proportional pseudo-columns.
+/// Studio V2 keeps totals and the input/output split in their own column.
 fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
     if is_charge(item) {
-        return div()
-            .flex()
-            .flex_col()
-            .gap_1()
-            .child(muted(if zh { "Token 不适用" } else { "Tokens N/A" }))
-            .child(muted(if zh {
-                "独立收费项"
-            } else {
-                "Standalone charge"
-            }))
-            .into_any_element();
+        return cell(
+            if zh { "Token 不适用" } else { "Tokens N/A" }.into(),
+            Some(
+                if zh {
+                    "独立收费项"
+                } else {
+                    "Standalone charge"
+                }
+                .into(),
+            ),
+            crate::theme::color::TEXT_3,
+            ("usage-tokens", row),
+        );
     }
-    let hit = cache_rate(item.cache_read_tokens, item.input_tokens);
-    let total = compact(item.total_tokens, zh);
-    let breakdown = format!(
-        "· {} {} · {} {}",
-        if zh { "输入" } else { "In" },
-        compact(item.input_tokens, zh),
-        if zh { "输出" } else { "Out" },
-        compact(item.output_tokens, zh),
-    );
-    let cache = format!(
-        "{} {}",
-        if zh { "缓存读" } else { "Cache read" },
-        compact(item.cache_read_tokens, zh),
-    );
-    let hit_text = percent(hit);
-    let description = format!(
-        "{} {total} | {breakdown} | {} {hit_text} | {cache}",
-        if zh { "总 Token" } else { "Total tokens" },
-        if zh {
-            "缓存命中率"
-        } else {
-            "Cache hit rate"
-        },
-    );
     let hint = format!(
-        "{} {}\n{} {}\n{} {}\n{} {}\n{} {}\n{} {}",
+        "{}: {}\n{}: {}\n{}: {}",
         if zh { "总 Token" } else { "Total tokens" },
         exact(item.total_tokens),
         if zh { "输入" } else { "Input" },
         exact(item.input_tokens),
         if zh { "输出" } else { "Output" },
-        exact(item.output_tokens),
-        if zh { "缓存读取" } else { "Cache read" },
-        exact(item.cache_read_tokens),
-        if zh { "缓存创建" } else { "Cache write" },
-        exact(item.cache_write_tokens),
-        if zh {
-            "缓存命中率 = 缓存读 ÷ 输入（缺失或输入为 0 显示 —）"
-        } else {
-            "Cache hit = cache read / input (missing or zero input: —)"
-        },
-        hit_text,
+        exact(item.output_tokens)
     );
-    let hit_color = match hit {
-        Some(value) if value >= 0.8 => crate::theme::color::SUCCESS,
-        Some(_) => crate::theme::color::WARNING,
-        None => crate::theme::color::TEXT_3,
-    };
-    let bar = div()
-        .flex_shrink_0()
-        .w(px(44.))
-        .h(px(4.))
-        .rounded_full()
-        .bg(rgb(crate::theme::color::BORDER))
-        .overflow_hidden()
-        .when_some(hit.filter(|value| *value > 0.), |track, value| {
-            track.child(
-                div()
-                    .w(px((value.clamp(0., 1.) * 44.) as f32))
-                    .h_full()
-                    .rounded_full()
-                    .bg(rgb(hit_color)),
-            )
-        });
     div()
         .id(("usage-tokens", row))
         .w_full()
-        .min_w_0()
         .h_full()
+        .min_w_0()
         .overflow_hidden()
         .flex()
         .flex_col()
         .justify_center()
-        .gap(px(4.))
-        .whitespace_nowrap()
-        .aria_label(description)
+        .gap(px(3.))
+        .tooltip(move |window, cx| {
+            gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
+        })
+        .child(
+            Label::new(compact(item.total_tokens, zh))
+                .w_full()
+                .text_ellipsis()
+                .text_size(px(15.))
+                .font_weight(FontWeight::BOLD)
+                .text_color(rgb(crate::theme::color::TEXT_1)),
+        )
+        .child(
+            muted(format!(
+                "↓ {}  ↑ {}",
+                compact(item.input_tokens, zh),
+                compact(item.output_tokens, zh)
+            ))
+            .w_full()
+            .text_ellipsis(),
+        )
+        .into_any_element()
+}
+
+/// Ratios are calculated only from compatible, known normalized counters.
+fn cache_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+    if is_charge(item) {
+        return cell(
+            "—".into(),
+            None,
+            crate::theme::color::TEXT_3,
+            ("usage-cache", row),
+        );
+    }
+    let hit = cache_rate(item.cache_read_tokens, item.input_tokens);
+    let ink = match hit {
+        Some(value) if value >= 0.8 => crate::theme::color::SUCCESS,
+        Some(_) => crate::theme::color::WARNING,
+        None => crate::theme::color::TEXT_3,
+    };
+    let hint = format!(
+        "{}: {}\n{}: {}\n{}: {}\n{}",
+        if zh { "缓存读取" } else { "Cache read" },
+        exact(item.cache_read_tokens),
+        if zh { "缓存创建" } else { "Cache write" },
+        exact(item.cache_write_tokens),
+        if zh { "输入" } else { "Input" },
+        exact(item.input_tokens),
+        if zh {
+            "命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —"
+        } else {
+            "Hit rate = cache read / input; missing or zero input: —"
+        }
+    );
+    div()
+        .id(("usage-cache", row))
+        .w_full()
+        .h_full()
+        .min_w_0()
+        .overflow_hidden()
+        .flex()
+        .items_center()
+        .gap(px(8.))
         .tooltip(move |window, cx| {
             gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
         })
         .child(
             div()
-                .flex()
-                .w_full()
-                .min_w_0()
-                .items_center()
-                .h(px(18.))
-                .gap(px(6.))
-                .child(
-                    Label::new(total)
-                        .flex_shrink_0()
-                        .text_size(px(crate::theme::font::BODY))
-                        .line_height(px(18.))
-                        .font_weight(FontWeight::SEMIBOLD)
-                        .text_color(rgb(crate::theme::color::TEXT_1)),
-                )
-                .child(
-                    Label::new(breakdown)
-                        .flex_1()
-                        .min_w_0()
-                        .text_ellipsis()
-                        .text_size(px(crate::theme::font::LABEL))
-                        .line_height(px(18.))
-                        .text_color(rgb(crate::theme::color::TEXT_3)),
-                ),
+                .w(px(44.))
+                .h(px(4.))
+                .flex_shrink_0()
+                .rounded_full()
+                .bg(rgb(crate::theme::color::BORDER))
+                .overflow_hidden()
+                .when_some(hit.filter(|value| *value > 0.), |bar, value| {
+                    bar.child(
+                        div()
+                            .w(px((value * 44.) as f32))
+                            .h_full()
+                            .rounded_full()
+                            .bg(rgb(ink)),
+                    )
+                }),
         )
         .child(
-            div()
-                .flex()
-                .w_full()
-                .min_w_0()
-                .items_center()
-                .h(px(16.))
-                .gap(px(6.))
-                .child(bar)
-                .child(
-                    Label::new(hit_text)
-                        .w(px(42.))
-                        .flex_shrink_0()
-                        .text_size(px(crate::theme::font::BODY))
-                        .line_height(px(16.))
-                        .text_color(rgb(hit_color)),
-                )
-                .child(
-                    Label::new(cache)
-                        .flex_1()
-                        .min_w_0()
-                        .text_ellipsis()
-                        .text_size(px(crate::theme::font::LABEL))
-                        .line_height(px(16.))
-                        .text_color(rgb(crate::theme::color::TEXT_3)),
-                ),
+            Label::new(percent(hit))
+                .text_size(px(12.))
+                .text_color(rgb(ink)),
         )
         .into_any_element()
 }
@@ -629,7 +605,7 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
 }
 
 /// Estimated cost cell: the amount on the first line and the WorkBuddy credit
-/// on the second, so the eleven DTO fields survive the nine-column design.
+/// on the second, preserving independent currency and credit values.
 fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
     if item.source == Source::JsonlImport && item.origin.is_imported() {
         let credit = item
@@ -739,21 +715,15 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .into_any_element()
 }
 
-/// The nine columns DESIGN_SPEC §4.1.5 fixes: time, provider (with the
-/// origin pill), model, request, tokens/cache hit, estimated cost (with the
-/// WorkBuddy credit on its second line), latency, tok/s and status. The
-/// 11-field DTO keeps every value: source moved into the provider cell and
-/// credits into the cost cell, so nothing is dropped or re-derived.
-pub const REQUEST_COLUMNS: usize = 9;
-// Stable viewport-based sizing keeps refreshes and page changes from moving
-// column boundaries. The compact token cell fits in 240px; names get most
-// surplus space while all nine columns fit the default ~1100px table host.
-const PREFERRED_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 168., 156., 92., 240., 112., 64., 56., 92.];
-const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] =
-    [110., 240., 320., 136., 280., 148., 76., 68., 112.];
-const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 3., 4., 0.5, 0.25, 0.25, 0.1, 0.1, 0.4];
-/// Drag floors: the smallest width the user may shrink a column to.
-const DRAG_FLOORS: [f32; REQUEST_COLUMNS] = [110., 96., 88., 80., 240., 96., 56., 48., 92.];
+/// Studio V2's eight visible columns. Request IDs remain in the time tooltip
+/// and detail dialog; generation rate remains in the latency tooltip/dialog.
+pub const REQUEST_COLUMNS: usize = 8;
+const PREFERRED_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 168., 156., 180., 126., 112., 80., 144.];
+const MAX_AUTO_WIDTHS: [f32; REQUEST_COLUMNS] = [110., 240., 320., 228., 145., 148., 96., 160.];
+const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 3., 4., 1., 0.5, 0.25, 0.1, 0.4];
+/// Preserve readable cells at the minimum window size; horizontal scrolling
+/// and explicit first/last-column buttons expose the remaining columns.
+const DRAG_FLOORS: [f32; REQUEST_COLUMNS] = [110., 110., 100., 140., 114., 96., 74., 144.];
 
 /// Fit automatic columns into the measured host. Explicit user widths win;
 /// when minimum readable widths cannot fit, keep horizontal scrolling.
@@ -847,11 +817,10 @@ impl UsageRows {
                 ("time", "时间"),
                 ("provider", "供应商"),
                 ("model", "模型"),
-                ("request", "请求标识"),
-                ("tokens", "Token / 缓存命中率"),
+                ("tokens", "Token 使用量"),
+                ("cache", "缓存命中"),
                 ("cost", "费用 / 积分"),
                 ("latency", "耗时"),
-                ("speed", "tok/s"),
                 ("status", "状态"),
             ]
         } else {
@@ -859,11 +828,10 @@ impl UsageRows {
                 ("time", "Time"),
                 ("provider", "Provider"),
                 ("model", "Model"),
-                ("request", "Request"),
-                ("tokens", "Tokens / cache hit rate"),
+                ("tokens", "Tokens"),
+                ("cache", "Cache hit"),
                 ("cost", "Cost / credits"),
                 ("latency", "Latency"),
-                ("speed", "tok/s"),
                 ("status", "Status"),
             ]
         }
@@ -957,48 +925,24 @@ impl TableDelegate for UsageRows {
                 0x19334d,
                 ("usage-model", row),
             ),
-            3 => cell(
-                if item.request_id.len() > 12 {
-                    format!("{}…", &item.request_id[..12])
-                } else {
-                    item.request_id.clone()
-                },
-                Some(format!(
-                    "{}\n{}\nHTTP {}\n{}",
-                    item.request_id,
-                    origin_text(item.origin, zh),
-                    // An absent status is a dash: never 0, never a default 200.
-                    http_text(item.http_status),
-                    if zh {
-                        "点击查看详情"
-                    } else {
-                        "Click for details"
-                    }
-                )),
-                0x6b7c90,
-                ("usage-request", row),
-            ),
-            4 => token_cell(item, row, zh),
+            3 => token_cell(item, row, zh),
+            4 => cache_cell(item, row, zh),
             5 => cost_cell(item, row, zh),
             6 => cell(
                 duration(item.duration_ms),
                 Some(format!(
-                    "{} {}\n{} {}\n{} {}",
+                    "{} {}\n{} {}\n{} {}\ntok/s {}\n{}",
                     if zh { "总耗时" } else { "Duration" },
                     duration(item.duration_ms),
                     if zh { "首内容" } else { "First content" },
                     duration(item.first_content_ms),
                     "TTFB",
-                    duration(item.ttfb_ms)
+                    duration(item.ttfb_ms),
+                    rate_text(item),
+                    rate_hint(item.stream, zh)
                 )),
                 0x19334d,
                 ("usage-latency", row),
-            ),
-            7 => cell(
-                rate_text(item),
-                Some(rate_hint(item.stream, zh).into()),
-                0x19334d,
-                ("usage-speed", row),
             ),
             _ => {
                 let (text, _) = usage_label(item.usage_status, zh);
@@ -1412,15 +1356,15 @@ mod tests {
             let widths = fitted_widths(available, &[None; super::REQUEST_COLUMNS]);
             assert!((widths.iter().sum::<f32>() - available).abs() < 0.1);
             assert_eq!(widths[0], 110.);
-            // Latency, tok/s and cost stay compact; the status column is text.
+            // Latency and cost stay compact; the status column fits English text.
             assert!(
-                widths[4] <= 280.,
+                widths[3] <= 228.,
                 "compact Token column must not consume spare name space"
             );
             if available >= PREFERRED_WIDTHS.iter().sum() {
                 assert!(widths[1] >= 168. && widths[2] >= 156.);
             }
-            assert!(widths[5] <= 148. && widths[6] <= 76. && widths[7] <= 68.);
+            assert!(widths[4] <= 145. && widths[5] <= 148. && widths[6] <= 96.);
             assert!(
                 widths
                     .iter()
@@ -1432,8 +1376,7 @@ mod tests {
 
     #[test]
     fn user_columns_are_preserved_while_remaining_columns_fit() {
-        // Nine design columns: time, provider, model, request, tokens, cost,
-        // latency, speed, status. Two of them are dragged here.
+        // Eight Studio V2 columns; model and Token widths are dragged here.
         let mut custom = [None; super::REQUEST_COLUMNS];
         custom[2] = Some(120.);
         custom[3] = Some(200.);

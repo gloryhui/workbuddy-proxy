@@ -3133,9 +3133,11 @@ impl Statistics {
                 }))
         };
         let table: AnyElement = match self.tab {
-            // DESIGN_SPEC §4.1.5: the request log is a 56px-row table with a
-            // 32px header. Aggregate rows use a readable 36px height.
-            Tab::Requests => crate::ui_components::log_table(&self.usage_table).into_any_element(),
+            // Studio V2 uses a separate eight-column request log. Aggregate
+            // rows retain their native table and existing sort handlers.
+            Tab::Requests => crate::ui_components::log_table(&self.usage_table)
+                .header_row_height(px(39.))
+                .into_any_element(),
             _ => crate::ui_components::table(&self.group_table)
                 .with_size(px(36.))
                 .into_any_element(),
@@ -3145,6 +3147,55 @@ impl Statistics {
             .min_h_0()
             .overflow_hidden()
             .gap_2()
+            .when(self.tab == Tab::Requests, |panel| {
+                panel
+                    .child(
+                        div()
+                            .flex()
+                            .flex_shrink_0()
+                            .flex_wrap()
+                            .items_center()
+                            .justify_between()
+                            .gap(px(8.))
+                            .child(
+                                div()
+                                    .flex()
+                                    .items_center()
+                                    .gap(px(14.))
+                                    .child(
+                                        Label::new(self.t("请求记录", "Request records"))
+                                            .text_size(px(17.))
+                                            .font_weight(FontWeight::BOLD)
+                                            .text_color(rgb(INK)),
+                                    )
+                                    .child(crate::ui_components::tag(
+                                        crate::ui_components::TagKind::Primary,
+                                        format!(
+                                            "{} {}",
+                                            self.total_rows.max(0),
+                                            self.t("条", "rows")
+                                        ),
+                                    )),
+                            )
+                            // The core supports only newest-first request ordering.
+                            // Show its actual order without a non-functional menu.
+                            .child(
+                                Label::new(self.t("时间 · 最新优先", "Time · newest first"))
+                                    .text_size(px(12.))
+                                    .text_color(rgb(MUTED)),
+                            ),
+                    )
+                    .child(
+                        Label::new(self.t(
+                            "代理请求和 WorkBuddy 导入统一展示，未知字段保留原始状态",
+                            "Proxy requests and WorkBuddy imports; unknown fields remain unknown",
+                        ))
+                        .w_full()
+                        .text_ellipsis()
+                        .text_size(px(12.))
+                        .text_color(rgb(MUTED)),
+                    )
+            })
             .when(self.tab != Tab::Requests, |panel| {
                 panel.child(
                     div()
@@ -3219,6 +3270,50 @@ impl Statistics {
             .child(self.details_pagination(cx))
             .into_any_element()
     }
+    /// Use Kit's shared header/body scroll handle so right-hand columns are
+    /// reachable even when the OS hides overlay scrollbars or has no trackpad.
+    fn table_column_navigation(&self, cx: &mut Context<Self>) -> AnyElement {
+        div()
+            .flex()
+            .items_center()
+            .justify_end()
+            .gap(px(6.))
+            .flex_shrink_0()
+            .child(
+                stats_button("table-first-column")
+                    .ghost()
+                    .label(self.t("首列", "First"))
+                    .tooltip(self.t("返回首列", "First column"))
+                    .on_click(cx.listener(|this, _, _, cx| {
+                        match this.tab {
+                            Tab::Requests => this
+                                .usage_table
+                                .update(cx, |table, cx| table.scroll_to_col(0, cx)),
+                            _ => this
+                                .group_table
+                                .update(cx, |table, cx| table.scroll_to_col(0, cx)),
+                        }
+                    })),
+            )
+            .child(
+                stats_button("table-last-column")
+                    .ghost()
+                    .label(self.t("右侧列", "Rightmost"))
+                    .tooltip(self.t("查看右侧列", "Rightmost columns"))
+                    .on_click(cx.listener(|this, _, _, cx| {
+                        match this.tab {
+                            Tab::Requests => this.usage_table.update(cx, |table, cx| {
+                                table.scroll_to_col(usage_table::REQUEST_COLUMNS - 1, cx)
+                            }),
+                            _ => this
+                                .group_table
+                                .update(cx, |table, cx| table.scroll_to_col(5, cx)),
+                        }
+                    })),
+            )
+            .into_any_element()
+    }
+
     fn details_pagination(&self, cx: &mut Context<Self>) -> AnyElement {
         let (page, total, previous, next) = match self.tab {
             Tab::Requests => (
@@ -3299,6 +3394,7 @@ impl Statistics {
                     .disabled(busy || total == 0)
                     .on_click(cx.listener(|this, _, _, cx| this.jump_to_input(cx))),
             )
+            .child(self.table_column_navigation(cx))
             .into_any_element()
     }
 }
