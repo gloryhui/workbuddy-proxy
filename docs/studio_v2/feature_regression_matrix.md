@@ -11,9 +11,9 @@
 | 恢复 1440×900、退出全屏 | ui.rs::restore_window_size | macOS 缩小后恢复 Passed；最大化/全屏待验 |
 | GitHub 与新 Issue | ui.rs::app_controls | 源码确认；外部 URL 保持 |
 | 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | macOS 两尺寸/中英/缩小恢复 Passed；拖动未测位移；Windows 待验 |
-| 供应商 0/1/2/20/64、固定 CRUD | ui.rs::sidebar | 旧列表可滚动；待搜索、容量禁用与各数量 GUI |
+| 供应商 0/1/2/20/64、固定 CRUD | ui.rs::sidebar、provider_filter.rs | macOS 5 种数量、末尾搜索/空结果/清空、64 滚动/新增复制禁用 Passed；最终视觉待续 |
 | 新增、复制、删除确认与取消 | ui.rs、state.rs | 源码确认；待独立草稿与取消路径验证 |
-| 未保存切换/恢复草稿 | ui.rs::capture、switch_provider、Drafts | 源码确认；待用户可见保护与 GUI |
+| 未保存切换/恢复草稿 | ui.rs::capture、switch_provider、Drafts | macOS 搜索不切换、切换保留、正常关闭重开恢复 Passed；提示表现待续 |
 | 预设搜索、名称/URL、Key 显隐 | ui.rs、presets.rs、InputState | 源码确认；不得把 Key 加入过滤/截图/日志 |
 | 四协议不同字段、认证、tokens/思考 | protocol_options.rs、model_options.rs | 源码确认；待各协议 GUI |
 | 模型发现 4096、总量 256、手动编辑 | model_table.rs、ui.rs | 源码确认；待自动回归与 GUI |
@@ -26,7 +26,7 @@
 | 采集、保留天数、本地导入去重 | statistics/import_controls*、workbuddy_import.rs | 源码确认；待自动回归与 GUI |
 | 真实代理状态、计数、端口 | ui.rs::right、core_state、status_bar | 源码确认；未知/未响应不能显示正常 |
 | 最近 100 条日志、清空/复制/滚动 | ui.rs::tick、right | 源码确认；待无新日志不抢阅读位置验证 |
-| 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | 源码确认；待进程验证 |
+| 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | 正常关窗 UI 退出/核心 health 200/重开恢复 Passed；托盘唤醒及单实例待验 |
 | 六皮肤/中英/HiDPI/无障碍 | theme.rs、ui_components.rs | 待 macOS GUI；Windows 未实际验证 |
 
 此矩阵随每个小功能提交更新；不将核心未改动当作运行回归通过。

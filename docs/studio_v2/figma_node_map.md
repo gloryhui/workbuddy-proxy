@@ -33,10 +33,10 @@
 | 78:1080 | 27 / STUDIO V2 · 删除供应商确认 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:1325 | 28 / STUDIO V2 · 供应商满载滚动 (64) | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:1804 | 29 / STUDIO V2 · 删除后仅剩 OpenCode Go | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
-| 79:400 | 30 / STUDIO V2 · 64 个供应商搜索 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 79:400 | 30 / STUDIO V2 · 64 个供应商搜索 | ui.rs, provider_filter.rs | 部分：本地过滤/容量通过，最终侧栏视觉待续 |
 | 79:885 | 31 / STUDIO V2 · 新供应商保存完成 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 79:1102 | 32 / STUDIO V2 · 供应商复制完成 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 80:418 | 33 / STUDIO V2 · 供应商搜索（2个） | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 80:418 | 33 / STUDIO V2 · 供应商搜索（2个） | ui.rs, provider_filter.rs | 部分：过滤/草稿保护通过，最终侧栏视觉待续 |
 | 80:646 | 34 / STUDIO V2 · 编辑 OpenCode Go | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
 | 80:864 | 35 / STUDIO V2 · 删除 OpenCode Go 确认 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
 | 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |

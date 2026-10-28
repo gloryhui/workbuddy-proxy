@@ -186,6 +186,7 @@ pub struct Proxy {
     url: Entity<InputState>,
     port: Entity<InputState>,
     search: Entity<InputState>,
+    provider_search: Entity<InputState>,
     edit_name: Entity<InputState>,
     edit_model: Entity<InputState>,
     pub(crate) model_options: crate::model_options::OptionsEditor,
@@ -336,6 +337,14 @@ impl Proxy {
                     "搜索模型 ID"
                 } else {
                     "Search model IDs"
+                },
+            ),
+            (
+                &self.provider_search,
+                if zh {
+                    "搜索供应商"
+                } else {
+                    "Search providers"
                 },
             ),
             (
@@ -623,6 +632,17 @@ impl Proxy {
                 && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
         gpui_kit::component::set_locale(if zh { "zh-CN" } else { "en" });
         let drafts = Drafts::load(&dir, &cfg);
+        let provider_search = input(
+            "",
+            if zh {
+                "搜索供应商"
+            } else {
+                "Search providers"
+            },
+            false,
+            window,
+            cx,
+        );
         let backend = Backend::new(dir.clone());
         let statistics = cx.new(|cx| Statistics::new(dir.clone(), zh, window, cx));
         let name = input(
@@ -753,6 +773,7 @@ impl Proxy {
             url,
             port,
             search,
+            provider_search,
             edit_name,
             edit_model,
             model_options,
@@ -878,6 +899,12 @@ impl Proxy {
         this.switch_page(Page::Statistics, window, cx);
         this.focus.focus(window, cx);
         cx.subscribe(&this.search, |_, _, event, cx| {
+            if matches!(event, InputEvent::Change) {
+                cx.notify();
+            }
+        })
+        .detach();
+        cx.subscribe(&this.provider_search, |_, _, event, cx| {
             if matches!(event, InputEvent::Change) {
                 cx.notify();
             }
@@ -1196,6 +1223,10 @@ impl Proxy {
             }
         }
         if tag == "add" || tag == "duplicate" {
+            // A new draft must remain visible even when the old name filter
+            // did not match it. Existing provider selection never clears it.
+            self.provider_search
+                .update(cx, |state, cx| state.set_value("", window, cx));
             self.drafts.selected = cfg
                 .providers
                 .last()
@@ -1980,18 +2011,18 @@ impl Proxy {
     /// rows only changed their presentation.
     fn sidebar(&mut self, cx: &mut Context<Self>) -> AnyElement {
         let selected = self.selected();
-        let rows = self
-            .cfg
-            .providers
-            .iter()
+        let query = self.provider_search.read(cx).value();
+        let visible = crate::provider_filter::filtered(&self.cfg.providers, &self.drafts, &query);
+        let visible_count = visible.len();
+        let no_matches = visible.is_empty();
+        let at_capacity = self.cfg.providers.len() >= config::MAX_PROVIDERS;
+        let rows = visible
+            .into_iter()
             .map(|p| {
                 let id = p.id.clone();
                 let active = self.page == Page::Providers && id == selected;
                 let draft = self.drafts.providers.get(&id);
-                let name = draft
-                    .map(|d| d.name.clone())
-                    .filter(|s| !s.is_empty())
-                    .unwrap_or_else(|| p.name.clone());
+                let name = crate::provider_filter::display_name(p, &self.drafts).to_owned();
                 let count = draft.map_or(p.models.len(), |d| d.models.len());
                 div()
                     .id(SharedString::from(format!("provider-{id}")))
@@ -2021,7 +2052,11 @@ impl Proxy {
                             .flex_shrink_0()
                             .size(px(crate::theme::size::PROVIDER_DOT))
                             .rounded_full()
-                            .bg(rgb(crate::theme::palette().primary)),
+                            .bg(rgb(if active {
+                                crate::theme::color::SUCCESS
+                            } else {
+                                crate::theme::color::SIDEBAR_MUTED
+                            })),
                     )
                     .child(
                         div()
@@ -2171,6 +2206,45 @@ impl Proxy {
             .when(self.providers_expanded, |this| {
                 this.child(
                     div()
+                        .flex()
+                        .items_center()
+                        .justify_between()
+                        .flex_shrink_0()
+                        .px_2()
+                        .py_1()
+                        .text_size(px(crate::theme::font::SMALL))
+                        .child(self.t("供应商", "Providers"))
+                        .child(if query.trim().is_empty() {
+                            format!("{} / {}", self.cfg.providers.len(), config::MAX_PROVIDERS)
+                        } else {
+                            format!(
+                                "{} {} / {}",
+                                self.t("匹配", "Matches"),
+                                visible_count,
+                                self.cfg.providers.len()
+                            )
+                        }),
+                )
+                .child(
+                    div().flex_shrink_0().px_1().pb_2().child(
+                        Styled::h(
+                            crate::ui_components::text_input(&self.provider_search, false),
+                            px(crate::theme::size::PROVIDER_ROW_HEIGHT),
+                        )
+                        .text_color(rgb(crate::theme::color::TEXT_1))
+                        .bg(rgb(crate::theme::color::WHITE))
+                        .prefix(
+                            Icon::default()
+                                .path("studio/provider-search.svg")
+                                .with_size(px(17.))
+                                .text_color(rgb(crate::theme::color::SIDEBAR_MUTED)),
+                        )
+                        .cleanable(true)
+                        .aria_label(self.t("搜索供应商", "Search providers")),
+                    ),
+                )
+                .child(
+                    div()
                         .id("provider-list")
                         .flex()
                         .flex_col()
@@ -2179,7 +2253,20 @@ impl Proxy {
                         .min_h_0()
                         .p_2()
                         .overflow_y_scroll()
-                        .children(rows),
+                        .children(rows)
+                        .when(no_matches, |list| {
+                            list.child(
+                                div()
+                                    .p_2()
+                                    .text_size(px(crate::theme::font::SMALL))
+                                    .text_color(rgb(crate::theme::color::SIDEBAR_MUTED))
+                                    .child(if self.cfg.providers.is_empty() {
+                                        self.t("还没有供应商", "No providers yet")
+                                    } else {
+                                        self.t("未找到供应商", "No providers found")
+                                    }),
+                            )
+                        }),
                 )
                 // Three equal tracks keep all provider actions on one line.
                 // The compact padding reserves space for 13px English labels
@@ -2202,7 +2289,7 @@ impl Proxy {
                                 "provider-add",
                                 crate::ui_components::ButtonKind::Ghost,
                                 self.t("添加", "Add"),
-                                self.busy,
+                                self.busy || at_capacity,
                                 false,
                             )
                             .child(crate::ui_components::action_icon(IconName::Plus))
@@ -2210,6 +2297,7 @@ impl Proxy {
                             .min_w_0()
                             .px(px(1.))
                             .tooltip(self.t("新增供应商", "Add provider"))
+                            .when(self.busy || at_capacity, |button| button.opacity(0.45))
                             .text_color(rgb(crate::theme::color::SIDEBAR_TEXT))
                             .custom(crate::ui_components::sidebar_variant(false, cx))
                             .accessibility_label(self.t("新增供应商", "Add provider"))
@@ -2223,7 +2311,7 @@ impl Proxy {
                                 "provider-copy",
                                 crate::ui_components::ButtonKind::Ghost,
                                 self.t("复制", "Copy"),
-                                self.busy || selected.is_empty(),
+                                self.busy || selected.is_empty() || at_capacity,
                                 false,
                             )
                             .child(crate::ui_components::action_icon(IconName::Copy))
@@ -2231,6 +2319,9 @@ impl Proxy {
                             .min_w_0()
                             .px(px(1.))
                             .tooltip(self.t("复制供应商", "Duplicate provider"))
+                            .when(self.busy || selected.is_empty() || at_capacity, |button| {
+                                button.opacity(0.45)
+                            })
                             .text_color(rgb(crate::theme::color::SIDEBAR_TEXT))
                             .custom(crate::ui_components::sidebar_variant(false, cx))
                             .accessibility_label(self.t("复制供应商", "Duplicate provider"))

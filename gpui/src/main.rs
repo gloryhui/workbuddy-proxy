@@ -22,6 +22,7 @@ mod model_options;
 mod model_table;
 mod presets;
 mod protocol_options;
+mod provider_filter;
 mod source_filter;
 mod state;
 mod statistics;
