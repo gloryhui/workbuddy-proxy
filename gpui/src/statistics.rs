@@ -171,6 +171,23 @@ fn choice(code: impl Into<String>, title: impl Into<SharedString>) -> Choice {
     }
 }
 
+/// Build labels from the same page-size contract at creation and locale changes.
+fn page_size_choices(zh: bool) -> Vec<Choice> {
+    pagination::PAGE_SIZES
+        .into_iter()
+        .map(|size| {
+            choice(
+                size.to_string(),
+                if zh {
+                    format!("{size} 条/页")
+                } else {
+                    format!("{size} per page")
+                },
+            )
+        })
+        .collect()
+}
+
 fn now_ms() -> i64 {
     chrono::Local::now().timestamp_millis()
 }
@@ -386,26 +403,8 @@ impl Statistics {
         let preferences = preferences::Preferences::load(&dir);
         let backend = StatsScheduler::new(dir.clone());
         let page_input = cx.new(|cx| InputState::new(window, cx).placeholder("1"));
-        let page_size_select = cx.new(|cx| {
-            SelectState::new(
-                pagination::PAGE_SIZES
-                    .into_iter()
-                    .map(|size| {
-                        choice(
-                            size.to_string(),
-                            if zh {
-                                format!("{size} 条/页")
-                            } else {
-                                format!("{size} per page")
-                            },
-                        )
-                    })
-                    .collect::<Vec<_>>(),
-                None,
-                window,
-                cx,
-            )
-        });
+        let page_size_select =
+            cx.new(|cx| SelectState::new(page_size_choices(zh), None, window, cx));
         let wake = backend.wake_receiver();
         let provider_search = cx.new(|cx| InputState::new(window, cx));
         let model_search = cx.new(|cx| InputState::new(window, cx));
@@ -976,6 +975,7 @@ impl Statistics {
             ));
         }
         for (select, items) in [
+            (&self.page_size_select, page_size_choices(self.zh)),
             (&self.outcome_select, outcomes),
             (&self.usage_select, usage),
             (&self.price_mode, modes),
