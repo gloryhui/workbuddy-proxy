@@ -25,6 +25,7 @@ mod mapping_controls;
 mod overview;
 mod pagination;
 mod preferences;
+mod recent;
 mod source_controls;
 mod trends;
 
@@ -280,6 +281,7 @@ pub struct Statistics {
     currency_select: Entity<ChoiceState>,
     // Data.
     dashboard: Option<DashboardDto>,
+    recent: recent::RecentRead<RequestRowDto>,
     rows: Vec<RequestRowDto>,
     total_rows: i64,
     as_of_id: i64,
@@ -637,6 +639,7 @@ impl Statistics {
             capture_select,
             currency_select,
             dashboard: None,
+            recent: recent::RecentRead::default(),
             rows: Vec::new(),
             total_rows: 0,
             as_of_id: 0,
@@ -853,6 +856,7 @@ impl Statistics {
             self.persist_preferences();
 
             self.backend.cancel_reads();
+            self.recent.invalidate();
             self.rows_gate.invalidate();
             self.groups_gate.invalidate();
             self.dashboard_seq = 0;
@@ -1011,6 +1015,7 @@ impl Statistics {
     }
 
     fn mark_dirty(&mut self, cx: &mut Context<Self>) {
+        self.recent.invalidate();
         self.generation += 1;
         self.debounce_until = Some(Instant::now() + DEBOUNCE);
         self.reset_pagination();
@@ -1447,9 +1452,13 @@ impl Statistics {
         // The import panel refreshes with the rest of the statistics; its read
         // is keyed by resource, so two refreshes in a row collapse into one.
         self.request_import_status(cx);
-        match self.tab {
-            Tab::Requests => self.request_rows(cx),
-            _ => self.request_groups(cx),
+        if self.view == preferences::View::Overview {
+            self.request_recent(cx);
+        } else {
+            match self.tab {
+                Tab::Requests => self.request_rows(cx),
+                _ => self.request_groups(cx),
+            }
         }
         self.last_refresh = Instant::now();
         self.request_health(cx);
@@ -1529,6 +1538,19 @@ impl Statistics {
             result,
             ..
         } = reply;
+        if kind == JobKind::Recent {
+            if self.visible && self.view == preferences::View::Overview {
+                let parsed = result.and_then(|value| {
+                    serde_json::from_value::<crate::stats_dto::RequestPageDto>(value)
+                        .map(|page| page.items.into_iter().next())
+                        .map_err(|_| "Invalid statistics response".to_string())
+                });
+                if self.recent.apply(seq, self.generation, parsed) {
+                    cx.notify();
+                }
+            }
+            return;
+        }
         if self.handle_mapping_reply(kind, seq, &tag, &result, cx) {
             return;
         }
@@ -1976,6 +1998,10 @@ impl Statistics {
             return;
         };
         let request_id = item.request_id.clone();
+        self.open_detail_id(request_id, window, cx);
+    }
+
+    fn open_detail_id(&mut self, request_id: String, window: &mut Window, cx: &mut Context<Self>) {
         let tag = format!("detail-{}", self.generation);
         let request = crate::stats_backend::command(
             "stats_request_detail",

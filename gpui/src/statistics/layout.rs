@@ -22,6 +22,7 @@ impl Statistics {
         if self.view != View::Settings {
             self.last_report_view = self.view;
         }
+        self.recent.invalidate();
         self.view = view;
         self.tab = if view == View::Summary {
             self.summary_tab
@@ -292,6 +293,7 @@ impl Statistics {
                 .gap_3()
                 .child(self.overview(cx))
                 .child(self.trends(cx))
+                .child(self.recent_card(cx))
                 .into_any_element(),
             View::Settings => div()
                 .id("statistics-settings-scroll")

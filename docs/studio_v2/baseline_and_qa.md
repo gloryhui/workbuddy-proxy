@@ -215,3 +215,18 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 最终 [1440×900 中文](screenshots/overview-billing-1440x900.png) / [1100×700 English 滚动位置](screenshots/overview-billing-1100x700.png) 已实拍并由主代理查看，只裁底部1行原生窗口框。小窗两卡超出一屏，截图展示滚动位置；完整可访问性由实际滚动补验，不以截图看不全冒充全屏展示。
 - [overview-billing-gui.json](benchmarks/overview-billing-gui.json)：同机release、默认Mono/Providers、1供应商64模型、200小请求和80×1MiB/4并发，核心/UI/托盘idle RSS为13.02/73.03/25.86 MiB，核心+UI86.05 MiB、峰值131.86 MiB；核心/UI记录就绪231.797/796.201 ms，p50/p95 0.188/0.222 ms。基线13.88/75.27/89.14 MiB、45.924/796.346 ms、0.177/0.209 ms仅单次同口径记录，不声明稳定性能趋势；记录标记不是首帧/可交互。
 - 两版UI/core均正常退出0并等待，sandbox_check enforced；清理专属配置/数据库/程序副本/旧图110,112 KiB，子代理临时文件剩余0。主代理日志和下一功能补丁仍在使用，收尾统一清理。最近请求、完整概览/其他画板与跨平台仍待后续，Goal继续active。
+
+## 小功能 12：真实最近请求（2026-10-29，北京时间）
+
+- 依据官方 context `52:191` 添加原生最近请求卡与18px时钟SVG，显示真实时间、供应商、模型、Token和状态；长名称/模型约束宽度，正文可换行。查看详情按该记录request_id进入原详情处理器，明细表行入口仍保留。导入记录沿用Recorded语义，没有HTTP时不伪造200，Token未知仍为—。
+- 概览使用独立Recent只读resource执行原 `stats_requests`、使用既有最小页量10并仅展示首条；不携带明细cursor/page/as_of_id。核心既有查询按started_at_ms DESC/id DESC排序，未修改SQL、协议或存储。此读替换概览原无用的分页列表读，明细/分析继续旧请求和分页；使用原刷新节奏且仅概览可见时运行，没有新计时器或后台采集。
+- RecentRead按本地请求序号和筛选代际校验，换筛选/离开视图/隐藏窗口立即作废；旧回复不能清理或覆盖新请求。初始和未收到回复时显示读取中，只有真实空回复才显示暂无；失败清除旧行并显示局部失败，避免把旧行称作最新。
+- 新自动回归覆盖旧序号/旧代际/作废后的回复拒绝、空/失败不保留旧行、最新查询不带分页游标且保留筛选，以及调度Recent合并不覆盖Rows页请求。fmt / 165 tests / clippy / release已通过；核心仍沿用原二进制和573 tests基线。最终GUI/性能/清理结果随后补记。
+
+- 首次真实GUI捕获契约错误：page_size=1通过UI自写断言，但核心公开控制API只接受10/20/50/100，因此显示读取失败。修正为复用既有分页选项最小值10，仅取返回首条；没有扩展核心API。查询回归增加与既有分页选项一致的检查，并用同一未升级核心复验真实最新记录，避免把窄单测当成公开契约证明。
+- 最终 `345ebc96` 版 fmt / 165 tests / clippy / release Passed，设置程序14,877,216 bytes；使用相同核心副本及原22条数据库复验，无核心升级或造新记录。明细第2页后切回概览，卡片及详情均匹配数据库最新 request_id（前缀eb611fc1）、Provider01/550Token/200完成，不是第2页记录。
+- 实测Builtin为空且详情禁用，Custom为22条最新Provider01；Provider00为20条且最近详情匹配其第20条，Provider01为2条且最近正确。快速Builtin→Custom→Builtin最终为空，无旧卡残留；沿用来源切换重置供应商的既有规则。1100英文可滚动取回最近卡，详情ID匹配，Esc关闭回原卡。
+- 最终 [1440×900 中文完整概览](screenshots/overview-recent-1440x900.png) / [1100×700 English 滚动位置](screenshots/overview-recent-1100x700.png) 由主代理查看，原图只裁底部1行；全部为本机mock合成记录，无聊天正文、密钥或真实用户数据。当前概览主要结构/正常与空态已落地，整帧多外观/异常/无障碍最终审计仍待续。
+- [overview-recent-gui.json](benchmarks/overview-recent-gui.json)：同机release、默认Mono/Providers、1供应商64模型、200小请求及80×1MiB/4并发，核心/UI/托盘idle RSS 12.53/73.09/25.81 MiB，核心+UI85.62 MiB、峰值130.28 MiB；核心/UI记录就绪437.715/963.361 ms，p50/p95 0.193/0.230 ms。默认页基线13.88/75.27/89.14 MiB、45.924/796.346 ms、0.177/0.209 ms仅单次同口径记录，不声称稳定趋势；UI记录不是首帧/可交互，最终仍需多轮启动/延迟复测。
+- 本批旧/修正版及补验UI/core均正常退出0并等待，benchmark sandbox enforced；清理专属配置/22条合成数据库/程序副本117,788 KiB，保留临时0。主代理核对无打开引用及本轮构建完成后清理构建/诊断日志和已应用补丁76 KiB；本 goal turn 计费+最近请求累计清理227,976 KiB（约223 MiB），本会话临时文件剩余0。两项归属未明历史空目录0 KiB保留，共享Cargo缓存及交付图/JSON/报告保留；系统盘当前剩余40.47 GiB。
+- Goal继续active。后续推进明细/分析/统计设置内容、供应商CRUD及协议/模型等弹窗，补窄窗列访问、完整Tab/IME、跨平台和逐帧最终审计；没有缩小40帧及功能保护要求。

@@ -25,6 +25,7 @@ pub const MAX_REPLY_BYTES: u64 = 1024 * 1024;
 pub enum JobKind {
     Dashboard,
     Rows,
+    Recent,
     Groups,
     Filters,
     Detail,
@@ -51,6 +52,7 @@ impl JobKind {
             self,
             JobKind::Dashboard
                 | JobKind::Rows
+                | JobKind::Recent
                 | JobKind::Groups
                 | JobKind::Filters
                 | JobKind::Detail
@@ -73,6 +75,7 @@ impl JobKind {
 pub enum JobKey {
     Dashboard,
     Rows,
+    Recent,
     Groups,
     Detail(String),
     Health,
@@ -114,6 +117,7 @@ impl JobKey {
         match self {
             JobKey::Dashboard => JobKind::Dashboard,
             JobKey::Rows => JobKind::Rows,
+            JobKey::Recent => JobKind::Recent,
             JobKey::Groups => JobKind::Groups,
             JobKey::Detail(_) => JobKind::Detail,
             JobKey::Health => JobKind::Health,
@@ -274,7 +278,7 @@ impl StatsScheduler {
                     .keys()
                     .filter(|key| !pending.in_flight.contains_key(*key))
                     .min_by_key(|key| match key {
-                        JobKey::Rows | JobKey::Groups | JobKey::Detail(_) => 0,
+                        JobKey::Rows | JobKey::Recent | JobKey::Groups | JobKey::Detail(_) => 0,
                         _ => 1,
                     })
                     .cloned()
@@ -484,6 +488,34 @@ mod tests {
         scheduler.pump();
         assert_eq!(jobs.try_recv().unwrap().key, super::JobKey::Rows);
         assert_eq!(jobs.try_recv().unwrap().key, super::JobKey::Dashboard);
+    }
+
+    #[test]
+    fn recent_reads_do_not_replace_the_paginated_request_intent() {
+        let (scheduler, jobs) = super::StatsScheduler::for_tests();
+        scheduler.submit_read(
+            super::JobKey::Rows,
+            "page-2".into(),
+            serde_json::json!({"cursor":"page-two"}),
+        );
+        scheduler.submit_read(
+            super::JobKey::Recent,
+            "old-recent".into(),
+            serde_json::json!({"page_size":10}),
+        );
+        scheduler.submit_read(
+            super::JobKey::Recent,
+            "new-recent".into(),
+            serde_json::json!({"page_size":10}),
+        );
+        scheduler.pump();
+        let mut tags = Vec::new();
+        while let Ok(job) = jobs.try_recv() {
+            tags.push(job.tag);
+        }
+        tags.sort();
+        assert_eq!(tags, ["new-recent", "page-2"]);
+        assert!(super::JobKind::Recent.is_read());
     }
 
     use super::*;

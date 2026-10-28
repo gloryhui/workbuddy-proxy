@@ -15,3 +15,5 @@ Runtime center `54:298` supplies `runtime-activity.svg` (19px, layer `54:299`) a
 Statistics filter row `52:87` supplies `stats-refresh.svg` (18px, layer `52:104`) and `stats-chevron.svg` (16px, layers `52:90/94/98/102`). They are embedded in the existing refresh and date/interval controls; the native model/provider Select controls keep their own keyboard and focus engine.
 
 Overview KPI grid `52:107` supplies `kpi-grid.svg`, `kpi-shield.svg`, and `kpi-activity.svg` (18px each; layers `52:130`, `52:139`, `52:146`). The main Token surface and cards are native GPUI. The hero's bar area uses real recent dashboard time buckets; it never embeds the design's fixed decorative values as usage data.
+
+Recent activity `52:191` supplies `recent-clock.svg` (18px, layer `52:192`). The native recent-request card reads the existing `stats_requests` API with its own first-page read intent, rather than embedding the design's sample request or reusing a paginated table row.
