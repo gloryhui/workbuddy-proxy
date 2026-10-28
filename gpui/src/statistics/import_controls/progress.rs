@@ -27,6 +27,10 @@ impl Snapshot {
             && self.bytes_committed.checked_add(self.bytes_remaining) == Some(self.bytes_total)
     }
 
+    pub(super) fn committed_text(&self) -> String {
+        data_size(self.bytes_committed)
+    }
+
     fn percent(&self) -> f32 {
         if self.bytes_total == 0 {
             return 0.;
@@ -52,7 +56,10 @@ fn data_size(bytes: i64) -> String {
 }
 
 impl Statistics {
-    pub(in crate::statistics::import_controls) fn import_progress(&self) -> AnyElement {
+    pub(in crate::statistics::import_controls) fn import_progress(
+        &self,
+        compact: bool,
+    ) -> AnyElement {
         let status = self.import_ui.status.as_ref();
         let snapshot = status.and_then(|status| status.progress.as_ref());
         let enabled = status.is_some_and(|status| status.effective_enabled);
@@ -125,12 +132,29 @@ impl Statistics {
                     .to_owned()
             });
         let label = format!("{title}. {detail}");
+        let bar = Progress::new("wb-import-progress")
+            .small()
+            .w_full()
+            .value(if known {
+                snapshot.map_or(0., Snapshot::percent)
+            } else {
+                0.
+            })
+            .loading(snapshot.is_some() && enabled && !error && !known)
+            .when(compact, |bar| {
+                bar.color(rgb(if enabled && !error {
+                    crate::theme::color::CHART_CACHE_READ
+                } else {
+                    MUTED
+                }))
+            })
+            .accessibility_label(label);
+        if compact {
+            return div().w_full().child(bar).into_any_element();
+        }
         div().flex().flex_col().w_full().gap_1()
             .child(Label::new(title).text_size(px(crate::theme::font::LABEL)).text_color(rgb(MUTED)))
-            .child(Progress::new("wb-import-progress").small().w_full()
-                .value(if known { snapshot.map_or(0., Snapshot::percent) } else { 0. })
-                .loading(snapshot.is_some() && enabled && !error && !known)
-                .accessibility_label(label))
+            .child(bar)
             .child(div().text_size(px(crate::theme::font::LABEL)).text_color(rgb(MUTED)).child(detail))
             .child(div().text_size(px(crate::theme::font::LABEL)).text_color(rgb(MUTED)).child(self.t(
                 "按最近发现的文件快照计算；已去重副本与异常记录不计入未读积压。",

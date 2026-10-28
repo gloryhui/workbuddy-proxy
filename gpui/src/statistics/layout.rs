@@ -359,7 +359,8 @@ impl Statistics {
                         .children(self.warnings())
                         .children(self.import_notices(cx))
                         .child(self.pricing_section(cx))
-                        .child(self.storage_section(cx)),
+                        .child(self.settings_capture_import(cx))
+                        .children(self.maintenance_panel(cx)),
                 )
                 .into_any_element(),
         }

@@ -27,6 +27,7 @@ mod overview;
 mod pagination;
 mod preferences;
 mod recent;
+mod settings_capture;
 mod settings_layout;
 mod source_controls;
 mod trends;
@@ -206,14 +207,6 @@ fn local_midnight_days_ago(days: i64) -> i64 {
         .unwrap_or_else(|| now_ms() - days * 86_400_000)
 }
 
-fn stats_heading(text: &'static str) -> Div {
-    div()
-        .text_size(px(13.))
-        .font_weight(FontWeight::SEMIBOLD)
-        .text_color(rgb(INK))
-        .child(text)
-}
-
 /// Card padding from DESIGN_SPEC §3 (16–20). `stats_card` applies it and the
 /// filter card's width probe subtracts exactly the same value, so the KPI grid
 /// is budgeted against the width it really gets.
@@ -245,6 +238,8 @@ pub struct Statistics {
     page_scroll: ScrollHandle,
     analysis_scroll: ScrollHandle,
     settings_scroll: ScrollHandle,
+    provider_modes_scroll: ScrollHandle,
+    maintenance_anchor: ScrollAnchor,
     price_rows_scroll: ScrollHandle,
     settings_anchors: [ScrollAnchor; 3],
     settings_section: usize,
@@ -361,7 +356,6 @@ pub struct Statistics {
     maintenance_error: Option<String>,
     clear_preview: Option<ClearPreviewDto>,
     clear_token: Option<String>,
-    storage_open: bool,
     draft_generation: u64,
     provider_search: Entity<InputState>,
     model_search: Entity<InputState>,
@@ -666,6 +660,8 @@ impl Statistics {
             mapping_ui: mapping_controls::MappingUi::default(),
             page_scroll: ScrollHandle::new(),
             analysis_scroll: ScrollHandle::new(),
+            maintenance_anchor: ScrollAnchor::for_handle(settings_scroll.clone()),
+            provider_modes_scroll: ScrollHandle::new(),
             settings_scroll,
             price_rows_scroll: ScrollHandle::new(),
             settings_anchors,
@@ -717,7 +713,6 @@ impl Statistics {
             maintenance_error: None,
             clear_preview: None,
             clear_token: None,
-            storage_open: true,
             draft_generation: 0,
             provider_search,
             model_search,
@@ -1527,7 +1522,7 @@ impl Statistics {
         // Provider modes are filled in one per tick so the list converges
         // without ever queueing a job per provider at once.
         self.poll_import_status(cx);
-        if foreground && self.view == preferences::View::Settings && self.storage_open {
+        if foreground && self.view == preferences::View::Settings {
             self.request_provider_modes(cx);
         }
         // Maintenance progress is polled at most every two seconds and only
@@ -2007,6 +2002,8 @@ impl Statistics {
                 .map(str::to_owned);
             if let Ok(preview) = serde_json::from_value::<ClearPreviewDto>(value) {
                 self.clear_preview = Some(preview);
+                let anchor = self.maintenance_anchor.clone();
+                window.on_next_frame(move |window, cx| anchor.scroll_to(window, cx));
             }
         }
     }
@@ -3499,511 +3496,6 @@ impl Statistics {
     }
 }
 
-/// Legacy storage group retained while the Studio settings cards migrate.
-impl Statistics {
-    fn section_toggle(
-        &self,
-        id: &'static str,
-        title: &'static str,
-        subtitle: Option<&'static str>,
-        open: bool,
-        cx: &mut Context<Self>,
-    ) -> AnyElement {
-        // DESIGN_SPEC §4.2: one collapsed row per section, chevron + title and
-        // an optional one-line hint. The hint is a label, not part of the
-        // clickable toggle, so it never changes the collapse target.
-        div()
-            .flex()
-            .items_center()
-            .gap_2()
-            .child(
-                stats_button(id)
-                    .ghost()
-                    .child(crate::ui_components::action_icon(
-                        Icon::new(if open {
-                            IconName::ChevronDown
-                        } else {
-                            IconName::ChevronRight
-                        })
-                        .size(px(16.)),
-                    ))
-                    .label(title)
-                    .on_click(cx.listener(move |this, _, _, cx| {
-                        this.storage_open = !this.storage_open;
-                        cx.notify();
-                    })),
-            )
-            .when_some(subtitle, |this, subtitle| {
-                this.child(
-                    Label::new(subtitle)
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(MUTED)),
-                )
-            })
-            .into_any_element()
-    }
-
-    fn storage_section(&self, cx: &mut Context<Self>) -> AnyElement {
-        let open = self.storage_open;
-        let settings = self.settings.clone();
-        let (enabled, retention, revision) = settings.as_ref().map_or((true, 180, 1), |settings| {
-            (settings.enabled, settings.retention_days, settings.revision)
-        });
-        let progress = self
-            .maintenance
-            .clone()
-            .filter(|task| task.status == MaintenanceStatus::Running);
-        let maintenance_label = self.t("维护任务", "Maintenance");
-        let rows_label = self.t("行已处理", "rows processed");
-        let wide = self.filters_width >= STORAGE_SIDE_BY_SIDE_WIDTH;
-
-        // DESIGN_SPEC §4.2: left column keeps the three settings, right column
-        // the provider capture-mode table. Narrow windows stack the columns;
-        // no control is hidden in either arrangement.
-        let settings_column = div()
-            .flex()
-            .flex_col()
-            .gap_4()
-            .flex_1()
-            .min_w_0()
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .gap_2()
-                    .child(
-                        div()
-                            .w(px(88.))
-                            .child(self.filter_label(self.t("缺省默认币种", "Default currency"))),
-                    )
-                    .children([Currency::Cny, Currency::Usd].into_iter().map(|currency| {
-                        stats_button((
-                            "stats-default-currency",
-                            if currency == Currency::Cny {
-                                0usize
-                            } else {
-                                1usize
-                            },
-                        ))
-                        .outline()
-                        .label(currency.as_str())
-                        .disabled(
-                            settings
-                                .as_ref()
-                                .is_none_or(|s| s.default_currency == currency),
-                        )
-                        .on_click(cx.listener(move |this, _, _, cx| {
-                            this.save_default_currency(currency, cx)
-                        }))
-                    }))
-                    .child(
-                        Label::new(self.t("仅新请求", "new requests only"))
-                            .text_size(px(crate::theme::font::LABEL))
-                            .text_color(rgb(MUTED)),
-                    ),
-            )
-            .child(
-                div()
-                    .flex()
-                    .items_start()
-                    .gap_3()
-                    .child(
-                        div()
-                            .w(px(88.))
-                            .pt(px(2.))
-                            .child(self.filter_label(self.t("摘要采集", "Summary collection"))),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .child(
-                                Checkbox::new("collect-enabled")
-                                    .label(self.t("启用摘要采集", "Enable summary collection"))
-                                    .checked(enabled)
-                                    .large()
-                                    .on_change(cx.listener(move |this, value: &bool, _, cx| {
-                                        this.update_settings(*value, retention, revision, cx);
-                                    })),
-                            )
-                            .child(
-                                Label::new(self.t(
-                                    "暂停只影响新请求，已接纳的请求仍会结算",
-                                    "Pausing only stops new requests; admitted ones still settle",
-                                ))
-                                .text_size(px(crate::theme::font::LABEL))
-                                .text_color(rgb(MUTED)),
-                            ),
-                    ),
-            )
-            .child(
-                div()
-                    .flex()
-                    .items_start()
-                    .gap_3()
-                    .child(
-                        div()
-                            .w(px(88.))
-                            .pt(px(4.))
-                            .child(self.filter_label(self.t("保留天数", "Retention days"))),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_2()
-                            .child(
-                                div().flex().items_center().gap_2().children(
-                                    [
-                                        (30i64, self.t("30 天", "30 days")),
-                                        (90, self.t("90 天", "90 days")),
-                                        (180, self.t("180 天", "180 days")),
-                                        (365, self.t("365 天", "365 days")),
-                                        (0, self.t("永久", "Forever")),
-                                    ]
-                                    .into_iter()
-                                    .map(|(days, label)| {
-                                        let active = retention == days;
-                                        let id = if days == 0 {
-                                            "retention-forever".to_owned()
-                                        } else {
-                                            format!("retention-{days}")
-                                        };
-                                        let button = stats_button(id).label(label).on_click(
-                                            cx.listener(move |this, _, _, cx| {
-                                                this.update_settings(enabled, days, revision, cx)
-                                            }),
-                                        );
-                                        if active {
-                                            button.primary().outline()
-                                        } else {
-                                            button.ghost()
-                                        }
-                                    }),
-                                ),
-                            )
-                            .child(
-                                Label::new(format!(
-                                    "{} {} · {}",
-                                    self.t("当前", "now"),
-                                    if retention == 0 {
-                                        self.t("永久", "forever").to_owned()
-                                    } else {
-                                        format!("{} {}", retention, self.t("天", "days"))
-                                    },
-                                    self.t("(0 = 永久)", "(0 = forever)")
-                                ))
-                                .text_size(px(crate::theme::font::LABEL))
-                                .text_color(rgb(MUTED)),
-                            ),
-                    ),
-            );
-
-        let mode_rows = self
-            .configured_providers
-            .iter()
-            .enumerate()
-            .skip(self.storage_page * self.storage_page_size)
-            .take(self.storage_page_size)
-            .map(|(index, (key, name))| {
-                let id = key.clone();
-                let mode_settings = self.provider_modes.get(&id).cloned();
-                let mode = mode_settings
-                    .as_ref()
-                    .map_or(UsageMode::default(), |settings| settings.usage_mode);
-                let mode_revision = mode_settings
-                    .as_ref()
-                    .map_or(0, |settings| settings.revision);
-                let label = if name.is_empty() {
-                    key.clone()
-                } else {
-                    name.clone()
-                };
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .gap_3()
-                    .px(px(12.))
-                    .py(px(10.))
-                    .border_b(px(1.))
-                    .border_color(rgb(0xeef2f7))
-                    .child(Label::new(label).text_size(px(12.)).text_color(rgb(INK)))
-                    .child(
-                        Checkbox::new(("provider-mode", index))
-                            .label(self.t(
-                                "请求上游返回用量（request）",
-                                "Request upstream usage (request mode)",
-                            ))
-                            .checked(mode == UsageMode::Request)
-                            .disabled(
-                                mode_settings.is_none()
-                                    || self.backend.is_busy(&JobKey::ProviderMode(id.clone())),
-                            )
-                            .large()
-                            .on_change(cx.listener(move |this, value: &bool, _, cx| {
-                                this.set_provider_mode(id.clone(), *value, mode_revision, cx);
-                            })),
-                    )
-                    .into_any_element()
-            })
-            .collect::<Vec<_>>();
-        let modes_table = div()
-            .flex()
-            .flex_col()
-            .w_full()
-            .min_w_0()
-            .border_1()
-            .border_color(rgb(BORDER))
-            .rounded(px(8.))
-            .overflow_hidden()
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .h(px(32.))
-                    .px(px(12.))
-                    .bg(rgb(0xf7f9fc))
-                    .border_b(px(1.))
-                    .border_color(rgb(BORDER))
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED))
-                    .child(self.t("供应商", "Provider"))
-                    .child(self.t("用量采集方式", "Capture mode")),
-            )
-            .children(if mode_rows.is_empty() {
-                vec![
-                    div()
-                        .px(px(12.))
-                        .py(px(16.))
-                        .child(
-                            Label::new(self.t("暂无供应商", "No providers"))
-                                .text_size(px(crate::theme::font::LABEL))
-                                .text_color(rgb(MUTED)),
-                        )
-                        .into_any_element(),
-                ]
-            } else {
-                mode_rows
-            });
-
-        let modes_column = div()
-            .flex()
-            .flex_col()
-            .gap_3()
-            .flex_1()
-            .min_w_0()
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(stats_heading(
-                        self.t("供应商采集模式", "Provider capture modes"),
-                    ))
-                    .child(
-                        stats_button("provider-modes-refresh")
-                            .ghost()
-                            .child(crate::ui_components::action_icon(
-                                Icon::new(IconName::RefreshCw).size(px(16.)),
-                            ))
-                            .label(self.t("刷新供应商采集模式", "Reload provider modes"))
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                for (id, _) in this
-                                    .configured_providers
-                                    .iter()
-                                    .skip(this.storage_page * this.storage_page_size)
-                                    .take(this.storage_page_size)
-                                {
-                                    this.provider_modes.remove(id);
-                                }
-                                this.request_provider_modes(cx);
-                                cx.notify();
-                            })),
-                    ),
-            )
-            .child(modes_table)
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(
-                        Label::new(format!(
-                            "{} {}/{}",
-                            self.t("第", "Page"),
-                            self.storage_page + 1,
-                            self.configured_providers
-                                .len()
-                                .div_ceil(self.storage_page_size)
-                                .max(1)
-                        ))
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(MUTED)),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap_2()
-                            .child(
-                                stats_button("storage-prev")
-                                    .ghost()
-                                    .label(self.t("上一页", "Previous"))
-                                    .disabled(self.storage_page == 0)
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.storage_page = this.storage_page.saturating_sub(1);
-                                        this.request_provider_modes(cx);
-                                        cx.notify();
-                                    })),
-                            )
-                            .child(
-                                stats_button("storage-page-size")
-                                    .ghost()
-                                    .label(format!(
-                                        "{} {}",
-                                        self.storage_page_size,
-                                        self.t("条/页", "per page")
-                                    ))
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.storage_page_size = match this.storage_page_size {
-                                            20 => 50,
-                                            50 => 100,
-                                            _ => 20,
-                                        };
-                                        this.storage_page = 0;
-                                        this.request_provider_modes(cx);
-                                        cx.notify();
-                                    })),
-                            )
-                            .child(
-                                stats_button("storage-next")
-                                    .ghost()
-                                    .label(self.t("下一页", "Next"))
-                                    .disabled(
-                                        (self.storage_page + 1) * self.storage_page_size
-                                            >= self.configured_providers.len(),
-                                    )
-                                    .on_click(cx.listener(|this, _, _, cx| {
-                                        this.storage_page += 1;
-                                        this.request_provider_modes(cx);
-                                        cx.notify();
-                                    })),
-                            ),
-                    ),
-            );
-
-        let columns = div()
-            .flex()
-            .gap(px(24.))
-            .when(wide, |this| this.flex_row())
-            .when(!wide, |this| this.flex_col())
-            .child(settings_column)
-            .child(modes_column);
-
-        let danger = div()
-            .flex()
-            .flex_col()
-            .gap_2()
-            .w_full()
-            .child(div().h(px(1.)).w_full().bg(rgb(BORDER)).mt_2())
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(
-                        Label::new(self.t("危险操作", "Danger zone"))
-                            .text_size(px(crate::theme::font::LABEL))
-                            .text_color(rgb(MUTED)),
-                    )
-                    .child(
-                        crate::ui_components::button(
-                            "clear-preview",
-                            crate::ui_components::ButtonKind::DangerOutline,
-                            self.t("清除历史统计…", "Clear history…"),
-                            false,
-                            false,
-                        )
-                        .on_click(cx.listener(|this, _, _, cx| this.preview_clear(cx))),
-                    ),
-            )
-            .when_some(self.maintenance_error.clone(), |this, message| {
-                this.child(
-                    Label::new(message)
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(0xa4424a)),
-                )
-            })
-            .when_some(progress, |this, task| {
-                this.child(
-                    Label::new(format!(
-                        "{} {} · {} {}",
-                        maintenance_label, task.kind, task.affected_rows, rows_label
-                    ))
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED)),
-                )
-            })
-            .when_some(self.clear_preview.clone(), |this, preview| {
-                let token = preview.confirmed;
-                this.child(
-                    div()
-                        .flex()
-                        .items_center()
-                        .gap_2()
-                        .child(
-                            Label::new(format!(
-                                "{} {}",
-                                if token {
-                                    self.t("将删除已结束的", "Deletes finished")
-                                } else {
-                                    self.t("预览：将删除", "Preview: would delete")
-                                },
-                                preview.row_count
-                            ))
-                            .text_size(px(crate::theme::font::LABEL))
-                            .text_color(rgb(0xa4424a)),
-                        )
-                        .child(
-                            Label::new(self.t(
-                                "保留去重标记，不修改 WorkBuddy 源文件。",
-                                "Deduplication markers remain; WorkBuddy source files are unchanged.",
-                            ))
-                            .text_size(px(crate::theme::font::LABEL))
-                            .text_color(rgb(MUTED)),
-                        )
-                        .child(
-                            stats_button("clear-confirm")
-                                .danger()
-                                .label(self.t("确认清除", "Confirm clear"))
-                                .on_click(cx.listener(|this, _, _, cx| this.confirm_clear(cx))),
-                        ),
-                )
-            });
-
-        let body = div()
-            .flex()
-            .flex_col()
-            .gap_4()
-            .child(columns)
-            .child(self.import_controls(cx))
-            .child(danger);
-        stats_card("stats-storage")
-            .anchor_scroll(Some(self.settings_anchors[1].clone()))
-            .child(self.section_toggle(
-                "storage-toggle",
-                self.t("采集与存储", "Collection & storage"),
-                None,
-                open,
-                cx,
-            ))
-            .when(open, |this| this.child(body))
-            .into_any_element()
-    }
-}
 impl Statistics {
     /// Opens the native price form.
     pub(crate) fn open_price_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {

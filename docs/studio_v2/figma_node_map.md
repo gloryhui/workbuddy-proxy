@@ -8,7 +8,7 @@
 | 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 部分：侧栏/双卡/运行中心/日志交互通过；完整视觉与无障碍待续 |
 | 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 部分：八列/来源筛选/分页/详情/窄窗首末列已验，整帧最终审计待续 |
 | 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：表卡/两指标卡/真实排序/分组分页/两尺寸已验，完整视觉与无障碍待续 |
-| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, layout.rs, import_controls.rs | 部分：分区导航/价格卡CRUD与游标/快照/失败提示已验，采集及导入双卡和完整视觉待续 |
+| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs | 部分：分区导航/价格卡CRUD与游标/快照/失败提示、采集/导入双卡及主要业务已验；整帧视觉、完整键盘/IME/无障碍待续 |
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -66,3 +66,5 @@
 汇总分析 `57:8` 的表卡 `57:225`、Token构成 `57:275` 与缓存/覆盖 `57:287` 已原生落地到 `statistics/analysis.rs`；真实分组/排序/服务端分页保持。表体43px行、38px表头，底部两卡用既有dashboard字段，窄窗正文独立滚动与纵排。没有使用稿中的静态509万、86.3%或100%冒充真实数据。
 
 设置高保真 `58:223` / `58:272` / `58:301` 本轮已读取。三项导航已以原生ScrollAnchor接入；价格面板优先落地到 `statistics/settings_layout.rs`，保留精确搜索、20/50/100游标分页和原生CRUD/更新菜单，新增独立价格同步失败反馈。采集/存储与本地导入当前仍是原控件组，后续拆双卡；价格模态框 `60:249` / `69:359` 的完整视觉也未在本批施工。上述阶段记录为历史进度，当前范围以主表及最新实施记录为准。
+
+采集/存储 `58:272` 与导入 `58:301` 已拆为原生双卡，窄窗纵排；真实设置/模式、21供应商有界分页/内层滚动、六计数与checkpoint、增量/完整核对及全局截止清理取消/确认已回归。旧“仍为原控件组”段落保留作阶段历史，当前范围以主表和最新QA记录为准；整帧及价格模态框视觉仍待续。

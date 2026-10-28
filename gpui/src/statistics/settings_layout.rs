@@ -493,7 +493,6 @@ impl Statistics {
                         )
                         .on_click(cx.listener(move |this, _, window, cx| {
                             this.settings_section = index;
-                            this.storage_open = true;
                             let anchor = this.settings_anchors[index].clone();
                             // Allow an expanded section to lay out before locating it.
                             window.on_next_frame(move |window, cx| anchor.scroll_to(window, cx));

@@ -104,8 +104,11 @@ impl Statistics {
                         match notice {
                             Notice::Pending => this.open_mapping_dialog(window, cx),
                             Notice::Disabled => {
-                                this.storage_open = true;
-                                this.page_scroll.scroll_to_bottom();
+                                this.select_view(preferences::View::Settings, cx);
+                                this.settings_section = 2;
+                                let anchor = this.settings_anchors[2].clone();
+                                window
+                                    .on_next_frame(move |window, cx| anchor.scroll_to(window, cx));
                                 this.request_import_status(cx);
                             }
                             _ => this.import_write(None, matches!(notice, Notice::Conflict), cx),
