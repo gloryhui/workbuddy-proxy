@@ -10,7 +10,7 @@
 | 系统/中文/English | ui.rs::language_menu、set_language | macOS 隔离 GUI 菜单/中英实际切换 Passed；跟随系统待验 |
 | 恢复 1440×900、退出全屏 | ui.rs::restore_window_size | macOS 缩小后恢复 Passed；最大化/全屏待验 |
 | GitHub 与新 Issue | ui.rs::app_controls | 源码确认；外部 URL 保持 |
-| 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | 源码确认；待两种尺寸 GUI、Windows |
+| 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | macOS 两尺寸/中英/缩小恢复 Passed；拖动未测位移；Windows 待验 |
 | 供应商 0/1/2/20/64、固定 CRUD | ui.rs::sidebar | 旧列表可滚动；待搜索、容量禁用与各数量 GUI |
 | 新增、复制、删除确认与取消 | ui.rs、state.rs | 源码确认；待独立草稿与取消路径验证 |
 | 未保存切换/恢复草稿 | ui.rs::capture、switch_provider、Drafts | 源码确认；待用户可见保护与 GUI |

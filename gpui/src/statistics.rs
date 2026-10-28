@@ -48,11 +48,11 @@ use std::{
     time::{Duration, Instant},
 };
 
-const BG: u32 = 0xf7f8f9;
-const INK: u32 = 0x19334d;
-const MUTED: u32 = 0x6b7c90;
-const BORDER: u32 = 0xe2e9f1;
-const OK: u32 = 0x2f8f5b;
+const BG: u32 = crate::theme::color::BG_PAGE;
+const INK: u32 = crate::theme::color::TEXT_1;
+const MUTED: u32 = crate::theme::color::TEXT_3;
+const BORDER: u32 = crate::theme::color::BORDER;
+const OK: u32 = crate::theme::color::SUCCESS;
 const WARN: u32 = 0xb7791f;
 const PANEL: u32 = 0xffffff;
 
@@ -2343,6 +2343,16 @@ impl Statistics {
 
 /// Filter row and the page header.
 impl Statistics {
+    pub fn page_title(&self) -> &'static str {
+        use preferences::View;
+        match self.view {
+            View::Overview => self.t("用量概览", "Usage overview"),
+            View::Details => self.t("用量明细", "Usage records"),
+            View::Summary => self.t("汇总分析", "Usage analysis"),
+            View::Settings => self.t("统计设置", "Statistics settings"),
+        }
+    }
+
     fn header(&self, cx: &mut Context<Self>) -> AnyElement {
         div()
             .flex()
@@ -2353,29 +2363,6 @@ impl Statistics {
             .w_full()
             .mb(px(8.))
             .flex_shrink_0()
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap_1()
-                    .min_w_0()
-                    .child(
-                        div()
-                            .text_size(px(crate::theme::font::PAGE_TITLE))
-                            .line_height(px(crate::theme::line_height::PAGE_TITLE))
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .text_color(rgb(0x242e3f))
-                            .child(self.t("使用统计", "Usage statistics")),
-                    )
-                    .child(
-                        Label::new(self.t(
-                            "查看 AI 模型的请求级使用情况、缓存命中和成本聚合",
-                            "Request-level usage, cache hits and cost aggregation",
-                        ))
-                        .text_size(px(12.))
-                        .text_color(rgb(crate::theme::color::TEXT_3)),
-                    ),
-            )
             .child(self.source_group(cx))
             .into_any_element()
     }

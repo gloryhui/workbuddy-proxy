@@ -1,9 +1,5 @@
-//! Central visual contract for the UI renewal.
-//!
-//! T01 collects the DESIGN_SPEC values in one place and installs them on the
-//! existing GPUI Kit theme. Pages migrate to these tokens incrementally in
-//! T02–T08; this module deliberately does not create a second theme state or
-//! change any page, business value, window or platform behavior.
+//! Shared native Studio V2 tokens (Figma 51:2 / implementation contract 71:364).
+//! Existing Skin palettes still own accents and saved appearance preferences.
 //!
 //! Business values (pagination sizes, retention days, token thresholds,
 //! request limits and similar) must never be added here.
@@ -22,21 +18,29 @@ pub fn apply_skin(skin: Skin, cx: &mut App) {
 
 /// Design colours from DESIGN_SPEC §1.1 and the component states in §3.
 pub mod color {
-    pub const SUCCESS: u32 = 0x15803d;
-    pub const SUCCESS_TINT: u32 = 0xf0fdf4;
+    pub const SUCCESS: u32 = 0x11976f;
+    pub const SUCCESS_TINT: u32 = 0xe9f8f1;
 
-    pub const TEXT_1: u32 = 0x1b2230;
-    pub const TEXT_2: u32 = 0x4a5366;
-    pub const TEXT_3: u32 = 0x8a93a5;
+    pub const TEXT_1: u32 = 0x161c2c;
+    pub const TEXT_2: u32 = 0x4c566d;
+    pub const TEXT_3: u32 = 0x778196;
 
-    pub const BORDER: u32 = 0xe6e9ef;
-    pub const BORDER_INPUT: u32 = 0xe1e5eb;
+    pub const BORDER: u32 = 0xe7eaf2;
+    pub const BORDER_INPUT: u32 = 0xd8dde9;
     pub const DIVIDER: u32 = 0xeef0f3;
     pub const CHECKBOX_BORDER: u32 = 0xc7ccd6;
 
-    pub const BG_PAGE: u32 = 0xf5f6f8;
-    pub const BG_BAR: u32 = 0xfbfbfc;
-    pub const BG_TABLE_HEAD: u32 = 0xf8f9fb;
+    pub const BG_PAGE: u32 = 0xf7f8fc;
+    pub const BG_BAR: u32 = 0xffffff;
+    pub const BG_TABLE_HEAD: u32 = 0xf3f5fa;
+    pub const SIDEBAR: u32 = 0x111525;
+    pub const SIDEBAR_TEXT: u32 = 0xf0f3fe;
+    pub const SIDEBAR_MUTED: u32 = 0x929bb0;
+    pub const SIDEBAR_LINE: u32 = 0x2c3246;
+    pub const SIDEBAR_ACTIVE: u32 = 0x2d3251;
+    pub const SIDEBAR_HOVER: u32 = 0x20263a;
+    pub const TERMINAL: u32 = 0x171c2c;
+    pub const TERMINAL_TEXT: u32 = 0xadb8ca;
     pub const BG_SEG: u32 = 0xedeff3;
     pub const BG_DISABLED: u32 = 0xf3f4f6;
     pub const BG_MENU_SELECTED: u32 = 0xf3f5f8;
@@ -61,7 +65,7 @@ pub mod color {
 
 /// Typography sizes from DESIGN_SPEC §1.2. Sizes are logical pixels.
 pub mod font {
-    pub const PAGE_TITLE: f32 = 22.;
+    pub const PAGE_TITLE: f32 = 28.;
     pub const DIALOG_TITLE: f32 = 18.;
     /// The card-title range is 14–16; 15 is the shared middle value.
     pub const CARD_TITLE: f32 = 15.;
@@ -77,7 +81,7 @@ pub mod font {
 
 /// Line heights paired with the sizes above.
 pub mod line_height {
-    pub const PAGE_TITLE: f32 = 28.;
+    pub const PAGE_TITLE: f32 = 41.;
     pub const DIALOG_TITLE: f32 = 24.;
     pub const BODY: f32 = 20.;
     pub const LABEL: f32 = 18.;
@@ -87,8 +91,8 @@ pub mod line_height {
 
 /// Shared spacing values. These are visual gaps/padding, not business values.
 pub mod space {
-    pub const PAGE_TOP: f32 = 6.;
-    pub const PAGE_X: f32 = 24.;
+    pub const PAGE_TOP: f32 = 32.;
+    pub const PAGE_X: f32 = 32.;
     pub const PAGE_BOTTOM: f32 = 16.;
     pub const SIDEBAR_X: f32 = 18.;
     pub const SIDEBAR_Y: f32 = 12.;
@@ -108,10 +112,10 @@ pub mod space {
 
 /// Corner radii from DESIGN_SPEC §1.3.
 pub mod radius {
-    pub const CONTROL: f32 = 8.;
+    pub const CONTROL: f32 = 9.;
     pub const TABLE: f32 = 10.;
-    pub const CARD: f32 = 12.;
-    pub const DIALOG: f32 = 16.;
+    pub const CARD: f32 = 16.;
+    pub const DIALOG: f32 = 18.;
     pub const SEGMENTED: f32 = 11.;
     pub const CHECKBOX: f32 = 4.;
     pub const MENU_OPTION: f32 = 7.;
@@ -127,15 +131,17 @@ pub mod size {
     pub const SIDEBAR_WIDTH: f32 = 256.;
     pub const RIGHT_RAIL_WIDTH: f32 = 300.;
     pub const TOP_ICON_ROW_HEIGHT: f32 = 36.;
+    /// Native drag/control strip, visually continuous with sidebar and canvas.
+    pub const NATIVE_TITLEBAR: f32 = 24.;
     /// Studio V2 SystemToolbar (Figma 103:442): seven 36px targets, six gaps.
     pub const SYSTEM_BUTTON: f32 = 36.;
     pub const SYSTEM_ICON: f32 = 20.;
     pub const SYSTEM_GAP: f32 = 8.;
     pub const SYSTEM_TOOLBAR_WIDTH: f32 = 300.;
-    pub const STATUS_BAR_HEIGHT: f32 = 30.;
-    pub const INPUT_HEIGHT: f32 = 36.;
-    pub const SELECT_HEIGHT: f32 = 36.;
-    pub const BUTTON_HEIGHT: f32 = 32.;
+    pub const STATUS_BAR_HEIGHT: f32 = 28.;
+    pub const INPUT_HEIGHT: f32 = 40.;
+    pub const SELECT_HEIGHT: f32 = 40.;
+    pub const BUTTON_HEIGHT: f32 = 36.;
     /// DESIGN_SPEC §3 "按钮通用：内边距 0 14".
     pub const BUTTON_PADDING_X: f32 = 14.;
     /// Tighter horizontal padding for buttons that share a narrow rail.
@@ -151,8 +157,8 @@ pub mod size {
     pub const SEGMENT_BUTTON_HEIGHT: f32 = 32.;
     pub const TABLE_HEADER_HEIGHT: f32 = 32.;
     pub const TABLE_ROW_HEIGHT: f32 = 56.;
-    pub const NAV_ROW_HEIGHT: f32 = 38.;
-    pub const PROVIDER_ROW_HEIGHT: f32 = 34.;
+    pub const NAV_ROW_HEIGHT: f32 = 43.;
+    pub const PROVIDER_ROW_HEIGHT: f32 = 38.;
     pub const FOOTER_HEIGHT: f32 = 44.;
     pub const STATUS_DOT: f32 = 6.;
     pub const PROVIDER_DOT: f32 = 7.;
@@ -304,11 +310,11 @@ pub fn install(cx: &mut App) {
         colors.secondary_foreground = rgb(crate::theme::palette().dark).into();
         colors.secondary_hover = rgb(crate::theme::palette().border).into();
         colors.selection = rgb(crate::theme::palette().ring).into();
-        colors.sidebar = rgb(color::BG_BAR).into();
-        colors.sidebar_accent = rgb(crate::theme::palette().tint).into();
-        colors.sidebar_accent_foreground = rgb(crate::theme::palette().dark).into();
-        colors.sidebar_border = rgb(color::BORDER).into();
-        colors.sidebar_foreground = rgb(color::TEXT_1).into();
+        colors.sidebar = rgb(color::SIDEBAR).into();
+        colors.sidebar_accent = rgb(color::SIDEBAR_ACTIVE).into();
+        colors.sidebar_accent_foreground = rgb(color::SIDEBAR_TEXT).into();
+        colors.sidebar_border = rgb(color::SIDEBAR_LINE).into();
+        colors.sidebar_foreground = rgb(color::SIDEBAR_TEXT).into();
         colors.sidebar_primary = rgb(crate::theme::palette().primary).into();
         colors.sidebar_primary_foreground = rgb(color::WHITE).into();
         colors.skeleton = rgb(color::BG_DISABLED).into();

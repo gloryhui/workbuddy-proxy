@@ -9,7 +9,7 @@
 use crate::theme::{color, font, radius, size};
 use gpui_kit::component::{
     Disableable, Icon, IconName, Sizable,
-    button::{Button, ButtonVariants},
+    button::{Button, ButtonCustomVariant, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
     input::{Input, InputState},
@@ -43,6 +43,23 @@ pub fn action_button(id: impl Into<ElementId>) -> Button {
         .h(px(size::BUTTON_HEIGHT))
         .px(px(size::BUTTON_PADDING_X))
         .rounded(px(radius::CONTROL))
+}
+
+/// Kit computes its interaction colours after generic builder hover styles.
+/// Use the native custom variant for controls on the dark navigation surface.
+pub fn sidebar_variant(active: bool, cx: &App) -> ButtonCustomVariant {
+    ButtonCustomVariant::new(cx)
+        .color(
+            rgb(if active {
+                color::SIDEBAR_ACTIVE
+            } else {
+                color::SIDEBAR
+            })
+            .into(),
+        )
+        .foreground(rgb(color::SIDEBAR_TEXT).into())
+        .hover(rgb(color::SIDEBAR_HOVER).into())
+        .active(rgb(color::SIDEBAR_ACTIVE).into())
 }
 
 /// Add icons as content: Button::icon resizes its icon during rendering,
@@ -135,7 +152,7 @@ pub fn system_button(
         .h(px(size::SYSTEM_BUTTON))
         .p_0()
         .ghost()
-        .rounded(px(9.))
+        .rounded(px(radius::CONTROL))
         .child(
             Icon::default()
                 .path(asset)
@@ -186,7 +203,7 @@ pub fn named_icon_button_sized(
         .disabled(disabled)
 }
 
-/// Text input at the design's 36px field height. The caller's `InputState` is
+/// Text input at Studio V2's 40px field height. The caller's `InputState` is
 /// passed through untouched.
 pub fn text_input(state: &Entity<InputState>, disabled: bool) -> Input {
     // Input::h is an inherent multi-line-only API in Kit 0.7.3. Use Styled::h

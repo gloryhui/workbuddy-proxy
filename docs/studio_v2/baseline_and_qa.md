@@ -53,3 +53,15 @@
 | 代理请求 p50 / p95 (ms) | 0.177 / 0.209 | 0.179 / 0.221 |
 
 原始报告：[baseline-gui.json](benchmarks/baseline-gui.json)、[toolbar-gui.json](benchmarks/toolbar-gui.json)、[corrected headless](benchmarks/baseline-core-corrected.json)。单次采样有调度与缓存差异，不能据此声称性能趋势；RSS 相加可能重复计算共享页。启动耗时也需后续多轮复测。
+
+## 小功能 3：Studio 原生窗口框架与共享 Tokens
+
+- `theme.rs` 接入官方 V2 变量：深色侧栏、画布/正文/边线/成功状态；256px 侧栏、32px 内容边距、28px 工作区状态栏、36px 按钮、40px 输入/选择、43px 导航、38px 供应商行。原六皮肤与默认黑白不变；没有迁移已有外观文件。
+- 七项工具栏进入唯一页面标题区，统计标题随概览/明细/分析/设置视图变化。原生 TitleBar 保留拖动与系统窗口控制，24px 区域视觉上与两侧背景相连，没有独立白色工具顶栏或面包屑。状态栏移至工作区底部，不跨越深色侧栏。
+- 使用现有 Kit `ButtonCustomVariant` 为深色导航指定正常/悬停/按下颜色。真实 UI 测试发现普通 builder `.hover` 被 Kit 的 variant 样式覆盖；最初修补未生效，随后按 0.7.3 源码采用 custom variant，再次实测通过，未修改依赖。
+- GPUI fmt / 155 tests / clippy / release 全部 Passed。macOS 1440×900 与 1100×700、中英、统计视图切换、六皮肤弹层与 Blue/Mono 保存、缩小再恢复尺寸均实测通过。小窗口供应商表单需要在卡片内滚动取回模型操作；工具栏与标题无重叠。导航与新增/复制 hover 对比已复验通过。
+- 原生拖动已操作，但工具没有返回屏幕坐标，尚不能断言位移验证通过；Windows 系统按钮、全屏、HiDPI/IME/键盘仍待验。
+- [1440×900 明细](screenshots/shell-1440x900.png)、[1100×700 供应商](screenshots/shell-1100x700.png)。两图来自最终 custom variant 修复版（SHA256 前缀 `2279bfb0`），各自原始窗口高出 1 点，仅裁去底部窗口框，没有重绘。
+- 本批只完成原生框架。供应商搜索、完整侧栏导航/本地状态卡、两块式编辑区、统计筛选重排与各弹窗视觉仍未完成。
+- [shell-gui.json](benchmarks/shell-gui.json)：同口径单次核心/UI/托盘空闲 RSS 为 13.80/74.50/26.92 MiB，两者合计 88.30 MiB，峰值 132.55 MiB；核心/UI 记录就绪为 230.179/932.980 ms。没有加入新计时器或持续重绘，不从单次波动推断性能改善。
+- 本轮全部隔离进程已退出并等待，测试配置、数据库、程序副本和原始截图清理约 139,360 KiB；修复前问题截图暂留 184 KiB，最终截图/JSON 已保存在仓库。系统盘剩余约 39 GiB。

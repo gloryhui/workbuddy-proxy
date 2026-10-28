@@ -51,9 +51,9 @@ enum CoreState {
     Unreachable,
 }
 
-const BG: u32 = 0xf7f8f9;
-const INK: u32 = 0x19334d;
-const MUTED: u32 = 0x6b7c90;
+const BG: u32 = crate::theme::color::BG_PAGE;
+const INK: u32 = crate::theme::color::TEXT_1;
+const MUTED: u32 = crate::theme::color::TEXT_3;
 // T03 skeleton geometry comes from the T01 tokens in `theme`: 224px sidebar,
 // 36px title toolbar, 30px status bar, 34px provider rows. Only the brand mark
 // and the provider panel's title row have no token and stay local. Page bodies
@@ -75,9 +75,9 @@ fn navigation_title(text: &'static str, active: bool) -> Label {
             FontWeight::NORMAL
         })
         .text_color(rgb(if active {
-            crate::theme::palette().dark
+            crate::theme::color::SIDEBAR_TEXT
         } else {
-            crate::theme::color::TEXT_1
+            crate::theme::color::SIDEBAR_MUTED
         }))
 }
 #[derive(Clone)]
@@ -871,6 +871,10 @@ impl Proxy {
         })
         .detach();
         this.load_form(window, cx);
+        // The shared heading follows the statistics view without duplicating
+        // the report's state or changing its refresh cadence.
+        cx.observe(&this.statistics, |_, _, cx| cx.notify())
+            .detach();
         this.switch_page(Page::Statistics, window, cx);
         this.focus.focus(window, cx);
         cx.subscribe(&this.search, |_, _, event, cx| {
@@ -1998,14 +2002,16 @@ impl Proxy {
                     .h(px(crate::theme::size::PROVIDER_ROW_HEIGHT))
                     .px_2()
                     .rounded(px(crate::theme::radius::CONTROL))
-                    .when(active, |this| this.bg(rgb(crate::theme::palette().tint)))
-                    .when(!active, |this| this.bg(rgb(crate::theme::color::BG_PAGE)))
+                    .when(active, |this| {
+                        this.bg(rgb(crate::theme::color::SIDEBAR_ACTIVE))
+                    })
+                    .when(!active, |this| this.bg(rgb(crate::theme::color::SIDEBAR)))
                     // The pre-T03 `SidebarMenuItem` was disabled as a whole while
                     // busy: no click handler ran and the row read as muted. Keep
                     // both halves so the row cannot act or look active.
                     .when(self.busy, |this| this.opacity(0.55))
                     .when(!self.busy, |this| {
-                        this.hover(|this| this.bg(rgb(crate::theme::palette().tint)))
+                        this.hover(|this| this.bg(rgb(crate::theme::color::SIDEBAR_HOVER)))
                     })
                     .role(Role::TreeItem)
                     .aria_label(name.clone())
@@ -2034,7 +2040,7 @@ impl Proxy {
                         div()
                             .flex_shrink_0()
                             .text_size(px(crate::theme::font::SMALL))
-                            .text_color(rgb(crate::theme::color::TEXT_3))
+                            .text_color(rgb(crate::theme::color::SIDEBAR_MUTED))
                             .child(count.to_string()),
                     )
                     .on_click(cx.listener(move |this, _, window, cx| {
@@ -2118,18 +2124,18 @@ impl Proxy {
             .when(self.providers_expanded, |panel| {
                 panel
                     .flex_1()
-                    .bg(rgb(crate::theme::color::WHITE))
+                    .bg(rgb(crate::theme::color::SIDEBAR))
                     .border_1()
-                    .border_color(rgb(crate::theme::color::BORDER))
+                    .border_color(rgb(crate::theme::color::SIDEBAR_LINE))
             })
             .child(
                 Button::new("nav-providers")
-                    .ghost()
+                    .custom(crate::ui_components::sidebar_variant(providers_active, cx))
                     .w_full()
                     .h(px(crate::theme::size::NAV_ROW_HEIGHT))
                     .flex_shrink_0()
                     .when(providers_active, |button| {
-                        button.bg(rgb(crate::theme::palette().tint))
+                        button.bg(rgb(crate::theme::color::SIDEBAR_ACTIVE))
                     })
                     .accessibility_label(self.t("供应商管理", "Providers"))
                     .tooltip(if self.providers_expanded {
@@ -2204,6 +2210,8 @@ impl Proxy {
                             .min_w_0()
                             .px(px(1.))
                             .tooltip(self.t("新增供应商", "Add provider"))
+                            .text_color(rgb(crate::theme::color::SIDEBAR_TEXT))
+                            .custom(crate::ui_components::sidebar_variant(false, cx))
                             .accessibility_label(self.t("新增供应商", "Add provider"))
                             .on_click(cx.listener(|this, _, _, cx| {
                                 this.capture(cx);
@@ -2223,6 +2231,8 @@ impl Proxy {
                             .min_w_0()
                             .px(px(1.))
                             .tooltip(self.t("复制供应商", "Duplicate provider"))
+                            .text_color(rgb(crate::theme::color::SIDEBAR_TEXT))
+                            .custom(crate::ui_components::sidebar_variant(false, cx))
                             .accessibility_label(self.t("复制供应商", "Duplicate provider"))
                             .on_click(cx.listener(|this, _, _, cx| {
                                 let mut steps = this.dirty_steps(cx);
@@ -2261,20 +2271,20 @@ impl Proxy {
             .w(px(crate::theme::size::SIDEBAR_WIDTH))
             .h_full()
             .px(px(crate::theme::space::SIDEBAR_X))
-            .py(px(crate::theme::space::SIDEBAR_Y))
-            .bg(rgb(crate::theme::color::BG_BAR))
-            .border_r_1()
-            .border_color(rgb(crate::theme::color::BORDER))
+            .pt(px(41.))
+            .pb(px(crate::theme::space::SIDEBAR_Y))
+            .bg(rgb(crate::theme::color::SIDEBAR))
+            .text_color(rgb(crate::theme::color::SIDEBAR_TEXT))
             .child(brand)
             .child(
                 Button::new("nav-statistics")
-                    .ghost()
+                    .custom(crate::ui_components::sidebar_variant(statistics_active, cx))
                     .w_full()
                     .h(px(crate::theme::size::NAV_ROW_HEIGHT))
                     .flex_shrink_0()
                     .justify_start()
                     .when(statistics_active, |button| {
-                        button.bg(rgb(crate::theme::palette().tint))
+                        button.bg(rgb(crate::theme::color::SIDEBAR_ACTIVE))
                     })
                     .accessibility_label(self.t("数据统计", "Statistics"))
                     .child(div().flex().flex_1().items_center().child(navigation_title(
@@ -3469,10 +3479,49 @@ impl Render for Proxy {
         let right = self.right(cx);
         self.manage_dialog(window, cx);
         let status_bar = self.status_bar();
-        // Window skeleton (DESIGN_SPEC §2): the fixed 224px sidebar sits beside
-        // the main column (36px top icon row over the page body), and the 30px
-        // status bar spans the full window width underneath both. Only the page
-        // bodies scroll; the sidebar tool row and the status bar stay put.
+        let title = match self.page {
+            Page::Providers => self.t("连接与模型", "Connections & models"),
+            Page::Statistics => self.statistics.read(cx).page_title(),
+        };
+        let subtitle = match self.page {
+            Page::Providers => self.t(
+                "管理上游协议、凭证和 WorkBuddy 可用模型",
+                "Manage upstream protocols, credentials and WorkBuddy models",
+            ),
+            Page::Statistics => self.t(
+                "掌握模型请求、Token 消耗与缓存表现",
+                "Explore model requests, token usage and cache performance",
+            ),
+        };
+        let heading = div()
+            .flex()
+            .flex_col()
+            .flex_shrink_0()
+            .gap(px(8.))
+            .pb(px(28.))
+            .child(
+                div()
+                    .flex()
+                    .items_start()
+                    .gap_4()
+                    .child(
+                        div()
+                            .flex_1()
+                            .min_w_0()
+                            .text_size(px(crate::theme::font::PAGE_TITLE))
+                            .line_height(px(crate::theme::line_height::PAGE_TITLE))
+                            .font_weight(FontWeight::BOLD)
+                            .child(title),
+                    )
+                    .child(self.app_controls(cx)),
+            )
+            .child(
+                Label::new(subtitle)
+                    .text_size(px(crate::theme::font::BODY))
+                    .text_color(rgb(crate::theme::color::TEXT_3)),
+            );
+        // One page title and action row, beside the sidebar. The native strip
+        // only owns OS controls/dragging and blends into both surfaces.
         let content = div()
             .relative()
             .key_context("Proxy")
@@ -3494,44 +3543,52 @@ impl Render for Proxy {
                         .flex_1()
                         .min_w_0()
                         .min_h_0()
-                        .px(px(crate::theme::space::PAGE_X))
-                        .pt(px(crate::theme::space::PAGE_TOP))
-                        .pb(px(crate::theme::space::PAGE_BOTTOM))
-                        .gap(px(crate::theme::space::SECTION_GAP))
                         .child(
                             div()
                                 .flex()
-                                .gap_3()
+                                .flex_col()
                                 .flex_1()
                                 .min_h_0()
-                                .child(center)
-                                .when(self.page == Page::Providers, |this| this.child(right)),
-                        ),
+                                .px(px(crate::theme::space::PAGE_X))
+                                .pt(px(crate::theme::space::PAGE_TOP))
+                                .pb(px(crate::theme::space::PAGE_BOTTOM))
+                                .gap(px(crate::theme::space::SECTION_GAP))
+                                .child(heading)
+                                .child(
+                                    div()
+                                        .flex()
+                                        .gap_3()
+                                        .flex_1()
+                                        .min_h_0()
+                                        .child(center)
+                                        .when(self.page == Page::Providers, |this| {
+                                            this.child(right)
+                                        }),
+                                ),
+                        )
+                        .child(status_bar),
                 ),
-            )
-            .child(status_bar);
+            );
         div()
             .size_full()
             .flex()
             .flex_col()
             .child(
                 TitleBar::new()
-                    .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
+                    .h(px(crate::theme::size::NATIVE_TITLEBAR))
+                    .pl_0()
                     .bg(rgb(BG))
                     .border_b_0()
                     // Kit reserves macOS traffic lights on the left and adds
                     // native Windows min/max/close hit areas on the right.
-                    .child(div().flex_1().min_w_0().h_full())
                     .child(
                         div()
+                            .w(px(crate::theme::size::SIDEBAR_WIDTH))
+                            .flex_shrink_0()
                             .h_full()
-                            .pr(px(if cfg!(target_os = "macos") {
-                                crate::theme::space::PAGE_X
-                            } else {
-                                8.
-                            }))
-                            .child(self.app_controls(cx)),
-                    ),
+                            .bg(rgb(crate::theme::color::SIDEBAR)),
+                    )
+                    .child(div().flex_1().min_w_0().h_full()),
             )
             .child(content.flex_1().min_h_0())
     }
