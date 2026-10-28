@@ -1,0 +1,33 @@
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit",
+  "architecture": "arm64",
+  "mode": "native GUI",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 8428096,
+  "idle_rss_mib": 86.14,
+  "core_idle_rss_mib": 12.58,
+  "measured_process_count": 2,
+  "ui_idle_rss_mib": 73.56,
+  "tray_idle_rss_mib": 26.48,
+  "core_ready_ms": 236.086,
+  "ui_record_ready_ms": 911.043,
+  "sampled_peak_rss_mib": 131.45,
+  "post_load_rss_mib": 131.47,
+  "small_request_count": 200,
+  "direct_loopback_ms": {
+    "p50": 0.216,
+    "p95": 0.484
+  },
+  "proxied_loopback_ms": {
+    "p50": 0.18,
+    "p95": 0.223
+  },
+  "median_proxy_overhead_ms": -0.036,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.089,
+  "notes": "RSS sums instance.json core and gpui.json settings PIDs (shared pages can be counted twice); tray RSS is separate, headless has one PID. UI readiness is the gpui.json marker, not first paint or interactivity. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied."
+}

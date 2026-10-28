@@ -223,6 +223,93 @@ pub fn compact_input(state: &Entity<InputState>, disabled: bool) -> Input {
     text_input(state, disabled)
 }
 
+/// The sidebar uses the same native input and editing engine, with a local
+/// paint projection. Changing the global theme here would also recolor the
+/// bright workspace and refresh every window on each input render.
+#[derive(IntoElement)]
+pub struct SidebarSearch {
+    state: Entity<InputState>,
+    label: SharedString,
+    clear_label: SharedString,
+}
+
+pub fn sidebar_search(
+    state: &Entity<InputState>,
+    label: impl Into<SharedString>,
+    clear_label: impl Into<SharedString>,
+) -> SidebarSearch {
+    SidebarSearch {
+        state: state.clone(),
+        label: label.into(),
+        clear_label: clear_label.into(),
+    }
+}
+
+impl RenderOnce for SidebarSearch {
+    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
+        let clear_state = self.state.clone();
+        let has_text = !self.state.read(cx).value().is_empty();
+        let clear_style = ButtonCustomVariant::new(cx)
+            .color(rgb(color::SIDEBAR_HOVER).into())
+            .foreground(rgb(color::SIDEBAR_TEXT).into())
+            .hover(rgb(color::SIDEBAR_ACTIVE).into())
+            .active(rgb(color::SIDEBAR_ACTIVE).into());
+        let clear = Button::new("provider-search-clear")
+            .custom(clear_style)
+            .with_size(px(24.))
+            .size(px(24.))
+            .p_0()
+            .accessibility_label(self.clear_label.clone())
+            .tooltip(self.clear_label)
+            .child(
+                Icon::new(IconName::Close)
+                    .with_size(px(12.))
+                    .text_color(rgb(color::SIDEBAR_MUTED)),
+            )
+            .on_click(move |_, window, cx| {
+                clear_state.update(cx, |state, cx| state.set_value("", window, cx));
+                clear_state.read(cx).focus_handle(cx).focus(window, cx);
+            });
+        let input = RenderOnce::render(
+            Styled::h(
+                Input::new(&self.state)
+                    .large()
+                    .when(has_text, |input| input.suffix(clear))
+                    .aria_label(self.label)
+                    .prefix(
+                        Icon::default()
+                            .path("studio/provider-search.svg")
+                            .with_size(px(17.))
+                            .text_color(rgb(color::SIDEBAR_MUTED)),
+                    )
+                    .text_color(rgb(color::SIDEBAR_TEXT))
+                    .bg(rgb(color::SIDEBAR_HOVER))
+                    .border_color(rgb(color::SIDEBAR_HOVER))
+                    .rounded(px(radius::CONTROL)),
+                px(size::PROVIDER_ROW_HEIGHT),
+            ),
+            window,
+            cx,
+        )
+        .into_any_element();
+        // Kit installs its global editor palette while building the input.
+        // Project only this single-line state's paint colours after that,
+        // before the existing input entity performs layout and paint.
+        self.state.update(cx, |state, _| {
+            state.set_editor_style(gpui_kit::base::input::InputEditorStyle {
+                foreground: rgb(color::SIDEBAR_TEXT).into(),
+                muted_foreground: rgb(color::SIDEBAR_MUTED).into(),
+                background: rgb(color::SIDEBAR_HOVER).into(),
+                border: rgb(color::SIDEBAR_LINE).into(),
+                selection: rgb(crate::theme::sidebar_selection()).into(),
+                caret: rgb(color::SIDEBAR_TEXT).into(),
+                ..Default::default()
+            });
+        });
+        input
+    }
+}
+
 /// Select wrapper; the state, items and keyboard behavior stay with the caller.
 pub fn select<D>(state: &Entity<SelectState<D>>, disabled: bool) -> Select<D>
 where

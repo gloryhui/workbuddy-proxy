@@ -16,6 +16,23 @@ pub fn apply_skin(skin: Skin, cx: &mut App) {
     install(cx);
 }
 
+/// A monochrome accent must remain visible on the midnight navigation surface.
+pub fn sidebar_accent() -> u32 {
+    if current_skin() == Skin::Monochrome {
+        color::SIDEBAR_TEXT
+    } else {
+        palette().primary
+    }
+}
+
+pub fn sidebar_selection() -> u32 {
+    if current_skin() == Skin::Monochrome {
+        0x52525b
+    } else {
+        palette().primary
+    }
+}
+
 /// Design colours from DESIGN_SPEC §1.1 and the component states in §3.
 pub mod color {
     pub const SUCCESS: u32 = 0x11976f;
@@ -39,6 +56,7 @@ pub mod color {
     pub const SIDEBAR_LINE: u32 = 0x2c3246;
     pub const SIDEBAR_ACTIVE: u32 = 0x2d3251;
     pub const SIDEBAR_HOVER: u32 = 0x20263a;
+    pub const SIDEBAR_DANGER: u32 = 0xc94f5e;
     pub const TERMINAL: u32 = 0x171c2c;
     pub const TERMINAL_TEXT: u32 = 0xadb8ca;
     pub const BG_SEG: u32 = 0xedeff3;
@@ -129,6 +147,10 @@ pub mod size {
     /// ~193px (widest label is the English "Delete"), plus footer padding,
     /// card border and both 18px sidebar insets.
     pub const SIDEBAR_WIDTH: f32 = 256.;
+    pub const SIDEBAR_BRAND: f32 = 38.;
+    pub const SIDEBAR_ICON: f32 = 18.;
+    pub const SIDEBAR_STATUS: f32 = 104.;
+    pub const SIDEBAR_STATUS_COMPACT: f32 = 76.;
     pub const RIGHT_RAIL_WIDTH: f32 = 300.;
     pub const TOP_ICON_ROW_HEIGHT: f32 = 36.;
     /// Native drag/control strip, visually continuous with sidebar and canvas.

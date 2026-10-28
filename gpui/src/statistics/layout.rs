@@ -15,9 +15,12 @@ pub(super) fn kind_choices(zh: bool) -> Vec<Choice> {
 }
 
 impl Statistics {
-    fn select_view(&mut self, view: View, cx: &mut Context<Self>) {
+    pub(super) fn select_view(&mut self, view: View, cx: &mut Context<Self>) {
         if self.view == view {
             return;
+        }
+        if self.view != View::Settings {
+            self.last_report_view = self.view;
         }
         self.view = view;
         self.tab = if view == View::Summary {
@@ -34,6 +37,18 @@ impl Statistics {
             self.refresh(cx);
         }
         cx.notify();
+    }
+
+    pub fn is_settings_view(&self) -> bool {
+        self.view == View::Settings
+    }
+
+    pub fn open_workspace(&mut self, settings: bool, cx: &mut Context<Self>) {
+        if settings {
+            self.select_view(View::Settings, cx);
+        } else if self.view == View::Settings {
+            self.select_view(self.last_report_view, cx);
+        }
     }
 
     pub(super) fn view_tabs(&self, cx: &mut Context<Self>) -> AnyElement {

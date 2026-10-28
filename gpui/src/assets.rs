@@ -10,6 +10,27 @@ impl AssetSource for Assets {
         }
         // Original Studio V2 vectors from the shared seven-action toolbar.
         let studio: Option<&'static [u8]> = match path {
+            "studio/nav-chart.svg" => Some(include_bytes!("../assets/studio/nav-chart.svg")),
+            "studio/nav-server.svg" => Some(include_bytes!("../assets/studio/nav-server.svg")),
+            "studio/nav-settings.svg" => Some(include_bytes!("../assets/studio/nav-settings.svg")),
+            "studio/relay-activity.svg" => {
+                Some(include_bytes!("../assets/studio/relay-activity.svg"))
+            }
+            "studio/relay-link.svg" => Some(include_bytes!("../assets/studio/relay-link.svg")),
+            "studio/supplier-selected.svg" => {
+                Some(include_bytes!("../assets/studio/supplier-selected.svg"))
+            }
+            "studio/supplier-default.svg" => {
+                Some(include_bytes!("../assets/studio/supplier-default.svg"))
+            }
+            "studio/supplier-add.svg" => Some(include_bytes!("../assets/studio/supplier-add.svg")),
+            "studio/supplier-copy.svg" => {
+                Some(include_bytes!("../assets/studio/supplier-copy.svg"))
+            }
+            "studio/supplier-delete.svg" => {
+                Some(include_bytes!("../assets/studio/supplier-delete.svg"))
+            }
+            "studio/brand.png" => Some(include_bytes!("../assets/studio/brand.png")),
             "studio/provider-search.svg" => {
                 Some(include_bytes!("../assets/studio/provider-search.svg"))
             }
