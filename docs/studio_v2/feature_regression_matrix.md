@@ -24,8 +24,8 @@
 | 未知/缺失、缓存、Token 完整性 | usage_chart/continuity.rs、usage_table.rs | 源码确认；保留现有统计语义，待自动回归 |
 | CNY/USD/积分、价格快照与规则 CRUD | statistics.rs、stats_backend.rs | 源码确认；待 GUI |
 | 采集、保留天数、本地导入去重 | statistics/import_controls*、workbuddy_import.rs | 源码确认；待自动回归与 GUI |
-| 真实代理状态、计数、端口 | ui.rs::right、core_state、status_bar | 源码确认；未知/未响应不能显示正常 |
-| 最近 100 条日志、清空/复制/滚动 | ui.rs::tick、right | 源码确认；待无新日志不抢阅读位置验证 |
+| 真实代理状态、计数、端口 | ui/relay.rs、core_state、status_bar | macOS 合成2供应商/6模型/1请求、暂停核心未响应/恢复、复制完整端点 Passed；端口0/65536拒绝、确认Esc/取消不重启 Passed；真实重启/回滚待验 |
+| 最近 100 条日志、清空/复制/滚动 | ui.rs::snapshot、ui/relay.rs、ui_components::TerminalLogs | macOS 深色只读选择/复制/清空、无新日志5秒不抢首部、新日志到底 Passed；100条上限源码确认 |
 | 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | 正常关窗 UI 退出/核心 health 200/重开恢复 Passed；托盘唤醒及单实例待验 |
 | 六皮肤/中英/HiDPI/无障碍 | theme.rs、ui_components.rs | 待 macOS GUI；Windows 未实际验证 |
 

@@ -10,6 +10,11 @@ impl AssetSource for Assets {
         }
         // Original Studio V2 vectors from the shared seven-action toolbar.
         let studio: Option<&'static [u8]> = match path {
+            "studio/runtime-activity.svg" => {
+                Some(include_bytes!("../assets/studio/runtime-activity.svg"))
+            }
+            "studio/runtime-copy.svg" => Some(include_bytes!("../assets/studio/runtime-copy.svg")),
+            "studio/log-terminal.svg" => Some(include_bytes!("../assets/studio/log-terminal.svg")),
             "studio/profile-edit.svg" => Some(include_bytes!("../assets/studio/profile-edit.svg")),
             "studio/model-edit.svg" => Some(include_bytes!("../assets/studio/model-edit.svg")),
             "studio/nav-chart.svg" => Some(include_bytes!("../assets/studio/nav-chart.svg")),

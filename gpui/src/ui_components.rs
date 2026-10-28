@@ -12,7 +12,7 @@ use gpui_kit::component::{
     button::{Button, ButtonCustomVariant, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
-    input::{Input, InputState},
+    input::{Input, InputState, Textarea, TextareaState},
     label::Label,
     searchable_list::{SearchableListDelegate, SearchableListItem},
     select::{Select, SelectState},
@@ -563,4 +563,57 @@ pub fn calendar(
         .border_1()
         .border_color(rgb(color::BORDER))
         .rounded(px(radius::CARD))
+}
+
+/// A local paint projection over the existing read-only log editor. It keeps
+/// selection, clipboard and scroll state in the original native entity.
+#[derive(IntoElement)]
+pub struct TerminalLogs {
+    state: Entity<TextareaState>,
+    mono: SharedString,
+    label: SharedString,
+}
+
+pub fn terminal_logs(
+    state: &Entity<TextareaState>,
+    mono: SharedString,
+    label: impl Into<SharedString>,
+) -> TerminalLogs {
+    TerminalLogs {
+        state: state.clone(),
+        mono,
+        label: label.into(),
+    }
+}
+
+impl RenderOnce for TerminalLogs {
+    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
+        let editor = RenderOnce::render(
+            Textarea::new(&self.state)
+                .readonly(true)
+                .bordered(false)
+                .aria_label(self.label)
+                .font_family(self.mono)
+                .text_size(px(12.))
+                .line_height(px(20.))
+                .bg(rgb(color::TERMINAL))
+                .text_color(rgb(color::TERMINAL_TEXT))
+                .h_full(),
+            window,
+            cx,
+        )
+        .into_any_element();
+        self.state.update(cx, |state, _| {
+            state.set_editor_style(gpui_kit::base::input::InputEditorStyle {
+                foreground: rgb(color::TERMINAL_TEXT).into(),
+                muted_foreground: rgb(color::SIDEBAR_MUTED).into(),
+                background: rgb(color::TERMINAL).into(),
+                border: rgb(color::TERMINAL_LINE).into(),
+                selection: rgb(crate::theme::sidebar_selection()).into(),
+                caret: rgb(color::SIDEBAR_TEXT).into(),
+                ..Default::default()
+            });
+        });
+        editor
+    }
 }

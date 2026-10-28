@@ -58,6 +58,7 @@ pub mod color {
     pub const SIDEBAR_HOVER: u32 = 0x20263a;
     pub const SIDEBAR_DANGER: u32 = 0xc94f5e;
     pub const TERMINAL: u32 = 0x171c2c;
+    pub const TERMINAL_LINE: u32 = 0x2d3548;
     pub const TERMINAL_TEXT: u32 = 0xadb8ca;
     pub const BG_SEG: u32 = 0xedeff3;
     pub const BG_DISABLED: u32 = 0xf3f4f6;

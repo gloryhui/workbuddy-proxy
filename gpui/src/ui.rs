@@ -1,4 +1,5 @@
 mod providers;
+mod relay;
 mod sidebar;
 mod skin_controls;
 use crate::{
@@ -11,7 +12,7 @@ use gpui_kit::component::{
     ActiveTheme, ElementExt, Icon, IconName, InteractiveElementExt as _, Selectable, Sizable,
     TitleBar, WindowExt,
     button::{Button, ButtonVariants},
-    input::{InputEvent, InputState, Textarea, TextareaState},
+    input::{InputEvent, InputState, TextareaState},
     label::Label,
     list::ListItem,
     menu::{DropdownMenu, PopupMenuItem},
@@ -179,6 +180,7 @@ pub struct Proxy {
     effort: String,
     selection: Selection,
     table_focus: FocusHandle,
+    modal_focus: FocusHandle,
     model_table: Entity<TableState<crate::model_table::Models>>,
     table_width: Pixels,
     dialog_open: bool,
@@ -199,6 +201,8 @@ pub struct Proxy {
     startup_checked: bool,
     startup_report: Option<crate::workbuddy_status::EndpointCheck>,
     startup_sync_open: bool,
+    port_open: bool,
+    port_error: bool,
     pending_port: Option<u16>,
     resetting_window: bool,
     skin_open: bool,
@@ -701,6 +705,7 @@ impl Proxy {
         let logs = cx.new(|cx| TextareaState::new(window, cx));
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle();
+        let modal_focus = cx.focus_handle();
         let owner = cx.entity().downgrade();
         let model_table = cx.new(|cx| {
             TableState::new(
@@ -767,6 +772,7 @@ impl Proxy {
             effort: "keep".into(),
             selection: Selection::default(),
             table_focus,
+            modal_focus,
             model_table,
             table_width: px(0.),
             dialog_open: false,
@@ -787,6 +793,8 @@ impl Proxy {
             startup_checked: false,
             startup_report: None,
             startup_sync_open: false,
+            port_open: false,
+            port_error: false,
             pending_port: None,
             resetting_window: false,
             skin_open: false,
@@ -1083,6 +1091,7 @@ impl Proxy {
             || self.sync_open
             || self.unsync_open
             || self.startup_sync_open
+            || self.port_open
             || self.pending_port.is_some()
         {
             return;
@@ -1478,6 +1487,7 @@ impl Proxy {
             && !self.dialog_open
             && !self.sync_open
             && !self.unsync_open
+            && !self.port_open
             && self.pending_port.is_none()
             && !self.protocol_open
             && self.editing.is_none()
@@ -1647,7 +1657,7 @@ impl Proxy {
             self.startup_report = None;
         }
         self.startup_sync_open = false;
-        if self.pending_port.take().is_some() {
+        if self.pending_port.take().is_some() || self.port_open {
             let current = self
                 .proxy_address
                 .parse::<reqwest::Url>()
@@ -1658,6 +1668,8 @@ impl Proxy {
                 state.set_value(current.to_string(), window, cx)
             });
         }
+        self.port_open = false;
+        self.port_error = false;
         self.protocol_open = false;
         self.focus.focus(window, cx);
         cx.notify();
@@ -1763,6 +1775,7 @@ impl Proxy {
             || self.sync_open
             || self.unsync_open
             || self.startup_sync_open
+            || self.port_open
             || self.pending_port.is_some()
             || self.protocol_open;
         if active && !self.dialog_open {
@@ -1787,12 +1800,14 @@ impl Proxy {
                 // the window root would leave the modal focus trap inactive and
                 // let Tab/Enter reach background controls (T09 X03).
                 self.protocol_options.initial_focus(cx)
+            } else if self.port_open {
+                self.port.read(cx).focus_handle(cx)
             } else if self.picker.is_some() {
                 self.search.read(cx).focus_handle(cx)
             } else if self.editing.is_some() {
                 self.edit_model.read(cx).focus_handle(cx)
             } else {
-                self.focus.clone()
+                self.modal_focus.clone()
             };
             let first = std::cell::Cell::new(true);
             window.open_dialog(cx, move |dialog, window, cx| {
@@ -1808,7 +1823,9 @@ impl Proxy {
                     .child(body.clone())
                     .on_ok(move |_, window, cx| {
                         let _ = confirm_owner.update(cx, |this, cx| {
-                            if this.protocol_open {
+                            if this.port_open {
+                                this.prepare_port(window, cx);
+                            } else if this.protocol_open {
                                 this.confirm_protocol(window, cx);
                             } else if this.editing.is_some() {
                                 this.confirm_edit(cx);
@@ -1998,313 +2015,10 @@ impl Proxy {
             .into_any_element()
     }
 
-    /// Right rail (DESIGN_SPEC §4.3): the global-settings card above the log
-    /// card, at the design's 300px base width. The rail itself does not scroll;
-    /// the log area inside its card does.
-    fn right(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
-        div()
-            .w(px(if window.viewport_size().width < px(1280.) {
-                300.
-            } else {
-                348.
-            }))
-            .flex_shrink_0()
-            .flex()
-            .flex_col()
-            .gap(px(crate::theme::space::SECTION_GAP))
-            .child(self.global_settings_card(cx))
-            .child(self.log_card(cx))
-            .into_any_element()
-    }
-
-    /// Global settings card: the WorkBuddy sync actions, the local-relay
-    /// sub-card (status, address, port confirmation entry, live counters) and
-    /// the platform note. All callbacks are the pre-existing ones.
-    fn global_settings_card(&mut self, cx: &mut Context<Self>) -> AnyElement {
-        let (dot, text, text_color) = self.core_indicator();
-        let mono = cx.theme().mono_font_family.clone();
-        rail_card("global-settings")
-            .flex_shrink_0()
-            .child(
-                div()
-                    .text_size(px(crate::theme::font::CARD_TITLE))
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .child(self.t("全局设置", "Global settings")),
-            )
-            .when(self.error && self.editing.is_none(), |this| {
-                this.child(
-                    Label::new(self.status.clone())
-                        .text_size(px(crate::theme::font::SMALL))
-                        .text_color(rgb(crate::theme::color::DANGER)),
-                )
-            })
-            .child(
-                div()
-                    .id("workbuddy-sync-actions")
-                    .w_full()
-                    .flex()
-                    .items_center()
-                    .gap(px(crate::theme::space::ROW_GAP))
-                    .child(
-                        crate::ui_components::button(
-                            "sync",
-                            crate::ui_components::ButtonKind::Primary,
-                            self.t("同步 WorkBuddy", "Sync WorkBuddy"),
-                            self.busy,
-                            false,
-                        )
-                        .px(px(crate::theme::size::BUTTON_X_TIGHT))
-                        .child(crate::ui_components::action_icon(IconName::RefreshCw))
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            this.sync_open = true;
-                            cx.notify();
-                        })),
-                    )
-                    .child(
-                        crate::ui_components::button(
-                            "restore",
-                            crate::ui_components::ButtonKind::Normal,
-                            self.t("取消同步", "Unsync"),
-                            self.busy,
-                            false,
-                        )
-                        .px(px(crate::theme::size::BUTTON_X_TIGHT))
-                        .child(crate::ui_components::action_icon(IconName::Delete))
-                        .tooltip(self.t(
-                            "移除代理同步到 WorkBuddy 的模型",
-                            "Remove proxy models synced to WorkBuddy",
-                        ))
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            this.unsync_open = true;
-                            cx.notify();
-                        })),
-                    ),
-            )
-            .child(
-                Label::new(self.t(
-                    "新增或修改模型后，旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy，再继续原会话。",
-                    "After model changes, fully quit and reopen WorkBuddy if an existing conversation reports a missing URL or key; then continue that conversation.",
-                ))
-                .text_size(px(crate::theme::font::SMALL))
-                .line_height(px(16.))
-                .text_color(rgb(crate::theme::color::TEXT_3)),
-            )
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap(px(crate::theme::space::CARD_GAP))
-                    .p(px(crate::theme::space::CARD_SM))
-                    .rounded(px(crate::theme::radius::TABLE))
-                    .bg(rgb(crate::theme::color::BG_PAGE))
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .justify_between()
-                            .child(
-                                Label::new(self.t("本地代理", "Local relay"))
-                                    .text_size(px(crate::theme::font::BODY)),
-                            )
-                            .child(
-                                // D13: this entry used to print a hardcoded
-                                // "running" state. It reports the same trusted
-                                // core state as the status bar, rendered as the
-                                // design's dot plus label (T04).
-                                div()
-                                    .flex()
-                                    .items_center()
-                                    .gap(px(crate::theme::space::SMALL))
-                                    .child(
-                                        div()
-                                            .w(px(crate::theme::size::STATUS_DOT))
-                                            .h(px(crate::theme::size::STATUS_DOT))
-                                            .rounded_full()
-                                            .bg(rgb(dot)),
-                                    )
-                                    .child(
-                                        Label::new(text)
-                                            .text_size(px(crate::theme::font::SMALL))
-                                            .text_color(rgb(text_color)),
-                                    ),
-                            ),
-                    )
-                    .child(
-                        Label::new(self.proxy_address.clone())
-                            .font_family(mono.clone())
-                            .text_size(px(crate::theme::font::BODY))
-                            .text_color(rgb(crate::theme::palette().dark)),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap(px(crate::theme::space::ROW_GAP))
-                            .child(
-                                div()
-                                    .w(px(60.))
-                                    .text_size(px(crate::theme::font::LABEL))
-                                    .text_color(rgb(crate::theme::color::TEXT_3))
-                                    .child(self.t("本地端口", "Local port")),
-                            )
-                            .child(
-                                div().w(px(110.)).child(
-                                    crate::ui_components::text_input(&self.port, self.busy)
-                                        .aria_label(self.t("本地端口", "Local port")),
-                                ),
-                            )
-                            .child(
-                                crate::ui_components::named_icon_button(
-                                    "port-apply",
-                                    IconName::Check,
-                                    self.t("应用端口", "Apply port"),
-                                    self.t("应用端口", "Apply port"),
-                                    self.busy,
-                                )
-                                .on_click(cx.listener(|this, _, _, cx| {
-                                    match this
-                                        .port
-                                        .read(cx)
-                                        .value()
-                                        .parse::<u16>()
-                                        .ok()
-                                        .filter(|p| *p > 0)
-                                    {
-                                        Some(port) => {
-                                            let current = this.proxy_address.parse::<reqwest::Url>().ok().and_then(|u| u.port_or_known_default()).unwrap_or(this.cfg.port);
-                                            if port != current {
-                                                this.pending_port = Some(port);
-                                                cx.notify();
-                                            }
-                                        }
-                                        None => {
-                                            this.error = true;
-                                            this.status = this
-                                                .t(
-                                                    "请输入 1–65535 的端口号",
-                                                    "Enter a port from 1 to 65535",
-                                                )
-                                                .into();
-                                            cx.notify();
-                                        }
-                                    }
-                                })),
-                            ),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .gap(px(crate::theme::space::CARD_GAP))
-                            .children(
-                                [
-                                    self.t("供应商", "Providers"),
-                                    self.t("模型", "Models"),
-                                    self.t("请求", "Requests"),
-                                ]
-                                .into_iter()
-                                .zip(self.proxy_counts)
-                                .map(|(name, count)| {
-                                    div()
-                                        .flex_1()
-                                        .flex()
-                                        .flex_col()
-                                        .gap(px(crate::theme::space::TIGHT))
-                                        .child(
-                                            Label::new(count.to_string())
-                                                .font_weight(FontWeight::SEMIBOLD)
-                                                .text_size(px(crate::theme::font::CARD_TITLE)),
-                                        )
-                                        .child(
-                                            Label::new(name)
-                                                .text_size(px(crate::theme::font::SMALL))
-                                                .text_color(rgb(crate::theme::color::TEXT_3)),
-                                        )
-                                }),
-                            ),
-                    ),
-            )
-            .into_any_element()
-    }
-
-    /// Log card with its own scrolling text area; the clear and copy entries
-    /// keep their original callbacks and payload.
-    fn log_card(&mut self, cx: &mut Context<Self>) -> AnyElement {
-        let mono = cx.theme().mono_font_family.clone();
-        rail_card("log-panel")
-            .flex_1()
-            .min_h_0()
-            .child(
-                div()
-                    .flex_shrink_0()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(
-                        div()
-                            .text_size(px(crate::theme::font::CARD_TITLE))
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .child(self.t("日志", "Logs")),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap(px(crate::theme::space::SMALL))
-                            .child(
-                                crate::ui_components::named_icon_button(
-                                    "clear-logs",
-                                    IconName::Delete,
-                                    self.t("清空日志", "Clear logs"),
-                                    self.t("清空日志", "Clear logs"),
-                                    self.busy,
-                                )
-                                .on_click(cx.listener(
-                                    |this, _, _, cx| {
-                                        this.send(
-                                            "clear_logs",
-                                            vec![json!({"command":"clear_logs"})],
-                                            cx,
-                                        )
-                                    },
-                                )),
-                            )
-                            .child(
-                                crate::ui_components::named_icon_button(
-                                    "copy-logs",
-                                    IconName::Copy,
-                                    self.t("复制日志", "Copy logs"),
-                                    self.t("复制日志", "Copy logs"),
-                                    false,
-                                )
-                                .on_click(cx.listener(
-                                    |this, _, _, cx| {
-                                        cx.write_to_clipboard(ClipboardItem::new_string(format!(
-                                            "{}\n\n{}",
-                                            this.summary, this.log_text
-                                        )));
-                                        this.status = this.t("日志已复制", "Logs copied").into();
-                                        this.error = false;
-                                        cx.notify();
-                                    },
-                                )),
-                            ),
-                    ),
-            )
-            .child(
-                div().flex_1().min_h_0().child(
-                    Textarea::new(&self.logs)
-                        .readonly(true)
-                        .bordered(false)
-                        .font_family(mono)
-                        .text_size(px(crate::theme::font::SMALL))
-                        .line_height(px(16.))
-                        .h_full(),
-                ),
-            )
-            .into_any_element()
-    }
     fn dialog_body(&mut self, window: &Window, cx: &mut Context<Self>) -> Option<AnyElement> {
-        let content = if self.protocol_open {
+        let content = if self.port_open {
+            self.port_dialog(cx)
+        } else if self.protocol_open {
             crate::ui_components::dialog_body_sized(window.viewport_size().height, 210., 360., 570.)
                 .child(crate::ui_components::dialog_title(
                     self.t("上游协议选项", "Upstream protocol options"),
@@ -3025,7 +2739,15 @@ struct ModalBody {
 impl Render for ModalBody {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         self.owner
-            .update(cx, |this, cx| this.dialog_body(window, cx))
+            .update(cx, |this, cx| {
+                this.dialog_body(window, cx).map(|body| {
+                    div()
+                        .id("proxy-modal-body")
+                        .track_focus(&this.modal_focus)
+                        .child(body)
+                        .into_any_element()
+                })
+            })
             .ok()
             .flatten()
             .unwrap_or_else(|| div().into_any_element())
