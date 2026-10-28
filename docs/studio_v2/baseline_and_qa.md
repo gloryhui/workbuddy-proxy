@@ -368,3 +368,30 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 最初同机基线核心/UI/合计为13.88/75.27/89.14 MiB，核心/UI累计就绪45.924/796.346 ms，请求p50/p95为0.177/0.209 ms。当前核心启动标记比最初慢，但核心二进制未改，当前205.687ms处于后续既有复测约196–741ms范围；单次波动不作为改善或退化归因。累计就绪标记不等于首帧/可交互，专项仍未完成；未重复测试已通过且无新增疑点的基准。
 
 - 两套隔离GUI/Core及mock均正常退出并wait（UI/Core退出码0），两次关UI后核心健康仍ready；子代理核查PID和路径引用后仅清理自有夹具46,576 KiB。基准正常退出0，主代理确认sandbox_check enforced、核心PID已退出及专属根无lsof引用，再清理构建日志/上版UI副本/基准副本37,568 KiB。累计84,144 KiB（约82.17 MiB），本轮专属临时剩余0 bytes；两项归属未明历史空目录各0 KiB保留，Cargo共享缓存及交付截图/JSON/报告保留。系统盘当前剩余40.89 GiB。
+
+
+## 小功能 21：原生模型能力编辑弹窗（2026-10-29，北京时间）
+
+- 官方MCP读取 `59:279` 与独立弹窗 `59:484` 的高保真context/截图，将旧模型编辑与能力控件提取到 `ui/model_editor.rs`。原生Dialog宽728px、高800px、900px窗内top45px；小窗高度随视口收缩，固定62px标题区与确认/取消底栏，六组表单通过Kit ScrollableMask和独立ScrollHandle滚动。保留默认思考强度Select（设计静态图未呈现的原功能），通过同一思考标题行容纳而不删除该字段。
+- `model_options.rs` 继续拥有自动/手动状态、真实元数据来源、四个InputState、正整数/上下文解析与原验证器；六项Flag读写/依赖实现原样转移并离线逐字核对。默认强度事件、自动元数据的模型/地址/协议身份校验与只在自动模式应用的门控保留，没有新增轮询/重绘计时器。能力说明通过原生Popover完整保留图片附件/其他媒体透传/完整Chat URL说明，未知图片能力仍直接显示警告。
+- 五个支持档位改为原生Kit toggle Button，使用真实pressed状态和原生Check向量，保留low/medium/high/xhigh/max集合排序与默认档位必须被支持的验证；这五档属于模型能力声明，不替代协议请求覆盖中的none/minimal等映射。模型名称/ID两列、自动识别卡、三列×两行能力、两列×两行限制均来自原Input/Select状态。
+- 表单各组使用非Tab停靠的原生FocusHandle作用域，焦点进入任一原生Input/Checkbox/Select/Button时将完整组滚入视野；不增加额外Tab停靠。新增model_edit_error保存本弹窗校验错误，普通后台刷新不清除，打开/取消/成功确认才清除；原空ID、能力校验、总量256校验、草稿确认与显式保存处理器保留，补齐总量拒绝后的notify。
+- 首版快检暴露field helper的flex_none抵消flex_1、使身份/限制列被收缩；最终改为flex_shrink_0并重建，真实复验列宽各约330px。等宽修复后的 `09ddb90f` 版fmt / 167 tests / 严格clippy（all-targets、-D warnings）/ release Passed；UI 15,043,760 bytes / SHA256 `09ddb90fb0d7d15bf246d991dc255816cf29be99845c62e73778e0b8b5751adc`，核心仍8,428,096 bytes / `25f24ad6`。既有block0.1.6未来兼容提示保留，核心/配置格式/热路径未改。
+- 09ddb等宽版宽窗真实快检：728×800、top45、固定头尾、两列字段完整；deepseek-v4.1-flash自动预设显示图片/思考开启、输入1,000,000、默认上下文300,000及128,000/300,000/1,000,000选择。后续手动/错误/两尺寸截图、性能和清理结果见下。
+
+- 真实业务回归：未知模型自动模式直接显示图片能力未确认/未自动开启，切手动后图片/思考/Chat自定义协议可修改；手动等待4秒值未被元数据覆盖。思考关闭时Only/AllowOff禁用，开启Only时自动关闭并禁用AllowOff；取消对默认high的支持后确认被拒绝，固定底栏错误等待8秒仍保留，说明Popover Esc只关浮层而保留模态。
+- 手动确认前后隔离Core的capabilities都仍为null；显式供应商Save后才实读为supportsToolCall/supportsImages/supportsReasoning/onlyReasoning/useCustomProtocol=true，canDisableThinking=false，默认high、支持[high,max]，最大输入4096/输出1024，默认上下文2048、选项[1024,2048,4096]。Token -1与默认上下文不在列表会被拒绝，修正后Enter确认成功。所有配置、上游及模型均为隔离合成数据。
+
+- Chat下自定义协议可选，Responses/Anthropic/Gemini分别打开已存手动模型后均显示off/禁用、点击不变；仅切换隔离UI协议草稿，没有保存或同步真实WorkBuddy。核心原有native entry生成路径会强制忽略自定义Chat URL标志（源码核对），该逻辑未改。空ID Enter显示Model ID is required且保留模态；X后重开恢复原ID，Cancel/Esc各自改名后重开恢复原显示名。
+- 小窗实测发现错误底栏增加高度、以及带底部焦点缩窗后，原焦点字段会被遮住；滚动条还覆盖右边Help末字/输入边框。仅在render中发scroll_to_item未解决：核对GPUI源码，Div::prepaint先消费active-item请求，后续clamp_scroll_position才更新新viewport bounds，因此请求按旧高度被认为“已可见”。现改为只在几何变化时通过on_next_frame于本次布局完成后发一次滚动请求/notify；原生focus-in与7个Input/Select直接焦点监听记录最近表单组，bounds observer仅在模型模态激活时notify。普通render不触发校正，没有timer或持续动画；需滚动时留12px thumb空隙，宽窗无滚动保留设计字段宽度。最终候选 `a5e5256d` 通过fmt / 167 tests / 严格clippy / release，UI15,043,776 bytes / SHA256 `a5e5256db7e68fdb5004c992dd2330615820506c22b5f5ccfa683a59e5d9c2ab`；最终真实补验与图见下。
+
+- a5焦点修复实际补验：宽窗聚焦Context choices实时缩到1100×700，以及新开1100小窗在该字段Enter触发无效上下文，两条落定路径的字段/光标均完整位于错误底栏上方。错误时手动向上滚动等待8.5秒不回跳；Tab跨身份/能力/档位/限制/上下文会将字段滚入，Shift+Tab返回默认上下文也可见。
+- 随后发现旧confirm_edit会将本地校验错误写入共享Runtime状态，取消后仍显示红字。本批将空ID、能力校验、总量256失败的反馈仅写入model_edit_error，保留原验证器与成功草稿流程，避免覆盖后台状态。最终 `df39cf6c` 版fmt / 167 tests / 严格clippy / release Passed，UI15,043,776 bytes / SHA256 `df39cf6c8dfda376aa909589ab7a08311558c2dc75995052cc5247cee0e906b1`。实测局部错误与字段/底栏同屏，Esc后Runtime无校验红字；最终图均用此版重拍，代表性保存与进程收尾见下。
+
+- 主代理已逐张查看最终df39版四张真实PNG：[1440×900中文Studio自动预设](screenshots/model-editor-auto-1440x900.png)、[1100×700英文Mono手动能力/档位](screenshots/model-editor-manual-1100x700.png)、[小窗四限制字段](screenshots/model-editor-fields-1100x700.png)、[无效context后当前字段/错误/固定底栏同屏](screenshots/model-editor-error-1100x700.png)。表单文字/字段/按钮完整、gutter无文字遮挡，均为1合成供应商/2模型/0请求，只裁截图通道底部多出的1px；旧候选宽窗error图已移除，不混作最终证据。
+- df39另验Esc与Cancel回Runtime均无校验错误外溢。截图时手动输入上限仍为4096；随后修正再Confirm，Core仍4096且页面Unsaved draft，显式供应商Save后Core才8192。该代表性保存与先前完整flags/context对象核对分开记录，不以截图4096冒充保存后的8192。
+- 最终UI/Core/fixture退出码均0并wait，关UI后Core health HTTP200再正常停止；性能/清理见下。Goal保持active，下一批继续模型/协议及同步确认弹窗；原40帧最终精细对照、完整IME/无障碍与Windows/Intel Mac/HiDPI仍未完成。
+
+- 同机release默认Providers页 [model-editor-gui.json](benchmarks/model-editor-gui.json)：核心/UI/合计12.47/74.14/86.61 MiB，采样峰值132.22 MiB，托盘另计25.67 MiB；核心/UI累计就绪443.112/1072.183 ms，差629.071 ms；请求p50/p95为0.165/0.191 ms。仍为1供应商64模型、200小请求与80×1MiB/4并发、本地mock，sandbox_check enforced且基准正常退出0，核心二进制仍25f24ad6。
+- 最初基线核心/UI/合计13.88/75.27/89.14 MiB，核心/UI累计就绪45.924/796.346 ms，请求p50/p95为0.177/0.209 ms。上轮模型选择为12.70/72.08/84.78 MiB及205.687/735.351 ms；本轮UI累计标记比上轮高337ms，其中核心累计标记高237ms，差629ms在后续已有约475–755ms范围。保留全部原始结果，不把单次RSS/启动/请求差异归因于代码或宣称改善；就绪标记仍不等于首帧/可交互，专项未完成。
+- 所有隔离UI/Core/mock已正常退出并wait，关UI后核心HTTP200；子代理仅清理确切自有夹具47,244 KiB。主代理核对基准sandbox_check enforced、核心PID退出及专属根无lsof引用，再清理旧UI副本/构建日志/基准副本37,820 KiB。累计85,064 KiB（约83.07 MiB），本轮专属临时剩余0 bytes；两项归属未明历史空目录各0 KiB保留，Cargo共享缓存与交付截图/JSON/报告保留。系统盘剩余40.86 GiB。

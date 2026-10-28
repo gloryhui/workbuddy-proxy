@@ -1,3 +1,4 @@
+mod model_editor;
 mod model_picker;
 mod providers;
 mod relay;
@@ -171,6 +172,11 @@ pub struct Proxy {
     edit_name: Entity<InputState>,
     edit_model: Entity<InputState>,
     pub(crate) model_options: crate::model_options::OptionsEditor,
+    model_edit_error: Option<String>,
+    model_editor_scroll: ScrollHandle,
+    model_editor_layout: Option<(Pixels, bool)>,
+    model_editor_focused_row: usize,
+    model_editor_focus: [FocusHandle; 6],
     logs: Entity<TextareaState>,
     log_text: String,
     summary: String,
@@ -774,6 +780,11 @@ impl Proxy {
             edit_name,
             edit_model,
             model_options,
+            model_edit_error: None,
+            model_editor_scroll: ScrollHandle::new(),
+            model_editor_layout: None,
+            model_editor_focused_row: 0,
+            model_editor_focus: std::array::from_fn(|_| cx.focus_handle().tab_stop(false)),
             logs,
             log_text: String::new(),
             summary: String::new(),
@@ -894,6 +905,7 @@ impl Proxy {
             }
         })
         .detach();
+        this.subscribe_model_editor_focus(window, cx);
         this.load_form(window, cx);
         // Current-provider labels and save state follow editing events, rather
         // than waiting for an idle draft-persistence tick to redraw the UI.
@@ -1582,6 +1594,10 @@ impl Proxy {
         }
         self.error = false;
         self.editing = Some(i);
+        self.model_edit_error = None;
+        self.model_editor_layout = None;
+        self.model_editor_focused_row = 0;
+        self.model_editor_scroll.set_offset(point(px(0.), px(0.)));
         self.new_model = new;
         let row = self.models.get(i).cloned().unwrap_or(json!({}));
         self.edit_name.update(cx, |s, cx| {
@@ -1600,9 +1616,6 @@ impl Proxy {
         self.edit_model.read(cx).focus_handle(cx).focus(window, cx);
         cx.notify();
     }
-    pub(crate) fn is_chinese(&self) -> bool {
-        self.zh
-    }
     pub(crate) fn model_id_for_options(&self, cx: &App) -> String {
         self.edit_model.read(cx).value().to_string()
     }
@@ -1612,16 +1625,14 @@ impl Proxy {
         }
         let id = self.edit_model.read(cx).value().trim().to_owned();
         if id.is_empty() {
-            self.status = self.t("请填写模型 ID", "Model ID is required").into();
-            self.error = true;
+            self.model_edit_error = Some(self.t("请填写模型 ID", "Model ID is required").into());
             cx.notify();
             return;
         }
         let capabilities = match self.model_options.read(cx) {
             Ok(value) => value,
             Err(error) => {
-                self.status = crate::i18n::message(&error, self.zh);
-                self.error = true;
+                self.model_edit_error = Some(crate::i18n::message(&error, self.zh));
                 cx.notify();
                 return;
             }
@@ -1644,8 +1655,9 @@ impl Proxy {
                 + self.models.len()
                 >= 256
             {
-                self.status = self.t("最多支持 256 个模型", "At most 256 models").into();
-                self.error = true;
+                self.model_edit_error =
+                    Some(self.t("最多支持 256 个模型", "At most 256 models").into());
+                cx.notify();
                 return;
             }
             self.models.push(row);
@@ -1653,6 +1665,7 @@ impl Proxy {
             self.models[i] = row;
         }
         self.editing = None;
+        self.model_edit_error = None;
         self.error = false;
         self.capture(cx);
         self.status = self
@@ -1663,6 +1676,7 @@ impl Proxy {
     fn dismiss(&mut self, _: &Dismiss, window: &mut Window, cx: &mut Context<Self>) {
         self.picker = None;
         self.editing = None;
+        self.model_edit_error = None;
         self.delete_open = false;
         self.sync_open = false;
         self.unsync_open = false;
@@ -1751,6 +1765,7 @@ impl Proxy {
                 }
             });
             let is_picker = self.picker.is_some();
+            let is_model_editor = self.editing.is_some();
             let width = if self.protocol_open {
                 crate::theme::size::DIALOG_PROTOCOL_WIDTH
             } else if self.picker.is_some() || self.editing.is_some() {
@@ -1779,7 +1794,23 @@ impl Proxy {
                 }
                 let confirm_owner = owner.clone();
                 let owner = owner.clone();
-                let dialog = if is_picker {
+                let dialog = if is_model_editor {
+                    let height = model_editor::surface_height(window);
+                    let content_body = body.clone();
+                    dialog
+                        .width(px(728.))
+                        .h(height)
+                        .p(px(26.))
+                        .pt(px(20.))
+                        .pb(px(20.))
+                        .bg(rgb(crate::theme::color::BG_BAR))
+                        .rounded(px(18.))
+                        .border_color(rgb(crate::theme::color::BORDER))
+                        .margin_top(
+                            ((window.viewport_size().height - height) / 2. - px(5.)).max(px(16.)),
+                        )
+                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                } else if is_picker {
                     let height = model_picker::surface_height(window);
                     let content_body = body.clone();
                     dialog
@@ -2032,67 +2063,7 @@ impl Proxy {
         } else if self.picker.is_some() {
             self.picker_dialog(window, cx)
         } else if self.editing.is_some() {
-            crate::ui_components::dialog_body_sized(window.viewport_size().height, 210., 360., 570.)
-                .child(crate::ui_components::dialog_title(if self.new_model {
-                    self.t("添加模型", "Add model")
-                } else {
-                    self.t("编辑模型", "Edit model")
-                }))
-                .child(
-                    crate::ui_components::scrollable_form("model-editor-fields")
-                        .child(
-                            div()
-                                .flex()
-                                .flex_col()
-                                .gap(px(crate::theme::space::SMALL))
-                                .child(field_label(self.t("显示名", "Display name")))
-                                .child(crate::ui_components::text_input(&self.edit_name, false)),
-                        )
-                        .child(
-                            div()
-                                .flex()
-                                .flex_col()
-                                .gap(px(crate::theme::space::SMALL))
-                                .child(field_label(self.t("模型 ID", "Model ID")))
-                                .child(crate::ui_components::text_input(&self.edit_model, false)),
-                        )
-                        .child(crate::model_options::render(self, cx)),
-                )
-                .when(self.error, |this| {
-                    this.child(
-                        Label::new(self.status.clone())
-                            .text_size(px(crate::theme::font::LABEL))
-                            .text_color(rgb(crate::theme::color::DANGER)),
-                    )
-                })
-                .child(
-                    crate::ui_components::dialog_footer()
-                        .child(
-                            crate::ui_components::button(
-                                "edit-cancel",
-                                crate::ui_components::ButtonKind::Normal,
-                                self.t("取消", "Cancel"),
-                                false,
-                                false,
-                            )
-                            .on_click(
-                                cx.listener(|this, _, window, cx| {
-                                    this.dismiss(&Dismiss, window, cx)
-                                }),
-                            ),
-                        )
-                        .child(
-                            crate::ui_components::button(
-                                "edit-confirm",
-                                crate::ui_components::ButtonKind::Primary,
-                                self.t("确认", "Confirm"),
-                                false,
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, _, cx| this.confirm_edit(cx))),
-                        ),
-                )
-                .into_any_element()
+            self.model_editor_dialog(window, cx)
         } else if let Some(port) = self.pending_port {
             crate::ui_components::dialog_body()
                 .w_full()
