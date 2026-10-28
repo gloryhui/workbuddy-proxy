@@ -18,6 +18,7 @@ use crate::{
     usage_chart::{ChartMode, ChartPoint, SeriesKind, UsagePlot},
     usage_table::{self, GroupRows, UsageRows},
 };
+mod analysis;
 mod event_metrics;
 mod import_controls;
 mod layout;
@@ -241,6 +242,7 @@ pub struct Statistics {
     import_ui: import_controls::ImportUi,
     mapping_ui: mapping_controls::MappingUi,
     page_scroll: ScrollHandle,
+    analysis_scroll: ScrollHandle,
     mapping_from: Entity<InputState>,
     mapping_to: Entity<InputState>,
     /// The filter generation and the one request it owes.
@@ -655,6 +657,7 @@ impl Statistics {
             import_ui: import_controls::ImportUi::new(),
             mapping_ui: mapping_controls::MappingUi::default(),
             page_scroll: ScrollHandle::new(),
+            analysis_scroll: ScrollHandle::new(),
             mapping_from,
             mapping_to,
             coordinator: crate::stats_controller::FilterCoordinator::new(),
@@ -3091,47 +3094,6 @@ impl Statistics {
 
     /// Tabs, table and pagination.
     fn details(&self, cx: &mut Context<Self>) -> AnyElement {
-        let tab_button = |id: &'static str, tab: Tab, label: String| {
-            let active = self.tab == tab;
-            stats_button(id)
-                .label(label)
-                .when(active, |button| button.primary().outline())
-                .when(!active, |button| button.ghost())
-                .on_click(cx.listener(move |this, _, window, cx| {
-                    if this.tab == tab {
-                        return;
-                    }
-                    this.tab = tab;
-                    this.summary_tab = tab;
-                    this.persist_preferences();
-                    this.reset_pagination();
-                    // Leaving a tab invalidates its outstanding read at once:
-                    // the reply that is already in flight must not land in the
-                    // tab the user just opened.
-                    this.rows_gate.invalidate();
-                    this.groups_gate.invalidate();
-                    match tab {
-                        Tab::Requests => this.request_rows(cx),
-                        _ => this.request_groups(cx),
-                    }
-                    let _ = window;
-                    cx.notify();
-                }))
-        };
-        let sort_button = |id: &'static str, sort: SortMetric, label: String| {
-            let active = self.group_sort == sort;
-            stats_button(id)
-                .when(!active, |button| button.ghost())
-                .when(active, |button| button.primary().outline())
-                .label(label)
-                .on_click(cx.listener(move |this, _, _, cx| {
-                    this.group_sort = sort;
-                    this.reset_pagination();
-                    if this.tab != Tab::Requests {
-                        this.request_groups(cx);
-                    }
-                }))
-        };
         let table: AnyElement = match self.tab {
             // Studio V2 uses a separate eight-column request log. Aggregate
             // rows retain their native table and existing sort handlers.
@@ -3139,7 +3101,8 @@ impl Statistics {
                 .header_row_height(px(39.))
                 .into_any_element(),
             _ => crate::ui_components::table(&self.group_table)
-                .with_size(px(36.))
+                .with_size(px(43.))
+                .header_row_height(px(38.))
                 .into_any_element(),
         };
         stats_card("stats-details")
@@ -3197,53 +3160,7 @@ impl Statistics {
                     )
             })
             .when(self.tab != Tab::Requests, |panel| {
-                panel.child(
-                    div()
-                        .flex()
-                        .flex_shrink_0()
-                        .flex_wrap()
-                        .items_center()
-                        .justify_between()
-                        .child(
-                            div()
-                                .flex()
-                                .items_center()
-                                .gap_2()
-                                .child(tab_button(
-                                    "tab-providers",
-                                    Tab::Providers,
-                                    self.t("供应商统计", "Providers").to_owned(),
-                                ))
-                                .child(tab_button(
-                                    "tab-models",
-                                    Tab::Models,
-                                    self.t("模型统计", "Models").to_owned(),
-                                ))
-                                .when(self.tab != Tab::Requests, |this| {
-                                    this.child(
-                                        div()
-                                            .flex()
-                                            .items_center()
-                                            .gap_2()
-                                            .child(
-                                                Label::new(self.t("排序", "Sort"))
-                                                    .text_size(px(crate::theme::font::LABEL))
-                                                    .text_color(rgb(MUTED)),
-                                            )
-                                            .child(sort_button(
-                                                "sort-tokens",
-                                                SortMetric::TotalTokens,
-                                                self.t("总 Token", "Total tokens").to_owned(),
-                                            ))
-                                            .child(sort_button(
-                                                "sort-requests",
-                                                SortMetric::RequestCount,
-                                                self.t("请求数", "Requests").to_owned(),
-                                            )),
-                                    )
-                                }),
-                        ),
-                )
+                panel.child(self.analysis_table_header(cx))
             })
             .child(
                 div()
@@ -3343,6 +3260,9 @@ impl Statistics {
             .gap_2()
             .flex_wrap()
             .flex_shrink_0()
+            .when(self.tab != Tab::Requests, |footer| {
+                footer.child(self.analysis_sort_control(cx))
+            })
             .child(
                 Label::new(format!(
                     "{} {}/{}{} · {}{} {}",

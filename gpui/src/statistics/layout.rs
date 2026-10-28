@@ -272,7 +272,7 @@ impl Statistics {
 
     pub(super) fn report_body(&self, cx: &mut Context<Self>) -> AnyElement {
         match self.view {
-            View::Details | View::Summary => div()
+            View::Details => div()
                 .flex()
                 .flex_col()
                 .flex_1()
@@ -281,6 +281,37 @@ impl Statistics {
                 .overflow_hidden()
                 .child(self.report_totals())
                 .child(self.details(cx))
+                .into_any_element(),
+            View::Summary => div()
+                .flex()
+                .flex_col()
+                .flex_1()
+                .min_h_0()
+                .gap_2()
+                .overflow_hidden()
+                .child(self.report_totals())
+                .child(
+                    div()
+                        .id("statistics-analysis-scroll")
+                        .track_scroll(&self.analysis_scroll)
+                        .flex()
+                        .flex_col()
+                        .flex_1()
+                        .min_h_0()
+                        .overflow_y_scroll()
+                        .gap(px(18.))
+                        .child(
+                            div()
+                                .w_full()
+                                .h(px(321.))
+                                .flex_none()
+                                .flex()
+                                .flex_col()
+                                .min_h_0()
+                                .child(self.details(cx)),
+                        )
+                        .child(self.analysis_cards()),
+                )
                 .into_any_element(),
             View::Overview => div()
                 .id("statistics-overview-scroll")

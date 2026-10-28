@@ -10,7 +10,7 @@ use crate::{
 };
 use chrono::{Local, TimeZone as _};
 use gpui_kit::component::{
-    ActiveTheme, Sizable,
+    Sizable,
     label::Label,
     table::{Column, TableDelegate, TableState},
     tag::Tag,
@@ -1054,9 +1054,9 @@ impl TableDelegate for GroupRows {
                 } else {
                     "Model"
                 },
-                220.,
+                if zh { 258. } else { 244. },
             ),
-            1 => ("requests", if zh { "请求" } else { "Requests" }, 150.),
+            1 => ("requests", if zh { "请求数" } else { "Requests" }, 110.),
             2 => (
                 "tokens",
                 if zh {
@@ -1064,14 +1064,26 @@ impl TableDelegate for GroupRows {
                 } else {
                     "Input / Output"
                 },
-                190.,
+                if zh { 254. } else { 235. },
             ),
-            3 => ("cache", if zh { "缓存命中" } else { "Cache hit" }, 150.),
-            4 => ("cost", if zh { "估算费用" } else { "Est. cost" }, 170.),
+            3 => (
+                "cache",
+                if zh {
+                    "缓存命中率"
+                } else {
+                    "Cache hit rate"
+                },
+                if zh { 210. } else { 180. },
+            ),
+            4 => (
+                "cost",
+                if zh { "估算费用" } else { "Est. cost" },
+                if zh { 149. } else { 140. },
+            ),
             _ => (
                 "coverage",
                 if zh { "用量覆盖" } else { "Usage coverage" },
-                150.,
+                if zh { 104. } else { 150. },
             ),
         };
         Column::new(id, title)
@@ -1085,9 +1097,15 @@ impl TableDelegate for GroupRows {
         &mut self,
         row: usize,
         _: &mut Window,
-        cx: &mut Context<TableState<Self>>,
+        _: &mut Context<TableState<Self>>,
     ) -> Stateful<Div> {
-        div().id(("group-row", row)).bg(cx.theme().background)
+        div()
+            .id(("group-row", row))
+            .bg(rgb(if row.is_multiple_of(2) {
+                0xffffff
+            } else {
+                0xf4f6ff
+            }))
     }
 
     fn render_td(
@@ -1108,7 +1126,7 @@ impl TableDelegate for GroupRows {
                     model_label(&item.key, zh),
                     item.provider_count
                 )),
-                0x19334d,
+                crate::theme::color::TEXT_1,
                 ("group-key", row),
             ),
             1 => cell(
@@ -1122,7 +1140,7 @@ impl TableDelegate for GroupRows {
                     if zh { "取消" } else { "Cancelled" },
                     summary.cancelled_count
                 )),
-                0x19334d,
+                crate::theme::color::TEXT_1,
                 ("group-requests", row),
             ),
             2 => cell(
@@ -1139,7 +1157,7 @@ impl TableDelegate for GroupRows {
                     exact(summary.output_tokens),
                     exact(summary.total_tokens)
                 )),
-                0x19334d,
+                crate::theme::color::TEXT_1,
                 ("group-tokens", row),
             ),
             3 => cell(
@@ -1154,7 +1172,7 @@ impl TableDelegate for GroupRows {
                     summary.cache_read_known_count,
                     summary.request_count
                 )),
-                0x19334d,
+                crate::theme::palette().dark,
                 ("group-cache", row),
             ),
             4 => {
@@ -1174,7 +1192,7 @@ impl TableDelegate for GroupRows {
                             }
                             .into(),
                         ),
-                        0x19334d,
+                        crate::theme::color::TEXT_1,
                         ("group-cost", row),
                     );
                 }
@@ -1193,9 +1211,9 @@ impl TableDelegate for GroupRows {
                         .join(" · ")
                 };
                 cell(
-                    text,
+                    text.clone(),
                     Some(format!(
-                        "{} {}\n{} {}",
+                        "{text}\n{} {}\n{} {}",
                         if zh {
                             "已定价请求"
                         } else {
@@ -1209,7 +1227,7 @@ impl TableDelegate for GroupRows {
                         if zh { "未定价" } else { "Unpriced" },
                         summary.unpriced_request_count
                     )),
-                    0x19334d,
+                    crate::theme::color::TEXT_1,
                     ("group-cost", row),
                 )
             }
@@ -1219,7 +1237,11 @@ impl TableDelegate for GroupRows {
                     "{}/{}",
                     summary.usage_complete_count, summary.usage_eligible_count
                 )),
-                0x19334d,
+                if summary.usage_coverage.is_some() {
+                    crate::theme::color::SUCCESS
+                } else {
+                    crate::theme::color::TEXT_3
+                },
                 ("group-coverage", row),
             ),
         }
