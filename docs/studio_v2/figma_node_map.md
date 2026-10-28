@@ -13,7 +13,7 @@
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续 |
-| 60:475 | 10 / STUDIO V2 · 请求详情 | statistics.rs, detail_metadata, usage_table.rs | 部分：最近请求入口/正确ID/Esc已验，详情整帧视觉待续 |
+| 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 部分：650×770原生分组/两尺寸/真实代理与导入/完整元数据换行/本次快照/错误重试/各关闭路径已验；Tooltip视觉、完整无障碍/跨平台与精细审计待续 |
 | 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -70,3 +70,5 @@
 采集/存储 `58:272` 与导入 `58:301` 已拆为原生双卡，窄窗纵排；真实设置/模式、21供应商有界分页/内层滚动、六计数与checkpoint、增量/完整核对及全局截止清理取消/确认已回归。旧“仍为原控件组”段落保留作阶段历史，当前范围以主表和最新QA记录为准；整帧及价格模态框视觉仍待续。
 
 价格模态框 `60:249` / `69:359` 已落地原生 `statistics/price_layout.rs`：42px字段、四价格2×2、独立表单滚动、固定取消/保存/错误底栏，保留备注与旧修订确认。已验两尺寸、中英文/Studio及Mono、键盘字段自动滚入视野与版本冲突恢复；此前“视觉待施工”是历史进度，精细视觉/IME/无障碍及跨平台仍待最终审计。
+
+请求详情 `60:475` / `60:692` 已提取原生 `statistics/detail_layout.rs`，650×770固定头/提示/关闭底栏，15行主摘要与独立滚动；原额外metadata和价格快照在原生More浮层完整换行保留。真实代理/导入/失败/SSE、费用快照、同ID错误重试/恢复、关闭及复制ID已回归；Tooltip仍受CUA hover能力限制未作视觉验收，精细视觉/无障碍/跨平台继续保留待办。

@@ -19,6 +19,7 @@ use crate::{
     usage_table::{self, GroupRows, UsageRows},
 };
 mod analysis;
+mod detail_layout;
 mod event_metrics;
 mod import_controls;
 mod layout;
@@ -341,6 +342,10 @@ pub struct Statistics {
     visible_series: BTreeSet<SeriesKind>,
     details: Option<RequestDetailDto>,
     detail_open: bool,
+    detail_request_id: Option<String>,
+    detail_error: Option<String>,
+    detail_scroll: ScrollHandle,
+    detail_metadata_scroll: ScrollHandle,
     // P1.
     settings: Option<SettingsDto>,
     provider_modes: BTreeMap<String, ProviderSettingsDto>,
@@ -703,6 +708,10 @@ impl Statistics {
             ]),
             details: None,
             detail_open: false,
+            detail_request_id: None,
+            detail_error: None,
+            detail_scroll: ScrollHandle::new(),
+            detail_metadata_scroll: ScrollHandle::new(),
             settings: None,
             provider_modes: BTreeMap::new(),
             prices: Vec::new(),
@@ -1692,6 +1701,9 @@ impl Statistics {
                 if kind == JobKind::Prices {
                     self.prices_loading = false;
                 }
+                if kind == JobKind::Detail {
+                    self.detail_error = Some(failure.clone());
+                }
                 if dashboard_reply {
                     self.pending_dashboard = false;
                 }
@@ -1963,7 +1975,18 @@ impl Statistics {
         }
         if tag.starts_with("detail-") {
             if let Ok(detail) = serde_json::from_value::<RequestDetailDto>(value) {
-                self.details = Some(detail);
+                if self.detail_request_id.as_deref() == Some(detail.request.request_id.as_str()) {
+                    self.detail_error = None;
+                    self.details = Some(detail);
+                } else {
+                    self.detail_error = Some(
+                        self.t(
+                            "请求标识不匹配，请重试读取",
+                            "Request ID mismatch; retry reading the record",
+                        )
+                        .to_owned(),
+                    );
+                }
             }
             return;
         }
@@ -2011,382 +2034,6 @@ impl Statistics {
                 window.on_next_frame(move |window, cx| anchor.scroll_to(window, cx));
             }
         }
-    }
-
-    pub(crate) fn open_detail(&mut self, row: usize, window: &mut Window, cx: &mut Context<Self>) {
-        let Some(item) = self.rows.get(row) else {
-            return;
-        };
-        let request_id = item.request_id.clone();
-        self.open_detail_id(request_id, window, cx);
-    }
-
-    fn open_detail_id(&mut self, request_id: String, window: &mut Window, cx: &mut Context<Self>) {
-        let tag = format!("detail-{}", self.generation);
-        let request = crate::stats_backend::command(
-            "stats_request_detail",
-            &tag,
-            json!({"request_id": request_id}),
-        );
-        self.detail_seq =
-            self.backend
-                .submit_read(JobKey::Detail(request_id.clone()), tag, request);
-        self.details = None;
-        self.detail_open = true;
-        self.open_detail_dialog(window, cx);
-    }
-
-    fn open_detail_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {
-        let owner = cx.entity().downgrade();
-        let observer = cx.entity().clone();
-        let body = cx.new(|cx| {
-            cx.observe(&observer, |_, _, cx| cx.notify()).detach();
-            DetailBody {
-                owner: owner.clone(),
-            }
-        });
-        window.open_dialog(cx, move |dialog, _window, _cx| {
-            let close_owner = owner.clone();
-            dialog
-                .w(px(680.))
-                .close_button(true)
-                .overlay_closable(true)
-                .child(body.clone())
-                .on_close(move |_, _, cx| {
-                    let _ = close_owner.update(cx, |this, cx| {
-                        this.detail_seq = 0;
-                        this.detail_open = false;
-                        this.details = None;
-                        cx.notify();
-                    });
-                })
-                .on_ok(move |_, _, _| true)
-        });
-    }
-}
-
-/// Dialog body rendered from the owner's state.
-struct DetailBody {
-    owner: WeakEntity<Statistics>,
-}
-
-impl Render for DetailBody {
-    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
-        let content = self
-            .owner
-            .update(cx, |this, cx| this.detail_content(cx))
-            .unwrap_or_else(|_| div().into_any_element());
-        div()
-            .id("usage-detail-scroll")
-            .max_h(px(f32::from(window.viewport_size().height) * 0.8 - 60.))
-            .overflow_y_scroll()
-            .child(content)
-    }
-}
-
-impl Statistics {
-    fn detail_content(&mut self, cx: &mut Context<Self>) -> AnyElement {
-        let zh = self.zh;
-        let title = if zh { "用量详情" } else { "Usage detail" };
-        let Some(detail) = &self.details else {
-            return crate::ui_components::dialog_body()
-                .w_full()
-                .gap_3()
-                .child(
-                    div()
-                        .text_size(px(crate::theme::font::DIALOG_TITLE))
-                        .font_weight(FontWeight::SEMIBOLD)
-                        .child(title),
-                )
-                .child(Label::new(if zh { "正在读取…" } else { "Loading…" }).text_color(rgb(MUTED)))
-                .into_any_element();
-        };
-        let item = &detail.request;
-        let row = |name: String, value: String| {
-            div()
-                .id(SharedString::from(format!("detail-{name}")))
-                .role(Role::Group)
-                .aria_label(format!("{name}：{value}"))
-                .flex()
-                .justify_between()
-                .gap_3()
-                .text_size(px(crate::theme::font::BODY))
-                .child(
-                    Label::new(name)
-                        .text_size(px(crate::theme::font::BODY))
-                        .flex_shrink_0()
-                        .text_color(rgb(MUTED)),
-                )
-                .child(
-                    div()
-                        .flex_1()
-                        .min_w_0()
-                        .text_right()
-                        .text_color(rgb(INK))
-                        .child(value),
-                )
-        };
-        let cost_text = match item.cost.as_ref() {
-            Some(cost)
-                if matches!(
-                    cost.status,
-                    CostStatus::Priced | CostStatus::DefaultZero | CostStatus::NotApplicable
-                ) =>
-            {
-                format!(
-                    "{} {}",
-                    cost.currency.map_or("", |currency| currency.as_str()),
-                    usage_table::amount(cost.total_cost_nanos.as_deref(), cost.currency)
-                )
-            }
-            Some(cost) => usage_table::cost_hint(cost.status, zh),
-            None => usage_table::cost_label(CostStatus::Unpriced, zh),
-        };
-        let mut rows: Vec<_> = detail_metadata::fields(item, zh)
-            .into_iter()
-            .map(|(label, value)| row(label.into(), value))
-            .collect();
-        rows.extend(vec![
-            row(
-                if zh {
-                    "请求标识".into()
-                } else {
-                    "Request ID".into()
-                },
-                item.request_id.clone(),
-            ),
-            row(
-                if zh {
-                    "时间".into()
-                } else {
-                    "Started".into()
-                },
-                usage_table::timestamp(item.started_at_ms, zh),
-            ),
-            row(
-                if zh {
-                    "供应商 / 路由".into()
-                } else {
-                    "Provider / route".into()
-                },
-                format!(
-                    "{} · {}",
-                    item.provider_name,
-                    usage_table::route_text(item, zh)
-                ),
-            ),
-            row(
-                if zh {
-                    "请求模型".into()
-                } else {
-                    "Requested model".into()
-                },
-                usage_table::requested_text(item, zh),
-            ),
-            row(
-                if zh {
-                    "上游模型".into()
-                } else {
-                    "Upstream model".into()
-                },
-                usage_table::model_text(item, zh),
-            ),
-            row(
-                if zh {
-                    "上游协议".into()
-                } else {
-                    "Upstream protocol".into()
-                },
-                match item.upstream_protocol.as_deref() {
-                    Some("openai_responses") => "OpenAI Responses",
-                    Some("anthropic_messages") => "Anthropic Messages",
-                    Some("gemini_generate_content") => "Gemini GenerateContent",
-                    Some("openai_chat") => "OpenAI Chat Completions",
-                    _ => "—",
-                }
-                .into(),
-            ),
-            row(
-                if zh {
-                    "响应声明模型".into()
-                } else {
-                    "Response model".into()
-                },
-                item.response_model.clone().unwrap_or_else(|| "—".into()),
-            ),
-            row(
-                if zh {
-                    "状态".into()
-                } else {
-                    "Outcome".into()
-                },
-                format!(
-                    "HTTP {} · {}",
-                    item.http_status
-                        .map_or("—".into(), |status| status.to_string()),
-                    usage_table::outcome_label(item.outcome, item.error_kind, zh)
-                ),
-            ),
-            row(
-                if zh { "用量".into() } else { "Usage".into() },
-                format!(
-                    "{} · {}",
-                    usage_table::usage_label(item.usage_status, zh).0,
-                    item.usage_reason
-                        .map_or_else(|| "—".into(), |reason| format!("{reason}"))
-                ),
-            ),
-            row(
-                if zh { "Token".into() } else { "Tokens".into() },
-                if item.usage_status == crate::stats_dto::UsageStatus::NotApplicable {
-                    if zh { "不适用" } else { "Not applicable" }.into()
-                } else {
-                    format!(
-                        "↓{} ↑{} R{} W{} Σ{}",
-                        usage_table::exact(item.input_tokens),
-                        usage_table::exact(item.output_tokens),
-                        usage_table::exact(item.cache_read_tokens),
-                        usage_table::exact(item.cache_write_tokens),
-                        usage_table::exact(item.total_tokens)
-                    )
-                },
-            ),
-            row(
-                if zh {
-                    "性能".into()
-                } else {
-                    "Latency".into()
-                },
-                format!(
-                    "{} {} · {} {} · TTFB {}",
-                    if zh { "总" } else { "total" },
-                    usage_table::duration(item.duration_ms),
-                    if zh { "首内容" } else { "first" },
-                    usage_table::duration(item.first_content_ms),
-                    usage_table::duration(item.ttfb_ms)
-                ),
-            ),
-            row(
-                if zh {
-                    "缓存命中率".into()
-                } else {
-                    "Cache hit rate".into()
-                },
-                usage_table::percent(usage_table::cache_rate(
-                    item.cache_read_tokens,
-                    item.input_tokens,
-                )),
-            ),
-            row(
-                "tok/s".into(),
-                format!(
-                    "{} · {}",
-                    usage_table::rate_text(item),
-                    usage_table::rate_hint(item.stream, zh)
-                ),
-            ),
-            row(
-                if zh {
-                    "估算费用".into()
-                } else {
-                    "Estimated cost".into()
-                },
-                cost_text,
-            ),
-        ]);
-        if let Some(snapshot) = &detail.price_snapshot {
-            // The prices this request actually used, read from its own row: they
-            // stay correct even after the configuration is edited or deleted.
-            let rates = [
-                snapshot.input_rate_nanos.as_deref(),
-                snapshot.output_rate_nanos.as_deref(),
-                snapshot.cache_read_rate_nanos.as_deref(),
-                snapshot.cache_write_rate_nanos.as_deref(),
-            ];
-            let text = match snapshot.price_source {
-                crate::stats_dto::PriceSource::DefaultZero => {
-                    if zh {
-                        "未配置价格，按 0 计算".to_owned()
-                    } else {
-                        "No price configured · counted as 0".to_owned()
-                    }
-                }
-                _ => rates
-                    .iter()
-                    .enumerate()
-                    .filter_map(|(index, rate)| {
-                        rate.map(|value| {
-                            let label = ["in", "out", "read", "write"][index];
-                            format!("{label} {}", usage_table::amount(Some(value), None))
-                        })
-                    })
-                    .collect::<Vec<_>>()
-                    .join(" · "),
-            };
-            let source = snapshot
-                .source_price_id
-                .as_deref()
-                .map(|id| {
-                    format!(
-                        " · {} {}@{}",
-                        if zh { "来源" } else { "source" },
-                        id,
-                        snapshot.source_price_revision.unwrap_or(0)
-                    )
-                })
-                .unwrap_or_default();
-            rows.push(row(
-                if zh {
-                    "本次单价".into()
-                } else {
-                    "Unit price used".into()
-                },
-                format!("{text}{source}"),
-            ));
-        }
-        rows.push(row(
-            if zh {
-                "记录时间".into()
-            } else {
-                "Recorded".into()
-            },
-            format!(
-                "{} → {}",
-                usage_table::timestamp(detail.created_at_ms, zh),
-                usage_table::timestamp(detail.updated_at_ms, zh)
-            ),
-        ));
-        crate::ui_components::dialog_body()
-            .w_full()
-            .gap_3()
-            .child(
-                div()
-                    .text_size(px(crate::theme::font::DIALOG_TITLE))
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .child(title),
-            )
-            .child(
-                div()
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED))
-                    .child(if zh {
-                        "只保存统计摘要：不包含聊天正文、工具参数、图片或密钥"
-                    } else {
-                        "Summary only: no chat text, tool arguments, images or keys are stored"
-                    }),
-            )
-            .child(div().flex().flex_col().gap_2().children(rows))
-            .child(
-                crate::ui_components::dialog_footer().child(
-                    stats_button("detail-close")
-                        .label(if zh { "关闭" } else { "Close" })
-                        .on_click(cx.listener(|this, _, window, cx| {
-                            this.detail_open = false;
-                            window.close_dialog(cx);
-                        })),
-                ),
-            )
-            .into_any_element()
     }
 }
 
