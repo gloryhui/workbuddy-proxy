@@ -16,8 +16,8 @@
 | 未保存切换/恢复草稿 | ui.rs::capture、switch_provider、Drafts | macOS 搜索不切换、切换保留、正常关闭重开恢复 Passed；提示表现待续 |
 | 预设搜索、名称/URL、Key 显隐 | ui.rs、presets.rs、InputState | 源码确认；不得把 Key 加入过滤/截图/日志 |
 | 四协议不同字段、认证、tokens/思考 | protocol_options.rs、model_options.rs | 源码确认；待各协议 GUI |
-| 模型发现 4096、总量 256、手动编辑 | model_table.rs、ui.rs | 源码确认；待自动回归与 GUI |
-| Shift/Cmd/Ctrl 多选、快捷键、焦点/IME | state.rs、model_table.rs、main.rs | 源码确认；待 GUI |
+| 模型发现 4096、总量 256、手动编辑 | model_table.rs、ui/providers.rs | macOS 新增/编辑取消/空模型/256 禁用/128 行虚拟化 Passed；发现上限及全部错误态待续 |
+| Shift/Cmd/Ctrl 多选、快捷键、焦点/IME | state.rs、model_table.rs、main.rs | macOS Shift/Cmd 多选、Delete/Backspace、Cmd+S、编辑聚焦 Passed；Windows Ctrl/完整 IME 待验 |
 | 同步/取消、重启提示及失败回滚 | ui.rs、workbuddy_restart.rs、核心 | 源码确认；只对合成 WorkBuddy 目录验证 |
 | 概览/明细/汇总/设置、全部/内置/自定义 | statistics/*、source_filter.rs | 源码确认；待 V2 视觉及筛选回归 |
 | 日期、分页、每页条数、固定表头 | statistics/pagination.rs、usage_table.rs | 源码确认；保留服务端分页与虚拟表体 |

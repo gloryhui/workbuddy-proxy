@@ -2,7 +2,8 @@
 //! Application selection retains Shift/Ctrl/Command semantics.
 use crate::{state::Selection, ui::Proxy};
 use gpui_kit::component::{
-    ActiveTheme, Icon,
+    ActiveTheme, Disableable, Icon, Sizable,
+    button::{Button, ButtonVariants},
     label::Label,
     table::{Column, TableDelegate, TableState},
     tooltip::Tooltip,
@@ -11,7 +12,7 @@ use gpui_kit::prelude::StatefulInteractiveElement as _;
 use gpui_kit::*;
 use serde_json::Value;
 
-pub const EDIT_COLUMN_WIDTH: Pixels = px(48.);
+pub const EDIT_COLUMN_WIDTH: Pixels = px(64.);
 
 pub struct Models {
     pub owner: WeakEntity<Proxy>,
@@ -42,7 +43,11 @@ impl TableDelegate for Models {
             if i == 0 {
                 if self.zh { "显示名" } else { "Display name" }
             } else {
-                if self.zh { "模型 ID" } else { "Model ID" }
+                if self.zh {
+                    "上游模型 ID"
+                } else {
+                    "Upstream model ID"
+                }
             },
         )
         .width(self.column_width)
@@ -84,18 +89,24 @@ impl TableDelegate for Models {
             } else {
                 "Edit model"
             };
-            return crate::ui_components::icon_button(
-                ("model-edit", i),
-                Icon::default().path("icons/model-edit.svg"),
-                label,
-                label,
-                self.busy,
-            )
-            .on_click(move |_, window, cx| {
-                cx.stop_propagation();
-                let _ = owner.update(cx, |this, cx| this.edit_model_row(i, window, cx));
-            })
-            .into_any_element();
+            return Button::new(("model-edit", i))
+                .ghost()
+                .with_size(px(28.))
+                .size(px(28.))
+                .p_0()
+                .child(
+                    Icon::default()
+                        .path("studio/model-edit.svg")
+                        .with_size(px(15.)),
+                )
+                .tooltip(label)
+                .accessibility_label(label)
+                .disabled(self.busy)
+                .on_click(move |_, window, cx| {
+                    cx.stop_propagation();
+                    let _ = owner.update(cx, |this, cx| this.edit_model_row(i, window, cx));
+                })
+                .into_any_element();
         }
         let row = &self.rows[i];
         let id = row["model"].as_str().unwrap_or("");

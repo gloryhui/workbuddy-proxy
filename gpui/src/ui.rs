@@ -1,3 +1,4 @@
+mod providers;
 mod sidebar;
 mod skin_controls;
 use crate::{
@@ -165,6 +166,7 @@ pub struct Proxy {
     port: Entity<InputState>,
     search: Entity<InputState>,
     provider_search: Entity<InputState>,
+    provider_scroll: ScrollHandle,
     edit_name: Entity<InputState>,
     edit_model: Entity<InputState>,
     pub(crate) model_options: crate::model_options::OptionsEditor,
@@ -752,6 +754,7 @@ impl Proxy {
             port,
             search,
             provider_search,
+            provider_scroll: ScrollHandle::new(),
             edit_name,
             edit_model,
             model_options,
@@ -830,6 +833,7 @@ impl Proxy {
         cx.subscribe(&this.effort_select, |this, _, event, cx| {
             if let SelectEvent::Confirm(Some(code)) = event {
                 this.effort = code.clone();
+                this.capture(cx);
                 cx.notify();
             }
         })
@@ -870,6 +874,17 @@ impl Proxy {
         })
         .detach();
         this.load_form(window, cx);
+        // Current-provider labels and save state follow editing events, rather
+        // than waiting for an idle draft-persistence tick to redraw the UI.
+        for state in [&this.name, &this.key, &this.url] {
+            cx.subscribe(state, |this, _, event, cx| {
+                if matches!(event, InputEvent::Change) {
+                    this.capture(cx);
+                    cx.notify();
+                }
+            })
+            .detach();
+        }
         // The shared heading follows the statistics view without duplicating
         // the report's state or changing its refresh cadence.
         cx.observe(&this.statistics, |_, _, cx| cx.notify())
@@ -1521,6 +1536,7 @@ impl Proxy {
             return;
         }
         self.selection.remove(&mut self.models);
+        self.capture(cx);
         cx.notify();
     }
     fn select_models(&mut self, _: &SelectModels, _: &mut Window, cx: &mut Context<Self>) {
@@ -1615,6 +1631,7 @@ impl Proxy {
         }
         self.editing = None;
         self.error = false;
+        self.capture(cx);
         self.status = self
             .t("模型已更新，保存后生效", "Models updated; save to apply")
             .into();
@@ -1695,6 +1712,7 @@ impl Proxy {
             self.models.push(json!({"model":id,"name":id}));
         }
         self.picker = None;
+        self.capture(cx);
         self.status = self
             .t("模型已添加，保存后生效", "Models added; save to apply")
             .into();
@@ -1980,308 +1998,16 @@ impl Proxy {
             .into_any_element()
     }
 
-    fn center(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
-        // Keep the two action groups intact. Automatic flex wrapping can measure
-        // this footer as one row while placing controls below its bounds.
-        let stacked_actions = window.viewport_size().width < px(1280.);
-        if self.selected().is_empty() {
-            return card("empty-provider")
-                .flex_1()
-                .items_center()
-                .justify_center()
-                .gap_4()
-                .child(img("brand.png").size(px(64.)))
-                .child(
-                    div()
-                        .text_lg()
-                        .font_weight(FontWeight::SEMIBOLD)
-                        .child(self.t("添加你的第一个供应商", "Add your first provider")),
-                )
-                .child(div().text_color(rgb(MUTED)).child(self.t(
-                    "配置接口地址、Key 和模型即可开始",
-                    "Configure an API URL, key and models to get started",
-                )))
-                .child(
-                    crate::ui_components::action_button("first-provider")
-                        .primary()
-                        .label(self.t("添加供应商", "Add provider"))
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            this.send("add", vec![json!({"command":"add"})], cx)
-                        })),
-                )
-                .into_any_element();
-        }
-        let mono = cx.theme().mono_font_family.clone();
-        // Connection settings (DESIGN_SPEC §4.3): preset, name/API key, protocol
-        // and options, URL with its hint, the model list, thinking effort and the
-        // two actions. Every callback and draft rule below is the pre-existing
-        // one; only the visual structure changed.
-        card("provider-settings")
-            .flex_1()
-            .min_w_0()
-            .min_h_0()
-            .p(px(crate::theme::space::CARD_SM))
-            .gap(px(crate::theme::space::CARD_GAP))
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(
-                        div()
-                            .text_size(px(crate::theme::font::CARD_TITLE))
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .child(self.t("连接设置", "Connection settings")),
-                    )
-                    .child(hint_line(self.t("修改后保存", "Save changes to apply"))),
-            )
-            .child(
-                div()
-                    .id("provider-form")
-                    .flex()
-                    .flex_col()
-                    .flex_1()
-                    .min_h_0()
-                    .overflow_y_scroll()
-                    .gap(px(crate::theme::space::CARD_GAP))
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap(px(crate::theme::space::SMALL))
-                            .child(field_label(self.t("供应商预设", "Provider preset")))
-                            .child(self.preset_menu()),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .gap(px(crate::theme::space::CARD_GAP))
-                            .child(
-                                div()
-                                    .flex_1()
-                                    .min_w_0()
-                                    .flex()
-                                    .flex_col()
-                                    .gap(px(crate::theme::space::SMALL))
-                                    .child(field_label(self.t("供应商名称", "Provider name")))
-                                    .child(crate::ui_components::text_input(&self.name, self.busy)),
-                            )
-                            .child(
-                                div()
-                                    .flex_1()
-                                    .min_w_0()
-                                    .flex()
-                                    .flex_col()
-                                    .gap(px(crate::theme::space::SMALL))
-                                    .child(field_label("API Key"))
-                                    .child(crate::ui_components::masked_input(&self.key, self.busy)),
-                            ),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap(px(crate::theme::space::SMALL))
-                            .child(field_label(self.t("上游协议", "Upstream protocol")))
-                            .child(
-                                div()
-                                    .flex()
-                                    .items_center()
-                                    .gap(px(crate::theme::space::CARD_GAP))
-                                    .child(
-                                        div().flex_1().min_w_0().child(
-                                            crate::ui_components::select(
-                                                &self.protocol_select,
-                                                self.busy,
-                                            )
-                                            .w_full()
-                                            .accessibility_label(
-                                                self.t("上游协议", "Upstream protocol"),
-                                            ),
-                                        ),
-                                    )
-                                    .child(
-                                        crate::ui_components::button(
-                                            "protocol-options",
-                                            crate::ui_components::ButtonKind::Normal,
-                                            self.t("协议选项", "Protocol options"),
-                                            self.busy,
-                                            false,
-                                        )
-                                        .on_click(cx.listener(|this, _, window, cx| {
-                                            let draft = this
-                                                .drafts
-                                                .providers
-                                                .get(&this.selected())
-                                                .cloned()
-                                                .unwrap_or_default();
-                                            this.protocol_options.load(
-                                                draft.protocol,
-                                                &draft.protocol_settings,
-                                                window,
-                                                cx,
-                                            );
-                                            this.protocol_open = true;
-                                            this.error = false;
-                                            cx.notify();
-                                        })),
-                                    ),
-                            ),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap(px(crate::theme::space::SMALL))
-                            .child(field_label(self.t("API 地址", "API URL")))
-                            .child(
-                                crate::ui_components::text_input(&self.url, self.busy)
-                                    .font_family(mono.clone()),
-                            )
-                            .child(hint_line(self.url_hint())),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .justify_between()
-                            .pt(px(crate::theme::space::TIGHT))
-                            .child(
-                                div()
-                                    .font_weight(FontWeight::SEMIBOLD)
-                                    .text_size(px(crate::theme::font::BODY))
-                                    .child(self.t("模型列表", "Models")),
-                            )
-                            .child(
-                                div()
-                                    .flex()
-                                    .items_center()
-                                    .gap(px(crate::theme::space::ROW_GAP))
-                                    .child(
-                                        crate::ui_components::button(
-                                            "fetch",
-                                            crate::ui_components::ButtonKind::Outline,
-                                            self.t("获取模型", "Fetch models"),
-                                            self.busy,
-                                            false,
-                                        )
-                                        .child(crate::ui_components::action_icon(IconName::RefreshCw))
-                                        .on_click(cx.listener(|this, _, _, cx|{
-                                            this.send("fetch",vec![json!({"command":"fetch","provider_id":this.selected(),"upstream":this.url.read(cx).value().to_string(),"key":this.key.read(cx).value().to_string(),"protocol":this.protocol_payload()["protocol"],"protocol_settings":this.protocol_payload()["protocol_settings"]})],cx);
-                                        })),
-                                    )
-                                    .child(
-                                        crate::ui_components::named_icon_button(
-                                            "model-add",
-                                            IconName::Plus,
-                                            self.t("添加模型", "Add model"),
-                                            self.t("添加模型", "Add model"),
-                                            self.busy,
-                                        )
-                                        .on_click(cx.listener(|this, _, window, cx| {
-                                            this.edit(this.models.len(), true, window, cx)
-                                        })),
-                                    )
-                                    .child(
-                                        crate::ui_components::named_icon_button(
-                                            "model-remove",
-                                            IconName::Close,
-                                            self.t("删除模型", "Remove models"),
-                                            self.t("删除模型", "Remove models"),
-                                            self.busy || self.selection.rows.is_empty(),
-                                        )
-                                        .on_click(cx.listener(|this, _, window, cx| {
-                                            this.remove_models(&RemoveModels, window, cx)
-                                        })),
-                                    ),
-                            ),
-                    )
-                    .child(
-                        div()
-                            .key_context("ModelList")
-                            .track_focus(&self.table_focus)
-                            .flex_1()
-                            .min_h(px(140.))
-                            .on_action(cx.listener(Self::remove_models))
-                            .on_action(cx.listener(Self::select_models))
-                            .on_action(cx.listener(Self::edit_selected))
-                            .on_prepaint({
-                                let owner = cx.entity().downgrade();
-                                move |bounds, _, cx| {
-                                    let width = (bounds.size.width - px(2.)).max(px(240.));
-                                    let _ = owner.update(cx, |this, cx| {
-                                        if this.table_width != width {
-                                            this.table_width = width;
-                                            cx.notify();
-                                        }
-                                    });
-                                }
-                            })
-                            .child(crate::ui_components::table(&self.model_table)),
-                    )
-                    .child(hint_line(self.t(
-                        "Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑",
-                        "Shift range · Ctrl / ⌘ toggle · Delete to remove · Double-click to edit",
-                    ))),
-            )
-            .child(
-                div()
-                    .id("provider-actions")
-                    .w_full()
-                    .flex_shrink_0()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .gap(px(crate::theme::space::CARD_GAP))
-                    .h(px(if stacked_actions { 84. } else { 36. }))
-                    .when(stacked_actions, |this| this.flex_col().items_stretch())
-                    .child(
-                        div()
-                            .flex()
-                            .flex_shrink_0()
-                            .items_center()
-                            .gap(px(crate::theme::space::CARD_GAP))
-                            .child(field_label(self.t("思考强度", "Thinking effort")))
-                            .child(self.effort_menu()),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_shrink_0()
-                            .items_center()
-                            .justify_end()
-                            .gap(px(crate::theme::space::CARD_GAP))
-                            .child(
-                        crate::ui_components::button(
-                            "test",
-                            crate::ui_components::ButtonKind::Outline,
-                            self.t("测试连接", "Test connection"),
-                            self.busy || self.models.is_empty(),
-                            self.busy,
-                        )
-                        .on_click(cx.listener(|this, _, _, cx| this.test(cx))),
-                            )
-                            .child(
-                        crate::ui_components::button(
-                            "save",
-                            crate::ui_components::ButtonKind::Primary,
-                            self.t("保存", "Save"),
-                            self.busy,
-                            self.busy,
-                        )
-                        .child(crate::ui_components::action_icon(IconName::Check))
-                        .on_click(cx.listener(|this, _, window, cx| this.save(&Save, window, cx))),
-                            ),
-                    ),
-            )
-            .into_any_element()
-    }
     /// Right rail (DESIGN_SPEC §4.3): the global-settings card above the log
     /// card, at the design's 300px base width. The rail itself does not scroll;
     /// the log area inside its card does.
-    fn right(&mut self, cx: &mut Context<Self>) -> AnyElement {
+    fn right(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
         div()
-            .w(px(crate::theme::size::RIGHT_RAIL_WIDTH))
+            .w(px(if window.viewport_size().width < px(1280.) {
+                300.
+            } else {
+                348.
+            }))
             .flex_shrink_0()
             .flex()
             .flex_col()
@@ -3158,7 +2884,28 @@ impl Render for Proxy {
             Page::Providers => self.center(window, cx),
             Page::Statistics => self.statistics.clone().into_any_element(),
         };
-        let right = self.right(cx);
+        let body = if self.page == Page::Providers {
+            let summary = (!self.selected().is_empty()).then(|| self.provider_summary(cx));
+            div()
+                .flex()
+                .flex_col()
+                .flex_1()
+                .min_h_0()
+                .gap(px(12.))
+                .when_some(summary, |column, summary| column.child(summary))
+                .child(
+                    div()
+                        .flex()
+                        .flex_1()
+                        .min_h_0()
+                        .gap(px(17.))
+                        .child(center)
+                        .child(self.right(window, cx)),
+                )
+                .into_any_element()
+        } else {
+            center
+        };
         self.manage_dialog(window, cx);
         let status_bar = self.status_bar();
         let title = match self.page {
@@ -3200,6 +2947,7 @@ impl Render for Proxy {
             .child(
                 Label::new(subtitle)
                     .text_size(px(crate::theme::font::BODY))
+                    .line_height(px(20.))
                     .text_color(rgb(crate::theme::color::TEXT_3)),
             );
         // One page title and action row, beside the sidebar. The native strip
@@ -3236,17 +2984,7 @@ impl Render for Proxy {
                                 .pb(px(crate::theme::space::PAGE_BOTTOM))
                                 .gap(px(crate::theme::space::SECTION_GAP))
                                 .child(heading)
-                                .child(
-                                    div()
-                                        .flex()
-                                        .gap_3()
-                                        .flex_1()
-                                        .min_h_0()
-                                        .child(center)
-                                        .when(self.page == Page::Providers, |this| {
-                                            this.child(right)
-                                        }),
-                                ),
+                                .child(body),
                         )
                         .child(status_bar),
                 ),

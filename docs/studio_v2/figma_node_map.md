@@ -5,7 +5,7 @@
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
 | 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
-| 54:2 | 02 / STUDIO V2 · 供应商管理 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, state.rs, model_table.rs | 部分：摘要/两卡/侧栏交互通过；右栏及完整视觉待续 |
 | 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
 | 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |
 | 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/*, usage_table.rs, usage_chart.rs | 未验收 |

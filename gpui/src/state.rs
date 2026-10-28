@@ -20,6 +20,26 @@ pub struct Draft {
     pub models: Vec<Value>,
 }
 impl Draft {
+    /// Pure projection for one supplier; unlike `Drafts::from_config`, this
+    /// does not fingerprint/read the configuration file. Renderers may compare
+    /// the current draft with this saved snapshot without doing frame-time IO.
+    pub fn from_provider(provider: &config::Provider) -> Self {
+        Self {
+            name: if provider.is_draft() { String::new() } else { provider.name.clone() },
+            key: provider.api_key.clone(),
+            upstream: provider.upstream.clone(),
+            protocol: provider.protocol,
+            protocol_settings: provider.protocol_settings.clone(),
+            effort: if provider.models.iter().all(|model| provider.models.first().is_some_and(|first| first.reasoning_effort == model.reasoning_effort)) {
+                provider.models.first().map(|model| model.reasoning_effort.clone()).unwrap_or_else(|| "keep".into())
+            } else { "keep".into() },
+            models: provider.models.iter().map(|model| json!({
+                "id":model.id, "name":model.name, "model":model.model,
+                "reasoning_effort":model.reasoning_effort, "capabilities":model.capabilities,
+            })).collect(),
+        }
+    }
+
     pub fn payload(&self, id: &str) -> Value {
         json!({"command":"save","provider_id":id,"name":self.name,"key":self.key,"upstream":self.upstream,"protocol":self.protocol,"protocol_settings":self.protocol_settings,"reasoning_effort":self.effort,"models":self.models})
     }
@@ -64,7 +84,19 @@ impl Drafts {
         stored.unwrap_or_else(|| Self::from_config(dir, cfg))
     }
     pub fn from_config(dir: &Path, cfg: &Config) -> Self {
-        Self{base:Self::fingerprint(dir),selected:cfg.providers.first().map(|p|p.id.clone()).unwrap_or_default(),providers:cfg.providers.iter().map(|p|(p.id.clone(),Draft{name:if p.is_draft(){String::new()}else{p.name.clone()},key:p.api_key.clone(),upstream:p.upstream.clone(),protocol:p.protocol,protocol_settings:p.protocol_settings.clone(),effort:if p.models.iter().all(|m|p.models.first().is_some_and(|a|a.reasoning_effort==m.reasoning_effort)){p.models.first().map(|m|m.reasoning_effort.clone()).unwrap_or("keep".into())}else{"keep".into()},models:p.models.iter().map(|m|json!({"id":m.id,"name":m.name,"model":m.model,"reasoning_effort":m.reasoning_effort,"capabilities":m.capabilities})).collect()})).collect()}
+        Self {
+            base: Self::fingerprint(dir),
+            selected: cfg
+                .providers
+                .first()
+                .map(|provider| provider.id.clone())
+                .unwrap_or_default(),
+            providers: cfg
+                .providers
+                .iter()
+                .map(|provider| (provider.id.clone(), Draft::from_provider(provider)))
+                .collect(),
+        }
     }
     pub fn persist(&mut self, dir: &Path) -> Result<(), String> {
         self.base = Self::fingerprint(dir);
