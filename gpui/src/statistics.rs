@@ -26,6 +26,7 @@ mod mapping_controls;
 mod overview;
 mod pagination;
 mod preferences;
+mod price_layout;
 mod recent;
 mod settings_capture;
 mod settings_layout;
@@ -241,6 +242,7 @@ pub struct Statistics {
     provider_modes_scroll: ScrollHandle,
     maintenance_anchor: ScrollAnchor,
     price_rows_scroll: ScrollHandle,
+    price_form_scroll: ScrollHandle,
     settings_anchors: [ScrollAnchor; 3],
     settings_section: usize,
     mapping_from: Entity<InputState>,
@@ -664,6 +666,7 @@ impl Statistics {
             provider_modes_scroll: ScrollHandle::new(),
             settings_scroll,
             price_rows_scroll: ScrollHandle::new(),
+            price_form_scroll: ScrollHandle::new(),
             settings_anchors,
             settings_section: 0,
             mapping_from,
@@ -760,6 +763,7 @@ impl Statistics {
     }
 
     fn subscribe(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        self.subscribe_price_focus(window, cx);
         cx.subscribe_in(&self.page_input, window, |this, _, event, _, cx| {
             if matches!(event, InputEvent::PressEnter { .. }) {
                 this.jump_to_input(cx);
@@ -1011,6 +1015,7 @@ impl Statistics {
             ),
             (&self.model_search, self.t("搜索模型", "Search models")),
             (&self.price_search, self.t("精确模型ID", "Exact model ID")),
+            (&self.price_label, self.t("备注", "Label")),
         ] {
             input.update(cx, |state, cx| {
                 state.set_placeholder(hint.to_owned(), window, cx)
@@ -3497,243 +3502,6 @@ impl Statistics {
 }
 
 impl Statistics {
-    /// Opens the native price form.
-    pub(crate) fn open_price_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {
-        self.price_open = true;
-        // The dialog's own provider list must be current before it is shown.
-        self.sync_price_providers(window, cx);
-        let owner = cx.entity().downgrade();
-        let observer = cx.entity().clone();
-        let body = cx.new(|cx| {
-            cx.observe(&observer, |_, _, cx| cx.notify()).detach();
-            PriceBody {
-                owner: owner.clone(),
-            }
-        });
-        window.open_dialog(cx, move |dialog, _, _| {
-            let close_owner = owner.clone();
-            let save_owner = owner.clone();
-            dialog
-                .w(px(520.))
-                .close_button(true)
-                .child(body.clone())
-                .on_ok(move |_, window, cx| {
-                    // Enter submits exactly like the Save button; the dialog
-                    // closes only when the core confirms this draft.
-                    let _ = save_owner.update(cx, |this, cx| this.save_price(cx));
-                    let _ = &window;
-                    false
-                })
-                .on_close(move |_, window, cx| {
-                    let _ = close_owner.update(cx, |this, cx| {
-                        // X and Escape cancel the draft; a programmatic close
-                        // (a confirmed save) only clears it.
-                        this.price_closing = false;
-                        this.cancel_price(window, cx)
-                    });
-                })
-        });
-    }
-
-    fn price_body(&self, cx: &mut Context<Self>) -> AnyElement {
-        // DESIGN_SPEC §4.3: each price field carries the selected currency's
-        // symbol. The symbol follows the currency control, never a stale draft.
-        let symbol = match self
-            .price_currency
-            .read(cx)
-            .selected_value()
-            .map(String::as_str)
-        {
-            Some("USD") => "$",
-            _ => "¥",
-        };
-        crate::ui_components::dialog_body()
-            .w_full()
-            .gap_3()
-            .child(
-                div()
-                    .text_size(px(crate::theme::font::DIALOG_TITLE))
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .child(if self.price_draft.is_editing() {
-                        self.t("编辑价格", "Edit price")
-                    } else {
-                        self.t("新建价格规则", "New price rule")
-                    }),
-            )
-            .child(
-                div()
-                    .text_size(px(crate::theme::font::LABEL))
-                    .text_color(rgb(MUTED))
-                    .child(self.t(
-                        "价格是每百万 Token 的估算单价，不是实际账单",
-                        "Prices are per-million estimates, not a real invoice",
-                    )),
-            )
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap_1()
-                    .child(self.filter_label(self.t("供应商", "Provider")))
-                    .child(
-                        crate::ui_components::select(
-                            &self.price_provider,
-                            self.price_draft.identity_locked(),
-                        )
-                        .w_full(),
-                    ),
-            )
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap_1()
-                    .child(self.filter_label(if self.price_draft.identity_locked() {
-                        self.t(
-                            "上游模型 ID（编辑时不可更改）",
-                            "Upstream model ID (fixed while editing)",
-                        )
-                    } else {
-                        self.t("上游模型 ID", "Upstream model ID")
-                    }))
-                    .child(crate::ui_components::text_input(
-                        &self.price_model,
-                        self.price_draft.identity_locked(),
-                    )),
-            )
-            .child(
-                div()
-                    .flex()
-                    .gap_3()
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .flex_grow(3.)
-                            .child(self.filter_label(self.t("计价方式", "Pricing mode")))
-                            .child(crate::ui_components::select(&self.price_mode, false).w_full()),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .flex_grow(2.)
-                            .child(self.filter_label(self.t("币种", "Currency")))
-                            .child(
-                                crate::ui_components::select(&self.price_currency, false).w_full(),
-                            ),
-                    ),
-            )
-            .child(
-                div()
-                    .flex()
-                    .gap_3()
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .flex_1()
-                            .child(self.filter_label(self.t("输入价 / 百万", "Input / million")))
-                            .child(
-                                crate::ui_components::text_input(&self.price_input, false).prefix(
-                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                                ),
-                            ),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .flex_1()
-                            .child(self.filter_label(self.t("输出价 / 百万", "Output / million")))
-                            .child(
-                                crate::ui_components::text_input(&self.price_output, false).prefix(
-                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                                ),
-                            ),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .flex_1()
-                            .child(
-                                self.filter_label(
-                                    self.t("缓存读价 / 百万", "Cache read / million"),
-                                ),
-                            )
-                            .child(
-                                crate::ui_components::text_input(&self.price_read, false).prefix(
-                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                                ),
-                            ),
-                    )
-                    .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .gap_1()
-                            .flex_1()
-                            .child(
-                                self.filter_label(
-                                    self.t("缓存写价 / 百万", "Cache write / million"),
-                                ),
-                            )
-                            .child(
-                                crate::ui_components::text_input(&self.price_write, false).prefix(
-                                    Label::new(symbol).text_size(px(12.)).text_color(rgb(MUTED)),
-                                ),
-                            ),
-                    ),
-            )
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap_1()
-                    .child(self.filter_label(self.t("备注", "Label")))
-                    .child(crate::ui_components::text_input(&self.price_label, false)),
-            )
-            .child(
-                Label::new(self.t(
-                    "保存后只影响新请求；每个请求保留自己的单价快照",
-                    "Saving only affects new requests; each request keeps its own price snapshot",
-                ))
-                .text_size(px(crate::theme::font::LABEL))
-                .text_color(rgb(MUTED)),
-            )
-            .when_some(self.price_draft.error.clone(), |this, error| {
-                this.child(
-                    Label::new(error)
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(0xa4424a)),
-                )
-            })
-            .child(
-                crate::ui_components::dialog_footer().child(
-                    stats_button("price-save")
-                        .primary()
-                        .child(crate::ui_components::action_icon(
-                            Icon::new(IconName::Check).size(px(16.)),
-                        ))
-                        .label(if self.price_draft.pending {
-                            self.t("保存中…", "Saving…")
-                        } else {
-                            self.t("保存", "Save")
-                        })
-                        // A second submit while the first is in flight would
-                        // race two revisions against the same row.
-                        .disabled(self.price_draft.pending)
-                        .on_click(cx.listener(|this, _, _, cx| this.save_price(cx))),
-                ),
-            )
-            .into_any_element()
-    }
     fn save_price(&mut self, cx: &mut Context<Self>) {
         if self.price_draft.pending {
             return;
@@ -4138,19 +3906,6 @@ impl Statistics {
             );
         }
         cx.notify();
-    }
-}
-
-/// Dialog body for the price form.
-struct PriceBody {
-    owner: WeakEntity<Statistics>,
-}
-
-impl Render for PriceBody {
-    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
-        self.owner
-            .update(cx, |this, cx| this.price_body(cx))
-            .unwrap_or_else(|_| div().into_any_element())
     }
 }
 

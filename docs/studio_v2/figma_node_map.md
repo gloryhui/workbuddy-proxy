@@ -12,7 +12,7 @@
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics.rs::price_body, stats_backend.rs | 部分：真实新建/取消/保存与历史快照保护已验，模态框视觉待施工 |
+| 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续 |
 | 60:475 | 10 / STUDIO V2 · 请求详情 | statistics.rs, detail_metadata, usage_table.rs | 部分：最近请求入口/正确ID/Esc已验，详情整帧视觉待续 |
 | 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -26,7 +26,7 @@
 | 67:338 | 20 / STUDIO V2 · OpenCode Go 供应商 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 67:548 | 21 / STUDIO V2 · 思考强度菜单 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 68:350 | 22 / STUDIO V2 · 取消同步确认 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics.rs::price_body, stats_backend.rs | 部分：真实编辑/取消/保存和费率revision已验，模态框视觉待施工 |
+| 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生编辑布局/身份锁定/取消恢复/版本冲突及手动刷新重开/旧快照金额保护已验；完整IME/无障碍/跨平台与精细视觉待续 |
 | 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:605 | 25 / STUDIO V2 · 编辑供应商资料 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:843 | 26 / STUDIO V2 · 复制供应商草稿 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -68,3 +68,5 @@
 设置高保真 `58:223` / `58:272` / `58:301` 本轮已读取。三项导航已以原生ScrollAnchor接入；价格面板优先落地到 `statistics/settings_layout.rs`，保留精确搜索、20/50/100游标分页和原生CRUD/更新菜单，新增独立价格同步失败反馈。采集/存储与本地导入当前仍是原控件组，后续拆双卡；价格模态框 `60:249` / `69:359` 的完整视觉也未在本批施工。上述阶段记录为历史进度，当前范围以主表及最新实施记录为准。
 
 采集/存储 `58:272` 与导入 `58:301` 已拆为原生双卡，窄窗纵排；真实设置/模式、21供应商有界分页/内层滚动、六计数与checkpoint、增量/完整核对及全局截止清理取消/确认已回归。旧“仍为原控件组”段落保留作阶段历史，当前范围以主表和最新QA记录为准；整帧及价格模态框视觉仍待续。
+
+价格模态框 `60:249` / `69:359` 已落地原生 `statistics/price_layout.rs`：42px字段、四价格2×2、独立表单滚动、固定取消/保存/错误底栏，保留备注与旧修订确认。已验两尺寸、中英文/Studio及Mono、键盘字段自动滚入视野与版本冲突恢复；此前“视觉待施工”是历史进度，精细视觉/IME/无障碍及跨平台仍待最终审计。

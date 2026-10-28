@@ -22,7 +22,7 @@
 | 概览/明细/汇总/设置、全部/内置/自定义 | statistics/*、source_filter.rs | macOS 三报表/设置返回、2/0/2来源、日期/刷新/更多浮层 Passed；概览四KPI/七详细指标/空值/趋势四图例/计费和小窗滚动 Passed，最近请求/详情ID与过滤 Passed；分析表/Token构成/缓存80%与空值、12模型真实分页和两种实际排序、1440并排/1100两卡滚动与独立位置 Passed；Tooltip及完整视觉审计待续 |
 | 日期、分页、每页条数、固定表头 | statistics/pagination.rs、usage_table.rs | 日期草稿取消/应用、每页10/20条、上一页/下一页/输入跳页 Passed；明细八列与分析首/末列按钮在1100同步表头/表体取回最右列 Passed，保留服务端分页/虚拟表体；最终1100中英文两完整行、分页/导航不换行，英文状态完整可读；每页Select即时中英切换保值、10/20翻页及非默认20关闭重开恢复 Passed，完整本地化仍待审计 |
 | 未知/缺失、缓存、Token 完整性 | usage_chart/continuity.rs、usage_table.rs | 既有自动测试 Passed；GUI保留缺失/单点提示、图例独立；缓存子集和未知不造零语义保持 |
-| CNY/USD/积分、价格快照与规则 CRUD | statistics/trends.rs、statistics.rs、stats_backend.rs | 计费摘要CNY真实零/USD缺失、独立积分/默认零价及费用趋势 Passed；价格规则新建/编辑取消与保存/菜单删除、精确搜索、21规则20/50真实分页、旧revision1金额不变/新revision2生效及更新失败持续反馈 Passed；完整价格弹窗视觉待续 |
+| CNY/USD/积分、价格快照与规则 CRUD | statistics/trends.rs、statistics/price_layout.rs、statistics.rs、stats_backend.rs | 计费摘要CNY真实零/USD缺失、独立积分/默认零价及费用趋势 Passed；价格规则新建/编辑取消与保存/菜单删除、精确搜索、21规则20/50真实分页、旧金额不变/新revision生效及更新失败持续反馈；原生新建/编辑两尺寸、四费率/备注/身份锁定、Tab/Shift+Tab自动滚动/Enter/Cancel/X/Esc、校验和服务端revision冲突恢复 Passed；完整IME/无障碍/跨平台与精细视觉待续 |
 | 采集、保留天数、本地导入去重 | statistics/settings_capture.rs、statistics/import_controls*、workbuddy_import.rs | 原生双卡及窄窗纵排；CNY/USD、30/90/永久/365天、REQUEST/OBSERVE、21供应商20/50分页与独立滚动、摘要暂停/恢复真实请求、导入暂停追加再启用、六计数/实际checkpoint、完整核对/分类入口、全局截止清理预览取消/确认及源文件不变 Passed；全量键盘/IME/无障碍与跨平台待续 |
 | 真实代理状态、计数、端口 | ui/relay.rs、core_state、status_bar | macOS 合成2供应商/6模型/1请求、暂停核心未响应/恢复、复制完整端点 Passed；端口0/65536拒绝、确认Esc/取消不重启 Passed；真实重启/回滚待验 |
 | 最近 100 条日志、清空/复制/滚动 | ui.rs::snapshot、ui/relay.rs、ui_components::TerminalLogs | macOS 深色只读/复制/清空、无新日志不抢首部/新日志到底 Passed；Studio 补验发现选区覆盖后已修复，Mono/Studio 实拍选区可读；100条上限源码确认 |
