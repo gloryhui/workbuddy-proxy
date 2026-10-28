@@ -1,3 +1,4 @@
+mod model_picker;
 mod providers;
 mod relay;
 mod sidebar;
@@ -14,7 +15,6 @@ use gpui_kit::component::{
     button::{Button, ButtonVariants},
     input::{InputEvent, InputState, TextareaState},
     label::Label,
-    list::ListItem,
     menu::{DropdownMenu, PopupMenuItem},
     select::{SearchableVec, SelectEvent, SelectItem, SelectState},
     table::TableState,
@@ -191,6 +191,8 @@ pub struct Proxy {
     picker: Option<Vec<String>>,
     picked: BTreeSet<usize>,
     only_picked: bool,
+    picker_list: Entity<gpui_kit::component::list::ListState<model_picker::Candidates>>,
+    picker_focus: FocusHandle,
     editing: Option<usize>,
     new_model: bool,
     effort_select: Entity<ChoiceState>,
@@ -615,6 +617,7 @@ impl Proxy {
             || (cfg.language == "auto"
                 && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
         gpui_kit::component::set_locale(if zh { "zh-CN" } else { "en" });
+        model_picker::init(cx);
         let drafts = Drafts::load(&dir, &cfg);
         let provider_search = input(
             "",
@@ -707,6 +710,14 @@ impl Proxy {
         let table_focus = cx.focus_handle();
         let modal_focus = cx.focus_handle();
         let owner = cx.entity().downgrade();
+        let picker_list = cx.new(|cx| {
+            gpui_kit::component::list::ListState::new(
+                model_picker::Candidates::new(owner.clone(), zh),
+                window,
+                cx,
+            )
+        });
+        let picker_focus = picker_list.read(cx).focus_handle(cx).tab_stop(true);
         let model_table = cx.new(|cx| {
             TableState::new(
                 crate::model_table::Models {
@@ -783,6 +794,8 @@ impl Proxy {
             picker: None,
             picked: BTreeSet::new(),
             only_picked: false,
+            picker_list,
+            picker_focus,
             editing: None,
             new_model: false,
             effort_select,
@@ -1680,57 +1693,6 @@ impl Proxy {
         let _ = config::write_json(&self.dir.join("gpui-exit-host"), &true);
         cx.quit();
     }
-    fn filtered(&self, cx: &App) -> Vec<usize> {
-        let query = self.search.read(cx).value().to_lowercase();
-        self.picker
-            .as_ref()
-            .map(|ids| {
-                ids.iter()
-                    .enumerate()
-                    .filter(|(i, id)| {
-                        id.to_lowercase().contains(&query)
-                            && (!self.only_picked
-                                || self.picked.contains(i)
-                                || self.models.iter().any(|m| m["model"].as_str() == Some(id)))
-                    })
-                    .map(|(i, _)| i)
-                    .collect()
-            })
-            .unwrap_or_default()
-    }
-    fn apply_picker(&mut self, cx: &mut Context<Self>) {
-        let Some(ids) = &self.picker else {
-            return;
-        };
-        let missing = self
-            .picked
-            .iter()
-            .filter_map(|i| ids.get(*i))
-            .filter(|id| !self.models.iter().any(|m| m["model"].as_str() == Some(id)))
-            .collect::<Vec<_>>();
-        let other = self
-            .cfg
-            .providers
-            .iter()
-            .filter(|p| p.id != self.selected())
-            .map(|p| p.models.len())
-            .sum::<usize>();
-        if self.models.len() + other + missing.len() > 256 {
-            self.error = true;
-            self.status = self.t("最多支持 256 个模型", "At most 256 models").into();
-            return;
-        }
-        for id in missing {
-            self.models.push(json!({"model":id,"name":id}));
-        }
-        self.picker = None;
-        self.capture(cx);
-        self.status = self
-            .t("模型已添加，保存后生效", "Models added; save to apply")
-            .into();
-        cx.notify();
-    }
-
     fn refresh_table(&self, window: &Window, cx: &mut Context<Self>) {
         let width = if self.table_width > px(0.) {
             self.table_width
@@ -1788,6 +1750,7 @@ impl Proxy {
                     owner: owner.clone(),
                 }
             });
+            let is_picker = self.picker.is_some();
             let width = if self.protocol_open {
                 crate::theme::size::DIALOG_PROTOCOL_WIDTH
             } else if self.picker.is_some() || self.editing.is_some() {
@@ -1816,11 +1779,28 @@ impl Proxy {
                 }
                 let confirm_owner = owner.clone();
                 let owner = owner.clone();
+                let dialog = if is_picker {
+                    let height = model_picker::surface_height(window);
+                    let content_body = body.clone();
+                    dialog
+                        .width(px(726.))
+                        .h(height)
+                        .p(px(25.))
+                        .pt(px(20.))
+                        .pb(px(15.))
+                        .bg(rgb(0xffffff))
+                        .rounded(px(18.))
+                        .border_color(rgb(crate::theme::color::BORDER))
+                        .margin_top(
+                            ((window.viewport_size().height - height) / 2. - px(21.)).max(px(16.)),
+                        )
+                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                } else {
+                    dialog.w(px(width)).child(body.clone())
+                };
                 dialog
-                    .w(px(width))
                     .close_button(true)
                     .overlay_closable(false)
-                    .child(body.clone())
                     .on_ok(move |_, window, cx| {
                         let _ = confirm_owner.update(cx, |this, cx| {
                             if this.port_open {
@@ -2015,7 +1995,7 @@ impl Proxy {
             .into_any_element()
     }
 
-    fn dialog_body(&mut self, window: &Window, cx: &mut Context<Self>) -> Option<AnyElement> {
+    fn dialog_body(&mut self, window: &mut Window, cx: &mut Context<Self>) -> Option<AnyElement> {
         let content = if self.port_open {
             self.port_dialog(cx)
         } else if self.protocol_open {
@@ -2374,220 +2354,6 @@ impl Proxy {
             return None;
         };
         Some(content)
-    }
-
-    fn picker_dialog(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
-        let filtered = self.filtered(cx);
-        let count = filtered.len();
-        let chosen = self.picked.len();
-        let total = self.picker.as_ref().map_or(0, Vec::len);
-        // "已选" is how many models this provider already has; "总数" is every
-        // discovered candidate and "待添加" is the current pick. The numbers in
-        // the design are sample data and are never copied.
-        let added = self.models.len();
-        let picker_button = |id: &'static str, label: &'static str, active: bool| {
-            crate::ui_components::button(
-                id,
-                if active {
-                    crate::ui_components::ButtonKind::Outline
-                } else {
-                    crate::ui_components::ButtonKind::Normal
-                },
-                label,
-                false,
-                false,
-            )
-        };
-        crate::ui_components::dialog_body()
-            .w_full()
-            .h((window.viewport_size().height - px(210.)).clamp(px(260.), px(550.)))
-            .gap(px(crate::theme::space::CARD_GAP))
-            .child(
-                div()
-                    .flex()
-                    .items_center()
-                    .justify_between()
-                    .child(crate::ui_components::dialog_title(
-                        self.t("选择模型", "Select models"),
-                    ))
-                    .child(hint_line(format!(
-                        "{} {} / {}  ·  {} {}",
-                        self.t("已选", "Added"),
-                        added,
-                        total,
-                        chosen,
-                        self.t("待添加", "to add")
-                    ))),
-            )
-            .child(crate::ui_components::text_input(&self.search, false))
-            .child(
-                div()
-                    .flex()
-                    .flex_wrap()
-                    .gap(px(crate::theme::space::ROW_GAP))
-                    .child(
-                        picker_button(
-                            "picker-select-all",
-                            self.t("全选当前筛选", "Select filtered"),
-                            false,
-                        )
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            for i in this.filtered(cx) {
-                                if !this.models.iter().any(|m| {
-                                    m["model"].as_str()
-                                        == this
-                                            .picker
-                                            .as_ref()
-                                            .and_then(|ids| ids.get(i))
-                                            .map(String::as_str)
-                                }) {
-                                    this.picked.insert(i);
-                                }
-                            }
-                            cx.notify();
-                        })),
-                    )
-                    .child(
-                        picker_button(
-                            "picker-invert",
-                            self.t("反选当前筛选", "Invert filtered"),
-                            false,
-                        )
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            for i in this.filtered(cx) {
-                                if !this.models.iter().any(|m| {
-                                    m["model"].as_str()
-                                        == this
-                                            .picker
-                                            .as_ref()
-                                            .and_then(|ids| ids.get(i))
-                                            .map(String::as_str)
-                                }) && !this.picked.remove(&i)
-                                {
-                                    this.picked.insert(i);
-                                }
-                            }
-                            cx.notify();
-                        })),
-                    )
-                    .child(
-                        picker_button("picker-clear", self.t("清空选择", "Clear selection"), false)
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.picked.clear();
-                                cx.notify();
-                            })),
-                    )
-                    .child(
-                        picker_button(
-                            "picker-only",
-                            self.t("仅看已勾选", "Selected only"),
-                            self.only_picked,
-                        )
-                        .on_click(cx.listener(|this, _, _, cx| {
-                            this.only_picked = !this.only_picked;
-                            cx.notify();
-                        })),
-                    ),
-            )
-            .child(
-                div()
-                    .flex_1()
-                    .min_h_0()
-                    .border_1()
-                    .border_color(rgb(crate::theme::color::BORDER))
-                    .rounded(px(crate::theme::radius::TABLE))
-                    .overflow_hidden()
-                    .child(
-                        uniform_list(
-                            "discovered-models",
-                            count,
-                            cx.processor(move |this, range: std::ops::Range<usize>, _, cx| {
-                                range
-                                    .map(|index| {
-                                        let i = filtered[index];
-                                        let id = this.picker.as_ref().unwrap()[i].clone();
-                                        let existing = this
-                                            .models
-                                            .iter()
-                                            .any(|m| m["model"].as_str() == Some(&id));
-                                        let checked = existing || this.picked.contains(&i);
-                                        let zh = this.zh;
-                                        ListItem::new(("candidate", i))
-                                            .w_full()
-                                            .h(px(crate::theme::size::LIST_ROW_HEIGHT))
-                                            // Models already in this provider keep the
-                                            // design's tinted row and trailing note.
-                                            .when(existing, |row| {
-                                                row.bg(rgb(crate::theme::color::BG_TABLE_HEAD))
-                                            })
-                                            .accessibility_label(id.clone())
-                                            .child(
-                                                crate::ui_components::checkbox(
-                                                    ("candidate-check", i),
-                                                    id,
-                                                    checked,
-                                                    existing,
-                                                )
-                                                .accessibility_id(format!("candidate-{i}"))
-                                                .w_full()
-                                                .on_change(cx.listener(
-                                                    move |this, checked: &bool, _, cx| {
-                                                        if *checked {
-                                                            this.picked.insert(i);
-                                                        } else {
-                                                            this.picked.remove(&i);
-                                                        }
-                                                        cx.notify();
-                                                    },
-                                                )),
-                                            )
-                                            .suffix(move |_, _| {
-                                                Label::new(if existing {
-                                                    if zh { "已添加" } else { "Added" }
-                                                } else {
-                                                    ""
-                                                })
-                                                .text_size(px(crate::theme::font::SMALL))
-                                                .text_color(rgb(crate::theme::color::TEXT_3))
-                                            })
-                                            .into_any_element()
-                                    })
-                                    .collect()
-                            }),
-                        )
-                        .size_full(),
-                    ),
-            )
-            .child(hint_line(self.t(
-                "已有模型保留，确认添加后仍需保存。",
-                "Existing models are kept. Save after adding your selection.",
-            )))
-            .child(
-                crate::ui_components::dialog_footer()
-                    .child(
-                        crate::ui_components::button(
-                            "picker-cancel",
-                            crate::ui_components::ButtonKind::Normal,
-                            self.t("取消", "Cancel"),
-                            false,
-                            false,
-                        )
-                        .on_click(
-                            cx.listener(|this, _, window, cx| this.dismiss(&Dismiss, window, cx)),
-                        ),
-                    )
-                    .child(
-                        crate::ui_components::button(
-                            "picker-confirm",
-                            crate::ui_components::ButtonKind::Primary,
-                            format!("{} ({chosen})", self.t("确认添加", "Add selected")),
-                            chosen == 0,
-                            false,
-                        )
-                        .on_click(cx.listener(|this, _, _, cx| this.apply_picker(cx))),
-                    ),
-            )
-            .into_any_element()
     }
 }
 impl Render for Proxy {
