@@ -734,3 +734,29 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 四轮合计空闲 RSS 中位86.425→85.340MiB，UI73.795→73.170MiB；p95旧0.195/0.194ms、新两轮均0.199ms，中位增加0.0045ms（约2.31%），保留该小幅上升。当前短测未见明显退化，不宣称性能提升。最初旧版启动较冷，UI记录不是首帧/可交互时间；RSS共享页可能双计，默认64模型短测不测失败恢复时延、长时活跃表单CPU或跨平台。[性能汇总](benchmarks/provider-recovery-performance-summary.json)。
 - 按用户持续授权，完整精确路径/UID501/类型/无符号链接与挂载越界/进程及lsof预检、临执行前二次核对后，删除本轮专属测试根的202个文件，释放已分配空间估计284,585,984 bytes（271.40MiB），本轮专属临时文件保留0。实际截图/JSON在仓库，共享Cargo缓存及未知历史临时项保留未动；系统盘当前可用40,853,585,920 bytes（38.05GiB）。中断场景退出码未补造。[清理证据](benchmarks/provider-recovery-cleanup.json)。
 - 本批补齐已有部分验收帧的失败恢复缺口，剩余仍为5/40未逐帧验收、34部分验收、1复用待核对、0整帧最终验收。整体继续开发并穿插分项实机验收；下一批对齐语言菜单及保留工具栏状态，完整40帧精细视觉、IME/无障碍与跨平台仍未完成。
+
+
+## 小功能 34：原生语言菜单与语言切换回归（2026-10-29，北京时间）
+
+- 按官方 Figma MCP 最新高保真 104:1823 与 104:2035（含两张设计截图）实施：语言浮层241×184、圆角12、标题14、关闭27；三项221×40、间距5、文字13/选中tick12。整组七功能工具栏位置不变，以其右边为原生锚点；浮层顶部为设计 content24+local91=115，右边距32，原36px按钮/20px图标及8px间距保留。Close“×”与勾选“✓”是设计文本，复用779bytes/root20×20的既有本地language.svg，无新位图、临时资产URL或静态截图实现。
+- Kit PopupMenu 不直接提供该标题/关闭与精确行布局，局部组合原生 base::Popup、ListState/List 与 Button；既有 set_language 的auto/zh/en、locale/原生文案更新、原配置保存及草稿捕获处理不改。Popup 管理原生定位/指针遮挡，List 使用真实焦点与既有方向/Enter/Esc处理，Space仅在列表容器确认；打开时持有原生deferred guard，关闭恢复打开前真实焦点，原工具栏鼠标屏蔽保留。选项沿用原 choices，方向键环绕只移列表选中游标，勾选来自已保存配置。不添加timer、持续动画或后台轮询，不改Core/管理API/配置格式/依赖。
+- 首候选 d4e8 实机发现“复点语言按钮时先outside-close再mouseup重开”，因此未作为最终验收；X关闭及皮肤独立打开在首候选通过。先改为native同型mouse-down观察状态守卫，mouseup不再toggle、Keyboard/Touch click保留；56d55复点通过，但真实Esc/焦点失败，源码定位Button内部FocusHandle覆盖通用track_focus，未接受该候选。最终使用原生ListState真实焦点，并用Popup只定位，避免整排toolbar增加Popover Enter/Space上下文。旧版db29和两失败候选均正常停止并wait，失败记录保留；最终交互/两尺寸图必须重新核对c389，不混用旧图。
+- 最终c389已通过fmt、183测试（2项既有Core专项ignored）、严格clippy all-targets/-D warnings、Intel check2.420s及Release38.379s；UI15,180,336 bytes、SHA256 `c38927425dea06c1c1c23a5eae2c51967a7f61fe8953bead55b6b1dab4f92547`，Core仍25f/8,428,096 bytes。Intel只类型检查，原block0.1.6 future-incompatibility提示保留；未添加镜像布局的测试，使用已有回归套件和真实键鼠/界面验证。[编译与资产证据](benchmarks/language-menu-build.json)。
+- c389 已实机确认：鼠标打开后 Down从中文到English、再Down环绕系统、Up回English，AX选中游标随方向键变化，原中文勾选保持且不自动保存；Esc可关闭。Down+Enter真实保存en，Up+Space真实保存zh；鼠标三项实际保存，auto持久值为auto、该夹具系统locale表现中文，重复auto的配置SHA与mtime完全不变。复点触发开/关、X及外部空白取消均通过，取消不写配置。
+- 未保存名称sub2api draft、增加的第3模型和Responses，在切英语后保留，Runtime仍显示Core2供应商/3已保存模型；统计页原选中Custom，切中文后仍为对应“自定义模型”，供应商草稿仍在。关闭重开同配置，仍为English/正确勾选，草稿名称/3模型/Responses恢复，Core仍是A Chat2+B Chat1且无provider save。
+- 从搜索框Shift+Tab到语言按钮，真实焦点环可见；Return打开→Esc关闭后焦点回按钮，Return再次打开。皮肤按钮键盘Return只开皮肤菜单；恢复尺寸键盘Return将1100恢复1440且未误开语言。同步确认遮罩里点击语言位置不触发语言菜单，确认仍在；Esc关闭，无同步/重启写入。鼠标打开按原生语义保留打开前编辑/页面焦点，不能用鼠标X后Return未复开就推断焦点回退失败。
+- 主代理逐张查看最终[中文Studio1440×900](screenshots/ui34-language-1440x900.png)与[英文Mono1100×700](screenshots/ui34-language-1100x700.png)，并核对PNG SHA/尺寸。Popup241×184/top115/right32、标题/关闭与三行布局视觉相符；选中项分别为真实zh/en，未照抄设计auto示例。截图保留原工具栏hover提示，位于菜单上方；不是重绘。两张raw分别1440×901/1100×701，仅裁底1物理像素、无缩放。小窗表单保留原内部滚动，模型全行/Save不在同一首屏不作为此菜单的新完成项。[真实交互/原图与最终SHA/退出证据](benchmarks/language-menu-gui-validation.json)。
+- 旧版db29、失败d4/56d和最终c389均按独立合成夹具执行，记录各自终态；最终UI3272、重开UI5872、Core3271、fixture3266均正常退出0并wait，关闭各UI后Core health200，主代理核对已记录的最终及失败候选PID均消失。WorkBuddy []哨兵SHA始终4f53…；没有真实vendor请求、真实登录项修改或同步/重启操作。完整IME/无障碍与Windows/Intel实机仍未验。
+
+同一25f Core、旧db29/新c389 Release，原benchmark按旧→新→旧→新四轮各1000小请求和80次1MiB/并发4。默认64模型页、菜单关闭；合成HOME/loopback catalog与Core内核沙盒实际permission-query核对，原benchmark未改；直接子进程均wait、Core/UI均消失，退出数组均[-15,-15,0,0]。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧db29](benchmarks/language-menu-previous-gui.json) | 12.27 / 72.36 / 84.62 | 439.222 / 1038.867 | 0.172 / 0.194 | 133.89 | 0.090 |
+| [新c389](benchmarks/language-menu-current-gui.json) | 12.75 / 73.00 / 85.75 | 215.426 / 814.873 | 0.174 / 0.198 | 134.69 | 0.085 |
+| [旧db29复测](benchmarks/language-menu-previous-run2-gui.json) | 12.03 / 73.03 / 85.06 | 214.219 / 691.140 | 0.172 / 0.197 | 129.02 | 0.085 |
+| [新c389复测](benchmarks/language-menu-current-run2-gui.json) | 12.00 / 71.84 / 83.84 | 220.588 / 690.685 | 0.172 / 0.190 | 131.66 | 0.086 |
+
+- 当前短测未见明显退化：合计空闲RSS中位84.840→84.795MiB、UI72.695→72.420MiB；p95中位0.1955→0.1940ms，两对方向不同；峰值中位131.455→133.175MiB（增加1.72MiB），原值保留。不宣称性能提升，首轮旧版更冷；UI标记不是首帧或可交互时间，RSS共享页可双计。该默认页短测不测菜单打开时持续CPU、真实交互时延或跨平台。[性能汇总](benchmarks/language-menu-performance-summary.json)。
+- 按用户持续安全清理授权，完整规范化路径/所有权/类型/无符号链接与挂载越界/进程与lsof检查、临执行二次核实后，删除本轮189个专属测试文件，释放已分配空间估计238,526,464 bytes（227.48MiB），本轮临时保留0；最终PNG/JSON在仓库，共享Cargo缓存和4个归属未确认的历史临时项保留、不递归检查或删除。系统盘当前可用40,741,105,664 bytes（37.94GiB）。[清理记录](benchmarks/language-menu-cleanup.json)。
+- 本批39语言菜单从未逐帧验收改为部分验收，剩余4/40未逐帧验收、35部分验收、1复用待核对、0整帧最终验收。整体继续开发并穿插分项验收；保留黑白主题、开机启动、检查更新、恢复窗口状态及40帧完整精细视觉/IME/无障碍/跨平台专项。Goal面板最新已核实active，报告按实际状态同步。

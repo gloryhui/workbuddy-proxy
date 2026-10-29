@@ -42,7 +42,7 @@
 | 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；失败后只读配置对齐/幸存dirty与异常文件守卫已验；完整视觉/IME/无障碍/跨平台与Core-unresponsive待续 |
 | 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
 | 104:1605 | 38 / STUDIO V2 · 检查更新交互（原型） | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
-| 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
+| 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui/language_menu.rs, ui.rs | 部分：241×184原生浮层/两尺寸、auto/zh/en真实保存/重复不写、方向Enter/Space/Esc/X/外部取消、键盘复开、草稿/筛选/重开、遮罩与邻接安全按钮已验；完整IME/无障碍/跨平台与菜单打开持续CPU待续 |
 | 104:2046 | 40 / STUDIO V2 · 恢复默认窗口尺寸（原型） | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
 
 共享组件：`103:442` 七项工具栏 → `ui.rs::app_controls`、`ui_components.rs`；最新 `54:2` / `90:442` 已将其独立置于窗口top8/right32、300×36，七项事件保持原样。最终049版1440×900与恢复界面操作后补拍的1100×700实拍已检查；最终小窗Skin/Language上缘点击、模态遮罩及Restore已验，快捷键与菜单Esc的完整范围见实施记录。`83:454` 供应商行、`83:455` 固定操作栏 → `ui.rs::sidebar`；`71:364` 原生实施契约 → `theme.rs`、本目录记录。

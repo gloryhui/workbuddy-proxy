@@ -1,0 +1,111 @@
+{
+  "feature": "UI-34 native interface language menu",
+  "candidate_sha256": "c38927425dea06c1c1c23a5eae2c51967a7f61fe8953bead55b6b1dab4f92547",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": {
+    "synthetic_providers_initial": 2,
+    "synthetic_models_initial": 3,
+    "requests": 0,
+    "upstream": "loopback mock",
+    "core_kernel_sandbox": "enforced by fixture profile",
+    "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "workbuddy_sentinel_empty_array_after": true
+  },
+  "results": {
+    "mouse_trigger_toggle": "open then close without reopen",
+    "dismiss": "X, outside blank click, and Esc closed menu; configuration hash and mtime unchanged across cancellation checks",
+    "arrows": "Down Chinese to English to system, Up back to English; native List selected changed and saved check remained Chinese until confirmation",
+    "keyboard_confirm": "Down+Return saved en; Up+Space saved zh; configuration values read back",
+    "mouse_options": "auto, zh, en each selected; auto serialized auto and rendered Chinese on this system",
+    "repeat_selected": "auto repeated with identical SHA256 62824586e340ac26cce948e99658a747a57dbd3db278076199d1749bc97a3184 and mtime_ns 1793282177453776382",
+    "keyboard_focus_restore": "visible focus ring on language button; Return opened, Esc closed with ring restored, second Return reopened",
+    "toolbar": "keyboard Return on Appearance opened Appearance only; keyboard Return on Restore resized 1100 to 1440 without opening language",
+    "modal": "Sync confirmation covered toolbar; click on language location left dialog open and did not open language, Esc closed; no sync or restart action executed",
+    "draft": "unsaved name sub2api draft, extra third model and OpenAI Responses remained after language switch and after UI reopening",
+    "filter": "Custom models selected in English remained selected as 自定义模型 after Chinese switch",
+    "reopen": "same isolated config reopened English, English menu item selected, unsaved provider draft restored",
+    "saved_core_after": "sub2api OpenAI Chat 2 models; OpenCode Go OpenAI Chat 1 model; 0 requests; language en; autostart false; no provider save"
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/ui34-language-1440x900.png",
+      "language": "zh",
+      "skin": "Studio Indigo",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "output_size": [
+        1440,
+        900
+      ],
+      "transform": "crop bottom one physical pixel, no resize",
+      "raw_sha256": "d7dead69d555b8acd38bda566abba78321ac2a0c9d206f4c0185cdf48cef21dd",
+      "sha256": "73ab9f809198b0a37e3a304b615c5942da126c3517e653d49b8b3bea2a052f56"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/ui34-language-1100x700.png",
+      "language": "en",
+      "skin": "Mono",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "output_size": [
+        1100,
+        700
+      ],
+      "transform": "crop bottom one physical pixel, no resize",
+      "raw_sha256": "8f846189079d92f63712c1fd49a72c316f87bdb6edd30220a9bb8c40cd3429df",
+      "sha256": "12248f11026d0787569e2b374b77a8af2804d7b11b1915b85524dd41ad1a943e"
+    }
+  ],
+  "prior_candidates": {
+    "d4e8a907": "pointer trigger reopened instead of closing; fixed before final",
+    "56d55cbc": "mouse-opened menu Esc did not close; fixed before final"
+  },
+  "termination": {
+    "fixture_pid": 3266,
+    "core_pid": 3271,
+    "first_ui_pid": 3272,
+    "reopened_ui_pid": 5872,
+    "first_ui_exit": 0,
+    "reopened_ui_exit": 0,
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "health_after_each_ui_close_http": 200,
+    "all_listed_pids_gone": true
+  },
+  "limitations": [
+    "Full IME and comprehensive accessibility audit not performed.",
+    "Snapshot counts and saved configuration observed; no external WorkBuddy lifecycle or real vendor request was exercised."
+  ],
+  "main_review": {
+    "both_final_actual_pngs_viewed": true,
+    "hash_and_exact_dimensions_checked": true,
+    "panel_target": {
+      "width": 241,
+      "height": 184,
+      "top": 115,
+      "right": 32,
+      "rows": 40,
+      "gap": 5
+    },
+    "geometry_scope": "Visually matched against high-fidelity Figma; target layout values inspected in source, no instrumented element-bounds claim. Original toolbar hover hints are visible above the popup in captures.",
+    "saved_and_draft_counts_distinguished": true
+  },
+  "prior_candidate_termination": {
+    "d4": {
+      "fixture_pid": 89141,
+      "core_pid": 89143,
+      "ui_pid": 89152,
+      "exit_status": "all0, normal close and health200, agent reported PIDs gone"
+    },
+    "56d": {
+      "fixture_pid": 92118,
+      "core_pid": 92120,
+      "ui_pid": 92132,
+      "exit_status": "all0 and wait, normal close and health200, agent reported PIDs gone"
+    }
+  }
+}

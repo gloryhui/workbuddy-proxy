@@ -1,0 +1,120 @@
+{
+  "ui_sha256": "c38927425dea06c1c1c23a5eae2c51967a7f61fe8953bead55b6b1dab4f92547",
+  "ui_bytes": 15180336,
+  "baseline_ui_sha256": "db29ace240a767110b6a3e161c8431f4eb189a6ba8c98712955964a27d06d9d4",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "exit": 0,
+      "seconds": 0.487,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ]
+    },
+    "test": {
+      "exit": 0,
+      "seconds": 3.437,
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    },
+    "clippy": {
+      "exit": 0,
+      "seconds": 1.875,
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    "intel": {
+      "exit": 0,
+      "seconds": 2.42,
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ]
+    },
+    "release": {
+      "exit": 0,
+      "seconds": 38.379,
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    }
+  },
+  "figma_frames": [
+    "104:1823",
+    "104:2035"
+  ],
+  "layout": {
+    "width": 241,
+    "height": 184,
+    "radius": 12,
+    "row_width": 221,
+    "row_height": 40,
+    "row_gap": 5,
+    "header_height_inside_border": 42,
+    "title_font": 14,
+    "close_size": 27,
+    "row_font": 13,
+    "tick_font": 12,
+    "window_top": 115,
+    "window_right": 32,
+    "list_item_extent_including_gap": 45,
+    "list_viewport_height": 135
+  },
+  "scope": "Native base Popup anchoring, ListState/List options and Button close/trigger; real list focus/Enter/Escape/arrows, scoped Space confirm, native deferred context guard and prior-focus restoration. Existing auto/zh/en set_language, config save and toolbar events unchanged.",
+  "source_sha256": {
+    "gpui/src/ui.rs": "4bfbc3615208cac6833b717480298b1d7e4370b89a37b37f6bd9ec14460173f5",
+    "gpui/src/ui/language_menu.rs": "2d4f0a7bfe461942a440c86b9218d3f4197cf25a76e8f9427c4874cca8487177"
+  },
+  "warning": "Existing block0.1.6 future-incompatibility warning",
+  "intel_runtime_verified": false,
+  "new_tests": "No layout-mirroring tests added; existing regression suite plus actual keyboard/mouse/UI tests.",
+  "tests_passed": 183,
+  "tests_ignored": 2,
+  "assets": [
+    {
+      "path": "gpui/assets/studio/language.svg",
+      "bytes": 779,
+      "width": "20",
+      "height": "20",
+      "sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45",
+      "rendered_slot": "Existing 20x20 icon in same36x36 toolbar button; close and check are Figma text glyphs, no added bitmap or substituted SVG."
+    }
+  ],
+  "rejected_candidates": [
+    {
+      "ui_sha256": "d4e8a907cdf71f957fe65f1209a9ac6c4a3bcb72761b4a3b70fc3818f8450d86",
+      "issue": "Second trigger click outside-dismissed then reopened on mouse-up. Rejected; final uses observed-state guard on mouse-down and keyboard/touch-only click activation."
+    },
+    {
+      "ui_sha256": "56d55cbc11623b18b4e5f59072987acfb94c086b4b09837534305d4c5d6a1445",
+      "issue": "Buttons internally replace their FocusHandle, leaving externally tracked row handles unmounted. Escape/keyboard routing failed. Replaced option buttons with native ListState; native Popup anchors only without wrapping toolbar keys in Popover Confirm."
+    }
+  ],
+  "focus_design": "Native ListState real FocusHandle. Enter/Escape/arrows use existing list handlers, Space is scoped to list only. Closing restores the actual opening focus; keyboard invocation returns to the language button, pointer invocation preserves the previous editor/page focus. Native Popup adds no Enter/Space context to the other toolbar buttons."
+}

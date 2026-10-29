@@ -8,7 +8,7 @@
 | 六套旧皮肤 + 可选 Studio 靛蓝、保存失败不切换 | theme/skin.rs、ui/skin_controls.rs | macOS 七项选择/原键保存、默认 Mono、配置 SHA 不变、Studio 重开恢复 Passed；非法目录保存失败由既有自动测试覆盖 |
 | 开机启动、失败回滚 | ui.rs::app_controls、核心 action | 源码确认；待隔离验证，不能修改用户真实登录项 |
 | 检查更新、busy/error | ui.rs::app_controls、tick | 源码确认；待 mock 与 GUI |
-| 系统/中文/English | ui.rs::language_menu、set_language | macOS 隔离 GUI 菜单/中英实际切换 Passed；跟随系统待验 |
+| 系统/中文/English | ui/language_menu.rs、ui.rs::set_language | 241×184原生Popup/List、真实三模式保存/重复项SHA与mtime不变、方向环绕/Enter/Space/Esc/X/外部取消、键盘焦点返回及复开、草稿/Custom筛选/重开持久、遮罩与邻接安全按钮、两尺寸及四轮性能 Passed；完整IME/无障碍/跨平台及打开菜单持续CPU未验 |
 | 恢复 1440×900、退出全屏 | ui.rs::restore_window_size | macOS 缩小后恢复 Passed；最大化/全屏待验 |
 | GitHub 与新 Issue | ui.rs::app_controls | 源码确认；外部 URL 保持 |
 | 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | macOS 两尺寸/中英/缩小恢复 Passed；拖动未测位移；Windows 待验 |

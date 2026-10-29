@@ -1,3 +1,4 @@
+mod language_menu;
 mod model_editor;
 mod model_picker;
 mod protocol_dialog;
@@ -23,7 +24,6 @@ use gpui_kit::component::{
     button::{Button, ButtonVariants},
     input::{InputEvent, InputState, TextareaState},
     label::Label,
-    menu::{DropdownMenu, PopupMenuItem},
     select::{SelectEvent, SelectItem},
     table::TableState,
 };
@@ -251,6 +251,7 @@ pub struct Proxy {
     resetting_window: bool,
     skin_open: bool,
     skin_error: bool,
+    language_menu: language_menu::State,
     wake: String,
     last_poll: Instant,
     last_dirty: String,
@@ -425,42 +426,10 @@ impl Proxy {
         });
         self.sync_preset(window, cx);
     }
-    fn language_menu(&self, cx: &mut Context<Self>) -> AnyElement {
-        let items = choices(self.zh, true);
-        let selected = self.cfg.language.clone();
-        let owner = cx.entity().downgrade();
-        crate::ui_components::system_button(
-            "language",
-            "studio/language.svg",
-            self.t("切换界面语言", "Change interface language"),
-            self.t("界面语言", "Interface language"),
-            self.busy,
-        )
-        .dropdown_menu_with_anchor(Anchor::TopRight, move |mut menu, _, _| {
-            for item in &items {
-                let code = item.code.clone();
-                let owner = owner.clone();
-                let title = item.title.clone();
-                menu = menu.item(
-                    PopupMenuItem::element(move |_, _| {
-                        div().min_h(px(32.)).flex().items_center().child(
-                            Label::new(title.clone()).text_size(px(crate::theme::font::BODY)),
-                        )
-                    })
-                    .checked(code == selected)
-                    .on_click(move |_, window, cx| {
-                        let _ = owner.update(cx, |this, cx| this.set_language(&code, window, cx));
-                    }),
-                );
-            }
-            menu.min_w(px(180.))
-        })
-        .into_any_element()
-    }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
         // Figma 103:442: all seven original actions, in their original order.
         // The shared native buttons retain focus, tooltips and disabled rules.
-        div()
+        let toolbar = div()
             .id("titlebar-actions")
             .w(px(crate::theme::size::SYSTEM_TOOLBAR_WIDTH))
             .flex()
@@ -554,7 +523,8 @@ impl Proxy {
                 )
                 .on_click(|_, _, cx| cx.open_url(FEEDBACK_URL)),
             )
-            .into_any_element()
+            .into_any_element();
+        self.language_toolbar(toolbar, cx)
     }
     fn restore_window_size(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if self.resetting_window {
@@ -674,6 +644,7 @@ impl Proxy {
         gpui_kit::component::set_locale(if zh { "zh-CN" } else { "en" });
         model_picker::init(cx);
         provider_choices::init(cx);
+        language_menu::init(cx);
         let drafts = Drafts::load(&dir, &cfg);
         let provider_search = input(
             "",
@@ -896,6 +867,7 @@ impl Proxy {
             resetting_window: false,
             skin_open: false,
             skin_error: false,
+            language_menu: language_menu::State::new(zh, window, cx),
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
