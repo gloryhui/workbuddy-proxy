@@ -14,10 +14,10 @@
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：526原生确认/两尺寸、取消/无隐式Enter、仅同步/当前草稿与全部saved范围、非法文件/重试、守卫下写入后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验 |
 | 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续 |
 | 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 部分：650×770原生分组/两尺寸/真实代理与导入/完整元数据换行/本次快照/错误重试/各关闭路径已验；Tooltip视觉、完整无障碍/跨平台与精细审计待续 |
-| 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 61:1111 | 11 / STUDIO V2 · 协议选项 · Gemini | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
+| 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
+| 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
+| 61:1111 | 11 / STUDIO V2 · 协议选项 · Gemini | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
 | 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
 | 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 部分：旧六主题+可选 Studio、保存/恢复/深色选区通过；完整视觉待续 |
 | 66:320 | 17 / STUDIO V2 · 上游协议下拉 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -45,7 +45,7 @@
 | 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
 | 104:2046 | 40 / STUDIO V2 · 恢复默认窗口尺寸（原型） | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
 
-共享组件：`103:442` 七项工具栏 → `ui.rs::app_controls`、`ui_components.rs`；最新 `54:2` / `90:442` 已将其独立置于窗口top8/right32、300×36，七项事件保持原样。最终049版1440×900与解锁后补拍的1100×700实拍已检查；最终小窗Skin/Language上缘点击、模态遮罩及Restore已验，快捷键与菜单Esc的完整范围见实施记录。`83:454` 供应商行、`83:455` 固定操作栏 → `ui.rs::sidebar`；`71:364` 原生实施契约 → `theme.rs`、本目录记录。
+共享组件：`103:442` 七项工具栏 → `ui.rs::app_controls`、`ui_components.rs`；最新 `54:2` / `90:442` 已将其独立置于窗口top8/right32、300×36，七项事件保持原样。最终049版1440×900与恢复界面操作后补拍的1100×700实拍已检查；最终小窗Skin/Language上缘点击、模态遮罩及Restore已验，快捷键与菜单Esc的完整范围见实施记录。`83:454` 供应商行、`83:455` 固定操作栏 → `ui.rs::sidebar`；`71:364` 原生实施契约 → `theme.rs`、本目录记录。
 
 首批已读取高保真 design context 和渲染：`103:442`、`71:364`、`54:2`。`54:2` 变量已读取，包括 sidebar `#111525`、canvas `#F7F8FC`、ink `#161C2C`、accent `#655CF4`、success `#11976F`。工具栏自身未单独绑定变量（variable defs 返回空对象），尺寸来自共享组件 context。后续阶段按需读取对应画板，不能把 metadata 清单视为已实现。
 

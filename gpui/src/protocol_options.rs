@@ -1,10 +1,12 @@
 //! Typed native provider controls; all edits remain drafts until Save.
-use crate::theme::{color, font, line_height, radius, size, space};
+use crate::theme::{color, font, line_height};
 use crate::upstream_config::{ProtocolSettings, ReasoningMode, UpstreamProtocol};
+use gpui_kit::prelude::FluentBuilder;
 use gpui_kit::{
     component::{
         input::InputState,
         label::Label,
+        scroll::{ScrollableElement, ScrollableMask},
         select::{SelectItem, SelectState},
     },
     *,
@@ -47,7 +49,16 @@ fn modes(protocol: UpstreamProtocol) -> Vec<Mode> {
         })
         .collect()
 }
+#[derive(Clone)]
+struct RawDraft {
+    authentication: String,
+    limit: String,
+    mode: String,
+    mapping: [String; 7],
+}
+
 pub struct Editor {
+    drafts: BTreeMap<&'static str, RawDraft>,
     protocol: UpstreamProtocol,
     limit: Entity<InputState>,
     authentication: Entity<SelectState<Vec<Mode>>>,
@@ -57,6 +68,7 @@ pub struct Editor {
 impl Editor {
     pub fn new(window: &mut Window, cx: &mut App) -> Self {
         Self {
+            drafts: BTreeMap::new(),
             protocol: UpstreamProtocol::default(),
             authentication: cx.new(|cx| {
                 SelectState::new(
@@ -96,6 +108,17 @@ impl Editor {
     }
 
     pub fn load(
+        &mut self,
+        protocol: UpstreamProtocol,
+        settings: &ProtocolSettings,
+        window: &mut Window,
+        cx: &mut App,
+    ) {
+        self.drafts.clear();
+        self.load_settings(protocol, settings, window, cx);
+    }
+
+    fn load_settings(
         &mut self,
         protocol: UpstreamProtocol,
         settings: &ProtocolSettings,
@@ -166,7 +189,88 @@ impl Editor {
         settings.validate(self.protocol)?;
         Ok(settings)
     }
-    /// 12px muted field label, as in the design's protocol dialogs.
+    pub fn protocol(&self) -> UpstreamProtocol {
+        self.protocol
+    }
+
+    /// Keep raw input, including invalid intermediate text, when moving between
+    /// protocol tabs. Only Apply parses and updates the provider draft.
+    pub fn switch_to(&mut self, protocol: UpstreamProtocol, window: &mut Window, cx: &mut App) {
+        if self.protocol == protocol {
+            return;
+        }
+        let raw = RawDraft {
+            authentication: self
+                .authentication
+                .read(cx)
+                .selected_value()
+                .cloned()
+                .unwrap_or_else(|| "protocol_default".into()),
+            limit: self.limit.read(cx).value().to_string(),
+            mode: self
+                .mode
+                .read(cx)
+                .selected_value()
+                .cloned()
+                .unwrap_or_else(|| "none".into()),
+            mapping: std::array::from_fn(|i| self.mapping[i].read(cx).value().to_string()),
+        };
+        let azure = raw.authentication == "azure_api_key"
+            && matches!(
+                protocol,
+                UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses
+            );
+        self.drafts.insert(self.protocol.as_str(), raw);
+        if let Some(raw) = self.drafts.get(protocol.as_str()).cloned() {
+            self.protocol = protocol;
+            self.authentication.update(cx, |s, cx| {
+                s.set_selected_value(&raw.authentication, window, cx)
+            });
+            self.limit
+                .update(cx, |s, cx| s.set_value(raw.limit, window, cx));
+            self.mode.update(cx, |s, cx| {
+                s.set_items(modes(protocol), window, cx);
+                s.set_selected_value(&raw.mode, window, cx);
+            });
+            for (input, text) in self.mapping.iter().zip(raw.mapping) {
+                input.update(cx, |s, cx| s.set_value(text, window, cx));
+            }
+        } else {
+            let mut settings = ProtocolSettings::default();
+            if azure {
+                settings.authentication = crate::upstream_config::Authentication::AzureApiKey;
+            }
+            self.load_settings(protocol, &settings, window, cx);
+        }
+    }
+
+    pub fn focus_targets(&self, cx: &App) -> Vec<(FocusHandle, usize)> {
+        let mut targets = vec![
+            (self.authentication.read(cx).focus_handle(cx), 0),
+            (self.limit.read(cx).focus_handle(cx), 1),
+            (self.mode.read(cx).focus_handle(cx), 2),
+        ];
+        targets.extend(
+            self.mapping
+                .iter()
+                .enumerate()
+                .map(|(i, input)| (input.read(cx).focus_handle(cx), i + 3)),
+        );
+        targets
+    }
+
+    pub fn focus_row(&self, control: usize) -> usize {
+        let mode_row = usize::from(self.protocol != UpstreamProtocol::GeminiGenerateContent);
+        match control {
+            0 | 1 => 0,
+            2 => mode_row,
+            _ => {
+                mode_row + 2 + control.saturating_sub(3)
+                    - usize::from(self.protocol != UpstreamProtocol::OpenaiResponses)
+            }
+        }
+    }
+
     fn field_label(text: String) -> Label {
         Label::new(text)
             .text_size(px(font::LABEL))
@@ -174,124 +278,114 @@ impl Editor {
             .text_color(rgb(color::TEXT_3))
     }
 
-    /// Renders the shared protocol editor (DESIGN_SPEC §5).
-    ///
-    /// One component serves all four protocols: only the leading fields differ
-    /// (authentication / output limit + version / none), while the thinking
-    /// mode, the mapping explanation and the monospace mapping column are
-    /// shared. The Responses protocol keeps its explicit `none` mapping row.
-    /// `mono` is the resolved monospace family from the active theme.
-    pub fn render(&self, zh: bool, mono: SharedString) -> AnyElement {
+    pub fn render(
+        &self,
+        zh: bool,
+        mono: SharedString,
+        scroll: &ScrollHandle,
+        height: Pixels,
+        needs_gutter: bool,
+    ) -> AnyElement {
         let t = |cn: &str, en: &str| if zh { cn.to_owned() } else { en.to_owned() };
         let openai = matches!(
             self.protocol,
             UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses
         );
         let anthropic = self.protocol == UpstreamProtocol::AnthropicMessages;
-        let authentication = t("API Key 认证", "API Key authentication");
-        let limit = t("默认最大输出 Token", "Default maximum output tokens");
-        let mode = t("思考模式", "Thinking mode");
-        div()
-            .id("protocol-options-fields")
-            .flex()
-            .flex_col()
-            .gap(px(space::CARD_GAP))
-            .overflow_y_scroll()
-            .flex_1()
-            .min_h_0()
+        let responses = self.protocol == UpstreamProtocol::OpenaiResponses;
+        let gemini = self.protocol == UpstreamProtocol::GeminiGenerateContent;
+        let field = |label: String, control: AnyElement| {
+            div()
+                .flex()
+                .flex_col()
+                .flex_none()
+                .gap(px(3.))
+                .child(Self::field_label(label))
+                .child(control)
+        };
+        let input = |state: &Entity<InputState>, label: String, h: f32| {
+            Styled::h(crate::ui_components::text_input(state, false), px(h))
+                .text_size(px(12.))
+                .rounded(px(9.))
+                .bg(rgb(color::BG_TABLE_HEAD))
+                .border_color(rgb(color::BORDER))
+                .w_full()
+                .aria_label(label)
+                .into_any_element()
+        };
+        let select = |state: &Entity<SelectState<Vec<Mode>>>, label: String| {
+            crate::ui_components::select(state, false)
+                .w_full()
+                .h(px(38.))
+                .text_size(px(12.))
+                .rounded(px(9.))
+                .bg(rgb(color::BG_TABLE_HEAD))
+                .border_color(rgb(color::BORDER))
+                .accessibility_label(label)
+                .into_any_element()
+        };
+        let auth_label = t("API Key 认证", "API Key authentication");
+        let limit_label = t("默认最大输出 Token", "Default maximum output tokens");
+        let mode_label = t("思考模式", "Thinking mode");
+        let rows = div().id("protocol-options-fields").flex().flex_col().w_full()
+            .when(needs_gutter, |rows| rows.pr(px(12.)))
+            .pb(px(12.))
             .children(openai.then(|| {
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap(px(space::SMALL))
-                    .child(Self::field_label(authentication.clone()))
-                    .child(
-                        crate::ui_components::select(&self.authentication, false)
-                            .w_full()
-                            .accessibility_label(authentication.clone()),
-                    )
+                div().pt(px(18.)).pb(px(31.)).flex_none()
+                    .child(field(auth_label.clone(), select(&self.authentication, auth_label)))
             }))
             .children(anthropic.then(|| {
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap(px(space::SMALL))
-                    .child(Self::field_label(limit.clone()))
-                    .child(
-                        crate::ui_components::text_input(&self.limit, false)
-                            .w_full()
-                            .aria_label(limit.clone()),
-                    )
+                div().flex().flex_col().pt(px(16.)).pb(px(12.)).flex_none()
+                    .child(field(limit_label.clone(), input(&self.limit, limit_label, 38.)))
+                    .child(div().mt(px(10.)).h(px(35.)).flex_none().px(px(13.))
+                        .flex().items_center().rounded(px(9.)).bg(rgb(color::BG_TABLE_HEAD))
+                        .child(Label::new("Anthropic-Version: 2023-06-01")
+                            .font_family(mono.clone()).text_size(px(12.)).text_color(rgb(color::TEXT_2))))
             }))
-            .children(anthropic.then(|| {
-                Label::new("Anthropic-Version: 2023-06-01")
-                    .text_size(px(font::BODY))
-                    .line_height(px(line_height::BODY))
-                    .text_color(rgb(color::TEXT_2))
-            }))
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .gap(px(space::SMALL))
-                    .child(Self::field_label(mode.clone()))
-                    .child(
-                        crate::ui_components::select(&self.mode, false)
-                            .w_full()
-                            .accessibility_label(mode.clone()),
-                    ),
-            )
-            .child(
-                div()
-                    .font_weight(FontWeight::SEMIBOLD)
-                    .text_size(px(font::BODY))
-                    .line_height(px(line_height::BODY))
-                    .child(t("思考强度映射", "Thinking effort mapping")),
-            )
-            .child(
-                div()
-                    .p(px(space::CARD_SM))
-                    .rounded(px(radius::CONTROL))
-                    .bg(rgb(color::BG_PAGE))
-                    .border_1()
-                    .border_color(rgb(color::BORDER))
-                    .child(
-                        Label::new(t(
-                            "按供应商文档填写映射，留空表示不配置。预算模式填正整数；档位模式填原生 level。Responses 留空沿用原生 effort，max 必须显式映射。",
-                            "Use the provider's documented mapping. Budget: positive tokens; level: native level. Empty = unconfigured. Responses uses native efforts by default; max needs an explicit mapping.",
-                        ))
-                        .text_size(px(font::LABEL))
-                        .line_height(px(line_height::LABEL))
-                        .text_color(rgb(color::TEXT_2)),
-                    ),
-            )
-            .children(
-                EFFORTS
-                    .into_iter()
-                    .zip(&self.mapping)
-                    .filter(|(effort, _)| {
-                        *effort != "none" || self.protocol == UpstreamProtocol::OpenaiResponses
-                    })
-                    .map(|(effort, state)| {
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap(px(space::CARD_GAP))
-                            .child(
-                                Label::new(effort)
-                                    .w(px(size::MAPPING_LABEL_WIDTH))
-                                    .flex_shrink_0()
-                                    .font_family(mono.clone())
-                                    .text_size(px(font::LABEL))
-                                    .line_height(px(line_height::LABEL))
-                                    .text_color(rgb(color::TEXT_2)),
-                            )
-                            .child(div().flex_1().child(
-                                crate::ui_components::text_input(state, false)
-                                    .aria_label(format!("{effort} mapping")),
-                            ))
-                    }),
-            )
+            .child(div().flex_none().pt(px(if gemini { 22. } else { 0. }))
+                .pb(px(if gemini { 47. } else if anthropic { 31. } else { 26. }))
+                .child(field(mode_label.clone(), select(&self.mode, mode_label))))
+            .child(div().flex().flex_col().flex_none().gap(px(if responses { 4. } else { 5. }))
+                .pb(px(if responses || gemini { 7. } else if anthropic { 5. } else { 6. }))
+                .child(Label::new(t("思考强度映射", "Thinking effort mapping"))
+                    .font_weight(FontWeight::BOLD).text_size(px(15.)).line_height(px(22.)))
+                .child(div().flex().flex_col().flex_none().justify_center()
+                    .min_h(px(if responses { 45. } else if gemini { 56. } else { 53. }))
+                    .px(px(13.)).py(px(8.)).rounded(px(10.)).bg(rgb(color::BG_NOTICE))
+                    .child(Label::new(t(
+                        "留空表示不配置。预算模式填正整数；档位模式填写原生 level。",
+                        "Empty = unconfigured. Budgets: positive tokens; levels: native values."))
+                        .text_size(px(11.)).line_height(px(16.)).whitespace_normal().h_auto()
+                        .text_color(rgb(color::TEXT_2)))
+                    .child(Label::new(if responses {
+                        t("Responses 留空沿用原生 effort，max 需显式映射。",
+                            "Responses keeps native efforts when empty; max requires an explicit mapping.")
+                    } else {
+                        t("具体映射请遵循供应商文档，避免把 Token 预算误当成档位。",
+                            "Follow the provider documentation; token budgets and levels are distinct.")
+                    }).text_size(px(11.)).line_height(px(16.)).whitespace_normal().h_auto()
+                        .text_color(rgb(color::TEXT_3)))))
+            .children(EFFORTS.into_iter().zip(&self.mapping)
+                .filter(|(effort, _)| *effort != "none" || responses)
+                .map(|(effort, state)| {
+                    let row_height = if responses || anthropic { 36. } else { 38. };
+                    div().flex().items_center().gap(px(11.)).flex_none()
+                        .mb(px(if responses { 0. } else if anthropic { 1. } else if gemini { 11. } else { 3. }))
+                        .h(px(row_height))
+                        .child(div().w(px(crate::theme::size::MAPPING_LABEL_WIDTH)).h(px(33.)).flex_shrink_0().px(px(12.))
+                            .rounded(px(7.)).bg(rgb(color::BG_TABLE_HEAD)).flex().items_center()
+                            .child(Label::new(effort).font_family(mono.clone()).text_size(px(12.))
+                                .text_color(rgb(color::TEXT_2))))
+                        .child(div().flex_1().min_w_0().child(input(state, format!("{effort} mapping"), row_height)))
+                }));
+        div()
+            .relative()
+            .w_full()
+            .h(height)
+            .flex_none()
+            .child(rows.h(height).overflow_y_scroll().track_scroll(scroll))
+            .child(ScrollableMask::new(Axis::Vertical, scroll))
+            .vertical_scrollbar(scroll)
             .into_any_element()
     }
 }

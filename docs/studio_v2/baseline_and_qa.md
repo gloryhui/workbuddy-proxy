@@ -433,3 +433,41 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 同日补验：CUA在新的隔离应用中实际点击能切换页面，已证明当前可操作；使用相同最终049/UI与25f24ad6/Core补拍[1100×700实拍](screenshots/toolbar-top8-1100x700.png)。主代理已检查：标题/副标题仍约(288,65)/(288,110)、摘要/连接卡top167/223，工具组保持窗口顶部，七按钮完整。原图2200×1402裁底2物理像素，一次LANCZOS等比例缩为1100×700；是新建合成配置的实际截图，不沿用上一轮基线。
 - 最终049小窗实测Skin(786,12)、Language(918,12)能开菜单；Sync模态打开后同坐标点击不出现菜单，模态保持，Esc关闭确认。Restore后的原图2880×1800，确认恢复1440×900。Skin菜单首次Esc没有关闭，通过再点Skin关闭；不将该项误报为Esc通过，菜单完整键盘路径仍需后续审计。无重启、启动项、外部URL或剪贴板操作。两尺寸截图要求至此补齐；独立夹具继续供下一协议弹窗验证，当前不清理在用进程。
+
+
+## 小功能 24：原生四协议选项弹窗（2026-10-29，北京时间）
+
+- 官方MCP实际读取四帧 `61:289` / `61:561` / `61:838` / `61:1111`，对应620×724组件 `61:42` / `61:103` / `61:169` / `61:231`，分别检查高保真context与渲染图；Gemini一次传输失败后重试同node成功，没有凭其他协议推断。新增 `ui/protocol_dialog.rs` 统一620px原生Kit Dialog、协议标记、四个原生切换按钮、固定Apply/草稿说明底栏；内容按窗口高度独立滚动，1100×700下弹窗缩至636px高。继续使用现有Input/Select/ScrollHandle与内置X，没有引入新运行时、依赖或图片占位。
+- `protocol_options.rs` 保留真实输入实体和原load/read/parse/validate契约，差异字段仍为OpenAI认证、Responses含none的七项映射、Anthropic最大输出/固定版本及预算或adaptive、Gemini预算或level。原解析器与既有测试离线逐字核对未改，代理核心、配置格式与协议转发代码未改。新增modal内各协议原始输入缓存，切换tab可保留尚未通过校验的中间文本；打开弹窗从当前provider draft重新加载。Apply验证所选协议/settings后只更新provider draft，并同步外层协议Select；显式Save仍负责写核心。
+- 错误改为protocol_error局部显示，关闭/重新打开/成功应用清除；原验证器拒绝的内容不应用、不关闭模态。原生Input/Select的焦点监听将当前字段滚入；视口或错误底栏高度改变时在布局后的下一帧只校正一次，复用已核对的GPUI prepaint顺序，不引入timer或持续重绘。
+- 本轮使用Figma技能及Impeccable现有布局精修流程，既有Figma与原生控件为视觉依据；项目无PRODUCT/DESIGN不阻碍本次已有界面的定向施工。Rust目标机械扫描返回[]，仅作辅助；布局仍需实际运行核对。`fmt`、167项测试、严格clippy（all-targets、-D warnings）及release构建Passed，UI15,076,832 bytes / SHA256 `3116352117e37842ad44141a9ea0643772ce6ef48c3c345d825286d3b3f3b5b9`；核心仍8,428,096 bytes / `25f24ad6`。block0.1.6未来兼容提示保持既有基线。
+- 原生宽窗首轮快检620×724，标题/四tab/六行映射/固定Apply完整；该快检为Mono。最终四协议业务、两尺寸Studio/Mono截图和性能结果见后续记录，不将快检替代验收。
+
+- 3116真实回归发现：点击Chat tab后Return会意外Apply并关闭；Core因未显式Save保持原Gemini budget，但供应商草稿已被应用，不能算通过。源码确认Kit Button的mouse-down主动prevent_default保持旧焦点；原切tab又在下一帧强制焦点到输入，Enter因而走Dialog Confirm。只加选中边框的20d版未作为最终版验收。
+- 修复增加四个缓存的非Tab停靠焦点作用域，继续保留原生Button的Tab停靠；切标签时焦点进入对应作用域，ProtocolTab的Enter/Space动作只激活标签并停止冒泡，Dialog Confirm另检查标签作用域而拒绝Apply。移除切标签后抢输入焦点的下一帧回调；输入字段正常Enter/显式Apply仍用原验证流程。该修复同时包含选中1px语义强调边框；`7ec85309` 通过fmt / 167 tests / 严格clippy / release，UI15,076,832 bytes / SHA256 `7ec85309c8951808d987517be656eb464530e88d90665c8d8dbdbb6ab042d460`。最终键盘复验及重拍仍需实际核对，3116旧图不冒充此版本。
+
+- 3116完整业务实测：Responses none=low/max=high与Anthropic budget中的未校验bad在tab往返后保留；预算bad拒绝应用，修正后Anthropic budget low=1024/output4096、adaptive levels.low=low/budgets={}分别显式保存成功。Gemini level low=low与budget low=512也分别保存；Responses none/max与Azure认证一起保存为openai_responses/azure_api_key，未发上游请求。模式选项保持原有双语常量，不宣称纯英文选项。
+- 7ec关键复验：四tab各click→Return及click→Space均保留模态，不应用外层Chat草稿；Chat click→Tab两次聚焦未选Responses→Enter真实切换且不关闭。Responses max焦点从1440缩1100仍可见，Shift+Tab回xhigh也完整；输入max=high按Return只Apply到draft，Core仍Gemini budget，Cmd+S后才读到openai_responses/responses_efforts.max=high。
+- 7ec补验Chat的空映射/Azure认证：Apply后Core仍openai_responses/protocol_default，Cmd+S后为openai_chat/azure_api_key。Anthropic最大输出改8192：Apply后Core仍openai_chat/4096，Cmd+S后才anthropic_messages/default_max_output_tokens=8192。小窗外层Save按钮当时在不可见区域，AX点击未触发；这些提交使用显式Cmd+S并以日志Saved/配置实读为证，不将不可见点击冒充成功。外层表单小窗手动滚动到保存按钮的可达性另留后续审计。
+- 7ec非法Responses max在输入焦点Return后，当前字段/局部错误/固定底栏同屏，等待8秒仍在；Esc回主界面Runtime没有该校验红字。X/Esc取消无效文本与重新打开按provider draft重建已验；最终截图/性能/进程收尾继续见下。
+
+- 7ec九张图已由主代理逐张查看，宽窗各协议全表单与选中边框、窄窗独立滚动/固定底栏及错误字段完整；但最后点击modal标题空白（CUA实际坐标[900,220]）后AX焦点为standard window，Escape没有关闭，随后X可关。该特定路径不通过，不泛化为输入焦点下Esc失败；7ec UI/Core/fixture均退出0，关UI后Core HTTP200。此轮照片仍是7ec候选证据，下面最终修复版重拍覆盖后才作最终交付。
+- ModalBody处于Kit的窗口dialog layer，非Proxy实际dispatch子树；仅在protocol_open时给其跟踪焦点根补ProtocolModal key context及原Proxy::dismiss listener，并绑定局部Escape，保留子Select菜单与ProtocolTab的原键盘路由。`98fb1329` 通过fmt / 167 tests / 严格clippy / release，UI15,076,832 bytes / SHA256 `98fb1329837d75a5ff711b7488c45393ff45a0504c9d4f0b1a296b936baf5a4c`；待真实同路径及嵌套菜单复验，不将源码推断冒充通过。
+
+- 98fb实际复验：同CUA窗口截图物理坐标[900,220]点击后原图鼠标在modal标题左上，AX焦点显示standard window，Escape现会关闭modal，Core仍Anthropic/8192。不得将该坐标与CGWindow全局逻辑坐标混算；中途一次基于CG Bounds的否定已由立即截图推翻，不作证据。另一窗口内非输入坐标Escape也可关闭；Select展开后Escape只关list、保留modal，点Responses tab Return仍不Apply。输入max=high Return只改draft，Core仍Anthropic/8192，随后Cmd+S日志Saved且实读openai_responses/responses_efforts.max=high。
+- 主代理逐张查看最终98fb九张PNG：[Chat大窗](screenshots/protocol-chat-1440x900.png)/[小窗](screenshots/protocol-chat-1100x700.png)、[Responses大窗](screenshots/protocol-responses-1440x900.png)/[小窗](screenshots/protocol-responses-1100x700.png)、[Anthropic大窗](screenshots/protocol-anthropic-1440x900.png)/[小窗](screenshots/protocol-anthropic-1100x700.png)、[Gemini大窗](screenshots/protocol-gemini-1440x900.png)/[小窗](screenshots/protocol-gemini-1100x700.png)、[Responses max局部错误](screenshots/protocol-error-1100x700.png)。均为同一98fb真实隔离应用：宽窗中文Studio、原始2880×1800；小窗英文Mono、原始2200×1402裁底2物理像素，各一次LANCZOS等比例2:1到交付尺寸。最终背景已保存Responses/max=high，1供应商/1模型/0请求；各协议tab为modal本地选择，Anthropic图4096为新tab默认值，不冒充之前保存8192的业务状态。窄窗正文独立滚动，固定标题/标签和Apply底栏完整；错误图max=invalid未提交，字段与错误同屏。
+- 7ec活跃Gemini modal单次ps：Core8,016/UI77,712 KiB，合85,728 KiB（7.83/75.89/83.72 MiB），1供应商1模型0请求，与默认Providers页64模型基准分开记录。98fb最终UI/Core/fixture均正常退出0，关UI后Core HTTP200/ready，实际PID2242/2238/2235消失；两套夹具保留到照片审阅后才清理。性能、最终清理及提交见下。
+
+- 默认Providers页用既有benchmark脚本、同机release顺序执行旧049→新98fb→旧049复测→新98fb复测，四轮均1供应商64模型、200小请求、80×1MiB/4并发、本地HTTP mock、Core仍25f24ad6，均退出0。各核心sandbox_check enforced且PID已消失，UI副本SHA分别核对为049/98fb；UI kernel sandbox不作声明。原始结果全部保留：
+
+| 轮次 | 核心/UI/合计 RSS MiB | 托盘另计 MiB | 核心/累计UI就绪标记 ms | UI标记减核心 ms | 请求p50/p95 ms | 采样峰值 MiB | 大请求秒 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| [旧版](benchmarks/protocol-options-previous-gui.json) | 12.27 / 77.03 / 89.30 | 26.89 | 437.245 / 1115.123 | 677.878 | 0.162 / 0.215 | 136.72 | 0.099 |
+| [新版](benchmarks/protocol-options-gui.json) | 12.58 / 76.97 / 89.55 | 26.59 | 214.303 / 1239.011 | 1024.708 | 0.215 / 0.451 | 145.16 | 0.150 |
+| [旧版复测](benchmarks/protocol-options-previous-run2-gui.json) | 12.16 / 63.19 / 75.34 | 26.00 | 886.325 / 1497.932 | 611.607 | 0.169 / 0.193 | 120.69 | 0.089 |
+| [新版复测](benchmarks/protocol-options-run2-gui.json) | 12.58 / 64.36 / 76.94 | 27.05 | 232.932 / 1027.467 | 794.535 | 0.168 / 0.203 | 125.69 | 0.087 |
+
+- 首轮新版p95 0.451ms、大请求0.150s较旧版0.215ms/0.099s偏高，启动标记差1024.708ms也偏高；不据核心二进制未改直接判定通过。GUI夹具清理完成后复测，旧/新p50 0.169/0.168、p95 0.193/0.203ms，大请求0.089/0.087s，延迟升高未持续，UI标记差611.607/794.535ms。两版复测RSS都低于首轮，保留现象但不作归因或宣称改善；这些标记不是首帧/可交互时延，专项仍待全局验收。现有四轮未证实持续退化，没有改动基准参数或放宽门槛。
+- 对照最初同机基线Core/UI/合计13.88/75.27/89.14 MiB、核心/累计UI标记45.924/796.346ms、请求p50/p95 0.177/0.209ms，仅作范围参考。本批可比证据以上述049/98fb同口径交错四轮为准。完整IME/无障碍、Windows/Intel Mac/HiDPI与40帧最终审计仍未完成，Goal保持active。
+
+- 进程安全结束后，子代理核对两套UI/Core/mock的exit0与PID消失、父目录无lsof/命令行引用，清理确切自有GUI夹具59,768 KiB。主代理核对四轮benchmark exit0、sandbox enforced/各Core PID消失、专属根无lsof引用后，清理构建日志/上版UI副本/四份基准副本106,648 KiB。本轮累计166,416 KiB（约162.52 MiB），自有临时文件剩余0 bytes。两项归属未明历史空目录各0 KiB保留，既有049原始截图398,590 bytes及本轮交付PNG/JSON/报告、共享Cargo缓存保留；系统盘当前剩余36.61 GiB。

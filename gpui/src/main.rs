@@ -347,6 +347,9 @@ fn main() {
                 KeyBinding::new("ctrl-a", ui::SelectModels, Some("ModelList")),
                 KeyBinding::new("f2", ui::EditModel, Some("ModelList")),
                 KeyBinding::new("enter", ui::EditModel, Some("ModelList")),
+                KeyBinding::new("enter", ui::ActivateProtocolTab, Some("ProtocolTab")),
+                KeyBinding::new("space", ui::ActivateProtocolTab, Some("ProtocolTab")),
+                KeyBinding::new("escape", ui::Dismiss, Some("ProtocolModal")),
                 KeyBinding::new("escape", ui::Dismiss, Some("Proxy")),
                 KeyBinding::new("cmd-q", ui::Quit, None),
             ]);

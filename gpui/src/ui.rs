@@ -1,5 +1,6 @@
 mod model_editor;
 mod model_picker;
+mod protocol_dialog;
 mod providers;
 mod relay;
 mod sidebar;
@@ -31,7 +32,15 @@ use std::{
 };
 gpui_kit::actions!(
     proxy,
-    [Save, RemoveModels, SelectModels, EditModel, Dismiss, Quit]
+    [
+        Save,
+        RemoveModels,
+        SelectModels,
+        EditModel,
+        Dismiss,
+        Quit,
+        ActivateProtocolTab
+    ]
 );
 
 /// Top-level pages of the settings window.
@@ -192,6 +201,11 @@ pub struct Proxy {
     table_width: Pixels,
     dialog_open: bool,
     protocol_open: bool,
+    protocol_error: Option<String>,
+    protocol_scroll: ScrollHandle,
+    protocol_tab_focus: [FocusHandle; 4],
+    protocol_focused_control: usize,
+    protocol_layout: Option<(Pixels, crate::upstream_config::UpstreamProtocol)>,
     protocol_select: Entity<ChoiceState>,
     protocol_options: crate::protocol_options::Editor,
     focus: FocusHandle,
@@ -800,6 +814,11 @@ impl Proxy {
             table_width: px(0.),
             dialog_open: false,
             protocol_open: false,
+            protocol_error: None,
+            protocol_scroll: ScrollHandle::new(),
+            protocol_tab_focus: std::array::from_fn(|_| cx.focus_handle().tab_stop(false)),
+            protocol_focused_control: 2,
+            protocol_layout: None,
             protocol_select,
             protocol_options,
             focus,
@@ -907,6 +926,7 @@ impl Proxy {
         })
         .detach();
         this.subscribe_model_editor_focus(window, cx);
+        this.subscribe_protocol_editor_focus(window, cx);
         this.load_form(window, cx);
         // Current-provider labels and save state follow editing events, rather
         // than waiting for an idle draft-persistence tick to redraw the UI.
@@ -974,15 +994,21 @@ impl Proxy {
             Ok(settings) => {
                 let id = self.selected();
                 if let Some(d) = self.drafts.providers.get_mut(&id) {
+                    d.protocol = self.protocol_options.protocol();
                     d.protocol_settings = settings;
                 }
+                let protocol = self.protocol_options.protocol();
+                self.protocol_select.update(cx, |s, cx| {
+                    s.set_selected_value(&protocol.as_str().to_owned(), window, cx)
+                });
+                self.last_metadata = Instant::now() - Duration::from_secs(10);
                 self.sync_preset(window, cx);
+                self.protocol_error = None;
                 self.protocol_open = false;
                 self.error = false;
             }
             Err(error) => {
-                self.status = error;
-                self.error = true;
+                self.protocol_error = Some(error);
             }
         }
         cx.notify();
@@ -1699,6 +1725,7 @@ impl Proxy {
         self.port_open = false;
         self.port_error = false;
         self.protocol_open = false;
+        self.protocol_error = None;
         self.focus.focus(window, cx);
         cx.notify();
     }
@@ -1765,14 +1792,13 @@ impl Proxy {
                     owner: owner.clone(),
                 }
             });
+            let is_protocol = self.protocol_open;
             let is_picker = self.picker.is_some();
             let is_model_editor = self.editing.is_some();
             let is_sync_confirmation = self.sync_open || self.unsync_open;
             let sync_zh = self.zh;
             let sync_remove = self.unsync_open;
-            let width = if self.protocol_open {
-                crate::theme::size::DIALOG_PROTOCOL_WIDTH
-            } else if self.picker.is_some() || self.editing.is_some() {
+            let width = if self.picker.is_some() || self.editing.is_some() {
                 720.
             } else {
                 480.
@@ -1798,7 +1824,21 @@ impl Proxy {
                 }
                 let confirm_owner = owner.clone();
                 let owner = owner.clone();
-                let dialog = if is_sync_confirmation {
+                let dialog = if is_protocol {
+                    let height = protocol_dialog::surface_height(window);
+                    let content_body = body.clone();
+                    dialog
+                        .width(px(crate::theme::size::DIALOG_PROTOCOL_WIDTH))
+                        .h(height)
+                        .p(px(25.))
+                        .pt(px(20.))
+                        .pb(px(14.))
+                        .bg(rgb(crate::theme::color::BG_BAR))
+                        .rounded(px(18.))
+                        .border_color(rgb(crate::theme::color::BORDER))
+                        .margin_top(((window.viewport_size().height - height) / 2.).max(px(16.)))
+                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                } else if is_sync_confirmation {
                     let content_body = body.clone();
                     dialog
                         .width(px(526.))
@@ -1860,7 +1900,13 @@ impl Proxy {
                             if this.port_open {
                                 this.prepare_port(window, cx);
                             } else if this.protocol_open {
-                                this.confirm_protocol(window, cx);
+                                if !this
+                                    .protocol_tab_focus
+                                    .iter()
+                                    .any(|focus| focus.contains_focused(window, cx))
+                                {
+                                    this.confirm_protocol(window, cx);
+                                }
                             } else if this.editing.is_some() {
                                 this.confirm_edit(cx);
                             } else if this.picker.is_some() {
@@ -2053,36 +2099,7 @@ impl Proxy {
         let content = if self.port_open {
             self.port_dialog(cx)
         } else if self.protocol_open {
-            crate::ui_components::dialog_body_sized(window.viewport_size().height, 210., 360., 570.)
-                .child(crate::ui_components::dialog_title(
-                    self.t("上游协议选项", "Upstream protocol options"),
-                ))
-                .child(
-                    self.protocol_options
-                        .render(self.zh, cx.theme().mono_font_family.clone()),
-                )
-                .when(self.error, |this| {
-                    this.child(
-                        Label::new(self.status.clone())
-                            .text_size(px(crate::theme::font::LABEL))
-                            .text_color(rgb(crate::theme::color::DANGER)),
-                    )
-                })
-                .child(
-                    crate::ui_components::dialog_footer().child(
-                        crate::ui_components::button(
-                            "protocol-apply",
-                            crate::ui_components::ButtonKind::Primary,
-                            self.t("应用到草稿", "Apply to draft"),
-                            false,
-                            false,
-                        )
-                        .on_click(
-                            cx.listener(|this, _, window, cx| this.confirm_protocol(window, cx)),
-                        ),
-                    ),
-                )
-                .into_any_element()
+            self.protocol_dialog(window, cx)
         } else if self.picker.is_some() {
             self.picker_dialog(window, cx)
         } else if self.editing.is_some() {
@@ -2401,6 +2418,13 @@ impl Render for ModalBody {
                     div()
                         .id("proxy-modal-body")
                         .track_focus(&this.modal_focus)
+                        .when(this.protocol_open, |body| {
+                            // The modal view lives in Kit's window layer, outside
+                            // Proxy's dispatch tree. Its generic body focus needs
+                            // a local dismissal route too, not only input focus.
+                            body.key_context("ProtocolModal")
+                                .on_action(cx.listener(Proxy::dismiss))
+                        })
                         .child(body)
                         .into_any_element()
                 })

@@ -313,6 +313,16 @@ impl Proxy {
                                     window,
                                     cx,
                                 );
+                                this.protocol_error = None;
+                                this.protocol_scroll.set_offset(point(px(0.), px(0.)));
+                                this.protocol_focused_control = if draft.protocol
+                                    == crate::upstream_config::UpstreamProtocol::AnthropicMessages
+                                {
+                                    1
+                                } else {
+                                    2
+                                };
+                                this.protocol_layout = None;
                                 this.protocol_open = true;
                                 this.error = false;
                                 cx.notify();

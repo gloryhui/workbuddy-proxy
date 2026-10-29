@@ -173,9 +173,8 @@ pub mod size {
     pub const BUTTON_X_TIGHT: f32 = 8.;
     pub const ICON_BUTTON: f32 = 32.;
     pub const DIALOG_ICON_BUTTON: f32 = 28.;
-    /// The shared protocol editor's mapping labels use a fixed monospace column.
-    /// Mapping fields use the same 36px height as other inputs (D16 decision).
-    pub const MAPPING_LABEL_WIDTH: f32 = 84.;
+    /// Studio protocol editor (61:42): fixed monospace key column.
+    pub const MAPPING_LABEL_WIDTH: f32 = 94.;
     /// Provider page: the thinking-effort select width in the design's action row.
     pub const EFFORT_SELECT_WIDTH: f32 = 200.;
     pub const LIST_ROW_HEIGHT: f32 = 36.;
@@ -194,9 +193,9 @@ pub mod size {
     pub const PROGRESS_HEIGHT: f32 = 4.;
     pub const DIALOG_MIN_WIDTH: f32 = 520.;
     pub const DIALOG_MAX_WIDTH: f32 = 660.;
-    /// The three shared protocol dialogs in the design are ~596px wide, inside
-    /// the §3 dialog range. The model picker/editor keep their own width (T05).
-    pub const DIALOG_PROTOCOL_WIDTH: f32 = 600.;
+    /// Studio's four protocol variants (61:42/103/169/231) share a 620px shell.
+    /// The model picker/editor keep their own independent dimensions.
+    pub const DIALOG_PROTOCOL_WIDTH: f32 = 620.;
 }
 
 /// Border widths and focus treatment.
