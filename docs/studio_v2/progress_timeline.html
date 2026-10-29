@@ -198,10 +198,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T06:38:55+08:00",
+  "updated_at": "2026-10-30T07:16:01+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "122202f14652072079d0a8163c628ee9c7174e1f",
+  "code_head": "a2dfa9527175af114773386b409eef393e5598c9",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -211,63 +211,63 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 44,
+  "recorded_tasks": 45,
   "current_task": {
-    "id": 44,
-    "title": "模型编辑图标原色与编辑保存回归",
+    "id": 45,
+    "title": "请求详情长提示换行与键盘回归",
     "status": "recorded",
-    "description": "Studio/Mono铅笔恢复Figma原色；两尺寸、三皮肤、鼠标/键盘编辑、草稿与显式保存、192测试和四轮原基准完成，完整跨平台及无障碍等仍待验。"
+    "description": "修复原生Tooltip长文本越框；两尺寸/More键盘/真实零与缺失/价格快照、192测试、3段资源采样和六轮原基准完成，三字段精确hover及完整跨平台等仍待验。"
   },
   "latest_task": {
-    "id": 44,
-    "title": "模型编辑图标原色与编辑保存回归",
+    "id": 45,
+    "title": "请求详情长提示换行与键盘回归",
     "status": "recorded",
-    "summary": "修正Studio/黑白主题模型编辑铅笔被原生按钮文字色染色的问题，仅改model_table.rs；按钮28×28、SVG15×15、事件/焦点/禁用规则及其他皮肤保持。证据：编译与原资源、真实交互及落盘、视觉与像素、1440实拍、1100实拍、四轮性能、清理。",
+    "summary": "修复详情/More长值Tooltip文字越出边框和窗口的问题，仅改detail_layout.rs提示内容布局，原值、15行/弹窗/滚动及事件保持。证据：编译、真实交互与原API数据、视觉、1440中文、1100英文、小窗完整长提示、六轮性能、清理。",
     "highlights": [
-      "修正Studio/黑白主题模型编辑铅笔被原生按钮文字色染色的问题，仅改model_table.rs；按钮28×28、SVG15×15、事件/焦点/禁用规则及其他皮肤保持。证据：编译与原资源、真实交互及落盘、视觉与像素、1440实拍、1100实拍、四轮性能、清理。",
-      "官方Figma54:246模型卡与62:438黑白图标的高保真context/截图已读取。设计两处使用同一15px SVG，下载后与现有model-edit.svg逐字节一致，SHAd19ec85f…/原stroke#8B94A9，没有改写或替换资源。旧0892实拍确实显示靛蓝铅笔，Kit Icon::into_svg会把图形作为文字色遮罩；现在仅Studio/Mono且非busy时在Button设置该原色，busy继续Kit disabled foreground，其他皮肤不进入该分支。未改Core、配置格式、依赖、热路径或工具栏位置。",
-      "本轮重新通过fmt0.465s、192 tests/2既有ignored6.006s、严格clippy all-targets/-Dwarnings2.658s、Intel check1.790s、Release42.589s。最终UIb5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691，15,246,768bytes；基线仍0892、Core仍25f/8,428,096bytes。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留，UI43的Windows资源编译阻碍及标题栏重叠没有因此解决。"
+      "修复详情/More长值Tooltip文字越出边框和窗口的问题，仅改detail_layout.rs提示内容布局，原值、15行/弹窗/滚动及事件保持。证据：编译、真实交互与原API数据、视觉、1440中文、1100英文、小窗完整长提示、六轮性能、清理。",
+      "官方MCP重读60:692高保真context/截图，保留650×770上限、原生Dialog/Popover/Tooltip/Label与15个36px主行；该弹窗设计无外部SVG/图片槽。b527基线More滚动暴露实际缺陷：外框虽max560，子文本仍单行越出边框/窗口，见失败原图与旧版原始记录，不作最终通过证据。改用Tooltip::element内的Label max520/whitespace_normal/popover_foreground，外框仍max560；不截字符串、不插入数据换行、不改全局Kit或加定时器。",
+      "首次编译提示缺ActiveTheme trait导入，已补，未弱化门禁。最终fmt0.649s、192 tests/2既有ignored5.812s、严格clippy all-targets/-Dwarnings2.498s、Intel check1.887s、Release40.128s通过。UI0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0，15,246,768bytes；旧UIb527、Core仍25f/8,428,096bytes。最初b527复用门禁与修复后重编译分列，不混用。Intel仅类型检查，block0.1.6提示及UI43 Windows资源编译/标题栏问题保留。"
     ],
     "limits": [
-      "实际原生close后两UI均exit0，私有夹具再停止Core并wait0，两个fixture直接wait0；这不额外证明Core驻留连续性（见UI42）。四轮benchmark自有子进程退出数组均[-15,-15,0,0]并wait，记录的Core/UI PID由主代理独立核对消失，临时目录清理延迟到完整预检之后。没有实际供应商请求、真实登录项/同步重启或外部AX，busy禁用分支本轮未强制造成GUI场景；完整IME/读屏/Windows/Intel实机/HiDPI仍待验。"
+      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮实际修复长Tooltip溢出并补键盘/长值/零与未知语义；三个字段精确hover、完整视觉/IME/读屏/原生AX、Windows布局偏好与实机、Intel实机/HiDPI、托盘/位移/最小化、首帧及更新公网成功仍待推进。Goal active，HTML继续仅静态校验。"
     ],
     "evidence": [
       {
-        "label": "编译与原资源",
-        "href": "benchmarks/model-edit-build.json"
+        "label": "编译",
+        "href": "benchmarks/request-detail-tooltip-build.json"
       },
       {
-        "label": "真实交互及落盘",
-        "href": "benchmarks/model-edit-gui-validation.json"
+        "label": "真实交互与原API数据",
+        "href": "benchmarks/request-detail-tooltip-gui-validation.json"
       },
       {
-        "label": "视觉与像素",
-        "href": "benchmarks/model-edit-visual-validation.json"
+        "label": "视觉",
+        "href": "benchmarks/request-detail-tooltip-visual-validation.json"
       },
       {
-        "label": "1440实拍",
-        "href": "screenshots/model-edit-1440x900.png"
+        "label": "1440中文",
+        "href": "screenshots/request-detail-tooltip-1440x900.png"
       },
       {
-        "label": "1100实拍",
-        "href": "screenshots/model-edit-1100x700.png"
+        "label": "1100英文",
+        "href": "screenshots/request-detail-tooltip-1100x700.png"
       },
       {
-        "label": "四轮性能",
-        "href": "benchmarks/model-edit-performance-summary.json"
+        "label": "小窗完整长提示",
+        "href": "screenshots/request-detail-tooltip-more-1100x700.png"
+      },
+      {
+        "label": "六轮性能",
+        "href": "benchmarks/request-detail-tooltip-performance-summary.json"
       },
       {
         "label": "清理",
-        "href": "benchmarks/model-edit-cleanup.json"
-      },
-      {
-        "label": "Mono1100",
-        "href": "screenshots/model-edit-mono-1100x700.png"
+        "href": "benchmarks/request-detail-tooltip-cleanup.json"
       }
     ],
-    "commit": "122202f14652072079d0a8163c628ee9c7174e1f",
-    "date": "2026-10-30T06:38:41+08:00",
-    "commit_subject": "fix(studio): preserve design color for model edit icons",
+    "commit": "a2dfa9527175af114773386b409eef393e5598c9",
+    "date": "2026-10-30T07:15:16+08:00",
+    "commit_subject": "fix(studio): wrap long request detail tooltips",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -347,7 +347,7 @@
       "node": "60:475",
       "title": "10 / STUDIO V2 · 请求详情",
       "source": "statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs",
-      "detail": "部分：650×770原生分组/两尺寸/真实代理与导入/完整元数据换行/本次快照/错误重试/各关闭路径已验；Tooltip视觉、完整无障碍/跨平台与精细审计待续",
+      "detail": "部分：原650×770/分组/代理与导入/本次快照/错误重试/关闭证据保留；0b43修长Tooltip横向溢出，真实请求模型提示两尺寸完整/30s同图、More键盘/长值及价格@1/零与未知/小窗底部已验；三精确hover/完整无障碍/跨平台与整帧待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-475"
     },
@@ -2491,6 +2491,58 @@
       "date": "2026-10-30T06:38:41+08:00",
       "commit_subject": "fix(studio): preserve design color for model edit icons",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 45,
+      "title": "请求详情长提示换行与键盘回归",
+      "status": "recorded",
+      "summary": "修复详情/More长值Tooltip文字越出边框和窗口的问题，仅改detail_layout.rs提示内容布局，原值、15行/弹窗/滚动及事件保持。证据：编译、真实交互与原API数据、视觉、1440中文、1100英文、小窗完整长提示、六轮性能、清理。",
+      "highlights": [
+        "修复详情/More长值Tooltip文字越出边框和窗口的问题，仅改detail_layout.rs提示内容布局，原值、15行/弹窗/滚动及事件保持。证据：编译、真实交互与原API数据、视觉、1440中文、1100英文、小窗完整长提示、六轮性能、清理。",
+        "官方MCP重读60:692高保真context/截图，保留650×770上限、原生Dialog/Popover/Tooltip/Label与15个36px主行；该弹窗设计无外部SVG/图片槽。b527基线More滚动暴露实际缺陷：外框虽max560，子文本仍单行越出边框/窗口，见失败原图与旧版原始记录，不作最终通过证据。改用Tooltip::element内的Label max520/whitespace_normal/popover_foreground，外框仍max560；不截字符串、不插入数据换行、不改全局Kit或加定时器。",
+        "首次编译提示缺ActiveTheme trait导入，已补，未弱化门禁。最终fmt0.649s、192 tests/2既有ignored5.812s、严格clippy all-targets/-Dwarnings2.498s、Intel check1.887s、Release40.128s通过。UI0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0，15,246,768bytes；旧UIb527、Core仍25f/8,428,096bytes。最初b527复用门禁与修复后重编译分列，不混用。Intel仅类型检查，block0.1.6提示及UI43 Windows资源编译/标题栏问题保留。"
+      ],
+      "limits": [
+        "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮实际修复长Tooltip溢出并补键盘/长值/零与未知语义；三个字段精确hover、完整视觉/IME/读屏/原生AX、Windows布局偏好与实机、Intel实机/HiDPI、托盘/位移/最小化、首帧及更新公网成功仍待推进。Goal active，HTML继续仅静态校验。"
+      ],
+      "evidence": [
+        {
+          "label": "编译",
+          "href": "benchmarks/request-detail-tooltip-build.json"
+        },
+        {
+          "label": "真实交互与原API数据",
+          "href": "benchmarks/request-detail-tooltip-gui-validation.json"
+        },
+        {
+          "label": "视觉",
+          "href": "benchmarks/request-detail-tooltip-visual-validation.json"
+        },
+        {
+          "label": "1440中文",
+          "href": "screenshots/request-detail-tooltip-1440x900.png"
+        },
+        {
+          "label": "1100英文",
+          "href": "screenshots/request-detail-tooltip-1100x700.png"
+        },
+        {
+          "label": "小窗完整长提示",
+          "href": "screenshots/request-detail-tooltip-more-1100x700.png"
+        },
+        {
+          "label": "六轮性能",
+          "href": "benchmarks/request-detail-tooltip-performance-summary.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/request-detail-tooltip-cleanup.json"
+        }
+      ],
+      "commit": "a2dfa9527175af114773386b409eef393e5598c9",
+      "date": "2026-10-30T07:15:16+08:00",
+      "commit_subject": "fix(studio): wrap long request detail tooltips",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2784,6 +2836,14 @@
     {
       "date": "2026-10-30T06:38:55+08:00",
       "note": "完成 UI-44 并保留全部模型事件；40部分/0最终验收，Goal active",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T07:16:01+08:00",
+      "note": "完成 UI-45 长提示实际缺陷修复；40部分/0最终验收，Goal active",
       "pending": 0,
       "partial": 40,
       "reused": 0,
