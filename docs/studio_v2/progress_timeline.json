@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T05:22:21+08:00",
+  "updated_at": "2026-10-30T06:09:01+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "b2cdbb70a8f6851a301acf60398e41e186c0faa9",
@@ -13,63 +13,59 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 41,
+  "recorded_tasks": 42,
   "current_task": {
-    "id": 41,
-    "title": "工具栏键盘焦点与皮肤浮层退出已提交",
+    "id": 42,
+    "title": "macOS三进程与草稿、CmdQ分项验收已提交",
     "status": "recorded",
-    "description": "最终0892：192项测试、Studio七按钮清晰焦点、语言Enter/Space/Esc与皮肤双向Tab离开、两尺寸实拍及菜单CPU完成；八轮原基准保留初始异常，未见持续退化。40部分验收、0整帧最终验收。"
+    "description": "源码未改：真实3→2→3、官方单实例/草稿恢复/实际CmdQ、原脚本冷启动重启及两尺寸实拍完成。拖动位移、最小化状态和物理托盘菜单点击未验。40部分验收、0整帧最终验收。"
   },
   "latest_task": {
-    "id": 41,
-    "title": "皮肤浮层离开关闭与七工具按钮键盘焦点",
+    "id": 42,
+    "title": "原生托盘、设置与核心生命周期实测",
     "status": "recorded",
-    "summary": "修复Tab离开皮肤浮层后残留且Esc失效，以及Studio工具按钮焦点几乎不可辨认；最终0892真实七项键盘可达、语言复开、皮肤双向离开、草稿与遮罩、两尺寸及性能分项完成。证据：最终构建、真实交互、1440语言焦点、1100恢复焦点、八轮原基准、菜单CPU与原值、清理记录、2aac边宽失败实拍。",
+    "summary": "新增真实三进程关闭/重开/单实例与CmdQ证据，补齐已有Core挂接及正常冷启动两条路径；本轮没有Rust源码或依赖变更。证据：构建复用与哈希、真实GUI、1440重开草稿、1100重开草稿、热挂接运行与CmdQ、原脚本冷启动/重启、清理记录。",
     "highlights": [
-      "修复Tab离开皮肤浮层后残留且Esc失效，以及Studio工具按钮焦点几乎不可辨认；最终0892真实七项键盘可达、语言复开、皮肤双向离开、草稿与遮罩、两尺寸及性能分项完成。证据：最终构建、真实交互、1440语言焦点、1100恢复焦点、八轮原基准、菜单CPU与原值、清理记录、2aac边宽失败实拍。",
-      "旧0c5c默认Mono新开首Tab到统计侧栏，ShiftTab可逐项到七按钮，语言Enter/Esc返回和Tab接续曾通过，初始工具栏不可达的推断撤回。真实缺陷是皮肤Space打开、Tab走完七项后再Tab已到侧栏但dialog仍在，此时Esc也不关闭（基线记录）。为皮肤面板保留单个非Tab停靠的FocusHandle，通过Kit公开track_focus与一次on_focus_out订阅在离开时关闭浮层、保留新控件焦点；内部选择不关闭，菜单内Esc和触发按钮恢复仍由原生Popover处理。未新增定时器、改变主题保存回调或键位。",
-      "Kit用主题ring绘制焦点，Studio旧ring#f4f6ff相对画布#f7f8fc对比仅1.016:1。最终只在共用system_button_base使用原生focus_visible绘制1px皮肤primary边框，并关闭这七项的原软halo；其他控件的全局ring/selection、布局和事件原值保留。七皮肤在画布/白卡/自身浅色底共21组颜色对比回归均≥3:1（最低4.4352），Studio画布为4.5068。色彩测试不是完整无障碍认证，其他控件焦点及读屏仍需审计。"
+      "新增真实三进程关闭/重开/单实例与CmdQ证据，补齐已有Core挂接及正常冷启动两条路径；本轮没有Rust源码或依赖变更。证据：构建复用与哈希、真实GUI、1440重开草稿、1100重开草稿、热挂接运行与CmdQ、原脚本冷启动/重启、清理记录。",
+      "当前源码/可执行文件与小功能41已提交版本逐哈希一致：UI0892/15,246,768bytes、Core25f/8,428,096bytes，仍为原生Rust+GPUI与native/gpui_host.m轻量托盘。复用192 tests/2 ignored、fmt/clippy/Intel check/Release门禁，本轮不冒称重新编译或重跑八轮基准。README明确普通启动3进程、关设置后2进程、重开私有草稿及CmdQ完全退出；本轮核对src/frontend.rs、src/gpui_host.rs、native/gpui_host.m、UI wake/quit路径后按实际行为验收，没有改代理核心逻辑或配置。",
+      "Mac实际未锁定。先启动受kernel profile保护的Core91253，再用唯一review bundle与显式config-dir/合成HOME的原生托盘91258挂接，托盘真实生成UI91259，三PID不同。热挂接的托盘/UI没有内核沙盒，不把合成环境等同kernel隔离；实际Core91253完整保护矩阵及真实LaunchAgents四类deny1已留，合成目录四项allow0，未操作真实Key、用户配置或登录项。本地review bundle的Mach-O字节不变，本轮不是已签名安装包/DMG验收。"
     ],
     "limits": [
-      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享工具栏与皮肤浮层专项，完整视觉、其他控件焦点/IME/读屏/原生AX属性、Windows/Intel实机/HiDPI、托盘/首帧和更新公网成功等仍未完成。Goal保持active；HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。"
+      "未通过项明确保留：CUA App.drag([500,18]→[600,68])返回成功，但工具仅有窗口局部图且无全局坐标，未证明位移；minimize按钮动作返回成功，但未暴露minimized状态，不能证明最小化或恢复。已请求用户明确授权只读CGWindowList窗口位置/尺寸，尚无回复，未执行bounds查询；外部AX也未使用。指定Tray bundle绑定原始错误Computer Use server error -10005: timeoutReached，实际Tray仍活，未把超时当退出/重启，未点不明真实图标；物理托盘Settings/Quit菜单仍待验。"
     ],
     "evidence": [
       {
-        "label": "最终构建",
-        "href": "benchmarks/toolbar-keyboard-build.json"
+        "label": "构建复用与哈希",
+        "href": "benchmarks/window-lifecycle-build.json"
       },
       {
-        "label": "真实交互",
-        "href": "benchmarks/toolbar-keyboard-gui-validation.json"
+        "label": "真实GUI",
+        "href": "benchmarks/window-lifecycle-gui-validation.json"
       },
       {
-        "label": "1440语言焦点",
-        "href": "screenshots/toolbar-keyboard-1440x900.png"
+        "label": "1440重开草稿",
+        "href": "screenshots/window-lifecycle-1440x900.png"
       },
       {
-        "label": "1100恢复焦点",
-        "href": "screenshots/toolbar-keyboard-1100x700.png"
+        "label": "1100重开草稿",
+        "href": "screenshots/window-lifecycle-1100x700.png"
       },
       {
-        "label": "八轮原基准",
-        "href": "benchmarks/toolbar-keyboard-performance-summary.json"
+        "label": "热挂接运行与CmdQ",
+        "href": "benchmarks/window-lifecycle-runtime-validation.json"
       },
       {
-        "label": "菜单CPU与原值",
-        "href": "benchmarks/toolbar-keyboard-menu-idle.json"
+        "label": "原脚本冷启动/重启",
+        "href": "benchmarks/window-lifecycle-cold-start.json"
       },
       {
         "label": "清理记录",
-        "href": "benchmarks/toolbar-keyboard-cleanup.json"
-      },
-      {
-        "label": "2aac边宽失败实拍",
-        "href": "screenshots/toolbar-keyboard-2aac-focus-missing-1440x901.png"
+        "href": "benchmarks/window-lifecycle-cleanup.json"
       }
     ],
-    "commit": "b2cdbb70a8f6851a301acf60398e41e186c0faa9",
-    "date": "2026-10-30T05:21:53+08:00",
-    "commit_subject": "fix(studio): restore toolbar focus and dismiss inactive skin menus",
+    "commit": "2da5ce616cda4e218823547bad053421e539229b",
+    "date": "2026-10-30T06:08:40+08:00",
+    "commit_subject": "test(studio): record native tray and settings lifecycle acceptance",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2165,6 +2161,54 @@
       "date": "2026-10-30T05:21:53+08:00",
       "commit_subject": "fix(studio): restore toolbar focus and dismiss inactive skin menus",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 42,
+      "title": "原生托盘、设置与核心生命周期实测",
+      "status": "recorded",
+      "summary": "新增真实三进程关闭/重开/单实例与CmdQ证据，补齐已有Core挂接及正常冷启动两条路径；本轮没有Rust源码或依赖变更。证据：构建复用与哈希、真实GUI、1440重开草稿、1100重开草稿、热挂接运行与CmdQ、原脚本冷启动/重启、清理记录。",
+      "highlights": [
+        "新增真实三进程关闭/重开/单实例与CmdQ证据，补齐已有Core挂接及正常冷启动两条路径；本轮没有Rust源码或依赖变更。证据：构建复用与哈希、真实GUI、1440重开草稿、1100重开草稿、热挂接运行与CmdQ、原脚本冷启动/重启、清理记录。",
+        "当前源码/可执行文件与小功能41已提交版本逐哈希一致：UI0892/15,246,768bytes、Core25f/8,428,096bytes，仍为原生Rust+GPUI与native/gpui_host.m轻量托盘。复用192 tests/2 ignored、fmt/clippy/Intel check/Release门禁，本轮不冒称重新编译或重跑八轮基准。README明确普通启动3进程、关设置后2进程、重开私有草稿及CmdQ完全退出；本轮核对src/frontend.rs、src/gpui_host.rs、native/gpui_host.m、UI wake/quit路径后按实际行为验收，没有改代理核心逻辑或配置。",
+        "Mac实际未锁定。先启动受kernel profile保护的Core91253，再用唯一review bundle与显式config-dir/合成HOME的原生托盘91258挂接，托盘真实生成UI91259，三PID不同。热挂接的托盘/UI没有内核沙盒，不把合成环境等同kernel隔离；实际Core91253完整保护矩阵及真实LaunchAgents四类deny1已留，合成目录四项allow0，未操作真实Key、用户配置或登录项。本地review bundle的Mach-O字节不变，本轮不是已签名安装包/DMG验收。"
+      ],
+      "limits": [
+        "未通过项明确保留：CUA App.drag([500,18]→[600,68])返回成功，但工具仅有窗口局部图且无全局坐标，未证明位移；minimize按钮动作返回成功，但未暴露minimized状态，不能证明最小化或恢复。已请求用户明确授权只读CGWindowList窗口位置/尺寸，尚无回复，未执行bounds查询；外部AX也未使用。指定Tray bundle绑定原始错误Computer Use server error -10005: timeoutReached，实际Tray仍活，未把超时当退出/重启，未点不明真实图标；物理托盘Settings/Quit菜单仍待验。"
+      ],
+      "evidence": [
+        {
+          "label": "构建复用与哈希",
+          "href": "benchmarks/window-lifecycle-build.json"
+        },
+        {
+          "label": "真实GUI",
+          "href": "benchmarks/window-lifecycle-gui-validation.json"
+        },
+        {
+          "label": "1440重开草稿",
+          "href": "screenshots/window-lifecycle-1440x900.png"
+        },
+        {
+          "label": "1100重开草稿",
+          "href": "screenshots/window-lifecycle-1100x700.png"
+        },
+        {
+          "label": "热挂接运行与CmdQ",
+          "href": "benchmarks/window-lifecycle-runtime-validation.json"
+        },
+        {
+          "label": "原脚本冷启动/重启",
+          "href": "benchmarks/window-lifecycle-cold-start.json"
+        },
+        {
+          "label": "清理记录",
+          "href": "benchmarks/window-lifecycle-cleanup.json"
+        }
+      ],
+      "commit": "2da5ce616cda4e218823547bad053421e539229b",
+      "date": "2026-10-30T06:08:40+08:00",
+      "commit_subject": "test(studio): record native tray and settings lifecycle acceptance",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2434,6 +2478,14 @@
     {
       "date": "2026-10-30T05:22:21+08:00",
       "note": "本轮修复共享工具栏原生焦点边框与皮肤非模态退出；原生AX/其他控件焦点/IME/读屏、跨平台与完整逐帧最终审计继续，Goal保持active。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T06:09:01+08:00",
+      "note": "本轮为同一0892/25f版本的生命周期验收，构建门禁沿用已提交版本；原生坐标方法待明确授权，完整视觉/IME/读屏/跨平台等仍继续，Goal active。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
