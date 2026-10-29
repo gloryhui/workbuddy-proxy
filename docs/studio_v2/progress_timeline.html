@@ -198,77 +198,74 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-29T20:36:30+08:00",
+  "updated_at": "2026-10-29T22:17:18+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "ba59cfe330e23c7c33ac574cfd8b70958dc96da8",
+  "code_head": "cf13beb76997b7add49c0b184d49837e6a8cdff0",
   "phase": "开发中 · 分项实机验收穿插",
-  "goal_status": "paused",
+  "goal_status": "active",
   "counts": {
-    "pending": 5,
-    "partial": 34,
+    "pending": 4,
+    "partial": 35,
     "reused": 1,
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 33,
+  "recorded_tasks": 34,
   "current_task": {
-    "id": 33,
-    "title": "删除失败后的配置对齐与草稿保护",
+    "id": 34,
+    "title": "原生语言菜单与语言切换回归",
     "status": "recorded",
-    "description": "失败删除恢复、幸存草稿与 Cancel/重开/显式保存、空态和异常配置守卫实测通过；183测试、两尺寸实拍及四轮性能已随 ba59cfe 提交。"
+    "description": "语言浮层/三模式保存、取消/方向Enter/Space/Esc、键盘复开、草稿筛选/重开与遮罩实测完成；183测试、两尺寸实拍、四轮性能及清理已提交。"
   },
   "latest_task": {
-    "id": 33,
-    "title": "删除失败后的配置对齐与草稿保护",
+    "id": 34,
+    "title": "原生语言菜单与语言切换回归",
     "status": "recorded",
-    "summary": "UI-32 遗留问题：确认层打开后若目标供应商已被另一管理请求删除，原 Delete 返回真实错误“请选择供应商”，Core 已只剩幸存者，UI 却继续保留旧列表与表单。本批先用旧 9bfff Release 重现并保存真实原图，再验证修复；这属于已有部分验收帧的状态恢复，不新增设计或减少剩余帧数量。",
+    "summary": "按官方 Figma MCP 最新高保真 104:1823 与 104:2035（含两张设计截图）实施：语言浮层241×184、圆角12、标题14、关闭27；三项221×40、间距5、文字13/选中tick12。整组七功能工具栏位置不变，以其右边为原生锚点；浮层顶部为设计 content24+local91=115，右边距32，原36px按钮/20px图标及8px间距保留。Close“×”与勾选“✓”是设计文本，复用779bytes/ro",
     "highlights": [
-      "UI-32 遗留问题：确认层打开后若目标供应商已被另一管理请求删除，原 Delete 返回真实错误“请选择供应商”，Core 已只剩幸存者，UI 却继续保留旧列表与表单。本批先用旧 9bfff Release 重现并保存真实原图，再验证修复；这属于已有部分验收帧的状态恢复，不新增设计或减少剩余帧数量。",
-      "只在失败 Delete 分支使用 UI 私有只读读取器：已有普通文件、2MiB 上限、显式现代 providers 数组、Config.validate 与非空 local_key；不调用可能初始化缺失文件或迁移旧格式的 Config.load。合并另要求原/新 local_key 一致，已认证 Core snapshot 的供应商/模型数量与配置相同，以及同端口 loopback HTTP /v1 地址。无快照、缺失/非法/旧格式或不匹配时保留缓存和真实错误，不执行保存、删除重试或同步。现有 snapshot 不含完整 provider ID 集合，因此这些校验不声称提供跨进程原子快照；Core/管理 API/配置格式均不改。",
-      "通过校验后，已删除行与失效的 created-pending/editor 退出；干净幸存行跟随保存配置，dirty 草稿、活动资料编辑的原始 Cancel 快照及未创建的本地 pending 保留。只有当前选择或表单实值改变才 reload，保留未变表单的焦点/选择。失败仍为 error，清除 Delete receipt，绝不显示 Deleted 1 成功回执；正常成功路径沿用原 update_config。"
+      "按官方 Figma MCP 最新高保真 104:1823 与 104:2035（含两张设计截图）实施：语言浮层241×184、圆角12、标题14、关闭27；三项221×40、间距5、文字13/选中tick12。整组七功能工具栏位置不变，以其右边为原生锚点；浮层顶部为设计 content24+local91=115，右边距32，原36px按钮/20px图标及8px间距保留。Close“×”与勾选“✓”是设计文本，复用779bytes/root20×20的既有本地language.svg，无新位图、临时资产URL或静态截图实现。",
+      "Kit PopupMenu 不直接提供该标题/关闭与精确行布局，局部组合原生 base::Popup、ListState/List 与 Button；既有 set_language 的auto/zh/en、locale/原生文案更新、原配置保存及草稿捕获处理不改。Popup 管理原生定位/指针遮挡，List 使用真实焦点与既有方向/Enter/Esc处理，Space仅在列表容器确认；打开时持有原生deferred guard，关闭恢复打开前真实焦点，原工具栏鼠标屏蔽保留。选项沿用原 choices，方向键环绕只移列表选中游标，勾选来自已保存配置。不添加timer、持续动画或后台轮询，不改Core/管理API/配置格式/依赖。",
+      "首候选 d4e8 实机发现“复点语言按钮时先outside-close再mouseup重开”，因此未作为最终验收；X关闭及皮肤独立打开在首候选通过。先改为native同型mouse-down观察状态守卫，mouseup不再toggle、Keyboard/Touch click保留；56d55复点通过，但真实Esc/焦点失败，源码定位Button内部FocusHandle覆盖通用track_focus，未接受该候选。最终使用原生ListState真实焦点，并用Popup只定位，避免整排toolbar增加Popover Enter/Space上下文。旧版db29和两失败候选均正常停止并wait，失败记录保留；最终交互/两尺寸图必须重新核对c389，不混用旧图。"
     ],
-    "limits": [
-      "baseline、clean、dirty/同 Core 重开、empty、guard 的独立成功夹具均正常 UI/Core/fixture exit0 并 wait，关闭 UI 后 Core health200，主代理再次核对报告中所有 PID 消失。62077/62082/62085 中断场景仍只确认消失、exit/wait 未知，不混入成功终态。Core-unresponsive、所有语言/尺寸组合、完整 IME/无障碍与跨平台尚未实测。",
-      "本批补齐已有部分验收帧的失败恢复缺口，剩余仍为5/40未逐帧验收、34部分验收、1复用待核对、0整帧最终验收。整体继续开发并穿插分项实机验收；下一批对齐语言菜单及保留工具栏状态，完整40帧精细视觉、IME/无障碍与跨平台仍未完成。"
-    ],
+    "limits": [],
     "evidence": [
       {
-        "label": "编译证据",
-        "href": "benchmarks/provider-recovery-build.json"
+        "label": "编译与资产证据",
+        "href": "benchmarks/language-menu-build.json"
       },
       {
-        "label": "旧版缓存问题宽图",
-        "href": "screenshots/ui33-baseline-failure-1440x900.png"
+        "label": "中文Studio1440×900",
+        "href": "screenshots/ui34-language-1440x900.png"
       },
       {
-        "label": "新版 clean 恢复宽图",
-        "href": "screenshots/ui33-recovered-clean-1440x900.png"
+        "label": "英文Mono1100×700",
+        "href": "screenshots/ui34-language-1100x700.png"
       },
       {
-        "label": "英文 Mono dirty 恢复小图",
-        "href": "screenshots/ui33-recovered-draft-1100x700.png"
+        "label": "真实交互/原图与最终SHA/退出证据",
+        "href": "benchmarks/language-menu-gui-validation.json"
       },
       {
-        "label": "新版空态宽图",
-        "href": "screenshots/ui33-recovered-empty-1440x900.png"
+        "label": "旧db29",
+        "href": "benchmarks/language-menu-previous-gui.json"
       },
       {
-        "label": "GUI 记录",
-        "href": "benchmarks/provider-recovery-gui-validation.json"
+        "label": "新c389",
+        "href": "benchmarks/language-menu-current-gui.json"
       },
       {
-        "label": "旧9bfff",
-        "href": "benchmarks/provider-recovery-previous-gui.json"
+        "label": "旧db29复测",
+        "href": "benchmarks/language-menu-previous-run2-gui.json"
       },
       {
-        "label": "新db29",
-        "href": "benchmarks/provider-recovery-current-gui.json"
+        "label": "新c389复测",
+        "href": "benchmarks/language-menu-current-run2-gui.json"
       }
     ],
-    "commit": "ba59cfe330e23c7c33ac574cfd8b70958dc96da8",
-    "date": "2026-10-29T20:34:26+08:00",
-    "commit_subject": "fix(gpui): reconcile failed deletes and preserve surviving drafts",
+    "commit": "cf13beb76997b7add49c0b184d49837e6a8cdff0",
+    "date": "2026-10-29T22:17:17+08:00",
+    "commit_subject": "feat(gpui): align native language menu with Studio design",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -579,9 +576,9 @@
     {
       "node": "104:1823",
       "title": "39 / STUDIO V2 · 语言切换菜单",
-      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/language_menu.rs, ui.rs",
+      "detail": "部分：241×184原生浮层/两尺寸、auto/zh/en真实保存/重复不写、方向Enter/Space/Esc/X/外部取消、键盘复开、草稿/筛选/重开、遮罩与邻接安全按钮已验；完整IME/无障碍/跨平台与菜单打开持续CPU待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1823"
     },
     {
@@ -1946,6 +1943,56 @@
       "date": "2026-10-29T20:34:26+08:00",
       "commit_subject": "fix(gpui): reconcile failed deletes and preserve surviving drafts",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 34,
+      "title": "原生语言菜单与语言切换回归",
+      "status": "recorded",
+      "summary": "按官方 Figma MCP 最新高保真 104:1823 与 104:2035（含两张设计截图）实施：语言浮层241×184、圆角12、标题14、关闭27；三项221×40、间距5、文字13/选中tick12。整组七功能工具栏位置不变，以其右边为原生锚点；浮层顶部为设计 content24+local91=115，右边距32，原36px按钮/20px图标及8px间距保留。Close“×”与勾选“✓”是设计文本，复用779bytes/ro",
+      "highlights": [
+        "按官方 Figma MCP 最新高保真 104:1823 与 104:2035（含两张设计截图）实施：语言浮层241×184、圆角12、标题14、关闭27；三项221×40、间距5、文字13/选中tick12。整组七功能工具栏位置不变，以其右边为原生锚点；浮层顶部为设计 content24+local91=115，右边距32，原36px按钮/20px图标及8px间距保留。Close“×”与勾选“✓”是设计文本，复用779bytes/root20×20的既有本地language.svg，无新位图、临时资产URL或静态截图实现。",
+        "Kit PopupMenu 不直接提供该标题/关闭与精确行布局，局部组合原生 base::Popup、ListState/List 与 Button；既有 set_language 的auto/zh/en、locale/原生文案更新、原配置保存及草稿捕获处理不改。Popup 管理原生定位/指针遮挡，List 使用真实焦点与既有方向/Enter/Esc处理，Space仅在列表容器确认；打开时持有原生deferred guard，关闭恢复打开前真实焦点，原工具栏鼠标屏蔽保留。选项沿用原 choices，方向键环绕只移列表选中游标，勾选来自已保存配置。不添加timer、持续动画或后台轮询，不改Core/管理API/配置格式/依赖。",
+        "首候选 d4e8 实机发现“复点语言按钮时先outside-close再mouseup重开”，因此未作为最终验收；X关闭及皮肤独立打开在首候选通过。先改为native同型mouse-down观察状态守卫，mouseup不再toggle、Keyboard/Touch click保留；56d55复点通过，但真实Esc/焦点失败，源码定位Button内部FocusHandle覆盖通用track_focus，未接受该候选。最终使用原生ListState真实焦点，并用Popup只定位，避免整排toolbar增加Popover Enter/Space上下文。旧版db29和两失败候选均正常停止并wait，失败记录保留；最终交互/两尺寸图必须重新核对c389，不混用旧图。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "编译与资产证据",
+          "href": "benchmarks/language-menu-build.json"
+        },
+        {
+          "label": "中文Studio1440×900",
+          "href": "screenshots/ui34-language-1440x900.png"
+        },
+        {
+          "label": "英文Mono1100×700",
+          "href": "screenshots/ui34-language-1100x700.png"
+        },
+        {
+          "label": "真实交互/原图与最终SHA/退出证据",
+          "href": "benchmarks/language-menu-gui-validation.json"
+        },
+        {
+          "label": "旧db29",
+          "href": "benchmarks/language-menu-previous-gui.json"
+        },
+        {
+          "label": "新c389",
+          "href": "benchmarks/language-menu-current-gui.json"
+        },
+        {
+          "label": "旧db29复测",
+          "href": "benchmarks/language-menu-previous-run2-gui.json"
+        },
+        {
+          "label": "新c389复测",
+          "href": "benchmarks/language-menu-current-run2-gui.json"
+        }
+      ],
+      "commit": "cf13beb76997b7add49c0b184d49837e6a8cdff0",
+      "date": "2026-10-29T22:17:17+08:00",
+      "commit_subject": "feat(gpui): align native language menu with Studio design",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2027,12 +2074,52 @@
       "partial": 34,
       "reused": 1,
       "verified": 0
+    },
+    {
+      "date": "2026-10-29T20:57:21+08:00",
+      "note": "开始 UI-34 语言菜单；剩余5未验收、34部分验收、1复用待核对",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T21:18:44+08:00",
+      "note": "UI-34 进入真实交互验收；剩余界面5/34/1不变",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T21:32:32+08:00",
+      "note": "UI-34 首候选复点问题已修复，最终验收使用56d55；剩余5/34/1",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T21:55:54+08:00",
+      "note": "UI-34 焦点根因已修复，c389方向键与Esc实机通过；剩余5/34/1",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T22:17:18+08:00",
+      "note": "UI-34 完成，语言帧转部分验收；剩余4未验收、35部分验收、1复用待核对，Goal实际已恢复active",
+      "pending": 4,
+      "partial": 35,
+      "reused": 1,
+      "verified": 0
     }
   ],
   "verification": [
     {
       "title": "40 帧最终视觉复核",
-      "detail": "当前 34 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "detail": "当前 35 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",
