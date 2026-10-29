@@ -153,6 +153,18 @@ impl TableDelegate for Models {
                         .with_size(px(28.))
                         .size(px(28.))
                         .p_0()
+                        .when(
+                            !self.busy
+                                && matches!(
+                                    crate::theme::current_skin(),
+                                    crate::theme::Skin::StudioIndigo
+                                        | crate::theme::Skin::Monochrome
+                                ),
+                            // Kit renders SVGs as a text-colored mask. Keep the
+                            // Figma 54:264 / 62:438 stroke on these two surfaces;
+                            // busy controls retain Kit's disabled foreground.
+                            |button| button.text_color(rgb(0x8b94a9)),
+                        )
                         .child(
                             Icon::default()
                                 .path("studio/model-edit.svg")

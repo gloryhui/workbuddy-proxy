@@ -1,0 +1,412 @@
+{
+  "feature": "UI-44 model edit icon fidelity and real interaction",
+  "checked_at": "2026-10-30T06:36:14.855554+08:00",
+  "gui": {
+    "candidate_ui_sha256": "b5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691",
+    "core_pid": 15888,
+    "ui_pid": 15899,
+    "fixture_pid": 15887,
+    "window_id": 62242,
+    "cases": {
+      "studio_icon": "Two visible model pencils appeared gray-blue with pointer away from icons.",
+      "first_row_mouse": "AX Edit model-1 opened model-1 / model-a-1; Escape returned two unchanged rows.",
+      "modal_interception": "Clicked screenshot-relative [982,713] at underlying second edit location while model-1 dialog open; model-1 dialog remained and no second editor appeared; Escape closed.",
+      "second_row_keyboard": "Clicked first table row [360,680], Down then F2 opened model-2 / model-a-2. Changed display name to Model edit 44 and clicked modal Confirm. Table showed new name and same ID before provider Save.",
+      "draft_persistence": "Reopened edited row and observed Model edit 44 / model-a-2; Escape cancelled. Switched provider B then A; table retained Model edit 44.",
+      "themes": "Mono and Studio pencils appeared gray-blue; Blue pencils appeared blue. Studio restored and draft remained intact.",
+      "explicit_save": "After all screenshots, clicked visible Save configuration once. UI showed saved and log recorded provider/models saved; Core result is independently checked by parent."
+    },
+    "capture_method": "Native screencapture -x -o -l; each capture verified PID 15899 / onscreen / layer 0 / window 62242. No global window bounds queried. Raw files unscaled.",
+    "resize": "CUA App.drag([1438,898],[1098,698]), then CUA scroll([500,530], down, 0.6) to reveal two table rows.",
+    "raw_images": [
+      {
+        "file": "studio-1440-raw.png",
+        "size": [
+          1440,
+          901
+        ],
+        "sha256": "05f1595281b6c424d54f1ebdc7e4374e7caca66e6e37cb73a8d1f436fe7e2cef"
+      },
+      {
+        "file": "studio-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "62bc901e35d1c302592e3c2b2428acbab1857529165fffe44e1133eabd076ae0"
+      },
+      {
+        "file": "mono-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "62b1e3a3d9f855b2757987b7ab4c1d093617e68c9bdf6a4b6697151d97aae7a2"
+      },
+      {
+        "file": "blue-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "fcdbcf3deb7d3a65065baeaeb688ae3d1fd0c90670f8e18b89986e1b5a951604"
+      }
+    ],
+    "limitations": [
+      "Colors assessed visually, not sampled.",
+      "CUA reported focus as standard window; editing behavior verified by fields and keyboard outcome.",
+      "External AX, other themes and full IME/accessibility were not tested."
+    ],
+    "close_action": "After idle sampling, clicked fresh CUA AX native close button 56 on UI PID 15899; call returned successfully. No CmdQ, Core action, or post-close app query. Parent will record actual exit and waits."
+  },
+  "main_independent_checks": {
+    "draft_before_save": {
+      "checked_at": "2026-10-30T06:31:03.380060+08:00",
+      "stage": "native dialog confirmation before main Save",
+      "saved_config_sha256": "509e49eaddce45bc52e7538f665a52456a750e1574915c1288ebb56d284fa95f",
+      "draft_sha256": "21cb17defda2c51f3e1479ead189e69625137d086827b0a5cb4233f69fbc917e",
+      "saved_models": [
+        {
+          "id": "model-a-1",
+          "name": "model-1",
+          "model": "model-a-1"
+        },
+        {
+          "id": "model-a-2",
+          "name": "model-2",
+          "model": "model-a-2"
+        }
+      ],
+      "draft_models": [
+        {
+          "id": "model-a-1",
+          "name": "model-1",
+          "model": "model-a-1"
+        },
+        {
+          "id": "model-a-2",
+          "name": "Model edit 44",
+          "model": "model-a-2"
+        }
+      ],
+      "saved_provider_count": 2,
+      "saved_total_models": 3,
+      "selected": "provider-a",
+      "synthetic_only": true,
+      "credentials_omitted": true
+    },
+    "saved_after_explicit_save_and_idle": {
+      "checked_at": "2026-10-30T06:33:40.472150+08:00",
+      "stage": "actual main Save after screenshots",
+      "saved_config_sha256": "e49b6d09c814114ae4ceb214ec168e5e1365caae0d6d33d5f8cdbcd04db8eca6",
+      "draft_sha256": "863a4b67147796bc82c863ea665cd336b9522b48aec392716517cb6c2fea3414",
+      "saved_models": [
+        {
+          "id": "model-a-1",
+          "name": "model-1",
+          "model": "model-a-1"
+        },
+        {
+          "id": "model-a-2",
+          "name": "Model edit 44",
+          "model": "model-a-2"
+        }
+      ],
+      "saved_provider_count": 2,
+      "saved_total_models": 3,
+      "selected": "provider-a",
+      "synthetic_only": true,
+      "credentials_omitted": true,
+      "idle_sample": {
+        "scope": "New b527 Studio Chinese Providers page at1100; no CUA inputs during sample. No old-page counterpart or leak/optimization claim.",
+        "elapsed_seconds": 30.0050395000726,
+        "metrics": {
+          "core": {
+            "cpu_percent_one_core": 0.1,
+            "start_rss_mib": 11.015625,
+            "end_rss_mib": 11.015625
+          },
+          "ui": {
+            "cpu_percent_one_core": 0.467,
+            "start_rss_mib": 104.234375,
+            "end_rss_mib": 104.234375
+          }
+        },
+        "cpu_time_source": "ps cumulative TIME, centisecond resolution"
+      }
+    }
+  },
+  "source_protection": {
+    "baseline": {
+      "core": {
+        "enforced": true,
+        "pid": 13849,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "gui_kernel_guard": false,
+      "note": "Core kernel protection confirmed, unique review bundle/UI explicitconfig and synthetic environment; UI not kernel-sandboxed"
+    },
+    "current-ui44": {
+      "core": {
+        "enforced": true,
+        "pid": 15888,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "gui_kernel_guard": false,
+      "note": "Core kernel protection confirmed, unique review bundle/UI explicitconfig and synthetic environment; UI not kernel-sandboxed"
+    }
+  },
+  "terminal": {
+    "baseline": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "current-ui44": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    }
+  },
+  "actor_pids": {
+    "baseline": [
+      13848,
+      13849,
+      13850
+    ],
+    "current": [
+      15887,
+      15888,
+      15899
+    ]
+  },
+  "all_recorded_pids_gone": true,
+  "fixture_sessions_direct_wait_exit_codes": [
+    0,
+    0
+  ],
+  "shutdown_scope": "Actual native UI close exits UI0; private fixture then explicitly stops/waits Core0 and exits0. This case does not independently prove resident Core continuity; UI42 records that separately.",
+  "workbuddy_sentinel_sha256": {
+    "baseline": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "current-ui44": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "visual_file": "model-edit-visual-validation.json",
+  "limits": [
+    "Scoped model edit button and existing edit/cancel/draft/save events only; not whole-frame acceptance.",
+    "No real vendor request, actual WorkBuddy synchronization/autostart, external AX, full IME/screen-reader, Windows/Intel runtime or HiDPI acceptance.",
+    "Busy disabled style is source-confirmed preserved (custom color only while not busy); busy pointer path not forced in this round.",
+    "Same-PID native screenshot selection reads ID/PID/layer/onscreen; no global position/bounds queried. CUA relative resize proved final PNG dimensions, not drag-window displacement."
+  ]
+}

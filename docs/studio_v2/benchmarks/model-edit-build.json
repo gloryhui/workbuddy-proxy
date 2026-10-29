@@ -1,0 +1,109 @@
+{
+  "feature": "UI-44 model edit icon color fidelity",
+  "base_commit": "ac10465a51102352b64234ab7af46e3d49fc5cc8",
+  "ui_sha256": "b5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691",
+  "ui_bytes": 15246768,
+  "baseline_ui_sha256": "0892b084054464431d5af83b9db5e60b013ca338cbc4ace3053cf04e0791d4f8",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.465
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 6.006
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 2.658
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 1.79
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 42.589
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/model_table.rs": "99d2c2ef7d3d0175411641c4c60588e91a43d77073e85dc9eb19e3be11bd88a1"
+  },
+  "asset_audit": {
+    "figma_nodes": [
+      "54:264",
+      "62:438"
+    ],
+    "source": "official get_design_context; asset30aa3.svg downloaded with instructed curl -L",
+    "local_asset": "gpui/assets/studio/model-edit.svg",
+    "sha256": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68",
+    "exact_bytes": true,
+    "svg_root_size": [
+      15,
+      15
+    ],
+    "slot_size": [
+      15,
+      15
+    ],
+    "wrapper_hit_target": [
+      28,
+      28
+    ],
+    "stroke": "#8B94A9",
+    "source_asset_unchanged": true
+  },
+  "scope": "One GPUI file only. Studio and Mono enabled model edit buttons inherit the exact Figma icon stroke color; disabled Kit style, other saved palettes, events, focus, size and SVG bytes remain unchanged. No core/config/dependency changes.",
+  "limitations": [
+    "Full native AX attributes/IME/screen-reader audit pending.",
+    "Intel typecheck only; existing block0.1.6 future-incompatibility warning.",
+    "Windows check blocked in UI-43; Windows caption overlap is still pending."
+  ]
+}

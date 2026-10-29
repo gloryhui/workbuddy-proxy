@@ -995,3 +995,26 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - desktop工作流确有Windows原生构建任务，但push分支仅main/codex/gpui-preview，当前feat/studio_v2_gpui不会因此自动触发；本轮未改触发器、发起远程任务或将旧CI结果算作当前提交通过。UI仍0892/15,246,768bytes，Core仍25f/8,428,096bytes，相关源码哈希逐项复核一致；192 tests/2既有ignored、fmt/clippy/Intel check/Release为小功能41的复用证据，本轮不冒称重跑。没有新GUI或性能结果，不用旧图替代Windows实拍。
 - 本轮未建会话临时目录，删除0文件/释放0bytes，本轮临时保留0；Cargo锁定下载及可再生检查产物留在既有共享缓存。旧root30的24.03MiB保护项继续保留，未读取误截图或重试已拒删除；系统盘记录可用38,975,066,112bytes（36.30GiB）。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮新增Windows待修问题及可复核证据，不减少最终待验界面数量。Goal继续active，后续先推进不依赖Windows环境或未授权方法的验收与修复；HTML仍仅静态校验。
+
+## 小功能 44：模型编辑图标原色与编辑保存回归（2026-10-30，北京时间）
+
+- 修正Studio/黑白主题模型编辑铅笔被原生按钮文字色染色的问题，仅改model_table.rs；按钮28×28、SVG15×15、事件/焦点/禁用规则及其他皮肤保持。证据：[编译与原资源](benchmarks/model-edit-build.json)、[真实交互及落盘](benchmarks/model-edit-gui-validation.json)、[视觉与像素](benchmarks/model-edit-visual-validation.json)、[1440实拍](screenshots/model-edit-1440x900.png)、[1100实拍](screenshots/model-edit-1100x700.png)、[四轮性能](benchmarks/model-edit-performance-summary.json)、[清理](benchmarks/model-edit-cleanup.json)。
+- 官方Figma54:246模型卡与62:438黑白图标的高保真context/截图已读取。设计两处使用同一15px SVG，下载后与现有model-edit.svg逐字节一致，SHAd19ec85f…/原stroke#8B94A9，没有改写或替换资源。旧0892实拍确实显示靛蓝铅笔，Kit Icon::into_svg会把图形作为文字色遮罩；现在仅Studio/Mono且非busy时在Button设置该原色，busy继续Kit disabled foreground，其他皮肤不进入该分支。未改Core、配置格式、依赖、热路径或工具栏位置。
+- 本轮重新通过fmt0.465s、192 tests/2既有ignored6.006s、严格clippy all-targets/-Dwarnings2.658s、Intel check1.790s、Release42.589s。最终UIb5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691，15,246,768bytes；基线仍0892、Core仍25f/8,428,096bytes。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留，UI43的Windows资源编译阻碍及标题栏重叠没有因此解决。
+- Mac实际IOConsoleLocked=No。旧夹具UI13850/Core13849、最终UI15899/Core15888均为显式config-dir和合成HOME；Core内核保护矩阵及真实LaunchAgents四类deny已分别实查。UI使用review bundle与隔离环境，没有内核沙盒，不将其称为全角色保护。只读模型目录为2供应商/3模型，Key均合成；真实WorkBuddy文件未操作，两个[]哨兵SHA保持。
+- Terra仅通过CUA实际操作：鼠标第一行铅笔打开model-1/model-a-1，点遮罩下第二行位置未切换编辑目标，Esc取消保持两行；表中第一行→Down→F2打开正确model-2/model-a-2，改显示名Model edit 44并确认。主代理实读Core config SHA509e49…仍model-1/model-2，私有草稿才有新名字；复开编辑、Esc取消及B→A切换均保持该草稿。所有截图后实际点击一次主页保存，Core才变为Model edit 44，第一行及模型ID/2供应商3模型保持，config SHAe49b6d…已留，未通过脚本写配置模拟操作。
+- 最终Studio1440/1100、[Mono1100](screenshots/model-edit-mono-1100x700.png)、[Blue1100](screenshots/model-edit-blue-1100x700.png)及[旧版1440原图](screenshots/model-edit-baseline-1440x901.png)均由主代理查看。新两主题铅笔灰蓝，Blue沿用蓝色；切肤不丢草稿。原图仅捕获自己PID15899/onscreen/layer0/window62242，raw1440×901/1100×701只裁底1像素，不缩放、不重绘。小窗通过CUA原生边角drag及中心滚动让两行和保存按钮可见，未查询全局bounds，也不将resize当作窗口拖动位移验收；截图均在显式Save之前，因此未保存徽标符合当时真实状态。
+- 像素核对记录局部坐标和AA原值：旧铅笔主色RGB82/73/218，新Studio/Mono为141/150/170并含原色139/148/169；每个实际墨迹包围框13×13/85像素，对各自包围框归一后形状掩码与旧图完全一致。15×15指SVG根与渲染槽，13×13指有色墨迹范围，不混为同一尺寸；小窗采样框相对图标起点比大窗低1像素，已按实际包围框记录。没有重着色截图来得到该结论。
+- 保存后Studio中文Providers1100静置30.005s，无CUA输入；ps累计CPU得到Core0.100%/UI0.467%单核，RSS首尾分别11.016/104.234MiB。此为新版本单页短样本，无旧Providers同场对照，不宣称减少占用或排除长期泄漏。
+
+| 原脚本同条件顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 峰值RSS MiB | 80×1MiB耗时s |
+| --- | --- | --- | --- | --- |
+| 旧0892第1轮 | 12.23/72.16/84.39 | 0.172/0.198 | 135.58 | 0.097 |
+| 新b527第1轮 | 12.39/72.91/85.30 | 0.172/0.200 | 133.73 | 0.087 |
+| 旧0892第2轮 | 13.19/72.39/85.58 | 0.172/0.198 | 127.22 | 0.087 |
+| 新b527第2轮 | 12.19/72.39/84.58 | 0.151/0.183 | 137.73 | 0.093 |
+
+- 原benchmark.py SHA仍bc7e0537…，本轮先查help，四轮均nativeGUI/同Core25f/64模型/1000小请求/80个1MiB并发4，appearance实读Studio。原脚本测默认Statistics页，不能冒称测Providers渲染；该页新版本空闲样本另列。四轮未见一致方向退化，但每版本仅2样本、后台活动未控制，不作优化/统计等效结论。UI记录ready不是首帧/可交互；RSS可能重复计算共享页，tray在原JSON单列，不是物理内存释放量、GPU或公网性能。
+- 实际原生close后两UI均exit0，私有夹具再停止Core并wait0，两个fixture直接wait0；这不额外证明Core驻留连续性（见UI42）。四轮benchmark自有子进程退出数组均[-15,-15,0,0]并wait，记录的Core/UI PID由主代理独立核对消失，临时目录清理延迟到完整预检之后。没有实际供应商请求、真实登录项/同步重启或外部AX，busy禁用分支本轮未强制造成GUI场景；完整IME/读屏/Windows/Intel实机/HiDPI仍待验。
+- 完成真实路径/UID501/父组件挂载与非符号链接/全量单链接普通文件/进程及lsof预检，临执行再核对清单SHA，按持续授权删除本轮唯一目录140文件，释放估计189,018,112bytes（180.26MiB）；本轮临时保留0，旧root30仍24.03MiB保护保留且未读误图或重试删除，已有Cargo缓存未动。系统盘清理后可用39,984,058,368bytes（37.24GiB）。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮补齐共享模型编辑按钮的设计差异和交互证据，完整视觉/其他焦点/IME/无障碍、Windows布局偏好与实机、Intel实机/HiDPI、物理托盘菜单/位移与最小化状态、首帧及更新公网成功继续待办。Goal active，HTML继续仅作静态校验。

@@ -1,0 +1,501 @@
+{
+  "ui_sha256": "b5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691",
+  "asset_audit": {
+    "figma_nodes": [
+      "54:264",
+      "62:438"
+    ],
+    "source": "official get_design_context; asset30aa3.svg downloaded with instructed curl -L",
+    "local_asset": "gpui/assets/studio/model-edit.svg",
+    "sha256": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68",
+    "exact_bytes": true,
+    "svg_root_size": [
+      15,
+      15
+    ],
+    "slot_size": [
+      15,
+      15
+    ],
+    "wrapper_hit_target": [
+      28,
+      28
+    ],
+    "stroke": "#8B94A9",
+    "source_asset_unchanged": true
+  },
+  "final_images": [
+    {
+      "raw_file": "studio-1440-raw.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "raw_sha256": "05f1595281b6c424d54f1ebdc7e4374e7caca66e6e37cb73a8d1f436fe7e2cef",
+      "file": "docs/studio_v2/screenshots/model-edit-1440x900.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "db00d157bced7e240b0d8e7a0ed5687363ad31a25c9e63bbe1c3cbce159daed8",
+      "method": "Native own-PID window capture; bottom1 physical pixel cropped only, no resizing/repainting",
+      "icon_sample_area_local_pixels": [
+        973,
+        676,
+        991,
+        694
+      ],
+      "most_common_rgb": [
+        {
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "pixels": 239
+        },
+        {
+          "rgb": [
+            141,
+            150,
+            170
+          ],
+          "pixels": 35
+        },
+        {
+          "rgb": [
+            217,
+            220,
+            227
+          ],
+          "pixels": 29
+        },
+        {
+          "rgb": [
+            139,
+            148,
+            169
+          ],
+          "pixels": 5
+        },
+        {
+          "rgb": [
+            230,
+            232,
+            236
+          ],
+          "pixels": 4
+        },
+        {
+          "rgb": [
+            231,
+            233,
+            237
+          ],
+          "pixels": 2
+        },
+        {
+          "rgb": [
+            195,
+            200,
+            211
+          ],
+          "pixels": 2
+        },
+        {
+          "rgb": [
+            173,
+            180,
+            194
+          ],
+          "pixels": 2
+        }
+      ],
+      "glyph_visible_bbox_within_sample": [
+        3,
+        2,
+        16,
+        15
+      ],
+      "glyph_non_background_pixels": 85,
+      "bbox_normalized_mask_matches_baseline": true
+    },
+    {
+      "raw_file": "studio-1100-raw.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "raw_sha256": "62bc901e35d1c302592e3c2b2428acbab1857529165fffe44e1133eabd076ae0",
+      "file": "docs/studio_v2/screenshots/model-edit-1100x700.png",
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "2f25e50cdd04a53cf4ea9f080b1118c899d9c64293c41e46f169d3a43ca534bd",
+      "method": "Native own-PID window capture; bottom1 physical pixel cropped only, no resizing/repainting",
+      "icon_sample_area_local_pixels": [
+        681,
+        434,
+        699,
+        452
+      ],
+      "most_common_rgb": [
+        {
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "pixels": 239
+        },
+        {
+          "rgb": [
+            141,
+            150,
+            170
+          ],
+          "pixels": 35
+        },
+        {
+          "rgb": [
+            217,
+            220,
+            227
+          ],
+          "pixels": 29
+        },
+        {
+          "rgb": [
+            139,
+            148,
+            169
+          ],
+          "pixels": 5
+        },
+        {
+          "rgb": [
+            230,
+            232,
+            236
+          ],
+          "pixels": 4
+        },
+        {
+          "rgb": [
+            231,
+            233,
+            237
+          ],
+          "pixels": 2
+        },
+        {
+          "rgb": [
+            195,
+            200,
+            211
+          ],
+          "pixels": 2
+        },
+        {
+          "rgb": [
+            173,
+            180,
+            194
+          ],
+          "pixels": 2
+        }
+      ],
+      "glyph_visible_bbox_within_sample": [
+        3,
+        1,
+        16,
+        14
+      ],
+      "glyph_non_background_pixels": 85,
+      "bbox_normalized_mask_matches_baseline": true
+    },
+    {
+      "raw_file": "mono-1100-raw.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "raw_sha256": "62b1e3a3d9f855b2757987b7ab4c1d093617e68c9bdf6a4b6697151d97aae7a2",
+      "file": "docs/studio_v2/screenshots/model-edit-mono-1100x700.png",
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "d2a295f89c0709610c89acabe6187ef7428a58928f47d823ae311f68667030fb",
+      "method": "Native own-PID window capture; bottom1 physical pixel cropped only, no resizing/repainting",
+      "icon_sample_area_local_pixels": [
+        681,
+        434,
+        699,
+        452
+      ],
+      "most_common_rgb": [
+        {
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "pixels": 239
+        },
+        {
+          "rgb": [
+            141,
+            150,
+            170
+          ],
+          "pixels": 35
+        },
+        {
+          "rgb": [
+            217,
+            220,
+            227
+          ],
+          "pixels": 29
+        },
+        {
+          "rgb": [
+            139,
+            148,
+            169
+          ],
+          "pixels": 5
+        },
+        {
+          "rgb": [
+            230,
+            232,
+            236
+          ],
+          "pixels": 4
+        },
+        {
+          "rgb": [
+            231,
+            233,
+            237
+          ],
+          "pixels": 2
+        },
+        {
+          "rgb": [
+            195,
+            200,
+            211
+          ],
+          "pixels": 2
+        },
+        {
+          "rgb": [
+            173,
+            180,
+            194
+          ],
+          "pixels": 2
+        }
+      ],
+      "glyph_visible_bbox_within_sample": [
+        3,
+        1,
+        16,
+        14
+      ],
+      "glyph_non_background_pixels": 85,
+      "bbox_normalized_mask_matches_baseline": true
+    },
+    {
+      "raw_file": "blue-1100-raw.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "raw_sha256": "fcdbcf3deb7d3a65065baeaeb688ae3d1fd0c90670f8e18b89986e1b5a951604",
+      "file": "docs/studio_v2/screenshots/model-edit-blue-1100x700.png",
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "856e00f41ae9d328c9b4d4987248931133f1c5b29ecaefa25fa191a9dc94b730",
+      "method": "Native own-PID window capture; bottom1 physical pixel cropped only, no resizing/repainting",
+      "icon_sample_area_local_pixels": [
+        681,
+        434,
+        699,
+        452
+      ],
+      "most_common_rgb": [
+        {
+          "rgb": [
+            247,
+            248,
+            252
+          ],
+          "pixels": 239
+        },
+        {
+          "rgb": [
+            175,
+            192,
+            240
+          ],
+          "pixels": 29
+        },
+        {
+          "rgb": [
+            32,
+            81,
+            217
+          ],
+          "pixels": 18
+        },
+        {
+          "rgb": [
+            32,
+            80,
+            217
+          ],
+          "pixels": 17
+        },
+        {
+          "rgb": [
+            29,
+            78,
+            216
+          ],
+          "pixels": 5
+        },
+        {
+          "rgb": [
+            199,
+            211,
+            244
+          ],
+          "pixels": 4
+        },
+        {
+          "rgb": [
+            203,
+            213,
+            245
+          ],
+          "pixels": 3
+        },
+        {
+          "rgb": [
+            94,
+            128,
+            227
+          ],
+          "pixels": 2
+        }
+      ],
+      "glyph_visible_bbox_within_sample": [
+        3,
+        1,
+        16,
+        14
+      ],
+      "glyph_non_background_pixels": 85,
+      "bbox_normalized_mask_matches_baseline": true
+    }
+  ],
+  "baseline_image": {
+    "file": "docs/studio_v2/screenshots/model-edit-baseline-1440x901.png",
+    "sha256": "50e6183bc906dd8522d3ad210bb179d0d1a5ce09721997ce7fb7885e92e3e94d",
+    "size": [
+      1440,
+      901
+    ],
+    "pixel_audit": {
+      "raw_file": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round35.zgqbfr04/baseline/baseline-model-table.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "raw_sha256": "50e6183bc906dd8522d3ad210bb179d0d1a5ce09721997ce7fb7885e92e3e94d",
+      "sample_area_local_pixels": [
+        973,
+        676,
+        991,
+        694
+      ],
+      "most_common_rgb": [
+        {
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "pixels": 239
+        },
+        {
+          "rgb": [
+            82,
+            73,
+            218
+          ],
+          "pixels": 35
+        },
+        {
+          "rgb": [
+            197,
+            194,
+            243
+          ],
+          "pixels": 15
+        },
+        {
+          "rgb": [
+            197,
+            194,
+            242
+          ],
+          "pixels": 14
+        },
+        {
+          "rgb": [
+            79,
+            70,
+            217
+          ],
+          "pixels": 5
+        },
+        {
+          "rgb": [
+            219,
+            217,
+            247
+          ],
+          "pixels": 3
+        },
+        {
+          "rgb": [
+            217,
+            215,
+            247
+          ],
+          "pixels": 2
+        },
+        {
+          "rgb": [
+            216,
+            214,
+            247
+          ],
+          "pixels": 2
+        }
+      ],
+      "note": "Raw native screenshot; local icon area only; no resizing, repainting, OCR or global window coordinates"
+    }
+  },
+  "reviewed_by_main": true,
+  "scope": "Model edit icon fidelity and actual model rows only; no whole-frame or native AX/IME acceptance",
+  "pixel_note": "Native AA yields most stroke pixels RGB141/150/170 and some exact139/148/169 for intended #8B94A9. Each actual glyph has a13x13 non-background bounding box/85 pixels and identical binary mask after bbox normalization. Narrow sample ROI begins one pixel lower relative to glyph than wide ROI; positions are recorded separately. SVG root/callsite remain15x15. No screenshot recoloring/resizing used."
+}
