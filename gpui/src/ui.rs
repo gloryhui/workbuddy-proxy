@@ -4,6 +4,7 @@ mod providers;
 mod relay;
 mod sidebar;
 mod skin_controls;
+mod sync_dialog;
 use crate::{
     backend::{Backend, Job},
     config::{self, Config},
@@ -1766,6 +1767,9 @@ impl Proxy {
             });
             let is_picker = self.picker.is_some();
             let is_model_editor = self.editing.is_some();
+            let is_sync_confirmation = self.sync_open || self.unsync_open;
+            let sync_zh = self.zh;
+            let sync_remove = self.unsync_open;
             let width = if self.protocol_open {
                 crate::theme::size::DIALOG_PROTOCOL_WIDTH
             } else if self.picker.is_some() || self.editing.is_some() {
@@ -1794,7 +1798,26 @@ impl Proxy {
                 }
                 let confirm_owner = owner.clone();
                 let owner = owner.clone();
-                let dialog = if is_model_editor {
+                let dialog = if is_sync_confirmation {
+                    let content_body = body.clone();
+                    dialog
+                        .width(px(526.))
+                        .min_h(px(318.))
+                        .p(px(26.))
+                        .pt(px(22.))
+                        .pb(px(26.))
+                        .bg(rgb(crate::theme::color::BG_BAR))
+                        .rounded(px(18.))
+                        .border_color(rgb(crate::theme::color::BORDER))
+                        .margin_top(
+                            ((window.viewport_size().height
+                                - sync_dialog::estimated_height(sync_zh, sync_remove))
+                                / 2.
+                                - px(17.))
+                            .max(px(16.)),
+                        )
+                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                } else if is_model_editor {
                     let height = model_editor::surface_height(window);
                     let content_body = body.clone();
                     dialog
@@ -2168,113 +2191,8 @@ impl Proxy {
                         ),
                 )
                 .into_any_element()
-        } else if self.unsync_open {
-            crate::ui_components::dialog_body()
-                .w_full()
-                .gap(px(crate::theme::space::CARD_GAP))
-                .child(crate::ui_components::dialog_title(self.t(
-                    "取消同步 WorkBuddy",
-                    "Unsync WorkBuddy",
-                )))
-                .child(body_hint(self.t(
-                    "将移除代理同步的模型，并恢复已备份的原有条目。重启 WorkBuddy 可让现有会话读取修改，但会中断正在执行的任务，请先保存工作。",
-                    "Remove proxy-managed models and restore backed-up original entries. Restart WorkBuddy to let existing conversations read the change; this interrupts running tasks. Save your work first.",
-                )))
-                .when(!cfg!(target_os = "macos"), |this| {
-                    this.child(body_hint(self.t(
-                        "此平台暂不支持自动重启；仅移除后请手动重开 WorkBuddy。",
-                        "Automatic restart is unavailable on this platform; remove the models, then reopen WorkBuddy manually.",
-                    )))
-                })
-                .child(
-                    crate::ui_components::dialog_footer()
-                        .child(
-                            crate::ui_components::button(
-                                "unsync-restart",
-                                crate::ui_components::ButtonKind::Primary,
-                                self.t("移除并重启", "Remove and restart"),
-                                self.busy || !cfg!(target_os = "macos"),
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, _, cx| this.unsync(true, cx))),
-                        )
-                        .child(
-                            crate::ui_components::button(
-                                "unsync-only",
-                                crate::ui_components::ButtonKind::Normal,
-                                self.t("仅移除", "Remove only"),
-                                self.busy,
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, _, cx| this.unsync(false, cx))),
-                        )
-                        .child(
-                            crate::ui_components::button(
-                                "unsync-cancel",
-                                crate::ui_components::ButtonKind::Normal,
-                                self.t("取消", "Cancel"),
-                                false,
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, window, cx| {
-                                this.dismiss(&Dismiss, window, cx)
-                            })),
-                        ),
-                )
-                .into_any_element()
-        } else if self.sync_open {
-            crate::ui_components::dialog_body()
-                .w_full()
-                .gap(px(crate::theme::space::CARD_GAP))
-                .child(crate::ui_components::dialog_title(
-                    self.t("同步 WorkBuddy", "Sync WorkBuddy"),
-                ))
-                .child(body_hint(self.t(
-                    "同步会保存当前供应商的修改，并更新所有已保存供应商的模型配置。重启可让旧会话读取新配置，但会中断 WorkBuddy 正在执行的任务，请先保存工作。",
-                    "Sync saves changes to the current provider and updates models for all saved providers. Restart lets existing conversations load the new configuration, but interrupts running WorkBuddy tasks. Save your work first.",
-                )))
-                .when(!cfg!(target_os = "macos"), |this| {
-                    this.child(body_hint(self.t(
-                        "此平台暂不支持自动重启；仅同步后请手动重开 WorkBuddy。",
-                        "Automatic restart is not supported on this platform yet. Sync, then reopen WorkBuddy manually.",
-                    )))
-                })
-                .child(
-                    crate::ui_components::dialog_footer()
-                        .child(
-                            crate::ui_components::button(
-                                "sync-restart",
-                                crate::ui_components::ButtonKind::Primary,
-                                self.t("同步并重启", "Sync and restart"),
-                                self.busy || !cfg!(target_os = "macos"),
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, _, cx| this.sync(true, cx))),
-                        )
-                        .child(
-                            crate::ui_components::button(
-                                "sync-only",
-                                crate::ui_components::ButtonKind::Normal,
-                                self.t("仅同步", "Sync only"),
-                                self.busy,
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, _, cx| this.sync(false, cx))),
-                        )
-                        .child(
-                            crate::ui_components::button(
-                                "sync-cancel",
-                                crate::ui_components::ButtonKind::Normal,
-                                self.t("取消", "Cancel"),
-                                false,
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, window, cx| {
-                                this.dismiss(&Dismiss, window, cx)
-                            })),
-                        ),
-                )
-                .into_any_element()
+        } else if self.unsync_open || self.sync_open {
+            self.sync_confirmation(cx)
         } else if self.delete_open {
             crate::ui_components::dialog_body()
                 .w_full()

@@ -395,3 +395,24 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 同机release默认Providers页 [model-editor-gui.json](benchmarks/model-editor-gui.json)：核心/UI/合计12.47/74.14/86.61 MiB，采样峰值132.22 MiB，托盘另计25.67 MiB；核心/UI累计就绪443.112/1072.183 ms，差629.071 ms；请求p50/p95为0.165/0.191 ms。仍为1供应商64模型、200小请求与80×1MiB/4并发、本地mock，sandbox_check enforced且基准正常退出0，核心二进制仍25f24ad6。
 - 最初基线核心/UI/合计13.88/75.27/89.14 MiB，核心/UI累计就绪45.924/796.346 ms，请求p50/p95为0.177/0.209 ms。上轮模型选择为12.70/72.08/84.78 MiB及205.687/735.351 ms；本轮UI累计标记比上轮高337ms，其中核心累计标记高237ms，差629ms在后续已有约475–755ms范围。保留全部原始结果，不把单次RSS/启动/请求差异归因于代码或宣称改善；就绪标记仍不等于首帧/可交互，专项未完成。
 - 所有隔离UI/Core/mock已正常退出并wait，关UI后核心HTTP200；子代理仅清理确切自有夹具47,244 KiB。主代理核对基准sandbox_check enforced、核心PID退出及专属根无lsof引用，再清理旧UI副本/构建日志/基准副本37,820 KiB。累计85,064 KiB（约83.07 MiB），本轮专属临时剩余0 bytes；两项归属未明历史空目录各0 KiB保留，Cargo共享缓存与交付截图/JSON/报告保留。系统盘剩余40.86 GiB。
+
+
+## 小功能 22：原生同步／取消同步确认（2026-10-29，北京时间）
+
+- 官方MCP读取 `60:27` / `60:232` 与 `68:350` / `68:555` 的高保真context/截图，新增 `ui/sync_dialog.rs` 复用两种确认布局：526px宽、中文318px高，英文按原生多行文字自然增高；45px旋转徽标、21px标题、14/12px分层说明、提示卡、分隔及36px三按钮。按钮顺序按设计为取消、不重启操作、重启操作；完整保留X/Esc与原容器Enter不隐式执行操作的行为。
+- 文案按真实业务保留：Sync先保存当前供应商草稿，再更新所有已保存供应商模型；Unsync不保存草稿、不清除供应商，只移除代理管理条目并恢复备份。源代码逐字核对，sync/unsync处理器及job顺序未改；原启动地址不一致确认仍保留旧分支，未将其冒充本批已施工。非macOS重启按钮继续禁用并有手动重开说明。
+- 首屏真实快检已确认中文526×318。RotateCw被应用自有Assets回落为加号，已改为复用已嵌入的Figma `studio/updates.svg`，Info为原生向量；无Unicode占位、新运行时或依赖升级。旋转图标修复后的 `e63b2a72` 版fmt / 167 tests / 严格clippy（all-targets、-D warnings）/ release Passed，UI15,060,272 bytes / SHA256 `e63b2a7260745b968ab6e6d4a87bd98314c34c2f24b783755c96de03862c9ac2`；核心仍8,428,096 bytes / `25f24ad6`。block0.1.6未来兼容提示保持既有基线。
+- 仅合成HOME/模型文件、假key与本地mock，Core采用既有kernel sandbox，UI为独立bundle及隔离环境，不声称UI kernel sandbox。初版非重启验证：两种弹窗各Cancel/X/Esc及容器Enter前后，config.json与models.json的SHA不变。Sync only保存当前Provider00 updated/Synthetic renamed model，另一个Provider01的Core名称仍原值，UI Provider01 draft仍在；模型文件保留无关原始模型和扩展字段，并包含两个已保存供应商的模型。
+- 重启验证分层进行：不对真实WorkBuddy做生命周期操作。原生重启组件用现有随机唯一bundle的Cocoa fixture脚本验证；产品GUI重启操作另以临时denial-only AppKit guard阻断真实bundle的运行实例查找与URL解析，点击前核对当前UI PID/nonce/构造证明，并用事件记录核对调用。guard不改变产品二进制或文件写入，只模拟应用不可用；该路径验证部分成功与调用顺序，不将其称为真实WorkBuddy重启成功。最终业务/图/生命周期结果、性能与清理见下。
+
+- 非重启补验：Only remove后合成models对象与原对象完全相等，installed=0、两供应商及另一未保存草稿保留。非法JSON使Sync only明确失败，文件SHA前后相同；按原有顺序，选中的Provider01 draft先保存到Core，随后install失败，未将其误报为整笔回滚。恢复有效源后双击Only重试成功，日志仅一次本次同步完成、文件3个不同ID/installed2；完整并发busy窗口未作可观测验收。
+
+- e63守卫GUI核对：proof PID与实际UI 14099一致、nonce匹配，denial_only/lookup_blocked/url_blocked均true，初始2条构造自检事件。非法models JSON下Sync+Restart失败，文件SHA不变、events仍2条；恢复源后同操作写入2个管理模型并保留unrelated，明确显示“Models synced to disk; WorkBuddy app was not found”，events2→4、两项查找均由同UI PID阻断。证明失败不进入restart、成功文件写入在前；没有执行真实WorkBuddy重启。
+
+- e63守卫Remove+Restart：events4→6，新增app/url查找均由UI14099阻断；明确显示已从磁盘移除/未找到应用，合成文件与原对象相等、installed0、两供应商保留。产品GUI的这些重启验证均为受控“应用不可用”结果，未对真实WorkBuddy执行终止或打开。
+- 关闭守卫UI后Core独立health HTTP200。现有 `scripts/workbuddy_restart_test.py` 在本会话专属TMP、无DYLD/guard环境下执行退出0：随机唯一disposable Cocoa bundle的missing、正常退出后新PID重开、拒退超时无强杀/不重复打开（夹具超时1s）、两个实例保持不动均Passed；原生产包装20s参数及原生源文件未改。该组件验证与上述产品GUI守卫路径分开记录。
+- 四图初验说明/按钮/旋转向量完整；再按实测英文自然高度Sync335/Unsync318修正原估计369的顶部定位，以保持设计相同的中心上移17px。最终位置版 `1fc50264` 已通过fmt / 167 tests / 严格clippy / release，UI15,060,272 bytes / SHA256 `1fc50264946305b29aa57b254e0d10de217f9678edcc651925ff74eb42bb31e3`；仅位置参数改变，业务处理器仍逐字未改，最终原始无guard UI重拍见下。
+
+- 主代理逐张查看最终1fc无guard真实截图：[同步1440×900](screenshots/sync-confirm-1440x900.png)、[取消同步1440×900](screenshots/unsync-confirm-1440x900.png)、[同步1100×700](screenshots/sync-confirm-1100x700.png)、[取消同步1100×700](screenshots/unsync-confirm-1100x700.png)，正文/提示/旋转SVG/三按钮均完整。中文Studio top274，英文Mono Sync约166/Unsync174；2合成供应商/2模型/0请求。最终重新实拍保留原字节：宽窗2880×1800不裁，小窗2200×1402裁底2物理像素至2200×1400，各用一次Pillow LANCZOS等比例2:1缩为交付PNG，没有沿用中途sips拉伸图。无guard重拍未点击重启。
+- 同机release默认Providers页 [sync-confirm-gui.json](benchmarks/sync-confirm-gui.json)：核心/UI/合计12.56/77.52/90.08 MiB，采样峰值135.20 MiB，托盘另计27.11 MiB；核心/UI累计就绪527.328/1197.547 ms，差670.219 ms；请求p50/p95为0.164/0.193 ms。1供应商64模型、200小请求及80×1MiB/4并发、本地mock，原始结果保留。最初基线13.88/75.27/89.14 MiB、45.924/796.346 ms、0.177/0.209 ms；单次波动不归因于代码/不宣称改善，就绪标记不等于首帧/可交互，专项仍待续。
+- 全部UI/Core/mock正常退出0并wait，关UI后Core HTTP200/ready。子代理仅清理确切自有夹具48,544 KiB；主代理确认基准sandbox_check enforced、核心PID退出、专属根无lsof引用，再清理guard源码/库、旧UI副本、构建日志及基准副本37,776 KiB。累计86,320 KiB（约84.30 MiB），本轮临时剩余0 bytes；两项归属未明历史空目录各0 KiB保留，交付图/JSON/报告与共享Cargo缓存保留。系统盘剩余40.69 GiB。Goal保持active；启动修复确认/四协议弹窗及完整busy/无障碍/跨平台等继续待办。

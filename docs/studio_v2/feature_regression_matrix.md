@@ -19,7 +19,7 @@
 | 模型发现 4096、总量 256、手动编辑 | ui/model_picker.rs、model_table.rs、ui/providers.rs | macOS 原生picker两尺寸、38/4096候选虚拟化、过滤/全选/反选/清空/仅已选/已有禁用、空态、Tab/方向/Home/End/Page/Space/Enter、Cancel/X/Esc、确认仅草稿/显式保存、其他供应商253+当前1到256与第257拒绝 Passed；原新增/编辑取消/空模型/256手动新增禁用/128行模型表 Passed，完整IME/无障碍与跨平台待续 |
 | 模型能力自动/手动、思考档位与Token/上下文 | ui/model_editor.rs、model_options.rs、ui.rs | 原生两尺寸；builtin/unknown与未知图片警告、手动等待不覆盖、六能力依赖与Chat/native自定义协议区别、五档/default及数字/上下文/空ID校验、局部错误持久、草稿确认/显式保存、Cancel/X/Esc与Help Esc、Tab/ShiftTab、带焦点缩窗及错误高度变化后可见、滚动等待不回跳 Passed；完整IME/无障碍/跨平台与精细审计待续 |
 | Shift/Cmd/Ctrl 多选、快捷键、焦点/IME | state.rs、model_table.rs、main.rs | macOS Shift/Cmd 多选、Delete/Backspace、Cmd+S、编辑聚焦 Passed；Windows Ctrl/完整 IME 待验 |
-| 同步/取消、重启提示及失败回滚 | ui.rs、workbuddy_restart.rs、核心 | 源码确认；只对合成 WorkBuddy 目录验证 |
+| 同步/取消、备份恢复与重启 | ui/sync_dialog.rs、ui.rs、backend.rs、workbuddy_restart.rs、核心 | 原生确认/取消与容器Enter、仅同步只保存当前草稿并写所有saved、保留其他草稿/无关条目、仅移除不保存draft并恢复原对象、非法文件不变及重试 Passed；guard核对失败不进入restart/成功后明确部分成功，随机唯一bundle组件正常重开/拒退不强杀/多实例不碰 Passed；真实WorkBuddy重启、完整并发busy、无障碍/跨平台未验 |
 | 概览/明细/汇总/设置、全部/内置/自定义 | statistics/*、source_filter.rs | macOS 三报表/设置返回、2/0/2来源、日期/刷新/更多浮层 Passed；概览四KPI/七详细指标/空值/趋势四图例/计费和小窗滚动 Passed，最近请求/详情ID与过滤 Passed；分析表/Token构成/缓存80%与空值、12模型真实分页和两种实际排序、1440并排/1100两卡滚动与独立位置 Passed；Tooltip及完整视觉审计待续 |
 | 日期、分页、每页条数、固定表头 | statistics/pagination.rs、usage_table.rs | 日期草稿取消/应用、每页10/20条、上一页/下一页/输入跳页 Passed；明细八列与分析首/末列按钮在1100同步表头/表体取回最右列 Passed，保留服务端分页/虚拟表体；最终1100中英文两完整行、分页/导航不换行，英文状态完整可读；每页Select即时中英切换保值、10/20翻页及非默认20关闭重开恢复 Passed，完整本地化仍待审计 |
 | 未知/缺失、缓存、Token 完整性 | usage_chart/continuity.rs、usage_table.rs | 既有自动测试 Passed；GUI保留缺失/单点提示、图例独立；缓存子集和未知不造零语义保持 |
@@ -37,3 +37,5 @@
 模型选择 `59:11` / `59:216` 已提取原生 `ui/model_picker.rs`：Kit虚拟List与Checkbox支持4096候选，固定批量操作/底栏与小窗自适应，保留已有项、过滤批选、草稿确认后显式保存和跨供应商总256约束。两尺寸、键盘、错误/空态与取消已验；不改变模型表原有Shift/Cmd/Ctrl多选。完整IME/无障碍/跨平台仍待最终审计。
 
 模型能力编辑 `59:279` / `59:484` 已提取 `ui/model_editor.rs`，保留设计未呈现的默认思考Select、真实元数据来源、未知图片警告及完整媒体/Chat URL说明；六能力Flag逻辑、模型能力五档与原验证器保持。局部错误不再写入Runtime，固定底栏/原生滚动/缓存焦点组与布局后单次校正解决缩窗及错误时的遮挡；全面IME/无障碍/跨平台继续保留待办。
+
+同步确认 `60:27` / `60:232` 与取消同步 `68:350` / `68:555` 已提取 `ui/sync_dialog.rs`，三按钮保持原save/install/restore与restart job顺序。正常隔离GUI验证文件/草稿语义，重启产品路径以denial-only guard核对部分成功；无guard的随机bundle脚本独立验证生命周期基础函数，未将其冒充真实WorkBuddy重启。启动地址不一致确认仍为原分支，后续视觉施工与整帧审计继续。

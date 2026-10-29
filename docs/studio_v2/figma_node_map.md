@@ -11,7 +11,7 @@
 | 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs | 部分：分区导航/价格卡CRUD与游标/快照/失败提示、采集/导入双卡及主要业务已验；整帧视觉、完整键盘/IME/无障碍待续 |
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui/model_picker.rs, ui.rs, ui/providers.rs | 部分：原生726×672/小窗自适应、38/4096虚拟候选、过滤与勾选/键盘、取消/确认草稿/显式保存、跨供应商256边界与错误/空态已验；完整IME/无障碍/跨平台待续 |
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui/model_editor.rs, model_options.rs, ui.rs | 部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；完整IME/无障碍/跨平台及精细审计待续 |
-| 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：526原生确认/两尺寸、取消/无隐式Enter、仅同步/当前草稿与全部saved范围、非法文件/重试、守卫下写入后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验 |
 | 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续 |
 | 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 部分：650×770原生分组/两尺寸/真实代理与导入/完整元数据换行/本次快照/错误重试/各关闭路径已验；Tooltip视觉、完整无障碍/跨平台与精细审计待续 |
 | 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
@@ -25,7 +25,7 @@
 | 66:760 | 19 / STUDIO V2 · API Key 显示演示 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 67:338 | 20 / STUDIO V2 · OpenCode Go 供应商 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 67:548 | 21 / STUDIO V2 · 思考强度菜单 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
-| 68:350 | 22 / STUDIO V2 · 取消同步确认 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 68:350 | 22 / STUDIO V2 · 取消同步确认 | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：原生确认/两尺寸、取消/仅移除、保留providers与草稿/恢复原条目、守卫下移除后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验 |
 | 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生编辑布局/身份锁定/取消恢复/版本冲突及手动刷新重开/旧快照金额保护已验；完整IME/无障碍/跨平台与精细视觉待续 |
 | 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:605 | 25 / STUDIO V2 · 编辑供应商资料 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |

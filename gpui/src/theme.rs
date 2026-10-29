@@ -50,6 +50,7 @@ pub mod color {
     pub const BG_PAGE: u32 = 0xf7f8fc;
     pub const BG_BAR: u32 = 0xffffff;
     pub const BG_TABLE_HEAD: u32 = 0xf3f5fa;
+    pub const BG_NOTICE: u32 = 0xf4f6ff;
     pub const SIDEBAR: u32 = 0x111525;
     pub const SIDEBAR_TEXT: u32 = 0xf0f3fe;
     pub const SIDEBAR_MUTED: u32 = 0x929bb0;
