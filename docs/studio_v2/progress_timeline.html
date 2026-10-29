@@ -198,77 +198,77 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T01:29:22+08:00",
+  "updated_at": "2026-10-30T01:56:33+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "21a560f73502c8e4bbb832280357ce669e06d2ee",
-  "phase": "开发中 · 分项实机验收穿插",
+  "code_head": "56f66171a730b3295b3fba7d1500f2e5ddd66290",
+  "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
-    "pending": 1,
-    "partial": 38,
+    "pending": 0,
+    "partial": 39,
     "reused": 1,
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 37,
+  "recorded_tasks": 38,
   "current_task": {
-    "id": 37,
-    "title": "检查更新原生反馈已提交",
+    "id": 38,
+    "title": "黑白主题分项已提交，进入专项验收",
     "status": "recorded",
-    "description": "186项UI测试及2项Core更新契约通过，真实Pending/HTTP403重试、两尺寸和六轮短测已记录；公网成功未实机验。剩余1待改、38部分验收、1复用待核对。"
+    "description": "Mono交替行与三个设计SVG路由已修复，187项测试、两尺寸真实交互和四轮性能通过。剩余0待初审、39部分验收、1复用待核对，整帧最终验收仍为0。"
   },
   "latest_task": {
-    "id": 37,
-    "title": "原生检查更新状态与真实请求反馈",
+    "id": 38,
+    "title": "黑白主题模型行与设计资源实际加载",
     "status": "recorded",
-    "summary": "检查更新按原Core真实结果显示等待、更新状态或失败；本环境公网返回HTTP403，已正确显示并可重试，公网成功分支尚未实机通过。证据：构建与契约、真实交互、1440等待、1100错误、1440错误、六轮性能、清理记录、保留异常样本。",
+    "summary": "Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：构建与资源、真实交互、1440中文、1100英文、四轮性能、清理记录、旧版1440实拍。",
     "highlights": [
-      "检查更新按原Core真实结果显示等待、更新状态或失败；本环境公网返回HTTP403，已正确显示并可重试，公网成功分支尚未实机通过。证据：构建与契约、真实交互、1440等待、1100错误、1440错误、六轮性能、清理记录、保留异常样本。",
-      "官方Figma MCP读取104:1605与104:1817高保真context/截图：299×113、top117/right32、圆角12、标题14/状态12/脚注11/关闭27。设计“◌”为原文静态文本，不新增持续spinner；原型注释替换为真实来源/当前版本/重试指导。既有updates.svg847bytes/root20×20与最新官方下载逐字节相同，实际含在Release并经原Assets::load路由，保持36×36按钮、七项顺序/20px图标/8px间距和工具栏原位置。",
-      "原check_update action、force:true与cc392d4规范化payload相同，busy禁用、Core版本排序/公开端点/8秒网络限制/缓存不改。新增原生Popup/Div焦点、Esc/X/外部关闭；关闭不取消原请求、回包不自动重开。只在打开且viewport变化时合并next-frame焦点恢复，无新timer/轮询。展示层仅读取available布尔和可读tag/current，拒绝非法响应误报最新并同步原底部错误，不重复版本比较；无测试URL、假成功、缓存捷径或新下载/打开行为。"
+      "Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：构建与资源、真实交互、1440中文、1100英文、四轮性能、清理记录、旧版1440实拍。",
+      "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
+      "32个设计资源核对：28个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有28文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。"
     ],
     "limits": [
-      "检查更新按原Core真实结果显示等待、更新状态或失败；本环境公网返回HTTP403，已正确显示并可重试，公网成功分支尚未实机通过。证据：构建与契约、真实交互、1440等待、1100错误、1440错误、六轮性能、清理记录、保留异常样本。",
-      "检查更新104:1605从未逐帧验收转部分验收；剩余1/40未逐帧验收、38部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例；公网成功、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘等专项仍未完成，Goal保持active，继续开发并穿插分项验收。"
+      "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
+      "黑白主题62:308转部分验收，剩余0/40待初审、39部分验收、1复用待核对、0整帧最终验收。进度生成器按待初审数量显示“逐帧初审已覆盖 · 专项验收与差异修复”；不是整项目完成。继续复核复用帧、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等未完成项，Goal保持active。进度HTML仍只有静态验证，不将先前浏览器file拒绝绕过或冒称渲染通过。"
     ],
     "evidence": [
       {
-        "label": "构建与契约",
-        "href": "benchmarks/update-notice-build.json"
+        "label": "构建与资源",
+        "href": "benchmarks/mono-theme-build.json"
       },
       {
         "label": "真实交互",
-        "href": "benchmarks/update-notice-gui-validation.json"
+        "href": "benchmarks/mono-theme-gui-validation.json"
       },
       {
-        "label": "1440等待",
-        "href": "screenshots/update-notice-1440x900.png"
+        "label": "1440中文",
+        "href": "screenshots/mono-theme-1440x900.png"
       },
       {
-        "label": "1100错误",
-        "href": "screenshots/update-notice-1100x700.png"
+        "label": "1100英文",
+        "href": "screenshots/mono-theme-1100x700.png"
       },
       {
-        "label": "1440错误",
-        "href": "screenshots/update-notice-error-1440x900.png"
-      },
-      {
-        "label": "六轮性能",
-        "href": "benchmarks/update-notice-performance-summary.json"
+        "label": "四轮性能",
+        "href": "benchmarks/mono-theme-performance-summary.json"
       },
       {
         "label": "清理记录",
-        "href": "benchmarks/update-notice-cleanup.json"
+        "href": "benchmarks/mono-theme-cleanup.json"
       },
       {
-        "label": "保留异常样本",
-        "href": "benchmarks/update-notice-current-run2-gui.json"
+        "label": "旧版1440实拍",
+        "href": "screenshots/mono-theme-baseline-1440x901.png"
+      },
+      {
+        "label": "旧78ab",
+        "href": "benchmarks/mono-theme-previous-gui.json"
       }
     ],
-    "commit": "21a560f73502c8e4bbb832280357ce669e06d2ee",
-    "date": "2026-10-30T01:28:29+08:00",
-    "commit_subject": "feat(studio): show native update-check feedback",
+    "commit": "56f66171a730b3295b3fba7d1500f2e5ddd66290",
+    "date": "2026-10-30T01:56:20+08:00",
+    "commit_subject": "fix(studio): align Mono model rows and provider vectors",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -387,9 +387,9 @@
     {
       "node": "62:308",
       "title": "13 / STUDIO V2 · 黑白主题示例",
-      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs",
+      "detail": "部分：Mono交替行/真实SVG路由、多选跨皮肤与语言/草稿保留、两尺寸和四轮性能已验；完整精细视觉/IME/无障碍及跨平台仍待专项",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=62-308"
     },
     {
@@ -2154,6 +2154,59 @@
       "date": "2026-10-30T01:28:29+08:00",
       "commit_subject": "feat(studio): show native update-check feedback",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 38,
+      "title": "黑白主题模型行与设计资源实际加载",
+      "status": "recorded",
+      "summary": "Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：构建与资源、真实交互、1440中文、1100英文、四轮性能、清理记录、旧版1440实拍。",
+      "highlights": [
+        "Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：构建与资源、真实交互、1440中文、1100英文、四轮性能、清理记录、旧版1440实拍。",
+        "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
+        "32个设计资源核对：28个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有28文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。"
+      ],
+      "limits": [
+        "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
+        "黑白主题62:308转部分验收，剩余0/40待初审、39部分验收、1复用待核对、0整帧最终验收。进度生成器按待初审数量显示“逐帧初审已覆盖 · 专项验收与差异修复”；不是整项目完成。继续复核复用帧、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等未完成项，Goal保持active。进度HTML仍只有静态验证，不将先前浏览器file拒绝绕过或冒称渲染通过。"
+      ],
+      "evidence": [
+        {
+          "label": "构建与资源",
+          "href": "benchmarks/mono-theme-build.json"
+        },
+        {
+          "label": "真实交互",
+          "href": "benchmarks/mono-theme-gui-validation.json"
+        },
+        {
+          "label": "1440中文",
+          "href": "screenshots/mono-theme-1440x900.png"
+        },
+        {
+          "label": "1100英文",
+          "href": "screenshots/mono-theme-1100x700.png"
+        },
+        {
+          "label": "四轮性能",
+          "href": "benchmarks/mono-theme-performance-summary.json"
+        },
+        {
+          "label": "清理记录",
+          "href": "benchmarks/mono-theme-cleanup.json"
+        },
+        {
+          "label": "旧版1440实拍",
+          "href": "screenshots/mono-theme-baseline-1440x901.png"
+        },
+        {
+          "label": "旧78ab",
+          "href": "benchmarks/mono-theme-previous-gui.json"
+        }
+      ],
+      "commit": "56f66171a730b3295b3fba7d1500f2e5ddd66290",
+      "date": "2026-10-30T01:56:20+08:00",
+      "commit_subject": "fix(studio): align Mono model rows and provider vectors",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2395,12 +2448,20 @@
       "partial": 38,
       "reused": 1,
       "verified": 0
+    },
+    {
+      "date": "2026-10-30T01:56:33+08:00",
+      "note": "UI-38已提交；40帧初审覆盖，继续专项验收与差异修复",
+      "pending": 0,
+      "partial": 39,
+      "reused": 1,
+      "verified": 0
     }
   ],
   "verification": [
     {
       "title": "40 帧最终视觉复核",
-      "detail": "当前 38 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "detail": "当前 39 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",

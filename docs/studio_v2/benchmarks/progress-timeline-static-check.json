@@ -1,30 +1,33 @@
 {
   "scope": "Static source/data/link checks only; no browser execution or rendering",
-  "checked_at": "2026-10-30T01:29:23+08:00",
+  "checked_at": "2026-10-30T01:57:34+08:00",
   "embedded_json_matches_external": true,
   "frame_count": 40,
   "frame_status_counts": {
-    "pending": 1,
-    "partial": 38,
+    "pending": 0,
+    "partial": 39,
     "reused": 1,
     "verified": 0
   },
-  "committed_task_records": 37,
+  "committed_task_records": 38,
   "recorded_goal_status": "active",
   "goal_badge_uses_recorded_status": true,
+  "literal_html_links_and_anchors_checked": true,
+  "phase_matches_frame_status": true,
   "current_task": {
-    "id": 37,
+    "id": 38,
     "status": "recorded"
   },
   "referenced_commit_objects_exist": true,
   "html_ids_unique": true,
-  "local_file_references_checked": 248,
-  "unique_local_files": 208,
+  "local_file_references_checked": 227,
+  "unique_local_files": 216,
   "missing_local_files": 0,
   "inline_javascript_node_syntax_checks": 2,
   "python_ast_parse": "passed",
   "invalid_recorded_transition_rejected_without_writes": true,
   "reference_base_stylesheet_exact_match": true,
+  "stylesheet_bytes": 17102,
   "javascript_syntax_check_input": "stdin; no temporary files created",
-  "browser_validation": "Not verified; see progress-timeline-browser-check.json. Earlier browser attempt record remains historical, not a check of this refreshed payload."
+  "browser_validation": "Not verified; previous CUA local-file refusal and no-workaround limit remain. No new browser rendering attempted."
 }
