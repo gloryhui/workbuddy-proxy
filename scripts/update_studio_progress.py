@@ -129,7 +129,8 @@ def main():
                         **counts})
     report = {"version": 1, "updated_at": now, "project": "WorkBuddy Studio V2",
               "branch": git("branch", "--show-current"), "code_head": git("log", "-1", "--format=%H", "--", "gpui/src", "gpui/assets"),
-              "phase": "开发中 · 分项实机验收穿插",
+              "phase": ("开发中 · 分项实机验收穿插" if counts["pending"]
+                        else "逐帧初审已覆盖 · 专项验收与差异修复"),
               "goal_status": args.goal_status or previous.get("goal_status", "unknown"),
               "counts": counts, "total_frames": len(frames), "recorded_tasks": len(recorded),
               "current_task": current, "latest_task": latest, "frames": frames,

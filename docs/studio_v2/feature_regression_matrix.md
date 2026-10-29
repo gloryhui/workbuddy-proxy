@@ -34,7 +34,7 @@
 | 最近请求、详情与独立读身份 | statistics/recent.rs、stats_backend.rs | 167自动回归；同核心22记录、最新ID/详情、明细第2页不误用、来源/供应商与快速切源、小窗Esc Passed；请求最小10条仅取首条 |
 | 请求详情、元数据与本次单价 | statistics/detail_layout.rs、statistics/detail_metadata.rs | 原生650×770/两尺寸、15行摘要、原metadata与长ID/模型/价格快照完整换行、真实代理/导入/连接失败/SSE与点数/未知值、not-found同IDRetry与8秒错误持久/新记录恢复、Esc/X/Close及Popover Esc、64位ID复制并恢复剪贴板 Passed；Tooltip视觉/完整无障碍/跨平台待续 |
 | 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | 正常关窗 UI 退出/核心 health 200/重开恢复 Passed；托盘唤醒及单实例待验 |
-| 外观/中英/HiDPI/无障碍 | theme.rs、ui_components.rs | macOS 七主题选择与中英两尺寸 Passed；完整 HiDPI/IME/无障碍及 Windows/Intel Mac 未实际验证 |
+| 外观/中英/HiDPI/无障碍 | theme.rs、ui_components.rs、model_table.rs、assets.rs | macOS既有七主题/中英分项证据保留；本轮Mono白/浅蓝交替行、三设计SVG实际加载、多选跨Blue→Mono及中英切换后草稿删除2→0/Core仍3、名称草稿/重开Mono持久、两尺寸与遮罩 Passed；完整初始Tab/HiDPI/IME/无障碍及Windows/Intel实机待专项 |
 
 此矩阵随每个小功能提交更新；不将核心未改动当作运行回归通过。
 

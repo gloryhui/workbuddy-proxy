@@ -1,0 +1,89 @@
+{
+  "feature": "UI-38 Mono provider theme",
+  "ui_sha256": "821cd561cdb4c9562abaf01424164146ce49be59740b9cc746b293742f81a333",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": {
+    "synthetic_home": true,
+    "mock": "loopback",
+    "providers": 2,
+    "models": 3,
+    "requests": 0,
+    "core_launched_with_sandbox_profile": true,
+    "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "final_core_kernel_attestation": "Not queried for Core PID 97407 in this GUI scenario; sandbox profile launch evidence only. Baseline PID 93872 was separately checked and is not substituted for final PID."
+  },
+  "observations": {
+    "row_colors": "In verified wide screenshot unselected row pixels RGB(255,255,255) and RGB(244,246,255). Old 78ab baseline both RGB(247,248,252).",
+    "selection": "Selected first row and Shift-clicked second; Blue→Mono and Chinese→English retained selection. Without reselecting, Remove models changed synthetic UI draft 2→0 while Core saved model counts remained [2,1]; no Save was invoked.",
+    "draft": "Synthetic name and zero-model draft remained after UI reopen; saved Core provider names and models unchanged.",
+    "persistence": "After normal close and reopening same isolated profile, appearance menu reported Mono on; UI language remained English.",
+    "mask": "Sync confirmation remained open after clicking Appearance location through scrim; Esc closed it. Neither Sync nor Restart was invoked.",
+    "screenshots_note": "English small window was scrolled within center column to expose selected model rows; it does not show the complete connection card."
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/mono-theme-1440x900.png",
+      "language": "zh",
+      "skin": "Mono",
+      "state": "normal rows",
+      "raw_pixels": [
+        1440,
+        901
+      ],
+      "output_pixels": [
+        1440,
+        900
+      ],
+      "capture": "macOS screencapture -x -o -l verified window 61050, no cursor",
+      "transform": "crop bottom one physical pixel; no scaling",
+      "raw_sha256": "772dbe8d5ae359ce93d3f65d1e508d8be11f317cd94bd549a892e9848e7b95d1",
+      "sha256": "a229cc9e2986a44a6a7c8dead59ec714cd6b88223a50282f1e68cb83a5990cec"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/mono-theme-1100x700.png",
+      "language": "en",
+      "skin": "Mono",
+      "state": "two selected rows, center column scrolled",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "output_pixels": [
+        1100,
+        700
+      ],
+      "capture": "macOS screencapture -x -o -l verified window 61050, no cursor",
+      "transform": "crop bottom one physical pixel; no scaling",
+      "raw_sha256": "b87da0b0d6141eb07f9d3a3b044af7df2bc18acb28452339d1fd13383ef37e3c",
+      "sha256": "d4d64cb1f47527e3a0718afbc56927a38d9d43311ec294aeecbbb852f985eda7"
+    }
+  ],
+  "termination": {
+    "fixture_pid": 97405,
+    "core_pid": 97407,
+    "first_ui_pid": 97408,
+    "reopened_ui_pid": 99362,
+    "first_ui_exit": 0,
+    "reopened_ui_exit": 0,
+    "core_health_after_ui_close": 200,
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "pids_gone": true,
+    "reopened_ui_wait_provenance": "Original exec session 51555 returned process exit 0 and printed reopened_ui_exit 0 before interruption."
+  },
+  "incident": {
+    "description": "A screenshot command inadvertently used unverified window ID 61049 instead of the verified target 61050, creating an opaque temporary file. Its content was never viewed or read by the agent, and it was never used as a deliverable.",
+    "attempted_cleanup": "An exact rm -f followed by the intended capture was rejected by automatic approval: rm -f style commands are not permitted. Neither command executed. The temporary file remains untouched for owner review; no alternate deletion was attempted.",
+    "correct_capture": "Verified ID 61050 was used to save a distinct file."
+  },
+  "limitations": [
+    "Full IME, accessibility and cross-platform audit were not performed.",
+    "Source registration and asset byte identity are build/test evidence; visual screenshots only establish the shown states."
+  ],
+  "main_agent_review": {
+    "final_pngs_visually_reviewed": true,
+    "dimensions_and_sha256_recomputed": true,
+    "final_gui_and_performance_pids_independently_confirmed_gone": true,
+    "accidental_capture_content_not_read": true
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2"
+  ],
+  "rounds": [
+    {
+      "label": "previous",
+      "core": 12.59,
+      "ui": 72.36,
+      "total": 84.95,
+      "core_ready": 459.831,
+      "ui_record": 1088.512,
+      "p50": 0.16,
+      "p95": 0.194,
+      "direct_p95": 0.236,
+      "peak": 135.2,
+      "large_s": 0.09,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "mono-theme-previous-gui.json"
+    },
+    {
+      "label": "current",
+      "core": 12.14,
+      "ui": 72.28,
+      "total": 84.42,
+      "core_ready": 215.89,
+      "ui_record": 793.147,
+      "p50": 0.172,
+      "p95": 0.191,
+      "direct_p95": 0.253,
+      "peak": 128.94,
+      "large_s": 0.086,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "mono-theme-current-gui.json"
+    },
+    {
+      "label": "previous-run2",
+      "core": 12.84,
+      "ui": 72.14,
+      "total": 84.98,
+      "core_ready": 224.604,
+      "ui_record": 692.335,
+      "p50": 0.175,
+      "p95": 0.217,
+      "direct_p95": 0.231,
+      "peak": 130.89,
+      "large_s": 0.086,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "mono-theme-previous-run2-gui.json"
+    },
+    {
+      "label": "current-run2",
+      "core": 12.78,
+      "ui": 71.89,
+      "total": 84.67,
+      "core_ready": 221.951,
+      "ui_record": 691.97,
+      "p50": 0.173,
+      "p95": 0.201,
+      "direct_p95": 0.218,
+      "peak": 133.5,
+      "large_s": 0.086,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "mono-theme-current-run2-gui.json"
+    }
+  ],
+  "medians": {
+    "previous": {
+      "core": 12.715,
+      "ui": 72.25,
+      "total": 84.965,
+      "core_ready": 342.2175,
+      "ui_record": 890.4235,
+      "p50": 0.1675,
+      "p95": 0.2055,
+      "peak": 133.045,
+      "large_s": 0.088
+    },
+    "current": {
+      "core": 12.46,
+      "ui": 72.085,
+      "total": 84.545,
+      "core_ready": 218.9205,
+      "ui_record": 742.5585,
+      "p50": 0.1725,
+      "p95": 0.196,
+      "peak": 131.22,
+      "large_s": 0.086
+    }
+  },
+  "assessment": "No obvious regression in these four bounded default-page runs. Not a performance improvement claim.",
+  "scope": "Same fixed Core25f, old78ab vs final821c, original scripts/benchmark.py unchanged, 1000 small requests and80x1MiB/concurrency4,64 models/defaultMono nativeGUI. Loopback/synthetic profiles/Core kernel sandbox including real LaunchAgents. Strictly serial after GUI/compilation ended.",
+  "limitations": [
+    "UI readiness marker is not first paint or interactivity.",
+    "RSS sum may double count shared pages.",
+    "Does not measure menu/hover interaction latency, sustained open-popup CPU, public network or cross-platform behavior."
+  ]
+}

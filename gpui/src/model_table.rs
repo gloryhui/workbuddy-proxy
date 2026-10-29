@@ -67,6 +67,11 @@ impl TableDelegate for Models {
             .accessibility_id(format!("model-{i}"))
             .bg(if selected {
                 cx.theme().table_active
+            } else if crate::theme::current_skin() == crate::theme::Skin::Monochrome {
+                // Figma 62:308 keeps Studio's white / soft-blue row rhythm
+                // with a monochrome accent. Application selection wins over
+                // striping; the other saved palettes keep their existing rows.
+                rgb([crate::theme::color::WHITE, crate::theme::color::BG_NOTICE][i % 2]).into()
             } else {
                 cx.theme().background
             })

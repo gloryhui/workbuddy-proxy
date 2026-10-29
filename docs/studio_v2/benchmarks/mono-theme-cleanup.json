@@ -1,0 +1,137 @@
+{
+  "project": "WorkBuddy Studio V2 UI-38",
+  "exact_canonical_target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3",
+  "type": "single session-owned temporary directory",
+  "owner_uid": 501,
+  "ancestor_checks": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3",
+      "resolved": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3",
+      "is_mount": false,
+      "is_symlink": false,
+      "owner_uid": 501,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "resolved": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "is_mount": false,
+      "is_symlink": false,
+      "owner_uid": 501,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "resolved": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "is_mount": false,
+      "is_symlink": false,
+      "owner_uid": 501,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "resolved": "/private/var/folders/zg",
+      "is_mount": false,
+      "is_symlink": false,
+      "owner_uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders",
+      "resolved": "/private/var/folders",
+      "is_mount": false,
+      "is_symlink": false,
+      "owner_uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var",
+      "resolved": "/private/var",
+      "is_mount": false,
+      "is_symlink": false,
+      "owner_uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/private",
+      "resolved": "/private",
+      "is_mount": false,
+      "is_symlink": false,
+      "owner_uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/",
+      "resolved": "/",
+      "is_mount": true,
+      "is_symlink": false,
+      "owner_uid": 0,
+      "device": 16777232
+    }
+  ],
+  "all_components_no_symlinks": true,
+  "all_descendants_owned_regular_files_or_directories": true,
+  "same_temp_mount": true,
+  "not_repository_or_mount_root": true,
+  "ownership": {
+    "purpose": "Studio V2 UI-38 isolated baseline",
+    "creator": "computer-use agent",
+    "root": "/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3",
+    "previous_ui_sha256": "78abbc6e5f1b8bfd71f052ca26e984271d8167ea6512b02c2e933166eb135b48"
+  },
+  "files": 184,
+  "logical_bytes": 215160714,
+  "allocated_bytes": 215756800,
+  "inventory_sha256": "b8b360ee388eba2c0cd34faebb9f7568e5f7e884425b46120f6b076933214239",
+  "reproducible": "Own binary copies, synthetic configs/databases, downloaded design assets, test logs, raw PNGs and private validation scripts; final evidence retained in repository",
+  "authorization": "Standing explicit user authorization for clearly identified safe task temporary data; no repeated confirmation required",
+  "references": {
+    "lsof_exit": 1,
+    "lsof_open_references": 0,
+    "process_command_references": 0
+  },
+  "shared_cargo_caches_and_unknown_history": "retained, not cleanup targets",
+  "cleanup_performed": true,
+  "exact_delete_targets": [
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/mono-ui.dmtrodm7",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/mono-final.oci0s0y8",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/perf-previous",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/perf-current",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/perf-previous-run2",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/perf-current-run2",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/figma-assets",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/tmp",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/previous-ui"
+  ],
+  "planned_deleted_files": 136,
+  "planned_released_allocated_bytes": 190558208,
+  "preserved_directory": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3/mono-final2.qpavux4z",
+  "preserved_reason": "Mistaken window61049 capture was not viewed. Automatic review rejected rm -f style commands; no retry, overwrite or enclosing-directory deletion. This entire fixture and root metadata/scripts remain.",
+  "retained_capture_content_inspected": false,
+  "deleted_files": 136,
+  "released_allocated_bytes_estimate": 190558208,
+  "own_temporary_bytes_retained": 25198592,
+  "system_data_free_bytes": 40547598336,
+  "unknown_history_retained_top_level": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/workbuddy-prompt-vars",
+      "type": "directory",
+      "scope": "Unknown historical ownership; retained without recursive inspection"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/workbuddy-default-open-probe",
+      "type": "directory",
+      "scope": "Unknown historical ownership; retained without recursive inspection"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/workbuddy-editor-sdk-sandbox",
+      "type": "directory",
+      "scope": "Unknown historical ownership; retained without recursive inspection"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/workbuddy-pac-69993-725c98beb288785d.sock",
+      "type": "file",
+      "scope": "Unknown historical ownership; retained without recursive inspection"
+    }
+  ]
+}

@@ -841,3 +841,28 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 首四轮最后一对代理p95 0.200→0.325ms，同轮直连0.334→0.584ms，未直接归因或放宽门槛。额外确认对两版均0.194ms，升高未持续；六轮及首四轮中位都保留，未丢弃异常。六轮合计RSS中位85.750→85.920MiB、UI73.310→72.560MiB、p95中位0.199→0.203ms，当前短测未证实持续退化、不宣称改善。旧第三轮Core/UI累计记录1911.941/2435.532ms高值亦保留；marker不是首帧/可交互，RSS共享页可能双计，不测弹层打开持续CPU、更新公网时延或UI操作时延。
 - 按用户持续安全清理授权，规范化绝对路径/各级父目录/挂载、UID501与无符号链接、完整范围/可再生性、lsof/进程检查及临执行二次核实后，删除217个本轮专属测试文件，释放已分配空间估计259,284,992 bytes（247.27MiB），本轮专属临时保留0。最终PNG/JSON留仓库，共享Cargo缓存及4个未知历史项保留未动；系统盘清理后可用40,604,233,728 bytes（37.82GiB）。
 - 检查更新104:1605从未逐帧验收转部分验收；剩余1/40未逐帧验收、38部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例；公网成功、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘等专项仍未完成，Goal保持active，继续开发并穿插分项验收。
+
+
+## 小功能 38：黑白主题模型行与设计资源实际加载（2026-10-30，北京时间）
+
+- Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：[构建与资源](benchmarks/mono-theme-build.json)、[真实交互](benchmarks/mono-theme-gui-validation.json)、[1440中文](screenshots/mono-theme-1440x900.png)、[1100英文](screenshots/mono-theme-1100x700.png)、[四轮性能](benchmarks/mono-theme-performance-summary.json)、[清理记录](benchmarks/mono-theme-cleanup.json)、[旧版1440实拍](screenshots/mono-theme-baseline-1440x901.png)。
+- 官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。
+- 32个设计资源核对：28个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有28文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。
+- 最终821c通过fmt、187 tests/2既有专项ignored、严格clippy all-targets/-D warnings、Intel check1.688s与Release39.673s；UI15,230,000bytes/SHA256 `821cd561cdb4c9562abaf01424164146ce49be59740b9cc746b293742f81a333`，Core仍25f/8,428,096bytes，原benchmark SHA不变。新增一项资源路由回归，不为纯底色写镜像测试。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留；先前6d25中间候选记录不冒充最终验收。
+- 最终独立合成HOME/loopback夹具2供应商/3模型/0请求。真实Shift选两行，跨Blue→Mono和中文→英文后不重选，Remove models使UI草稿2→0；Core保存数量仍[2,1]、原供应商名称不变，无Save。名称和零模型草稿在正常关闭重开后仍在，实际Appearance菜单Mono on、英文保留。Sync确认期间点工具栏皮肤位置不穿透，Esc取消，无同步/重启或真实登录项操作。完整Cmd切换组合、初始Tab、IME及无障碍仍未专项验收，不从颜色或AX缺少selected推断多选。
+- 主代理已逐张查看最终两张PNG并重算尺寸/SHA；宽图为普通行，窄图为两行已选、中心列滚动到模型目录，未展示完整连接卡，不冒称整帧最终视觉。原图1440×901/1100×701，仅裁底1物理像素，无缩放；固定窗口61050实拍，使用已明确授权的原生截图与MouseMoved方法，点击/按键均CUA。
+- 最终GUI的Core97407仅保留原沙盒profile启动证据，未对该PID实际执行sandbox_check，不用旧基线93872的查询代替。UI97408及重开99362均wait/exit0，两次关窗后Core health200；Core97407/fixture97405 exit0并wait，主代理确认PID消失。重开UI wait来源原exec session51555输出；四轮性能各有独立Core实际内核权限查询，包括真实LaunchAgents读/写/创建/删除deny，不混作GUI证据。WorkBuddy合成[]保持，真实用户数据未用于夹具。
+
+同一25f Core、旧78ab与最终821c，原benchmark严格旧→新→旧→新，各1000小请求及80×1MiB/并发4，64模型默认Mono页。编译和GUI退出后独占串行，合成HOME、loopback catalog、Core内核沙盒；全部直接子进程wait，退出数组均[-15,-15,0,0]，Core/UI消失。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧78ab](benchmarks/mono-theme-previous-gui.json) | 12.59 / 72.36 / 84.95 | 459.831 / 1088.512 | 0.160 / 0.194 | 135.20 | 0.090 |
+| [新821c](benchmarks/mono-theme-current-gui.json) | 12.14 / 72.28 / 84.42 | 215.890 / 793.147 | 0.172 / 0.191 | 128.94 | 0.086 |
+| [旧78ab复测](benchmarks/mono-theme-previous-run2-gui.json) | 12.84 / 72.14 / 84.98 | 224.604 / 692.335 | 0.175 / 0.217 | 130.89 | 0.086 |
+| [新821c复测](benchmarks/mono-theme-current-run2-gui.json) | 12.78 / 71.89 / 84.67 | 221.951 / 691.970 | 0.173 / 0.201 | 133.50 | 0.086 |
+
+- 四轮短测未见明显退化，合计空闲RSS中位84.965→84.545MiB、UI72.250→72.085MiB、p95中位0.2055→0.1960ms、峰值133.045→131.220MiB；保留新第2轮峰值相对旧增加2.61MiB及所有原值，不宣称改善。UI marker不是首帧/可交互，RSS共享页可双计；不测持续弹层CPU、真实操作时延、公网或跨平台。
+- 按持续安全清理授权，完整路径/UID501/父组件与挂载/无符号链接/全范围/进程及lsof预检、临执行二次核实后，仅删除逐一列明8目录和1二进制副本的136个专属可再生文件，释放已分配空间估计190,558,208bytes（181.73MiB）。本轮保留25,198,592bytes（24.03MiB），系统盘可用40,547,598,336bytes（37.76GiB）；共享Cargo缓存及4个未知历史项保留。
+- 真实记录一次截图命令失误：误用未核实窗口61049得到未知内容临时PNG，未由代理查看或读取其内容、未作交付图。自动审批拒绝后续rm-f及同命令中的再截图，原因为“rm -f style commands are not permitted. Use a safer approach”。没有覆盖/换命令删除该文件；正确61050另存截图。整个mono-final2目录与临时根及少量脚本保留，明确排除于清理范围，不以递归父目录删除绕过拒绝。
+- 黑白主题62:308转部分验收，剩余0/40待初审、39部分验收、1复用待核对、0整帧最终验收。进度生成器按待初审数量显示“逐帧初审已覆盖 · 专项验收与差异修复”；不是整项目完成。继续复核复用帧、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等未完成项，Goal保持active。进度HTML仍只有静态验证，不将先前浏览器file拒绝绕过或冒称渲染通过。

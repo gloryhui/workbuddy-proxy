@@ -18,7 +18,7 @@
 | 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
 | 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
 | 61:1111 | 11 / STUDIO V2 · 协议选项 · Gemini | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
-| 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
+| 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs | 部分：Mono交替行/真实SVG路由、多选跨皮肤与语言/草稿保留、两尺寸和四轮性能已验；完整精细视觉/IME/无障碍及跨平台仍待专项 |
 | 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 部分：旧六主题+可选 Studio、保存/恢复/深色选区通过；完整视觉待续 |
 | 66:320 | 17 / STUDIO V2 · 上游协议下拉 | ui/provider_choices.rs, ui/providers.rs, ui.rs | 部分：原生361×233/53px行与2px间隔、四项说明/选中标记、鼠标/方向Enter/Esc/外部取消、仅草稿/显式保存与两尺寸已验；完整IME/无障碍/跨平台及精细整帧待续 |
 | 66:538 | 18 / STUDIO V2 · 供应商预设搜索 | ui/provider_choices.rs, ui.rs, presets.rs | 部分：原生436×377/41px内嵌搜索/36px行、地区/Azure/空结果与Enter守卫、清除/取消/重开、真实预设草稿及loopback显式保存、两尺寸已验；完整IME/无障碍/跨平台待续 |

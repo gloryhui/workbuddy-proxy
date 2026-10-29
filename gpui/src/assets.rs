@@ -51,6 +51,15 @@ impl AssetSource for Assets {
             "studio/provider-search.svg" => {
                 Some(include_bytes!("../assets/studio/provider-search.svg"))
             }
+            "studio/provider-chevron.svg" => {
+                Some(include_bytes!("../assets/studio/provider-chevron.svg"))
+            }
+            "studio/provider-effort-chevron.svg" => Some(include_bytes!(
+                "../assets/studio/provider-effort-chevron.svg"
+            )),
+            "studio/provider-key-eye.svg" => {
+                Some(include_bytes!("../assets/studio/provider-key-eye.svg"))
+            }
             "studio/skin.svg" => Some(include_bytes!("../assets/studio/skin.svg")),
             "studio/autostart.svg" => Some(include_bytes!("../assets/studio/autostart.svg")),
             "studio/autostart-on.svg" => Some(include_bytes!("../assets/studio/autostart-on.svg")),
@@ -195,6 +204,27 @@ impl AssetSource for Assets {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn provider_fields_load_the_design_vectors_instead_of_generic_shapes() {
+        for (path, expected) in [
+            (
+                "studio/provider-chevron.svg",
+                include_bytes!("../assets/studio/provider-chevron.svg").as_slice(),
+            ),
+            (
+                "studio/provider-effort-chevron.svg",
+                include_bytes!("../assets/studio/provider-effort-chevron.svg").as_slice(),
+            ),
+            (
+                "studio/provider-key-eye.svg",
+                include_bytes!("../assets/studio/provider-key-eye.svg").as_slice(),
+            ),
+        ] {
+            let actual = Assets.load(path).unwrap().unwrap();
+            assert_eq!(actual.as_ref(), expected, "{path}");
+        }
+    }
+
     #[test]
     fn autostart_states_load_the_exact_design_assets_instead_of_the_fallback() {
         for (path, expected) in [
