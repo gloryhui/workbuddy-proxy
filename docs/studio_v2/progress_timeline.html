@@ -198,74 +198,74 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-29T18:50:34+08:00",
+  "updated_at": "2026-10-29T19:43:35+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "785a2dd32bd23b95719b67a3c5d180af82530fbe",
+  "code_head": "1a6c1cbcc504ae7d91c712be1222785e71cab933",
   "phase": "开发中 · 分项实机验收穿插",
   "goal_status": "active",
   "counts": {
-    "pending": 8,
-    "partial": 31,
+    "pending": 5,
+    "partial": 34,
     "reused": 1,
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 31,
+  "recorded_tasks": 32,
   "current_task": {
-    "id": 31,
-    "title": "原生协议、预设、思考菜单与 Key 显隐",
+    "id": 32,
+    "title": "单模型提示与确认删除结果反馈",
     "status": "recorded",
-    "description": "三菜单按最新 Figma 对齐，原选择与草稿/显式保存边界、Key 键盘显隐、两尺寸实拍已验；八轮请求复核与稳定后 CPU 短测未见持续明显退化。完整 IME、无障碍、跨平台与最终整帧审计待续。下一批继续单供应商状态。"
+    "description": "单模型提示、真实删除后幸存者反馈、编辑/草稿/保存与重开边界、两尺寸实拍及四轮性能已验并提交。失败不伪造回执；外部先删除目标后 UI 缓存未对齐的缺口已记录，下一批优先修复。完整 IME、无障碍和跨平台仍待续。"
   },
   "latest_task": {
-    "id": 31,
-    "title": "原生协议、预设、思考菜单与 Key 显隐",
+    "id": 32,
+    "title": "单模型提示与删除后幸存供应商状态",
     "status": "recorded",
-    "summary": "官方MCP高保真context及截图读取66:320、66:538、66:760、67:548，并复核协议66:524、预设66:742和思考67:752弹层。目标分别361×233/53px行、436×377/41px搜索/36px行、232×258/33px行，行间2px。预设来自现有全部数据，四协议code与六个effort值保持，不写死设计示例供应商或Key；黄色“虚构Key”原型注释不加入产品。",
+    "summary": "最新官方MCP高保真context/截图读取67:338、78:1804、80:1114。67:546/78:1960为仅一个模型时的664px宽上限、50px高/10px圆角提示，12px正文/17px行高；按实际当前草稿模型数显示，名称/供应商/模型ID不写死。原获取列表和手动添加按钮及处理器保持，英文小窗明确normal换行，固定50px容纳两行。",
     "highlights": [
-      "官方MCP高保真context及截图读取66:320、66:538、66:760、67:548，并复核协议66:524、预设66:742和思考67:752弹层。目标分别361×233/53px行、436×377/41px搜索/36px行、232×258/33px行，行间2px。预设来自现有全部数据，四协议code与六个effort值保持，不写死设计示例供应商或Key；黄色“虚构Key”原型注释不加入产品。",
-      "Kit Select的内容delegate无法设置外层行距和内嵌搜索框，因此局部组合Kit Popover、InputState、虚拟ListState/List及Button，继续发原typed SelectEvent::Confirm，由原协议/预设/effort处理器修改草稿。原Choice.matches仍执行名称/code/静态预设URL搜索；确认、取消、空结果、清查询和指针/键盘游标由UI模块管理，不更改Core、管理API、配置格式或依赖。没有增加timer、持续动画或后台轮询。新模块ui/provider_choices.rs统一三种尺寸，非整页重新设计。",
-      "Key仍调用原InputState.toggle_masked；17px设计眼睛SVG置于24px原生可Tab按钮，保留Password内容类型、禁用与中英Show/Hide名称。新增两个设计chevron本地SVG根尺寸16/14px及Key17px均与调用几何核对，原文件非空，未改路径内容或引用临时Figma URL。"
+      "最新官方MCP高保真context/截图读取67:338、78:1804、80:1114。67:546/78:1960为仅一个模型时的664px宽上限、50px高/10px圆角提示，12px正文/17px行高；按实际当前草稿模型数显示，名称/供应商/模型ID不写死。原获取列表和手动添加按钮及处理器保持，英文小窗明确normal换行，固定50px容纳两行。",
+      "ui/provider_feedback.rs新增会话内删除回执：在用户确认时捕获原命令目标ID，只在既有成功reply门槛内比较前后provider ID集合，恰好删除该目标、没有增删其他ID且真实幸存者存在才绑定该幸存ID。不根据名称/日志文案猜测，不持久化、不改Core或private drafts。取消不发命令；失败/无法入队清除尝试，最后一个provider删除后无虚构幸存者回执。切换provider、普通成功save/test/install等清除；dirty/edit/busy状态优先于绿色反馈。宽窗左Deleted 1/右Saved，窄窗合并为右Deleted 1。",
+      "原delete JSON命令、二次确认、目标绑定及全部保存/删除逻辑保持。模型table/help提取为provider_model_table局部布局方法，单行表体和提示按原生flex组合，多模型继续原Kit虚拟表格；没有新增timer、持续动画、依赖、资产或Core热路径修改。"
     ],
     "limits": [],
     "evidence": [
       {
-        "label": "编译与资产证据",
-        "href": "benchmarks/provider-menus-build.json"
+        "label": "编译证据",
+        "href": "benchmarks/provider-state-build.json"
       },
       {
-        "label": "协议",
-        "href": "screenshots/ui31-protocol-1440x900.png"
+        "label": "单模型宽窗",
+        "href": "screenshots/ui32-one-model-1440x900.png"
       },
       {
-        "label": "预设",
-        "href": "screenshots/ui31-preset-1440x900.png"
+        "label": "小窗",
+        "href": "screenshots/ui32-one-model-1100x700.png"
       },
       {
-        "label": "思考",
-        "href": "screenshots/ui31-effort-1440x900.png"
+        "label": "删A剩B宽窗",
+        "href": "screenshots/ui32-deleted-to-opencode-1440x900.png"
       },
       {
-        "label": "Key",
-        "href": "screenshots/ui31-key-1440x900.png"
+        "label": "小窗",
+        "href": "screenshots/ui32-deleted-to-opencode-1100x700.png"
       },
       {
-        "label": "协议",
-        "href": "screenshots/ui31-protocol-1100x700.png"
+        "label": "删B剩A宽窗",
+        "href": "screenshots/ui32-deleted-to-sub2api-1440x900.png"
       },
       {
-        "label": "预设",
-        "href": "screenshots/ui31-preset-1100x700.png"
+        "label": "小窗",
+        "href": "screenshots/ui32-deleted-to-sub2api-1100x700.png"
       },
       {
-        "label": "思考",
-        "href": "screenshots/ui31-effort-1100x700.png"
+        "label": "第4行补图",
+        "href": "screenshots/ui32-four-model-row4-1100x700.png"
       }
     ],
-    "commit": "785a2dd32bd23b95719b67a3c5d180af82530fbe",
-    "date": "2026-10-29T18:46:50+08:00",
-    "commit_subject": "feat(gpui): align provider menus and key visibility with Studio",
+    "commit": "1a6c1cbcc504ae7d91c712be1222785e71cab933",
+    "date": "2026-10-29T19:43:04+08:00",
+    "commit_subject": "feat(gpui): show single-model guidance and confirmed delete feedback",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -424,9 +424,9 @@
     {
       "node": "67:338",
       "title": "20 / STUDIO V2 · OpenCode Go 供应商",
-      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/providers.rs, ui.rs, ui/provider_feedback.rs",
+      "detail": "部分：真实B单模型、664×50原生提示/英文小窗换行、1→2→1草稿切换/无Core保存与两尺寸已验；完整精细视觉/IME/无障碍/跨平台待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-338"
     },
     {
@@ -496,9 +496,9 @@
     {
       "node": "78:1804",
       "title": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go",
-      "source": "ui/providers.rs, ui/sidebar.rs, ui.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs",
+      "detail": "部分：真实删A只剩B1、ID集合验证/绑定幸存者的会话Deleted1、dirty/edit/Save/重开、两尺寸与计数已验；失败后外部配置对齐另有缺口，完整审计待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1804"
     },
     {
@@ -552,9 +552,9 @@
     {
       "node": "80:1114",
       "title": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api",
-      "source": "ui/providers.rs, ui/sidebar.rs, ui.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs",
+      "detail": "部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；完整视觉/IME/无障碍/跨平台及失败配置对齐待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-1114"
     },
     {
@@ -1840,6 +1840,56 @@
       "date": "2026-10-29T18:46:50+08:00",
       "commit_subject": "feat(gpui): align provider menus and key visibility with Studio",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 32,
+      "title": "单模型提示与删除后幸存供应商状态",
+      "status": "recorded",
+      "summary": "最新官方MCP高保真context/截图读取67:338、78:1804、80:1114。67:546/78:1960为仅一个模型时的664px宽上限、50px高/10px圆角提示，12px正文/17px行高；按实际当前草稿模型数显示，名称/供应商/模型ID不写死。原获取列表和手动添加按钮及处理器保持，英文小窗明确normal换行，固定50px容纳两行。",
+      "highlights": [
+        "最新官方MCP高保真context/截图读取67:338、78:1804、80:1114。67:546/78:1960为仅一个模型时的664px宽上限、50px高/10px圆角提示，12px正文/17px行高；按实际当前草稿模型数显示，名称/供应商/模型ID不写死。原获取列表和手动添加按钮及处理器保持，英文小窗明确normal换行，固定50px容纳两行。",
+        "ui/provider_feedback.rs新增会话内删除回执：在用户确认时捕获原命令目标ID，只在既有成功reply门槛内比较前后provider ID集合，恰好删除该目标、没有增删其他ID且真实幸存者存在才绑定该幸存ID。不根据名称/日志文案猜测，不持久化、不改Core或private drafts。取消不发命令；失败/无法入队清除尝试，最后一个provider删除后无虚构幸存者回执。切换provider、普通成功save/test/install等清除；dirty/edit/busy状态优先于绿色反馈。宽窗左Deleted 1/右Saved，窄窗合并为右Deleted 1。",
+        "原delete JSON命令、二次确认、目标绑定及全部保存/删除逻辑保持。模型table/help提取为provider_model_table局部布局方法，单行表体和提示按原生flex组合，多模型继续原Kit虚拟表格；没有新增timer、持续动画、依赖、资产或Core热路径修改。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/provider-state-build.json"
+        },
+        {
+          "label": "单模型宽窗",
+          "href": "screenshots/ui32-one-model-1440x900.png"
+        },
+        {
+          "label": "小窗",
+          "href": "screenshots/ui32-one-model-1100x700.png"
+        },
+        {
+          "label": "删A剩B宽窗",
+          "href": "screenshots/ui32-deleted-to-opencode-1440x900.png"
+        },
+        {
+          "label": "小窗",
+          "href": "screenshots/ui32-deleted-to-opencode-1100x700.png"
+        },
+        {
+          "label": "删B剩A宽窗",
+          "href": "screenshots/ui32-deleted-to-sub2api-1440x900.png"
+        },
+        {
+          "label": "小窗",
+          "href": "screenshots/ui32-deleted-to-sub2api-1100x700.png"
+        },
+        {
+          "label": "第4行补图",
+          "href": "screenshots/ui32-four-model-row4-1100x700.png"
+        }
+      ],
+      "commit": "1a6c1cbcc504ae7d91c712be1222785e71cab933",
+      "date": "2026-10-29T19:43:04+08:00",
+      "commit_subject": "feat(gpui): show single-model guidance and confirmed delete feedback",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -1865,12 +1915,28 @@
       "partial": 31,
       "reused": 1,
       "verified": 0
+    },
+    {
+      "date": "2026-10-29T19:04:24+08:00",
+      "note": "UI-32 进入实机验证，界面计数暂不减少",
+      "pending": 8,
+      "partial": 31,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T19:43:35+08:00",
+      "note": "UI-32 已提交：3 帧加入部分验收，未逐帧验收由 8 降至 5；按持续授权完成安全临时清理",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
     }
   ],
   "verification": [
     {
       "title": "40 帧最终视觉复核",
-      "detail": "当前 31 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "detail": "当前 34 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",
