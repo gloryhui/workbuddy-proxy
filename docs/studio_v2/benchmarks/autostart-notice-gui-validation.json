@@ -1,0 +1,351 @@
+{
+  "feature": "UI-36 launch at login notice",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "limitations": [
+    "Pending busy disabled state was not independently asserted by attempting an additional activation.",
+    "No actual system LaunchAgents or launchctl, real WorkBuddy lifecycle, vendor requests, or OS login were exercised.",
+    "Full IME/accessibility audit not performed.",
+    "Fresh recapture window: 70 Shift+Tab attempts did not yield a reliably visible toolbar focus ring; initial keyboard entry remains unverified. Earlier Enter/Space result applies once button focus was visibly established in the original fixture."
+  ],
+  "intermediate_6337": {
+    "ui_sha256": "63377666da889ec36dae7ed0588bf0d33b0886d1759d5a2dc56d01aba3c685cc",
+    "fixture": {
+      "providers": 2,
+      "models": 3,
+      "requests": 0,
+      "mock": "loopback",
+      "synthetic_home": true,
+      "core_kernel_sandbox_enforced": true,
+      "real_launchagents_read_write_create_unlink_denied_by_sandbox_check": true,
+      "source_workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "results": {
+      "enable": "UI on; isolated config true; fake-home plist has expected label, RunAtLoad and fixture core/config args",
+      "disable": "UI off; isolated config false and fake-home plist absent",
+      "failure": "own empty directory blocked plist target; UI displayed error and off; config SHA unchanged 876b2239be92e1654a167ed541ef7c00f3e665b2c5d854f663c7f90477ac91a7; directory empty",
+      "retry": "verified exact owned empty directory and removed with rmdir; enabling succeeded with isolated config true and plist valid",
+      "keyboard": "visible focus ring on launch button; Enter enabled and Space disabled, matching config and fake plist",
+      "pending": "first 10-second helper resumed before click and did not capture pending; second 45-second bounded SIGSTOP helper showed pending, Esc closed it, SIGCONT and wait exit0, actual success reply updated toggle on without reopening notice",
+      "dismiss": "Esc, close X, outside click and Esc after actual resize closed notice",
+      "state_preservation": "unsaved synthetic provider name, English language and Custom models filter remained through toggles; saved provider counts stayed 2 and 1",
+      "mask": "sync confirmation open; clicking launch button position left modal present and config enabled, without invoking sync or restart",
+      "reopen": "after closing UI, same isolated app reopened in English with toggle on and draft visible; final UI action disabled; config false and fake plist absent",
+      "end_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "screenshots": [
+      {
+        "file": "docs/studio_v2/screenshots/autostart-notice-1440x900.png",
+        "language": "zh",
+        "skin": "Studio Indigo",
+        "state": "enabled",
+        "raw_pixels": [
+          1440,
+          901
+        ],
+        "output_pixels": [
+          1440,
+          900
+        ],
+        "source": "macOS screencapture -x -o -l verified window ID 60387; no cursor option",
+        "transform": "crop bottom one physical pixel, no resize",
+        "raw_sha256": "e0c64c528809a76536c24c75dac770cf4030ee5e6e2a248c132206d938cd60fa",
+        "sha256": "00e2a513a6ed2568848dae348878ebf9ab7465b55a3b238f8efbbd27c71942eb"
+      },
+      {
+        "file": "docs/studio_v2/screenshots/autostart-notice-1100x700.png",
+        "language": "en",
+        "skin": "Mono",
+        "state": "enabled",
+        "raw_pixels": [
+          1100,
+          701
+        ],
+        "output_pixels": [
+          1100,
+          700
+        ],
+        "source": "macOS screencapture -x -o -l verified window ID 60387; no cursor option",
+        "transform": "crop bottom one physical pixel, no resize",
+        "raw_sha256": "2b8953773fdce03e957d3d4bba2f5d9a3e9ebb3706c3046234075dd10d608875",
+        "sha256": "2e5398f756feb425847f06e2e03f437d9d78faf8a9b05fbc2d808603dff2518c"
+      }
+    ],
+    "termination": {
+      "fixture_pid": 33746,
+      "core_pid": 33748,
+      "first_ui_pid": 33752,
+      "reopened_ui_pid": 37712,
+      "first_ui_exit": 0,
+      "reopened_ui_exit": 0,
+      "core_health_after_each_ui_close": 200,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "pids_gone": true,
+      "pause_helpers_waited_exit": 0
+    },
+    "recapture": {
+      "fixture_pid": 39376,
+      "core_pid": 39378,
+      "ui_pid": 39379,
+      "ui_sha256": "63377666da889ec36dae7ed0588bf0d33b0886d1759d5a2dc56d01aba3c685cc",
+      "core_sandbox_enforced": true,
+      "real_launchagents_read_write_create_unlink_denied": true,
+      "final_config_autostart": false,
+      "final_fake_plist_absent": true,
+      "ui_exit": 0,
+      "core_health_after_ui_close": 200,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "pids_gone": true,
+      "cursor_attempt": "CGWarpMouseCursorPosition returned 0 but CUA screenshot still drew pointer over icon; no repeat; system native window capture without cursor used instead."
+    },
+    "initial_cua_screenshots": [
+      {
+        "file": "docs/studio_v2/screenshots/autostart-notice-1440x900.png",
+        "language": "zh",
+        "skin": "Studio Indigo",
+        "state": "enabled",
+        "raw_pixels": [
+          1440,
+          901
+        ],
+        "output_pixels": [
+          1440,
+          900
+        ],
+        "transform": "crop bottom one physical pixel, no resize",
+        "raw_sha256": "7e2edc879c700deecbb860dce0af1ed1b516f227076c9017a8ad0cf9d8b841ad",
+        "sha256": "3b169671f4b23bd7e14b2c85dc76dc233f77eff10d16696c876aeaf1766531c1",
+        "delivered": false,
+        "reason": "cursor overlay obscured active icon; replaced by direct native window captures"
+      },
+      {
+        "file": "docs/studio_v2/screenshots/autostart-notice-1100x700.png",
+        "language": "en",
+        "skin": "Mono",
+        "state": "enabled",
+        "raw_pixels": [
+          1100,
+          701
+        ],
+        "output_pixels": [
+          1100,
+          700
+        ],
+        "transform": "crop bottom one physical pixel, no resize",
+        "raw_sha256": "f32654f9f8cd358b54eaad51e35b5a07b707ea6312eb1d0df0ee27fc6e5acdd9",
+        "sha256": "4c65ce455d1994379383c55f12b1b8bb1a47830d37ea1447fa6b788b2cc431cc",
+        "delivered": false,
+        "reason": "cursor overlay obscured active icon; replaced by direct native window captures"
+      }
+    ],
+    "limitation": "Active icon fell back to incorrect asset; screenshots are superseded."
+  },
+  "intermediate_ad2e": {
+    "ui_sha256": "ad2ee86dfdc1b6207ef8e4c4eef6eddf37778979ff2bdc7b712e487a843ebd4e",
+    "observed": "Enabled popup and corrected power glyph; stale tooltip described disabled while config and UI were enabled. Both raw and settled screenshots SHA256 eda191f81655b7405860a438e4eb3a411482248877c15b29c01520b46a7ae728.",
+    "shutdown": {
+      "autostart": false,
+      "fake_plist_absent": true,
+      "ui_exit": 0,
+      "health_after_ui_close": 200,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "all_pids_gone": true
+    }
+  },
+  "final_candidate": {
+    "ui_sha256": "09f77516e538b6d0e275b402925c77428b2833993a4dac2a93e25c154714d97a",
+    "ui_bytes": 15213456,
+    "status": "hover text and live state update verified; other functionality per candidate-specific observations",
+    "fixture": {
+      "providers": 2,
+      "models": 3,
+      "requests": 0,
+      "synthetic_home": true,
+      "mock": "loopback",
+      "core_started_with_source_protection_sandbox": true,
+      "sentinel": "[]"
+    },
+    "observations": {
+      "enable": "Actual UI click produced on state; isolated config true, fake-home plist existed with expected label.",
+      "disable": "Actual UI click produced off state; isolated config false and fake-home plist absent.",
+      "sync_modal_mask": "Click at power position while sync confirmation was open left modal present and toggle off; screenshot had no tooltip above modal; Esc canceled.",
+      "tooltip": "Verified real hover Off text, UI click On then reenter On text, and while cursor stationary real isolated Core API set Off updated visible tooltip after snapshot. UI click and Core action were distinct.",
+      "other": "Pending, failure/retry and keyboard were not rerun on this candidate; see intermediate_6337."
+    },
+    "screenshots": [
+      {
+        "file": "docs/studio_v2/screenshots/autostart-notice-1440x900.png",
+        "language": "zh",
+        "skin": "Studio Indigo",
+        "state": "enabled",
+        "raw_pixels": [
+          1440,
+          901
+        ],
+        "output_pixels": [
+          1440,
+          900
+        ],
+        "source": "macOS screencapture -x -o -l verified window ID 60783, no cursor",
+        "transform": "crop bottom one physical pixel, no resize",
+        "raw_sha256": "de5d7a3ee3d0c5e196f2c16f0bd3390c0766ad9864aafc4faa60257ba2452d81",
+        "sha256": "358534a4a2c39834d8b5e7c7c023c61bad151a602c5527a131900795c93669d7"
+      },
+      {
+        "file": "docs/studio_v2/screenshots/autostart-notice-1100x700.png",
+        "language": "en",
+        "skin": "Mono",
+        "state": "enabled",
+        "raw_pixels": [
+          1100,
+          701
+        ],
+        "output_pixels": [
+          1100,
+          700
+        ],
+        "source": "macOS screencapture -x -o -l verified window ID 60783, no cursor",
+        "transform": "crop bottom one physical pixel, no resize",
+        "raw_sha256": "4a6fc5377297e8f74d01c3c8c02811bd1eddbfa951fbeabaa00fc3720710ee0d",
+        "sha256": "70b37f72edbbef89bd7d4f1106a8916c00a4545ab664787ac39a4c567b39e66e"
+      }
+    ],
+    "termination": {
+      "fixture_pid": 52877,
+      "core_pid": 52880,
+      "ui_pid": 52884,
+      "ui_exit": 0,
+      "core_health_after_ui_close": 200,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "pids_gone": true,
+      "final_config_autostart": false,
+      "final_fake_plist_absent": true
+    },
+    "authorized_hover_attempt": {
+      "permission": "User explicitly authorized CGEvent mouse movement and native screenshot; no clicks, keys, drag, permission changes or CGWarp.",
+      "preflight_post_event_access": true,
+      "event": "Two CGEventMouseMoved events, tap 0: safe blank then power center.",
+      "window_bounds": [
+        240,
+        71,
+        1440,
+        901
+      ],
+      "target_global": [
+        1410,
+        97
+      ],
+      "readback_global": [
+        1410,
+        97
+      ],
+      "foreground_ui_pid": 62135,
+      "wait_seconds": 2,
+      "observation": "No hover highlight or tooltip visible; event reception by app not established. No inferred root cause.",
+      "raw_sha256": "155b22d59619d75c199660d14de796abeb5e2b02e5e173f19b379782d22b6405",
+      "termination": {
+        "fixture_pid": 62128,
+        "core_pid": 62131,
+        "ui_pid": 62135,
+        "ui_exit": 0,
+        "core_health_after_ui_close": 200,
+        "core_exit": 0,
+        "fixture_exit": 0,
+        "pids_gone": true,
+        "final_autostart": false,
+        "fake_plist_absent": true
+      },
+      "result_followup": "Initial no-highlight observation was followed by a controlled sequence verifying blank-to-skin and blank-to-power; actual Power Off and On tooltips and live update were visible."
+    },
+    "interrupted_hover_fixture": {
+      "fixture_pid": 60934,
+      "core_pid": 60938,
+      "ui_pid": 60939,
+      "pids_gone": true,
+      "exit_codes_and_wait": "unavailable after interruption; not claimed as successful"
+    },
+    "verified_hover": {
+      "input": "User authorized CGEvent mouseMoved only; preflight true. No CGEvent clicks, keys or drag; UI clicks used CUA.",
+      "window_bounds": [
+        240,
+        71,
+        1440,
+        901
+      ],
+      "power_global": [
+        1410,
+        97
+      ],
+      "off_tooltip": "开机启动：已关闭（点击开启）",
+      "off_raw_sha256": "416d0d877b2a3e6cf36cea4f031fdc60476422ceb6cd9877ec31c23b76a47451",
+      "on_tooltip": "开机启动：已开启（点击关闭）",
+      "on_raw_sha256": "dff0070736704c2fe4e7b7bfc53ea606994ebf37d8a2e36cb22193bc09cdee02",
+      "enable": "CUA click; isolated config true and fake plist present; Esc closed notice before reentering hover.",
+      "live_change": "Pointer remained stationary; isolated authenticated Core autostart API set false; HTTP 200, config false and fake plist absent. After six seconds the visible tooltip changed to Off.",
+      "live_off_raw_sha256": "b244b62a93dc22b4b3a9a1af155f75ad2fe343f6679dc6a46f734a2d9653ffc3",
+      "fixture_termination": {
+        "fixture_pid": 64458,
+        "core_pid": 64463,
+        "ui_pid": 64464,
+        "ui_exit": 0,
+        "health_after_ui_close": 200,
+        "core_exit": 0,
+        "fixture_exit": 0,
+        "pids_gone": true,
+        "config_autostart": false,
+        "fake_plist_absent": true,
+        "synthetic_workbuddy_sentinel": "[]"
+      },
+      "retained_images": [
+        {
+          "file": "docs/studio_v2/screenshots/autostart-tooltip-live-on-1440x901.png",
+          "state": "on after actual UI click",
+          "sha256": "dff0070736704c2fe4e7b7bfc53ea606994ebf37d8a2e36cb22193bc09cdee02"
+        },
+        {
+          "file": "docs/studio_v2/screenshots/autostart-tooltip-live-off-1440x901.png",
+          "state": "off after actual Core API while pointer stationary",
+          "sha256": "b244b62a93dc22b4b3a9a1af155f75ad2fe343f6679dc6a46f734a2d9653ffc3"
+        }
+      ]
+    }
+  },
+  "main_agent_review": {
+    "final_images_visually_reviewed": true,
+    "final_png_sha256_and_dimensions_recomputed": true,
+    "final_09f7_processes_confirmed_gone": [
+      52877,
+      52880,
+      52884
+    ],
+    "old_tooltip_conflict_original_preserved": "docs/studio_v2/screenshots/autostart-tooltip-before-fix-1440x901.png",
+    "hover_method_confirmation_pending": false,
+    "tooltip_on_off_images_visually_reviewed": true,
+    "authorized_hover_processes_confirmed_gone": [
+      64458,
+      64463,
+      64464
+    ],
+    "interrupted_fixture_exit_wait_not_fabricated": true
+  },
+  "method_authorization": {
+    "source": "Direct user reply to the pending method question in this chat",
+    "answer": "允许 CGEvent 移动和原生截图验证",
+    "scope": "CGEvent mouseMoved only; no click/key/drag synthesis, no permission changes; native screencapture allowed for this tooltip verification",
+    "validation_status": "authorized method completed: actual Off/On hover and stationary-pointer live state update verified"
+  },
+  "interrupted_authorized_hover_fixture": {
+    "fixture_pid": 60934,
+    "core_pid": 60938,
+    "ui_pid": 60939,
+    "original_exec_session": 64391,
+    "current_pids_absent": true,
+    "exec_session_unavailable": true,
+    "exit_codes": null,
+    "wait_status": "unknown; no success claimed",
+    "next_action": "retain interrupted fixture evidence; use a fresh isolated scene only after confirmed original handles/processes terminal or unavailable"
+  }
+}

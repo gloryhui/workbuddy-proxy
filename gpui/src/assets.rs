@@ -53,6 +53,7 @@ impl AssetSource for Assets {
             }
             "studio/skin.svg" => Some(include_bytes!("../assets/studio/skin.svg")),
             "studio/autostart.svg" => Some(include_bytes!("../assets/studio/autostart.svg")),
+            "studio/autostart-on.svg" => Some(include_bytes!("../assets/studio/autostart-on.svg")),
             "studio/updates.svg" => Some(include_bytes!("../assets/studio/updates.svg")),
             "studio/language.svg" => Some(include_bytes!("../assets/studio/language.svg")),
             "studio/restore.svg" => Some(include_bytes!("../assets/studio/restore.svg")),
@@ -194,6 +195,24 @@ impl AssetSource for Assets {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn autostart_states_load_the_exact_design_assets_instead_of_the_fallback() {
+        for (path, expected) in [
+            (
+                "studio/autostart.svg",
+                include_bytes!("../assets/studio/autostart.svg").as_slice(),
+            ),
+            (
+                "studio/autostart-on.svg",
+                include_bytes!("../assets/studio/autostart-on.svg").as_slice(),
+            ),
+        ] {
+            assert_eq!(
+                super::Assets.load(path).unwrap().unwrap().as_ref(),
+                expected
+            );
+        }
+    }
     use super::*;
 
     fn load(path: &str) -> String {

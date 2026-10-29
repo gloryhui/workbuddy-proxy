@@ -146,6 +146,16 @@ pub fn system_button(
     accessibility_label: impl Into<SharedString>,
     disabled: bool,
 ) -> Button {
+    system_button_base(id, asset, accessibility_label, disabled).tooltip(tooltip)
+}
+
+/// Same system control, for callers supplying a live native tooltip view.
+pub fn system_button_base(
+    id: impl Into<ElementId>,
+    asset: &'static str,
+    accessibility_label: impl Into<SharedString>,
+    disabled: bool,
+) -> Button {
     Button::new(id)
         .with_size(px(size::SYSTEM_BUTTON))
         .w(px(size::SYSTEM_BUTTON))
@@ -160,7 +170,6 @@ pub fn system_button(
                 .flex_shrink_0(),
         )
         .text_color(rgb(color::TEXT_3))
-        .tooltip(tooltip)
         .accessibility_label(accessibility_label)
         .disabled(disabled)
 }

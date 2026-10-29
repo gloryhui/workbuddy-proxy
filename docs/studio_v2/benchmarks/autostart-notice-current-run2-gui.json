@@ -1,0 +1,142 @@
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "mode": "native GUI",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 8428096,
+  "idle_rss_mib": 87.09,
+  "core_idle_rss_mib": 12.31,
+  "measured_process_count": 2,
+  "ui_idle_rss_mib": 74.78,
+  "tray_idle_rss_mib": 25.67,
+  "core_ready_ms": 233.665,
+  "ui_record_ready_ms": 798.635,
+  "sampled_peak_rss_mib": 134.02,
+  "post_load_rss_mib": 134.02,
+  "small_request_count": 1000,
+  "direct_loopback_ms": {
+    "p50": 0.146,
+    "p95": 0.311
+  },
+  "proxied_loopback_ms": {
+    "p50": 0.171,
+    "p95": 0.189
+  },
+  "median_proxy_overhead_ms": 0.026,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.083,
+  "notes": "RSS sums instance.json core and gpui.json settings PIDs (shared pages can be counted twice); tray RSS is separate, headless has one PID. UI readiness is the gpui.json marker, not first paint or interactivity. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.",
+  "ui_sha256": "09f77516e538b6d0e275b402925c77428b2833993a4dac2a93e25c154714d97a",
+  "ui_binary_bytes": 15213456,
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_sandbox_enforced": true,
+  "core_sandbox_proof": {
+    "enforced": true,
+    "pid": 55871,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O"
+  },
+  "catalog_url_is_local": true,
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "fixture_wrapper_sha256": "c1f72c8ec4e090ad6337f6c1ff23476b400ae2bd2db5d746d71dcd507d61dcd1",
+  "owned_child_exit_codes": [
+    -15,
+    -15,
+    0,
+    0
+  ],
+  "all_owned_children_waited": true,
+  "ui_process_gone": true,
+  "core_process_gone": true,
+  "temporary_fixtures_retained_until_session_cleanup": true
+}

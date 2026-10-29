@@ -787,3 +787,29 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 当前短测未见明显退化，空闲合计RSS中位85.600→84.090MiB、UI73.335→72.195MiB；p95中位0.1865→0.1795ms，峰值132.400→132.335MiB。保留全部原值，不宣称改善；第一轮基线较冷、UI记录不是首帧/可交互时间、RSS共享页可能双计。默认页短测不代表提示打开持续CPU、恢复操作时延、长时间运行或跨平台。[性能汇总](benchmarks/window-restore-performance-summary.json)。
 - 按用户持续授权，规范化绝对路径/UID501/类型/完整范围、无符号链接/挂载越界、lsof与进程检查，临执行前再次核对后，删除本轮159个专属测试文件，释放已分配空间估计213,045,248 bytes（203.18MiB），本轮临时保留0。最终两图与JSON留在仓库，共享Cargo缓存与4个未知历史项保留未动。系统盘可用40,633,962,496 bytes（37.84GiB）。[精确清理记录](benchmarks/window-restore-cleanup.json)。
 - 恢复窗口104:2046由未逐帧验收改为部分验收；剩余3/40未逐帧验收、36部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、开机启动、检查更新；完整40帧精细视觉、IME/无障碍及Windows/Intel实机仍未完成，Goal保持active，继续开发并穿插分项实机验收。
+
+
+## 小功能 36：原生开机启动反馈与失败回滚（2026-10-29 至 2026-10-30，北京时间）
+
+- 官方Figma MCP读取104:1378、104:1600、104:1596/1597高保真context及截图：提示345×88、top117/right32、圆角12、标题14/正文11/关闭27。保持七按钮36×36/图标20×20、间距8与原顺序；开启SVG是官方759bytes/root20×20的power，已确切接入Assets::load并加入字节路由回归，Release含原SVG bytes；Studio选中#eeedff/前景#655cf4，Mono及六旧皮肤仍用各自palette。
+- 原autostart action、enabled=!cfg.autostart、忙碌禁用、配置/snapshot更新与Core失败回滚保持；只新增原生Popup、真实Div焦点、Esc/X/外部关闭与等待/开启/关闭/失败反馈。结果在原配置/快照处理后显示，关闭提示不取消任务、回包不重开已关闭层；仅提示打开且viewport尺寸变化时合并一次next-frame焦点恢复，无新timer/轮询/持续动画。Core、OS登录项实现、依赖、持久化格式、原benchmark未改。
+- 6337候选实机发现新增资源漏接加载表而落到旧rocket fallback，及选中灰色；ad2e修复正确power/颜色后又发现持续悬停仍显示旧“已关闭”而实际已开启。两候选均未作为最终视觉结果，保留[原生矛盾图](screenshots/autostart-tooltip-before-fix-1440x901.png)。09f7仅该按钮采用原生GPUI Tooltip host、复用Kit Tooltip::element样式，弱观察Proxy仅在该提示view存活时更新on/off/等待文案；其余六按钮的原包装语义保持。没有用删除状态文案掩盖问题。
+- 最终09f7通过fmt、184测试/2既有Core专项ignored、严格clippy all-targets/-D warnings、Intel check2.124s及Release37.774s；UI15,213,456 bytes、SHA256 `09f77516e538b6d0e275b402925c77428b2833993a4dac2a93e25c154714d97a`，Core仍25f/8,428,096 bytes。新增回归覆盖实际AssetSource路由，非镜像布局；Intel只类型检查，既有block0.1.6 future-incompatibility提示保留。[构建/源文件/资源证据](benchmarks/autostart-notice-build.json)。
+- 6337已实测真实UI启用/关闭，假HOME cfg与plist的Label/RunAtLoad/本轮Core及config-dir吻合；自建空目录阻塞假plist后真实失败、cfg SHA恢复原值，精确rmdir该空目录后重试成功。Core原实现先写next再回滚，不要求失败mtime不变。45秒安全上限的本轮Core短暂停验证Pending→Esc关闭→恢复后实际成功且提示不重开，助手正常wait；首轮10秒未捕获，不计通过。已聚焦电源的Enter/Space、X/外部/Esc/缩窗Esc、草稿/Custom筛选/英语与重开持久等证据只归6337，不冒称09f7重复全套。
+- 09f7本版已实测UI启用/关闭、cfg/plist吻合、正确power/选中色、Sync遮罩点击电源不改变开关且无提示或Tooltip盖过模态，Esc取消，无同步/重启。源码与当前Release哈希一致；当前候选未重复Pending/失败重试/键盘，完整IME/无障碍及跨平台仍未验，新窗口Tab入口的70次未见可靠焦点环保留为未定位，不当作已通过。
+- 用户明确回复“允许 CGEvent 移动和原生截图验证”后，仅使用MouseMoved事件（preflight=True），点击/按键继续CUA，没有CGEvent点击/按键/拖动或权限更改。初次无高亮不判通过；以空白离开/等待并确认旧tip消失后，同一中心点旧Skin与Power均能显示提示，因此不把先前现象归为标题栏缺陷，没有修改原生后端。最终真实Off tooltip正确；CUA启用并关信息层后重新hover为On；保持指针不动，以隔离Core原autostart API实际置false（HTTP200、cfg=false/plist消失），原snapshot更新后可见tip变Off。[开启提示实拍](screenshots/autostart-tooltip-live-on-1440x901.png)、[同位置实时关闭提示](screenshots/autostart-tooltip-live-off-1440x901.png)。外部Core action与UI点击分开记录，未伪造回包；[Apple事件API](https://developer.apple.com/documentation/coregraphics/cgevent/post%28tap%3A%29?language=objc)仅作方法依据。
+- 主代理逐张查看最终[中文Studio1440×900](screenshots/autostart-notice-1440x900.png)、[英文Mono1100×700](screenshots/autostart-notice-1100x700.png)与两张live-tooltip图，重算PNG尺寸/SHA，确认power槽位、弹层布局及实时文字相符。最终图来自获明确授权后的系统screencapture真实窗口，不含指针；raw1440×901/1100×701仅裁底1物理像素、不缩放；小窗保留原内容内部滚动，不列为模型表整帧最终验收。[分候选GUI与原图哈希](benchmarks/autostart-notice-gui-validation.json)。
+- 最终hover夹具UI64464、Core64463、fixture64458均exit0并wait，关UI后Core health200、最终假HOME autostart=false/plist不存在/WorkBuddy[]，主代理确认PID消失。各正常场景另记其各自终态；中断场景60934/60938/60939虽已消失，但exec session64391不可用、exit/wait未知，未补造正常退出。所有Core均用内核沙盒保护真实配置/WorkBuddy和真实LaunchAgents，实际permission-query拒绝read/write/create/unlink；没有真实登录项、launchctl、OS登录或真实WorkBuddy生命周期操作。
+
+同一25f Core，基线6e89/候选09f7，以原benchmark旧→新→旧→新各1000小请求及80次1MiB/并发4；64模型默认页，提示/Tooltip关闭，合成HOME/loopback catalog与内核沙盒。原脚本SHA不变，四轮直接子进程均wait、Core/UI消失，退出数组均[-15,-15,0,0]。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧6e89](benchmarks/autostart-notice-previous-gui.json) | 12.70 / 74.73 / 87.44 | 413.035 / 989.935 | 0.172 / 0.185 | 133.69 | 0.088 |
+| [新09f7](benchmarks/autostart-notice-current-gui.json) | 12.62 / 74.89 / 87.52 | 233.128 / 876.897 | 0.171 / 0.184 | 133.06 | 0.083 |
+| [旧6e89复测](benchmarks/autostart-notice-previous-run2-gui.json) | 12.27 / 73.70 / 85.97 | 222.446 / 693.639 | 0.172 / 0.186 | 128.92 | 0.082 |
+| [新09f7复测](benchmarks/autostart-notice-current-run2-gui.json) | 12.31 / 74.78 / 87.09 | 233.665 / 798.635 | 0.171 / 0.189 | 134.02 | 0.083 |
+
+- 当前四轮短测未见明显退化：合计RSS中位86.705→87.305MiB（+0.600），UI74.215→74.835MiB（+0.620），p95中位0.1855→0.1865ms（+0.001），峰值131.305→133.540MiB（+2.235）；保留上升与逐轮原值，不宣称改善。就绪标记不是首帧/可交互，RSS共享页可能双计；不测打开Tooltip持续CPU、真实操作时延或跨平台。[性能汇总](benchmarks/autostart-notice-performance-summary.json)。
+- 按用户持续安全清理授权，完整规范化绝对路径/各级父目录与挂载检查、UID501/无符号链接、全范围/可再生性、lsof与进程核查、临执行二次校验后，删除本轮434个专属测试文件，释放已分配空间估计386,924,544 bytes（369.00MiB），本轮临时保留0。最终PNG/JSON留在仓库；共享Cargo缓存与4个未知历史项保留未动。系统盘清理后可用40,576,331,776 bytes（37.79GiB）；中断的未知exit/wait仍如实保留。[清理记录](benchmarks/autostart-notice-cleanup.json)。
+- 开机启动104:1378由未逐帧验收转为部分验收；剩余2/40未逐帧验收、37部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、检查更新；完整40帧精细视觉、初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘专项仍未完成，Goal保持active，继续开发并穿插分项实机验收。

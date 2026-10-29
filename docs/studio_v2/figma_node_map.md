@@ -40,7 +40,7 @@
 | 80:646 | 34 / STUDIO V2 · 编辑 OpenCode Go | ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, ui.rs | 共用原位编辑/取消组件已实现；该整帧尚未逐项对照 |
 | 80:864 | 35 / STUDIO V2 · 删除 OpenCode Go 确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs | 部分：高保真已读，同一动态目标/模型数的原生确认；真实B键盘Space删除/小窗长名与两尺寸已验，整帧最终审计待续 |
 | 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；失败后只读配置对齐/幸存dirty与异常文件守卫已验；完整视觉/IME/无障碍/跨平台与Core-unresponsive待续 |
-| 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
+| 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs | 部分：原生提示/实际开关与隔离plist、分候选失败回滚/重试和Pending关闭、动态Tooltip实时刷新、遮罩/两尺寸与四轮性能已验；初始Tab/完整键盘/IME/无障碍及跨平台待续 |
 | 104:1605 | 38 / STUDIO V2 · 检查更新交互（原型） | ui.rs, ui/skin_controls.rs, theme.rs | 未验收 |
 | 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui/language_menu.rs, ui.rs | 部分：241×184原生浮层/两尺寸、auto/zh/en真实保存/重复不写、方向Enter/Space/Esc/X/外部取消、键盘复开、草稿/筛选/重开、遮罩与邻接安全按钮已验；完整IME/无障碍/跨平台与菜单打开持续CPU待续 |
 | 104:2046 | 40 / STUDIO V2 · 恢复默认窗口尺寸（原型） | ui/window_restore.rs, ui.rs | 部分：原生提示/两尺寸、普通/zoom/全屏恢复、缩窗Esc/X、真实Enter/Space、草稿筛选/遮罩与四轮性能已验；超时失败、完整IME/无障碍/跨平台待续 |

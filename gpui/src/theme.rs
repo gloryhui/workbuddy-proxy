@@ -33,6 +33,15 @@ pub fn sidebar_selection() -> u32 {
     }
 }
 
+/// Figma104:1596 uses a distinct selected toolbar tint in Studio Indigo.
+pub fn toolbar_selection() -> u32 {
+    if current_skin() == Skin::StudioIndigo {
+        0xeeedff
+    } else {
+        palette().tint
+    }
+}
+
 /// Design colours from DESIGN_SPEC §1.1 and the component states in §3.
 pub mod color {
     pub const SUCCESS: u32 = 0x11976f;

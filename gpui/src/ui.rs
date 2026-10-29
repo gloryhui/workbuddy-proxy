@@ -1,3 +1,4 @@
+mod autostart_notice;
 mod language_menu;
 mod model_editor;
 mod model_picker;
@@ -254,6 +255,7 @@ pub struct Proxy {
     skin_error: bool,
     language_menu: language_menu::State,
     window_restore: window_restore::State,
+    autostart_notice: autostart_notice::State,
     wake: String,
     last_poll: Instant,
     last_dirty: String,
@@ -446,35 +448,7 @@ impl Proxy {
             .on_mouse_down(MouseButton::Left, |_, _, cx| cx.stop_propagation())
             .on_double_click(|_, _, cx| cx.stop_propagation())
             .child(self.skin_control(cx))
-            .child(
-                crate::ui_components::system_button(
-                    "autostart",
-                    "studio/autostart.svg",
-                    if self.cfg.autostart {
-                        self.t(
-                            "开机启动：已开启（点击关闭）",
-                            "Launch at login: on (click to disable)",
-                        )
-                    } else {
-                        self.t(
-                            "开机启动：已关闭（点击开启）",
-                            "Launch at login: off (click to enable)",
-                        )
-                    },
-                    self.t("开机启动", "Launch at login"),
-                    self.busy,
-                )
-                .selected(self.cfg.autostart)
-                .toggled(self.cfg.autostart)
-                .on_click(cx.listener(|this, _, _, cx| {
-                    let enabled = !this.cfg.autostart;
-                    this.send(
-                        "autostart",
-                        vec![json!({"command":"autostart","enabled":enabled})],
-                        cx,
-                    );
-                })),
-            )
+            .child(self.autostart_control(cx))
             .child(
                 crate::ui_components::system_button(
                     "check-update",
@@ -527,7 +501,8 @@ impl Proxy {
             )
             .into_any_element();
         let toolbar = self.language_toolbar(toolbar, cx);
-        self.restore_toolbar(toolbar, cx)
+        let toolbar = self.restore_toolbar(toolbar, cx);
+        self.autostart_toolbar(toolbar, cx)
     }
     fn restore_window_size(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if self.resetting_window {
@@ -651,6 +626,7 @@ impl Proxy {
         provider_choices::init(cx);
         language_menu::init(cx);
         window_restore::init(cx);
+        autostart_notice::init(cx);
         let drafts = Drafts::load(&dir, &cfg);
         let provider_search = input(
             "",
@@ -875,6 +851,7 @@ impl Proxy {
             skin_error: false,
             language_menu: language_menu::State::new(zh, window, cx),
             window_restore: window_restore::State::new(cx),
+            autostart_notice: autostart_notice::State::new(cx),
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
@@ -962,6 +939,7 @@ impl Proxy {
         this.subscribe_provider_delete_bounds(window, cx);
         this.subscribe_provider_rail_bounds(window, cx);
         this.subscribe_restore_notice_bounds(window, cx);
+        this.subscribe_autostart_notice_bounds(window, cx);
         this.load_form(window, cx);
         // Current-provider labels and save state follow editing events, rather
         // than waiting for an idle draft-persistence tick to redraw the UI.
@@ -1509,6 +1487,7 @@ impl Proxy {
             cx.activate(true);
         }
         while let Ok(mut reply) = self.backend.replies.try_recv() {
+            let autostart_result = (reply.tag == "autostart").then(|| reply.result.is_ok());
             if reply.tag == "workbuddy_check" {
                 match reply.result.and_then(|text| {
                     serde_json::from_str::<crate::workbuddy_status::EndpointCheck>(&text)
@@ -1667,6 +1646,9 @@ impl Proxy {
             }
             if let Some(snapshot) = reply.snapshot {
                 self.snapshot(snapshot, window, cx);
+            }
+            if let Some(success) = autostart_result {
+                self.finish_autostart_notice(success, cx);
             }
         }
         // One bounded read per settings launch, off the UI thread. Defer the

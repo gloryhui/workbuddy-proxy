@@ -1,0 +1,264 @@
+{
+  "ui_sha256": "09f77516e538b6d0e275b402925c77428b2833993a4dac2a93e25c154714d97a",
+  "ui_bytes": 15213456,
+  "baseline_ui_sha256": "6e89fb8f7ade5cdc27e810703405ce24805d27c45b31699860b9cb36ff7ea7d3",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "exit": 0,
+      "seconds": 0.528,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ]
+    },
+    "test": {
+      "exit": 0,
+      "seconds": 5.14,
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    },
+    "clippy": {
+      "exit": 0,
+      "seconds": 2.536,
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    "intel": {
+      "exit": 0,
+      "seconds": 2.124,
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ]
+    },
+    "release": {
+      "exit": 0,
+      "seconds": 37.774,
+      "command": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ]
+    }
+  },
+  "tests_passed": 184,
+  "tests_ignored": 2,
+  "figma_frames": [
+    "104:1378",
+    "104:1600",
+    "104:1596",
+    "104:1597"
+  ],
+  "layout": {
+    "width": 345,
+    "height": 88,
+    "radius": 12,
+    "top": 117,
+    "right": 32,
+    "title_font": 14,
+    "detail_font": 11,
+    "close_size": 27,
+    "selected_studio_background": "#eeedff",
+    "selected_foreground": "current palette primary (#655cf4 for Studio Indigo)"
+  },
+  "source_sha256": {
+    "gpui/src/ui.rs": "f51f297155ddbf9c1ffbc206c4ab219d9b82fc95adaf82d05069a3d95f3adc84",
+    "gpui/src/ui/autostart_notice.rs": "2dee0a1d6b622415a5b36a9a3461434923bb5dfa5cbfe2b37cd5c5a600628327",
+    "gpui/src/assets.rs": "983d7991d6d44b44978be708724d83d70096b60662ec585fa417e8f96d32ab71",
+    "gpui/src/theme.rs": "842c82c18aabbd449a4b8dcea4c9c1b136765cfcc38b0cf128af01f50a889c69",
+    "gpui/src/ui_components.rs": "2edff7b3902f14e41e56fd892706cafd67eb96722db2f8f4f0540cffb48e6a45"
+  },
+  "asset": {
+    "path": "gpui/assets/studio/autostart-on.svg",
+    "bytes": 759,
+    "width": "20",
+    "height": "20",
+    "sha256": "43e2433546b6447dc811b896831d858dc811fc78af7d76a66d33bdd317607bba",
+    "figma_slot": "104:1596 /104:1597; toolbar button index1,20x20 icon in36x36 target at x44",
+    "asset_source_registration": "gpui/src/assets.rs::Assets::load exact include_bytes route, tested against actual design file bytes",
+    "exact_svg_bytes_present_in_release_binary": true
+  },
+  "scope": "Native presentation only. Original autostart enabled=!cfg.autostart action and busy checks retained; notice resolves after unchanged config/snapshot reply handling. No Core, OS login implementation, persistence format, dependency or benchmark changes.",
+  "warning": "Existing block0.1.6 future-incompatibility warning",
+  "intel_runtime_verified": false,
+  "inactive_asset": {
+    "path": "gpui/assets/studio/autostart.svg",
+    "bytes": 810,
+    "width": "20",
+    "height": "20",
+    "sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc",
+    "existing_asset_unchanged": true
+  },
+  "login_launch_scope": {
+    "verified_by_source": "src/gpui_host.rs::wb_gpui_open_initial skips opening settings for --autostart; native/gpui_host.m invokes that initial guard",
+    "actual_os_login_tested": false,
+    "core_and_os_registration_logic_changed": false
+  },
+  "rejected_candidates": [
+    {
+      "ui_sha256": "63377666da889ec36dae7ed0588bf0d33b0886d1759d5a2dc56d01aba3c685cc",
+      "ui_bytes": 15196928,
+      "gate_timings": {
+        "fmt": {
+          "exit": 0,
+          "seconds": 0.451,
+          "command": [
+            "cargo",
+            "fmt",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--all",
+            "--check"
+          ]
+        },
+        "test": {
+          "exit": 0,
+          "seconds": 4.857,
+          "command": [
+            "cargo",
+            "test",
+            "--manifest-path",
+            "gpui/Cargo.toml"
+          ]
+        },
+        "clippy": {
+          "exit": 0,
+          "seconds": 2.926,
+          "command": [
+            "cargo",
+            "clippy",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--all-targets",
+            "--",
+            "-D",
+            "warnings"
+          ]
+        },
+        "intel": {
+          "exit": 0,
+          "seconds": 2.621,
+          "command": [
+            "cargo",
+            "check",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--target",
+            "x86_64-apple-darwin"
+          ]
+        },
+        "release": {
+          "exit": 0,
+          "seconds": 36.457,
+          "command": [
+            "cargo",
+            "build",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--release"
+          ]
+        }
+      },
+      "tests_passed": 183,
+      "reason": "Real unobstructed native screenshot showed legacy rocket fallback instead of provided power glyph, and generic gray selected style. Missing asset source registration fixed, exact-byte loader regression added, selected tint/foreground matched latest Figma104:1596.",
+      "mechanical_source_detector": {
+        "target": "gpui/src/ui/autostart_notice.rs",
+        "exit": 0,
+        "findings": [],
+        "scope": "Mechanical source detector only; does not establish native visual/accessibility verification"
+      }
+    },
+    {
+      "ui_sha256": "ad2ee86dfdc1b6207ef8e4c4eef6eddf37778979ff2bdc7b712e487a843ebd4e",
+      "ui_bytes": 15213440,
+      "gate_timings": {
+        "fmt": {
+          "exit": 0,
+          "seconds": 0.452,
+          "command": [
+            "cargo",
+            "fmt",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--all",
+            "--check"
+          ]
+        },
+        "test": {
+          "exit": 0,
+          "seconds": 5.951,
+          "command": [
+            "cargo",
+            "test",
+            "--manifest-path",
+            "gpui/Cargo.toml"
+          ]
+        },
+        "clippy": {
+          "exit": 0,
+          "seconds": 2.618,
+          "command": [
+            "cargo",
+            "clippy",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--all-targets",
+            "--",
+            "-D",
+            "warnings"
+          ]
+        },
+        "intel": {
+          "exit": 0,
+          "seconds": 2.006,
+          "command": [
+            "cargo",
+            "check",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--target",
+            "x86_64-apple-darwin"
+          ]
+        },
+        "release": {
+          "exit": 0,
+          "seconds": 36.78,
+          "command": [
+            "cargo",
+            "build",
+            "--manifest-path",
+            "gpui/Cargo.toml",
+            "--release"
+          ]
+        }
+      },
+      "tests_passed": 184,
+      "reason": "Power SVG and selected colors correct, but a sustained hover retained previous off text after actual enable success. Replaced only this control string tooltip with native GPUI tooltip hosting the existing styled Tooltip view, observing Proxy notifications while alive."
+    }
+  ],
+  "tooltip_scope": "Autostart-only native GPUI tooltip; existing styled Tooltip component observes weak Proxy owner for view lifetime and reads actual config/pending state. No new polling/timer, original on/off/click-to-disable/enable information retained. Other six controls keep original helper behavior."
+}
