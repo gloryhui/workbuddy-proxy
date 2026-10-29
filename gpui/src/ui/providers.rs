@@ -47,8 +47,10 @@ fn model_count(count: usize, zh: bool) -> String {
 }
 
 impl Proxy {
-    pub(super) fn provider_summary(&self, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn provider_summary(&self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
         let selected = self.selected();
+        let editing = self.provider_edits.contains(&selected);
+        let compact = window.viewport_size().width < px(1300.);
         let name = self.name.read(cx).value();
         let display = if name.is_empty() {
             self.cfg
@@ -80,8 +82,14 @@ impl Proxy {
         } else if dirty {
             (
                 self.t("草稿未保存", "Unsaved draft"),
-                color::WARNING,
-                color::BG_TABLE_HEAD,
+                color::DRAFT_INK,
+                color::DRAFT_TINT,
+            )
+        } else if editing {
+            (
+                self.t("编辑中", "Editing"),
+                color::DRAFT_INK,
+                color::DRAFT_TINT,
             )
         } else {
             (
@@ -135,52 +143,95 @@ impl Proxy {
                             .text_color(rgb(color::TEXT_3)),
                     ),
             )
+            .when(editing && !compact, |row| {
+                row.child(
+                    div()
+                        .flex()
+                        .items_center()
+                        .flex_none()
+                        .w(px(142.))
+                        .h(px(26.))
+                        .px(px(12.))
+                        .rounded(px(8.))
+                        .bg(rgb(color::DRAFT_TINT))
+                        .child(
+                            Label::new(if dirty {
+                                self.t("修改待保存", "Changes pending")
+                            } else {
+                                self.t("正在编辑", "Editing profile")
+                            })
+                            .text_size(px(11.))
+                            .line_height(px(16.))
+                            .text_color(rgb(color::DRAFT_INK)),
+                        ),
+                )
+            })
             .child(div().flex_1())
             .child(
                 div()
                     .flex()
                     .items_center()
                     .justify_center()
+                    .gap(px(5.))
                     .flex_shrink_0()
                     .w(px(136.))
                     .h(px(27.))
                     .px(px(12.))
                     .rounded(px(9.))
                     .bg(rgb(background))
+                    .child(div().size(px(6.)).flex_none().rounded_full().bg(rgb(ink)))
                     .child(Label::new(status).text_size(px(11.)).text_color(rgb(ink))),
             )
             .child(
-                Button::new("provider-edit-profile")
-                    .disabled(self.busy)
-                    .with_size(px(32.))
-                    .w(px(121.))
-                    .h(px(32.))
-                    .ml(px(31.))
-                    .px(px(12.))
-                    .outline()
-                    .accessibility_label(self.t("编辑供应商资料", "Edit provider profile"))
+                div()
+                    .flex_none()
+                    .ml(px(if compact { 12. } else { 31. }))
+                    .track_focus(&self.provider_profile_focus)
+                    .key_context("ProviderProfileControl")
+                    .on_action(cx.listener(
+                        |this, _: &ActivateProviderProfileControl, window, cx| {
+                            this.toggle_provider_edit(window, cx);
+                            cx.stop_propagation();
+                        },
+                    ))
                     .child(
-                        div()
-                            .flex()
-                            .items_center()
-                            .gap(px(6.))
+                        Button::new("provider-edit-profile")
+                            .disabled(self.busy)
+                            .with_size(px(32.))
+                            .w(px(if editing && !self.zh { 144. } else { 121. }))
+                            .h(px(32.))
+                            .px(px(12.))
+                            .outline()
+                            .accessibility_label(if editing {
+                                self.t("取消修改", "Cancel changes")
+                            } else {
+                                self.t("编辑供应商资料", "Edit provider profile")
+                            })
                             .child(
-                                Icon::default()
-                                    .path("studio/profile-edit.svg")
-                                    .with_size(px(16.))
-                                    .text_color(rgb(crate::theme::palette().dark)),
+                                div()
+                                    .flex()
+                                    .items_center()
+                                    .gap(px(6.))
+                                    .child(
+                                        Icon::default()
+                                            .path("studio/profile-edit.svg")
+                                            .with_size(px(16.))
+                                            .text_color(rgb(crate::theme::palette().dark)),
+                                    )
+                                    .child(
+                                        Label::new(if editing {
+                                            self.t("取消修改", "Cancel changes")
+                                        } else {
+                                            self.t("编辑资料", "Edit profile")
+                                        })
+                                        .text_size(px(12.))
+                                        .text_color(rgb(crate::theme::palette().dark)),
+                                    ),
                             )
-                            .child(
-                                Label::new(self.t("编辑资料", "Edit profile"))
-                                    .text_size(px(12.))
-                                    .text_color(rgb(crate::theme::palette().dark)),
-                            ),
-                    )
-                    .on_click(cx.listener(|this, _, window, cx| {
-                        this.provider_scroll.set_offset(point(px(0.), px(0.)));
-                        this.name.read(cx).focus_handle(cx).focus(window, cx);
-                        cx.notify();
-                    })),
+                            .on_click(cx.listener(|this, _, window, cx| {
+                                this.toggle_provider_edit(window, cx);
+                            })),
+                    ),
             )
             .into_any_element()
     }

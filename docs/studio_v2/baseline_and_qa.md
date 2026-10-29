@@ -497,3 +497,27 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 合计RSS两次中位数85.545→86.195MiB（+0.650MiB，+0.76%），UI约+0.885MiB；该口径未见明显持续退化，不宣称性能提升。Core/UI标记为进程记录就绪，不是首帧/可交互时间；测的是默认页、同机短轮loopback，不能推断打开全部弹窗/长期负载或跨平台表现。Core与mock/client隔离，RSS共享页可能双计，托盘单独记在JSON。
 - Goal保持active。供应商新增/编辑/复制草稿及取消、40帧最终精细审计、完整IME/无障碍和Windows/Intel实际运行仍待后续；本批不把这些缺项标为完成。
 - 清理：UI/Core/mock/benchmark子进程均已停止并wait，最终再次核实专属根无lsof/进程引用。先前API夹具8,753,152 bytes、UI夹具24,920,064 bytes、本次对照程序/4轮基准副本/编译日志109,289,472 bytes，合计删除已分配空间约142,962,688 bytes（136.34MiB）；本批专属系统临时根已删除，余0。benchmark内部TemporaryDirectory也按上下文自动清理，不重复估算其大小。共享Cargo缓存、既有归属不明目录及历史toolbar raw证据保留。系统盘当前可用38,165,327,872 bytes（35.54GiB）。
+
+## 小功能 26：供应商资料原位编辑与取消（2026-10-29，北京时间）
+
+- 按已读取的高保真 `78:605` 接入 `ui/provider_edit.rs`。原“编辑资料”仅聚焦名称；现在进入编辑时缓存当前供应商的完整草稿及模型选择，按钮变为“取消修改”。取消只恢复进入本次编辑前的本地值，不发送save/delete/sync；进入前已有的未保存名称、协议、模型及能力不会被误当成已保存值清掉。
+- 快照按供应商ID独立保留，A/B切换互不覆盖。复用现有成功/committed回复才重载配置的门禁；成功save/test/install/duplicate结束对应编辑，普通失败继续保留草稿及编辑模式，其他供应商快照保持。刷新后消失的供应商会清除快照，取消不能复活已删除条目。快照仅在当前窗口会话内，不增加或改变 `gpui-drafts.json` 格式；关闭/重开沿用原历史草稿恢复逻辑。
+- Figma的warning `#b57a35` / tint `#fff3e4`写入语义token；宽窗补142×26待保存提示，小于1300px时保留右侧同义状态，避免拥挤。英文Cancel changes有144px按钮宽度、窄窗收紧间距，名称仍可省略且保留完整可访问名称。右状态徽标用原生6px圆形与5px间距实现状态点，不用Unicode替代图标。复用原SVG/原生Button；非Tab停靠作用域给明确聚焦的按钮Enter/Space动作，不改变Name输入Return。
+- fmt、169项测试、严格clippy all-targets/-D warnings、Release40.18s、Intel Mac目标check2.86s均Passed。最终UI 15,109,936 bytes，SHA256 `403aa529aec379c560b88c3a3e20b064e4a90c1bdb9989ca572d082d466fce9f`；核心仍25f SHA及8,428,096 bytes，无核心/API/配置格式改动。Intel仅编译兼容，未实际运行。开发中纯测试glob导入把builtin test解析成GPUI test宏导致编译递归，已改为选择性导入；没有清缓存/升级依赖，既存block0.1.6未来兼容提示保持。[编译证据](benchmarks/provider-edit-build.json)。
+- d6dc交互候选实测：A进入Edit前为 `A before edit`、3模型/Responses，之后改名、加第4模型并切Chat，Cancel恢复原名称/3模型/Responses；期间Core仍A2/B1/Chat、config SHA未变，合成WorkBuddy哨兵不变。模型表进入前选A2、编辑中改选第3行、取消后A2选择底色恢复。A/B各自编辑后往返，取消A不影响B，取消B也不覆盖A。
+- Name焦点Return不取消或保存；Shift+Tab到取消按钮后以可见焦点环确认，Enter和Space分别实际取消。A保持编辑时，B空名称Cmd+S触发真实Core校验失败，空草稿及编辑态保留；改为 `B saved` 再保存成功，B退出编辑，A的未保存3模型/Responses和编辑态保持。正常关窗后同Core重开，A名称/3模型/Responses历史草稿恢复，入口回到Edit profile；未将会话内快照当成跨重启撤销机制。
+- 最终403仅追加状态圆点，事件/快照逻辑与d6dc相同。最终版再次修改名称后Cancel恢复A原草稿，前后Core config SHA均 `2a750d00565971ad842d637b7b0f79c392b1c42ef16db1cc8cd193a8d10189a6`；哨兵均 `4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`。初始与最终config不同是B被明确保存、测试切换语言所致，不宣称整轮配置不变。[分版本GUI证据](benchmarks/provider-edit-gui-validation.json)。
+- 最终实际截图已逐张打开检查：[1440×900中文Studio编辑态](screenshots/provider-edit-1440x900.png)、[1100×700英文Mono编辑态](screenshots/provider-edit-1100x700.png)、[英文小窗已保存态](screenshots/provider-edit-saved-1100x700.png)。宽图raw1440×900无裁切；小图raw1100×701仅裁底1物理像素，无缩放。A草稿3模型与运行中心核心已保存总3模型（A2+B1）是不同状态口径，未以设计静态数值代替真实数据。最后UI正常退出0、Core health仍HTTP200 ready，再停止Core/fixture/mock退出0并wait。
+
+同机Release、相同25f核心、相同默认GUI页/benchmark脚本，4d83→403→4d83→403四轮交错：1供应商/64模型配置、200小请求、80次1MiB/并发4；输入Core/UI SHA均核对，核心内核沙盒enforced，所有owned子进程wait、UI PID已消失。Mock/controller按既有脚本SIGTERM收尾（数组[-15,-15,0,0]），不写成全部退出0。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI记录就绪 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧4d83](benchmarks/provider-edit-previous-gui.json) | 12.58 / 74.27 / 86.84 | 474.548 / 1155.150 | 0.168 / 0.201 | 132.91 | 0.092 |
+| [新403](benchmarks/provider-edit-gui.json) | 12.59 / 75.20 / 87.80 | 227.733 / 1013.683 | 0.166 / 0.203 | 135.16 | 0.087 |
+| [旧4d83复测](benchmarks/provider-edit-previous-run2-gui.json) | 12.77 / 72.95 / 85.72 | 225.843 / 696.486 | 0.165 / 0.201 | 130.83 | 0.101 |
+| [新403复测](benchmarks/provider-edit-run2-gui.json) | 12.73 / 72.55 / 85.28 | 226.935 / 887.208 | 0.168 / 0.229 | 129.81 | 0.092 |
+
+- 合计RSS中位数86.28→86.54MiB（+0.26MiB，约+0.30%）；累计UI记录标记中位数925.818→950.446ms，轮间方向不一致。该短轮口径未见明显持续退化，不宣称提升。就绪标记不是首帧/可交互时间，默认页结果不代表64个同时编辑快照、长期负载或跨平台表现；共享页可能双计、托盘另计于JSON。
+- Goal保持active。新增/复制独立草稿与取消仍待施工；完整40帧精细审计、IME/无障碍及Windows/Intel实际运行继续保留待办。1100小窗中心列滚动取回Test/Save按钮及点击保存本轮未实测（已验证Cmd+S），不将其标Passed。
+- 收尾确认UI/Core/mock/benchmark与编译子进程均终止并wait，专属根无lsof或进程引用。UI夹具25,313,280 bytes、最后程序副本/四轮基准副本/日志109,363,200 bytes，删除已分配空间合计约134,676,480 bytes（128.44MiB）；本批专属临时根余0，benchmark内部TemporaryDirectory也自动清理且未重复估算。共享Cargo缓存、归属不明历史目录及历史截图证据保留；macOS自行记录的一份93,053-byte编译诊断保留作开发故障证据。系统盘当前可用38,100,635,648 bytes（35.48GiB）。

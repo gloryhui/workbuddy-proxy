@@ -352,6 +352,16 @@ fn main() {
                 KeyBinding::new("escape", ui::Dismiss, Some("ProxyModal")),
                 KeyBinding::new(
                     "enter",
+                    ui::ActivateProviderProfileControl,
+                    Some("ProviderProfileControl"),
+                ),
+                KeyBinding::new(
+                    "space",
+                    ui::ActivateProviderProfileControl,
+                    Some("ProviderProfileControl"),
+                ),
+                KeyBinding::new(
+                    "enter",
                     ui::ActivateProviderDeleteControl,
                     Some("ProviderDeleteControl"),
                 ),

@@ -73,6 +73,8 @@ pub mod color {
     pub const DANGER_BG: u32 = 0xfff3ee;
     pub const DANGER_BORDER: u32 = 0xf5c6b3;
     pub const WARNING: u32 = 0xb4690e;
+    pub const DRAFT_INK: u32 = 0xb57a35;
+    pub const DRAFT_TINT: u32 = 0xfff3e4;
 
     /// Shared Studio overlay: rgba(18, 23, 43, .49), from delete frames
     /// 78:1080 / 80:864, encoded as RGBA for Kit's native modal layer.

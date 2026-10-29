@@ -2,6 +2,7 @@ mod model_editor;
 mod model_picker;
 mod protocol_dialog;
 mod provider_delete;
+mod provider_edit;
 mod providers;
 mod relay;
 mod sidebar;
@@ -41,7 +42,8 @@ gpui_kit::actions!(
         Dismiss,
         Quit,
         ActivateProtocolTab,
-        ActivateProviderDeleteControl
+        ActivateProviderDeleteControl,
+        ActivateProviderProfileControl
     ]
 );
 
@@ -162,6 +164,8 @@ pub struct Proxy {
     statistics: Entity<Statistics>,
     cfg: Config,
     drafts: Drafts,
+    provider_edits: provider_edit::ProviderEdits,
+    provider_profile_focus: FocusHandle,
     backend: Backend,
     zh: bool,
     busy: bool,
@@ -780,6 +784,8 @@ impl Proxy {
             statistics,
             cfg,
             drafts,
+            provider_edits: provider_edit::ProviderEdits::default(),
+            provider_profile_focus: cx.focus_handle().tab_stop(false),
             backend,
             zh,
             busy: false,
@@ -1273,6 +1279,12 @@ impl Proxy {
         cx: &mut Context<Self>,
     ) {
         let saved = self.selected();
+        // update_config is reached only after the existing successful/committed
+        // reply gate. Failed saves keep both the draft and its edit baseline.
+        self.provider_edits.reconcile(
+            &cfg,
+            matches!(tag, "save" | "test" | "install" | "duplicate").then_some(saved.as_str()),
+        );
         let fresh = Drafts::from_config(&self.dir, &cfg);
         self.drafts
             .providers
@@ -2251,7 +2263,7 @@ impl Render for Proxy {
             Page::Statistics => self.statistics.clone().into_any_element(),
         };
         let body = if self.page == Page::Providers {
-            let summary = (!self.selected().is_empty()).then(|| self.provider_summary(cx));
+            let summary = (!self.selected().is_empty()).then(|| self.provider_summary(window, cx));
             div()
                 .flex()
                 .flex_col()

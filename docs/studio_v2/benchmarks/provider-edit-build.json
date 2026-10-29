@@ -1,0 +1,16 @@
+{
+  "ui_sha256": "403aa529aec379c560b88c3a3e20b064e4a90c1bdb9989ca572d082d466fce9f",
+  "ui_bytes": 15109936,
+  "baseline_ui_sha256": "4d834b44ff878932abfb30a319ec599f74eb05d72bee7492a5305755409dfdfc",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "tests_passed": 169,
+  "fmt": "passed",
+  "strict_clippy_all_targets": "passed",
+  "release_build_seconds": 40.18,
+  "intel_target_check_seconds": 2.86,
+  "intel_runtime_verified": false,
+  "gui_validation_state": "passed_for_documented_scope",
+  "warning": "Existing block0.1.6 future incompatibility warning",
+  "development_fix": "Pure tests use selective imports to avoid resolving builtin test to GPUI test macro through a glob import.",
+  "gui_evidence": "provider-edit-gui-validation.json"
+}

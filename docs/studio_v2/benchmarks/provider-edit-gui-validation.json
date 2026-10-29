@@ -1,0 +1,99 @@
+{
+  "feature": "provider profile edit and cancel",
+  "platform": "macOS",
+  "isolation": "Synthetic providers and local mock; isolated HOME and config, sandboxed core, no real WorkBuddy, clipboard or login item actions.",
+  "versions": {
+    "full_interaction_ui_sha256": "d6dc7581a216a1da321e736883e833523c3bbb723179f18060ccc68c460332f7",
+    "final_ui_sha256": "403aa529aec379c560b88c3a3e20b064e4a90c1bdb9989ca572d082d466fce9f",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+  },
+  "fixture": {
+    "initial_saved_providers": [
+      {
+        "name": "Provider A",
+        "models": 2,
+        "protocol": "openai_chat"
+      },
+      {
+        "name": "Provider B",
+        "models": 1,
+        "protocol": "openai_chat"
+      }
+    ],
+    "initial_requests": 0,
+    "fake_workbuddy_models_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "full_interaction_d6dc": {
+    "cancel_snapshot": "A before Edit contained name A before edit, 3 draft models including a-before-model and Responses; after changing name, adding fourth model and switching to Chat, Cancel restored all three draft values and ended edit. Initial Core config SHA 13a4392ca616d7921b7e738f85433848cd198167a28b190a406f3eb9db73c5ad remained unchanged; fake WorkBuddy hash unchanged.",
+    "selection": "A2 selected before Edit, third row selected during Edit, Cancel restored A2 selection based on visible row backgrounds.",
+    "independent_sessions": "A and B were edited independently; switching retained each session; cancelling A restored its pre-edit draft while B remained in Edit with its change, and cancelling B restored Provider B.",
+    "keyboard": "Name Return kept edit and did not save. From name field Shift+Tab twice visibly focused Cancel; Return and Space each cancelled in separate sessions.",
+    "failure_and_success": "With A still editing, B empty name and Cmd+S yielded Core validation error; B empty draft and edit mode remained. B corrected to B saved then Cmd+S succeeded, B exited Edit and Core contained A original 2 models/Chat plus B saved 1 model/Chat. A edit mode and its 3-model Responses draft remained.",
+    "reopen": "After normal UI close and reopen A before edit, Responses and 3-model draft restored. Edit snapshot did not persist and Edit profile button returned, as intended."
+  },
+  "final_403_smoke": "Changed A name to Final cancel check in Edit, then clicked Cancel; A before edit, Responses and 3-model draft returned. Isolated Core config SHA before/after both 2a750d00565971ad842d637b7b0f79c392b1c42ef16db1cc8cd193a8d10189a6; synthetic WorkBuddy file SHA unchanged. The config differs from initial because B was explicitly saved and language changed during testing.",
+  "screenshots": [
+    {
+      "path": "docs/studio_v2/screenshots/provider-edit-1440x900.png",
+      "raw_pixels": [
+        1440,
+        900
+      ],
+      "output_pixels": [
+        1440,
+        900
+      ],
+      "crop": "none",
+      "scale": "none",
+      "locale": "zh",
+      "theme": "Studio Indigo",
+      "state": "A editing; three-model Responses draft; B saved"
+    },
+    {
+      "path": "docs/studio_v2/screenshots/provider-edit-1100x700.png",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "output_pixels": [
+        1100,
+        700
+      ],
+      "crop": "bottom 1 physical pixel",
+      "scale": "none",
+      "locale": "en",
+      "theme": "Mono",
+      "state": "A editing; Cancel changes and unsaved status visible"
+    },
+    {
+      "path": "docs/studio_v2/screenshots/provider-edit-saved-1100x700.png",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "output_pixels": [
+        1100,
+        700
+      ],
+      "crop": "bottom 1 physical pixel",
+      "scale": "none",
+      "locale": "en",
+      "theme": "Mono",
+      "state": "B saved with one model and Edit profile button"
+    }
+  ],
+  "limitations": [
+    "Small-window central column scrolling to Test/Save and an idempotent click on B Save were not tested in this round; Cmd+S successful save was verified.",
+    "Full accessibility and input method coverage were not claimed."
+  ],
+  "shutdown": {
+    "ui_exit": 0,
+    "core_health_after_ui_close": {
+      "http": 200,
+      "state": "ready"
+    },
+    "core_exit": 0,
+    "fixture_and_mock_exit": 0,
+    "owned_processes_gone": true
+  }
+}
