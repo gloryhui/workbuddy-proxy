@@ -1,0 +1,423 @@
+{
+  "feature": "UI-43 Windows static compatibility audit",
+  "checked_at": "2026-10-30T06:20:01+08:00",
+  "checkout_head": "40f77fc9bc3a3ec2b52aa202ae4dd31ad8ed5ea4",
+  "source_changed": false,
+  "scope": "Local locked dependency/source audit and attempted Windows GNU cargo check. No Windows runtime, UI screenshots, visual acceptance, or performance pass.",
+  "toolchain": {
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)"
+  },
+  "installed_targets": [
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin",
+    "x86_64-pc-windows-gnu",
+    "x86_64-pc-windows-gnullvm"
+  ],
+  "available_tools": {
+    "rc.exe": null,
+    "llvm-rc": null,
+    "x86_64-w64-mingw32-windres": null,
+    "wine": null,
+    "cargo-xwin": null
+  },
+  "dependencies": {
+    "gpui-kit": "0.7.3",
+    "gpui-component": "0.7.3",
+    "actual_backend": "gpui-pre / gpui-pre-windows 0.3.9",
+    "unrelated_gpui_0_2_2": "not an active dependency; not used for conclusions"
+  },
+  "source_sha256": {
+    "gpui/src/main.rs": "963f6615fb33a5cb84072f3ff3aa9fbc108d9b8d579a7bb34ef4ffdedb1a3c98",
+    "gpui/src/ui.rs": "19200cdbdfd0fcfd886b6db0a0ab6194fa454aaacbf03a44fdaf7308177c5f61",
+    "gpui/src/theme.rs": "e57681d158961be12f6da43de7fcbdb7cd793352808fbe3945bd3d810c7edc36",
+    "gpui/src/ui_components.rs": "e2b4f57d15b86892a9790e94dd71f677c0e4001accb85619c86238c57d3ea964",
+    "gpui/src/ui/skin_controls.rs": "d81cb8d3630ecb6277f88d3974a73ce30bdd4d2bbc26bc9f531f3e3fb214eedd",
+    "gpui/build.rs": "637afad8d2d35887689bd90f03390f5b285efaebe982bd2e34e50daadb2b493b",
+    "gpui/Cargo.toml": "95c8728027af68c6946f709e831ba60300c3b5b7f89dc7be756cc789f40c8f6b",
+    "gpui/Cargo.lock": "88cb4109289282c4ea63eef2a8644cfba6768eb4a6a193186cdad3fd71283d62",
+    ".github/workflows/desktop.yml": "8ba6ca27b292f7b5b4f37a7f4c4d233243ef36dfcba7d6359cbe273df3ffcede",
+    ".github/workflows/ci.yml": "8398868b3fa051a742fd75b2412b21268d5ca33d6fdf08f8fb54930ce9c2e2cf"
+  },
+  "dependency_source_sha256": {
+    "gpui-component-0.7.3/src/title_bar.rs": "3a5ffefe22cb460ecd63a76453304574bb135205b655de56005cd4b7341b37b2",
+    "gpui-pre-0.3.9/build.rs": "8eff51e24e06289869c9a45f30cd8372fd7d50ec28f7a1e3b6e54adde8c6aa01",
+    "gpui-pre-0.3.9/src/window.rs": "44f32319b9385fa6dbc15c36b3edea00a26208309b37283ae4f9bd4bead674f8",
+    "gpui-pre-0.3.9/src/platform.rs": "148dc1c498fdc812c1c37ac92021efeb2acc17ab0dbf3a59b071a660c6951c07",
+    "gpui-pre-windows-0.3.9/src/events.rs": "712bb4de608a072895ed0228afc164c517a5490efa1bcc66d013672c782dbc71",
+    "gpui-pre-windows-0.3.9/src/window.rs": "e0813871c6eb06180b702e3345e00331c3f4a7f062089b599f19580cf30b4cbb"
+  },
+  "attempts": [
+    {
+      "mode": "initial offline",
+      "exit_code": 101,
+      "result": "failed to download accesskit_windows v0.34.0; attempting HTTP with --offline"
+    },
+    {
+      "mode": "locked online",
+      "exit_code": 101,
+      "result": "downloaded locked Windows crates; gpui-pre build.rs: NotAttempted(\"x86_64-w64-mingw32-windres\")"
+    },
+    {
+      "mode": "final captured offline after locked downloads",
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-pc-windows-gnu"
+      ],
+      "elapsed_seconds": 1.852,
+      "exit_code": 101,
+      "stdout": "",
+      "stderr": "    Checking image v0.25.10\n   Compiling gpui-pre v0.3.9\n    Checking spin v0.10.1\n    Checking const-oid v0.10.2\n    Checking seahash v4.1.0\n   Compiling windows_x86_64_gnu v0.53.1\n    Checking pollster v0.4.0\n    Checking inventory v0.3.25\n    Checking num_cpus v1.17.0\n    Checking waker-fn v1.2.0\n    Checking raw-window-handle v0.6.2\n    Checking async-io v2.6.0\n    Checking markup5ever v0.12.1\n    Checking walkdir v2.5.0\n    Checking windows-result v0.2.0\n    Checking bstr v1.13.1\n    Checking digest v0.11.3\n    Checking cpufeatures v0.3.1\n    Checking windows-strings v0.1.0\n   Compiling generic-array v0.14.7\n   Compiling html5ever v0.27.0\n    Checking sha2 v0.11.1\n    Checking async-lock v3.4.2\n    Checking arc-swap v1.9.2\n    Checking globset v0.4.20\nerror: failed to run custom build command for `gpui-pre v0.3.9`\n\nCaused by:\n  process didn't exit successfully: `/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/debug/build/gpui-pre-9509a1dff0b26a9c/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=build.rs\n  cargo::rustc-check-cfg=cfg(gles)\n  cargo::rustc-check-cfg=cfg(gpui_leak_detection)\n  cargo::rerun-if-env-changed=GPUI_LEAK_DETECTION\n  cargo:rerun-if-changed=resources/windows/gpui.manifest.xml\n  cargo:rerun-if-changed=resources/windows/gpui.rc\n\n  --- stderr\n\n  thread 'main' (32073387) panicked at /Users/glory/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gpui-pre-0.3.9/build.rs:36:10:\n  called `Result::unwrap()` on an `Err` value: NotAttempted(\"x86_64-w64-mingw32-windres\")\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nwarning: build failed, waiting for other jobs to finish...\n"
+    }
+  ],
+  "compile_status": "BLOCKED before application type checking; no Windows binary generated",
+  "independent_app_build_prerequisite": {
+    "source": "gpui/build.rs",
+    "requirement": "cc::windows_registry::find_tool(target, \"rc.exe\") requires Windows SDK resource compiler",
+    "observed_this_attempt": false,
+    "note": "App build.rs not reached; this is source-confirmed additional prerequisite, not the observed first failure"
+  },
+  "caption_layout_model": {
+    "units": "logical pixels",
+    "sdk_constant_actual_width": 34,
+    "sdk_comment_says": 35,
+    "note": "Use executable .w(TITLE_BAR_HEIGHT)=34, not stale 35px comment. App sets TitleBar height24; three controls h_full. Static model assumes normal full-width non-fullscreen layout and default supported controls. No runtime measured bounds.",
+    "source_chain": [
+      "gpui/src/main.rs WindowOptions ..TitleBar::window_options()",
+      "gpui/src/ui.rs TitleBar h24 and absolute toolbar top8 right32",
+      "gpui-component 0.7.3 TitleBar::render -> WindowControls -> ControlIcon width34 height full",
+      "gpui-pre 0.3.9 default WindowControls minimize/maximize true; Windows backend has no override",
+      "gpui-pre-windows 0.3.9 WM_NCHITTEST maps WindowControlArea to HTMINBUTTON/HTMAXBUTTON/HTCLOSE"
+    ],
+    "occlusion_limit": "Toolbar .occlude() may suppress underlying hitboxes; it cannot resolve shared visual space. No Windows click outcome inferred.",
+    "cases": [
+      {
+        "window_logical_size": [
+          1440,
+          900
+        ],
+        "toolbar": {
+          "x": 1108,
+          "y": 8,
+          "width": 300,
+          "height": 36
+        },
+        "toolbar_buttons": [
+          {
+            "name": "skin",
+            "rect": {
+              "x": 1108,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "autostart",
+            "rect": {
+              "x": 1152,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "update",
+            "rect": {
+              "x": 1196,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "language",
+            "rect": {
+              "x": 1240,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "restore",
+            "rect": {
+              "x": 1284,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "github",
+            "rect": {
+              "x": 1328,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "feedback",
+            "rect": {
+              "x": 1372,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          }
+        ],
+        "caption_controls": [
+          {
+            "name": "minimize",
+            "rect": {
+              "x": 1338,
+              "y": 0,
+              "width": 34,
+              "height": 24
+            }
+          },
+          {
+            "name": "maximize",
+            "rect": {
+              "x": 1372,
+              "y": 0,
+              "width": 34,
+              "height": 24
+            }
+          },
+          {
+            "name": "close",
+            "rect": {
+              "x": 1406,
+              "y": 0,
+              "width": 34,
+              "height": 24
+            }
+          }
+        ],
+        "intersections": [
+          {
+            "toolbar": "github",
+            "caption": "minimize",
+            "intersection": {
+              "x": 1338,
+              "y": 8,
+              "width": 26,
+              "height": 16
+            }
+          },
+          {
+            "toolbar": "feedback",
+            "caption": "maximize",
+            "intersection": {
+              "x": 1372,
+              "y": 8,
+              "width": 34,
+              "height": 16
+            }
+          },
+          {
+            "toolbar": "feedback",
+            "caption": "close",
+            "intersection": {
+              "x": 1406,
+              "y": 8,
+              "width": 2,
+              "height": 16
+            }
+          }
+        ]
+      },
+      {
+        "window_logical_size": [
+          1100,
+          700
+        ],
+        "toolbar": {
+          "x": 768,
+          "y": 8,
+          "width": 300,
+          "height": 36
+        },
+        "toolbar_buttons": [
+          {
+            "name": "skin",
+            "rect": {
+              "x": 768,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "autostart",
+            "rect": {
+              "x": 812,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "update",
+            "rect": {
+              "x": 856,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "language",
+            "rect": {
+              "x": 900,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "restore",
+            "rect": {
+              "x": 944,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "github",
+            "rect": {
+              "x": 988,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "name": "feedback",
+            "rect": {
+              "x": 1032,
+              "y": 8,
+              "width": 36,
+              "height": 36
+            }
+          }
+        ],
+        "caption_controls": [
+          {
+            "name": "minimize",
+            "rect": {
+              "x": 998,
+              "y": 0,
+              "width": 34,
+              "height": 24
+            }
+          },
+          {
+            "name": "maximize",
+            "rect": {
+              "x": 1032,
+              "y": 0,
+              "width": 34,
+              "height": 24
+            }
+          },
+          {
+            "name": "close",
+            "rect": {
+              "x": 1066,
+              "y": 0,
+              "width": 34,
+              "height": 24
+            }
+          }
+        ],
+        "intersections": [
+          {
+            "toolbar": "github",
+            "caption": "minimize",
+            "intersection": {
+              "x": 998,
+              "y": 8,
+              "width": 26,
+              "height": 16
+            }
+          },
+          {
+            "toolbar": "feedback",
+            "caption": "maximize",
+            "intersection": {
+              "x": 1032,
+              "y": 8,
+              "width": 34,
+              "height": 16
+            }
+          },
+          {
+            "toolbar": "feedback",
+            "caption": "close",
+            "intersection": {
+              "x": 1066,
+              "y": 8,
+              "width": 2,
+              "height": 16
+            }
+          }
+        ]
+      }
+    ],
+    "status": "STATIC OVERLAP FOUND; runtime click/paint and platform-specific layout remain pending"
+  },
+  "production_binaries": {
+    "ui_sha256": "0892b084054464431d5af83b9db5e60b013ca338cbc4ace3053cf04e0791d4f8",
+    "ui_bytes": 15246768,
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "core_bytes": 8428096,
+    "changed": false
+  },
+  "mac_gate_reuse": {
+    "path": "toolbar-keyboard-build.json",
+    "tests_passed": 192,
+    "existing_ignored": 2,
+    "rerun_this_round": false
+  },
+  "ci": {
+    "desktop_windows_job_exists": true,
+    "desktop_auto_push_branches": [
+      "main",
+      "codex/gpui-preview"
+    ],
+    "current_branch_auto_run": false,
+    "dispatched_this_round": false,
+    "changed": false
+  },
+  "decision": {
+    "mac_top8_right32": "unchanged",
+    "windows_layout": "awaiting user preference or Windows runtime confirmation; no unapproved layout adjustment"
+  },
+  "acceptance": {
+    "remaining_frames": 40,
+    "partial": 40,
+    "final_accepted": 0,
+    "goal": "active"
+  },
+  "cleanup": {
+    "session_temp_directory_created": false,
+    "files_deleted": 0,
+    "released_bytes": 0,
+    "own_session_temporary_bytes_retained": 0,
+    "cargo_cache": "reused existing cache; locked downloads and reproducible build artifacts retained, not cleaned",
+    "protected_old_root30_bytes": 25198592,
+    "protected_old_root30": "retained; no content read or deletion retried",
+    "system_data_free_bytes": 38975066112,
+    "external_free_bytes": 456851243008
+  }
+}

@@ -984,3 +984,14 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 未通过项明确保留：CUA App.drag([500,18]→[600,68])返回成功，但工具仅有窗口局部图且无全局坐标，未证明位移；minimize按钮动作返回成功，但未暴露minimized状态，不能证明最小化或恢复。已请求用户明确授权只读CGWindowList窗口位置/尺寸，尚无回复，未执行bounds查询；外部AX也未使用。指定Tray bundle绑定原始错误Computer Use server error -10005: timeoutReached，实际Tray仍活，未把超时当退出/重启，未点不明真实图标；物理托盘Settings/Quit菜单仍待验。
 - 按持续授权完成规范化路径/UID501/父组件与挂载/全部类型及单一链接/进程和lsof预检、临执行清单哈希复核，删除本轮唯一目录67个可再生测试文件，释放估计25,059,328bytes（23.90MiB），本轮临时保留0；系统盘清理后可用38,845,001,728bytes（36.18GiB）。root30仍25,198,592bytes（24.03MiB，仅元数据计量）保留，未读误截图或重试被拒删除；共享缓存与4个未知历史项未动，系统T顶层仅发现root30和本轮root34两个Studio目录。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成macOS单实例/驻留进程/草稿/官方唤起/CmdQ分项，实际菜单点击、拖动/最小化状态、完整视觉/其他焦点/IME/读屏/原生AX、Windows/Intel实机/HiDPI、首帧及更新公网成功等继续推进；Goal active，HTML仍只作静态数据/脚本/链接校验。
+
+## 小功能 43：Windows 标题栏兼容性静态审计（2026-10-30，北京时间）
+
+- 本轮完成目标工具链与实际锁定依赖的审计，发现资源编译前置条件缺失及标题栏静态重叠；不将其标为Windows验收通过。没有生产源码、依赖、工作流或可执行文件变更。证据：[Windows检查与布局计算](benchmarks/windows-compatibility-audit.json)、[沿用的Mac构建门禁](benchmarks/toolbar-keyboard-build.json)。
+- 当前Rust/Cargo均1.98.1，已装Windows GNU/GNU LLVM目标，未装MSVC目标；PATH中rc.exe、llvm-rc、x86_64-w64-mingw32-windres、wine及cargo-xwin均未找到。先以locked/offline检查，因缺accesskit_windows缓存失败；随后允许Cargo下载锁定版本，实际检查在gpui-pre 0.3.9/build.rs:36停止，原始错误为`NotAttempted("x86_64-w64-mingw32-windres")`。依赖齐备后再以locked/offline捕获同一失败，exit101、1.852s；这是资源编译阻碍，没有完成应用Windows类型检查或生成Windows可执行文件。
+- 应用自身gpui/build.rs还明确要求Windows SDK的rc.exe，这是独立源码前置条件，本次未运行到该步骤；不把它冒充本次首先发生的错误。复用已有Cargo目录，未伪造资源编译器、禁用manifest、修改锁文件或安装/切换工具链来规避门禁。实际依赖为gpui-kit/component0.7.3与gpui-pre/pre-windows0.3.9；机器上另一份gpui0.2.2不在本次依赖链，不用于结论。
+- 源码模型使用正常非全屏、完整宽度、默认支持最小化/最大化的局部逻辑坐标。应用TitleBar高24；Kit的三个ControlIcon实际`.w(TITLE_BAR_HEIGHT)`，该常量为34，而旁边旧注释写35，计算采用实际34。七按钮仍top8/right32、300×36、各36×36、间距8。1440和1100两宽度得到同一重叠：GitHub与Minimize交集26×16，Feedback与Maximize交集34×16，Feedback与Close交集2×16；完整矩形已写入JSON。这是静态几何推导，不是Windows实机测量、截图或点击结果。
+- 实际Windows后端会将WindowControlArea映射到HTMINBUTTON/HTMAXBUTTON/HTCLOSE；工具栏的occlude可排除下面的命中区域，却不能解决共用可视空间。绘制与点击的最终表现仍待Windows实机。已向用户询问Windows将工具栏置于窗口按钮下方或保留待实机确认的偏好，尚无答复，本轮未擅自改变明确要求的top8/right32；macOS位置保持。Windows Ctrl/IME、窗口按钮、缩放/HiDPI、两尺寸实拍及性能继续待验。
+- desktop工作流确有Windows原生构建任务，但push分支仅main/codex/gpui-preview，当前feat/studio_v2_gpui不会因此自动触发；本轮未改触发器、发起远程任务或将旧CI结果算作当前提交通过。UI仍0892/15,246,768bytes，Core仍25f/8,428,096bytes，相关源码哈希逐项复核一致；192 tests/2既有ignored、fmt/clippy/Intel check/Release为小功能41的复用证据，本轮不冒称重跑。没有新GUI或性能结果，不用旧图替代Windows实拍。
+- 本轮未建会话临时目录，删除0文件/释放0bytes，本轮临时保留0；Cargo锁定下载及可再生检查产物留在既有共享缓存。旧root30的24.03MiB保护项继续保留，未读取误截图或重试已拒删除；系统盘记录可用38,975,066,112bytes（36.30GiB）。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮新增Windows待修问题及可复核证据，不减少最终待验界面数量。Goal继续active，后续先推进不依赖Windows环境或未授权方法的验收与修复；HTML仍仅静态校验。

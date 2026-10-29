@@ -78,3 +78,5 @@
 共享工具栏专项（小功能41）：0892保留103:442七项顺序/20px资源/36px热区/8px间距/top8/right32，改原生focus_visible为显式1px主色框，未改变全局ring/selection。统计页初始Tab/反向七项与语言Enter/Space/Esc/Tab接续、皮肤非模态浮层离开关闭/内部保存、Sync遮罩、两尺寸及菜单CPU/八轮原基准已验；完整无障碍/其他控件焦点与跨平台待续，不改变40部分/0整帧最终验收计数。
 
 共享生命周期专项（小功能42）：同一0892/25f字节未改；macOS实际Core/Tray/UI三进程、仅关设置后2驻留且真实loopback200、官方重复启动/已有Tray生成新UI及草稿恢复、实际CmdQ整体退出和统计run正常关闭已验，另补原脚本正常冷启动/重启路径。1440/1100为新UI重开实际截图。CUA托盘绑定timeout，物理菜单点击和拖动位移/最小化状态未验证；全局坐标方法仍待授权，Windows/Intel/HiDPI/完整视觉等不在通过结论内。40帧继续部分验收。
+
+Windows专项（小功能43）：实际锁定Kit0.7.3/pre-windows0.3.9源码的静态模型发现右上窗口按钮与top8/right32工具栏末两项重叠，两宽度均有明确交集；不是Windows实拍。GNU检查在依赖manifest缺windres处失败，应用Windows类型检查未完成，另有rc.exe源码前置条件；Windows布局偏好/实机/HiDPI仍待核对，Mac位置及40部分/0整帧最终验收计数不变。
