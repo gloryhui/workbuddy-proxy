@@ -198,10 +198,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T03:59:53+08:00",
+  "updated_at": "2026-10-30T05:22:21+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "c51711728ff95f405d136cf67c0dd847696134d2",
+  "code_head": "b2cdbb70a8f6851a301acf60398e41e186c0faa9",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -211,64 +211,63 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 40,
+  "recorded_tasks": 41,
   "current_task": {
-    "id": 40,
-    "title": "模型表键盘分项已提交，原生AX属性待授权",
+    "id": 41,
+    "title": "工具栏键盘焦点与皮肤浮层退出已提交",
     "status": "recorded",
-    "description": "191项测试、真实键盘交互、1440×900与1100×700截图及四轮性能短测完成；AXSelected/SelectedRows/系统焦点尚未外查。40部分验收、0整帧最终验收。"
+    "description": "最终0892：192项测试、Studio七按钮清晰焦点、语言Enter/Space/Esc与皮肤双向Tab离开、两尺寸实拍及菜单CPU完成；八轮原基准保留初始异常，未见持续退化。40部分验收、0整帧最终验收。"
   },
   "latest_task": {
-    "id": 40,
-    "title": "模型表键盘导航与原生语义结构",
+    "id": 41,
+    "title": "皮肤浮层离开关闭与七工具按钮键盘焦点",
     "status": "recorded",
-    "summary": "补齐模型表键盘方向/Home/End/Shift范围、单一Tab入口和当前选中活动行编辑，保留原生虚拟滚动及鼠标多选；两尺寸实拍和四轮性能短测完成。证据：最终构建、真实交互、1440模型表、1100英文、1440单模型、四轮性能、清理记录、中间版焦点失败实拍。",
+    "summary": "修复Tab离开皮肤浮层后残留且Esc失效，以及Studio工具按钮焦点几乎不可辨认；最终0892真实七项键盘可达、语言复开、皮肤双向离开、草稿与遮罩、两尺寸及性能分项完成。证据：最终构建、真实交互、1440语言焦点、1100恢复焦点、八轮原基准、菜单CPU与原值、清理记录、2aac边宽失败实拍。",
     "highlights": [
-      "补齐模型表键盘方向/Home/End/Shift范围、单一Tab入口和当前选中活动行编辑，保留原生虚拟滚动及鼠标多选；两尺寸实拍和四轮性能短测完成。证据：最终构建、真实交互、1440模型表、1100英文、1440单模型、四轮性能、清理记录、中间版焦点失败实拍。",
-      "核对锁定SDK gpui-component0.7.3：Kit在delegate.render_tr之后再次用自己的单选值写入Row aria_selected，当前应用使用独立多选且关闭Kit单选。以公开a11y_synthetic_children后置回调更新同一行节点的selected/row_index，补Table、多选标记、行列计数、Row/ColumnHeader/Cell和完整名称/列序号；编辑按钮含模型名称。未修改registry、依赖、虚拟化或核心。CUA实际树可见具名表头、模型单元格和编辑按钮，但不输出AXSelected/AXSelectedRows/OS焦点属性；这三项仍未运行验证，不能从颜色或CUA缺少字段推断通过。",
-      "Selection新增窗口内非序列化cursor，保留鼠标anchor，使Shift反向可以缩小范围；空表和上下边界不环绕，删除后重置活动行，已有save/test/install重载保留合法选择和cursor。Enter/F2复用原编辑器并定位活动的已选行，cursor被鼠标取消选中时回退首个已选行。新增4个行为回归覆盖范围反向、空/边界/短列表、全选活动行/删除恢复及编辑目标，不改变Draft/config格式或代理逻辑。"
+      "修复Tab离开皮肤浮层后残留且Esc失效，以及Studio工具按钮焦点几乎不可辨认；最终0892真实七项键盘可达、语言复开、皮肤双向离开、草稿与遮罩、两尺寸及性能分项完成。证据：最终构建、真实交互、1440语言焦点、1100恢复焦点、八轮原基准、菜单CPU与原值、清理记录、2aac边宽失败实拍。",
+      "旧0c5c默认Mono新开首Tab到统计侧栏，ShiftTab可逐项到七按钮，语言Enter/Esc返回和Tab接续曾通过，初始工具栏不可达的推断撤回。真实缺陷是皮肤Space打开、Tab走完七项后再Tab已到侧栏但dialog仍在，此时Esc也不关闭（基线记录）。为皮肤面板保留单个非Tab停靠的FocusHandle，通过Kit公开track_focus与一次on_focus_out订阅在离开时关闭浮层、保留新控件焦点；内部选择不关闭，菜单内Esc和触发按钮恢复仍由原生Popover处理。未新增定时器、改变主题保存回调或键位。",
+      "Kit用主题ring绘制焦点，Studio旧ring#f4f6ff相对画布#f7f8fc对比仅1.016:1。最终只在共用system_button_base使用原生focus_visible绘制1px皮肤primary边框，并关闭这七项的原软halo；其他控件的全局ring/selection、布局和事件原值保留。七皮肤在画布/白卡/自身浅色底共21组颜色对比回归均≥3:1（最低4.4352），Studio画布为4.5068。色彩测试不是完整无障碍认证，其他控件焦点及读屏仍需审计。"
     ],
     "limits": [
-      "UI/Core/fixture均exit0并wait，UI退出后Core health200；主代理复核进程消失。CUA文档要求外部交互方法须明确授权；已发出的只读AXUIElement查询问题尚无明确人类答复，因此本轮仅记真实键盘/可见焦点/CUA结构通过，AXSelected/SelectedRows/系统焦点仍待授权。完整读屏、IME及跨平台审计未完成。",
-      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮只补共用模型表专项；40帧完整精细视觉、初始Tab、IME/读屏/原生AX属性、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等仍待推进。Goal保持active，HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。"
+      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享工具栏与皮肤浮层专项，完整视觉、其他控件焦点/IME/读屏/原生AX属性、Windows/Intel实机/HiDPI、托盘/首帧和更新公网成功等仍未完成。Goal保持active；HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。"
     ],
     "evidence": [
       {
         "label": "最终构建",
-        "href": "benchmarks/model-table-build.json"
+        "href": "benchmarks/toolbar-keyboard-build.json"
       },
       {
         "label": "真实交互",
-        "href": "benchmarks/model-table-gui-validation.json"
+        "href": "benchmarks/toolbar-keyboard-gui-validation.json"
       },
       {
-        "label": "1440模型表",
-        "href": "screenshots/model-table-1440x900.png"
+        "label": "1440语言焦点",
+        "href": "screenshots/toolbar-keyboard-1440x900.png"
       },
       {
-        "label": "1100英文",
-        "href": "screenshots/model-table-1100x700.png"
+        "label": "1100恢复焦点",
+        "href": "screenshots/toolbar-keyboard-1100x700.png"
       },
       {
-        "label": "1440单模型",
-        "href": "screenshots/model-table-single-1440x900.png"
+        "label": "八轮原基准",
+        "href": "benchmarks/toolbar-keyboard-performance-summary.json"
       },
       {
-        "label": "四轮性能",
-        "href": "benchmarks/model-table-performance-summary.json"
+        "label": "菜单CPU与原值",
+        "href": "benchmarks/toolbar-keyboard-menu-idle.json"
       },
       {
         "label": "清理记录",
-        "href": "benchmarks/model-table-cleanup.json"
+        "href": "benchmarks/toolbar-keyboard-cleanup.json"
       },
       {
-        "label": "中间版焦点失败实拍",
-        "href": "screenshots/model-table-d992-focus-regression-1440x901.png"
+        "label": "2aac边宽失败实拍",
+        "href": "screenshots/toolbar-keyboard-2aac-focus-missing-1440x901.png"
       }
     ],
-    "commit": "c51711728ff95f405d136cf67c0dd847696134d2",
-    "date": "2026-10-30T03:59:45+08:00",
-    "commit_subject": "fix(studio): add model table keyboard navigation and semantics",
+    "commit": "b2cdbb70a8f6851a301acf60398e41e186c0faa9",
+    "date": "2026-10-30T05:21:53+08:00",
+    "commit_subject": "fix(studio): restore toolbar focus and dismiss inactive skin menus",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -396,7 +395,7 @@
       "node": "64:335",
       "title": "14 / STUDIO V2 · 外观与主题",
       "source": "ui/skin_controls.rs, theme/skin.rs, ui_components.rs",
-      "detail": "部分：旧六主题+可选 Studio、保存/恢复/深色选区通过；完整视觉待续",
+      "detail": "部分：原七项配置保留；最终0892菜单内Blue→Studio落盘/草稿、Esc与正反Tab离开关闭、Studio七工具按钮清晰焦点/两尺寸与菜单CPU/八轮短测已验；其他控件焦点/完整视觉/IME/读屏/原生AX及跨平台待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=64-335"
     },
@@ -580,7 +579,7 @@
       "node": "104:1823",
       "title": "39 / STUDIO V2 · 语言切换菜单",
       "source": "ui/language_menu.rs, ui.rs",
-      "detail": "部分：241×184原生浮层/两尺寸、auto/zh/en真实保存/重复不写、方向Enter/Space/Esc/X/外部取消、键盘复开、草稿/筛选/重开、遮罩与邻接安全按钮已验；完整IME/无障碍/跨平台与菜单打开持续CPU待续",
+      "detail": "部分：原241×184/三模式保存与重复不写/取消/草稿筛选/重开等证据保留；最终0892 Studio工具焦点/Enter与Space打开/Esc返回/复开及Tab接续已验，菜单30s CPU样本已留；长期CPU/完整IME/读屏/原生AX及跨平台待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1823"
     },
@@ -2312,6 +2311,58 @@
       "date": "2026-10-30T03:59:45+08:00",
       "commit_subject": "fix(studio): add model table keyboard navigation and semantics",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 41,
+      "title": "皮肤浮层离开关闭与七工具按钮键盘焦点",
+      "status": "recorded",
+      "summary": "修复Tab离开皮肤浮层后残留且Esc失效，以及Studio工具按钮焦点几乎不可辨认；最终0892真实七项键盘可达、语言复开、皮肤双向离开、草稿与遮罩、两尺寸及性能分项完成。证据：最终构建、真实交互、1440语言焦点、1100恢复焦点、八轮原基准、菜单CPU与原值、清理记录、2aac边宽失败实拍。",
+      "highlights": [
+        "修复Tab离开皮肤浮层后残留且Esc失效，以及Studio工具按钮焦点几乎不可辨认；最终0892真实七项键盘可达、语言复开、皮肤双向离开、草稿与遮罩、两尺寸及性能分项完成。证据：最终构建、真实交互、1440语言焦点、1100恢复焦点、八轮原基准、菜单CPU与原值、清理记录、2aac边宽失败实拍。",
+        "旧0c5c默认Mono新开首Tab到统计侧栏，ShiftTab可逐项到七按钮，语言Enter/Esc返回和Tab接续曾通过，初始工具栏不可达的推断撤回。真实缺陷是皮肤Space打开、Tab走完七项后再Tab已到侧栏但dialog仍在，此时Esc也不关闭（基线记录）。为皮肤面板保留单个非Tab停靠的FocusHandle，通过Kit公开track_focus与一次on_focus_out订阅在离开时关闭浮层、保留新控件焦点；内部选择不关闭，菜单内Esc和触发按钮恢复仍由原生Popover处理。未新增定时器、改变主题保存回调或键位。",
+        "Kit用主题ring绘制焦点，Studio旧ring#f4f6ff相对画布#f7f8fc对比仅1.016:1。最终只在共用system_button_base使用原生focus_visible绘制1px皮肤primary边框，并关闭这七项的原软halo；其他控件的全局ring/selection、布局和事件原值保留。七皮肤在画布/白卡/自身浅色底共21组颜色对比回归均≥3:1（最低4.4352），Studio画布为4.5068。色彩测试不是完整无障碍认证，其他控件焦点及读屏仍需审计。"
+      ],
+      "limits": [
+        "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享工具栏与皮肤浮层专项，完整视觉、其他控件焦点/IME/读屏/原生AX属性、Windows/Intel实机/HiDPI、托盘/首帧和更新公网成功等仍未完成。Goal保持active；HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。"
+      ],
+      "evidence": [
+        {
+          "label": "最终构建",
+          "href": "benchmarks/toolbar-keyboard-build.json"
+        },
+        {
+          "label": "真实交互",
+          "href": "benchmarks/toolbar-keyboard-gui-validation.json"
+        },
+        {
+          "label": "1440语言焦点",
+          "href": "screenshots/toolbar-keyboard-1440x900.png"
+        },
+        {
+          "label": "1100恢复焦点",
+          "href": "screenshots/toolbar-keyboard-1100x700.png"
+        },
+        {
+          "label": "八轮原基准",
+          "href": "benchmarks/toolbar-keyboard-performance-summary.json"
+        },
+        {
+          "label": "菜单CPU与原值",
+          "href": "benchmarks/toolbar-keyboard-menu-idle.json"
+        },
+        {
+          "label": "清理记录",
+          "href": "benchmarks/toolbar-keyboard-cleanup.json"
+        },
+        {
+          "label": "2aac边宽失败实拍",
+          "href": "screenshots/toolbar-keyboard-2aac-focus-missing-1440x901.png"
+        }
+      ],
+      "commit": "b2cdbb70a8f6851a301acf60398e41e186c0faa9",
+      "date": "2026-10-30T05:21:53+08:00",
+      "commit_subject": "fix(studio): restore toolbar focus and dismiss inactive skin menus",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2573,6 +2624,14 @@
     {
       "date": "2026-10-30T03:59:53+08:00",
       "note": "当前处于专项验收与差异修复阶段；逐帧初审已覆盖，原生AX验证等待明确方法授权，继续推进其余可独立专项。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T05:22:21+08:00",
+      "note": "本轮修复共享工具栏原生焦点边框与皮肤非模态退出；原生AX/其他控件焦点/IME/读屏、跨平台与完整逐帧最终审计继续，Goal保持active。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
