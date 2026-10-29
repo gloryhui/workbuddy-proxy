@@ -555,3 +555,29 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - UI记录标记不是首帧或可交互时间；RSS共享页可能双计，tray另列原JSON。默认页结果不代表多个草稿、长时间占用、网络上游或跨平台。完整40帧/键盘/IME/无障碍与Windows/Intel实际运行仍待后续，Goal保持active。
 
 - 收尾停止并wait本轮全部GUI/Core/mock/benchmark/测试子进程，专属根lsof无引用；删除105个专属临时文件（隔离配置/数据库/程序副本、原图、六轮基准副本和日志），释放已分配空间208,322,560 bytes（198.67MiB），本轮保留专属临时文件0。仓库实拍/JSON保留，复用Cargo缓存与未知历史目录未动；上一轮93,053-byte系统编译诊断继续保留。系统盘当前可用41,767,514,112 bytes（38.90GiB）。[清理证据](benchmarks/provider-create-cleanup.json)。
+
+## 小功能 28：新增与复制保存完成状态（2026-10-29，北京时间）
+
+- 按本会话此前已读取的Figma高保真 `79:885` / `79:1102`，供应商摘要宽窗补142×26绿色完成徽标；普通已保存配置为“已保存”，本窗口内真实创建并保存的副本为“已保存副本”。1100等窄窗维持单一状态徽标，副本完成显示Saved copy，宽窗右侧仍为通用Saved。继承已有语义success/tint、原生Label/Div，不添加动画或周期重绘。
+- `saved_copies`仅在pending存在、来源已知且Outcome.saved为true时记录生成后的真实ID；create失败或create成功/save失败不记成功，后续已知目标保存成功才记录。来源不从名称猜测，不写Core配置或private drafts。切换A/B仍按各自真实ID，删除/配置刷新时移除已不存在条目；关闭重开回通用Saved，不宣称持久化了复制来源。
+- busy、pending、dirty、editing优先覆盖绿色提示：宽窗显示Working/未保存草稿/复制草稿/修改待保存/正在编辑，窄窗对应真实状态。取消编辑恢复旧草稿后再按是否真的dirty判断。原save/test/install与Core管理API及draft格式均未变；Test先保存成功、后续测试失败时允许显示已保存，同时原错误反馈继续保留，不把连接测试失败伪装为未提交。
+- fmt、174项测试、严格clippy all-targets/-D warnings、Intel目标check2.69s、Release44.50s Passed。UI 15,196,656 bytes（较eda8增加16 bytes），SHA256 `c4554655b271d3b17dfae3572bb8d39b884c116f15d0035a0a724e00b9c93059`；核心仍8,428,096 bytes /25f SHA。既存block0.1.6未来兼容提示保持，Intel只证明类型检查兼容；两项真实Core ignored专项在小功能27已单独通过，本次仅UI呈现未重复执行。[编译证据](benchmarks/provider-saved-build.json)。
+- 最终c455实机：新增明确Save后Core由2→3供应商、3模型/0请求，宽窗两徽标绿色Saved；清空名称并Save触发真实填写校验，修改待保存/草稿未保存优先，不误报完成，Cancel恢复原值。复制A后Save，Core由3→4供应商/5模型，宽窗左Saved copy、右Saved；复制来源仍2模型，新的目标/route语义沿用小功能27。
+- 副本改名立即显示未保存，Cancel恢复Saved copy；切B再返回仍按正确ID显示。关闭UI退出0、Core health仍ready，同Core重开选择该副本则回generic Saved，符合不持久化会话来源。1100英文实际Saved copy已见；侧栏向下滚动可取回选中行。后一次因屏外AX点击未命中行而误打开本地copy，立即Cancel、未保存，不将该误操作计为目标行点击成功。
+
+- 主代理逐张检查[新增1440](screenshots/provider-saved-new-1440x900.png)、[新增1100](screenshots/provider-saved-new-1100x700.png)、[复制1440](screenshots/provider-saved-copy-1440x900.png)、[复制1100](screenshots/provider-saved-copy-1100x700.png)。四张原图宽2880×1802/小2200×1402，只裁底2物理像素后一次LANCZOS缩至目标尺寸。新增宽图3供应商/3模型，小图已是4/5；复制宽图4/5，小图为重开后再次保存的副本5/7，均0请求。最后小图已滚出选中行，不伪装为同一时刻。
+- 原UI和重开UI均退出0，关窗后Core仍health ready，再停止Core/fixture退出0并wait，记录PID全部消失；合成WorkBuddy哨兵最终SHA与初始一致。非法保存前后未分别采样byte hash、busy瞬态未实际捕获，不将其标实测Passed。[GUI证据](benchmarks/provider-saved-gui-validation.json)。
+
+同机Release、相同25f核心、默认GUI页，eda8→c455→eda8→c455四轮交错；1供应商/64模型、200小请求、80次1MiB/并发4。输入UI/Core SHA均核对，核心内核沙盒enforced，所有owned进程wait，UI PID消失。Mock/controller按原脚本SIGTERM退出，数组[-15,-15,0,0]，不写成全部退出0。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧eda8](benchmarks/provider-saved-previous-gui.json) | 11.84 / 76.53 / 88.38 | 265.786 / 995.818 | 0.168 / 0.203 | 132.53 | 0.089 |
+| [新c455](benchmarks/provider-saved-gui.json) | 12.12 / 76.41 / 88.53 | 231.470 / 711.170 | 0.168 / 0.215 | 130.69 | 0.084 |
+| [旧eda8复测](benchmarks/provider-saved-previous-run2-gui.json) | 12.50 / 76.80 / 89.30 | 239.011 / 1069.740 | 0.164 / 0.207 | 132.61 | 0.089 |
+| [新c455复测](benchmarks/provider-saved-run2-gui.json) | 12.56 / 76.66 / 89.22 | 226.085 / 755.656 | 0.172 / 0.210 | 134.52 | 0.086 |
+
+- 合计空闲RSS中位88.840→88.875MiB（+0.035MiB，约+0.04%）；累计UI记录中位1032.779→733.413ms，峰值132.570→132.605MiB。当前短轮未见持续退化，不宣称提升；标记不是首帧/可交互时间，默认页不代表多个复制收据、长期运行或跨平台表现，共享页可能双计、tray另计。
+
+- 已停止并wait本轮GUI/Core/mock/benchmark/编译子进程，专属根lsof无引用；清理55个专属临时文件，释放已分配空间136,257,536 bytes（129.95MiB），保留本轮专属临时文件0。仓库实拍/JSON、共享Cargo缓存、未知历史目录不动，前序93,053-byte系统编译诊断仍保留。系统盘可用41,758,957,568 bytes（38.89GiB）。[清理证据](benchmarks/provider-saved-cleanup.json)。
+- Goal保持active。下一批继续供应商满载/搜索与菜单状态的逐帧对齐；完整40帧精细审计、IME/无障碍及Windows/Intel实际运行仍未完成。

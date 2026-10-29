@@ -148,6 +148,9 @@ impl Proxy {
                 self.drafts.selected = id.clone();
             }
             self.drafts.providers.insert(id.clone(), outcome.draft);
+            if outcome.saved && pending.source_id.is_some() {
+                self.saved_copies.insert(id.clone());
+            }
             pending.id = id;
             pending.created = true;
             if outcome.saved {

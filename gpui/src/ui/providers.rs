@@ -86,6 +86,7 @@ impl Proxy {
                         .get(&selected)
                         .is_some_and(|draft| draft != &Draft::from_provider(provider))
                 });
+        let saved_copy = self.saved_copies.contains(&selected);
         let (status, ink, background) = if self.busy {
             (
                 self.t("处理中", "Working"),
@@ -106,10 +107,31 @@ impl Proxy {
             )
         } else {
             (
-                self.t("已保存", "Saved"),
+                if compact && saved_copy {
+                    self.t("已保存副本", "Saved copy")
+                } else {
+                    self.t("已保存", "Saved")
+                },
                 color::SUCCESS,
                 color::SUCCESS_TINT,
             )
+        };
+        let detail = if self.busy {
+            self.t("处理中", "Working")
+        } else if let Some(pending) = pending {
+            if pending.source_id.is_some() {
+                self.t("复制草稿 · 未保存", "Copied draft")
+            } else {
+                self.t("未保存草稿", "Unsaved draft")
+            }
+        } else if dirty {
+            self.t("修改待保存", "Changes pending")
+        } else if editing {
+            self.t("正在编辑", "Editing profile")
+        } else if saved_copy {
+            self.t("已保存副本", "Saved copy")
+        } else {
+            self.t("已保存", "Saved")
         };
         div()
             .flex()
@@ -156,9 +178,11 @@ impl Proxy {
                             .text_color(rgb(color::TEXT_3)),
                     ),
             )
-            .when(editing && !compact, |row| {
+            .when(!compact, |row| {
                 row.child(
                     div()
+                        .id("provider-summary-detail")
+                        .aria_label(detail)
                         .flex()
                         .items_center()
                         .flex_none()
@@ -166,28 +190,20 @@ impl Proxy {
                         .h(px(26.))
                         .px(px(12.))
                         .rounded(px(8.))
-                        .bg(rgb(color::DRAFT_TINT))
+                        .bg(rgb(background))
                         .child(
-                            Label::new(if let Some(pending) = pending {
-                                if pending.source_id.is_some() {
-                                    self.t("复制草稿 · 未保存", "Copied draft")
-                                } else {
-                                    self.t("未保存草稿", "Unsaved draft")
-                                }
-                            } else if dirty {
-                                self.t("修改待保存", "Changes pending")
-                            } else {
-                                self.t("正在编辑", "Editing profile")
-                            })
-                            .text_size(px(11.))
-                            .line_height(px(16.))
-                            .text_color(rgb(color::DRAFT_INK)),
+                            Label::new(detail)
+                                .text_size(px(11.))
+                                .line_height(px(16.))
+                                .text_color(rgb(ink)),
                         ),
                 )
             })
             .child(div().flex_1())
             .child(
                 div()
+                    .id("provider-summary-status")
+                    .aria_label(status)
                     .flex()
                     .items_center()
                     .justify_center()

@@ -1,0 +1,41 @@
+{
+  "ui_sha256": "c4554655b271d3b17dfae3572bb8d39b884c116f15d0035a0a724e00b9c93059",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": "isolated fake HOME, Core sandbox, loopback mock; no real WorkBuddy or keys",
+  "initial": {
+    "providers": 2,
+    "models": 3,
+    "requests": 0,
+    "config_sha256": "fea5e7da3bc3f65571bfc9385b4d23b7a23e480564076abae8c82bed944e1344",
+    "sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "results": {
+    "new_save": "Actual Save created New synthetic; wide green Saved; 3 providers/3 models/0 requests.",
+    "invalid_name": "After Edit and clearing name, dirty badges appeared; Save rejected with visible error, 3 providers retained; Cancel restored original name. Byte-for-byte hash around failure not separately measured.",
+    "copy_save": "A copy saved; wide left Saved copy and right Saved; 4 providers/5 models/0 requests; A and copy retained low/high.",
+    "edit_cancel_switch": "Edited copy showed pending status; Cancel restored name and Saved copy; B and copy switch preserved intended identity.",
+    "reopen": "UI closed, reopened same fixture; existing copy displayed generic Saved in new session.",
+    "small_copy": "After reopening, second copy saved; 5 providers/7 models/0 requests. Sidebar scrolled to show selected new copy; right Saved copy visible.",
+    "sentinel": "Final sentinel SHA matched initial.",
+    "busy": "Not observed during transient operation; not claimed GUI passed."
+  },
+  "screenshots": {
+    "files": [
+      "provider-saved-new-1440x900.png",
+      "provider-saved-new-1100x700.png",
+      "provider-saved-copy-1440x900.png",
+      "provider-saved-copy-1100x700.png"
+    ],
+    "states": "CN Studio wide, EN Mono small; new wide captured at 3 providers, other original images at 4; final copy small at 5 providers after second copy.",
+    "raw": "Wide 2880x1802; small 2200x1402; crop bottom 2 physical pixels then one LANCZOS resize."
+  },
+  "processes": {
+    "initial_ui_exit": 0,
+    "reopened_ui_exit": 0,
+    "core_health_after_ui_close": "ready",
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "owned_pids_gone": true
+  },
+  "cleanup": "Fixture and raw retained for owner review and root cleanup."
+}

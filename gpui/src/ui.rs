@@ -166,6 +166,9 @@ pub struct Proxy {
     cfg: Config,
     drafts: Drafts,
     provider_edits: provider_edit::ProviderEdits,
+    /// Copy provenance is only known for successful creations in this window.
+    /// Never infer it from a name or add presentation state to core config.
+    saved_copies: BTreeSet<String>,
     provider_profile_focus: FocusHandle,
     backend: Backend,
     zh: bool,
@@ -786,6 +789,7 @@ impl Proxy {
             cfg,
             drafts,
             provider_edits: provider_edit::ProviderEdits::default(),
+            saved_copies: BTreeSet::new(),
             provider_profile_focus: cx.focus_handle().tab_stop(false),
             backend,
             zh,
@@ -1316,6 +1320,8 @@ impl Proxy {
             )
             .then_some(saved.as_str()),
         );
+        self.saved_copies
+            .retain(|id| cfg.providers.iter().any(|provider| provider.id == *id));
         let fresh = Drafts::from_config(&self.dir, &cfg);
         self.drafts.providers.retain(|id, _| {
             fresh.providers.contains_key(id)

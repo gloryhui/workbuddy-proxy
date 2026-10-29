@@ -1,0 +1,36 @@
+{
+  "ui_sha256": "c4554655b271d3b17dfae3572bb8d39b884c116f15d0035a0a724e00b9c93059",
+  "ui_bytes": 15196656,
+  "baseline_ui_sha256": "eda88cef314e30fa24392ef3571afba2a9e0a1ed50ffba3d194a8b27d6faf79f",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "tests_passed": 174,
+  "tests_ignored": 2,
+  "gate_timings": {
+    "fmt": {
+      "exit_code": 0,
+      "seconds": 0.523
+    },
+    "test": {
+      "exit_code": 0,
+      "seconds": 6.574
+    },
+    "clippy": {
+      "exit_code": 0,
+      "seconds": 2.987
+    },
+    "intel": {
+      "exit_code": 0,
+      "seconds": 2.687
+    },
+    "release": {
+      "exit_code": 0,
+      "seconds": 44.5
+    }
+  },
+  "intel_runtime_verified": false,
+  "warning": "Existing block0.1.6 future incompatibility warning",
+  "scope": "Presentation only: session-local copy receipt after committed creation; no Core/API/config/private draft schema changes.",
+  "gui_validation_state": "passed_for_documented_scope",
+  "gui_evidence": "provider-saved-gui-validation.json"
+}

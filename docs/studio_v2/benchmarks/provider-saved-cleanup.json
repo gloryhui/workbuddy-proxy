@@ -1,0 +1,13 @@
+{
+  "owned_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round20.vcjc295b",
+  "scope": "Only phase28 round20 owned isolated profiles, databases, raw screenshots, binaries, benchmark copies and logs. Repository PNG/JSON evidence retained.",
+  "lsof_open_references": 0,
+  "all_owned_children_waited": true,
+  "ui_pids_gone": true,
+  "deleted_regular_files": 55,
+  "deleted_allocated_bytes": 136257536,
+  "deleted_logical_bytes": 136053977,
+  "retained_owned_temp_bytes": 0,
+  "historical_diagnostic_retained_bytes": 93053,
+  "system_disk_free_bytes": 41758957568
+}
