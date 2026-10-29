@@ -1,0 +1,597 @@
+{
+  "feature": "UI-42 warm-attached native tray and actual user interaction",
+  "manifest": {
+    "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round34.5l39aj9v",
+    "config": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round34.5l39aj9v/config",
+    "core_executable": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round34.5l39aj9v/WorkBuddy Lifecycle Tray Review.app/Contents/MacOS/workbuddy-proxy",
+    "ui_executable": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round34.5l39aj9v/WorkBuddy Lifecycle Tray Review.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui",
+    "bundle_ids": {
+      "tray": "com.workbuddy.proxy.codexreview.lifecycle34.5l39aj9v.tray",
+      "settings": "com.workbuddy.proxy.codexreview.lifecycle34.5l39aj9v.settings"
+    },
+    "core_pid": 91253,
+    "tray_pid": 91258,
+    "ui_pid": 91259,
+    "fixture_pid": 91252,
+    "port": 58619,
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "ui_sha256": "0892b084054464431d5af83b9db5e60b013ca338cbc4ace3053cf04e0791d4f8",
+    "core_kernel_protection": true,
+    "tray_ui_kernel_sandboxed": false,
+    "scope": "Protected prestarted Core; native tray attaches to it. Tray/UI use unique review bundles, explicit config and synthetic LSEnvironment. No installed app or real profiles used."
+  },
+  "core_kernel_proof": {
+    "enforced": true,
+    "pid": 91253,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launch_agents": {
+      "file-read-data": 1,
+      "file-write-data": 1,
+      "file-write-create": 1,
+      "file-write-unlink": 1
+    }
+  },
+  "checkpoints": [
+    {
+      "label": "ready_three_processes",
+      "monotonic": 929445.530539875,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 12.328
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 24.469
+        },
+        "ui": {
+          "pid": 91259,
+          "rss_mib": 82.234
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    },
+    {
+      "label": "draft_after_cua_drag_before_minimize",
+      "monotonic": 929722.059705208,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 11.141
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 22.391
+        },
+        "ui": {
+          "pid": 91259,
+          "rss_mib": 87.0
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [
+        {
+          "id": "provider-a",
+          "name": "Lifecycle draft42",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    },
+    {
+      "label": "before_duplicate_2",
+      "monotonic": 929794.914797916,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 11.156
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 22.422
+        },
+        "ui": {
+          "pid": 91259,
+          "rss_mib": 87.375
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [
+        {
+          "id": "provider-a",
+          "name": "Lifecycle draft42",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    },
+    {
+      "label": "after_duplicate_2",
+      "monotonic": 929795.676117041,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 11.156
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 22.469
+        },
+        "ui": {
+          "pid": 91259,
+          "rss_mib": 87.375
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [
+        {
+          "id": "provider-a",
+          "name": "Lifecycle draft42",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    },
+    {
+      "label": "loopback_probe_3",
+      "monotonic": 929885.805553083,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 11.391
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 22.5
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [
+        {
+          "id": "provider-a",
+          "name": "Lifecycle draft42",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    },
+    {
+      "label": "reopened_by_existing_native_tray_after_official_launch",
+      "monotonic": 930003.414762291,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 11.422
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 21.281
+        },
+        "ui": {
+          "pid": 95860,
+          "rss_mib": 84.938
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [
+        {
+          "id": "provider-a",
+          "name": "Lifecycle draft42",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    },
+    {
+      "label": "before_actual_settings_cmd_q",
+      "monotonic": 930339.688476958,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 11.469
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 21.125
+        },
+        "ui": {
+          "pid": 95860,
+          "rss_mib": 89.641
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [
+        {
+          "id": "provider-a",
+          "name": "Lifecycle draft42",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    }
+  ],
+  "reopen": {
+    "method": "Official normal launch of same isolated application; existing native tray receives wake and spawns Settings child. Not a tray menu click.",
+    "launcher_exit": 0,
+    "core_pid": 91253,
+    "tray_pid": 91258,
+    "previous_ui_pid": 91259,
+    "new_ui_pid": 95860,
+    "new_ui_ppid": 91258
+  },
+  "closed_ui_service": {
+    "checkpoint": {
+      "label": "loopback_probe_3",
+      "monotonic": 929885.805553083,
+      "core_pid": 91253,
+      "tray_pid": 91258,
+      "live": {
+        "core": {
+          "pid": 91253,
+          "rss_mib": 11.391
+        },
+        "tray": {
+          "pid": 91258,
+          "rss_mib": 22.5
+        }
+      },
+      "saved_names": [
+        {
+          "id": "provider-a",
+          "name": "Synthetic A",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "draft_names": [
+        {
+          "id": "provider-a",
+          "name": "Lifecycle draft42",
+          "models": 2
+        },
+        {
+          "id": "provider-b",
+          "name": "Synthetic B",
+          "models": 1
+        }
+      ],
+      "health_status": 200,
+      "health": {
+        "app": "workbuddy-proxy",
+        "control_protocol": 12,
+        "ready": true,
+        "version": "0.5.7"
+      },
+      "saved_config_sha256": "7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a"
+    },
+    "synthetic_probe": {
+      "id": 3,
+      "kind": "probe",
+      "http": 200,
+      "synthetic_response": true
+    },
+    "stats_runs": [
+      [
+        null,
+        null
+      ]
+    ],
+    "scope": "Actual UI window close; protected Core and native tray still alive; unchanged saved config; one active statistics run."
+  },
+  "actual_cmd_q": {
+    "pids_absent": [
+      91252,
+      91253,
+      91258,
+      91259,
+      95860
+    ],
+    "terminal": {
+      "direct_exit_codes": {
+        "tray": 0,
+        "core": 0
+      },
+      "all_direct_children_waited": true,
+      "ui_pids": [
+        91259,
+        95860
+      ],
+      "all_ui_processes_gone": true,
+      "ui_exit_codes_observed": false,
+      "ui_wait_owner": "Native tray SETTINGS Child; observed exit/disappearance, no invented grandchild return code.",
+      "server_thread_stopped_joined": true
+    },
+    "statistics_runs_after_cmd_q": [
+      [
+        1793310497127,
+        "normal"
+      ]
+    ],
+    "single_run_closed_normally": true,
+    "core_instance_removed": true,
+    "frontend_instance_removed": true,
+    "ui_instance_removed": true,
+    "exit_host_marker_exists": true,
+    "command_method": "Actual CUA super+q to Settings95860, no fixture finish/stop request before Core/Tray termination"
+  },
+  "fixture_sha256": "74596ba5df820b7d43903100f4280b3d81346a7806c1ee406f8b03af3c7e3578",
+  "rss_caveat": "Sum of process RSS, shared pages may be counted multiple times; no GPU accounting or optimization claim",
+  "boundaries": {
+    "actual_tray_menu_clicked": false,
+    "drag_displacement_verified": false,
+    "minimized_state_verified": false,
+    "cgwindow_bounds_queried": false,
+    "external_ax_queried": false,
+    "warm_tray_ui_kernel_sandboxed": false,
+    "warm_core_kernel_sandboxed": true,
+    "gui_grandchild_exit_codes_observed": false
+  },
+  "environment_boundaries": {
+    "warm": "Protected prestarted Core; tray/UI synthetic unique bundle/env, not kernel-sandboxed",
+    "cold": "Original normal entrypoint with all Core/tray/UI roles attested under inherited protection profile; process/API evidence, no CUA interaction",
+    "release_package": "Local review bundle with byte-identical product code, not actual signed installer/DMG validation"
+  }
+}

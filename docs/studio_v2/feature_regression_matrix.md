@@ -11,7 +11,7 @@
 | 系统/中文/English | ui/language_menu.rs、ui.rs::set_language | 原241×184/三模式保存与重复不写、方向/取消/草稿筛选/重开与遮罩等先前证据保留；最终0892 Studio主色焦点、Enter/Space打开/Esc返回/复开/Tab到Restore已验，菜单30s CPU2.53%单核/0.17%Core与RSS原值保留；三模式未在0892全套重验，长期CPU/完整IME/读屏/原生AX与跨平台待续 |
 | 恢复 1440×900、退出全屏 | ui/window_restore.rs、ui.rs::restore_window_size | 原算法逐字核对保持；325×103提示、普通/zoom/全屏恢复、实际缩窗后Esc/X、键盘Return/Space、草稿/Custom筛选与遮罩、两尺寸和四轮短测 Passed；互斥/重复仅旧80ad实测、超时失败未注入，完整IME/无障碍/跨平台未验 |
 | GitHub 与新 Issue | ui.rs::app_controls | 原外部URL和open_url处理器保持；最终0892 Studio两按钮Tab可达/主色焦点已验，本轮未激活外链 |
-| 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | macOS 两尺寸/中英/缩小恢复 Passed；拖动未测位移；Windows 待验 |
+| 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | 原两尺寸/中英/缩小恢复证据保留；UI42同0892重开草稿两尺寸已实拍，CUA暴露Raise/close/minimize/fullscreen/zoom，原生close真实退出设置已验；drag/minimize动作成功不等于位移/最小化状态通过，工具未提供属性且外部坐标查询待授权，Windows/HiDPI待验 |
 | 供应商 0/1/2/20/64、固定 CRUD | ui.rs::sidebar、provider_filter.rs | macOS 5 种数量、末尾搜索/空结果/清空、64 滚动/新增复制禁用 Passed；选中尾行保存/resize/清搜索/展开自动可见、手动9秒不回跳与20/64两尺寸 Passed，整帧/键盘/无障碍待续 |
 | 新增、复制、删除确认与取消 | ui/provider_delete.rs、ui/sidebar.rs、ui.rs、state.rs | 原生532删除确认/已保存目标与dirty说明、Cancel/X/Esc与草稿保护、默认Return不删/Tab确认Enter或Space、Core失败重试、仅删A保留B及最终删B到空列表、无自动同步/哨兵不变、两尺寸/合法长名实拍与四轮性能 Passed；headless未知/重复删除配置不变。未实际双击/hover按压，合法长名未触发内部滚动；新增/复制独立pending、取消/恢复/重开、来源dirty先保存、Save/Test新目标/新route与mixed effort、零供应商发现及可见小窗Save已实机Passed；完整IME/无障碍/跨平台待续 |
 | 资料编辑/取消与历史草稿 | ui/provider_edit.rs、ui/providers.rs、model_table.rs、ui.rs | 既有Cancel完整Draft/Selection、Name Return及按钮键盘证据保留；本轮B原位Cancel恢复先有未保存名/新增模型、A独立草稿、显式Save仅B、Studio普通白/蓝与原生上下选中边线/Shift多选仅草稿删除、两尺寸四图/遮罩/重开与四轮同主题性能 Passed；编辑快照仅窗口内，完整视觉/键盘/IME/无障碍及跨平台待专项 |
@@ -34,7 +34,7 @@
 | 最近 100 条日志、清空/复制/滚动 | ui.rs::snapshot、ui/relay.rs、ui_components::TerminalLogs | macOS 深色只读/复制/清空、无新日志不抢首部/新日志到底 Passed；Studio 补验发现选区覆盖后已修复，Mono/Studio 实拍选区可读；100条上限源码确认 |
 | 最近请求、详情与独立读身份 | statistics/recent.rs、stats_backend.rs | 167自动回归；同核心22记录、最新ID/详情、明细第2页不误用、来源/供应商与快速切源、小窗Esc Passed；请求最小10条仅取首条 |
 | 请求详情、元数据与本次单价 | statistics/detail_layout.rs、statistics/detail_metadata.rs | 原生650×770/两尺寸、15行摘要、原metadata与长ID/模型/价格快照完整换行、真实代理/导入/连接失败/SSE与点数/未知值、not-found同IDRetry与8秒错误持久/新记录恢复、Esc/X/Close及Popover Esc、64位ID复制并恢复剪贴板 Passed；Tooltip视觉/完整无障碍/跨平台待续 |
-| 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | 正常关窗 UI 退出/核心 health 200/重开恢复 Passed；托盘唤醒及单实例待验 |
+| 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | UI42真实3→2→3、原生关窗后Core/Tray存活且loopback200、官方重复启动同PID与已有Tray生成新UI/草稿恢复、实际Settings CmdQ使Core/Tray/UI全退且唯一统计run正常关闭 Passed；正常冷启动及重启原脚本另验三角色/单实例/关闭重开/两run normal，冷路径全角色kernel保护。show/CLI不是物理菜单点击；指定托盘CUA绑定timeout、菜单点击仍待验，Windows/Intel实机待续 |
 | 外观/中英/HiDPI/无障碍 | theme.rs、ui_components.rs、model_table.rs、assets.rs | macOS既有七主题/中英分项证据保留；本轮Mono白/浅蓝交替行、三设计SVG实际加载、多选跨Blue→Mono及中英切换后草稿删除2→0/Core仍3、名称草稿/重开Mono持久、两尺寸与遮罩 Passed；完整初始Tab/HiDPI/IME/无障碍及Windows/Intel实机待专项 |
 
 此矩阵随每个小功能提交更新；不将核心未改动当作运行回归通过。

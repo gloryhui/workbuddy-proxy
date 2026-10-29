@@ -1,0 +1,19 @@
+{
+  "feature": "UI-42 native lifecycle acceptance only",
+  "checkout_head": "03af0dc0895b777c3b979829fef866307457ae83",
+  "source_changed": false,
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "ui_sha256": "0892b084054464431d5af83b9db5e60b013ca338cbc4ace3053cf04e0791d4f8",
+  "ui_bytes": 15246768,
+  "compile_gates_reused_from": "docs/studio_v2/benchmarks/toolbar-keyboard-build.json",
+  "compile_rerun_this_round": false,
+  "revalidated_source_sha256": {
+    "gpui/src/ui.rs": "19200cdbdfd0fcfd886b6db0a0ab6194fa454aaacbf03a44fdaf7308177c5f61",
+    "gpui/src/ui/skin_controls.rs": "d81cb8d3630ecb6277f88d3974a73ce30bdd4d2bbc26bc9f531f3e3fb214eedd",
+    "gpui/src/theme.rs": "e57681d158961be12f6da43de7fcbdb7cd793352808fbe3945bd3d810c7edc36",
+    "gpui/src/ui_components.rs": "e2b4f57d15b86892a9790e94dd71f677c0e4001accb85619c86238c57d3ea964"
+  },
+  "reused_gate_summary": "192 tests/2 existing ignored,fmt,strict clippy,Intel check,release passed in UI-41; byte-identical executables/source this round",
+  "platform_limit": "macOS Apple Silicon runtime only; no Windows/Intel/HiDPI/full native AX acceptance",
+  "new_runtime_scope": "Actual native tray and Settings with protected prestarted Core; original-script cold tray-created Core lifecycle; same immutable product code. Unique local review bundles, not release installer/signature/DMG validation."
+}

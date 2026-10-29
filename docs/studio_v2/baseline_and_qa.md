@@ -958,3 +958,29 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 八轮直接子进程全部wait，退出数组均[-15,-15,0,0]，各Core/UI消失由主代理逐PID复核；8个原benchmark临时目录延迟到全部测试退出后的精确清理，原基准负载/计量未修改，仅私有wrapper增加反向标签守卫。
 - 按持续授权，规范化绝对路径/UID501/各级父组件与挂载/完整类型与单一链接/进程和lsof预检、临执行清单哈希复核后，删除本轮唯一目录322个专属可再生文件，释放估计388,628,480bytes（370.63MiB），本轮保留0；系统盘可用40,357,142,528bytes（37.59GiB）。此前root30仍25,198,592bytes（24.03MiB，仅元数据计量），未读取其误截图、未重试被拒的删除；共享缓存及4个未知历史项保留。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享工具栏与皮肤浮层专项，完整视觉、其他控件焦点/IME/读屏/原生AX属性、Windows/Intel实机/HiDPI、托盘/首帧和更新公网成功等仍未完成。Goal保持active；HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。
+
+## 小功能 42：原生托盘、设置与核心生命周期实测（2026-10-30，北京时间）
+
+- 新增真实三进程关闭/重开/单实例与CmdQ证据，补齐已有Core挂接及正常冷启动两条路径；本轮没有Rust源码或依赖变更。证据：[构建复用与哈希](benchmarks/window-lifecycle-build.json)、[真实GUI](benchmarks/window-lifecycle-gui-validation.json)、[1440重开草稿](screenshots/window-lifecycle-1440x900.png)、[1100重开草稿](screenshots/window-lifecycle-1100x700.png)、[热挂接运行与CmdQ](benchmarks/window-lifecycle-runtime-validation.json)、[原脚本冷启动/重启](benchmarks/window-lifecycle-cold-start.json)、[清理记录](benchmarks/window-lifecycle-cleanup.json)。
+- 当前源码/可执行文件与小功能41已提交版本逐哈希一致：UI0892/15,246,768bytes、Core25f/8,428,096bytes，仍为原生Rust+GPUI与native/gpui_host.m轻量托盘。复用192 tests/2 ignored、fmt/clippy/Intel check/Release门禁，本轮不冒称重新编译或重跑八轮基准。README明确普通启动3进程、关设置后2进程、重开私有草稿及CmdQ完全退出；本轮核对src/frontend.rs、src/gpui_host.rs、native/gpui_host.m、UI wake/quit路径后按实际行为验收，没有改代理核心逻辑或配置。
+- Mac实际未锁定。先启动受kernel profile保护的Core91253，再用唯一review bundle与显式config-dir/合成HOME的原生托盘91258挂接，托盘真实生成UI91259，三PID不同。热挂接的托盘/UI没有内核沙盒，不把合成环境等同kernel隔离；实际Core91253完整保护矩阵及真实LaunchAgents四类deny1已留，合成目录四项allow0，未操作真实Key、用户配置或登录项。本地review bundle的Mach-O字节不变，本轮不是已签名安装包/DMG验收。
+- CUA在Providers实际输入未保存Lifecycle draft42，A1/A2两行保留；私有草稿文件实读一致，Core保存名称仍Synthetic A、config SHA始终7f592d07bc8f7403fca77432d27b70e5e2ae633903b3479560e0d92b9ff54b1a。官方重复启动CLI exit0，Core91253/Tray91258/UI91259均保持；随后CUA看到默认Statistics再进入A仍有草稿，证明单实例复用，不仅是重复启动命令成功。
+- CUA点击原UI的真实close按钮，仅关设置，不按CmdQ；UI91259确实退出、gpui.json移除，Core/Tray保留且health200。关闭期间真实loopback代理POST得到HTTP200/synthetic响应，Core统计仍只有一个活跃run；未通过设置页存活来冒充后台连续性。
+- 再次官方正常启动同应用，由已有Tray91258创建新UI95860（实际OS PPID=91258），Core/Tray PID不变。CUA在新UI确认默认统计页，Providers的Lifecycle draft42/A1/A2恢复，Runtime为2供应商/3模型/1请求；未覆盖保存配置。该入口是CLI→已驻留托盘→设置，不是物理点击托盘菜单。
+- 两张最终PNG主代理已逐张查看并重算尺寸/SHA；英文Studio、新UI95860、捕获window62179，raw1440×901/1100×701仅裁底1物理像素，无缩放。该PID曾返回两个onscreen/layer0 ID62194与62179；按同PID分别捕获均为本轮完整Providers画面，1440×901且SHA相同0ebda259…，据实际内容识别，没有按标题猜窗口或声称ID唯一。1100模型行在内部滚动区下方，图不冒称连接卡与所有模型行同屏。
+- CmdQ前记录Core/Tray/UI仍3进程、health200、保存配置SHA未变、唯一统计run活跃，gpui-exit-host不存在。随后CUA仅对UI95860发送一次super+q，不查询/激活/重开；实际Core与Tray退出并直接wait0，两个UI PID91259/95860及fixture91252均消失，三种instance marker移除，唯一统计run停止原因为normal。Fixture没有先发finish/stop掩盖CmdQ结果；设置UI是托盘拥有的子进程，只记录等待其消失，不虚构观察不到的UI孙进程退出码。
+- 为避免只验“已有Core”替代正常启动，使用未修改scripts/gpui_package_test.py在新目录补测托盘主动创建Core：首组Core1313/Tray1312/UI1314，正常退出后重启Core1342/Tray1341/UI1343。原脚本的64模型/选定model-3 loopback连接诊断、日志clear、重复启动复用、关闭UI驻留2进程、show重开、私有草稿与保存配置分离、两次Core统计run均normal等检查通过。
+- 冷启动私有Popen wrapper仅加同一内核profile和实际三个角色的保护门禁；原脚本SHA记录，未改产品或脚本源码。两次冷启动的Core/Tray/UI均实查enforced，所有直接子进程wait，退出数组[0,0,0,0,0]，全部记录角色PID消失由主代理独立复核。冷启动脚本的show使用/_control/show、草稿由脚本注入，不冒充点击菜单或人工输入；实际人工式输入/关窗/CmdQ证据来自热挂接CUA路径。实际签名/安装包/Windows/Intel/HiDPI不在该结论内。
+
+| 实测阶段 | 进程数 | Core / Tray / UI RSS MiB | 合计RSS MiB |
+| --- | --- | --- | --- |
+| 热挂接、重复启动后 | 3 | 11.156 / 22.469 / 87.375 | 121.000 |
+| 原生关设置、后台请求后 | 2 | 11.391 / 22.500 / UI已退出 | 33.891 |
+| 新UI恢复草稿、CmdQ前 | 3 | 11.469 / 21.125 / 89.641 | 122.235 |
+| 冷启动原脚本、64模型 | 3 | 12.530 / 26.810 / 83.800 | 123.140 |
+| 冷启动原脚本关设置 | 2 | 分项未另外记录 / UI已退出 | 39.520 |
+
+- RSS为进程工作集求和，可能重复计算共享页，不能将差值当作精确物理内存释放量或优化结论；本轮补充驻留/服务连续性度量，不新增p50/p95对比，因为生产源码与上一轮八轮基准完全相同。GPU/首帧/交互时延和长时资源不在测量内。
+- 未通过项明确保留：CUA App.drag([500,18]→[600,68])返回成功，但工具仅有窗口局部图且无全局坐标，未证明位移；minimize按钮动作返回成功，但未暴露minimized状态，不能证明最小化或恢复。已请求用户明确授权只读CGWindowList窗口位置/尺寸，尚无回复，未执行bounds查询；外部AX也未使用。指定Tray bundle绑定原始错误Computer Use server error -10005: timeoutReached，实际Tray仍活，未把超时当退出/重启，未点不明真实图标；物理托盘Settings/Quit菜单仍待验。
+- 按持续授权完成规范化路径/UID501/父组件与挂载/全部类型及单一链接/进程和lsof预检、临执行清单哈希复核，删除本轮唯一目录67个可再生测试文件，释放估计25,059,328bytes（23.90MiB），本轮临时保留0；系统盘清理后可用38,845,001,728bytes（36.18GiB）。root30仍25,198,592bytes（24.03MiB，仅元数据计量）保留，未读误截图或重试被拒删除；共享缓存与4个未知历史项未动，系统T顶层仅发现root30和本轮root34两个Studio目录。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成macOS单实例/驻留进程/草稿/官方唤起/CmdQ分项，实际菜单点击、拖动/最小化状态、完整视觉/其他焦点/IME/读屏/原生AX、Windows/Intel实机/HiDPI、首帧及更新公网成功等继续推进；Goal active，HTML仍只作静态数据/脚本/链接校验。

@@ -1,0 +1,107 @@
+{
+  "ui_sha256": "0892b084054464431d5af83b9db5e60b013ca338cbc4ace3053cf04e0791d4f8",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "scope": "Synthetic A2/B1, fake HOME and loopback only. Core used the protected sandbox profile; tray and settings UI were not kernel sandboxed.",
+  "initial_processes": {
+    "core": 91253,
+    "tray": 91258,
+    "settings_ui": 91259
+  },
+  "reopened_settings_ui_pid": 95860,
+  "cases": {
+    "native_window_controls": "CUA AX exposed standard window with Raise, close, minimize, fullscreen and zoom secondary action.",
+    "drag": "CUA App.drag from window image [500,18] to [600,68] returned successfully. No position/bounds evidence available through CUA; displacement not verified.",
+    "initial_draft": "On Providers A, CUA set name Lifecycle draft42; A1/A2 remained visible; Save was not invoked.",
+    "tray": "CUA getApp on the specified tray bundle returned Computer Use server error -10005: timeoutReached. No tray item or unknown icon clicked; tray menu functionality not verified.",
+    "minimize": "CUA click on fresh AX minimize button returned successfully. CUA did not expose minimized state and subsequently still exposed window tree; actual minimization not established.",
+    "repeat_host_launch": "Parent performed official host CLI repeat launch; CUA observed Statistics/Usage records and then Providers retained Lifecycle draft42/A1/A2. Process and Core checks are maintained by parent.",
+    "close_settings_only": "Clicked fresh AX close button for original settings window; no CmdQ or tray Quit at this stage. Core and tray survival and HTTP200 loopback are parent-verified.",
+    "host_cli_reopen": "Parent launched official host CLI; CUA observed reopened Statistics/Usage records and then restored Lifecycle draft42/A1/A2 in Providers. This is CLI reopening; no tray Settings menu click was performed.",
+    "cmdq": "Sent exactly one CUA super+q to reopened settings; call returned successfully without text. No post-exit CUA queries or restart; outcome to be recorded from parent process evidence."
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/window-lifecycle-1440x900.png",
+      "ui_pid": 95860,
+      "verified_capture_window_id": 62179,
+      "raw_size": [
+        1440,
+        901
+      ],
+      "output_size": [
+        1440,
+        900
+      ],
+      "raw_sha256": "0ebda259f911909f56a37cd7edec86b9720a6ff7c6f22ec3bb11dc6472d00ac8",
+      "png_sha256": "abef8cb69c11dc4a9dbcf88c155ef754b75871a8c6083f7f117880635bb5e07d",
+      "state": "English Studio, reopened Providers, Lifecycle draft42/A1/A2, Runtime 2 providers 3 models 1 request."
+    },
+    {
+      "file": "docs/studio_v2/screenshots/window-lifecycle-1100x700.png",
+      "ui_pid": 95860,
+      "verified_capture_window_id": 62179,
+      "raw_size": [
+        1100,
+        701
+      ],
+      "output_size": [
+        1100,
+        700
+      ],
+      "raw_sha256": "aa90f4b75e1f6525b71c221619191e50637eddc556b34c65800b14b08c462e24",
+      "png_sha256": "b4f377d8c170868641e5e0912963090308709b8240465d664b13f1f3975dd0dc",
+      "state": "English Studio, reopened Providers, same draft and Runtime counts. Model rows are below the internal scroll viewport."
+    }
+  ],
+  "capture_method": "macOS screencapture -x -o -l verified current PID window; crop bottom 1 physical pixel only; no scaling. Two current PID layer-0 onscreen IDs 62194 and 62179 both yielded identical 1440x901 image bytes; images were inspected before selecting 62179 and recaptured at small size. No global window bounds read.",
+  "limitations": [
+    "Drag displacement and minimized state not verified.",
+    "Tray StatusItem and Settings/Quit interactions not verified because CUA tray binding timed out.",
+    "No external AX attributes or CGWindow bounds/global coordinates queried.",
+    "CmdQ process termination, health and fixture waits to be added from parent observations."
+  ],
+  "parent_verified_runtime_reference": "docs/studio_v2/benchmarks/window-lifecycle-runtime-validation.json",
+  "parent_verified_cmd_q_outcome": {
+    "pids_absent": [
+      91252,
+      91253,
+      91258,
+      91259,
+      95860
+    ],
+    "terminal": {
+      "direct_exit_codes": {
+        "tray": 0,
+        "core": 0
+      },
+      "all_direct_children_waited": true,
+      "ui_pids": [
+        91259,
+        95860
+      ],
+      "all_ui_processes_gone": true,
+      "ui_exit_codes_observed": false,
+      "ui_wait_owner": "Native tray SETTINGS Child; observed exit/disappearance, no invented grandchild return code.",
+      "server_thread_stopped_joined": true
+    },
+    "statistics_runs_after_cmd_q": [
+      [
+        1793310497127,
+        "normal"
+      ]
+    ],
+    "single_run_closed_normally": true,
+    "core_instance_removed": true,
+    "frontend_instance_removed": true,
+    "ui_instance_removed": true,
+    "exit_host_marker_exists": true,
+    "command_method": "Actual CUA super+q to Settings95860, no fixture finish/stop request before Core/Tray termination"
+  },
+  "main_agent_review": {
+    "two_images_visually_reviewed": true,
+    "dimensions_sha256_recomputed": true,
+    "current_and_reopened_pids_independently_verified": true,
+    "drag_and_minimize_not_promoted_to_pass": true,
+    "tray_timeout_not_treated_as_process_exit": true
+  }
+}
