@@ -1,0 +1,207 @@
+{
+  "candidate_sha256": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": {
+    "providers": 2,
+    "models": [
+      12,
+      1
+    ],
+    "requests": 0,
+    "synthetic_home_loopback": true,
+    "core_pid": 42098,
+    "ui_pid": 42105,
+    "fixture_pid": 42092,
+    "kernel_sandbox": {
+      "enforced": true,
+      "pid": 42098,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launch_agents": {
+        "file-read-data": 1,
+        "file-write-data": 1,
+        "file-write-create": 1,
+        "file-write-unlink": 1
+      }
+    }
+  },
+  "cases": {
+    "single_model_focus": "Studio: 1px outline and white area below model; prior solid blue gone",
+    "virtual_end_and_boundary": "first row End Down F2 opened model-a-12",
+    "range_active": "Home Shift+Down twice Shift+Up F2 opened model-a-02",
+    "first_boundary": "Home Up F2 opened model-a-01",
+    "tab_path": "clicked first row then Shift+Tab to remove button, Tab to table focus outline, Tab to model edit, Shift+Tab back to outline",
+    "name_field": "visible provider name received Up/Down/Cmd+A; name and model count remained unchanged; selection state not externally read",
+    "select_all_remove": "Cmd+A Backspace removed 12 model rows in UI draft; saved Core remained A12/B1",
+    "empty_table": "Up Down Home End left app responsive; focus background light, no solid accent",
+    "header_semantics": "CUA tree exposes table, row, cells with header names and model names, contextual edit buttons",
+    "selected_semantics": "CUA tree did not expose selected or SelectedRows; external AX not queried pending user authorization"
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/model-table-1440x900.png",
+      "source_size": [
+        1440,
+        901
+      ],
+      "output_size": [
+        1440,
+        900
+      ],
+      "raw_sha256": "ce5c5f906a82558823cd29f90a1459b99825d11a419c1c767ca11612f9badf88",
+      "png_sha256": "c8e677ee947826974a71798d123e95c46e6832d7fd1fb9cd4b0ae4771093b496",
+      "processing": "crop bottom 1 physical pixel, no scaling",
+      "source": "native screencapture verified PID 42105, unique window ID 61490"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/model-table-single-1440x900.png",
+      "source_size": [
+        1440,
+        901
+      ],
+      "output_size": [
+        1440,
+        900
+      ],
+      "raw_sha256": "5b3fb73bf4c0f10bd40f0456f8322d9b1edfcef696aa598c8bb4895fb3c2e884",
+      "png_sha256": "d0370a6d2cde33a5c81bf9ea6a0bc2da4c123592d194b30eb4b48b923765cb42",
+      "processing": "crop bottom 1 physical pixel, no scaling",
+      "source": "native screencapture verified PID 42105, unique window ID 61490"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/model-table-1100x700.png",
+      "source_size": [
+        1100,
+        701
+      ],
+      "output_size": [
+        1100,
+        700
+      ],
+      "raw_sha256": "0c1668e7dc087f3cd1e99d92a8863ee10aa8f3af95663b457cf9d68d0e9f90d0",
+      "png_sha256": "1254d1dc0c73606d322dc95def6da5a759f5ae860ef82f31272f6da36c2e5076",
+      "processing": "crop bottom 1 physical pixel, no scaling",
+      "source": "native screencapture verified PID 42105, unique window ID 61490"
+    }
+  ],
+  "intermediate_failure": {
+    "candidate_sha256": "d9921581b5e9e4154769a923fbae6edbf9cd884262ed2dd8d3039e36163147cd",
+    "file": "docs/studio_v2/screenshots/model-table-d992-focus-regression-1440x901.png",
+    "raw_sha256": "8a2354ac2a9c4127e60d8d56bd45d5e20e5dcf8e73088bc26c40a5a606f428a2",
+    "note": "single model focus yielded solid accent area; fixed in final candidate"
+  },
+  "lifecycle": {
+    "ui_exit": 0,
+    "core_health_after_ui_exit_http": 200,
+    "core_exit": 0,
+    "fixture_wait_exit": 0,
+    "pids_gone": [
+      42092,
+      42098,
+      42105
+    ]
+  },
+  "limitations": [
+    "Native AXSelected, AXSelectedRows, OS focus property not observed; CUA output omits these and external AX permission pending.",
+    "Complete accessibility, IME and cross-platform coverage not tested.",
+    "Name-field isolation verified by unchanged name and visible model count; underlying selected set could not be inspected via CUA."
+  ],
+  "feature": "UI-40 model table keyboard and native semantic structure",
+  "ui_sha256": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "native_selected_runtime_verified": false,
+  "external_ax_queries_executed": false,
+  "external_ax_authorization": "Pending explicit human reply to read-only native AX method request; not inferred from Goal continuation.",
+  "main_agent_review": {
+    "all_three_final_pngs_visually_reviewed": true,
+    "failed_d992_raw_png_visually_reviewed": true,
+    "png_dimensions_and_sha256_recomputed": true,
+    "final_gui_and_performance_pids_independently_confirmed_gone": true,
+    "keyboard_visual_semantic_structure_only_not_full_accessibility_acceptance": true
+  }
+}

@@ -482,16 +482,43 @@ impl Proxy {
     ) -> AnyElement {
         div()
                     .id("provider-model-table")
+                    .accessibility_id("provider-model-table")
+                    .role(Role::Table)
                     .key_context("ModelList")
                     .track_focus(&self.table_focus)
+                    .bg(rgb(crate::theme::color::WHITE))
+                    .focus_visible(|style| style.shadow(vec![
+                        BoxShadow::new(px(0.), px(0.), rgb(crate::theme::palette().primary).into())
+                            .blur_radius(px(0.)).spread_radius(px(1.))
+                    ]))
                     .flex()
                     .flex_col()
                     .flex_1()
                     .min_h(px(if self.models.len() == 1 { 129. } else { 116. }))
-                    .aria_label(keyboard_hint)
+                    .aria_label(format!("{} · {keyboard_hint}", self.t("模型目录", "Model directory")))
+                    .aria_keyshortcuts("ArrowUp ArrowDown Shift+ArrowUp Shift+ArrowDown Home End Shift+Home Shift+End Control+A Meta+A Delete Enter F2")
+                    .a11y_synthetic_children({
+                        let rows = self.models.len() + 1;
+                        move |tree| {
+                            let table = tree.parent_node();
+                            table.set_multiselectable();
+                            table.set_row_count(rows);
+                            table.set_column_count(3);
+                        }
+                    })
                     .on_action(cx.listener(Self::remove_models))
                     .on_action(cx.listener(Self::select_models))
                     .on_action(cx.listener(Self::edit_selected))
+                    .on_action(cx.listener(|this, _: &ModelPrevious, window, cx| this.move_models(ModelMove::Previous, false, window, cx)))
+                    .on_action(cx.listener(|this, _: &ModelNext, window, cx| this.move_models(ModelMove::Next, false, window, cx)))
+                    .on_action(cx.listener(|this, _: &ModelFirst, window, cx| this.move_models(ModelMove::First, false, window, cx)))
+                    .on_action(cx.listener(|this, _: &ModelLast, window, cx| this.move_models(ModelMove::Last, false, window, cx)))
+                    .on_action(cx.listener(|this, _: &ExtendModelPrevious, window, cx| this.move_models(ModelMove::Previous, true, window, cx)))
+                    .on_action(cx.listener(|this, _: &ExtendModelNext, window, cx| this.move_models(ModelMove::Next, true, window, cx)))
+                    .on_action(cx.listener(|this, _: &ExtendModelFirst, window, cx| this.move_models(ModelMove::First, true, window, cx)))
+                    .on_action(cx.listener(|this, _: &ExtendModelLast, window, cx| this.move_models(ModelMove::Last, true, window, cx)))
+                    .on_action(cx.listener(|_, _: &ModelNextControl, window, cx| { window.focus_next(cx); cx.stop_propagation(); }))
+                    .on_action(cx.listener(|_, _: &ModelPreviousControl, window, cx| { window.focus_prev(cx); cx.stop_propagation(); }))
                     .on_prepaint({
                         let owner = cx.entity().downgrade();
                         move |bounds, _, cx| {

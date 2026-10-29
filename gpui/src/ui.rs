@@ -1,6 +1,8 @@
 mod autostart_notice;
 mod language_menu;
 mod model_editor;
+mod model_navigation;
+pub(crate) use model_navigation::bindings as model_navigation_bindings;
 mod model_picker;
 mod protocol_dialog;
 mod provider_choices;
@@ -18,7 +20,7 @@ mod window_restore;
 use crate::{
     backend::{Backend, Job},
     config::{self, Config},
-    state::{Draft, Drafts, Selection},
+    state::{Draft, Drafts, ModelMove, Selection},
     statistics::Statistics,
 };
 use gpui_kit::component::{
@@ -45,6 +47,16 @@ gpui_kit::actions!(
         RemoveModels,
         SelectModels,
         EditModel,
+        ModelPrevious,
+        ModelNext,
+        ModelFirst,
+        ModelLast,
+        ExtendModelPrevious,
+        ExtendModelNext,
+        ExtendModelFirst,
+        ExtendModelLast,
+        ModelNextControl,
+        ModelPreviousControl,
         Dismiss,
         Quit,
         ActivateProtocolTab,
@@ -725,7 +737,7 @@ impl Proxy {
         let protocol_select = cx.new(|cx| ChoiceState::new(protocol_choices(zh), window, cx));
         let logs = cx.new(|cx| TextareaState::new(window, cx));
         let focus = cx.focus_handle();
-        let table_focus = cx.focus_handle();
+        let table_focus = cx.focus_handle().tab_stop(true);
         let modal_focus = cx.focus_handle();
         let owner = cx.entity().downgrade();
         let picker_list = cx.new(|cx| {
@@ -754,6 +766,10 @@ impl Proxy {
             .sortable(false)
             .col_movable(false)
         });
+        // The application owns multi-selection and its single Tab entry. Kit's
+        // private single-selection focus stays usable by pointer, but is not a
+        // second Tab stop. FocusHandle clones share this registered setting.
+        model_table.read(cx).focus_handle(cx).tab_stop(false);
         let timer = cx.spawn_in(window, async move |this, cx| {
             loop {
                 cx.background_executor()
@@ -1375,13 +1391,15 @@ impl Proxy {
         ) {
             let selected = self.selection.rows.clone();
             let anchor = self.selection.anchor;
+            let cursor = self.selection.cursor;
             self.load_form(window, cx);
             if matches!(tag, "save" | "test" | "install") {
                 self.selection.rows = selected
                     .into_iter()
                     .filter(|i| *i < self.models.len())
                     .collect();
-                self.selection.anchor = anchor;
+                self.selection.anchor = anchor.min(self.models.len().saturating_sub(1));
+                self.selection.cursor = cursor.filter(|row| *row < self.models.len());
             }
         }
     }
@@ -1741,11 +1759,11 @@ impl Proxy {
         cx.notify();
     }
     fn select_models(&mut self, _: &SelectModels, _: &mut Window, cx: &mut Context<Self>) {
-        self.selection.rows = (0..self.models.len()).collect();
+        self.selection.select_all(self.models.len());
         cx.notify();
     }
     fn edit_selected(&mut self, _: &EditModel, window: &mut Window, cx: &mut Context<Self>) {
-        if let Some(i) = self.selection.rows.first().copied() {
+        if let Some(i) = self.selection.edit_row() {
             self.edit(i, false, window, cx);
         }
     }

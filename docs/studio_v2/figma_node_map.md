@@ -47,6 +47,8 @@
 
 共享组件：`103:442` 七项工具栏 → `ui.rs::app_controls`、`ui_components.rs`；最新 `54:2` / `90:442` 已将其独立置于窗口top8/right32、300×36，七项事件保持原样。最终049版1440×900与恢复界面操作后补拍的1100×700实拍已检查；最终小窗Skin/Language上缘点击、模态遮罩及Restore已验，快捷键与菜单Esc的完整范围见实施记录。`83:454` 供应商行、`83:455` 固定操作栏 → `ui.rs::sidebar`；`71:364` 原生实施契约 → `theme.rs`、本目录记录。
 
+共享模型表专项（小功能40）：`model_table.rs`、`ui/model_navigation.rs`、`state.rs`补齐原生表/行/具名表头/单元格语义、方向/Home/End与Shift范围、活动选中行Enter/F2、单一表级Tab入口和可见焦点。最终0c5c真实键盘、1440/1100两尺寸及四轮性能已验；原生AXSelected/SelectedRows/系统焦点属性仍待方法授权和运行核对，完整IME/读屏/跨平台及精细视觉未完成。该共享证据不改变40部分/0整帧最终验收计数。
+
 首批已读取高保真 design context 和渲染：`103:442`、`71:364`、`54:2`。`54:2` 变量已读取，包括 sidebar `#111525`、canvas `#F7F8FC`、ink `#161C2C`、accent `#655CF4`、success `#11976F`。工具栏自身未单独绑定变量（variable defs 返回空对象），尺寸来自共享组件 context。后续阶段按需读取对应画板，不能把 metadata 清单视为已实现。
 
 右栏高保真 context `54:298` / `54:320` 已读取：`ui/relay.rs` 运行中心与日志、`ui_components::TerminalLogs` 的本地深色原生编辑器投影。两尺寸/计数/复制/日志滚动/端口取消的真实回归见 `baseline_and_qa.md`。

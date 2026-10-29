@@ -376,6 +376,7 @@ fn main() {
                 KeyBinding::new("escape", ui::Dismiss, Some("Proxy")),
                 KeyBinding::new("cmd-q", ui::Quit, None),
             ]);
+            cx.bind_keys(ui::model_navigation_bindings());
             let bounds = Bounds::centered(None, default_window_size(), cx);
             gpui_kit::open_window(
                 WindowOptions {

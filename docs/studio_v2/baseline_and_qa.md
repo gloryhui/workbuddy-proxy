@@ -891,3 +891,27 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 四轮短测未见持续明显退化，合计RSS中位85.350→84.540MiB、UI72.940→72.335MiB、p95中位0.2005→0.1970ms、峰值134.030→133.275MiB。首轮新合计/峰值/p95分别增加0.31MiB/2.47MiB/0.010ms，次轮方向相反，逐轮原值全保留，不宣称改善。UI marker不是首帧/可交互，RSS共享页可双计；不测真实编辑时延、持续弹层CPU、公网或跨平台。
 - 按持续安全清理授权，完整规范化路径/UID501/父组件与挂载/无符号链接/全范围/进程及lsof预检、临执行二次核实后，删除本轮单一精确目录的186个专属可再生文件，释放已分配空间估计215,400,448bytes（205.42MiB），本轮专属临时保留0，系统盘可用40,482,267,136bytes（37.70GiB）。上一轮因删除被拒而保留的整个root30为25,198,592bytes（24.03MiB，仅元数据计量），未读取其误截图内容、未重试删除；共享Cargo缓存和4个未知历史项也保留。
 - 80:646由共用待核对转部分验收；剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。40帧均有分项证据，仍须完整精细视觉、初始Tab/键盘、IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘和更新公网成功等专项。源码中Kit会再次写入行aria_selected，应用多选的最终原生AX输出仍须专项核对，不能由本轮可见边线推断正确；原生模型编辑图标着色等既有精细视觉也不列整帧最终通过。Goal保持active；进度HTML继续仅静态校验，不绕过先前浏览器file限制。
+
+## 小功能 40：模型表键盘导航与原生语义结构（2026-10-30，北京时间）
+
+- 补齐模型表键盘方向/Home/End/Shift范围、单一Tab入口和当前选中活动行编辑，保留原生虚拟滚动及鼠标多选；两尺寸实拍和四轮性能短测完成。证据：[最终构建](benchmarks/model-table-build.json)、[真实交互](benchmarks/model-table-gui-validation.json)、[1440模型表](screenshots/model-table-1440x900.png)、[1100英文](screenshots/model-table-1100x700.png)、[1440单模型](screenshots/model-table-single-1440x900.png)、[四轮性能](benchmarks/model-table-performance-summary.json)、[清理记录](benchmarks/model-table-cleanup.json)、[中间版焦点失败实拍](screenshots/model-table-d992-focus-regression-1440x901.png)。
+- 核对锁定SDK gpui-component0.7.3：Kit在delegate.render_tr之后再次用自己的单选值写入Row aria_selected，当前应用使用独立多选且关闭Kit单选。以公开a11y_synthetic_children后置回调更新同一行节点的selected/row_index，补Table、多选标记、行列计数、Row/ColumnHeader/Cell和完整名称/列序号；编辑按钮含模型名称。未修改registry、依赖、虚拟化或核心。CUA实际树可见具名表头、模型单元格和编辑按钮，但不输出AXSelected/AXSelectedRows/OS焦点属性；这三项仍未运行验证，不能从颜色或CUA缺少字段推断通过。
+- Selection新增窗口内非序列化cursor，保留鼠标anchor，使Shift反向可以缩小范围；空表和上下边界不环绕，删除后重置活动行，已有save/test/install重载保留合法选择和cursor。Enter/F2复用原编辑器并定位活动的已选行，cursor被鼠标取消选中时回退首个已选行。新增4个行为回归覆盖范围反向、空/边界/短列表、全选活动行/删除恢复及编辑目标，不改变Draft/config格式或代理逻辑。
+- 键位仅绑定ModelList及实际SDK内层DataTable上下文；方向导航通过既有vertical_scroll_handle显示目标行。应用table_focus是唯一表级Tab入口，Kit内部焦点退出Tab序列但仍可鼠标聚焦；Tab/ShiftTab使用Window既有焦点遍历。焦点轮廓1px且不改布局。中间候选d992真实单模型下方出现大块主色，失败证据保留；最终0c5c给表容器同卡片白底遮住shadow内部，1440和1100均实拍确认恢复浅底/外轮廓。该修复不等于全皮肤精细视觉已验。
+- 最终UI SHA256 `0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac`、15,246,720bytes；fmt0.741s、191 tests/2既有ignored（5.572s）、严格clippy all-targets/-D warnings2.278s、Intel check1.843s、Release39.462s通过。六份源文件及最终UI/Core哈希在收尾再次吻合；Core保持25f/8,428,096bytes，原benchmark SHA保持bc7e0537。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留。
+- 最终合成HOME/loopback A12模型/B1模型/0请求，UI42105、Core42098、fixture42092。实测End→Down→F2打开model-a-12，Home→Up→F2打开model-a-01；Home/ShiftDown两次/ShiftUp→F2打开model-a-02，证明活动行编辑而非首个已选行。点击首行后ShiftTab到Remove、Tab到表轮廓、Tab到行Edit、ShiftTab回表，未激活删除。Name输入框方向/CmdA后名称和模型数不变，但未外查底层selected集合，不扩大断言。表CmdA/Backspace使UI草稿12→0，已保存Core仍A12/B1；空表四方向键保持响应，B单模型最终白底正确。实际kernel_protection矩阵及真实LaunchAgents四类deny记录于GUI JSON，无真实配置/登录项修改。
+- 三张最终PNG主代理均已查看、重算尺寸/SHA；分别1440×900、1100×700和1440×900单模型。原始1440×901/1100×701仅裁底1物理像素，无缩放/拼接，窗口61490。宽图滚动到末行，小图滚动到英文模型区域，不宣称完整连接卡同屏或整帧最终验收。点击/键盘走CUA，原生截图沿用用户已授权方法；没有使用未授权的外部AX API。
+- UI/Core/fixture均exit0并wait，UI退出后Core health200；主代理复核进程消失。CUA文档要求外部交互方法须明确授权；已发出的只读AXUIElement查询问题尚无明确人类答复，因此本轮仅记真实键盘/可见焦点/CUA结构通过，AXSelected/SelectedRows/系统焦点仍待授权。完整读屏、IME及跨平台审计未完成。
+
+同一25f Core、旧bc60与最终0c5c，原benchmark严格旧→新→旧→新，每轮1000小请求及80×1MiB/并发4、64模型。两版隔离appearance均为Studio Indigo；GUI/编译/图像处理结束后独占串行，不含读屏或AX查询工作负载。私有wrapper将原benchmark临时目录延迟到全部进程结束后的精确目录清理，负载/计量及原脚本不改。四轮Core内核沙盒含真实LaunchAgents均实查，直接子进程全部wait，退出数组[-15,-15,0,0]，Core/UI消失。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧bc60](benchmarks/model-table-previous-gui.json) | 12.45 / 72.33 / 84.78 | 434.970 / 1064.021 | 0.173 / 0.209 | 134.70 | 0.091 |
+| [新0c5c](benchmarks/model-table-current-gui.json) | 12.53 / 72.12 / 84.66 | 214.805 / 790.265 | 0.172 / 0.197 | 133.64 | 0.087 |
+| [旧bc60复测](benchmarks/model-table-previous-run2-gui.json) | 12.42 / 71.92 / 84.34 | 219.399 / 679.945 | 0.173 / 0.205 | 139.95 | 0.087 |
+| [新0c5c复测](benchmarks/model-table-current-run2-gui.json) | 12.09 / 72.25 / 84.34 | 217.189 / 704.437 | 0.173 / 0.197 | 130.94 | 0.087 |
+
+- 四轮短测未见明显退化；合计RSS中位84.560→84.500MiB，UI72.125→72.185MiB（增加0.060，保留），p95中位0.207→0.197ms、峰值137.325→132.290MiB。不宣称性能优化；冷启动次序影响，UI marker不是首帧/可交互、RSS共享页可双计，不测键盘交互时延、持续菜单CPU、公网或跨平台。
+- 规范化绝对路径、UID501、所有父组件/挂载/全部文件类型及单一链接、进程/lsof预检与临执行二次清单哈希一致后，按持续授权删除本轮唯一临时目录254个专属可再生文件，释放已分配空间估计268,795,904bytes（256.34MiB），本轮保留0；系统盘可用40,462,876,672bytes（37.68GiB）。此前因删除被拒而保留的root30仍25,198,592bytes（24.03MiB，仅元数据计量），未读取误截图或重试删除；共享Cargo缓存及4个未知历史项保留。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮只补共用模型表专项；40帧完整精细视觉、初始Tab、IME/读屏/原生AX属性、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等仍待推进。Goal保持active，HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。

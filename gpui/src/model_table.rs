@@ -53,6 +53,31 @@ impl TableDelegate for Models {
         .width(self.column_width)
         .min_width(px(120.))
     }
+    fn render_header(
+        &mut self,
+        _: &mut Window,
+        _: &mut Context<TableState<Self>>,
+    ) -> Stateful<Div> {
+        div()
+            .id("model-header")
+            .role(Role::Row)
+            .a11y_synthetic_children(|tree| tree.parent_node().set_row_index(0))
+    }
+    fn render_th(
+        &mut self,
+        col: usize,
+        _: &mut Window,
+        cx: &mut Context<TableState<Self>>,
+    ) -> impl IntoElement {
+        let name = self.column(col, cx).name.clone();
+        div()
+            .id(("model-header-cell", col))
+            .role(Role::ColumnHeader)
+            .aria_label(name.clone())
+            .size_full()
+            .a11y_synthetic_children(move |tree| tree.parent_node().set_column_index(col))
+            .child(name)
+    }
     fn render_tr(
         &mut self,
         i: usize,
@@ -66,6 +91,17 @@ impl TableDelegate for Models {
             .id(("model", i))
             .aria_selected(selected)
             .accessibility_id(format!("model-{i}"))
+            .when(self.selection.cursor == Some(i), |row| {
+                row.aria_active_descendant()
+            })
+            .a11y_synthetic_children(move |tree| {
+                // Kit writes its single-row selection after render_tr returns.
+                // This supported post-prepaint hook updates that same native
+                // row node, retaining cells, buttons and virtualization.
+                let row = tree.parent_node();
+                row.set_selected(selected);
+                row.set_row_index(i + 1); // Header occupies row zero.
+            })
             .bg(if selected {
                 cx.theme().table_active
             } else if studio || crate::theme::current_skin() == crate::theme::Skin::Monochrome {
@@ -101,23 +137,35 @@ impl TableDelegate for Models {
             } else {
                 "Edit model"
             };
-            return Button::new(("model-edit", i))
-                .ghost()
-                .with_size(px(28.))
-                .size(px(28.))
-                .p_0()
+            let model = &self.rows[i];
+            let name = model["name"]
+                .as_str()
+                .filter(|value| !value.is_empty())
+                .or_else(|| model["model"].as_str())
+                .unwrap_or("");
+            return div()
+                .id(("model-action-cell", i))
+                .role(Role::Cell)
+                .a11y_synthetic_children(|tree| tree.parent_node().set_column_index(2))
                 .child(
-                    Icon::default()
-                        .path("studio/model-edit.svg")
-                        .with_size(px(15.)),
+                    Button::new(("model-edit", i))
+                        .ghost()
+                        .with_size(px(28.))
+                        .size(px(28.))
+                        .p_0()
+                        .child(
+                            Icon::default()
+                                .path("studio/model-edit.svg")
+                                .with_size(px(15.)),
+                        )
+                        .tooltip(label)
+                        .accessibility_label(format!("{label}: {name}"))
+                        .disabled(self.busy)
+                        .on_click(move |_, window, cx| {
+                            cx.stop_propagation();
+                            let _ = owner.update(cx, |this, cx| this.edit_model_row(i, window, cx));
+                        }),
                 )
-                .tooltip(label)
-                .accessibility_label(label)
-                .disabled(self.busy)
-                .on_click(move |_, window, cx| {
-                    cx.stop_propagation();
-                    let _ = owner.update(cx, |this, cx| this.edit_model_row(i, window, cx));
-                })
                 .into_any_element();
         }
         let row = &self.rows[i];
@@ -142,6 +190,9 @@ impl TableDelegate for Models {
         };
         div()
             .id(("model-cell", i * 2 + col))
+            .role(Role::Cell)
+            .aria_label(value.to_owned())
+            .a11y_synthetic_children(move |tree| tree.parent_node().set_column_index(col))
             .w_full()
             .min_w_0()
             .overflow_hidden()

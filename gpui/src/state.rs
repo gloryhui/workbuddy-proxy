@@ -126,9 +126,18 @@ impl Drafts {
 pub struct Selection {
     pub rows: BTreeSet<usize>,
     pub anchor: usize,
+    pub cursor: Option<usize>,
+}
+#[derive(Clone, Copy)]
+pub enum ModelMove {
+    Previous,
+    Next,
+    First,
+    Last,
 }
 impl Selection {
     pub fn click(&mut self, row: usize, extend: bool, toggle: bool) {
+        self.cursor = Some(row);
         if extend {
             if !toggle {
                 self.rows.clear();
@@ -146,6 +155,41 @@ impl Selection {
             self.anchor = row;
         }
     }
+    pub fn select_all(&mut self, count: usize) {
+        self.rows = (0..count).collect();
+        self.cursor = self
+            .cursor
+            .filter(|row| *row < count)
+            .or((count > 0).then_some(0));
+        self.anchor = self.cursor.unwrap_or(0);
+    }
+    pub fn edit_row(&self) -> Option<usize> {
+        self.cursor
+            .filter(|row| self.rows.contains(row))
+            .or_else(|| self.rows.first().copied())
+    }
+    /// Keyboard range extension keeps the mouse anchor and moves a separate
+    /// active row, so reversing direction shrinks the range instead of jumping.
+    pub fn navigate(&mut self, movement: ModelMove, count: usize, extend: bool) -> Option<usize> {
+        if count == 0 {
+            self.rows.clear();
+            self.cursor = None;
+            self.anchor = 0;
+            return None;
+        }
+        let previous = self.cursor.filter(|row| *row < count);
+        let target = match movement {
+            ModelMove::Previous => previous.map_or(count - 1, |row| row.saturating_sub(1)),
+            ModelMove::Next => previous.map_or(0, |row| (row + 1).min(count - 1)),
+            ModelMove::First => 0,
+            ModelMove::Last => count - 1,
+        };
+        if extend && (previous.is_none() || self.anchor >= count) {
+            self.anchor = previous.unwrap_or(target);
+        }
+        self.click(target, extend, false);
+        Some(target)
+    }
     pub fn remove(&mut self, models: &mut Vec<Value>) {
         for row in self.rows.iter().rev() {
             if *row < models.len() {
@@ -153,12 +197,87 @@ impl Selection {
             }
         }
         self.rows.clear();
+        self.cursor = None;
+        self.anchor = 0;
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn keyboard_ranges_extend_and_shrink_from_the_mouse_anchor() {
+        let mut selection = Selection::default();
+        selection.click(2, false, false);
+        selection.navigate(ModelMove::Next, 6, true);
+        selection.navigate(ModelMove::Next, 6, true);
+        assert_eq!(selection.rows, BTreeSet::from([2, 3, 4]));
+        assert_eq!(selection.edit_row(), Some(4));
+        assert_eq!(selection.anchor, 2);
+        selection.navigate(ModelMove::Previous, 6, true);
+        assert_eq!(selection.rows, BTreeSet::from([2, 3]));
+        assert_eq!(selection.edit_row(), Some(3));
+        selection.navigate(ModelMove::Previous, 6, true);
+        selection.navigate(ModelMove::Previous, 6, true);
+        assert_eq!(selection.rows, BTreeSet::from([1, 2]));
+        assert_eq!(selection.cursor, Some(1));
+        selection.navigate(ModelMove::Next, 6, false);
+        assert_eq!(selection.rows, BTreeSet::from([2]));
+        assert_eq!(selection.anchor, 2);
+    }
+
+    #[test]
+    fn keyboard_navigation_handles_empty_boundaries_and_shortened_lists() {
+        let mut selection = Selection::default();
+        assert_eq!(selection.navigate(ModelMove::Previous, 0, true), None);
+        assert_eq!(selection.navigate(ModelMove::Next, 3, false), Some(0));
+        assert_eq!(selection.navigate(ModelMove::Previous, 3, false), Some(0));
+        selection.navigate(ModelMove::Last, 3, false);
+        assert_eq!(selection.navigate(ModelMove::Next, 3, false), Some(2));
+        selection.navigate(ModelMove::First, 3, true);
+        assert_eq!(selection.rows, BTreeSet::from([0, 1, 2]));
+        selection.click(8, false, false);
+        assert_eq!(selection.navigate(ModelMove::Previous, 2, true), Some(1));
+        assert_eq!(selection.rows, BTreeSet::from([1]));
+        selection.navigate(ModelMove::Last, 0, false);
+        assert!(selection.rows.is_empty());
+        assert!(selection.cursor.is_none());
+        assert_eq!(selection.anchor, 0);
+    }
+
+    #[test]
+    fn select_all_keeps_the_active_row_and_delete_resets_keyboard_state() {
+        let mut selection = Selection::default();
+        selection.click(3, false, false);
+        selection.select_all(5);
+        assert_eq!(selection.cursor, Some(3));
+        assert_eq!(selection.rows, BTreeSet::from([0, 1, 2, 3, 4]));
+        selection.navigate(ModelMove::Previous, 5, true);
+        assert_eq!(selection.rows, BTreeSet::from([2, 3]));
+        let mut models = (0..5).map(|i| json!({"model":i})).collect();
+        selection.remove(&mut models);
+        assert_eq!(
+            models,
+            vec![json!({"model":0}), json!({"model":1}), json!({"model":4})]
+        );
+        assert!(selection.cursor.is_none());
+        assert_eq!(selection.navigate(ModelMove::Next, 3, false), Some(0));
+    }
+
+    #[test]
+    fn editing_uses_an_active_selected_row_and_handles_a_toggled_off_cursor() {
+        let mut selection = Selection::default();
+        selection.click(1, false, false);
+        selection.click(4, true, false);
+        assert_eq!(selection.edit_row(), Some(4));
+        selection.click(4, false, true);
+        assert_eq!(selection.edit_row(), Some(1));
+        selection.select_all(5);
+        assert_eq!(selection.edit_row(), Some(4));
+        selection.select_all(0);
+        assert_eq!(selection.edit_row(), None);
+    }
     #[test]
     fn legacy_private_draft_inherits_current_protocol_without_losing_typed_edits() {
         let dir = tempfile::tempdir().unwrap();

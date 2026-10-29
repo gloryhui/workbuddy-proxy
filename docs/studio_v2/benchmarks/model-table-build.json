@@ -1,0 +1,112 @@
+{
+  "feature": "UI-40 native model table semantics and keyboard navigation",
+  "ui_sha256": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "ui_bytes": 15246720,
+  "baseline_ui_sha256": "bc60105d0fe722a2877ffd2761a4a7d8d379b65e110402d2dd1d70bd8c9f0dbe",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.741
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 5.572
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 2.278
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 1.843
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 39.462
+    }
+  },
+  "tests_passed": 191,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/model_table.rs": "3830e7cc7e84039b002cf7b94585fcd956213ccab13d2c40e2f27b1bab86b488",
+    "gpui/src/ui/providers.rs": "ed3941b0afb9ab290d920af8e245c2d1ecc31c58c6a36329b73869bdf9169b5c",
+    "gpui/src/ui/model_navigation.rs": "3e6554c2d0f94b0fd0d894974b9c5522d3b78b3f7c6c3ad0681a17e62c454d1f",
+    "gpui/src/ui.rs": "7417295cf7cb3d3ab626651095c53b003c4ed774b503b644276f60ac6f470628",
+    "gpui/src/state.rs": "e892d9db509ff5dfb152600cd13b1231375b8106d5c3edb87691d0869ac0ebff",
+    "gpui/src/main.rs": "963f6615fb33a5cb84072f3ff3aa9fbc108d9b8d579a7bb34ef4ffdedb1a3c98"
+  },
+  "scope": "Native table/rows/cells retained with post-prepaint row metadata; named headers/actions, one application Table Tab stop, scoped Up/Down/Home/End/Shift range, original virtual scrolling. Selection cursor is window-local/non-serialized; keyboard ranges preserve mouse anchor and are regression tested. Existing row mouse modifiers, edit/save/Core/config formats/SDK dependencies retained.",
+  "limitations": [
+    "Native AX selected/SelectedRows remain unverified unless CUA supplies values or user explicitly authorizes requested read-only API.",
+    "Full IME/screen-reader and cross-platform audit pending.",
+    "Intel typecheck only; existing block0.1.6 warning."
+  ],
+  "test_output_summary": [
+    "test result: ok. 191 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.12s"
+  ],
+  "metadata_only_candidate": {
+    "ui_sha256": "1080421e9a0cc1cac8b5069d507a0419a4682ff6c42ed9cd88c5f7be1bb94c4a",
+    "reason_superseded": "Explicit header names plus missing application row keyboard navigation, one Tab entry and active-row accessibility focus added after preview."
+  },
+  "nav_compile_preview": {
+    "ui_sha256": "91eace08202584257c2748b02c3bf47c216676ae90d60661ab308ba4ec801e65",
+    "reason_superseded": "Locked Kit inner context is DataTable; descendant bindings use that actual context, and application Tab/ShiftTab explicitly traverse window focus. No GUI acceptance claimed for preview."
+  },
+  "new_tests": "4 selection behavior regressions: mouse-anchor range extension/reversal, empty/boundary/shortened lists, active-row select-all/post-delete reset, and active selected Enter target with toggled-off cursor fallback. No mirrored layout or one-setter accessibility test.",
+  "tab_preview": {
+    "ui_sha256": "d2eb101799dd5fd62cde76c80cd187dd839ab72419f7cf71db59fb3bf34a67a1",
+    "reason_superseded": "Range focus can differ from first selected row; Enter/F2 now edits active selected row, falling back when cursor was toggled off."
+  },
+  "edit_target": "Enter/F2 reuse original model editor but target active selected row rather than a different first selected row after keyboard range extension; no active selected row falls back to original first-selection behavior.",
+  "failed_focus_candidate": {
+    "ui_sha256": "d9921581b5e9e4154769a923fbae6edbf9cd884262ed2dd8d3039e36163147cd",
+    "reason_rejected": "Actual single-model keyboard focus showed a solid primary rectangle behind the helper: transparent parent exposed shadow interior. Final0c5c uses an opaque white card-matching root; real 1440/1100 GUI validation verified the light helper area and1px outer stroke.",
+    "not_final_acceptance": true
+  },
+  "gui_validation_scope": "Real CUA keyboard, focus outline, table/header/cell names and event behavior; native AXSelected/SelectedRows/OS-focus attributes were NOT queried or verified."
+}

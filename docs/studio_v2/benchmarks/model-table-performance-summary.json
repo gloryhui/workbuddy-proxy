@@ -1,0 +1,121 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2"
+  ],
+  "rounds": [
+    {
+      "label": "previous",
+      "core": 12.45,
+      "ui": 72.33,
+      "total": 84.78,
+      "core_ready": 434.97,
+      "ui_record": 1064.021,
+      "p50": 0.173,
+      "p95": 0.209,
+      "direct_p95": 0.262,
+      "peak": 134.7,
+      "large_s": 0.091,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "model-table-previous-gui.json"
+    },
+    {
+      "label": "current",
+      "core": 12.53,
+      "ui": 72.12,
+      "total": 84.66,
+      "core_ready": 214.805,
+      "ui_record": 790.265,
+      "p50": 0.172,
+      "p95": 0.197,
+      "direct_p95": 0.227,
+      "peak": 133.64,
+      "large_s": 0.087,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "model-table-current-gui.json"
+    },
+    {
+      "label": "previous-run2",
+      "core": 12.42,
+      "ui": 71.92,
+      "total": 84.34,
+      "core_ready": 219.399,
+      "ui_record": 679.945,
+      "p50": 0.173,
+      "p95": 0.205,
+      "direct_p95": 0.22,
+      "peak": 139.95,
+      "large_s": 0.087,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "model-table-previous-run2-gui.json"
+    },
+    {
+      "label": "current-run2",
+      "core": 12.09,
+      "ui": 72.25,
+      "total": 84.34,
+      "core_ready": 217.189,
+      "ui_record": 704.437,
+      "p50": 0.173,
+      "p95": 0.197,
+      "direct_p95": 0.235,
+      "peak": 130.94,
+      "large_s": 0.087,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "model-table-current-run2-gui.json"
+    }
+  ],
+  "medians": {
+    "previous": {
+      "core": 12.435,
+      "ui": 72.125,
+      "total": 84.56,
+      "core_ready": 327.1845,
+      "ui_record": 871.983,
+      "p50": 0.173,
+      "p95": 0.207,
+      "peak": 137.325,
+      "large_s": 0.089
+    },
+    "current": {
+      "core": 12.31,
+      "ui": 72.185,
+      "total": 84.5,
+      "core_ready": 215.997,
+      "ui_record": 747.351,
+      "p50": 0.1725,
+      "p95": 0.197,
+      "peak": 132.29,
+      "large_s": 0.087
+    }
+  },
+  "assessment": "No obvious regression in four bounded same-palette default-page runs; preserve UI RSS increases and individual samples, no optimization claim.",
+  "scope": "Fixed Core25f, oldbc60/final0c5c; original benchmark SHA/1000 small requests/80x1MiB/concurrency4/64 models unchanged. Both isolated fixtures use Studio Indigo. Serial after all GUI/image/compile activity. Core kernel sandbox including real LaunchAgents. Wrapper defers owned temporary-directory cleanup until all children have exited and exact-root deletion is verified.",
+  "limitations": [
+    "UI ready marker is not first paint/interactivity.",
+    "RSS may double count shared pages.",
+    "Does not measure active screen-reader/AX query workloads, keyboard interaction latency, long-duration open menus or cross-platform behavior."
+  ]
+}
