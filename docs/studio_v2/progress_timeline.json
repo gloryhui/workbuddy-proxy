@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T06:21:27+08:00",
+  "updated_at": "2026-10-30T06:38:55+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "b2cdbb70a8f6851a301acf60398e41e186c0faa9",
+  "code_head": "122202f14652072079d0a8163c628ee9c7174e1f",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -13,39 +13,63 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 43,
+  "recorded_tasks": 44,
   "current_task": {
-    "id": 43,
-    "title": "Windows 标题栏兼容性静态审计",
+    "id": 44,
+    "title": "模型编辑图标原色与编辑保存回归",
     "status": "recorded",
-    "description": "记录Windows GNU检查缺windres而未通过及工具栏与窗口按钮静态重叠；未改产品代码，布局偏好和Windows实机验收待续，仍40部分/0最终验收。"
+    "description": "Studio/Mono铅笔恢复Figma原色；两尺寸、三皮肤、鼠标/键盘编辑、草稿与显式保存、192测试和四轮原基准完成，完整跨平台及无障碍等仍待验。"
   },
   "latest_task": {
-    "id": 43,
-    "title": "Windows 标题栏兼容性静态审计",
+    "id": 44,
+    "title": "模型编辑图标原色与编辑保存回归",
     "status": "recorded",
-    "summary": "本轮完成目标工具链与实际锁定依赖的审计，发现资源编译前置条件缺失及标题栏静态重叠；不将其标为Windows验收通过。没有生产源码、依赖、工作流或可执行文件变更。证据：Windows检查与布局计算、沿用的Mac构建门禁。",
+    "summary": "修正Studio/黑白主题模型编辑铅笔被原生按钮文字色染色的问题，仅改model_table.rs；按钮28×28、SVG15×15、事件/焦点/禁用规则及其他皮肤保持。证据：编译与原资源、真实交互及落盘、视觉与像素、1440实拍、1100实拍、四轮性能、清理。",
     "highlights": [
-      "本轮完成目标工具链与实际锁定依赖的审计，发现资源编译前置条件缺失及标题栏静态重叠；不将其标为Windows验收通过。没有生产源码、依赖、工作流或可执行文件变更。证据：Windows检查与布局计算、沿用的Mac构建门禁。",
-      "当前Rust/Cargo均1.98.1，已装Windows GNU/GNU LLVM目标，未装MSVC目标；PATH中rc.exe、llvm-rc、x86_64-w64-mingw32-windres、wine及cargo-xwin均未找到。先以locked/offline检查，因缺accesskit_windows缓存失败；随后允许Cargo下载锁定版本，实际检查在gpui-pre 0.3.9/build.rs:36停止，原始错误为NotAttempted(\"x86_64-w64-mingw32-windres\")。依赖齐备后再以locked/offline捕获同一失败，exit101、1.852s；这是资源编译阻碍，没有完成应用Windows类型检查或生成Windows可执行文件。",
-      "应用自身gpui/build.rs还明确要求Windows SDK的rc.exe，这是独立源码前置条件，本次未运行到该步骤；不把它冒充本次首先发生的错误。复用已有Cargo目录，未伪造资源编译器、禁用manifest、修改锁文件或安装/切换工具链来规避门禁。实际依赖为gpui-kit/component0.7.3与gpui-pre/pre-windows0.3.9；机器上另一份gpui0.2.2不在本次依赖链，不用于结论。"
+      "修正Studio/黑白主题模型编辑铅笔被原生按钮文字色染色的问题，仅改model_table.rs；按钮28×28、SVG15×15、事件/焦点/禁用规则及其他皮肤保持。证据：编译与原资源、真实交互及落盘、视觉与像素、1440实拍、1100实拍、四轮性能、清理。",
+      "官方Figma54:246模型卡与62:438黑白图标的高保真context/截图已读取。设计两处使用同一15px SVG，下载后与现有model-edit.svg逐字节一致，SHAd19ec85f…/原stroke#8B94A9，没有改写或替换资源。旧0892实拍确实显示靛蓝铅笔，Kit Icon::into_svg会把图形作为文字色遮罩；现在仅Studio/Mono且非busy时在Button设置该原色，busy继续Kit disabled foreground，其他皮肤不进入该分支。未改Core、配置格式、依赖、热路径或工具栏位置。",
+      "本轮重新通过fmt0.465s、192 tests/2既有ignored6.006s、严格clippy all-targets/-Dwarnings2.658s、Intel check1.790s、Release42.589s。最终UIb5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691，15,246,768bytes；基线仍0892、Core仍25f/8,428,096bytes。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留，UI43的Windows资源编译阻碍及标题栏重叠没有因此解决。"
     ],
     "limits": [
-      "实际Windows后端会将WindowControlArea映射到HTMINBUTTON/HTMAXBUTTON/HTCLOSE；工具栏的occlude可排除下面的命中区域，却不能解决共用可视空间。绘制与点击的最终表现仍待Windows实机。已向用户询问Windows将工具栏置于窗口按钮下方或保留待实机确认的偏好，尚无答复，本轮未擅自改变明确要求的top8/right32；macOS位置保持。Windows Ctrl/IME、窗口按钮、缩放/HiDPI、两尺寸实拍及性能继续待验。"
+      "实际原生close后两UI均exit0，私有夹具再停止Core并wait0，两个fixture直接wait0；这不额外证明Core驻留连续性（见UI42）。四轮benchmark自有子进程退出数组均[-15,-15,0,0]并wait，记录的Core/UI PID由主代理独立核对消失，临时目录清理延迟到完整预检之后。没有实际供应商请求、真实登录项/同步重启或外部AX，busy禁用分支本轮未强制造成GUI场景；完整IME/读屏/Windows/Intel实机/HiDPI仍待验。"
     ],
     "evidence": [
       {
-        "label": "Windows检查与布局计算",
-        "href": "benchmarks/windows-compatibility-audit.json"
+        "label": "编译与原资源",
+        "href": "benchmarks/model-edit-build.json"
       },
       {
-        "label": "沿用的Mac构建门禁",
-        "href": "benchmarks/toolbar-keyboard-build.json"
+        "label": "真实交互及落盘",
+        "href": "benchmarks/model-edit-gui-validation.json"
+      },
+      {
+        "label": "视觉与像素",
+        "href": "benchmarks/model-edit-visual-validation.json"
+      },
+      {
+        "label": "1440实拍",
+        "href": "screenshots/model-edit-1440x900.png"
+      },
+      {
+        "label": "1100实拍",
+        "href": "screenshots/model-edit-1100x700.png"
+      },
+      {
+        "label": "四轮性能",
+        "href": "benchmarks/model-edit-performance-summary.json"
+      },
+      {
+        "label": "清理",
+        "href": "benchmarks/model-edit-cleanup.json"
+      },
+      {
+        "label": "Mono1100",
+        "href": "screenshots/model-edit-mono-1100x700.png"
       }
     ],
-    "commit": "546a39a683fd18767649ed1207f0d2b443ba517e",
-    "date": "2026-10-30T06:21:18+08:00",
-    "commit_subject": "docs(studio): record Windows toolbar compatibility audit",
+    "commit": "122202f14652072079d0a8163c628ee9c7174e1f",
+    "date": "2026-10-30T06:38:41+08:00",
+    "commit_subject": "fix(studio): preserve design color for model edit icons",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2217,6 +2241,58 @@
       "date": "2026-10-30T06:21:18+08:00",
       "commit_subject": "docs(studio): record Windows toolbar compatibility audit",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 44,
+      "title": "模型编辑图标原色与编辑保存回归",
+      "status": "recorded",
+      "summary": "修正Studio/黑白主题模型编辑铅笔被原生按钮文字色染色的问题，仅改model_table.rs；按钮28×28、SVG15×15、事件/焦点/禁用规则及其他皮肤保持。证据：编译与原资源、真实交互及落盘、视觉与像素、1440实拍、1100实拍、四轮性能、清理。",
+      "highlights": [
+        "修正Studio/黑白主题模型编辑铅笔被原生按钮文字色染色的问题，仅改model_table.rs；按钮28×28、SVG15×15、事件/焦点/禁用规则及其他皮肤保持。证据：编译与原资源、真实交互及落盘、视觉与像素、1440实拍、1100实拍、四轮性能、清理。",
+        "官方Figma54:246模型卡与62:438黑白图标的高保真context/截图已读取。设计两处使用同一15px SVG，下载后与现有model-edit.svg逐字节一致，SHAd19ec85f…/原stroke#8B94A9，没有改写或替换资源。旧0892实拍确实显示靛蓝铅笔，Kit Icon::into_svg会把图形作为文字色遮罩；现在仅Studio/Mono且非busy时在Button设置该原色，busy继续Kit disabled foreground，其他皮肤不进入该分支。未改Core、配置格式、依赖、热路径或工具栏位置。",
+        "本轮重新通过fmt0.465s、192 tests/2既有ignored6.006s、严格clippy all-targets/-Dwarnings2.658s、Intel check1.790s、Release42.589s。最终UIb5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691，15,246,768bytes；基线仍0892、Core仍25f/8,428,096bytes。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留，UI43的Windows资源编译阻碍及标题栏重叠没有因此解决。"
+      ],
+      "limits": [
+        "实际原生close后两UI均exit0，私有夹具再停止Core并wait0，两个fixture直接wait0；这不额外证明Core驻留连续性（见UI42）。四轮benchmark自有子进程退出数组均[-15,-15,0,0]并wait，记录的Core/UI PID由主代理独立核对消失，临时目录清理延迟到完整预检之后。没有实际供应商请求、真实登录项/同步重启或外部AX，busy禁用分支本轮未强制造成GUI场景；完整IME/读屏/Windows/Intel实机/HiDPI仍待验。"
+      ],
+      "evidence": [
+        {
+          "label": "编译与原资源",
+          "href": "benchmarks/model-edit-build.json"
+        },
+        {
+          "label": "真实交互及落盘",
+          "href": "benchmarks/model-edit-gui-validation.json"
+        },
+        {
+          "label": "视觉与像素",
+          "href": "benchmarks/model-edit-visual-validation.json"
+        },
+        {
+          "label": "1440实拍",
+          "href": "screenshots/model-edit-1440x900.png"
+        },
+        {
+          "label": "1100实拍",
+          "href": "screenshots/model-edit-1100x700.png"
+        },
+        {
+          "label": "四轮性能",
+          "href": "benchmarks/model-edit-performance-summary.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/model-edit-cleanup.json"
+        },
+        {
+          "label": "Mono1100",
+          "href": "screenshots/model-edit-mono-1100x700.png"
+        }
+      ],
+      "commit": "122202f14652072079d0a8163c628ee9c7174e1f",
+      "date": "2026-10-30T06:38:41+08:00",
+      "commit_subject": "fix(studio): preserve design color for model edit icons",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2502,6 +2578,14 @@
     {
       "date": "2026-10-30T06:21:27+08:00",
       "note": "完成 UI-43 静态审计记录；Windows 编译与运行未通过，Goal继续active",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T06:38:55+08:00",
+      "note": "完成 UI-44 并保留全部模型事件；40部分/0最终验收，Goal active",
       "pending": 0,
       "partial": 40,
       "reused": 0,
