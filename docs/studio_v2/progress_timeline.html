@@ -198,7 +198,7 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T06:09:01+08:00",
+  "updated_at": "2026-10-30T06:21:27+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "b2cdbb70a8f6851a301acf60398e41e186c0faa9",
@@ -211,59 +211,39 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 42,
+  "recorded_tasks": 43,
   "current_task": {
-    "id": 42,
-    "title": "macOS三进程与草稿、CmdQ分项验收已提交",
+    "id": 43,
+    "title": "Windows 标题栏兼容性静态审计",
     "status": "recorded",
-    "description": "源码未改：真实3→2→3、官方单实例/草稿恢复/实际CmdQ、原脚本冷启动重启及两尺寸实拍完成。拖动位移、最小化状态和物理托盘菜单点击未验。40部分验收、0整帧最终验收。"
+    "description": "记录Windows GNU检查缺windres而未通过及工具栏与窗口按钮静态重叠；未改产品代码，布局偏好和Windows实机验收待续，仍40部分/0最终验收。"
   },
   "latest_task": {
-    "id": 42,
-    "title": "原生托盘、设置与核心生命周期实测",
+    "id": 43,
+    "title": "Windows 标题栏兼容性静态审计",
     "status": "recorded",
-    "summary": "新增真实三进程关闭/重开/单实例与CmdQ证据，补齐已有Core挂接及正常冷启动两条路径；本轮没有Rust源码或依赖变更。证据：构建复用与哈希、真实GUI、1440重开草稿、1100重开草稿、热挂接运行与CmdQ、原脚本冷启动/重启、清理记录。",
+    "summary": "本轮完成目标工具链与实际锁定依赖的审计，发现资源编译前置条件缺失及标题栏静态重叠；不将其标为Windows验收通过。没有生产源码、依赖、工作流或可执行文件变更。证据：Windows检查与布局计算、沿用的Mac构建门禁。",
     "highlights": [
-      "新增真实三进程关闭/重开/单实例与CmdQ证据，补齐已有Core挂接及正常冷启动两条路径；本轮没有Rust源码或依赖变更。证据：构建复用与哈希、真实GUI、1440重开草稿、1100重开草稿、热挂接运行与CmdQ、原脚本冷启动/重启、清理记录。",
-      "当前源码/可执行文件与小功能41已提交版本逐哈希一致：UI0892/15,246,768bytes、Core25f/8,428,096bytes，仍为原生Rust+GPUI与native/gpui_host.m轻量托盘。复用192 tests/2 ignored、fmt/clippy/Intel check/Release门禁，本轮不冒称重新编译或重跑八轮基准。README明确普通启动3进程、关设置后2进程、重开私有草稿及CmdQ完全退出；本轮核对src/frontend.rs、src/gpui_host.rs、native/gpui_host.m、UI wake/quit路径后按实际行为验收，没有改代理核心逻辑或配置。",
-      "Mac实际未锁定。先启动受kernel profile保护的Core91253，再用唯一review bundle与显式config-dir/合成HOME的原生托盘91258挂接，托盘真实生成UI91259，三PID不同。热挂接的托盘/UI没有内核沙盒，不把合成环境等同kernel隔离；实际Core91253完整保护矩阵及真实LaunchAgents四类deny1已留，合成目录四项allow0，未操作真实Key、用户配置或登录项。本地review bundle的Mach-O字节不变，本轮不是已签名安装包/DMG验收。"
+      "本轮完成目标工具链与实际锁定依赖的审计，发现资源编译前置条件缺失及标题栏静态重叠；不将其标为Windows验收通过。没有生产源码、依赖、工作流或可执行文件变更。证据：Windows检查与布局计算、沿用的Mac构建门禁。",
+      "当前Rust/Cargo均1.98.1，已装Windows GNU/GNU LLVM目标，未装MSVC目标；PATH中rc.exe、llvm-rc、x86_64-w64-mingw32-windres、wine及cargo-xwin均未找到。先以locked/offline检查，因缺accesskit_windows缓存失败；随后允许Cargo下载锁定版本，实际检查在gpui-pre 0.3.9/build.rs:36停止，原始错误为NotAttempted(\"x86_64-w64-mingw32-windres\")。依赖齐备后再以locked/offline捕获同一失败，exit101、1.852s；这是资源编译阻碍，没有完成应用Windows类型检查或生成Windows可执行文件。",
+      "应用自身gpui/build.rs还明确要求Windows SDK的rc.exe，这是独立源码前置条件，本次未运行到该步骤；不把它冒充本次首先发生的错误。复用已有Cargo目录，未伪造资源编译器、禁用manifest、修改锁文件或安装/切换工具链来规避门禁。实际依赖为gpui-kit/component0.7.3与gpui-pre/pre-windows0.3.9；机器上另一份gpui0.2.2不在本次依赖链，不用于结论。"
     ],
     "limits": [
-      "未通过项明确保留：CUA App.drag([500,18]→[600,68])返回成功，但工具仅有窗口局部图且无全局坐标，未证明位移；minimize按钮动作返回成功，但未暴露minimized状态，不能证明最小化或恢复。已请求用户明确授权只读CGWindowList窗口位置/尺寸，尚无回复，未执行bounds查询；外部AX也未使用。指定Tray bundle绑定原始错误Computer Use server error -10005: timeoutReached，实际Tray仍活，未把超时当退出/重启，未点不明真实图标；物理托盘Settings/Quit菜单仍待验。"
+      "实际Windows后端会将WindowControlArea映射到HTMINBUTTON/HTMAXBUTTON/HTCLOSE；工具栏的occlude可排除下面的命中区域，却不能解决共用可视空间。绘制与点击的最终表现仍待Windows实机。已向用户询问Windows将工具栏置于窗口按钮下方或保留待实机确认的偏好，尚无答复，本轮未擅自改变明确要求的top8/right32；macOS位置保持。Windows Ctrl/IME、窗口按钮、缩放/HiDPI、两尺寸实拍及性能继续待验。"
     ],
     "evidence": [
       {
-        "label": "构建复用与哈希",
-        "href": "benchmarks/window-lifecycle-build.json"
+        "label": "Windows检查与布局计算",
+        "href": "benchmarks/windows-compatibility-audit.json"
       },
       {
-        "label": "真实GUI",
-        "href": "benchmarks/window-lifecycle-gui-validation.json"
-      },
-      {
-        "label": "1440重开草稿",
-        "href": "screenshots/window-lifecycle-1440x900.png"
-      },
-      {
-        "label": "1100重开草稿",
-        "href": "screenshots/window-lifecycle-1100x700.png"
-      },
-      {
-        "label": "热挂接运行与CmdQ",
-        "href": "benchmarks/window-lifecycle-runtime-validation.json"
-      },
-      {
-        "label": "原脚本冷启动/重启",
-        "href": "benchmarks/window-lifecycle-cold-start.json"
-      },
-      {
-        "label": "清理记录",
-        "href": "benchmarks/window-lifecycle-cleanup.json"
+        "label": "沿用的Mac构建门禁",
+        "href": "benchmarks/toolbar-keyboard-build.json"
       }
     ],
-    "commit": "2da5ce616cda4e218823547bad053421e539229b",
-    "date": "2026-10-30T06:08:40+08:00",
-    "commit_subject": "test(studio): record native tray and settings lifecycle acceptance",
+    "commit": "546a39a683fd18767649ed1207f0d2b443ba517e",
+    "date": "2026-10-30T06:21:18+08:00",
+    "commit_subject": "docs(studio): record Windows toolbar compatibility audit",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2407,6 +2387,34 @@
       "date": "2026-10-30T06:08:40+08:00",
       "commit_subject": "test(studio): record native tray and settings lifecycle acceptance",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 43,
+      "title": "Windows 标题栏兼容性静态审计",
+      "status": "recorded",
+      "summary": "本轮完成目标工具链与实际锁定依赖的审计，发现资源编译前置条件缺失及标题栏静态重叠；不将其标为Windows验收通过。没有生产源码、依赖、工作流或可执行文件变更。证据：Windows检查与布局计算、沿用的Mac构建门禁。",
+      "highlights": [
+        "本轮完成目标工具链与实际锁定依赖的审计，发现资源编译前置条件缺失及标题栏静态重叠；不将其标为Windows验收通过。没有生产源码、依赖、工作流或可执行文件变更。证据：Windows检查与布局计算、沿用的Mac构建门禁。",
+        "当前Rust/Cargo均1.98.1，已装Windows GNU/GNU LLVM目标，未装MSVC目标；PATH中rc.exe、llvm-rc、x86_64-w64-mingw32-windres、wine及cargo-xwin均未找到。先以locked/offline检查，因缺accesskit_windows缓存失败；随后允许Cargo下载锁定版本，实际检查在gpui-pre 0.3.9/build.rs:36停止，原始错误为NotAttempted(\"x86_64-w64-mingw32-windres\")。依赖齐备后再以locked/offline捕获同一失败，exit101、1.852s；这是资源编译阻碍，没有完成应用Windows类型检查或生成Windows可执行文件。",
+        "应用自身gpui/build.rs还明确要求Windows SDK的rc.exe，这是独立源码前置条件，本次未运行到该步骤；不把它冒充本次首先发生的错误。复用已有Cargo目录，未伪造资源编译器、禁用manifest、修改锁文件或安装/切换工具链来规避门禁。实际依赖为gpui-kit/component0.7.3与gpui-pre/pre-windows0.3.9；机器上另一份gpui0.2.2不在本次依赖链，不用于结论。"
+      ],
+      "limits": [
+        "实际Windows后端会将WindowControlArea映射到HTMINBUTTON/HTMAXBUTTON/HTCLOSE；工具栏的occlude可排除下面的命中区域，却不能解决共用可视空间。绘制与点击的最终表现仍待Windows实机。已向用户询问Windows将工具栏置于窗口按钮下方或保留待实机确认的偏好，尚无答复，本轮未擅自改变明确要求的top8/right32；macOS位置保持。Windows Ctrl/IME、窗口按钮、缩放/HiDPI、两尺寸实拍及性能继续待验。"
+      ],
+      "evidence": [
+        {
+          "label": "Windows检查与布局计算",
+          "href": "benchmarks/windows-compatibility-audit.json"
+        },
+        {
+          "label": "沿用的Mac构建门禁",
+          "href": "benchmarks/toolbar-keyboard-build.json"
+        }
+      ],
+      "commit": "546a39a683fd18767649ed1207f0d2b443ba517e",
+      "date": "2026-10-30T06:21:18+08:00",
+      "commit_subject": "docs(studio): record Windows toolbar compatibility audit",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2684,6 +2692,14 @@
     {
       "date": "2026-10-30T06:09:01+08:00",
       "note": "本轮为同一0892/25f版本的生命周期验收，构建门禁沿用已提交版本；原生坐标方法待明确授权，完整视觉/IME/读屏/跨平台等仍继续，Goal active。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T06:21:27+08:00",
+      "note": "完成 UI-43 静态审计记录；Windows 编译与运行未通过，Goal继续active",
       "pending": 0,
       "partial": 40,
       "reused": 0,
