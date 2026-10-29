@@ -1,0 +1,40 @@
+{
+  "ui_sha256": "841cde257909e029eb9b827e5e39273bf4e9f17325978a404b764318bdfa93a7",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": "independent synthetic HOME, sandboxed core and loopback mock",
+  "results": {
+    "new_and_copy": "20→21 new then 21→22 copy actual Save; selected appended rows became visible above fixed CRUD without manual scrolling.",
+    "resize": "1440→1100 retained selected appended row visible.",
+    "manual_scroll": "Scrolled selected tail away to Provider00/01/02; after nine seconds remained there, no refresh-induced jump.",
+    "filter_draft": "Edited copy name Draft changed; search Provider00 hid selected copy without changing its draft or selected main content; clear restored selected draft row into view.",
+    "collapse_expand": "List re-expanded with selected draft row visible.",
+    "capacity": "Independent 64-provider fixture showed 64/64, dimmed Add and Copy; physical clicks did not create draft or change UI.",
+    "search64": "Provider63 search returned 1/64, selected it, clear revealed selected final row; no-such-provider returned 0/64 without changing selected main content. 1100 resize retained selected row visible."
+  },
+  "screenshots": {
+    "files": [
+      "provider-rail-20-1440x900.png",
+      "provider-rail-20-1100x700.png",
+      "provider-rail-64-1440x900.png",
+      "provider-rail-64-1100x700.png"
+    ],
+    "states": "20 fixture actually 22 providers after saves, unsaved Draft changed, CN Studio both; 64 fixture 64 providers/3 models/0 requests, Provider63 selected, CN Studio wide and EN Mono small.",
+    "raw_processing": "wide 2880x1800 no crop; small 2200x1402 crop bottom 2 physical px; one LANCZOS 2:1 resize."
+  },
+  "processes": {
+    "20": {
+      "ui_exit": 0,
+      "health_after_ui_close": "ready",
+      "core_exit": 0,
+      "fixture_exit": 0
+    },
+    "64": {
+      "ui_exit": 0,
+      "health_after_ui_close": "ready",
+      "core_exit": 0,
+      "fixture_exit": 0
+    },
+    "owned_pids_gone": true
+  },
+  "cleanup": "fixture and raw retained for parent inspection and owned root cleanup"
+}

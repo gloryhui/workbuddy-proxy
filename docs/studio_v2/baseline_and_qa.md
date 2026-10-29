@@ -581,3 +581,34 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 已停止并wait本轮GUI/Core/mock/benchmark/编译子进程，专属根lsof无引用；清理55个专属临时文件，释放已分配空间136,257,536 bytes（129.95MiB），保留本轮专属临时文件0。仓库实拍/JSON、共享Cargo缓存、未知历史目录不动，前序93,053-byte系统编译诊断仍保留。系统盘可用41,758,957,568 bytes（38.89GiB）。[清理证据](benchmarks/provider-saved-cleanup.json)。
 - Goal保持active。下一批继续供应商满载/搜索与菜单状态的逐帧对齐；完整40帧精细审计、IME/无障碍及Windows/Intel实际运行仍未完成。
+
+## 小功能 29：满载供应商侧栏与选中行可见性（2026-10-29，北京时间）
+
+- 前序小窗实测新保存的副本可能位于固定CRUD下方，需要手动滚动取回。本批沿用已读满载帧 `78:1325` 与搜索状态，保持原生独立滚动、固定操作栏及真实计数，给provider-list增加会话内原生ScrollHandle。
+- 只在选中真实rail ID、可见ID列表、viewport尺寸、展开状态或页面变化时，在下一frame布局稳定后调用原生scroll_to_item最小取回目标；较新的筛选/选择会使排队任务失效。临时New/Copy继续指向return_to来源，不新增伪保存行。没有timer/轮询重绘，手动滚动offset和后台poll不属于layout identity，不会持续拉回所选行。
+- 搜索继续只按可见名称、不碰key/URL或内部ID；搜索隐藏当前目标时不滚动到其他行、不改选择、不清查询；清除搜索后才取回当前目标。窗口移动但viewport不变不会触发重定位。折叠保持native offset，展开后只做一次当前行可见性校正。
+- fmt、174项测试、严格clippy all-targets/-D warnings、Intel目标check3.12s、Release44.27s Passed。UI 15,196,672 bytes（比c455增加16 bytes），SHA256 `841cde257909e029eb9b827e5e39273bf4e9f17325978a404b764318bdfa93a7`；核心仍8,428,096 bytes/25f SHA，未改API、配置或业务逻辑。既存block0.1.6未来兼容提示保持，Intel仅类型检查；两项Core ignored专项已在小功能27单独通过，本批未重复。[编译证据](benchmarks/provider-rail-build.json)。
+- 最终841c的20场景真实GUI：New Save由20→21供应商/3模型，Copy Save由21→22供应商/3模型（复制的是新建空模型供应商）；两次新选中尾行均无手动滚动就完整出现在固定CRUD上方。1440缩至1100后当前copy仍完整可见。手动向上滚至Provider00并等待9秒，列表仍停在00/01/02，没有poll回跳。
+- 在当前副本已有未保存名称Draft changed时搜索Provider00，筛选隐藏当前目标但主区保持该草稿；清除搜索后原选中行自动可见，草稿未丢。折叠/再展开保持同一选中行可见。64独立场景真实64/3/0：搜索Provider63得1/64并选中；清除后露出58–63，缩窗后61–63仍完整显示。无结果得0/64且主区仍Provider63；Add/Copy满载禁用，实际点击未创建。
+
+- 主代理逐张打开检查[20场景宽窗](screenshots/provider-rail-20-1440x900.png)、[20场景小窗](screenshots/provider-rail-20-1100x700.png)、[64宽窗](screenshots/provider-rail-64-1440x900.png)、[64小窗](screenshots/provider-rail-64-1100x700.png)。20夹具经过保存已是22供应商/3模型，显示真实未保存Draft changed；64为64/3/0。宽图raw2880×1800未裁，小图2200×1402仅裁底2px，再一次LANCZOS 2:1缩至目标尺寸。20两尺寸中文Studio，64宽中文Studio/小英文Mono；搜索无结果和1/64为实际交互未单独拍图。
+- 两套隔离夹具均先正常关闭UI退出0，Core health仍ready，再停止Core/fixture退出0并wait，所有记录PID消失；[GUI证据](benchmarks/provider-rail-gui-validation.json)。
+- Figma连接恢复后重新读取高保真78:1325和79:400，满载64/64、匹配1/64、38px列表行/独立滚动/固定44px操作栏与原本地SVG槽位保持；实际Core计数与按钮容量规则优先于原型静态例值（原型rail64而运行中心2/5，不在产品伪造）。搜索17px、状态点7px及动作16px SVG非空本地文件/根尺寸/调用几何均核对，没有下载或新增资产。
+- 另复查54:2与79:885/79:1102发现：通用页没有左侧完成徽标，只有新增/复制完成帧有142×26的Draft badge。小功能28当前把左Saved用于所有保存行，是已确认的通用header呈现差异；本批仅rail，留待下一小批限定到真实创建完成上下文，不将整帧标完成。
+
+同机Release、相同25f核心、默认GUI页，c455→841c→c455→841c四轮交错：1供应商/64模型，200小请求、80次1MiB/并发4。初次新版本p95方向偏高，再在图片处理完成后按新→旧各追加1000小请求。输入SHA全部核对、核心内核沙盒enforced、owned子进程wait、UI PID消失；Mock/controller按脚本SIGTERM退出数组[-15,-15,0,0]，不写成全0。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧c455](benchmarks/provider-rail-previous-gui.json) | 11.08 / 75.33 / 86.41 | 240.257 / 951.273 | 0.188 / 0.327 | 140.42 | 0.107 |
+| [新841c](benchmarks/provider-rail-gui.json) | 12.30 / 76.61 / 88.91 | 219.758 / 688.469 | 0.189 / 0.357 | 140.84 | 0.103 |
+| [旧c455复测](benchmarks/provider-rail-previous-run2-gui.json) | 13.33 / 77.56 / 90.89 | 247.833 / 685.012 | 0.156 / 0.283 | 144.78 | 0.110 |
+| [新841c复测](benchmarks/provider-rail-run2-gui.json) | 10.84 / 72.11 / 82.95 | 210.664 / 714.131 | 0.181 / 0.407 | 135.78 | 0.143 |
+| [新841c1000请求复核](benchmarks/provider-rail-confirm-gui.json) | 12.45 / 76.98 / 89.44 | 434.396 / 1129.436 | 0.171 / 0.191 | 135.03 | 0.090 |
+| [旧c4551000请求复核](benchmarks/provider-rail-previous-confirm-gui.json) | 11.98 / 76.11 / 88.09 | 230.619 / 730.981 | 0.171 / 0.207 | 133.80 | 0.087 |
+
+- 初四轮合计空闲RSS中位88.650→85.930MiB，单轮方向不同，不宣称降低。初四轮新p95为0.357/0.407ms，旧为0.327/0.283ms；追加1000请求后新/旧p50均0.171ms、p95为0.191/0.207ms，中位代理开销0.024/0.023ms，未复现持续尾延迟退化。追加轮合计RSS新89.44/旧88.09MiB，累计就绪新1129.436/旧730.981ms，核心启动自身434.396/230.619ms，不能把单轮累计时间都归因于UI。
+- 只在当前短轮口径判定未见明显持续退化，不宣称提升。UI记录不是首帧或可交互时间，RSS共享页可能双计、tray另计；默认1供应商页不能替代64供应商长期CPU/重绘审计，64列表真实9秒无回跳属于前述GUI证据。
+
+- 本轮GUI/Core/mock/benchmark/编译子进程已停止并wait，专属根lsof无引用；删除80个专属临时文件，释放已分配空间206,548,992 bytes（196.98MiB），保留本轮专属临时文件0。仓库实拍/JSON、共享Cargo缓存、未知历史目录不动，前序93,053-byte系统编译诊断仍保留。系统盘可用41,629,990,912 bytes（38.77GiB）。[清理证据](benchmarks/provider-rail-cleanup.json)。
+- Goal保持active。下一批修正上述通用/新建/复制完成header的可见范围，再继续菜单/完整40帧精细审计；IME/无障碍与Windows/Intel实际运行仍未完成。

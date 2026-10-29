@@ -119,8 +119,32 @@ fn action(kind: SupplierAction, label: &'static str, disabled: bool, cx: &App) -
         )
 }
 
+/// Geometry and identity that warrant a single reveal. Scroll offsets and
+/// background poll values are intentionally absent: browsing must not jump.
+#[derive(Clone, PartialEq)]
+pub(super) struct RailLayout {
+    viewport: Size<Pixels>,
+    selected: String,
+    rows: Vec<String>,
+    expanded: bool,
+    page: Page,
+}
+
 impl Proxy {
-    pub(super) fn sidebar(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn subscribe_provider_rail_bounds(
+        &self,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
+        cx.observe_window_bounds(window, |this, _, cx| {
+            if this.providers_expanded {
+                cx.notify();
+            }
+        })
+        .detach();
+    }
+
+    pub(super) fn sidebar(&mut self, window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
         let compact = window.viewport_size().height < px(800.);
         let selected = self.selected();
         let rail_selected = self
@@ -132,6 +156,30 @@ impl Proxy {
         let query = self.provider_search.read(cx).value();
         let visible = crate::provider_filter::filtered(&self.cfg.providers, &self.drafts, &query);
         let count = visible.len();
+        let layout = RailLayout {
+            viewport: window.viewport_size(),
+            selected: rail_selected.to_owned(),
+            rows: visible.iter().map(|provider| provider.id.clone()).collect(),
+            expanded: self.providers_expanded,
+            page: self.page,
+        };
+        if self.provider_rail_layout.as_ref() != Some(&layout) {
+            self.provider_rail_layout = Some(layout.clone());
+            if layout.expanded
+                && layout.page == Page::Providers
+                && let Some(index) = layout.rows.iter().position(|id| *id == layout.selected)
+            {
+                // GPUI consumes the target against the last child bounds.
+                // Wait until changed rows/viewport have laid out, then reveal
+                // minimally once. A newer query/selection invalidates this job.
+                cx.on_next_frame(window, move |this, _, cx| {
+                    if this.provider_rail_layout.as_ref() == Some(&layout) {
+                        this.provider_rail_scroll.scroll_to_item(index);
+                        cx.notify();
+                    }
+                });
+            }
+        }
         let settings = self.statistics.read(cx).is_settings_view();
         let rows = visible
             .into_iter()
@@ -379,6 +427,7 @@ impl Proxy {
                         .mx(px(4.))
                         .gap(px(4.))
                         .overflow_y_scroll()
+                        .track_scroll(&self.provider_rail_scroll)
                         .children(rows)
                         .when(count == 0, |list| {
                             list.child(

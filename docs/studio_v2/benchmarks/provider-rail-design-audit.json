@@ -1,0 +1,47 @@
+{
+  "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "high_fidelity_nodes_rechecked": [
+    "78:1325",
+    "79:400",
+    "54:2",
+    "79:885",
+    "79:1102"
+  ],
+  "rail_geometry": {
+    "row_height": 38,
+    "list_width": 216,
+    "fixed_actions_height": 44,
+    "search_icon": 17,
+    "provider_dot": 7,
+    "action_icon": 16
+  },
+  "assets_reused": [
+    "supplier-selected.svg",
+    "supplier-default.svg",
+    "provider-search.svg",
+    "supplier-add.svg",
+    "supplier-copy.svg",
+    "supplier-delete.svg"
+  ],
+  "asset_checks": "Non-empty local files, SVG root width/height and existing effective callsite geometry inspected; no new static asset or runtime Figma URL.",
+  "preserved_core_rules": "Core actual counts and capacity limits remain authoritative over static prototype example counts and enabled copy appearance.",
+  "confirmed_next_header_fix": {
+    "generic_frame": "54:2",
+    "generic_header_children": [
+      "75:403",
+      "75:404",
+      "75:405",
+      "75:407",
+      "54:207"
+    ],
+    "new_completion_badge": "79:1090",
+    "copy_completion_badge": "79:1331",
+    "completion_geometry": {
+      "left": 340,
+      "top": 8,
+      "width": 142,
+      "height": 26
+    },
+    "finding": "Generic saved provider must omit left completion badge. Only a confirmed new/copy completion context has this badge. Current phase28 universal Saved detail differs; schedule next UI-only correction."
+  }
+}

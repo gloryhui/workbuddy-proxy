@@ -1,0 +1,36 @@
+{
+  "ui_sha256": "841cde257909e029eb9b827e5e39273bf4e9f17325978a404b764318bdfa93a7",
+  "ui_bytes": 15196672,
+  "baseline_ui_sha256": "c4554655b271d3b17dfae3572bb8d39b884c116f15d0035a0a724e00b9c93059",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "tests_passed": 174,
+  "tests_ignored": 2,
+  "gate_timings": {
+    "fmt": {
+      "exit_code": 0,
+      "seconds": 0.498
+    },
+    "test": {
+      "exit_code": 0,
+      "seconds": 7.175
+    },
+    "clippy": {
+      "exit_code": 0,
+      "seconds": 3.339
+    },
+    "intel": {
+      "exit_code": 0,
+      "seconds": 3.124
+    },
+    "release": {
+      "exit_code": 0,
+      "seconds": 44.273
+    }
+  },
+  "intel_runtime_verified": false,
+  "warning": "Existing block0.1.6 future incompatibility warning",
+  "scope": "Native sidebar scroll visibility only, no Core/API/config changes. Layout identity changes schedule one deferred native reveal; manual scroll and poll values are not identity.",
+  "gui_validation_state": "passed_for_documented_scope",
+  "gui_evidence": "provider-rail-gui-validation.json"
+}

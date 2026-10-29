@@ -189,6 +189,8 @@ pub struct Proxy {
     search: Entity<InputState>,
     provider_search: Entity<InputState>,
     provider_scroll: ScrollHandle,
+    provider_rail_scroll: ScrollHandle,
+    provider_rail_layout: Option<sidebar::RailLayout>,
     edit_name: Entity<InputState>,
     edit_model: Entity<InputState>,
     pub(crate) model_options: crate::model_options::OptionsEditor,
@@ -808,6 +810,8 @@ impl Proxy {
             search,
             provider_search,
             provider_scroll: ScrollHandle::new(),
+            provider_rail_scroll: ScrollHandle::new(),
+            provider_rail_layout: None,
             edit_name,
             edit_model,
             model_options,
@@ -947,6 +951,7 @@ impl Proxy {
         this.subscribe_model_editor_focus(window, cx);
         this.subscribe_protocol_editor_focus(window, cx);
         this.subscribe_provider_delete_bounds(window, cx);
+        this.subscribe_provider_rail_bounds(window, cx);
         this.load_form(window, cx);
         // Current-provider labels and save state follow editing events, rather
         // than waiting for an idle draft-persistence tick to redraw the UI.
