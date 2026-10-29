@@ -1,0 +1,38 @@
+{
+  "ui_sha256": "0e87b2fede06bfb87a929de5e9da000b0dc760fbc294bc54415715f2122fda25",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": "isolated synthetic HOME/config, loopback mock and sandboxed core; 2 providers, 3 models, 0 requests",
+  "regression": "Earlier candidate bae473 omitted the API URL field; 0e87 restored it next to protocol and editing a loopback test value was observed.",
+  "checks": {
+    "protocol": "Down/Return selects Anthropic; Up/Esc preserves it; Up/Return selects Responses. Mouse selects Responses. Down then outside click preserves previously selected Responses. Selection remains draft until Save.",
+    "preset": "us-east-1 matches Amazon Bedrock; zzzznoresult shows no matching presets; Return on zero results keeps dialog open and does not save. Search Azure and mouse select updates draft; search input focus Down/Up/Return confirms Azure. Outside click cancels; reopening search clears query.",
+    "effort": "High to Low via Up/Return; Keep per-model settings selected via mouse; label and chevron both legible at 1100 width.",
+    "save_boundary": "Before explicit Save core showed openai_chat and model efforts high/high. After restoring loopback URL and selecting Low, explicit UI Save produced openai_chat, loopback URL and low/low in core. Later Bedrock name, Responses and Keep per-model settings were unsaved UI draft only.",
+    "locale_and_key": "Chinese to English preserved Azure, Chat and Low. Synthetic key clicked visible; Tab/Enter showed and Space hid. AX uses secure field in both states, with Show/Hide API key labels and no value.",
+    "popup_idle": "Preset popup remained visually in same position after 8 seconds; this observation does not measure redraw activity.",
+    "popup_geometry": "Approximate dimensions from 2x screenshots: protocol 361x233 with rows about 53px and 2px gaps; preset 436x377 with 36px rows and 2px gaps; effort 232x258 with 33px rows and 2px gaps. Dimensions include visual edge/rounding uncertainty; no instrumented layout bounds. Small-window popups visibly fit."
+  },
+  "screenshots": {
+    "path_pattern": "screenshots/ui31-{protocol,preset,effort,key}-{1440x900,1100x700}.png",
+    "wide": "Chinese Studio Indigo, saved Azure/Chat/Low",
+    "small": "English Mono: protocol and preset captured Azure/Chat/Low saved; effort and key captured later with unsaved synthetic Bedrock-name draft and Keep per-model settings",
+    "key": "Only synthetic sk-demo-key-not-real displayed",
+    "raw": "Wide 2880x1802 and small 2200x1402; crop bottom two physical pixels, then one Lanczos resize to 1440x900 or 1100x700."
+  },
+  "cleanup": {
+    "ui_pid": 14294,
+    "ui_exit": 0,
+    "core_pid": 14292,
+    "health_after_ui_http": 200,
+    "core_exit": 0,
+    "runner_wait_exit": 0,
+    "mock_shutdown_and_join": true,
+    "pids_gone": true,
+    "temporary_evidence": "retained for parent under current external cleanup policy"
+  },
+  "limitations": [
+    "Complete IME and accessibility audit not performed.",
+    "Pixel-derived geometry approximate; no layout instrumentation.",
+    "8-second position observation does not establish absence of continuous repaint."
+  ]
+}

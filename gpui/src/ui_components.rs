@@ -12,7 +12,7 @@ use gpui_kit::component::{
     button::{Button, ButtonCustomVariant, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
-    input::{Input, InputState, Textarea, TextareaState},
+    input::{Input, InputContentType, InputState, Textarea, TextareaState},
     label::Label,
     searchable_list::{SearchableListDelegate, SearchableListItem},
     select::{Select, SelectState},
@@ -214,8 +214,10 @@ pub fn text_input(state: &Entity<InputState>, disabled: bool) -> Input {
 }
 
 /// Masked input (API keys) with the same field metrics and mask toggle.
-pub fn masked_input(state: &Entity<InputState>, disabled: bool) -> Input {
-    text_input(state, disabled).mask_toggle()
+pub fn masked_input(state: &Entity<InputState>, disabled: bool, toggle: Button) -> Input {
+    text_input(state, disabled)
+        .content_type(InputContentType::Password)
+        .suffix(toggle)
 }
 
 /// Filter/search input with compact text and the shared 36px hit area.

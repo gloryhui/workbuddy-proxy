@@ -1,0 +1,32 @@
+{
+  "scope": "Eight short same-machine release GUI benchmarks plus isolated idle CPU diagnostics; not first-paint, interactivity, long-duration or cross-platform acceptance",
+  "ui_sha256": "0e87b2fede06bfb87a929de5e9da000b0dc760fbc294bc54415715f2122fda25",
+  "baseline_ui_sha256": "ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "successful_benchmark_files": [
+    "provider-menus-previous-gui.json",
+    "provider-menus-gui.json",
+    "provider-menus-previous-run2-gui.json",
+    "provider-menus-run2-gui.json",
+    "provider-menus-previous-confirm-gui.json",
+    "provider-menus-confirm-gui.json",
+    "provider-menus-confirm2-gui.json",
+    "provider-menus-previous-confirm2-gui.json"
+  ],
+  "retained_failed_diagnostic": "provider-menus-previous-diagnostic-attempt.json",
+  "idle_diagnostic_files": [
+    "provider-menus-previous-idle.json",
+    "provider-menus-idle.json",
+    "provider-menus-idle-steady.json",
+    "provider-menus-previous-idle-steady.json",
+    "provider-menus-previous-idle-steady2.json",
+    "provider-menus-idle-steady2.json"
+  ],
+  "combined_idle_rss_mib_run_median": {
+    "previous": 83.6,
+    "current": 80.85
+  },
+  "assessment": "Initial two current 200-request p95 results were higher; two subsequent paired 1000-request comparisons did not reproduce a persistent directional regression. Short 5s CPU sample was higher for current; fixed 10s settle plus four 15s idle measurements yielded current2.948/2.974%, previous3.305/3.404% of one core. No performance improvement claim; limited tests do not establish long-duration repaint behavior.",
+  "benchmark_implementation_changed": false,
+  "cleanup_policy": "Session fixtures retained pending explicit approval under the newly supplied external-directory cleanup rule"
+}

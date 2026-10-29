@@ -1,0 +1,19 @@
+{
+  "ui_sha256": "ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_sandbox_enforced": true,
+  "configured_providers": 1,
+  "configured_models": 64,
+  "window_seconds": 5.005,
+  "ui_percent_one_core": 4.258,
+  "core_percent_one_core": 0.201,
+  "ui_rss_mib_after_window": 76.28,
+  "method": "libproc user+system CPU deltas, 5 second idle default provider page after 2 second settle, no requests or GUI interaction; not a long-duration repaint audit",
+  "all_owned_children_waited": true,
+  "owned_child_exit_codes": [
+    -15,
+    -15
+  ],
+  "core_and_ui_gone": true,
+  "temporary_fixtures_retained": true
+}

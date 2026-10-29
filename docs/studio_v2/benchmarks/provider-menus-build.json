@@ -1,0 +1,122 @@
+{
+  "ui_sha256": "0e87b2fede06bfb87a929de5e9da000b0dc760fbc294bc54415715f2122fda25",
+  "ui_bytes": 15113824,
+  "baseline_ui_sha256": "ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "tests_passed": 174,
+  "tests_ignored": 2,
+  "gate_timings": {
+    "fmt": {
+      "exit_code": 0,
+      "seconds": 0.629,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ]
+    },
+    "test": {
+      "exit_code": 0,
+      "seconds": 5.616,
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    },
+    "clippy": {
+      "exit_code": 0,
+      "seconds": 2.391,
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    "intel": {
+      "exit_code": 0,
+      "seconds": 1.872,
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ]
+    },
+    "release": {
+      "exit_code": 0,
+      "seconds": 49.813,
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    }
+  },
+  "intel_runtime_verified": false,
+  "warning": "Existing block0.1.6 future incompatibility warning",
+  "figma_frames": [
+    "66:320",
+    "66:538",
+    "66:760",
+    "67:548"
+  ],
+  "native_components": [
+    "Kit Popover",
+    "Kit InputState/Input",
+    "Kit virtual ListState/List",
+    "Kit Button"
+  ],
+  "event_contract": "Original typed SelectEvent::Confirm and provider handlers; original InputState::toggle_masked",
+  "scope": "Provider menu presentation and keyboard/pointer interaction only; no proxy core, dependency or persistence schema changes",
+  "candidate_rejections": [
+    {
+      "sha256": "845cc891d9011a8496a6f070bfae70006e895f57e22cbad93db416adde7109c6",
+      "reason": "Select adapter could not express exact outer gaps and inset search styling; replaced by composed native controls"
+    },
+    {
+      "sha256": "bae4735cb9f68cc3579e743692526f979f6dc757bd05de3424865665ae61be31",
+      "reason": "GUI and source review caught missing API URL sibling; restored and rebuilt before final acceptance"
+    }
+  ],
+  "assets": [
+    {
+      "file": "studio/provider-chevron.svg",
+      "bytes": 338,
+      "sha256": "ee4c74f7eabc72df6f675b78340f9f0750eb39d6e3361f7dc146ab61d0ab1e84",
+      "root_width": "16",
+      "root_height": "16",
+      "rendered_logical_size": 16
+    },
+    {
+      "file": "studio/provider-effort-chevron.svg",
+      "bytes": 344,
+      "sha256": "9f29669d79d2b9d26d1fb66528ae86d4a8d9c7e984515ae8db628ca32fc79de2",
+      "root_width": "14",
+      "root_height": "14",
+      "rendered_logical_size": 14
+    },
+    {
+      "file": "studio/provider-key-eye.svg",
+      "bytes": 728,
+      "sha256": "6d37ac30da43e20031b7dcf834ac5b09cded84e89b8d05c8f83c6ab5d58091a6",
+      "root_width": "17",
+      "root_height": "17",
+      "rendered_logical_size": 17
+    }
+  ]
+}

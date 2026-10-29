@@ -642,3 +642,36 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - GUI/Core/mock/benchmark/编译子进程已停止并wait，专属根lsof无引用；删除77个专属临时文件，释放已分配空间231,231,488 bytes（220.52MiB），本轮保留专属临时文件0。仓库实拍/JSON、共享Cargo缓存和未知历史目录未动；此前系统编译诊断当前93,053 bytes，未清理。系统盘可用39,366,713,344 bytes（36.66GiB）。[清理证据](benchmarks/provider-badge-scope-cleanup.json)。
 - 本轮剩余界面：12/40未逐帧验收；27部分验收、1复用待核对。Goal继续active，下一批推进上游协议/预设搜索/思考菜单/Key显隐状态，完整40帧视觉与键盘、IME、无障碍及Windows/Intel实际运行仍未完成。
+
+## 小功能 31：原生协议、预设、思考菜单与 Key 显隐（2026-10-29，北京时间）
+
+- 官方MCP高保真context及截图读取66:320、66:538、66:760、67:548，并复核协议66:524、预设66:742和思考67:752弹层。目标分别361×233/53px行、436×377/41px搜索/36px行、232×258/33px行，行间2px。预设来自现有全部数据，四协议code与六个effort值保持，不写死设计示例供应商或Key；黄色“虚构Key”原型注释不加入产品。
+- Kit Select的内容delegate无法设置外层行距和内嵌搜索框，因此局部组合Kit Popover、InputState、虚拟ListState/List及Button，继续发原typed SelectEvent::Confirm，由原协议/预设/effort处理器修改草稿。原Choice.matches仍执行名称/code/静态预设URL搜索；确认、取消、空结果、清查询和指针/键盘游标由UI模块管理，不更改Core、管理API、配置格式或依赖。没有增加timer、持续动画或后台轮询。新模块ui/provider_choices.rs统一三种尺寸，非整页重新设计。
+- Key仍调用原InputState.toggle_masked；17px设计眼睛SVG置于24px原生可Tab按钮，保留Password内容类型、禁用与中英Show/Hide名称。新增两个设计chevron本地SVG根尺寸16/14px及Key17px均与调用几何核对，原文件非空，未改路径内容或引用临时Figma URL。
+- fmt、174项测试（2项既有Core专项ignored）、严格clippy all-targets/-D warnings、Intel目标check1.872s及Release49.813s Passed。最终UI 15,113,824 bytes，SHA256 `0e87b2fede06bfb87a929de5e9da000b0dc760fbc294bc54415715f2122fda25`；核心仍8,428,096 bytes、25f SHA。block0.1.6未来兼容提示保持，Intel仅类型检查。[编译与资产证据](benchmarks/provider-menus-build.json)。
+- 首个精确菜单候选bae473在源码复核及实机首屏均发现API URL同排字段被误删；该候选未保存，已恢复原字段并重新五项gate。之前845cc内容delegate候选的尺寸留白/搜索样式差距也未冒充通过；最终交互和截图均重新使用0e87，未混用候选照片。
+- 最终真实GUI：协议Down/Enter选Anthropic，Up/Esc取消，Up/Enter选Responses；鼠标选择与外部点击取消也保值。预设地区us-east-1匹配Bedrock、未知词空态Return不关闭/不保存，Azure搜索分别鼠标及输入焦点Down/Up/Return确认；外部取消后重开清查询/恢复列表。长英文预设及Keep per-model settings未挤压右箭头。思考High→Low经原处理器，其他档位值及原keep/default语义保持。
+- 明确Save前Core仍Chat、high/high；预设选择只改草稿且Azure地址为空。回填loopback mock再明确Save后，Core为Chat、同一loopback URL及low/low，仍2供应商/3模型/0请求。后来Bedrock名称、Responses和Keep都是未保存草稿，不作新Core结果。没有对真实vendor URL Save/Test/Fetch。中→英保留Azure/Chat/Low；Key点击、Tab/Enter及Space可显隐，AX始终secure且无明文value，图中仅sk-demo-key-not-real。
+- 主代理检查四种最终状态两尺寸：宽窗中文Studio，[协议](screenshots/ui31-protocol-1440x900.png)、[预设](screenshots/ui31-preset-1440x900.png)、[思考](screenshots/ui31-effort-1440x900.png)、[Key](screenshots/ui31-key-1440x900.png)；小窗英文Mono，[协议](screenshots/ui31-protocol-1100x700.png)、[预设](screenshots/ui31-preset-1100x700.png)、[思考](screenshots/ui31-effort-1100x700.png)、[Key](screenshots/ui31-key-1100x700.png)。前两小图仍Azure已保存态，后两图是长名未保存草稿；不要求与静态原型示例计数相同。Raw2880×1802/2200×1402仅裁底2物理像素，再一次Lanczos等比缩至目标。像素粗量与目标几何相符，未作instrumented bounds。预设静置8秒位置不变只属视觉观察，不证明无重绘。[GUI证据](benchmarks/provider-menus-gui-validation.json)。
+- GUI UI14294、Core14292、runner均正常退出0、mock shutdown/join；关窗后Core health HTTP200，记录PID均消失。完整IME/无障碍/跨平台与整帧最终审计继续待验。
+
+同机Release、相同25f核心、默认1供应商/64模型GUI页，以ce2→0e→ce2→0e做四轮各200小请求及80次1MiB/并发4；新版前两轮p95高于旧版，保留异常再按旧→新→新→旧追加四轮各1000小请求。所有成功轮输入SHA、Core内核沙盒、子进程wait与Core/UI消失均核对，mock/controller退出数组[-15,-15,0,0]，不是全部0。原benchmark脚本未修改；本地包装仅隔离配置/保护用户目录与核对进程。外部临时夹具按用户新清理规范保留，不自动递归删除。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧ce2](benchmarks/provider-menus-previous-gui.json) | 11.69 / 64.66 / 76.34 | 1061.080 / 1793.690 | 0.167 / 0.201 | 131.05 | 0.151 |
+| [新0e87](benchmarks/provider-menus-gui.json) | 10.86 / 68.86 / 79.72 | 242.067 / 978.380 | 0.207 / 0.427 | 124.64 | 0.107 |
+| [旧ce2复测](benchmarks/provider-menus-previous-run2-gui.json) | 10.92 / 73.64 / 84.56 | 125.526 / 521.260 | 0.183 / 0.298 | 136.89 | 0.113 |
+| [新0e87复测](benchmarks/provider-menus-run2-gui.json) | 10.36 / 67.75 / 78.11 | 142.190 / 553.753 | 0.314 / 0.814 | 131.59 | 0.189 |
+| [旧ce2 1000请求1](benchmarks/provider-menus-previous-confirm-gui.json) | 10.58 / 72.06 / 82.64 | 139.427 / 636.140 | 0.289 / 0.820 | 141.83 | 0.124 |
+| [新0e87 1000请求1](benchmarks/provider-menus-confirm-gui.json) | 12.09 / 69.89 / 81.98 | 144.618 / 648.803 | 0.296 / 0.669 | 142.84 | 0.149 |
+| [新0e87 1000请求2](benchmarks/provider-menus-confirm2-gui.json) | 12.09 / 76.66 / 88.75 | 137.492 / 554.389 | 0.150 / 0.187 | 141.70 | 0.088 |
+| [旧ce2 1000请求2](benchmarks/provider-menus-previous-confirm2-gui.json) | 12.02 / 80.95 / 92.97 | 138.262 / 583.494 | 0.171 / 0.184 | 141.73 | 0.089 |
+
+- 首四轮新版p95 0.427/0.814ms，旧版0.201/0.298ms，不能忽略。追加两对1000请求分别旧/新0.820/0.669ms、新/旧0.187/0.184ms；第二对p50新/旧0.150/0.171ms，大请求0.088/0.089s。方向未持续相同，限定当前短测未证实持续明显退化，不宣称提升。八轮合计空闲RSS按版本中位83.60→80.85MiB，单轮和整体系统有波动，不作降低内存承诺。直接请求与代理分时采样出现负中位开销，属于采样差异，不能解释成代理加速。
+- 独立CPU诊断：初次启动稳定2秒后采5秒，旧UI4.258%/新7.660%（单核口径），继续按预先固定新→旧→旧→新顺序，稳定10秒后各采15秒，UI为新2.948%、旧3.305%、旧3.404%、新2.974%，Core约0.126–0.143%。短轮升高未持续。数据分别见[旧短窗](benchmarks/provider-menus-previous-idle.json)、[新短窗](benchmarks/provider-menus-idle.json)、[新稳定1](benchmarks/provider-menus-idle-steady.json)、[旧稳定1](benchmarks/provider-menus-previous-idle-steady.json)、[旧稳定2](benchmarks/provider-menus-previous-idle-steady2.json)、[新稳定2](benchmarks/provider-menus-idle-steady2.json)。使用libproc user+system差值，不以肉眼不移动证明无重绘。
+- 一次附加CPU诊断错误地放在原benchmark已写gpui-stop之后，UI正常退出导致资源查询失败；不是产品失败，也不作为成功对比轮。[原始失败记录](benchmarks/provider-menus-previous-diagnostic-attempt.json)保留，遗留的已核实测试Core19679通过正常控制接口HTTP200停止且PID消失。随后CPU采样改独立夹具，八轮成功基准仍完整使用原脚本时序，未删除异常或放宽标准。
+- 这些就绪标记包含核心启动，不等于首帧或可交互；RSS共享页可能双计、tray另列，默认页短测不能替代满载/长时间/跨平台审计。[性能汇总](benchmarks/provider-menus-performance-summary.json)。
+
+- 直接持有的GUI/Core/mock/benchmark/CPU诊断子进程已停止并wait，相关Core/UI PID均已消失，专属根lsof无引用。用户本轮新AGENTS要求工作区外删除先对具体目标批准，本批不执行递归清理；只读预检规范化系统临时根，全部UID501、无符号链接，保留328文件/158,158,848已分配bytes（150.83MiB），本批释放0。内容为本会话程序副本/合成配置数据库/日志与raw，最终实拍和报告已在仓库；共享缓存、真实用户数据及未知历史目录不动。系统盘可用38,209,105,920 bytes（35.59GiB）。[清理预检与保留记录](benchmarks/provider-menus-cleanup.json)。
+- 本批四帧从未逐帧验收改为部分验收，剩余8/40未逐帧验收、31部分验收、1复用待核对。Goal保持active，整体仍在开发并穿插分项验收；下一批继续OpenCode Go/单供应商结果状态，之后保留的工具栏状态及完整40帧精细视觉、IME/无障碍与Windows/Intel实际运行继续推进。

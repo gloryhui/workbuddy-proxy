@@ -1,6 +1,7 @@
 mod model_editor;
 mod model_picker;
 mod protocol_dialog;
+mod provider_choices;
 mod provider_delete;
 mod provider_edit;
 mod provider_new;
@@ -22,7 +23,7 @@ use gpui_kit::component::{
     input::{InputEvent, InputState, TextareaState},
     label::Label,
     menu::{DropdownMenu, PopupMenuItem},
-    select::{SearchableVec, SelectEvent, SelectItem, SelectState},
+    select::{SelectEvent, SelectItem},
     table::TableState,
 };
 use gpui_kit::prelude::FluentBuilder;
@@ -100,9 +101,9 @@ impl SelectItem for Choice {
             })
     }
 }
-type ChoiceState = SelectState<Vec<Choice>>;
-fn protocol_choices() -> Vec<Choice> {
-    [
+type ChoiceState = provider_choices::MenuState;
+fn protocol_choices(zh: bool) -> provider_choices::MenuChoices {
+    let items = [
         ("openai_chat", "OpenAI Chat Completions"),
         ("openai_responses", "OpenAI Responses"),
         ("anthropic_messages", "Anthropic Messages"),
@@ -113,7 +114,8 @@ fn protocol_choices() -> Vec<Choice> {
         code: code.into(),
         title: title.into(),
     })
-    .collect()
+    .collect();
+    provider_choices::MenuChoices::new(items, provider_choices::MenuKind::Protocol, zh)
 }
 fn choices(zh: bool, languages: bool) -> Vec<Choice> {
     let entries: &[(&str, &str, &str)] = if languages {
@@ -140,8 +142,8 @@ fn choices(zh: bool, languages: bool) -> Vec<Choice> {
         })
         .collect()
 }
-fn preset_choices(zh: bool) -> SearchableVec<Choice> {
-    SearchableVec::new(
+fn preset_choices(zh: bool) -> provider_choices::MenuChoices {
+    provider_choices::MenuChoices::new(
         std::iter::once(Choice {
             code: "custom".into(),
             title: (if zh {
@@ -156,6 +158,8 @@ fn preset_choices(zh: bool) -> SearchableVec<Choice> {
             title: p.title(zh).to_owned().into(),
         }))
         .collect::<Vec<_>>(),
+        provider_choices::MenuKind::Preset,
+        zh,
     )
 }
 pub struct Proxy {
@@ -229,7 +233,7 @@ pub struct Proxy {
     editing: Option<usize>,
     new_model: bool,
     effort_select: Entity<ChoiceState>,
-    preset_select: Entity<SelectState<SearchableVec<Choice>>>,
+    preset_select: Entity<ChoiceState>,
     delete_open: bool,
     provider_delete_target: Option<provider_delete::DeleteTarget>,
     provider_delete_scroll: ScrollHandle,
@@ -397,11 +401,26 @@ impl Proxy {
     }
     fn refresh_choices(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         self.effort_select.update(cx, |s, cx| {
-            s.set_items(choices(self.zh, false), window, cx);
+            s.set_items(
+                provider_choices::MenuChoices::new(
+                    choices(self.zh, false),
+                    provider_choices::MenuKind::Effort,
+                    self.zh,
+                ),
+                window,
+                cx,
+            );
             s.set_selected_value(&self.effort, window, cx);
         });
         self.preset_select
             .update(cx, |s, cx| s.set_items(preset_choices(self.zh), window, cx));
+        self.protocol_select.update(cx, |s, cx| {
+            let selected = s.selected_value().cloned();
+            s.set_items(protocol_choices(self.zh), window, cx);
+            if let Some(selected) = selected {
+                s.set_selected_value(&selected, window, cx);
+            }
+        });
         self.sync_preset(window, cx);
     }
     fn language_menu(&self, cx: &mut Context<Self>) -> AnyElement {
@@ -577,25 +596,23 @@ impl Proxy {
             }
         }).detach();
     }
-    fn effort_menu(&self) -> AnyElement {
-        crate::ui_components::select(&self.effort_select, self.busy)
-            .id("effort")
-            .w(px(crate::theme::size::EFFORT_SELECT_WIDTH))
-            .menu_width(px(240.))
-            .accessibility_label(self.t("思考强度", "Thinking effort"))
-            .into_any_element()
+    fn effort_menu(&self, cx: &App) -> AnyElement {
+        provider_choices::control(
+            &self.effort_select,
+            self.busy,
+            self.t("思考强度", "Thinking effort"),
+            Some(crate::theme::size::EFFORT_SELECT_WIDTH),
+            cx,
+        )
     }
-    fn preset_menu(&self) -> AnyElement {
-        crate::ui_components::select(&self.preset_select, self.busy)
-            .id("provider-preset")
-            .w_full()
-            .menu_width(px(420.))
-            .search_placeholder(self.t(
-                "搜索供应商、地区或套餐",
-                "Search providers, regions or plans",
-            ))
-            .accessibility_label(self.t("供应商预设", "Provider preset"))
-            .into_any_element()
+    fn preset_menu(&self, cx: &App) -> AnyElement {
+        provider_choices::control(
+            &self.preset_select,
+            self.busy,
+            self.t("供应商预设", "Provider preset"),
+            None,
+            cx,
+        )
     }
     fn sync_preset(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         let draft = self
@@ -654,6 +671,7 @@ impl Proxy {
                 && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
         gpui_kit::component::set_locale(if zh { "zh-CN" } else { "en" });
         model_picker::init(cx);
+        provider_choices::init(cx);
         let drafts = Drafts::load(&dir, &cfg);
         let provider_search = input(
             "",
@@ -736,11 +754,20 @@ impl Proxy {
             cx,
         );
         let model_options = crate::model_options::OptionsEditor::new(zh, window, cx);
-        let effort_select = cx.new(|cx| SelectState::new(choices(zh, false), None, window, cx));
-        let preset_select =
-            cx.new(|cx| SelectState::new(preset_choices(zh), None, window, cx).searchable(true));
+        let effort_select = cx.new(|cx| {
+            ChoiceState::new(
+                provider_choices::MenuChoices::new(
+                    choices(zh, false),
+                    provider_choices::MenuKind::Effort,
+                    zh,
+                ),
+                window,
+                cx,
+            )
+        });
+        let preset_select = cx.new(|cx| ChoiceState::new(preset_choices(zh), window, cx));
         let protocol_options = crate::protocol_options::Editor::new(window, cx);
-        let protocol_select = cx.new(|cx| SelectState::new(protocol_choices(), None, window, cx));
+        let protocol_select = cx.new(|cx| ChoiceState::new(protocol_choices(zh), window, cx));
         let logs = cx.new(|cx| TextareaState::new(window, cx));
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle();

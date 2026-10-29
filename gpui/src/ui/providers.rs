@@ -47,6 +47,35 @@ fn model_count(count: usize, zh: bool) -> String {
 }
 
 impl Proxy {
+    fn key_visibility_button(&self, cx: &mut Context<Self>) -> Button {
+        let masked = self.key.read(cx).presentation().is_masked();
+        let label = if masked {
+            self.t("显示 API Key", "Show API key")
+        } else {
+            self.t("隐藏 API Key", "Hide API key")
+        };
+        Button::new("api-key-visibility")
+            .ghost()
+            .with_size(px(24.))
+            .size(px(24.))
+            .p_0()
+            .disabled(self.busy)
+            .tab_stop(true)
+            .accessibility_label(label)
+            .tooltip(label)
+            .child(
+                Icon::default()
+                    .path("studio/provider-key-eye.svg")
+                    .with_size(px(17.))
+                    .text_color(rgb(color::TEXT_3)),
+            )
+            .on_click(cx.listener(|this, _, window, cx| {
+                this.key
+                    .update(cx, |state, cx| state.toggle_masked(window, cx));
+                cx.notify();
+            }))
+    }
+
     pub(super) fn provider_summary(&self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
         let selected = self.selected();
         let pending = self.drafts.pending.as_ref().filter(|p| p.id == selected);
@@ -340,7 +369,7 @@ impl Proxy {
                     .gap(px(10.))
                     .child(field(
                         self.t("供应商预设", "Provider preset"),
-                        self.preset_menu(),
+                        self.preset_menu(cx),
                     ))
                     .child(
                         div()
@@ -353,8 +382,12 @@ impl Proxy {
                             ))
                             .child(field(
                                 "API Key",
-                                crate::ui_components::masked_input(&self.key, self.busy)
-                                    .aria_label("API Key"),
+                                crate::ui_components::masked_input(
+                                    &self.key,
+                                    self.busy,
+                                    self.key_visibility_button(cx),
+                                )
+                                .aria_label("API Key"),
                             )),
                     )
                     .child(
@@ -363,9 +396,13 @@ impl Proxy {
                             .gap(px(12.))
                             .child(field(
                                 self.t("上游协议", "Upstream protocol"),
-                                crate::ui_components::select(&self.protocol_select, self.busy)
-                                    .w_full()
-                                    .accessibility_label(self.t("上游协议", "Upstream protocol")),
+                                provider_choices::control(
+                                    &self.protocol_select,
+                                    self.busy,
+                                    self.t("上游协议", "Upstream protocol"),
+                                    None,
+                                    cx,
+                                ),
                             ))
                             .child(field(
                                 self.t("API 地址", "API URL"),
@@ -594,7 +631,7 @@ impl Proxy {
                             .items_center()
                             .gap(px(8.))
                             .child(field_label(self.t("思考强度", "Thinking effort")))
-                            .child(self.effort_menu()),
+                            .child(self.effort_menu(cx)),
                     )
                     .child(
                         div()
