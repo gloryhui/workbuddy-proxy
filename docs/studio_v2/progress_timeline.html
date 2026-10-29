@@ -198,7 +198,7 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T07:16:01+08:00",
+  "updated_at": "2026-10-30T07:54:34+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "a2dfa9527175af114773386b409eef393e5598c9",
@@ -211,63 +211,61 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 45,
+  "recorded_tasks": 46,
   "current_task": {
-    "id": 45,
-    "title": "请求详情长提示换行与键盘回归",
+    "id": 46,
+    "title": "Unicode 编辑、保存与冷载入验收",
     "status": "recorded",
-    "description": "修复原生Tooltip长文本越框；两尺寸/More键盘/真实零与缺失/价格快照、192测试、3段资源采样和六轮原基准完成，三字段精确hover及完整跨平台等仍待验。"
+    "description": "同0b43字节完成setValue后的Unicode编辑、取消/草稿/显式保存和新Core/UI冷载入；两尺寸及资源证据已留，真实中文IME与只读输入源授权仍待办。"
   },
   "latest_task": {
-    "id": 45,
-    "title": "请求详情长提示换行与键盘回归",
+    "id": 46,
+    "title": "Unicode 编辑、保存与冷载入验收",
     "status": "recorded",
-    "summary": "修复详情/More长值Tooltip文字越出边框和窗口的问题，仅改detail_layout.rs提示内容布局，原值、15行/弹窗/滚动及事件保持。证据：编译、真实交互与原API数据、视觉、1440中文、1100英文、小窗完整长提示、六轮性能、清理。",
+    "summary": "本轮未改产品源码，补齐模型显示名Unicode编辑/取消/草稿/显式保存和新Core/UI冷载入证据；真实中文IME仍未验收，不把程序赋值当组合输入。证据：构建复用与源码、真实操作与落盘、方法边界、1440中文、1100英文、冷载入、资源验证、清理。",
     "highlights": [
-      "修复详情/More长值Tooltip文字越出边框和窗口的问题，仅改detail_layout.rs提示内容布局，原值、15行/弹窗/滚动及事件保持。证据：编译、真实交互与原API数据、视觉、1440中文、1100英文、小窗完整长提示、六轮性能、清理。",
-      "官方MCP重读60:692高保真context/截图，保留650×770上限、原生Dialog/Popover/Tooltip/Label与15个36px主行；该弹窗设计无外部SVG/图片槽。b527基线More滚动暴露实际缺陷：外框虽max560，子文本仍单行越出边框/窗口，见失败原图与旧版原始记录，不作最终通过证据。改用Tooltip::element内的Label max520/whitespace_normal/popover_foreground，外框仍max560；不截字符串、不插入数据换行、不改全局Kit或加定时器。",
-      "首次编译提示缺ActiveTheme trait导入，已补，未弱化门禁。最终fmt0.649s、192 tests/2既有ignored5.812s、严格clippy all-targets/-Dwarnings2.498s、Intel check1.887s、Release40.128s通过。UI0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0，15,246,768bytes；旧UIb527、Core仍25f/8,428,096bytes。最初b527复用门禁与修复后重编译分列，不混用。Intel仅类型检查，block0.1.6提示及UI43 Windows资源编译/标题栏问题保留。"
+      "本轮未改产品源码，补齐模型显示名Unicode编辑/取消/草稿/显式保存和新Core/UI冷载入证据；真实中文IME仍未验收，不把程序赋值当组合输入。证据：构建复用与源码、真实操作与落盘、方法边界、1440中文、1100英文、冷载入、资源验证、清理。",
+      "当前UI仍0b43629a…/15,246,768bytes、Core仍25f/8,428,096bytes，与UI45最终构建逐哈希一致；相关应用源码未变。复用UI45的192 tests/2既有ignored、fmt/严格clippy/Intel check/Release及包含当前0b43/25f的六轮旧/新原benchmark对照，本轮不冒称重新编译或重复请求基准。macOS实际15.8.1/Apple Silicon，ioreg No锁定。",
+      "只读核对实际锁定gpui-pre-macos0.3.9：marked_text_range存在时及IME可打印键先交inputContext.handleEvent，之后才回应用keybindings。gpui-base0.7.3提供UTF16 marked range，普通单行Enter传播/PressEnter；显示名是无应用ASCII过滤/数字mask的原生InputState，当前normalize_input只去单行换行符。这是源码路径，不是OS组合输入通过；同时以缓存.crate SHA核对Cargo.lock，并逐字节比较两个已读源文件，未改缓存/依赖（未发现.cargo-checksum.json时改用只读archive member校验，未解压写入）。"
     ],
-    "limits": [
-      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮实际修复长Tooltip溢出并补键盘/长值/零与未知语义；三个字段精确hover、完整视觉/IME/读屏/原生AX、Windows布局偏好与实机、Intel实机/HiDPI、托盘/位移/最小化、首帧及更新公网成功仍待推进。Goal active，HTML继续仅静态校验。"
-    ],
+    "limits": [],
     "evidence": [
       {
-        "label": "编译",
-        "href": "benchmarks/request-detail-tooltip-build.json"
+        "label": "构建复用与源码",
+        "href": "benchmarks/unicode-input-build.json"
       },
       {
-        "label": "真实交互与原API数据",
-        "href": "benchmarks/request-detail-tooltip-gui-validation.json"
+        "label": "真实操作与落盘",
+        "href": "benchmarks/unicode-input-gui-validation.json"
       },
       {
-        "label": "视觉",
-        "href": "benchmarks/request-detail-tooltip-visual-validation.json"
+        "label": "方法边界",
+        "href": "benchmarks/unicode-input-method-boundaries.json"
       },
       {
         "label": "1440中文",
-        "href": "screenshots/request-detail-tooltip-1440x900.png"
+        "href": "screenshots/unicode-input-1440x900.png"
       },
       {
         "label": "1100英文",
-        "href": "screenshots/request-detail-tooltip-1100x700.png"
+        "href": "screenshots/unicode-input-1100x700.png"
       },
       {
-        "label": "小窗完整长提示",
-        "href": "screenshots/request-detail-tooltip-more-1100x700.png"
+        "label": "冷载入",
+        "href": "benchmarks/unicode-input-cold-reopen.json"
       },
       {
-        "label": "六轮性能",
-        "href": "benchmarks/request-detail-tooltip-performance-summary.json"
+        "label": "资源验证",
+        "href": "benchmarks/unicode-input-performance-validation.json"
       },
       {
         "label": "清理",
-        "href": "benchmarks/request-detail-tooltip-cleanup.json"
+        "href": "benchmarks/unicode-input-cleanup.json"
       }
     ],
-    "commit": "a2dfa9527175af114773386b409eef393e5598c9",
-    "date": "2026-10-30T07:15:16+08:00",
-    "commit_subject": "fix(studio): wrap long request detail tooltips",
+    "commit": "42b19cf0d00612934b303f25eb9859b96957522d",
+    "date": "2026-10-30T07:54:06+08:00",
+    "commit_subject": "test(studio): record Unicode editing and cold-load validation",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2543,6 +2541,56 @@
       "date": "2026-10-30T07:15:16+08:00",
       "commit_subject": "fix(studio): wrap long request detail tooltips",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 46,
+      "title": "Unicode 编辑、保存与冷载入验收",
+      "status": "recorded",
+      "summary": "本轮未改产品源码，补齐模型显示名Unicode编辑/取消/草稿/显式保存和新Core/UI冷载入证据；真实中文IME仍未验收，不把程序赋值当组合输入。证据：构建复用与源码、真实操作与落盘、方法边界、1440中文、1100英文、冷载入、资源验证、清理。",
+      "highlights": [
+        "本轮未改产品源码，补齐模型显示名Unicode编辑/取消/草稿/显式保存和新Core/UI冷载入证据；真实中文IME仍未验收，不把程序赋值当组合输入。证据：构建复用与源码、真实操作与落盘、方法边界、1440中文、1100英文、冷载入、资源验证、清理。",
+        "当前UI仍0b43629a…/15,246,768bytes、Core仍25f/8,428,096bytes，与UI45最终构建逐哈希一致；相关应用源码未变。复用UI45的192 tests/2既有ignored、fmt/严格clippy/Intel check/Release及包含当前0b43/25f的六轮旧/新原benchmark对照，本轮不冒称重新编译或重复请求基准。macOS实际15.8.1/Apple Silicon，ioreg No锁定。",
+        "只读核对实际锁定gpui-pre-macos0.3.9：marked_text_range存在时及IME可打印键先交inputContext.handleEvent，之后才回应用keybindings。gpui-base0.7.3提供UTF16 marked range，普通单行Enter传播/PressEnter；显示名是无应用ASCII过滤/数字mask的原生InputState，当前normalize_input只去单行换行符。这是源码路径，不是OS组合输入通过；同时以缓存.crate SHA核对Cargo.lock，并逐字节比较两个已读源文件，未改缓存/依赖（未发现.cargo-checksum.json时改用只读archive member校验，未解压写入）。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "构建复用与源码",
+          "href": "benchmarks/unicode-input-build.json"
+        },
+        {
+          "label": "真实操作与落盘",
+          "href": "benchmarks/unicode-input-gui-validation.json"
+        },
+        {
+          "label": "方法边界",
+          "href": "benchmarks/unicode-input-method-boundaries.json"
+        },
+        {
+          "label": "1440中文",
+          "href": "screenshots/unicode-input-1440x900.png"
+        },
+        {
+          "label": "1100英文",
+          "href": "screenshots/unicode-input-1100x700.png"
+        },
+        {
+          "label": "冷载入",
+          "href": "benchmarks/unicode-input-cold-reopen.json"
+        },
+        {
+          "label": "资源验证",
+          "href": "benchmarks/unicode-input-performance-validation.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/unicode-input-cleanup.json"
+        }
+      ],
+      "commit": "42b19cf0d00612934b303f25eb9859b96957522d",
+      "date": "2026-10-30T07:54:06+08:00",
+      "commit_subject": "test(studio): record Unicode editing and cold-load validation",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2844,6 +2892,14 @@
     {
       "date": "2026-10-30T07:16:01+08:00",
       "note": "完成 UI-45 长提示实际缺陷修复；40部分/0最终验收，Goal active",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T07:54:34+08:00",
+      "note": "完成 UI-46 验收记录；待初审0/待最终40，Goal active，真实IME未验",
       "pending": 0,
       "partial": 40,
       "reused": 0,
