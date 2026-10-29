@@ -1,6 +1,6 @@
 {
   "checked_at": "2026-10-29T18:45:43+08:00",
-  "state": "retained_pending_explicit_user_approval",
+  "state": "cleaned_after_explicit_user_approval",
   "normalized_absolute_target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round23.pz_6ev5n",
   "type": "directory",
   "project": "WorkBuddy Studio V2 UI-31 isolated synthetic validation session",
@@ -74,9 +74,9 @@
   ],
   "retained_delivery_evidence": "Final screenshots, build/GUI/performance reports and QA are stored in the repository; shared Cargo caches and original user data are excluded from this target",
   "regeneration_basis": "Existing immutable binaries/committed Rust sources, synthetic fixture setup and original scripts/benchmark.py; raw captures have preserved final normalized PNG counterparts",
-  "destructive_cleanup_executed": false,
-  "freed_bytes": 0,
-  "system_disk_free_bytes": 38209105920,
+  "destructive_cleanup_executed": true,
+  "freed_bytes": 158158848,
+  "system_disk_free_bytes": 38459838464,
   "files": [
     "perf.py",
     "idle.py",
@@ -408,5 +408,9 @@
     "menu-ui.0iwIphur/ui-release-menu31/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui"
   ],
   "directly_owned_subprocesses_waited": true,
-  "core_and_ui_pids_gone": true
+  "core_and_ui_pids_gone": true,
+  "removed_file_count": 328,
+  "retained_session_temporary_bytes": 0,
+  "cleaned_at": "2026-10-29T18:49:24+08:00",
+  "approval": "Direct user reply: 同意清理该目录; exact normalized target and 328-file scope revalidated immediately before deletion"
 }

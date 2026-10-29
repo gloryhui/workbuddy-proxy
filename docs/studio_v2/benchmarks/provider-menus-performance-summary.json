@@ -28,5 +28,5 @@
   },
   "assessment": "Initial two current 200-request p95 results were higher; two subsequent paired 1000-request comparisons did not reproduce a persistent directional regression. Short 5s CPU sample was higher for current; fixed 10s settle plus four 15s idle measurements yielded current2.948/2.974%, previous3.305/3.404% of one core. No performance improvement claim; limited tests do not establish long-duration repaint behavior.",
   "benchmark_implementation_changed": false,
-  "cleanup_policy": "Session fixtures retained pending explicit approval under the newly supplied external-directory cleanup rule"
+  "cleanup_policy": "Completed after explicit user approval of the exact external session directory, with full repeated path/ownership/reference preflight; see provider-menus-cleanup.json"
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-29T18:47:05+08:00",
+  "updated_at": "2026-10-29T18:50:34+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "785a2dd32bd23b95719b67a3c5d180af82530fbe",
@@ -1655,6 +1655,14 @@
     {
       "date": "2026-10-29T18:47:05+08:00",
       "note": "UI-31 已提交：4 帧加入部分验收，未逐帧验收由 12 降至 8；外部临时夹具待清理确认",
+      "pending": 8,
+      "partial": 31,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T18:50:34+08:00",
+      "note": "UI-31 临时夹具已获批并按预检范围清理，释放 150.83 MiB；后续安全临时清理沿用用户持续授权",
       "pending": 8,
       "partial": 31,
       "reused": 1,
