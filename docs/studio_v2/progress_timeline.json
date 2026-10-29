@@ -1,76 +1,73 @@
 {
   "version": 1,
-  "updated_at": "2026-10-29T18:02:54+08:00",
+  "updated_at": "2026-10-29T18:47:05+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "71d18bc3d5043d8909ea91ce47ba700d950bd943",
+  "code_head": "785a2dd32bd23b95719b67a3c5d180af82530fbe",
   "phase": "开发中 · 分项实机验收穿插",
   "goal_status": "active",
   "counts": {
-    "pending": 12,
-    "partial": 27,
+    "pending": 8,
+    "partial": 31,
     "reused": 1,
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 30,
+  "recorded_tasks": 31,
   "current_task": {
     "id": 31,
-    "title": "协议、预设、思考菜单与 Key 显隐",
-    "status": "developing",
-    "description": "四个状态已读取最新Figma，候选完成原生控件接入和部分真实交互；正在修正菜单行高与选中标记，最终两尺寸截图及性能待验。"
+    "title": "原生协议、预设、思考菜单与 Key 显隐",
+    "status": "recorded",
+    "description": "三菜单按最新 Figma 对齐，原选择与草稿/显式保存边界、Key 键盘显隐、两尺寸实拍已验；八轮请求复核与稳定后 CPU 短测未见持续明显退化。完整 IME、无障碍、跨平台与最终整帧审计待续。下一批继续单供应商状态。"
   },
   "latest_task": {
-    "id": 30,
-    "title": "完成徽标只用于新增/复制上下文",
+    "id": 31,
+    "title": "原生协议、预设、思考菜单与 Key 显隐",
     "status": "recorded",
-    "summary": "根据上批高保真审计并再次读取最新54:2：通用header只有模型数、编辑入口和右侧Saved；79:885的79:1090、79:1102的79:1331才有142×26左侧完成徽标。本批收窄小功能28的通用左Saved，不改变既有原生文字、颜色token、编辑图标/调用几何或右状态。没有新增静态资产或临时Figma URL。",
+    "summary": "官方MCP高保真context及截图读取66:320、66:538、66:760、67:548，并复核协议66:524、预设66:742和思考67:752弹层。目标分别361×233/53px行、436×377/41px搜索/36px行、232×258/33px行，行间2px。预设来自现有全部数据，四协议code与六个effort值保持，不写死设计示例供应商或Key；黄色“虚构Key”原型注释不加入产品。",
     "highlights": [
-      "根据上批高保真审计并再次读取最新54:2：通用header只有模型数、编辑入口和右侧Saved；79:885的79:1090、79:1102的79:1331才有142×26左侧完成徽标。本批收窄小功能28的通用左Saved，不改变既有原生文字、颜色token、编辑图标/调用几何或右状态。没有新增静态资产或临时Figma URL。",
-      "会话内保存来源由只记录Copy的集合改为真实ID→New/Copy枚举；仅Outcome.saved才记录，部分create未完成save时不记录。普通已有供应商Save不产生创建完成上下文，不根据名称猜测。dirty/edit/busy仍优先显示真实状态；新建/副本各自完成提示、切换恢复及取消语义保持。配置刷新清除已不存在ID，关闭重开丢弃来源回普通Saved，不写Core或private drafts。",
-      "fmt、174项测试、严格clippy all-targets/-D warnings、Intel目标check3.78s、Release47.43s Passed。UI仍15,196,672 bytes，SHA256 ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf；核心仍8,428,096 bytes/25f SHA，未改代理核心、管理API或配置格式。既存block0.1.6未来兼容提示保持，Intel仅类型检查；小功能27两项真实Core ignored专项本批未重复。编译证据。"
+      "官方MCP高保真context及截图读取66:320、66:538、66:760、67:548，并复核协议66:524、预设66:742和思考67:752弹层。目标分别361×233/53px行、436×377/41px搜索/36px行、232×258/33px行，行间2px。预设来自现有全部数据，四协议code与六个effort值保持，不写死设计示例供应商或Key；黄色“虚构Key”原型注释不加入产品。",
+      "Kit Select的内容delegate无法设置外层行距和内嵌搜索框，因此局部组合Kit Popover、InputState、虚拟ListState/List及Button，继续发原typed SelectEvent::Confirm，由原协议/预设/effort处理器修改草稿。原Choice.matches仍执行名称/code/静态预设URL搜索；确认、取消、空结果、清查询和指针/键盘游标由UI模块管理，不更改Core、管理API、配置格式或依赖。没有增加timer、持续动画或后台轮询。新模块ui/provider_choices.rs统一三种尺寸，非整页重新设计。",
+      "Key仍调用原InputState.toggle_masked；17px设计眼睛SVG置于24px原生可Tab按钮，保留Password内容类型、禁用与中英Show/Hide名称。新增两个设计chevron本地SVG根尺寸16/14px及Key17px均与调用几何核对，原文件非空，未改路径内容或引用临时Figma URL。"
     ],
-    "limits": [
-      "核心启动也有462/207ms等波动，累计UI标记含核心启动，不能都归于UI。记录标记不是首帧/可交互，RSS共享页可能双计、tray另列；默认页面结果不代表64个创建收据/长期负载/跨平台。没有放宽标准、删除异常轮或修改Core/benchmark实现。",
-      "本轮剩余界面：12/40未逐帧验收；27部分验收、1复用待核对。Goal继续active，下一批推进上游协议/预设搜索/思考菜单/Key显隐状态，完整40帧视觉与键盘、IME、无障碍及Windows/Intel实际运行仍未完成。"
-    ],
+    "limits": [],
     "evidence": [
       {
-        "label": "编译证据",
-        "href": "benchmarks/provider-badge-scope-build.json"
+        "label": "编译与资产证据",
+        "href": "benchmarks/provider-menus-build.json"
       },
       {
-        "label": "通用宽窗",
-        "href": "screenshots/provider-badge-scope-generic-1440x900.png"
+        "label": "协议",
+        "href": "screenshots/ui31-protocol-1440x900.png"
       },
       {
-        "label": "通用小窗",
-        "href": "screenshots/provider-badge-scope-generic-1100x700.png"
+        "label": "预设",
+        "href": "screenshots/ui31-preset-1440x900.png"
       },
       {
-        "label": "新增宽窗",
-        "href": "screenshots/provider-badge-scope-new-1440x900.png"
+        "label": "思考",
+        "href": "screenshots/ui31-effort-1440x900.png"
       },
       {
-        "label": "新增小窗",
-        "href": "screenshots/provider-badge-scope-new-1100x700.png"
+        "label": "Key",
+        "href": "screenshots/ui31-key-1440x900.png"
       },
       {
-        "label": "复制宽窗",
-        "href": "screenshots/provider-badge-scope-copy-1440x900.png"
+        "label": "协议",
+        "href": "screenshots/ui31-protocol-1100x700.png"
       },
       {
-        "label": "复制小窗",
-        "href": "screenshots/provider-badge-scope-copy-1100x700.png"
+        "label": "预设",
+        "href": "screenshots/ui31-preset-1100x700.png"
       },
       {
-        "label": "GUI证据",
-        "href": "benchmarks/provider-badge-scope-gui-validation.json"
+        "label": "思考",
+        "href": "screenshots/ui31-effort-1100x700.png"
       }
     ],
-    "commit": "71d18bc3d5043d8909ea91ce47ba700d950bd943",
-    "date": "2026-10-29T17:08:20+08:00",
-    "commit_subject": "fix(gpui): scope completion badges to newly created providers",
+    "commit": "785a2dd32bd23b95719b67a3c5d180af82530fbe",
+    "date": "2026-10-29T18:46:50+08:00",
+    "commit_subject": "feat(gpui): align provider menus and key visibility with Studio",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -205,25 +202,25 @@
     {
       "node": "66:320",
       "title": "17 / STUDIO V2 · 上游协议下拉",
-      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/provider_choices.rs, ui/providers.rs, ui.rs",
+      "detail": "部分：原生361×233/53px行与2px间隔、四项说明/选中标记、鼠标/方向Enter/Esc/外部取消、仅草稿/显式保存与两尺寸已验；完整IME/无障碍/跨平台及精细整帧待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-320"
     },
     {
       "node": "66:538",
       "title": "18 / STUDIO V2 · 供应商预设搜索",
-      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/provider_choices.rs, ui.rs, presets.rs",
+      "detail": "部分：原生436×377/41px内嵌搜索/36px行、地区/Azure/空结果与Enter守卫、清除/取消/重开、真实预设草稿及loopback显式保存、两尺寸已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-538"
     },
     {
       "node": "66:760",
       "title": "19 / STUDIO V2 · API Key 显示演示",
-      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/providers.rs, ui_components.rs, ui.rs",
+      "detail": "部分：17px设计眼睛SVG、原toggle_masked、鼠标/Tab Enter/Space显隐、中英名称及secure AX无值、仅合成Key两尺寸实拍已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-760"
     },
     {
@@ -237,9 +234,9 @@
     {
       "node": "67:548",
       "title": "21 / STUDIO V2 · 思考强度菜单",
-      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/provider_choices.rs, ui.rs",
+      "detail": "部分：原生232×258/33px行与2px间隔、六档原值、鼠标/方向Enter及Low真实保存、长英文/语言切换保值、两尺寸已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-548"
     },
     {
@@ -1595,6 +1592,56 @@
       "date": "2026-10-29T17:08:20+08:00",
       "commit_subject": "fix(gpui): scope completion badges to newly created providers",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 31,
+      "title": "原生协议、预设、思考菜单与 Key 显隐",
+      "status": "recorded",
+      "summary": "官方MCP高保真context及截图读取66:320、66:538、66:760、67:548，并复核协议66:524、预设66:742和思考67:752弹层。目标分别361×233/53px行、436×377/41px搜索/36px行、232×258/33px行，行间2px。预设来自现有全部数据，四协议code与六个effort值保持，不写死设计示例供应商或Key；黄色“虚构Key”原型注释不加入产品。",
+      "highlights": [
+        "官方MCP高保真context及截图读取66:320、66:538、66:760、67:548，并复核协议66:524、预设66:742和思考67:752弹层。目标分别361×233/53px行、436×377/41px搜索/36px行、232×258/33px行，行间2px。预设来自现有全部数据，四协议code与六个effort值保持，不写死设计示例供应商或Key；黄色“虚构Key”原型注释不加入产品。",
+        "Kit Select的内容delegate无法设置外层行距和内嵌搜索框，因此局部组合Kit Popover、InputState、虚拟ListState/List及Button，继续发原typed SelectEvent::Confirm，由原协议/预设/effort处理器修改草稿。原Choice.matches仍执行名称/code/静态预设URL搜索；确认、取消、空结果、清查询和指针/键盘游标由UI模块管理，不更改Core、管理API、配置格式或依赖。没有增加timer、持续动画或后台轮询。新模块ui/provider_choices.rs统一三种尺寸，非整页重新设计。",
+        "Key仍调用原InputState.toggle_masked；17px设计眼睛SVG置于24px原生可Tab按钮，保留Password内容类型、禁用与中英Show/Hide名称。新增两个设计chevron本地SVG根尺寸16/14px及Key17px均与调用几何核对，原文件非空，未改路径内容或引用临时Figma URL。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "编译与资产证据",
+          "href": "benchmarks/provider-menus-build.json"
+        },
+        {
+          "label": "协议",
+          "href": "screenshots/ui31-protocol-1440x900.png"
+        },
+        {
+          "label": "预设",
+          "href": "screenshots/ui31-preset-1440x900.png"
+        },
+        {
+          "label": "思考",
+          "href": "screenshots/ui31-effort-1440x900.png"
+        },
+        {
+          "label": "Key",
+          "href": "screenshots/ui31-key-1440x900.png"
+        },
+        {
+          "label": "协议",
+          "href": "screenshots/ui31-protocol-1100x700.png"
+        },
+        {
+          "label": "预设",
+          "href": "screenshots/ui31-preset-1100x700.png"
+        },
+        {
+          "label": "思考",
+          "href": "screenshots/ui31-effort-1100x700.png"
+        }
+      ],
+      "commit": "785a2dd32bd23b95719b67a3c5d180af82530fbe",
+      "date": "2026-10-29T18:46:50+08:00",
+      "commit_subject": "feat(gpui): align provider menus and key visibility with Studio",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -1604,12 +1651,20 @@
       "pending": 12,
       "partial": 27,
       "reused": 1
+    },
+    {
+      "date": "2026-10-29T18:47:05+08:00",
+      "note": "UI-31 已提交：4 帧加入部分验收，未逐帧验收由 12 降至 8；外部临时夹具待清理确认",
+      "pending": 8,
+      "partial": 31,
+      "reused": 1,
+      "verified": 0
     }
   ],
   "verification": [
     {
       "title": "40 帧最终视觉复核",
-      "detail": "当前 27 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "detail": "当前 31 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",
