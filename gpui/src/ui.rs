@@ -29,7 +29,7 @@ use gpui_kit::prelude::FluentBuilder;
 use gpui_kit::*;
 use serde_json::{Value, json};
 use std::{
-    collections::BTreeSet,
+    collections::{BTreeMap, BTreeSet},
     path::PathBuf,
     time::{Duration, Instant},
 };
@@ -166,9 +166,9 @@ pub struct Proxy {
     cfg: Config,
     drafts: Drafts,
     provider_edits: provider_edit::ProviderEdits,
-    /// Copy provenance is only known for successful creations in this window.
-    /// Never infer it from a name or add presentation state to core config.
-    saved_copies: BTreeSet<String>,
+    /// Completion context is only known for successful creations in this window.
+    /// Existing saved rows must not acquire an extra completion badge.
+    saved_creations: BTreeMap<String, provider_new::CreationKind>,
     provider_profile_focus: FocusHandle,
     backend: Backend,
     zh: bool,
@@ -791,7 +791,7 @@ impl Proxy {
             cfg,
             drafts,
             provider_edits: provider_edit::ProviderEdits::default(),
-            saved_copies: BTreeSet::new(),
+            saved_creations: BTreeMap::new(),
             provider_profile_focus: cx.focus_handle().tab_stop(false),
             backend,
             zh,
@@ -1325,8 +1325,8 @@ impl Proxy {
             )
             .then_some(saved.as_str()),
         );
-        self.saved_copies
-            .retain(|id| cfg.providers.iter().any(|provider| provider.id == *id));
+        self.saved_creations
+            .retain(|id, _| cfg.providers.iter().any(|provider| provider.id == *id));
         let fresh = Drafts::from_config(&self.dir, &cfg);
         self.drafts.providers.retain(|id, _| {
             fresh.providers.contains_key(id)

@@ -86,7 +86,8 @@ impl Proxy {
                         .get(&selected)
                         .is_some_and(|draft| draft != &Draft::from_provider(provider))
                 });
-        let saved_copy = self.saved_copies.contains(&selected);
+        let creation = self.saved_creations.get(&selected);
+        let saved_copy = matches!(creation, Some(provider_new::CreationKind::Copy));
         let (status, ink, background) = if self.busy {
             (
                 self.t("处理中", "Working"),
@@ -178,27 +179,30 @@ impl Proxy {
                             .text_color(rgb(color::TEXT_3)),
                     ),
             )
-            .when(!compact, |row| {
-                row.child(
-                    div()
-                        .id("provider-summary-detail")
-                        .aria_label(detail)
-                        .flex()
-                        .items_center()
-                        .flex_none()
-                        .w(px(142.))
-                        .h(px(26.))
-                        .px(px(12.))
-                        .rounded(px(8.))
-                        .bg(rgb(background))
-                        .child(
-                            Label::new(detail)
-                                .text_size(px(11.))
-                                .line_height(px(16.))
-                                .text_color(rgb(ink)),
-                        ),
-                )
-            })
+            .when(
+                !compact && (editing || dirty || self.busy || creation.is_some()),
+                |row| {
+                    row.child(
+                        div()
+                            .id("provider-summary-detail")
+                            .aria_label(detail)
+                            .flex()
+                            .items_center()
+                            .flex_none()
+                            .w(px(142.))
+                            .h(px(26.))
+                            .px(px(12.))
+                            .rounded(px(8.))
+                            .bg(rgb(background))
+                            .child(
+                                Label::new(detail)
+                                    .text_size(px(11.))
+                                    .line_height(px(16.))
+                                    .text_color(rgb(ink)),
+                            ),
+                    )
+                },
+            )
             .child(div().flex_1())
             .child(
                 div()

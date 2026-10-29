@@ -1,0 +1,19 @@
+{
+  "owned_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round22.7ojh1d97",
+  "scope": "Only phase30 round22 owned isolated UI fixture, synthetic profiles, databases, raw screenshots, binaries, eight benchmarks and logs. Repository evidence retained.",
+  "lsof_open_references": 0,
+  "all_owned_children_waited": true,
+  "ui_pids_gone": true,
+  "deleted_regular_files": 77,
+  "deleted_allocated_bytes": 231231488,
+  "deleted_logical_bytes": 230962767,
+  "retained_owned_temp_bytes": 0,
+  "historical_diagnostic_retained_bytes": 93053,
+  "remaining_interfaces": {
+    "total": 40,
+    "not_frame_verified": 12,
+    "partially_verified": 27,
+    "reused_pending_review": 1
+  },
+  "system_disk_free_bytes": 39366713344
+}

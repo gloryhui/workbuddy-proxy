@@ -1,6 +1,12 @@
 //! Unsaved new/copy forms live in the existing private draft store.
 use super::*;
 
+#[derive(Clone, Copy)]
+pub(super) enum CreationKind {
+    New,
+    Copy,
+}
+
 impl Proxy {
     pub(super) fn pending_selected(&self) -> bool {
         self.drafts
@@ -148,8 +154,15 @@ impl Proxy {
                 self.drafts.selected = id.clone();
             }
             self.drafts.providers.insert(id.clone(), outcome.draft);
-            if outcome.saved && pending.source_id.is_some() {
-                self.saved_copies.insert(id.clone());
+            if outcome.saved {
+                self.saved_creations.insert(
+                    id.clone(),
+                    if pending.source_id.is_some() {
+                        CreationKind::Copy
+                    } else {
+                        CreationKind::New
+                    },
+                );
             }
             pending.id = id;
             pending.created = true;

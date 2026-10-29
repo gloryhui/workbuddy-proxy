@@ -1,0 +1,42 @@
+{
+  "ui_sha256": "ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf",
+  "ui_bytes": 15196672,
+  "baseline_ui_sha256": "841cde257909e029eb9b827e5e39273bf4e9f17325978a404b764318bdfa93a7",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "tests_passed": 174,
+  "tests_ignored": 2,
+  "gate_timings": {
+    "fmt": {
+      "exit_code": 0,
+      "seconds": 0.486
+    },
+    "test": {
+      "exit_code": 0,
+      "seconds": 8.31
+    },
+    "clippy": {
+      "exit_code": 0,
+      "seconds": 4.229
+    },
+    "intel": {
+      "exit_code": 0,
+      "seconds": 3.781
+    },
+    "release": {
+      "exit_code": 0,
+      "seconds": 47.434
+    }
+  },
+  "intel_runtime_verified": false,
+  "warning": "Existing block0.1.6 future incompatibility warning",
+  "scope": "UI-private session creation provenance only; generic saved rows omit extra completion badge. Core/API/config schemas unchanged.",
+  "gui_validation_state": "passed_for_documented_scope",
+  "remaining_interfaces": {
+    "total": 40,
+    "not_frame_verified": 12,
+    "partially_verified": 27,
+    "reused_pending_review": 1
+  },
+  "gui_evidence": "provider-badge-scope-gui-validation.json"
+}

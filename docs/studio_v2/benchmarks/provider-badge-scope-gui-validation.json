@@ -1,0 +1,69 @@
+{
+  "candidate_sha256": "ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "environment": "isolated synthetic fixture; loopback mock; core sandbox; no real WorkBuddy configuration",
+  "initial_counts": {
+    "providers": 2,
+    "models": 3,
+    "requests": 0
+  },
+  "checks": {
+    "generic_initial_and_ordinary_save": "Provider A: right Saved, no left completion badge both initially and after normal Save",
+    "new_save": "New synthetic: actual Save creates third provider, 3 models total; wide left Saved and right Saved",
+    "copy_save": "Provider A copy: actual Save creates fourth provider, 5 models total; wide left Saved copy, narrow right Saved copy; copied model efforts low/high",
+    "invalid_and_cancel": "Copy edit with blank name produced validation error and unsaved/pending state instead of success; Cancel restored copy",
+    "switch": "B showed generic saved state; New retained session Saved after switching back",
+    "reopen": "After normal window close and reopening the same fixture, New and Copy each show generic right Saved with no left completion badge",
+    "busy": "Brief processing state observed during unintended update check; not a deliberate or complete busy-state test",
+    "workbuddy_sentinel": "Synthetic models.json retained SHA-256 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945, corresponding to empty array"
+  },
+  "screenshots": {
+    "generic-1440x900": {
+      "language": "Chinese",
+      "theme": "Studio Indigo",
+      "providers": 2,
+      "models": 3
+    },
+    "new-1440x900": {
+      "language": "Chinese",
+      "theme": "Studio Indigo",
+      "providers": 3,
+      "models": 3
+    },
+    "copy-1440x900": {
+      "language": "Chinese",
+      "theme": "Studio Indigo",
+      "providers": 4,
+      "models": 5
+    },
+    "generic-1100x700": {
+      "language": "English",
+      "theme": "Mono",
+      "providers": 4,
+      "models": 5
+    },
+    "new-1100x700": {
+      "language": "English",
+      "theme": "Mono",
+      "providers": 4,
+      "models": 5
+    },
+    "copy-1100x700": {
+      "language": "English",
+      "theme": "Mono",
+      "providers": 4,
+      "models": 5
+    }
+  },
+  "image_processing": "Actual app screenshots: wide 2880x1802 and narrow 2200x1402; cropped two bottom physical pixels, then resized once with Lanczos to 1440x900 and 1100x700 respectively.",
+  "cleanup": {
+    "first_ui_exit": 0,
+    "reopened_ui_exit": 0,
+    "core_health_after_ui_close_http": 200,
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "owned_pids_gone": true,
+    "temporary_fixture": "retained for parent audit and cleanup"
+  },
+  "incident": "Accidental click on Check updates after an accessibility index changed. The UI displayed processing followed by HTTP 403; no further update action taken. Parent notified. This is not a Check updates feature acceptance."
+}

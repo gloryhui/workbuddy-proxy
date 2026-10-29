@@ -612,3 +612,33 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 本轮GUI/Core/mock/benchmark/编译子进程已停止并wait，专属根lsof无引用；删除80个专属临时文件，释放已分配空间206,548,992 bytes（196.98MiB），保留本轮专属临时文件0。仓库实拍/JSON、共享Cargo缓存、未知历史目录不动，前序93,053-byte系统编译诊断仍保留。系统盘可用41,629,990,912 bytes（38.77GiB）。[清理证据](benchmarks/provider-rail-cleanup.json)。
 - Goal保持active。下一批修正上述通用/新建/复制完成header的可见范围，再继续菜单/完整40帧精细审计；IME/无障碍与Windows/Intel实际运行仍未完成。
+
+## 小功能 30：完成徽标只用于新增/复制上下文（2026-10-29，北京时间）
+
+- 根据上批高保真审计并再次读取最新54:2：通用header只有模型数、编辑入口和右侧Saved；79:885的79:1090、79:1102的79:1331才有142×26左侧完成徽标。本批收窄小功能28的通用左Saved，不改变既有原生文字、颜色token、编辑图标/调用几何或右状态。没有新增静态资产或临时Figma URL。
+- 会话内保存来源由只记录Copy的集合改为真实ID→New/Copy枚举；仅Outcome.saved才记录，部分create未完成save时不记录。普通已有供应商Save不产生创建完成上下文，不根据名称猜测。dirty/edit/busy仍优先显示真实状态；新建/副本各自完成提示、切换恢复及取消语义保持。配置刷新清除已不存在ID，关闭重开丢弃来源回普通Saved，不写Core或private drafts。
+- fmt、174项测试、严格clippy all-targets/-D warnings、Intel目标check3.78s、Release47.43s Passed。UI仍15,196,672 bytes，SHA256 `ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf`；核心仍8,428,096 bytes/25f SHA，未改代理核心、管理API或配置格式。既存block0.1.6未来兼容提示保持，Intel仅类型检查；小功能27两项真实Core ignored专项本批未重复。[编译证据](benchmarks/provider-badge-scope-build.json)。
+- 最终ce2真实GUI：已有A初始和普通Save后右侧Saved、左侧无完成徽标，Core仍2供应商/3模型/0请求；New与A Copy分别明确Save成功后显示左Saved/左Saved copy，Core4/5/0。副本Edit清空名称再Save被校验拒绝，左Changes pending、右Unsaved draft，不错误显示完成。
+- Cancel恢复副本状态，切B是通用Saved，回New仍为本窗口创建完成提示；正常关闭并同配置重开后，New和Copy均回到只有右侧通用Saved、左侧无完成徽标。合成WorkBuddy空数组哨兵SHA始终4f53cda1…，未自动同步。原UI和重开UI退出均0、Core关窗后health HTTP200、Core/fixture退出均0并wait，全部记录PID消失。
+- 主代理逐张打开检查[通用宽窗](screenshots/provider-badge-scope-generic-1440x900.png)、[通用小窗](screenshots/provider-badge-scope-generic-1100x700.png)、[新增宽窗](screenshots/provider-badge-scope-new-1440x900.png)、[新增小窗](screenshots/provider-badge-scope-new-1100x700.png)、[复制宽窗](screenshots/provider-badge-scope-copy-1440x900.png)、[复制小窗](screenshots/provider-badge-scope-copy-1100x700.png)。宽窗中文Studio，小窗英文Mono；generic宽图2/3、新宽图3/3、copy宽图4/5，三个小图均后续4/5，实际数据未写死为设计示例。原图2880×1802/2200×1402只裁底2物理像素，再一次LANCZOS缩到目标尺寸。[GUI证据](benchmarks/provider-badge-scope-gui-validation.json)。
+- 验收中因复用AX编号误点一次只读检查更新，返回HTTP403后没有继续操作；该误操作不计作检查更新功能验收，已要求后续toolbar每次用新鲜可访问名称定位。短暂处理中仅为偶然观察，不作为完整busy用例通过。
+- 剩余界面按主表当前统计12/40未逐帧验收、27部分验收、1复用待核对，不将局部修正当整帧完成。此后每轮汇报该数量及其口径。
+
+同机Release、相同25f核心、默认GUI页，841c→ce2→841c→ce2四轮交错：1供应商/64模型，200小请求及80次1MiB/并发4。初轮旧版UI RSS63.09MiB及另一旧版p95 2.263ms波动较大；所有图片转换结束后再按新→旧→旧→新追加四轮各1000小请求。八轮输入SHA、Core内核沙盒enforced均核对，owned进程wait，UI PID已消失；Mock/controller按脚本SIGTERM退出数组[-15,-15,0,0]，不写成全部0。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧841c](benchmarks/provider-badge-scope-previous-gui.json) | 11.41 / 63.09 / 74.50 | 967.808 / 1770.748 | 0.170 / 0.209 | 122.44 | 0.094 |
+| [新ce2](benchmarks/provider-badge-scope-gui.json) | 10.72 / 79.55 / 90.27 | 256.882 / 751.934 | 0.185 / 0.231 | 140.33 | 0.120 |
+| [旧841c复测](benchmarks/provider-badge-scope-previous-run2-gui.json) | 10.97 / 74.06 / 85.03 | 240.191 / 1253.484 | 0.534 / 2.263 | 139.48 | 0.126 |
+| [新ce2复测](benchmarks/provider-badge-scope-run2-gui.json) | 10.83 / 75.33 / 86.16 | 250.900 / 773.768 | 0.187 / 0.289 | 139.38 | 0.111 |
+| [新ce21000请求复核1](benchmarks/provider-badge-scope-confirm-gui.json) | 12.77 / 74.28 / 87.05 | 462.244 / 1129.924 | 0.175 / 0.336 | 140.59 | 0.121 |
+| [旧841c1000请求复核1](benchmarks/provider-badge-scope-previous-confirm-gui.json) | 12.83 / 75.59 / 88.42 | 207.552 / 851.894 | 0.164 / 0.218 | 142.44 | 0.095 |
+| [旧841c1000请求复核2](benchmarks/provider-badge-scope-previous-confirm2-gui.json) | 12.27 / 77.97 / 90.23 | 205.303 / 789.722 | 0.172 / 0.241 | 135.69 | 0.093 |
+| [新ce21000请求复核2](benchmarks/provider-badge-scope-confirm2-gui.json) | 12.19 / 74.59 / 86.78 | 220.764 / 655.108 | 0.168 / 0.215 | 134.64 | 0.095 |
+
+- 八轮空闲RSS（请求前相同配置/等待口径）中位合计86.725→86.915MiB（约+0.22%），UI中位74.825→74.960MiB。不能只选第一旧版低值作为常态。追加轮新/旧第一对p95 0.336/0.218ms，第二对0.215/0.241ms；第一对直接请求p50为0.149/0.135ms，代理中位开销0.026/0.029ms，第二对开销0.013/0.015ms，方向不同，未见持续明显退化，不宣称提升。
+- 核心启动也有462/207ms等波动，累计UI标记含核心启动，不能都归于UI。记录标记不是首帧/可交互，RSS共享页可能双计、tray另列；默认页面结果不代表64个创建收据/长期负载/跨平台。没有放宽标准、删除异常轮或修改Core/benchmark实现。
+
+- GUI/Core/mock/benchmark/编译子进程已停止并wait，专属根lsof无引用；删除77个专属临时文件，释放已分配空间231,231,488 bytes（220.52MiB），本轮保留专属临时文件0。仓库实拍/JSON、共享Cargo缓存和未知历史目录未动；此前系统编译诊断当前93,053 bytes，未清理。系统盘可用39,366,713,344 bytes（36.66GiB）。[清理证据](benchmarks/provider-badge-scope-cleanup.json)。
+- 本轮剩余界面：12/40未逐帧验收；27部分验收、1复用待核对。Goal继续active，下一批推进上游协议/预设搜索/思考菜单/Key显隐状态，完整40帧视觉与键盘、IME、无障碍及Windows/Intel实际运行仍未完成。
