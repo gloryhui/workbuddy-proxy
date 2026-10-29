@@ -49,6 +49,8 @@ pub struct Drafts {
     pub base: String,
     pub selected: String,
     pub providers: BTreeMap<String, Draft>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pending: Option<crate::provider_create::Pending>,
 }
 impl Drafts {
     fn fingerprint(dir: &Path) -> String {
@@ -81,7 +83,23 @@ impl Drafts {
                 serde_json::from_value::<Self>(value).ok()
             })
             .filter(|s| s.base == Self::fingerprint(dir));
-        stored.unwrap_or_else(|| Self::from_config(dir, cfg))
+        let mut loaded = stored.unwrap_or_else(|| Self::from_config(dir, cfg));
+        if loaded.pending.as_ref().is_some_and(|pending| {
+            !loaded.providers.contains_key(&pending.id)
+                || (cfg.providers.iter().any(|p| p.id == pending.id) != pending.created)
+                || pending.id.len() > 64
+                || !pending
+                    .id
+                    .bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || b == b'-')
+        }) {
+            loaded.pending = None;
+        }
+        loaded.providers.retain(|id, _| {
+            cfg.providers.iter().any(|p| p.id == *id)
+                || loaded.pending.as_ref().is_some_and(|p| p.id == *id)
+        });
+        loaded
     }
     pub fn from_config(dir: &Path, cfg: &Config) -> Self {
         Self {
@@ -96,6 +114,7 @@ impl Drafts {
                 .iter()
                 .map(|provider| (provider.id.clone(), Draft::from_provider(provider)))
                 .collect(),
+            pending: None,
         }
     }
     pub fn persist(&mut self, dir: &Path) -> Result<(), String> {

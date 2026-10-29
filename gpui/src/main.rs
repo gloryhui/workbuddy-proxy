@@ -15,6 +15,7 @@ mod config;
 #[allow(dead_code)]
 #[path = "../../src/diagnostic.rs"]
 mod diagnostic;
+mod draft_discovery;
 #[allow(dead_code)]
 #[path = "../../src/i18n.rs"]
 mod i18n;
@@ -22,6 +23,7 @@ mod model_options;
 mod model_table;
 mod presets;
 mod protocol_options;
+mod provider_create;
 mod provider_filter;
 mod source_filter;
 mod state;

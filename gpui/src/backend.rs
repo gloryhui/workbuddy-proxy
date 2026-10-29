@@ -17,6 +17,8 @@ pub struct Reply {
     pub config: Option<Config>,
     pub snapshot: Option<Value>,
     pub synced: bool,
+    pub creation: Option<crate::provider_create::Outcome>,
+    pub saved_provider: Option<String>,
 }
 pub struct Backend {
     pub jobs: SyncSender<Job>,
@@ -79,17 +81,25 @@ fn execute(
     (result, committed)
 }
 pub fn call(dir: &std::path::Path, payload: &Value) -> Result<String, String> {
+    call_detailed(dir, payload).map_err(|failure| failure.message)
+}
+fn call_detailed(
+    dir: &std::path::Path,
+    payload: &Value,
+) -> Result<String, crate::provider_create::Failure> {
+    use crate::provider_create::Failure;
     let info: Value = serde_json::from_slice(
-        &fs::read(dir.join("instance.json")).map_err(|_| "Core is not responding")?,
+        &fs::read(dir.join("instance.json"))
+            .map_err(|_| Failure::certain("Core is not responding"))?,
     )
-    .map_err(|_| "Invalid core response")?;
+    .map_err(|_| Failure::certain("Invalid core response"))?;
     let port = info["port"]
         .as_u64()
         .filter(|p| *p > 0 && *p <= 65535)
-        .ok_or("Invalid core response")?;
+        .ok_or_else(|| Failure::certain("Invalid core response"))?;
     let key = info["management_key"]
         .as_str()
-        .ok_or("Invalid core response")?;
+        .ok_or_else(|| Failure::certain("Invalid core response"))?;
     let agent: ureq::Agent = ureq::Agent::config_builder()
         .proxy(None)
         .max_redirects(0)
@@ -110,19 +120,36 @@ pub fn call(dir: &std::path::Path, payload: &Value) -> Result<String, String> {
         .post(format!("http://127.0.0.1:{port}/_control/action"))
         .header("Authorization", format!("Bearer {key}"))
         .send_json(payload)
-        .map_err(|_| "Core is not responding")?;
+        .map_err(|error| {
+            let certain = matches!(&error, ureq::Error::ConnectionFailed)
+                || matches!(&error, ureq::Error::Io(e) if matches!(e.kind(), std::io::ErrorKind::ConnectionRefused | std::io::ErrorKind::AddrNotAvailable));
+            if certain { Failure::certain("Core is not responding") } else { Failure::uncertain("Core is not responding") }
+        })?;
     let success = response.status().is_success();
+    let rejected = response.status().is_client_error();
     let data: Value = response
         .body_mut()
         .with_config()
         .limit(1024 * 1024)
         .read_json()
-        .map_err(|_| "Invalid core response")?;
+        .map_err(|_| {
+            if rejected {
+                Failure::certain("Invalid core response")
+            } else {
+                Failure::uncertain("Invalid core response")
+            }
+        })?;
     let message = data["message"]
         .as_str()
         .unwrap_or("Invalid core response")
         .to_owned();
-    if success { Ok(message) } else { Err(message) }
+    if success {
+        Ok(message)
+    } else if rejected {
+        Err(Failure::certain(message))
+    } else {
+        Err(Failure::uncertain(message))
+    }
 }
 impl Backend {
     pub fn new(dir: PathBuf) -> Self {
@@ -132,12 +159,67 @@ impl Backend {
             .name("settings-control".into())
             .stack_size(512 * 1024)
             .spawn(move || {
+                let mut draft_catalog: Option<crate::draft_discovery::Cache> = None;
                 while let Ok(job) = requests.recv() {
-                    let (result, synced) = execute(
+                    let mut creation = None;
+                    let mut saved_provider = None;
+                    let (mut result, synced) = execute(
                         &job,
-                        |step| call(&dir, step),
+                        |step| {
+                            if step["command"] == "ui_discover_models" {
+                                let (ids, cache) = crate::draft_discovery::fetch(step)?;
+                                draft_catalog = Some(cache);
+                                Ok(ids)
+                            } else if step["command"] == crate::provider_create::COMMAND {
+                                let pending = serde_json::from_value(step["pending"].clone()).map_err(|_| "Invalid local draft request")?;
+                                let draft = serde_json::from_value(step["draft"].clone()).map_err(|_| "Invalid local draft request")?;
+                                let (result, outcome) = crate::provider_create::commit(
+                                    &pending, &draft, || Config::load(&dir), |payload| call_detailed(&dir, payload),
+                                );
+                                if let Some(cache) = &mut draft_catalog
+                                    && let Some(id) = &outcome.provider_id {
+                                    cache.rebind(&outcome.local_id,id);
+                                }
+                                if outcome.saved {
+                                    saved_provider = outcome.provider_id.clone();
+                                    // Save already starts the core's metadata refresh.
+                                    // Subsequent UI reads must use that same resolver,
+                                    // including its fallback when refreshing fails.
+                                    draft_catalog = None;
+                                }
+                                creation = Some(outcome);
+                                result
+                            } else {
+                                let mut payload = step.clone();
+                                if let Some(outcome) = &creation
+                                    && payload["provider_id"].as_str() == Some(&outcome.local_id)
+                                    && let Some(id) = &outcome.provider_id {
+                                    payload["provider_id"] = json!(id);
+                                }
+                                if payload["command"] == "model_metadata"
+                                    && let Some(cache) = draft_catalog.as_ref().filter(|cache|cache.matches(&payload)) {
+                                    // Resolve public/builtin metadata without a stale live
+                                    // credential cache, then apply the unsaved discovery.
+                                    let mut base = payload.clone();
+                                    base["key"] = json!(format!("ui-resolver-{}", &crate::config::token()[..12]));
+                                    let mut value: Value = serde_json::from_str(&call(&dir,&base)?).map_err(|_|"Invalid model metadata")?;
+                                    cache.enrich(&payload,&mut value["metadata"])?;
+                                    Ok(value.to_string())
+                                } else {
+                                    let result=call(&dir, &payload);
+                                    if result.is_ok() && payload["command"] == "save" {
+                                        saved_provider=payload["provider_id"].as_str().map(str::to_owned);
+                                    }
+                                    result
+                                }
+                            }
+                        },
                         crate::workbuddy_restart::restart,
                     );
+                    if saved_provider.is_some()
+                        && let Err(error) = &mut result {
+                        *error = format!("Provider saved; subsequent action failed: {} / 供应商已保存，后续操作失败：{}",crate::i18n::message(error,false),crate::i18n::message(error,true));
+                    }
                     let snapshot = if matches!(job.tag.as_str(), "metadata" | "workbuddy_check") {
                         None
                     } else if job.tag == "poll" {
@@ -173,6 +255,8 @@ impl Backend {
                             config,
                             snapshot,
                             synced,
+                            creation,
+                            saved_provider,
                         })
                         .is_err()
                     {

@@ -1,0 +1,154 @@
+{
+  "status": "passed for documented per-candidate scope; final_candidate is authoritative for final build",
+  "candidate_ui_sha256": "3cf7c5b47f0b4b2a81352efb5f61e4784315634190d3f0a2f1c5a98509e632aa",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "environment": "isolated fake HOME and local mock; core sandbox; synthetic credentials and provider data",
+  "initial": {
+    "providers": 2,
+    "models": 3,
+    "requests": 0,
+    "config_sha256": "a09510220c7491d3f8cdae7989160a7c4b85af14b96f7e52d49d744fcc1ed47f",
+    "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "new_cancel": {
+    "result": "passed",
+    "observations": "Created local draft, fetched two mock models, selected vision-model; selected another provider and resumed; closed and reopened UI then resumed with fields and one model; Cancel left initial Core config and sentinel unchanged."
+  },
+  "copy_cancel": {
+    "result": "passed",
+    "observations": "Copy first saved dirty source A; Core still had A/B with low/high models; Cancel left post-source-save config and sentinel unchanged. Config SHA before/after cancellation is compared after isolated language preference change.",
+    "post_copy_prepare_config_sha256": "6bc075989e758fda63aa27de87b7c32b7c03f78fe6096fc19a78efac153edf48",
+    "before_after_cancel_config_sha256": "abf9f0d9e532543a3a01307917da4a006b88fc1e2ba346e39f8513390e88cb2b"
+  },
+  "new_explicit_save": {
+    "result": "passed",
+    "observations": "At 1100x700 scrolled central column to visible Save and clicked; real Core 2\u21923 providers, 3\u21924 models; New small draft saved with vision-model."
+  },
+  "model_metadata": {
+    "result": "passed for display in nonempty-provider fixture",
+    "observations": "Automatic editor after response showed image, tool and reasoning enabled; low/high, input 64000, output 7777, context 64000. Automatic remains null in saved Core capabilities by existing semantics. Zero-provider Core cache warm-up not verified."
+  },
+  "copy_test_failure": {
+    "result": "passed",
+    "observations": "Test on local copy using unreachable loopback endpoint first saved it, then displayed provider saved/subsequent connection test failed. 3\u21924 providers, 4\u21926 models; repeat Test retained one copy. New target and model IDs/aliases differ from source; low/high preserved."
+  },
+  "copy_explicit_save": {
+    "result": "passed",
+    "observations": "Second copy explicitly saved by visible small-window Save; Core 4\u21925 providers; fresh target/model IDs and aliases, low/high retained."
+  },
+  "screenshots": {
+    "new_1440": "provider-create-new-1440x900.png",
+    "copy_1440": "provider-create-copy-1440x900.png",
+    "new_1100": "provider-create-new-1100x700.png",
+    "copy_1100": "provider-create-copy-1100x700.png",
+    "actions_1100": "provider-create-actions-1100x700.png",
+    "processing": "Actual app-only raw wide 2880x1802 and small 2200x1402; bottom 2 physical pixels cropped, then one LANCZOS resize to 1440x900 or 1100x700. Wide CN Studio, small EN Mono. Small new image shows a separate new draft with no models; actions image shows saved New small draft with one model."
+  },
+  "not_verified": [
+    "Complete 40-frame audit, IME/accessibility/cross-platform runtime",
+    "Four-protocol GUI and Sync materialization not repeated in this phase",
+    "Other UI failure-recovery branches covered only by real-core contract where stated"
+  ],
+  "processes": {
+    "initial_ui_exit": 0,
+    "reopened_ui_exit": 0,
+    "core_exit_after_fixture_cleanup": 0,
+    "fixture_and_owned_pids_absent": true,
+    "core_health_after_ui_close": "ready"
+  },
+  "cleanup": "Fixture and raw images retained pending next candidate and owner review; no cleanup claimed.",
+  "incident": "An unintended CGSession -suspend command was executed; immediate read-only ioreg reported IOConsoleLocked=No and session OnConsole=1/LoginDone=1. No unlock attempted.",
+  "final_candidate": {
+    "ui_sha256": "eda88cef314e30fa24392ef3571afba2a9e0a1ed50ffba3d194a8b27d6faf79f",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "isolation": "Synthetic zero-provider HOME and local mock, Core sandbox profile; no real WorkBuddy data",
+    "zero_provider_cancel": {
+      "providers_after_cancel": 0,
+      "config_sha256_after_cancel": "a7569b061ac246fc4a0df1cf2f630f8b285789ca4e73b4ea6b30df47b2b1f3e5",
+      "note": "Core count verified after cancellation; initial config hash not captured, so byte-for-byte before/after is not claimed."
+    },
+    "first_provider": {
+      "before_save_providers": 0,
+      "after_save_providers": 1,
+      "after_save_models": 1,
+      "action": "Visible Save configuration button clicked after central column scroll at 1100x700",
+      "automatic_capabilities_saved": null,
+      "before_save_metadata_ui": {
+        "image": true,
+        "tools": true,
+        "reasoning": true,
+        "input": 64000,
+        "output": 7777,
+        "context": 64000,
+        "efforts": [
+          "low",
+          "high"
+        ]
+      },
+      "after_save_core_model_metadata": {
+        "sources": [
+          "upstream"
+        ],
+        "image": true,
+        "tools": true,
+        "reasoning": true,
+        "input": 64000,
+        "output": 7777,
+        "context": 64000,
+        "efforts": [
+          "low",
+          "high"
+        ]
+      }
+    },
+    "copy_cancel": {
+      "providers_after_cancel": 1,
+      "config_sha256_before_after": "a9b712de44ce99d9de5b247de3dd4e5e28d64cd99412955285af01f6dfb7b89c",
+      "sentinel_sha256_before_after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "screenshots": {
+      "files": [
+        "provider-create-final-new-1440x900.png",
+        "provider-create-final-new-1100x700.png",
+        "provider-create-final-copy-1440x900.png",
+        "provider-create-final-copy-1100x700.png",
+        "provider-create-final-actions-1100x700.png"
+      ],
+      "raw_dimensions": {
+        "new_1440": [
+          2880,
+          1802
+        ],
+        "new_1100": [
+          2200,
+          1402
+        ],
+        "copy_1440": [
+          2880,
+          1800
+        ],
+        "copy_1100": [
+          2200,
+          1402
+        ],
+        "actions_1100": [
+          2200,
+          1402
+        ]
+      },
+      "processing": "Crop bottom two physical pixels only when height includes extra two, then one LANCZOS 2:1 resize; copy_1440 was already 2880x1800 and not cropped.",
+      "content": "CN Studio wide, EN Mono small; new is unsaved one-model draft with Core 0, copy is unsaved one-model draft with Core 1, actions shows saved first provider."
+    },
+    "processes": {
+      "ui_exit": 0,
+      "core_health_after_ui_close": "ready",
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "pids_gone": true
+    },
+    "not_repeated": [
+      "copy mixed effort and IDs, copy Test failure, reopen draft and source dirty pre-save; separately tested with previous 3cf7 candidate",
+      "four-protocol GUI and Sync materialization in this phase"
+    ]
+  }
+}

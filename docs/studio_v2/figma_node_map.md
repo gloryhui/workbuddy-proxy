@@ -27,9 +27,9 @@
 | 67:548 | 21 / STUDIO V2 · 思考强度菜单 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 68:350 | 22 / STUDIO V2 · 取消同步确认 | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：原生确认/两尺寸、取消/仅移除、保留providers与草稿/恢复原条目、守卫下移除后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验 |
 | 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生编辑布局/身份锁定/取消恢复/版本冲突及手动刷新重开/旧快照金额保护已验；完整IME/无障碍/跨平台与精细视觉待续 |
-| 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui/provider_new.rs, ui/providers.rs, provider_create.rs, draft_discovery.rs, state.rs | 部分：独立pending/取消/切换恢复/重开、零供应商真实发现/自动能力及小窗Save、最终两尺寸已验，精细视觉/IME/无障碍待续 |
 | 78:605 | 25 / STUDIO V2 · 编辑供应商资料 | ui/provider_edit.rs, ui/providers.rs, ui.rs, state.rs, main.rs | 部分：原位编辑/取消完整草稿与选择、A/B独立、保存边界、重开草稿、两尺寸已验；整帧精细审计及IME/无障碍待续 |
-| 78:843 | 26 / STUDIO V2 · 复制供应商草稿 | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
+| 78:843 | 26 / STUDIO V2 · 复制供应商草稿 | ui/provider_new.rs, provider_create.rs, ui/sidebar.rs, ui/providers.rs | 部分：来源dirty先保存/副本本地取消、显式Save/Test真实新目标/新路由和混合effort已验；最终两尺寸及Cancel补验、四轮性能及1000请求复核已验，完整审计待续 |
 | 78:1080 | 27 / STUDIO V2 · 删除供应商确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs, main.rs | 部分：532原生删除确认/保存目标与dirty/取消键盘/失败重试/无自动同步、两尺寸与合法长名实拍及四轮性能已验；完整视觉/无障碍待续 |
 | 78:1325 | 28 / STUDIO V2 · 供应商满载滚动 (64) | ui.rs, state.rs, model_options.rs, protocol_options.rs | 未验收 |
 | 78:1804 | 29 / STUDIO V2 · 删除后仅剩 OpenCode Go | ui/providers.rs, ui/sidebar.rs, ui.rs | 未验收 |

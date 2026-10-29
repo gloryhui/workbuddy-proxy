@@ -521,3 +521,37 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 合计RSS中位数86.28→86.54MiB（+0.26MiB，约+0.30%）；累计UI记录标记中位数925.818→950.446ms，轮间方向不一致。该短轮口径未见明显持续退化，不宣称提升。就绪标记不是首帧/可交互时间，默认页结果不代表64个同时编辑快照、长期负载或跨平台表现；共享页可能双计、托盘另计于JSON。
 - Goal保持active。新增/复制独立草稿与取消仍待施工；完整40帧精细审计、IME/无障碍及Windows/Intel实际运行继续保留待办。1100小窗中心列滚动取回Test/Save按钮及点击保存本轮未实测（已验证Cmd+S），不将其标Passed。
 - 收尾确认UI/Core/mock/benchmark与编译子进程均终止并wait，专属根无lsof或进程引用。UI夹具25,313,280 bytes、最后程序副本/四轮基准副本/日志109,363,200 bytes，删除已分配空间合计约134,676,480 bytes（128.44MiB）；本批专属临时根余0，benchmark内部TemporaryDirectory也自动清理且未重复估算。共享Cargo缓存、归属不明历史目录及历史截图证据保留；macOS自行记录的一份93,053-byte编译诊断保留作开发故障证据。系统盘当前可用38,100,635,648 bytes（35.48GiB）。
+
+## 小功能 27：新增与复制的独立草稿（2026-10-29，北京时间）
+
+- 依据已读取的 `78:364` / `78:843`，New先建立空本地表单，Copy先沿用既有dirty-source保存边界，再建立独立副本。新增目标只在明确Save/Test/Sync时创建，Cancel本身不发save/delete，不回滚此前已经成功的来源保存。只有一个待保存新增/复制草稿；切换已保存供应商后Add可返回该草稿，避免覆盖。侧栏保存数量与运行中心保持Core实际口径，不用临时草稿伪造已保存记录。
+- `gpui-drafts.json`增加可选、向后兼容的UI-private pending字段；关闭重开恢复待保存表单。核心配置schema、核心管理API及代理代码不变。前端内部 `ui_create_provider` 仅由GPUI worker解释，最终仍调用原add/duplicate/save。先用现有Config校验完整结果及duplicate中间容量，再比较前后ID集合，只有恰好一个新增目标才绑定；不以最后一行猜测目标。保留Core duplicate的全新route IDs/aliases、模型能力及混合legacy effort。
+- 已知create成功而save失败时保留真实目标ID，重试只save该目标；连接拒绝等确认未分派的失败允许重试。超时/丢失回复或多个新增目标视为结果未确认，保留草稿、展示实际列表且不自动重复create或delete。Cancel也不自动删除已经创建的目标。普通供应商Save成功后Test失败，会按真实已提交状态重载并单独提示后续测试失败，继续保留原“Test先保存”的行为。
+- 零供应商没有Core fetch所需的已保存上下文，增加只读UI discovery adapter；没有新增代理实例或写Core配置。有已保存上下文时继续原Core fetch，协议/URL/settings/key全部显式覆盖，空key拒绝，不借用另一供应商凭证。只读适配器沿用四协议与Azure认证/分页、4096条/1MiB累计/16页/30秒累计、禁重定向/proxy/压缩和原能力归一化；缓存以完整wire配置和凭证隔离，不按provider ID误复用。与Core镜像的hint解析语义有真实RPC parity保护，后续任何一边改动需复跑。
+- fmt、174项默认测试、严格clippy all-targets/-D warnings、最终Release40.69s及Intel目标check1.94s Passed；2项默认ignored的真实核心专项均单独运行Passed。UI 15,196,640 bytes，最终SHA256 `eda88cef314e30fa24392ef3571afba2a9e0a1ed50ffba3d194a8b27d6faf79f`；核心仍8,428,096 bytes及25f SHA，没有升级依赖。Intel只证明类型检查兼容，既存block0.1.6未来兼容提示保持。[编译证据](benchmarks/provider-create-build.json)。
+- [真实Core合约与19项discovery parity](benchmarks/provider-create-core-contract.json)：非法表单无create/配置不变、连接拒绝后重试恰好一次、来源保存、独立copy及能力/混合effort/新路由、create后save400再试不重复创建、save成功Test失败报告已提交、多目标歧义不乱save/重复create均Passed。Discovery覆盖四协议、Azure/no-fallback、live覆盖builtin、编码/数量/页数/环路/体积错误；不同provider相同wire可复用、不同key不可复用，Core config SHA在只读发现前后不变。核心内核沙盒enforced，owned子进程全wait、server已join，Core退出0。
+- 开发中两次夹具检查先失败后修正：`/var`与`/private/var`差异使沙盒包装匹配失败，改为物理路径并验证enforced；Core启动warm请求命中严格mock时使用了固定smoke凭证，改将初始seed指向不可达本地地址，避免干扰显式请求的认证断言。没有把这两次夹具失败当成功或代理功能故障。
+- 3cf7交互候选真实GUI已验：New填写合成名称/Key/本地URL、fetch2候选并选择vision后，Core仍A2/B1、config SHA保持初值；切B后Add返回原pending，Copy在另一pending隐藏时禁用；正常关窗、同Core重开可恢复该pending。取消新增后Core与WorkBuddy合成哨兵SHA不变。Copy先保存A的dirty名称，Core仍仅A/B且两模型low/high保留；随后取消独立copy，取消前后Core SHA不变（中途显式语言切换另记配置变化）。
+- 1100英文Mono中心列实际向下滚动后，Test与Save同屏可见；点击可见Save使New small draft成为第三个Core供应商，运行计数真实变为3/4/0，header回Saved。Picker确认沿用旧行为只加入model/name，未打开能力编辑时保存的capabilities仍为null；没有把模型列表hint自动写入这一旧路径。
+- 主代理已逐张打开检查[新增宽窗](screenshots/provider-create-new-1440x900.png)、[新增小窗](screenshots/provider-create-new-1100x700.png)、[复制宽窗](screenshots/provider-create-copy-1440x900.png)、[复制小窗](screenshots/provider-create-copy-1100x700.png)、[小窗滚动后实际点击保存态](screenshots/provider-create-actions-1100x700.png)。本轮Retina原图为2880×1802/2200×1402，只裁底2物理像素，再一次LANCZOS缩至1440×900/1100×700；不是绘制或旧图。宽窗中文Studio、小窗英文Mono；新增宽图1个草稿模型，小图另一个无模型草稿，copy两图为同一A的2模型草稿，未伪装成同一状态。
+- 核对Core `save`后现有warm_metadata可异步填充live缓存，最终eda8只在成功create/save后清除UI临时catalog，后续自动能力统一读Core resolver。真实Core回归分别令warm成功和503失败，确认自动capabilities仍存null，UI与Core同一结果；失败时不把旧UI hint伪装为Core能力，也不增加额外fetch。
+- 最终eda8零供应商GUI闭环通过：Add/Cancel后仍0供应商（未捕获初始hash，仅声称实际数量）；再Add/fetch2候选/选vision并打开自动能力，保存前UI显示image/tools/reasoning、low/high及64000/7777/context64000，Core仍0。1100中心列滚动并实际点击可见Save后Core1供应商/1模型，capabilities=null保持自动语义；直接查询Core model_metadata的sources=[upstream]，能力与保存前一致。最终Copy/Cancel前后Core config SHA均a9b712de…、WorkBuddy哨兵均4f53cda1…，供应商仍1。
+- 最终[新增1440](screenshots/provider-create-final-new-1440x900.png)、[新增1100](screenshots/provider-create-final-new-1100x700.png)、[复制1440](screenshots/provider-create-final-copy-1440x900.png)、[复制1100](screenshots/provider-create-final-copy-1100x700.png)、[可见Save后的1100](screenshots/provider-create-final-actions-1100x700.png)均由主代理打开检查。new宽图raw2880×1802、三个小图2200×1402只裁底2px，copy宽图raw2880×1800无需裁切，再一次2:1 LANCZOS缩至目标逻辑尺寸。当前草稿1模型，New时Core0、Copy时Core1，非Figma静态计数。3cf7旧候选截图和独立范围保留，最终版未重复mixed effort/Test/reopen/source-save全套，详见[分版本GUI证据](benchmarks/provider-create-gui-validation.json)。
+- 两套GUI夹具UI/Core均正常退出0且wait，关窗后Core health仍ready；最终fixture退出0，所有记录PID已消失。界面代理误执行一次CGSession -suspend，已明确向用户说明；即时只读复核IOConsoleLocked=No/OnConsole=1，未尝试解锁，后续最终UI确实可交互。没有将锁态检查变更为解锁操作。
+- 四协议最终原生弹窗×两尺寸已在前序98fb阶段完成；本阶段未重复全部协议GUI，只读适配器的四协议19case真实Core parity已覆盖。Sync创建pending的GUI、完整40帧精细审计、IME/无障碍及Windows/Intel实际运行继续保留待办。
+
+同机Release默认GUI页、相同25f核心与benchmark脚本，403→eda8→403→eda8四轮交错；1供应商/64模型，200小请求与80次1MiB/并发4。初次新run2 p95偏高，再按新→旧追加各1000小请求核对。所有输入SHA核对、核心内核沙盒enforced、owned子进程wait、UI PID消失。Mock/controller按脚本SIGTERM返回[-15,-15,0,0]，不宣称全部退出0。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧403](benchmarks/provider-create-previous-gui.json) | 12.28 / 76.22 / 88.50 | 210.266 / 909.700 | 0.164 / 0.210 | 134.86 | 0.096 |
+| [新eda8](benchmarks/provider-create-gui.json) | 12.98 / 75.36 / 88.34 | 230.081 / 698.223 | 0.172 / 0.258 | 140.89 | 0.091 |
+| [旧403 复测](benchmarks/provider-create-previous-run2-gui.json) | 12.09 / 74.52 / 86.61 | 222.036 / 692.114 | 0.187 / 0.331 | 127.59 | 0.088 |
+| [新eda8 复测](benchmarks/provider-create-run2-gui.json) | 12.64 / 74.83 / 87.47 | 224.538 / 705.623 | 0.197 / 0.683 | 134.11 | 0.093 |
+| [新eda8 1000请求复测](benchmarks/provider-create-confirm-gui.json) | 12.22 / 75.44 / 87.66 | 222.440 / 725.660 | 0.173 / 0.201 | 133.86 | 0.091 |
+| [旧403 1000请求复测](benchmarks/provider-create-previous-confirm-gui.json) | 12.55 / 74.34 / 86.89 | 226.986 / 993.769 | 0.183 / 0.249 | 131.33 | 0.088 |
+
+- 前四轮合计RSS中位87.555→87.905MiB（+0.350MiB，约+0.40%）；累计UI记录中位800.907→701.923ms，峰值131.225→137.500MiB。首次run2 p95 0.683ms高于旧0.331ms；追加1000请求后新/旧p50为0.173/0.183ms、p95为0.201/0.249ms，median proxy overhead均0.024ms，未复现持续延迟退化。新/旧追加轮峰值133.86/131.33MiB、空闲87.66/86.89MiB。只在该短轮口径判定未见明显持续退化，不宣称提升。
+- UI记录标记不是首帧或可交互时间；RSS共享页可能双计，tray另列原JSON。默认页结果不代表多个草稿、长时间占用、网络上游或跨平台。完整40帧/键盘/IME/无障碍与Windows/Intel实际运行仍待后续，Goal保持active。
+
+- 收尾停止并wait本轮全部GUI/Core/mock/benchmark/测试子进程，专属根lsof无引用；删除105个专属临时文件（隔离配置/数据库/程序副本、原图、六轮基准副本和日志），释放已分配空间208,322,560 bytes（198.67MiB），本轮保留专属临时文件0。仓库实拍/JSON保留，复用Cargo缓存与未知历史目录未动；上一轮93,053-byte系统编译诊断继续保留。系统盘当前可用41,767,514,112 bytes（38.90GiB）。[清理证据](benchmarks/provider-create-cleanup.json)。

@@ -42,6 +42,10 @@ impl Proxy {
         if self.busy {
             return;
         }
+        if self.pending_selected() {
+            self.cancel_provider_draft(window, cx);
+            return;
+        }
         let id = self.selected();
         if self.provider_edits.contains(&id) {
             if let Some(selection) = self.provider_edits.cancel(&id, &mut self.drafts) {

@@ -1,0 +1,14 @@
+{
+  "scope": "Owned phase27 round19 only; isolated HOME/config/database, UI/core copies, raw screenshots and logs, six benchmark copies. In-repository final images and JSON retained. Shared caches and unknown historical directories untouched.",
+  "owned_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round19.g_m90sw2",
+  "lsof_open_references": 0,
+  "all_test_and_benchmark_children_waited": true,
+  "gui_pids_gone": true,
+  "deleted_regular_file_count": 105,
+  "deleted_allocated_bytes": 208322560,
+  "deleted_logical_bytes": 208001803,
+  "retained_owned_temp_bytes": 0,
+  "system_disk_free_bytes_after": 41767514112,
+  "retained_historical_diagnostic_bytes": 93053,
+  "historical_diagnostic_note": "Prior phase26 rustc diagnostic preserved; no new phase27 diagnostic cleanup claimed."
+}

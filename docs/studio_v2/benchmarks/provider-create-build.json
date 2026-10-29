@@ -1,0 +1,22 @@
+{
+  "ui_sha256": "eda88cef314e30fa24392ef3571afba2a9e0a1ed50ffba3d194a8b27d6faf79f",
+  "ui_bytes": 15196640,
+  "baseline_ui_sha256": "403aa529aec379c560b88c3a3e20b064e4a90c1bdb9989ca572d082d466fce9f",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "tests_passed": 174,
+  "tests_ignored": 2,
+  "ignored_tests_executed_separately": "Both passed with the isolated real core, see provider-create-core-contract.json",
+  "fmt": "passed",
+  "strict_clippy_all_targets": "passed",
+  "release_build_seconds": 40.691,
+  "intel_target_check_seconds": 1.939,
+  "intel_runtime_verified": false,
+  "gui_validation_state": "passed_for_documented_scope",
+  "warning": "Existing block0.1.6 future incompatibility warning",
+  "schema_scope": "Only optional UI-private gpui-drafts.json pending state added. Core config and management API unchanged.",
+  "core_contract": "provider-create-core-contract.json",
+  "strict_clippy_seconds": 2.088,
+  "development_fix": "Successful creation/save discards UI-only draft discovery cache; core keeps existing asynchronous warm_metadata behavior. Real-core tests cover successful and failed warm refresh.",
+  "gui_evidence": "provider-create-gui-validation.json"
+}

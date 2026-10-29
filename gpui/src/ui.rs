@@ -3,6 +3,7 @@ mod model_picker;
 mod protocol_dialog;
 mod provider_delete;
 mod provider_edit;
+mod provider_new;
 mod providers;
 mod relay;
 mod sidebar;
@@ -1147,7 +1148,18 @@ impl Proxy {
         self.drafts
             .providers
             .get(&self.selected())
-            .map(|d| vec![d.payload(&self.selected())])
+            .map(|d| {
+                vec![if let Some(pending) = self
+                    .drafts
+                    .pending
+                    .as_ref()
+                    .filter(|p| p.id == self.selected())
+                {
+                    crate::provider_create::request(pending, d)
+                } else {
+                    d.payload(&self.selected())
+                }]
+            })
             .unwrap_or_default()
     }
     fn save(&mut self, _: &Save, _: &mut Window, cx: &mut Context<Self>) {
@@ -1179,6 +1191,9 @@ impl Proxy {
     }
     fn dirty_steps(&mut self, cx: &App) -> Vec<Value> {
         self.capture(cx);
+        if self.pending_selected() {
+            return self.save_steps(cx);
+        }
         let fresh = Drafts::from_config(&self.dir, &self.cfg);
         if self.drafts.providers.get(&self.selected()) == fresh.providers.get(&self.selected()) {
             vec![]
@@ -1278,20 +1293,41 @@ impl Proxy {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) {
+        if self
+            .drafts
+            .pending
+            .as_ref()
+            .is_some_and(|p| p.created && !cfg.providers.iter().any(|saved| saved.id == p.id))
+            && let Some(pending) = self.drafts.pending.take()
+        {
+            self.drafts.providers.remove(&pending.id);
+            if self.drafts.selected == pending.id {
+                self.drafts.selected = pending.return_to;
+            }
+        }
         let saved = self.selected();
         // update_config is reached only after the existing successful/committed
         // reply gate. Failed saves keep both the draft and its edit baseline.
         self.provider_edits.reconcile(
             &cfg,
-            matches!(tag, "save" | "test" | "install" | "duplicate").then_some(saved.as_str()),
+            matches!(
+                tag,
+                "save" | "test" | "install" | "duplicate" | "copy_prepare"
+            )
+            .then_some(saved.as_str()),
         );
         let fresh = Drafts::from_config(&self.dir, &cfg);
-        self.drafts
-            .providers
-            .retain(|id, _| fresh.providers.contains_key(id));
+        self.drafts.providers.retain(|id, _| {
+            fresh.providers.contains_key(id)
+                || self.drafts.pending.as_ref().is_some_and(|p| p.id == *id)
+        });
         for (id, draft) in fresh.providers {
             if !self.drafts.providers.contains_key(&id)
-                || ((tag == "save" || tag == "test" || tag == "install" || tag == "duplicate")
+                || ((tag == "save"
+                    || tag == "test"
+                    || tag == "install"
+                    || tag == "duplicate"
+                    || tag == "copy_prepare")
                     && id == saved)
             {
                 self.drafts.providers.insert(id, draft);
@@ -1314,7 +1350,7 @@ impl Proxy {
         });
         if matches!(
             tag,
-            "save" | "test" | "install" | "add" | "duplicate" | "delete"
+            "save" | "test" | "install" | "add" | "duplicate" | "delete" | "copy_prepare"
         ) {
             let selected = self.selection.rows.clone();
             let anchor = self.selection.anchor;
@@ -1512,7 +1548,16 @@ impl Proxy {
                             .to_owned();
                     }
                 }
-                if reply.result.is_ok() || reply.synced {
+                let creation_attempted = reply.creation.is_some();
+                let creation_saved = reply
+                    .creation
+                    .map(|outcome| self.bind_created_draft(outcome))
+                    .unwrap_or(false);
+                if reply.result.is_ok()
+                    || reply.synced
+                    || creation_saved
+                    || reply.saved_provider.is_some()
+                {
                     if reply.tag == "fetch" {
                         self.picker = reply
                             .result
@@ -1527,6 +1572,11 @@ impl Proxy {
                     if let Some(cfg) = reply.config {
                         self.update_config(cfg, &reply.tag, window, cx);
                     }
+                    if reply.tag == "copy_prepare" {
+                        self.begin_provider_draft(true, window, cx);
+                    }
+                } else if creation_attempted && let Some(cfg) = reply.config {
+                    self.update_config(cfg, "creation_pending", window, cx);
                 }
                 if reply.synced || (reply.tag == "port" && reply.result.is_ok()) {
                     self.startup_report = None;

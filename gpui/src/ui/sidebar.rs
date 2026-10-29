@@ -123,6 +123,12 @@ impl Proxy {
     pub(super) fn sidebar(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
         let compact = window.viewport_size().height < px(800.);
         let selected = self.selected();
+        let rail_selected = self
+            .drafts
+            .pending
+            .as_ref()
+            .filter(|p| p.id == selected && !p.created)
+            .map_or(selected.as_str(), |p| p.return_to.as_str());
         let query = self.provider_search.read(cx).value();
         let visible = crate::provider_filter::filtered(&self.cfg.providers, &self.drafts, &query);
         let count = visible.len();
@@ -131,7 +137,7 @@ impl Proxy {
             .into_iter()
             .map(|provider| {
                 let id = provider.id.clone();
-                let active = self.page == Page::Providers && id == selected;
+                let active = self.page == Page::Providers && id == rail_selected;
                 let name = crate::provider_filter::display_name(provider, &self.drafts).to_owned();
                 let models = self
                     .drafts
@@ -463,29 +469,42 @@ impl Proxy {
                 action(
                     SupplierAction::Add,
                     self.t("新增", "Add"),
-                    self.busy || at_capacity,
+                    self.busy || (at_capacity && self.drafts.pending.is_none()),
                     cx,
                 )
-                .tooltip(self.t("新增供应商", "Add provider"))
-                .accessibility_label(self.t("新增供应商", "Add provider"))
-                .on_click(cx.listener(|this, _, _, cx| {
-                    this.capture(cx);
-                    this.send("add", vec![json!({"command":"add"})], cx);
+                .tooltip(if self.drafts.pending.is_some() {
+                    self.t("返回未保存草稿", "Resume unsaved draft")
+                } else {
+                    self.t("新增供应商", "Add provider")
+                })
+                .accessibility_label(if self.drafts.pending.is_some() {
+                    self.t("返回未保存草稿", "Resume unsaved draft")
+                } else {
+                    self.t("新增供应商", "Add provider")
+                })
+                .on_click(cx.listener(|this, _, window, cx| {
+                    this.begin_provider_draft(false, window, cx);
                 })),
             )
             .child(
                 action(
                     SupplierAction::Copy,
                     self.t("复制", "Copy"),
-                    self.busy || at_capacity || !has_selection,
+                    self.busy
+                        || at_capacity
+                        || !(has_selection || self.pending_selected())
+                        || self.drafts.pending.as_ref().is_some_and(|p| {
+                            !self.pending_selected()
+                                || p.uncertain
+                                || (!p.created
+                                    && self.cfg.providers.len() + 1 >= config::MAX_PROVIDERS)
+                        }),
                     cx,
                 )
                 .tooltip(self.t("复制供应商", "Duplicate provider"))
                 .accessibility_label(self.t("复制供应商", "Duplicate provider"))
-                .on_click(cx.listener(|this, _, _, cx| {
-                    let mut steps = this.dirty_steps(cx);
-                    steps.push(json!({"command":"duplicate","provider_id":this.selected()}));
-                    this.send("duplicate", steps, cx);
+                .on_click(cx.listener(|this, _, window, cx| {
+                    this.begin_provider_draft(true, window, cx);
                 })),
             )
             .child(

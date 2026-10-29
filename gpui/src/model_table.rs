@@ -153,12 +153,31 @@ impl TableDelegate for Models {
         div()
             .size_full()
             .flex()
-            .items_center()
+            .flex_col()
+            .px(px(22.))
+            .gap(px(8.))
+            .rounded(px(10.))
+            .bg(rgb(crate::theme::color::MODEL_EMPTY))
             .justify_center()
-            .child(gpui_kit::component::label::Label::new(if self.zh {
-                "获取模型，或点击 + 手动添加"
-            } else {
-                "Fetch models or use + to add one"
-            }))
+            .child(
+                gpui_kit::component::label::Label::new(if self.zh {
+                    "暂无模型"
+                } else {
+                    "No models yet"
+                })
+                .text_size(px(13.))
+                .font_weight(gpui::FontWeight::SEMIBOLD),
+            )
+            .child(
+                gpui_kit::component::label::Label::new(if self.zh {
+                    "先填写供应商名称、API 地址和 Key，然后获取或手动添加模型。"
+                } else {
+                    "Enter a provider name, API URL and key, then fetch or add models."
+                })
+                .text_size(px(11.))
+                .text_color(rgb(crate::theme::color::TEXT_3))
+                .whitespace_normal()
+                .h_auto(),
+            )
     }
 }
