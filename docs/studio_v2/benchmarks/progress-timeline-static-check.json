@@ -1,25 +1,25 @@
 {
   "scope": "Static source/data/link checks only; no browser execution or rendering",
-  "checked_at": "2026-10-29T22:59:27+08:00",
+  "checked_at": "2026-10-30T00:53:43+08:00",
   "embedded_json_matches_external": true,
   "frame_count": 40,
   "frame_status_counts": {
-    "pending": 3,
-    "partial": 36,
+    "pending": 2,
+    "partial": 37,
     "reused": 1,
     "verified": 0
   },
-  "committed_task_records": 35,
+  "committed_task_records": 36,
   "recorded_goal_status": "active",
   "goal_badge_uses_recorded_status": true,
   "current_task": {
-    "id": 35,
+    "id": 36,
     "status": "recorded"
   },
   "referenced_commit_objects_exist": true,
   "html_ids_unique": true,
-  "local_file_references_checked": 230,
-  "unique_local_files": 192,
+  "local_file_references_checked": 239,
+  "unique_local_files": 200,
   "missing_local_files": 0,
   "inline_javascript_node_syntax_checks": 2,
   "python_ast_parse": "passed",

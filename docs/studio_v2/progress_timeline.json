@@ -1,76 +1,75 @@
 {
   "version": 1,
-  "updated_at": "2026-10-29T22:59:18+08:00",
+  "updated_at": "2026-10-30T00:53:42+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "f5d73d9adae1b3ea02581260ade684291f56ca10",
+  "code_head": "fe7add84c34ffaca6b3826aa400e5ac3be228fd0",
   "phase": "开发中 · 分项实机验收穿插",
   "goal_status": "active",
   "counts": {
-    "pending": 3,
-    "partial": 36,
+    "pending": 2,
+    "partial": 37,
     "reused": 1,
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 35,
+  "recorded_tasks": 36,
   "current_task": {
-    "id": 35,
-    "title": "恢复窗口提示与状态回归已提交",
+    "id": 36,
+    "title": "开机启动反馈与动态提示已提交",
     "status": "recorded",
-    "description": "Figma原生提示与普通/zoom/全屏恢复、缩窗Esc和两尺寸已实测；183测试及四轮短测通过。3待改、36部分验收、1复用待核对。"
+    "description": "09f7通过184测试、真实开关/遮罩、持续hover状态刷新、两尺寸与四轮性能；保留分候选验收边界。剩余2待改、37部分验收、1复用待核对。"
   },
   "latest_task": {
-    "id": 35,
-    "title": "恢复默认窗口尺寸提示与窗口状态回归",
+    "id": 36,
+    "title": "原生开机启动反馈与失败回滚",
     "status": "recorded",
-    "summary": "官方Figma MCP读取104:2046及高保真子104:2258（截图均返回），提示325×103、圆角12、top24+93=117/right32、标题14/目标13/底提示11/关闭27。复用语义色与原生Popup/Label/Button；目标数字来自default_window_size，使用既有restore.svg 20×20/36×36触发按钮。原型“实际窗口控制由Rust+GPUI处理”替换为用户可用提示“可以继续",
+    "summary": "开机启动按钮按真实Core结果显示原生状态提示，并在持续悬停时同步当前开关状态。交付证据：编译与资源、真实交互、1440×900、1100×700、四轮性能、清理记录、Tooltip开启、悬停实时关闭。",
     "highlights": [
-      "官方Figma MCP读取104:2046及高保真子104:2258（截图均返回），提示325×103、圆角12、top24+93=117/right32、标题14/目标13/底提示11/关闭27。复用语义色与原生Popup/Label/Button；目标数字来自default_window_size，使用既有restore.svg 20×20/36×36触发按钮。原型“实际窗口控制由Rust+GPUI处理”替换为用户可用提示“可以继续调整窗口大小”，不把实现说明写入产品，也不把请求目标冒称当前实际尺寸。",
-      "原restore_window_size立即resize、全屏退出/unzoom序列、100ms等待及5秒超时保持；只加起始信息层与超时失败态，提示关闭不取消正在执行的恢复。基础Popup仅定位/遮挡，真实Div焦点与局部Esc/X/外部关闭、deferred guard和原焦点恢复沿用已验证结构；不会添加全工具栏Enter/Space上下文，不新增timer/持续动画，不更改Core/配置/依赖。",
-      "80ad候选通过fmt、183 tests（2项既有Core专项ignored）、严格clippy all-targets/-D warnings、Intel check2.562s及Release41.178s。UI15,196,880 bytes，SHA256 80ad8dfaa8ce2f1e092063500a09b016fc0f9e25dc7c12c5f59223c0c7a76612；Core仍25f/8,428,096bytes。Intel只类型检查，既有block0.1.6 future-incompatibility提示保留。构建与资产。"
+      "开机启动按钮按真实Core结果显示原生状态提示，并在持续悬停时同步当前开关状态。交付证据：编译与资源、真实交互、1440×900、1100×700、四轮性能、清理记录、Tooltip开启、悬停实时关闭。",
+      "官方Figma MCP读取104:1378、104:1600、104:1596/1597高保真context及截图：提示345×88、top117/right32、圆角12、标题14/正文11/关闭27。保持七按钮36×36/图标20×20、间距8与原顺序；开启SVG是官方759bytes/root20×20的power，已确切接入Assets::load并加入字节路由回归，Release含原SVG bytes；Studio选中#eeedff/前景#655cf4，Mono及六旧皮肤仍用各自palette。",
+      "原autostart action、enabled=!cfg.autostart、忙碌禁用、配置/snapshot更新与Core失败回滚保持；只新增原生Popup、真实Div焦点、Esc/X/外部关闭与等待/开启/关闭/失败反馈。结果在原配置/快照处理后显示，关闭提示不取消任务、回包不重开已关闭层；仅提示打开且viewport尺寸变化时合并一次next-frame焦点恢复，无新timer/轮询/持续动画。Core、OS登录项实现、依赖、持久化格式、原benchmark未改。"
     ],
     "limits": [
-      "当前短测未见明显退化，空闲合计RSS中位85.600→84.090MiB、UI73.335→72.195MiB；p95中位0.1865→0.1795ms，峰值132.400→132.335MiB。保留全部原值，不宣称改善；第一轮基线较冷、UI记录不是首帧/可交互时间、RSS共享页可能双计。默认页短测不代表提示打开持续CPU、恢复操作时延、长时间运行或跨平台。性能汇总。",
-      "恢复窗口104:2046由未逐帧验收改为部分验收；剩余3/40未逐帧验收、36部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、开机启动、检查更新；完整40帧精细视觉、IME/无障碍及Windows/Intel实机仍未完成，Goal保持active，继续开发并穿插分项实机验收。"
+      "开机启动104:1378由未逐帧验收转为部分验收；剩余2/40未逐帧验收、37部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、检查更新；完整40帧精细视觉、初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘专项仍未完成，Goal保持active，继续开发并穿插分项实机验收。"
     ],
     "evidence": [
       {
-        "label": "构建与资产",
-        "href": "benchmarks/window-restore-build.json"
+        "label": "编译与资源",
+        "href": "benchmarks/autostart-notice-build.json"
       },
       {
-        "label": "分候选真实交互与生命周期",
-        "href": "benchmarks/window-restore-gui-validation.json"
+        "label": "真实交互",
+        "href": "benchmarks/autostart-notice-gui-validation.json"
       },
       {
-        "label": "中文Studio1440×900",
-        "href": "screenshots/window-restore-1440x900.png"
+        "label": "1440×900",
+        "href": "screenshots/autostart-notice-1440x900.png"
       },
       {
-        "label": "英文Mono1100×700",
-        "href": "screenshots/window-restore-1100x700.png"
+        "label": "1100×700",
+        "href": "screenshots/autostart-notice-1100x700.png"
       },
       {
-        "label": "旧c389",
-        "href": "benchmarks/window-restore-previous-gui.json"
+        "label": "四轮性能",
+        "href": "benchmarks/autostart-notice-performance-summary.json"
       },
       {
-        "label": "新6e89",
-        "href": "benchmarks/window-restore-current-gui.json"
+        "label": "清理记录",
+        "href": "benchmarks/autostart-notice-cleanup.json"
       },
       {
-        "label": "旧c389复测",
-        "href": "benchmarks/window-restore-previous-run2-gui.json"
+        "label": "Tooltip开启",
+        "href": "screenshots/autostart-tooltip-live-on-1440x901.png"
       },
       {
-        "label": "新6e89复测",
-        "href": "benchmarks/window-restore-current-run2-gui.json"
+        "label": "悬停实时关闭",
+        "href": "screenshots/autostart-tooltip-live-off-1440x901.png"
       }
     ],
-    "commit": "f5d73d9adae1b3ea02581260ade684291f56ca10",
-    "date": "2026-10-29T22:59:10+08:00",
-    "commit_subject": "feat(studio): add native restore-window feedback",
+    "commit": "fe7add84c34ffaca6b3826aa400e5ac3be228fd0",
+    "date": "2026-10-30T00:51:45+08:00",
+    "commit_subject": "feat(studio): add native launch-at-login feedback",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -365,9 +364,9 @@
     {
       "node": "104:1378",
       "title": "37 / STUDIO V2 · 开机启动已开启（原型）",
-      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs",
+      "detail": "部分：原生提示/实际开关与隔离plist、分候选失败回滚/重试和Pending关闭、动态Tooltip实时刷新、遮罩/两尺寸与四轮性能已验；初始Tab/完整键盘/IME/无障碍及跨平台待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1378"
     },
     {
@@ -1851,6 +1850,58 @@
       "date": "2026-10-29T22:59:10+08:00",
       "commit_subject": "feat(studio): add native restore-window feedback",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 36,
+      "title": "原生开机启动反馈与失败回滚",
+      "status": "recorded",
+      "summary": "开机启动按钮按真实Core结果显示原生状态提示，并在持续悬停时同步当前开关状态。交付证据：编译与资源、真实交互、1440×900、1100×700、四轮性能、清理记录、Tooltip开启、悬停实时关闭。",
+      "highlights": [
+        "开机启动按钮按真实Core结果显示原生状态提示，并在持续悬停时同步当前开关状态。交付证据：编译与资源、真实交互、1440×900、1100×700、四轮性能、清理记录、Tooltip开启、悬停实时关闭。",
+        "官方Figma MCP读取104:1378、104:1600、104:1596/1597高保真context及截图：提示345×88、top117/right32、圆角12、标题14/正文11/关闭27。保持七按钮36×36/图标20×20、间距8与原顺序；开启SVG是官方759bytes/root20×20的power，已确切接入Assets::load并加入字节路由回归，Release含原SVG bytes；Studio选中#eeedff/前景#655cf4，Mono及六旧皮肤仍用各自palette。",
+        "原autostart action、enabled=!cfg.autostart、忙碌禁用、配置/snapshot更新与Core失败回滚保持；只新增原生Popup、真实Div焦点、Esc/X/外部关闭与等待/开启/关闭/失败反馈。结果在原配置/快照处理后显示，关闭提示不取消任务、回包不重开已关闭层；仅提示打开且viewport尺寸变化时合并一次next-frame焦点恢复，无新timer/轮询/持续动画。Core、OS登录项实现、依赖、持久化格式、原benchmark未改。"
+      ],
+      "limits": [
+        "开机启动104:1378由未逐帧验收转为部分验收；剩余2/40未逐帧验收、37部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、检查更新；完整40帧精细视觉、初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘专项仍未完成，Goal保持active，继续开发并穿插分项实机验收。"
+      ],
+      "evidence": [
+        {
+          "label": "编译与资源",
+          "href": "benchmarks/autostart-notice-build.json"
+        },
+        {
+          "label": "真实交互",
+          "href": "benchmarks/autostart-notice-gui-validation.json"
+        },
+        {
+          "label": "1440×900",
+          "href": "screenshots/autostart-notice-1440x900.png"
+        },
+        {
+          "label": "1100×700",
+          "href": "screenshots/autostart-notice-1100x700.png"
+        },
+        {
+          "label": "四轮性能",
+          "href": "benchmarks/autostart-notice-performance-summary.json"
+        },
+        {
+          "label": "清理记录",
+          "href": "benchmarks/autostart-notice-cleanup.json"
+        },
+        {
+          "label": "Tooltip开启",
+          "href": "screenshots/autostart-tooltip-live-on-1440x901.png"
+        },
+        {
+          "label": "悬停实时关闭",
+          "href": "screenshots/autostart-tooltip-live-off-1440x901.png"
+        }
+      ],
+      "commit": "fe7add84c34ffaca6b3826aa400e5ac3be228fd0",
+      "date": "2026-10-30T00:51:45+08:00",
+      "commit_subject": "feat(studio): add native launch-at-login feedback",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2004,12 +2055,76 @@
       "partial": 36,
       "reused": 1,
       "verified": 0
+    },
+    {
+      "date": "2026-10-29T23:04:06+08:00",
+      "note": "开始UI-36开机启动；3待改、36部分验收、1复用待核对",
+      "pending": 3,
+      "partial": 36,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T23:09:05+08:00",
+      "note": "UI-36编译通过并进入实机验证；3待改、36部分验收、1复用待核对",
+      "pending": 3,
+      "partial": 36,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T23:49:53+08:00",
+      "note": "UI-36视觉失败候选6337已弃用；ad2e补资源路由回归并进入复验，3/36/1不变",
+      "pending": 3,
+      "partial": 36,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T00:17:46+08:00",
+      "note": "UI-36其余验证已完成，持续悬停方法授权待答；3待改、36部分验收、1复用待核对",
+      "pending": 3,
+      "partial": 36,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T00:21:19+08:00",
+      "note": "UI-36悬停未验，其余证据齐全；保留本轮临时数据供复验，3/36/1不变",
+      "pending": 3,
+      "partial": 36,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T00:25:07+08:00",
+      "note": "UI-36方法授权已收到，正在补真实悬停证据；3/36/1暂不变",
+      "pending": 3,
+      "partial": 36,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T00:52:13+08:00",
+      "note": "UI-36提交，开机启动转部分验收；剩余2未验收、37部分验收、1复用待核对，Goal保持active",
+      "pending": 2,
+      "partial": 37,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T00:53:42+08:00",
+      "note": "UI-36完成，进度卡优先列编译/交互/两尺寸/性能/清理与动态提示证据；2/37/1不变",
+      "pending": 2,
+      "partial": 37,
+      "reused": 1,
+      "verified": 0
     }
   ],
   "verification": [
     {
       "title": "40 帧最终视觉复核",
-      "detail": "当前 36 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "detail": "当前 37 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",

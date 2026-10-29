@@ -791,6 +791,7 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 ## 小功能 36：原生开机启动反馈与失败回滚（2026-10-29 至 2026-10-30，北京时间）
 
+- 开机启动按钮按真实Core结果显示原生状态提示，并在持续悬停时同步当前开关状态。交付证据：[编译与资源](benchmarks/autostart-notice-build.json)、[真实交互](benchmarks/autostart-notice-gui-validation.json)、[1440×900](screenshots/autostart-notice-1440x900.png)、[1100×700](screenshots/autostart-notice-1100x700.png)、[四轮性能](benchmarks/autostart-notice-performance-summary.json)、[清理记录](benchmarks/autostart-notice-cleanup.json)、[Tooltip开启](screenshots/autostart-tooltip-live-on-1440x901.png)、[悬停实时关闭](screenshots/autostart-tooltip-live-off-1440x901.png)。
 - 官方Figma MCP读取104:1378、104:1600、104:1596/1597高保真context及截图：提示345×88、top117/right32、圆角12、标题14/正文11/关闭27。保持七按钮36×36/图标20×20、间距8与原顺序；开启SVG是官方759bytes/root20×20的power，已确切接入Assets::load并加入字节路由回归，Release含原SVG bytes；Studio选中#eeedff/前景#655cf4，Mono及六旧皮肤仍用各自palette。
 - 原autostart action、enabled=!cfg.autostart、忙碌禁用、配置/snapshot更新与Core失败回滚保持；只新增原生Popup、真实Div焦点、Esc/X/外部关闭与等待/开启/关闭/失败反馈。结果在原配置/快照处理后显示，关闭提示不取消任务、回包不重开已关闭层；仅提示打开且viewport尺寸变化时合并一次next-frame焦点恢复，无新timer/轮询/持续动画。Core、OS登录项实现、依赖、持久化格式、原benchmark未改。
 - 6337候选实机发现新增资源漏接加载表而落到旧rocket fallback，及选中灰色；ad2e修复正确power/颜色后又发现持续悬停仍显示旧“已关闭”而实际已开启。两候选均未作为最终视觉结果，保留[原生矛盾图](screenshots/autostart-tooltip-before-fix-1440x901.png)。09f7仅该按钮采用原生GPUI Tooltip host、复用Kit Tooltip::element样式，弱观察Proxy仅在该提示view存活时更新on/off/等待文案；其余六按钮的原包装语义保持。没有用删除状态文案掩盖问题。
