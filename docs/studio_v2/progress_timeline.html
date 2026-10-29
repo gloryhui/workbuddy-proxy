@@ -198,77 +198,76 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T01:56:33+08:00",
+  "updated_at": "2026-10-30T02:29:24+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "56f66171a730b3295b3fba7d1500f2e5ddd66290",
+  "code_head": "4db44649653b21d4518f75a5db53c62f0b848ce3",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
     "pending": 0,
-    "partial": 39,
-    "reused": 1,
+    "partial": 40,
+    "reused": 0,
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 38,
+  "recorded_tasks": 39,
   "current_task": {
-    "id": 38,
-    "title": "黑白主题分项已提交，进入专项验收",
+    "id": 39,
+    "title": "OpenCode Go编辑分项已提交",
     "status": "recorded",
-    "description": "Mono交替行与三个设计SVG路由已修复，187项测试、两尺寸真实交互和四轮性能通过。剩余0待初审、39部分验收、1复用待核对，整帧最终验收仍为0。"
+    "description": "共用帧核对、Studio普通行与原生选中边线已完成；187项测试、两尺寸四图及四轮同主题性能通过。剩余0待初审、40部分验收、0复用待核对；整帧最终验收仍为0。"
   },
   "latest_task": {
-    "id": 38,
-    "title": "黑白主题模型行与设计资源实际加载",
+    "id": 39,
+    "title": "OpenCode Go 编辑帧复核与 Studio 模型选中态",
     "status": "recorded",
-    "summary": "Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：构建与资源、真实交互、1440中文、1100英文、四轮性能、清理记录、旧版1440实拍。",
+    "summary": "最后一项复用帧80:646已补实机：B原位编辑/完整草稿取消/独立A与显式B保存、两尺寸四张截图、遮罩和重开通过；修复Studio普通模型行并用原生边线区分选中态。证据：构建与资源、真实交互、1440中文、1100英文顶部、1440单行选中、1100滚动模型区、四轮性能、清理记录。",
     "highlights": [
-      "Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：构建与资源、真实交互、1440中文、1100英文、四轮性能、清理记录、旧版1440实拍。",
-      "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
-      "32个设计资源核对：28个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有28文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。"
+      "最后一项复用帧80:646已补实机：B原位编辑/完整草稿取消/独立A与显式B保存、两尺寸四张截图、遮罩和重开通过；修复Studio普通模型行并用原生边线区分选中态。证据：构建与资源、真实交互、1440中文、1100英文顶部、1440单行选中、1100滚动模型区、四轮性能、清理记录。",
+      "官方MCP读取80:646完整高保真context及截图，30资源重新下载核对：26本地文件逐字节同、1个link仅clip标识不同且规范化全文相同、3个窗口按钮保留原生OS生命周期。26文件的实际Assets::load路由与最终Release字节均核实；本轮更正UI-38的32/28文字统计为30/26，原逐文件明细和核验结果不变，没有重写Git历史。",
+      "共用provider_edit原来已有真实Edit/Cancel快照，原2项契约再次通过；未改其开始/取消/显式保存/配置格式/事件。基线821c实际B编辑取消及A/B独立草稿已验；旧版实拍暴露Studio普通行仍统一#f7f8fc。只扩展Models::render_tr的Studio Indigo白色/BG_NOTICE交替行，保持Mono上轮行为与其余旧皮肤；Studio选中填充本来与奇数条纹同色，补原生top/bottom各1px主题强调边线。Kit可能省略最后行底边，因此显式声明上下边，不依赖该条件；列宽、固定29px行高、原Selection/Shift/Cmd/Ctrl与事件不改，无新控件/定时器。"
     ],
     "limits": [
-      "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
-      "黑白主题62:308转部分验收，剩余0/40待初审、39部分验收、1复用待核对、0整帧最终验收。进度生成器按待初审数量显示“逐帧初审已覆盖 · 专项验收与差异修复”；不是整项目完成。继续复核复用帧、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等未完成项，Goal保持active。进度HTML仍只有静态验证，不将先前浏览器file拒绝绕过或冒称渲染通过。"
+      "主代理逐张查看最终4图并重算PNG尺寸/SHA：1440普通/选中、1100顶部/滚动模型区是分别实拍的原生状态，无拼接或缩放，仅裁raw1440×901/1100×701底1物理像素。英文小窗使用原内部滚动，不能据此声称连接卡和模型卡同屏；真实Cancel changes、模型提示和Save均可达。本轮不声明整帧精细视觉或完整键盘/IME/无障碍已完成。"
     ],
     "evidence": [
       {
         "label": "构建与资源",
-        "href": "benchmarks/mono-theme-build.json"
+        "href": "benchmarks/opencode-edit-build.json"
       },
       {
         "label": "真实交互",
-        "href": "benchmarks/mono-theme-gui-validation.json"
+        "href": "benchmarks/opencode-edit-gui-validation.json"
       },
       {
         "label": "1440中文",
-        "href": "screenshots/mono-theme-1440x900.png"
+        "href": "screenshots/opencode-edit-1440x900.png"
       },
       {
-        "label": "1100英文",
-        "href": "screenshots/mono-theme-1100x700.png"
+        "label": "1100英文顶部",
+        "href": "screenshots/opencode-edit-1100x700.png"
+      },
+      {
+        "label": "1440单行选中",
+        "href": "screenshots/opencode-edit-selected-1440x900.png"
+      },
+      {
+        "label": "1100滚动模型区",
+        "href": "screenshots/opencode-edit-selected-scroll-1100x700.png"
       },
       {
         "label": "四轮性能",
-        "href": "benchmarks/mono-theme-performance-summary.json"
+        "href": "benchmarks/opencode-edit-performance-summary.json"
       },
       {
         "label": "清理记录",
-        "href": "benchmarks/mono-theme-cleanup.json"
-      },
-      {
-        "label": "旧版1440实拍",
-        "href": "screenshots/mono-theme-baseline-1440x901.png"
-      },
-      {
-        "label": "旧78ab",
-        "href": "benchmarks/mono-theme-previous-gui.json"
+        "href": "benchmarks/opencode-edit-cleanup.json"
       }
     ],
-    "commit": "56f66171a730b3295b3fba7d1500f2e5ddd66290",
-    "date": "2026-10-30T01:56:20+08:00",
-    "commit_subject": "fix(studio): align Mono model rows and provider vectors",
+    "commit": "4db44649653b21d4518f75a5db53c62f0b848ce3",
+    "date": "2026-10-30T02:28:58+08:00",
+    "commit_subject": "fix(studio): preserve selection in Studio model rows",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -539,9 +538,9 @@
     {
       "node": "80:646",
       "title": "34 / STUDIO V2 · 编辑 OpenCode Go",
-      "source": "ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, ui.rs",
-      "detail": "共用原位编辑/取消组件已实现；该整帧尚未逐项对照",
-      "status": "reused",
+      "source": "ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, model_table.rs, ui.rs",
+      "detail": "部分：B原位编辑/取消恢复已有未保存名称和模型、A独立草稿/仅B显式保存、单模型白行/Studio交替行与原生选中边线、两尺寸四图/遮罩/重开及四轮性能已验；完整精细视觉/键盘/IME/无障碍及跨平台仍待专项",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-646"
     },
     {
@@ -2163,7 +2162,7 @@
       "highlights": [
         "Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：构建与资源、真实交互、1440中文、1100英文、四轮性能、清理记录、旧版1440实拍。",
         "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
-        "32个设计资源核对：28个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有28文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。"
+        "30个设计资源核对：26个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有26文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。"
       ],
       "limits": [
         "官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。",
@@ -2206,6 +2205,58 @@
       "commit": "56f66171a730b3295b3fba7d1500f2e5ddd66290",
       "date": "2026-10-30T01:56:20+08:00",
       "commit_subject": "fix(studio): align Mono model rows and provider vectors",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 39,
+      "title": "OpenCode Go 编辑帧复核与 Studio 模型选中态",
+      "status": "recorded",
+      "summary": "最后一项复用帧80:646已补实机：B原位编辑/完整草稿取消/独立A与显式B保存、两尺寸四张截图、遮罩和重开通过；修复Studio普通模型行并用原生边线区分选中态。证据：构建与资源、真实交互、1440中文、1100英文顶部、1440单行选中、1100滚动模型区、四轮性能、清理记录。",
+      "highlights": [
+        "最后一项复用帧80:646已补实机：B原位编辑/完整草稿取消/独立A与显式B保存、两尺寸四张截图、遮罩和重开通过；修复Studio普通模型行并用原生边线区分选中态。证据：构建与资源、真实交互、1440中文、1100英文顶部、1440单行选中、1100滚动模型区、四轮性能、清理记录。",
+        "官方MCP读取80:646完整高保真context及截图，30资源重新下载核对：26本地文件逐字节同、1个link仅clip标识不同且规范化全文相同、3个窗口按钮保留原生OS生命周期。26文件的实际Assets::load路由与最终Release字节均核实；本轮更正UI-38的32/28文字统计为30/26，原逐文件明细和核验结果不变，没有重写Git历史。",
+        "共用provider_edit原来已有真实Edit/Cancel快照，原2项契约再次通过；未改其开始/取消/显式保存/配置格式/事件。基线821c实际B编辑取消及A/B独立草稿已验；旧版实拍暴露Studio普通行仍统一#f7f8fc。只扩展Models::render_tr的Studio Indigo白色/BG_NOTICE交替行，保持Mono上轮行为与其余旧皮肤；Studio选中填充本来与奇数条纹同色，补原生top/bottom各1px主题强调边线。Kit可能省略最后行底边，因此显式声明上下边，不依赖该条件；列宽、固定29px行高、原Selection/Shift/Cmd/Ctrl与事件不改，无新控件/定时器。"
+      ],
+      "limits": [
+        "主代理逐张查看最终4图并重算PNG尺寸/SHA：1440普通/选中、1100顶部/滚动模型区是分别实拍的原生状态，无拼接或缩放，仅裁raw1440×901/1100×701底1物理像素。英文小窗使用原内部滚动，不能据此声称连接卡和模型卡同屏；真实Cancel changes、模型提示和Save均可达。本轮不声明整帧精细视觉或完整键盘/IME/无障碍已完成。"
+      ],
+      "evidence": [
+        {
+          "label": "构建与资源",
+          "href": "benchmarks/opencode-edit-build.json"
+        },
+        {
+          "label": "真实交互",
+          "href": "benchmarks/opencode-edit-gui-validation.json"
+        },
+        {
+          "label": "1440中文",
+          "href": "screenshots/opencode-edit-1440x900.png"
+        },
+        {
+          "label": "1100英文顶部",
+          "href": "screenshots/opencode-edit-1100x700.png"
+        },
+        {
+          "label": "1440单行选中",
+          "href": "screenshots/opencode-edit-selected-1440x900.png"
+        },
+        {
+          "label": "1100滚动模型区",
+          "href": "screenshots/opencode-edit-selected-scroll-1100x700.png"
+        },
+        {
+          "label": "四轮性能",
+          "href": "benchmarks/opencode-edit-performance-summary.json"
+        },
+        {
+          "label": "清理记录",
+          "href": "benchmarks/opencode-edit-cleanup.json"
+        }
+      ],
+      "commit": "4db44649653b21d4518f75a5db53c62f0b848ce3",
+      "date": "2026-10-30T02:28:58+08:00",
+      "commit_subject": "fix(studio): preserve selection in Studio model rows",
       "source": "baseline_and_qa.md"
     }
   ],
@@ -2456,12 +2507,20 @@
       "partial": 39,
       "reused": 1,
       "verified": 0
+    },
+    {
+      "date": "2026-10-30T02:29:24+08:00",
+      "note": "UI-39已提交；最后复用帧转部分验收，继续完整专项审计",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
     }
   ],
   "verification": [
     {
       "title": "40 帧最终视觉复核",
-      "detail": "当前 39 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "detail": "当前 40 帧有阶段性证据、0 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",
