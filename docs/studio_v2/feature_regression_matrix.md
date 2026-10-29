@@ -4,7 +4,7 @@
 
 | 功能 | 原实现落点 | 当前状态 / 必须补验 |
 | --- | --- | --- |
-| 七功能工具栏独立定位与遮罩层级 | ui.rs::render/app_controls、theme.rs | top8/right32/300×36布局与原七项处理器逐字核对；最终049版1440×900实拍及Skin上缘点击已验。首轮71ae的Skin/Language上缘、Sync遮罩拦截、Cmd/Ctrl+S与Restore通过；最终1100×700实拍因Mac锁定待补，不能算两尺寸最终验收通过 |
+| 七功能工具栏独立定位与遮罩层级 | ui.rs::render/app_controls、theme.rs | top8/right32/300×36布局与原七项处理器逐字核对；最终049版1440×900及解锁后1100×700新实拍、Skin/Language上缘点击、Sync遮罩拦截/Esc及Restore通过；Cmd/Ctrl+S为首轮71ae证据。Skin菜单首次Esc未关闭，完整菜单键盘路径待审计 |
 | 六套旧皮肤 + 可选 Studio 靛蓝、保存失败不切换 | theme/skin.rs、ui/skin_controls.rs | macOS 七项选择/原键保存、默认 Mono、配置 SHA 不变、Studio 重开恢复 Passed；非法目录保存失败由既有自动测试覆盖 |
 | 开机启动、失败回滚 | ui.rs::app_controls、核心 action | 源码确认；待隔离验证，不能修改用户真实登录项 |
 | 检查更新、busy/error | ui.rs::app_controls、tick | 源码确认；待 mock 与 GUI |
