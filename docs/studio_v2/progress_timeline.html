@@ -1,0 +1,1871 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>WorkBuddy Studio V2 · UI 改造时间线</title>
+  <script>
+    (function(){var t;try{t=localStorage.getItem('workbuddy.studio.timeline.theme')}catch(_){}if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}());
+  </script>
+  <style>
+    :root { color-scheme: dark; --bg:#080e19; --surface:#0f1828; --panel:#121e30; --soft:#18263b; --text:#e9f0fb; --muted:#a1b0c7; --faint:#7588a4; --line:#26364d; --cyan:#70ddf4; --green:#75e1bb; --amber:#f3c678; --accent:#173944; --green-bg:#17352f; --amber-bg:#392f20; --shadow:0 18px 60px #00000025; --grid:#80add208; --hero:#14334b; --focus:#94e9ff; }
+    :root[data-theme="light"] { color-scheme:light; --bg:#f0f4f9; --surface:#ffffff; --panel:#f8fafc; --soft:#eaf0f7; --text:#17263c; --muted:#4f617a; --faint:#667992; --line:#d3deeb; --cyan:#066b84; --green:#176a51; --amber:#82520b; --accent:#deeff4; --green-bg:#e0f2e9; --amber-bg:#fff0d7; --shadow:0 18px 60px #253b5810; --grid:#35638908; --hero:#dceaf6; --focus:#086f9d; }
+    * { box-sizing:border-box; } html { scroll-behavior:smooth; scroll-padding-top:28px; }
+    body { margin:0; font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; color:var(--text); background:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),var(--bg); background-size:40px 40px; font-size:14px; line-height:1.65; }
+    button,input { font:inherit; } button,a,input { -webkit-tap-highlight-color:transparent; }
+    button { cursor:pointer; } a { color:var(--cyan); text-decoration:none; } a:hover { text-decoration:underline; }
+    :focus-visible { outline:3px solid var(--focus); outline-offset:4px; }
+    button { border:1px solid var(--line); background:var(--panel); color:var(--text); border-radius:9px; padding:8px 13px; }
+    button:hover { border-color:var(--cyan); } .mono,.eyebrow { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    .shell { max-width:1440px; margin:auto; padding:28px 42px 70px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:18px; padding-bottom:24px; }
+    .brand { display:flex; align-items:center; gap:11px; font-weight:700; font-size:17px; letter-spacing:.3px; }
+    .brand-mark { width:29px; height:29px; border:1px solid var(--cyan); display:grid; place-content:center; border-radius:8px; color:var(--cyan); font:700 20px ui-monospace,monospace; background:var(--accent); }
+    .top-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; } .offline { font-size:11px; color:var(--muted); letter-spacing:.6px; }
+    .hero { padding:31px 32px 24px; border:1px solid var(--line); border-radius:18px; background:radial-gradient(ellipse at 96% 0,var(--hero),transparent 65%),var(--surface); box-shadow:var(--shadow); overflow:hidden; }
+    .eyebrow { color:var(--cyan); font-size:11px; letter-spacing:2px; margin:0 0 13px; }
+    h1 { margin:0; font-weight:650; font-size:clamp(27px,3.1vw,41px); line-height:1.25; letter-spacing:-1px; }
+    .hero-desc { color:var(--muted); max-width:760px; margin:14px 0 0; }
+    .hero-meta { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin:22px 0 19px; color:var(--muted); font-size:12px; }
+    .pill { display:inline-flex; align-items:center; gap:6px; padding:3px 9px; border-radius:6px; font-size:11px; border:1px solid var(--line); white-space:nowrap; background:var(--soft); color:var(--muted); }
+    .pill.done { color:var(--green); background:var(--green-bg); border-color:transparent; } .pill.active { color:var(--cyan); background:var(--accent); border-color:transparent; } .pill.pending { color:var(--muted); }
+    .stage-track { display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:6px; }
+    .stage-chip { display:block; padding:8px 0; border-top:3px solid var(--line); color:var(--faint); font-size:11px; text-align:center; border-radius:2px; }
+    .stage-chip.done { border-color:var(--green); color:var(--green); } .stage-chip.active { border-color:var(--cyan); color:var(--cyan); background:var(--accent); }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0 27px; }
+    .stat { border:1px solid var(--line); border-radius:12px; background:var(--surface); padding:15px 19px; }
+    .stat strong { display:block; font-size:28px; line-height:1.2; margin:3px 0 5px; font-weight:600; } .stat span { font-size:12px; color:var(--muted); } .stat small { color:var(--faint); font-size:10px; }
+    .stat:nth-child(1) strong { color:var(--green); } .stat:nth-child(2) strong { color:var(--cyan); }
+    .workspace { display:grid; grid-template-columns:190px minmax(0,1fr); gap:35px; align-items:start; }
+    .rail { position:sticky; top:24px; } .rail-title { font-size:10px; letter-spacing:1.7px; color:var(--faint); margin-bottom:15px; }
+    .rail a { display:flex; align-items:center; gap:10px; padding:9px 10px; margin:3px 0; border-radius:7px; color:var(--muted); font-size:12px; border:1px solid transparent; }
+    .rail a:hover,.rail a[aria-current="step"] { color:var(--text); background:var(--surface); border-color:var(--line); text-decoration:none; }
+    .dot { height:6px; width:6px; flex:0 0 6px; border-radius:50%; background:var(--faint); } .dot.done { background:var(--green); } .dot.active { background:var(--cyan); box-shadow:0 0 9px var(--cyan); }
+    .rail-note { margin:22px 9px 0; font-size:11px; color:var(--faint); border-top:1px solid var(--line); padding-top:15px; }
+    .section-top { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:9px; margin-bottom:15px; }
+    h2 { font-size:19px; margin:0; letter-spacing:-.3px; } .small { color:var(--muted); font-size:12px; }
+    .toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:9px; padding:12px; background:var(--surface); border:1px solid var(--line); border-radius:12px; margin-bottom:19px; }
+    .search { flex:1 1 190px; min-width:0; border:1px solid var(--line); background:var(--bg); color:var(--text); border-radius:7px; padding:8px 11px; }
+    .filters { display:flex; flex-wrap:wrap; gap:5px; } .filter { font-size:12px; padding:6px 10px; background:transparent; border-color:transparent; }
+    .filter[aria-pressed="true"] { color:var(--cyan); background:var(--accent); border-color:var(--cyan); }
+    .timeline { position:relative; padding-left:23px; } .timeline:before { content:""; position:absolute; top:22px; bottom:22px; left:4px; width:1px; background:var(--line); }
+    .phase { position:relative; border:1px solid var(--line); border-radius:13px; margin:0 0 16px; background:var(--surface); scroll-margin-top:24px; }
+    .phase:before { content:""; position:absolute; top:25px; left:-24px; width:9px; height:9px; background:var(--surface); border:2px solid var(--faint); border-radius:50%; }
+    .phase[data-status="done"]:before { border-color:var(--green); background:var(--green); } .phase[data-status="active"] { border-color:var(--cyan); box-shadow:0 0 0 1px var(--accent),var(--shadow); }
+    .phase[data-status="active"]:before { border-color:var(--cyan); background:var(--cyan); box-shadow:0 0 14px var(--cyan); }
+    summary { list-style:none; cursor:pointer; padding:20px 22px; } summary::-webkit-details-marker { display:none; }
+    .phase-heading { display:flex; align-items:center; gap:11px; flex-wrap:wrap; } .phase-code { color:var(--faint); font-size:13px; } h3 { margin:0; font-size:17px; font-weight:600; }
+    .phase-heading .pill { margin-left:auto; } .chevron { color:var(--faint); width:14px; text-align:center; transition:transform .2s; } details[open] .chevron { transform:rotate(90deg); }
+    .phase-summary { margin:9px 0 0; color:var(--muted); font-size:12px; }
+    .progress-line { display:flex; align-items:center; gap:13px; margin:15px 0 0; } .item-track { display:flex; flex:1; height:4px; gap:3px; }
+    .segment { height:4px; background:var(--line); border-radius:1px; flex:1; } .segment.done { background:var(--green); } .segment.active { background:var(--cyan); }
+    .progress-caption { font-size:10px; color:var(--faint); white-space:nowrap; } .phase-body { padding:0 22px 20px; border-top:1px solid var(--line); }
+    .phase-date { font-size:11px; color:var(--faint); margin:13px 0; }
+    .task { display:grid; grid-template-columns:20px minmax(0,1fr) auto; align-items:start; gap:9px; padding:12px 0; border-bottom:1px solid var(--line); }
+    .task-icon { width:17px; height:17px; margin-top:3px; font-size:11px; line-height:15px; text-align:center; color:var(--faint); border:1px solid var(--line); border-radius:4px; }
+    .task-icon.done { color:var(--green); background:var(--green-bg); border-color:transparent; } .task-icon.active { color:var(--cyan); background:var(--accent); border-color:transparent; }
+    .task strong { display:block; font-size:13px; font-weight:550; } .task p { margin:4px 0 0; font-size:12px; color:var(--muted); overflow-wrap:anywhere; }
+    .task .pill { margin-top:2px; font-size:10px; }
+    .evidence { margin:16px 0 0; font-size:12px; color:var(--muted); padding:12px 14px; border-radius:8px; background:var(--panel); border:1px solid var(--line); }
+    .evidence b { color:var(--text); font-weight:500; } .evidence p { margin:5px 0 0; }
+    .phase-links { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; font-size:11px; }
+    .empty { padding:42px 20px; text-align:center; border:1px dashed var(--line); border-radius:12px; color:var(--muted); }
+    .panel { background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:22px; margin-top:25px; }
+    .carryovers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; margin-top:16px; }
+    .carryover { border:1px solid var(--line); background:var(--panel); border-radius:9px; padding:14px; }
+    .carryover strong { display:block; margin:8px 0 4px; font-size:13px; } .carryover p { font-size:12px; color:var(--muted); margin:0; }
+    .history-entry { padding:20px 0 0; margin-top:20px; border-top:1px solid var(--line); } .history-entry time { color:var(--cyan); font-size:11px; }
+    .history-entry h3 { margin-top:5px; font-size:15px; } .history-entry p,.history-entry ul { color:var(--muted); font-size:12px; } .history-entry ul { padding-left:18px; }
+    .history-links { display:flex; gap:12px; flex-wrap:wrap; font-size:11px; }
+    .foot { color:var(--faint); font-size:11px; margin-top:28px; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+    .basis { color:var(--faint); font-size:11px; margin:9px 0 0; }
+    .closeout { margin:0 0 30px; border-color:var(--cyan); padding:26px; }
+    .closeout-intro { color:var(--muted); font-size:13px; max-width:980px; }
+    .closeout-metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:20px 0; }
+    .closeout-metric { background:var(--panel); padding:14px 17px; border:1px solid var(--line); border-radius:10px; }
+    .closeout-metric strong { display:block; font:600 29px/1.4 ui-monospace,monospace; }
+    .closeout-metric span,.closeout-metric small { display:block; color:var(--muted); font-size:11px; }
+    .closeout-metric:first-child strong { color:var(--green); } .closeout-metric:nth-child(2) strong { color:var(--cyan); }
+    .closeout-current { display:flex; align-items:flex-start; gap:15px; flex-wrap:wrap; padding:17px; border:1px solid var(--cyan); border-radius:10px; background:var(--accent); }
+    .closeout-current strong { display:block; font-size:15px; } .closeout-current p { margin:4px 0 0; font-size:12px; color:var(--muted); }
+    .closeout-current>div { flex:1 1 400px; } .closeout-current>a { font-size:12px; }
+    .closeout-route { color:var(--muted); font-size:12px; margin:14px 0; overflow-wrap:anywhere; }
+    .closeout-groups { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; margin:15px 0 20px; }
+    .closeout-group { padding:12px; background:var(--panel); border:1px solid var(--line); border-radius:8px; min-width:0; }
+    .closeout-group strong { font-size:12px; } .closeout-group p { margin:4px 0 10px; font-size:11px; color:var(--muted); }
+    .closeout .toolbar { margin:20px 0 10px; background:var(--panel); }
+    .closeout-list { display:grid; gap:9px; }
+    .closeout-task { border:1px solid var(--line); border-radius:10px; background:var(--panel); scroll-margin-top:20px; overflow:hidden; }
+    .closeout-task[data-status="IN_PROGRESS"] { border-color:var(--cyan); }
+    .closeout-task summary { display:grid; grid-template-columns:70px minmax(0,1fr) auto 12px; align-items:start; gap:13px; padding:16px 18px; }
+    .closeout-code { font-size:14px; color:var(--faint); line-height:1.6; }
+    .closeout-task[data-status="PASS"] .closeout-code { color:var(--green); }
+    .closeout-task[data-status="IN_PROGRESS"] .closeout-code { color:var(--cyan); }
+    .closeout-task h3 { font-size:14px; } .closeout-task summary p { margin:4px 0 0; color:var(--muted); font-size:12px; }
+    .closeout-body { padding:0 18px 18px; border-top:1px solid var(--line); }
+    .closeout-task-meta { display:flex; flex-wrap:wrap; gap:6px 15px; font-size:11px; color:var(--faint); margin:12px 0; }
+    .closeout-columns { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .closeout-body h4 { font-size:12px; margin:8px 0; color:var(--text); font-weight:600; }
+    .closeout-body ul { padding-left:18px; margin:6px 0 13px; color:var(--muted); font-size:12px; }
+    .closeout-body li { margin:5px 0; }
+    .closeout-body p { color:var(--muted); font-size:12px; margin:6px 0; overflow-wrap:anywhere; }
+    .closeout-exit { padding:12px 15px; margin-top:12px; border:1px solid var(--line); background:var(--surface); border-radius:8px; }
+    .closeout-source { display:flex; flex-wrap:wrap; gap:8px 17px; font-size:11px; margin-top:12px; }
+    .closeout-note { color:var(--faint); font-size:11px; margin:14px 0 0; }
+    .closeout-filter[aria-pressed="true"] { color:var(--cyan); background:var(--accent); border-color:var(--cyan); }
+    @media(max-width:760px) { .closeout { padding:20px 15px; } .closeout-metrics { grid-template-columns:1fr 1fr; gap:8px; } .closeout-metric { padding:12px; } .closeout-groups { grid-template-columns:repeat(2,minmax(0,1fr)); } .closeout-task summary { grid-template-columns:62px minmax(0,1fr) 10px; gap:8px; padding:14px 12px; } .closeout-task summary>.pill { grid-column:2; grid-row:2; justify-self:start; } .closeout-task summary>.chevron { grid-column:3; grid-row:1; } .closeout-columns { grid-template-columns:1fr; gap:0; } .closeout-body { padding:0 12px 15px; } }
+    .ui-stage { border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:12px 0;overflow:hidden; }
+    .ui-stage summary { display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:16px 18px; }
+    .ui-stage summary .pill { margin-left:auto; }
+    .ui-tasks { border-top:1px solid var(--line);padding:0 18px; }
+    .ui-task { padding:14px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere; }
+    .ui-task:last-child { border-bottom:0; }
+    .ui-task p { margin:5px 0;color:var(--muted);font-size:12px; }
+    .ui-task .pill { margin-left:8px; }
+    .ui-task a { margin-right:12px; }
+    [hidden] { display:none !important; }
+    @media (max-width:1000px) { .shell { padding:22px 24px 50px; } .workspace { grid-template-columns:155px minmax(0,1fr); gap:23px; } .rail a { padding-left:5px; font-size:11px; gap:7px; } }
+    @media (max-width:760px) { .shell { padding:17px 15px 35px; } .hero { padding:24px 20px 19px; } .hero-desc { font-size:13px; } .stats { gap:8px; grid-template-columns:repeat(2,minmax(0,1fr)); } .stat { padding:13px 15px; } .workspace { display:block; } .rail { position:static; margin-bottom:23px; } .rail-nav { display:flex; overflow-x:auto; padding-bottom:8px; gap:6px; } .rail a { flex:0 0 auto; margin:0; padding:7px 9px; border-color:var(--line); } .rail a .nav-label,.rail-note,.rail-title { display:none; } .topbar { padding-bottom:18px; } .offline { display:none; } .stage-track { gap:3px; } .stage-chip { font-size:9px; padding:7px 0; } .timeline { padding-left:16px; } .phase:before { left:-17px; } .phase-heading { gap:7px; } h3 { font-size:15px; } summary { padding:17px 15px; } .phase-body { padding:0 15px 16px; } .progress-line { flex-wrap:wrap; gap:6px; } .item-track { min-width:100%; } .progress-caption { white-space:normal; } .task { grid-template-columns:18px minmax(0,1fr); gap:7px; } .task>.pill { grid-column:2; justify-self:start; } .carryovers { grid-template-columns:1fr; } .toolbar { padding:10px; } .panel { padding:18px 16px; } .hero-meta { font-size:11px; } .brand { font-size:15px; } #theme-toggle { padding:7px 10px; font-size:12px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } * { transition:none !important; } }
+    @media print { :root { --bg:#fff; --surface:#fff; --panel:#f7f7f7; --text:#111; --muted:#444; --faint:#555; --line:#ccc; --cyan:#065a70; --green:#165a42; --accent:#eee; --green-bg:#eee; } body { background:#fff; } .shell { max-width:none; padding:0; } .rail,.toolbar,.top-actions,#expand-all { display:none; } .workspace { display:block; } .phase,.panel,.hero { box-shadow:none; break-inside:avoid; } .stats { margin-bottom:15px; } }
+  </style>
+  <style>
+    .stage-track{grid-template-columns:repeat(5,minmax(0,1fr))}.stage-chip{cursor:default}.stat:first-child strong{color:var(--amber)}
+    .current-note{color:var(--muted);margin:8px 0 0;font-size:12px}.scope-note{border-left:3px solid var(--amber);padding:10px 14px;background:var(--amber-bg);border-radius:0 8px 8px 0;color:var(--muted);font-size:12px;margin-top:18px}
+    .coverage{display:flex;gap:4px;height:8px;margin-top:18px}.coverage span{min-width:3px;border-radius:3px}.coverage .partial{background:var(--cyan)}.coverage .reused{background:var(--amber)}.coverage .pending{background:var(--line)}.coverage .verified{background:var(--green)}
+    .coverage-labels{display:flex;gap:18px;flex-wrap:wrap;color:var(--faint);font-size:11px;margin-top:8px}.coverage-labels b{font-weight:500;color:var(--muted)}
+    .frame-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.frame{margin:0;border:1px solid var(--line);border-radius:9px;background:var(--panel);overflow:hidden}.frame summary{padding:13px 14px}.frame-title{display:flex;align-items:start;gap:8px;justify-content:space-between}.frame-title strong{font-size:12px;font-weight:550}.frame-meta{margin:5px 0 0;color:var(--faint);font-size:10px}.frame-body{padding:0 14px 14px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}.frame-body p{margin:6px 0 10px}.frame-body code{font-size:10px;color:var(--faint)}
+    .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:15px}.gallery a{display:block;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}.gallery img{display:block;width:100%;height:130px;object-fit:cover;object-position:top}.gallery span{display:block;padding:9px;font-size:11px;color:var(--muted)}
+    .timeline .phase-summary{max-width:850px}.phase-body ul{padding-left:18px;color:var(--muted);font-size:12px}.phase-body li{margin:8px 0;overflow-wrap:anywhere}.phase-body .limits{border-left:2px solid var(--amber);padding-left:12px;color:var(--faint)}
+    .phase-links a{overflow-wrap:anywhere}.report-update{font-size:11px;color:var(--faint);margin:0}.history-entry{padding-top:14px;margin-top:14px}.history-entry h3{font-size:13px}.history-entry p{margin:5px 0}.frame-filter[aria-pressed=true]{color:var(--cyan);background:var(--accent);border-color:var(--cyan)}
+    @media(max-width:1000px){.frame-list{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}}
+    @media(max-width:760px){.gallery{grid-template-columns:1fr}.gallery img{height:180px}.coverage-labels{gap:8px 13px}.stage-chip{font-size:9px}.frame-title{flex-wrap:wrap}.phase-heading .pill{margin-left:0}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">W</span>WorkBuddy <span class="small">/ Studio V2 · 工程记录</span></div>
+    <div class="top-actions"><span class="offline mono">LOCAL DOCUMENT · OFFLINE READY</span><button id="theme-toggle" type="button"></button></div>
+  </header>
+  <section class="hero" aria-labelledby="page-title">
+    <p class="eyebrow">RUST + GPUI / UI REDESIGN TIMELINE</p>
+    <h1 id="page-title">Studio V2 · UI 改造进度</h1>
+    <p class="hero-desc">当前仍处于开发阶段，按小批次完成编码、真实交互、两尺寸截图和性能复核，再提交推送。此页分别记录施工进展与最终验收缺口。</p>
+    <div class="hero-meta"><span class="pill active" id="phase"></span><span>最近同步 <time id="updated"></time> · 北京时间</span></div>
+    <div class="stage-track" aria-label="整体推进阶段">
+      <span class="stage-chip done">原生框架 · 已有实现</span><span class="stage-chip done">统计页面 · 已有实现</span><span class="stage-chip done">弹窗流程 · 分项已验</span><span class="stage-chip active" id="current-stage">当前分项 · 开发中</span><span class="stage-chip">最终统一验收 · 待完成</span>
+    </div>
+    <p class="basis">绿色阶段标记表示已有施工记录，不代表该阶段所有画板及跨平台验收完成。</p>
+  </section>
+  <section class="stats" aria-label="当前界面数量" id="stats"></section>
+  <div class="workspace">
+    <aside class="rail">
+      <div class="rail-title mono">PROJECT INDEX</div>
+      <nav class="rail-nav" aria-label="进度目录">
+        <a href="#current"><span class="dot active"></span>当前推进</a><a href="#frames"><span class="dot"></span>40 张画板</a><a href="#timeline-area"><span class="dot done"></span>施工时间线</a><a href="#verification"><span class="dot"></span>统一验收待办</a><a href="#history-area"><span class="dot"></span>更新记录</a>
+      </nav>
+      <div class="rail-note">每完成一项任务，同步 QA、画板映射与本页。<br><br><a href="figma_node_map.md">画板映射 ↗</a><br><a href="feature_regression_matrix.md">功能保护矩阵 ↗</a><br><a href="baseline_and_qa.md">实施与验证记录 ↗</a></div>
+    </aside>
+    <main>
+      <section class="panel closeout" id="current" aria-labelledby="current-title" style="margin-top:0">
+        <div class="section-top"><div><p class="eyebrow">CURRENT WORK / DEVELOP & VERIFY</p><h2 id="current-title">当前推进</h2></div><span class="pill active">Goal 持续推进</span></div>
+        <div class="closeout-current" id="current-task"></div>
+        <p class="current-note" id="baseline"></p>
+        <div class="scope-note">数量口径：“待逐帧验收”表示尚未完成独立画板对照；“部分验收”已有实现或真实运行证据，但仍保留具体缺项。已提交小任务数量不能当作界面完成率。</div>
+        <div class="coverage" id="coverage" role="img"></div><div class="coverage-labels" id="coverage-labels"></div>
+      </section>
+      <section class="panel" id="frames" aria-labelledby="frames-title">
+        <div class="section-top"><h2 id="frames-title">40 张画板 · 当前状态</h2><span class="small">以设计映射表为准</span></div>
+        <div class="toolbar"><input class="search" id="frame-search" type="search" placeholder="搜索画板、节点或未完成项…" aria-label="搜索画板"><div class="filters" id="frame-filters" role="group" aria-label="画板状态筛选"></div></div>
+        <p class="small" id="frame-result" role="status" aria-live="polite"></p><div class="frame-list" id="frame-list"></div>
+      </section>
+      <section class="panel" id="latest-evidence" aria-labelledby="evidence-title"><div class="section-top"><h2 id="evidence-title">最近已提交分项 · 实际截图</h2><span class="small" id="gallery-task"></span></div><div class="gallery" id="gallery"></div><p class="basis">合成隔离数据的真实应用截图。点击查看原尺寸；进行中的候选预览不当作最终证据。</p></section>
+      <section id="timeline-area" style="margin-top:30px" aria-labelledby="timeline-title">
+        <div class="section-top"><h2 id="timeline-title">施工时间线</h2><span class="small" id="task-total"></span></div>
+        <div class="toolbar"><input class="search" id="task-search" type="search" placeholder="搜索任务、结果或验证缺项…" aria-label="搜索施工记录"><div class="filters" id="task-filters" role="group" aria-label="施工状态筛选"></div><button id="expand-all" type="button" class="small">展开明细</button></div>
+        <p class="small" id="task-result" role="status" aria-live="polite"></p><div class="timeline" id="timeline"></div>
+      </section>
+      <section class="panel" id="verification" aria-labelledby="verification-title"><div class="section-top"><h2 id="verification-title">统一验收待办</h2><span class="pill pending">整体尚未完成</span></div><div class="carryovers" id="carryovers"></div></section>
+      <section class="panel" id="history-area" aria-labelledby="history-title"><div class="section-top"><h2 id="history-title">进度更新记录</h2><span class="small">每项完成后追加快照</span></div><div id="history"></div></section>
+      <footer class="foot"><span>保留原核心与现有功能 · 分项通过不等于生产或跨平台验收</span><span><a href="PROGRESS.md">维护说明 ↗</a> · <a href="progress_timeline.json">可维护数据 ↗</a> · <a href="../../scripts/update_studio_progress.py">更新脚本 ↗</a></span></footer>
+      <p class="report-update">此页内嵌数据，离线可用。完成任务后运行更新脚本并提交 HTML 与 JSON；页面不会自行查询服务。</p>
+    </main>
+  </div>
+</div>
+<noscript><p>本页使用 JavaScript 展示时间线，也可直接查看同目录 progress_timeline.json 与原始 QA / 画板映射。</p></noscript>
+<script id="progress-data" type="application/json">
+{
+  "version": 1,
+  "updated_at": "2026-10-29T18:02:54+08:00",
+  "project": "WorkBuddy Studio V2",
+  "branch": "feat/studio_v2_gpui",
+  "code_head": "71d18bc3d5043d8909ea91ce47ba700d950bd943",
+  "phase": "开发中 · 分项实机验收穿插",
+  "goal_status": "active",
+  "counts": {
+    "pending": 12,
+    "partial": 27,
+    "reused": 1,
+    "verified": 0
+  },
+  "total_frames": 40,
+  "recorded_tasks": 30,
+  "current_task": {
+    "id": 31,
+    "title": "协议、预设、思考菜单与 Key 显隐",
+    "status": "developing",
+    "description": "四个状态已读取最新Figma，候选完成原生控件接入和部分真实交互；正在修正菜单行高与选中标记，最终两尺寸截图及性能待验。"
+  },
+  "latest_task": {
+    "id": 30,
+    "title": "完成徽标只用于新增/复制上下文",
+    "status": "recorded",
+    "summary": "根据上批高保真审计并再次读取最新54:2：通用header只有模型数、编辑入口和右侧Saved；79:885的79:1090、79:1102的79:1331才有142×26左侧完成徽标。本批收窄小功能28的通用左Saved，不改变既有原生文字、颜色token、编辑图标/调用几何或右状态。没有新增静态资产或临时Figma URL。",
+    "highlights": [
+      "根据上批高保真审计并再次读取最新54:2：通用header只有模型数、编辑入口和右侧Saved；79:885的79:1090、79:1102的79:1331才有142×26左侧完成徽标。本批收窄小功能28的通用左Saved，不改变既有原生文字、颜色token、编辑图标/调用几何或右状态。没有新增静态资产或临时Figma URL。",
+      "会话内保存来源由只记录Copy的集合改为真实ID→New/Copy枚举；仅Outcome.saved才记录，部分create未完成save时不记录。普通已有供应商Save不产生创建完成上下文，不根据名称猜测。dirty/edit/busy仍优先显示真实状态；新建/副本各自完成提示、切换恢复及取消语义保持。配置刷新清除已不存在ID，关闭重开丢弃来源回普通Saved，不写Core或private drafts。",
+      "fmt、174项测试、严格clippy all-targets/-D warnings、Intel目标check3.78s、Release47.43s Passed。UI仍15,196,672 bytes，SHA256 ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf；核心仍8,428,096 bytes/25f SHA，未改代理核心、管理API或配置格式。既存block0.1.6未来兼容提示保持，Intel仅类型检查；小功能27两项真实Core ignored专项本批未重复。编译证据。"
+    ],
+    "limits": [
+      "核心启动也有462/207ms等波动，累计UI标记含核心启动，不能都归于UI。记录标记不是首帧/可交互，RSS共享页可能双计、tray另列；默认页面结果不代表64个创建收据/长期负载/跨平台。没有放宽标准、删除异常轮或修改Core/benchmark实现。",
+      "本轮剩余界面：12/40未逐帧验收；27部分验收、1复用待核对。Goal继续active，下一批推进上游协议/预设搜索/思考菜单/Key显隐状态，完整40帧视觉与键盘、IME、无障碍及Windows/Intel实际运行仍未完成。"
+    ],
+    "evidence": [
+      {
+        "label": "编译证据",
+        "href": "benchmarks/provider-badge-scope-build.json"
+      },
+      {
+        "label": "通用宽窗",
+        "href": "screenshots/provider-badge-scope-generic-1440x900.png"
+      },
+      {
+        "label": "通用小窗",
+        "href": "screenshots/provider-badge-scope-generic-1100x700.png"
+      },
+      {
+        "label": "新增宽窗",
+        "href": "screenshots/provider-badge-scope-new-1440x900.png"
+      },
+      {
+        "label": "新增小窗",
+        "href": "screenshots/provider-badge-scope-new-1100x700.png"
+      },
+      {
+        "label": "复制宽窗",
+        "href": "screenshots/provider-badge-scope-copy-1440x900.png"
+      },
+      {
+        "label": "复制小窗",
+        "href": "screenshots/provider-badge-scope-copy-1100x700.png"
+      },
+      {
+        "label": "GUI证据",
+        "href": "benchmarks/provider-badge-scope-gui-validation.json"
+      }
+    ],
+    "commit": "71d18bc3d5043d8909ea91ce47ba700d950bd943",
+    "date": "2026-10-29T17:08:20+08:00",
+    "commit_subject": "fix(gpui): scope completion badges to newly created providers",
+    "source": "baseline_and_qa.md"
+  },
+  "frames": [
+    {
+      "node": "52:2",
+      "title": "01 / STUDIO V2 · 使用概览",
+      "source": "statistics/overview.rs, layout.rs, source_controls.rs, usage_chart.rs",
+      "detail": "部分：导航/筛选、四KPI/详细指标/空值已验；四KPI/趋势/计费/最近请求已验，整帧最终审计待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=52-2"
+    },
+    {
+      "node": "54:2",
+      "title": "02 / STUDIO V2 · 供应商管理",
+      "source": "ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs",
+      "detail": "部分：侧栏/双卡/运行中心/日志交互通过；通用header无左创建完成徽标/普通Save/重开与两尺寸已验，完整视觉/无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=54-2"
+    },
+    {
+      "node": "56:8",
+      "title": "03 / STUDIO V2 · 用量明细",
+      "source": "statistics/*, usage_table.rs",
+      "detail": "部分：八列/来源筛选/分页/详情/窄窗首末列已验，整帧最终审计待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=56-8"
+    },
+    {
+      "node": "57:8",
+      "title": "04 / STUDIO V2 · 汇总分析",
+      "source": "statistics/analysis.rs, layout.rs, usage_table.rs",
+      "detail": "部分：表卡/两指标卡/真实排序/分组分页/两尺寸已验，完整视觉与无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=57-8"
+    },
+    {
+      "node": "58:8",
+      "title": "05 / STUDIO V2 · 统计设置",
+      "source": "statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs",
+      "detail": "部分：分区导航/价格卡CRUD与游标/快照/失败提示、采集/导入双卡及主要业务已验；整帧视觉、完整键盘/IME/无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=58-8"
+    },
+    {
+      "node": "59:11",
+      "title": "06 / STUDIO V2 · 选择模型",
+      "source": "ui/model_picker.rs, ui.rs, ui/providers.rs",
+      "detail": "部分：原生726×672/小窗自适应、38/4096虚拟候选、过滤与勾选/键盘、取消/确认草稿/显式保存、跨供应商256边界与错误/空态已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-11"
+    },
+    {
+      "node": "59:279",
+      "title": "07 / STUDIO V2 · 编辑模型能力",
+      "source": "ui/model_editor.rs, model_options.rs, ui.rs",
+      "detail": "部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；完整IME/无障碍/跨平台及精细审计待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-279"
+    },
+    {
+      "node": "60:27",
+      "title": "08 / STUDIO V2 · 同步 WorkBuddy",
+      "source": "ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs",
+      "detail": "部分：526原生确认/两尺寸、取消/无隐式Enter、仅同步/当前草稿与全部saved范围、非法文件/重试、守卫下写入后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-27"
+    },
+    {
+      "node": "60:249",
+      "title": "09 / STUDIO V2 · 新建价格规则",
+      "source": "statistics/price_layout.rs, stats_controller.rs, stats_backend.rs",
+      "detail": "部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-249"
+    },
+    {
+      "node": "60:475",
+      "title": "10 / STUDIO V2 · 请求详情",
+      "source": "statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs",
+      "detail": "部分：650×770原生分组/两尺寸/真实代理与导入/完整元数据换行/本次快照/错误重试/各关闭路径已验；Tooltip视觉、完整无障碍/跨平台与精细审计待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-475"
+    },
+    {
+      "node": "61:289",
+      "title": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
+      "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
+      "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-289"
+    },
+    {
+      "node": "61:561",
+      "title": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
+      "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
+      "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-561"
+    },
+    {
+      "node": "61:838",
+      "title": "11 / STUDIO V2 · 协议选项 · Anthropic",
+      "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
+      "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-838"
+    },
+    {
+      "node": "61:1111",
+      "title": "11 / STUDIO V2 · 协议选项 · Gemini",
+      "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
+      "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-1111"
+    },
+    {
+      "node": "62:308",
+      "title": "13 / STUDIO V2 · 黑白主题示例",
+      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=62-308"
+    },
+    {
+      "node": "64:335",
+      "title": "14 / STUDIO V2 · 外观与主题",
+      "source": "ui/skin_controls.rs, theme/skin.rs, ui_components.rs",
+      "detail": "部分：旧六主题+可选 Studio、保存/恢复/深色选区通过；完整视觉待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=64-335"
+    },
+    {
+      "node": "66:320",
+      "title": "17 / STUDIO V2 · 上游协议下拉",
+      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-320"
+    },
+    {
+      "node": "66:538",
+      "title": "18 / STUDIO V2 · 供应商预设搜索",
+      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-538"
+    },
+    {
+      "node": "66:760",
+      "title": "19 / STUDIO V2 · API Key 显示演示",
+      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-760"
+    },
+    {
+      "node": "67:338",
+      "title": "20 / STUDIO V2 · OpenCode Go 供应商",
+      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-338"
+    },
+    {
+      "node": "67:548",
+      "title": "21 / STUDIO V2 · 思考强度菜单",
+      "source": "ui.rs, state.rs, model_options.rs, protocol_options.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-548"
+    },
+    {
+      "node": "68:350",
+      "title": "22 / STUDIO V2 · 取消同步确认",
+      "source": "ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs",
+      "detail": "部分：原生确认/两尺寸、取消/仅移除、保留providers与草稿/恢复原条目、守卫下移除后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=68-350"
+    },
+    {
+      "node": "69:359",
+      "title": "23 / STUDIO V2 · 编辑模型价格",
+      "source": "statistics/price_layout.rs, stats_controller.rs, stats_backend.rs",
+      "detail": "部分：原生编辑布局/身份锁定/取消恢复/版本冲突及手动刷新重开/旧快照金额保护已验；完整IME/无障碍/跨平台与精细视觉待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=69-359"
+    },
+    {
+      "node": "78:364",
+      "title": "24 / STUDIO V2 · 新增供应商草稿",
+      "source": "ui/provider_new.rs, ui/providers.rs, provider_create.rs, draft_discovery.rs, state.rs",
+      "detail": "部分：独立pending/取消/切换恢复/重开、零供应商真实发现/自动能力及小窗Save、最终两尺寸已验，精细视觉/IME/无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-364"
+    },
+    {
+      "node": "78:605",
+      "title": "25 / STUDIO V2 · 编辑供应商资料",
+      "source": "ui/provider_edit.rs, ui/providers.rs, ui.rs, state.rs, main.rs",
+      "detail": "部分：原位编辑/取消完整草稿与选择、A/B独立、保存边界、重开草稿、两尺寸已验；整帧精细审计及IME/无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-605"
+    },
+    {
+      "node": "78:843",
+      "title": "26 / STUDIO V2 · 复制供应商草稿",
+      "source": "ui/provider_new.rs, provider_create.rs, ui/sidebar.rs, ui/providers.rs",
+      "detail": "部分：来源dirty先保存/副本本地取消、显式Save/Test真实新目标/新路由和混合effort已验；最终两尺寸及Cancel补验、四轮性能及1000请求复核已验，完整审计待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-843"
+    },
+    {
+      "node": "78:1080",
+      "title": "27 / STUDIO V2 · 删除供应商确认",
+      "source": "ui/provider_delete.rs, ui/sidebar.rs, ui.rs, main.rs",
+      "detail": "部分：532原生删除确认/保存目标与dirty/取消键盘/失败重试/无自动同步、两尺寸与合法长名实拍及四轮性能已验；完整视觉/无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1080"
+    },
+    {
+      "node": "78:1325",
+      "title": "28 / STUDIO V2 · 供应商满载滚动 (64)",
+      "source": "ui/sidebar.rs, ui.rs, provider_filter.rs",
+      "detail": "部分：最新高保真已读、native选中行/缩窗自动可见、手动9秒不回跳、固定CRUD/64容量与两尺寸已验；通用header差异已在小功能30修正，整帧/键盘/无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1325"
+    },
+    {
+      "node": "78:1804",
+      "title": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go",
+      "source": "ui/providers.rs, ui/sidebar.rs, ui.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1804"
+    },
+    {
+      "node": "79:400",
+      "title": "30 / STUDIO V2 · 64 个供应商搜索",
+      "source": "ui.rs, provider_filter.rs",
+      "detail": "部分：最新高保真已读、64末行1/64与无结果0/64、清除恢复选中行/保持草稿/两尺寸与容量已验；独立搜索态实拍及完整键盘/无障碍待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-400"
+    },
+    {
+      "node": "79:885",
+      "title": "31 / STUDIO V2 · 新供应商保存完成",
+      "source": "ui/providers.rs, ui/provider_new.rs, ui.rs",
+      "detail": "部分：真实Save与绿色完成徽标、dirty/失败/Cancel及两尺寸实拍、四轮性能已验；精细整帧/IME/无障碍/跨平台待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-885"
+    },
+    {
+      "node": "79:1102",
+      "title": "32 / STUDIO V2 · 供应商复制完成",
+      "source": "ui/providers.rs, ui/provider_new.rs, ui.rs",
+      "detail": "部分：成功copy真实ID的会话徽标、dirty/Cancel/切换不串标/重开genericSaved、两尺寸与四轮性能已验；精细整帧/IME/无障碍/跨平台待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-1102"
+    },
+    {
+      "node": "80:418",
+      "title": "33 / STUDIO V2 · 供应商搜索（2个）",
+      "source": "ui.rs, provider_filter.rs",
+      "detail": "部分：过滤/草稿保护通过，最终侧栏视觉待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-418"
+    },
+    {
+      "node": "80:646",
+      "title": "34 / STUDIO V2 · 编辑 OpenCode Go",
+      "source": "ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, ui.rs",
+      "detail": "共用原位编辑/取消组件已实现；该整帧尚未逐项对照",
+      "status": "reused",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-646"
+    },
+    {
+      "node": "80:864",
+      "title": "35 / STUDIO V2 · 删除 OpenCode Go 确认",
+      "source": "ui/provider_delete.rs, ui/sidebar.rs, ui.rs",
+      "detail": "部分：高保真已读，同一动态目标/模型数的原生确认；真实B键盘Space删除/小窗长名与两尺寸已验，整帧最终审计待续",
+      "status": "partial",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-864"
+    },
+    {
+      "node": "80:1114",
+      "title": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api",
+      "source": "ui/providers.rs, ui/sidebar.rs, ui.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-1114"
+    },
+    {
+      "node": "104:1378",
+      "title": "37 / STUDIO V2 · 开机启动已开启（原型）",
+      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1378"
+    },
+    {
+      "node": "104:1605",
+      "title": "38 / STUDIO V2 · 检查更新交互（原型）",
+      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1605"
+    },
+    {
+      "node": "104:1823",
+      "title": "39 / STUDIO V2 · 语言切换菜单",
+      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1823"
+    },
+    {
+      "node": "104:2046",
+      "title": "40 / STUDIO V2 · 恢复默认窗口尺寸（原型）",
+      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
+      "detail": "未验收",
+      "status": "pending",
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-2046"
+    }
+  ],
+  "timeline": [
+    {
+      "id": 1,
+      "title": "七项原生工具栏（Figma 103:442）",
+      "status": "recorded",
+      "summary": "ui_components::system_button 统一 Kit Button、20px SVG、36px 命中区、Tooltip/无障碍名称与禁用态；app_controls 严格按衣服、电源、刷新、地球、恢复、GitHub、反馈排列，间隔 8px，总宽 300px。",
+      "highlights": [
+        "ui_components::system_button 统一 Kit Button、20px SVG、36px 命中区、Tooltip/无障碍名称与禁用态；app_controls 严格按衣服、电源、刷新、地球、恢复、GitHub、反馈排列，间隔 8px，总宽 300px。",
+        "七个 SVG 来自官方 MCP 高保真 context，根尺寸/viewBox 均为 20×20，本地嵌入，不使用临时 Figma URL 作为运行资源。保留原皮肤弹层、开机启动 action、更新、语言菜单、尺寸恢复与打开 URL 的真实处理器。",
+        "修改文件：gpui/src/{assets.rs,theme.rs,ui.rs,ui_components.rs,ui/skin_controls.rs}；新增 gpui/assets/studio/。未改造其他页面结构，后续继续施工。"
+      ],
+      "limits": [
+        "UI 子代理已结束本轮全部进程，清理会话专属测试目录（94,192 KiB），交付截图保留，临时文件剩余 0。系统盘剩余约 39 GiB。此轮通过终止测试进程退出，尚未验收用户关闭窗口后核心继续运行。"
+      ],
+      "evidence": [
+        {
+          "label": "工具栏截图",
+          "href": "screenshots/toolbar-1440x900.png"
+        }
+      ],
+      "commit": "c505d22302cdafdad8c0a8d62197d8209280fc6d",
+      "date": "2026-10-28T22:07:06+08:00",
+      "commit_subject": "feat(ui): align Studio V2 native system toolbar",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 2,
+      "title": "修正独立 GPUI 进程的基准测量",
+      "status": "recorded",
+      "summary": "scripts/benchmark.py 的 GUI 模式等待并读取 gpui.json，只将真实核心与设置 UI 的 RSS 相加；托盘单列。UI 未启动或记录失效会拒绝报告 GUI 基准。增加核心健康端点与 UI 记录就绪时间，明确后者不是首次绘制/可交互时刻。",
+      "highlights": [
+        "scripts/benchmark.py 的 GUI 模式等待并读取 gpui.json，只将真实核心与设置 UI 的 RSS 相加；托盘单列。UI 未启动或记录失效会拒绝报告 GUI 基准。增加核心健康端点与 UI 记录就绪时间，明确后者不是首次绘制/可交互时刻。",
+        "结束时停止采样线程、发送 UI 停止标记、等待 UI 记录释放，然后退出会话临时目录。scripts/benchmark_test.py 的 4 项回归覆盖核心/托盘/UI 分离、有效/非法/已退出的 UI 记录，全部 Passed；headless 完整基准 Passed。",
+        "两轮 GUI 基准均继承验证过的内核沙盒，隔离 HOME 与配置；均为同机 release、64 模型、200 小请求、80 大请求、4 并发，无构建并行。两轮进程全部退出，清理本轮目录 24,752 KiB；临时文件剩余 0，系统盘约剩 39 GiB。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "baseline-gui.json",
+          "href": "benchmarks/baseline-gui.json"
+        },
+        {
+          "label": "toolbar-gui.json",
+          "href": "benchmarks/toolbar-gui.json"
+        },
+        {
+          "label": "corrected headless",
+          "href": "benchmarks/baseline-core-corrected.json"
+        }
+      ],
+      "commit": "e737fd39b3e348b9e9c4a53a0fa751c34dc95364",
+      "date": "2026-10-28T22:10:49+08:00",
+      "commit_subject": "fix(bench): measure the on-demand settings process in GUI runs",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 3,
+      "title": "Studio 原生窗口框架与共享 Tokens",
+      "status": "recorded",
+      "summary": "theme.rs 接入官方 V2 变量：深色侧栏、画布/正文/边线/成功状态；256px 侧栏、32px 内容边距、28px 工作区状态栏、36px 按钮、40px 输入/选择、43px 导航、38px 供应商行。原六皮肤与默认黑白不变；没有迁移已有外观文件。",
+      "highlights": [
+        "theme.rs 接入官方 V2 变量：深色侧栏、画布/正文/边线/成功状态；256px 侧栏、32px 内容边距、28px 工作区状态栏、36px 按钮、40px 输入/选择、43px 导航、38px 供应商行。原六皮肤与默认黑白不变；没有迁移已有外观文件。",
+        "七项工具栏进入唯一页面标题区，统计标题随概览/明细/分析/设置视图变化。原生 TitleBar 保留拖动与系统窗口控制，24px 区域视觉上与两侧背景相连，没有独立白色工具顶栏或面包屑。状态栏移至工作区底部，不跨越深色侧栏。",
+        "使用现有 Kit ButtonCustomVariant 为深色导航指定正常/悬停/按下颜色。真实 UI 测试发现普通 builder .hover 被 Kit 的 variant 样式覆盖；最初修补未生效，随后按 0.7.3 源码采用 custom variant，再次实测通过，未修改依赖。"
+      ],
+      "limits": [
+        "原生拖动已操作，但工具没有返回屏幕坐标，尚不能断言位移验证通过；Windows 系统按钮、全屏、HiDPI/IME/键盘仍待验。",
+        "本批只完成原生框架。供应商搜索、完整侧栏导航/本地状态卡、两块式编辑区、统计筛选重排与各弹窗视觉仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900 明细",
+          "href": "screenshots/shell-1440x900.png"
+        },
+        {
+          "label": "1100×700 供应商",
+          "href": "screenshots/shell-1100x700.png"
+        },
+        {
+          "label": "shell-gui.json",
+          "href": "benchmarks/shell-gui.json"
+        }
+      ],
+      "commit": "bb12ede6aecf902b359cb17092c98aefc18b33e0",
+      "date": "2026-10-28T22:24:54+08:00",
+      "commit_subject": "feat(ui): integrate Studio V2 native window shell and tokens",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 4,
+      "title": "本地供应商搜索与容量保护",
+      "status": "recorded",
+      "summary": "provider_filter.rs 仅过滤可见供应商名称，大小写不敏感、裁去查询首尾空白，尊重已保留的名称草稿和原排序，不搜索 Key/URL/内部 ID；不发送上游请求、写数据库或添加定时器。InputState 与模型搜索状态独立，筛选不改变当前编辑项。",
+      "highlights": [
+        "provider_filter.rs 仅过滤可见供应商名称，大小写不敏感、裁去查询首尾空白，尊重已保留的名称草稿和原排序，不搜索 Key/URL/内部 ID；不发送上游请求、写数据库或添加定时器。InputState 与模型搜索状态独立，筛选不改变当前编辑项。",
+        "侧栏增加搜索、清空、匹配 n/总数、空列表/无结果提示；达到核心定义的 64 个供应商上限时禁用新增/复制。保持原独立滚动列表和固定操作栏；新增/复制成功后清空搜索以显示新草稿。禁用操作同时降低透明度，避免自定义前景使禁用态看起来可用。",
+        "设计参照 54:2、83:454/455；补充读取搜索状态的真实高保真子树 79:438（父 79:400）、80:456（父 80:418）及截图。搜索 SVG 为导出的 17px 资源，输入高 38px。暂保留浅色 Kit 搜索外观以保证六套皮肤的文字和插入光标可读；最终深色搜索、完整三导航及侧栏本地代理卡仍待施工，不能视为一比一完成。"
+      ],
+      "limits": [
+        "Release 核心 / 设置程序：8,428,096 / 14,761,328 bytes。核心没有改动。Windows/Intel Mac/HiDPI 与完整键盘、IME、四协议和统计逐画板视觉验收仍待进行。",
+        "Goal 仍 active，尚未完成完整 V2。下一批继续完整侧栏的第三导航/本地状态卡及深色搜索、当前供应商摘要和双卡片编辑区，再推进协议/模型弹窗、统计页面和全部状态的视觉/键盘回归。不得把首批 4 个小功能的通过当成全部 40 张画板验收完成。"
+      ],
+      "evidence": [
+        {
+          "label": "2 条 / 1440×900",
+          "href": "screenshots/provider-search-2-1440x900.png"
+        },
+        {
+          "label": "64 条 / 1100×700",
+          "href": "screenshots/provider-search-64-1100x700.png"
+        },
+        {
+          "label": "provider-search-gui.json",
+          "href": "benchmarks/provider-search-gui.json"
+        }
+      ],
+      "commit": "76f3737729ea3d1b5d8a80dbc3535a704a05ee8b",
+      "date": "2026-10-28T22:41:00+08:00",
+      "commit_subject": "feat(ui): add local provider search and capacity guards",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 5,
+      "title": "完整 Studio 侧栏与原生深色输入",
+      "status": "recorded",
+      "summary": "官方 MCP 重新读取 54:4 的高保真层级/截图，按其品牌、三导航、216px 供应商行、固定 44px 操作栏、104px 状态卡、版本页脚重排。窗口高 700 时状态卡缩至 76px，列表继续独立滚动，操作栏始终可见。供应商区小标题保留折叠能力，导航进入供应商页时自动展开。",
+      "highlights": [
+        "官方 MCP 重新读取 54:4 的高保真层级/截图，按其品牌、三导航、216px 供应商行、固定 44px 操作栏、104px 状态卡、版本页脚重排。窗口高 700 时状态卡缩至 76px，列表继续独立滚动，操作栏始终可见。供应商区小标题保留折叠能力，导航进入供应商页时自动展开。",
+        "ui/sidebar.rs 从原大文件分离，供应商行改用真实 Kit Button，Tab/Enter 可达；三导航进入统计、供应商和统计设置，离开设置时恢复此前报表视图。只增加会话内视图记忆，没有变更持久化文件格式、后台查询/核心语义。",
+        "SidebarSearch 复用同一 Input/InputState 的公开 InputEditorStyle 绘制投影；只替换该输入的深色文字、占位、插入光标和选区颜色。清除使用 native Kit Button 和原 InputState 的 set_value/焦点机制。没有全局主题交换、额外重绘计时器或依赖升级。"
+      ],
+      "limits": [
+        "sidebar-gui.json：同机 release、1 供应商/64 模型、200 小请求，核心/UI/托盘空闲 RSS 12.58/73.56/26.48 MiB，核心+UI 86.14 MiB，采样峰值 131.45 MiB；核心/UI 记录就绪 236.086/911.043 ms，请求 p50/p95 0.180/0.223 ms。单次结果不代表稳定趋势。",
+        "尚未完成：供应商摘要、连接/模型双卡片、运行中心与深色日志、统计及协议/模型弹窗整体对齐，Windows/Intel Mac 等跨平台验收。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900",
+          "href": "screenshots/sidebar-1440x900.png"
+        },
+        {
+          "label": "64 条 / 1100×700",
+          "href": "screenshots/sidebar-64-1100x700.png"
+        },
+        {
+          "label": "sidebar-gui.json",
+          "href": "benchmarks/sidebar-gui.json"
+        }
+      ],
+      "commit": "0af93ffd756205f94c8e4485ceb22f78466fa96c",
+      "date": "2026-10-28T23:06:55+08:00",
+      "commit_subject": "feat(ui): complete Studio sidebar and native dark search",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 6,
+      "title": "供应商摘要与连接/模型双卡片",
+      "status": "recorded",
+      "summary": "官方 MCP 读取 54:203 高保真布局和截图，将主区拆为当前供应商摘要、连接配置、模型目录。名称/Key、协议/地址成对排列，保留既有 InputState、SelectState、API Key 掩码、四协议 Editor 与原保存/测试/发现逻辑。没有根据静态稿伪造「连接正常」徽章。",
+      "highlights": [
+        "官方 MCP 读取 54:203 高保真布局和截图，将主区拆为当前供应商摘要、连接配置、模型目录。名称/Key、协议/地址成对排列，保留既有 InputState、SelectState、API Key 掩码、四协议 Editor 与原保存/测试/发现逻辑。没有根据静态稿伪造「连接正常」徽章。",
+        "摘要使用真实名称、模型数量与保存/草稿/忙碌状态。名称列及数量在左侧分组，状态与编辑资料在右侧；编辑资料可聚焦名称并将中央编辑列滚回顶部。Draft::from_provider 抽出既有单供应商投影，只在内存比较保存状态，避免渲染时调用带文件指纹读取的 from_config；旧私有草稿和持久化格式保持。",
+        "模型目录继续使用原虚拟 DataTable、选择状态、Shift/Cmd/Ctrl/Delete/Backspace 与编辑路径，行密度 29px、编辑按钮使用设计导出 15px 矢量。UI 总草稿模型达到核心定义的 256 上限时禁用新增，仍由原管理 API 负责保存校验。"
+      ],
+      "limits": [
+        "核心未改，沿用已通过的 573 单测基线及同一核心二进制；本批没有升级依赖或改版本号。Windows/Intel Mac 与完整 IME/无障碍未实际验证。协议/模型弹窗入口已验证，弹窗全量视觉仍待后续逐帧检查。",
+        "Goal 继续 active。下一批优先改造运行中心和深色活动日志，再推进统计页面、协议/模型弹窗及可选 Studio 靛蓝方案；六套旧皮肤和既有默认值继续保留。完整 40 张状态画板与跨平台验收仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900 中文",
+          "href": "screenshots/providers-1440x900.png"
+        },
+        {
+          "label": "1100×700 English",
+          "href": "screenshots/providers-1100x700.png"
+        },
+        {
+          "label": "providers-gui.json",
+          "href": "benchmarks/providers-gui.json"
+        }
+      ],
+      "commit": "e30b3be677d00366abbecf7731668843cf369b74",
+      "date": "2026-10-28T23:41:01+08:00",
+      "commit_subject": "feat(ui): split provider workspace into Studio connection and model cards",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 7,
+      "title": "运行中心与原生活动日志",
+      "status": "recorded",
+      "summary": "官方 MCP 读取 54:298、54:320 的高保真 context/截图，右栏改为运行中心与深色活动日志。运行中心使用原核心轮询的状态、真实地址和供应商/模型/请求计数，不根据设计样例伪造运行状态；复制仍输出完整兼容端点。三个图标按原始 19/16/19px SVG 嵌入，没有网络运行时资源。",
+      "highlights": [
+        "官方 MCP 读取 54:298、54:320 的高保真 context/截图，右栏改为运行中心与深色活动日志。运行中心使用原核心轮询的状态、真实地址和供应商/模型/请求计数，不根据设计样例伪造运行状态；复制仍输出完整兼容端点。三个图标按原始 19/16/19px SVG 嵌入，没有网络运行时资源。",
+        "ui/relay.rs 分离右栏布局；同步/取消同步沿用既有确认与处理器。端口入口改为原生设置对话框，保留 1–65535 校验和原二次重启确认/取消/回滚。打开编辑不会写配置或重启程序。局部输入错误与后台状态分离，取消时恢复当前真实端口。",
+        "TerminalLogs 复用原 TextareaState，通过公开 InputEditorStyle 局部指定深色前景、背景、选区和光标。保留只读选择、原清空命令和包含 summary 的复制文本；核心最近 100 条、旧到新顺序和 text != log_text 才滚到底的判断不变。没有新计时器、每帧 IO 或日志重建机制。"
+      ],
+      "limits": [
+        "0/65536 拒绝进入重启确认，取消/重开恢复真实端口且无残留局部错误；合法更改只打开确认并取消，配置/运行端口保持。端口确认、同步和取消同步的 Esc 关闭复验 Passed；Tab 未得到可靠焦点位置证据，仍待补验。没有对真实 WorkBuddy 执行同步、取消或重启。",
+        "主 GUI/基准进程已退出并等待，清理本批隔离配置/数据库/程序副本约 108,412 KiB，子代理临时文件保留 0；最终矢量复验清理另行记录。主构建日志目录继续用于下一批，结束时统一清理。Windows/Intel Mac/HiDPI 和完整无障碍仍未实际验证，40 张画板整体不能视为完成。"
+      ],
+      "evidence": [
+        {
+          "label": "runtime-gui.json",
+          "href": "benchmarks/runtime-gui.json"
+        },
+        {
+          "label": "1440×900 中文",
+          "href": "screenshots/runtime-1440x900.png"
+        },
+        {
+          "label": "1100×700 English",
+          "href": "screenshots/runtime-1100x700.png"
+        }
+      ],
+      "commit": "1728736c3430a91676b5612fc581b70014a9afa7",
+      "date": "2026-10-29T00:01:31+08:00",
+      "commit_subject": "feat(ui): add Studio runtime center and native terminal logs",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 8,
+      "title": "可选 Studio 靛蓝外观",
+      "status": "recorded",
+      "summary": "官方 MCP 读取外观画板 64:335，沿用现有原生外观弹层；新增 Skin::StudioIndigo，主色 #655cf4、深色 #4f46d9、浅色 #f4f6ff 与边线 #d8dde9 使用已读取的 V2 变量。新增项在六个旧选项之后占两列，以完整显示中英文名和选中标记。",
+      "highlights": [
+        "官方 MCP 读取外观画板 64:335，沿用现有原生外观弹层；新增 Skin::StudioIndigo，主色 #655cf4、深色 #4f46d9、浅色 #f4f6ff 与边线 #d8dde9 使用已读取的 V2 变量。新增项在六个旧选项之后占两列，以完整显示中英文名和选中标记。",
+        "迁移策略：没有自动迁移或重写。无外观文件、损坏/未知配置及新安装仍按既有逻辑默认黑白；六个旧序列化名称和顺序保持，读取旧文件不改写。新增方案仅在用户手动选择后以现有 appearance.json version 1、skin: studio_indigo 保存，不改变供应商配置或核心协议。旧版本若不认识此新值，会按其既有失败回退逻辑显示黑白。",
+        "新增兼容回归用真实旧键 blue/violet/rose/amber/teal/monochrome 加载并逐字节确认文件未改写，确认默认仍 Mono、新方案仍使用 version 1。既有 roundtrip 与文字对比度测试一并覆盖第七项。"
+      ],
+      "limits": [
+        "Goal 继续 active：下一批推进统计概览/明细/分析/设置的 V2 控件与布局、协议/模型弹窗和完整逐帧回归；已读取统计 tabs/filter/section navigation 的高保真 context（52:79、52:87、58:215）。Windows/Intel Mac、完整 IME/无障碍以及所有画板验收仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900 Studio 与真实日志选区",
+          "href": "screenshots/indigo-1440x900.png"
+        },
+        {
+          "label": "1100×700 English 七项外观弹层",
+          "href": "screenshots/appearance-1100x700.png"
+        },
+        {
+          "label": "indigo-gui.json",
+          "href": "benchmarks/indigo-gui.json"
+        }
+      ],
+      "commit": "234f0563dddceff3983255f183eba33bb24a2753",
+      "date": "2026-10-29T00:12:40+08:00",
+      "commit_subject": "feat(ui): add opt-in Studio Indigo appearance",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 9,
+      "title": "统计导航与主筛选区",
+      "status": "recorded",
+      "summary": "依据已读取的官方高保真 context 52:79 / 52:87，三项报表导航使用 42px 原生 Button、白色选中面和 3px 主题下划线；统计设置统一由侧栏进入，报表右侧保留真实采集状态、数据提示、更多条件和清除入口。",
+      "highlights": [
+        "依据已读取的官方高保真 context 52:79 / 52:87，三项报表导航使用 42px 原生 Button、白色选中面和 3px 主题下划线；统计设置统一由侧栏进入，报表右侧保留真实采集状态、数据提示、更多条件和清除入口。",
+        "主筛选顺序为模型、供应商、日期、自动刷新、刷新、来源组；来源组改为浅色轨道与白色选项，保持整组不拆分、唯一选择、RadioGroup/RadioButton 语义、左右/Home/End 键。中英主组均宽 391px，小窗整体换行。原 SourceFilter 状态转换和查询代际/丢弃过期回复逻辑不变。",
+        "记录类型移至「更多筛选」，采集方式、请求状态、历史搜索、完整性、包含测试仍用原状态与处理器；附加记录类型/状态生效时更多入口保持强调。几何枚举只保留六个主筛选槽，删除未使用的旧 Status/More 布局槽，更新实际尺寸断言，没有放宽 lint。"
+      ],
+      "limits": [
+        "UI/core 测试进程均正常退出0并等待，基准沙盒 enforced；清理专属合成配置/数据库/程序副本约148,420 KiB。保留328 KiB问题图在主临时根等待收尾；其中尚未可靠验证的窄窗列访问图已复制为 pending-columns-1100x700.jpg，不当作通过截图。两个已解决的浮层问题图可在收尾清理。完整 Tab 顺序、明细横向列取回、Windows/Intel Mac/HiDPI仍待后续，不能将统计全部画板标为通过。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900 中文",
+          "href": "screenshots/stats-controls-1440x900.png"
+        },
+        {
+          "label": "1100×700 English 浮层",
+          "href": "screenshots/stats-controls-1100x700.png"
+        },
+        {
+          "label": "stats-controls-gui.json",
+          "href": "benchmarks/stats-controls-gui.json"
+        },
+        {
+          "label": "pending-columns-1100x700.jpg",
+          "href": "screenshots/pending-columns-1100x700.jpg"
+        }
+      ],
+      "commit": "7f3e4d431a152f15b4f41cd7f2ae26aab9bc6c04",
+      "date": "2026-10-29T00:37:26+08:00",
+      "commit_subject": "feat(ui): align Studio statistics navigation and filters",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 10,
+      "title": "概览 Token 主卡和三项关键指标",
+      "status": "recorded",
+      "summary": "官方 MCP 读取 52:107 高保真 context/截图。概览顶部改为深色 Token 主卡 + 用量记录/代理成功率/缓存命中率三卡，168px 高、16px 间距；1440 一行，1100 主卡在三卡上方、正文可滚动。主卡数值/缩写单位分开为 47px/21px，三个图标按原导出18px嵌入。",
+      "highlights": [
+        "官方 MCP 读取 52:107 高保真 context/截图。概览顶部改为深色 Token 主卡 + 用量记录/代理成功率/缓存命中率三卡，168px 高、16px 间距；1440 一行，1100 主卡在三卡上方、正文可滚动。主卡数值/缩写单位分开为 47px/21px，三个图标按原导出18px嵌入。",
+        "原七项完整指标保留在 Token 卡右上的原生详细指标 Popover，可内部滚动。继续使用原 cards(summary) 投影、精确值、独立输入/输出与缓存读写、完整率、CNY/USD费用和 WorkBuddy 积分说明；不改变聚合、数据缺失、货币/积分或价格快照语义。首层卡中的记录0是真实0，未知成功率/缓存/Token仍为破折号。",
+        "初版照稿使用固定 decorative signal；实拍发现空来源也有相同柱形，可能被误认成用量。改为已存在 dashboard.series 的最近14个时间桶 total_tokens 原生柱形：Unknown/负值留空，零不画柱，只按已知峰值缩放；使用单一总Token颜色，不伪装成输入/缓存分项，也不发新查询。完整趋势图和断点/货币图逻辑未改。"
+      ],
+      "limits": [
+        "最终截图 1440×900 中文 / 1100×700 English 已由主代理查看，只裁去底部1行原生窗口框；旧固定装饰柱形截图已删除。顶部KPI与设计对齐；下方趋势/计费/最近请求尚未完成整帧布局。",
+        "Goal保持active。下一批继续使用趋势/费用面板与真实最近请求、明细/分析/设置内容、协议/模型弹窗，补明细窄窗列访问、Tab/IME及跨平台验收。完整40帧尚未达到最终验收，不能以本批KPI通过缩小完成标准。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900 中文",
+          "href": "screenshots/overview-kpi-1440x900.png"
+        },
+        {
+          "label": "1100×700 English",
+          "href": "screenshots/overview-kpi-1100x700.png"
+        },
+        {
+          "label": "overview-kpi-gui.json",
+          "href": "benchmarks/overview-kpi-gui.json"
+        }
+      ],
+      "commit": "d388dbf5346db5f7bc82c44a886d0c71b99a7568",
+      "date": "2026-10-29T00:53:01+08:00",
+      "commit_subject": "feat(ui): compose Studio overview KPIs from live summaries",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 11,
+      "title": "概览趋势与计费摘要",
+      "status": "recorded",
+      "summary": "依据官方高保真 context 52:151 / 52:179，将原两块大趋势图重排为使用趋势+费用与计费摘要：宽窗约694:410，窄窗上下堆叠并随原概览正文滚动。statistics/trends.rs 分离布局；原 UsagePlot、时间桶/缺失/单点、图例数据与费用币种状态保持，没有使用 Figma 静态路径作为真实曲线。",
+      "highlights": [
+        "依据官方高保真 context 52:151 / 52:179，将原两块大趋势图重排为使用趋势+费用与计费摘要：宽窗约694:410，窄窗上下堆叠并随原概览正文滚动。statistics/trends.rs 分离布局；原 UsagePlot、时间桶/缺失/单点、图例数据与费用币种状态保持，没有使用 Figma 静态路径作为真实曲线。",
+        "四个图例改为原生 Button、明确选中状态和键盘入口，保留输入/输出/缓存读/写独立开关。输入/缓存读采用稿中紫色 #6c61f8 / 青色 #28b7a6，通过共享主题常量提供；额外输出绿、缓存写灰继续区分，通用语义蓝保持原值。",
+        "计费摘要只查当前币种在 SummaryDto.costs 的真实汇总，无该币种时显示—；真实已记录零价显示¥0/$0。WorkBuddy积分单独使用原格式器，导入未定价条数及默认零价条数直接读现有字段。费用趋势保留在标题旁原生图表按钮中，可查看实际币种、零位或缺失空轴，不改变历史价格或聚合。"
+      ],
+      "limits": [
+        "两版UI/core均正常退出0并等待，sandbox_check enforced；清理专属配置/数据库/程序副本/旧图110,112 KiB，子代理临时文件剩余0。主代理日志和下一功能补丁仍在使用，收尾统一清理。最近请求、完整概览/其他画板与跨平台仍待后续，Goal继续active。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900 中文",
+          "href": "screenshots/overview-billing-1440x900.png"
+        },
+        {
+          "label": "1100×700 English 滚动位置",
+          "href": "screenshots/overview-billing-1100x700.png"
+        },
+        {
+          "label": "overview-billing-gui.json",
+          "href": "benchmarks/overview-billing-gui.json"
+        }
+      ],
+      "commit": "67d05f8d1d767ceb170d1a32e8ed5365d2e7a0d9",
+      "date": "2026-10-29T01:14:56+08:00",
+      "commit_subject": "feat(ui): align Studio usage trend and billing summary",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 12,
+      "title": "真实最近请求",
+      "status": "recorded",
+      "summary": "依据官方 context 52:191 添加原生最近请求卡与18px时钟SVG，显示真实时间、供应商、模型、Token和状态；长名称/模型约束宽度，正文可换行。查看详情按该记录request_id进入原详情处理器，明细表行入口仍保留。导入记录沿用Recorded语义，没有HTTP时不伪造200，Token未知仍为—。",
+      "highlights": [
+        "依据官方 context 52:191 添加原生最近请求卡与18px时钟SVG，显示真实时间、供应商、模型、Token和状态；长名称/模型约束宽度，正文可换行。查看详情按该记录request_id进入原详情处理器，明细表行入口仍保留。导入记录沿用Recorded语义，没有HTTP时不伪造200，Token未知仍为—。",
+        "概览使用独立Recent只读resource执行原 stats_requests、使用既有最小页量10并仅展示首条；不携带明细cursor/page/as_of_id。核心既有查询按started_at_ms DESC/id DESC排序，未修改SQL、协议或存储。此读替换概览原无用的分页列表读，明细/分析继续旧请求和分页；使用原刷新节奏且仅概览可见时运行，没有新计时器或后台采集。",
+        "RecentRead按本地请求序号和筛选代际校验，换筛选/离开视图/隐藏窗口立即作废；旧回复不能清理或覆盖新请求。初始和未收到回复时显示读取中，只有真实空回复才显示暂无；失败清除旧行并显示局部失败，避免把旧行称作最新。"
+      ],
+      "limits": [
+        "最终 1440×900 中文完整概览 / 1100×700 English 滚动位置 由主代理查看，原图只裁底部1行；全部为本机mock合成记录，无聊天正文、密钥或真实用户数据。当前概览主要结构/正常与空态已落地，整帧多外观/异常/无障碍最终审计仍待续。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900 中文完整概览",
+          "href": "screenshots/overview-recent-1440x900.png"
+        },
+        {
+          "label": "1100×700 English 滚动位置",
+          "href": "screenshots/overview-recent-1100x700.png"
+        },
+        {
+          "label": "overview-recent-gui.json",
+          "href": "benchmarks/overview-recent-gui.json"
+        }
+      ],
+      "commit": "1a443c1f3d65badaa0fe60e992b081f096298163",
+      "date": "2026-10-29T01:38:16+08:00",
+      "commit_subject": "feat(ui): show the latest filtered request in Studio overview",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 13,
+      "title": "八列明细与明确的横向列访问",
+      "status": "recorded",
+      "summary": "官方高保真 context 56:209 / 57:8 与截图已读取。请求表按最新V2的八个逻辑列重排：Token总量与输入/输出两行，缓存命中独立为44px比例条+真实百分比。未知、输入为零、非法子集仍显示—；收费项Token/缓存不适用，导入记录无HTTP时保留—及已记录。币种金额和WorkBuddy积分继续独立。",
+      "highlights": [
+        "官方高保真 context 56:209 / 57:8 与截图已读取。请求表按最新V2的八个逻辑列重排：Token总量与输入/输出两行，缓存命中独立为44px比例条+真实百分比。未知、输入为零、非法子集仍显示—；收费项Token/缓存不适用，导入记录无HTTP时保留—及已记录。币种金额和WorkBuddy积分继续独立。",
+        "请求ID移至原时间提示/详情，tok/s移至耗时提示/详情；没有删除后端字段或更改计算口径。供应商来源pill、历史快照名称、收费项标签及行详情处理器保持。标题、真实记录数、统一导入说明和39px原生表头按稿落地；请求排序展示核心实际的最新优先，没有添加无效下拉菜单。",
+        "明细与分析增加明确的首列/最右列按钮，调用Kit TableState::scroll_to_col共享的表头/表体横向句柄，不依赖操作系统是否显示overlay滚动条。可读列宽下限及用户拖动宽度保持会话内语义；不添加轮询、后台查询、数据库/配置改动或依赖升级。分析整帧布局与底部指标卡仍待续。"
+      ],
+      "limits": [
+        "初次累计UI就绪标记1154.076 ms高于历史796.346 ms，故补两次复测，得到1460.283/711.764 ms；三次核心就绪441.024/781.300/237.153 ms也明显波动，且核心二进制未变。累计UI减核心就绪为713.052/678.983/474.611 ms（历史750.422 ms），这些观测未显示稳定的UI额外启动退化。仍不以就绪文件标记替代首帧/可交互计时；最终成组启动专项仍待进行。三次基准均有sandbox_check enforced证明，使用隔离HOME/config与本地mock，无真实Key或对话。",
+        "Goal继续active。下一批推进汇总分析/统计设置和本地化Select刷新、协议/模型及供应商CRUD状态；完整40帧、全部Tab/IME/无障碍、Windows/Intel Mac/HiDPI和最终多轮性能验收仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900中文",
+          "href": "screenshots/request-table-1440x900.png"
+        },
+        {
+          "label": "1100×700英文最右列",
+          "href": "screenshots/request-table-right-1100x700.png"
+        },
+        {
+          "label": "run1",
+          "href": "benchmarks/request-table-gui.json"
+        },
+        {
+          "label": "run2",
+          "href": "benchmarks/request-table-gui-run2.json"
+        },
+        {
+          "label": "run3",
+          "href": "benchmarks/request-table-gui-run3.json"
+        }
+      ],
+      "commit": "b6840366351ba7b9bdc6603ef6b9f29ab6fb3d75",
+      "date": "2026-10-29T02:00:48+08:00",
+      "commit_subject": "feat(gpui): align request columns and add table navigation",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 14,
+      "title": "每页条数选项即时切换语言",
+      "status": "recorded",
+      "summary": "上轮英文实拍中的“10条/页”由rebuild_choices漏掉page_size_select造成。创建与语言重建改用同一page_size_choices，选项值仍为API允许的10/20/50/100，按原值恢复选择；没有变更偏好格式、分页处理器或后台接口。",
+      "highlights": [
+        "上轮英文实拍中的“10条/页”由rebuild_choices漏掉page_size_select造成。创建与语言重建改用同一page_size_choices，选项值仍为API允许的10/20/50/100，按原值恢复选择；没有变更偏好格式、分页处理器或后台接口。",
+        "fmt / 165 tests / clippy（all-targets、-D warnings）/ release Passed，block0.1.6未来兼容提示保持既有基线。标签刷新是本地内存投影，Select程序化恢复不会发Confirm；原事件处理器亦仅在实际page_size变化时发列表查询。",
+        "最终 1e1cc20e 实拍：中文20条/页第2/2页→英文20 per page第2/2页→中文20条/页第2/2页，记录和页码保持；展开10/20/50/100均即时翻译。英文选择10 per page后恢复第1/3页、Next可到第2/3页；同配置重开显示正确英文10。另以非默认20补验，确认旧UI PID已消失、新PID重开仍20 per page、22条共2页，排除仅恢复默认10的弱证据。"
+      ],
+      "limits": [
+        "1100×700分页同一行可操作；英文20 per page实拍为合成数据，原生截图仅裁底部1px。该修复只刷新选项文案，没有额外性能复测；同阶段上一功能三次基准见上，不将其冒充本版测量。完整本地化/IME/无障碍仍待最终审计。"
+      ],
+      "evidence": [
+        {
+          "label": "英文20 per page实拍",
+          "href": "screenshots/pagination-locale-1100x700.png"
+        }
+      ],
+      "commit": "12be7a8a9bf0dd4ed1e4fd23b41300c82cbb2cba",
+      "date": "2026-10-29T02:14:44+08:00",
+      "commit_subject": "fix(gpui): refresh page size labels when locale changes",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 15,
+      "title": "汇总分析面板与真实构成",
+      "status": "recorded",
+      "summary": "依据已读取的官方高保真 57:8 / 57:225 / 57:275 / 57:287，聚合表改为供应商/模型表现标题、真实组数、38px原生分段、38px表头及43px条纹行。六列顺序与稿保持；中英文分别保留可读宽度，最小窗仍通过首/右列取回完整列。原供应商/模型分组、历史名称/Key、输入输出、缓存、独立币种/积分及服务端分页保持。",
+      "highlights": [
+        "依据已读取的官方高保真 57:8 / 57:225 / 57:275 / 57:287，聚合表改为供应商/模型表现标题、真实组数、38px原生分段、38px表头及43px条纹行。六列顺序与稿保持；中英文分别保留可读宽度，最小窗仍通过首/右列取回完整列。原供应商/模型分组、历史名称/Key、输入输出、缓存、独立币种/积分及服务端分页保持。",
+        "statistics/analysis.rs 承载原生标题/分段、真实排序菜单、Token构成与缓存/完整性两卡。排序菜单仅提供原API支持的总Token/请求数，沿用重置分组分页及读身份的处理流程；多币种聚合费用提示补充完整金额，避免单行截断后只剩数量提示。",
+        "两卡读取当前筛选的同一dashboard，不发新查询/计时器。Token只在输入、输出非负、无溢出且与已知正总量一致时绘制分项；已知零和缺失/不一致各有说明，缓存不加进总量。缓存命中沿用核心的已知缓存读对应输入分母，完整性沿用完整/可计量记录；百分比缺失/非有限/越界显示—且无填充。新增2项纯投影测试覆盖正常、零、未知、负值、总量不匹配、溢出、NaN/Infinity。"
+      ],
+      "limits": [
+        "analysis-gui.json为同机release默认Providers页单次复测：核心/UI/合计12.67/73.48/86.16 MiB，采样峰值128.25 MiB，托盘25.56 MiB；核心/UI累计就绪433.209/1078.498 ms，差645.289 ms在上批474.611–713.052 ms范围内；请求p50/p95为0.164/0.215 ms。口径仍200小请求、64模型、80×1MiB/4并发、本地mock，不从单次波动宣称改善；就绪标记不是首帧/可交互，最终成组专项仍待进行。",
+        "Goal继续active。分析主要结构及本批数据/排序/分页验证完成，整帧逐项对照、全部Tooltip/Tab/IME/无障碍与Windows/Intel Mac/HiDPI仍未完成；下一批继续统计设置、价格/导入和供应商/协议/模型弹窗，原40帧及全部功能保护标准保持。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900中文Studio Indigo",
+          "href": "screenshots/analysis-1440x900.png"
+        },
+        {
+          "label": "1100×700英文Mono",
+          "href": "screenshots/analysis-1100x700.png"
+        },
+        {
+          "label": "analysis-gui.json",
+          "href": "benchmarks/analysis-gui.json"
+        },
+        {
+          "label": "Token构成",
+          "href": "screenshots/analysis-cards-1100x700.png"
+        },
+        {
+          "label": "缓存/覆盖",
+          "href": "screenshots/analysis-cache-1100x700.png"
+        }
+      ],
+      "commit": "cc547ac182eae21ffed75febf59c9438b1593a07",
+      "date": "2026-10-29T02:36:22+08:00",
+      "commit_subject": "feat(gpui): add native usage analysis panels",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 16,
+      "title": "设置分区导航与原生价格规则面板",
+      "status": "recorded",
+      "summary": "官方MCP读取 58:223 价格卡、58:272 采集卡、58:301 导入卡的高保真context/截图，并复用 58:215 三分区导航。当前批实现导航与价格面板；采集/本地导入暂保留原控件组，双卡片下一批继续，不声明整张58:8完成。",
+      "highlights": [
+        "官方MCP读取 58:223 价格卡、58:272 采集卡、58:301 导入卡的高保真context/截图，并复用 58:215 三分区导航。当前批实现导航与价格面板；采集/本地导入暂保留原控件组，双卡片下一批继续，不声明整张58:8完成。",
+        "statistics/settings_layout.rs 提取原价格展示，改为标题/真实本页条数、价格快照说明、精确模型搜索与新建、44px两行字段、原生菜单（卡头刷新/手动更新、逐行编辑/更多删除）。模型/来源/映射可截断但不挤列，原ID/备注与费率/币种/输入计费模式保持；规则计数明确是本页数量，不用当前页长度冒充全部规则数。",
+        "三项40px原生导航通过ScrollAnchor定位到真实分区，折叠旧存储组后点本地用量会重新展开并定位；设置页拥有独立ScrollHandle和实际宽度探针，不依赖已隐藏的报表filters，因此直接进入设置、窗口改尺寸也更新布局。供应商模式读取沿用原每tick有界机制，限可见设置页且组展开，未加新计时器或修改核心/持久化格式。"
+      ],
+      "limits": [
+        "默认Providers页同口径 首轮、复测2、复测3：核心/UI空闲RSS为12.72/74.30、12.14/72.78、12.45/72.08 MiB，合87.02/84.92/84.53 MiB，采样峰值141.27/132.02/134.66 MiB。核心/UI累计就绪417.908/1173.089、228.235/899.853、220.779/715.811 ms，差755.181/671.618/495.032 ms；就绪标记仍不代表首帧/可交互。",
+        "Goal继续active。下一批把采集/存储及本地用量拆为V2双卡，保留全部开关/模式/六项计数/真实checkpoint进度/检查更新与完整核对/清理预览确认路径；价格模态框、供应商/协议/模型等剩余画板、完整键盘/IME/无障碍与跨平台验证仍待续。原40帧和功能保护要求保持，不以本批导航/价格功能验收替代整页/全产品完成。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900中文Studio",
+          "href": "screenshots/settings-pricing-1440x900.png"
+        },
+        {
+          "label": "1100×700英文Mono",
+          "href": "screenshots/settings-pricing-1100x700.png"
+        },
+        {
+          "label": "小窗失败区",
+          "href": "screenshots/settings-price-update-error-1100x700.png"
+        },
+        {
+          "label": "首轮",
+          "href": "benchmarks/settings-pricing-gui.json"
+        },
+        {
+          "label": "复测2",
+          "href": "benchmarks/settings-pricing-run2-gui.json"
+        },
+        {
+          "label": "复测3",
+          "href": "benchmarks/settings-pricing-run3-gui.json"
+        }
+      ],
+      "commit": "9c10ed6e2ed0a241da1694d45272ba5e494a4881",
+      "date": "2026-10-29T03:28:27+08:00",
+      "commit_subject": "feat(gpui): add settings navigation and pricing panel",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 17,
+      "title": "采集/存储与本地用量双卡",
+      "status": "recorded",
+      "summary": "根据已读取高保真 58:272 / 58:301，把旧折叠存储组拆为宽窗约538:566的双卡，窄窗纵排，保留三分区ScrollAnchor。statistics/settings_capture.rs承载采集控制和维护预览，导入卡仍由原import_controls驱动；没有改核心、统计API或持久化格式。",
+      "highlights": [
+        "根据已读取高保真 58:272 / 58:301，把旧折叠存储组拆为宽窗约538:566的双卡，窄窗纵排，保留三分区ScrollAnchor。statistics/settings_capture.rs承载采集控制和维护预览，导入卡仍由原import_controls驱动；没有改核心、统计API或持久化格式。",
+        "采集卡显示真实加载/启用/暂停状态、默认CNY/USD菜单、摘要Checkbox、30/90/180/365/永久预设及非预设当前值。币种和REQUEST/OBSERVE菜单按核心确认值显示，当前值禁用避免无意义重复写入；读不到设置/模式时显示—并禁用，未假定启用或REQUEST。供应商模式两列、最多两行独立滚动，沿用原有界逐tick读取与20/50/100页大小和页码，刷新/页大小在更多菜单。",
+        "导入卡保留显式启用Checkbox、有效状态、真实已入库/待处理计数、checkpoint进度、发现文件数/已提交字节/最近增量或完整核对时间，以及已导入/去重/冲突/待重读四个主计数。只读Details保留全部六计数、两个时间、完整进度/未读积压及去重解释；Full check和分类说明在原生更多菜单，不发额外渲染查询或计时器。进度复用原Snapshot校验/99.9%未完成上限/完整核对不定进度逻辑，未知状态不装作就绪。"
+      ],
+      "limits": [
+        "首轮核心/UI累计就绪442.518/1257.921 ms，差815.403 ms，比上批差值495.032–755.181 ms偏高，故作同参数复测：226.755/881.588 ms，差654.833 ms。保留两次全部结果，未见持续偏高，不从单次/少量波动宣称性能改善；就绪标记仍不是首帧/可交互，最终专项与跨平台结果仍待进行。",
+        "Goal继续active。采集/存储与本地导入本批主要结构和业务路径已验，完整Tooltip/Tab/IME/无障碍、整帧锚点/密度及Windows/Intel Mac/HiDPI仍待完成；下一批继续新建/编辑价格模态框及供应商/协议/模型等剩余画板。原40帧与全部功能保护范围保持。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900中文Studio双卡",
+          "href": "screenshots/settings-cards-1440x900.png"
+        },
+        {
+          "label": "1100×700英文Mono采集卡",
+          "href": "screenshots/settings-cards-1100x700.png"
+        },
+        {
+          "label": "1100×700英文Mono导入卡",
+          "href": "screenshots/settings-import-1100x700.png"
+        },
+        {
+          "label": "首轮",
+          "href": "benchmarks/settings-capture-import-gui.json"
+        },
+        {
+          "label": "复测",
+          "href": "benchmarks/settings-capture-import-run2-gui.json"
+        }
+      ],
+      "commit": "ad762c479b75e0f02067c4ba93ad3fd4965cb3ce",
+      "date": "2026-10-29T04:35:46+08:00",
+      "commit_subject": "feat(gpui): add capture and local usage settings cards",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 18,
+      "title": "新建/编辑价格原生模态框",
+      "status": "recorded",
+      "summary": "通过官方MCP重新读取 60:249 / 69:359 的高保真context与截图：574×625、18px圆角、26px侧内边距、21px标题/每百万Token标签、42px字段、四价格2×2排列与底栏。背景中的工具栏/Logo已由前批原生资产承载；本批模态框只有原生文字/字段/容器，不把整张设计图或临时URL作为运行时资产。",
+      "highlights": [
+        "通过官方MCP重新读取 60:249 / 69:359 的高保真context与截图：574×625、18px圆角、26px侧内边距、21px标题/每百万Token标签、42px字段、四价格2×2排列与底栏。背景中的工具栏/Logo已由前批原生资产承载；本批模态框只有原生文字/字段/容器，不把整张设计图或临时URL作为运行时资产。",
+        "提取 statistics/price_layout.rs，通过Kit原生content插槽与Dialog::width设置尺寸（旧w样式会被Kit最终props宽度覆盖）。固定头/底栏，表单独立滚动，保留原备注字段与身份锁定说明；原InputState/SelectState、校验、revision/异步确认、历史快照和取消逻辑保持。新增显式Cancel走原cancel_price并关闭原生Dialog，Enter继续原save_price等待确认，X/Esc仍走原on_close。",
+        "初版编译发现Kit API名称与类型差异（Input用aria_label、Select具体Choice类型、Label无tooltip），已按当前0.7.3源码修正；未升级依赖或压低检查。校验/保存失败提示放固定底栏，避免长表单滚动位置藏住失败反馈。最终构建与真实UI回归随后记录。"
+      ],
+      "limits": [
+        "交错旧A/新B/新C/旧D的组合RSS为86.08/85.53/84.34/85.64 MiB（UI73.62/73.41/72.11/73.34），请求p50/p95为0.169/0.314、0.169/0.207、0.164/0.203、0.167/0.202 ms；核心/UI累计就绪455.979/1307.948、233.344/800.928、234.076/813.275、207.929/744.244 ms。旧版也出现首轮尾延迟与启动偏高，当前交错两轮与旧D/先前基线接近，未发现当前UI导致持续退化的证据；少量结果不用于宣称性能改善。全部7轮保留相同200小请求、64模型、80×1MiB/4并发、本地mock、同机re",
+        "Goal继续active。本批完成价格新建/编辑原生结构与主要交互回归；完整Tooltip/IME/无障碍、精细视觉、Windows/Intel Mac/HiDPI及首帧/可交互专项仍待最终审计。下一批继续请求详情和供应商/协议/模型等剩余画板，原40帧与全部功能保护标准保持。"
+      ],
+      "evidence": [
+        {
+          "label": "新建中文Studio 1440×900",
+          "href": "screenshots/price-new-1440x900.png"
+        },
+        {
+          "label": "编辑中文Studio 1440×900",
+          "href": "screenshots/price-edit-1440x900.png"
+        },
+        {
+          "label": "新建英文Mono 1100×700",
+          "href": "screenshots/price-new-1100x700.png"
+        },
+        {
+          "label": "英文备注/滚动区",
+          "href": "screenshots/price-fields-1100x700.png"
+        },
+        {
+          "label": "首轮",
+          "href": "benchmarks/price-dialog-gui.json"
+        },
+        {
+          "label": "复测2",
+          "href": "benchmarks/price-dialog-run2-gui.json"
+        },
+        {
+          "label": "复测3",
+          "href": "benchmarks/price-dialog-run3-gui.json"
+        },
+        {
+          "label": "旧A",
+          "href": "benchmarks/price-dialog-previous-a-gui.json"
+        }
+      ],
+      "commit": "e0312b7772360c4774a6626bdeade093d107f5a4",
+      "date": "2026-10-29T05:08:30+08:00",
+      "commit_subject": "feat(gpui): align native pricing dialogs with Studio",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 19,
+      "title": "请求详情与原生元数据浮层",
+      "status": "recorded",
+      "summary": "官方MCP读取 60:475 / 60:692 的高保真context/截图：650×770、18px圆角、21px标题/真实状态标签、15个36px信息行分组、摘要说明、数据口径提示及固定关闭底栏。statistics/detail_layout.rs 提取原展示，主表体独立滚动；更多详情保留原6项元数据、路由、响应模型、用量质量/原因、本次单价及来源revision、记录时间和速率口径。主行另显示导入真实点数，HTTP/stream",
+      "highlights": [
+        "官方MCP读取 60:475 / 60:692 的高保真context/截图：650×770、18px圆角、21px标题/真实状态标签、15个36px信息行分组、摘要说明、数据口径提示及固定关闭底栏。statistics/detail_layout.rs 提取原展示，主表体独立滚动；更多详情保留原6项元数据、路由、响应模型、用量质量/原因、本次单价及来源revision、记录时间和速率口径。主行另显示导入真实点数，HTTP/stream未知值保留—；额外内容通过原生Popover访问。",
+        "保留原stats_request_detail、backend seq筛选与独立读身份，增加选中ID回显匹配；Close/X/Esc统一清理读seq/选中ID/详情/错误，迟到回复继续被既有seq门禁丢弃。弹窗内独立detail_error避免普通后台查询清掉错误；手动Retry只重读同一ID，不叠Dialog、不加轮询。未知价格来源revision显示—，替代旧展示的默认0。",
+        "首次编译修正Popover content闭包须3参数；严格clippy发现冗余String.into后删除，未弱化检查。首版 26007bf2e8f7621f1278b122b8e9e12ee71ce01c6d420fdb6cd2832ca6755ee3 /14,960,016 bytes 通过fmt、167 tests、clippy（all-targets、-D warnings）、release。现场主要布局与More浮层两尺寸通过；最终补导入消息时间标签与状态/关闭位置对齐，最终构建随后记录。"
+      ],
+      "limits": [
+        "Goal继续active。请求详情本批主要布局、旧信息保留、真实数据/错误重试/关闭/复制与长值访问已验；Tooltip视觉、完整IME/无障碍、跨平台/HiDPI与首帧/可交互专项仍待最终审计。下一批继续模型选择/能力编辑及供应商/协议等剩余画板，原40帧和全部功能保护范围保持。"
+      ],
+      "evidence": [
+        {
+          "label": "代理SSE/中文Studio 1440×900",
+          "href": "screenshots/detail-proxy-1440x900.png"
+        },
+        {
+          "label": "内置导入/中文Studio",
+          "href": "screenshots/detail-import-1440x900.png"
+        },
+        {
+          "label": "英文Mono 1100×700",
+          "href": "screenshots/detail-1100x700.png"
+        },
+        {
+          "label": "More完整快照/英文小窗",
+          "href": "screenshots/detail-metadata-1100x700.png"
+        },
+        {
+          "label": "64位导入ID原生换行",
+          "href": "screenshots/detail-id-wrap-1440x900.png"
+        },
+        {
+          "label": "not-found故障实拍",
+          "href": "screenshots/detail-not-found.png"
+        },
+        {
+          "label": "首轮",
+          "href": "benchmarks/request-detail-gui.json"
+        },
+        {
+          "label": "复测2",
+          "href": "benchmarks/request-detail-run2-gui.json"
+        }
+      ],
+      "commit": "b38d9519314bdaf6978455ca28a66f1afe370b12",
+      "date": "2026-10-29T06:04:15+08:00",
+      "commit_subject": "feat(gpui): align request details with Studio",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 20,
+      "title": "原生模型选择弹窗",
+      "status": "recorded",
+      "summary": "依据官方MCP读取的 59:11 / 59:216，将旧内联模型选择提取为 ui/model_picker.rs。使用原生Kit Dialog、ListState虚拟列表、Checkbox、Input与Button，宽726px、高672px；最小窗高随视口收缩，39px条纹行独立滚动，标题、批量操作与取消/添加底栏固定。示例38个模型没有写死，所有计数来自实际候选、当前草稿和勾选集合。",
+      "highlights": [
+        "依据官方MCP读取的 59:11 / 59:216，将旧内联模型选择提取为 ui/model_picker.rs。使用原生Kit Dialog、ListState虚拟列表、Checkbox、Input与Button，宽726px、高672px；最小窗高随视口收缩，39px条纹行独立滚动，标题、批量操作与取消/添加底栏固定。示例38个模型没有写死，所有计数来自实际候选、当前草稿和勾选集合。",
+        "复用原有上游获取、大小写不敏感搜索、筛选内全选/反选、清空、仅看已勾选及既有模型禁用语义。批量操作结束后只发一次界面通知；保留候选索引选择，不引入逐行实体或后台计时器。模型表的Shift/Cmd/Ctrl多选处理器没有改变。",
+        "总量按其他已保存供应商与当前供应商草稿合计256个检查；超限时在弹窗内持续提示，拒绝修改模型。确认仍只更新草稿，显式保存后才提交核心；空选择Enter与禁用的添加按钮一致，保持弹窗。新列表保留Enter确认添加、Esc取消，通过原生焦点/键绑定实现方向键与Home/End/PageUp/PageDown滚动、Space切换当前行。"
+      ],
+      "limits": [
+        "Cancel/X/Esc分别在非空选择后退出而不应用；第一夹具关闭UI后Core health仍ready，再停止测试核心。最终进程收尾、默认页基准和清理结果见下。完整IME/无障碍、Windows/Intel Mac/HiDPI与整帧最终审计仍待后续，Goal保持active；下一小功能继续模型能力编辑弹窗59:279。",
+        "最初同机基线核心/UI/合计为13.88/75.27/89.14 MiB，核心/UI累计就绪45.924/796.346 ms，请求p50/p95为0.177/0.209 ms。当前核心启动标记比最初慢，但核心二进制未改，当前205.687ms处于后续既有复测约196–741ms范围；单次波动不作为改善或退化归因。累计就绪标记不等于首帧/可交互，专项仍未完成；未重复测试已通过且无新增疑点的基准。"
+      ],
+      "evidence": [
+        {
+          "label": "4096项末尾实拍",
+          "href": "screenshots/model-picker-4096-end-1440x900.png"
+        },
+        {
+          "label": "全选超限实拍",
+          "href": "screenshots/model-picker-limit-1440x900.png"
+        },
+        {
+          "label": "38项中文Studio大窗",
+          "href": "screenshots/model-picker-38-1440x900.png"
+        },
+        {
+          "label": "38项英文Mono小窗",
+          "href": "screenshots/model-picker-38-1100x700.png"
+        },
+        {
+          "label": "model-picker-gui.json",
+          "href": "benchmarks/model-picker-gui.json"
+        }
+      ],
+      "commit": "cd2bf75ccbcff7cfae905e7eb3d8c78fd391e5ff",
+      "date": "2026-10-29T06:55:31+08:00",
+      "commit_subject": "feat(gpui): add native Studio model picker",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 21,
+      "title": "原生模型能力编辑弹窗",
+      "status": "recorded",
+      "summary": "官方MCP读取 59:279 与独立弹窗 59:484 的高保真context/截图，将旧模型编辑与能力控件提取到 ui/model_editor.rs。原生Dialog宽728px、高800px、900px窗内top45px；小窗高度随视口收缩，固定62px标题区与确认/取消底栏，六组表单通过Kit ScrollableMask和独立ScrollHandle滚动。保留默认思考强度Select（设计静态图未呈现的原功能），通过同一思考标",
+      "highlights": [
+        "官方MCP读取 59:279 与独立弹窗 59:484 的高保真context/截图，将旧模型编辑与能力控件提取到 ui/model_editor.rs。原生Dialog宽728px、高800px、900px窗内top45px；小窗高度随视口收缩，固定62px标题区与确认/取消底栏，六组表单通过Kit ScrollableMask和独立ScrollHandle滚动。保留默认思考强度Select（设计静态图未呈现的原功能），通过同一思考标题行容纳而不删除该字段。",
+        "model_options.rs 继续拥有自动/手动状态、真实元数据来源、四个InputState、正整数/上下文解析与原验证器；六项Flag读写/依赖实现原样转移并离线逐字核对。默认强度事件、自动元数据的模型/地址/协议身份校验与只在自动模式应用的门控保留，没有新增轮询/重绘计时器。能力说明通过原生Popover完整保留图片附件/其他媒体透传/完整Chat URL说明，未知图片能力仍直接显示警告。",
+        "五个支持档位改为原生Kit toggle Button，使用真实pressed状态和原生Check向量，保留low/medium/high/xhigh/max集合排序与默认档位必须被支持的验证；这五档属于模型能力声明，不替代协议请求覆盖中的none/minimal等映射。模型名称/ID两列、自动识别卡、三列×两行能力、两列×两行限制均来自原Input/Select状态。"
+      ],
+      "limits": [
+        "最终UI/Core/fixture退出码均0并wait，关UI后Core health HTTP200再正常停止；性能/清理见下。Goal保持active，下一批继续模型/协议及同步确认弹窗；原40帧最终精细对照、完整IME/无障碍与Windows/Intel Mac/HiDPI仍未完成。",
+        "最初基线核心/UI/合计13.88/75.27/89.14 MiB，核心/UI累计就绪45.924/796.346 ms，请求p50/p95为0.177/0.209 ms。上轮模型选择为12.70/72.08/84.78 MiB及205.687/735.351 ms；本轮UI累计标记比上轮高337ms，其中核心累计标记高237ms，差629ms在后续已有约475–755ms范围。保留全部原始结果，不把单次RSS/启动/请求差异归因于代码或宣称改善；就绪标记仍不等于首帧/可交互，专项未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900中文Studio自动预设",
+          "href": "screenshots/model-editor-auto-1440x900.png"
+        },
+        {
+          "label": "1100×700英文Mono手动能力/档位",
+          "href": "screenshots/model-editor-manual-1100x700.png"
+        },
+        {
+          "label": "小窗四限制字段",
+          "href": "screenshots/model-editor-fields-1100x700.png"
+        },
+        {
+          "label": "无效context后当前字段/错误/固定底栏同屏",
+          "href": "screenshots/model-editor-error-1100x700.png"
+        },
+        {
+          "label": "model-editor-gui.json",
+          "href": "benchmarks/model-editor-gui.json"
+        }
+      ],
+      "commit": "ad1abd5cb4d5b4eed4c943b1be71074bd502553a",
+      "date": "2026-10-29T07:54:30+08:00",
+      "commit_subject": "feat(gpui): align model capability editor with Studio",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 22,
+      "title": "原生同步／取消同步确认",
+      "status": "recorded",
+      "summary": "官方MCP读取 60:27 / 60:232 与 68:350 / 68:555 的高保真context/截图，新增 ui/sync_dialog.rs 复用两种确认布局：526px宽、中文318px高，英文按原生多行文字自然增高；45px旋转徽标、21px标题、14/12px分层说明、提示卡、分隔及36px三按钮。按钮顺序按设计为取消、不重启操作、重启操作；完整保留X/Esc与原容器Enter不隐式执行操作的行为。",
+      "highlights": [
+        "官方MCP读取 60:27 / 60:232 与 68:350 / 68:555 的高保真context/截图，新增 ui/sync_dialog.rs 复用两种确认布局：526px宽、中文318px高，英文按原生多行文字自然增高；45px旋转徽标、21px标题、14/12px分层说明、提示卡、分隔及36px三按钮。按钮顺序按设计为取消、不重启操作、重启操作；完整保留X/Esc与原容器Enter不隐式执行操作的行为。",
+        "文案按真实业务保留：Sync先保存当前供应商草稿，再更新所有已保存供应商模型；Unsync不保存草稿、不清除供应商，只移除代理管理条目并恢复备份。源代码逐字核对，sync/unsync处理器及job顺序未改；原启动地址不一致确认仍保留旧分支，未将其冒充本批已施工。非macOS重启按钮继续禁用并有手动重开说明。",
+        "首屏真实快检已确认中文526×318。RotateCw被应用自有Assets回落为加号，已改为复用已嵌入的Figma studio/updates.svg，Info为原生向量；无Unicode占位、新运行时或依赖升级。旋转图标修复后的 e63b2a72 版fmt / 167 tests / 严格clippy（all-targets、-D warnings）/ release Passed，UI15,060,272 bytes / SHA256 e63b2a7260745b968ab6e6d4a87bd98314c34c2f24b783755c96de03862c9ac2；核心仍8,428,096 bytes / 25f24ad6。block0.1.6未来兼容提示保持既有基线。"
+      ],
+      "limits": [
+        "同机release默认Providers页 sync-confirm-gui.json：核心/UI/合计12.56/77.52/90.08 MiB，采样峰值135.20 MiB，托盘另计27.11 MiB；核心/UI累计就绪527.328/1197.547 ms，差670.219 ms；请求p50/p95为0.164/0.193 ms。1供应商64模型、200小请求及80×1MiB/4并发、本地mock，原始结果保留。最初基线13.88/75.27/89.14 MiB、45.924/796.346 ms、0.177/0.209 ms；单次波动不归因于代码/不宣称改善，就绪标记不等于首帧/可交互，专项仍待续。"
+      ],
+      "evidence": [
+        {
+          "label": "同步1440×900",
+          "href": "screenshots/sync-confirm-1440x900.png"
+        },
+        {
+          "label": "取消同步1440×900",
+          "href": "screenshots/unsync-confirm-1440x900.png"
+        },
+        {
+          "label": "同步1100×700",
+          "href": "screenshots/sync-confirm-1100x700.png"
+        },
+        {
+          "label": "取消同步1100×700",
+          "href": "screenshots/unsync-confirm-1100x700.png"
+        },
+        {
+          "label": "sync-confirm-gui.json",
+          "href": "benchmarks/sync-confirm-gui.json"
+        }
+      ],
+      "commit": "61b46adc1aafecc6555bf280bc722f324936c82a",
+      "date": "2026-10-29T09:13:06+08:00",
+      "commit_subject": "feat(gpui): align sync confirmations with Studio",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 23,
+      "title": "七功能工具栏独立置顶",
+      "status": "recorded",
+      "summary": "按用户新要求及官方MCP重新读取的最新 54:2 / 90:442：工具组top8、right32、宽300、高36，七个36×36原生按钮、20×20图标、8px间距。将app_controls从标题行移到窗口根的绝对定位容器；标题行保留原40px文字高度/间距，原生24px TitleBar与页面内容流继续原位。",
+      "highlights": [
+        "按用户新要求及官方MCP重新读取的最新 54:2 / 90:442：工具组top8、right32、宽300、高36，七个36×36原生按钮、20×20图标、8px间距。将app_controls从标题行移到窗口根的绝对定位容器；标题行保留原40px文字高度/间距，原生24px TitleBar与页面内容流继续原位。",
+        "app_controls含七项事件与occlude/mousedown/doubleclick拖动拦截逐字未改；同三个save/dismiss/quit动作监听与Proxy键盘上下文结构性移至窗口根，使置顶工具栏仍在同一应用动作作用域。Toolkit WindowStateLayers在整个application content之后画dialog layer，工具栏仍处于模态遮罩下。只改ui.rs布局及theme.rs中8px间距token，代理核心/持久化/功能实现未改。",
+        "首轮 71ae2d1d 已通过fmt / 167 tests / 严格clippy（all-targets、-D warnings）/ release；UI15,060,272 bytes / SHA256 71ae2d1d523bc1aaf94c1b65ec31712d399c6f50c9b1bcbc0612f8284a31d9c5，核心仍25f24ad6。block0.1.6未来兼容提示为既有基线。"
+      ],
+      "limits": [
+        "准备补拍最终版1100×700及复核模态时，CUA明确返回Mac locked；ioreg的IOConsoleLocked=No与其不一致，按实际界面工具阻碍停止，没有尝试解锁。最终小窗实拍仍待解锁补验；基线或首轮71ae图不代替最终049图。当前提交包含已通过编译和宽窗检查的布局，但第7项两尺寸截图验收尚未完成，Goal保持active。"
+      ],
+      "evidence": [
+        {
+          "label": "1440×900真实运行图",
+          "href": "screenshots/toolbar-top8-1440x900.png"
+        },
+        {
+          "label": "1100×700实拍",
+          "href": "screenshots/toolbar-top8-1100x700.png"
+        }
+      ],
+      "commit": "0313ea5139b1a5e21c189f93e06977b63d209283",
+      "date": "2026-10-29T10:09:18+08:00",
+      "commit_subject": "fix(gpui): anchor Studio toolbar to window top",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 24,
+      "title": "原生四协议选项弹窗",
+      "status": "recorded",
+      "summary": "官方MCP实际读取四帧 61:289 / 61:561 / 61:838 / 61:1111，对应620×724组件 61:42 / 61:103 / 61:169 / 61:231，分别检查高保真context与渲染图；Gemini一次传输失败后重试同node成功，没有凭其他协议推断。新增 ui/protocol_dialog.rs 统一620px原生Kit Dialog、协议标记、四个原生切换按钮、固定Apply/草稿说明底栏；内容",
+      "highlights": [
+        "官方MCP实际读取四帧 61:289 / 61:561 / 61:838 / 61:1111，对应620×724组件 61:42 / 61:103 / 61:169 / 61:231，分别检查高保真context与渲染图；Gemini一次传输失败后重试同node成功，没有凭其他协议推断。新增 ui/protocol_dialog.rs 统一620px原生Kit Dialog、协议标记、四个原生切换按钮、固定Apply/草稿说明底栏；内容按窗口高度独立滚动，1100×700下弹窗缩至636px高。继续使用现有Input/Select/ScrollHandle与内置X，没有引入新运行时、依赖或图片占位。",
+        "protocol_options.rs 保留真实输入实体和原load/read/parse/validate契约，差异字段仍为OpenAI认证、Responses含none的七项映射、Anthropic最大输出/固定版本及预算或adaptive、Gemini预算或level。原解析器与既有测试离线逐字核对未改，代理核心、配置格式与协议转发代码未改。新增modal内各协议原始输入缓存，切换tab可保留尚未通过校验的中间文本；打开弹窗从当前provider draft重新加载。Apply验证所选协议/settings后只更新provider draft，并同步外层协议Select；显式Save仍负责写核心。",
+        "错误改为protocol_error局部显示，关闭/重新打开/成功应用清除；原验证器拒绝的内容不应用、不关闭模态。原生Input/Select的焦点监听将当前字段滚入；视口或错误底栏高度改变时在布局后的下一帧只校正一次，复用已核对的GPUI prepaint顺序，不引入timer或持续重绘。"
+      ],
+      "limits": [
+        "首轮新版p95 0.451ms、大请求0.150s较旧版0.215ms/0.099s偏高，启动标记差1024.708ms也偏高；不据核心二进制未改直接判定通过。GUI夹具清理完成后复测，旧/新p50 0.169/0.168、p95 0.193/0.203ms，大请求0.089/0.087s，延迟升高未持续，UI标记差611.607/794.535ms。两版复测RSS都低于首轮，保留现象但不作归因或宣称改善；这些标记不是首帧/可交互时延，专项仍待全局验收。现有四轮未证实持续退化，没有改动基准参数或放宽门槛。",
+        "对照最初同机基线Core/UI/合计13.88/75.27/89.14 MiB、核心/累计UI标记45.924/796.346ms、请求p50/p95 0.177/0.209ms，仅作范围参考。本批可比证据以上述049/98fb同口径交错四轮为准。完整IME/无障碍、Windows/Intel Mac/HiDPI与40帧最终审计仍未完成，Goal保持active。"
+      ],
+      "evidence": [
+        {
+          "label": "Chat大窗",
+          "href": "screenshots/protocol-chat-1440x900.png"
+        },
+        {
+          "label": "小窗",
+          "href": "screenshots/protocol-chat-1100x700.png"
+        },
+        {
+          "label": "Responses大窗",
+          "href": "screenshots/protocol-responses-1440x900.png"
+        },
+        {
+          "label": "小窗",
+          "href": "screenshots/protocol-responses-1100x700.png"
+        },
+        {
+          "label": "Anthropic大窗",
+          "href": "screenshots/protocol-anthropic-1440x900.png"
+        },
+        {
+          "label": "小窗",
+          "href": "screenshots/protocol-anthropic-1100x700.png"
+        },
+        {
+          "label": "Gemini大窗",
+          "href": "screenshots/protocol-gemini-1440x900.png"
+        },
+        {
+          "label": "小窗",
+          "href": "screenshots/protocol-gemini-1100x700.png"
+        }
+      ],
+      "commit": "e42d50931b51908a398dd4f54c8789ff79407f59",
+      "date": "2026-10-29T11:54:45+08:00",
+      "commit_subject": "feat(gpui): align four protocol editors with Studio",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 25,
+      "title": "供应商删除确认",
+      "status": "recorded",
+      "summary": "官方MCP高保真context及渲染已读取 78:364 / 78:605 / 78:843 / 78:1080，另补读 80:864：新增/编辑/复制为原位草稿，继续保留待办；本批对齐删除确认 78:1310 / 80:1093。原生532×322名义尺寸、46px危险徽标、目标名称/已保存模型数、不可直接撤销与再次同步说明、分隔及38px按钮。徽标“!”是Figma原生文本节点，不是替代SVG的近似Unicode图标。",
+      "highlights": [
+        "官方MCP高保真context及渲染已读取 78:364 / 78:605 / 78:843 / 78:1080，另补读 80:864：新增/编辑/复制为原位草稿，继续保留待办；本批对齐删除确认 78:1310 / 80:1093。原生532×322名义尺寸、46px危险徽标、目标名称/已保存模型数、不可直接撤销与再次同步说明、分隔及38px按钮。徽标“!”是Figma原生文本节点，不是替代SVG的近似Unicode图标。",
+        "ui/provider_delete.rs 打开时只捕获UI草稿，缓存同一目标ID、已保存名称/模型数及dirty状态；明确确认才沿用原delete命令，不自动save/sync/restart。Cancel/X/Esc清除本地确认状态并保留草稿，原busy/Runtime失败反馈及配置重载保持。没有修改核心、管理API或配置格式。",
+        "实拍发现Kit自定义按钮正常底色被混为20%，已显式设置实心危险底色并补active；disabled仍用原生状态。对照两张删除帧的scrim rgba(18,23,43,.49)，统一原生遮罩token由原.38收敛为.49；协议帧 61:289 是近似的rgba(19,23,46,.48)。采用共享.49保持弹窗遮罩一致，不增加额外图层、动画或事件处理。"
+      ],
+      "limits": [
+        "最终代码通过fmt、167项测试、严格clippy（all-targets、-D warnings）及Release构建41.64s。UI 15,093,376 bytes，SHA256 4d834b44ff878932abfb30a319ec599f74eb05d72bee7492a5305755409dfdfc；核心仍8,428,096 bytes、SHA256 25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5。Intel cargo check --manifest-path gpui/Cargo.toml --target x86_64-appl",
+        "Goal保持active。供应商新增/编辑/复制草稿及取消、40帧最终精细审计、完整IME/无障碍和Windows/Intel实际运行仍待后续；本批不把这些缺项标为完成。"
+      ],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/delete-provider-build.json"
+        },
+        {
+          "label": "脱敏GUI记录",
+          "href": "benchmarks/delete-provider-gui-validation.json"
+        },
+        {
+          "label": "1440×900中文Studio",
+          "href": "screenshots/delete-provider-1440x900.png"
+        },
+        {
+          "label": "1100×700英文Mono",
+          "href": "screenshots/delete-provider-1100x700.png"
+        },
+        {
+          "label": "合法长名小窗",
+          "href": "screenshots/delete-provider-long-1100x700.png"
+        },
+        {
+          "label": "Headless API保护回归",
+          "href": "benchmarks/delete-provider-api.json"
+        },
+        {
+          "label": "旧98fb",
+          "href": "benchmarks/delete-provider-previous-gui.json"
+        },
+        {
+          "label": "新4d83",
+          "href": "benchmarks/delete-provider-gui.json"
+        }
+      ],
+      "commit": "c7b501586a4279cdc6450e1684b7a59ae8d2da1a",
+      "date": "2026-10-29T13:25:47+08:00",
+      "commit_subject": "feat(gpui): align provider deletion confirmation with Studio",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 26,
+      "title": "供应商资料原位编辑与取消",
+      "status": "recorded",
+      "summary": "按已读取的高保真 78:605 接入 ui/provider_edit.rs。原“编辑资料”仅聚焦名称；现在进入编辑时缓存当前供应商的完整草稿及模型选择，按钮变为“取消修改”。取消只恢复进入本次编辑前的本地值，不发送save/delete/sync；进入前已有的未保存名称、协议、模型及能力不会被误当成已保存值清掉。",
+      "highlights": [
+        "按已读取的高保真 78:605 接入 ui/provider_edit.rs。原“编辑资料”仅聚焦名称；现在进入编辑时缓存当前供应商的完整草稿及模型选择，按钮变为“取消修改”。取消只恢复进入本次编辑前的本地值，不发送save/delete/sync；进入前已有的未保存名称、协议、模型及能力不会被误当成已保存值清掉。",
+        "快照按供应商ID独立保留，A/B切换互不覆盖。复用现有成功/committed回复才重载配置的门禁；成功save/test/install/duplicate结束对应编辑，普通失败继续保留草稿及编辑模式，其他供应商快照保持。刷新后消失的供应商会清除快照，取消不能复活已删除条目。快照仅在当前窗口会话内，不增加或改变 gpui-drafts.json 格式；关闭/重开沿用原历史草稿恢复逻辑。",
+        "Figma的warning #b57a35 / tint #fff3e4写入语义token；宽窗补142×26待保存提示，小于1300px时保留右侧同义状态，避免拥挤。英文Cancel changes有144px按钮宽度、窄窗收紧间距，名称仍可省略且保留完整可访问名称。右状态徽标用原生6px圆形与5px间距实现状态点，不用Unicode替代图标。复用原SVG/原生Button；非Tab停靠作用域给明确聚焦的按钮Enter/Space动作，不改变Name输入Return。"
+      ],
+      "limits": [
+        "合计RSS中位数86.28→86.54MiB（+0.26MiB，约+0.30%）；累计UI记录标记中位数925.818→950.446ms，轮间方向不一致。该短轮口径未见明显持续退化，不宣称提升。就绪标记不是首帧/可交互时间，默认页结果不代表64个同时编辑快照、长期负载或跨平台表现；共享页可能双计、托盘另计于JSON。",
+        "Goal保持active。新增/复制独立草稿与取消仍待施工；完整40帧精细审计、IME/无障碍及Windows/Intel实际运行继续保留待办。1100小窗中心列滚动取回Test/Save按钮及点击保存本轮未实测（已验证Cmd+S），不将其标Passed。"
+      ],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/provider-edit-build.json"
+        },
+        {
+          "label": "分版本GUI证据",
+          "href": "benchmarks/provider-edit-gui-validation.json"
+        },
+        {
+          "label": "1440×900中文Studio编辑态",
+          "href": "screenshots/provider-edit-1440x900.png"
+        },
+        {
+          "label": "1100×700英文Mono编辑态",
+          "href": "screenshots/provider-edit-1100x700.png"
+        },
+        {
+          "label": "英文小窗已保存态",
+          "href": "screenshots/provider-edit-saved-1100x700.png"
+        },
+        {
+          "label": "旧4d83",
+          "href": "benchmarks/provider-edit-previous-gui.json"
+        },
+        {
+          "label": "新403",
+          "href": "benchmarks/provider-edit-gui.json"
+        },
+        {
+          "label": "旧4d83复测",
+          "href": "benchmarks/provider-edit-previous-run2-gui.json"
+        }
+      ],
+      "commit": "c7c6f9f73d3148b5ab722db88b952b40b34db1bf",
+      "date": "2026-10-29T14:11:54+08:00",
+      "commit_subject": "feat(gpui): support cancelling provider profile edits",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 27,
+      "title": "新增与复制的独立草稿",
+      "status": "recorded",
+      "summary": "依据已读取的 78:364 / 78:843，New先建立空本地表单，Copy先沿用既有dirty-source保存边界，再建立独立副本。新增目标只在明确Save/Test/Sync时创建，Cancel本身不发save/delete，不回滚此前已经成功的来源保存。只有一个待保存新增/复制草稿；切换已保存供应商后Add可返回该草稿，避免覆盖。侧栏保存数量与运行中心保持Core实际口径，不用临时草稿伪造已保存记录。",
+      "highlights": [
+        "依据已读取的 78:364 / 78:843，New先建立空本地表单，Copy先沿用既有dirty-source保存边界，再建立独立副本。新增目标只在明确Save/Test/Sync时创建，Cancel本身不发save/delete，不回滚此前已经成功的来源保存。只有一个待保存新增/复制草稿；切换已保存供应商后Add可返回该草稿，避免覆盖。侧栏保存数量与运行中心保持Core实际口径，不用临时草稿伪造已保存记录。",
+        "gpui-drafts.json增加可选、向后兼容的UI-private pending字段；关闭重开恢复待保存表单。核心配置schema、核心管理API及代理代码不变。前端内部 ui_create_provider 仅由GPUI worker解释，最终仍调用原add/duplicate/save。先用现有Config校验完整结果及duplicate中间容量，再比较前后ID集合，只有恰好一个新增目标才绑定；不以最后一行猜测目标。保留Core duplicate的全新route IDs/aliases、模型能力及混合legacy effort。",
+        "已知create成功而save失败时保留真实目标ID，重试只save该目标；连接拒绝等确认未分派的失败允许重试。超时/丢失回复或多个新增目标视为结果未确认，保留草稿、展示实际列表且不自动重复create或delete。Cancel也不自动删除已经创建的目标。普通供应商Save成功后Test失败，会按真实已提交状态重载并单独提示后续测试失败，继续保留原“Test先保存”的行为。"
+      ],
+      "limits": [
+        "UI记录标记不是首帧或可交互时间；RSS共享页可能双计，tray另列原JSON。默认页结果不代表多个草稿、长时间占用、网络上游或跨平台。完整40帧/键盘/IME/无障碍与Windows/Intel实际运行仍待后续，Goal保持active。"
+      ],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/provider-create-build.json"
+        },
+        {
+          "label": "真实Core合约与19项discovery parity",
+          "href": "benchmarks/provider-create-core-contract.json"
+        },
+        {
+          "label": "新增宽窗",
+          "href": "screenshots/provider-create-new-1440x900.png"
+        },
+        {
+          "label": "新增小窗",
+          "href": "screenshots/provider-create-new-1100x700.png"
+        },
+        {
+          "label": "复制宽窗",
+          "href": "screenshots/provider-create-copy-1440x900.png"
+        },
+        {
+          "label": "复制小窗",
+          "href": "screenshots/provider-create-copy-1100x700.png"
+        },
+        {
+          "label": "小窗滚动后实际点击保存态",
+          "href": "screenshots/provider-create-actions-1100x700.png"
+        },
+        {
+          "label": "新增1440",
+          "href": "screenshots/provider-create-final-new-1440x900.png"
+        }
+      ],
+      "commit": "6861864fe349b9e860050bdd48ebaf234f5a19b9",
+      "date": "2026-10-29T16:22:18+08:00",
+      "commit_subject": "feat(gpui): keep new and copied providers as cancellable drafts",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 28,
+      "title": "新增与复制保存完成状态",
+      "status": "recorded",
+      "summary": "按本会话此前已读取的Figma高保真 79:885 / 79:1102，供应商摘要宽窗补142×26绿色完成徽标；普通已保存配置为“已保存”，本窗口内真实创建并保存的副本为“已保存副本”。1100等窄窗维持单一状态徽标，副本完成显示Saved copy，宽窗右侧仍为通用Saved。继承已有语义success/tint、原生Label/Div，不添加动画或周期重绘。",
+      "highlights": [
+        "按本会话此前已读取的Figma高保真 79:885 / 79:1102，供应商摘要宽窗补142×26绿色完成徽标；普通已保存配置为“已保存”，本窗口内真实创建并保存的副本为“已保存副本”。1100等窄窗维持单一状态徽标，副本完成显示Saved copy，宽窗右侧仍为通用Saved。继承已有语义success/tint、原生Label/Div，不添加动画或周期重绘。",
+        "saved_copies仅在pending存在、来源已知且Outcome.saved为true时记录生成后的真实ID；create失败或create成功/save失败不记成功，后续已知目标保存成功才记录。来源不从名称猜测，不写Core配置或private drafts。切换A/B仍按各自真实ID，删除/配置刷新时移除已不存在条目；关闭重开回通用Saved，不宣称持久化了复制来源。",
+        "busy、pending、dirty、editing优先覆盖绿色提示：宽窗显示Working/未保存草稿/复制草稿/修改待保存/正在编辑，窄窗对应真实状态。取消编辑恢复旧草稿后再按是否真的dirty判断。原save/test/install与Core管理API及draft格式均未变；Test先保存成功、后续测试失败时允许显示已保存，同时原错误反馈继续保留，不把连接测试失败伪装为未提交。"
+      ],
+      "limits": [
+        "合计空闲RSS中位88.840→88.875MiB（+0.035MiB，约+0.04%）；累计UI记录中位1032.779→733.413ms，峰值132.570→132.605MiB。当前短轮未见持续退化，不宣称提升；标记不是首帧/可交互时间，默认页不代表多个复制收据、长期运行或跨平台表现，共享页可能双计、tray另计。",
+        "Goal保持active。下一批继续供应商满载/搜索与菜单状态的逐帧对齐；完整40帧精细审计、IME/无障碍及Windows/Intel实际运行仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/provider-saved-build.json"
+        },
+        {
+          "label": "新增1440",
+          "href": "screenshots/provider-saved-new-1440x900.png"
+        },
+        {
+          "label": "新增1100",
+          "href": "screenshots/provider-saved-new-1100x700.png"
+        },
+        {
+          "label": "复制1440",
+          "href": "screenshots/provider-saved-copy-1440x900.png"
+        },
+        {
+          "label": "复制1100",
+          "href": "screenshots/provider-saved-copy-1100x700.png"
+        },
+        {
+          "label": "GUI证据",
+          "href": "benchmarks/provider-saved-gui-validation.json"
+        },
+        {
+          "label": "旧eda8",
+          "href": "benchmarks/provider-saved-previous-gui.json"
+        },
+        {
+          "label": "新c455",
+          "href": "benchmarks/provider-saved-gui.json"
+        }
+      ],
+      "commit": "1ecb350feddbe35278660375544ccb2898836b11",
+      "date": "2026-10-29T16:32:59+08:00",
+      "commit_subject": "feat(gpui): show confirmed provider save and copy states",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 29,
+      "title": "满载供应商侧栏与选中行可见性",
+      "status": "recorded",
+      "summary": "前序小窗实测新保存的副本可能位于固定CRUD下方，需要手动滚动取回。本批沿用已读满载帧 78:1325 与搜索状态，保持原生独立滚动、固定操作栏及真实计数，给provider-list增加会话内原生ScrollHandle。",
+      "highlights": [
+        "前序小窗实测新保存的副本可能位于固定CRUD下方，需要手动滚动取回。本批沿用已读满载帧 78:1325 与搜索状态，保持原生独立滚动、固定操作栏及真实计数，给provider-list增加会话内原生ScrollHandle。",
+        "只在选中真实rail ID、可见ID列表、viewport尺寸、展开状态或页面变化时，在下一frame布局稳定后调用原生scroll_to_item最小取回目标；较新的筛选/选择会使排队任务失效。临时New/Copy继续指向return_to来源，不新增伪保存行。没有timer/轮询重绘，手动滚动offset和后台poll不属于layout identity，不会持续拉回所选行。",
+        "搜索继续只按可见名称、不碰key/URL或内部ID；搜索隐藏当前目标时不滚动到其他行、不改选择、不清查询；清除搜索后才取回当前目标。窗口移动但viewport不变不会触发重定位。折叠保持native offset，展开后只做一次当前行可见性校正。"
+      ],
+      "limits": [
+        "Goal保持active。下一批修正上述通用/新建/复制完成header的可见范围，再继续菜单/完整40帧精细审计；IME/无障碍与Windows/Intel实际运行仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/provider-rail-build.json"
+        },
+        {
+          "label": "20场景宽窗",
+          "href": "screenshots/provider-rail-20-1440x900.png"
+        },
+        {
+          "label": "20场景小窗",
+          "href": "screenshots/provider-rail-20-1100x700.png"
+        },
+        {
+          "label": "64宽窗",
+          "href": "screenshots/provider-rail-64-1440x900.png"
+        },
+        {
+          "label": "64小窗",
+          "href": "screenshots/provider-rail-64-1100x700.png"
+        },
+        {
+          "label": "GUI证据",
+          "href": "benchmarks/provider-rail-gui-validation.json"
+        },
+        {
+          "label": "旧c455",
+          "href": "benchmarks/provider-rail-previous-gui.json"
+        },
+        {
+          "label": "新841c",
+          "href": "benchmarks/provider-rail-gui.json"
+        }
+      ],
+      "commit": "4e46d58a649cf00613d6963dbeef374ba835638f",
+      "date": "2026-10-29T16:50:12+08:00",
+      "commit_subject": "fix(gpui): keep selected providers visible after layout changes",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 30,
+      "title": "完成徽标只用于新增/复制上下文",
+      "status": "recorded",
+      "summary": "根据上批高保真审计并再次读取最新54:2：通用header只有模型数、编辑入口和右侧Saved；79:885的79:1090、79:1102的79:1331才有142×26左侧完成徽标。本批收窄小功能28的通用左Saved，不改变既有原生文字、颜色token、编辑图标/调用几何或右状态。没有新增静态资产或临时Figma URL。",
+      "highlights": [
+        "根据上批高保真审计并再次读取最新54:2：通用header只有模型数、编辑入口和右侧Saved；79:885的79:1090、79:1102的79:1331才有142×26左侧完成徽标。本批收窄小功能28的通用左Saved，不改变既有原生文字、颜色token、编辑图标/调用几何或右状态。没有新增静态资产或临时Figma URL。",
+        "会话内保存来源由只记录Copy的集合改为真实ID→New/Copy枚举；仅Outcome.saved才记录，部分create未完成save时不记录。普通已有供应商Save不产生创建完成上下文，不根据名称猜测。dirty/edit/busy仍优先显示真实状态；新建/副本各自完成提示、切换恢复及取消语义保持。配置刷新清除已不存在ID，关闭重开丢弃来源回普通Saved，不写Core或private drafts。",
+        "fmt、174项测试、严格clippy all-targets/-D warnings、Intel目标check3.78s、Release47.43s Passed。UI仍15,196,672 bytes，SHA256 ce2ba5dcee93a10b0e79fb7d07a4fd440898a5ebcb51cfcc1ee320aea124afcf；核心仍8,428,096 bytes/25f SHA，未改代理核心、管理API或配置格式。既存block0.1.6未来兼容提示保持，Intel仅类型检查；小功能27两项真实Core ignored专项本批未重复。编译证据。"
+      ],
+      "limits": [
+        "核心启动也有462/207ms等波动，累计UI标记含核心启动，不能都归于UI。记录标记不是首帧/可交互，RSS共享页可能双计、tray另列；默认页面结果不代表64个创建收据/长期负载/跨平台。没有放宽标准、删除异常轮或修改Core/benchmark实现。",
+        "本轮剩余界面：12/40未逐帧验收；27部分验收、1复用待核对。Goal继续active，下一批推进上游协议/预设搜索/思考菜单/Key显隐状态，完整40帧视觉与键盘、IME、无障碍及Windows/Intel实际运行仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/provider-badge-scope-build.json"
+        },
+        {
+          "label": "通用宽窗",
+          "href": "screenshots/provider-badge-scope-generic-1440x900.png"
+        },
+        {
+          "label": "通用小窗",
+          "href": "screenshots/provider-badge-scope-generic-1100x700.png"
+        },
+        {
+          "label": "新增宽窗",
+          "href": "screenshots/provider-badge-scope-new-1440x900.png"
+        },
+        {
+          "label": "新增小窗",
+          "href": "screenshots/provider-badge-scope-new-1100x700.png"
+        },
+        {
+          "label": "复制宽窗",
+          "href": "screenshots/provider-badge-scope-copy-1440x900.png"
+        },
+        {
+          "label": "复制小窗",
+          "href": "screenshots/provider-badge-scope-copy-1100x700.png"
+        },
+        {
+          "label": "GUI证据",
+          "href": "benchmarks/provider-badge-scope-gui-validation.json"
+        }
+      ],
+      "commit": "71d18bc3d5043d8909ea91ce47ba700d950bd943",
+      "date": "2026-10-29T17:08:20+08:00",
+      "commit_subject": "fix(gpui): scope completion badges to newly created providers",
+      "source": "baseline_and_qa.md"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-10-29T17:54:08+08:00",
+      "note": "创建UI改造进度时间线，纳入当前40张画板与30个已提交分项。",
+      "pending": 12,
+      "partial": 27,
+      "reused": 1
+    }
+  ],
+  "verification": [
+    {
+      "title": "40 帧最终视觉复核",
+      "detail": "当前 27 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+    },
+    {
+      "title": "键盘、IME 与无障碍",
+      "detail": "已完成若干控件真实键盘路径；完整 Tab 顺序、中文输入法及辅助功能仍需统一复核。"
+    },
+    {
+      "title": "平台与生命周期",
+      "detail": "macOS arm64 实机持续验证；Intel 目前只有类型检查，Windows、HiDPI 与完整托盘生命周期仍按矩阵保留待验。"
+    },
+    {
+      "title": "性能与证据口径",
+      "detail": "保留真实新旧版本对比、核心/UI/合计 RSS、启动记录和请求 p50/p95。UI 就绪记录不是首帧或可交互时间。"
+    }
+  ],
+  "sources": [
+    {
+      "label": "40 帧映射",
+      "href": "figma_node_map.md"
+    },
+    {
+      "label": "实施与 QA 原文",
+      "href": "baseline_and_qa.md"
+    },
+    {
+      "label": "功能保护矩阵",
+      "href": "feature_regression_matrix.md"
+    }
+  ]
+}
+</script>
+<script>
+'use strict';
+const data=JSON.parse(document.getElementById('progress-data').textContent);
+const $=id=>document.getElementById(id);
+const names={pending:'待逐帧验收',partial:'部分验收',reused:'复用待核对',verified:'已验收',developing:'开发中',validating:'分项验收中',planned:'待推进',recorded:'已提交分项'};
+function node(tag,attrs={},children=[]){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else e.setAttribute(k,String(v))}for(const c of [children].flat(Infinity)){if(c!==null&&c!==undefined)e.append(c instanceof Node?c:document.createTextNode(String(c)))}return e}
+function link(label,href){if(!/^(?:benchmarks|screenshots)\/[A-Za-z0-9_.-]+$/.test(href)&&!/^https:\/\/(?:github\.com|www\.figma\.com)\//.test(href)&&!['baseline_and_qa.md','figma_node_map.md','feature_regression_matrix.md'].includes(href))return node('span',{},label);return node('a',{href,target:'_blank',rel:'noopener'},label+' ↗')}
+function pill(status,label){return node('span',{class:'pill '+(status==='recorded'||status==='verified'?'done':status==='developing'||status==='validating'||status==='partial'?'active':'pending')},label||names[status]||status)}
+function date(value){return value?new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',dateStyle:'medium',timeStyle:'short',hour12:false}).format(new Date(value)):'待记录'}
+function themeButton(){const dark=document.documentElement.dataset.theme==='dark';$('theme-toggle').textContent=dark?'切换亮色':'切换深色';$('theme-toggle').setAttribute('aria-label',dark?'切换为亮色主题':'切换为深色主题')}
+$('theme-toggle').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('workbuddy.studio.timeline.theme',t)}catch(_){}themeButton()};themeButton();
+$('phase').textContent=data.phase;$('updated').textContent=date(data.updated_at);
+for(const[value,label,small]of [[data.counts.pending+'/'+data.total_frames,'待逐帧验收','剩余独立画板对照'],[data.counts.partial,'部分验收','已有阶段证据，仍需复核'],[data.counts.reused,'复用待核对','组件已实现，整帧尚未核对'],[data.recorded_tasks,'已提交分项','任务数不等于界面完成率']])$('stats').append(node('div',{class:'stat'},[node('span',{},label),node('strong',{},value),node('small',{},small)]));
+const current=data.current_task||{};$('current-stage').textContent='UI-'+current.id+' · '+(names[current.status]||'推进中');$('current-task').append(node('div',{},[node('strong',{},'UI-'+current.id+' · '+current.title),node('p',{},current.description||'按已记录任务继续推进')]),pill(current.status));
+$('baseline').textContent='分支 '+data.branch+' · 最近界面代码基线 '+data.code_head.slice(0,7)+' · 最近已提交 UI-'+data.latest_task.id+' '+data.latest_task.title;
+for(const status of ['verified','partial','reused','pending']){const count=data.counts[status]||0;if(count)$('coverage').append(node('span',{class:status,style:'flex:'+count,title:names[status]+' '+count}));if(count)$('coverage-labels').append(node('span',{},[node('b',{},count+' '),names[status]]))}
+$('coverage').setAttribute('aria-label',data.frames.length+'张画板：'+['verified','partial','reused','pending'].map(k=>(data.counts[k]||0)+'张'+names[k]).join('，'));
+let frameFilter='pending',taskFilter='all';
+function filters(target,items,currentValue,change){$(target).replaceChildren(...items.map(([id,label])=>{const b=node('button',{type:'button',class:'filter','aria-pressed':id===currentValue,'data-value':id},label);b.onclick=()=>change(id);return b}))}
+function renderFrames(){filters('frame-filters',[['all','全部 '+data.total_frames],['pending','待逐帧 '+data.counts.pending],['partial','部分 '+data.counts.partial],['reused','复用 '+data.counts.reused],...((data.counts.verified||0)?[['verified','已验收 '+data.counts.verified]]:[])],frameFilter,v=>{frameFilter=v;renderFrames()});const query=$('frame-search').value.trim().toLowerCase();const rows=data.frames.filter(f=>(frameFilter==='all'||f.status===frameFilter)&&[f.node,f.title,f.detail,f.source].join(' ').toLowerCase().includes(query));$('frame-result').textContent='显示 '+rows.length+' / '+data.total_frames+' 张画板；剩余口径：'+data.counts.pending+' 张尚未逐帧验收。';$('frame-list').replaceChildren(...rows.map(f=>node('details',{class:'frame'},[node('summary',{},[node('div',{class:'frame-title'},[node('strong',{},f.title),pill(f.status)]),node('p',{class:'frame-meta mono'},'FIGMA '+f.node)]),node('div',{class:'frame-body'},[node('p',{},f.detail),node('p',{},node('code',{},'Rust · '+f.source)),link('打开 Figma 画板',f.url)])])));if(!rows.length)$('frame-list').append(node('div',{class:'empty'},'没有匹配的画板。'))}
+$('frame-search').oninput=renderFrames;renderFrames();
+const timeline=[...data.timeline];if(current.id&&!timeline.some(t=>t.id===current.id))timeline.push({id:current.id,title:current.title,status:current.status,summary:current.description,highlights:[],limits:['最终候选截图与性能尚未完成，不能标为已提交或验收通过。'],evidence:[]});
+else{const t=timeline.find(t=>t.id===current.id);if(t&&!t.commit){t.status=current.status;t.summary=current.description||t.summary}}
+function renderTasks(){filters('task-filters',[['all','全部'],['recorded','已提交'],['current','当前推进']],taskFilter,v=>{taskFilter=v;renderTasks()});const query=$('task-search').value.trim().toLowerCase();const rows=timeline.filter(t=>(taskFilter==='all'||taskFilter==='recorded'&&t.status==='recorded'||taskFilter==='current'&&t.id===current.id)&&[t.id,t.title,t.summary,...t.highlights,...t.limits].join(' ').toLowerCase().includes(query)).sort((a,b)=>b.id-a.id);$('task-result').textContent='显示 '+rows.length+' / '+timeline.length+' 项记录';$('task-total').textContent=data.recorded_tasks+' 个已提交分项 · 当前 UI-'+current.id;$('timeline').replaceChildren(...rows.map(t=>{const d=node('details',{class:'phase',id:'task-'+t.id,'data-status':t.status==='recorded'?'done':t.id===current.id?'active':'pending'});if(t.id===current.id)d.open=true;d.append(node('summary',{},[node('div',{class:'phase-heading'},[node('span',{class:'chevron','aria-hidden':true},'›'),node('span',{class:'phase-code mono'},'UI-'+String(t.id).padStart(2,'0')),node('h3',{},t.title),pill(t.status)]),node('p',{class:'phase-summary'},t.summary)]));const body=node('div',{class:'phase-body'},[node('p',{class:'phase-date mono'},t.date?date(t.date)+' · 对应记录提交 '+t.commit.slice(0,7):'当前任务 · 尚未形成最终提交'),node('ul',{},t.highlights.map(x=>node('li',{},x)))]);if(t.limits.length)body.append(node('div',{class:'limits'},t.limits.map(x=>node('p',{},x))));const evidence=node('div',{class:'phase-links'},t.evidence.map(e=>link(e.label,e.href)));if(t.commit)evidence.append(link(t.commit.slice(0,7)+' · Git提交','https://github.com/gloryhui/workbuddy-proxy/commit/'+t.commit));evidence.append(link('QA原文',t.source||'baseline_and_qa.md'));body.append(evidence);d.append(body);return d}));if(!rows.length)$('timeline').append(node('div',{class:'empty'},'没有匹配的施工记录。'))}
+$('task-search').oninput=renderTasks;renderTasks();$('expand-all').onclick=()=>{const details=[...$('timeline').querySelectorAll('details')];const open=details.some(d=>!d.open);details.forEach(d=>d.open=open);$('expand-all').textContent=open?'收起明细':'展开明细'};
+for(const item of data.verification)$('carryovers').append(node('div',{class:'carryover'},[pill('pending','仍需复核'),node('strong',{},item.title),node('p',{},item.detail)]));
+for(const item of [...data.history].reverse())$('history').append(node('article',{class:'history-entry'},[node('time',{dateTime:item.date},date(item.date)),node('h3',{},item.note),node('p',{},'剩余 '+item.pending+' / 40 未逐帧验收 · '+item.partial+' 部分验收 · '+item.reused+' 复用待核对')]));
+const images=data.latest_task.evidence.filter(e=>/\.(png|jpg|jpeg)$/.test(e.href)).slice(0,3);$('gallery-task').textContent='UI-'+data.latest_task.id+' · '+data.latest_task.commit.slice(0,7);for(const item of images){const a=link('',item.href);a.replaceChildren(node('img',{src:item.href,alt:item.label,loading:'lazy'}),node('span',{},item.label));$('gallery').append(a)}if(!images.length)$('latest-evidence').hidden=true;
+</script>
+</body>
+</html>

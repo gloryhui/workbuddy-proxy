@@ -1,0 +1,36 @@
+{
+  "scope": "Studio V2 progress timeline HTML; static inspection and browser-open attempt",
+  "attempts": [
+    {
+      "surface": "in-app browser",
+      "result": "unavailable",
+      "message": "Browser is not available: iab"
+    },
+    {
+      "surface": "Chrome new tab using file URL",
+      "result": "blocked",
+      "message": "The requested URL protocol is not allowed. Allowed protocols: \"http:\", \"https:\". The agent must not attempt to achieve the same outcome via workaround, indirect execution, raw CDP or browser commands, alternate browser surfaces, or policy circumvention."
+    }
+  ],
+  "static_checks": {
+    "embedded_json_parse": "passed",
+    "frame_count": 40,
+    "frame_status_counts": {
+      "pending": 12,
+      "partial": 27,
+      "reused": 1
+    },
+    "declared_counts_match": true,
+    "relative_evidence_files_checked": 149,
+    "missing_relative_evidence_files": 0,
+    "css_and_js": "Source inspection found responsive 760px breakpoint, theme variables, default pending filter, search and expand handlers. This does not establish rendered behavior."
+  },
+  "browser_render": "not verified",
+  "browser_interaction": "not verified",
+  "desktop_and_mobile_layout": "not verified",
+  "theme_toggle": "not verified",
+  "search_filter_and_expand": "not verified",
+  "evidence_links_open": "not verified",
+  "screenshots": "not captured",
+  "note": "No localhost server, alternative browser surface, or renderer was used after the policy rejection."
+}
