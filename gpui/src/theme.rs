@@ -112,6 +112,7 @@ pub mod line_height {
 /// Shared spacing values. These are visual gaps/padding, not business values.
 pub mod space {
     pub const PAGE_TOP: f32 = 32.;
+    pub const SYSTEM_TOOLBAR_TOP: f32 = 8.;
     pub const PAGE_X: f32 = 32.;
     pub const PAGE_BOTTOM: f32 = 16.;
     pub const SIDEBAR_X: f32 = 18.;

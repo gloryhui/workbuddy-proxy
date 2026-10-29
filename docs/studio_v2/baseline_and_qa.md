@@ -416,3 +416,17 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 主代理逐张查看最终1fc无guard真实截图：[同步1440×900](screenshots/sync-confirm-1440x900.png)、[取消同步1440×900](screenshots/unsync-confirm-1440x900.png)、[同步1100×700](screenshots/sync-confirm-1100x700.png)、[取消同步1100×700](screenshots/unsync-confirm-1100x700.png)，正文/提示/旋转SVG/三按钮均完整。中文Studio top274，英文Mono Sync约166/Unsync174；2合成供应商/2模型/0请求。最终重新实拍保留原字节：宽窗2880×1800不裁，小窗2200×1402裁底2物理像素至2200×1400，各用一次Pillow LANCZOS等比例2:1缩为交付PNG，没有沿用中途sips拉伸图。无guard重拍未点击重启。
 - 同机release默认Providers页 [sync-confirm-gui.json](benchmarks/sync-confirm-gui.json)：核心/UI/合计12.56/77.52/90.08 MiB，采样峰值135.20 MiB，托盘另计27.11 MiB；核心/UI累计就绪527.328/1197.547 ms，差670.219 ms；请求p50/p95为0.164/0.193 ms。1供应商64模型、200小请求及80×1MiB/4并发、本地mock，原始结果保留。最初基线13.88/75.27/89.14 MiB、45.924/796.346 ms、0.177/0.209 ms；单次波动不归因于代码/不宣称改善，就绪标记不等于首帧/可交互，专项仍待续。
 - 全部UI/Core/mock正常退出0并wait，关UI后Core HTTP200/ready。子代理仅清理确切自有夹具48,544 KiB；主代理确认基准sandbox_check enforced、核心PID退出、专属根无lsof引用，再清理guard源码/库、旧UI副本、构建日志及基准副本37,776 KiB。累计86,320 KiB（约84.30 MiB），本轮临时剩余0 bytes；两项归属未明历史空目录各0 KiB保留，交付图/JSON/报告与共享Cargo缓存保留。系统盘剩余40.69 GiB。Goal保持active；启动修复确认/四协议弹窗及完整busy/无障碍/跨平台等继续待办。
+
+
+## 小功能 23：七功能工具栏独立置顶（2026-10-29，北京时间）
+
+- 按用户新要求及官方MCP重新读取的最新 `54:2` / `90:442`：工具组top8、right32、宽300、高36，七个36×36原生按钮、20×20图标、8px间距。将app_controls从标题行移到窗口根的绝对定位容器；标题行保留原40px文字高度/间距，原生24px TitleBar与页面内容流继续原位。
+- app_controls含七项事件与occlude/mousedown/doubleclick拖动拦截逐字未改；同三个save/dismiss/quit动作监听与Proxy键盘上下文结构性移至窗口根，使置顶工具栏仍在同一应用动作作用域。Toolkit WindowStateLayers在整个application content之后画dialog layer，工具栏仍处于模态遮罩下。只改ui.rs布局及theme.rs中8px间距token，代理核心/持久化/功能实现未改。
+- 首轮 `71ae2d1d` 已通过fmt / 167 tests / 严格clippy（all-targets、-D warnings）/ release；UI15,060,272 bytes / SHA256 `71ae2d1d523bc1aaf94c1b65ec31712d399c6f50c9b1bcbc0612f8284a31d9c5`，核心仍25f24ad6。block0.1.6未来兼容提示为既有基线。
+- 变动前1fc的1440及1100原图基线：标题字形约(288,65)、副标题约(288,110)，供应商摘要卡top167、连接卡top223。新版1440落定截图保持这些位置；Skin上缘窗口相对(1126,12)和中心(1126,26)均能开菜单，Language上缘也可操作。Sync模态打开后点击Skin/Language上缘均无菜单、模态保留，Esc正常关闭，未点击重启。
+- CUA验证一度误把过渡帧当落定位置，已用落盘原图撤回误判；另一次复用过期AX索引误点“复制日志”，将系统剪贴板替换为合成日志，原内容未读取/暂存且无法恢复，已立即向用户说明并停止使用过期索引。不将该误点视为工具栏验证通过，也未打印原剪贴板内容。后续按新鲜目标和原图继续核对。
+
+- 首轮另验Cmd+S与Ctrl+S均可保存合成供应商，后者Core只读核对名称Review Ctrl；1100点击Restore回1440×900。原生表单Name→Tab→Key代表性遍历通过。CUA未暴露原生全局窗口bounds，不将截图构图对比冒充该API测量；点击上缘可开菜单是拖动区未吞按钮的直接证据。
+- 最终恢复content原有relative包含块，保护其他页内部绝对定位基准，同时toolbar仍用独立窗口根relative定位。`04991dda` 已通过fmt / 167 tests / 严格clippy / release，UI15,060,272 bytes / SHA256 `04991ddaeef6f2ddd4788bfc6d8d6362a18134bb526e3391888860a1cd8803f7`，事件实现及核心仍未改；最终图与收尾见下。
+- 主代理检查最终049版[1440×900真实运行图](screenshots/toolbar-top8-1440x900.png)：标题、副标题、摘要卡及连接卡仍在原位置，七按钮在窗口顶端；Skin上缘y12可打开菜单。原图2880×1802，裁去通道底部多出的2物理像素后，一次LANCZOS等比例2:1缩为1440×900。图中Runtime的“更新检查返回HTTP 403”为当前运行状态，起因未证实，不据此归因于布局，也不将其额外文字行误作页面位置变动。
+- 准备补拍最终版1100×700及复核模态时，CUA明确返回Mac locked；ioreg的IOConsoleLocked=No与其不一致，按实际界面工具阻碍停止，没有尝试解锁。最终小窗实拍仍待解锁补验；基线或首轮71ae图不代替最终049图。当前提交包含已通过编译和宽窗检查的布局，但第7项两尺寸截图验收尚未完成，Goal保持active。

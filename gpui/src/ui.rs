@@ -2295,20 +2295,15 @@ impl Render for Proxy {
             .gap(px(8.))
             .pb(px(28.))
             .child(
-                div()
-                    .flex()
-                    .items_start()
-                    .gap_4()
-                    .child(
-                        div()
-                            .flex_1()
-                            .min_w_0()
-                            .text_size(px(crate::theme::font::PAGE_TITLE))
-                            .line_height(px(crate::theme::line_height::PAGE_TITLE))
-                            .font_weight(FontWeight::BOLD)
-                            .child(title),
-                    )
-                    .child(self.app_controls(cx)),
+                div().flex().items_start().gap_4().child(
+                    div()
+                        .flex_1()
+                        .min_w_0()
+                        .text_size(px(crate::theme::font::PAGE_TITLE))
+                        .line_height(px(crate::theme::line_height::PAGE_TITLE))
+                        .font_weight(FontWeight::BOLD)
+                        .child(title),
+                ),
             )
             .child(
                 Label::new(subtitle)
@@ -2316,15 +2311,10 @@ impl Render for Proxy {
                     .line_height(px(20.))
                     .text_color(rgb(crate::theme::color::TEXT_3)),
             );
-        // One page title and action row, beside the sidebar. The native strip
-        // only owns OS controls/dragging and blends into both surfaces.
+        // Page titles keep their original flow and spacing. Window actions are
+        // positioned separately at the window root, below Kit's modal layers.
         let content = div()
             .relative()
-            .key_context("Proxy")
-            .track_focus(&self.focus)
-            .on_action(cx.listener(Self::save))
-            .on_action(cx.listener(Self::dismiss))
-            .on_action(cx.listener(Self::quit))
             .flex()
             .flex_col()
             .size_full()
@@ -2356,6 +2346,12 @@ impl Render for Proxy {
                 ),
             );
         div()
+            .relative()
+            .key_context("Proxy")
+            .track_focus(&self.focus)
+            .on_action(cx.listener(Self::save))
+            .on_action(cx.listener(Self::dismiss))
+            .on_action(cx.listener(Self::quit))
             .size_full()
             .flex()
             .flex_col()
@@ -2377,6 +2373,15 @@ impl Render for Proxy {
                     .child(div().flex_1().min_w_0().h_full()),
             )
             .child(content.flex_1().min_h_0())
+            .child(
+                div()
+                    .absolute()
+                    .top(px(crate::theme::space::SYSTEM_TOOLBAR_TOP))
+                    .right(px(crate::theme::space::PAGE_X))
+                    .w(px(crate::theme::size::SYSTEM_TOOLBAR_WIDTH))
+                    .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
+                    .child(self.app_controls(cx)),
+            )
     }
 }
 impl Drop for Proxy {
