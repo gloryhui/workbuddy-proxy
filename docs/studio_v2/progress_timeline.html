@@ -198,74 +198,77 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-29T22:17:18+08:00",
+  "updated_at": "2026-10-29T22:59:18+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "cf13beb76997b7add49c0b184d49837e6a8cdff0",
+  "code_head": "f5d73d9adae1b3ea02581260ade684291f56ca10",
   "phase": "开发中 · 分项实机验收穿插",
   "goal_status": "active",
   "counts": {
-    "pending": 4,
-    "partial": 35,
+    "pending": 3,
+    "partial": 36,
     "reused": 1,
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 34,
+  "recorded_tasks": 35,
   "current_task": {
-    "id": 34,
-    "title": "原生语言菜单与语言切换回归",
+    "id": 35,
+    "title": "恢复窗口提示与状态回归已提交",
     "status": "recorded",
-    "description": "语言浮层/三模式保存、取消/方向Enter/Space/Esc、键盘复开、草稿筛选/重开与遮罩实测完成；183测试、两尺寸实拍、四轮性能及清理已提交。"
+    "description": "Figma原生提示与普通/zoom/全屏恢复、缩窗Esc和两尺寸已实测；183测试及四轮短测通过。3待改、36部分验收、1复用待核对。"
   },
   "latest_task": {
-    "id": 34,
-    "title": "原生语言菜单与语言切换回归",
+    "id": 35,
+    "title": "恢复默认窗口尺寸提示与窗口状态回归",
     "status": "recorded",
-    "summary": "按官方 Figma MCP 最新高保真 104:1823 与 104:2035（含两张设计截图）实施：语言浮层241×184、圆角12、标题14、关闭27；三项221×40、间距5、文字13/选中tick12。整组七功能工具栏位置不变，以其右边为原生锚点；浮层顶部为设计 content24+local91=115，右边距32，原36px按钮/20px图标及8px间距保留。Close“×”与勾选“✓”是设计文本，复用779bytes/ro",
+    "summary": "官方Figma MCP读取104:2046及高保真子104:2258（截图均返回），提示325×103、圆角12、top24+93=117/right32、标题14/目标13/底提示11/关闭27。复用语义色与原生Popup/Label/Button；目标数字来自default_window_size，使用既有restore.svg 20×20/36×36触发按钮。原型“实际窗口控制由Rust+GPUI处理”替换为用户可用提示“可以继续",
     "highlights": [
-      "按官方 Figma MCP 最新高保真 104:1823 与 104:2035（含两张设计截图）实施：语言浮层241×184、圆角12、标题14、关闭27；三项221×40、间距5、文字13/选中tick12。整组七功能工具栏位置不变，以其右边为原生锚点；浮层顶部为设计 content24+local91=115，右边距32，原36px按钮/20px图标及8px间距保留。Close“×”与勾选“✓”是设计文本，复用779bytes/root20×20的既有本地language.svg，无新位图、临时资产URL或静态截图实现。",
-      "Kit PopupMenu 不直接提供该标题/关闭与精确行布局，局部组合原生 base::Popup、ListState/List 与 Button；既有 set_language 的auto/zh/en、locale/原生文案更新、原配置保存及草稿捕获处理不改。Popup 管理原生定位/指针遮挡，List 使用真实焦点与既有方向/Enter/Esc处理，Space仅在列表容器确认；打开时持有原生deferred guard，关闭恢复打开前真实焦点，原工具栏鼠标屏蔽保留。选项沿用原 choices，方向键环绕只移列表选中游标，勾选来自已保存配置。不添加timer、持续动画或后台轮询，不改Core/管理API/配置格式/依赖。",
-      "首候选 d4e8 实机发现“复点语言按钮时先outside-close再mouseup重开”，因此未作为最终验收；X关闭及皮肤独立打开在首候选通过。先改为native同型mouse-down观察状态守卫，mouseup不再toggle、Keyboard/Touch click保留；56d55复点通过，但真实Esc/焦点失败，源码定位Button内部FocusHandle覆盖通用track_focus，未接受该候选。最终使用原生ListState真实焦点，并用Popup只定位，避免整排toolbar增加Popover Enter/Space上下文。旧版db29和两失败候选均正常停止并wait，失败记录保留；最终交互/两尺寸图必须重新核对c389，不混用旧图。"
+      "官方Figma MCP读取104:2046及高保真子104:2258（截图均返回），提示325×103、圆角12、top24+93=117/right32、标题14/目标13/底提示11/关闭27。复用语义色与原生Popup/Label/Button；目标数字来自default_window_size，使用既有restore.svg 20×20/36×36触发按钮。原型“实际窗口控制由Rust+GPUI处理”替换为用户可用提示“可以继续调整窗口大小”，不把实现说明写入产品，也不把请求目标冒称当前实际尺寸。",
+      "原restore_window_size立即resize、全屏退出/unzoom序列、100ms等待及5秒超时保持；只加起始信息层与超时失败态，提示关闭不取消正在执行的恢复。基础Popup仅定位/遮挡，真实Div焦点与局部Esc/X/外部关闭、deferred guard和原焦点恢复沿用已验证结构；不会添加全工具栏Enter/Space上下文，不新增timer/持续动画，不更改Core/配置/依赖。",
+      "80ad候选通过fmt、183 tests（2项既有Core专项ignored）、严格clippy all-targets/-D warnings、Intel check2.562s及Release41.178s。UI15,196,880 bytes，SHA256 80ad8dfaa8ce2f1e092063500a09b016fc0f9e25dc7c12c5f59223c0c7a76612；Core仍25f/8,428,096bytes。Intel只类型检查，既有block0.1.6 future-incompatibility提示保留。构建与资产。"
     ],
-    "limits": [],
+    "limits": [
+      "当前短测未见明显退化，空闲合计RSS中位85.600→84.090MiB、UI73.335→72.195MiB；p95中位0.1865→0.1795ms，峰值132.400→132.335MiB。保留全部原值，不宣称改善；第一轮基线较冷、UI记录不是首帧/可交互时间、RSS共享页可能双计。默认页短测不代表提示打开持续CPU、恢复操作时延、长时间运行或跨平台。性能汇总。",
+      "恢复窗口104:2046由未逐帧验收改为部分验收；剩余3/40未逐帧验收、36部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、开机启动、检查更新；完整40帧精细视觉、IME/无障碍及Windows/Intel实机仍未完成，Goal保持active，继续开发并穿插分项实机验收。"
+    ],
     "evidence": [
       {
-        "label": "编译与资产证据",
-        "href": "benchmarks/language-menu-build.json"
+        "label": "构建与资产",
+        "href": "benchmarks/window-restore-build.json"
+      },
+      {
+        "label": "分候选真实交互与生命周期",
+        "href": "benchmarks/window-restore-gui-validation.json"
       },
       {
         "label": "中文Studio1440×900",
-        "href": "screenshots/ui34-language-1440x900.png"
+        "href": "screenshots/window-restore-1440x900.png"
       },
       {
         "label": "英文Mono1100×700",
-        "href": "screenshots/ui34-language-1100x700.png"
+        "href": "screenshots/window-restore-1100x700.png"
       },
       {
-        "label": "真实交互/原图与最终SHA/退出证据",
-        "href": "benchmarks/language-menu-gui-validation.json"
+        "label": "旧c389",
+        "href": "benchmarks/window-restore-previous-gui.json"
       },
       {
-        "label": "旧db29",
-        "href": "benchmarks/language-menu-previous-gui.json"
+        "label": "新6e89",
+        "href": "benchmarks/window-restore-current-gui.json"
       },
       {
-        "label": "新c389",
-        "href": "benchmarks/language-menu-current-gui.json"
+        "label": "旧c389复测",
+        "href": "benchmarks/window-restore-previous-run2-gui.json"
       },
       {
-        "label": "旧db29复测",
-        "href": "benchmarks/language-menu-previous-run2-gui.json"
-      },
-      {
-        "label": "新c389复测",
-        "href": "benchmarks/language-menu-current-run2-gui.json"
+        "label": "新6e89复测",
+        "href": "benchmarks/window-restore-current-run2-gui.json"
       }
     ],
-    "commit": "cf13beb76997b7add49c0b184d49837e6a8cdff0",
-    "date": "2026-10-29T22:17:17+08:00",
-    "commit_subject": "feat(gpui): align native language menu with Studio design",
+    "commit": "f5d73d9adae1b3ea02581260ade684291f56ca10",
+    "date": "2026-10-29T22:59:10+08:00",
+    "commit_subject": "feat(studio): add native restore-window feedback",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -584,9 +587,9 @@
     {
       "node": "104:2046",
       "title": "40 / STUDIO V2 · 恢复默认窗口尺寸（原型）",
-      "source": "ui.rs, ui/skin_controls.rs, theme.rs",
-      "detail": "未验收",
-      "status": "pending",
+      "source": "ui/window_restore.rs, ui.rs",
+      "detail": "部分：原生提示/两尺寸、普通/zoom/全屏恢复、缩窗Esc/X、真实Enter/Space、草稿筛选/遮罩与四轮性能已验；超时失败、完整IME/无障碍/跨平台待续",
+      "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-2046"
     }
   ],
@@ -1993,6 +1996,59 @@
       "date": "2026-10-29T22:17:17+08:00",
       "commit_subject": "feat(gpui): align native language menu with Studio design",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 35,
+      "title": "恢复默认窗口尺寸提示与窗口状态回归",
+      "status": "recorded",
+      "summary": "官方Figma MCP读取104:2046及高保真子104:2258（截图均返回），提示325×103、圆角12、top24+93=117/right32、标题14/目标13/底提示11/关闭27。复用语义色与原生Popup/Label/Button；目标数字来自default_window_size，使用既有restore.svg 20×20/36×36触发按钮。原型“实际窗口控制由Rust+GPUI处理”替换为用户可用提示“可以继续",
+      "highlights": [
+        "官方Figma MCP读取104:2046及高保真子104:2258（截图均返回），提示325×103、圆角12、top24+93=117/right32、标题14/目标13/底提示11/关闭27。复用语义色与原生Popup/Label/Button；目标数字来自default_window_size，使用既有restore.svg 20×20/36×36触发按钮。原型“实际窗口控制由Rust+GPUI处理”替换为用户可用提示“可以继续调整窗口大小”，不把实现说明写入产品，也不把请求目标冒称当前实际尺寸。",
+        "原restore_window_size立即resize、全屏退出/unzoom序列、100ms等待及5秒超时保持；只加起始信息层与超时失败态，提示关闭不取消正在执行的恢复。基础Popup仅定位/遮挡，真实Div焦点与局部Esc/X/外部关闭、deferred guard和原焦点恢复沿用已验证结构；不会添加全工具栏Enter/Space上下文，不新增timer/持续动画，不更改Core/配置/依赖。",
+        "80ad候选通过fmt、183 tests（2项既有Core专项ignored）、严格clippy all-targets/-D warnings、Intel check2.562s及Release41.178s。UI15,196,880 bytes，SHA256 80ad8dfaa8ce2f1e092063500a09b016fc0f9e25dc7c12c5f59223c0c7a76612；Core仍25f/8,428,096bytes。Intel只类型检查，既有block0.1.6 future-incompatibility提示保留。构建与资产。"
+      ],
+      "limits": [
+        "当前短测未见明显退化，空闲合计RSS中位85.600→84.090MiB、UI73.335→72.195MiB；p95中位0.1865→0.1795ms，峰值132.400→132.335MiB。保留全部原值，不宣称改善；第一轮基线较冷、UI记录不是首帧/可交互时间、RSS共享页可能双计。默认页短测不代表提示打开持续CPU、恢复操作时延、长时间运行或跨平台。性能汇总。",
+        "恢复窗口104:2046由未逐帧验收改为部分验收；剩余3/40未逐帧验收、36部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、开机启动、检查更新；完整40帧精细视觉、IME/无障碍及Windows/Intel实机仍未完成，Goal保持active，继续开发并穿插分项实机验收。"
+      ],
+      "evidence": [
+        {
+          "label": "构建与资产",
+          "href": "benchmarks/window-restore-build.json"
+        },
+        {
+          "label": "分候选真实交互与生命周期",
+          "href": "benchmarks/window-restore-gui-validation.json"
+        },
+        {
+          "label": "中文Studio1440×900",
+          "href": "screenshots/window-restore-1440x900.png"
+        },
+        {
+          "label": "英文Mono1100×700",
+          "href": "screenshots/window-restore-1100x700.png"
+        },
+        {
+          "label": "旧c389",
+          "href": "benchmarks/window-restore-previous-gui.json"
+        },
+        {
+          "label": "新6e89",
+          "href": "benchmarks/window-restore-current-gui.json"
+        },
+        {
+          "label": "旧c389复测",
+          "href": "benchmarks/window-restore-previous-run2-gui.json"
+        },
+        {
+          "label": "新6e89复测",
+          "href": "benchmarks/window-restore-current-run2-gui.json"
+        }
+      ],
+      "commit": "f5d73d9adae1b3ea02581260ade684291f56ca10",
+      "date": "2026-10-29T22:59:10+08:00",
+      "commit_subject": "feat(studio): add native restore-window feedback",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2114,12 +2170,44 @@
       "partial": 35,
       "reused": 1,
       "verified": 0
+    },
+    {
+      "date": "2026-10-29T22:31:34+08:00",
+      "note": "开始UI-35恢复窗口状态；剩余4未验收、35部分验收、1复用待核对",
+      "pending": 4,
+      "partial": 35,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T22:37:56+08:00",
+      "note": "UI-35 实际全屏和zoom恢复已通过，剩余4/35/1暂不变",
+      "pending": 4,
+      "partial": 35,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T22:47:42+08:00",
+      "note": "UI-35缩窗后Esc边界已修复并实测通过；剩余4/35/1不变",
+      "pending": 4,
+      "partial": 35,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T22:59:18+08:00",
+      "note": "UI-35提交，恢复窗口转部分验收；剩余3未验收、36部分验收、1复用待核对，Goal保持active",
+      "pending": 3,
+      "partial": 36,
+      "reused": 1,
+      "verified": 0
     }
   ],
   "verification": [
     {
       "title": "40 帧最终视觉复核",
-      "detail": "当前 35 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "detail": "当前 36 帧有阶段性证据、1 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",
