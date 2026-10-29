@@ -103,6 +103,8 @@ def main():
     parser.add_argument("--status", choices=["planned", "developing", "validating", "recorded"])
     parser.add_argument("--description")
     parser.add_argument("--note")
+    parser.add_argument("--goal-status", choices=["active", "paused", "blocked", "complete"],
+                        help="Last observed Goal panel state; records it without controlling Goal")
     args = parser.parse_args()
     previous = json.loads(DATA.read_text(encoding="utf-8")) if DATA.exists() else {}
     current = dict(previous.get("current_task", {}))
@@ -127,7 +129,8 @@ def main():
                         **counts})
     report = {"version": 1, "updated_at": now, "project": "WorkBuddy Studio V2",
               "branch": git("branch", "--show-current"), "code_head": git("log", "-1", "--format=%H", "--", "gpui/src", "gpui/assets"),
-              "phase": "开发中 · 分项实机验收穿插", "goal_status": "active",
+              "phase": "开发中 · 分项实机验收穿插",
+              "goal_status": args.goal_status or previous.get("goal_status", "unknown"),
               "counts": counts, "total_frames": len(frames), "recorded_tasks": len(recorded),
               "current_task": current, "latest_task": latest, "frames": frames,
               "timeline": timeline, "history": history[-200:],

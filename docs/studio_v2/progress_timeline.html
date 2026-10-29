@@ -170,7 +170,7 @@
     </aside>
     <main>
       <section class="panel closeout" id="current" aria-labelledby="current-title" style="margin-top:0">
-        <div class="section-top"><div><p class="eyebrow">CURRENT WORK / DEVELOP & VERIFY</p><h2 id="current-title">当前推进</h2></div><span class="pill active">Goal 持续推进</span></div>
+        <div class="section-top"><div><p class="eyebrow">CURRENT WORK / DEVELOP & VERIFY</p><h2 id="current-title">当前推进</h2></div><span class="pill" id="goal-state">Goal 状态以报告记录为准</span></div>
         <div class="closeout-current" id="current-task"></div>
         <p class="current-note" id="baseline"></p>
         <div class="scope-note">数量口径：“待逐帧验收”表示尚未完成独立画板对照；“部分验收”已有实现或真实运行证据，但仍保留具体缺项。已提交小任务数量不能当作界面完成率。</div>
@@ -198,12 +198,12 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-29T19:43:35+08:00",
+  "updated_at": "2026-10-29T20:36:30+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "1a6c1cbcc504ae7d91c712be1222785e71cab933",
+  "code_head": "ba59cfe330e23c7c33ac574cfd8b70958dc96da8",
   "phase": "开发中 · 分项实机验收穿插",
-  "goal_status": "active",
+  "goal_status": "paused",
   "counts": {
     "pending": 5,
     "partial": 34,
@@ -211,61 +211,64 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 32,
+  "recorded_tasks": 33,
   "current_task": {
-    "id": 32,
-    "title": "单模型提示与确认删除结果反馈",
+    "id": 33,
+    "title": "删除失败后的配置对齐与草稿保护",
     "status": "recorded",
-    "description": "单模型提示、真实删除后幸存者反馈、编辑/草稿/保存与重开边界、两尺寸实拍及四轮性能已验并提交。失败不伪造回执；外部先删除目标后 UI 缓存未对齐的缺口已记录，下一批优先修复。完整 IME、无障碍和跨平台仍待续。"
+    "description": "失败删除恢复、幸存草稿与 Cancel/重开/显式保存、空态和异常配置守卫实测通过；183测试、两尺寸实拍及四轮性能已随 ba59cfe 提交。"
   },
   "latest_task": {
-    "id": 32,
-    "title": "单模型提示与删除后幸存供应商状态",
+    "id": 33,
+    "title": "删除失败后的配置对齐与草稿保护",
     "status": "recorded",
-    "summary": "最新官方MCP高保真context/截图读取67:338、78:1804、80:1114。67:546/78:1960为仅一个模型时的664px宽上限、50px高/10px圆角提示，12px正文/17px行高；按实际当前草稿模型数显示，名称/供应商/模型ID不写死。原获取列表和手动添加按钮及处理器保持，英文小窗明确normal换行，固定50px容纳两行。",
+    "summary": "UI-32 遗留问题：确认层打开后若目标供应商已被另一管理请求删除，原 Delete 返回真实错误“请选择供应商”，Core 已只剩幸存者，UI 却继续保留旧列表与表单。本批先用旧 9bfff Release 重现并保存真实原图，再验证修复；这属于已有部分验收帧的状态恢复，不新增设计或减少剩余帧数量。",
     "highlights": [
-      "最新官方MCP高保真context/截图读取67:338、78:1804、80:1114。67:546/78:1960为仅一个模型时的664px宽上限、50px高/10px圆角提示，12px正文/17px行高；按实际当前草稿模型数显示，名称/供应商/模型ID不写死。原获取列表和手动添加按钮及处理器保持，英文小窗明确normal换行，固定50px容纳两行。",
-      "ui/provider_feedback.rs新增会话内删除回执：在用户确认时捕获原命令目标ID，只在既有成功reply门槛内比较前后provider ID集合，恰好删除该目标、没有增删其他ID且真实幸存者存在才绑定该幸存ID。不根据名称/日志文案猜测，不持久化、不改Core或private drafts。取消不发命令；失败/无法入队清除尝试，最后一个provider删除后无虚构幸存者回执。切换provider、普通成功save/test/install等清除；dirty/edit/busy状态优先于绿色反馈。宽窗左Deleted 1/右Saved，窄窗合并为右Deleted 1。",
-      "原delete JSON命令、二次确认、目标绑定及全部保存/删除逻辑保持。模型table/help提取为provider_model_table局部布局方法，单行表体和提示按原生flex组合，多模型继续原Kit虚拟表格；没有新增timer、持续动画、依赖、资产或Core热路径修改。"
+      "UI-32 遗留问题：确认层打开后若目标供应商已被另一管理请求删除，原 Delete 返回真实错误“请选择供应商”，Core 已只剩幸存者，UI 却继续保留旧列表与表单。本批先用旧 9bfff Release 重现并保存真实原图，再验证修复；这属于已有部分验收帧的状态恢复，不新增设计或减少剩余帧数量。",
+      "只在失败 Delete 分支使用 UI 私有只读读取器：已有普通文件、2MiB 上限、显式现代 providers 数组、Config.validate 与非空 local_key；不调用可能初始化缺失文件或迁移旧格式的 Config.load。合并另要求原/新 local_key 一致，已认证 Core snapshot 的供应商/模型数量与配置相同，以及同端口 loopback HTTP /v1 地址。无快照、缺失/非法/旧格式或不匹配时保留缓存和真实错误，不执行保存、删除重试或同步。现有 snapshot 不含完整 provider ID 集合，因此这些校验不声称提供跨进程原子快照；Core/管理 API/配置格式均不改。",
+      "通过校验后，已删除行与失效的 created-pending/editor 退出；干净幸存行跟随保存配置，dirty 草稿、活动资料编辑的原始 Cancel 快照及未创建的本地 pending 保留。只有当前选择或表单实值改变才 reload，保留未变表单的焦点/选择。失败仍为 error，清除 Delete receipt，绝不显示 Deleted 1 成功回执；正常成功路径沿用原 update_config。"
     ],
-    "limits": [],
+    "limits": [
+      "baseline、clean、dirty/同 Core 重开、empty、guard 的独立成功夹具均正常 UI/Core/fixture exit0 并 wait，关闭 UI 后 Core health200，主代理再次核对报告中所有 PID 消失。62077/62082/62085 中断场景仍只确认消失、exit/wait 未知，不混入成功终态。Core-unresponsive、所有语言/尺寸组合、完整 IME/无障碍与跨平台尚未实测。",
+      "本批补齐已有部分验收帧的失败恢复缺口，剩余仍为5/40未逐帧验收、34部分验收、1复用待核对、0整帧最终验收。整体继续开发并穿插分项实机验收；下一批对齐语言菜单及保留工具栏状态，完整40帧精细视觉、IME/无障碍与跨平台仍未完成。"
+    ],
     "evidence": [
       {
         "label": "编译证据",
-        "href": "benchmarks/provider-state-build.json"
+        "href": "benchmarks/provider-recovery-build.json"
       },
       {
-        "label": "单模型宽窗",
-        "href": "screenshots/ui32-one-model-1440x900.png"
+        "label": "旧版缓存问题宽图",
+        "href": "screenshots/ui33-baseline-failure-1440x900.png"
       },
       {
-        "label": "小窗",
-        "href": "screenshots/ui32-one-model-1100x700.png"
+        "label": "新版 clean 恢复宽图",
+        "href": "screenshots/ui33-recovered-clean-1440x900.png"
       },
       {
-        "label": "删A剩B宽窗",
-        "href": "screenshots/ui32-deleted-to-opencode-1440x900.png"
+        "label": "英文 Mono dirty 恢复小图",
+        "href": "screenshots/ui33-recovered-draft-1100x700.png"
       },
       {
-        "label": "小窗",
-        "href": "screenshots/ui32-deleted-to-opencode-1100x700.png"
+        "label": "新版空态宽图",
+        "href": "screenshots/ui33-recovered-empty-1440x900.png"
       },
       {
-        "label": "删B剩A宽窗",
-        "href": "screenshots/ui32-deleted-to-sub2api-1440x900.png"
+        "label": "GUI 记录",
+        "href": "benchmarks/provider-recovery-gui-validation.json"
       },
       {
-        "label": "小窗",
-        "href": "screenshots/ui32-deleted-to-sub2api-1100x700.png"
+        "label": "旧9bfff",
+        "href": "benchmarks/provider-recovery-previous-gui.json"
       },
       {
-        "label": "第4行补图",
-        "href": "screenshots/ui32-four-model-row4-1100x700.png"
+        "label": "新db29",
+        "href": "benchmarks/provider-recovery-current-gui.json"
       }
     ],
-    "commit": "1a6c1cbcc504ae7d91c712be1222785e71cab933",
-    "date": "2026-10-29T19:43:04+08:00",
-    "commit_subject": "feat(gpui): show single-model guidance and confirmed delete feedback",
+    "commit": "ba59cfe330e23c7c33ac574cfd8b70958dc96da8",
+    "date": "2026-10-29T20:34:26+08:00",
+    "commit_subject": "fix(gpui): reconcile failed deletes and preserve surviving drafts",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -497,7 +500,7 @@
       "node": "78:1804",
       "title": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go",
       "source": "ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs",
-      "detail": "部分：真实删A只剩B1、ID集合验证/绑定幸存者的会话Deleted1、dirty/edit/Save/重开、两尺寸与计数已验；失败后外部配置对齐另有缺口，完整审计待续",
+      "detail": "部分：真实删A只剩B1、ID集合验证/绑定幸存者的会话Deleted1、dirty/edit/Save/重开、两尺寸与计数已验；失败后可信配置对齐/原错误、dirty与Cancel/重开、异常文件守卫及恢复重试、两尺寸已验；Core-unresponsive与完整审计待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1804"
     },
@@ -553,7 +556,7 @@
       "node": "80:1114",
       "title": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api",
       "source": "ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs",
-      "detail": "部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；完整视觉/IME/无障碍/跨平台及失败配置对齐待续",
+      "detail": "部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；失败后只读配置对齐/幸存dirty与异常文件守卫已验；完整视觉/IME/无障碍/跨平台与Core-unresponsive待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-1114"
     },
@@ -1890,6 +1893,59 @@
       "date": "2026-10-29T19:43:04+08:00",
       "commit_subject": "feat(gpui): show single-model guidance and confirmed delete feedback",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 33,
+      "title": "删除失败后的配置对齐与草稿保护",
+      "status": "recorded",
+      "summary": "UI-32 遗留问题：确认层打开后若目标供应商已被另一管理请求删除，原 Delete 返回真实错误“请选择供应商”，Core 已只剩幸存者，UI 却继续保留旧列表与表单。本批先用旧 9bfff Release 重现并保存真实原图，再验证修复；这属于已有部分验收帧的状态恢复，不新增设计或减少剩余帧数量。",
+      "highlights": [
+        "UI-32 遗留问题：确认层打开后若目标供应商已被另一管理请求删除，原 Delete 返回真实错误“请选择供应商”，Core 已只剩幸存者，UI 却继续保留旧列表与表单。本批先用旧 9bfff Release 重现并保存真实原图，再验证修复；这属于已有部分验收帧的状态恢复，不新增设计或减少剩余帧数量。",
+        "只在失败 Delete 分支使用 UI 私有只读读取器：已有普通文件、2MiB 上限、显式现代 providers 数组、Config.validate 与非空 local_key；不调用可能初始化缺失文件或迁移旧格式的 Config.load。合并另要求原/新 local_key 一致，已认证 Core snapshot 的供应商/模型数量与配置相同，以及同端口 loopback HTTP /v1 地址。无快照、缺失/非法/旧格式或不匹配时保留缓存和真实错误，不执行保存、删除重试或同步。现有 snapshot 不含完整 provider ID 集合，因此这些校验不声称提供跨进程原子快照；Core/管理 API/配置格式均不改。",
+        "通过校验后，已删除行与失效的 created-pending/editor 退出；干净幸存行跟随保存配置，dirty 草稿、活动资料编辑的原始 Cancel 快照及未创建的本地 pending 保留。只有当前选择或表单实值改变才 reload，保留未变表单的焦点/选择。失败仍为 error，清除 Delete receipt，绝不显示 Deleted 1 成功回执；正常成功路径沿用原 update_config。"
+      ],
+      "limits": [
+        "baseline、clean、dirty/同 Core 重开、empty、guard 的独立成功夹具均正常 UI/Core/fixture exit0 并 wait，关闭 UI 后 Core health200，主代理再次核对报告中所有 PID 消失。62077/62082/62085 中断场景仍只确认消失、exit/wait 未知，不混入成功终态。Core-unresponsive、所有语言/尺寸组合、完整 IME/无障碍与跨平台尚未实测。",
+        "本批补齐已有部分验收帧的失败恢复缺口，剩余仍为5/40未逐帧验收、34部分验收、1复用待核对、0整帧最终验收。整体继续开发并穿插分项实机验收；下一批对齐语言菜单及保留工具栏状态，完整40帧精细视觉、IME/无障碍与跨平台仍未完成。"
+      ],
+      "evidence": [
+        {
+          "label": "编译证据",
+          "href": "benchmarks/provider-recovery-build.json"
+        },
+        {
+          "label": "旧版缓存问题宽图",
+          "href": "screenshots/ui33-baseline-failure-1440x900.png"
+        },
+        {
+          "label": "新版 clean 恢复宽图",
+          "href": "screenshots/ui33-recovered-clean-1440x900.png"
+        },
+        {
+          "label": "英文 Mono dirty 恢复小图",
+          "href": "screenshots/ui33-recovered-draft-1100x700.png"
+        },
+        {
+          "label": "新版空态宽图",
+          "href": "screenshots/ui33-recovered-empty-1440x900.png"
+        },
+        {
+          "label": "GUI 记录",
+          "href": "benchmarks/provider-recovery-gui-validation.json"
+        },
+        {
+          "label": "旧9bfff",
+          "href": "benchmarks/provider-recovery-previous-gui.json"
+        },
+        {
+          "label": "新db29",
+          "href": "benchmarks/provider-recovery-current-gui.json"
+        }
+      ],
+      "commit": "ba59cfe330e23c7c33ac574cfd8b70958dc96da8",
+      "date": "2026-10-29T20:34:26+08:00",
+      "commit_subject": "fix(gpui): reconcile failed deletes and preserve surviving drafts",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -1927,6 +1983,46 @@
     {
       "date": "2026-10-29T19:43:35+08:00",
       "note": "UI-32 已提交：3 帧加入部分验收，未逐帧验收由 8 降至 5；按持续授权完成安全临时清理",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T19:56:13+08:00",
+      "note": "开始 UI-33，剩余 5 未验收、34 部分验收、1 复用待核对",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T19:58:23+08:00",
+      "note": "UI-33 进入分项实机验收；剩余界面口径仍为 5/34/1",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T20:18:47+08:00",
+      "note": "UI-33 核心恢复及草稿边界实测通过，尚未提交；剩余 5/34/1 不变",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T20:34:39+08:00",
+      "note": "UI-33 完成并提交；剩余 5 未验收、34 部分验收、1 复用待核对，继续后续工具栏状态",
+      "pending": 5,
+      "partial": 34,
+      "reused": 1,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-29T20:36:30+08:00",
+      "note": "核对自动 Goal 面板实际为暂停；本轮已按用户继续指令完成 UI-33，报告不再写死 active",
       "pending": 5,
       "partial": 34,
       "reused": 1,
@@ -1979,6 +2075,7 @@ function date(value){return value?new Intl.DateTimeFormat('zh-CN',{timeZone:'Asi
 function themeButton(){const dark=document.documentElement.dataset.theme==='dark';$('theme-toggle').textContent=dark?'切换亮色':'切换深色';$('theme-toggle').setAttribute('aria-label',dark?'切换为亮色主题':'切换为深色主题')}
 $('theme-toggle').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('workbuddy.studio.timeline.theme',t)}catch(_){}themeButton()};themeButton();
 $('phase').textContent=data.phase;$('updated').textContent=date(data.updated_at);
+const goalNames={active:'Goal 持续推进',paused:'自动 Goal 暂停',blocked:'Goal 受阻',complete:'Goal 已完成'};$('goal-state').textContent=goalNames[data.goal_status]||'Goal 状态待同步';$('goal-state').className='pill '+(data.goal_status==='active'?'active':data.goal_status==='complete'?'done':'pending');
 for(const[value,label,small]of [[data.counts.pending+'/'+data.total_frames,'待逐帧验收','剩余独立画板对照'],[data.counts.partial,'部分验收','已有阶段证据，仍需复核'],[data.counts.reused,'复用待核对','组件已实现，整帧尚未核对'],[data.recorded_tasks,'已提交分项','任务数不等于界面完成率']])$('stats').append(node('div',{class:'stat'},[node('span',{},label),node('strong',{},value),node('small',{},small)]));
 const current=data.current_task||{};$('current-stage').textContent='UI-'+current.id+' · '+(names[current.status]||'推进中');$('current-task').append(node('div',{},[node('strong',{},'UI-'+current.id+' · '+current.title),node('p',{},current.description||'按已记录任务继续推进')]),pill(current.status));
 $('baseline').textContent='分支 '+data.branch+' · 最近界面代码基线 '+data.code_head.slice(0,7)+' · 最近已提交 UI-'+data.latest_task.id+' '+data.latest_task.title;

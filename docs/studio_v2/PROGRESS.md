@@ -20,6 +20,8 @@
 
 `recorded` 只表示分项已提交，不等于整帧或整项目最终验收。生成器只读本地 Git，不访问远端、不自动提交推送，不调用核心，不包含用户配置或密钥。不要手工改内嵌 JSON；下次生成会覆盖它。未识别的画板状态或没有已提交 QA 的 `recorded` 任务会拒绝更新。
 
+刷新前核对 Goal 面板的实际状态，并用 `--goal-status active`、`paused`、`blocked` 或 `complete` 记录。该参数只更新报告，不控制 Goal；省略时保留上次记录，首次缺省为未知。Goal 暂停后本轮仍可按用户明确的“继续”指令施工，分项已提交也不表示自动 Goal 已恢复运行。
+
 ## 当前验证边界
 
 页面的静态检查与浏览器限制记录见 [静态校验](benchmarks/progress-timeline-static-check.json)、[浏览器检查](benchmarks/progress-timeline-browser-check.json)。浏览器工具拒绝本地 `file:` 地址并禁止替代路径绕过，因此尚未实测页面渲染、主题、筛选、展开与响应式效果；不以源码检查替代实际浏览器验收。
