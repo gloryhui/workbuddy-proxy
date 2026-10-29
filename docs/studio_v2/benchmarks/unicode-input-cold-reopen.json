@@ -1,0 +1,188 @@
+{
+  "feature": "Actual saved Unicode model payload cold loading",
+  "proof": {
+    "model_payload_sha256_source": "9320d59bffaa8d4586ee0693649dc6794e67ee16a5bd53a49347b9fd9ce55f2c",
+    "model_payload_sha256_cold_loaded": "9320d59bffaa8d4586ee0693649dc6794e67ee16a5bd53a49347b9fd9ce55f2c",
+    "all_models_payload_equal": true,
+    "source_config_sha256": "95b16cd0ca4b5854282d6594ab060afb1ac2090eb527a46122262fb841eba14f",
+    "cold_config_sha256": "15747c6586f09d3852af6dd94f0857d5e7674f539abc00c7dbdbb5ec0d8f8ed4",
+    "port_and_upstreams_replaced_for_new_synthetic_instance": true,
+    "private_ui_drafts_copied": false,
+    "cold_first_name": "输入验证46🙂",
+    "cold_first_model": "model-a-1",
+    "language": "en",
+    "autostart": false,
+    "credentials_omitted": true
+  },
+  "copy_provenance": {
+    "source_config_sha256": "95b16cd0ca4b5854282d6594ab060afb1ac2090eb527a46122262fb841eba14f",
+    "source_model_payload_sha256": "9320d59bffaa8d4586ee0693649dc6794e67ee16a5bd53a49347b9fd9ce55f2c",
+    "copied_model_payload_sha256": "9320d59bffaa8d4586ee0693649dc6794e67ee16a5bd53a49347b9fd9ce55f2c",
+    "changed_fields": [
+      "port",
+      "providers[*].upstream (synthetic loopback only)"
+    ],
+    "private_ui_drafts_copied": false,
+    "source_is_current_session_synthetic_config": true
+  },
+  "observed": {
+    "fixture": "reopen-ui46",
+    "ui_pid": 45413,
+    "core_pid": 45409,
+    "fixture_pid": 45408,
+    "source": "Previously saved synthetic configuration; loopback port/upstream adjusted by fixture; no private UI draft copied",
+    "actions": "Opened Providers and model editor without typing or setting values; Escape closed editor",
+    "display_name": "输入验证46🙂",
+    "model_id": "model-a-1",
+    "second_model": "model-2",
+    "visible_runtime_counts": {
+      "providers": 2,
+      "models": 3,
+      "requests": 0
+    },
+    "visible_state": "Saved",
+    "screenshot": {
+      "path": "reopen-ui46/unicode-cold-reopen-raw.png",
+      "window_id": 62574,
+      "size_px": [
+        1440,
+        901
+      ],
+      "sha256": "e73d4ad1a1b82aae779c20a529c700409bf44be01e300eb86110329b2b6eb883",
+      "method": "native screencapture current PID onscreen layer 0; no resize or crop"
+    },
+    "ui_close_action": {
+      "pid": 45413,
+      "method": "CUA native window close button",
+      "result": "click returned without error; process exit/wait to be checked by fixture owner",
+      "note": "No Cmd+Q and no direct Core action"
+    },
+    "parent_verified": {
+      "model_payload_sha256_prefix": "9320d59",
+      "sampling": "30.004 s; UI 0.467% single-core, RSS 92.000 to 92.031 MiB; Core 0.10%"
+    }
+  },
+  "initial_pids": [
+    37463,
+    37464,
+    37468
+  ],
+  "cold_pids": [
+    45408,
+    45409,
+    45413
+  ],
+  "initial_actors_exited_before_new_launch": true,
+  "core_protection": {
+    "enforced": true,
+    "pid": 45409,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "gui_kernel_guard": false,
+  "scope": "New synthetic config changes only port and loopback upstream; complete saved model payload identical. No copy of gpui-drafts.json; no SetValue/typeText or Save in cold GUI."
+}

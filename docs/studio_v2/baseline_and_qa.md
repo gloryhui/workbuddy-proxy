@@ -1050,3 +1050,26 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 新第2轮0.129s相对旧0.087s放缓已保留，并补“新→旧”反向对照，未复现持续放缓。六轮旧→新中位：合计RSS84.50→84.28MiB、UI71.81→72.19MiB、峰值131.06→134.91MiB（+3.85）、p95 0.203→0.196ms、大请求均0.089s，未隐去占用上升项。每版仅3样本/后台未控制，不作优化、统计等效或因果判断；就绪标记非首帧/可交互，RSS共享页可能双计，tray原JSON单列。反向确认只给私有wrapper加label，原脚本/负载未变，各wrapper SHA单列。
 - CUA Close关详情再原生close关UI，两UI exit0；私有夹具再停止/wait Core0，两fixture直接wait0，不混为CmdQ/驻留验收。六轮直接子进程退出数组均[-15,-15,0,0]并wait，记录Core/UI PID由主代理独立核对消失。全量真实路径/UID501/父组件挂载与非符号链接/单链接普通文件/进程及lsof预检、临执行清单SHA复核后，按持续授权删除193文件，释放估计253,874,176bytes（242.11MiB）；本轮临时保留0。旧root30仍24.03MiB保护保留且未读误图/重试删除，共享Cargo缓存未动；系统盘清理后39,962,796,032bytes（37.22GiB）。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮实际修复长Tooltip溢出并补键盘/长值/零与未知语义；三个字段精确hover、完整视觉/IME/读屏/原生AX、Windows布局偏好与实机、Intel实机/HiDPI、托盘/位移/最小化、首帧及更新公网成功仍待推进。Goal active，HTML继续仅静态校验。
+
+## 小功能 46：Unicode 编辑、保存与冷载入验收（2026-10-30，北京时间）
+
+- 本轮未改产品源码，补齐模型显示名Unicode编辑/取消/草稿/显式保存和新Core/UI冷载入证据；真实中文IME仍未验收，不把程序赋值当组合输入。证据：[构建复用与源码](benchmarks/unicode-input-build.json)、[真实操作与落盘](benchmarks/unicode-input-gui-validation.json)、[方法边界](benchmarks/unicode-input-method-boundaries.json)、[1440中文](screenshots/unicode-input-1440x900.png)、[1100英文](screenshots/unicode-input-1100x700.png)、[冷载入](benchmarks/unicode-input-cold-reopen.json)、[资源验证](benchmarks/unicode-input-performance-validation.json)、[清理](benchmarks/unicode-input-cleanup.json)。
+- 当前UI仍0b43629a…/15,246,768bytes、Core仍25f/8,428,096bytes，与UI45最终构建逐哈希一致；相关应用源码未变。复用UI45的192 tests/2既有ignored、fmt/严格clippy/Intel check/Release及包含当前0b43/25f的六轮旧/新原benchmark对照，本轮不冒称重新编译或重复请求基准。macOS实际15.8.1/Apple Silicon，ioreg No锁定。
+- 只读核对实际锁定gpui-pre-macos0.3.9：marked_text_range存在时及IME可打印键先交inputContext.handleEvent，之后才回应用keybindings。gpui-base0.7.3提供UTF16 marked range，普通单行Enter传播/PressEnter；显示名是无应用ASCII过滤/数字mask的原生InputState，当前normalize_input只去单行换行符。这是源码路径，不是OS组合输入通过；同时以缓存.crate SHA核对Cargo.lock，并逐字节比较两个已读源文件，未改缓存/依赖（未发现.cargo-checksum.json时改用只读archive member校验，未解压写入）。
+- CUA应用树未提供当前输入源，逐键pressKey n/i/h/a/o只见nihao，无候选/marked证据；原输入源无法确认，因此没有显式切换。typeText调用“你好 Studio🙂e+U0301”后实际仅为“ Studioe”，该输入路径的Unicode缺失原因未定位到工具/macOS/GPUI哪层，不据此判产品故障或Unicode输入通过。后续CUA setValue可写入完整样本，测试仅限定为程序赋值后的原生编辑。
+- setValue样本中，End/Backspace只删U0301留e，CmdZ恢复、CmdShiftZ重做；继续Backspace依次去e与整枚emoji；Home/ShiftRight两次/Backspace去两汉字；重新赋样本后End/Left两次/ShiftLeft/Backspace可仅去emoji、保留e+U0301。所测操作未见破损，但只记录码点删除，不声明字素簇删除通过。取消样本后model-1与ID不变。
+- 第一模型setValue“输入验证46🙂”→弹窗确认→复开完整读回→Esc；主代理此时核对Core config SHA仍e53ebc…且名称model-1，只有私有草稿含完整7码点/8个UTF16单元，ID/model-a-1与2供应商3模型保持。第二模型普通非组合Return将Latin46确认到草稿，改discard-Latin后Esc保留前值，再Return恢复model-2。该普通Enter/Esc不是IME候选确认/取消结论。
+- 两尺寸原图实际重开未保存模型，中文及emoji字形可见；主代理已查看[视觉记录](benchmarks/unicode-input-visual-validation.json)。之后真实切英文、Esc取消无新增改动编辑，再点击主页Save，Core文件首名才变“输入验证46🙂”、第二名model-2/ID与数量保持，language=en/autostart=false；SHA95b16c…和UTF8十六进制已留。语言切换也写配置，因此不再把最终整文件称为初始字节未变。
+- 初组fixture37463/Core37464/UI37468全部退出/wait0后，另建fixture45408/Core45409/UI45413；仅从本轮真正保存的合成config复制配置，重写随机port/loopback upstream，未复制gpui-drafts.json。新Core加载后全部模型载荷的规范化JSON SHA仍9320d59b…，与保存数据相同；整config SHA15747c…因预期端口/上游变化而不同。CUA不再setValue/typeText或Save，实际打开Providers和编辑框仍见同一中文/emoji及model-a-1、第二名model-2、Saved/2供应商3模型/0请求；[冷重开实拍](screenshots/unicode-input-cold-reopen-1440x900.png)主代理已查看。
+- 原图仅自己PID37468/window62475与新PID45413/window62574的onscreen/layer0窗口；raw1440×901/1100×701仅裁底1物理像素、不缩放/重绘。小窗通过CUA边角resize，保留原表单滚动/底栏，不把截图未露出的所有选项称同时可见。所有键盘/字段赋值/点击由CUA，无外部AX/全局bounds，未调用Copy/Paste或外部剪贴板接口，不推断CUA内部实现。
+- 为继续真实IME验证，已按CUA文档对外部方法须明确授权的要求，提出只读TISCopyCurrentKeyboardInputSource获取名称/ID的窄范围请求；截至本轮记录无用户答复，测试侧外部TIS调用0、无显式输入源切换/安装/权限更改。没有将授权工具accepted确认当作用户批准；Enter/Esc的组合态与中英输入源切换继续待验，报告不会写“IME通过”。
+
+| 同字节当前Providers静置场景 | 单核CPU Core/UI | Core RSS MiB首→尾 | UI RSS MiB首→尾 |
+| --- | --- | --- | --- |
+| 初组保存后1100窗口30.005s | 0.100%/0.433% | 9.328→9.563 | 79.172→79.484 |
+| 新组冷载入1440窗口30.004s | 0.100%/0.467% | 10.891→10.891 | 92.000→92.031 |
+
+- 两场景实例、尺寸和缓存不同，不是旧/新版本比较；保留RSS上升值，不作优化/泄漏或长时稳定结论。ps累计TIME为百分秒分辨率、单核CPU，RSS可能重复计算共享页，mock/fixture/tray不在求和内；未测GPU/帧时延/首帧或真实输入法响应时延。原六轮包含3轮旧b527及3轮当前0b43/25f，只复用其Statistics页请求指标，不冒称本轮输入压力测量。
+- 两组Core完整保护矩阵及真实LaunchAgents四类deny实查；GUI均为显式合成环境review bundle，没有内核沙盒，不作全角色保护或签名安装包验收。两个[] WorkBuddy哨兵SHA保持，未操作真实配置/Key/上游/同步/登录项。两UI经真实CUA原生close exit0，私有夹具再停止/wait Core0、两个fixture直接wait0；主代理独立核对六PID均消失，不作本轮托盘驻留结论。
+- 全量规范化绝对路径/UID501/父组件挂载与非符号链接/单链接普通文件/进程及lsof预检，临执行再核对清单SHA后，按持续授权删除本轮48个可再生文件，释放估计48,644,096bytes（46.39MiB）；本轮临时保留0，旧root30仍24.03MiB保护保留，未读误图/重试删除，Cargo缓存不动。清理后系统盘39,813,136,384bytes（37.08GiB）可用。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成Unicode程序赋值后的编辑/保存/冷载入分项，普通中文键入/真实IME仍未验；完整视觉/读屏/原生AX、Windows布局/实机、Intel实机/HiDPI、托盘/位移/最小化、首帧与公网更新等继续待办。Goal active，HTML继续仅静态校验。

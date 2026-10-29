@@ -1,0 +1,398 @@
+{
+  "feature": "UI46 model Unicode editing and persistence acceptance",
+  "checked_at": "2026-10-30T07:48:03.089496+08:00",
+  "agent_observations": {
+    "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "ui_pid": 37468,
+    "core_pid": 37464,
+    "fixture_pid": 37463,
+    "cases": {
+      "input_source": "CUA app tree did not expose current input source; original source unknown, no input source switched.",
+      "ime_probe": "After clearing model display name, individual CUA pressKey n/i/h/a/o produced Latin nihao; no visible composition or candidate UI. Real Chinese IME composition, Enter and Escape semantics not established.",
+      "typeText": "CUA typeText of 你好 Studio🙂e + U+0301 yielded actual field value space+Studioe; Chinese, emoji and combining accent did not arrive. This is a tool/input path observation, not a demonstrated product Unicode fault.",
+      "unicode_setValue": "CUA setValue inserted 你好 Studio🙂e + U+0301. End+Backspace deleted only U+0301, leaving e; CmdZ restored and CmdShiftZ redid that deletion. Two more Backspaces removed e then full emoji. Home+ShiftRight twice+Backspace removed the two Han characters. After reset, End+Left twice+ShiftLeft+Backspace removed emoji while retaining e+U+0301. No corruption observed in those operations; grapheme-cluster deletion not claimed.",
+      "cancel_and_draft": "Cancelled Unicode editing sample; model-1 unchanged. CUA setValue 输入验证46🙂, modal Confirm, reopened and observed same value with model-a-1; Escape cancelled reopen. Before provider Save, parent verified Core still model-1 and private draft Unicode value.",
+      "noncomposition_latin": "Second model setValue Latin46 and field Return confirmed to draft; reopen change to discard-Latin then Escape preserved Latin46; restored model-2 with Return. This is not IME.",
+      "save": "After screenshots and English language change, Escape cancelled no-change modal; clicked visible Save configuration, UI displayed Saved and log Saved. Parent checks persisted model separately. English selection itself changed Core language so whole config byte-identity no longer applies."
+    },
+    "raw_images": [
+      {
+        "file": "unicode-zh-1440-raw.png",
+        "size": [
+          1440,
+          901
+        ],
+        "sha256": "b183f51ac11552d30d325e20be5bd2339b576d76638293dd6a6f830a87f7d7e3",
+        "state": "Studio Chinese / unsaved model name after CUA setValue / editor reopened"
+      },
+      {
+        "file": "unicode-en-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "0b345bf4a690f6bbf4964959e78028e3dd621efcf3aa942f262b456fc40e209c",
+        "state": "Studio English / same unsaved model name / editor reopened"
+      }
+    ],
+    "capture": "Native screencapture verified onscreen layer0 UI PID37468 window62475; original PNG without resize or cropping; small window via CUA drag([1438,898],[1098,698]).",
+    "limitations": [
+      "Real IME marked composition was not verified; no explicit input-source change or TIS query performed.",
+      "No Copy or Paste action or external clipboard interface was invoked; CUA internal implementation was not inspected.",
+      "No external AX query or global window bounds used.",
+      "setValue is not physical Unicode typing or an IME acceptance test.",
+      "Cold persistence and 30-second sampling were independently checked by the parent; process exit/wait remains to be verified by the fixture owner."
+    ],
+    "ui_close_action": {
+      "pid": 37468,
+      "method": "CUA native window close button",
+      "result": "click returned without error",
+      "note": "No Cmd+Q; Core lifecycle and wait handled separately by fixture owner."
+    },
+    "cold_reopen": {
+      "fixture": "reopen-ui46",
+      "ui_pid": 45413,
+      "core_pid": 45409,
+      "fixture_pid": 45408,
+      "source": "Previously saved synthetic configuration; loopback port/upstream adjusted by fixture; no private UI draft copied",
+      "actions": "Opened Providers and model editor without typing or setting values; Escape closed editor",
+      "display_name": "输入验证46🙂",
+      "model_id": "model-a-1",
+      "second_model": "model-2",
+      "visible_runtime_counts": {
+        "providers": 2,
+        "models": 3,
+        "requests": 0
+      },
+      "visible_state": "Saved",
+      "screenshot": {
+        "path": "reopen-ui46/unicode-cold-reopen-raw.png",
+        "window_id": 62574,
+        "size_px": [
+          1440,
+          901
+        ],
+        "sha256": "e73d4ad1a1b82aae779c20a529c700409bf44be01e300eb86110329b2b6eb883",
+        "method": "native screencapture current PID onscreen layer 0; no resize or crop"
+      },
+      "ui_close_action": {
+        "pid": 45413,
+        "method": "CUA native window close button",
+        "result": "click returned without error; process exit/wait to be checked by fixture owner",
+        "note": "No Cmd+Q and no direct Core action"
+      },
+      "parent_verified": {
+        "model_payload_sha256_prefix": "9320d59",
+        "sampling": "30.004 s; UI 0.467% single-core, RSS 92.000 to 92.031 MiB; Core 0.10%"
+      }
+    }
+  },
+  "draft_checkpoint": {
+    "stage": "Native dialog confirmation/reopen/cancel before provider Save",
+    "checked_at": "2026-10-30T07:27:19.713497+08:00",
+    "input_method": "CUA setValue followed by real native editing/buttons; not CJK IME proof",
+    "saved_config_sha256": "e53ebc77f46dd6e3168377e3e68c8f7a9dad90f1a73f72118cddefb553ec3229",
+    "saved_config_unchanged": true,
+    "draft_sha256": "296083508cdfdfb8eed67f2d433e11450f678936006234f9352b7daa9e275e3b",
+    "saved_first_model": {
+      "id": "model-a-1",
+      "name": "model-1",
+      "model": "model-a-1"
+    },
+    "draft_first_model": {
+      "id": "model-a-1",
+      "name": "输入验证46🙂",
+      "model": "model-a-1"
+    },
+    "unicode_name_codepoints": [
+      "U+8F93",
+      "U+5165",
+      "U+9A8C",
+      "U+8BC1",
+      "U+0034",
+      "U+0036",
+      "U+1F642"
+    ],
+    "unicode_name_utf16_units": 8,
+    "providers": 2,
+    "models": 3,
+    "credentials_omitted": true
+  },
+  "saved_checkpoint": {
+    "stage": "after actual native Save configuration",
+    "checked_at": "2026-10-30T07:33:23.023719+08:00",
+    "config_sha256": "95b16cd0ca4b5854282d6594ab060afb1ac2090eb527a46122262fb841eba14f",
+    "first_model": {
+      "id": "model-a-1",
+      "name": "输入验证46🙂",
+      "model": "model-a-1"
+    },
+    "second_model_name": "model-2",
+    "providers": 2,
+    "models": 3,
+    "language": "en after real UI switch",
+    "autostart": false,
+    "name_codepoints": [
+      "U+8F93",
+      "U+5165",
+      "U+9A8C",
+      "U+8BC1",
+      "U+0034",
+      "U+0036",
+      "U+1F642"
+    ],
+    "utf16_units": 8,
+    "utf8_hex": "e8be93e585a5e9aa8ce8af813436f09f9982",
+    "credentials_omitted": true
+  },
+  "core_protection": {
+    "input-ui46": {
+      "enforced": true,
+      "pid": 37464,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "reopen-ui46": {
+      "enforced": true,
+      "pid": 45409,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    }
+  },
+  "gui_kernel_guard": false,
+  "terminal": {
+    "input-ui46": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "reopen-ui46": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    }
+  },
+  "fixture_direct_wait_exit_codes": [
+    0,
+    0
+  ],
+  "all_recorded_pids_gone": true,
+  "workbuddy_sentinels": {
+    "input-ui46": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "reopen-ui46": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "shutdown_scope": "Real CUA native close exits each UI0; private fixture then explicitly stops/waits Core0 and exits0. No independent resident tray/core continuity claim.",
+  "ime_scope": "Not verified; method boundary separately recorded. No direct external AX/TIS/global bounds or explicit clipboard commands.",
+  "product_source_changed": false
+}

@@ -1,0 +1,64 @@
+{
+  "feature": "UI46 unchanged product bytes resource validation",
+  "samples": [
+    {
+      "scene": "unicode-saved-idle",
+      "checked_at": "2026-10-30T07:35:26.888460+08:00",
+      "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+      "elapsed_seconds": 30.005082790972665,
+      "metrics": {
+        "core": {
+          "pid": 37464,
+          "start_rss_mib": 9.328125,
+          "end_rss_mib": 9.5625,
+          "cpu_percent_one_core": 0.1
+        },
+        "ui": {
+          "pid": 37468,
+          "start_rss_mib": 79.171875,
+          "end_rss_mib": 79.484375,
+          "cpu_percent_one_core": 0.433
+        }
+      },
+      "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+    },
+    {
+      "scene": "cold-unicode-idle",
+      "checked_at": "2026-10-30T07:43:20.497725+08:00",
+      "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+      "elapsed_seconds": 30.00405341689475,
+      "metrics": {
+        "core": {
+          "pid": 45409,
+          "start_rss_mib": 10.890625,
+          "end_rss_mib": 10.890625,
+          "cpu_percent_one_core": 0.1
+        },
+        "ui": {
+          "pid": 45413,
+          "start_rss_mib": 92.0,
+          "end_rss_mib": 92.03125,
+          "cpu_percent_one_core": 0.467
+        }
+      },
+      "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+    }
+  ],
+  "reused_request_benchmark": {
+    "summary": "request-detail-tooltip-performance-summary.json",
+    "sha256": "1b707e51c36b9789fb83edbe304dab679dcaf71618f8e30a525b9c9203e73063",
+    "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "runs": 6,
+    "rerun_this_round": false,
+    "scene": "Prior same-byte default Statistics page; not input/composition throughput",
+    "baseline_ui_sha256": "b5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691",
+    "baseline_runs": 3,
+    "current_exact_byte_runs": 3
+  },
+  "limits": [
+    "Two current Providers idle30s samples use different instances/window sizes and warm caches; no direct old/new comparison.",
+    "RSS may doublecount shared pages, excludes mock/fixture and tray.",
+    "Not physical memory freed, GPU/firstpaint/frame time, long-term leak proof or Windows/Intel runtime."
+  ]
+}

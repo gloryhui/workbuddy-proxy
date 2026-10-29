@@ -1,0 +1,63 @@
+{
+  "feature": "UI46 native Unicode field rendering",
+  "product_ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+  "main_reviewed_all_raw_images": true,
+  "images": [
+    {
+      "file": "docs/studio_v2/screenshots/unicode-input-1440x900.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "b7ca8c44740852972b58d1dacadfc6406d2202776a97c2e40103b004b79746e3",
+      "raw_file": "input-ui46/unicode-zh-1440-raw.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "raw_sha256": "b183f51ac11552d30d325e20be5bd2339b576d76638293dd6a6f830a87f7d7e3",
+      "pid": 37468,
+      "window_id": 62475,
+      "method": "Native own-PID onscreen/layer0 screencapture; crop bottom1 physical pixel only; no scale or repaint",
+      "state": "Actual Unicode buffer after CUA setValue, modal confirmation and reopen"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/unicode-input-1100x700.png",
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "d8186bcbc482caa3a2fca2c9059c0189d57712654e2c333fe19fbd49e3bb05b5",
+      "raw_file": "input-ui46/unicode-en-1100-raw.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "raw_sha256": "0b345bf4a690f6bbf4964959e78028e3dd621efcf3aa942f262b456fc40e209c",
+      "pid": 37468,
+      "window_id": 62475,
+      "method": "Native own-PID onscreen/layer0 screencapture; crop bottom1 physical pixel only; no scale or repaint",
+      "state": "Actual Unicode buffer after CUA setValue, modal confirmation and reopen"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/unicode-input-cold-reopen-1440x900.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "3caa13b0c367c659e233d0916972e30f992c13edfe87fd2424fac4c2f363cad4",
+      "raw_file": "reopen-ui46/unicode-cold-reopen-raw.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "raw_sha256": "e73d4ad1a1b82aae779c20a529c700409bf44be01e300eb86110329b2b6eb883",
+      "pid": 45413,
+      "window_id": 62574,
+      "method": "Native own-PID onscreen/layer0 screencapture; crop bottom1 physical pixel only; no scale or repaint",
+      "state": "New Core/UI loaded actual saved models; no field injection or UI draft copy"
+    }
+  ],
+  "real_ime_composition_verified": false,
+  "scope": "Chinese and emoji rendering/field persistence; not a candidate-window or actual CJK composition screenshot. Wide and small show existing scrolling model editor, not all options at once."
+}

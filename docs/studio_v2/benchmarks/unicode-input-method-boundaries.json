@@ -1,0 +1,24 @@
+{
+  "feature": "IME/Unicode method boundary",
+  "real_cjk_ime_passed": false,
+  "current_input_source_name": null,
+  "current_input_source_id": null,
+  "original_input_source_unknown": true,
+  "explicit_input_source_switch_commands": 0,
+  "proposed_read_only_method": "TISCopyCurrentKeyboardInputSource: localized name and input source ID only",
+  "human_approval_reply_received": false,
+  "execution_status": "Not executed; explicit external-method authorization request pending",
+  "tool_rule": "CUA documentation requires explicit user request before another computer-interaction technology.",
+  "press_key_probe": "Individual n/i/h/a/o produced plain nihao; no observed marked/candidate state.",
+  "type_text_probe": {
+    "requested": "你好 Studio🙂é",
+    "observed": " Studioe",
+    "cause": "Not established; do not assign a product or automation fault from this alone."
+  },
+  "set_value_scope": "CUA setValue stored Unicode; subsequent keyboard editing, cancellation, draft/save/cold-load proven. Does not prove ordinary Unicode typing or IME commit/cancel.",
+  "combining_mark_scope": "Backspace removed U+0301 alone; codepoint deletion observed, not a grapheme-cluster deletion pass.",
+  "explicit_clipboard_commands_or_external_clipboard_apis_called": false,
+  "cua_implementation_internal_clipboard_behavior": "Not asserted",
+  "external_test_tis_query_count": 0,
+  "tis_scope": "No test-side external TIS API invocation; native product input machinery may internally query the input source and is not instrumented here."
+}

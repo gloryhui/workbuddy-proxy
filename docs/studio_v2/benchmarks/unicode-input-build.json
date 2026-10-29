@@ -1,0 +1,52 @@
+{
+  "feature": "UI-46 native input acceptance",
+  "checked_at": "2026-10-30T07:21:54.412416+08:00",
+  "source_changed": false,
+  "compile_rerun": false,
+  "reused_gates": "request-detail-tooltip-build.json: same0b43/192passed2ignored/fmt/clippy/Intelcheck/release",
+  "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "source_sha256": {
+    "gpui/src/main.rs": "963f6615fb33a5cb84072f3ff3aa9fbc108d9b8d579a7bb34ef4ffdedb1a3c98",
+    "gpui/src/ui.rs": "19200cdbdfd0fcfd886b6db0a0ab6194fa454aaacbf03a44fdaf7308177c5f61",
+    "gpui/src/ui/model_editor.rs": "72035e3d9c5957c53d63b8bcf767b7c3dd88ed0351b2d79923677cf8f757e947",
+    "gpui/src/ui/protocol_dialog.rs": "c3d7241cbd1d778b120d227b58b5dd33530421e30d63e6e21dc3cc4501882627",
+    "gpui/src/ui_components.rs": "e2b4f57d15b86892a9790e94dd71f677c0e4001accb85619c86238c57d3ea964"
+  },
+  "dependency_source_sha256": {
+    "gpui-pre-macos-0.3.9/src/window.rs": "2f17e4e9cdc2696388c7a3d4d546e82601b5dc3b5114255cc2579e3fe28e2c39",
+    "gpui-base-0.7.3/src/input/base/state.rs": "a9641aaf0c107351af892e89bf7af06b5a3c3d52290346769b7983fe6353f539"
+  },
+  "source_findings": [
+    "Actual locked gpui-pre-macos0.3.9 checks marked_text_range before keybindings; sends composing/IME printable keys to inputContext.handleEvent first.",
+    "Shared native InputState uses UTF16 marked ranges and singlelineEnter propagates/PressEnter; source path alone is not OS IME runtime acceptance.",
+    "No application-specific Shift+B binding found in main.rs; no inference about other apps or input methods.",
+    "Model display-name uses default unmasked native InputState without application pattern/number mask. Its shared normalize_input only strips newlines for this singleline mode.",
+    "Shared Backspace uses previous UTF8 cursor boundary; current combining-mark deletion is codepoint-level, not a proven grapheme-cluster guarantee."
+  ],
+  "initial_config_sha256": "e53ebc77f46dd6e3168377e3e68c8f7a9dad90f1a73f72118cddefb553ec3229",
+  "platform_limits": [
+    "macOS Apple Silicon only; no other repository UI or global input configuration changes authorized by this record.",
+    "Real Pinyin/CJK composition requires actually observed candidate/marked state; injected Chinese strings alone do not count."
+  ],
+  "dependency_provenance": {
+    "gpui-pre-macos-0.3.9/src/window.rs": {
+      "cached_crate_sha256": "c7c988b7e49775cc8542dbe48d5a10e073d8e898a023ef3ff3d24f33363e9863",
+      "cargo_lock_package_checksum_matches": true,
+      "source_member_matches_installed_registry": true,
+      "source_sha256": "2f17e4e9cdc2696388c7a3d4d546e82601b5dc3b5114255cc2579e3fe28e2c39"
+    },
+    "gpui-base-0.7.3/src/input/base/state.rs": {
+      "cached_crate_sha256": "2e9955b6f4b048fd50ca15fc8e225d80bb00ba9ebc8fecdddde5ad26dbef9270",
+      "cargo_lock_package_checksum_matches": true,
+      "source_member_matches_installed_registry": true,
+      "source_sha256": "a9641aaf0c107351af892e89bf7af06b5a3c3d52290346769b7983fe6353f539"
+    }
+  },
+  "checksum_method": "No .cargo-checksum.json file present; instead verify cached .crate SHA against Cargo.lock and compare exact archive members without extraction or registry writes.",
+  "mac_os_version": "15.8.1",
+  "product_binary_bytes": {
+    "ui": 15246768,
+    "core": 8428096
+  }
+}
