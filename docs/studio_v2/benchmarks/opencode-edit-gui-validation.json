@@ -1,0 +1,129 @@
+{
+  "feature": "UI-39 OpenCode Go inline editing",
+  "ui_sha256": "bc60105d0fe722a2877ffd2761a4a7d8d379b65e110402d2dd1d70bd8c9f0dbe",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": {
+    "synthetic_home": true,
+    "mock": "loopback",
+    "initial_providers": 2,
+    "initial_models": 3,
+    "initial_requests": 0,
+    "core_kernel_attestation": {
+      "core_pid": 11516,
+      "kernel_enforced": true,
+      "launchagents_denied": {
+        "file-read-data": true,
+        "file-write-data": true,
+        "file-write-create": true,
+        "file-write-unlink": true
+      }
+    },
+    "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "observations": {
+    "cancel": "B had unsaved name OpenCode prior draft and fixture-extra model before Edit. Edited name to B during edit, then Cancel restored preexisting name and both draft models; A independent draft retained.",
+    "save": "Explicit Save on B wrote B name and two models; saved Core A remained sub2api with 2 models while A independent unsaved name remained.",
+    "screenshot_state": "After B Save, extra model removed only from B draft and Edit entered: B shows one draft model, Runtime reports 4 saved models [A2,B2].",
+    "single_row": "B normal single row white with helper; click selected and top/bottom accent lines visible.",
+    "multi_select": "A unselected rows white/light blue; Shift selected both, accent boundaries visible; Remove models changed A draft 2\u21920, Core remained A2/B2, without Save.",
+    "mask": "Sync confirmation stayed open when clicking Appearance and Edit profile locations through mask; Esc canceled; no sync or restart.",
+    "reopen": "B one-model draft remained after close/reopen; Edit profile appeared rather than Cancel changes, indicating editing mode not persisted."
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/opencode-edit-1440x900.png",
+      "language": "zh",
+      "skin": "Studio Indigo",
+      "state": "B editing, 1 model draft",
+      "raw_pixels": [
+        1440,
+        901
+      ],
+      "pixels": [
+        1440,
+        900
+      ],
+      "raw_sha256": "45f29ef452904e4e36f26587517ff5fe4f7c597c2b95eb4e813c72fad0c26314",
+      "sha256": "146b0620f14b2622afdab6609f084b0ee60c5ac9af667ffc71b20efb45c8f152",
+      "source": "macOS screencapture -x -o -l verified UI PID 11517 window 61221; no cursor",
+      "transform": "crop bottom one physical pixel; no resize"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/opencode-edit-selected-1440x900.png",
+      "language": "zh",
+      "skin": "Studio Indigo",
+      "state": "B editing, 1 selected draft model",
+      "raw_pixels": [
+        1440,
+        901
+      ],
+      "pixels": [
+        1440,
+        900
+      ],
+      "raw_sha256": "c2e166c522150b1de82e2825d9a9cbc59ec53b69ab2e8a213585aef2732d6013",
+      "sha256": "b8890f993596158544ce49adf2e59b135d529c8fba3841203828da1c22b1744b",
+      "source": "macOS screencapture -x -o -l verified UI PID 11517 window 61221; no cursor",
+      "transform": "crop bottom one physical pixel; no resize"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/opencode-edit-1100x700.png",
+      "language": "en",
+      "skin": "Studio Indigo",
+      "state": "B editing, top of form",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "pixels": [
+        1100,
+        700
+      ],
+      "raw_sha256": "4cd2d86a80c5cfa6a0e62fbb87afb9f79e2ef20258f0288eb6db12701c2319c5",
+      "sha256": "f68f3a048899cacfb6a53e2fd66609ede4cfcbd97289f6e34c9f9ccf3c92875c",
+      "source": "macOS screencapture -x -o -l verified UI PID 11517 window 61221; no cursor",
+      "transform": "crop bottom one physical pixel; no resize"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/opencode-edit-selected-scroll-1100x700.png",
+      "language": "en",
+      "skin": "Studio Indigo",
+      "state": "B editing, scrolled model section",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "pixels": [
+        1100,
+        700
+      ],
+      "raw_sha256": "e8201a8def7b8dd542bfe2fc8f94e6cd6ee811ded28e1ee0edf423202ad5f93b",
+      "sha256": "917537899c0161ab422d06f8f9717f62ed371a71077e1462124f5ba35a8e1853",
+      "source": "macOS screencapture -x -o -l verified UI PID 11517 window 61221; no cursor",
+      "transform": "crop bottom one physical pixel; no resize"
+    }
+  ],
+  "termination": {
+    "fixture_pid": 11514,
+    "core_pid": 11516,
+    "ui_pid": 11517,
+    "reopened_ui_pid": 13947,
+    "first_ui_exit": 0,
+    "reopened_ui_exit": 0,
+    "reopened_wait_provenance": "exec session 68201 returned reopened_ui_exit 0",
+    "core_health_after_each_ui_close": 200,
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "pids_gone": true
+  },
+  "limitations": [
+    "English small screenshots are separate original scroll states; connection card and model card are not claimed to fit simultaneously.",
+    "Full keyboard, IME, accessibility and cross-platform audits not performed.",
+    "Final GUI kernel attestation preserves actual boolean output only; raw numerical sandbox_check return matrix was not saved and cannot be reconstructed after process exit. Benchmark rounds retain their own full permission proof."
+  ],
+  "main_agent_review": {
+    "all_four_final_pngs_visually_reviewed": true,
+    "png_dimensions_and_sha256_recomputed": true,
+    "gui_and_performance_pids_independently_confirmed_gone": true
+  }
+}

@@ -8,7 +8,7 @@ use gpui_kit::component::{
     table::{Column, TableDelegate, TableState},
     tooltip::Tooltip,
 };
-use gpui_kit::prelude::StatefulInteractiveElement as _;
+use gpui_kit::prelude::{FluentBuilder as _, StatefulInteractiveElement as _};
 use gpui_kit::*;
 use serde_json::Value;
 
@@ -61,19 +61,26 @@ impl TableDelegate for Models {
     ) -> Stateful<Div> {
         let owner = self.owner.clone();
         let selected = self.selection.rows.contains(&i);
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         div()
             .id(("model", i))
             .aria_selected(selected)
             .accessibility_id(format!("model-{i}"))
             .bg(if selected {
                 cx.theme().table_active
-            } else if crate::theme::current_skin() == crate::theme::Skin::Monochrome {
-                // Figma 62:308 keeps Studio's white / soft-blue row rhythm
-                // with a monochrome accent. Application selection wins over
-                // striping; the other saved palettes keep their existing rows.
+            } else if studio || crate::theme::current_skin() == crate::theme::Skin::Monochrome {
+                // Figma 62:308 / 80:646 keep the white / soft-blue row rhythm.
+                // Application selection wins; other saved palettes keep their rows.
                 rgb([crate::theme::color::WHITE, crate::theme::color::BG_NOTICE][i % 2]).into()
             } else {
                 cx.theme().background
+            })
+            .when(selected && studio, |row| {
+                // Studio's selected fill is also the alternating soft blue.
+                // Native borders retain a visible selection cue without moving columns.
+                row.border_t_1()
+                    .border_b_1()
+                    .border_color(rgb(crate::theme::palette().primary))
             })
             .on_click(move |event, window, cx| {
                 cx.stop_propagation();

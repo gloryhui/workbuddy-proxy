@@ -1,0 +1,121 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2"
+  ],
+  "rounds": [
+    {
+      "label": "previous",
+      "core": 12.09,
+      "ui": 72.27,
+      "total": 84.36,
+      "core_ready": 433.745,
+      "ui_record": 1020.81,
+      "p50": 0.172,
+      "p95": 0.191,
+      "direct_p95": 0.255,
+      "peak": 134.03,
+      "large_s": 0.09,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "opencode-edit-previous-gui.json"
+    },
+    {
+      "label": "current",
+      "core": 11.97,
+      "ui": 72.7,
+      "total": 84.67,
+      "core_ready": 224.441,
+      "ui_record": 857.528,
+      "p50": 0.173,
+      "p95": 0.201,
+      "direct_p95": 0.218,
+      "peak": 136.5,
+      "large_s": 0.086,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "opencode-edit-current-gui.json"
+    },
+    {
+      "label": "previous-run2",
+      "core": 12.73,
+      "ui": 73.61,
+      "total": 86.34,
+      "core_ready": 225.029,
+      "ui_record": 730.758,
+      "p50": 0.174,
+      "p95": 0.21,
+      "direct_p95": 0.239,
+      "peak": 134.03,
+      "large_s": 0.089,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "opencode-edit-previous-run2-gui.json"
+    },
+    {
+      "label": "current-run2",
+      "core": 12.44,
+      "ui": 71.97,
+      "total": 84.41,
+      "core_ready": 216.75,
+      "ui_record": 685.185,
+      "p50": 0.172,
+      "p95": 0.193,
+      "direct_p95": 0.219,
+      "peak": 130.05,
+      "large_s": 0.086,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "opencode-edit-current-run2-gui.json"
+    }
+  ],
+  "medians": {
+    "previous": {
+      "core": 12.41,
+      "ui": 72.94,
+      "total": 85.35,
+      "core_ready": 329.387,
+      "ui_record": 875.784,
+      "p50": 0.173,
+      "p95": 0.2005,
+      "peak": 134.03,
+      "large_s": 0.0895
+    },
+    "current": {
+      "core": 12.205,
+      "ui": 72.335,
+      "total": 84.54,
+      "core_ready": 220.5955,
+      "ui_record": 771.3565,
+      "p50": 0.1725,
+      "p95": 0.197,
+      "peak": 133.275,
+      "large_s": 0.086
+    }
+  },
+  "assessment": "No obvious regression in these four bounded runs; first-pair RSS/p95/peak increases and all raw samples retained. No optimization claim.",
+  "scope": "Fixed Core25f, old821c vs finalbc60, original scripts/benchmark.py unchanged,1000 small requests/80x1MiB/concurrency4/64 models. Both isolated fixtures use same appearance.json version1 Studio Indigo to exercise changed palette. Strictly serial after compilation/GUI/image processing. Synthetic profiles/loopback catalog/Core kernel sandbox including LaunchAgents.",
+  "limitations": [
+    "UI marker is not first paint/interactivity.",
+    "RSS may double count shared pages.",
+    "Does not measure active edit interaction latency, sustained menu CPU, public upstream latency, cross-platform or full accessibility."
+  ]
+}

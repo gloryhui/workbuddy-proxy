@@ -37,7 +37,7 @@
 | 79:885 | 31 / STUDIO V2 · 新供应商保存完成 | ui/providers.rs, ui/provider_new.rs, ui.rs | 部分：真实Save与绿色完成徽标、dirty/失败/Cancel及两尺寸实拍、四轮性能已验；精细整帧/IME/无障碍/跨平台待续 |
 | 79:1102 | 32 / STUDIO V2 · 供应商复制完成 | ui/providers.rs, ui/provider_new.rs, ui.rs | 部分：成功copy真实ID的会话徽标、dirty/Cancel/切换不串标/重开genericSaved、两尺寸与四轮性能已验；精细整帧/IME/无障碍/跨平台待续 |
 | 80:418 | 33 / STUDIO V2 · 供应商搜索（2个） | ui.rs, provider_filter.rs | 部分：过滤/草稿保护通过，最终侧栏视觉待续 |
-| 80:646 | 34 / STUDIO V2 · 编辑 OpenCode Go | ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, ui.rs | 共用原位编辑/取消组件已实现；该整帧尚未逐项对照 |
+| 80:646 | 34 / STUDIO V2 · 编辑 OpenCode Go | ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, model_table.rs, ui.rs | 部分：B原位编辑/取消恢复已有未保存名称和模型、A独立草稿/仅B显式保存、单模型白行/Studio交替行与原生选中边线、两尺寸四图/遮罩/重开及四轮性能已验；完整精细视觉/键盘/IME/无障碍及跨平台仍待专项 |
 | 80:864 | 35 / STUDIO V2 · 删除 OpenCode Go 确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs | 部分：高保真已读，同一动态目标/模型数的原生确认；真实B键盘Space删除/小窗长名与两尺寸已验，整帧最终审计待续 |
 | 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；失败后只读配置对齐/幸存dirty与异常文件守卫已验；完整视觉/IME/无障碍/跨平台与Core-unresponsive待续 |
 | 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs | 部分：原生提示/实际开关与隔离plist、分候选失败回滚/重试和Pending关闭、动态Tooltip实时刷新、遮罩/两尺寸与四轮性能已验；初始Tab/完整键盘/IME/无障碍及跨平台待续 |

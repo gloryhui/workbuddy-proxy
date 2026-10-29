@@ -502,7 +502,7 @@
     }
   ],
   "asset_audit_notes": [
-    "28 design assets are byte-exact existing local files and all registered/embedded in final Release; provider-chevron, provider-effort-chevron and provider-key-eye were missing routes before this fix.",
+    "26 design assets are byte-exact existing local files and all registered/embedded in final Release; provider-chevron, provider-effort-chevron and provider-key-eye were missing routes before this fix.",
     "Relay link differs only in clipping identifier; canonical content comparison after replacing clip id is equal. Native15px slot unchanged.",
     "Three design window-control vectors represented by existing native macOS window controls; not fake clickable replicas.",
     "Toolbar7 exact20x20 SVG inside36x36, gap8/top8/right32/width300; native control and all events unchanged."
@@ -596,5 +596,6 @@
     "after_fix": "Full final suite passes new route test for all three existing design vectors",
     "new_tests": 1
   },
-  "core_sha256_rechecked_after_final_build": true
+  "core_sha256_rechecked_after_final_build": true,
+  "asset_count_correction": "UI-39 re-count from the unchanged per-file manifest:30 total,26 exact local files,1 clip-id-only equivalent and3 native OS window controls; previous32/28 prose was incorrect."
 }

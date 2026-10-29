@@ -14,7 +14,7 @@
 | 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | macOS 两尺寸/中英/缩小恢复 Passed；拖动未测位移；Windows 待验 |
 | 供应商 0/1/2/20/64、固定 CRUD | ui.rs::sidebar、provider_filter.rs | macOS 5 种数量、末尾搜索/空结果/清空、64 滚动/新增复制禁用 Passed；选中尾行保存/resize/清搜索/展开自动可见、手动9秒不回跳与20/64两尺寸 Passed，整帧/键盘/无障碍待续 |
 | 新增、复制、删除确认与取消 | ui/provider_delete.rs、ui/sidebar.rs、ui.rs、state.rs | 原生532删除确认/已保存目标与dirty说明、Cancel/X/Esc与草稿保护、默认Return不删/Tab确认Enter或Space、Core失败重试、仅删A保留B及最终删B到空列表、无自动同步/哨兵不变、两尺寸/合法长名实拍与四轮性能 Passed；headless未知/重复删除配置不变。未实际双击/hover按压，合法长名未触发内部滚动；新增/复制独立pending、取消/恢复/重开、来源dirty先保存、Save/Test新目标/新route与mixed effort、零供应商发现及可见小窗Save已实机Passed；完整IME/无障碍/跨平台待续 |
-| 资料编辑/取消与历史草稿 | ui/provider_edit.rs、ui/providers.rs、ui.rs | 原位编辑/Cancel恢复进入前完整Draft及Selection、保留既有未保存模型/协议、A/B独立模式、失败Save保持/成功Save仅结束当前、Name Return不误提交、按钮Enter/Space、关闭重开草稿、两尺寸/已保存态实拍与4轮性能 Passed；快照仅窗口内，完整IME/无障碍与跨平台待续 |
+| 资料编辑/取消与历史草稿 | ui/provider_edit.rs、ui/providers.rs、model_table.rs、ui.rs | 既有Cancel完整Draft/Selection、Name Return及按钮键盘证据保留；本轮B原位Cancel恢复先有未保存名/新增模型、A独立草稿、显式Save仅B、Studio普通白/蓝与原生上下选中边线/Shift多选仅草稿删除、两尺寸四图/遮罩/重开与四轮同主题性能 Passed；编辑快照仅窗口内，完整视觉/键盘/IME/无障碍及跨平台待专项 |
 | 新增/复制保存完成提示 | ui/providers.rs、ui/provider_new.rs、ui.rs | 真实Save后宽窗绿色Saved/Saved copy、小窗单状态、dirty/非法Save/Cancel、切B返回不串标、关闭重开genericSaved、两尺寸与四轮性能 Passed；会话来源不写配置，通用已保存行及重开无左创建徽标、New/Copy区分两尺寸已验；busy未完整实测 |
 | 单模型提示/删除后结果 | ui/provider_feedback.rs、ui/providers.rs、ui/provider_delete.rs、config_refresh.rs、backend.rs | 实际草稿1→2→1、664×50提示/英文小窗换行；真实删A/B后幸存者1/1与1/4计数/两尺寸、edit/dirty/普通Save与重开清除 Passed；外部先删目标后的失败能只读对齐可信配置、保留原错误/dirty及Cancel快照/重开草稿，最后供应商空态、缺失/非法文件不初始化或覆盖及恢复重试、两尺寸与4轮性能 Passed；busy/三供应商切换/Core-unresponsive/完整IME/无障碍待续 |
 | 未保存切换/恢复草稿 | ui.rs::capture、switch_provider、Drafts | macOS 搜索不切换、切换保留、正常关闭重开恢复 Passed；提示表现待续 |

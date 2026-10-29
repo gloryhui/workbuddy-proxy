@@ -847,7 +847,7 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - Mono保持黑色强调色和Studio蓝灰基础面板，修复模型普通行的白/浅蓝交替底色，并补齐三个设计SVG加载路由；真实多选、草稿、主题持久化、遮罩与两尺寸通过。证据：[构建与资源](benchmarks/mono-theme-build.json)、[真实交互](benchmarks/mono-theme-gui-validation.json)、[1440中文](screenshots/mono-theme-1440x900.png)、[1100英文](screenshots/mono-theme-1100x700.png)、[四轮性能](benchmarks/mono-theme-performance-summary.json)、[清理记录](benchmarks/mono-theme-cleanup.json)、[旧版1440实拍](screenshots/mono-theme-baseline-1440x901.png)。
 - 官方Figma MCP读取62:308高保真context和截图：accent#27272a/dark#18181b，普通模型行白色与soft-blue#f4f6ff交替，侧栏与基础背景仍为Studio蓝灰。实拍旧78ab两行均#f7f8fc；最终821c未选两行为#ffffff/#f4f6ff。只在Models::render_tr的Mono未选分支补底色，原选中分支优先，其余保存皮肤行底色/原Selection/Kit虚拟表格/事件/核心均不改。既有Mono高对比白色导航轨保留，完整精细视觉差异仍待专项。
-- 32个设计资源核对：28个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有28文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。
+- 30个设计资源核对：26个现有本地文件逐字节相同；relay-link仅内部clip标识不同，完整内容规范化比较相同；3个窗口控制保留现有原生macOS生命周期，不画假的交通灯。发现provider-chevron16px、provider-effort-chevron14px及provider-key-eye17px虽在仓库却未注册，实际走通用回退。新增Assets::load原文件include_bytes路由，不改SVG或依赖；回归测试修复前真实exit101/断言失败，修复后通过。所有26文件实际路由和最终Release嵌入字节已核实；七工具栏20px/36px/8px间距/top8/right32保留。
 - 最终821c通过fmt、187 tests/2既有专项ignored、严格clippy all-targets/-D warnings、Intel check1.688s与Release39.673s；UI15,230,000bytes/SHA256 `821cd561cdb4c9562abaf01424164146ce49be59740b9cc746b293742f81a333`，Core仍25f/8,428,096bytes，原benchmark SHA不变。新增一项资源路由回归，不为纯底色写镜像测试。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留；先前6d25中间候选记录不冒充最终验收。
 - 最终独立合成HOME/loopback夹具2供应商/3模型/0请求。真实Shift选两行，跨Blue→Mono和中文→英文后不重选，Remove models使UI草稿2→0；Core保存数量仍[2,1]、原供应商名称不变，无Save。名称和零模型草稿在正常关闭重开后仍在，实际Appearance菜单Mono on、英文保留。Sync确认期间点工具栏皮肤位置不穿透，Esc取消，无同步/重启或真实登录项操作。完整Cmd切换组合、初始Tab、IME及无障碍仍未专项验收，不从颜色或AX缺少selected推断多选。
 - 主代理已逐张查看最终两张PNG并重算尺寸/SHA；宽图为普通行，窄图为两行已选、中心列滚动到模型目录，未展示完整连接卡，不冒称整帧最终视觉。原图1440×901/1100×701，仅裁底1物理像素，无缩放；固定窗口61050实拍，使用已明确授权的原生截图与MouseMoved方法，点击/按键均CUA。
@@ -866,3 +866,28 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 按持续安全清理授权，完整路径/UID501/父组件与挂载/无符号链接/全范围/进程及lsof预检、临执行二次核实后，仅删除逐一列明8目录和1二进制副本的136个专属可再生文件，释放已分配空间估计190,558,208bytes（181.73MiB）。本轮保留25,198,592bytes（24.03MiB），系统盘可用40,547,598,336bytes（37.76GiB）；共享Cargo缓存及4个未知历史项保留。
 - 真实记录一次截图命令失误：误用未核实窗口61049得到未知内容临时PNG，未由代理查看或读取其内容、未作交付图。自动审批拒绝后续rm-f及同命令中的再截图，原因为“rm -f style commands are not permitted. Use a safer approach”。没有覆盖/换命令删除该文件；正确61050另存截图。整个mono-final2目录与临时根及少量脚本保留，明确排除于清理范围，不以递归父目录删除绕过拒绝。
 - 黑白主题62:308转部分验收，剩余0/40待初审、39部分验收、1复用待核对、0整帧最终验收。进度生成器按待初审数量显示“逐帧初审已覆盖 · 专项验收与差异修复”；不是整项目完成。继续复核复用帧、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等未完成项，Goal保持active。进度HTML仍只有静态验证，不将先前浏览器file拒绝绕过或冒称渲染通过。
+
+
+## 小功能 39：OpenCode Go 编辑帧复核与 Studio 模型选中态（2026-10-30，北京时间）
+
+- 最后一项复用帧80:646已补实机：B原位编辑/完整草稿取消/独立A与显式B保存、两尺寸四张截图、遮罩和重开通过；修复Studio普通模型行并用原生边线区分选中态。证据：[构建与资源](benchmarks/opencode-edit-build.json)、[真实交互](benchmarks/opencode-edit-gui-validation.json)、[1440中文](screenshots/opencode-edit-1440x900.png)、[1100英文顶部](screenshots/opencode-edit-1100x700.png)、[1440单行选中](screenshots/opencode-edit-selected-1440x900.png)、[1100滚动模型区](screenshots/opencode-edit-selected-scroll-1100x700.png)、[四轮性能](benchmarks/opencode-edit-performance-summary.json)、[清理记录](benchmarks/opencode-edit-cleanup.json)。
+- 官方MCP读取80:646完整高保真context及截图，30资源重新下载核对：26本地文件逐字节同、1个link仅clip标识不同且规范化全文相同、3个窗口按钮保留原生OS生命周期。26文件的实际Assets::load路由与最终Release字节均核实；本轮更正UI-38的32/28文字统计为30/26，原逐文件明细和核验结果不变，没有重写Git历史。
+- 共用provider_edit原来已有真实Edit/Cancel快照，原2项契约再次通过；未改其开始/取消/显式保存/配置格式/事件。基线821c实际B编辑取消及A/B独立草稿已验；[旧版实拍](screenshots/opencode-edit-baseline-1440x901.png)暴露Studio普通行仍统一#f7f8fc。只扩展Models::render_tr的Studio Indigo白色/BG_NOTICE交替行，保持Mono上轮行为与其余旧皮肤；Studio选中填充本来与奇数条纹同色，补原生top/bottom各1px主题强调边线。Kit可能省略最后行底边，因此显式声明上下边，不依赖该条件；列宽、固定29px行高、原Selection/Shift/Cmd/Ctrl与事件不改，无新控件/定时器。
+- 最终bc60通过fmt、187测试/2既有专项ignored、严格clippy all-targets/-D warnings、Intel check1.783s与Release39.607s；UI15,230,000bytes/SHA256 `bc60105d0fe722a2877ffd2761a4a7d8d379b65e110402d2dd1d70bd8c9f0dbe`，Core仍25f/8,428,096bytes。没有为纯底色/边线新增镜像测试。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留；中间cfff仅准备状态、不作为最终验收。
+- 最终独立合成HOME/loopback夹具，初始2供应商/3模型/0请求。B进入编辑前已有OpenCode prior draft名称及新增fixture-extra模型，Edit内改名再Cancel真实恢复这份未保存名称和两模型；A独立名称草稿不丢。实际Save仅写B名称和两模型，Core A仍原名/2模型、A未保存名称保留；随后只从B草稿移除extra回1模型，未保存。因此截图B显示1草稿模型、Runtime显示4已保存模型[A2,B2]为真实状态，未伪造与Figma相同的计数、预设或公网URL。
+- B单模型普通白行及选择后的上下边线实拍；A普通两行白/浅蓝，Shift选两行后边线均可见，再Remove models使A草稿2→0，Core仍[A2,B2]，无Save A；B单模型草稿保持。Sync确认期间点Appearance和Edit原位置均未穿透，Esc取消，无同步/重启或登录项操作。没有将Figma误高亮A/同时dirty与saved的冲突状态硬编码到产品，当前身份和草稿状态以原逻辑为准。
+- 主代理逐张查看最终4图并重算PNG尺寸/SHA：1440普通/选中、1100顶部/滚动模型区是分别实拍的原生状态，无拼接或缩放，仅裁raw1440×901/1100×701底1物理像素。英文小窗使用原内部滚动，不能据此声称连接卡和模型卡同屏；真实Cancel changes、模型提示和Save均可达。本轮不声明整帧精细视觉或完整键盘/IME/无障碍已完成。
+- 最终Core11516活着时实际kernel_protection布尔enforced及真实LaunchAgents四类deny已取得，未用旧PID替代；原始数字矩阵未持久化、退出后无法恢复，报告如实只保留原布尔摘要。首次UI11517/重开13947均exit0并wait，两次关闭后Core health200，Core11516/fixture11514 exit0并wait；主代理确认PID消失。重开B的一模型草稿保留，入口恢复Edit profile，编辑快照不持久化属原会话语义；原exec session68201的wait来源记录在GUI证据。WorkBuddy合成[] SHA不变。
+
+同一25f Core、旧821c与最终bc60，原benchmark严格旧→新→旧→新，每轮1000小请求及80×1MiB/并发4、64模型。私有wrapper给两版同样写入隔离的appearance.json版本1/Studio Indigo，实际覆盖本轮主题；原基准脚本SHA/负载不改。编译/GUI/图像处理全停后独占串行，Core内核沙盒和真实LaunchAgents权限各自实查，四轮直接子进程全部wait，退出数组[-15,-15,0,0]且Core/UI消失。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧821c](benchmarks/opencode-edit-previous-gui.json) | 12.09 / 72.27 / 84.36 | 433.745 / 1020.810 | 0.172 / 0.191 | 134.03 | 0.090 |
+| [新bc60](benchmarks/opencode-edit-current-gui.json) | 11.97 / 72.70 / 84.67 | 224.441 / 857.528 | 0.173 / 0.201 | 136.50 | 0.086 |
+| [旧821c复测](benchmarks/opencode-edit-previous-run2-gui.json) | 12.73 / 73.61 / 86.34 | 225.029 / 730.758 | 0.174 / 0.210 | 134.03 | 0.089 |
+| [新bc60复测](benchmarks/opencode-edit-current-run2-gui.json) | 12.44 / 71.97 / 84.41 | 216.750 / 685.185 | 0.172 / 0.193 | 130.05 | 0.086 |
+
+- 四轮短测未见持续明显退化，合计RSS中位85.350→84.540MiB、UI72.940→72.335MiB、p95中位0.2005→0.1970ms、峰值134.030→133.275MiB。首轮新合计/峰值/p95分别增加0.31MiB/2.47MiB/0.010ms，次轮方向相反，逐轮原值全保留，不宣称改善。UI marker不是首帧/可交互，RSS共享页可双计；不测真实编辑时延、持续弹层CPU、公网或跨平台。
+- 按持续安全清理授权，完整规范化路径/UID501/父组件与挂载/无符号链接/全范围/进程及lsof预检、临执行二次核实后，删除本轮单一精确目录的186个专属可再生文件，释放已分配空间估计215,400,448bytes（205.42MiB），本轮专属临时保留0，系统盘可用40,482,267,136bytes（37.70GiB）。上一轮因删除被拒而保留的整个root30为25,198,592bytes（24.03MiB，仅元数据计量），未读取其误截图内容、未重试删除；共享Cargo缓存和4个未知历史项也保留。
+- 80:646由共用待核对转部分验收；剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。40帧均有分项证据，仍须完整精细视觉、初始Tab/键盘、IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘和更新公网成功等专项。源码中Kit会再次写入行aria_selected，应用多选的最终原生AX输出仍须专项核对，不能由本轮可见边线推断正确；原生模型编辑图标着色等既有精细视觉也不列整帧最终通过。Goal保持active；进度HTML继续仅静态校验，不绕过先前浏览器file限制。
