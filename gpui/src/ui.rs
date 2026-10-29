@@ -1,6 +1,7 @@
 mod model_editor;
 mod model_picker;
 mod protocol_dialog;
+mod provider_delete;
 mod providers;
 mod relay;
 mod sidebar;
@@ -39,7 +40,8 @@ gpui_kit::actions!(
         EditModel,
         Dismiss,
         Quit,
-        ActivateProtocolTab
+        ActivateProtocolTab,
+        ActivateProviderDeleteControl
     ]
 );
 
@@ -219,6 +221,9 @@ pub struct Proxy {
     effort_select: Entity<ChoiceState>,
     preset_select: Entity<SelectState<SearchableVec<Choice>>>,
     delete_open: bool,
+    provider_delete_target: Option<provider_delete::DeleteTarget>,
+    provider_delete_scroll: ScrollHandle,
+    provider_delete_focus: [FocusHandle; 2],
     sync_open: bool,
     unsync_open: bool,
     startup_checked: bool,
@@ -832,6 +837,9 @@ impl Proxy {
             effort_select,
             preset_select,
             delete_open: false,
+            provider_delete_target: None,
+            provider_delete_scroll: ScrollHandle::new(),
+            provider_delete_focus: std::array::from_fn(|_| cx.focus_handle().tab_stop(false)),
             sync_open: false,
             unsync_open: false,
             startup_checked: false,
@@ -927,6 +935,7 @@ impl Proxy {
         .detach();
         this.subscribe_model_editor_focus(window, cx);
         this.subscribe_protocol_editor_focus(window, cx);
+        this.subscribe_provider_delete_bounds(window, cx);
         this.load_form(window, cx);
         // Current-provider labels and save state follow editing events, rather
         // than waiting for an idle draft-persistence tick to redraw the UI.
@@ -1705,6 +1714,7 @@ impl Proxy {
         self.editing = None;
         self.model_edit_error = None;
         self.delete_open = false;
+        self.provider_delete_target = None;
         self.sync_open = false;
         self.unsync_open = false;
         if self.startup_sync_open {
@@ -1792,6 +1802,7 @@ impl Proxy {
                     owner: owner.clone(),
                 }
             });
+            let is_provider_delete = self.delete_open;
             let is_protocol = self.protocol_open;
             let is_picker = self.picker.is_some();
             let is_model_editor = self.editing.is_some();
@@ -1824,7 +1835,20 @@ impl Proxy {
                 }
                 let confirm_owner = owner.clone();
                 let owner = owner.clone();
-                let dialog = if is_protocol {
+                let dialog = if is_provider_delete {
+                    let content_body = body.clone();
+                    dialog
+                        .width(px(532.))
+                        .min_h(px(322.))
+                        .p(px(26.))
+                        .pt(px(22.))
+                        .pb(px(18.))
+                        .bg(rgb(crate::theme::color::BG_BAR))
+                        .rounded(px(18.))
+                        .border_color(rgb(crate::theme::color::BORDER))
+                        .margin_top(provider_delete::margin_top(window))
+                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                } else if is_protocol {
                     let height = protocol_dialog::surface_height(window);
                     let content_body = body.clone();
                     dialog
@@ -2211,51 +2235,7 @@ impl Proxy {
         } else if self.unsync_open || self.sync_open {
             self.sync_confirmation(cx)
         } else if self.delete_open {
-            crate::ui_components::dialog_body()
-                .w_full()
-                .gap(px(crate::theme::space::CARD_GAP))
-                .child(crate::ui_components::dialog_title(
-                    self.t("删除供应商？", "Delete provider?"),
-                ))
-                .child(body_hint(self.t(
-                    "将移除此供应商及其保存的 Key 和模型。",
-                    "This removes the provider and its saved key and models.",
-                )))
-                .child(
-                    crate::ui_components::dialog_footer()
-                        .child(
-                            crate::ui_components::button(
-                                "delete-cancel",
-                                crate::ui_components::ButtonKind::Normal,
-                                self.t("取消", "Cancel"),
-                                false,
-                                false,
-                            )
-                            .on_click(
-                                cx.listener(|this, _, window, cx| {
-                                    this.dismiss(&Dismiss, window, cx)
-                                }),
-                            ),
-                        )
-                        .child(
-                            crate::ui_components::button(
-                                "delete-confirm",
-                                crate::ui_components::ButtonKind::Danger,
-                                self.t("删除", "Delete"),
-                                false,
-                                false,
-                            )
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.delete_open = false;
-                                this.send(
-                                    "delete",
-                                    vec![json!({"command":"delete","provider_id":this.selected()})],
-                                    cx,
-                                );
-                            })),
-                        ),
-                )
-                .into_any_element()
+            self.provider_delete_confirmation(window, cx)
         } else {
             return None;
         };
@@ -2418,12 +2398,15 @@ impl Render for ModalBody {
                     div()
                         .id("proxy-modal-body")
                         .track_focus(&this.modal_focus)
-                        .when(this.protocol_open, |body| {
+                        .when(this.protocol_open || this.delete_open, |body| {
                             // The modal view lives in Kit's window layer, outside
                             // Proxy's dispatch tree. Its generic body focus needs
                             // a local dismissal route too, not only input focus.
-                            body.key_context("ProtocolModal")
+                            body.key_context("ProxyModal")
                                 .on_action(cx.listener(Proxy::dismiss))
+                        })
+                        .when(this.delete_open, |body| {
+                            body.on_key_down(cx.listener(Proxy::scroll_provider_delete))
                         })
                         .child(body)
                         .into_any_element()

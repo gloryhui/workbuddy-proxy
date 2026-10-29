@@ -57,7 +57,10 @@ pub mod color {
     pub const SIDEBAR_LINE: u32 = 0x2c3246;
     pub const SIDEBAR_ACTIVE: u32 = 0x2d3251;
     pub const SIDEBAR_HOVER: u32 = 0x20263a;
-    pub const SIDEBAR_DANGER: u32 = 0xc94f5e;
+    pub const DESTRUCTIVE: u32 = 0xc94f5e;
+    pub const DESTRUCTIVE_TINT: u32 = 0xfff0f0;
+    pub const DESTRUCTIVE_HOVER: u32 = 0xb74351;
+    pub const SIDEBAR_DANGER: u32 = DESTRUCTIVE;
     pub const TERMINAL: u32 = 0x171c2c;
     pub const TERMINAL_LINE: u32 = 0x2d3548;
     pub const TERMINAL_TEXT: u32 = 0xadb8ca;
@@ -71,8 +74,9 @@ pub mod color {
     pub const DANGER_BORDER: u32 = 0xf5c6b3;
     pub const WARNING: u32 = 0xb4690e;
 
-    /// rgba(20, 30, 50, .38), encoded as RGBA for Kit's overlay colour.
-    pub const SCRIM_RGBA: u32 = 0x141e3261;
+    /// Shared Studio overlay: rgba(18, 23, 43, .49), from delete frames
+    /// 78:1080 / 80:864, encoded as RGBA for Kit's native modal layer.
+    pub const SCRIM_RGBA: u32 = 0x12172b7d;
 
     pub const CHART_INPUT: u32 = 0x6c61f8;
     pub const CHART_OUTPUT: u32 = 0x2e9e6b;

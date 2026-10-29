@@ -1,0 +1,8 @@
+{
+  "earlier_api_cleanup_bytes": 8753152,
+  "ui_fixture_cleanup_bytes": 24920064,
+  "final_root_cleanup_bytes": 109289472,
+  "total_deleted_allocated_bytes": 142962688,
+  "phase_temp_remaining_bytes": 0,
+  "system_disk_free_bytes": 38165327872
+}

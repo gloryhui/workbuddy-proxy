@@ -471,3 +471,29 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 对照最初同机基线Core/UI/合计13.88/75.27/89.14 MiB、核心/累计UI标记45.924/796.346ms、请求p50/p95 0.177/0.209ms，仅作范围参考。本批可比证据以上述049/98fb同口径交错四轮为准。完整IME/无障碍、Windows/Intel Mac/HiDPI与40帧最终审计仍未完成，Goal保持active。
 
 - 进程安全结束后，子代理核对两套UI/Core/mock的exit0与PID消失、父目录无lsof/命令行引用，清理确切自有GUI夹具59,768 KiB。主代理核对四轮benchmark exit0、sandbox enforced/各Core PID消失、专属根无lsof引用后，清理构建日志/上版UI副本/四份基准副本106,648 KiB。本轮累计166,416 KiB（约162.52 MiB），自有临时文件剩余0 bytes。两项归属未明历史空目录各0 KiB保留，既有049原始截图398,590 bytes及本轮交付PNG/JSON/报告、共享Cargo缓存保留；系统盘当前剩余36.61 GiB。
+
+
+## 小功能 25：供应商删除确认（2026-10-29，北京时间）
+
+- 官方MCP高保真context及渲染已读取 `78:364` / `78:605` / `78:843` / `78:1080`，另补读 `80:864`：新增/编辑/复制为原位草稿，继续保留待办；本批对齐删除确认 `78:1310` / `80:1093`。原生532×322名义尺寸、46px危险徽标、目标名称/已保存模型数、不可直接撤销与再次同步说明、分隔及38px按钮。徽标“!”是Figma原生文本节点，不是替代SVG的近似Unicode图标。
+- `ui/provider_delete.rs` 打开时只捕获UI草稿，缓存同一目标ID、已保存名称/模型数及dirty状态；明确确认才沿用原delete命令，不自动save/sync/restart。Cancel/X/Esc清除本地确认状态并保留草稿，原busy/Runtime失败反馈及配置重载保持。没有修改核心、管理API或配置格式。
+- 实拍发现Kit自定义按钮正常底色被混为20%，已显式设置实心危险底色并补active；disabled仍用原生状态。对照两张删除帧的scrim rgba(18,23,43,.49)，统一原生遮罩token由原.38收敛为.49；协议帧 `61:289` 是近似的rgba(19,23,46,.48)。采用共享.49保持弹窗遮罩一致，不增加额外图层、动画或事件处理。
+- 正文有界、固定头/尾、原生wheel/scrollbar和Home/End/Page/方向键后备路径；窗口bounds observer只在弹窗激活时notify，无timer/持续重绘。核心仍限制名称<=240 UTF-8 bytes且不允许控制字符：2024bytes保存被拒，229bytes合法自然长名在小窗完整换行5行。另一233bytes U+2028合成名称被现有API接受，但GPUI呈连续文字，未触发overflow。因此**内部滚动与Home/End/Page尚未实际触发，不标Passed**；没有绕过核心校验构造非法配置。
+- 最终代码通过fmt、167项测试、严格clippy（all-targets、-D warnings）及Release构建41.64s。UI 15,093,376 bytes，SHA256 `4d834b44ff878932abfb30a319ec599f74eb05d72bee7492a5305755409dfdfc`；核心仍8,428,096 bytes、SHA256 `25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5`。Intel `cargo check --manifest-path gpui/Cargo.toml --target x86_64-apple-darwin --all-targets` 初次27.74s/最终1.60s Passed，证明类型检查兼容，不代表Intel实际运行。既存block0.1.6未来兼容提示保持。[编译证据](benchmarks/delete-provider-build.json)。
+- 锁屏期间先编码/编译；桌面复查可交互后才开始GUI，旧98fb真实取消作为对照。2af9/2bbc候选实测A已保存2模型、UI名称/3模型草稿时，提示仍指向已保存A/2模型并显示dirty说明；Cancel/X/标题空白Esc/聚焦取消后的Return或Space保留草稿，容器Return不隐式删除。隔离instance端口临时改为1，删除显示真实Core连接错误，配置仍A2/B1且草稿保留；helper finally恢复原端口，重新打开并Tab聚焦Confirm/Return后只删除A，B/1模型及合成WorkBuddy文件保留。
+- 最终4d83重拍三图；标题空白Esc、协议Select优先Esc与标题空白Esc烟测Passed。确认按钮保留原生Tab停靠，非Tab停靠作用域使Enter/Space只操作明确聚焦按钮；最终版两次Tab可见Confirm焦点后Space删除B，核心实读0供应商/0模型/0请求，合成 `.workbuddy/models.json` SHA前后均 `4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`。没有真实双击/快速重复测试，hover/pressed未独立捕获，不能将代码路径当实测。各候选与最终版范围见[脱敏GUI记录](benchmarks/delete-provider-gui-validation.json)。
+- 实际截图均已主代理打开检查：[1440×900中文Studio](screenshots/delete-provider-1440x900.png)、[1100×700英文Mono](screenshots/delete-provider-1100x700.png)、[合法长名小窗](screenshots/delete-provider-long-1100x700.png)。宽图raw1440×900无裁切；小图raw1100×701仅裁底边1物理像素，无缩放或重绘。背景是删除A后真实B/1模型/0请求，未写死Figma示例。最后关UI/wait退出0，Core仍health HTTP200 ready，再正常停止Core/fixture，退出均0。
+- [Headless API保护回归](benchmarks/delete-provider-api.json)：同一25f核心、sandbox_check enforced、合成HOME/config与真实格式哨兵。delete A仅保留B完整对象/一模型；不存在及重复delete HTTP400且config SHA不变，哨兵不变、代理请求0。仅证明API契约，不替代上述GUI证据。
+
+最终4d83与旧98fb使用同一25f核心、Release、默认GUI页与相同benchmark脚本；先确认 `python3 scripts/benchmark.py --help`。每轮配置1供应商/64模型，200小请求、80次1MiB/并发4，无真实上游。交错顺序为旧→新→旧→新，核心沙盒均实际核对enforced、输入UI SHA均校验，所有owned子进程已wait，UI PID已消失。Mock及GUI controller按既有脚本以SIGTERM收尾（返回数组[-15,-15,0,0]），不把它写成全部退出0。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪标记 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧98fb](benchmarks/delete-provider-previous-gui.json) | 11.98 / 73.47 / 85.45 | 475.893 / 1181.296 | 0.164 / 0.199 | 126.91 | 0.099 |
+| [新4d83](benchmarks/delete-provider-gui.json) | 11.33 / 74.06 / 85.39 | 231.278 / 1211.513 | 0.166 / 0.186 | 129.95 | 0.094 |
+| [旧98fb复测](benchmarks/delete-provider-previous-run2-gui.json) | 12.27 / 73.38 / 85.64 | 233.151 / 809.285 | 0.173 / 0.249 | 134.11 | 0.093 |
+| [新4d83复测](benchmarks/delete-provider-run2-gui.json) | 12.44 / 74.56 / 87.00 | 220.298 / 707.438 | 0.152 / 0.180 | 131.20 | 0.102 |
+
+- 合计RSS两次中位数85.545→86.195MiB（+0.650MiB，+0.76%），UI约+0.885MiB；该口径未见明显持续退化，不宣称性能提升。Core/UI标记为进程记录就绪，不是首帧/可交互时间；测的是默认页、同机短轮loopback，不能推断打开全部弹窗/长期负载或跨平台表现。Core与mock/client隔离，RSS共享页可能双计，托盘单独记在JSON。
+- Goal保持active。供应商新增/编辑/复制草稿及取消、40帧最终精细审计、完整IME/无障碍和Windows/Intel实际运行仍待后续；本批不把这些缺项标为完成。
+- 清理：UI/Core/mock/benchmark子进程均已停止并wait，最终再次核实专属根无lsof/进程引用。先前API夹具8,753,152 bytes、UI夹具24,920,064 bytes、本次对照程序/4轮基准副本/编译日志109,289,472 bytes，合计删除已分配空间约142,962,688 bytes（136.34MiB）；本批专属系统临时根已删除，余0。benchmark内部TemporaryDirectory也按上下文自动清理，不重复估算其大小。共享Cargo缓存、既有归属不明目录及历史toolbar raw证据保留。系统盘当前可用38,165,327,872 bytes（35.54GiB）。

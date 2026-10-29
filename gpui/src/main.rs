@@ -349,7 +349,17 @@ fn main() {
                 KeyBinding::new("enter", ui::EditModel, Some("ModelList")),
                 KeyBinding::new("enter", ui::ActivateProtocolTab, Some("ProtocolTab")),
                 KeyBinding::new("space", ui::ActivateProtocolTab, Some("ProtocolTab")),
-                KeyBinding::new("escape", ui::Dismiss, Some("ProtocolModal")),
+                KeyBinding::new("escape", ui::Dismiss, Some("ProxyModal")),
+                KeyBinding::new(
+                    "enter",
+                    ui::ActivateProviderDeleteControl,
+                    Some("ProviderDeleteControl"),
+                ),
+                KeyBinding::new(
+                    "space",
+                    ui::ActivateProviderDeleteControl,
+                    Some("ProviderDeleteControl"),
+                ),
                 KeyBinding::new("escape", ui::Dismiss, Some("Proxy")),
                 KeyBinding::new("cmd-q", ui::Quit, None),
             ]);

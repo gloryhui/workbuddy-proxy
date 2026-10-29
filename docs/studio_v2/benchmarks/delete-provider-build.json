@@ -1,0 +1,24 @@
+{
+  "ui_sha256": "4d834b44ff878932abfb30a319ec599f74eb05d72bee7492a5305755409dfdfc",
+  "ui_bytes": 15093376,
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "native_target": "aarch64-apple-darwin",
+  "tests_passed": 167,
+  "fmt": "passed",
+  "clippy_all_targets_deny_warnings": "passed",
+  "release_build": "passed",
+  "intel_target_check": {
+    "command": "cargo check --manifest-path gpui/Cargo.toml --target x86_64-apple-darwin --all-targets",
+    "status": "passed",
+    "seconds": 1.6,
+    "runtime_verified": false,
+    "notes": "Initial cold target check passed in 27.74s; final source recheck passed in 1.60s."
+  },
+  "gui_verified": true,
+  "gui_blocker": null,
+  "warning": "Existing block 0.1.6 future-incompatibility warning",
+  "release_build_seconds": 41.64,
+  "gui_validation_state": "passed_for_documented_scope",
+  "gui_evidence": "delete-provider-gui-validation.json"
+}

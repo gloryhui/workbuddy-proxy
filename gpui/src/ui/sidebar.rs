@@ -498,8 +498,7 @@ impl Proxy {
                 .tooltip(self.t("删除供应商", "Delete provider"))
                 .accessibility_label(self.t("删除供应商", "Delete provider"))
                 .on_click(cx.listener(|this, _, _, cx| {
-                    this.delete_open = true;
-                    cx.notify();
+                    this.open_provider_delete(cx);
                 })),
             )
             .into_any_element()

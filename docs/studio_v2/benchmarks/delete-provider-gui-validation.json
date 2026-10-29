@@ -1,0 +1,117 @@
+{
+  "feature": "provider delete confirmation",
+  "platform": "macOS",
+  "isolation": "Synthetic isolated HOME/config, sandboxed core and local mock; no real WorkBuddy data or clipboard.",
+  "versions": {
+    "baseline_ui_sha256": "98fb1329837d75a5ff711b7488c45393ff45a0504c9d4f0b1a296b936baf5a4c",
+    "initial_candidate_sha256": "2af9a45f5800dd98678a9cc7150be5d149668242ac6e99d796d9216ea9d480dd",
+    "interaction_candidate_sha256": "2bbcdfa2de015062a1439eae92f055e8c253e582fffe24e77ff68cab26a80233",
+    "final_ui_sha256": "4d834b44ff878932abfb30a319ec599f74eb05d72bee7492a5305755409dfdfc",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+  },
+  "fixture": {
+    "initial_providers": [
+      {
+        "name": "Provider A",
+        "saved_models": 2
+      },
+      {
+        "name": "Provider B",
+        "saved_models": 1
+      }
+    ],
+    "initial_requests": 0,
+    "synthetic_workbuddy_models_sha256_before_and_after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "observations": [
+    {
+      "version": "98fb",
+      "result": "Old delete modal was opened and Cancel preserved A and B."
+    },
+    {
+      "version": "2af9",
+      "result": "Saved Provider A and its two saved models shown while the draft had a changed name and three models; unsaved-change warning displayed. Cancel, X, title-blank Escape and focused Cancel Return/Space preserved draft; generic Return did not delete. Protocol select Escape closed only select, tab Return did not apply, title Escape closed dialog."
+    },
+    {
+      "version": "1844",
+      "result": "Pre-format build showed opaque red danger button; not final evidence."
+    },
+    {
+      "version": "2bbc",
+      "result": "Cancel, X, title-blank Escape preserved A draft; generic Return did not delete. Invalid port in the isolated instance file caused Core is not responding while Core retained A2/B1 and draft remained. The instance file was restored by helper finally. After restoration, two Tabs and Return on Confirm deleted A, retained B with one saved model, and did not alter synthetic WorkBuddy file."
+    },
+    {
+      "version": "4d83",
+      "result": "Final scrim and danger button were photographed; title-blank Escape closed delete dialog. Protocol select Escape closed select first and title-blank Escape closed its dialog. A legal 229-byte B name was fully visible over five wrapped lines at small size. Two Tabs visibly focused Confirm and one Space deleted B; Core then contained zero providers, zero models and zero requests. Synthetic WorkBuddy file hash remained unchanged."
+    },
+    {
+      "version": "4d83",
+      "result": "A 233-byte name with 58 Unicode U+2028 separators was accepted by the existing Core API, but the UI rendered it as contiguous text and did not trigger internal overflow. It was replaced with the valid natural long name for the final image."
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/studio_v2/screenshots/delete-provider-1440x900.png",
+      "raw_pixels": [
+        1440,
+        900
+      ],
+      "output_pixels": [
+        1440,
+        900
+      ],
+      "crop": "none",
+      "scale": "none",
+      "locale": "zh",
+      "theme": "Studio Indigo",
+      "state": "Provider B, 1 saved model, 0 requests"
+    },
+    {
+      "path": "docs/studio_v2/screenshots/delete-provider-1100x700.png",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "output_pixels": [
+        1100,
+        700
+      ],
+      "crop": "bottom 1 physical pixel",
+      "scale": "none",
+      "locale": "en",
+      "theme": "Mono",
+      "state": "Provider B, 1 saved model, 0 requests"
+    },
+    {
+      "path": "docs/studio_v2/screenshots/delete-provider-long-1100x700.png",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "output_pixels": [
+        1100,
+        700
+      ],
+      "crop": "bottom 1 physical pixel",
+      "scale": "none",
+      "locale": "en",
+      "theme": "Mono",
+      "state": "Provider B, valid 229-byte name, 1 saved model, 0 requests"
+    }
+  ],
+  "limitations": [
+    "No real double-click or rapid repeat activation was tested.",
+    "Long-name data remained within the modal viewport; internal scrolling, PageDown, End and Home were not triggered or verified.",
+    "Danger-button hover and pressed appearance were not independently captured."
+  ],
+  "cleanup_observations": {
+    "final_ui_exit": 0,
+    "core_after_ui_close": {
+      "http": 200,
+      "state": "ready"
+    },
+    "core_exit": 0,
+    "fixture_and_mock_exit": 0,
+    "owned_processes_confirmed_gone": true
+  }
+}

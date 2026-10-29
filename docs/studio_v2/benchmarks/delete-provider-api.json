@@ -1,0 +1,20 @@
+{
+  "mode": "headless API contract only; no GUI validation",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_sandbox_enforced": true,
+  "initial_providers": 2,
+  "initial_models": 3,
+  "unknown_provider_http_status": 400,
+  "unknown_provider_config_unchanged": true,
+  "deleted_provider": "A",
+  "remaining_provider": "B",
+  "remaining_models": 1,
+  "unrelated_provider_exactly_preserved": true,
+  "synthetic_workbuddy_file_unchanged": true,
+  "repeat_delete_http_status": 400,
+  "repeat_delete_config_unchanged": true,
+  "proxy_requests": 0,
+  "status": "passed",
+  "core_exit_code": 0,
+  "all_owned_processes_waited": true
+}
