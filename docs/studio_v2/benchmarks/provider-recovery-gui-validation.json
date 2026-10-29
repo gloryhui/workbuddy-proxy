@@ -1,0 +1,164 @@
+{
+  "scope": "UI-33 isolated native macOS GUI; synthetic credentials, fake HOME, loopback upstream, core sandbox protecting real home",
+  "versions": {
+    "baseline_ui_sha256": "9bfff6b548d39bb90d036af7854043ca3fd3426f6f549cc7f351ad58f98f4910",
+    "candidate_ui_sha256": "db29ace240a767110b6a3e161c8431f4eb189a6ba8c98712955964a27d06d9d4",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+  },
+  "baseline": {
+    "observed": "A4/B1 cached after external A delete and failed UI confirmation; Runtime 1/1/0; error 请选择供应商, no false Deleted badge.",
+    "config_sha256_before_and_after_failed_ui": "745921da1ce7350d6c0ff1f926418672c98bb8c602b336b5f4933b0513839afc"
+  },
+  "clean_recovery": {
+    "observed": "External A delete followed by failed UI confirmation recovered rail/form to B1 and Runtime 1/1/0; original error 请选择供应商 retained, no Deleted receipt.",
+    "config_sha256_before_and_after_failed_ui": "e05bea013f29b44c7f5b5c5b146de0473f6476c54a33c2d490bf96e5fc99b50a",
+    "language_note": "Later switching language was a separate successful action and replaced current Runtime error; it is not the error screenshot."
+  },
+  "dirty_survivor": {
+    "before": "B draft name OpenCode Go draft, 2 models, Responses; entered Edit then appended edit.",
+    "after_failed_delete": "B selected, name OpenCode Go draft edit, 2 models, Responses, Cancel changes available, Runtime 1/1/0 with Select a provider and no Deleted badge.",
+    "core_config_sha_before_and_after_failed_ui": "50b2330cd6d2cebb9ff8e101a1c53a9027b6bec6448d277d1b5b84b570fec8e8",
+    "cancel_and_reopen": "Cancel restored pre-edit OpenCode Go draft/2 models/Responses. Close and reopen retained draft and protocol.",
+    "explicit_save": "Saved explicitly through UI; Core read back OpenCode Go draft, 2 models, openai_responses; config SHA 35940f57e60c7e87db655de8a353b07a60174d4cf71ac02dc4d6d2cc484cd920."
+  },
+  "last_provider": {
+    "observed": "External delete of sole A4 then failed UI confirmation yielded error 请选择供应商, safe empty state, Runtime 0/0/0, no Deleted receipt.",
+    "config_sha_before_after": "8e86309bb7722383a54634be72e8ea05afc0cb05ddf0ca7e0c8ee3ee4521a52b"
+  },
+  "file_guards": {
+    "missing": "After external delete, temporarily moved only fixture config to owned backup; failed UI confirmation left config missing and B guard-draft still accessible.",
+    "invalid": "Synthetic invalid JSON SHA 289ebc7572988c9e76391c2c8cadaeb9d605084816d229f07e6ca81315acb3c6 unchanged through failed UI confirmation, cached draft preserved.",
+    "restoration": "Restored exact owned backup SHA 12358a7dec8061cf63c7e173cc4dabdf3f715caeb5186175e39e7d266f3bdc42; retry failed with original error, recovered to only B guard-draft and no Deleted receipt."
+  },
+  "sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "screenshots": [
+    {
+      "file": "ui33-baseline-failure-1440x900.png",
+      "raw_sha256": "0d92f938ed235b8984d9071cc216657021efc881be1a774ead51ac7d2db834ee",
+      "raw_size": [
+        2880,
+        1802
+      ],
+      "crop_bottom": 2,
+      "resize": true,
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "13794005b1467959740a52a4047f49bc52382984cd024779c779f159819624ea"
+    },
+    {
+      "file": "ui33-recovered-clean-1440x900.png",
+      "raw_sha256": "1f958f1cb85256ff316aee1b0eb61feccca716dda05df21784f438d2aaffe574",
+      "raw_size": [
+        2880,
+        1802
+      ],
+      "crop_bottom": 2,
+      "resize": true,
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "6b84b804e140ee7ccd0c44e0220c69ba93550a22de08fe22dcb0a65405f3a525"
+    },
+    {
+      "file": "ui33-recovered-draft-1100x700.png",
+      "raw_sha256": "9424cbeb563c50ef72617b5984f437c77c7865e8d495ec77aef9b069c27af9f9",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "crop_bottom": 1,
+      "resize": false,
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "2e480b6cc1eca4ef32eb7f66cd8cb2570d9690bea6e3f7710e234d9965669074"
+    },
+    {
+      "file": "ui33-recovered-empty-1440x900.png",
+      "raw_sha256": "067d8c569da82ac83e1ff18a52e0bdcdea2978d2c880e9d25702ed46a1001adf",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "crop_bottom": 1,
+      "resize": false,
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "a46ebe05b019ced68461daeb4fa713182c5e508457219577032a88f3f527b3fd"
+    }
+  ],
+  "image_method": "Actual CUA JPEG window captures. Removed bottom extra 1 physical pixel from 1x captures without resize; removed bottom extra 2 physical pixels from 2x captures and resized once with LANCZOS.",
+  "process_lifecycle": {
+    "baseline": {
+      "fixture_pid": 54356,
+      "core_pid": 54358,
+      "ui_pid": 54362,
+      "ui_exit": 0,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "health_after_ui_close": 200
+    },
+    "clean": {
+      "fixture_pid": 58633,
+      "core_pid": 58635,
+      "ui_pid": 58636,
+      "ui_exit": 0,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "health_after_ui_close": 200
+    },
+    "draft": {
+      "fixture_pid": 63630,
+      "core_pid": 63635,
+      "ui_pid": 63637,
+      "reopened_ui_pid": 67114,
+      "ui_exit": 0,
+      "reopened_ui_exit": 0,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "health_after_ui_close": 200
+    },
+    "empty": {
+      "fixture_pid": 68051,
+      "core_pid": 68053,
+      "ui_pid": 68057,
+      "ui_exit": 0,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "health_after_ui_close": 200
+    },
+    "guard": {
+      "fixture_pid": 69308,
+      "core_pid": 69312,
+      "ui_pid": 69317,
+      "ui_exit": 0,
+      "core_exit": 0,
+      "fixture_exit": 0,
+      "health_after_ui_close": 200
+    },
+    "interrupted_scene": {
+      "fixture_pid": 62077,
+      "core_pid": 62082,
+      "ui_pid": 62085,
+      "all_pids_gone": true,
+      "exit_and_wait": "unknown; interrupted session handle unavailable, no terminal-status produced"
+    }
+  },
+  "limitations": [
+    "No real WorkBuddy, vendor, startup or clipboard interactions.",
+    "Snapshot matching relies on existing key/count/loopback fields, not a provider ID set or cross-process atomic transaction.",
+    "Complete IME/accessibility, Core-unresponsive scenario, and every language/size combination were not exercised."
+  ],
+  "main_review": {
+    "four_actual_pngs_viewed": true,
+    "png_hashes_and_dimensions_verified": true,
+    "recorded_gui_pids_confirmed_gone": true,
+    "scope": "Wide clean recovery and empty state; compact English dirty survivor. Small model rows/save require existing inner scroll; this screenshot alone is not a proof that their contents or Save are simultaneously visible. Complete visual/IME/accessibility audit remains open."
+  }
+}

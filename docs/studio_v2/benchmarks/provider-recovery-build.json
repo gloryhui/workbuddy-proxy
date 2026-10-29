@@ -1,0 +1,92 @@
+{
+  "ui_sha256": "db29ace240a767110b6a3e161c8431f4eb189a6ba8c98712955964a27d06d9d4",
+  "ui_bytes": 15130544,
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "baseline_ui_sha256": "9bfff6b548d39bb90d036af7854043ca3fd3426f6f549cc7f351ad58f98f4910",
+  "tests_passed": 183,
+  "tests_ignored": 2,
+  "gates": {
+    "fmt": {
+      "exit": 0,
+      "seconds": 0.498,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ]
+    },
+    "intel": {
+      "exit": 0,
+      "seconds": 3.019,
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ]
+    },
+    "release": {
+      "exit": 0,
+      "seconds": 42.358,
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    }
+  },
+  "test_exit": 0,
+  "test_command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "gpui/Cargo.toml",
+    "--bin",
+    "workbuddy-proxy-gpui"
+  ],
+  "clippy_exit": 0,
+  "clippy_command": [
+    "cargo",
+    "clippy",
+    "--manifest-path",
+    "gpui/Cargo.toml",
+    "--all-targets",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "clippy_cargo_reported_seconds": 3.33,
+  "warning": "Existing block 0.1.6 future-incompatibility warning",
+  "intel_runtime_verified": false,
+  "scope": "Only native UI backend read/reconciliation. Failed delete keeps actual error, no success receipt. No core, API, dependency, schema or layout changes.",
+  "new_tests": [
+    "missing_invalid_and_legacy_files_are_never_initialized_or_rewritten",
+    "only_matching_live_counts_endpoint_and_identity_allow_recovery",
+    "surviving_dirty_draft_is_not_replaced_when_deleted_selection_moves",
+    "clean_rows_follow_external_changes_but_active_editor_keeps_its_snapshot",
+    "deleting_the_last_saved_provider_enters_empty_state",
+    "local_uncreated_draft_survives_but_deleted_created_pending_is_removed"
+  ],
+  "guard_limits": {
+    "read_only_config_max_bytes": 2097152,
+    "explicit_modern_providers_array": true,
+    "key_count_endpoint_checks": true,
+    "snapshot_contains_provider_ids": false,
+    "cross_process_atomicity_claimed": false
+  },
+  "source_sha256": {
+    "gpui/src/config_refresh.rs": "9a2c6f0cdf4aed136b1bcd7bad18208698d06fc38c9ffa45404e26eda78b417b",
+    "gpui/src/backend.rs": "5feaba436dcc5817cd93ca5559c8e7a298e047f6d4e1eb3199ecf1438876593f",
+    "gpui/src/ui.rs": "cf77524b5e5a42435f56c3cf202a467c54c498555a866d6110cbf043056474f0",
+    "gpui/src/main.rs": "702a7a4b2584f20f0b1b8271afc935e481d6481e0759017e5042b6beee295f15"
+  },
+  "unchanged_core_api_dependencies": true
+}

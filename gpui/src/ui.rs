@@ -1425,6 +1425,37 @@ impl Proxy {
             }
         }
     }
+    fn reconcile_failed_delete(
+        &mut self,
+        cfg: Config,
+        snapshot: &Value,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
+        if !crate::config_refresh::matches_core(&self.cfg, &cfg, snapshot) {
+            return;
+        }
+        self.capture(cx);
+        let edits = &self.provider_edits;
+        let reload =
+            crate::config_refresh::refresh_drafts(&mut self.drafts, &self.cfg, &cfg, |id| {
+                edits.contains(id)
+            });
+        self.provider_edits.reconcile(&cfg, None);
+        self.saved_creations
+            .retain(|id, _| cfg.providers.iter().any(|p| &p.id == id));
+        self.delete_feedback.reconcile(&cfg);
+        self.cfg = cfg;
+        self.port.update(cx, |input, cx| {
+            input.set_value(self.cfg.port.to_string(), window, cx)
+        });
+        if reload {
+            self.load_form(window, cx);
+        }
+        // Keep the original error. A refreshed persisted view is not a success
+        // receipt and must not send any save/delete/sync operation.
+        cx.notify();
+    }
     fn snapshot(&mut self, v: Value, window: &mut Window, cx: &mut Context<Self>) {
         self.proxy_address = v["url"].as_str().unwrap_or("").to_owned();
         self.proxy_counts =
@@ -1497,7 +1528,7 @@ impl Proxy {
             window.activate_window();
             cx.activate(true);
         }
-        while let Ok(reply) = self.backend.replies.try_recv() {
+        while let Ok(mut reply) = self.backend.replies.try_recv() {
             if reply.tag == "workbuddy_check" {
                 match reply.result.and_then(|text| {
                     serde_json::from_str::<crate::workbuddy_status::EndpointCheck>(&text)
@@ -1633,14 +1664,19 @@ impl Proxy {
                         self.search.update(cx, |s, cx| s.set_value("", window, cx));
                         self.search.read(cx).focus_handle(cx).focus(window, cx);
                     }
-                    if let Some(cfg) = reply.config {
+                    if let Some(cfg) = reply.config.take() {
                         self.update_config(cfg, &reply.tag, window, cx);
                     }
                     if reply.tag == "copy_prepare" {
                         self.begin_provider_draft(true, window, cx);
                     }
-                } else if creation_attempted && let Some(cfg) = reply.config {
+                } else if creation_attempted && let Some(cfg) = reply.config.take() {
                     self.update_config(cfg, "creation_pending", window, cx);
+                } else if reply.tag == "delete"
+                    && let (Some(cfg), Some(snapshot)) =
+                        (reply.config.take(), reply.snapshot.as_ref())
+                {
+                    self.reconcile_failed_delete(cfg, snapshot, window, cx);
                 }
                 if reply.synced || (reply.tag == "port" && reply.result.is_ok()) {
                     self.startup_report = None;

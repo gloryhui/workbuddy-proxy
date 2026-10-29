@@ -705,3 +705,32 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 按用户后续安全临时目录持续授权，展示完整目标后，临执行前再次规范化/归属/完整清单/无链接挂载/无进程预检，精确删除本轮专属根198文件，移除224,612,352已分配bytes（214.21MiB，非全系统净空间差承诺）；本轮专属临时保留0。最终PNG/JSON、共享Cargo缓存、系统编译诊断及未知历史目录不动。系统盘可用39,180,062,720 bytes（36.49GiB）。[清理证据](benchmarks/provider-state-cleanup.json)。
 - 本批3帧加入部分验收，当前5/40未逐帧验收、34部分验收、1复用待核对。Goal保持active：下一小批优先修复上面的失败reply配置对齐/草稿保护，再继续5帧与完整40帧精细视觉、IME/无障碍及跨平台/首帧审计；不将已知缓存缺口或未实测busy、平台标为完成。
+
+
+## 小功能 33：删除失败后的配置对齐与草稿保护（2026-10-29，北京时间）
+
+- UI-32 遗留问题：确认层打开后若目标供应商已被另一管理请求删除，原 Delete 返回真实错误“请选择供应商”，Core 已只剩幸存者，UI 却继续保留旧列表与表单。本批先用旧 9bfff Release 重现并保存真实原图，再验证修复；这属于已有部分验收帧的状态恢复，不新增设计或减少剩余帧数量。
+- 只在失败 Delete 分支使用 UI 私有只读读取器：已有普通文件、2MiB 上限、显式现代 providers 数组、Config.validate 与非空 local_key；不调用可能初始化缺失文件或迁移旧格式的 Config.load。合并另要求原/新 local_key 一致，已认证 Core snapshot 的供应商/模型数量与配置相同，以及同端口 loopback HTTP /v1 地址。无快照、缺失/非法/旧格式或不匹配时保留缓存和真实错误，不执行保存、删除重试或同步。现有 snapshot 不含完整 provider ID 集合，因此这些校验不声称提供跨进程原子快照；Core/管理 API/配置格式均不改。
+- 通过校验后，已删除行与失效的 created-pending/editor 退出；干净幸存行跟随保存配置，dirty 草稿、活动资料编辑的原始 Cancel 快照及未创建的本地 pending 保留。只有当前选择或表单实值改变才 reload，保留未变表单的焦点/选择。失败仍为 error，清除 Delete receipt，绝不显示 Deleted 1 成功回执；正常成功路径沿用原 update_config。
+- fmt Passed；183 tests（2 项既有 Core 专项 ignored），其中新增 6 项覆盖缺失/非法/旧格式文件不写入、Core 身份/数量/地址守卫、幸存 dirty 完整 Draft、干净外部变化与编辑快照、最后供应商空态及 local/created pending 分界；严格 clippy all-targets/-D warnings、Intel check 3.019s、Release 42.358s Passed。最终 UI 15,130,544 bytes，SHA256 `db29ace240a767110b6a3e161c8431f4eb189a6ba8c98712955964a27d06d9d4`；Core 仍 8,428,096 bytes、25f SHA。Intel 仅类型检查，既有 block0.1.6 future-incompatibility 提示保留。[编译证据](benchmarks/provider-recovery-build.json)。
+- 实机已确认 clean 场景：旧版错误后仍 A4+B1，新版外部删 A 后再 UI 确认实际失败，rail/表单自动仅剩 B1、Runtime 1/1/0；真实错误仍可见，无 Deleted 回执，失败 UI 未再改 Core。英文小窗先切语言会被独立成功的 Language saved 替换当前 status，该中间照片不算最终错误态，最终错误图须先设英文再重新触发。
+- 新独立 dirty 场景已确认：B 在进入资料编辑前已有未保存名称 OpenCode Go draft、2 模型和 Responses；编辑内再修改名称，加上 edit，切 A 开确认、外部删 A 再 UI 确认失败后，B 的 draft edit、2 模型、Responses 和 Cancel changes 均保留，Runtime 仍是 Core 已保存的 1/1/0，Select a provider 错误可见，Core 配置 SHA 与哨兵均不变。Cancel 恢复进入 Edit 前的 draft/2 模型/Responses；正常关窗后 Core health200，同 Core 重开仍保留草稿且不持久化编辑模式，显式 Save 才真实写入名称 draft、2 模型与 openai_responses，哨兵不变。
+- 一次用户中断发生于旧草稿夹具，62077/62082/62085 已只读确认消失，但没有 terminal-status/exit/wait 证明；不并入“全部退出0”或“全部wait成功”，保留原夹具并从独立新场景复验。独立重跑成功场景的实际退出、原图与最终 PNG 另行逐项记录，不补造中断场景的退出码。
+
+- 最后供应商场景：单 A4 开确认后由合成 Core 外删 A，再由 UI 确认，仍显示真实“请选择供应商”错误并安全进入空态，Runtime 0/0/0，无 Deleted 回执，外删后与失败后的 Core config SHA 相同，WorkBuddy 哨兵不变。
+- 异常文件守卫：A 外删后暂时移走本夹具 config，再确认失败，文件仍缺失未生成默认，B 的 guard-draft 仍可切回读取；随后本夹具写入合成非法 JSON 再失败，字节 SHA 不变、草稿仍保留。恢复合法 B1 备份再第三次失败重试，列表自动对齐唯一 B、guard-draft 保留且无 Deleted。均未修改真实用户配置或发起真实上游请求。
+- 主代理逐张查看并核对最终 PNG 的 SHA 与尺寸：[旧版缓存问题宽图](screenshots/ui33-baseline-failure-1440x900.png)、[新版 clean 恢复宽图](screenshots/ui33-recovered-clean-1440x900.png)、[英文 Mono dirty 恢复小图](screenshots/ui33-recovered-draft-1100x700.png)、[新版空态宽图](screenshots/ui33-recovered-empty-1440x900.png)。宽 clean 为中文 Studio；小窗可见 dirty 名称/2 模型徽标、Responses、Cancel 和真实错误，模型行/Save 仍需原内部滚动，该图不能证明这些内容同时可见。Raw 2x 仅裁底部2物理像素并一次 Lanczos 缩放；1x 仅裁底1物理像素，无重绘。合成 Key 均遮掩、URL 为 loopback；完整原图 SHA、配置 SHA、哨兵和场景细节见 [GUI 记录](benchmarks/provider-recovery-gui-validation.json)。
+- baseline、clean、dirty/同 Core 重开、empty、guard 的独立成功夹具均正常 UI/Core/fixture exit0 并 wait，关闭 UI 后 Core health200，主代理再次核对报告中所有 PID 消失。62077/62082/62085 中断场景仍只确认消失、exit/wait 未知，不混入成功终态。Core-unresponsive、所有语言/尺寸组合、完整 IME/无障碍与跨平台尚未实测。
+
+同一 25f Core、旧9bfff/新db29 Release，以旧→新→旧→新执行原 benchmark 四轮，各1000小请求、80次1MiB/并发4。原脚本未改；本地包装只设合成 HOME/数据、已验证 loopback catalog 覆盖、Core 内核沙盒和进程收尾。四轮均 attested、Core/UI 已退出且直接子进程均 wait，退出数组都是[-15,-15,0,0]，不宣称全0。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧9bfff](benchmarks/provider-recovery-previous-gui.json) | 12.73 / 74.20 / 86.94 | 481.296 / 1160.421 | 0.172 / 0.195 | 135.94 | 0.091 |
+| [新db29](benchmarks/provider-recovery-current-gui.json) | 11.98 / 73.22 / 85.20 | 222.671 / 860.738 | 0.172 / 0.199 | 134.41 | 0.084 |
+| [旧9bfff复测](benchmarks/provider-recovery-previous-run2-gui.json) | 12.52 / 73.39 / 85.91 | 226.240 / 805.719 | 0.173 / 0.194 | 132.67 | 0.085 |
+| [新db29复测](benchmarks/provider-recovery-current-run2-gui.json) | 12.36 / 73.12 / 85.48 | 223.541 / 813.405 | 0.174 / 0.199 | 130.56 | 0.085 |
+
+- 四轮合计空闲 RSS 中位86.425→85.340MiB，UI73.795→73.170MiB；p95旧0.195/0.194ms、新两轮均0.199ms，中位增加0.0045ms（约2.31%），保留该小幅上升。当前短测未见明显退化，不宣称性能提升。最初旧版启动较冷，UI记录不是首帧/可交互时间；RSS共享页可能双计，默认64模型短测不测失败恢复时延、长时活跃表单CPU或跨平台。[性能汇总](benchmarks/provider-recovery-performance-summary.json)。
+- 按用户持续授权，完整精确路径/UID501/类型/无符号链接与挂载越界/进程及lsof预检、临执行前二次核对后，删除本轮专属测试根的202个文件，释放已分配空间估计284,585,984 bytes（271.40MiB），本轮专属临时文件保留0。实际截图/JSON在仓库，共享Cargo缓存及未知历史临时项保留未动；系统盘当前可用40,853,585,920 bytes（38.05GiB）。中断场景退出码未补造。[清理证据](benchmarks/provider-recovery-cleanup.json)。
+- 本批补齐已有部分验收帧的失败恢复缺口，剩余仍为5/40未逐帧验收、34部分验收、1复用待核对、0整帧最终验收。整体继续开发并穿插分项实机验收；下一批对齐语言菜单及保留工具栏状态，完整40帧精细视觉、IME/无障碍与跨平台仍未完成。

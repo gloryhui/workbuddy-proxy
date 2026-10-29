@@ -234,7 +234,11 @@ impl Backend {
                     };
                     let config =
                         if !matches!(job.tag.as_str(), "poll" | "metadata" | "workbuddy_check") {
-                            Config::load(&dir).ok()
+                            if job.tag == "delete" && result.is_err() {
+                                crate::config_refresh::existing_config(&dir)
+                            } else {
+                                Config::load(&dir).ok()
+                            }
                         } else {
                             None
                         };

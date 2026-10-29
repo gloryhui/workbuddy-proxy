@@ -1,0 +1,118 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2"
+  ],
+  "rounds": [
+    {
+      "label": "previous",
+      "core": 12.73,
+      "ui": 74.2,
+      "total": 86.94,
+      "core_ready": 481.296,
+      "ui_record": 1160.421,
+      "p50": 0.172,
+      "p95": 0.195,
+      "peak": 135.94,
+      "large_s": 0.091,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "provider-recovery-previous-gui.json"
+    },
+    {
+      "label": "current",
+      "core": 11.98,
+      "ui": 73.22,
+      "total": 85.2,
+      "core_ready": 222.671,
+      "ui_record": 860.738,
+      "p50": 0.172,
+      "p95": 0.199,
+      "peak": 134.41,
+      "large_s": 0.084,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "provider-recovery-current-gui.json"
+    },
+    {
+      "label": "previous-run2",
+      "core": 12.52,
+      "ui": 73.39,
+      "total": 85.91,
+      "core_ready": 226.24,
+      "ui_record": 805.719,
+      "p50": 0.173,
+      "p95": 0.194,
+      "peak": 132.67,
+      "large_s": 0.085,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "provider-recovery-previous-run2-gui.json"
+    },
+    {
+      "label": "current-run2",
+      "core": 12.36,
+      "ui": 73.12,
+      "total": 85.48,
+      "core_ready": 223.541,
+      "ui_record": 813.405,
+      "p50": 0.174,
+      "p95": 0.199,
+      "peak": 130.56,
+      "large_s": 0.085,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "provider-recovery-current-run2-gui.json"
+    }
+  ],
+  "medians": {
+    "core": {
+      "previous": 12.625,
+      "current": 12.17
+    },
+    "ui": {
+      "previous": 73.795,
+      "current": 73.17
+    },
+    "total": {
+      "previous": 86.425,
+      "current": 85.34
+    },
+    "p50": {
+      "previous": 0.1725,
+      "current": 0.173
+    },
+    "p95": {
+      "previous": 0.1945,
+      "current": 0.199
+    },
+    "peak": {
+      "previous": 134.305,
+      "current": 132.485
+    },
+    "large_s": {
+      "previous": 0.088,
+      "current": 0.0845
+    }
+  },
+  "scope": "Original benchmark unchanged; four interleaved native GUI rounds, 1000 small and 80 concurrent 1 MiB requests each; same byte-identical Core, baseline9bfff vs candidate db29. Core source/config sandbox verified, synthetic homes and loopback catalog. UI marker is not first paint/interactivity; shared RSS may double count. Default64-model short test does not measure failure recovery latency or sustained active form CPU.",
+  "conclusion": "No obvious regression in this bounded short run. Total idle RSS median86.425→85.34MiB and UI73.795→73.17MiB; p95 rose0.1945→0.199ms (about2.31%, +0.0045ms) in both new rounds. Retain this increase, do not claim speed/memory improvement or extrapolate to recovery UI latency, sustained CPU or first paint."
+}

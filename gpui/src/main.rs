@@ -12,6 +12,7 @@ mod capabilities;
 #[allow(dead_code)]
 #[path = "../../src/config.rs"]
 mod config;
+mod config_refresh;
 #[allow(dead_code)]
 #[path = "../../src/diagnostic.rs"]
 mod diagnostic;
