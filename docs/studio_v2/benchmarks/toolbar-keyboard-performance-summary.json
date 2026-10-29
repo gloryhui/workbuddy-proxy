@@ -1,0 +1,213 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2",
+    "current-run3",
+    "previous-run3",
+    "current-run4",
+    "previous-run4"
+  ],
+  "rounds": [
+    {
+      "label": "previous",
+      "core": 11.77,
+      "ui": 71.55,
+      "total": 83.31,
+      "core_ready": 424.782,
+      "ui_record": 1014.392,
+      "p50": 0.172,
+      "p95": 0.214,
+      "direct_p95": 0.227,
+      "peak": 128.69,
+      "large_s": 0.087,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-previous-gui.json"
+    },
+    {
+      "label": "current",
+      "core": 12.47,
+      "ui": 72.88,
+      "total": 85.34,
+      "core_ready": 208.693,
+      "ui_record": 791.242,
+      "p50": 0.173,
+      "p95": 0.24,
+      "direct_p95": 0.21,
+      "peak": 135.58,
+      "large_s": 0.09,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-current-gui.json"
+    },
+    {
+      "label": "previous-run2",
+      "core": 13.61,
+      "ui": 73.56,
+      "total": 87.17,
+      "core_ready": 217.583,
+      "ui_record": 786.335,
+      "p50": 0.174,
+      "p95": 0.358,
+      "direct_p95": 0.423,
+      "peak": 140.64,
+      "large_s": 0.096,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-previous-run2-gui.json"
+    },
+    {
+      "label": "current-run2",
+      "core": 13.47,
+      "ui": 73.83,
+      "total": 87.3,
+      "core_ready": 206.458,
+      "ui_record": 671.016,
+      "p50": 0.187,
+      "p95": 0.644,
+      "direct_p95": 0.213,
+      "peak": 149.62,
+      "large_s": 0.129,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-current-run2-gui.json"
+    },
+    {
+      "label": "current-run3",
+      "core": 13.91,
+      "ui": 71.42,
+      "total": 85.33,
+      "core_ready": 228.283,
+      "ui_record": 840.744,
+      "p50": 0.172,
+      "p95": 0.205,
+      "direct_p95": 0.233,
+      "peak": 134.0,
+      "large_s": 0.094,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-current-run3-gui.json"
+    },
+    {
+      "label": "previous-run3",
+      "core": 12.42,
+      "ui": 71.98,
+      "total": 84.41,
+      "core_ready": 219.188,
+      "ui_record": 693.105,
+      "p50": 0.171,
+      "p95": 0.215,
+      "direct_p95": 0.227,
+      "peak": 134.28,
+      "large_s": 0.086,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-previous-run3-gui.json"
+    },
+    {
+      "label": "current-run4",
+      "core": 12.11,
+      "ui": 72.38,
+      "total": 84.48,
+      "core_ready": 212.136,
+      "ui_record": 650.541,
+      "p50": 0.173,
+      "p95": 0.206,
+      "direct_p95": 0.223,
+      "peak": 133.61,
+      "large_s": 0.086,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-current-run4-gui.json"
+    },
+    {
+      "label": "previous-run4",
+      "core": 12.38,
+      "ui": 72.48,
+      "total": 84.86,
+      "core_ready": 209.276,
+      "ui_record": 672.933,
+      "p50": 0.172,
+      "p95": 0.275,
+      "direct_p95": 0.253,
+      "peak": 142.62,
+      "large_s": 0.097,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "toolbar-keyboard-previous-run4-gui.json"
+    }
+  ],
+  "medians": {
+    "previous": {
+      "core": 12.4,
+      "ui": 72.23,
+      "total": 84.635,
+      "core_ready": 218.3855,
+      "ui_record": 739.72,
+      "p50": 0.172,
+      "p95": 0.245,
+      "peak": 137.46,
+      "large_s": 0.0915
+    },
+    "current": {
+      "core": 12.97,
+      "ui": 72.63,
+      "total": 85.335,
+      "core_ready": 210.4145,
+      "ui_record": 731.129,
+      "p50": 0.173,
+      "p95": 0.223,
+      "peak": 134.79,
+      "large_s": 0.092
+    }
+  },
+  "assessment": "No consistent directional regression across8 bounded runs. Initial current-run2 p95.644ms and large.129s retained; reverse pairs change direction. No optimization claim.",
+  "scope": "Same Core25f, old0c5c/final0892, explicit Studio Indigo/version1 verified in every fixture. Original benchmark SHA and1000 small requests/80x1MiB/concurrency4/64 models unchanged. Session GUI/compile/image work stopped before serial benchmark.8 owned fixture directories retained until final verified cleanup.",
+  "investigation": "Initial4 had higher new p95. Added reverse current\u2192previous pairs without discarding initial samples; new.205/.206ms vs old.215/.275ms. This does not establish statistical equivalence.",
+  "background_snapshot_between_batches": {
+    "Codex Renderer_cpu_percent": 35.1,
+    "WindowServer_cpu_percent": 23.5,
+    "RustDesk_cpu_percent": 18.2,
+    "scope": "Point-in-time snapshot only; user apps retained, no causal attribution."
+  },
+  "limitations": [
+    "UI ready marker is not first paint/interactivity.",
+    "RSS can double-count shared pages. UI median increases0.40MiB and total0.70MiB retained, not called a memory optimization.",
+    "Normal user background apps were active; these are short local samples, not controlled lab performance.",
+    "No AT/IME workload, interactive key latency, long-duration leak or cross-platform measurement."
+  ]
+}

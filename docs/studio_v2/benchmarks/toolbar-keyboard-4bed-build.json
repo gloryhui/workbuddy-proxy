@@ -1,0 +1,186 @@
+{
+  "feature": "UI-41 skin popover keyboard dismissal and toolbar reachability",
+  "base_commit": "8f1bca9aa0ecb40a604d1444fece6a245d62c5a9",
+  "ui_sha256": "4bed2bb91cc2f8717e03e807946f8137490079947724b2839c9340315bff16c0",
+  "ui_bytes": 15246768,
+  "baseline_ui_sha256": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.722
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 5.731
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 2.568
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 2.263
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 40.089
+    }
+  },
+  "tests_passed": 191,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/ui.rs": "19200cdbdfd0fcfd886b6db0a0ab6194fa454aaacbf03a44fdaf7308177c5f61",
+    "gpui/src/ui/skin_controls.rs": "d81cb8d3630ecb6277f88d3974a73ce30bdd4d2bbc26bc9f531f3e3fb214eedd"
+  },
+  "asset_audit": [
+    {
+      "local": "gpui/assets/studio/skin.svg",
+      "bytes": 1261,
+      "latest_figma_sha256": "7b79341e5e565a302d2ea31d60c8b69dd5e1d09b2ed118fb32810c914524f612",
+      "local_sha256": "45ddc49b81c15160db87e548a96e73335165725eae935564710c34444aabccae",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": false,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/autostart.svg",
+      "bytes": 810,
+      "latest_figma_sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc",
+      "local_sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/updates.svg",
+      "bytes": 847,
+      "latest_figma_sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd",
+      "local_sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/language.svg",
+      "bytes": 779,
+      "latest_figma_sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45",
+      "local_sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/restore.svg",
+      "bytes": 410,
+      "latest_figma_sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37",
+      "local_sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/github.svg",
+      "bytes": 926,
+      "latest_figma_sha256": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435",
+      "local_sha256": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/feedback.svg",
+      "bytes": 663,
+      "latest_figma_sha256": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9",
+      "local_sha256": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    }
+  ],
+  "scope": "Two GPUI files only. Stable non-tab-stop skin panel focus handle and focus-out dismissal preserve the new focus, Kit Escape/trigger restoration and existing theme save callbacks. No core/config/dependency/asset/layout changes.",
+  "limitations": [
+    "Full native AX attributes/IME/screen-reader audit pending.",
+    "Intel typecheck only; existing block0.1.6 future-incompatibility warning.",
+    "Initial toolbar reachability already worked in baseline and is not claimed as a new fix."
+  ]
+}

@@ -4,13 +4,13 @@
 
 | 功能 | 原实现落点 | 当前状态 / 必须补验 |
 | --- | --- | --- |
-| 七功能工具栏独立定位与遮罩层级 | ui.rs::render/app_controls、theme.rs | top8/right32/300×36布局与原七项处理器逐字核对；最终049版1440×900及解锁后1100×700新实拍、Skin/Language上缘点击、Sync遮罩拦截/Esc及Restore通过；Cmd/Ctrl+S为首轮71ae证据。Skin菜单首次Esc未关闭，完整菜单键盘路径待审计 |
-| 六套旧皮肤 + 可选 Studio 靛蓝、保存失败不切换 | theme/skin.rs、ui/skin_controls.rs | macOS 七项选择/原键保存、默认 Mono、配置 SHA 不变、Studio 重开恢复 Passed；非法目录保存失败由既有自动测试覆盖 |
-| 开机启动、失败回滚 | ui/autostart_notice.rs、ui.rs、assets.rs、原Core action | 原动作/忙碌禁用/回滚保留；真实假HOME开关/plist/失败重试、分候选Pending取消不重开/已聚焦Enter与Space/草稿筛选及重开、最终power/选中色/遮罩和持续hover实时更新、两尺寸与四轮短测 Passed，覆盖按候选分开记录。真实LaunchAgents受内核沙盒保护；新窗口Tab入口/完整键盘/IME/无障碍/跨平台及实际OS登录待续 |
+| 七功能工具栏独立定位与遮罩层级 | ui.rs::render/app_controls、ui_components.rs、theme.rs | 原top8/right32/300×36、36px按钮/20pxSVG/8px间距及七处理器保留，旧049两尺寸/点击/Restore和71ae快捷键证据保留；最终0892 Studio首Tab/反向七项清晰原生主色框、语言Enter/Space/Esc与Tab接续、皮肤双向Tab离开关闭/Esc恢复、Sync遮罩/两尺寸实拍/菜单CPU与八轮短测 Passed；OS焦点属性、完整IME/读屏/跨平台仍待验 |
+| 六套旧皮肤 + 可选 Studio 靛蓝、保存失败不切换 | theme/skin.rs、ui/skin_controls.rs | 原七项选择/原键保存、默认Mono/Studio重开和非法目录测试保留；最终0892菜单内Blue→Studio落盘/草稿保持、Esc及双向Tab离开关闭已验；七皮肤工具按钮21组浅面焦点色对比回归通过，仅工具栏焦点样式变化，全局ring/selection不改；其他控件焦点/完整视觉与跨平台待续 |
+| 开机启动、失败回滚 | ui/autostart_notice.rs、ui.rs、assets.rs、原Core action | 原动作/忙碌禁用/回滚保留；真实假HOME开关/plist/失败重试、分候选Pending取消不重开/已聚焦Enter与Space/草稿筛选及重开、最终power/选中色/遮罩和持续hover实时更新、两尺寸与四轮短测 Passed，覆盖按候选分开记录。真实LaunchAgents受内核沙盒保护；0892 Studio新窗口Tab焦点已验，完整键盘/IME/无障碍/跨平台及实际OS登录待续 |
 | 检查更新、busy/error | ui/update_notice.rs、ui.rs::app_controls/tick、原Core update | 原force:true/网络/版本/缓存不改；原生等待、真实HTTP403与重试、Pending关闭不重开、X/外部/Esc/实际缩窗、草稿/Custom过滤/语言保持及模态遮罩、两尺寸/六轮短测 Passed；UI响应与原Core两项契约测试通过，公网成功未实机验。busy精确请求数、完整键盘/IME/无障碍/跨平台待续 |
-| 系统/中文/English | ui/language_menu.rs、ui.rs::set_language | 241×184原生Popup/List、真实三模式保存/重复项SHA与mtime不变、方向环绕/Enter/Space/Esc/X/外部取消、键盘焦点返回及复开、草稿/Custom筛选/重开持久、遮罩与邻接安全按钮、两尺寸及四轮性能 Passed；完整IME/无障碍/跨平台及打开菜单持续CPU未验 |
+| 系统/中文/English | ui/language_menu.rs、ui.rs::set_language | 原241×184/三模式保存与重复不写、方向/取消/草稿筛选/重开与遮罩等先前证据保留；最终0892 Studio主色焦点、Enter/Space打开/Esc返回/复开/Tab到Restore已验，菜单30s CPU2.53%单核/0.17%Core与RSS原值保留；三模式未在0892全套重验，长期CPU/完整IME/读屏/原生AX与跨平台待续 |
 | 恢复 1440×900、退出全屏 | ui/window_restore.rs、ui.rs::restore_window_size | 原算法逐字核对保持；325×103提示、普通/zoom/全屏恢复、实际缩窗后Esc/X、键盘Return/Space、草稿/Custom筛选与遮罩、两尺寸和四轮短测 Passed；互斥/重复仅旧80ad实测、超时失败未注入，完整IME/无障碍/跨平台未验 |
-| GitHub 与新 Issue | ui.rs::app_controls | 源码确认；外部 URL 保持 |
+| GitHub 与新 Issue | ui.rs::app_controls | 原外部URL和open_url处理器保持；最终0892 Studio两按钮Tab可达/主色焦点已验，本轮未激活外链 |
 | 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | macOS 两尺寸/中英/缩小恢复 Passed；拖动未测位移；Windows 待验 |
 | 供应商 0/1/2/20/64、固定 CRUD | ui.rs::sidebar、provider_filter.rs | macOS 5 种数量、末尾搜索/空结果/清空、64 滚动/新增复制禁用 Passed；选中尾行保存/resize/清搜索/展开自动可见、手动9秒不回跳与20/64两尺寸 Passed，整帧/键盘/无障碍待续 |
 | 新增、复制、删除确认与取消 | ui/provider_delete.rs、ui/sidebar.rs、ui.rs、state.rs | 原生532删除确认/已保存目标与dirty说明、Cancel/X/Esc与草稿保护、默认Return不删/Tab确认Enter或Space、Core失败重试、仅删A保留B及最终删B到空列表、无自动同步/哨兵不变、两尺寸/合法长名实拍与四轮性能 Passed；headless未知/重复删除配置不变。未实际双击/hover按压，合法长名未触发内部滚动；新增/复制独立pending、取消/恢复/重开、来源dirty先保存、Save/Test新目标/新route与mixed effort、零供应商发现及可见小窗Save已实机Passed；完整IME/无障碍/跨平台待续 |

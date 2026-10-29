@@ -1,0 +1,288 @@
+{
+  "feature": "UI-41 skin popover dismissal and visible native keyboard focus",
+  "base_commit": "8f1bca9aa0ecb40a604d1444fece6a245d62c5a9",
+  "ui_sha256": "2aac4f24d5c33b0f03a48ecd623146686b632fc46a7f5438c3fd164281d0ee33",
+  "ui_bytes": 15246768,
+  "baseline_ui_sha256": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.466
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 5.53
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 2.152
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 1.786
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 39.446
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/ui.rs": "19200cdbdfd0fcfd886b6db0a0ab6194fa454aaacbf03a44fdaf7308177c5f61",
+    "gpui/src/ui/skin_controls.rs": "d81cb8d3630ecb6277f88d3974a73ce30bdd4d2bbc26bc9f531f3e3fb214eedd",
+    "gpui/src/theme.rs": "e57681d158961be12f6da43de7fcbdb7cd793352808fbe3945bd3d810c7edc36",
+    "gpui/src/ui_components.rs": "84a6f7d66b11dc460e6be58306de9089ac792df03395d487f8fa10211d2a44d0"
+  },
+  "asset_audit": [
+    {
+      "local": "gpui/assets/studio/skin.svg",
+      "bytes": 1261,
+      "latest_figma_sha256": "7b79341e5e565a302d2ea31d60c8b69dd5e1d09b2ed118fb32810c914524f612",
+      "local_sha256": "45ddc49b81c15160db87e548a96e73335165725eae935564710c34444aabccae",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": false,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/autostart.svg",
+      "bytes": 810,
+      "latest_figma_sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc",
+      "local_sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/updates.svg",
+      "bytes": 847,
+      "latest_figma_sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd",
+      "local_sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/language.svg",
+      "bytes": 779,
+      "latest_figma_sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45",
+      "local_sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/restore.svg",
+      "bytes": 410,
+      "latest_figma_sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37",
+      "local_sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/github.svg",
+      "bytes": 926,
+      "latest_figma_sha256": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435",
+      "local_sha256": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    },
+    {
+      "local": "gpui/assets/studio/feedback.svg",
+      "bytes": 663,
+      "latest_figma_sha256": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9",
+      "local_sha256": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9",
+      "root_dimensions": {
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20"
+      },
+      "byte_exact": true,
+      "clip_identifier_only_equivalent": true,
+      "asset_file_unchanged": true
+    }
+  ],
+  "scope": "Four GPUI files only. Stable non-tab-stop skin focus handle and focus-out dismissal preserve new focus, Kit Escape/trigger restoration and existing theme save callbacks. Only the shared seven system buttons use native focus_visible with a solid skin-primary border; Kit soft halo is disabled on those buttons. Contrast regression covers7 palettes and canvas/card/tint. Other controls retain the existing global ring and selection colors. No core/config/dependency/asset/layout changes.",
+  "limitations": [
+    "Full native AX attributes/IME/screen-reader audit pending.",
+    "Intel typecheck only; existing block0.1.6 future-incompatibility warning.",
+    "Intermediate4bed Mono toolbar focus was visible, but Studio focus tint was indistinct; final source strengthens the shared native focus color."
+  ],
+  "focus_regression": {
+    "old_behavior_real_test_exit": 101,
+    "old_failure": "Monochrome focus contrast1.20;0 passed/1 failed/193 filtered",
+    "final_suite": "192 passed/0 failed/2 existing ignored",
+    "contrast_requirement": "At least3:1 against page/card/own light tint for every existing skin and Studio",
+    "palettes": [
+      {
+        "skin": "Blue",
+        "old_ring_hex": "dbeafe",
+        "new_focus_hex": "2563eb",
+        "old_canvas_contrast": 1.1496,
+        "new_contrast_canvas_card_tint": [
+          4.8701,
+          5.1686,
+          4.7493
+        ]
+      },
+      {
+        "skin": "Violet",
+        "old_ring_hex": "ede9fe",
+        "new_focus_hex": "7c3aed",
+        "old_canvas_contrast": 1.1187,
+        "new_contrast_canvas_card_tint": [
+          5.3695,
+          5.6986,
+          5.1957
+        ]
+      },
+      {
+        "skin": "Rose",
+        "old_ring_hex": "ffe4e6",
+        "new_focus_hex": "be185d",
+        "old_canvas_contrast": 1.1312,
+        "new_contrast_canvas_card_tint": [
+          5.6891,
+          6.0377,
+          5.4961
+        ]
+      },
+      {
+        "skin": "Amber",
+        "old_ring_hex": "fef3c7",
+        "new_focus_hex": "b45309",
+        "old_canvas_contrast": 1.0492,
+        "new_contrast_canvas_card_tint": [
+          4.7317,
+          5.0216,
+          4.8424
+        ]
+      },
+      {
+        "skin": "Teal",
+        "old_ring_hex": "ccfbf1",
+        "new_focus_hex": "0f766e",
+        "old_canvas_contrast": 1.0618,
+        "new_contrast_canvas_card_tint": [
+          5.1572,
+          5.4733,
+          5.248
+        ]
+      },
+      {
+        "skin": "Monochrome",
+        "old_ring_hex": "e4e4e7",
+        "new_focus_hex": "27272a",
+        "old_canvas_contrast": 1.1956,
+        "new_contrast_canvas_card_tint": [
+          14.0346,
+          14.8946,
+          13.5508
+        ]
+      },
+      {
+        "skin": "StudioIndigo",
+        "old_ring_hex": "f4f6ff",
+        "new_focus_hex": "655cf4",
+        "old_canvas_contrast": 1.0162,
+        "new_contrast_canvas_card_tint": [
+          4.5068,
+          4.783,
+          4.4352
+        ]
+      }
+    ],
+    "initial_test_harness_issue": "Two compile attempts hit SIGBUS after glob-importing the GPUI test attribute. Explicit Skin/color/focus_color imports avoided the macro collision and produced the real assertion failure; no cache deletion, dependency or toolchain change.",
+    "scope": "Shared system toolbar buttons only; native focus_visible border, all7 palettes on light canvas/card/tint. Existing global ring/selection tokens unchanged."
+  },
+  "test_output_summary": [
+    "test result: ok. 192 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.11s"
+  ],
+  "intermediate_candidates": [
+    {
+      "ui_sha256": "22f75c10ba484d8b90e3f1f3428bd5c0a62d57a2ac170d89f3211986dbbc2ff5",
+      "status": "Intermediate Studio toolbar focus and language keyboard passed; final implementation narrows focus styling to shared system buttons to preserve other controls."
+    },
+    {
+      "ui_sha256": "4bed2bb91cc2f8717e03e807946f8137490079947724b2839c9340315bff16c0",
+      "status": "Skin focus-out fix passed; Studio focus remained indistinct. Old/default Mono vs4bed Studio menu CPU samples are diagnostic only, not a controlled version comparison."
+    }
+  ]
+}

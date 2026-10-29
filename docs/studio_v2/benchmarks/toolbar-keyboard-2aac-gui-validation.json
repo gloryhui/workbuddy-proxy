@@ -1,0 +1,32 @@
+{
+  "candidate_sha256": "2aac4f24d5c33b0f03a48ecd623146686b632fc46a7f5438c3fd164281d0ee33",
+  "appearance": {
+    "version": 1,
+    "skin": "studio_indigo",
+    "prelaunch_sha256": "496958cff21cefeeb813956160851b3ff6d3750e244b24a894b260cf936f26ff"
+  },
+  "ui_pid": 71587,
+  "core_pid": 71583,
+  "fixture_pid": 71581,
+  "window_id": 61970,
+  "observation": "First Tab showed sidebar focus; after seven Shift+Tab actions no distinguishable toolbar focus outline was visible. Actual focused control could not be established via CUA.",
+  "raw_image": "toolbar-focus-missing-1440-raw.png",
+  "raw_sha256": "e60eae183930dfac64af6eb002e63d6243fcd8994c82e229d67e7f6d90aa582c",
+  "raw_window_dimensions": [
+    1440,
+    901
+  ],
+  "result": "candidate failed visual focus check; not final evidence",
+  "intermediate_only": true,
+  "screenshot": {
+    "file": "docs/studio_v2/screenshots/toolbar-keyboard-2aac-focus-missing-1440x901.png",
+    "raw_size": [
+      1440,
+      901
+    ],
+    "sha256": "e60eae183930dfac64af6eb002e63d6243fcd8994c82e229d67e7f6d90aa582c",
+    "pid": 71587,
+    "verified_window_id": 61970
+  },
+  "reason_superseded": "Kit ghost buttons have zero border width. Setting only keyboard focus border color painted no line; final source adds1px width in focus_visible."
+}

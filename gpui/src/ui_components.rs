@@ -8,7 +8,7 @@
 
 use crate::theme::{color, font, radius, size};
 use gpui_kit::component::{
-    Disableable, ElementExt, Icon, IconName, Sizable,
+    Disableable, ElementExt, FocusableExt, Icon, IconName, Sizable,
     button::{Button, ButtonCustomVariant, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
@@ -157,6 +157,15 @@ pub fn system_button_base(
     disabled: bool,
 ) -> Button {
     Button::new(id)
+        // Kit's soft theme ring is nearly the canvas color in Studio. Use
+        // the native keyboard-focus state with a solid semantic outline;
+        // keep other controls' existing focus/selection palettes intact.
+        .focus_ring(false)
+        .focus_visible(|style| {
+            style
+                .border_1()
+                .border_color(rgb(crate::theme::focus_color(crate::theme::current_skin())))
+        })
         .with_size(px(size::SYSTEM_BUTTON))
         .w(px(size::SYSTEM_BUTTON))
         .h(px(size::SYSTEM_BUTTON))

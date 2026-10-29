@@ -1,0 +1,13 @@
+{
+  "candidate": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "ui_pid": 54023,
+  "initial_view": "statistics details",
+  "initial_tab": "Statistics sidebar visible focus ring",
+  "reverse_from_initial": "Shift+Tab focused Feedback, then GitHub, Restore, Language, Updates, Startup, Skin; each visible ring; no activation",
+  "skin_escape_trigger": "Return opens; Escape closes and returns visible Skin ring; Tab advances Startup",
+  "language_escape": "Return opens, Escape closes and returns visible Language ring; Return reopens; Escape then Tab advances Restore",
+  "skin_escape_after_leaving": "Space opens; Tab traverses 7 skin options then next Tab moves to Statistics sidebar while dialog remains open; Escape on sidebar leaves dialog open; verified fresh AX dialog still present",
+  "provider_page": "navigated with pointer; next Tab reached first model edit visually; fresh-application initial provider page not tested",
+  "evidence": "CUA screenshots and getAXState outputs in task tool log; no native selected attributes read",
+  "skin": "Monochrome/default; no appearance.json and observed Mono checked"
+}

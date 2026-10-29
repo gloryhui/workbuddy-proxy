@@ -2,11 +2,27 @@ use super::*;
 use gpui_kit::component::popover::Popover;
 
 impl Proxy {
+    pub(super) fn subscribe_skin_focus(&self, window: &mut Window, cx: &mut Context<Self>) {
+        cx.on_focus_out(&self.skin_focus, window, |this, _, window, cx| {
+            if this.skin_open && !this.skin_focus.contains_focused(window, cx) {
+                // This is a non-modal popover: Tab may leave it, but a surface
+                // with no keyboard focus must not linger and lose Escape.
+                // Keep the newly focused control; Kit owns normal dismissal
+                // and trigger restoration while focus remains inside.
+                this.skin_open = false;
+                this.skin_error = false;
+                cx.notify();
+            }
+        })
+        .detach();
+    }
+
     pub(super) fn skin_control(&self, cx: &mut Context<Self>) -> AnyElement {
         let owner = cx.entity().downgrade();
         let content_owner = owner.clone();
         Popover::new("skin-settings")
             .open(self.skin_open)
+            .track_focus(&self.skin_focus)
             .trigger(crate::ui_components::system_button(
                 "skin-settings-trigger",
                 "studio/skin.svg",
@@ -32,6 +48,7 @@ impl Proxy {
     fn skin_panel(&self, cx: &mut Context<Self>) -> AnyElement {
         let selected = crate::theme::current_skin();
         div()
+            .track_focus(&self.skin_focus)
             .w(px(320.))
             .flex()
             .flex_col()

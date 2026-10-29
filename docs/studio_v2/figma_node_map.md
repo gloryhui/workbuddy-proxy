@@ -19,7 +19,7 @@
 | 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
 | 61:1111 | 11 / STUDIO V2 · 协议选项 · Gemini | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
 | 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs | 部分：Mono交替行/真实SVG路由、多选跨皮肤与语言/草稿保留、两尺寸和四轮性能已验；完整精细视觉/IME/无障碍及跨平台仍待专项 |
-| 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 部分：旧六主题+可选 Studio、保存/恢复/深色选区通过；完整视觉待续 |
+| 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 部分：原七项配置保留；最终0892菜单内Blue→Studio落盘/草稿、Esc与正反Tab离开关闭、Studio七工具按钮清晰焦点/两尺寸与菜单CPU/八轮短测已验；其他控件焦点/完整视觉/IME/读屏/原生AX及跨平台待续 |
 | 66:320 | 17 / STUDIO V2 · 上游协议下拉 | ui/provider_choices.rs, ui/providers.rs, ui.rs | 部分：原生361×233/53px行与2px间隔、四项说明/选中标记、鼠标/方向Enter/Esc/外部取消、仅草稿/显式保存与两尺寸已验；完整IME/无障碍/跨平台及精细整帧待续 |
 | 66:538 | 18 / STUDIO V2 · 供应商预设搜索 | ui/provider_choices.rs, ui.rs, presets.rs | 部分：原生436×377/41px内嵌搜索/36px行、地区/Azure/空结果与Enter守卫、清除/取消/重开、真实预设草稿及loopback显式保存、两尺寸已验；完整IME/无障碍/跨平台待续 |
 | 66:760 | 19 / STUDIO V2 · API Key 显示演示 | ui/providers.rs, ui_components.rs, ui.rs | 部分：17px设计眼睛SVG、原toggle_masked、鼠标/Tab Enter/Space显隐、中英名称及secure AX无值、仅合成Key两尺寸实拍已验；完整IME/无障碍/跨平台待续 |
@@ -42,7 +42,7 @@
 | 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；失败后只读配置对齐/幸存dirty与异常文件守卫已验；完整视觉/IME/无障碍/跨平台与Core-unresponsive待续 |
 | 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs | 部分：原生提示/实际开关与隔离plist、分候选失败回滚/重试和Pending关闭、动态Tooltip实时刷新、遮罩/两尺寸与四轮性能已验；初始Tab/完整键盘/IME/无障碍及跨平台待续 |
 | 104:1605 | 38 / STUDIO V2 · 检查更新交互（原型） | ui/update_notice.rs, ui.rs | 部分：299×113原生等待/实际HTTP403与重试、关闭不回包重开、Esc/X/外部/缩窗、草稿筛选/遮罩/两尺寸与六轮性能已验；公网成功/完整键盘/IME/无障碍及跨平台待续 |
-| 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui/language_menu.rs, ui.rs | 部分：241×184原生浮层/两尺寸、auto/zh/en真实保存/重复不写、方向Enter/Space/Esc/X/外部取消、键盘复开、草稿/筛选/重开、遮罩与邻接安全按钮已验；完整IME/无障碍/跨平台与菜单打开持续CPU待续 |
+| 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui/language_menu.rs, ui.rs | 部分：原241×184/三模式保存与重复不写/取消/草稿筛选/重开等证据保留；最终0892 Studio工具焦点/Enter与Space打开/Esc返回/复开及Tab接续已验，菜单30s CPU样本已留；长期CPU/完整IME/读屏/原生AX及跨平台待续 |
 | 104:2046 | 40 / STUDIO V2 · 恢复默认窗口尺寸（原型） | ui/window_restore.rs, ui.rs | 部分：原生提示/两尺寸、普通/zoom/全屏恢复、缩窗Esc/X、真实Enter/Space、草稿筛选/遮罩与四轮性能已验；超时失败、完整IME/无障碍/跨平台待续 |
 
 共享组件：`103:442` 七项工具栏 → `ui.rs::app_controls`、`ui_components.rs`；最新 `54:2` / `90:442` 已将其独立置于窗口top8/right32、300×36，七项事件保持原样。最终049版1440×900与恢复界面操作后补拍的1100×700实拍已检查；最终小窗Skin/Language上缘点击、模态遮罩及Restore已验，快捷键与菜单Esc的完整范围见实施记录。`83:454` 供应商行、`83:455` 固定操作栏 → `ui.rs::sidebar`；`71:364` 原生实施契约 → `theme.rs`、本目录记录。
@@ -74,3 +74,5 @@
 价格模态框 `60:249` / `69:359` 已落地原生 `statistics/price_layout.rs`：42px字段、四价格2×2、独立表单滚动、固定取消/保存/错误底栏，保留备注与旧修订确认。已验两尺寸、中英文/Studio及Mono、键盘字段自动滚入视野与版本冲突恢复；此前“视觉待施工”是历史进度，精细视觉/IME/无障碍及跨平台仍待最终审计。
 
 请求详情 `60:475` / `60:692` 已提取原生 `statistics/detail_layout.rs`，650×770固定头/提示/关闭底栏，15行主摘要与独立滚动；原额外metadata和价格快照在原生More浮层完整换行保留。真实代理/导入/失败/SSE、费用快照、同ID错误重试/恢复、关闭及复制ID已回归；Tooltip仍受CUA hover能力限制未作视觉验收，精细视觉/无障碍/跨平台继续保留待办。
+
+共享工具栏专项（小功能41）：0892保留103:442七项顺序/20px资源/36px热区/8px间距/top8/right32，改原生focus_visible为显式1px主色框，未改变全局ring/selection。统计页初始Tab/反向七项与语言Enter/Space/Esc/Tab接续、皮肤非模态浮层离开关闭/内部保存、Sync遮罩、两尺寸及菜单CPU/八轮原基准已验；完整无障碍/其他控件焦点与跨平台待续，不改变40部分/0整帧最终验收计数。

@@ -915,3 +915,46 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 四轮短测未见明显退化；合计RSS中位84.560→84.500MiB，UI72.125→72.185MiB（增加0.060，保留），p95中位0.207→0.197ms、峰值137.325→132.290MiB。不宣称性能优化；冷启动次序影响，UI marker不是首帧/可交互、RSS共享页可双计，不测键盘交互时延、持续菜单CPU、公网或跨平台。
 - 规范化绝对路径、UID501、所有父组件/挂载/全部文件类型及单一链接、进程/lsof预检与临执行二次清单哈希一致后，按持续授权删除本轮唯一临时目录254个专属可再生文件，释放已分配空间估计268,795,904bytes（256.34MiB），本轮保留0；系统盘可用40,462,876,672bytes（37.68GiB）。此前因删除被拒而保留的root30仍25,198,592bytes（24.03MiB，仅元数据计量），未读取误截图或重试删除；共享Cargo缓存及4个未知历史项保留。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮只补共用模型表专项；40帧完整精细视觉、初始Tab、IME/读屏/原生AX属性、HiDPI/Windows/Intel实机、首帧/托盘及更新公网成功等仍待推进。Goal保持active，HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。
+
+## 小功能 41：皮肤浮层离开关闭与七工具按钮键盘焦点（2026-10-30，北京时间）
+
+- 修复Tab离开皮肤浮层后残留且Esc失效，以及Studio工具按钮焦点几乎不可辨认；最终0892真实七项键盘可达、语言复开、皮肤双向离开、草稿与遮罩、两尺寸及性能分项完成。证据：[最终构建](benchmarks/toolbar-keyboard-build.json)、[真实交互](benchmarks/toolbar-keyboard-gui-validation.json)、[1440语言焦点](screenshots/toolbar-keyboard-1440x900.png)、[1100恢复焦点](screenshots/toolbar-keyboard-1100x700.png)、[八轮原基准](benchmarks/toolbar-keyboard-performance-summary.json)、[菜单CPU与原值](benchmarks/toolbar-keyboard-menu-idle.json)、[清理记录](benchmarks/toolbar-keyboard-cleanup.json)、[2aac边宽失败实拍](screenshots/toolbar-keyboard-2aac-focus-missing-1440x901.png)。
+- 旧0c5c默认Mono新开首Tab到统计侧栏，ShiftTab可逐项到七按钮，语言Enter/Esc返回和Tab接续曾通过，初始工具栏不可达的推断撤回。真实缺陷是皮肤Space打开、Tab走完七项后再Tab已到侧栏但dialog仍在，此时Esc也不关闭（[基线记录](benchmarks/toolbar-keyboard-baseline.json)）。为皮肤面板保留单个非Tab停靠的FocusHandle，通过Kit公开track_focus与一次on_focus_out订阅在离开时关闭浮层、保留新控件焦点；内部选择不关闭，菜单内Esc和触发按钮恢复仍由原生Popover处理。未新增定时器、改变主题保存回调或键位。
+- Kit用主题ring绘制焦点，Studio旧ring#f4f6ff相对画布#f7f8fc对比仅1.016:1。最终只在共用system_button_base使用原生focus_visible绘制1px皮肤primary边框，并关闭这七项的原软halo；其他控件的全局ring/selection、布局和事件原值保留。七皮肤在画布/白卡/自身浅色底共21组颜色对比回归均≥3:1（最低4.4352），Studio画布为4.5068。色彩测试不是完整无障碍认证，其他控件焦点及读屏仍需审计。
+- 新对比回归在旧色上真实失败：Monochrome1.20、0 passed/1 failed；改为主色后最终192 tests通过。测试夹具最初glob导入同名GPUI test宏曾两次触发SIGBUS，改成显式导入后获得实际断言失败，未删除缓存或改变工具链。4bed只修皮肤退出，Studio焦点仍浅；22f全局强色可见后收窄作用范围；2aac仅设边框色但Ghost默认边宽0，实拍未见边线，加入显式1px后0892才通过。中间记录和原图均独立保留，不冒充最终；纯色对比测试不能替代原生渲染验证。
+- 官方Figma MCP重读103:442含原始截图：7×36px按钮/20pxSVG/gap8/总宽300。七个本地SVG下载核对6份字节一致、1份仅内部clip ID不同且规范化内容一致，均20×20且文件未改；原top8/right32和标题/副标题/正文位置、工具栏遮罩层级/拖拽拦截不改。Rust仅ui.rs、ui/skin_controls.rs、ui_components.rs、theme.rs四文件，代理核心/配置格式/依赖/版本/协议逻辑不变；新安装默认Mono和既存外观选择不迁移。
+- 最终UI SHA256 `0892b084054464431d5af83b9db5e60b013ca338cbc4ace3053cf04e0791d4f8`、15,246,768bytes；fmt0.473s、192 tests/2既有ignored（5.131s）、严格clippy all-targets/-D warnings2.214s、Intel check1.747s、Release41.630s通过。Core仍25f/8,428,096bytes；Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留。
+- 最终启动前显式写Studio/version1，原字节SHA496958cff21cefeeb813956160851b3ff6d3750e244b24a894b260cf936f26ff；合成HOME/loopback A2/B1/0请求，UI73890/Core73879/fixture73877。统计页首Tab到侧栏，逐次ShiftTab七项均有主色细框；定位语言后Return打开/Esc回语言、Space复开/Esc、Tab到Restore实测通过，未激活外链或电源。皮肤Enter/Space与Esc返回、Tab八次离开到侧栏自动关闭、反向离开到Feedback自动关闭均通过，无焦点陷阱。
+- 菜单内Blue→Studio实际落盘相应外观、浮层持续打开；未保存名称synthetic-draft-0892及A两行模型保留。Sync确认期间点击皮肤位置不穿透，Esc取消，未执行同步/重启/真实登录项动作。本轮只复验语言键盘路径，三模式保存/重复不写与重开持久仍引用先前语言分项，不扩大成0892全套重验。
+- 主代理已逐张查看最终两张及三张中间图，最终尺寸/SHA重算通过；同UI73890、唯一窗口62001。宽图语言焦点、窄图恢复焦点，中文Studio统计明细/0记录；raw1440×901/1100×701仅裁底1物理像素，无缩放/拼接。小窗明细保留原横向滚动，不声明整帧最终视觉。CUA焦点文字仍泛化为窗口，键盘可达结论来自可见边框和真实动作；外部AX API未使用，OS焦点/selected等原生属性与完整IME/读屏未验。
+- 实际Core73879完整kernel_protection数值矩阵：真实受保护目录各操作deny1，合成目录四项allow0，真实LaunchAgents四类查询均deny1；无真实用户配置或登录项变更。UI exit0并wait，关窗后Core health200/ready，Core/fixture均exit0并wait，主代理独立确认三PID消失。4bed重开/22f/2aac的生命周期只作对应中间证据。
+
+最终0892同一Studio会话，统计用量明细无请求，CUA/截图/编译暂停；每状态31个1秒RSS样本、30秒累计CPU时间差，百分比为单核占用。每次采样前后新树确认菜单状态；皮肤首次RSS增加0.734MiB后，重新打开并连续追加两段30秒，后段未继续增长。旧0c5c采样实际为默认Mono、4bed为Studio，已更正并另存[不同皮肤的中间样本](benchmarks/toolbar-keyboard-4bed-menu-idle.json)，不作版本性能对比或最终验收。
+
+| 最终状态 | UI / Core平均CPU % | UI RSS起 / 止 MiB |
+| --- | --- | --- |
+| 关闭菜单30s | 2.433 / 0.167 | 103.563 / 103.563 |
+| 皮肤打开30s | 2.633 / 0.167 | 103.891 / 104.625 |
+| 语言打开30s | 2.533 / 0.167 | 104.922 / 104.922 |
+| 皮肤重开前30s | 2.533 / 0.167 | 105.016 / 105.000 |
+| 紧接后30s | 2.567 / 0.133 | 105.000 / 105.000 |
+
+以上只证明短样本，不能证明长期无泄漏、读屏负载或交互时延；0.01s CPU计量分辨率、热会话RSS和原轮询保留。无性能优化结论。
+
+原benchmark SHA仍bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2，每轮1000小请求、80×1MiB/并发4、64模型，固定Core25f，旧0c5c/新0892均在每个隔离目录实际读回Studio/version1。编译/GUI/CUA/图像处理结束后本会话独占串行；系统用户后台应用仍运行，批间快照Codex Renderer35.1%/WindowServer23.5%/RustDesk18.2%仅作环境记录，不作因果归因。
+
+| 顺序/Release | Core / UI / 合计RSS MiB | Core / 累计UI记录 ms | 请求p50 / p95 ms | 峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [1旧](benchmarks/toolbar-keyboard-previous-gui.json) | 11.77 / 71.55 / 83.31 | 424.782 / 1014.392 | 0.172 / 0.214 | 128.69 | 0.087 |
+| [2新](benchmarks/toolbar-keyboard-current-gui.json) | 12.47 / 72.88 / 85.34 | 208.693 / 791.242 | 0.173 / 0.240 | 135.58 | 0.090 |
+| [3旧](benchmarks/toolbar-keyboard-previous-run2-gui.json) | 13.61 / 73.56 / 87.17 | 217.583 / 786.335 | 0.174 / 0.358 | 140.64 | 0.096 |
+| [4新](benchmarks/toolbar-keyboard-current-run2-gui.json) | 13.47 / 73.83 / 87.30 | 206.458 / 671.016 | 0.187 / 0.644 | 149.62 | 0.129 |
+| [5新反向](benchmarks/toolbar-keyboard-current-run3-gui.json) | 13.91 / 71.42 / 85.33 | 228.283 / 840.744 | 0.172 / 0.205 | 134.00 | 0.094 |
+| [6旧反向](benchmarks/toolbar-keyboard-previous-run3-gui.json) | 12.42 / 71.98 / 84.41 | 219.188 / 693.105 | 0.171 / 0.215 | 134.28 | 0.086 |
+| [7新反向](benchmarks/toolbar-keyboard-current-run4-gui.json) | 12.11 / 72.38 / 84.48 | 212.136 / 650.541 | 0.173 / 0.206 | 133.61 | 0.086 |
+| [8旧反向](benchmarks/toolbar-keyboard-previous-run4-gui.json) | 12.38 / 72.48 / 84.86 | 209.276 / 672.933 | 0.172 / 0.275 | 142.62 | 0.097 |
+
+- 初四轮新版p95偏高，保留0.644ms/大请求0.129s/峰值149.62MiB异常，再追加新→旧两对。反向新版0.205/0.206ms、旧版0.215/0.275ms方向相反，八轮未见持续指向新版的退化，不是统计等价证明。中位Core12.400→12.970、UI72.230→72.630（+0.400）、合计84.635→85.335（+0.700MiB），p50 0.172→0.173、p95 0.245→0.223ms；启动Core218.386→210.415、累计UI739.720→731.129ms。未丢弃初始差样本，不宣称优化；UI marker不是首帧/可交互，RSS共享页可双计，无公网、长时或跨平台结论。
+- 八轮直接子进程全部wait，退出数组均[-15,-15,0,0]，各Core/UI消失由主代理逐PID复核；8个原benchmark临时目录延迟到全部测试退出后的精确清理，原基准负载/计量未修改，仅私有wrapper增加反向标签守卫。
+- 按持续授权，规范化绝对路径/UID501/各级父组件与挂载/完整类型与单一链接/进程和lsof预检、临执行清单哈希复核后，删除本轮唯一目录322个专属可再生文件，释放估计388,628,480bytes（370.63MiB），本轮保留0；系统盘可用40,357,142,528bytes（37.59GiB）。此前root30仍25,198,592bytes（24.03MiB，仅元数据计量），未读取其误截图、未重试被拒的删除；共享缓存及4个未知历史项保留。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享工具栏与皮肤浮层专项，完整视觉、其他控件焦点/IME/读屏/原生AX属性、Windows/Intel实机/HiDPI、托盘/首帧和更新公网成功等仍未完成。Goal保持active；HTML仅静态数据/脚本/链接校验，不绕过既有浏览器本地文件限制。

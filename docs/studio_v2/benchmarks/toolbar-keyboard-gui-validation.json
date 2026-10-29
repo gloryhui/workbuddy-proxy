@@ -1,0 +1,182 @@
+{
+  "candidate_sha256": "0892b084054464431d5af83b9db5e60b013ca338cbc4ace3053cf04e0791d4f8",
+  "baseline_sha256": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "prelaunch_appearance": {
+    "value": {
+      "version": 1,
+      "skin": "studio_indigo"
+    },
+    "sha256": "496958cff21cefeeb813956160851b3ff6d3750e244b24a894b260cf936f26ff"
+  },
+  "kernel_sandbox": {
+    "enforced": true,
+    "pid": 73879,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launch_agents": {
+      "file-read-data": 1,
+      "file-write-data": 1,
+      "file-write-create": 1,
+      "file-write-unlink": 1
+    }
+  },
+  "cases": {
+    "initial_keyboard_focus": "Statistics initial Tab showed sidebar focus; seven Shift+Tab steps visibly outlined Feedback, GitHub, Restore, Language, Update, Startup, Skin in Studio primary. External links and Startup were not activated.",
+    "language": "Language focused: Return opens, Escape closes and returns to Language; Space opens, Escape closes, Tab reaches Restore with visible outline.",
+    "skin_escape": "Skin Space opens and Escape closes with visible Skin focus; Return also opens.",
+    "skin_forward": "Menu remained open after seven Tabs, eighth Tab closed it and focused Statistics sidebar.",
+    "skin_reverse": "From newly opened menu Shift+Tab closed it and visibly focused Feedback.",
+    "theme_draft": "Synthetic unsaved provider name and its two model rows survived Blue and Studio selections; both selections left menu open and appearance.json was read back as blue then studio_indigo.",
+    "modal": "Sync confirmation opened; clicking Skin position on scrim did not open skin menu or dismiss confirmation; Escape closed confirmation. No sync or restart executed.",
+    "menu_samples": "Before and after sampling, fresh CUA trees showed seven Skin options and Studio on; Language dialog and three options remained present after its sample.",
+    "intermediate": "2aac failed visual toolbar outline; 4bed and 22f are intermediate only, not claimed as final evidence."
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/toolbar-keyboard-1440x900.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "output_size": [
+        1440,
+        900
+      ],
+      "raw_sha256": "6c0dc246e13f1f6d362f6655ef65b35156ce6b4fc4a901a8fce9624810d2ee30",
+      "png_sha256": "894173293edac449146b39d02a1b27fd662a2d0780f400ad9a712f76068873af",
+      "method": "Native screencapture verified unique window, crop bottom 1 physical pixel; no scaling",
+      "pid": 73890,
+      "verified_window_id": 62001,
+      "state": "Chinese / Studio / Statistics details / Language keyboard focus / no popup"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/toolbar-keyboard-1100x700.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "output_size": [
+        1100,
+        700
+      ],
+      "raw_sha256": "5b1c96a989e6cc6b59edd8e5bdc14c00383f1ee042238945726beb7c5ab22084",
+      "png_sha256": "e0a20dc1494742af616feed2dd0fb71211aa2f731034b9135b1265c6870f1120",
+      "method": "Native screencapture verified unique window, crop bottom 1 physical pixel; no scaling",
+      "pid": 73890,
+      "verified_window_id": 62001,
+      "state": "Chinese / Studio / Statistics details / Restore keyboard focus / no popup"
+    }
+  ],
+  "lifecycle": {
+    "fixture_pid": 73877,
+    "ui_pid": 73890,
+    "core_pid": 73879,
+    "ui_exit": 0,
+    "ui_close_core_health_http": 200,
+    "ui_close_core_health_state": "ready",
+    "core_exit": 0,
+    "fixture_wait_exit": 0,
+    "all_pids_gone": true
+  },
+  "limitations": [
+    "CUA focused element reports standard window; focus identity was verified via visible outlines and safe keyboard behavior, not external native AX attributes.",
+    "Comprehensive accessibility, IME and other control focus colors are not covered.",
+    "Menu idle samples are reported separately; 60-second observations do not establish long-term memory stability.",
+    "Baseline and intermediate menu CPU samples may have different theme and warm-session history; do not attribute RSS differences directly to this change."
+  ],
+  "main_agent_review": {
+    "final_images_visually_reviewed": 2,
+    "intermediate_images_visually_reviewed": 3,
+    "dimensions_sha256_recomputed": true,
+    "gui_pids_gone_independently_checked": true,
+    "all8_benchmark_core_ui_pids_gone_independently_checked": true,
+    "scope": "Visible focus and real keyboard/pointer behavior. Native OS AX selected/focused attributes not queried or verified."
+  }
+}

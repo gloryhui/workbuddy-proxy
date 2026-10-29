@@ -42,6 +42,11 @@ pub fn toolbar_selection() -> u32 {
     }
 }
 
+/// Toolbar keyboard outlines must stay distinct from their light surfaces.
+pub fn focus_color(skin: Skin) -> u32 {
+    skin.palette().primary
+}
+
 /// Design colours from DESIGN_SPEC §1.1 and the component states in §3.
 pub mod color {
     pub const SUCCESS: u32 = 0x11976f;
@@ -449,4 +454,37 @@ fn resolve_mono(installed: &[String]) -> Option<SharedString> {
 /// per-text feature; pages apply it when they migrate in T02–T08.
 pub fn tabular_figures() -> FontFeatures {
     FontFeatures(Arc::new(vec![("tnum".into(), 1)]))
+}
+
+#[cfg(test)]
+mod focus_tests {
+    use super::{Skin, color, focus_color};
+
+    fn luminance(color: u32) -> f64 {
+        [16, 8, 0]
+            .map(|shift| {
+                let channel = ((color >> shift) & 255) as f64 / 255.;
+                if channel <= 0.04045 {
+                    channel / 12.92
+                } else {
+                    ((channel + 0.055) / 1.055).powf(2.4)
+                }
+            })
+            .into_iter()
+            .zip([0.2126, 0.7152, 0.0722])
+            .map(|(channel, weight)| channel * weight)
+            .sum()
+    }
+
+    #[test]
+    fn keyboard_focus_contrasts_with_every_skin_surface() {
+        for skin in Skin::ALL {
+            for surface in [color::BG_PAGE, color::WHITE, skin.palette().tint] {
+                let outline = luminance(focus_color(skin));
+                let background = luminance(surface);
+                let contrast = (outline.max(background) + 0.05) / (outline.min(background) + 0.05);
+                assert!(contrast >= 3., "{skin:?}: focus contrast {contrast:.2}");
+            }
+        }
+    }
 }

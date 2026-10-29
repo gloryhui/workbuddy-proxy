@@ -1,0 +1,180 @@
+{
+  "candidate_sha256": "4bed2bb91cc2f8717e03e807946f8137490079947724b2839c9340315bff16c0",
+  "baseline_sha256": "0c5c4389679a9875c94fc822f192afce1b2aeab49a6005405177302aff1e5cac",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "kernel_sandbox": {
+    "enforced": true,
+    "pid": 59369,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launch_agents": {
+      "file-read-data": 1,
+      "file-write-data": 1,
+      "file-write-create": 1,
+      "file-write-unlink": 1
+    }
+  },
+  "cases": {
+    "baseline_initial_focus": "Mono statistics initial Tab to sidebar, ShiftTab to seven toolbar buttons with visible ring; no external links activated",
+    "baseline_skin_defect": "Space opens; Tab traverses seven options and leaves for sidebar while popup remains; Esc on sidebar does not close",
+    "final_initial_focus": "initial Mono statistics: Tab sidebar then ShiftTab visibly reaches Feedback/GitHub/Restore/Language/Update/Startup/Skin; no activation",
+    "final_skin_exit_forward": "Space opens; Tab through seven options then next Tab closes and leaves focus on Statistics sidebar",
+    "final_skin_exit_reverse": "Return opens, Tab to first option then ShiftTab closes and focus goes to Feedback on reverse wrap",
+    "final_skin_esc": "Return opens Esc closes and visibly restores Skin; Space reopens Esc closes",
+    "theme_draft": "Blue and Studio selections both leave popup open; appearance.json ultimately studio_indigo; synthetic name + one model draft maintained; Core remains A2/B1",
+    "modal": "Sync confirmation open; skin coordinate clicked on scrim; popup did not open; Esc cancels, no sync/restart",
+    "language_mouse": "opening and outside click closes; Esc after sampled open also closes",
+    "reopen": "same Core; UI reopened and recovered synthetic name + one model draft and Studio/English settings",
+    "final_language_keyboard": "not reliably identified focus in Studio/English after reopen; no Enter/Space sent; not verified",
+    "provider_fresh_initial": "application opens statistics by default; fresh Providers initial path not verified"
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/toolbar-keyboard-4bed-1440x900.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "output_size": [
+        1440,
+        900
+      ],
+      "raw_sha256": "6462a10ba6956bf3d06561e9648e6882897ef110966f0cd6969cb75ea14757f3",
+      "png_sha256": "f9d4d12d5c592f9bdb9a3af973057e880ac79d3d8a742f3931b073643a81f48a",
+      "process": "crop bottom 1 physical pixel; no scaling",
+      "pid": 65117,
+      "verified_window_id": 61894,
+      "state": "English / Studio Indigo / unsaved synthetic name + one model / menu closed"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/toolbar-keyboard-4bed-1100x700.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "output_size": [
+        1100,
+        700
+      ],
+      "raw_sha256": "dc10d92f18f7333bed9ea9092cd253e15b58dd17840004bfa7d1f35411dd9e15",
+      "png_sha256": "26a8a3f5daf2e1f2ac8234c163f7c6d43a1d3f5b9a21b7314c7298dad465e126",
+      "process": "crop bottom 1 physical pixel; no scaling",
+      "pid": 59373,
+      "verified_window_id": 61705,
+      "state": "English / Studio Indigo / unsaved synthetic name + one model / menu closed"
+    }
+  ],
+  "menu_screenshot": "native menu screenshots captured but tooltip overlaps heading; not promoted as clean final screenshots",
+  "lifecycle": {
+    "fixture_pid": 59367,
+    "core_pid": 59369,
+    "first_ui_pid": 59373,
+    "first_ui_exit": 0,
+    "first_ui_close_core_health_http": 200,
+    "reopened_ui_pid": 65117,
+    "reopened_ui_exit": 0,
+    "reopened_ui_wait_exit": 0,
+    "reopened_ui_close_core_health_http": 200,
+    "core_exit": 0,
+    "fixture_wait_exit": 0,
+    "pids_gone": [
+      59367,
+      59369,
+      59373,
+      65117
+    ]
+  },
+  "limitations": [
+    "Final Studio/English toolbar rings and language Enter/Space/Esc reopen not established; CUA focused element remains standard window.",
+    "External AX properties and comprehensive IME/accessibility not tested.",
+    "CPU samples are separately maintained by parent; baseline language popup presence at end not conclusively observed via full fresh tree."
+  ],
+  "intermediate_only": true,
+  "reason_superseded": "Studio focus tint could not reliably be distinguished. Subsequent candidate changes only shared toolbar keyboard-outline rendering."
+}

@@ -266,6 +266,7 @@ pub struct Proxy {
     resetting_window: bool,
     skin_open: bool,
     skin_error: bool,
+    skin_focus: FocusHandle,
     language_menu: language_menu::State,
     window_restore: window_restore::State,
     autostart_notice: autostart_notice::State,
@@ -865,6 +866,7 @@ impl Proxy {
             resetting_window: false,
             skin_open: false,
             skin_error: false,
+            skin_focus: cx.focus_handle().tab_stop(false),
             language_menu: language_menu::State::new(zh, window, cx),
             window_restore: window_restore::State::new(cx),
             autostart_notice: autostart_notice::State::new(cx),
@@ -952,6 +954,7 @@ impl Proxy {
         })
         .detach();
         this.subscribe_model_editor_focus(window, cx);
+        this.subscribe_skin_focus(window, cx);
         this.subscribe_protocol_editor_focus(window, cx);
         this.subscribe_provider_delete_bounds(window, cx);
         this.subscribe_provider_rail_bounds(window, cx);
