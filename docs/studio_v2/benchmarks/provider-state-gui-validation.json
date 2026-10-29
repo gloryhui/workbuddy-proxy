@@ -1,0 +1,148 @@
+{
+  "scope": "UI-32 synthetic native macOS GUI; fake HOME and loopback-only providers",
+  "versions": {
+    "baseline_ui_sha256": "0e87b2fede06bfb87a929de5e9da000b0dc760fbc294bc54415715f2122fda25",
+    "behavior_candidate_ui_sha256": "0f7de760c809ca8615b6de1f018f5ff38939a84a177dea7be961da8f860b0b5f",
+    "final_ui_sha256": "9bfff6b548d39bb90d036af7854043ca3fd3426f6f549cc7f351ad58f98f4910",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+  },
+  "baseline": "OpenCode Go with one model had no helper note. After deleting sub2api, 1 provider and 1 model remained, with no delete receipt badge.",
+  "candidate_0f_behavior": {
+    "model_count": "Added second synthetic model to draft: helper disappeared, status Unsaved draft, core remained 2 providers/5 models. Removed added model: helper returned at one model, state Saved.",
+    "cancel": "Cancel of sub2api deletion preserved both providers, 5 models, config SHA a85686362d6c6a495498678daab9d7b6e2f389d3c2340585741b4ae84aff9f81 and WorkBuddy sentinel.",
+    "delete": "Confirmed sub2api delete, survivor OpenCode Go 1 model, Runtime 1 provider/1 model/0 requests; small badge Deleted 1.",
+    "known_visual_issue": "English note clipped at 1100; corrected in final candidate."
+  },
+  "final_9b": {
+    "single_model": "CN Studio 1440 helper is one line and EN Mono 1100 helper wraps completely onto two lines; table and footer accessible.",
+    "delete_sub2api": "Confirmed through UI, only OpenCode Go remains: 1 provider/1 model/0 requests; wide left Deleted 1 and right Saved, small right Deleted 1, helper visible.",
+    "delete_opencode": "Separate clean fixture: confirmed through UI, only sub2api remains: 1 provider/4 models/0 requests; wide left Deleted 1 and right Saved, small right Deleted 1, no single-model helper.",
+    "edit_and_dirty": "After deletion, Edit replaced receipt with editing state; Cancel restored receipt. Editing provider name showed unsaved status; explicit Save succeeded and cleared receipt.",
+    "reopen": "After successful delete in separate fixture, closed and relaunched UI against same running isolated core: survivor displayed generic Saved without receipt.",
+    "fourth_row": "In 1100 window, independently scrolled model table to model-4/model-a-4 and its edit icon; footer Save remained visible. The additional row4 image is after reopening and therefore has generic Saved, not a delete receipt.",
+    "failure": "Separate fixture: open A confirmation, externally delete A through own Core, then confirm in UI. Actual error was 请选择供应商; no delete receipt; config SHA a308924c3055e868d64565e2d762786357d9e5246a53d30237ffffc5d1688304 unchanged across failed confirmation, sentinel unchanged. UI cached A/B while Runtime showed actual 1/1, a separately reported authority-alignment issue. Failure screenshot was observed in CUA output but not saved as raw before closing.",
+    "not_verified": [
+      "Busy visual state was not held or captured.",
+      "Receipt clearing via switching among 3 providers was not exercised.",
+      "Full accessibility and IME were not tested."
+    ]
+  },
+  "fixture_integrity": {
+    "initial": "2 synthetic providers, 5 models, 0 requests",
+    "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "upstreams": "loopback mock only",
+    "core_sandbox": "macOS sandbox profile protecting real home"
+  },
+  "screenshots": [
+    {
+      "file": "ui32-one-model-1440x900.png",
+      "raw_size": [
+        2880,
+        1802
+      ],
+      "format": "JPEG",
+      "crop_bottom_physical_pixels": 2,
+      "target": [
+        1440,
+        900
+      ],
+      "sha256": "092ab19d82ff1d393ff3bde061903f020a9cc17d8a18b2791ff8d75bb8d0d558"
+    },
+    {
+      "file": "ui32-one-model-1100x700.png",
+      "raw_size": [
+        2200,
+        1402
+      ],
+      "format": "JPEG",
+      "crop_bottom_physical_pixels": 2,
+      "target": [
+        1100,
+        700
+      ],
+      "sha256": "f793df12b50fcab4dbaa1984b93ff0f0030a7a36c72ba3a0222d176b119c9f05"
+    },
+    {
+      "file": "ui32-deleted-to-opencode-1440x900.png",
+      "raw_size": [
+        2880,
+        1800
+      ],
+      "format": "JPEG",
+      "crop_bottom_physical_pixels": 0,
+      "target": [
+        1440,
+        900
+      ],
+      "sha256": "04330b4387182aff7249e703aa9e9078d99cce35fc1086834438839fce1afa21"
+    },
+    {
+      "file": "ui32-deleted-to-opencode-1100x700.png",
+      "raw_size": [
+        2200,
+        1402
+      ],
+      "format": "JPEG",
+      "crop_bottom_physical_pixels": 2,
+      "target": [
+        1100,
+        700
+      ],
+      "sha256": "06ddf657807546d63e4cf01fb6cbadbe47891cf9a612e4d91c44bed2af454491"
+    },
+    {
+      "file": "ui32-deleted-to-sub2api-1440x900.png",
+      "raw_size": [
+        2880,
+        1802
+      ],
+      "format": "JPEG",
+      "crop_bottom_physical_pixels": 2,
+      "target": [
+        1440,
+        900
+      ],
+      "sha256": "baf2f5c6361336b4913c4211828bf0b62bb7d17b46a58d67bbfdbd780e344b63"
+    },
+    {
+      "file": "ui32-deleted-to-sub2api-1100x700.png",
+      "raw_size": [
+        2200,
+        1402
+      ],
+      "format": "JPEG",
+      "crop_bottom_physical_pixels": 2,
+      "target": [
+        1100,
+        700
+      ],
+      "sha256": "9a3a78380ff36ab04a22280c1099d9aeb4725898000dfd7dd209144e8fbb422e"
+    },
+    {
+      "file": "ui32-four-model-row4-1100x700.png",
+      "raw_size": [
+        2200,
+        1402
+      ],
+      "format": "JPEG",
+      "crop_bottom_physical_pixels": 2,
+      "target": [
+        1100,
+        700
+      ],
+      "sha256": "6db195af43f3205b69cbe5d6e71b4cf7685fc290a46e7f9464b1bc691b7753ef"
+    }
+  ],
+  "screenshot_method": "Native CUA window screenshot bytes were JPEG at 2x; where height had two extra physical pixels, cropped only bottom 2 pixels, then one proportional LANCZOS resize to 1x PNG. 2880x1800 had no crop.",
+  "process_lifecycle": {
+    "all_owned_ui_core_fixture_stopped_and_waited": true,
+    "independent_core_health_after_each_close": "HTTP 200",
+    "ui_and_core_exit_codes": 0,
+    "fixture_exit_codes": 0,
+    "reopened_ui_exit_codes": [
+      0,
+      0
+    ],
+    "initial_bad_fixture": "First baseline failed startup due to short synthetic model ID; fixed in new independent fixture; it was not accepted as a GUI result."
+  }
+}

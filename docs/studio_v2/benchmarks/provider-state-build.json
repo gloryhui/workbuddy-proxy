@@ -1,0 +1,98 @@
+{
+  "ui_sha256": "9bfff6b548d39bb90d036af7854043ca3fd3426f6f549cc7f351ad58f98f4910",
+  "ui_bytes": 15114016,
+  "baseline_ui_sha256": "0e87b2fede06bfb87a929de5e9da000b0dc760fbc294bc54415715f2122fda25",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "tests_passed": 177,
+  "tests_ignored": 2,
+  "new_tests": [
+    "only_the_submitted_target_may_disappear",
+    "feedback_requires_a_real_surviving_provider",
+    "another_attempt_or_context_clears_the_previous_receipt"
+  ],
+  "gate_timings": {
+    "fmt": {
+      "exit": 0,
+      "seconds": 0.457,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ]
+    },
+    "test": {
+      "exit": 0,
+      "seconds": 4.647,
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    },
+    "clippy": {
+      "exit": 0,
+      "seconds": 2.152,
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    "intel": {
+      "exit": 0,
+      "seconds": 1.73,
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ]
+    },
+    "release": {
+      "exit": 0,
+      "seconds": 46.187,
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    }
+  },
+  "figma_frames": [
+    "67:338",
+    "78:1804",
+    "80:1114"
+  ],
+  "layout": {
+    "single_model_note_max_width": 664,
+    "single_model_note_height": 50,
+    "row_note_gap": 16,
+    "note_radius": 10,
+    "note_text_size": 12,
+    "note_line_height": 17,
+    "compact_text_wrap": "explicit normal whitespace, full constrained width"
+  },
+  "scope": "UI-only model helper and session-only confirmed-delete receipt; original delete command, save handlers, core, dependencies and persisted schemas unchanged",
+  "build_issue": "Initial unit test compilation hit SIGBUS in gpui_macros parsing. Removing wildcard GPUI imports from the pure test module prevented macro shadowing; explicit Config/BTreeSet and test imports compile and run the standard unit tests. Layout was also extracted to a named method.",
+  "known_candidate_issue": {
+    "ui_sha256": "0f7de760c809ca8615b6de1f018f5ff38939a84a177dea7be961da8f860b0b5f",
+    "issue": "English helper clipped at 1100 and wide helper exceeded Figma width; final9bfff adds normal wrapping/width constraint and max664"
+  },
+  "intel_runtime_verified": false,
+  "warning": "Existing block0.1.6 future incompatibility warning",
+  "assets": "No new static assets in this task; original native icons and previous checked SVG slots retained"
+}

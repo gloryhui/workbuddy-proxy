@@ -677,3 +677,31 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 本批四帧从未逐帧验收改为部分验收，剩余8/40未逐帧验收、31部分验收、1复用待核对。Goal保持active，整体仍在开发并穿插分项验收；下一批继续OpenCode Go/单供应商结果状态，之后保留的工具栏状态及完整40帧精细视觉、IME/无障碍与Windows/Intel实际运行继续推进。
 
 - 清理后续：用户明确批准该单一系统临时目录后，临执行前重新核对规范化绝对路径、328文件完整清单/大小/UID、无符号链接/挂载跳转及lsof无引用，精确删除获批目录，释放158,158,848已分配bytes（150.83MiB）；该轮专属临时保留0，系统盘可用38,459,838,464 bytes。最终截图/报告及共享构建缓存保持。用户随后持续授权后续本任务中范围明确、经安全预检的临时目录按同一方式清理，无需再次确认；仍逐次核实具体路径及影响。
+
+## 小功能 32：单模型提示与删除后幸存供应商状态（2026-10-29，北京时间）
+
+- 最新官方MCP高保真context/截图读取67:338、78:1804、80:1114。67:546/78:1960为仅一个模型时的664px宽上限、50px高/10px圆角提示，12px正文/17px行高；按实际当前草稿模型数显示，名称/供应商/模型ID不写死。原获取列表和手动添加按钮及处理器保持，英文小窗明确normal换行，固定50px容纳两行。
+- ui/provider_feedback.rs新增会话内删除回执：在用户确认时捕获原命令目标ID，只在既有成功reply门槛内比较前后provider ID集合，恰好删除该目标、没有增删其他ID且真实幸存者存在才绑定该幸存ID。不根据名称/日志文案猜测，不持久化、不改Core或private drafts。取消不发命令；失败/无法入队清除尝试，最后一个provider删除后无虚构幸存者回执。切换provider、普通成功save/test/install等清除；dirty/edit/busy状态优先于绿色反馈。宽窗左Deleted 1/右Saved，窄窗合并为右Deleted 1。
+- 原delete JSON命令、二次确认、目标绑定及全部保存/删除逻辑保持。模型table/help提取为provider_model_table局部布局方法，单行表体和提示按原生flex组合，多模型继续原Kit虚拟表格；没有新增timer、持续动画、依赖、资产或Core热路径修改。
+- 首轮纯单测编译在gpui_macros解析中SIGBUS；拆分布局后仍复现，去除纯单测模块的GPUI通配导入、明确导入Config/BTreeSet及测试项后不再复现，未升级工具链或改宏依赖。随后修正DataTable需要外层原生frame承载高度的API用法。0f7d实机发现英文小窗说明不换行，最终9bfff加入约束宽度与normal换行；宽窗helper另收敛到664上限。旧候选不充当最终截图证据。
+- 最终9bfff通过fmt、177项测试（新增3项删除身份/幸存者/清除边界，原2项Core专项ignored）、严格clippy all-targets/-D warnings、Intel check1.730s及Release46.187s。UI 15,114,016 bytes，SHA256 `9bfff6b548d39bb90d036af7854043ca3fd3426f6f549cc7f351ad58f98f4910`；对照0e87为15,113,824 bytes，Core仍8,428,096 bytes/25f SHA。Intel只有类型检查，既存block0.1.6未来兼容提示未处理。[编译证据](benchmarks/provider-state-build.json)。
+- 旧0e87隔离实拍确认一个模型时没有helper、删除后没有结果徽标。0f7d在合成OpenCode Go草稿中手动加第二个模型，提示消失并显示Unsaved；移除该新增行回到1时恢复提示和Saved，Core一直2供应商/5模型。取消删除前后Core配置与WorkBuddy空哨兵SHA均不变；此版英文截断未作为最终证据。
+- 最终9bfff新夹具先2供应商/5模型：单模型中英均可读，明确删除sub2api后真实剩OpenCode Go 1模型，Runtime1/1/0；另一独立夹具删除OpenCode Go后剩sub2api 4模型，Runtime1/4/0且不显示单模型提示。宽窗左Deleted1/右Saved，窄窗合并右Deleted1。Edit/dirty覆盖回执，Cancel恢复，普通Save成功清除；同一Core正常关窗重开后只有generic Saved，没有持久回执。测试上游仅loopback，因此预设按真实规则显示Custom，不伪造设计示例vendor匹配。
+- 主代理逐张检查最终三状态两尺寸：[单模型宽窗](screenshots/ui32-one-model-1440x900.png)、[小窗](screenshots/ui32-one-model-1100x700.png)、[删A剩B宽窗](screenshots/ui32-deleted-to-opencode-1440x900.png)、[小窗](screenshots/ui32-deleted-to-opencode-1100x700.png)、[删B剩A宽窗](screenshots/ui32-deleted-to-sub2api-1440x900.png)、[小窗](screenshots/ui32-deleted-to-sub2api-1100x700.png)。宽中文Studio，小英文Mono；小窗中央表体独立滚动，[第4行补图](screenshots/ui32-four-model-row4-1100x700.png)完整读出model-4/model-a-4/编辑图标，表头与Save可见。该补图是重开后的generic Saved，不当作带删除回执图。Raw宽2880×1802/小2200×1402只裁底2物理像素，一张2880×1800不裁，再一次LANCZOS等比缩为目标；原图格式JPEG，最终PNG真实转换。
+- 失败独立场景：先打开A删除确认，再由同一合成Core API外部删A，UI再确认得到真实错误“请选择供应商”；失败前后Core SHA a308924c…及WorkBuddy哨兵4f53cda1…不变，没有Deleted回执。此时UI仍缓存A/B而Runtime已1/1，是现有错误分支未对齐reply.config的已知缺口，下一小批修复，不把失败整屏标为通过。错误画面仅在CUA结果中实际观察，未保存raw，不伪造补拍；busy及三供应商切换清除未实机保持，源码优先级/单测与GUI范围分开。[脱敏GUI证据](benchmarks/provider-state-gui-validation.json)。
+- 所有基线/候选/重开UI、独立Core、fixture均退出0并wait，mock停止；每次关UI后Core health HTTP200，记录PID消失。完整IME/无障碍/跨平台及精细整帧审计继续待验。
+
+同机Release、相同25f核心，默认1供应商/64模型GUI页，0e87→9bfff→0e87→9bfff四轮各1000小请求及80次1MiB/并发4。输入SHA与Core内核沙盒均核对，mock/controller及辅助子进程退出数组[-15,-15,0,0]并wait，Core/UI PID均消失；本地包装只隔离环境、核SHA/进程，原benchmark未修改。临时夹具保留至本轮统一精确路径清理。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧0e87](benchmarks/provider-state-previous-gui.json) | 12.36 / 77.08 / 89.44 | 456.869 / 1104.873 | 0.160 / 0.246 | 140.41 | 0.106 |
+| [新9bfff](benchmarks/provider-state-gui.json) | 13.75 / 76.34 / 90.09 | 223.999 / 786.842 | 0.174 / 0.198 | 139.88 | 0.096 |
+| [旧0e87复测](benchmarks/provider-state-previous-run2-gui.json) | 12.88 / 75.05 / 87.92 | 108.780 / 521.056 | 0.172 / 0.190 | 135.77 | 0.096 |
+| [新9bfff复测](benchmarks/provider-state-run2-gui.json) | 12.56 / 75.84 / 88.41 | 107.575 / 502.894 | 0.178 / 0.207 | 132.39 | 0.091 |
+
+- 四轮合计空闲RSS按版本中位88.68→89.25MiB（约+0.64%），UI中位76.065→76.090MiB。请求p95第一对旧/新0.246/0.198ms、第二对0.190/0.207ms；中位代理开销第二对0.026/0.027ms，方向未持续相同，限定当前短测未见明显持续退化，不宣称改善。首个旧Core启动456.869ms，后续107–224ms，核心二进制没有变，不把累计UI启动都归为布局影响。
+- 累计就绪不是首帧或可交互，RSS共享页可能双计、tray单列；默认64模型短测不能替代单模型提示/回执活动态的长期CPU、重绘、完整无障碍或跨平台审计。直接与代理分时采样出现负开销时不解释为代理加速。此轮没有新增失败或疑点后继续重复已通过测试。
+
+- 按用户后续安全临时目录持续授权，展示完整目标后，临执行前再次规范化/归属/完整清单/无链接挂载/无进程预检，精确删除本轮专属根198文件，移除224,612,352已分配bytes（214.21MiB，非全系统净空间差承诺）；本轮专属临时保留0。最终PNG/JSON、共享Cargo缓存、系统编译诊断及未知历史目录不动。系统盘可用39,180,062,720 bytes（36.49GiB）。[清理证据](benchmarks/provider-state-cleanup.json)。
+- 本批3帧加入部分验收，当前5/40未逐帧验收、34部分验收、1复用待核对。Goal保持active：下一小批优先修复上面的失败reply配置对齐/草稿保护，再继续5帧与完整40帧精细视觉、IME/无障碍及跨平台/首帧审计；不将已知缓存缺口或未实测busy、平台标为完成。

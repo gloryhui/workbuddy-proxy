@@ -4,6 +4,7 @@ mod protocol_dialog;
 mod provider_choices;
 mod provider_delete;
 mod provider_edit;
+mod provider_feedback;
 mod provider_new;
 mod providers;
 mod relay;
@@ -236,6 +237,7 @@ pub struct Proxy {
     preset_select: Entity<ChoiceState>,
     delete_open: bool,
     provider_delete_target: Option<provider_delete::DeleteTarget>,
+    delete_feedback: provider_feedback::DeleteFeedback,
     provider_delete_scroll: ScrollHandle,
     provider_delete_focus: [FocusHandle; 2],
     sync_open: bool,
@@ -880,6 +882,7 @@ impl Proxy {
             preset_select,
             delete_open: false,
             provider_delete_target: None,
+            delete_feedback: Default::default(),
             provider_delete_scroll: ScrollHandle::new(),
             provider_delete_focus: std::array::from_fn(|_| cx.focus_handle().tab_stop(false)),
             sync_open: false,
@@ -1318,6 +1321,9 @@ impl Proxy {
         if self.busy {
             return;
         }
+        if id != self.selected() {
+            self.delete_feedback.clear();
+        }
         self.capture(cx);
         self.drafts.selected = id;
         self.load_form(window, cx);
@@ -1329,6 +1335,23 @@ impl Proxy {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) {
+        if tag == "delete" {
+            let selected = self.selected();
+            let survivor = cfg
+                .providers
+                .iter()
+                .find(|p| p.id == selected)
+                .or_else(|| cfg.providers.first())
+                .map(|p| p.id.as_str())
+                .unwrap_or("");
+            self.delete_feedback.committed(&self.cfg, &cfg, survivor);
+        } else if matches!(
+            tag,
+            "save" | "test" | "install" | "add" | "duplicate" | "copy_prepare"
+        ) {
+            self.delete_feedback.clear();
+        }
+        self.delete_feedback.reconcile(&cfg);
         if self
             .drafts
             .pending
@@ -1578,6 +1601,9 @@ impl Proxy {
                         };
                     }
                     Err(message) => {
+                        if reply.tag == "delete" {
+                            self.delete_feedback.clear();
+                        }
                         self.error = true;
                         self.status = crate::i18n::message(message, self.zh)
                             .lines()

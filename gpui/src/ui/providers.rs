@@ -117,6 +117,7 @@ impl Proxy {
                 });
         let creation = self.saved_creations.get(&selected);
         let saved_copy = matches!(creation, Some(provider_new::CreationKind::Copy));
+        let deleted = self.delete_feedback.is_for(&selected);
         let (status, ink, background) = if self.busy {
             (
                 self.t("处理中", "Working"),
@@ -137,7 +138,9 @@ impl Proxy {
             )
         } else {
             (
-                if compact && saved_copy {
+                if compact && deleted {
+                    self.t("已删除 1 个", "Deleted 1")
+                } else if compact && saved_copy {
                     self.t("已保存副本", "Saved copy")
                 } else {
                     self.t("已保存", "Saved")
@@ -158,6 +161,8 @@ impl Proxy {
             self.t("修改待保存", "Changes pending")
         } else if editing {
             self.t("正在编辑", "Editing profile")
+        } else if deleted {
+            self.t("已删除 1 个", "Deleted 1")
         } else if saved_copy {
             self.t("已保存副本", "Saved copy")
         } else {
@@ -209,7 +214,7 @@ impl Proxy {
                     ),
             )
             .when(
-                !compact && (editing || dirty || self.busy || creation.is_some()),
+                !compact && (editing || dirty || self.busy || creation.is_some() || deleted),
                 |row| {
                     row.child(
                         div()
@@ -218,7 +223,11 @@ impl Proxy {
                             .flex()
                             .items_center()
                             .flex_none()
-                            .w(px(142.))
+                            .w(px(if deleted && !editing && !dirty && !self.busy {
+                                118.
+                            } else {
+                                142.
+                            }))
                             .h(px(26.))
                             .px(px(12.))
                             .rounded(px(8.))
@@ -466,6 +475,55 @@ impl Proxy {
             .into_any_element()
     }
 
+    fn provider_model_table(
+        &self,
+        keyboard_hint: &'static str,
+        cx: &mut Context<Self>,
+    ) -> AnyElement {
+        div()
+                    .id("provider-model-table")
+                    .key_context("ModelList")
+                    .track_focus(&self.table_focus)
+                    .flex()
+                    .flex_col()
+                    .flex_1()
+                    .min_h(px(if self.models.len() == 1 { 129. } else { 116. }))
+                    .aria_label(keyboard_hint)
+                    .on_action(cx.listener(Self::remove_models))
+                    .on_action(cx.listener(Self::select_models))
+                    .on_action(cx.listener(Self::edit_selected))
+                    .on_prepaint({
+                        let owner = cx.entity().downgrade();
+                        move |bounds, _, cx| {
+                            let width = (bounds.size.width - px(2.)).max(px(240.));
+                            let _ = owner.update(cx, |this, cx| {
+                                if this.table_width != width {
+                                    this.table_width = width;
+                                    cx.notify();
+                                }
+                            });
+                        }
+                    })
+                    .child(
+                        div().min_h_0()
+                            .when(self.models.len() == 1, |frame| frame.h(px(63.)).flex_shrink_0())
+                            .when(self.models.len() != 1, |frame| frame.flex_1())
+                            .child(crate::ui_components::table(&self.model_table).with_size(px(29.))),
+                    )
+                    .when(self.models.len() == 1, |table| {
+                        table.child(
+                            div().id("single-model-helper").flex().items_center()
+                                .flex_shrink_0().h(px(50.)).max_w(px(664.)).mx(px(8.)).mt(px(16.)).px(px(14.))
+                                .rounded(px(10.)).bg(rgb(color::BG_NOTICE))
+                                .child(Label::new(self.t(
+                                    "这里只有 1 个模型。需要增加模型时，可直接获取上游列表或手动添加。",
+                                    "There is 1 model here. Fetch the upstream list or add a model manually to include more.",
+                                )).w_full().min_w_0().whitespace_normal().text_size(px(12.)).line_height(px(17.)).text_color(rgb(color::TEXT_2))),
+                        )
+                    })
+        .into_any_element()
+    }
+
     fn model_directory(&self, compact: bool, cx: &mut Context<Self>) -> AnyElement {
         let selected = self.selected();
         let total: usize = self
@@ -587,31 +645,7 @@ impl Proxy {
                             ),
                     ),
             )
-            .child(
-                div()
-                    .id("provider-model-table")
-                    .key_context("ModelList")
-                    .track_focus(&self.table_focus)
-                    .flex_1()
-                    .min_h(px(116.))
-                    .aria_label(keyboard_hint)
-                    .on_action(cx.listener(Self::remove_models))
-                    .on_action(cx.listener(Self::select_models))
-                    .on_action(cx.listener(Self::edit_selected))
-                    .on_prepaint({
-                        let owner = cx.entity().downgrade();
-                        move |bounds, _, cx| {
-                            let width = (bounds.size.width - px(2.)).max(px(240.));
-                            let _ = owner.update(cx, |this, cx| {
-                                if this.table_width != width {
-                                    this.table_width = width;
-                                    cx.notify();
-                                }
-                            });
-                        }
-                    })
-                    .child(crate::ui_components::table(&self.model_table).with_size(px(29.))),
-            )
+            .child(self.provider_model_table(keyboard_hint, cx))
             .when(compact, |card| {
                 card.child(hint_line(keyboard_hint).text_size(px(11.)))
             })

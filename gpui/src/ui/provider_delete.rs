@@ -85,6 +85,7 @@ impl Proxy {
             return;
         };
         self.delete_open = false;
+        self.delete_feedback.begin(&target.id);
         // The warning and the command identify the same provider, even if the
         // selected row changes while a background reply is being reconciled.
         self.send(
@@ -92,6 +93,9 @@ impl Proxy {
             vec![json!({"command":"delete","provider_id":target.id})],
             cx,
         );
+        if !self.busy {
+            self.delete_feedback.clear();
+        }
     }
 
     pub(super) fn scroll_provider_delete(
