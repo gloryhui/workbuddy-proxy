@@ -13,6 +13,7 @@ mod relay;
 mod sidebar;
 mod skin_controls;
 mod sync_dialog;
+mod update_notice;
 mod window_restore;
 use crate::{
     backend::{Backend, Job},
@@ -256,6 +257,7 @@ pub struct Proxy {
     language_menu: language_menu::State,
     window_restore: window_restore::State,
     autostart_notice: autostart_notice::State,
+    update_notice: update_notice::State,
     wake: String,
     last_poll: Instant,
     last_dirty: String,
@@ -457,13 +459,9 @@ impl Proxy {
                     self.t("检查更新", "Check updates"),
                     self.busy,
                 )
-                .on_click(cx.listener(|this, _, _, cx| {
-                    this.send(
-                        "check_update",
-                        vec![json!({"command":"check_update","force":true})],
-                        cx,
-                    )
-                })),
+                .on_click(
+                    cx.listener(|this, _, window, cx| this.check_update_with_notice(window, cx)),
+                ),
             )
             .child(self.language_menu(cx))
             .child(
@@ -502,7 +500,8 @@ impl Proxy {
             .into_any_element();
         let toolbar = self.language_toolbar(toolbar, cx);
         let toolbar = self.restore_toolbar(toolbar, cx);
-        self.autostart_toolbar(toolbar, cx)
+        let toolbar = self.autostart_toolbar(toolbar, cx);
+        self.update_toolbar(toolbar, cx)
     }
     fn restore_window_size(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if self.resetting_window {
@@ -627,6 +626,7 @@ impl Proxy {
         language_menu::init(cx);
         window_restore::init(cx);
         autostart_notice::init(cx);
+        update_notice::init(cx);
         let drafts = Drafts::load(&dir, &cfg);
         let provider_search = input(
             "",
@@ -852,6 +852,7 @@ impl Proxy {
             language_menu: language_menu::State::new(zh, window, cx),
             window_restore: window_restore::State::new(cx),
             autostart_notice: autostart_notice::State::new(cx),
+            update_notice: update_notice::State::new(cx),
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
@@ -940,6 +941,7 @@ impl Proxy {
         this.subscribe_provider_rail_bounds(window, cx);
         this.subscribe_restore_notice_bounds(window, cx);
         this.subscribe_autostart_notice_bounds(window, cx);
+        this.subscribe_update_notice_bounds(window, cx);
         this.load_form(window, cx);
         // Current-provider labels and save state follow editing events, rather
         // than waiting for an idle draft-persistence tick to redraw the UI.
@@ -1488,6 +1490,7 @@ impl Proxy {
         }
         while let Ok(mut reply) = self.backend.replies.try_recv() {
             let autostart_result = (reply.tag == "autostart").then(|| reply.result.is_ok());
+            let update_result = (reply.tag == "check_update").then(|| reply.result.clone());
             if reply.tag == "workbuddy_check" {
                 match reply.result.and_then(|text| {
                     serde_json::from_str::<crate::workbuddy_status::EndpointCheck>(&text)
@@ -1649,6 +1652,9 @@ impl Proxy {
             }
             if let Some(success) = autostart_result {
                 self.finish_autostart_notice(success, cx);
+            }
+            if let Some(result) = update_result {
+                self.finish_update_notice(result, cx);
             }
         }
         // One bounded read per settings launch, off the UI thread. Defer the

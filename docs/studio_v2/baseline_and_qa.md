@@ -814,3 +814,30 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 当前四轮短测未见明显退化：合计RSS中位86.705→87.305MiB（+0.600），UI74.215→74.835MiB（+0.620），p95中位0.1855→0.1865ms（+0.001），峰值131.305→133.540MiB（+2.235）；保留上升与逐轮原值，不宣称改善。就绪标记不是首帧/可交互，RSS共享页可能双计；不测打开Tooltip持续CPU、真实操作时延或跨平台。[性能汇总](benchmarks/autostart-notice-performance-summary.json)。
 - 按用户持续安全清理授权，完整规范化绝对路径/各级父目录与挂载检查、UID501/无符号链接、全范围/可再生性、lsof与进程核查、临执行二次校验后，删除本轮434个专属测试文件，释放已分配空间估计386,924,544 bytes（369.00MiB），本轮临时保留0。最终PNG/JSON留在仓库；共享Cargo缓存与4个未知历史项保留未动。系统盘清理后可用40,576,331,776 bytes（37.79GiB）；中断的未知exit/wait仍如实保留。[清理记录](benchmarks/autostart-notice-cleanup.json)。
 - 开机启动104:1378由未逐帧验收转为部分验收；剩余2/40未逐帧验收、37部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、检查更新；完整40帧精细视觉、初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘专项仍未完成，Goal保持active，继续开发并穿插分项实机验收。
+
+
+## 小功能 37：原生检查更新状态与真实请求反馈（2026-10-30，北京时间）
+
+- 检查更新按原Core真实结果显示等待、更新状态或失败；本环境公网返回HTTP403，已正确显示并可重试，公网成功分支尚未实机通过。证据：[构建与契约](benchmarks/update-notice-build.json)、[真实交互](benchmarks/update-notice-gui-validation.json)、[1440等待](screenshots/update-notice-1440x900.png)、[1100错误](screenshots/update-notice-1100x700.png)、[1440错误](screenshots/update-notice-error-1440x900.png)、[六轮性能](benchmarks/update-notice-performance-summary.json)、[清理记录](benchmarks/update-notice-cleanup.json)、[保留异常样本](benchmarks/update-notice-current-run2-gui.json)。
+- 官方Figma MCP读取104:1605与104:1817高保真context/截图：299×113、top117/right32、圆角12、标题14/状态12/脚注11/关闭27。设计“◌”为原文静态文本，不新增持续spinner；原型注释替换为真实来源/当前版本/重试指导。既有updates.svg847bytes/root20×20与最新官方下载逐字节相同，实际含在Release并经原Assets::load路由，保持36×36按钮、七项顺序/20px图标/8px间距和工具栏原位置。
+- 原check_update action、force:true与cc392d4规范化payload相同，busy禁用、Core版本排序/公开端点/8秒网络限制/缓存不改。新增原生Popup/Div焦点、Esc/X/外部关闭；关闭不取消原请求、回包不自动重开。只在打开且viewport变化时合并next-frame焦点恢复，无新timer/轮询。展示层仅读取available布尔和可读tag/current，拒绝非法响应误报最新并同步原底部错误，不重复版本比较；无测试URL、假成功、缓存捷径或新下载/打开行为。
+- 最终78abbc通过fmt、186测试/2既有Core专项ignored、严格clippy all-targets/-D warnings、Intel check2.601s与Release39.069s；UI15,230,000 bytes、SHA256 `78abbc6e5f1b8bfd71f052ca26e984271d8167ea6512b02c2e933166eb135b48`，Core仍25f/8,428,096 bytes。新增两项是展示响应契约，不是镜像布局。因公网成功受限，额外运行原Core的两项update::tests（--locked，0.465s/2 passed），覆盖数值版本/缓存与无凭据loopback稳定响应/拒绝预发布；只属契约补证，不冒称公网或GUI成功。Intel仅类型检查，既有block0.1.6 future-incompatibility提示保留，Core/Cargo/原benchmark未改。
+- 实机使用独立合成HOME、2供应商/3模型/0请求、loopback模型源与WorkBuddy[]。Core内核沙盒实际enforced，真实LaunchAgents读/写/创建/删除权限均被拒。仅暂停本轮Core并设45秒自动SIGCONT/finally保护，UI真实出现Pending；忙时再点没有新增提示，但未计量服务端请求数，不据此声称精确去重。Esc关闭、主动恢复/助手wait0后，原真实公网请求返回HTTP403，未将关闭提示重新打开，未保存名称保留；真实UI重试仍HTTP403，没有修改Core/请求参数获取伪成功。
+- 英文1100真实检查/错误已验，原生X/外部空白关闭、实际1100→1200×750缩放后Esc关闭通过；Sync遮罩上点击更新按钮位置不穿透、Esc取消，无同步/重启。返回Stats仍为Custom models，未保存synthetic unsaved draft保留，Core已保存名称仍sub2api/OpenCode Go、3模型、autostart=false；WorkBuddy[] SHA不变。Language/Restore各开各自提示，不误开Update。完整初始Tab/键盘、IME/无障碍及Windows/Intel实机待专项，不能以本轮鼠标与Esc结果代替。
+- 主代理逐张查看中文Studio1440×900等待、中文1440×900真实403及英文Mono1100×700真实403，重算PNG尺寸/SHA；浮层布局、真实文案与SVG槽位相符。raw为1440×901/1100×701，仅裁底1物理像素、无缩放。等待图是在自有Core暂停期间取得，Runtime显示未响应为真实状态，不冒充正常网络等待耗时；Figma示例数据未写死，小窗原内部滚动保持。
+- UI79387/Core79383/fixture79381均exit0并wait，关闭UI后Core health200，主代理确认PID消失，暂停助手已CONT/wait0。没有真实供应商调用、真实登录项、WorkBuddy同步重启或系统权限修改；公网更新调用是原Core固定公开Release源，不使用凭据。公网可用/已最新两个展示分支仅有源代码/契约测试证据，仍未实机通过。
+
+同一25f Core与Release，原benchmark旧09f7→新78abbc→旧→新四轮后，因第4轮p95升高再加同参数旧/新一对；六轮各1000小请求及80次1MiB/并发4，64模型默认页、更新弹层关闭，不执行公网检查。合成HOME/loopback catalog与Core内核沙盒核对；原脚本SHA及参数不变，仅私有wrapper扩展run3标签，逐轮wrapper SHA保留。全部直接子进程wait、Core/UI消失，退出数组均[-15,-15,0,0]。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧09f7](benchmarks/update-notice-previous-gui.json) | 14.28 / 73.62 / 87.91 | 486.616 / 1110.177 | 0.173 / 0.199 | 135.70 | 0.090 |
+| [新78abbc](benchmarks/update-notice-current-gui.json) | 12.61 / 73.78 / 86.39 | 226.463 / 814.079 | 0.173 / 0.203 | 132.97 | 0.085 |
+| [旧09f7复测2](benchmarks/update-notice-previous-run2-gui.json) | 11.95 / 73.31 / 85.27 | 191.502 / 625.610 | 0.174 / 0.200 | 133.00 | 0.088 |
+| [新78abbc复测2](benchmarks/update-notice-current-run2-gui.json) | 13.36 / 72.56 / 85.92 | 239.868 / 783.538 | 0.178 / 0.325 | 135.42 | 0.088 |
+| [旧09f7复测3](benchmarks/update-notice-previous-run3-gui.json) | 12.45 / 73.30 / 85.75 | 1911.941 / 2435.532 | 0.165 / 0.194 | 135.30 | 0.088 |
+| [新78abbc复测3](benchmarks/update-notice-current-run3-gui.json) | 12.09 / 72.36 / 84.45 | 228.034 / 693.948 | 0.173 / 0.194 | 131.22 | 0.084 |
+
+- 首四轮最后一对代理p95 0.200→0.325ms，同轮直连0.334→0.584ms，未直接归因或放宽门槛。额外确认对两版均0.194ms，升高未持续；六轮及首四轮中位都保留，未丢弃异常。六轮合计RSS中位85.750→85.920MiB、UI73.310→72.560MiB、p95中位0.199→0.203ms，当前短测未证实持续退化、不宣称改善。旧第三轮Core/UI累计记录1911.941/2435.532ms高值亦保留；marker不是首帧/可交互，RSS共享页可能双计，不测弹层打开持续CPU、更新公网时延或UI操作时延。
+- 按用户持续安全清理授权，规范化绝对路径/各级父目录/挂载、UID501与无符号链接、完整范围/可再生性、lsof/进程检查及临执行二次核实后，删除217个本轮专属测试文件，释放已分配空间估计259,284,992 bytes（247.27MiB），本轮专属临时保留0。最终PNG/JSON留仓库，共享Cargo缓存及4个未知历史项保留未动；系统盘清理后可用40,604,233,728 bytes（37.82GiB）。
+- 检查更新104:1605从未逐帧验收转部分验收；剩余1/40未逐帧验收、38部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例；公网成功、40帧精细视觉/初始Tab/IME/无障碍、HiDPI/Windows/Intel实机、首帧/托盘等专项仍未完成，Goal保持active，继续开发并穿插分项验收。

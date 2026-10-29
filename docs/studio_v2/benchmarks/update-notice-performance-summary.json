@@ -1,0 +1,223 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2",
+    "previous-run3",
+    "current-run3"
+  ],
+  "rounds": [
+    {
+      "label": "previous",
+      "core": 14.28,
+      "ui": 73.62,
+      "total": 87.91,
+      "core_ready": 486.616,
+      "ui_record": 1110.177,
+      "p50": 0.173,
+      "p95": 0.199,
+      "direct_p95": 0.294,
+      "peak": 135.7,
+      "large_s": 0.09,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "fixture_wrapper_sha256": "e6adef9d86bc3a5d7a1ace87fd78a246f16b194780de2495d793f362e1063200",
+      "source": "update-notice-previous-gui.json"
+    },
+    {
+      "label": "current",
+      "core": 12.61,
+      "ui": 73.78,
+      "total": 86.39,
+      "core_ready": 226.463,
+      "ui_record": 814.079,
+      "p50": 0.173,
+      "p95": 0.203,
+      "direct_p95": 0.235,
+      "peak": 132.97,
+      "large_s": 0.085,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "fixture_wrapper_sha256": "e6adef9d86bc3a5d7a1ace87fd78a246f16b194780de2495d793f362e1063200",
+      "source": "update-notice-current-gui.json"
+    },
+    {
+      "label": "previous-run2",
+      "core": 11.95,
+      "ui": 73.31,
+      "total": 85.27,
+      "core_ready": 191.502,
+      "ui_record": 625.61,
+      "p50": 0.174,
+      "p95": 0.2,
+      "direct_p95": 0.334,
+      "peak": 133.0,
+      "large_s": 0.088,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "fixture_wrapper_sha256": "e6adef9d86bc3a5d7a1ace87fd78a246f16b194780de2495d793f362e1063200",
+      "source": "update-notice-previous-run2-gui.json"
+    },
+    {
+      "label": "current-run2",
+      "core": 13.36,
+      "ui": 72.56,
+      "total": 85.92,
+      "core_ready": 239.868,
+      "ui_record": 783.538,
+      "p50": 0.178,
+      "p95": 0.325,
+      "direct_p95": 0.584,
+      "peak": 135.42,
+      "large_s": 0.088,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "fixture_wrapper_sha256": "e6adef9d86bc3a5d7a1ace87fd78a246f16b194780de2495d793f362e1063200",
+      "source": "update-notice-current-run2-gui.json"
+    },
+    {
+      "label": "previous-run3",
+      "core": 12.45,
+      "ui": 73.3,
+      "total": 85.75,
+      "core_ready": 1911.941,
+      "ui_record": 2435.532,
+      "p50": 0.165,
+      "p95": 0.194,
+      "direct_p95": 0.258,
+      "peak": 135.3,
+      "large_s": 0.088,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "fixture_wrapper_sha256": "7c4f6a3d5116aee8232b248f0206f2511e26033e8fb5aa09aef1e32b40505342",
+      "source": "update-notice-previous-run3-gui.json"
+    },
+    {
+      "label": "current-run3",
+      "core": 12.09,
+      "ui": 72.36,
+      "total": 84.45,
+      "core_ready": 228.034,
+      "ui_record": 693.948,
+      "p50": 0.173,
+      "p95": 0.194,
+      "direct_p95": 0.275,
+      "peak": 131.22,
+      "large_s": 0.084,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "fixture_wrapper_sha256": "7c4f6a3d5116aee8232b248f0206f2511e26033e8fb5aa09aef1e32b40505342",
+      "source": "update-notice-current-run3-gui.json"
+    }
+  ],
+  "initial_four_medians": {
+    "total": {
+      "previous": 86.59,
+      "current": 86.155
+    },
+    "ui": {
+      "previous": 73.465,
+      "current": 73.17
+    },
+    "core_ready": {
+      "previous": 339.059,
+      "current": 233.1655
+    },
+    "ui_record": {
+      "previous": 867.8935,
+      "current": 798.8085
+    },
+    "p95": {
+      "previous": 0.1995,
+      "current": 0.264
+    },
+    "peak": {
+      "previous": 134.35,
+      "current": 134.195
+    },
+    "large_s": {
+      "previous": 0.089,
+      "current": 0.0865
+    }
+  },
+  "medians": {
+    "total": {
+      "previous": 85.75,
+      "current": 85.92
+    },
+    "ui": {
+      "previous": 73.31,
+      "current": 72.56
+    },
+    "core_ready": {
+      "previous": 486.616,
+      "current": 228.034
+    },
+    "ui_record": {
+      "previous": 1110.177,
+      "current": 783.538
+    },
+    "p95": {
+      "previous": 0.199,
+      "current": 0.203
+    },
+    "peak": {
+      "previous": 135.3,
+      "current": 132.97
+    },
+    "large_s": {
+      "previous": 0.088,
+      "current": 0.085
+    }
+  },
+  "confirmation_pair": {
+    "label": [
+      "previous-run3",
+      "current-run3"
+    ],
+    "p95": [
+      0.194,
+      0.194
+    ],
+    "direct_p95": [
+      0.258,
+      0.275
+    ],
+    "core_ready": [
+      1911.941,
+      228.034
+    ],
+    "ui_record": [
+      2435.532,
+      693.948
+    ]
+  },
+  "scope": "Original benchmark unchanged; six interleaved native GUI rounds with1000 small and80 concurrent1MiB requests each. Last pair added to investigate initial current-run2 p95 spike, without changing parameters or thresholds. Same byte-identical25f Core, baseline09f7 vs candidate78abbc. Fake HOME/loopback catalog and attested Core sandbox;64-model default page, popup closed and no public update checks during benchmark. UI record is not first paint/interactivity; RSS shared pages may double count. Does not measure popup-open sustained CPU, network update-check latency or UI interaction latency.",
+  "orchestration_note": "Only private wrapper label whitelist was extended for run3; per-row helper hashes retained. Original benchmark and all arguments unchanged.",
+  "conclusion": "Initial current-run2 proxied p95 rose0.200→0.325ms; direct p95 concurrently0.334→0.584ms, not assigned a cause. One additional same-parameter old/new pair both0.194ms, so the rise was not sustained in this bounded run. All six retained: median total RSS85.750→85.920MiB, UI73.310→72.560MiB, p95median0.199→0.203ms. Old third Core/UI marker1911.941/2435.532ms retained, not used to claim faster first paint. No demonstrated persistent regression in these short rounds; no improvement or broad runtime/latency claim."
+}

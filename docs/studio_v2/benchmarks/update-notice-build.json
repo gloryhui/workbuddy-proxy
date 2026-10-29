@@ -1,0 +1,119 @@
+{
+  "ui_sha256": "78abbc6e5f1b8bfd71f052ca26e984271d8167ea6512b02c2e933166eb135b48",
+  "ui_bytes": 15230000,
+  "baseline_ui_sha256": "09f77516e538b6d0e275b402925c77428b2833993a4dac2a93e25c154714d97a",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "exit": 0,
+      "seconds": 0.463,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ]
+    },
+    "test": {
+      "exit": 0,
+      "seconds": 7.502,
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    },
+    "clippy": {
+      "exit": 0,
+      "seconds": 3.186,
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    "intel": {
+      "exit": 0,
+      "seconds": 2.601,
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ]
+    },
+    "release": {
+      "exit": 0,
+      "seconds": 39.069,
+      "command": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ]
+    }
+  },
+  "tests_passed": 186,
+  "tests_ignored": 2,
+  "figma_frames": [
+    "104:1605",
+    "104:1817"
+  ],
+  "layout": {
+    "width": 299,
+    "height": 113,
+    "top": 117,
+    "right": 32,
+    "radius": 12,
+    "title_font": 14,
+    "status_font": 12,
+    "detail_font": 11,
+    "close_size": 27
+  },
+  "source_sha256": {
+    "gpui/src/ui.rs": "ed13f2b35463b2bf0992efb1b9366dda0f0bd434347451a3274c6496087ba7ac",
+    "gpui/src/ui/update_notice.rs": "80cbf1d3becc1012dfa6cd96f228a3b3c949a90411d9638b9dc4d1cce1903206"
+  },
+  "asset": {
+    "path": "gpui/assets/studio/updates.svg",
+    "bytes": 847,
+    "width": "20",
+    "height": "20",
+    "sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd",
+    "equals_latest_official_download": true,
+    "exact_bytes_present_in_release": true,
+    "asset_source_registration": "existing Assets::load include_bytes route",
+    "slot": "toolbar index2, x88,20x20 SVG inside36x36 button; toolbar top8/right32/width300"
+  },
+  "scope": "UI-only native Popup and phase feedback. Original check_update action force:true, busy rules, Core network/cache/version comparison/public endpoint and original benchmark retained. UI rejects malformed outcome instead of false up-to-date; no test endpoint, mock success, extra download/open action or dependency changes.",
+  "tests_scope": "Two pure UI response-contract regressions; available/current and malformed types/labels. No real public success claimed by unit tests.",
+  "warning": "Existing block0.1.6 future-incompatibility warning",
+  "intel_runtime_verified": false,
+  "original_action_payload_preserved": true,
+  "source_baseline": "cc392d4:gpui/src/ui.rs",
+  "existing_core_update_contract_tests": {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "update::tests"
+    ],
+    "exit": 0,
+    "seconds": 0.465,
+    "scope": "Existing immutable-Core updater contract tests only, loopback HTTP and temporary cache, not public GUI success.",
+    "tests_passed": 2,
+    "production_core_sha256_unchanged": true
+  }
+}

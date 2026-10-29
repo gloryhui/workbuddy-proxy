@@ -1,0 +1,106 @@
+{
+  "feature": "UI-37 check updates notice",
+  "ui_sha256": "78abbc6e5f1b8bfd71f052ca26e984271d8167ea6512b02c2e933166eb135b48",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": {
+    "synthetic_home": true,
+    "loopback_mock": true,
+    "providers": 2,
+    "models": 3,
+    "requests": 0,
+    "core_kernel_sandbox_enforced": true,
+    "real_launchagents_read_write_create_unlink_denied": true,
+    "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "results": {
+    "real_update": "Actual Core force update check returned HTTP403; retry also HTTP403; no success asserted.",
+    "pending": "Paused owned Core with bounded 45-second SIGCONT finally helper; UI showed pending, additional click did not open new notice, Esc closed. Helper actively resumed and exited0. Actual HTTP403 reply arrived without reopening notice. The core was paused in pending screenshot, so runtime correctly showed unresponsive.",
+    "dismiss": "Close X and outside click closed the notice; Esc also closed after real 1100-to-1200 resize.",
+    "preservation": "Synthetic unsaved name persisted through checks and language change; Custom models selection remained visible after return to statistics; saved providers sub2api/OpenCode Go and three models unchanged, autostart false.",
+    "mask": "Sync confirmation open, clicking check updates location did not open notice or dismiss confirmation; Esc canceled. No sync/restart was executed.",
+    "neighbors": "Language and Restore opened their own notices without update notice."
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/update-notice-1440x900.png",
+      "language": "zh",
+      "skin": "Studio Indigo",
+      "state": "pending while own core paused",
+      "raw_pixels": [
+        1440,
+        901
+      ],
+      "pixels": [
+        1440,
+        900
+      ],
+      "capture": "macOS screencapture -x -o -l verified window 60848, no cursor",
+      "transform": "crop bottom 1 physical pixel; no scaling",
+      "raw_sha256": "c9e74cbe5e960ae6f955f701ff1efcf3481f387ff900e0cae690bfcfb08f6fd3",
+      "sha256": "cf2a99a95718303a2b6640bae04c9426a578b998b48ee6d34cac3742ccf8543b"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/update-notice-1100x700.png",
+      "language": "en",
+      "skin": "Mono",
+      "state": "actual HTTP 403",
+      "raw_pixels": [
+        1100,
+        701
+      ],
+      "pixels": [
+        1100,
+        700
+      ],
+      "capture": "macOS screencapture -x -o -l verified window 60848, no cursor",
+      "transform": "crop bottom 1 physical pixel; no scaling",
+      "raw_sha256": "b0e1ee452dc4aeec7fea1e79c9309a7cbb29ac665578448462d1bbc08b61554f",
+      "sha256": "80bbf2a69a9f3dffcdf9596911a195efb0b34e913046b532f7b7da849735aed6"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/update-notice-error-1440x900.png",
+      "language": "zh",
+      "skin": "Studio Indigo",
+      "state": "actual HTTP 403",
+      "raw_pixels": [
+        1440,
+        901
+      ],
+      "pixels": [
+        1440,
+        900
+      ],
+      "capture": "macOS screencapture -x -o -l verified window 60848, no cursor",
+      "transform": "crop bottom 1 physical pixel; no scaling",
+      "raw_sha256": "f0aa1a517dd33e802db7e45cd809fc42967c27a11d197cd32bc25d27eba39bc2",
+      "sha256": "7b253014fd1c325cc6efb9af20c8bf913533457ca1016132db111fc47a313537"
+    }
+  ],
+  "termination": {
+    "fixture_pid": 79381,
+    "core_pid": 79383,
+    "ui_pid": 79387,
+    "ui_exit": 0,
+    "core_health_after_ui_close": 200,
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "pids_gone": true,
+    "pause_helper_exit": 0
+  },
+  "limitations": [
+    "Update successful/up-to-date branch was not observed in this environment; HTTP403 is real external response.",
+    "Busy duplicate click produced no additional popup, but exact server request count was not instrumented.",
+    "Full IME/accessibility and initial toolbar keyboard traversal not audited."
+  ],
+  "main_agent_review": {
+    "all_three_pngs_visually_reviewed": true,
+    "dimensions_and_sha256_recomputed": true,
+    "final_pids_confirmed_gone": [
+      79381,
+      79383,
+      79387
+    ],
+    "pending_capture_uses_paused_owned_core_not_normal_network_latency": true,
+    "real_public_success_not_claimed": true
+  }
+}
