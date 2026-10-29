@@ -9,7 +9,7 @@
 | 开机启动、失败回滚 | ui.rs::app_controls、核心 action | 源码确认；待隔离验证，不能修改用户真实登录项 |
 | 检查更新、busy/error | ui.rs::app_controls、tick | 源码确认；待 mock 与 GUI |
 | 系统/中文/English | ui/language_menu.rs、ui.rs::set_language | 241×184原生Popup/List、真实三模式保存/重复项SHA与mtime不变、方向环绕/Enter/Space/Esc/X/外部取消、键盘焦点返回及复开、草稿/Custom筛选/重开持久、遮罩与邻接安全按钮、两尺寸及四轮性能 Passed；完整IME/无障碍/跨平台及打开菜单持续CPU未验 |
-| 恢复 1440×900、退出全屏 | ui.rs::restore_window_size | macOS 缩小后恢复 Passed；最大化/全屏待验 |
+| 恢复 1440×900、退出全屏 | ui/window_restore.rs、ui.rs::restore_window_size | 原算法逐字核对保持；325×103提示、普通/zoom/全屏恢复、实际缩窗后Esc/X、键盘Return/Space、草稿/Custom筛选与遮罩、两尺寸和四轮短测 Passed；互斥/重复仅旧80ad实测、超时失败未注入，完整IME/无障碍/跨平台未验 |
 | GitHub 与新 Issue | ui.rs::app_controls | 源码确认；外部 URL 保持 |
 | 最小窗口 1100×700、系统按钮/拖动 | main.rs、TitleBar | macOS 两尺寸/中英/缩小恢复 Passed；拖动未测位移；Windows 待验 |
 | 供应商 0/1/2/20/64、固定 CRUD | ui.rs::sidebar、provider_filter.rs | macOS 5 种数量、末尾搜索/空结果/清空、64 滚动/新增复制禁用 Passed；选中尾行保存/resize/清搜索/展开自动可见、手动9秒不回跳与20/64两尺寸 Passed，整帧/键盘/无障碍待续 |

@@ -12,6 +12,7 @@ mod relay;
 mod sidebar;
 mod skin_controls;
 mod sync_dialog;
+mod window_restore;
 use crate::{
     backend::{Backend, Job},
     config::{self, Config},
@@ -252,6 +253,7 @@ pub struct Proxy {
     skin_open: bool,
     skin_error: bool,
     language_menu: language_menu::State,
+    window_restore: window_restore::State,
     wake: String,
     last_poll: Instant,
     last_dirty: String,
@@ -524,12 +526,14 @@ impl Proxy {
                 .on_click(|_, _, cx| cx.open_url(FEEDBACK_URL)),
             )
             .into_any_element();
-        self.language_toolbar(toolbar, cx)
+        let toolbar = self.language_toolbar(toolbar, cx);
+        self.restore_toolbar(toolbar, cx)
     }
     fn restore_window_size(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if self.resetting_window {
             return;
         }
+        self.show_restore_notice(window, cx);
         if !window.is_fullscreen() && !window.is_maximized() {
             window.resize(crate::default_window_size());
             return;
@@ -549,6 +553,7 @@ impl Proxy {
                 let done = this.update_in(cx, |this, window, cx| {
                     if started.elapsed() > Duration::from_secs(5) {
                         this.resetting_window = false;
+                        this.restore_notice_failed();
                         this.error = true;
                         this.status = this.t("窗口状态切换未完成，请退出全屏或最大化后重试", "Window transition did not finish; leave fullscreen or maximize mode and try again").into();
                         cx.notify();
@@ -645,6 +650,7 @@ impl Proxy {
         model_picker::init(cx);
         provider_choices::init(cx);
         language_menu::init(cx);
+        window_restore::init(cx);
         let drafts = Drafts::load(&dir, &cfg);
         let provider_search = input(
             "",
@@ -868,6 +874,7 @@ impl Proxy {
             skin_open: false,
             skin_error: false,
             language_menu: language_menu::State::new(zh, window, cx),
+            window_restore: window_restore::State::new(cx),
             wake: String::new(),
             last_poll: Instant::now() - Duration::from_secs(10),
             last_dirty: String::new(),
@@ -954,6 +961,7 @@ impl Proxy {
         this.subscribe_protocol_editor_focus(window, cx);
         this.subscribe_provider_delete_bounds(window, cx);
         this.subscribe_provider_rail_bounds(window, cx);
+        this.subscribe_restore_notice_bounds(window, cx);
         this.load_form(window, cx);
         // Current-provider labels and save state follow editing events, rather
         // than waiting for an idle draft-persistence tick to redraw the UI.

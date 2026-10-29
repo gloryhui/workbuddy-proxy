@@ -1,0 +1,109 @@
+{
+  "ui_sha256": "6e89fb8f7ade5cdc27e810703405ce24805d27c45b31699860b9cb36ff7ea7d3",
+  "ui_bytes": 15196880,
+  "baseline_ui_sha256": "c38927425dea06c1c1c23a5eae2c51967a7f61fe8953bead55b6b1dab4f92547",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "exit": 0,
+      "seconds": 0.453,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ]
+    },
+    "test": {
+      "exit": 0,
+      "seconds": 5.986,
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    },
+    "clippy": {
+      "exit": 0,
+      "seconds": 2.697,
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    "intel": {
+      "exit": 0,
+      "seconds": 2.214,
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ]
+    },
+    "release": {
+      "exit": 0,
+      "seconds": 40.837,
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ]
+    }
+  },
+  "tests_passed": 183,
+  "tests_ignored": 2,
+  "figma_frames": [
+    "104:2046",
+    "104:2258"
+  ],
+  "layout": {
+    "width": 325,
+    "height": 103,
+    "radius": 12,
+    "top": 117,
+    "right": 32,
+    "title_font": 14,
+    "target_font": 13,
+    "detail_font": 11,
+    "close_size": 27
+  },
+  "source_sha256": {
+    "gpui/src/ui.rs": "97555a926ab1203575f9dfc7794ddea8a5db693e526cad40b5274aae70abddfc",
+    "gpui/src/ui/window_restore.rs": "04972b46ccffa2143a4a546a246de1df7cc2177be68542f308aacc8fc96e6f35"
+  },
+  "asset": {
+    "path": "gpui/assets/studio/restore.svg",
+    "bytes": 410,
+    "width": "20",
+    "height": "20",
+    "sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37"
+  },
+  "scope": "UI-only informational notice. Original immediate resize, fullscreen/unzoom request sequence,100ms transition polling and5s timeout retained. Add notice show/failure state only; no Core/action/dependency/schema changes. Target from default_window_size, footer gives user guidance and does not assert unobserved current size.",
+  "warning": "Existing block0.1.6 future-incompatibility warning",
+  "intel_runtime_verified": false,
+  "rejected_candidate": {
+    "ui_sha256": "80ad8dfaa8ce2f1e092063500a09b016fc0f9e25dc7c12c5f59223c0c7a76612",
+    "issue": "After manual resize to1100 with notice open, focus was lost and Esc did not close; ordinary/fullscreen/zoom paths passed. Final coalesces viewport bounds changes into one next-frame focus restoration, without an idle timer."
+  },
+  "resize_algorithm_comparison": {
+    "equal_after_removing_two_notice_hooks": true,
+    "sha256_of_original_function": "854cb08e090b4982a8227c21d1b1158a8f0e9ed588056f6d832d67f176160efe",
+    "source_baseline": "018b9e1:gpui/src/ui.rs",
+    "scope": "Immediate resize, fullscreen exit/unzoom loop,100ms wait,5s timeout, error and retry rules exactly preserved; additional viewport observer only restores popup focus."
+  }
+}

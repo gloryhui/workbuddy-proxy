@@ -760,3 +760,30 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 当前短测未见明显退化：合计空闲RSS中位84.840→84.795MiB、UI72.695→72.420MiB；p95中位0.1955→0.1940ms，两对方向不同；峰值中位131.455→133.175MiB（增加1.72MiB），原值保留。不宣称性能提升，首轮旧版更冷；UI标记不是首帧或可交互时间，RSS共享页可双计。该默认页短测不测菜单打开时持续CPU、真实交互时延或跨平台。[性能汇总](benchmarks/language-menu-performance-summary.json)。
 - 按用户持续安全清理授权，完整规范化路径/所有权/类型/无符号链接与挂载越界/进程与lsof检查、临执行二次核实后，删除本轮189个专属测试文件，释放已分配空间估计238,526,464 bytes（227.48MiB），本轮临时保留0；最终PNG/JSON在仓库，共享Cargo缓存和4个归属未确认的历史临时项保留、不递归检查或删除。系统盘当前可用40,741,105,664 bytes（37.94GiB）。[清理记录](benchmarks/language-menu-cleanup.json)。
 - 本批39语言菜单从未逐帧验收改为部分验收，剩余4/40未逐帧验收、35部分验收、1复用待核对、0整帧最终验收。整体继续开发并穿插分项验收；保留黑白主题、开机启动、检查更新、恢复窗口状态及40帧完整精细视觉/IME/无障碍/跨平台专项。Goal面板最新已核实active，报告按实际状态同步。
+
+
+## 小功能 35：恢复默认窗口尺寸提示与窗口状态回归（2026-10-29，北京时间）
+
+- 官方Figma MCP读取104:2046及高保真子104:2258（截图均返回），提示325×103、圆角12、top24+93=117/right32、标题14/目标13/底提示11/关闭27。复用语义色与原生Popup/Label/Button；目标数字来自default_window_size，使用既有restore.svg 20×20/36×36触发按钮。原型“实际窗口控制由Rust+GPUI处理”替换为用户可用提示“可以继续调整窗口大小”，不把实现说明写入产品，也不把请求目标冒称当前实际尺寸。
+- 原restore_window_size立即resize、全屏退出/unzoom序列、100ms等待及5秒超时保持；只加起始信息层与超时失败态，提示关闭不取消正在执行的恢复。基础Popup仅定位/遮挡，真实Div焦点与局部Esc/X/外部关闭、deferred guard和原焦点恢复沿用已验证结构；不会添加全工具栏Enter/Space上下文，不新增timer/持续动画，不更改Core/配置/依赖。
+- 80ad候选通过fmt、183 tests（2项既有Core专项ignored）、严格clippy all-targets/-D warnings、Intel check2.562s及Release41.178s。UI15,196,880 bytes，SHA256 `80ad8dfaa8ce2f1e092063500a09b016fc0f9e25dc7c12c5f59223c0c7a76612`；Core仍25f/8,428,096bytes。Intel只类型检查，既有block0.1.6 future-incompatibility提示保留。[构建与资产](benchmarks/window-restore-build.json)。
+- 旧c389真实基线：窗口1100×701物理截图边界点击Restore回1440×901，无提示dialog；旧UI16802、Core16801、fixture16792均正常退出0并wait，关窗后Core health200。新80ad普通1100恢复回1440、目标1440×900逻辑像素与提示出现，Esc/X/外部关闭；再次恢复保持单个提示。原生zoom secondary action实际放大到约1920宽，Restore回1440；原生full screen button进入全屏时AX窗口控制消失，Restore后窗口控制重现并回1440，提示正常。此为实际窗口交互，不由源代码推断成功。
+- 80ad 的键盘Enter/Space、焦点环返回、语言/皮肤互斥、Custom模型筛选、未保存名称和语言、模态遮罩及config SHA/mtime不变已实测；但提示保持打开时实际拖小窗口后，焦点丢失导致Esc未关闭，因此该候选未作为最终验收。新增viewport-bounds订阅，仅提示打开且尺寸变化时合并到一次next-frame真实Div焦点恢复，窗口仅移动/提示关闭不触发，不新增timer或持续重绘。
+- 修复6e89通过fmt、183 tests/2ignored、严格clippy、Intel check2.214s与Release40.837s；UI仍15,196,880 bytes，SHA256 `6e89fb8f7ade5cdc27e810703405ce24805d27c45b31699860b9cb36ff7ea7d3`。独立新夹具重点复验“1100→Restore1440→实际拖回1100→Esc”已通过，旧80ad相同路径未关闭。最终验收只使用6e89照片与性能结果；以下分开记录最终候选与旧80ad的实际覆盖。
+
+- 最终6e89真实复验普通1100→Restore1440、原生zoom及全屏→正常1440，窗口控制重现；实际缩窗后Esc与X关闭通过。从真实Restore焦点环Return打开/Esc关闭/Space重开，Custom模型筛选、未保存名称sub2api draft与语言切换保持；同步确认遮罩阻止Restore，无提示/resize/同步或重启。配置SHA与mtime、合成WorkBuddy []哨兵不变。语言/皮肤互斥及重复Restore单提示仅在80ad验证，6e89未单独复验；5秒超时失败未注入，不列为实机通过。[分候选真实交互与生命周期](benchmarks/window-restore-gui-validation.json)。
+- 主代理逐张查看最终[中文Studio1440×900](screenshots/window-restore-1440x900.png)及[英文Mono1100×700](screenshots/window-restore-1100x700.png)，并核对PNG尺寸与SHA。原始JPEG与最终PNG均为相同尺寸，仅解码转换、无裁切或缩放；提示top117/right32、325×103及文案层次符合该设计。小图是恢复1440后实际手动缩至1100的状态，不冒充Restore结果；小窗原内容内部滚动保持，非本批新增验收范围。
+- 最终UI25156、Core25155、fixture25150正常退出0并wait，关闭UI后Core health200，主代理核对PID均消失；旧c389/80ad亦分别正常结束。原restore_window_size去除两个提示hook后与018b9e1原函数字节相同，既有resize/退出全屏/unzoom、100ms等待和5s超时算法保持，原始benchmark、Core与依赖未改。未执行真实WorkBuddy同步/重启或真实登录项变更。
+
+同一25f Core，旧c389/新6e89 Release，以原benchmark旧→新→旧→新串行四轮，每轮1000小请求、80次1MiB/并发4，64模型默认页且提示关闭。合成HOME与loopback catalog、Core内核沙盒permission-query核实；全部直接子进程wait，UI/Core消失，退出数组均[-15,-15,0,0]。
+
+| Release | Core / UI / 合计RSS MiB | Core / 累计UI就绪记录 ms | 请求p50 / p95 ms | 合计峰值MiB | 大请求s |
+| --- | --- | --- | --- | --- | --- |
+| [旧c389](benchmarks/window-restore-previous-gui.json) | 12.59 / 74.12 / 86.72 | 448.469 / 1085.419 | 0.171 / 0.184 | 133.61 | 0.085 |
+| [新6e89](benchmarks/window-restore-current-gui.json) | 11.80 / 72.83 / 84.62 | 236.490 / 836.551 | 0.172 / 0.186 | 133.84 | 0.083 |
+| [旧c389复测](benchmarks/window-restore-previous-run2-gui.json) | 11.94 / 72.55 / 84.48 | 232.339 / 726.073 | 0.172 / 0.189 | 131.19 | 0.083 |
+| [新6e89复测](benchmarks/window-restore-current-run2-gui.json) | 12.00 / 71.56 / 83.56 | 237.062 / 705.232 | 0.149 / 0.173 | 130.83 | 0.084 |
+
+- 当前短测未见明显退化，空闲合计RSS中位85.600→84.090MiB、UI73.335→72.195MiB；p95中位0.1865→0.1795ms，峰值132.400→132.335MiB。保留全部原值，不宣称改善；第一轮基线较冷、UI记录不是首帧/可交互时间、RSS共享页可能双计。默认页短测不代表提示打开持续CPU、恢复操作时延、长时间运行或跨平台。[性能汇总](benchmarks/window-restore-performance-summary.json)。
+- 按用户持续授权，规范化绝对路径/UID501/类型/完整范围、无符号链接/挂载越界、lsof与进程检查，临执行前再次核对后，删除本轮159个专属测试文件，释放已分配空间估计213,045,248 bytes（203.18MiB），本轮临时保留0。最终两图与JSON留在仓库，共享Cargo缓存与4个未知历史项保留未动。系统盘可用40,633,962,496 bytes（37.84GiB）。[精确清理记录](benchmarks/window-restore-cleanup.json)。
+- 恢复窗口104:2046由未逐帧验收改为部分验收；剩余3/40未逐帧验收、36部分验收、1复用待核对、0整帧最终验收。待改为黑白主题示例、开机启动、检查更新；完整40帧精细视觉、IME/无障碍及Windows/Intel实机仍未完成，Goal保持active，继续开发并穿插分项实机验收。

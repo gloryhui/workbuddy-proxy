@@ -1,0 +1,107 @@
+{
+  "feature": "UI-35 restore window size notice",
+  "candidate_sha256": "6e89fb8f7ade5cdc27e810703405ce24805d27c45b31699860b9cb36ff7ea7d3",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "fixture": {
+    "initial_providers": 2,
+    "initial_models": 3,
+    "initial_requests": 0,
+    "upstream": "loopback mock",
+    "core_sandbox": "enforced fixture profile",
+    "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "baseline": {
+    "sha256": "c38927425dea06c1c1c23a5eae2c51967a7f61fe8953bead55b6b1dab4f92547",
+    "observation": "1100 logical window restored to 1440, no notice dialog",
+    "raw_sha256": "288ba903f1a963f6a76ccffab57bd6c23ea23db1c1082d6ce2c65a5dcf6bd64f",
+    "ui_exit": 0,
+    "core_health_after_ui_close": 200,
+    "core_exit": 0,
+    "fixture_exit": 0
+  },
+  "intermediate": {
+    "sha256": "80ad8dfaa8ce2f1e092063500a09b016fc0f9e25dc7c12c5f59223c0c7a76612",
+    "observation": "manual resize after open left notice visible and one Escape did not close; later external click closed it",
+    "failure_screenshot": "not captured as a separate raw image; observation supported by actual AX state",
+    "ui_exit": 0,
+    "core_health_after_ui_close": 200,
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "additional_observations": [
+      "Opening the language or appearance menu dismissed the restore notice; only 80ad was tested for these mutual-exclusion paths.",
+      "Repeated Restore while the notice was already open left one notice; only 80ad was tested for this repeated-trigger path."
+    ]
+  },
+  "final_results": {
+    "normal": "1100 restore to 1440 and notice",
+    "resize_escape": "after actual restore to 1440, manually resize to 1100; Escape removed dialog in AX and image",
+    "resize_close": "same resize path followed by X removed dialog",
+    "zoom": "native zoom secondary action enlarged window; Restore returned 1440",
+    "fullscreen": "native full screen button removed window controls; Restore returned 1440 and controls reappeared",
+    "keyboard": "visually focused restore button; Return opened notice, Escape closed and Space reopened",
+    "filter": "Custom models selected before Restore remained selected",
+    "draft": "unsaved sub2api draft remained after Restore and language change; saved config still sub2api 2 models and OpenCode Go 1 model",
+    "modal": "Sync confirmation blocked click at restore location; no notice or resize, Esc closed modal; no sync or restart performed",
+    "config_integrity": "after language set to en, restore and modal interaction left SHA256 8ac9d2704e6c801d8ff60f9b83381ccab15e47b631fc4aec9d80aa6fa4bd7655 and mtime_ns 1793285417252628379 unchanged"
+  },
+  "screenshots": [
+    {
+      "file": "docs/studio_v2/screenshots/window-restore-1440x900.png",
+      "language": "zh",
+      "skin": "Studio Indigo",
+      "raw_pixels": [
+        1440,
+        900
+      ],
+      "png_pixels": [
+        1440,
+        900
+      ],
+      "transform": "JPEG decoded to PNG; no crop or scaling",
+      "raw_sha256": "8b6964c0286654a60327d190523eba3a5f0b60a8e19eebe9325cc615c45548e2",
+      "sha256": "66454c9a5dee5be727100276b799a7195dc61db0ef4e1cc334300d8208c97038"
+    },
+    {
+      "file": "docs/studio_v2/screenshots/window-restore-1100x700.png",
+      "language": "en",
+      "skin": "Mono",
+      "raw_pixels": [
+        1100,
+        700
+      ],
+      "png_pixels": [
+        1100,
+        700
+      ],
+      "transform": "JPEG decoded to PNG; no crop or scaling",
+      "capture_state": "window manually resized to 1100 after Restore completed at 1440; not the result of Restore",
+      "raw_sha256": "7263fea3afed1dbb4d2b71bdd73135a2e8aa06d0d607daea107022e10b0955b0",
+      "sha256": "dfc03d0ebfcc8fa3f588296ffd86549173b7c7d664214b1d95ee4c2b1505e8a3"
+    }
+  ],
+  "termination": {
+    "ui_pid": 25156,
+    "core_pid": 25155,
+    "fixture_pid": 25150,
+    "ui_exit": 0,
+    "health_after_ui_close": 200,
+    "core_exit": 0,
+    "fixture_exit": 0,
+    "all_pids_gone": true
+  },
+  "limitations": [
+    "No comprehensive IME/accessibility audit or real WorkBuddy lifecycle was exercised.",
+    "Timeout failure branch was not induced.",
+    "Language/appearance mutual exclusion and repeated Restore with one notice were observed on 80ad only, not separately revalidated on 6e89."
+  ],
+  "main_agent_review": {
+    "both_final_pngs_visually_reviewed": true,
+    "png_dimensions_and_sha256_recomputed": true,
+    "final_pids_confirmed_gone": [
+      25150,
+      25155,
+      25156
+    ],
+    "small_window_is_post_restore_manual_resize": true
+  }
+}

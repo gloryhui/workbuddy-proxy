@@ -1,0 +1,118 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2"
+  ],
+  "rounds": [
+    {
+      "label": "previous",
+      "core": 12.59,
+      "ui": 74.12,
+      "total": 86.72,
+      "core_ready": 448.469,
+      "ui_record": 1085.419,
+      "p50": 0.171,
+      "p95": 0.184,
+      "peak": 133.61,
+      "large_s": 0.085,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "window-restore-previous-gui.json"
+    },
+    {
+      "label": "current",
+      "core": 11.8,
+      "ui": 72.83,
+      "total": 84.62,
+      "core_ready": 236.49,
+      "ui_record": 836.551,
+      "p50": 0.172,
+      "p95": 0.186,
+      "peak": 133.84,
+      "large_s": 0.083,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "window-restore-current-gui.json"
+    },
+    {
+      "label": "previous-run2",
+      "core": 11.94,
+      "ui": 72.55,
+      "total": 84.48,
+      "core_ready": 232.339,
+      "ui_record": 726.073,
+      "p50": 0.172,
+      "p95": 0.189,
+      "peak": 131.19,
+      "large_s": 0.083,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "window-restore-previous-run2-gui.json"
+    },
+    {
+      "label": "current-run2",
+      "core": 12.0,
+      "ui": 71.56,
+      "total": 83.56,
+      "core_ready": 237.062,
+      "ui_record": 705.232,
+      "p50": 0.149,
+      "p95": 0.173,
+      "peak": 130.83,
+      "large_s": 0.084,
+      "exits": [
+        -15,
+        -15,
+        0,
+        0
+      ],
+      "source": "window-restore-current-run2-gui.json"
+    }
+  ],
+  "medians": {
+    "total": {
+      "previous": 85.6,
+      "current": 84.09
+    },
+    "ui": {
+      "previous": 73.335,
+      "current": 72.195
+    },
+    "core_ready": {
+      "previous": 340.404,
+      "current": 236.776
+    },
+    "ui_record": {
+      "previous": 905.746,
+      "current": 770.8915
+    },
+    "p95": {
+      "previous": 0.1865,
+      "current": 0.1795
+    },
+    "peak": {
+      "previous": 132.4,
+      "current": 132.335
+    },
+    "large_s": {
+      "previous": 0.084,
+      "current": 0.0835
+    }
+  },
+  "scope": "Original benchmark unchanged; four interleaved native GUI rounds, 1000 small and80 concurrent1MiB requests each; same byte-identical25f Core, baseline c389 vs candidate6e89. Kernel sandbox attested, fake HOME/loopback catalog. Default64-model page, notice closed; does not measure notice-open sustained CPU or interaction latency. UI record is not first paint/interactivity; shared RSS may double count.",
+  "conclusion": "No obvious regression in this bounded short run. Idle total RSS median85.6→84.09MiB; UI73.335→72.195MiB; p95median0.1865→0.1795ms; peakmedian132.4→132.335MiB. Preserve all measurements; do not claim improvement or popup-open/first-paint/interaction performance."
+}
