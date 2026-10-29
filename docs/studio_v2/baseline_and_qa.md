@@ -1018,3 +1018,35 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 实际原生close后两UI均exit0，私有夹具再停止Core并wait0，两个fixture直接wait0；这不额外证明Core驻留连续性（见UI42）。四轮benchmark自有子进程退出数组均[-15,-15,0,0]并wait，记录的Core/UI PID由主代理独立核对消失，临时目录清理延迟到完整预检之后。没有实际供应商请求、真实登录项/同步重启或外部AX，busy禁用分支本轮未强制造成GUI场景；完整IME/读屏/Windows/Intel实机/HiDPI仍待验。
 - 完成真实路径/UID501/父组件挂载与非符号链接/全量单链接普通文件/进程及lsof预检，临执行再核对清单SHA，按持续授权删除本轮唯一目录140文件，释放估计189,018,112bytes（180.26MiB）；本轮临时保留0，旧root30仍24.03MiB保护保留且未读误图或重试删除，已有Cargo缓存未动。系统盘清理后可用39,984,058,368bytes（37.24GiB）。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮补齐共享模型编辑按钮的设计差异和交互证据，完整视觉/其他焦点/IME/无障碍、Windows布局偏好与实机、Intel实机/HiDPI、物理托盘菜单/位移与最小化状态、首帧及更新公网成功继续待办。Goal active，HTML继续仅作静态校验。
+
+## 小功能 45：请求详情长提示换行与键盘回归（2026-10-30，北京时间）
+
+- 修复详情/More长值Tooltip文字越出边框和窗口的问题，仅改detail_layout.rs提示内容布局，原值、15行/弹窗/滚动及事件保持。证据：[编译](benchmarks/request-detail-tooltip-build.json)、[真实交互与原API数据](benchmarks/request-detail-tooltip-gui-validation.json)、[视觉](benchmarks/request-detail-tooltip-visual-validation.json)、[1440中文](screenshots/request-detail-tooltip-1440x900.png)、[1100英文](screenshots/request-detail-tooltip-1100x700.png)、[小窗完整长提示](screenshots/request-detail-tooltip-more-1100x700.png)、[六轮性能](benchmarks/request-detail-tooltip-performance-summary.json)、[清理](benchmarks/request-detail-tooltip-cleanup.json)。
+- 官方MCP重读60:692高保真context/截图，保留650×770上限、原生Dialog/Popover/Tooltip/Label与15个36px主行；该弹窗设计无外部SVG/图片槽。b527基线More滚动暴露实际缺陷：外框虽max560，子文本仍单行越出边框/窗口，见[失败原图](screenshots/request-detail-tooltip-before-fix-1440x901.png)与[旧版原始记录](benchmarks/request-detail-tooltip-before-gui.json)，不作最终通过证据。改用Tooltip::element内的Label max520/whitespace_normal/popover_foreground，外框仍max560；不截字符串、不插入数据换行、不改全局Kit或加定时器。
+- 首次编译提示缺ActiveTheme trait导入，已补，未弱化门禁。最终fmt0.649s、192 tests/2既有ignored5.812s、严格clippy all-targets/-Dwarnings2.498s、Intel check1.887s、Release40.128s通过。UI0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0，15,246,768bytes；旧UIb527、Core仍25f/8,428,096bytes。最初b527复用门禁与修复后重编译分列，不混用。Intel仅类型检查，block0.1.6提示及UI43 Windows资源编译/标题栏问题保留。
+- Mac两次ioreg均No锁定。两夹具均用原Core价格管理API建立CNY flat2/8费率@1，再真实loopback HTTP200生成各自唯一记录，无SQLite写入/伪造UI回包。b527请求c895d1…、最终148ede…均实数48字符（非64）；价格source分别c0fe4c…@1、56025a…@1，候选数据分开。三个长值末尾为TAIL-PROVIDER45/TAIL-MODEL45/TAIL-REQUEST45，均来自实际合成配置。
+- 最终Cua实见非流式HTTP200、500输入/50输出/R400/W—/Σ550、80%、CNY¥0.0014、总0ms/首内容—/TTFB0ms/速度—，与本条原Core DTO/价格快照一致，保留零与未知。More中三个完整长值、费率/来源@1/记录时间可滚动读全；实际语言切换后配置en，供应商名/alias/上游及2供应商3模型/autostart=false保持。没有Core、配置格式、路由、统计或价格语义变化。
+- 最终Tab→Return、重开后Tab→Space均开More；首次Esc只关More、第二Esc关详情，Tab/ShiftTab及可见Close沿用。主代理查看两尺寸主窗、[宽窗More](screenshots/request-detail-tooltip-more-1440x900.png)及[小窗底部](screenshots/request-detail-tooltip-bottom-1100x700.png)；小窗内部滚动后费用/用时/速度与固定Close同屏，主图第一屏仅前12行，不称15行同时可见。
+- 旧More+CUA scroll路径在两尺寸自然出现长请求模型Tooltip，修复后实际两行、尾标在边框与窗口内。英文小窗保持30秒后未重触发，首尾原图SHA完全一致bb67e18…，提示仍在；Esc关More后提示消失。这只证明一条自然触发的长值提示，不等于三个字段独立精确hover/dismissal均通过。此前CUA坐标click不移动真实指针，CGEvent current-pointer仍800/600、±2移动只触发HTTP旧点提示；该相对方法确认失败后停止，未猜坐标/读全局bounds或改权限。
+- 最终截图只选自己PID25221/onscreen/layer0/window62390，raw1440×901/1100×701只裁底1物理像素，不缩放/重绘；resize/scroll均CUA。Core22081/25220的内核保护矩阵及真实LaunchAgents四类deny各自实查；UI为显式合成环境review bundle，无内核沙盒，不作全角色/签名安装包验收。没有外部AX/剪贴板、真实Key/供应商请求、开机启动或WorkBuddy同步重启。
+
+| 同一0b43/UI25221静置场景 | 单核CPU Core/UI | Core RSS MiB首→尾 | UI RSS MiB首→尾 |
+| --- | --- | --- | --- |
+| 详情无More/Tooltip30.002s | 0.100%/0.833% | 11.250→11.141 | 103.391→101.609 |
+| More+可见长Tooltip30.005s | 0.100%/0.833% | 9.875→9.938 | 94.938→96.094 |
+| 关闭后详情底部30.003s | 0.133%/0.900% | 10.000→10.000 | 97.453→98.578 |
+
+- 三个界面时段/缓存状态不同，保留RSS升降，不据短样本宣称减少内存、泄漏或排除长期增长。CPU为ps累计TIME（单核、百分秒分辨率），非GPU/帧时延。另行运行原benchmark默认Statistics页，不能冒称打开Tooltip场景；原脚本SHA仍bc7e0537…，已查help，六轮均同Core25f/Studio实读/64模型/1000小请求/80×1MiB并发4。
+
+| 原脚本实际顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 峰值RSS MiB | 80×1MiB耗时s |
+| --- | --- | --- | --- | --- |
+| 旧b527第1轮 | 12.28/71.72/84.00 | 0.172/0.203 | 139.70 | 0.089 |
+| 新0b43第1轮 | 12.56/72.19/84.75 | 0.171/0.189 | 134.91 | 0.087 |
+| 旧b527第2轮 | 12.69/73.06/85.75 | 0.172/0.192 | 130.38 | 0.087 |
+| 新0b43第2轮 | 12.14/72.14/84.28 | 0.172/0.200 | 133.95 | 0.129 |
+| 新0b43反向确认 | 11.84/72.33/84.17 | 0.171/0.196 | 136.84 | 0.089 |
+| 旧b527反向确认 | 12.69/71.81/84.50 | 0.172/0.233 | 131.06 | 0.098 |
+
+- 新第2轮0.129s相对旧0.087s放缓已保留，并补“新→旧”反向对照，未复现持续放缓。六轮旧→新中位：合计RSS84.50→84.28MiB、UI71.81→72.19MiB、峰值131.06→134.91MiB（+3.85）、p95 0.203→0.196ms、大请求均0.089s，未隐去占用上升项。每版仅3样本/后台未控制，不作优化、统计等效或因果判断；就绪标记非首帧/可交互，RSS共享页可能双计，tray原JSON单列。反向确认只给私有wrapper加label，原脚本/负载未变，各wrapper SHA单列。
+- CUA Close关详情再原生close关UI，两UI exit0；私有夹具再停止/wait Core0，两fixture直接wait0，不混为CmdQ/驻留验收。六轮直接子进程退出数组均[-15,-15,0,0]并wait，记录Core/UI PID由主代理独立核对消失。全量真实路径/UID501/父组件挂载与非符号链接/单链接普通文件/进程及lsof预检、临执行清单SHA复核后，按持续授权删除193文件，释放估计253,874,176bytes（242.11MiB）；本轮临时保留0。旧root30仍24.03MiB保护保留且未读误图/重试删除，共享Cargo缓存未动；系统盘清理后39,962,796,032bytes（37.22GiB）。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮实际修复长Tooltip溢出并补键盘/长值/零与未知语义；三个字段精确hover、完整视觉/IME/读屏/原生AX、Windows布局偏好与实机、Intel实机/HiDPI、托盘/位移/最小化、首帧及更新公网成功仍待推进。Goal active，HTML继续仅静态校验。

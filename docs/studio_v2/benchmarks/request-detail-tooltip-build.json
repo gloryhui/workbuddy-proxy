@@ -1,0 +1,129 @@
+{
+  "feature": "UI-45 wrap long request detail tooltip values",
+  "base_commit": "78f6cb0e4fe699901ef731da2adeb542fc60e075",
+  "source_changed": true,
+  "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+  "ui_bytes": 15246768,
+  "baseline_ui_sha256": "b5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.649
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 5.812
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 2.498
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 1.887
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 40.128
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/statistics/detail_layout.rs": "e92bb2e2bc76cf2fec36bb76501fcd9864714cd56054bf5179759872b6e7b033",
+    "gpui/src/statistics/detail_metadata.rs": "10bd8e008d876bf65e9561de4cb291e21866f7227f0334fb41f9dcd5510c8653",
+    "gpui/src/stats_backend.rs": "7ce6f80e33452ab892414a2c0eb91480089e6b8eaff98754c5c2a0ce33d8927b",
+    "gpui/src/usage_table.rs": "2dfc0984328a27864f4323deb49259dc212ca566c14384b1af3f040bba47a0f4"
+  },
+  "scope": "One GPUI detail_layout.rs edit: native Tooltip::element and bounded whitespace-normal Label retain the complete original row value. No substring/inserted data newlines/timer/global toolkit patch or core/config/API/dependency change.",
+  "design": {
+    "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "page": "51:2",
+    "dialog": "60:692",
+    "context_and_screenshot_read": true,
+    "static_asset_slots_in_dialog": 0
+  },
+  "initial_b527_source_reuse_attestation": {
+    "feature": "UI-45 current request detail acceptance",
+    "source_changed": false,
+    "checked_at": "2026-10-30T06:44:31.867346+08:00",
+    "base_commit": "78f6cb0e4fe699901ef731da2adeb542fc60e075",
+    "ui_sha256": "b5274a51c8bb4045ba7854676775d9c1a08288ed710afc0ed7e7b33382b26691",
+    "ui_bytes": 15246768,
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "core_bytes": 8428096,
+    "source_sha256": {
+      "gpui/src/statistics/detail_layout.rs": "7c7509dc66ea5b74a6bcde7559e1d6692c4304825ffd28762c2f3bab7c6c9a63",
+      "gpui/src/statistics/detail_metadata.rs": "10bd8e008d876bf65e9561de4cb291e21866f7227f0334fb41f9dcd5510c8653",
+      "gpui/src/statistics.rs": "7eb4a42a75ce5bdea95479ad54329b6d22897c82e21f0a0b0fba7a28d19e6e40",
+      "gpui/src/stats_backend.rs": "7ce6f80e33452ab892414a2c0eb91480089e6b8eaff98754c5c2a0ce33d8927b",
+      "gpui/src/ui.rs": "19200cdbdfd0fcfd886b6db0a0ab6194fa454aaacbf03a44fdaf7308177c5f61",
+      "gpui/src/main.rs": "963f6615fb33a5cb84072f3ff3aa9fbc108d9b8d579a7bb34ef4ffdedb1a3c98",
+      "gpui/src/usage_table.rs": "2dfc0984328a27864f4323deb49259dc212ca566c14384b1af3f040bba47a0f4",
+      "gpui/Cargo.lock": "88cb4109289282c4ea63eef2a8644cfba6768eb4a6a193186cdad3fd71283d62",
+      "gpui/Cargo.toml": "95c8728027af68c6946f709e831ba60300c3b5b7f89dc7be756cc789f40c8f6b"
+    },
+    "compile_rerun_this_round": false,
+    "reused_gates_from": "model-edit-build.json",
+    "reused_gate_summary": "192 tests/2 existing ignored; fmt,strictclippy,Intel check,release passed for the same b527 bytes in UI44; not repeated this round",
+    "design": {
+      "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+      "page": "51:2",
+      "dialog": "60:692",
+      "context_and_screenshot_read": true,
+      "static_asset_slots_in_dialog": 0,
+      "code_stack": "existing Rust+GPUI native rows,Dialog,Popover,Tooltip,Label; no WebView"
+    },
+    "runtime_scope": "Only current macOS Apple Silicon native review bundle; no Windows/Intel runtime,HiDPI,firstpaint or external AX acceptance"
+  },
+  "limitations": [
+    "Candidate compilation success does not prove fixed tooltip; actual final GUI required.",
+    "Intel only typecheck,block0.1.6 future incompatibility remains.",
+    "Windows resource compilation and caption overlap fromUI43 remain unresolved."
+  ]
+}

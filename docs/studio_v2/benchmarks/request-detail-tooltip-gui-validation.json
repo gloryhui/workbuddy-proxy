@@ -1,0 +1,416 @@
+{
+  "feature": "UI-45 final wrapped request detail tooltip",
+  "checked_at": "2026-10-30T07:04:25.050798+08:00",
+  "fixture": {
+    "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round36.zmz2v09e/fixed-ui45",
+    "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round36.zmz2v09e/fixed-ui45/WorkBuddy Proxy Review.app",
+    "core_pid": 25220,
+    "ui_pid": 25221,
+    "fixture_pid": 25219,
+    "port": 63171,
+    "bundle_id": "com.workbuddy.proxy.codexreview.tui45fixed-ui45",
+    "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+    "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+    "source_guard_library_sha256": null,
+    "sandbox_ui_pid": 25221,
+    "gui_kernel_guard": false,
+    "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+    "binary_sha256": {
+      "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+      "ui": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0"
+    },
+    "synthetic_initial": {
+      "providers": 2,
+      "models": 3,
+      "requests": 0,
+      "phase": "configuration before management API/HTTP seeding"
+    },
+    "complete_bundle_signed": false,
+    "signature_identity": null,
+    "seeded_request_count": 1
+  },
+  "gui": {
+    "candidate_ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+    "ui_pid": 25221,
+    "core_pid": 25220,
+    "fixture_pid": 25219,
+    "request_id": "148ede0b7e95f1ed31cba8331be2840578078db613221965",
+    "cases": {
+      "details": "Actual detail displayed HTTP 200 completed, streaming No, input 500/output 50/cache read 400/cache write unknown/total 550, cache hit 80%, proxy CNY 0.0014, total 0 ms / first content unknown / TTFB 0 ms, output speed unknown.",
+      "keyboard": "Tab then Return opened More; first Escape closed More while detail remained, second Escape closed detail. After reopening, Tab then Space also opened More and two Escapes closed the layers.",
+      "long_values": "More displayed wrapped requested model, upstream model and provider/route with respective TAIL markers. Scroll reached unit price in 2/out 8/read 0.2000/write 0, source 56025ab8329d374cf9866a61@1, recorded time.",
+      "tooltip": "CUA More scroll naturally triggered requested-model tooltip at both sizes; screenshots show wrapped text within box and TAIL-REQUEST45. At end of 30-second 1100 More+tooltip sample the tooltip remained and the capture bytes were identical to the pre-sample capture. This does not establish direct hover for all three fields.",
+      "small_bottom": "In 1100 English, after Esc and internal scroll, CNY ¥0.0014, total 0 ms, first content —, TTFB 0 ms, output speed — and fixed Close were visible together; clicking title cleared a temporary token tooltip.",
+      "close": "CUA clicked fresh detail Close 58; subsequent fresh AX showed detail closed; clicked app native close button 42. No CmdQ, Core action, clipboard, or post-close app query."
+    },
+    "raw_images": [
+      {
+        "file": "more-scroll-1440-raw.png",
+        "size": [
+          1440,
+          901
+        ],
+        "sha256": "f094e34d8c66a64e6a48f1725b838a74fce27ae102803efeaeae02000839ba98"
+      },
+      {
+        "file": "detail-zh-1440-raw.png",
+        "size": [
+          1440,
+          901
+        ],
+        "sha256": "97cf560724c4f2e09f5c6bf4c324fa6563065cbc69d892b4fc4047d982e65d59"
+      },
+      {
+        "file": "detail-en-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "8fcfd271a8a0a7ea0e4716f53ba08021756a4056f9a242809202ffb3f20365f0"
+      },
+      {
+        "file": "more-scroll-en-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "bb67e18cf0536451b19e9eeb72e2f38e86c17849ca88a8db7a75ac5e85973470"
+      },
+      {
+        "file": "more-tip-after-sample-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "bb67e18cf0536451b19e9eeb72e2f38e86c17849ca88a8db7a75ac5e85973470"
+      },
+      {
+        "file": "detail-en-bottom-1100-raw.png",
+        "size": [
+          1100,
+          701
+        ],
+        "sha256": "0e729266a9849cca6f4d021e0a5752a1b7a93f1066c661e7983f1f1856140964"
+      }
+    ],
+    "capture": "Native screencapture -x -o -l verified onscreen layer0 PID25221 window62390; PNG original, no scaling or cropping. 1100 resize via CUA drag([1438,898],[1098,698]).",
+    "limitations": [
+      "Direct targeted hover/dismissal for each of three long fields not verified; tooltip was naturally triggered during More scrolling.",
+      "No external AX, global window bounds or clipboard access.",
+      "Idle samples reported separately by parent; short measurements do not establish long-term behavior.",
+      "Parent will verify and record actual process exit and wait outcomes."
+    ]
+  },
+  "seed": {
+    "synthetic_only": true,
+    "source": "original Core management API plus real loopback HTTP request, no SQLite writes or mocked UI responses",
+    "config_sha256": "053ea54cb8e7fdcc513ab0b81ce18b3c2372f8f7951adccd645e0eb1f6e0170e",
+    "price_rule": {
+      "cache_read_rate_nanos": "200000000",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793314336467,
+      "currency": "CNY",
+      "input_mode": "flat",
+      "input_rate_nanos": "2000000000",
+      "label": "Synthetic UI45",
+      "output_rate_nanos": "8000000000",
+      "price_id": "56025ab8329d374cf9866a61",
+      "provider_id": "provider-a",
+      "referenced": false,
+      "request_tag": "",
+      "revision": 1,
+      "rule_id": "56025ab8329d374cf9866a61",
+      "upstream_model": "fixture-model-45-metadata-metadata-metadata-metadata-metadata-metadata-metadata-metadata-metadata-metadata-TAIL-MODEL45"
+    },
+    "detail": {
+      "api_version": 4,
+      "request_tag": "",
+      "generated_at_ms": 1793314336475,
+      "generation": "cd018653bd5fa8fe53bcd88139145bb6758f679e5b6ef3cd:2",
+      "request": {
+        "id": 1,
+        "request_id": "148ede0b7e95f1ed31cba8331be2840578078db613221965",
+        "source": "relay",
+        "provider_id": "provider-a",
+        "provider_name": "Synthetic Provider 45 long-name-long-name-long-name-long-name-long-name-long-name-long-name-long-name-TAIL-PROVIDER45",
+        "route_id": "model-a-1",
+        "route_name": "Model45",
+        "requested_model": "wbp45-requested-requested-requested-requested-requested-requested-requested-requested-requested-requested-requested-requested-requested-requested-TAIL-REQUEST45",
+        "upstream_model": "fixture-model-45-metadata-metadata-metadata-metadata-metadata-metadata-metadata-metadata-metadata-metadata-TAIL-MODEL45",
+        "upstream_protocol": "openai_chat",
+        "response_model": "mock-model",
+        "started_at_ms": 1793314336473,
+        "ended_at_ms": 1793314336474,
+        "stream": false,
+        "upstream_started": true,
+        "http_status": 200,
+        "outcome": "completed",
+        "error_kind": null,
+        "duration_ms": 0,
+        "ttfb_ms": 0,
+        "first_content_ms": null,
+        "usage_status": "complete",
+        "usage_reason": null,
+        "usage_source": "upstream",
+        "input_tokens": 500,
+        "output_tokens": 50,
+        "total_tokens": 550,
+        "cache_read_tokens": 400,
+        "cache_write_tokens": null,
+        "reasoning_tokens": null,
+        "input_uncached_tokens": null,
+        "input_breakdown": "read_subset",
+        "cost": {
+          "status": "priced",
+          "currency": "CNY",
+          "total_cost_nanos": "1400000",
+          "source_price_id": "56025ab8329d374cf9866a61",
+          "pricing_version": 2
+        },
+        "record_origin": "proxy",
+        "time_basis": "request_start",
+        "total_tokens_derived": false,
+        "workbuddy_credit_nanos": null,
+        "recorded": false
+      },
+      "parser_version": 1,
+      "created_at_ms": 1793314336473,
+      "updated_at_ms": 1793314336474,
+      "run_id": "cd018653bd5fa8fe53bcd88139145bb6758f679e5b6ef3cd",
+      "cost_parts": {
+        "status": "priced",
+        "currency": "CNY",
+        "input_cost_nanos": "1000000",
+        "output_cost_nanos": "400000",
+        "cache_read_cost_nanos": "0",
+        "cache_write_cost_nanos": "0",
+        "total_cost_nanos": "1400000",
+        "calculated_at_ms": 1793314336474,
+        "pricing_version": 2
+      },
+      "price_snapshot": {
+        "price_source": "manual",
+        "price_snapshot_at_ms": 1793314336473,
+        "input_mode": "flat",
+        "input_rate_nanos": "2000000000",
+        "output_rate_nanos": "8000000000",
+        "cache_read_rate_nanos": "200000000",
+        "cache_write_rate_nanos": "0",
+        "source_price_id": "56025ab8329d374cf9866a61",
+        "source_price_revision": 1
+      }
+    },
+    "request_count": 1,
+    "window_filter": {
+      "from_ms": 1793314335468,
+      "to_ms": 1793314396474,
+      "timezone": "UTC"
+    }
+  },
+  "core_protection": {
+    "enforced": true,
+    "pid": 25220,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "gui_kernel_guard": false,
+  "resource_samples": [
+    {
+      "scene": "detail-closed-tooltip",
+      "checked_at": "2026-10-30T06:56:33.735263+08:00",
+      "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+      "elapsed_seconds": 30.00243708305061,
+      "metrics": {
+        "core": {
+          "pid": 25220,
+          "start_rss_mib": 11.25,
+          "end_rss_mib": 11.140625,
+          "cpu_percent_one_core": 0.1
+        },
+        "ui": {
+          "pid": 25221,
+          "start_rss_mib": 103.390625,
+          "end_rss_mib": 101.609375,
+          "cpu_percent_one_core": 0.833
+        }
+      },
+      "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+    },
+    {
+      "scene": "more-visible-tooltip",
+      "checked_at": "2026-10-30T06:58:07.332266+08:00",
+      "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+      "elapsed_seconds": 30.00507099996321,
+      "metrics": {
+        "core": {
+          "pid": 25220,
+          "start_rss_mib": 9.875,
+          "end_rss_mib": 9.9375,
+          "cpu_percent_one_core": 0.1
+        },
+        "ui": {
+          "pid": 25221,
+          "start_rss_mib": 94.9375,
+          "end_rss_mib": 96.09375,
+          "cpu_percent_one_core": 0.833
+        }
+      },
+      "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+    },
+    {
+      "scene": "after-tooltip-close",
+      "checked_at": "2026-10-30T07:00:45.031950+08:00",
+      "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+      "elapsed_seconds": 30.003333500004373,
+      "metrics": {
+        "core": {
+          "pid": 25220,
+          "start_rss_mib": 10.0,
+          "end_rss_mib": 10.0,
+          "cpu_percent_one_core": 0.133
+        },
+        "ui": {
+          "pid": 25221,
+          "start_rss_mib": 97.453125,
+          "end_rss_mib": 98.578125,
+          "cpu_percent_one_core": 0.9
+        }
+      },
+      "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+    }
+  ],
+  "tooltip_visible_before_and_after_sample": {
+    "raw_sha256": "bb67e18cf0536451b19e9eeb72e2f38e86c17849ca88a8db7a75ac5e85973470",
+    "same_bytes": true
+  },
+  "config_scope": {
+    "language": "en after actual language switch",
+    "autostart": false,
+    "providers": 2,
+    "models": 3,
+    "same_original_provider_name_alias_upstream_model": true,
+    "final_config_sha256": "842859e847c72c6ae864f68f231af43e2d9b3b8461f9c254305a3d2102af0435",
+    "credentials_omitted": true
+  },
+  "terminal": {
+    "ui_exit_before_cleanup": 0,
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": 0,
+    "core_exit_after_cleanup": 0
+  },
+  "fixture_direct_wait_exit_code": 0,
+  "all_recorded_pids_gone": true,
+  "workbuddy_sentinel_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "shutdown_scope": "Actual CUA Close exits detail then native close exits UI0; private fixture explicitly stops/waits Core0 and exits0. Not an independent tray/core-residency acceptance.",
+  "visual_file": "request-detail-tooltip-visual-validation.json",
+  "limitations": [
+    "One naturally triggered requested-model long tooltip verified in both actual window sizes; three intended exact CGEvent hover targets not proven.",
+    "No externalAX/globalwindowbounds/clipboard or real vendor/login/sync operation.",
+    "Current3x30s CPU/RSS scene samples are short; scenes/warm caches differ, not a leak proof or old/new performance comparison.",
+    "Full frame precision,IME/screenreader,Windows/Intel runtime,HiDPI/firstpaint remain pending."
+  ]
+}

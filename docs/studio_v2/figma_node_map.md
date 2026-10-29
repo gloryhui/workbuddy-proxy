@@ -13,7 +13,7 @@
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui/model_editor.rs, model_options.rs, ui.rs | 部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；完整IME/无障碍/跨平台及精细审计待续 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：526原生确认/两尺寸、取消/无隐式Enter、仅同步/当前草稿与全部saved范围、非法文件/重试、守卫下写入后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验 |
 | 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续 |
-| 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 部分：650×770原生分组/两尺寸/真实代理与导入/完整元数据换行/本次快照/错误重试/各关闭路径已验；Tooltip视觉、完整无障碍/跨平台与精细审计待续 |
+| 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 部分：原650×770/分组/代理与导入/本次快照/错误重试/关闭证据保留；0b43修长Tooltip横向溢出，真实请求模型提示两尺寸完整/30s同图、More键盘/长值及价格@1/零与未知/小窗底部已验；三精确hover/完整无障碍/跨平台与整帧待续 |
 | 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
 | 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
 | 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续 |
@@ -82,3 +82,5 @@
 Windows专项（小功能43）：实际锁定Kit0.7.3/pre-windows0.3.9源码的静态模型发现右上窗口按钮与top8/right32工具栏末两项重叠，两宽度均有明确交集；不是Windows实拍。GNU检查在依赖manifest缺windres处失败，应用Windows类型检查未完成，另有rc.exe源码前置条件；Windows布局偏好/实机/HiDPI仍待核对，Mac位置及40部分/0整帧最终验收计数不变。
 
 共享模型编辑图标（小功能44）：最新54:246/54:264与黑白62:438高保真确认同一15px原资源；b527仅修Studio/Mono可用按钮的Kit遮罩颜色，图标/28px热区及事件保持，其他皮肤沿用。两尺寸、Mono/Blue切换、鼠标首行/Down+F2第二行、取消/遮罩/草稿往返与显式Save、192测试/四轮原基准已验；不覆盖完整整帧/IME/原生AX/Windows/Intel/HiDPI待办，仍40部分/0最终验收。
+
+请求详情专项（小功能45）：重读60:692高保真，0b43仅将原生Tooltip内容改为有界换行Label，保留全部字符串、主行、API与事件。旧b527越框原图及最终两尺寸/自然长提示完整/More键盘和两层Esc/48字符真实ID及原数据/3×30s/六轮原基准均留证；三个字段独立精确hover与完整IME/AX/跨平台等未验，40帧仍部分验收。

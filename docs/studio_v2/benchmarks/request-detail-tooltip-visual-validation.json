@@ -1,0 +1,109 @@
+{
+  "feature": "UI-45 actual request detail tooltip wrapping",
+  "ui_sha256": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+  "main_reviewed_each_raw_image": true,
+  "images": [
+    {
+      "raw_file": "detail-zh-1440-raw.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "raw_sha256": "97cf560724c4f2e09f5c6bf4c324fa6563065cbc69d892b4fc4047d982e65d59",
+      "file": "docs/studio_v2/screenshots/request-detail-tooltip-1440x900.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "c4a41caa8ea64ff11f1f64dcc04fe3057a469c2223757d9439aca9dc89203001",
+      "method": "Native PID25221/window62390 capture; crop bottom1 physical pixel only, no scale/repaint"
+    },
+    {
+      "raw_file": "detail-en-1100-raw.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "raw_sha256": "8fcfd271a8a0a7ea0e4716f53ba08021756a4056f9a242809202ffb3f20365f0",
+      "file": "docs/studio_v2/screenshots/request-detail-tooltip-1100x700.png",
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "cc652a4ad01c0676ca3027e1812ef5d5f08ac5d93a0b51b9dec2302d279d0fda",
+      "method": "Native PID25221/window62390 capture; crop bottom1 physical pixel only, no scale/repaint"
+    },
+    {
+      "raw_file": "more-scroll-1440-raw.png",
+      "raw_size": [
+        1440,
+        901
+      ],
+      "raw_sha256": "f094e34d8c66a64e6a48f1725b838a74fce27ae102803efeaeae02000839ba98",
+      "file": "docs/studio_v2/screenshots/request-detail-tooltip-more-1440x900.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "c2d9eadc23f5a0e3109ce121f587675e7dc434a7a0fe1d6cd4f2176cfcf7aad8",
+      "method": "Native PID25221/window62390 capture; crop bottom1 physical pixel only, no scale/repaint"
+    },
+    {
+      "raw_file": "more-scroll-en-1100-raw.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "raw_sha256": "bb67e18cf0536451b19e9eeb72e2f38e86c17849ca88a8db7a75ac5e85973470",
+      "file": "docs/studio_v2/screenshots/request-detail-tooltip-more-1100x700.png",
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "bdc13deacb3e7868f438d40730d351c58ef87e47b9e2383423d0fb1f8a83c31b",
+      "method": "Native PID25221/window62390 capture; crop bottom1 physical pixel only, no scale/repaint"
+    },
+    {
+      "raw_file": "detail-en-bottom-1100-raw.png",
+      "raw_size": [
+        1100,
+        701
+      ],
+      "raw_sha256": "0e729266a9849cca6f4d021e0a5752a1b7a93f1066c661e7983f1f1856140964",
+      "file": "docs/studio_v2/screenshots/request-detail-tooltip-bottom-1100x700.png",
+      "size": [
+        1100,
+        700
+      ],
+      "sha256": "f0f706e2b646144d3aad41772326c958eeded573f78651fc1c2880c7d48bcfec",
+      "method": "Native PID25221/window62390 capture; crop bottom1 physical pixel only, no scale/repaint"
+    }
+  ],
+  "before_failure": {
+    "file": "docs/studio_v2/screenshots/request-detail-tooltip-before-fix-1440x901.png",
+    "version": "b527",
+    "raw_size": [
+      1440,
+      901
+    ],
+    "sha256": "ef19ee6be948428560a991721944246ecb717b1a769ed4f50099de6257a46f06",
+    "observed": "Unwrapped requested-model text extends past native560px tooltip frame and right window edge; diagnostic, not final pass"
+  },
+  "fixed_tooltip": {
+    "actual_trigger": "CUA More open plus scroll naturally exposed requested-model tooltip; not a verified precise3-field CGEvent hover",
+    "both_sizes_observed": "Complete TAIL-REQUEST45 within2 native text lines inside border and window",
+    "same_visible_tooltip_after30s": true,
+    "before_and_after_raw_sha256": "bb67e18cf0536451b19e9eeb72e2f38e86c17849ca88a8db7a75ac5e85973470"
+  },
+  "small_window_scope": "First screenshot shows top/first12 rows; dedicated bottom screenshot verifies cost,latency,speed and fixedClose after internal scroll. Not all15 simultaneously visible.",
+  "design": {
+    "dialog_node": "60:692",
+    "native_width": 650,
+    "native_height_max": 770,
+    "static_asset_slots_in_dialog": 0
+  },
+  "limits": [
+    "Three independent intended provider/upstream/requested exact hover/dismissal cases not proven.",
+    "No external AX,global window bounds,clipboard access,IME/screen-reader or cross-platform visual acceptance."
+  ]
+}

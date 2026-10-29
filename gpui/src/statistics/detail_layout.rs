@@ -1,5 +1,6 @@
 //! Studio request detail, backed only by the selected record's own snapshot.
 use super::*;
+use gpui_kit::component::ActiveTheme as _;
 use gpui_kit::component::scroll::{ScrollableElement, ScrollableMask};
 
 fn row(
@@ -24,9 +25,17 @@ fn row(
             row.h_auto().min_h(px(36.)).items_start().py(px(8.))
         })
         .tooltip(move |window, cx| {
-            gpui_kit::component::tooltip::Tooltip::new(hint.clone())
-                .max_w(px(560.))
-                .build(window, cx)
+            let hint = hint.clone();
+            gpui_kit::component::tooltip::Tooltip::element(move |_, cx| {
+                // A max-width on the popup alone leaves its text unbounded.
+                // Keep long record values inside the native tooltip surface.
+                Label::new(hint.clone())
+                    .max_w(px(520.))
+                    .whitespace_normal()
+                    .text_color(cx.theme().popover_foreground)
+            })
+            .max_w(px(560.))
+            .build(window, cx)
         })
         .child(
             Label::new(name)

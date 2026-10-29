@@ -35,7 +35,7 @@
 | 真实代理状态、计数、端口 | ui/relay.rs、core_state、status_bar | macOS 合成2供应商/6模型/1请求、暂停核心未响应/恢复、复制完整端点 Passed；端口0/65536拒绝、确认Esc/取消不重启 Passed；真实重启/回滚待验 |
 | 最近 100 条日志、清空/复制/滚动 | ui.rs::snapshot、ui/relay.rs、ui_components::TerminalLogs | macOS 深色只读/复制/清空、无新日志不抢首部/新日志到底 Passed；Studio 补验发现选区覆盖后已修复，Mono/Studio 实拍选区可读；100条上限源码确认 |
 | 最近请求、详情与独立读身份 | statistics/recent.rs、stats_backend.rs | 167自动回归；同核心22记录、最新ID/详情、明细第2页不误用、来源/供应商与快速切源、小窗Esc Passed；请求最小10条仅取首条 |
-| 请求详情、元数据与本次单价 | statistics/detail_layout.rs、statistics/detail_metadata.rs | 原生650×770/两尺寸、15行摘要、原metadata与长ID/模型/价格快照完整换行、真实代理/导入/连接失败/SSE与点数/未知值、not-found同IDRetry与8秒错误持久/新记录恢复、Esc/X/Close及Popover Esc、64位ID复制并恢复剪贴板 Passed；Tooltip视觉/完整无障碍/跨平台待续 |
+| 请求详情、元数据与本次单价 | statistics/detail_layout.rs、statistics/detail_metadata.rs | 原650×770/15行、代理/导入/失败/SSE/费用快照/同ID错误重试恢复/关闭/64位ID复制证据保留；UI45仅修长Tooltip越边框，0b43两尺寸自然出现请求模型提示完整且30s首尾同图、More的Tab+Return/Space/两层Esc、原API零与未知/价格@1、小窗底部、192测试/六轮基准 Passed。三个精确hover/完整无障碍/跨平台与整帧审计待续 |
 | 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | UI42真实3→2→3、原生关窗后Core/Tray存活且loopback200、官方重复启动同PID与已有Tray生成新UI/草稿恢复、实际Settings CmdQ使Core/Tray/UI全退且唯一统计run正常关闭 Passed；正常冷启动及重启原脚本另验三角色/单实例/关闭重开/两run normal，冷路径全角色kernel保护。show/CLI不是物理菜单点击；指定托盘CUA绑定timeout、菜单点击仍待验，Windows/Intel实机待续 |
 | 外观/中英/HiDPI/无障碍 | theme.rs、ui_components.rs、model_table.rs、assets.rs | macOS既有七主题/中英分项证据保留；本轮Mono白/浅蓝交替行、三设计SVG实际加载、多选跨Blue→Mono及中英切换后草稿删除2→0/Core仍3、名称草稿/重开Mono持久、两尺寸与遮罩 Passed；完整初始Tab/HiDPI/IME/无障碍及Windows/Intel实机待专项 |
 
