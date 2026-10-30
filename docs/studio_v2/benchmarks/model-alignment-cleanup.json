@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-10-30T17:22:20+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+  "type": "session-owned synthetic GUI fixture, copied binaries, helper scripts and private test config/database",
+  "owner_uid": 501,
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "reproducible_basis": "Current session created root and fixtures; source helpers and unchanged candidate/Core cached builds remain, final GUI/build/geometry proof and six screenshots exported to docs/studio_v2. No real profiles/config/installed app included.",
+  "entries": 110,
+  "files": 64,
+  "logical_bytes": 83838020,
+  "allocated_bytes": 84140032,
+  "no_symlinks_or_cross_mounts": true,
+  "process_path_references": [],
+  "lsof_exit": 1,
+  "lsof_empty": true,
+  "inventory_sha256": "0342aa3b782555001569edb6b10e7da422f3c5daa6fa0274b1b4b461d382c5df",
+  "delete_attempted": true,
+  "deleted": false,
+  "system_disk_free_bytes": 50718920704,
+  "immediate_preflight_at": "2026-10-30T17:22:45+08:00",
+  "refused_by_policy": true,
+  "refusal": "approval required by policy, but AskForApproval is set to Never",
+  "no_equivalent_deletion_attempt": true,
+  "freed_bytes": 0,
+  "retained_allocated_bytes": 84140032,
+  "previous_root_presence": {
+    "studio-v2-round30.g5izvnv3": false,
+    "studio-v2-round41.yze15j8d": false,
+    "studio-v2-round44.auxj1uyj": false,
+    "studio-v2-round45.w_lhpgrm": false
+  },
+  "previous_root_note": "Existence check only; no prior root read, hash, deletion or released-space claim this continuation."
+}

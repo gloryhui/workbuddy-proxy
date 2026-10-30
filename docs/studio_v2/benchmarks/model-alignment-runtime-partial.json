@@ -1,0 +1,41 @@
+{
+  "source_report": {
+    "ui_sha256": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+    "ui_pid": 56341,
+    "core_pid": 56337,
+    "fixture_pid": 56336,
+    "locked": false,
+    "gui_tool_availability": "mcp__cua_repl unavailable; tool inventory returned no declared native computer-use tool",
+    "capture": {
+      "filename": "provider-wide-raw.png",
+      "window_id": 65712,
+      "window_owner_pid": 56341,
+      "layer": 0,
+      "method": "screencapture -x -o -l",
+      "width_px": 2880,
+      "height_px": 1802,
+      "sha256": "bf5cf414a557ac3a8d5c0a5bac3c69267e34aa9e66f1f04d77e9183aa6613c00",
+      "postprocessing": "none",
+      "actual_view": "Statistics / Usage details; zero requests",
+      "filename_does_not_describe_view": true
+    },
+    "limitations": [
+      "Could not navigate to Providers, interact with model editor, resize window, or invoke native close without an available authorized GUI tool.",
+      "No model alignment or interaction validation is claimed.",
+      "No external AX, window bounds, AppleScript, or synthetic click/keyboard method was used.",
+      "Parent handles fixture marker, process exit/wait and Core checks."
+    ]
+  },
+  "actual_page": "Statistics / request details / empty state; not Providers or Model dialog.",
+  "original_filename_was_misleading": "provider-wide-raw.png",
+  "delivered_evidence": "docs/studio_v2/screenshots/model-alignment-statistics-1440x900-native-2x.png",
+  "raw_sha256": "bf5cf414a557ac3a8d5c0a5bac3c69267e34aa9e66f1f04d77e9183aa6613c00",
+  "postprocessing": "Untouched native screenshot bytes, no crop/resize/redraw.",
+  "ui_sha256": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+  "core_config_sha_unchanged": true,
+  "shutdown": "Existing own gpui-stop + fixture finish markers, fixture wait0; not native click Close acceptance.",
+  "limitations": [
+    "Computer Use tool unavailable; no current candidate provider/model interaction, resize,1100capture or final acceptance.",
+    "Single empty-state wide image cannot prove populated request table/all filters, menus/keyboard/IME."
+  ]
+}

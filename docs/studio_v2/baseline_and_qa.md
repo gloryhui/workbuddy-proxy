@@ -1263,3 +1263,15 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - Root44已完成规范绝对路径/系统临时归属/逐级父目录挂载与非符号链接/UID501/全量普通单链接/进程与lsof预检，临执行再次核对同一清单SHA。对精确单一目录的rm命令被执行策略拒绝：需要approval但AskForApproval=Never；未改用等价删除或重试绕过。故本轮清理0、仍保留289文件/341,610,496分配bytes（325.79MiB），已退出无引用且交付证据已导出，详[清理记录](benchmarks/model-frame-cleanup.json)。共享Cargo缓存保持；旧Root30保护项24.03MiB、Root41私有记录/说明12KiB保留，未读/哈希私有事件或重试删除。系统盘当前36,423,729,152bytes（33.92GiB）可用。
 - 剩余40帧最终验收（40部分/0最终）；全局视觉首轮39未开始、1已审查且保留差异。当前Goal active；进度HTML继续仅静态检查，未通过本地地址被拒后的替代浏览器路径绕过。下一步继续全局差异修复和逐帧对照，不以本次局部native控件修正宣称整帧通过。
+
+
+## 小功能 54：模型布局余差、共享资产与首帧列宽估算（2026-10-30）
+
+- 将模型能力首行上移1逻辑像素，同时补偿分区底部1px保持后续内容位置；五档位按钮最大宽124px并保留窄窗收缩，取消按钮使用白底深色字。模型表初始宽度估算共用实际侧栏宽度和17px列间距，修正1440下53px、1100下5px估算差，不宣称已测首帧闪动。皮肤20px与侧栏链接15px替换为最新官方精确SVG导出。只改Rust/GPUI布局与静态资产，未改Core、依赖和模型事件逻辑。
+- [编译门禁](benchmarks/model-alignment-build.json)：当前工作树fmt、194项测试（192通过/2忽略）、strict clippy all-targets、Intel类型检查和arm64 release通过；候选UI SHA bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a，与本轮性能样本及实机UI一致。Intel仅类型检查，不作为本轮Intel实机通过。
+- [真实交互与独立读回](benchmarks/model-alignment-gui-validation.json)：Computer Use恢复后绑定准确PID5490，无重复UI；2供应商/5模型/0请求的隔离环境，Core实际kernel guard及LaunchAgents读写拒绝通过。AUTO只读、manual图片off/medium on取消复原、确认写隔离草稿再重开保留通过；Core配置SHA未变。宽/窄窗口遮罩点皮肤位置均不穿透；局部Tab/ShiftTab可见caret与Space实测，不等于完整键盘/AX/IME通过。原生关闭UI后Core health HTTP200，再正常退出；UI/Core/fixture均exit0并wait，三PID由主代理独立核对消失。两次夹具前置失败保留在报告，未算产品失败或成功UI样本。
+- [1440模型原图](screenshots/model-alignment-manual-1440x900-native-2x.png)与[1100限制滚动原图](screenshots/model-alignment-limits-1100x700-native-2x.png)已检查；另归档两尺寸供应商、wide AUTO和small manual，合计6张未加工实拍。原图2880×1802与2200×1402保留原生额外2物理行。小窗模型内部滚动可达四限制字段和固定取消/确认，供应商模型目录需内部滚动，不声明全部可在一屏显示。
+- [像素几何](benchmarks/model-alignment-geometry.json)：仅在内存ICC转sRGB分析，交付原图未变。复选框首行373.5/次行410.5相对Figma373/410，纵向余差从1.5px收敛至0.5px；wide五档位外宽124px、所选内填充起点385/657/929及宽122px符合稿横向几何，未宣称整图一致。
+- [性能对照](benchmarks/model-alignment-performance-summary.json)：相同Core25f24ad、旧UI af174b4/新UI bc7f7f1、原脚本64模型/1000小请求/80×1MiB并发4，12个完成样本和1个旧版errno49失败均保留。初始各4轮合计RSS中位88.820→89.320MiB、p95 .1970→.2665ms；追加安静反向各2轮为91.300→92.155MiB、p95 .1850→.2055ms，UI RSS78.450→79.580MiB。全部增量和高值保留，不宣称优化/等价或归因；UI就绪记录不是首帧，默认统计页吞吐不等于模型弹窗FPS/输入延迟。
+- [供应商整帧源码审查](benchmarks/provider-frame-source-audit.json)已补当前两尺寸实拍；用量明细另有空/真实14条Mock请求宽窗图进入审查。40帧仍部分验收、0帧最终验收；字体/阴影、0.5px余差、供应商卡片高度与真实连接状态、统计页文案/密度、完整键盘/IME/读屏和跨平台仍未完成，Goal保持active。
+- [清理预检与策略拒绝](benchmarks/model-alignment-cleanup.json)：本轮精确自建临时目录已核实64文件、80.24MiB、无进程/lsof引用且证据已归档；执行删除被“approval required by policy, but AskForApproval is set to Never”拒绝，未换等价方式绕过，释放0并保留80.24MiB。用户再次授权清晰合理目录/构建缓存清理，后续继续按路径和归属预检执行，当前运行时限制未改变；系统盘当时剩余约47.24GiB。此前round44/45此次核对不存在，不声称由本轮删除或计算释放空间。

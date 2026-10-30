@@ -1,0 +1,478 @@
+{
+  "fixture_source": "14 real proxy HTTP200 requests to isolated loopback mock, v1/models discovered aliases. No direct SQL insertion, no request-message/key export.",
+  "request_count": 14,
+  "total_tokens": 7700,
+  "input_tokens": 7000,
+  "output_tokens": 700,
+  "rows": [
+    {
+      "id": 14,
+      "request_id": "6c18bf3b904a6f1b5e36bdc494c207a81a883848bd437c6d",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "claude-opus-4.7",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 13,
+      "request_id": "4d03df9f22bb8734a613bf91f1e68fa915100eb258aab901",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "gpt-6.1",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 12,
+      "request_id": "ac24390e115c4db3be9707b231912a5075ceb72ae6d62726",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "gpt-6",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 11,
+      "request_id": "649b8f5196d723e1afc1eb7bb36856c30d668115bae7e87a",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "deepseek-v4.1-flash",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 10,
+      "request_id": "ad88a07ed8201eed6c079731e54b26a32f7440e77950c198",
+      "provider_id": "provider-b",
+      "provider_name": "OpenCode Go",
+      "upstream_model": "model-b-1",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 9,
+      "request_id": "e908b25bbae138f5a9096209777a1b1209810743f4ce0cb8",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "claude-opus-4.7",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 8,
+      "request_id": "3dc8c756bcbea5b22d9acdf1e045e3ed041b6a0144dbc6f1",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "gpt-6.1",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 7,
+      "request_id": "a5d77227599db7fe922d5d34827bf9c5c76ffb47d0956e8e",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "gpt-6",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 6,
+      "request_id": "6560242aa90d1c6a29662e6291c197de7bf28f56de318d7c",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "deepseek-v4.1-flash",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 5,
+      "request_id": "2107f930aba0a41bbde19081f87be246b7690ec1d0553389",
+      "provider_id": "provider-b",
+      "provider_name": "OpenCode Go",
+      "upstream_model": "model-b-1",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 4,
+      "request_id": "0a8525ce1b68a3e9d8172b6bc0f086eaa8f585458237bdc4",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "claude-opus-4.7",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 3,
+      "request_id": "1caf27bb53b6ecc54ea4ef6100ecd05e9e239ee450578abd",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "gpt-6.1",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 2,
+      "request_id": "87bca340519e97da17231474d2a6e97eca5e31aff0ea664e",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "gpt-6",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 0,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    },
+    {
+      "id": 1,
+      "request_id": "063ae0fec434f30bc7251d1c45a914bfdb1ebfffe95f7323",
+      "provider_id": "provider-a",
+      "provider_name": "sub2api",
+      "upstream_model": "deepseek-v4.1-flash",
+      "http_status": 200,
+      "outcome": "completed",
+      "input_tokens": 500,
+      "output_tokens": 50,
+      "total_tokens": 550,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "duration_ms": 1,
+      "cost": {
+        "status": "default_zero",
+        "currency": "CNY",
+        "total_cost_nanos": "0",
+        "source_price_id": null,
+        "pricing_version": 2
+      }
+    }
+  ],
+  "raw_capture": {
+    "ui_sha256": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+    "ui_pid": 63680,
+    "core_pid": 63676,
+    "fixture_pid": 63672,
+    "window_id": 65841,
+    "window_layer": 0,
+    "mac_locked": false,
+    "capture": {
+      "file": "statistics-populated-wide-raw.png",
+      "width_px": 2880,
+      "height_px": 1802,
+      "sha256": "bcf9731f3ae919330453ff1763b46c140e1bf829c7ddab994135f000a62b82dc",
+      "method": "screencapture -x -o -l",
+      "postprocessing": "none"
+    },
+    "visible_view": "数据统计 / 用量明细",
+    "visible_summary": {
+      "requests": 14,
+      "tokens": 7700,
+      "page": "1/2",
+      "page_size": 10,
+      "onscreen_rows": "six complete rows and the seventh partially visible"
+    },
+    "visible_columns": [
+      "时间",
+      "供应商",
+      "模型",
+      "Token 使用量",
+      "缓存命中",
+      "费用 / 积分",
+      "耗时",
+      "状态"
+    ],
+    "observations": [
+      "Visible examples show 550 tokens (500 input, 50 output), cache as unavailable, ¥0, 0 ms and 200 completed.",
+      "Request ID, streaming and first-token time are not present among currently visible columns; their detail views were not opened."
+    ],
+    "limitations": [
+      "No declared Computer Use tool available; no navigation, resize, scroll, pagination or click validation performed.",
+      "Screenshot is the populated Statistics view, not a Provider or Model editor capture.",
+      "Parent handles marker shutdown and process wait."
+    ]
+  },
+  "delivered_screenshot": "screenshots/model-alignment-statistics-populated-1440x900-native-2x.png",
+  "initial_and_final_config_sha256": "0bd2d020889aff759bd7e21ea77d6bf92e8cc1f1cade0d31916b789956fd00ab",
+  "config_unchanged": true,
+  "readback_scope": "Corrected invalid empty date-range probe to the existing stats_requests request_tag/filter/page_size contract; then read14items. Initial400 was a test caller error, not an app defect.",
+  "shutdown": "Own gpui-stop+fixture marker, parent wait0; no native Close click claim.",
+  "core_guard": {
+    "enforced": true,
+    "pid": 63676,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "gui_kernel_guard": false,
+  "both_fixture_groups_waited0_and_all6_pids_gone": true
+}

@@ -3,6 +3,17 @@ use super::*;
 use crate::theme::color;
 use gpui_kit::component::{Disableable, button::ButtonCustomVariant};
 
+pub(super) const COLUMN_GAP: f32 = 17.;
+
+/// Shared by the rendered rail and the model table's initial width estimate.
+pub(super) fn rail_width(window: &Window) -> f32 {
+    if window.viewport_size().width < px(1280.) {
+        300.
+    } else {
+        348.
+    }
+}
+
 fn vector(path: &'static str, size: f32, ink: u32) -> Icon {
     Icon::default()
         .path(path)
@@ -43,11 +54,7 @@ fn log_action(
 impl Proxy {
     pub(super) fn right(&mut self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
         div()
-            .w(px(if window.viewport_size().width < px(1280.) {
-                300.
-            } else {
-                348.
-            }))
+            .w(px(rail_width(window)))
             .flex_shrink_0()
             .flex()
             .flex_col()

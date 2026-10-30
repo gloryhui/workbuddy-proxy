@@ -1,0 +1,262 @@
+{
+  "ui_pid": 5490,
+  "core_pid": 5489,
+  "window_id": 145,
+  "fixture": "synthetic, UI environment-isolated, Core guard independently checked by parent",
+  "screen": "Studio Chinese, 2 providers, 5 models, 0 requests",
+  "cases": {
+    "auto_readonly": "AUTO enabled; clicking Tools and Medium left AX values unchanged",
+    "cancel": "AUTO off, Images off, Medium on; Cancel then reopen returned AUTO on, Images on, Medium off",
+    "confirm_draft": "AUTO off, Images off, Medium on, Confirm; reopened with those values. No provider Save was clicked. Core and draft file independently checked by parent.",
+    "space": "click AUTO on then Space switched it off; this subsequent edit was canceled",
+    "tab": "in small window clicked Name; Tab visibly placed caret in ID; Shift+Tab visibly returned caret to Name. CUA AX focus remained window, so evidence is visible caret, not AX focus property",
+    "modal_overlay": "wide and small clicks at skin-button screen positions left editor open and no skin menu visible",
+    "small_scroll": "CUA scroll reached four limits while Cancel and Confirm remained visible",
+    "closure": "canceled editor then clicked native window Close; Core left running for parent health/wait"
+  },
+  "resize": "CUA drag from [2876,1794] to [2196,1394] using window screenshot physical pixels",
+  "screenshots": [
+    {
+      "path": "screenshots/model-alignment-provider-1440x900-native-2x.png",
+      "width_px": 2880,
+      "height_px": 1802,
+      "sha256": "073351cfdefc2d14bb65d5e7c23b1762abb024760bb7283720be7034759a60c8",
+      "method": "screencapture -x -o -l 145",
+      "ui_pid": 5490,
+      "postprocessing": "none"
+    },
+    {
+      "path": "screenshots/model-alignment-auto-1440x900-native-2x.png",
+      "width_px": 2880,
+      "height_px": 1802,
+      "sha256": "5f920b3e1034934e2fbac0bdeb0b3caf8e84cc24afad96066ca53657210da3f9",
+      "method": "screencapture -x -o -l 145",
+      "ui_pid": 5490,
+      "postprocessing": "none"
+    },
+    {
+      "path": "screenshots/model-alignment-manual-1440x900-native-2x.png",
+      "width_px": 2880,
+      "height_px": 1802,
+      "sha256": "41eac3f35c67eb2dc7f3095630a434507e983d613a57a319e556ba543238cc8b",
+      "method": "screencapture -x -o -l 145",
+      "ui_pid": 5490,
+      "postprocessing": "none"
+    },
+    {
+      "path": "screenshots/model-alignment-provider-1100x700-native-2x.png",
+      "width_px": 2200,
+      "height_px": 1402,
+      "sha256": "80a6e91df27a796eacd30dc3b57c3e0526231717b7a3327916557e0532614e7b",
+      "method": "screencapture -x -o -l 145",
+      "ui_pid": 5490,
+      "postprocessing": "none"
+    },
+    {
+      "path": "screenshots/model-alignment-manual-1100x700-native-2x.png",
+      "width_px": 2200,
+      "height_px": 1402,
+      "sha256": "6fb6aeecc639fbd4288dac23fee51961bf8b5c5f2233a317defbecf868e72887",
+      "method": "screencapture -x -o -l 145",
+      "ui_pid": 5490,
+      "postprocessing": "none"
+    },
+    {
+      "path": "screenshots/model-alignment-limits-1100x700-native-2x.png",
+      "width_px": 2200,
+      "height_px": 1402,
+      "sha256": "137ab458ce26c35986fe1412abc3d06e2d6984eb5a55074fb15efef704952331",
+      "method": "screencapture -x -o -l 145",
+      "ui_pid": 5490,
+      "postprocessing": "none"
+    }
+  ],
+  "limitations": [
+    "No full Tab traversal, Enter behavior, IME or screen-reader validation claimed.",
+    "Small provider screenshot shows top of page; model directory requires internal scroll.",
+    "UI close was invoked; process exit and Core health/wait must be confirmed by parent."
+  ],
+  "checked_at": "2026-10-30T17:21:01+08:00",
+  "build_sha256": {
+    "candidate-ui": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+    "baseline-core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+  },
+  "core_guard": {
+    "enforced": true,
+    "pid": 5489,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "draft_readback": {
+    "cancel_model_capabilities": null,
+    "confirmed_draft_model": {
+      "id": "proxy-route",
+      "name": "deepseek-v4.1-flash",
+      "model": "deepseek-v4.1-flash",
+      "capabilities": {
+        "supportsToolCall": true,
+        "supportsImages": false,
+        "supportsReasoning": true,
+        "onlyReasoning": false,
+        "useCustomProtocol": false,
+        "reasoning": {
+          "defaultEffort": "high",
+          "supportedEfforts": [
+            "low",
+            "medium",
+            "high",
+            "max"
+          ],
+          "canDisableThinking": true
+        },
+        "maxInputTokens": 1000000,
+        "contextWindow": {
+          "defaultLength": 300000,
+          "supportedLengths": [
+            128000,
+            300000,
+            1000000
+          ]
+        }
+      },
+      "reasoning_effort": "default"
+    },
+    "core_model_capabilities": null,
+    "core_config_unchanged": true,
+    "readback_scope": "Own isolated draft/config only; no real user profile accessed, no homepage Save/export."
+  },
+  "post_native_close": {
+    "health_http": 200,
+    "ui_gone": true,
+    "config_unchanged": true
+  },
+  "terminal": {
+    "ui_exit_before_cleanup": 0,
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": 0,
+    "core_exit_after_cleanup": 0
+  },
+  "fixture_handle_exit": 0,
+  "independently_confirmed_pid_gone": {
+    "fixture_pid": true,
+    "core_pid": true,
+    "ui_pid": true
+  },
+  "scoped_live_processes": [],
+  "fixture_setup_failures": [
+    {
+      "attempt": "native-model-ui54",
+      "outcome": "fixture assertion: legacy importer pending_classification expected1 actual0 after provider seed changed; no UI launched; own fixture process exit1 waited, atexit cleanup ran",
+      "product_failure": false
+    },
+    {
+      "attempt": "native-model-ui54-zero",
+      "outcome": "fixture shared review index parent absent after UI readiness; own fixture process exit1 waited, atexit cleanup ran; corrected review output to own root",
+      "product_failure": false
+    }
+  ]
+}

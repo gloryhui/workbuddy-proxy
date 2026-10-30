@@ -6,7 +6,8 @@
     "inventory_source": "Official Figma MCP page metadata refreshed 2026-10-30; exactly40 matching state frames",
     "high_fidelity_context_read": [
       "59:484",
-      "59:279"
+      "59:279",
+      "54:2"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -32,38 +33,59 @@
     {
       "id": "54:2",
       "name": "02 / STUDIO V2 · 供应商管理",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewing",
+      "scope": "UI54最新54:2源码/资产审查及当前bc7候选两尺寸供应商实拍完成；整帧差异仍在审查，未最终通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "源码核对：1440列宽755/348和17间距；发现初始表宽估算差53px/小窗5px，候选已统一，未实拍确认",
+        "colors": "待真实渲染对照",
+        "typography": "已列字体/权重/基线待验",
+        "assets": "供应商30资产对应模型帧前30，除3装饰traffic lights使用真实系统控件外27份本地精确匹配；本轮2份更新仍在候选工作树",
+        "states": "待当前候选实机验证；原专项证据不升级为整帧通过",
+        "interaction": "模型弹窗取消/确认草稿、AUTO只读、遮罩、局部键盘通过；供应商完整业务与首帧表现未全验",
+        "native_1440": "bc7候选2880×1802原始供应商实拍已核对",
+        "native_1100": "bc7候选2200×1402原始供应商实拍已核对；模型目录需内部滚动"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "首帧模型表宽估算旧宽窗774/小窗434px，实际布局应721/429；候选共用rail_width和COLUMN_GAP，仍待运行验证。",
+        "标题/副标题位置保持；源码推算摘要条/双列内容比设计约低1px，待当前实拍复核。",
+        "模型卡min280/flex、运行中心/日志内容自适应与稿253/279/309px静态高度存在差异，需结合额外业务控件与滚动核对。",
+        "设计“连接正常”徽章没有对应渲染；需找到真实测试/状态来源，不能用静态样例冒充连接成功。",
+        "字体/权重、Cancel及控件状态、完整静态资产slot有效几何、键盘/IME/平台未终验。"
+      ],
+      "evidence": [
+        "benchmarks/provider-frame-source-audit.json",
+        "benchmarks/model-alignment-gui-validation.json",
+        "screenshots/model-alignment-provider-1440x900-native-2x.png",
+        "screenshots/model-alignment-provider-1100x700-native-2x.png"
+      ]
     },
     {
       "id": "56:8",
       "name": "03 / STUDIO V2 · 用量明细",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewing",
+      "scope": "UI54已保存当前候选统计页空数据/14条真实隔离代理请求的1440宽窗实拍；完整整帧比对继续，未最终通过。",
       "checks": {
-        "layout": "not_checked",
+        "layout": "已记录宽窗副标题/汇总条/表格密度差异，1100及交互未完成",
         "colors": "not_checked",
         "typography": "not_checked",
         "assets": "not_checked",
-        "states": "not_checked",
+        "states": "真实14条HTTP200本地Mock请求、7700 tokens有独立只读回查；不使用设计样例量值",
         "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "native_1440": "当前bc7候选2880×1802原始实拍两份（含原生额外2物理行）",
+        "native_1100": "尚未实拍当前统计页"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "副标题文案与设计不同，需结合真实统计范围核对。",
+        "实际范围汇总条占用额外高度，明细列表下移；保留真实汇总能力后再处理布局。",
+        "宽窗10条分页下仅6行完全可见、第7行部分可见，需要结合内部滚动及固定页脚审查密度。",
+        "动态请求量、模型、Token、费用和耗时来自隔离本地Mock，不替换为设计假数据。"
+      ],
+      "evidence": [
+        "benchmarks/model-alignment-runtime-partial.json",
+        "benchmarks/model-alignment-statistics-populated.json",
+        "screenshots/model-alignment-statistics-1440x900-native-2x.png",
+        "screenshots/model-alignment-statistics-populated-1440x900-native-2x.png"
+      ]
     },
     {
       "id": "57:8",
@@ -123,24 +145,24 @@
       "id": "59:279",
       "name": "07 / STUDIO V2 · 编辑模型能力",
       "review_status": "reviewed_with_differences",
-      "scope": "UI53 首轮完整界面审查已记录：高保真整帧/弹窗、31资产清单、几何与颜色测量、两尺寸自动/手动实拍及功能交互；保留明确差异，未最终通过。",
+      "scope": "UI53首轮整帧审查后，UI54补布局余差修复；当前bc7候选两尺寸、取消/确认草稿、遮罩和局部键盘已验，整帧保留差异。",
       "checks": {
-        "layout": "已测量；列起点/notice尺寸已对齐，仍有1.5px纵向与档位宽度余差",
+        "layout": "复选框相对稿从低1.5px收敛至低0.5px；wide档位横向124px已对齐，小窗内部滚动/固定动作可达",
         "colors": "notice与checkbox主色经ICC分析符合；文字/按钮/背景仍需全量逐项核对",
         "typography": "保留差异：Noto Sans SC设计与原生字体回退/权重/基线未统一",
-        "assets": "31设计资产中26份与本地字节完全一致；皮肤/侧栏链接2份哈希不同待视觉复核，3个装饰traffic lights沿用真实系统控件；未宣称所有slot几何通过",
-        "states": "最终候选AUTO只读与manual依赖/取消通过；中间版Confirm/Save独立读回通过",
-        "interaction": "最终候选AUTO点击+Space、能力和effort点击通过；完整Tab/ShiftTab/Enter、AX读屏待验",
-        "native_1440": "最终af174自动/手动2880x1802原生图已核对",
-        "native_1100": "最终af174自动/手动/限制滚动2200x1402原生图已核对"
+        "assets": "UI54两份共享SVG替换为官方精确导出；模型帧28份本地精确匹配，3个装饰traffic lights仍使用真实系统控件；非全slot验收",
+        "states": "当前bc7 AUTO只读、manual图片/medium更改、取消复原及确认后草稿重开通过；Core配置未写",
+        "interaction": "当前bc7两尺寸遮罩不穿透、局部Tab/ShiftTab可见caret及Space通过；完整遍历/Enter/IME/读屏未验",
+        "native_1440": "当前bc7 AUTO/manual2880×1802原图已核对",
+        "native_1100": "当前bc7 manual/限制滚动2200×1402原图已核对"
       },
       "differences": [
-        "复选框两行相对Figma约低1.5逻辑像素；notice与确认按钮存在约0.5px纵向余差。",
-        "五档位按钮当前flex约125.2px，稿为124px，横向累计约4.8px；后续需处理宽/窄适配。",
-        "原生Kit双层黑色弹窗阴影与稿0/18/42 rgba(20,31,59,.22)不同，且Kit在调用方样式后覆盖。",
-        "设计Noto Sans SC与当前macOS系统字体回退、输入文字权重/基线仍有差异；取消按钮底色等局部外观待续。",
-        "共享背景/动态真实日志与状态不使用设计假数据；皮肤/侧栏链接SVG哈希不同，完整静态asset slot与effective geometry尚未全部通过。",
-        "Help/默认档位Select/自动模式开关为原业务交互保留；完整键盘和无障碍仍待统一终验。"
+        "复选框两行从比稿低1.5px收敛至低0.5px；notice与确认按钮仍有约0.5px纵向余差。",
+        "wide档位外宽124px与稿横向对齐；small弹窗需内部滚动，完整响应式视觉仍待终验。",
+        "原生Kit双层黑色弹窗阴影与稿0/18/42 rgba(20,31,59,.22)不同，Kit在调用方样式后覆盖。",
+        "设计Noto Sans SC与macOS系统字体回退、权重/基线差异继续；取消背景本轮已改白，未宣称全色彩通过。",
+        "共享背景/动态日志与状态保持真实；完整静态asset slot/effective geometry仍待全量验收。",
+        "Help/默认档位Select/自动模式开关保留原业务；完整键盘/IME/无障碍和跨平台未最终通过。"
       ],
       "evidence": [
         "benchmarks/model-frame-build.json",
@@ -149,7 +171,11 @@
         "benchmarks/model-frame-geometry.json",
         "benchmarks/model-frame-performance-summary.json",
         "screenshots/model-frame-auto-1440x900-native-2x.png",
-        "screenshots/model-frame-auto-1100x700-native-2x.png"
+        "screenshots/model-frame-auto-1100x700-native-2x.png",
+        "benchmarks/model-alignment-gui-validation.json",
+        "benchmarks/model-alignment-geometry.json",
+        "screenshots/model-alignment-manual-1440x900-native-2x.png",
+        "screenshots/model-alignment-limits-1100x700-native-2x.png"
       ]
     },
     {

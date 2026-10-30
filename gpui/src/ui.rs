@@ -1935,8 +1935,8 @@ impl Proxy {
             // First frame, before the model table's own prepaint reports its
             // bounds: page padding + right rail + rail gap + card padding.
             let chrome = crate::theme::space::PAGE_X * 2.
-                + crate::theme::size::RIGHT_RAIL_WIDTH
-                + crate::theme::space::CARD_GAP
+                + relay::rail_width(window)
+                + relay::COLUMN_GAP
                 + crate::theme::space::CARD_SM * 2.
                 + 2.;
             window.viewport_size().width - px(chrome + crate::theme::size::SIDEBAR_WIDTH)
@@ -2449,7 +2449,7 @@ impl Render for Proxy {
                         .flex()
                         .flex_1()
                         .min_h_0()
-                        .gap(px(17.))
+                        .gap(px(relay::COLUMN_GAP))
                         .child(center)
                         .child(self.right(window, cx)),
                 )

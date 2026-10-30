@@ -407,7 +407,7 @@ impl Proxy {
                 .gap_0()
                 .h(px(20.))
                 .flex_none()
-                .mt(px(if row == 0 { 12. } else { 17. }))
+                .mt(px(if row == 0 { 11. } else { 17. }))
                 .children(flags.iter().enumerate().map(|(column, &(flag, cn, en))| {
                     let unavailable = self.model_options.automatic
                         || (matches!(flag, Flag::CustomProtocol) && self.native_protocol())
@@ -440,7 +440,7 @@ impl Proxy {
         div()
             .flex()
             .flex_col()
-            .pb(px(27.))
+            .pb(px(28.))
             .border_b_1()
             .border_color(rgb(BORDER))
             .child(
@@ -495,6 +495,7 @@ impl Proxy {
                     .h(px(36.))
                     .flex_1()
                     .min_w_0()
+                    .max_w(px(124.))
                     .rounded(px(9.))
                     .text_size(px(13.))
                     .justify_start()
@@ -863,6 +864,8 @@ impl Proxy {
                             .child(
                                 crate::ui_components::action_button("edit-cancel")
                                     .outline()
+                                    .bg(rgb(crate::theme::color::BG_BAR))
+                                    .text_color(rgb(INK))
                                     .h(px(36.))
                                     .min_w(px(90.))
                                     .rounded(px(9.))

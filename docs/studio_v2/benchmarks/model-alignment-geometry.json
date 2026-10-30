@@ -1,0 +1,84 @@
+{
+  "raw_size": [
+    2880,
+    1802
+  ],
+  "raw_sha256": "41eac3f35c67eb2dc7f3095630a434507e983d613a57a319e556ba543238cc8b",
+  "analysis_only_icc_to_srgb": true,
+  "raw_unmodified": true,
+  "checked_flags": [
+    {
+      "bbox_px": [
+        768,
+        747,
+        800,
+        779
+      ],
+      "pixels": 836
+    },
+    {
+      "bbox_px": [
+        1564,
+        747,
+        1596,
+        779
+      ],
+      "pixels": 836
+    },
+    {
+      "bbox_px": [
+        1164,
+        821,
+        1196,
+        853
+      ],
+      "pixels": 836
+    }
+  ],
+  "effort_fills": [
+    {
+      "bbox_px": [
+        1040,
+        1023,
+        1288,
+        1095
+      ],
+      "pixels": 17026
+    },
+    {
+      "bbox_px": [
+        770,
+        1025,
+        1014,
+        1093
+      ],
+      "pixels": 15718
+    },
+    {
+      "bbox_px": [
+        1314,
+        1025,
+        1558,
+        1093
+      ],
+      "pixels": 15715
+    },
+    {
+      "bbox_px": [
+        1858,
+        1025,
+        2102,
+        1093
+      ],
+      "pixels": 15220
+    }
+  ],
+  "scale": 2,
+  "scale_basis": "CUA requested1440x900 versus raw2880x1802; native extra2 physical rows retained",
+  "reference": "model-frame-geometry.json official Figma59:279 reference geometry",
+  "findings": [
+    "Checked first-row top373.5 and second410.5 logical versus design373/410; moved up1logical px from UI53, residual0.5 retained.",
+    "Wide selected effort inner fills now [385,512.5,507,546.5], [657,512.5,779,546.5], [929,512.5,1051,546.5], matching reference horizontal starts/122px inner fill; outer button124px.",
+    "Small window real scrolling and fixed actions checked separately; no claim of full-frame/font/shadow equality."
+  ]
+}

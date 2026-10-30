@@ -1,0 +1,271 @@
+{
+  "attempt_order": [
+    "previous",
+    "current",
+    "current-run2",
+    "previous-run2",
+    "previous-run3",
+    "current-run3",
+    "current-run4",
+    "previous-run4:FAILED",
+    "previous-run5"
+  ],
+  "completed_runs": [
+    {
+      "label": "previous",
+      "evidence": "model-alignment-previous-gui.json",
+      "core": 12.06,
+      "ui": 75.98,
+      "total": 88.05,
+      "peak": 139.97,
+      "p50": 0.176,
+      "p95": 0.2,
+      "large_seconds": 0.096,
+      "core_ready_ms": 249.974,
+      "ui_record_ready_ms": 900.107
+    },
+    {
+      "label": "current",
+      "evidence": "model-alignment-current-gui.json",
+      "core": 12.61,
+      "ui": 78.05,
+      "total": 90.66,
+      "peak": 138.05,
+      "p50": 0.172,
+      "p95": 0.192,
+      "large_seconds": 0.098,
+      "core_ready_ms": 219.841,
+      "ui_record_ready_ms": 633.212
+    },
+    {
+      "label": "current-run2",
+      "evidence": "model-alignment-current-run2-gui.json",
+      "core": 12.48,
+      "ui": 76.67,
+      "total": 89.16,
+      "peak": 151.73,
+      "p50": 0.361,
+      "p95": 0.901,
+      "large_seconds": 0.139,
+      "core_ready_ms": 226.423,
+      "ui_record_ready_ms": 783.702
+    },
+    {
+      "label": "previous-run2",
+      "evidence": "model-alignment-previous-run2-gui.json",
+      "core": 12.11,
+      "ui": 77.45,
+      "total": 89.56,
+      "peak": 136.03,
+      "p50": 0.173,
+      "p95": 0.199,
+      "large_seconds": 0.086,
+      "core_ready_ms": 229.903,
+      "ui_record_ready_ms": 695.616
+    },
+    {
+      "label": "previous-run3",
+      "evidence": "model-alignment-previous-run3-gui.json",
+      "core": 12.31,
+      "ui": 75.77,
+      "total": 88.08,
+      "peak": 134.95,
+      "p50": 0.156,
+      "p95": 0.195,
+      "large_seconds": 0.087,
+      "core_ready_ms": 230.38,
+      "ui_record_ready_ms": 701.773
+    },
+    {
+      "label": "current-run3",
+      "evidence": "model-alignment-current-run3-gui.json",
+      "core": 13.27,
+      "ui": 75.44,
+      "total": 88.7,
+      "peak": 137.14,
+      "p50": 0.176,
+      "p95": 0.201,
+      "large_seconds": 0.085,
+      "core_ready_ms": 229.792,
+      "ui_record_ready_ms": 803.149
+    },
+    {
+      "label": "current-run4",
+      "evidence": "model-alignment-current-run4-gui.json",
+      "core": 13.45,
+      "ui": 76.03,
+      "total": 89.48,
+      "peak": 136.44,
+      "p50": 0.182,
+      "p95": 0.332,
+      "large_seconds": 0.092,
+      "core_ready_ms": 210.521,
+      "ui_record_ready_ms": 695.442
+    },
+    {
+      "label": "previous-run5",
+      "evidence": "model-alignment-previous-run5-gui.json",
+      "core": 12.41,
+      "ui": 80.55,
+      "total": 92.95,
+      "peak": 142.05,
+      "p50": 0.172,
+      "p95": 0.187,
+      "large_seconds": 0.086,
+      "core_ready_ms": 459.039,
+      "ui_record_ready_ms": 1013.998
+    }
+  ],
+  "median_of_four_completed_each": {
+    "previous": {
+      "core": 12.21,
+      "ui": 76.715,
+      "total": 88.82,
+      "peak": 138.0,
+      "p50": 0.1725,
+      "p95": 0.197,
+      "large_seconds": 0.0865,
+      "core_ready_ms": 240.177,
+      "ui_record_ready_ms": 800.94
+    },
+    "current": {
+      "core": 12.94,
+      "ui": 76.35,
+      "total": 89.32,
+      "peak": 137.595,
+      "p50": 0.179,
+      "p95": 0.2665,
+      "large_seconds": 0.095,
+      "core_ready_ms": 223.132,
+      "ui_record_ready_ms": 739.572
+    }
+  },
+  "current_minus_previous": {
+    "core": 0.73,
+    "ui": -0.365,
+    "total": 0.5,
+    "peak": -0.405,
+    "p50": 0.0065,
+    "p95": 0.0695,
+    "large_seconds": 0.0085,
+    "core_ready_ms": -17.045,
+    "ui_record_ready_ms": -61.368
+  },
+  "failed_sample": "model-alignment-failed-previous-run4.json",
+  "failure_handling": "Preserved failed OS errno49 request/stop sample and no false output. Verified owned group terminal and fresh loopback bind/connect before one unique replacement previous-run5. No OS configuration, limit or workload changes.",
+  "source_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "previous_ui_sha256": "af174b451fdcc28fe7631fae92116e1493aba1ab706e0c126929296e02161720",
+  "current_ui_sha256": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "workload": "Original --gui --requests1000 --models64;80x1MiB concurrency4;Studio preference readback; same frozen Core. Mac checked unlocked before each initial attempt.",
+  "limitations": [
+    "Four short completed samples per version; no optimization, equivalence or causal claim. All increases retained.",
+    "One failed local TCP allocation sample remains; exact OS cause unproven.",
+    "Default Statistics empty/cached table, not Provider/model-dialog paint, keyboard latency, FPS, first paint or interactivity.",
+    "RSS shared pages may double count; tray separate, mock/client excluded; loopback excludes public network/TLS/model latency.",
+    "GUI isolated HOME/config environment, not kernel sandbox. CUA restored in later continuation; real provider/model interaction and both requested sizes are recorded separately in model-alignment-gui-validation.json."
+  ],
+  "quiet_confirmation": {
+    "reason": "Initial8 completed samples retained candidate p95 .901/.332ms and median .2665 vs old .197; local TCP allocation also failed once. Host/loopback variability remained unresolved. Added a reverse pair with no other agent tool work while the benchmark handle was live; exact earlier per-sample overlap and causes were not verified.",
+    "order": [
+      "previous-quiet1",
+      "current-quiet1",
+      "current-quiet2",
+      "previous-quiet2"
+    ],
+    "completed_runs": [
+      {
+        "label": "previous-quiet1",
+        "evidence": "model-alignment-previous-quiet1-gui.json",
+        "core": 12.89,
+        "ui": 80.98,
+        "total": 93.88,
+        "peak": 146.78,
+        "p50": 0.172,
+        "p95": 0.191,
+        "large_seconds": 0.087,
+        "core_ready_ms": 223.185,
+        "ui_record_ready_ms": 962.181
+      },
+      {
+        "label": "current-quiet1",
+        "evidence": "model-alignment-current-quiet1-gui.json",
+        "core": 12.77,
+        "ui": 79.88,
+        "total": 92.64,
+        "peak": 143.66,
+        "p50": 0.179,
+        "p95": 0.217,
+        "large_seconds": 0.09,
+        "core_ready_ms": 230.305,
+        "ui_record_ready_ms": 992.346
+      },
+      {
+        "label": "current-quiet2",
+        "evidence": "model-alignment-current-quiet2-gui.json",
+        "core": 12.39,
+        "ui": 79.28,
+        "total": 91.67,
+        "peak": 144.08,
+        "p50": 0.151,
+        "p95": 0.194,
+        "large_seconds": 0.09,
+        "core_ready_ms": 227.114,
+        "ui_record_ready_ms": 695.875
+      },
+      {
+        "label": "previous-quiet2",
+        "evidence": "model-alignment-previous-quiet2-gui.json",
+        "core": 12.8,
+        "ui": 75.92,
+        "total": 88.72,
+        "peak": 134.97,
+        "p50": 0.153,
+        "p95": 0.179,
+        "large_seconds": 0.086,
+        "core_ready_ms": 196.14,
+        "ui_record_ready_ms": 665.348
+      }
+    ],
+    "median_of_two_each": {
+      "previous": {
+        "core": 12.845,
+        "ui": 78.45,
+        "total": 91.3,
+        "peak": 140.875,
+        "p50": 0.16249999999999998,
+        "p95": 0.185,
+        "large_seconds": 0.0865,
+        "core_ready_ms": 209.6625,
+        "ui_record_ready_ms": 813.7645
+      },
+      "current": {
+        "core": 12.58,
+        "ui": 79.58,
+        "total": 92.155,
+        "peak": 143.87,
+        "p50": 0.16499999999999998,
+        "p95": 0.20550000000000002,
+        "large_seconds": 0.09,
+        "core_ready_ms": 228.7095,
+        "ui_record_ready_ms": 844.1105
+      }
+    },
+    "current_minus_previous": {
+      "core": -0.265,
+      "ui": 1.13,
+      "total": 0.855,
+      "peak": 2.995,
+      "p50": 0.0025,
+      "p95": 0.0205,
+      "large_seconds": 0.0035,
+      "core_ready_ms": 19.047,
+      "ui_record_ready_ms": 30.346
+    },
+    "no_change_to_benchmark_or_product": true,
+    "not_causal": "Quiet condition reduces one uncontrolled factor; does not prove earlier outliers were caused by Figma/host activity or establish performance equivalence."
+  },
+  "all_completed_sample_count": 12,
+  "failed_sample_count": 1,
+  "later_runtime_evidence": "model-alignment-gui-validation.json"
+}
