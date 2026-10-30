@@ -1,0 +1,216 @@
+{
+  "lifecycle": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime4-ui50",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime4-ui50/WorkBuddy Proxy Review.app",
+      "core_pid": 7897,
+      "ui_pid": 7904,
+      "fixture_pid": 7892,
+      "port": 50994,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui50ime4-ui50",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 7904,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 3,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "core_guard": {
+      "enforced": true,
+      "pid": 7897,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "all_fixture_core_ui_pids_independently_gone": true,
+    "direct_fixture_wait_exit": 0,
+    "guard_missing_reason": null
+  },
+  "events": {
+    "ui_sha256": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+    "ui_pid": 7904,
+    "core_pid": 7897,
+    "fixture_pid": 7892,
+    "cold_source": "Actual saved synthetic config, only loopback upstream and random port changed; no private UI draft copied or field injection.",
+    "read_only_case": "Providers first row and editor showed 你好/model-a-1; second row model-2; screenshot showed Saved and Runtime 2 providers/3 models/0 requests. Opened editor and escaped; no typeText/setValue/Save.",
+    "screenshot": {
+      "file": "cold-model-raw.png",
+      "window_id": 63331,
+      "raw_px": [
+        2880,
+        1802
+      ],
+      "sha256": "12588e561f34eced30ef0e64c8d705aedabe9aad1871c4371e0e980f7e682c09",
+      "method": "native screencapture, current PID onscreen layer 0; no resize/crop"
+    },
+    "model_payload_parent_verified_sha256": "3ad936d2a0eab1ba6225be66df27ba759c86febd9afb1d76b9b675d1de574aaa",
+    "input_source_final": {
+      "name": "青简",
+      "id": "app.qingjian.inputmethod.Hans"
+    },
+    "test_side_tis_calls_round_total": 5,
+    "tis_scope": "Each call only TISCopyCurrentKeyboardInputSource, localized name and ID, CFRelease. No enumerate/select/source switch; count does not assert product internals.",
+    "native_control": "CUA getApp timeout -10005; planned native comparison input not executed.",
+    "ui_close": "CUA native Close click returned without error, no Cmd+Q or direct Core action; owner to verify process exit/wait."
+  },
+  "models": {
+    "source": "Actual ime3 Core-saved config; cold seed rewrites only port/provider loopback upstream, no drafts copied",
+    "model_payload_unchanged": true,
+    "canonical_models_sha256": "3ad936d2a0eab1ba6225be66df27ba759c86febd9afb1d76b9b675d1de574aaa",
+    "core_config_sha256": "1e1000beaca6e1dfbb064cb05bfbf6d907335863935373b1ac4d70657c2d13be",
+    "first_name": "你好",
+    "first_model": "model-a-1",
+    "drafts_not_copied": true,
+    "providers": 2,
+    "models": 3,
+    "language": "zh",
+    "autostart": false
+  },
+  "images": [
+    {
+      "case": "ime4-ui50",
+      "raw_file": "cold-model-raw.png",
+      "raw_sha256": "12588e561f34eced30ef0e64c8d705aedabe9aad1871c4371e0e980f7e682c09",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-cold-1440x900-2x.png",
+      "committed_sha256": "7e3feb710b87a9b33cdcd03fe0ae4349625c97df373b70379c46fea1ab2aea71",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    }
+  ]
+}

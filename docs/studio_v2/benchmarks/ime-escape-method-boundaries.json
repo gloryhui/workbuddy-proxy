@@ -1,0 +1,104 @@
+{
+  "feature": "UI50 real pinyin IME and model-name Escape guard",
+  "user_authorized_tis_current_name_and_id": true,
+  "tis_scope": "Only current localized name and sourceID, no listing/source switching/settings or external key injection",
+  "product_api_internal_tis_not_instrumented": true,
+  "explicit_input_source_switches": 0,
+  "explicit_mode_switches": 0,
+  "external_ax_global_bounds_clipboard_queries": 0,
+  "native_comparison": {
+    "binding_error": "Computer Use server error -10005: timeoutReached",
+    "planned_probe_keys_executed": false,
+    "native_runner_exit": 0,
+    "native_process_exit": 0,
+    "conclusion": "Native comparison unavailable, not a control result",
+    "private_trace": "native-events.jsonl",
+    "private_trace_contents_not_exported": true,
+    "trace_further_reads_stopped": true,
+    "unassigned_events_not_used_as_evidence": true
+  },
+  "early_gpui_fixture": {
+    "case": "ime-ui50",
+    "terminal_exit": 0,
+    "cause": "Not established; ended before controlled GUI probe",
+    "live_guard_query_unavailable": true,
+    "post_exit_sandbox_query_not_valid_protection_evidence": true
+  },
+  "scope": "Only model display-name IME in current Qingjian source. No blanket all-field/all-IME/all-platform acceptance.",
+  "test_side_tis_call_count": 5,
+  "source_name": "青简",
+  "source_id": "app.qingjian.inputmethod.Hans",
+  "first_and_last_source_identical": true,
+  "native_build": {
+    "command": [
+      "/usr/bin/swiftc",
+      "-module-cache-path",
+      "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/swift-module-cache",
+      "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-control.swift",
+      "-o",
+      "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/Native IME Control.app/Contents/MacOS/ime-native-control"
+    ],
+    "exit": 0,
+    "seconds": 3.8482245419872925,
+    "source_sha256": "0c67662627170433d30edbee4110dbf86cc52ff317ff57f73b82f81d409845fe"
+  },
+  "native_manifest": {
+    "pid": 93033,
+    "runner_pid": 93032,
+    "bundle_id": "com.workbuddy.proxy.codexreview.ime-native-ui50",
+    "binary_sha256": "8aae0cdf557ba200f71cf5118431a3a024a5fe669f0daabafc05160d98a1bcad",
+    "profile": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-profile",
+    "event_log": "native-events.jsonl",
+    "scope": "Synthetic own NSTextView passive keyDown/insertText/setMarkedText/unmarkText observer; no global event monitor, source writes or input injection"
+  },
+  "native_terminal": {
+    "exit": 0,
+    "waited": true
+  },
+  "early_fixture_lifecycle": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime-ui50",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime-ui50/WorkBuddy Proxy Review.app",
+      "core_pid": 81868,
+      "ui_pid": 81878,
+      "fixture_pid": 81864,
+      "port": 56592,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui50ime-ui50",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 81878,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "b92130b75949f4445507663cc6d7b285028044149226cd893493af15e32b0b0b"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 3,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "core_guard": null,
+    "all_fixture_core_ui_pids_independently_gone": true,
+    "direct_fixture_wait_exit": 0,
+    "guard_missing_reason": "Exited before controlled probe and live permission query; post-exit query not eligible"
+  },
+  "private_trace_metadata_only": {
+    "bytes": 1966,
+    "allocated_bytes": 4096,
+    "owner_uid": 501,
+    "mode": "0o600",
+    "contents_not_read_again": true,
+    "contents_not_exported": true
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "lifecycle": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime3-ui50",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime3-ui50/WorkBuddy Proxy Review.app",
+      "core_pid": 2354,
+      "ui_pid": 2357,
+      "fixture_pid": 2349,
+      "port": 57680,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui50ime3-ui50",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 2357,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 3,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "core_guard": {
+      "enforced": true,
+      "pid": 2354,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "all_fixture_core_ui_pids_independently_gone": true,
+    "direct_fixture_wait_exit": 0,
+    "guard_missing_reason": null
+  },
+  "events": {
+    "ui_sha256": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "ui_pid": 2357,
+    "core_pid": 2354,
+    "fixture_pid": 2349,
+    "input_source": {
+      "name": "青简",
+      "id": "app.qingjian.inputmethod.Hans",
+      "method": "TISCopyCurrentKeyboardInputSource; only localized name and ID; CFRelease",
+      "ime3_read_count": 2,
+      "times": "after field focus and after main Save",
+      "no_change": "No list, select, mode change or input source switch"
+    },
+    "cases": {
+      "compose": "CUA pressKey n/i/h/a/o produced underlined ni'hao; Space produced 你好; no setValue/typeText; candidate window not visible in application capture.",
+      "escape": "With committed 你好 prefix, further underlined ni'hao then Esc yielded 你好, codepoints U+4F60 U+597D, modal stayed open at wide and small dimensions.",
+      "return": "With 你好 prefix, underlined ni'hao then Return yielded un-underlined 你好nihao, modal remained; this is literal pinyin, not Chinese candidate.",
+      "undo_redo": "CmdZ -> 你好; CmdShiftZ -> 你好nihao; CmdZ -> 你好. Subsequent ordinary Return closed editor and populated draft.",
+      "save": "Small window second Esc canceled fresh editor; explicit Save configuration clicked, UI saved and table 你好/model-a-1, 2 providers/3 models/0 requests. Parent verified Core saved model canonical SHA256 3ad936d2a0eab1ba6225be66df27ba759c86febd9afb1d76b9b675d1de574aaa; config SHA prefix 47e10bbf."
+    },
+    "raw_images": [
+      {
+        "file": "prefix-escape-clean-raw.png",
+        "raw_px": [
+          2880,
+          1802
+        ],
+        "sha256": "caa2f93cef2af771307094453da5b3709d4d28a154c44476bc9cc9ba8ef736c7",
+        "window_id": 63262
+      },
+      {
+        "file": "prefix-escape-small-raw.png",
+        "raw_px": [
+          2200,
+          1402
+        ],
+        "sha256": "e99d74a16760d283c3b9c146e2df7bcf463b7af23195dd7f778666291fcc153e",
+        "window_id": 63262
+      }
+    ],
+    "sample_parent_report": {
+      "composition": "30s UI 1.200% single-core RSS 78.469 to 79.875 MiB; Core 0.067% 8.156 to 8.266 MiB",
+      "saved": "30s UI 0.300% RSS 55.141 to 55.344 MiB; Core 0.033% 7.859 to 7.984 MiB",
+      "scope": "short observations only"
+    },
+    "limitations": [
+      "Native NSTextView comparison binding failed -10005 timeout; planned input was not executed and cannot serve as comparison.",
+      "Candidate selection window itself not visible in app screenshot.",
+      "IME behavior is observed on current 青简 source; other sources/platforms not verified.",
+      "No Copy/Paste action or external clipboard interface invoked; CUA internals not asserted.",
+      "Cold persistence and fixture exit/wait pending parent."
+    ]
+  },
+  "before_save": {
+    "stage": "real pinyin Space commits Chinese; plain Return confirms UI draft before Save",
+    "core_config_sha256": "ca36a66682d86dcc542b282051106f83642e3b74fc74fb9781425904b15059ea",
+    "initial_core_bytes_unchanged": true,
+    "core_first_name": "model-1",
+    "draft_first_name": "你好",
+    "model_id": "model-a-1",
+    "providers": 2,
+    "models": 3,
+    "language": "zh",
+    "autostart": false
+  },
+  "after_save": {
+    "stage": "after real explicit Save of IME-produced Chinese",
+    "core_config_sha256": "47e10bbf7c38ccef134f587991cb42f5af0664f7cb22a2525c44f0c5beae7486",
+    "name": "你好",
+    "name_codepoints": [
+      "U+4F60",
+      "U+597D"
+    ],
+    "model_id": "model-a-1",
+    "second_name": "model-2",
+    "providers": 2,
+    "models": 3,
+    "language": "zh",
+    "autostart": false,
+    "canonical_models_sha256": "3ad936d2a0eab1ba6225be66df27ba759c86febd9afb1d76b9b675d1de574aaa"
+  },
+  "resources": [
+    {
+      "scene": "ime-composition-idle",
+      "checked_at": "2026-10-30T09:35:53.118388+08:00",
+      "ui_sha256": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+      "elapsed_seconds": 30.005107625038363,
+      "metrics": {
+        "core": {
+          "pid": 2354,
+          "start_rss_mib": 8.15625,
+          "end_rss_mib": 8.265625,
+          "cpu_percent_one_core": 0.067
+        },
+        "ui": {
+          "pid": 2357,
+          "start_rss_mib": 78.46875,
+          "end_rss_mib": 79.875,
+          "cpu_percent_one_core": 1.2
+        }
+      },
+      "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+    },
+    {
+      "scene": "ime-committed-idle",
+      "checked_at": "2026-10-30T09:39:45.604468+08:00",
+      "ui_sha256": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+      "elapsed_seconds": 30.0033480420243,
+      "metrics": {
+        "core": {
+          "pid": 2354,
+          "start_rss_mib": 7.859375,
+          "end_rss_mib": 7.984375,
+          "cpu_percent_one_core": 0.033
+        },
+        "ui": {
+          "pid": 2357,
+          "start_rss_mib": 55.140625,
+          "end_rss_mib": 55.34375,
+          "cpu_percent_one_core": 0.3
+        }
+      },
+      "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+    }
+  ],
+  "images": [
+    {
+      "case": "ime3-ui50",
+      "raw_file": "prefix-escape-clean-raw.png",
+      "raw_sha256": "caa2f93cef2af771307094453da5b3709d4d28a154c44476bc9cc9ba8ef736c7",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-fixed-1440x900-2x.png",
+      "committed_sha256": "4b3d54581604e00409d885687ac2cfbdb143819a8574892fa48578221d25956e",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime3-ui50",
+      "raw_file": "prefix-escape-small-raw.png",
+      "raw_sha256": "e99d74a16760d283c3b9c146e2df7bcf463b7af23195dd7f778666291fcc153e",
+      "raw_physical_px": [
+        2200,
+        1402
+      ],
+      "committed_image": "screenshots/ime-escape-fixed-1100x700-2x.png",
+      "committed_sha256": "68be2e1d7841fd949b6225caf790fc8ecde64842cc74f2a05bd627b4d8188813",
+      "committed_physical_px": [
+        2200,
+        1400
+      ],
+      "requested_logical_px": [
+        1100,
+        700
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    }
+  ],
+  "scope": "Local display-name InputState validator only; matches existing Core control-character rule, no rewriting or dependency patch. Other fields/sources remain unverified."
+}

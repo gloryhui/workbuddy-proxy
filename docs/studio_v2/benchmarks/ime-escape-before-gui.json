@@ -1,0 +1,255 @@
+{
+  "lifecycle": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime2-ui50",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime2-ui50/WorkBuddy Proxy Review.app",
+      "core_pid": 86991,
+      "ui_pid": 86995,
+      "fixture_pid": 86990,
+      "port": 60327,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui50ime2-ui50",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 86995,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "b92130b75949f4445507663cc6d7b285028044149226cd893493af15e32b0b0b"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 3,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "core_guard": {
+      "enforced": true,
+      "pid": 86991,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "all_fixture_core_ui_pids_independently_gone": true,
+    "direct_fixture_wait_exit": 0,
+    "guard_missing_reason": null
+  },
+  "anomaly": {
+    "ui_pid": 86995,
+    "window_id": 63062,
+    "source_name": "青简",
+    "source_id": "app.qingjian.inputmethod.Hans",
+    "method": "CUA getAXState textual value; no external AX",
+    "reproduction": "existing 你好; End; pressKey n i h a o; observed underlined ni'hao appended; Escape; modal remains",
+    "actual_value": "你好\u001b",
+    "codepoints": [
+      "U+4F60",
+      "U+597D",
+      "U+001B"
+    ],
+    "screenshot": "escape-prefix-anomaly-raw.png",
+    "sha256": "5a7c35eb7f1ee506f5cb8f9483b610a3a443932c27fe32f01ade079598bd032c",
+    "limits": "No candidate window observed in application screenshot. No editor confirmation or provider Save performed after anomaly; original value obtained through supported CUA textual AX snapshot."
+  },
+  "before_save": {
+    "stage": "real pinyin Space commits Chinese; plain Return confirms UI draft before Save",
+    "core_config_sha256": "5cf1a00055f659ef20bbf13df27f1413bc46f67e5c6d7613b7b967feee044ebd",
+    "core_first_name": "model-1",
+    "draft_first_name": "你好",
+    "model_id": "model-a-1",
+    "providers": 2,
+    "models": 3,
+    "language": "zh",
+    "autostart": false
+  },
+  "images": [
+    {
+      "case": "ime2-ui50",
+      "raw_file": "composition-before-enter-raw.png",
+      "raw_sha256": "0236b3e722480a16cc0530c4ede910e426be98f00437f3f89ca2dd4de28029f0",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-composition-before-2x.png",
+      "committed_sha256": "7fb5e3d65899f4027139b8208bf93620d5263617272740eb03e229c29e1ee3fa",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime2-ui50",
+      "raw_file": "ime-space-committed-raw.png",
+      "raw_sha256": "8f7c1ad9c7d6aad45d4a8c5372a716e8c5d3ee082019941821c37ba2a5931cd0",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-chinese-committed-2x.png",
+      "committed_sha256": "abf8b0cb36bb1f632c1dddd8a685f6f765dd9b002272ca695275870fc07637ff",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime2-ui50",
+      "raw_file": "escape-prefix-anomaly-raw.png",
+      "raw_sha256": "5a7c35eb7f1ee506f5cb8f9483b610a3a443932c27fe32f01ade079598bd032c",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-before-2x.png",
+      "committed_sha256": "1aee080895cc58d38688fdcba2d87b38452db5e723dd56349c1142002e8d47b0",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    }
+  ],
+  "source_scope": "Controlled CUA pinyin/Space/IME Escape in current Qingjian source. No setValue/typeText."
+}

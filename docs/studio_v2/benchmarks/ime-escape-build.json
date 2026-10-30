@@ -1,0 +1,94 @@
+{
+  "feature": "UI-50 reject model name control characters after IME cancellation",
+  "base_commit": "3dfcb3cd98d33bd34628227987abdfb718a977d7",
+  "source_changed": true,
+  "ui_sha256": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+  "ui_bytes": 15246784,
+  "baseline_ui_sha256": "b92130b75949f4445507663cc6d7b285028044149226cd893493af15e32b0b0b",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 5.022
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 14.949
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 5.322
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 3.967
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 58.43
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/ui.rs": "78006820dbdf588f0a5db609af8de2e22f77154ee8ec8808c94b811a83e2538d",
+    "gpui/src/ui/model_editor.rs": "72035e3d9c5957c53d63b8bcf767b7c3dd88ed0351b2d79923677cf8f757e947",
+    "src/config.rs": "eae0b4ac1ee00115bb7ab795546dd294eb51d94236259f7649e85dfa96e9809f"
+  },
+  "scope": "One GPUI ui.rs edit installs native InputState validator only on model display name, matching existing Core control-character rejection. Chinese, emoji and combining text stay allowed; no data rewriting, Core, dependency or global input patch. No substring/inserted data newlines/timer/global toolkit patch or core/config/API/dependency change.",
+  "design": {
+    "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "mapped_node": "59:279",
+    "new_design_context_read": false,
+    "existing_model_dialog_layout_and_assets_unchanged": true
+  },
+  "limitations": [
+    "Native validator compilation alone does not establish IME cancel correctness; actual prefix+composition+Escape regression must pass.",
+    "Intel only typecheck,block0.1.6 future incompatibility remains.",
+    "Windows resource compilation and caption overlap fromUI43 remain unresolved."
+  ]
+}

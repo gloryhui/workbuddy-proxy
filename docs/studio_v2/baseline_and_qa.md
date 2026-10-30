@@ -1147,3 +1147,37 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 五张图均主代理查看，只选自己PID/onscreen/layer0 window62819/62836/62885原生screencapture；raw1440×901/1100×701仅Pillow精确裁底1行、保留ICC并逐像素RGBA比对，无缩放/重绘或sips转换。resize是CUA边角操作，不作窗口位移/HiDPI通过；没有外部AX/TIS/全局bounds/剪贴板/CGEvent调用。
 - 三UI经CUA原生Close exit0，各fixture停止/wait Core0、直接fixture wait0，主代理独立确认九PID消失；六轮基准自有子进程数组均[-15,-15,0,0]且wait，所记Core/UI已独立核对消失。完整规范化路径/UID501/父组件符号链接与挂载边界/全量单链接普通文件/进程与lsof预检，临执行清单SHA复核后，按持续授权删除本轮212个自有可再生测试文件，释放276,353,024bytes（263.55MiB），本轮临时保留0。旧root30保护项24.03MiB继续保留，未读误截图/重试删除，Cargo缓存不动；系统盘清理后39,829,184,512bytes（37.09GiB）可用。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮补齐模型目录两类设计标记及行内裁切差异，独立长ID提示、完整视觉/全部皮肤/真实IME/AX读屏、跨平台/HiDPI、物理托盘/窗口位移及最小化、首帧和公网更新成功仍待验。Goal active，HTML继续仅静态检查。
+
+## 小功能 50：真实拼音 IME 与模型名称取消控制符守卫（2026-10-30，北京时间）
+
+- 在当前青简输入源完成真实逐键拼音→Space汉字、组合Esc/Return、UndoRedo、草稿/显式保存和独立冷载入，并修复模型显示名在组合取消后混入U+001B的问题。证据：[编译](benchmarks/ime-escape-build.json)、[真实交互/落盘](benchmarks/ime-escape-gui-validation.json)、[方法边界](benchmarks/ime-escape-method-boundaries.json)、[1440请求尺寸原生2×图](screenshots/ime-escape-fixed-1440x900-2x.png)、[1100请求尺寸原生2×图](screenshots/ime-escape-fixed-1100x700-2x.png)、[冷重开](benchmarks/ime-escape-cold-reopen.json)、[六轮性能](benchmarks/ime-escape-performance-summary.json)、[清理](benchmarks/ime-escape-cleanup.json)。
+- 用户明确授权只读TISCopyCurrentKeyboardInputSource取得当前名称/ID后，本轮测试侧共5次仅读LocalizedName/InputSourceID并CFRelease：初始、旧GPUI字段聚焦、修复GPUI字段聚焦、保存后、cold，均为青简/app.qingjian.inputmethod.Hans。没有列举/选择输入源、改模式/设置、外部按键注入、外部AX/全局bounds或剪贴板接口；产品内部TIS调用未计数/未监控。输入源名称本身不是组合通过证据，本轮实际用CUA单独pressKey n/i/h/a/o、未typeText/setValue，见[原生下划线拼音](screenshots/ime-escape-composition-before-2x.png)和[Space落字](screenshots/ime-escape-chinese-committed-2x.png)。
+- 旧b921真实现场：你好前缀后追加下划线ni'hao，Esc取消组合/保留弹窗但新鲜CUA字段值为你好+U+001B，码点U+4F60/U+597D/U+001B，见[旧版原图](screenshots/ime-escape-before-2x.png)与[原值/生命周期](benchmarks/ime-escape-before-gui.json)。控制字符在图片中不可见，不能只凭截图判断；该编辑未确认/保存，Cancel取消后草稿仍你好，旧Core文件仍model-1。当前gpui-base0.7.3单行normalize_input只去换行，Core config.rs原规则已拒char::is_control；未把到达字段的字符归责于青简、平台或自动化哪一层。
+- 仅在ui.rs创建模型edit_name后设置原生InputState validator，拒绝Core本来不允许的控制字符；不改写输入字符串、不重建InputState/历史、没有依赖/SDK/代理核心或格式修改。其余字段不套用此守卫，不将其称全局IME修复。沿用59:279现有布局/资产，本轮不重新设计或重读设计context；普通中文、emoji/组合重音不属于该拒绝集，但新守卫的实际IME通过范围限于本次青简模型显示名。
+- 最终87eb真实重复：清空后逐键nihao→Space得到你好；End追加下划线ni'hao→Esc，宽/小窗均仅剩U+4F60/U+597D且弹窗仍在，没有旧拼音或控制字符。同前缀组合Return得到无下划线的你好nihao，弹窗保持，是原拼音提交而非汉字候选；CmdZ→你好、CmdShiftZ→你好nihao、再CmdZ→你好。普通Return才确认到草稿，小窗再次组合Esc干净后第二Esc取消编辑回主页。原候选窗口本身未在应用截图中观测，不据Space落字宣称候选面板分页/多候选选择已验。
+- 显示名确认草稿后Core config SHAca36a666…与该实例初始逐字节相同、name仍model-1；一次真实主页Save后才变你好/model-a-1，SHA47e10bbf…；第二名model-2、2供应商3模型0请求、zh/autostartfalse保持。全模型规范JSON SHA3ad936d2a0eab1ba6225be66df27ba759c86febd9afb1d76b9b675d1de574aaa。新Core7897/UI7904仅从该真正保存的配置重置随机port/provider loopback upstream，未复制gpui-drafts或注入字段；CUA只打开/查看/退出，实际Saved/你好/第二model-2与2/3/0保持，[冷图](screenshots/ime-escape-cold-1440x900-2x.png)已查看，整模型载荷SHA一致。
+- 最终fmt5.022s、192 tests/2既有ignored14.949s、严格clippy all-targets/-Dwarnings5.322s、Intel check3.967s、Release58.430s通过。UI87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba/15,246,784bytes，比b921多16bytes；Core仍25f/8,428,096bytes。Intel只是类型检查，既有block0.1.6提示及UI43 Windows编译/标题栏问题保持。
+- Mac实际未锁定。受控旧组UI86995/Core86991、修复组UI2357/Core2354及cold UI7904/Core7897的Core运行中内核保护和真实LaunchAgents四类deny各自核实；GUI均无内核沙盒。最初ime-ui50在操作前自行exit0，原因未定，退出后权限查询不能当有效保护证明，不计该实例GUI验收；所有夹具terminal/wait0和12个fixture/Core/UI PID消失已分别核对。
+- 为定位曾准备并编译标准NSTextView对照，但CUA精确路径绑定返回原文Computer Use server error -10005: timeoutReached，计划的原生比较按键未执行；不作为对照通过。该进程/runner最终exit0并wait。事件日志存在不能归属到计划探针的记录，已停止继续读取，不导出内容/不作因果证据；本轮只保留其0600私有文件和归属说明，未重试绑定、另用外部AX或改变权限。
+- [视觉记录](benchmarks/ime-escape-visual-validation.json)中的原生raw为2880×1802和2200×1402；按请求1440×900/1100×700及已知256px侧栏在宽raw为512px推得当前2×布局，未查询OS backingScaleFactor/全局bounds，PNG也无DPI metadata。交付图仅裁底2物理像素为2880×1800/2200×1400，保持原RGBA/ICC并逐像素比较，不缩放/重绘。该2×场景是实测局部证据，不替代全部HiDPI/字体fallback/Windows/Intel验收；八张已提交原图来源均由主代理查看。
+
+| 修复同一UI2357静置场景 | 单核CPU Core/UI | Core RSS MiB首→尾 | UI RSS MiB首→尾 |
+| --- | --- | --- | --- |
+| 小窗下划线组合30.005s | 0.067%/1.200% | 8.156→8.266 | 78.469→79.875 |
+| 保存后主页无浮层30.003s | 0.033%/0.300% | 7.859→7.984 | 55.141→55.344 |
+
+- 两场景状态/缓存不同，不能把RSS下降当优化或长期泄漏结果；ps TIME百分秒分辨率，不测GPU、首帧或实际输入法端到端延迟，青简自身进程不在此Core/UI求和内。原benchmark --help已查，SHA仍bc7e0537…，同25f Core/Studio实读/64个Core模型/1000小请求/80×1MiB并发4；默认Statistics，非模型编辑/输入吞吐。
+
+| 原脚本实际顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 峰值RSS MiB | 80×1MiB耗时s | Core/UI记录ready ms |
+| --- | --- | --- | --- | --- | --- |
+| 旧b921第1轮 | 10.53/73.09/83.62 | 0.172/0.227 | 133.38 | 0.097 | 224.556/829.841 |
+| 新87eb第1轮 | 12.78/78.55/91.33 | 0.172/0.194 | 140.25 | 0.086 | 221.125/655.663 |
+| 旧b921第2轮 | 12.34/74.25/86.59 | 0.172/0.200 | 135.03 | 0.090 | 224.240/695.398 |
+| 新87eb第2轮 | 11.77/78.39/90.16 | 0.172/0.199 | 139.05 | 0.086 | 206.577/679.206 |
+| 新87eb反向确认 | 12.38/75.23/87.61 | 0.172/0.193 | 132.48 | 0.091 | 440.467/1027.303 |
+| 旧b921反向确认 | 12.53/76.12/88.66 | 0.172/0.190 | 131.66 | 0.085 | 213.155/664.248 |
+
+- 前两组UI RSS新比旧高4–5MiB，已保留并补新→旧反向对照；反向新75.23/旧76.12MiB未复现同方向。该组在原JSON写出/RSS watcher join后、停止标记写入前截当前自有PID窗口，[新版图](screenshots/ime-escape-perf-current-2x.png)/[旧版图](screenshots/ime-escape-perf-previous-2x.png)均raw2880×1802；没有读取bounds属性。原负载/指标未改，新增2个自有截图子进程exit0单独列于反向数组，其余四轮退出数组[-15,-15,0,0]，反向为[-15,-15,0,0,0,0]，均wait。
+- 六轮旧→新中位：Core12.34→12.38/UI74.25→78.39/合计86.59→90.16MiB，峰值133.38→139.05MiB，p50均.172/p95.200→.194ms，大请求.090→.086s，Core ready224.240→221.125/UI记录ready695.398→679.206ms。明确保留UI+4.14/合计+3.57/峰值+5.67MiB观察项，不宣称优化或统计等效；每版仅3短样本、后台/缓存未控制，反向同尺寸只核对一组、不证明因果。ready不是首帧/可交互，RSS共享页可能双计。反向照片显示缓存明细空表/初始供应商模型，而不是1000行GUI绘制，不用HTTP吞吐替代UI满载性能。
+- 完成规范化绝对路径/UID501/父组件挂载与非符号链接/各目标内全量单链接普通文件/进程和lsof预检、临执行清单SHA复核，按持续授权仅删除清单41个具体目标中的335个自有可再生文件，释放366,891,008bytes（349.89MiB）。Root41父目录不作为删除目标；保留无法归属的native-events.jsonl及ownership/retention共3文件、12,288bytes分配空间（12KiB），不读取或哈希私有日志内容。旧root30保护项24.03MiB仍保留且未读误图/重试删除，共享Cargo缓存不动；系统盘清理后38,287,470,592bytes（35.66GiB）可用。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮通过的是当前青简源的模型显示名专项；其他字段/输入源、候选面板、完整AX读屏/视觉/全部HiDPI/跨平台、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active；HTML继续仅静态检查。

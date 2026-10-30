@@ -1,0 +1,251 @@
+{
+  "images": [
+    {
+      "case": "ime2-ui50",
+      "raw_file": "composition-before-enter-raw.png",
+      "raw_sha256": "0236b3e722480a16cc0530c4ede910e426be98f00437f3f89ca2dd4de28029f0",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-composition-before-2x.png",
+      "committed_sha256": "7fb5e3d65899f4027139b8208bf93620d5263617272740eb03e229c29e1ee3fa",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime2-ui50",
+      "raw_file": "ime-space-committed-raw.png",
+      "raw_sha256": "8f7c1ad9c7d6aad45d4a8c5372a716e8c5d3ee082019941821c37ba2a5931cd0",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-chinese-committed-2x.png",
+      "committed_sha256": "abf8b0cb36bb1f632c1dddd8a685f6f765dd9b002272ca695275870fc07637ff",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime2-ui50",
+      "raw_file": "escape-prefix-anomaly-raw.png",
+      "raw_sha256": "5a7c35eb7f1ee506f5cb8f9483b610a3a443932c27fe32f01ade079598bd032c",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-before-2x.png",
+      "committed_sha256": "1aee080895cc58d38688fdcba2d87b38452db5e723dd56349c1142002e8d47b0",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime3-ui50",
+      "raw_file": "prefix-escape-clean-raw.png",
+      "raw_sha256": "caa2f93cef2af771307094453da5b3709d4d28a154c44476bc9cc9ba8ef736c7",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-fixed-1440x900-2x.png",
+      "committed_sha256": "4b3d54581604e00409d885687ac2cfbdb143819a8574892fa48578221d25956e",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime3-ui50",
+      "raw_file": "prefix-escape-small-raw.png",
+      "raw_sha256": "e99d74a16760d283c3b9c146e2df7bcf463b7af23195dd7f778666291fcc153e",
+      "raw_physical_px": [
+        2200,
+        1402
+      ],
+      "committed_image": "screenshots/ime-escape-fixed-1100x700-2x.png",
+      "committed_sha256": "68be2e1d7841fd949b6225caf790fc8ecde64842cc74f2a05bd627b4d8188813",
+      "committed_physical_px": [
+        2200,
+        1400
+      ],
+      "requested_logical_px": [
+        1100,
+        700
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "ime4-ui50",
+      "raw_file": "cold-model-raw.png",
+      "raw_sha256": "12588e561f34eced30ef0e64c8d705aedabe9aad1871c4371e0e980f7e682c09",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-cold-1440x900-2x.png",
+      "committed_sha256": "7e3feb710b87a9b33cdcd03fe0ae4349625c97df373b70379c46fea1ab2aea71",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "perf-current-run3",
+      "raw_file": "post-metrics-window.png",
+      "raw_sha256": "49e01b6df07d4472a4c81be6d49d8e957f513e04ae35ad286f3c00bfbf2ec8de",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-perf-current-2x.png",
+      "committed_sha256": "40ae8a34fe561298593ae210bc8085b2a486d5838163fbf7e350fb087b7894c0",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    },
+    {
+      "case": "perf-previous-run3",
+      "raw_file": "post-metrics-window.png",
+      "raw_sha256": "686ca2e1ffb22c109f2d4c5190ff67177a6a6c183e207e0373e52c93e501a34a",
+      "raw_physical_px": [
+        2880,
+        1802
+      ],
+      "committed_image": "screenshots/ime-escape-perf-previous-2x.png",
+      "committed_sha256": "7cdfd79db5dedf95e42af223272a98f203ef8932d3f35e4f3a419246de05eb8b",
+      "committed_physical_px": [
+        2880,
+        1800
+      ],
+      "requested_logical_px": [
+        1440,
+        900
+      ],
+      "pixel_ratio_inferred_from_source_layout": 2,
+      "os_scale_factor_not_queried": true,
+      "png_dpi_metadata": null,
+      "parent_viewed_raw": true,
+      "processing": "Only bottom2 physical rows removed; no resampling or repaint; preserve original RGBA pixels/ICC",
+      "crop_pixel_identity_verified": true
+    }
+  ],
+  "logical_size_evidence": "CUA requested sizes plus known fixed256px sidebar rendered512px in wide raw; physical widths2880/2200. Ratio2 inferred from layout, not an OS backingScaleFactor/bounds query. PNG has no DPI metadata.",
+  "source_sidebar_width": 256,
+  "wide_raw_sidebar_boundary_x": 512,
+  "os_global_bounds_not_read": true,
+  "findings": [
+    "Actual underlined pinyin from separate key events and Space-committed Chinese are visible.",
+    "AX codepoints, not screenshot alone, establish old U001B and fixed clean Chinese.",
+    "Final wide and small Chinese remain visible with native dialog controls; cold scene reads same saved Chinese."
+  ],
+  "benchmark_post_metric_windows": {
+    "current-run3": {
+      "capture": {
+        "attempted": true,
+        "window_id": 63489,
+        "ui_pid": 12959,
+        "file": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current-run3/post-metrics-window.png",
+        "method": "own PID onscreen layer0 windowNumber only; no bounds property read; screenshot after result write/watcher join before stop marker"
+      },
+      "ui_idle_rss_mib": 75.23,
+      "sampled_peak_rss_mib": 132.48,
+      "captured_px": [
+        2880,
+        1802
+      ]
+    },
+    "previous-run3": {
+      "capture": {
+        "attempted": true,
+        "window_id": 63494,
+        "ui_pid": 13003,
+        "file": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous-run3/post-metrics-window.png",
+        "method": "own PID onscreen layer0 windowNumber only; no bounds property read; screenshot after result write/watcher join before stop marker"
+      },
+      "ui_idle_rss_mib": 76.12,
+      "sampled_peak_rss_mib": 131.66,
+      "captured_px": [
+        2880,
+        1802
+      ]
+    }
+  },
+  "limits": [
+    "Current2x rendered scenes do not prove full cross-platform/HiDPI acceptance.",
+    "Candidate panel itself not observed in application capture.",
+    "Post-metric benchmark captures show cached default Requests empty state; HTTP workload does not prove GUI rendering1000 rows."
+  ],
+  "checked_at": "2026-10-30T09:58:00.532681+08:00"
+}

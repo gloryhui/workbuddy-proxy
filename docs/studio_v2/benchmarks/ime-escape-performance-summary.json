@@ -1,0 +1,201 @@
+{
+  "feature": "UI-50 original benchmark before/after",
+  "checked_at": "2026-10-30T09:55:41.614677+08:00",
+  "sequence": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2",
+    "current-run3",
+    "previous-run3"
+  ],
+  "runs": {
+    "previous": {
+      "core_idle_rss_mib": 10.53,
+      "ui_idle_rss_mib": 73.09,
+      "idle_rss_mib": 83.62,
+      "sampled_peak_rss_mib": 133.38,
+      "core_ready_ms": 224.556,
+      "ui_record_ready_ms": 829.841,
+      "large_seconds": 0.097,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.227
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "current": {
+      "core_idle_rss_mib": 12.78,
+      "ui_idle_rss_mib": 78.55,
+      "idle_rss_mib": 91.33,
+      "sampled_peak_rss_mib": 140.25,
+      "core_ready_ms": 221.125,
+      "ui_record_ready_ms": 655.663,
+      "large_seconds": 0.086,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.194
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "previous-run2": {
+      "core_idle_rss_mib": 12.34,
+      "ui_idle_rss_mib": 74.25,
+      "idle_rss_mib": 86.59,
+      "sampled_peak_rss_mib": 135.03,
+      "core_ready_ms": 224.24,
+      "ui_record_ready_ms": 695.398,
+      "large_seconds": 0.09,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.2
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "current-run2": {
+      "core_idle_rss_mib": 11.77,
+      "ui_idle_rss_mib": 78.39,
+      "idle_rss_mib": 90.16,
+      "sampled_peak_rss_mib": 139.05,
+      "core_ready_ms": 206.577,
+      "ui_record_ready_ms": 679.206,
+      "large_seconds": 0.086,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.199
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "current-run3": {
+      "core_idle_rss_mib": 12.38,
+      "ui_idle_rss_mib": 75.23,
+      "idle_rss_mib": 87.61,
+      "sampled_peak_rss_mib": 132.48,
+      "core_ready_ms": 440.467,
+      "ui_record_ready_ms": 1027.303,
+      "large_seconds": 0.091,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.193
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "previous-run3": {
+      "core_idle_rss_mib": 12.53,
+      "ui_idle_rss_mib": 76.12,
+      "idle_rss_mib": 88.66,
+      "sampled_peak_rss_mib": 131.66,
+      "core_ready_ms": 213.155,
+      "ui_record_ready_ms": 664.248,
+      "large_seconds": 0.085,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.19
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "medians": {
+    "previous": {
+      "core_idle_rss_mib": 12.34,
+      "ui_idle_rss_mib": 74.25,
+      "idle_rss_mib": 86.59,
+      "sampled_peak_rss_mib": 133.38,
+      "core_ready_ms": 224.24,
+      "ui_record_ready_ms": 695.398,
+      "large_seconds": 0.09,
+      "proxy_p50_ms": 0.172,
+      "proxy_p95_ms": 0.2
+    },
+    "current": {
+      "core_idle_rss_mib": 12.38,
+      "ui_idle_rss_mib": 78.39,
+      "idle_rss_mib": 90.16,
+      "sampled_peak_rss_mib": 139.05,
+      "core_ready_ms": 221.125,
+      "ui_record_ready_ms": 679.206,
+      "large_seconds": 0.086,
+      "proxy_p50_ms": 0.172,
+      "proxy_p95_ms": 0.194
+    }
+  },
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "actual_ui_scene": "Benchmark default Statistics page; separate current model IME composition/saved30s samples are in ime-escape-gui-validation.json",
+  "workload": "Original unchanged script: nativeGUI, same25f Core, Studio preference readback,64 models,1000 small requests and80x1MiB/concurrency4. Private wrapper protects Core, attests kernel protection and defers session temp deletion for full preflight.",
+  "conclusion": "Initial two current UI RSS samples were about4-5MiB above previous. Reverse current75.23MiB/previous76.12MiB did not repeat that direction; both post-metric captures are2880x1802. Keep all increases and samples; same capture dimensions in one reverse pair do not establish causality or statistical equivalence.",
+  "limits": [
+    "Only3 samples per version; host background activity and cold/warm cache variation not controlled.",
+    "RSS sum may doublecount shared pages; tray separately reported in raw runs.",
+    "UI record ready is not first paint/interactive time.",
+    "No Windows/Intel runtime, GPU timing, long-duration leak or real vendor measurement.",
+    "Post-metric benchmark captures show cached default Requests empty state; HTTP workload does not prove GUI rendering1000 rows.",
+    "Reverse capture is after result write and RSS watcher join; extra two owned capture children are recorded in raw exit arrays."
+  ],
+  "all_recorded_core_ui_pids_independently_gone": true,
+  "post_metric_window_comparison": {
+    "current-run3": {
+      "capture": {
+        "attempted": true,
+        "window_id": 63489,
+        "ui_pid": 12959,
+        "file": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current-run3/post-metrics-window.png",
+        "method": "own PID onscreen layer0 windowNumber only; no bounds property read; screenshot after result write/watcher join before stop marker"
+      },
+      "ui_idle_rss_mib": 75.23,
+      "sampled_peak_rss_mib": 132.48,
+      "captured_px": [
+        2880,
+        1802
+      ]
+    },
+    "previous-run3": {
+      "capture": {
+        "attempted": true,
+        "window_id": 63494,
+        "ui_pid": 13003,
+        "file": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous-run3/post-metrics-window.png",
+        "method": "own PID onscreen layer0 windowNumber only; no bounds property read; screenshot after result write/watcher join before stop marker"
+      },
+      "ui_idle_rss_mib": 76.12,
+      "sampled_peak_rss_mib": 131.66,
+      "captured_px": [
+        2880,
+        1802
+      ]
+    }
+  }
+}

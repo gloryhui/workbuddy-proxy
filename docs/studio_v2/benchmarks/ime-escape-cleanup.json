@@ -1,0 +1,436 @@
+{
+  "project": "WorkBuddy Studio V2 UI50",
+  "exact_canonical_session_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d",
+  "targets": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/Native IME Control.app",
+      "type": "directory",
+      "files": 2,
+      "allocated_bytes": 155648,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/benchmark-window-comparison.json",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/candidate-build.json",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/candidate-clippy.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/candidate-fmt.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 0,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/candidate-intel.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/candidate-release.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/candidate-test.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 20480,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/fixture-cold.py",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 12288,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/fixture.py",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 12288,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime-ui50",
+      "type": "directory",
+      "files": 18,
+      "allocated_bytes": 24649728,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime2-ui50",
+      "type": "directory",
+      "files": 23,
+      "allocated_bytes": 25743360,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime3-ui50",
+      "type": "directory",
+      "files": 26,
+      "allocated_bytes": 24965120,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ime4-ui50",
+      "type": "directory",
+      "files": 20,
+      "allocated_bytes": 24580096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/method-boundaries.json",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-build.json",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-build.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 0,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-control.swift",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 8192,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-manifest.json",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-process.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-profile",
+      "type": "directory",
+      "files": 0,
+      "allocated_bytes": 0,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-terminal.json",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/own-window-id",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 69632,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/own-window-id.swift",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current",
+      "type": "directory",
+      "files": 20,
+      "allocated_bytes": 31211520,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current-run2",
+      "type": "directory",
+      "files": 20,
+      "allocated_bytes": 31211520,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current-run2.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current-run3",
+      "type": "directory",
+      "files": 21,
+      "allocated_bytes": 31604736,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current-run3.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-current.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous",
+      "type": "directory",
+      "files": 20,
+      "allocated_bytes": 31211520,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous-run2",
+      "type": "directory",
+      "files": 20,
+      "allocated_bytes": 31207424,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous-run2.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous-run3",
+      "type": "directory",
+      "files": 21,
+      "allocated_bytes": 31604736,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous-run3.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf-previous.log",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/perf.py",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 8192,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/previous-ui",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 15249408,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/resource.py",
+      "type": "file",
+      "files": 1,
+      "allocated_bytes": 4096,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/swift-module-cache",
+      "type": "directory",
+      "files": 97,
+      "allocated_bytes": 63291392,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/tmp",
+      "type": "directory",
+      "files": 0,
+      "allocated_bytes": 0,
+      "project": "WorkBuddy Studio V2 UI50",
+      "reproducible": "Explicit own binary copies, synthetic fixtures, build/module cache, raw captures, test scripts/logs; final evidence exported"
+    }
+  ],
+  "owner": {
+    "task": "studio-v2-ui50",
+    "created_by": "root",
+    "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d",
+    "uid": 501,
+    "scope": "isolated GPUI and native AppKit IME route verification",
+    "ui_sha256": "b92130b75949f4445507663cc6d7b285028044149226cd893493af15e32b0b0b",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "created_at": "2026-10-30T09:02:54.899327+08:00"
+  },
+  "ancestor_checks": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d",
+      "uid": 501,
+      "is_mount": false,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "is_mount": false,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "is_mount": false,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "is_mount": false,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "is_mount": false,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "is_mount": false,
+      "device": 16777232
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "is_mount": false,
+      "device": 16777232
+    },
+    {
+      "path": "/",
+      "uid": 0,
+      "is_mount": true,
+      "device": 16777232
+    }
+  ],
+  "no_symlinks_or_mount_crossing": true,
+  "all_deleted_files_single_link": true,
+  "files": 335,
+  "logical_bytes": 355119107,
+  "allocated_bytes": 366891008,
+  "inventory_sha256": "b2885097ccbd655623e26ccfb2390ca333eda4ddcbfcce6dd96336abc65189ef",
+  "private_trace_retained_metadata_only": {
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-events.jsonl",
+    "bytes": 1966,
+    "allocated_bytes": 4096,
+    "owner_uid": 501,
+    "mode": "0600",
+    "content_read_or_hashed": false,
+    "reason": "Native control binding failed and recorded events not attributable to planned probes. Private trace preserved, not accepted/exported as comparison evidence."
+  },
+  "private_trace_bytes_read_during_cleanup": 0,
+  "root_not_a_deletion_target": true,
+  "standing_safe_temp_cleanup_authorization": true,
+  "process_refs": 0,
+  "lsof_refs": 0,
+  "cleanup_performed": true,
+  "released_allocated_bytes_estimate": 366891008,
+  "own_retained_files": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/ownership.json",
+      "bytes": 455,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/native-events.jsonl",
+      "bytes": 1966,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d/retention.json",
+      "bytes": 647,
+      "allocated_bytes": 4096
+    }
+  ],
+  "own_temporary_allocated_bytes_retained": 12288,
+  "old_round30_retained_metadata_only_bytes": 25198592,
+  "system_data_free_bytes": 38287470592
+}

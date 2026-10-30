@@ -710,6 +710,11 @@ impl Proxy {
             window,
             cx,
         );
+        // Model names already reject control characters in Core validation.
+        // Keep an IME cancellation key from becoming editable name content.
+        edit_name.update(cx, |state, cx| {
+            state.set_validator(|value, _| !value.chars().any(char::is_control), cx);
+        });
         let edit_model = input(
             "",
             if zh {
