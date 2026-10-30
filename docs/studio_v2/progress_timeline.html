@@ -199,10 +199,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T17:25:02+08:00",
+  "updated_at": "2026-10-30T18:19:50+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "a33be2625d17d31ea3a47a7607ddfa876e3d3374",
+  "code_head": "750ae14cd6eb347f8e7a54adec68b01b54a4270e",
   "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
   "goal_status": "active",
   "counts": {
@@ -212,74 +212,72 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 54,
+  "recorded_tasks": 55,
   "remaining_final": 40,
   "visual_review": {
     "counts": {
       "not_reviewed": 37,
-      "reviewing": 2,
-      "reviewed_with_differences": 1,
+      "reviewing": 1,
+      "reviewed_with_differences": 2,
       "reviewed": 0
     },
     "source": "visual_review.json",
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 54,
-    "title": "模型布局余差与供应商整帧比对",
+    "id": 55,
+    "title": "用量明细整页布局与真实范围汇总",
     "status": "recorded",
-    "description": "第54项局部修复已提交a33be26：模型复选框上移、档位124px、白底取消、共享SVG和首帧列宽估算。当前bc7候选真实交互、两尺寸6张原图、草稿独立读回、12轮性能及编译门禁已归档。CUA已恢复；后续优先后台执行，必须前台时先告知。仍剩40帧最终验收（37未首轮比对、2审查中、1保留差异）；字体/阴影、供应商与统计页差异继续。"
+    "description": "UI55已提交750ae14：用量明细整页局部对齐、条数标签真实范围汇总、自动刷新页码草稿保护与显式分页同步。最终3aa两尺寸实拍、分页/来源/详情/键盘、192tests及编译、六轮原负载和六次共享Core启动专项已归档。剩余40帧最终验收（37未整帧审查、1审查中、2保留差异）。下一步继续共享控件及其余整帧对照，字体/表格/Select箭头/跨平台等差异仍开放。CUA后台优先；清理被策略拒绝，合计暂留357.54MiB。"
   },
   "latest_task": {
-    "id": 54,
-    "title": "模型布局余差、共享资产与首帧列宽估算",
+    "id": 55,
+    "title": "用量明细整页布局、范围汇总与页码草稿保护",
     "status": "recorded",
-    "summary": "将模型能力首行上移1逻辑像素，同时补偿分区底部1px保持后续内容位置；五档位按钮最大宽124px并保留窄窗收缩，取消按钮使用白底深色字。模型表初始宽度估算共用实际侧栏宽度和17px列间距，修正1440下53px、1100下5px估算差，不宣称已测首帧闪动。皮肤20px与侧栏链接15px替换为最新官方精确SVG导出。只改Rust/GPUI布局与静态资产，未改Core、依赖和模型事件逻辑。",
+    "summary": "按最新56:8对齐明细副标题、47px页签区/筛选间距、283px面板起点和540px最大高度；请求行改52px、隔行使用#F4F6FF，仅明细页分页按钮/页大小选择收为32px，跳页输入仍由Kit绘制40px，窄窗继续收缩/换行。原独立范围条移入请求条数标签的原生Popover，仍读取原dashboard.summary，不删真实记录数/Token/积分；汇总分析视图原范围条不变。只改Rust/GPUI展示和UI输入同步，Core/协",
     "highlights": [
-      "将模型能力首行上移1逻辑像素，同时补偿分区底部1px保持后续内容位置；五档位按钮最大宽124px并保留窄窗收缩，取消按钮使用白底深色字。模型表初始宽度估算共用实际侧栏宽度和17px列间距，修正1440下53px、1100下5px估算差，不宣称已测首帧闪动。皮肤20px与侧栏链接15px替换为最新官方精确SVG导出。只改Rust/GPUI布局与静态资产，未改Core、依赖和模型事件逻辑。",
-      "编译门禁：当前工作树fmt、194项测试（192通过/2忽略）、strict clippy all-targets、Intel类型检查和arm64 release通过；候选UI SHA bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a，与本轮性能样本及实机UI一致。Intel仅类型检查，不作为本轮Intel实机通过。",
-      "真实交互与独立读回：Computer Use恢复后绑定准确PID5490，无重复UI；2供应商/5模型/0请求的隔离环境，Core实际kernel guard及LaunchAgents读写拒绝通过。AUTO只读、manual图片off/medium on取消复原、确认写隔离草稿再重开保留通过；Core配置SHA未变。宽/窄窗口遮罩点皮肤位置均不穿透；局部Tab/ShiftTab可见caret与Space实测，不等于完整键盘/AX/IME通过。原生关闭UI后Core health HTTP200，再正常退出；UI/Core/fixture均exit0并wait，三PID由主代理独立核对消失。两次夹具前置失败保留在报告，未算产品失败或成功UI样本。"
+      "按最新56:8对齐明细副标题、47px页签区/筛选间距、283px面板起点和540px最大高度；请求行改52px、隔行使用#F4F6FF，仅明细页分页按钮/页大小选择收为32px，跳页输入仍由Kit绘制40px，窄窗继续收缩/换行。原独立范围条移入请求条数标签的原生Popover，仍读取原dashboard.summary，不删真实记录数/Token/积分；汇总分析视图原范围条不变。只改Rust/GPUI展示和UI输入同步，Core/协议/查询序列化/原分页及保存格式未改。",
+      "构建门禁：最终UI3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859的fmt、194tests（192通过/2忽略）、strict all-targets clippy、Intel类型检查及arm64 release均通过。ab28与595的中间构建/交互记录另保留；Intel这里只是类型检查，未宣称本版Intel/Windows实机通过。",
+      "最终真实交互与独立数据核验：CUA通过文档提供的后台getApp启动精确隔离bundle，未显式activate/raise；不声称实际前台未改变。最终UI20931对2供应商/5模型/14条真实本地Mock代理请求，实测内置0/自定义14/全部14、跳页/返回、汇总Tab→Space/Esc/Return、请求详情HTTP200/500输入+50输出/550总量和小窗滚动/右侧列。较早ab28另测下一页4条/20条页大小再恢复10；最终scope以各版记录为准。结束只读SQLite复核14/7000/700/7700，Core配置SHA始终不变。"
     ],
-    "limits": [
-      "供应商整帧源码审查已补当前两尺寸实拍；用量明细另有空/真实14条Mock请求宽窗图进入审查。40帧仍部分验收、0帧最终验收；字体/阴影、0.5px余差、供应商卡片高度与真实连接状态、统计页文案/密度、完整键盘/IME/读屏和跨平台仍未完成，Goal保持active。"
-    ],
+    "limits": [],
     "evidence": [
       {
-        "label": "编译门禁",
-        "href": "benchmarks/model-alignment-build.json"
+        "label": "构建门禁",
+        "href": "benchmarks/details-layout-build.json"
       },
       {
-        "label": "真实交互与独立读回",
-        "href": "benchmarks/model-alignment-gui-validation.json"
+        "label": "最终真实交互与独立数据核验",
+        "href": "benchmarks/details-layout-gui-validation.json"
       },
       {
-        "label": "1440模型原图",
-        "href": "screenshots/model-alignment-manual-1440x900-native-2x.png"
+        "label": "1440最终原图",
+        "href": "screenshots/details-layout-1440x900-native-2x.png"
       },
       {
-        "label": "1100限制滚动原图",
-        "href": "screenshots/model-alignment-limits-1100x700-native-2x.png"
+        "label": "1100最终原图",
+        "href": "screenshots/details-layout-1100x700-native-2x.png"
       },
       {
-        "label": "像素几何",
-        "href": "benchmarks/model-alignment-geometry.json"
+        "label": "小窗真实范围汇总",
+        "href": "screenshots/details-layout-summary-1100x700-native-2x.png"
       },
       {
-        "label": "性能对照",
-        "href": "benchmarks/model-alignment-performance-summary.json"
+        "label": "像素测量",
+        "href": "benchmarks/details-layout-geometry.json"
       },
       {
-        "label": "供应商整帧源码审查",
-        "href": "benchmarks/provider-frame-source-audit.json"
+        "label": "设计与资产审查",
+        "href": "benchmarks/details-layout-design-audit.json"
       },
       {
-        "label": "清理预检与策略拒绝",
-        "href": "benchmarks/model-alignment-cleanup.json"
+        "label": "六轮原负载对照",
+        "href": "benchmarks/details-layout-performance-summary.json"
       }
     ],
-    "commit": "a33be2625d17d31ea3a47a7607ddfa876e3d3374",
-    "date": "2026-10-30T17:24:51+08:00",
-    "commit_subject": "fix(studio): refine model dialog spacing and responsive table width",
+    "commit": "750ae14cd6eb347f8e7a54adec68b01b54a4270e",
+    "date": "2026-10-30T18:19:17+08:00",
+    "commit_subject": "fix(studio): align usage records and preserve page edits during refresh",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -356,29 +354,41 @@
       "visual_review": {
         "id": "56:8",
         "name": "03 / STUDIO V2 · 用量明细",
-        "review_status": "reviewing",
-        "scope": "UI54已保存当前候选统计页空数据/14条真实隔离代理请求的1440宽窗实拍；完整整帧比对继续，未最终通过。",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI55完成首轮整页审查和局部修复；最新56:8、24资源清单、3aa候选真实两尺寸/筛选分页详情/汇总键盘及性能已记录，整帧仍保留差异。",
         "checks": {
-          "layout": "已记录宽窗副标题/汇总条/表格密度差异，1100及交互未完成",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "真实14条HTTP200本地Mock请求、7700 tokens有独立只读回查；不使用设计样例量值",
-          "interaction": "not_checked",
-          "native_1440": "当前bc7候选2880×1802原始实拍两份（含原生额外2物理行）",
-          "native_1100": "尚未实拍当前统计页"
+          "layout": "面板top283/height540及表头top364与稿对应，52px行距已测；原生表头含边框40px而稿39px，列宽/内边距仍有差异",
+          "colors": "隔行#F4F6FF和条数浅靛色已对齐；文字/状态/hover尚未全量逐项终验",
+          "typography": "Noto Sans SC与系统fallback/权重/字号存在差异，尚未最终统一",
+          "assets": "24资源中19字节一致、2仅局部clipID不同且完整绘制结构相同、3装饰traffic lights用真实系统控件；Select内置chevron及全部slot终验仍待续",
+          "states": "最终3aa内置0/自定义14/全部14、真实详情、分页和汇总通过；全状态矩阵未完成",
+          "interaction": "Tab/Space/Esc/Return汇总、分页/来源/详情、自动刷新不覆盖编辑且显式翻页同步输入通过；非完整键盘/IME/读屏",
+          "native_1440": "最终3aa2880×1802原始实拍已核对，含原生额外2物理行",
+          "native_1100": "最终3aa2200×1402原始表/范围汇总实拍已核对，内滚/固定pager/右侧列可达"
         },
         "differences": [
-          "副标题文案与设计不同，需结合真实统计范围核对。",
-          "实际范围汇总条占用额外高度，明细列表下移；保留真实汇总能力后再处理布局。",
-          "宽窗10条分页下仅6行完全可见、第7行部分可见，需要结合内部滚动及固定页脚审查密度。",
-          "动态请求量、模型、Token、费用和耗时来自隔离本地Mock，不替换为设计假数据。"
+          "字体fallback、权重/基线及部分单元格字号仍与Noto Sans SC/Inter设计不同。",
+          "原生表头含边框实际40px、稿39px，表体有约1px余差；列宽、标题/表格内边距与垂直列分隔仍待统一。",
+          "模型/供应商Select仍用Kit内置chevron，日期/刷新用Figma16px资源；完整静态slot/effective geometry尚未全部终验。",
+          "保留真实健康/更多筛选/清除、跳页/首列/右侧列等原业务控件，以及条数标签可打开真实范围汇总；与静态稿有额外可见控件。",
+          "统计页供应商栏的当前供应商高亮呈现仍与设计样例有差异，需按真实上下文核对。",
+          "后台自动刷新由既有window_active门控；本轮未主动前置，但实际前台状态未独立测量，不宣称所有后台截图即时。",
+          "完整键盘、IME/读屏、全部皮肤/状态和跨平台仍未最终验收。",
+          "分页按钮/页大小选择已为32px，跳页输入仍由Kit绘制40px；它是保留的额外业务控件，完整footer几何仍需统一。"
         ],
         "evidence": [
           "benchmarks/model-alignment-runtime-partial.json",
           "benchmarks/model-alignment-statistics-populated.json",
           "screenshots/model-alignment-statistics-1440x900-native-2x.png",
-          "screenshots/model-alignment-statistics-populated-1440x900-native-2x.png"
+          "screenshots/model-alignment-statistics-populated-1440x900-native-2x.png",
+          "benchmarks/details-layout-build.json",
+          "benchmarks/details-layout-design-audit.json",
+          "benchmarks/details-layout-gui-validation.json",
+          "benchmarks/details-layout-geometry.json",
+          "benchmarks/details-layout-performance-summary.json",
+          "benchmarks/details-layout-startup-comparison.json",
+          "screenshots/details-layout-1440x900-native-2x.png",
+          "screenshots/details-layout-1100x700-native-2x.png"
         ]
       }
     },
@@ -3778,6 +3788,56 @@
       "date": "2026-10-30T17:24:51+08:00",
       "commit_subject": "fix(studio): refine model dialog spacing and responsive table width",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 55,
+      "title": "用量明细整页布局、范围汇总与页码草稿保护",
+      "status": "recorded",
+      "summary": "按最新56:8对齐明细副标题、47px页签区/筛选间距、283px面板起点和540px最大高度；请求行改52px、隔行使用#F4F6FF，仅明细页分页按钮/页大小选择收为32px，跳页输入仍由Kit绘制40px，窄窗继续收缩/换行。原独立范围条移入请求条数标签的原生Popover，仍读取原dashboard.summary，不删真实记录数/Token/积分；汇总分析视图原范围条不变。只改Rust/GPUI展示和UI输入同步，Core/协",
+      "highlights": [
+        "按最新56:8对齐明细副标题、47px页签区/筛选间距、283px面板起点和540px最大高度；请求行改52px、隔行使用#F4F6FF，仅明细页分页按钮/页大小选择收为32px，跳页输入仍由Kit绘制40px，窄窗继续收缩/换行。原独立范围条移入请求条数标签的原生Popover，仍读取原dashboard.summary，不删真实记录数/Token/积分；汇总分析视图原范围条不变。只改Rust/GPUI展示和UI输入同步，Core/协议/查询序列化/原分页及保存格式未改。",
+        "构建门禁：最终UI3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859的fmt、194tests（192通过/2忽略）、strict all-targets clippy、Intel类型检查及arm64 release均通过。ab28与595的中间构建/交互记录另保留；Intel这里只是类型检查，未宣称本版Intel/Windows实机通过。",
+        "最终真实交互与独立数据核验：CUA通过文档提供的后台getApp启动精确隔离bundle，未显式activate/raise；不声称实际前台未改变。最终UI20931对2供应商/5模型/14条真实本地Mock代理请求，实测内置0/自定义14/全部14、跳页/返回、汇总Tab→Space/Esc/Return、请求详情HTTP200/500输入+50输出/550总量和小窗滚动/右侧列。较早ab28另测下一页4条/20条页大小再恢复10；最终scope以各版记录为准。结束只读SQLite复核14/7000/700/7700，Core配置SHA始终不变。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "构建门禁",
+          "href": "benchmarks/details-layout-build.json"
+        },
+        {
+          "label": "最终真实交互与独立数据核验",
+          "href": "benchmarks/details-layout-gui-validation.json"
+        },
+        {
+          "label": "1440最终原图",
+          "href": "screenshots/details-layout-1440x900-native-2x.png"
+        },
+        {
+          "label": "1100最终原图",
+          "href": "screenshots/details-layout-1100x700-native-2x.png"
+        },
+        {
+          "label": "小窗真实范围汇总",
+          "href": "screenshots/details-layout-summary-1100x700-native-2x.png"
+        },
+        {
+          "label": "像素测量",
+          "href": "benchmarks/details-layout-geometry.json"
+        },
+        {
+          "label": "设计与资产审查",
+          "href": "benchmarks/details-layout-design-audit.json"
+        },
+        {
+          "label": "六轮原负载对照",
+          "href": "benchmarks/details-layout-performance-summary.json"
+        }
+      ],
+      "commit": "750ae14cd6eb347f8e7a54adec68b01b54a4270e",
+      "date": "2026-10-30T18:19:17+08:00",
+      "commit_subject": "fix(studio): align usage records and preserve page edits during refresh",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -4243,6 +4303,51 @@
         "not_reviewed": 37,
         "reviewing": 2,
         "reviewed_with_differences": 1,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T17:33:24+08:00",
+      "note": "开始UI55：后台CUA启动隔离用量明细实例，整页布局与范围汇总验收进行中。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 37,
+        "reviewing": 2,
+        "reviewed_with_differences": 1,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T18:15:10+08:00",
+      "note": "同步当前进度：UI55真实验收和性能已归档，提交收尾中；37/1/2首轮审查状态，40帧最终验收仍待完成。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 37,
+        "reviewing": 1,
+        "reviewed_with_differences": 2,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T18:19:50+08:00",
+      "note": "UI55提交完成，保留全部性能增量和启动波动；40帧最终验收仍待完成，继续共享控件/整帧差异修复。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 37,
+        "reviewing": 1,
+        "reviewed_with_differences": 2,
         "reviewed": 0
       }
     }
