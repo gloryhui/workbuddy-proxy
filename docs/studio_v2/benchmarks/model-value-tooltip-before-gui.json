@@ -1,0 +1,188 @@
+{
+  "scenario": {
+    "version": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0",
+    "ui_pid": 55581,
+    "core_pid": 55577,
+    "fixture_pid": 55576,
+    "window_id": 62597,
+    "scenario": "Providers first long display name; CUA scroll down/up over row, then natural tooltip",
+    "name_tooltip": "Single line extends past right edge; TAIL-NAME47 not visible. AX full text alone is not visual proof.",
+    "id_tooltip": "CUA scroll down/up over ID column did not show an ID tooltip during this observation; unverified, not an inferred failure.",
+    "raw": {
+      "file": "name-tooltip-1440-raw.png",
+      "size_px": [
+        1440,
+        901
+      ],
+      "sha256": "3995e80daf66f49ce300e225d15d1ee90d8b4849ac842d93c49ff85ac60ebde2"
+    },
+    "scope": "Synthetic isolated fixture; no clipboard, external AX, global bounds or CGEvent pointer action.",
+    "agent_crop_superseded": {
+      "file": "name-tooltip-1440.png",
+      "size_px": [
+        1440,
+        900
+      ],
+      "sha256": "8030b400b71c622c29b84d92f771c414ac71d9429244707d346643ea6111dce4",
+      "method": "sips crop top-left 1440x900; no scaling"
+    },
+    "cropped": {
+      "file": "pixel-exact-name-tooltip-1440.png",
+      "size_px": [
+        1440,
+        900
+      ],
+      "sha256": "b1346d72104ad918412509d9f82b5c191f5fd8655078b292af07489cb13505e9",
+      "method": "Pillow pixel-exact bottom1 row crop"
+    }
+  },
+  "lifecycle": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round38.y7j4rn5f/baseline-ui47",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round38.y7j4rn5f/baseline-ui47/WorkBuddy Proxy Review.app",
+      "core_pid": 55577,
+      "ui_pid": 55581,
+      "fixture_pid": 55576,
+      "port": 51217,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui47baseline-ui47",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 55581,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "0b43629a090b3976a43e9bf51a070bf0041cd8fc5c67b42484b840efea99a8c0"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 65,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "core_guard": {
+      "enforced": true,
+      "pid": 55577,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "all_three_pids_independently_gone": true,
+    "fixture_direct_wait_exit": 0,
+    "synthetic_models_sentinel_unchanged": true
+  },
+  "parent_viewed_raw": true,
+  "committed_image": "screenshots/model-value-tooltip-before-1440x900.png"
+}

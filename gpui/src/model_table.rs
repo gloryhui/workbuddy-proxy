@@ -6,7 +6,6 @@ use gpui_kit::component::{
     button::{Button, ButtonVariants},
     label::Label,
     table::{Column, TableDelegate, TableState},
-    tooltip::Tooltip,
 };
 use gpui_kit::prelude::{FluentBuilder as _, StatefulInteractiveElement as _};
 use gpui_kit::*;
@@ -208,7 +207,9 @@ impl TableDelegate for Models {
             .w_full()
             .min_w_0()
             .overflow_hidden()
-            .tooltip(move |window, cx| Tooltip::new(full.clone()).build(window, cx))
+            .tooltip(move |window, cx| {
+                crate::ui_components::full_value_tooltip(full.clone(), window, cx)
+            })
             .child(text.text_size(px(crate::theme::font::BODY)))
             .into_any_element()
     }

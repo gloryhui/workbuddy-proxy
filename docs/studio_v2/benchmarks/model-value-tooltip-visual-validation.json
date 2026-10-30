@@ -1,0 +1,84 @@
+{
+  "feature": "UI-47 full model name tooltip layout",
+  "images": [
+    {
+      "raw": "name-1440-raw.png",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "raw_sha256": "c2e9c2b13ace90fc8e0dd1d8d4fadb98bb547363c5824993d11ba60de66e99de",
+      "output": "pixel-exact-name-1440.png",
+      "output_px": [
+        1440,
+        900
+      ],
+      "output_sha256": "38a552a4f4bd573b370775443a13f9fcfa82a4dd5802e99d36e1b8de2f3d059e",
+      "processing": "Pillow exact crop of bottom1 row from raw; RGBA pixel identity verified; supersedes sips derivative",
+      "agent_processed_sha256": "bf11bcd9b573d7a641842767d6c5375e7c96fdcbadb67661804a718678d83298",
+      "agent_crop_pixel_identity": false,
+      "committed_image": "screenshots/model-value-tooltip-1440x900.png",
+      "parent_viewed_raw": true,
+      "crop_pixel_equality_verified": true
+    },
+    {
+      "raw": "name-1100-raw.png",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "raw_sha256": "7b40c934f0ea9e1ec9734a52a21eb18398c605dd945b3881c12792873f3787ff",
+      "output": "pixel-exact-name-1100.png",
+      "output_px": [
+        1100,
+        700
+      ],
+      "output_sha256": "c4f448f732b7a4861a8b25615852425d5c880c5aa19b6af519ebb5a5c7f8f0f7",
+      "processing": "Pillow exact crop of bottom1 row from raw; RGBA pixel identity verified; supersedes sips derivative",
+      "agent_processed_sha256": "319621d71446c93fcf1de6fe35a4c81e0e8ebefaa2567ad68e2eaa4f6b8e5d97",
+      "agent_crop_pixel_identity": false,
+      "committed_image": "screenshots/model-value-tooltip-1100x700.png",
+      "parent_viewed_raw": true,
+      "crop_pixel_equality_verified": true
+    },
+    {
+      "raw": "detail-more-1100-raw.png",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "raw_sha256": "24160eade01b6ab9e8f5d7068bc232e59b9f031562afa8db00a9f5b48046ed5f",
+      "output": "pixel-exact-detail-more-1100.png",
+      "output_px": [
+        1100,
+        700
+      ],
+      "output_sha256": "427a24f08b20b91170dcea9f30653b5bf3e9768e586bcca7d4993fb3c8353bd6",
+      "processing": "Pillow exact crop of bottom1 row from raw; RGBA pixel identity verified; supersedes sips derivative",
+      "agent_processed_sha256": "fbcf87a877dbbda3115581e6ece3e4e7f89e9d47fa374f4b4f99db1b65b4fb67",
+      "agent_crop_pixel_identity": false,
+      "committed_image": "screenshots/model-value-tooltip-detail-1100x700.png",
+      "parent_viewed_raw": true,
+      "crop_pixel_equality_verified": true
+    }
+  ],
+  "baseline": "model-value-tooltip-before-gui.json",
+  "design_asset": {
+    "node": "54:246",
+    "svg_root_px": 15,
+    "sha256": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68",
+    "byte_identical": true
+  },
+  "visual_findings": [
+    "Actual baseline native tooltip single-line text escapes window and TAIL-NAME47 is not visible.",
+    "Current native tooltip at both sizes has five wrapped lines and visible TAIL-NAME47 inside surface/window.",
+    "1100 request More retains original complete upstream model TAIL-ID47 and native two-level Esc."
+  ],
+  "limits": [
+    "Precise table ID tooltip was not independently shown; do not mark it runtime passed.",
+    "More content wrapping is not independent evidence of hovering every request-detail tooltip.",
+    "Not full frame, IME, reader, Windows/Intel runtime or HiDPI acceptance."
+  ],
+  "processing": "Select only own PID onscreen layer0; native screencapture. Raw901/701 to900/700 is exactly one bottom row crop; no scaling/repainting; all pixel equality checked.",
+  "checked_at": "2026-10-30T08:15:36.076709+08:00"
+}

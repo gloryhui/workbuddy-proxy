@@ -8,7 +8,7 @@
 
 use crate::theme::{color, font, radius, size};
 use gpui_kit::component::{
-    Disableable, ElementExt, FocusableExt, Icon, IconName, Sizable,
+    ActiveTheme, Disableable, ElementExt, FocusableExt, Icon, IconName, Sizable,
     button::{Button, ButtonCustomVariant, ButtonVariants},
     checkbox::Checkbox,
     dialog::{DialogContent, DialogFooter},
@@ -18,9 +18,22 @@ use gpui_kit::component::{
     select::{Select, SelectState},
     table::{DataTable, TableDelegate, TableState},
     tag::Tag,
+    tooltip::Tooltip,
 };
 use gpui_kit::prelude::FluentBuilder as _;
 use gpui_kit::*;
+
+/// Keep complete values inside the native tooltip, including unbroken IDs.
+pub fn full_value_tooltip(value: String, window: &mut Window, cx: &mut App) -> AnyView {
+    Tooltip::element(move |_, cx| {
+        Label::new(value.clone())
+            .max_w(px(520.))
+            .whitespace_normal()
+            .text_color(cx.theme().popover_foreground)
+    })
+    .max_w(px(560.))
+    .build(window, cx)
+}
 
 /// Shared button kinds. `Outline` is the primary-outline style used by the
 /// secondary actions in the provider page; `DangerOutline` is the pale danger
