@@ -1,0 +1,43 @@
+{
+  "status": "intermediate; not final",
+  "ui_sha256": "52ff37072e1ec1d4132c0f807c9f1152aa7688cf503b8d463b00fb320c92c814",
+  "ui_pid": 49558,
+  "core_pid": 49374,
+  "window_number": 3153,
+  "captures": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/candidate-3153.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "26d39be2dfd96084e907b469d07d004bce300d3d025b35352114f5171f5b4382"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/final-picker-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "26d39be2dfd96084e907b469d07d004bce300d3d025b35352114f5171f5b4382"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/final-sync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "f96e3dbae892898fd69ee98874e29152a796b4d085040867dcbe6b298be9f95d"
+    }
+  ],
+  "observations": [
+    "Picker obtained 5 candidates; 4 already added and 0 pending; Clear text appears enabled despite disabled semantics as independently identified by parent.",
+    "Picker and Sync canceled; Price opened and canceled without saving. Price screenshot not saved.",
+    "Price wide CUA observation showed notes label near fixed footer edge; visual geometry and accessibility not independently measured."
+  ],
+  "native_close": "CUA close button clicked; Core retained for parent lifecycle checks",
+  "limitations": [
+    "No Apply, Save, Sync or provider configuration change.",
+    "No explicit activate/raise, external AX, bounds or synthetic input."
+  ]
+}

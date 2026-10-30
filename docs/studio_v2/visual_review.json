@@ -17,7 +17,11 @@
       "61:289",
       "61:561",
       "61:838",
-      "61:1111"
+      "61:1111",
+      "59:11",
+      "60:27",
+      "60:249",
+      "60:475"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -259,20 +263,37 @@
     {
       "id": "59:11",
       "name": "06 / STUDIO V2 · 选择模型",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+        "states": "已有灰勾不变、可选model-b-1鼠标与Space、全选/反选/清空/仅选、命中/无匹配和Cancel通过；再次Add仅草稿/Core5，显式CmdS后Core6。新Base引擎保留原筛选/容量/草稿方法，完整Tab/全部容量/IME/AX未重验。",
+        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+      ],
+      "evidence": [
+        "benchmarks/dialogs-layout-design-audit.json",
+        "benchmarks/dialogs-layout-asset-audit.json",
+        "benchmarks/dialogs-layout-build.json",
+        "benchmarks/dialogs-layout-source-scope.json",
+        "benchmarks/dialogs-layout-final-gui-validation.json",
+        "benchmarks/dialogs-layout-interaction-core-proofs.json",
+        "benchmarks/dialogs-layout-original-fields-proof.json",
+        "benchmarks/dialogs-layout-process-lifecycle.json",
+        "benchmarks/dialogs-layout-performance-summary.json",
+        "screenshots/dialogs-layout-final-picker-wide.png",
+        "screenshots/dialogs-layout-final-picker-small.png"
+      ]
     },
     {
       "id": "59:279",
@@ -317,56 +338,107 @@
     {
       "id": "60:27",
       "name": "08 / STUDIO V2 · 同步 WorkBuddy",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+        "states": "确认Cancel不写；仅同步一次，将6模型写入隔离HOME/models.json，config.installed为6个模型安装条目、ID集合相同。Core真实HOME kernel保护已预检；未点击Restart/Unsync，不将隔离同步当真实WorkBuddy重启验收。",
+        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+      ],
+      "evidence": [
+        "benchmarks/dialogs-layout-design-audit.json",
+        "benchmarks/dialogs-layout-asset-audit.json",
+        "benchmarks/dialogs-layout-build.json",
+        "benchmarks/dialogs-layout-source-scope.json",
+        "benchmarks/dialogs-layout-final-gui-validation.json",
+        "benchmarks/dialogs-layout-interaction-core-proofs.json",
+        "benchmarks/dialogs-layout-original-fields-proof.json",
+        "benchmarks/dialogs-layout-process-lifecycle.json",
+        "benchmarks/dialogs-layout-performance-summary.json",
+        "screenshots/dialogs-layout-final-sync-wide.png",
+        "screenshots/dialogs-layout-final-sync-small.png"
+      ]
     },
     {
       "id": "60:249",
       "name": "09 / STUDIO V2 · 新建价格规则",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+        "states": "-1被本地decimal校验拒绝、规则0；纠正1.5/6/CNY/cache0并滚动取回备注实际输入后保存，规则1/revision1。原14费用快照逐字段不变，新本地mock请求500/50/550费用1050000nanos。旧错误在重新提交前仍显示，未改原校验逻辑。",
+        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+      ],
+      "evidence": [
+        "benchmarks/dialogs-layout-design-audit.json",
+        "benchmarks/dialogs-layout-asset-audit.json",
+        "benchmarks/dialogs-layout-build.json",
+        "benchmarks/dialogs-layout-source-scope.json",
+        "benchmarks/dialogs-layout-final-gui-validation.json",
+        "benchmarks/dialogs-layout-interaction-core-proofs.json",
+        "benchmarks/dialogs-layout-original-fields-proof.json",
+        "benchmarks/dialogs-layout-process-lifecycle.json",
+        "benchmarks/dialogs-layout-performance-summary.json",
+        "screenshots/dialogs-layout-final-price-wide.png",
+        "screenshots/dialogs-layout-final-price-small.png"
+      ]
     },
     {
       "id": "60:475",
       "name": "10 / STUDIO V2 · 请求详情",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+        "states": "真实新gpt6记录CNY¥0.00105、500/50/550；窄窗内滚取回费用/耗时/速度，更多详情1.5/6/0/0@1、Esc返回及Close通过；无缓存仍—、0ms/无速度，不冒充Figma样例89.4%/172.8tok/s。",
+        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+      ],
+      "evidence": [
+        "benchmarks/dialogs-layout-design-audit.json",
+        "benchmarks/dialogs-layout-asset-audit.json",
+        "benchmarks/dialogs-layout-build.json",
+        "benchmarks/dialogs-layout-source-scope.json",
+        "benchmarks/dialogs-layout-final-gui-validation.json",
+        "benchmarks/dialogs-layout-interaction-core-proofs.json",
+        "benchmarks/dialogs-layout-original-fields-proof.json",
+        "benchmarks/dialogs-layout-process-lifecycle.json",
+        "benchmarks/dialogs-layout-performance-summary.json",
+        "screenshots/dialogs-layout-final-detail-wide.png",
+        "screenshots/dialogs-layout-final-detail-small.png"
+      ]
     },
     {
       "id": "61:289",

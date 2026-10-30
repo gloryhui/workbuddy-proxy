@@ -1,0 +1,51 @@
+{
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "n_per_version": 2,
+  "same_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "previous_ui_sha256": "db89949f8ae49819e8c72951c5cfb2a4c1ba3c391ccd459dd743c3363ae7f899",
+  "current_ui_sha256": "76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "load": {
+    "providers": 1,
+    "models": 64,
+    "small_requests": 1000,
+    "large_requests": 80,
+    "size_mib": 1,
+    "concurrency": 4
+  },
+  "medians": {
+    "previous": {
+      "core_idle_rss_mib": 12.88,
+      "ui_idle_rss_mib": 84.475,
+      "idle_rss_mib": 97.36,
+      "core_ready_ms": 49.1715,
+      "native_ui_process_to_record_ms": 776.5615,
+      "sampled_peak_rss_mib": 144.0,
+      "large_seconds": 0.086,
+      "p50_ms": 0.171,
+      "p95_ms": 0.193
+    },
+    "current": {
+      "core_idle_rss_mib": 12.505,
+      "ui_idle_rss_mib": 84.78,
+      "idle_rss_mib": 97.29,
+      "core_ready_ms": 46.2,
+      "native_ui_process_to_record_ms": 756.768,
+      "sampled_peak_rss_mib": 142.74,
+      "large_seconds": 0.085,
+      "p50_ms": 0.172,
+      "p95_ms": 0.1915
+    }
+  },
+  "verdict": "No marked sustained regression observed in4runs; n2 each, not statistical equivalence/optimization.",
+  "limits": [
+    "RSS sums Core and UI and can double count shared pages;150ms sampledpeak can miss peaks, excludes mock/client.",
+    "Raw ui_record_ready_ms includes CUA wait and is excluded. process\u2192gpui.json excludes pre-process launch wait but is not first paint/interactivity. Core ready is before UI launch.",
+    "Original defaultProviders benchmark is separate from interactive2providers/6models/15rows fixture. Not FPS/inputlatency/longCPU/leaks/fullIME/AX/platform validation."
+  ]
+}

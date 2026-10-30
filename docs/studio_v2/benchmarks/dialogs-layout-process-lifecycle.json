@@ -1,0 +1,172 @@
+{
+  "checked_at": "2026-10-31T06:00:38.569341+08:00",
+  "known_direct_pids": 21,
+  "all_gone": true,
+  "entries": [
+    {
+      "group": "ui63-dialogs-baseline",
+      "kind": "fixture",
+      "pid": 43299,
+      "gone": true,
+      "exit_code": 0,
+      "ui_exit_note": null
+    },
+    {
+      "group": "ui63-dialogs-baseline",
+      "kind": "core",
+      "pid": 43300,
+      "gone": true,
+      "exit_code": 0,
+      "ui_exit_note": null
+    },
+    {
+      "group": "ui63-dialogs-baseline",
+      "kind": "ui",
+      "pid": 43547,
+      "gone": true,
+      "exit_code": null,
+      "ui_exit_note": "CUA-owned UI cannot be reaped by fixture"
+    },
+    {
+      "group": "ui63-dialogs-final",
+      "kind": "fixture",
+      "pid": 49369,
+      "gone": true,
+      "exit_code": 0,
+      "ui_exit_note": null
+    },
+    {
+      "group": "ui63-dialogs-final",
+      "kind": "core",
+      "pid": 49374,
+      "gone": true,
+      "exit_code": 0,
+      "ui_exit_note": null
+    },
+    {
+      "group": "ui63-dialogs-final",
+      "kind": "ui",
+      "pid": 49558,
+      "gone": true,
+      "exit_code": null,
+      "ui_exit_note": "CUA-owned UI cannot be reaped by fixture"
+    },
+    {
+      "group": "ui63-dialogs-final2",
+      "kind": "fixture",
+      "pid": 50866,
+      "gone": true,
+      "exit_code": 0,
+      "ui_exit_note": null
+    },
+    {
+      "group": "ui63-dialogs-final2",
+      "kind": "core",
+      "pid": 50874,
+      "gone": true,
+      "exit_code": 0,
+      "ui_exit_note": null
+    },
+    {
+      "group": "ui63-dialogs-final2",
+      "kind": "ui",
+      "pid": 51069,
+      "gone": true,
+      "exit_code": null,
+      "ui_exit_note": "CUA-owned UI cannot be reaped by fixture"
+    },
+    {
+      "group": "previous1",
+      "kind": "ui",
+      "pid": 56627,
+      "gone": true,
+      "exit_code": null
+    },
+    {
+      "group": "previous1",
+      "kind": "mock",
+      "pid": 56383,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "group": "previous1",
+      "kind": "core",
+      "pid": 56385,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "group": "current1",
+      "kind": "ui",
+      "pid": 56816,
+      "gone": true,
+      "exit_code": null
+    },
+    {
+      "group": "current1",
+      "kind": "mock",
+      "pid": 56657,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "group": "current1",
+      "kind": "core",
+      "pid": 56658,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "group": "current2",
+      "kind": "ui",
+      "pid": 57040,
+      "gone": true,
+      "exit_code": null
+    },
+    {
+      "group": "current2",
+      "kind": "mock",
+      "pid": 56847,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "group": "current2",
+      "kind": "core",
+      "pid": 56848,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "group": "previous2",
+      "kind": "ui",
+      "pid": 57260,
+      "gone": true,
+      "exit_code": null
+    },
+    {
+      "group": "previous2",
+      "kind": "mock",
+      "pid": 57069,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "group": "previous2",
+      "kind": "core",
+      "pid": 57071,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    }
+  ],
+  "observer_driver": "9stage observer and4run driver handles completed0. No UI exit-code inference."
+}

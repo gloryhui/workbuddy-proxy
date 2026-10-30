@@ -1,0 +1,95 @@
+{
+  "ui_sha256": "db89949f8ae49819e8c72951c5cfb2a4c1ba3c391ccd459dd743c3363ae7f899",
+  "ui_pid": 43547,
+  "core_pid": 43300,
+  "window_number": 3088,
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-picker-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "60f282ad2afaf2d7a9557444b9c7ffcbf1b36f54e93e4dd14756118cb72d9fc9",
+      "baseline": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-sync-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "ca7e5e7ac24a6f507c86a1528d6153241dccf421eb580c4f66d828da7623a7c7",
+      "baseline": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-price-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "cfd905f9adb86c1b1f789c4997ce2ddabab259906bfd10cbfca02d2cd274dbde",
+      "baseline": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-detail-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "14e6bec73e245976aa1f365f9a7d6e194a738b534d008a55c87160319de0554a",
+      "baseline": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-picker-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "e3a3c7ae2fa22e028d62f0d73c3fb03352cdb60c85dda3e7298cf5519c6add2f",
+      "baseline": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-sync-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "b8d52425bfbecdd0963c8c4a46dda4d5d18302f9588cff19caf71e218b30dff7",
+      "baseline": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-price-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "c25291535c3baef19211cd68639c52db4f4e9df69448672c9f7ae0393678a16f",
+      "baseline": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-detail-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "8fa91738e48703d96b18e306cf10c6d2bd0ced6f748407e9e9187c239f9a6947",
+      "baseline": true
+    }
+  ],
+  "observations": {
+    "picker": "Fetched models twice from local fixture to open wide and small; 5 candidates, 4 already added, 0 pending; Cancel both times, no additions.",
+    "sync": "Opened confirmation and Cancel at both sizes; did not choose sync or restart.",
+    "price": "Opened new price rule and Cancel at both sizes; no values entered or saved.",
+    "detail": "Opened first actual 200 record, 500 input/50 output/550 total; closed, small image retains scroll-dependent content.",
+    "resize": "CUA drag bottom-right from [1438,899] to [1098,699].",
+    "close": "CUA native close button clicked; exit/wait delegated to parent."
+  },
+  "capture": "Own PID onscreen layer0 window 3088 verified before each native screencapture. Picker wide copied byte-for-byte from candidate-3088 after visual confirmation. PNG raw, no crop or scaling.",
+  "limitations": [
+    "Baseline only, not new candidate or final design acceptance.",
+    "No Apply, Save, Test, Sync, clear or import.",
+    "No explicit activate or raise; actual foreground not asserted.",
+    "No external AX, bounds or CGEvent input."
+  ]
+}

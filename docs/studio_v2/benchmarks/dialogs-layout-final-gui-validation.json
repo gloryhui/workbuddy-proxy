@@ -1,0 +1,292 @@
+{
+  "ui_sha256": "76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c",
+  "ui_pid": 51069,
+  "core_pid": 50874,
+  "window_number": 3184,
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-picker-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "47e94111dcaf55e08e16d884c93e20cf10fa2739b9ce65b88aa302245f8aa835"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-sync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "dfa6bb84e9c2be94e1bcf9c5d105a875c8026ac2ec808f13a8cfd19b57829e91"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-price-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "cbce43ca4a3a1d4fedc03cfb570933d8631cd72b11e896048b9a6e2281fe19fb"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-detail-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "393a294b5193c61bc7d77b1a5faa5e6ce6d6fe5bfbea04b688715b49afd11995"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-picker-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "f96c6ef3a29fcf1bc30684a35564b49b3574d9de54789dd2a20ebf13dc734188"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-sync-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "cd58405794eec1e0711db3a0a86eabffc269accc89c097d13ff35672c08ce2a1"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-price-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "07e85600cff1785798c7b88af7b3a4df9227fa9d66cf8f98398d13800d07efc5"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-detail-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "2bb1f79dba606d8c7cb351d401cbfea46b4980418bb279efe23ec2bb3969ebf5"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/picker-checked-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "4e62d8719e90f2f8b674b309b36264e03864e2233bb044a3260890153ba69a47"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/price-invalid-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "8e9e77f7dd2d34306ab340dffe4c9126b317e635bcf51848e84b2f9f644ed769"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/price-note-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "2cb1bbd5f50eabad812dbe16e393583e53d98b8d0cef5558c81fa7a5a52b3abd"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/priced-detail-bottom-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "6ad472cd1fcfbe7421ecb11861c6357abfba77b1571f54f9102edf801214795b"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/picker-mono-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "cf68d3b692bec5358ed84d11c56e22830859f4023f367127a18f70495cb4e1cc"
+    }
+  ],
+  "observer_acknowledgements": [
+    {
+      "stage": "defaults-cancelled",
+      "ok": true,
+      "providers": 2,
+      "models": 5,
+      "private_models": 0,
+      "price_rules": 0,
+      "usage_counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "picker-cancelled",
+      "ok": true,
+      "providers": 2,
+      "models": 5,
+      "private_models": 0,
+      "price_rules": 0,
+      "usage_counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "picker-applied",
+      "ok": true,
+      "providers": 2,
+      "models": 5,
+      "private_models": 0,
+      "price_rules": 0,
+      "usage_counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "picker-saved",
+      "ok": true,
+      "providers": 2,
+      "models": 6,
+      "private_models": 0,
+      "price_rules": 0,
+      "usage_counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "sync-cancelled",
+      "ok": true,
+      "providers": 2,
+      "models": 6,
+      "private_models": 0,
+      "price_rules": 0,
+      "usage_counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "sync-only",
+      "ok": true,
+      "providers": 2,
+      "models": 6,
+      "private_models": 6,
+      "price_rules": 0,
+      "usage_counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "price-invalid",
+      "ok": true,
+      "providers": 2,
+      "models": 6,
+      "private_models": 6,
+      "price_rules": 0,
+      "usage_counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "price-saved",
+      "ok": true,
+      "providers": 2,
+      "models": 6,
+      "private_models": 6,
+      "price_rules": 1,
+      "usage_counts": [
+        15,
+        7500,
+        750,
+        8250,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    },
+    {
+      "stage": "detail-read",
+      "ok": true,
+      "providers": 2,
+      "models": 6,
+      "private_models": 6,
+      "price_rules": 1,
+      "usage_counts": [
+        15,
+        7500,
+        750,
+        8250,
+        200,
+        200
+      ],
+      "historical14_cost_snapshots_unchanged": true,
+      "core_health": "ready"
+    }
+  ],
+  "observations": {
+    "defaults": "Four dialogs, 1440x901 and 1100x701 native raw; no default Apply or Save; picker local fetch twice; sync canceled and detail closed.",
+    "picker": "Existing item click unchanged; model-b-1 mouse checked then Space unchecked; Select/Invert/Clear changed pending 0/1; Only filter showed four existing; search model-b-1 and no-match then clear; canceled. Reopened and added model-b-1 to A draft; Core still5; Cmd+S saved, Core6.",
+    "sync": "Cancel observed then only Sync once into isolated synthetic HOME; acknowledgement private models6, no Restart.",
+    "price": "sub2api gpt-6 CNY input -1/output6/read0/write0 rejected with plain decimal error; rule count0. Corrected input1.5, scrolled to complete note and typed UI63 rule; saved, rule1.",
+    "detail": "Observer issued one actual local mock request after save; UI first row and detail show sub2api/gpt-6, 500/50/550, CNY 0.00105, duration and TTFB 0 ms, speed unavailable; scroll reaches bottom. More displayed price 1.5000/6/0/0 @1, Escape dismissed More then Close dismissed detail.",
+    "theme": "Mono selected and Picker reopened with five existing grey checks; canceled, selected Studio again and reopened Picker, canceled.",
+    "native_close": "CUA clicked native close button index 66; Core retained for parent lifecycle checks. Exit code and wait not asserted."
+  },
+  "scope": [
+    "Own PID onscreen layer0 window3184 checked before native captures; picker wide is byte-copy of candidate-3184. No crop or scale; extra OS row retained.",
+    "Background CUA getApp, no explicit activate or raise; actual foreground not asserted.",
+    "No external AX or window bounds or CGEvent input, no clipboard, Test, restart or unsync.",
+    "Core has kernel profile verified independently by parent; GUI environment isolated, not kernel guarded.",
+    "No full-frame design acceptance; details at small size require internal scroll."
+  ]
+}

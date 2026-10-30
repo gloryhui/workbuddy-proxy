@@ -1,0 +1,342 @@
+{
+  "count": 56,
+  "artifacts": [
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/asset-audit.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-asset-audit.json",
+      "bytes": 23977,
+      "sha256": "6006eeb1aed5fd8a6c876666f5fad357c2215c3c1ce64593b5cf5d7e2df26751"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/source-scope.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-source-scope.json",
+      "bytes": 2150,
+      "sha256": "c21a9e0f7ab1b734db01949564fada7da1e6f6c9e685b09487bcbdfbb7fd1d67"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/build.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-build.json",
+      "bytes": 23329,
+      "sha256": "6e4e16ef9645baa2bd85fa73f178043e6086528a7181e0eb57e0bfe5a2af6ed9"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/initial-compile-error.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-initial-compile-error.json",
+      "bytes": 1427,
+      "sha256": "11139911c63e3477bcc8c768e2040a12215b6cac863680a40a5d5125b8b00cd6"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/design-audit.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-design-audit.json",
+      "bytes": 44376,
+      "sha256": "985cd875dee330a34f4884d3e9250ef761f4796ec82f67a5055830485438e778"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/inventory.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-inventory.json",
+      "bytes": 7146,
+      "sha256": "bc8859f06e464b8d418f5a67246007c1ca7030decce561a1c3bf56cc082906db"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/title-baseline.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-title-baseline.json",
+      "bytes": 1455,
+      "sha256": "b7e445432dee99c6252aa24ccd27c87e5ae1c888347096db9a92cc7514ddb8cf"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/title-final.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-title-final.json",
+      "bytes": 1459,
+      "sha256": "ea10cd7ad3a3f9f1e03264ff0640d481a40c439b89b86419ea37cdcce1eead0e"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/detail-final.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-detail-final.json",
+      "bytes": 1034,
+      "sha256": "43351495806aa5fd04f8c018d534c74ecef140c699251d1624f15bdef8a2110f"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/original-fields-proof.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-original-fields-proof.json",
+      "bytes": 982,
+      "sha256": "6ace1add88a9284d252a86380390be18ccee4df68c5e4218f57af675c82ef3d3"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/process-lifecycle.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-process-lifecycle.json",
+      "bytes": 3480,
+      "sha256": "40a350788fa8483e0b0c6b9839cc33b0998da0124e4a018a70ebeacfde69c0d5"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/performance-summary.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-performance-summary.json",
+      "bytes": 1892,
+      "sha256": "025591cfe92f0018eda90f68f629e5d72a50cc0e1ea62c351e039b194795881f"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/benchmark-driver.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-benchmark-driver.json",
+      "bytes": 617,
+      "sha256": "5b28ee7441090d5808398a6c68384c4014be36410c641fb6700ba204c5a82da7"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/performance-previous1.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-performance-previous1.json",
+      "bytes": 4513,
+      "sha256": "936f3885176092c4e6818c177aa8de26bc16ad03c59545a64bdb32ca3f075940"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/performance-current1.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-performance-current1.json",
+      "bytes": 4513,
+      "sha256": "68929e1c9ef2bf3e54f977d4e48fc19d316ebad5ae4bd000297e556d8b94e4e5"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/performance-current2.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-performance-current2.json",
+      "bytes": 4513,
+      "sha256": "379af7142729b0e654c1ca7eae9097fce03c730cbb947510fcf09f7a64361715"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/performance-previous2.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-performance-previous2.json",
+      "bytes": 4514,
+      "sha256": "2a4b6bbec341f83acd3b145f2f8869582cbadb54f2a62a43ee65327ad6cea0e0"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/reference-59-11.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-figma-59-11.png",
+      "bytes": 251240,
+      "sha256": "466892f509aa19ec1a400800389f57618bad334c6627056f80faafb2eb0661d4"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/reference-60-27.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-figma-60-27.png",
+      "bytes": 229238,
+      "sha256": "cb102fe00fc951a41372536885897d207f9338b2cc9cb52c7dcc068740b9b83e"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/reference-60-249.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-figma-60-249.png",
+      "bytes": 227629,
+      "sha256": "c091a4331ba51af7cdc4a548c27260f08747cfe85e0abf9e1379dd150d04d051"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/reference-60-475.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-figma-60-475.png",
+      "bytes": 250178,
+      "sha256": "e5aaa2942ac5b3cb88f60a2ecf3e791bfca66d0ae165c28ac0b6edf8fc3b6646"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-gui-validation.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-baseline-gui-validation.json",
+      "bytes": 3854,
+      "sha256": "f9a7c9d51e8815bf9454f4ef6f087d86b33311681d843962d8133a8b4053c217"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/post-gui-proof.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-baseline-post-gui-proof.json",
+      "bytes": 590,
+      "sha256": "43aef766612c9a23d3b2aeae4a69f281793226d69c0bd3b0a4be736013578713"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/terminal-status.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-baseline-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-picker-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-picker-wide.png",
+      "bytes": 227761,
+      "sha256": "60f282ad2afaf2d7a9557444b9c7ffcbf1b36f54e93e4dd14756118cb72d9fc9"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-picker-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-picker-small.png",
+      "bytes": 125651,
+      "sha256": "e3a3c7ae2fa22e028d62f0d73c3fb03352cdb60c85dda3e7298cf5519c6add2f"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-sync-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-sync-wide.png",
+      "bytes": 249784,
+      "sha256": "ca7e5e7ac24a6f507c86a1528d6153241dccf421eb580c4f66d828da7623a7c7"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-sync-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-sync-small.png",
+      "bytes": 167378,
+      "sha256": "b8d52425bfbecdd0963c8c4a46dda4d5d18302f9588cff19caf71e218b30dff7"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-price-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-price-wide.png",
+      "bytes": 202454,
+      "sha256": "cfd905f9adb86c1b1f789c4997ce2ddabab259906bfd10cbfca02d2cd274dbde"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-price-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-price-small.png",
+      "bytes": 129044,
+      "sha256": "c25291535c3baef19211cd68639c52db4f4e9df69448672c9f7ae0393678a16f"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-detail-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-detail-wide.png",
+      "bytes": 224656,
+      "sha256": "14e6bec73e245976aa1f365f9a7d6e194a738b534d008a55c87160319de0554a"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-baseline/baseline-detail-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-baseline-detail-small.png",
+      "bytes": 150048,
+      "sha256": "8fa91738e48703d96b18e306cf10c6d2bd0ced6f748407e9e9187c239f9a6947"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/intermediate-52ff-gui-validation.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-intermediate-52ff-gui-validation.json",
+      "bytes": 1748,
+      "sha256": "fcaa4c5cb1ce38f3af407c65d402b409c28ff0bb6831ae285ad4339e2bcbff86"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/post-gui-proof.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-intermediate-52ff-post-gui-proof.json",
+      "bytes": 590,
+      "sha256": "094e177f8f08fbba8a6a442831e178049cb10fc745baccd3ee20a4927c031864"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/terminal-status.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-intermediate-52ff-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/intermediate-52ff-build.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-intermediate-52ff-build.json",
+      "bytes": 23364,
+      "sha256": "ef735f8a39a3baa4c2ee31ce70f5090cf21781b4fbca7637fc35ce7bcf18d25d"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/final-picker-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-intermediate-52ff-picker-wide.png",
+      "bytes": 229305,
+      "sha256": "26d39be2dfd96084e907b469d07d004bce300d3d025b35352114f5171f5b4382"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final/final-sync-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-intermediate-52ff-sync-wide.png",
+      "bytes": 251280,
+      "sha256": "f96e3dbae892898fd69ee98874e29152a796b4d085040867dcbe6b298be9f95d"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-gui-validation.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-final-gui-validation.json",
+      "bytes": 9063,
+      "sha256": "896dafeca0b210597ba16d4076143bb92105e368568bbff7a08ba336c7145261"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/post-gui-proof.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-final-post-gui-proof.json",
+      "bytes": 591,
+      "sha256": "ca69bc6ccee0c4b21e5bab8a66fde3004458bdf4e14ae2a84fe5bbc87299b495"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/terminal-status.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-final-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/interaction-core-proofs.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-interaction-core-proofs.json",
+      "bytes": 8492,
+      "sha256": "91174ab8c608d13431230d09ed189553818c9bd4ceed384fec0eb3758c4db8d7"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/interaction-baseline-proof.json",
+      "repo": "docs/studio_v2/benchmarks/dialogs-layout-interaction-baseline-proof.json",
+      "bytes": 400,
+      "sha256": "44e95f2e9f0492d82d3a158f1fe5bbd488eeabbd5fd3272298e58d9b1c1f32c1"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-picker-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-picker-wide.png",
+      "bytes": 228281,
+      "sha256": "47e94111dcaf55e08e16d884c93e20cf10fa2739b9ce65b88aa302245f8aa835"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-sync-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-sync-wide.png",
+      "bytes": 251075,
+      "sha256": "dfa6bb84e9c2be94e1bcf9c5d105a875c8026ac2ec808f13a8cfd19b57829e91"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-price-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-price-wide.png",
+      "bytes": 202239,
+      "sha256": "cbce43ca4a3a1d4fedc03cfb570933d8631cd72b11e896048b9a6e2281fe19fb"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-detail-wide.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-detail-wide.png",
+      "bytes": 226533,
+      "sha256": "393a294b5193c61bc7d77b1a5faa5e6ce6d6fe5bfbea04b688715b49afd11995"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-picker-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-picker-small.png",
+      "bytes": 125944,
+      "sha256": "f96c6ef3a29fcf1bc30684a35564b49b3574d9de54789dd2a20ebf13dc734188"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-sync-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-sync-small.png",
+      "bytes": 168190,
+      "sha256": "cd58405794eec1e0711db3a0a86eabffc269accc89c097d13ff35672c08ce2a1"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-price-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-price-small.png",
+      "bytes": 129160,
+      "sha256": "07e85600cff1785798c7b88af7b3a4df9227fa9d66cf8f98398d13800d07efc5"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/final-detail-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-detail-small.png",
+      "bytes": 150682,
+      "sha256": "2bb1f79dba606d8c7cb351d401cbfea46b4980418bb279efe23ec2bb3969ebf5"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/picker-checked-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-picker-checked-small.png",
+      "bytes": 125860,
+      "sha256": "4e62d8719e90f2f8b674b309b36264e03864e2233bb044a3260890153ba69a47"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/price-invalid-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-price-invalid-small.png",
+      "bytes": 132634,
+      "sha256": "8e9e77f7dd2d34306ab340dffe4c9126b317e635bcf51848e84b2f9f644ed769"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/price-note-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-price-note-small.png",
+      "bytes": 132095,
+      "sha256": "2cb1bbd5f50eabad812dbe16e393583e53d98b8d0cef5558c81fa7a5a52b3abd"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/priced-detail-bottom-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-priced-detail-bottom-small.png",
+      "bytes": 145226,
+      "sha256": "6ad472cd1fcfbe7421ecb11861c6357abfba77b1571f54f9102edf801214795b"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf/ui63-dialogs-final2/picker-mono-small.png",
+      "repo": "docs/studio_v2/screenshots/dialogs-layout-final-picker-mono-small.png",
+      "bytes": 126417,
+      "sha256": "cf68d3b692bec5358ed84d11c56e22830859f4023f367127a18f70495cb4e1cc"
+    }
+  ],
+  "method": "Originals copied byte-for-byte; derived aggregate audits separate. Prefix distinguishes intermediate vs final even if initial intended filenames said final."
+}

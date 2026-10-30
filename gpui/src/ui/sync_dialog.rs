@@ -20,6 +20,7 @@ fn paragraph(text: &'static str, size: f32, line: f32, color: u32) -> Label {
 impl Proxy {
     pub(super) fn sync_confirmation(&self, cx: &mut Context<Self>) -> AnyElement {
         let remove = self.unsync_open;
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let palette = crate::theme::palette();
         let main = if remove {
             self.t(
@@ -67,18 +68,26 @@ impl Proxy {
         };
         div().flex().flex_col().w_full().gap_0()
             .child(div().flex().items_center().gap(px(14.)).h(px(45.)).flex_none().pr(px(20.))
+                .when(studio, |header| header.items_start())
                 .child(div().flex().items_center().justify_center().size(px(45.)).flex_none().rounded(px(14.))
-                    .bg(rgb(palette.tint)).child(Icon::default().path("studio/updates.svg").with_size(px(25.)).text_color(rgb(palette.dark))))
+                    .bg(rgb(if studio { 0xeeedff } else { palette.tint }))
+                    .when(studio, |badge| badge.child(Icon::new(IconName::RefreshCw)
+                        .with_size(px(25.)).text_color(rgb(palette.dark))))
+                    .when(!studio, |badge| badge.child(Icon::default().path("studio/updates.svg")
+                        .with_size(px(25.)).text_color(rgb(palette.dark)))))
                 .child(Label::new(if remove { self.t("取消同步 WorkBuddy", "Unsync WorkBuddy") } else { self.t("同步到 WorkBuddy", "Sync to WorkBuddy") })
-                    .text_size(px(21.)).font_weight(FontWeight::BOLD).text_color(rgb(INK))))
+                    .text_size(px(21.)).font_weight(FontWeight::BOLD).text_color(rgb(INK))
+                    .when(studio, |title| title.line_height(px(29.)).mt(px(-1.)))))
             .child(div().flex().flex_col().mt(px(18.)).gap(px(7.)).flex_none()
-                .child(paragraph(main, 14., 20., crate::theme::color::TEXT_2))
+                .child(paragraph(main, 14., 20., crate::theme::color::TEXT_2)
+                    .when(studio, |text| text.font_weight(FontWeight::MEDIUM)))
                 .child(paragraph(detail, 12., 17., MUTED)))
             .child(div().flex().flex_col().mt(px(20.)).px(px(14.)).py(px(12.)).gap(px(3.)).rounded(px(10.)).flex_none()
                 .bg(rgb(crate::theme::color::BG_NOTICE))
                 .child(div().flex().items_start().gap(px(6.))
                     .child(Icon::new(IconName::Info).with_size(px(14.)).mt(px(1.)).flex_none().text_color(rgb(crate::theme::color::TEXT_2)))
-                    .child(paragraph(notice, 12., 17., crate::theme::color::TEXT_2).flex_1().min_w_0()))
+                    .child(paragraph(notice, 12., 17., crate::theme::color::TEXT_2)
+                        .when(studio, |text| text.font_weight(FontWeight::MEDIUM)).flex_1().min_w_0()))
                 .child(paragraph(hint, 11., 15., MUTED).ml(px(20.)))
                 .when(!cfg!(target_os = "macos"), |notice| notice.child(paragraph(self.t(
                     "此平台暂不支持自动重启；请使用不重启选项，再手动重开 WorkBuddy。",

@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-31T05:54:58.058015+08:00",
+  "ui_pid": 51069,
+  "ui_pid_gone": true,
+  "ui_exit_code": null,
+  "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+  "core_pid": 50874,
+  "core_after_ui_closed": {
+    "http_status": 200,
+    "stats_health": "ready",
+    "config_sha256_unchanged": false,
+    "config_sha256_after": "761af6893370fe62f6172d137151e15d82aebf1d7f48622183af07f7f8d21b80",
+    "counts": [
+      15,
+      7500,
+      750,
+      8250,
+      200,
+      200
+    ],
+    "by_source": [
+      [
+        "relay",
+        15
+      ]
+    ]
+  }
+}

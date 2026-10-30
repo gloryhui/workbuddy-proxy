@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-31T06:02:28.761726+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round54.v9t50wwf",
+  "owner_uid": 501,
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "known_processes_gone": 21,
+  "deleted_files": 0,
+  "freed_bytes": 0,
+  "retained_file_count": 281,
+  "retained_bytes": 479486021,
+  "retained_mib": 457.27,
+  "system_data_free_bytes": 41459802112,
+  "system_data_free_gib": 38.61,
+  "reason": "Prior exact Root53 removal was rejected: approval required by policy with AskForApproval Never. Same approval state remains; no retry of that target, no equivalent deletion, parent expansion or policy change. This new Root54 retained as session-owned synthetic fixture/build/baseline cache; no deletion attempted under unchanged restriction.",
+  "evidence": "56 originals and derived reports exported. Core/UI/fixture/mock known21PIDs gone and observer/driver terminal0. SharedCargo target/source/repo outside this tempdir.",
+  "scope": "Copied binaries, synthetic test config/DB/HOME, temporary Figma sources/assets and verification helpers. No real user data targeted."
+}

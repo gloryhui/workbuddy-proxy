@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-31T05:30:05.180294+08:00",
+  "base_head": "8a35f113a9c14307652fa084252628e20f8687e3",
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.499,
+      "output": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked"
+      ],
+      "exit_code": 101,
+      "seconds": 3.281,
+      "output": "   Compiling workbuddy-proxy-gpui v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/gpui)\nerror[E0282]: type annotations needed\n   --> src/ui/model_picker.rs:412:45\n    |\n412 |         let action = |id, label, min_width, active| {\n    |                                             ^^^^^^\n...\n426 |                 .when(studio && !active, |button| {\n    |                                 ------- type must be known at this point\n    |\nhelp: consider giving this closure parameter an explicit type\n    |\n412 |         let action = |id, label, min_width, active: /* Type */| {\n    |                                                   ++++++++++++\n\nFor more information about this error, try `rustc --explain E0282`.\nerror: could not compile `workbuddy-proxy-gpui` (bin \"workbuddy-proxy-gpui\" test) due to 1 previous error\n"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "name" : "picker",
+    "pixels" : [
+      1440,
+      900
+    ],
+    "title_ink_bounds" : [
+      384,
+      118,
+      465,
+      137
+    ],
+    "version" : "reference"
+  },
+  {
+    "name" : "picker",
+    "pixels" : [
+      1440,
+      901
+    ],
+    "title_ink_bounds" : [
+      384,
+      119,
+      465,
+      138
+    ],
+    "version" : "candidate"
+  },
+  {
+    "name" : "sync",
+    "pixels" : [
+      1440,
+      900
+    ],
+    "title_ink_bounds" : [
+      545,
+      301,
+      730,
+      322
+    ],
+    "version" : "reference"
+  },
+  {
+    "name" : "sync",
+    "pixels" : [
+      1440,
+      901
+    ],
+    "title_ink_bounds" : [
+      545,
+      302,
+      730,
+      323
+    ],
+    "version" : "candidate"
+  },
+  {
+    "name" : "price",
+    "pixels" : [
+      1440,
+      900
+    ],
+    "title_ink_bounds" : [
+      461,
+      163,
+      583,
+      182
+    ],
+    "version" : "reference"
+  },
+  {
+    "name" : "price",
+    "pixels" : [
+      1440,
+      901
+    ],
+    "title_ink_bounds" : [
+      461,
+      164,
+      583,
+      183
+    ],
+    "version" : "candidate"
+  },
+  {
+    "name" : "detail",
+    "pixels" : [
+      1440,
+      900
+    ],
+    "title_ink_bounds" : [
+      424,
+      99,
+      505,
+      118
+    ],
+    "version" : "reference"
+  },
+  {
+    "name" : "detail",
+    "pixels" : [
+      1440,
+      901
+    ],
+    "title_ink_bounds" : [
+      424,
+      100,
+      505,
+      119
+    ],
+    "version" : "candidate"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-31T05:58:17.686584+08:00",
+  "all_original_fields_recursively_preserved": true,
+  "checked_nodes": 49,
+  "intentional_changes": {
+    "provider_A_appended_model": "model-b-1",
+    "total_models": 6,
+    "installed_model_entries": 6,
+    "private_WorkBuddy_models": 6,
+    "installed_ids_equal_private_model_ids": true,
+    "workbuddy_file_strictly_inside_fixture_HOME": true
+  },
+  "raw_observer_field_note": "installed_profiles in raw stage ACK means len(config.installed), which is installed model entries, not profile files. Correct meaning is6 entries in the one private models.json checked.",
+  "original_values_not_emitted": "Synthetic keys/endpoints and original model values compared in memory; no keys or model-file payload are serialized into proof.",
+  "final_config_sha256": "761af6893370fe62f6172d137151e15d82aebf1d7f48622183af07f7f8d21b80",
+  "private_model_file_sha256": "e7463a8af78ee6c65f916394d96c954f510505ca2e3664fc6d2f03f9cfa2f689"
+}

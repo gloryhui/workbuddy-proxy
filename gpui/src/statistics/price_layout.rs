@@ -16,7 +16,15 @@ fn field(label: &'static str, control: impl IntoElement) -> Div {
         .flex_1()
         .min_w_0()
         .flex_shrink_0()
-        .child(Label::new(label).text_size(px(12.)).text_color(rgb(MUTED)))
+        .child(
+            Label::new(label)
+                .text_size(px(12.))
+                .text_color(rgb(MUTED))
+                .when(
+                    crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                    |label| label.line_height(px(17.)).font_weight(FontWeight::MEDIUM),
+                ),
+        )
         .child(control)
 }
 
@@ -26,6 +34,16 @@ fn input(state: &Entity<InputState>, disabled: bool, label: &'static str) -> Inp
         .border_color(rgb(BORDER))
         .rounded(px(10.))
         .aria_label(label)
+        .when(
+            crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+            |input| {
+                input
+                    .text_color(rgb(crate::theme::color::TEXT_2))
+                    .text_size(px(13.))
+                    .line_height(px(18.))
+                    .font_weight(FontWeight::NORMAL)
+            },
+        )
 }
 
 impl Statistics {
@@ -100,6 +118,7 @@ impl Statistics {
     }
 
     fn price_body(&self, window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let height = (window.viewport_size().height - px(64.)).min(px(625.));
         let body_height = height - px(34.); // Native surface padding and border.
         let header_height = if self.zh { 67. } else { 84. };
@@ -119,8 +138,13 @@ impl Statistics {
             _ => "¥",
         };
         let price = |state, label| {
-            input(state, false, label)
-                .prefix(Label::new(symbol).text_size(px(13.)).text_color(rgb(MUTED)))
+            input(state, false, label).prefix(Label::new(symbol).text_size(px(13.)).text_color(
+                rgb(if studio {
+                    crate::theme::color::TEXT_2
+                } else {
+                    MUTED
+                }),
+            ))
         };
         let select_style = |select: gpui_kit::component::select::Select<Vec<Choice>>| {
             select
@@ -129,6 +153,13 @@ impl Statistics {
                 .bg(rgb(SURFACE))
                 .border_color(rgb(BORDER))
                 .rounded(px(10.))
+                .when(studio, |select| {
+                    select
+                        .text_color(rgb(crate::theme::color::TEXT_2))
+                        .text_size(px(13.))
+                        .line_height(px(18.))
+                        .font_weight(FontWeight::NORMAL)
+                })
         };
         let locked = self.price_draft.identity_locked();
         let provider_label = self.t("供应商", "Provider");
@@ -238,12 +269,15 @@ impl Statistics {
             .vertical_scrollbar(&self.price_form_scroll);
         div().flex().flex_col().w_full().h(body_height).gap_0()
             .child(div().flex().flex_col().h(px(header_height)).flex_none().gap(px(8.))
-                .child(div().flex().items_center().justify_between().gap(px(12.)).pr(px(24.))
+                .child(div().flex().items_center().justify_between().gap(px(12.)).pr(px(if studio { 5. } else { 24. }))
                     .child(Label::new(if self.price_draft.is_editing() { self.t("编辑价格", "Edit price") }
                         else { self.t("新建价格规则", "New price rule") })
-                        .text_size(px(21.)).font_weight(FontWeight::BOLD).text_color(rgb(INK)))
+                        .text_size(px(21.)).font_weight(FontWeight::BOLD).text_color(rgb(INK))
+                        .when(studio, |title| title.relative().top(px(-1.))))
                     .child(Tag::custom(rgb(SURFACE).into(), rgb(0x4c566d).into(), rgb(SURFACE).into())
                         .small().h(px(27.)).rounded(px(9.)).px(px(14.)).text_size(px(11.))
+                        .when(studio, |tag| tag.w(px(128.)).justify_center().font_weight(FontWeight::MEDIUM)
+                            .line_height(px(15.)).relative().top(px(-2.)))
                         .child(self.t("每百万 Token", "Per million tokens"))))
                 .child(div().text_size(px(12.)).line_height(px(17.)).text_color(rgb(MUTED)).child(self.t(
                     "为指定供应商及上游模型设置估算价格，保存后仅影响新请求。",

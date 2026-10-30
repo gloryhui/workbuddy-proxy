@@ -8,7 +8,9 @@ fn row(
     value: String,
     color: u32,
     wrap: bool,
+    cx: &App,
 ) -> Stateful<Div> {
+    let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
     let name = name.into();
     let hint = value.clone();
     div()
@@ -31,7 +33,13 @@ fn row(
                 .w(px(186.))
                 .flex_none()
                 .text_size(px(12.))
-                .text_color(rgb(MUTED)),
+                .text_color(rgb(MUTED))
+                .when(studio, |label| {
+                    label
+                        .line_height(px(17.))
+                        .font_weight(FontWeight::NORMAL)
+                        .when(!wrap, |label| label.relative().top(px(-3.)))
+                }),
         )
         .child(
             Label::new(value)
@@ -40,7 +48,16 @@ fn row(
                 .when(wrap, |label| label.whitespace_normal())
                 .when(!wrap, |label| label.text_ellipsis())
                 .text_size(px(12.))
-                .text_color(rgb(color)),
+                .text_color(rgb(color))
+                .when(studio, |label| {
+                    label
+                        .line_height(px(17.))
+                        .font_weight(FontWeight::NORMAL)
+                        .when(!wrap, |label| label.relative().top(px(-3.)))
+                        .when(!wrap && index == 0, |label| {
+                            crate::studio_fonts::latin(label, cx).font_weight(FontWeight::MEDIUM)
+                        })
+                }),
         )
 }
 
@@ -199,6 +216,7 @@ impl Statistics {
 
     fn detail_content(&self, window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
         use crate::{stats_dto::Outcome, ui_components::TagKind};
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let height = (window.viewport_size().height - px(64.)).min(px(770.)) - px(33.);
         let body_height = (height - px(66. + 51. + 50.)).max(px(100.));
         let (kind, badge) = self
@@ -236,7 +254,7 @@ impl Statistics {
                 }
             });
         let content = if let Some(detail) = &self.details {
-            self.detail_rows(detail).into_any_element()
+            self.detail_rows(detail, cx).into_any_element()
         } else if let Some(error) = &self.detail_error {
             div()
                 .flex()
@@ -292,18 +310,23 @@ impl Statistics {
             .vertical_scrollbar(&self.detail_scroll);
         div().flex().flex_col().w_full().h(height).gap_0()
             .child(div().flex().flex_col().h(px(66.)).flex_none().gap(px(8.))
-                .child(div().flex().items_center().justify_between().gap(px(12.)).pr(px(16.))
+                .child(div().flex().items_center().justify_between().gap(px(12.)).pr(px(if studio { 15. } else { 16. }))
                     .child(Label::new(self.t("请求详情", "Request detail")).text_size(px(21.))
                         .font_weight(FontWeight::BOLD).text_color(rgb(INK)))
-                    .child(super::settings_capture::status_badge(kind, badge).h(px(27.)).min_w(px(137.))))
+                    .child(super::settings_capture::status_badge(kind, badge).h(px(27.)).min_w(px(137.))
+                        .when(studio, |tag| tag.justify_center().rounded(px(9.))
+                            .font_weight(FontWeight::MEDIUM).line_height(px(15.)).relative().top(px(3.)))))
                 .child(Label::new(self.t("仅保存统计摘要，不包含消息内容、工具参数、图片或密钥", "Summary only: no message content, tool arguments, images or keys"))
                     .text_size(px(12.)).text_color(rgb(MUTED)))
-                .child(div().h(px(1.)).w_full().bg(rgb(BORDER))))
+                .child(div().h(px(1.)).w_full().bg(rgb(BORDER))
+                    .when(studio, |line| line.relative().top(px(6.)))))
             .child(body)
             .child(div().flex().flex_col().gap(px(3.)).h(px(51.)).flex_none().p(px(10.))
                 .rounded(px(10.)).bg(rgb(0xf4f6ff))
+                .when(studio, |notice| notice.relative().top(px(3.)))
                 .child(Label::new(self.t("缓存读写是输入的子集，不能与总 Token 简单相加。", "Cache reads/writes are input subsets; do not add them to total tokens."))
-                    .text_size(px(12.)).text_color(rgb(0x4c566d)))
+                    .text_size(px(12.)).text_color(rgb(0x4c566d))
+                    .when(studio, |text| text.font_weight(FontWeight::MEDIUM).line_height(px(17.))))
                 .child(Label::new(self.t("历史费用按请求发生时的价格快照计算。", "Historical costs use each request's recorded price snapshot."))
                     .text_size(px(11.)).text_color(rgb(MUTED))))
             .child(div().flex().items_end().justify_between().h(px(50.)).flex_none()
@@ -314,7 +337,7 @@ impl Statistics {
             .into_any_element()
     }
 
-    fn detail_rows(&self, detail: &RequestDetailDto) -> Div {
+    fn detail_rows(&self, detail: &RequestDetailDto, cx: &App) -> Div {
         let item = &detail.request;
         let metadata = detail_metadata::fields(item, self.zh);
         let tokens = if item.usage_status == crate::stats_dto::UsageStatus::NotApplicable {
@@ -422,6 +445,7 @@ impl Statistics {
                             INK
                         },
                         false,
+                        cx,
                     )
                     .when(index == 6 || index == 9, |row| {
                         row.border_b_1().border_color(rgb(BORDER))
@@ -539,7 +563,7 @@ impl Statistics {
                             .overflow_y_scroll()
                             .track_scroll(&self.detail_metadata_scroll)
                             .children(fields.into_iter().enumerate().map(
-                                |(index, (label, value))| row(index, label, value, INK, true),
+                                |(index, (label, value))| row(index, label, value, INK, true, cx),
                             )),
                     )
                     .child(ScrollableMask::new(

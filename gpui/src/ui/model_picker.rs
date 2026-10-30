@@ -65,6 +65,94 @@ impl ListDelegate for Candidates {
         let checked = existing || state.picked.contains(&candidate);
         let zh = state.zh;
         let target = self.owner.clone();
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
+        let label = Label::new(id.clone())
+            .text_size(px(13.))
+            .text_ellipsis()
+            .text_color(rgb(if existing { MUTED } else { INK }));
+        let on_change = move |checked: bool, window: &mut Window, cx: &mut App| {
+            cx.stop_propagation();
+            let _ = target.update(cx, |this, cx| {
+                this.set_picker_checked(candidate, checked);
+                cx.notify();
+                this.picker_list.update(cx, |list, cx| {
+                    list.set_selected_index(Some(ix), window, cx);
+                    list.scroll_to_selected_item(window, cx);
+                });
+                this.picker_focus.focus(window, cx);
+            });
+        };
+        let checkbox = if studio {
+            // Compose the same native engine as model_editor with the exact
+            // provided 15px indicator and unmodified 12px design check asset.
+            let fill = rgb(if existing {
+                MUTED
+            } else {
+                crate::theme::palette().primary
+            });
+            let tooltip = id.clone();
+            gpui_kit::base::Checkbox::new(("candidate-check", candidate))
+                .checked(checked)
+                .disabled(existing)
+                .tab_stop(false)
+                .accessibility_id(format!("candidate-{candidate}"))
+                .accessibility_label(id.clone())
+                .flex()
+                .items_center()
+                .gap(px(15.))
+                .flex_1()
+                .min_w_0()
+                .child(
+                    gpui_kit::base::CheckboxIndicator::new()
+                        .checked(checked)
+                        .disabled(existing)
+                        .flex()
+                        .items_center()
+                        .justify_center()
+                        .flex_none()
+                        .size(px(15.))
+                        .rounded(px(4.))
+                        .border_1()
+                        .border_color(if checked {
+                            fill
+                        } else {
+                            rgb(crate::theme::color::BORDER_INPUT)
+                        })
+                        .bg(if checked { fill } else { rgb(0xffffff) })
+                        .when(checked, |part| {
+                            part.child(
+                                svg()
+                                    .path("studio/model-check.svg")
+                                    .size(px(12.))
+                                    .text_color(rgb(0xffffff)),
+                            )
+                        }),
+                )
+                .child(label.line_height(px(19.)).font_weight(FontWeight::NORMAL))
+                .on_change(move |state, _, window, cx| {
+                    window.prevent_default();
+                    on_change(state == gpui_kit::base::CheckboxState::Checked, window, cx);
+                })
+                .on_mouse_down(MouseButton::Left, |_, window, _| window.prevent_default())
+                .tooltip(move |window, cx| {
+                    gpui_kit::component::tooltip::Tooltip::new(tooltip.clone()).build(window, cx)
+                })
+                .into_any_element()
+        } else {
+            Checkbox::new(("candidate-check", candidate))
+                .with_size(px(15.))
+                .checked(checked)
+                .disabled(existing)
+                .tab_stop(false)
+                .accessibility_id(format!("candidate-{candidate}"))
+                .accessibility_label(id.clone())
+                .tooltip(id.clone())
+                .flex_1()
+                .min_w_0()
+                .child(label)
+                .on_change(move |checked, window, cx| on_change(*checked, window, cx))
+                .into_any_element()
+        };
         Some(
             ListItem::new(("candidate", candidate))
                 .h(px(39.))
@@ -76,36 +164,7 @@ impl ListDelegate for Candidates {
                     row.bg(rgb(crate::theme::color::BG_TABLE_HEAD))
                 })
                 .accessibility_label(id.clone())
-                .child(
-                    Checkbox::new(("candidate-check", candidate))
-                        .with_size(px(15.))
-                        .checked(checked)
-                        .disabled(existing)
-                        .tab_stop(false)
-                        .accessibility_id(format!("candidate-{candidate}"))
-                        .accessibility_label(id.clone())
-                        .tooltip(id.clone())
-                        .flex_1()
-                        .min_w_0()
-                        .child(
-                            Label::new(id)
-                                .text_size(px(13.))
-                                .text_ellipsis()
-                                .text_color(rgb(if existing { MUTED } else { INK })),
-                        )
-                        .on_change(move |checked, window, cx| {
-                            cx.stop_propagation();
-                            let _ = target.update(cx, |this, cx| {
-                                this.set_picker_checked(candidate, *checked);
-                                cx.notify();
-                                this.picker_list.update(cx, |list, cx| {
-                                    list.set_selected_index(Some(ix), window, cx);
-                                    list.scroll_to_selected_item(window, cx);
-                                });
-                                this.picker_focus.focus(window, cx);
-                            });
-                        }),
-                )
+                .child(checkbox)
                 .when(existing, |row| {
                     row.suffix(move |_, _| {
                         Tag::custom(
@@ -118,6 +177,13 @@ impl ListDelegate for Candidates {
                         .min_w(px(87.))
                         .rounded(px(9.))
                         .text_size(px(11.))
+                        .when(studio, |tag| {
+                            tag.bg(rgb(0xeeedff))
+                                .border_color(rgb(0xeeedff))
+                                .justify_center()
+                                .font_weight(FontWeight::MEDIUM)
+                                .line_height(px(16.))
+                        })
                         .child(if zh { "已添加" } else { "Added" })
                     })
                 }),
@@ -307,6 +373,7 @@ impl Proxy {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) -> AnyElement {
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let filtered = self.filtered(cx);
         let count = filtered.len();
         let total = self.picker.as_ref().map_or(0, Vec::len);
@@ -342,12 +409,27 @@ impl Proxy {
         let footer_height = if over_limit { 105. } else { 81. };
         let height = surface_height(window) - px(37.);
         let list_height = (height - px(203. + footer_height)).max(px(100.));
-        let action = |id, label, min_width, active| {
+        let action = |id, label, min_width, active: bool| {
             crate::ui_components::action_button(id)
                 .h(px(35.))
                 .min_w(px(min_width))
                 .rounded(px(9.))
-                .label(label)
+                .when(studio, |button| {
+                    button.accessibility_label(label).child(
+                        div()
+                            .text_size(px(12.))
+                            .line_height(px(17.))
+                            .font_weight(FontWeight::MEDIUM)
+                            .child(label),
+                    )
+                })
+                .when(!studio, |button| button.label(label))
+                .when(studio && !active, |button| {
+                    button
+                        .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
+                        .border_1()
+                        .border_color(rgb(crate::theme::color::BORDER))
+                })
                 .when(active, |button| button.primary().outline())
                 .when(!active, |button| {
                     button.custom(
@@ -378,10 +460,14 @@ impl Proxy {
                             .justify_between()
                             .gap(px(12.))
                             .h(px(32.))
-                            .pr(px(16.))
+                            .when(studio, |header| header.items_start())
+                            .pr(px(if studio { 14. } else { 16. }))
                             .child(
                                 Label::new(self.t("选择模型", "Select models"))
                                     .text_size(px(21.))
+                                    .when(studio, |title| {
+                                        title.line_height(px(30.)).relative().top(px(-1.))
+                                    })
                                     .font_weight(FontWeight::BOLD)
                                     .text_color(rgb(INK)),
                             )
@@ -396,6 +482,14 @@ impl Proxy {
                                 .min_w(px(120.))
                                 .rounded(px(9.))
                                 .text_size(px(11.))
+                                .when(studio, |tag| {
+                                    tag.bg(rgb(0xeeedff))
+                                        .border_color(rgb(0xeeedff))
+                                        .justify_center()
+                                        .line_height(px(16.))
+                                        .font_weight(FontWeight::MEDIUM)
+                                        .mt(px(1.))
+                                })
                                 .child(format!(
                                     "{} {checked}/{total}",
                                     self.t("候选已选", "Checked")
@@ -426,6 +520,12 @@ impl Proxy {
                         .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
                         .border_color(rgb(crate::theme::color::BORDER))
                         .rounded(px(10.))
+                        .when(studio, |input| {
+                            input
+                                .text_color(rgb(crate::theme::color::TEXT_2))
+                                .line_height(px(19.))
+                                .font_weight(FontWeight::NORMAL)
+                        })
                         .aria_label(self.t("搜索模型 ID", "Search model IDs"))
                         .prefix(
                             Icon::new(IconName::Search)

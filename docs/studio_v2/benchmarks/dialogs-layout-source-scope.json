@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-31T05:33:39.319073+08:00",
+  "base_head": "8a35f113a9c14307652fa084252628e20f8687e3",
+  "changed_rust_paths": [
+    "gpui/src/ui/model_picker.rs",
+    "gpui/src/ui/sync_dialog.rs",
+    "gpui/src/statistics/price_layout.rs",
+    "gpui/src/statistics/detail_layout.rs"
+  ],
+  "source_sha256": {
+    "gpui/src/ui/model_picker.rs": "3e566d3d9a5008ed13bf82aaa02145b6f3c03970ddc887f7204b59601a0fe95e",
+    "gpui/src/ui/sync_dialog.rs": "bb37ca047ce98fd692049f73ec04cd2c75aaf293580740133ce7bc900865b883",
+    "gpui/src/statistics/price_layout.rs": "fcad6cef02dc31ba2733c9ff11eb281a9e01e5f797bf98506ed50d837fdd1d2f",
+    "gpui/src/statistics/detail_layout.rs": "f713b44311fb2a8c718681e9ca5e21acba0158ba46aede7117c5b7be2a419032"
+  },
+  "model_picker_nonrender_business_block_byte_equal": true,
+  "price_dialog_open_submit_close_block_byte_equal": true,
+  "scope": "4 native view files only; no Core/config/transport/dependencies/lockfile changes. Studio picker composes existing Kit BaseCheckbox engine like model_editor; callback converts same requested checked state then invokes unchanged set_picker_checked/list focus flow. Legacy Checkbox branch retained. Other handlers and data values preserved.",
+  "candidate_sha256": "76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c",
+  "limits": [
+    "Native glyphs close/Sync/Info differ from text prototype, no recreation of SVG paths. Sharedscrim remains preceding globalcolor. Exact optics and newrendered actualstates pending native review.",
+    "PriceLabel extra field and detail metadata preserve existing functionality beyond static design. Real Sync operates allsavedproviders, copy remains truthful rather than prototype current-only scope.",
+    "Six legacy themes have existing layout/control branches; not all new runtime states tested on each."
+  ],
+  "intermediate_52ff": "DefaultPicker Clear(chosen0) remained semantically disabled but its child Label overrode inherited disabled foreground. Changed only child text to div inheritance. Other3viewfiles byte equal, Basecheckbox/data/handlers unchanged; keep failure screenshot, do not label it final."
+}

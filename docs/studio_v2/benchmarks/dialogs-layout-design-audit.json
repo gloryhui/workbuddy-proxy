@@ -1,0 +1,918 @@
+{
+  "source": "Official Figma metadata/full high-fidelity design context+included render+1440px get_screenshot refreshed2026-10-31",
+  "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page_id": "51:2",
+  "frames": [
+    "59:11",
+    "60:27",
+    "60:249",
+    "60:475"
+  ],
+  "frame_count_inventory": 40,
+  "component_specs": {
+    "59-11": [
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[672px] left-[357px] overflow-clip rounded-[18px] shadow-[0px_18px_42px_0px_rgba(20,31,59,0.22)] top-[93px] w-[726px]",
+        "data-node-id": "59:216",
+        "data-name": "Dialog / Model Picker"
+      },
+      {
+        "className": "absolute h-[80px] left-[-1px] overflow-clip top-[-1px] w-[726px]",
+        "data-node-id": "59:217",
+        "data-name": "Dialog / Header"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[20px] leading-[30px] left-[26px] text-[21px] text-[color:var(--studio-ink,#161c2c)] top-[20px] w-[330px]",
+        "data-node-id": "59:218"
+      },
+      {
+        "className": "absolute bg-[var(--studio-accent-tint,#eeedff)] h-[27px] left-[566px] overflow-clip rounded-[9px] top-[22px] w-[120px]",
+        "data-node-id": "59:219",
+        "data-name": "Badge / 已选 1 / 38"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[16px] left-[34px] text-[11px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] whitespace-nowrap",
+        "data-node-id": "59:220"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[29px] left-[698px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[20px] w-[21px]",
+        "data-node-id": "59:221"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[71px] w-[659px]",
+        "data-node-id": "59:222"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[41px] left-[25px] overflow-clip rounded-[10px] top-[103px] w-[674px]",
+        "data-node-id": "59:223",
+        "data-name": "@INPUT:模型搜索"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[12px] text-[13px] text-[color:var(--studio-secondary,#778196)] top-[10px] w-[649px] whitespace-pre-wrap",
+        "data-node-id": "59:224"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[35px] left-[25px] overflow-clip rounded-[9px] top-[156px] w-[140px]",
+        "data-node-id": "59:225",
+        "data-name": "@PICKER:全选当前筛选"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[17px] left-[33px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] whitespace-nowrap",
+        "data-node-id": "59:226"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[35px] left-[173px] overflow-clip rounded-[9px] top-[156px] w-[140px]",
+        "data-node-id": "59:227",
+        "data-name": "@PICKER:反选当前筛选"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[17px] left-[33px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] whitespace-nowrap",
+        "data-node-id": "59:228"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[35px] left-[321px] overflow-clip rounded-[9px] top-[156px] w-[99px]",
+        "data-node-id": "59:229",
+        "data-name": "@PICKER:清空选择"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] whitespace-nowrap",
+        "data-node-id": "59:230"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[35px] left-[432px] overflow-clip rounded-[9px] top-[156px] w-[121px]",
+        "data-node-id": "59:231",
+        "data-name": "@PICKER:仅看已勾选"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[17px] left-[30px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] whitespace-nowrap",
+        "data-node-id": "59:232"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[352px] left-[25px] overflow-clip rounded-[10px] top-[203px] w-[674px]",
+        "data-node-id": "59:233",
+        "data-name": "Model selection list"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] h-[39px] left-[-1px] overflow-clip top-[-1px] w-[674px]",
+        "data-node-id": "59:234",
+        "data-name": "@MODEL:beam-free"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:235",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:236"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:237",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[39px] left-[-1px] overflow-clip top-[38px] w-[674px]",
+        "data-node-id": "59:238",
+        "data-name": "@MODEL:claude-haiku-5-5"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:239",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:240"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:241",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] h-[39px] left-[-1px] overflow-clip top-[77px] w-[674px]",
+        "data-node-id": "59:242",
+        "data-name": "@MODEL:deepseek-v4-pro"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:243",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:244"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:245",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[39px] left-[-1px] overflow-clip top-[116px] w-[674px]",
+        "data-node-id": "59:246",
+        "data-name": "@MODEL:deepseek-v4.1-flash"
+      },
+      {
+        "className": "absolute bg-[var(--studio-secondary,#778196)] left-[15px] overflow-clip rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:247",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "absolute left-[2px] size-[12px] top-[2px]",
+        "data-node-id": "93:486",
+        "data-name": "icon/tick"
+      },
+      {
+        "alt": "",
+        "className": "absolute block inset-0 max-w-none size-full"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-secondary,#778196)] top-[11px] w-[482px]",
+        "data-node-id": "59:249"
+      },
+      {
+        "className": "absolute bg-[var(--studio-accent-tint,#eeedff)] h-[27px] left-[571px] overflow-clip rounded-[9px] top-[7px] w-[87px]",
+        "data-node-id": "59:250",
+        "data-name": "Badge / 已添加"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[16px] left-[27px] text-[11px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] whitespace-nowrap",
+        "data-node-id": "59:251"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:252",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] h-[39px] left-[-1px] overflow-clip top-[155px] w-[674px]",
+        "data-node-id": "59:253",
+        "data-name": "@MODEL:gemini-4-argon"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:254",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:255"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:256",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[39px] left-[-1px] overflow-clip top-[194px] w-[674px]",
+        "data-node-id": "59:257",
+        "data-name": "@MODEL:glm-5.1"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:258",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:259"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:260",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] h-[39px] left-[-1px] overflow-clip top-[233px] w-[674px]",
+        "data-node-id": "59:261",
+        "data-name": "@MODEL:glm-5.2"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:262",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:263"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:264",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[39px] left-[-1px] overflow-clip top-[272px] w-[674px]",
+        "data-node-id": "59:265",
+        "data-name": "@MODEL:glm-5.3"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:266",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:267"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-0 top-[38px] w-[674px]",
+        "data-node-id": "59:268",
+        "data-name": "Divider"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] h-[39px] left-[-1px] overflow-clip top-[311px] w-[674px]",
+        "data-node-id": "59:269",
+        "data-name": "@MODEL:glm-5.3-flash"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid left-[15px] rounded-[4px] size-[15px] top-[12px]",
+        "data-node-id": "59:270",
+        "data-name": "Checkbox"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[19px] left-[45px] text-[13px] text-[color:var(--studio-ink,#161c2c)] top-[11px] w-[482px]",
+        "data-node-id": "59:271"
+      },
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] h-[95px] left-[-1px] overflow-clip top-[576px] w-[726px]",
+        "data-node-id": "59:272",
+        "data-name": "Dialog / Footer"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[26px] top-0 w-[674px]",
+        "data-node-id": "59:273",
+        "data-name": "Footer divider"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[22px] w-[525px]",
+        "data-node-id": "59:274"
+      },
+      {
+        "className": "absolute bg-[var(--studio-white,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[506px] px-[14px] rounded-[9px] top-[44px] w-[85px]",
+        "label": "取消",
+        "style": "Secondary"
+      },
+      {
+        "className": "absolute bg-[var(--studio-accent,#655cf4)] content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[599px] px-[14px] rounded-[9px] top-[44px] w-[101px]",
+        "label": "添加选中模型"
+      }
+    ],
+    "60-27": [
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[318px] left-[457px] overflow-clip rounded-[18px] shadow-[0px_18px_38px_0px_rgba(18,28,61,0.22)] top-[274px] w-[526px]",
+        "data-node-id": "60:232",
+        "data-name": "Dialog / Sync Confirmation"
+      },
+      {
+        "className": "absolute bg-[var(--studio-accent-tint,#eeedff)] left-[26px] rounded-[14px] size-[45px] top-[22px]",
+        "data-node-id": "60:233",
+        "data-name": "Icon badge"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[20px] leading-[35px] left-[38px] text-[25px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[27px] w-[24px]",
+        "data-node-id": "60:234"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[20px] leading-[29px] left-[85px] text-[21px] text-[color:var(--studio-ink,#161c2c)] top-[21px] w-[375px]",
+        "data-node-id": "60:235"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[28px] left-[492px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[18px] w-[22px]",
+        "data-node-id": "60:236"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[20px] left-[26px] text-[14px] text-[color:var(--studio-body,#4c566d)] top-[85px] w-[460px]",
+        "data-node-id": "60:237"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[112px] w-[476px]",
+        "data-node-id": "60:238"
+      },
+      {
+        "className": "[word-break:break-word] absolute bg-[var(--studio-soft-blue,#f4f6ff)] h-[59px] left-[26px] overflow-clip rounded-[10px] top-[149px] w-[472px]",
+        "data-node-id": "60:239",
+        "data-name": "Notice / disruption"
+      },
+      {
+        "className": "absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[14px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[12px] w-[447px] whitespace-pre-wrap",
+        "data-node-id": "60:240"
+      },
+      {
+        "className": "absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[15px] left-[34px] text-[11px] text-[color:var(--studio-secondary,#778196)] top-[34px] w-[428px]",
+        "data-node-id": "60:241"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[26px] top-[231px] w-[472px]",
+        "data-node-id": "60:242",
+        "data-name": "Footer line"
+      },
+      {
+        "className": "absolute bg-[var(--studio-white,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[178px] px-[14px] rounded-[9px] top-[254px] w-[83px]",
+        "label": "取消",
+        "style": "Secondary"
+      },
+      {
+        "className": "absolute bg-[var(--studio-white,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[271px] px-[14px] rounded-[9px] top-[254px] w-[92px]",
+        "label": "仅同步",
+        "style": "Secondary"
+      },
+      {
+        "className": "absolute bg-[var(--studio-accent,#655cf4)] content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[372px] px-[14px] rounded-[9px] top-[254px] w-[126px]",
+        "label": "同步并重启"
+      }
+    ],
+    "60-249": [
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[625px] left-[433px] overflow-clip rounded-[18px] shadow-[0px_18px_38px_0px_rgba(18,28,61,0.22)] top-[135px] w-[574px]",
+        "data-node-id": "60:435",
+        "data-name": "Dialog / New Pricing Rule"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[20px] leading-[29px] left-[26px] text-[21px] text-[color:var(--studio-ink,#161c2c)] top-[22px] w-[361px]",
+        "data-node-id": "60:436"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[27px] left-[413px] overflow-clip rounded-[9px] top-[22px] w-[128px]",
+        "data-node-id": "60:437",
+        "data-name": "Badge / 每百万 Token"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[15px] left-[30px] text-[11px] text-[color:var(--studio-body,#4c566d)] top-[6px] whitespace-nowrap",
+        "data-node-id": "60:438"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[28px] left-[542px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]",
+        "data-node-id": "60:439"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[59px] w-[509px]",
+        "data-node-id": "60:440"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[26px] top-[88px] w-[520px]",
+        "data-node-id": "60:441",
+        "data-name": "Divider"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[113px] w-[195px]",
+        "data-node-id": "60:442"
+      },
+      {
+        "className": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[42px] left-[26px] overflow-clip rounded-[10px] top-[134px] w-[520px]",
+        "data-node-id": "60:443",
+        "data-name": "@INPUT:供应商"
+      },
+      {
+        "className": "absolute h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[486px]",
+        "data-node-id": "60:444"
+      },
+      {
+        "className": "absolute h-[20px] leading-[21px] left-[496px] text-[15px] text-[color:var(--studio-secondary,#778196)] top-[8px] w-[18px]",
+        "data-node-id": "60:445"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[194px] w-[230px]",
+        "data-node-id": "60:446"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[42px] left-[26px] overflow-clip rounded-[10px] top-[216px] w-[520px]",
+        "data-node-id": "60:447",
+        "data-name": "@INPUT:模型 ID"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[486px]",
+        "data-node-id": "60:448"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[274px] w-[260px]",
+        "data-node-id": "60:449"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[306px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[274px] w-[230px]",
+        "data-node-id": "60:450"
+      },
+      {
+        "className": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[42px] left-[26px] overflow-clip rounded-[10px] top-[295px] w-[258px]",
+        "data-node-id": "60:451",
+        "data-name": "@SELECT:计价方式"
+      },
+      {
+        "className": "absolute h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[224px]",
+        "data-node-id": "60:452"
+      },
+      {
+        "className": "absolute h-[20px] leading-[21px] left-[234px] text-[15px] text-[color:var(--studio-secondary,#778196)] top-[8px] w-[18px]",
+        "data-node-id": "60:453"
+      },
+      {
+        "className": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[42px] left-[306px] overflow-clip rounded-[10px] top-[295px] w-[240px]",
+        "data-node-id": "60:454",
+        "data-name": "@SELECT:币种"
+      },
+      {
+        "className": "absolute h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[206px]",
+        "data-node-id": "60:455"
+      },
+      {
+        "className": "absolute h-[20px] leading-[21px] left-[216px] text-[15px] text-[color:var(--studio-secondary,#778196)] top-[8px] w-[18px]",
+        "data-node-id": "60:456"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[365px] w-[239px]",
+        "data-node-id": "60:457"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[42px] left-[26px] overflow-clip rounded-[10px] top-[386px] w-[253px]",
+        "data-node-id": "60:458",
+        "data-name": "@PRICE:输入价格 / 百万"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[219px]",
+        "data-node-id": "60:459"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[292px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[365px] w-[239px]",
+        "data-node-id": "60:460"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[42px] left-[292px] overflow-clip rounded-[10px] top-[386px] w-[253px]",
+        "data-node-id": "60:461",
+        "data-name": "@PRICE:输出价格 / 百万"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[219px]",
+        "data-node-id": "60:462"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[26px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[446px] w-[239px]",
+        "data-node-id": "60:463"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[42px] left-[26px] overflow-clip rounded-[10px] top-[467px] w-[253px]",
+        "data-node-id": "60:464",
+        "data-name": "@PRICE:缓存读取 / 百万"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[219px]",
+        "data-node-id": "60:465"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[292px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[446px] w-[239px]",
+        "data-node-id": "60:466"
+      },
+      {
+        "className": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[42px] left-[292px] overflow-clip rounded-[10px] top-[467px] w-[253px]",
+        "data-node-id": "60:467",
+        "data-name": "@PRICE:缓存写入 / 百万"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[18px] left-[11px] text-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[219px]",
+        "data-node-id": "60:468"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[26px] top-[549px] w-[520px]",
+        "data-node-id": "60:469",
+        "data-name": "Footer border"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[15px] left-[26px] text-[11px] text-[color:var(--studio-secondary,#778196)] top-[563px] w-[455px]",
+        "data-node-id": "60:470"
+      },
+      {
+        "className": "absolute bg-[var(--studio-white,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[357px] px-[14px] rounded-[9px] top-[579px] w-[82px]",
+        "label": "取消",
+        "style": "Secondary"
+      },
+      {
+        "className": "absolute bg-[var(--studio-accent,#655cf4)] content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[448px] px-[14px] rounded-[9px] top-[579px] w-[98px]",
+        "label": "保存规则"
+      }
+    ],
+    "60-475": [
+      {
+        "className": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[770px] left-[395px] overflow-clip rounded-[18px] shadow-[0px_18px_38px_0px_rgba(18,28,61,0.22)] top-[72px] w-[650px]",
+        "data-node-id": "60:692",
+        "data-name": "Dialog / Usage Detail"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[20px] leading-[29px] left-[27px] text-[21px] text-[color:var(--studio-ink,#161c2c)] top-[21px] w-[283px]",
+        "data-node-id": "60:693"
+      },
+      {
+        "className": "absolute bg-[var(--studio-success-tint,#e9f8f1)] h-[27px] left-[469px] overflow-clip rounded-[9px] top-[25px] w-[137px]",
+        "data-node-id": "60:694",
+        "data-name": "Badge / 200 · 已完成"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium leading-[15px] left-[35px] text-[11px] text-[color:var(--studio-success,#11976f)] top-[6px] whitespace-nowrap",
+        "data-node-id": "60:695"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[25px] left-[620px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[23px]",
+        "data-node-id": "60:696"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[57px] w-[568px]",
+        "data-node-id": "60:697"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[27px] top-[86px] w-[594px]",
+        "data-node-id": "60:698",
+        "data-name": "Divider"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[106px] w-[186px]",
+        "data-node-id": "60:699"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[20px] leading-[17px] left-[222px] not-italic text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[106px] w-[395px]",
+        "data-node-id": "60:700"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[142px] w-[186px]",
+        "data-node-id": "60:701"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[142px] w-[395px]",
+        "data-node-id": "60:702"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[178px] w-[186px]",
+        "data-node-id": "60:703"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[178px] w-[395px]",
+        "data-node-id": "60:704"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[214px] w-[186px]",
+        "data-node-id": "60:705"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[214px] w-[395px]",
+        "data-node-id": "60:706"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[250px] w-[186px]",
+        "data-node-id": "60:707"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[250px] w-[395px]",
+        "data-node-id": "60:708"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[286px] w-[186px]",
+        "data-node-id": "60:709"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[286px] w-[395px]",
+        "data-node-id": "60:710"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[322px] w-[186px]",
+        "data-node-id": "60:711"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[322px] w-[395px]",
+        "data-node-id": "60:712"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[27px] top-[351px] w-[594px]",
+        "data-node-id": "60:713",
+        "data-name": "Group divider"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[358px] w-[186px]",
+        "data-node-id": "60:714"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[358px] w-[395px]",
+        "data-node-id": "60:715"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[394px] w-[186px]",
+        "data-node-id": "60:716"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[394px] w-[395px]",
+        "data-node-id": "60:717"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[430px] w-[186px]",
+        "data-node-id": "60:718"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[430px] w-[395px]",
+        "data-node-id": "60:719"
+      },
+      {
+        "className": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[27px] top-[459px] w-[594px]",
+        "data-node-id": "60:720",
+        "data-name": "Group divider"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[466px] w-[186px]",
+        "data-node-id": "60:721"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[466px] w-[395px] whitespace-pre-wrap",
+        "data-node-id": "60:722"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[502px] w-[186px]",
+        "data-node-id": "60:723"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-success,#11976f)] top-[502px] w-[395px]",
+        "data-node-id": "60:724"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[538px] w-[186px]",
+        "data-node-id": "60:725"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[538px] w-[395px]",
+        "data-node-id": "60:726"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[574px] w-[186px]",
+        "data-node-id": "60:727"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[574px] w-[395px]",
+        "data-node-id": "60:728"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[27px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[610px] w-[186px]",
+        "data-node-id": "60:729"
+      },
+      {
+        "className": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[17px] left-[222px] text-[12px] text-[color:var(--studio-ink,#161c2c)] top-[610px] w-[395px]",
+        "data-node-id": "60:730"
+      },
+      {
+        "className": "[word-break:break-word] absolute bg-[var(--studio-soft-blue,#f4f6ff)] h-[51px] left-[27px] overflow-clip rounded-[10px] top-[659px] w-[594px]",
+        "data-node-id": "60:731",
+        "data-name": "Note / Data semantics"
+      },
+      {
+        "className": "absolute font-['Noto_Sans_SC:Medium'] font-medium h-[20px] leading-[17px] left-[13px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[566px]",
+        "data-node-id": "60:732"
+      },
+      {
+        "className": "absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[15px] left-[13px] text-[11px] text-[color:var(--studio-secondary,#778196)] top-[31px] w-[550px]",
+        "data-node-id": "60:733"
+      },
+      {
+        "className": "absolute bg-[var(--studio-white,white)] border border-[var(--studio-line-strong,#d8dde9)] border-solid content-stretch cursor-pointer flex h-[36px] items-center justify-center left-[523px] px-[14px] rounded-[9px] top-[724px] w-[98px]",
+        "label": "关闭"
+      }
+    ]
+  },
+  "asset_summary": {
+    "exact": 30,
+    "native_OS_controls": 3
+  },
+  "native_review": "Root viewed all4reference/8baseline/8finaldefault/5finalinteraction originals. Native1440x901/1100x701 retainOSextra1row, no crop/scale/redraw. Full-frame firstreview with differences, not acceptance.",
+  "title_pixel_comparison": [
+    {
+      "name": "picker",
+      "pixels": [
+        1440,
+        900
+      ],
+      "title_ink_bounds": [
+        384,
+        118,
+        465,
+        137
+      ],
+      "version": "reference"
+    },
+    {
+      "name": "picker",
+      "pixels": [
+        1440,
+        901
+      ],
+      "title_ink_bounds": [
+        384,
+        119,
+        465,
+        138
+      ],
+      "version": "candidate"
+    },
+    {
+      "name": "sync",
+      "pixels": [
+        1440,
+        900
+      ],
+      "title_ink_bounds": [
+        545,
+        301,
+        730,
+        322
+      ],
+      "version": "reference"
+    },
+    {
+      "name": "sync",
+      "pixels": [
+        1440,
+        901
+      ],
+      "title_ink_bounds": [
+        545,
+        302,
+        730,
+        323
+      ],
+      "version": "candidate"
+    },
+    {
+      "name": "price",
+      "pixels": [
+        1440,
+        900
+      ],
+      "title_ink_bounds": [
+        461,
+        163,
+        583,
+        182
+      ],
+      "version": "reference"
+    },
+    {
+      "name": "price",
+      "pixels": [
+        1440,
+        901
+      ],
+      "title_ink_bounds": [
+        461,
+        164,
+        583,
+        183
+      ],
+      "version": "candidate"
+    },
+    {
+      "name": "detail",
+      "pixels": [
+        1440,
+        900
+      ],
+      "title_ink_bounds": [
+        424,
+        99,
+        505,
+        118
+      ],
+      "version": "reference"
+    },
+    {
+      "name": "detail",
+      "pixels": [
+        1440,
+        901
+      ],
+      "title_ink_bounds": [
+        424,
+        100,
+        505,
+        119
+      ],
+      "version": "candidate"
+    }
+  ],
+  "detail_pixel_comparison": [
+    {
+      "line_y_at_x600": [
+        159,
+        424,
+        532
+      ],
+      "roles": [
+        {
+          "box": [
+            425,
+            182,
+            469,
+            192
+          ],
+          "name": "label0"
+        },
+        {
+          "box": [
+            425,
+            218,
+            469,
+            228
+          ],
+          "name": "label1"
+        },
+        {
+          "box": [
+            425,
+            398,
+            461,
+            408
+          ],
+          "name": "label6"
+        }
+      ],
+      "version": "reference"
+    },
+    {
+      "line_y_at_x600": [
+        160,
+        424,
+        532
+      ],
+      "roles": [
+        {
+          "box": [
+            425,
+            184,
+            469,
+            194
+          ],
+          "name": "label0"
+        },
+        {
+          "box": [
+            425,
+            220,
+            469,
+            230
+          ],
+          "name": "label1"
+        },
+        {
+          "box": [
+            425,
+            399,
+            469,
+            409
+          ],
+          "name": "label6"
+        }
+      ],
+      "version": "candidate"
+    }
+  ],
+  "scope": "Studio-only exact BaseCheckbox indicator15/check12, rowlabelgap15; inherit native disabled/hoverfg via div instead of Label; badges, titles, sync native vector, price typography, detail IDInter/row optics. No Core/function/config/dependency changes.",
+  "remaining_differences": [
+    "Global scrim and native close style remain different from Figma. Native RefreshCw/Info adapt prototype glyphs without recreatingSVG.",
+    "Request detail first normal rows about1pxlow afterOSrow; groupdividers about1pxhigh; labels/APIvalues preserve actual data. Exact font version/allglyphAA not asserted.",
+    "Price shell centered is about2logicalpx below reference;12px scrollgutter narrows fields and native equal-column layout differs. Extra label field is retained below viewport and reached via real scrolling/input; its top is partially clipped at default.",
+    "Picker empty space after5dynamic rows stays white whereas reference list surface issoft; dynamic candidates/checked4of5 rather than static1of38, additional counts and save hint retained.",
+    "Truthful Sync allsavedproviders copy differs from current-only prototype. Restart/unsync not run. Complete keyboard/IME/AX/all6skins/HiDPI/otherplatform hardware not finished."
+  ]
+}

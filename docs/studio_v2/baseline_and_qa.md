@@ -1407,3 +1407,28 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 本次未观察到明显持续退化，仍保留新增RSS/峰值/p95成本，不作统计等价或优化结论。RSS是两PID之和可能重复计共享页，峰值150ms采样可能漏峰；原ui_record_ready_ms包含CUA等待而不比较，进程到记录标记排除进程前工具等待但不是首帧/可交互时间，Core ready发生在UI启动前。上述默认页原负载与2供应商5模型的协议交互夹具分开，不证明FPS/输入延迟/长期CPU/泄漏/IME/AX/HiDPI/其他硬件。
 - 40帧中本批4帧完成整帧首审，台账为31待审/9已审查保留差异/0最终审查通过；40帧均仍部分验收，最终剩余40。明确保留原生X/共享scrim、Chat Select文字约低3px及映射标题约低2px、底栏水平偏移、全状态/键盘/IME/AX/平台差异；不能把本次首审或分项Passed升级为整帧一比一。Figma次级色在白底计算比3.914，未宣称全局AA。Goal保持active，后续按弹窗族继续全量首审及共享差异收敛。
 - 临时清理按原路径/所有者/父级组件/无symlink/挂载边界及297文件范围预检，24已记录PID消失，lsof和命令行均无引用，54份原PNG/JSON已逐字节保留。对本轮确切目录的rm被自动审批审查拒绝：`approval required by policy, AskForApproval Never`；没有换命令、重试、删父目录或改策略。释放0，保留546.95 MiB；系统Data剩余39.11 GiB。旧轮已被拒绝的目录未动。见[清理预检](benchmarks/protocol-layout-cleanup-preflight.json)、[清理结果](benchmarks/protocol-layout-cleanup.json)、[证据映射](benchmarks/protocol-layout-artifacts.json)。
+
+
+## 小功能 63：模型选择、同步确认、价格规则与请求详情首审（2026-10-31）
+
+- 官方MCP刷新51:2仍40唯一画板，读取59:11/60:27/60:249/60:475完整高保真上下文、内含渲染及1440×900原图。33个资源用指定curl重新下载，30与已有本地资源逐字节相同，3装饰窗口控件保留真实OS控件。完整壳/文字角色/资源与剩余差异见[设计审查](benchmarks/dialogs-layout-design-audit.json)、[资源核对](benchmarks/dialogs-layout-asset-audit.json)、[清单](benchmarks/dialogs-layout-inventory.json)。四帧完成首审，不作整帧最终通过。
+- 仅四Rust视图变更：Model Picker在Studio复用model_editor已采用的Native BaseCheckbox引擎，显式15px指示器、原12px model-check.svg及15px文字间隔；既有项灰勾禁用、可选项主色，原on_change状态请求转入同一set_picker_checked/list focus，筛选/容量/Add草稿逻辑块字节未变，旧皮肤保留原KitCheckbox分支。徽章EEEDFF居中、按钮文字12/17、搜索body色、标题光学校正；Sync标题约上移9px，main/notice权重校正，Studio用原生RefreshCw25替代将20px工具栏SVG错误放大到25px；Price字段body色13/18、label17/Medium、货币前缀和128px徽章；Detail只将请求ID设Inter Medium，其他行保持Noto、原36px行与数据/提示/完整元数据，修正正文/状态徽章/header线/notice光学位置。没有Core/协议/保存格式/依赖/锁文件修改。见[源码范围](benchmarks/dialogs-layout-source-scope.json)。
+- 最终76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c，42,442,656 bytes，较旧db899增加16,512 bytes；fmt/206tests（204通过、2既有忽略）/strict all-targets clippy/Intel all-targets类型检查/arm64 release均0，四源码构建及验收后SHA一致。初始bool闭包类型推断编译错误在门禁前修正并保留；52ff中间候选虽门禁0，但新Button child Label自带前景使禁用Clear看似可用，停止验收，改为div继承原生disabled/hover前景后完整重建重验。其他3文件与52ff字节相同，未把中间截图当最终。见[冻结构建](benchmarks/dialogs-layout-build.json)、[中间记录](benchmarks/dialogs-layout-intermediate-52ff-gui-validation.json)。
+- 最终唯一UI51069/Core50874，初始2供应商5模型/14真实本地种子请求/7700Token。主代理逐图查看四类宽/小共8张默认图及checked、价格错误、完整备注、新请求底部、Mono共5补图；原始1440×901和1100×701保留系统额外行，不裁剪、缩放或重绘。四标题参考/当前墨迹：Picker [384,118,465,137]/[384,119,465,138]；Sync [545,301,730,322]/[545,302,730,323]；Price [461,163,583,182]/[461,164,583,183]；Detail [424,99,505,118]/[424,100,505,119]，均只差OS行。详情header线159/160对齐；正文正常行仍约低1px、组线约高1px，仍留差异。见[真实GUI](benchmarks/dialogs-layout-final-gui-validation.json)、[标题像素](benchmarks/dialogs-layout-title-final.json)、[详情像素](benchmarks/dialogs-layout-detail-final.json)。
+- Picker真实已有灰勾点击不变，model-b-1鼠标勾选再Space取消，全选/反选/清空/仅选、搜索命中/无匹配/清查询及Cancel通过；重开Add后Core仍5，显式CmdS后为6（A5/B1），原49配置节点递归保持。Sync确认Cancel不写；随后只点一次“仅同步”，六个模型写入私有HOME的单一models.json，config.installed六个模型安装条目与该文件ID集合相同，不是六份配置文件。raw observer中installed_profiles命名不准，补充证明已说明其真实含义。没有Restart、Test、Unsync或真实用户目录写入；Core真实HOME与LaunchAgents权限由kernel预检保护，GUI只声明独立bundle及隔离环境。见[九阶段Core证明](benchmarks/dialogs-layout-interaction-core-proofs.json)、[原字段与安装ID证明](benchmarks/dialogs-layout-original-fields-proof.json)、[勾选实拍](screenshots/dialogs-layout-final-picker-checked-small.png)。
+- Price选择sub2api/gpt-6/CNY，输入-1/输出6/cache0被原plain-decimal校验拒绝，规则数0；纠正1.5，实际内滚取回完整备注并键入UI63 rule后保存，规则1/revision1。错误在重新提交前仍显示，原行为不改。独立SQL核对1.5/6/0/0，再只发1次本地合成gpt6请求，记录500/50/550、费用1,050,000 nanos（CNY0.00105），原14个历史费用快照逐字段保持；GUI真实详情显示该费用/Token，窄窗内滚到耗时/输出速度（—），更多详情读取价格1.5/6/0/0@1、Esc返回、Close通过，没有复制剪贴板或伪造缓存率/速度。备注默认顶部被viewport部分裁切，已证明可滚动输入，不说全部字段同屏。见[错误](screenshots/dialogs-layout-final-price-invalid-small.png)、[备注可达](screenshots/dialogs-layout-final-price-note-small.png)、[新请求详情](screenshots/dialogs-layout-final-priced-detail-bottom-small.png)。
+- 九独立stage均true：默认取消、Picker取消、Add草稿、显式保存、Sync取消、仅同步、价格拒绝、价格保存+新请求、详情读取。末态2供应商6模型/6安装条目/1规则/15请求，7500输入+750输出=8250；Core关UI后HTTP200/ready，再Core/fixture0，已记录21个直接PID消失。UI由CUA拥有，不能取得wait退出码，不写为UI exit0。Mono→Studio各打开Picker/Cancel，最终恢复Studio；不泛化为所有旧皮肤全部状态。见[关闭后数据](benchmarks/dialogs-layout-final-post-gui-proof.json)、[进程生命周期](benchmarks/dialogs-layout-process-lifecycle.json)。
+- 复用未改scripts/benchmark.py（bc7e0537…15f6c2），旧db899/新769，同Core25f24ad6，macOS arm64 release按P/C/C/P各2轮；1供应商64模型、1000小请求、80×1MiB/并发4，原负载不放宽。所有wrapper0、Core0/mock预期SIGTERM且wait、UI PID消失，Core kernel/LaunchAgents预检通过。原数据见[旧1](benchmarks/dialogs-layout-performance-previous1.json)、[新1](benchmarks/dialogs-layout-performance-current1.json)、[新2](benchmarks/dialogs-layout-performance-current2.json)、[旧2](benchmarks/dialogs-layout-performance-previous2.json)，[汇总](benchmarks/dialogs-layout-performance-summary.json)：
+
+| 中位数（每版n=2） | 旧db899 | 新769 |
+| --- | ---: | ---: |
+| Core / UI / 合计 RSS MiB | 12.880 / 84.475 / 97.360 | 12.505 / 84.780 / 97.290 |
+| 采样峰值 RSS MiB | 144.000 | 142.740 |
+| Core ready ms | 49.172 | 46.200 |
+| UI进程启动至gpui记录 ms | 776.562 | 756.768 |
+| 请求p50 / p95 ms | 0.171 / 0.193 | 0.172 / 0.1915 |
+| 大请求秒 | 0.086 | 0.085 |
+
+- 未见明显持续退化，UI RSS增加0.305MiB，合计差-0.070MiB；小样本不作统计等价或优化结论。RSS可能重复共享页，150ms峰值采样可能漏峰，排除mock/client；原ui_record_ready_ms含CUA等待不作比较，process→gpui记录标记不等于首帧/可交互，Core ready早于UI。默认Providers负载不是弹窗FPS/输入时延/长期CPU/泄漏测量。Intel类型检查不代表硬件，完整键盘/IME/AX/HiDPI/Windows及Intel实机仍未终验。
+- 本轮4帧由待审变为已审查保留差异，台账27待审/13保留差异/0最终通过，40帧仍部分验收、最终剩余40。共享scrim/原生X与glyph、价格shell/gutter/列宽及额外备注初始裁切、详情1px正文/组线与其他完整状态继续收敛；不以13张照片或分项Passed升级整帧通过。Goal保持active。
+- 已逐字节归档56份原PNG/JSON。沿用已知审批限制，本轮没有重试被拒的Root53或等价删除，也未改策略或删父目录；新的自有Root54保留457.27MiB供复用，释放0，系统Data余38.61GiB。所有相关进程已结束。见[证据映射](benchmarks/dialogs-layout-artifacts.json)、[临时材料保留说明](benchmarks/dialogs-layout-cleanup.json)。

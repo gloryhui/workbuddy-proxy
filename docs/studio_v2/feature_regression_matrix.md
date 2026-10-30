@@ -71,3 +71,6 @@ Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重
 
 
 四协议整帧首审与共享表单（UI62）：仅两Rust渲染文件，Studio标签几何/左对齐、原生selected+active白底、徽章色/Inter、字段文字和标题光学位置修正；load/read/parse/validate/switch_to与Apply/Save处理保持。最终db899四协议×两尺寸原始PNG、四tab各Return/Space、Responses非法文本往返/取消重开、Anthropic128正确拒绝→1024合法、四协议Apply与CmdS分步及九Core快照均留证。49个原配置节点递归相同，2供应商5模型0请求；UI关后Core200再正常退出。五编译门禁/204通过2忽略及P/C/C/P原负载四轮完成；旧63f、新db899性能与小样本限制见QA62。两个中间候选白底未生效不作通过，scope/原始照片与Core无副作用证据保留。四帧改为已审查保留差异，仍有Select/映射标题光学、原生X/scrim及完整状态/键盘/IME/AX/平台差异，不宣称整帧最终验收。
+
+
+四类业务弹窗整帧首审（UI63）：仅model_picker/sync_dialog/price_layout/detail_layout四Rust视图；Studio Picker复用现有NativeBaseCheckbox引擎与原12pxcheck资产/15px指示器/15px间隔，事件适配后仍走原set_picker_checked/list focus，六旧皮肤保留KitCheckbox。徽章/标题/字段文字、详情IDInter及行光学位置修正，最终769全门禁0/204pass2ignored。八默认原图与五交互原图、鼠标/Space/筛选/取消/Add到draft→显式Save的5→6模型边界；仅隔离HOME同步6模型、原49节点保持；价格-1拒绝再1.5/6/CNY/cache0/备注保存，原14费用快照不变，未来本地请求CNY0.00105/550Token，详情内滚/更多/Esc/Close通过。九Core阶段与21PID终态、四轮原负载留证。52ff中间版childLabel盖掉disabled前景不算通过，修为div继承并重建重验；注意raw observer字段installed_profiles实为安装模型条目，补充证明解释6条/单私有models.json。Mono→Studio抽查不等于六皮肤全部状态，Restart/完整键盘/IME/AX/平台及精确视觉仍待，不作整帧终验。

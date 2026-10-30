@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-10-31T05:38:47.474766+08:00",
+  "usage_rows": 14,
+  "price_rules": 0,
+  "historical_costs_digest": "cea990e7ca060d6a4b47407a72a59870e6ebf86e4de11ee10a5c5671a5dcb47d",
+  "config_sha256": "5eddc3c25756bf2ddf3ba83888fe0f69961c7919171b68b5246c8edb77599bcc",
+  "scope": "Read-only preinteraction snapshot, synthetic fixture only; cost rows have no API keys or message contents."
+}
