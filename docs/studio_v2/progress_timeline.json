@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-31T04:06:45+08:00",
+  "updated_at": "2026-10-31T04:27:45+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "e47267476e7b9544a6a575c253f62adc65a69ce4",
@@ -28,8 +28,8 @@
   "current_task": {
     "id": 62,
     "title": "四协议完整画板首审与共享表单差异",
-    "status": "planned",
-    "description": "下一批先刷新51:2清单，再集中读取61:289/61:561/61:838/61:1111四协议完整画板与资源，对照当前Rust原生弹窗识别并收敛共享表单差异；本批尚未实施。保持40帧完整范围和真实协议/草稿/保存语义，最终剩余40。"
+    "status": "developing",
+    "description": "已刷新官方51:2清单，仍为40帧；已读取四协议完整高保真上下文与官方截图，完成当前版本四协议1440及Gemini1100基线实拍、切换和Esc取消核对。正在比对标签页、字体、颜色与间距，本轮Rust修复尚未完成；修复后真实交互、两尺寸及性能验证仍待执行。全局35帧待整帧首审、5帧已审查保留差异，最终剩余40；当前尚无可信的全局最终验收日期。"
   },
   "latest_task": {
     "id": 61,
@@ -4965,6 +4965,21 @@
     {
       "date": "2026-10-31T04:06:45+08:00",
       "note": "UI61完成后转入四协议完整画板首审；35帧待首审、5帧已审查保留差异，全局最终验收未完成。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 0,
+        "reviewed_with_differences": 5,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T04:27:45+08:00",
+      "note": "按当前真实证据更新UI62施工状态；基线实拍不作为修复后验收结果。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
