@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "updated_at": "2026-10-31T05:07:00+08:00",
+  "updated_at": "2026-10-31T06:08:09+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "043112c93ea5b40d72eacdaeba868cb592b4831c",
+  "code_head": "617836e9681885e7a3b122d7403125f7d74af843",
   "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
   "goal_status": "active",
   "counts": {
@@ -13,72 +13,74 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 62,
+  "recorded_tasks": 63,
   "remaining_final": 40,
   "visual_review": {
     "counts": {
-      "not_reviewed": 31,
+      "not_reviewed": 27,
       "reviewing": 0,
-      "reviewed_with_differences": 9,
+      "reviewed_with_differences": 13,
       "reviewed": 0
     },
     "source": "visual_review.json",
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 63,
-    "title": "模型选择、同步确认、价格规则与请求详情整帧首审",
+    "id": 64,
+    "title": "共用弹窗遮罩、关闭控件与已审几何差异收敛",
     "status": "planned",
-    "description": "按弹窗族继续全量首审：下一批读取59:11、60:27、60:249、60:475完整最新官方画板，集中核对共享壳/表单/按钮/文字与真实交互，连同已记录的协议光学差异归并修复。本批尚未实施；不缩减40帧完整范围、不改核心或配置语义。当前31帧待首审、9帧已审查保留差异，最终剩余40。"
+    "description": "下一批先核对已读取的完整弹窗稿与原生Dialog/Base关闭接口，集中修正Studio遮罩/关闭控件，并归并协议文字、价格字段与详情行线的已记录几何差异，保持原取消/保存/焦点及六旧皮肤语义。本批尚未实施；剩余27帧整帧首审仍保留在完整40帧范围，13帧已审查但有差异，最终剩余40。"
   },
   "latest_task": {
-    "id": 62,
-    "title": "四协议完整画板首审与共享表单样式",
+    "id": 63,
+    "title": "模型选择、同步确认、价格规则与请求详情首审",
     "status": "recorded",
-    "summary": "官方 Figma 重新读取 51:2 清单，仍为40个唯一画板；集中读取 61:289 / 61:561 / 61:838 / 61:1111 的完整高保真上下文、组件与1440×900原图。30个共用资源重新下载：25字节一致、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件使用真实OS控件。原始参考、资源规格和核对见完整设计审查、资源核对、40帧清单。不把静态示例数据或组件局部核对当作整帧最终验收。",
+    "summary": "官方MCP刷新51:2仍40唯一画板，读取59:11/60:27/60:249/60:475完整高保真上下文、内含渲染及1440×900原图。33个资源用指定curl重新下载，30与已有本地资源逐字节相同，3装饰窗口控件保留真实OS控件。完整壳/文字角色/资源与剩余差异见设计审查、资源核对、清单。四帧完成首审，不作整帧最终通过。",
     "highlights": [
-      "官方 Figma 重新读取 51:2 清单，仍为40个唯一画板；集中读取 61:289 / 61:561 / 61:838 / 61:1111 的完整高保真上下文、组件与1440×900原图。30个共用资源重新下载：25字节一致、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件使用真实OS控件。原始参考、资源规格和核对见完整设计审查、资源核对、40帧清单。不把静态示例数据或组件局部核对当作整帧最终验收。",
-      "仅修改 ui/protocol_dialog.rs 和 protocol_options.rs 两个Rust渲染文件：Studio四标签宽123/124/124/137、left4/142/282/422、文字左15、12/17及选中/未选权重；原生selected加active白底、默认D5D1FF边框及原焦点主色；徽章EEEDFF与Inter Medium11/16；映射key及Anthropic-Version用Inter Medium12/17；字段原生文字4C566D、12/17与labelMedium；标题光学上移1px。六旧皮肤保留原分支/字体，不将源码分支等同于本版所有皮肤实测。Editor的load/read/parse/validate/switch_to和raw draft储存的非render前后段字节保持，原tab/Apply/Save处理器保留；不改Core、协议",
-      "最终冻结候选 db89949f8ae49819e8c72951c5cfb2a4c1ba3c391ccd459dd743c3363ae7f899，42,426,144 bytes，比旧63f增加16 bytes；fmt、206测试（204通过/2既有忽略）、strict all-targets clippy、Intel all-targets类型检查、arm64 release均0，构建前后及验收后两源码SHA一致。Intel类型检查不是硬件验收。两个中间候选089a/1389虽五门禁0，但实拍选中底仍245/247/251而不是白：进一步核对Kit源码确认普通Custom颜色会混入透明、toggled仅设置AX pressed，必须显式native selected及active颜色。修复后原PNG两点255/255/255、徽章238/237/255与参考相同；标题墨迹参考[437,11"
+      "官方MCP刷新51:2仍40唯一画板，读取59:11/60:27/60:249/60:475完整高保真上下文、内含渲染及1440×900原图。33个资源用指定curl重新下载，30与已有本地资源逐字节相同，3装饰窗口控件保留真实OS控件。完整壳/文字角色/资源与剩余差异见设计审查、资源核对、清单。四帧完成首审，不作整帧最终通过。",
+      "仅四Rust视图变更：Model Picker在Studio复用model_editor已采用的Native BaseCheckbox引擎，显式15px指示器、原12px model-check.svg及15px文字间隔；既有项灰勾禁用、可选项主色，原on_change状态请求转入同一set_picker_checked/list focus，筛选/容量/Add草稿逻辑块字节未变，旧皮肤保留原KitCheckbox分支。徽章EEEDFF居中、按钮文字12/17、搜索body色、标题光学校正；Sync标题约上移9px，main/notice权重校正，Studio用原生RefreshCw25替代将20px工具栏SVG错误放大到25px；Price字段body色13/18、label17/Medium、货币前缀和128px徽章；Detail只将请求ID设Inter Medium，其他行保持Not",
+      "最终76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c，42,442,656 bytes，较旧db899增加16,512 bytes；fmt/206tests（204通过、2既有忽略）/strict all-targets clippy/Intel all-targets类型检查/arm64 release均0，四源码构建及验收后SHA一致。初始bool闭包类型推断编译错误在门禁前修正并保留；52ff中间候选虽门禁0，但新Button child Label自带前景使禁用Clear看似可用，停止验收，改为div继承原生disabled/hover前景后完整重建重验。其他3文件与52ff字节相同，未把中间截图当最终。见冻结构建、中间记录。"
     ],
-    "limits": [],
+    "limits": [
+      "未见明显持续退化，UI RSS增加0.305MiB，合计差-0.070MiB；小样本不作统计等价或优化结论。RSS可能重复共享页，150ms峰值采样可能漏峰，排除mock/client；原ui_record_ready_ms含CUA等待不作比较，process→gpui记录标记不等于首帧/可交互，Core ready早于UI。默认Providers负载不是弹窗FPS/输入时延/长期CPU/泄漏测量。Intel类型检查不代表硬件，完整键盘/IME/AX/HiDPI/Windows及Intel实机仍未终验。"
+    ],
     "evidence": [
       {
-        "label": "完整设计审查",
-        "href": "benchmarks/protocol-layout-design-audit.json"
+        "label": "设计审查",
+        "href": "benchmarks/dialogs-layout-design-audit.json"
       },
       {
         "label": "资源核对",
-        "href": "benchmarks/protocol-layout-assets.json"
+        "href": "benchmarks/dialogs-layout-asset-audit.json"
       },
       {
-        "label": "40帧清单",
-        "href": "benchmarks/protocol-layout-inventory.json"
+        "label": "清单",
+        "href": "benchmarks/dialogs-layout-inventory.json"
       },
       {
         "label": "源码范围",
-        "href": "benchmarks/protocol-layout-source-scope.json"
+        "href": "benchmarks/dialogs-layout-source-scope.json"
       },
       {
         "label": "冻结构建",
-        "href": "benchmarks/protocol-layout-build.json"
+        "href": "benchmarks/dialogs-layout-build.json"
       },
       {
-        "label": "最终像素",
-        "href": "benchmarks/protocol-layout-final-pixels.json"
+        "label": "中间记录",
+        "href": "benchmarks/dialogs-layout-intermediate-52ff-gui-validation.json"
       },
       {
-        "label": "中间089a",
-        "href": "benchmarks/protocol-layout-intermediate-089a-gui-validation.json"
+        "label": "真实GUI",
+        "href": "benchmarks/dialogs-layout-final-gui-validation.json"
       },
       {
-        "label": "中间1389",
-        "href": "benchmarks/protocol-layout-intermediate-1389-gui-validation.json"
+        "label": "标题像素",
+        "href": "benchmarks/dialogs-layout-title-final.json"
       }
     ],
-    "commit": "043112c93ea5b40d72eacdaeba868cb592b4831c",
-    "date": "2026-10-31T05:06:17+08:00",
-    "commit_subject": "fix(gpui): align Studio protocol tabs and field typography",
+    "commit": "617836e9681885e7a3b122d7403125f7d74af843",
+    "date": "2026-10-31T06:07:16+08:00",
+    "commit_subject": "fix(gpui): align Studio picker and business dialogs",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -360,26 +362,43 @@
       "node": "59:11",
       "title": "06 / STUDIO V2 · 选择模型",
       "source": "ui/model_picker.rs, ui.rs, ui/providers.rs",
-      "detail": "部分：原生726×672/小窗自适应、38/4096虚拟候选、过滤与勾选/键盘、取消/确认草稿/显式保存、跨供应商256边界与错误/空态已验；完整IME/无障碍/跨平台待续",
+      "detail": "部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-11",
       "visual_review": {
         "id": "59:11",
         "name": "06 / STUDIO V2 · 选择模型",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+          "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+          "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+          "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+          "states": "已有灰勾不变、可选model-b-1鼠标与Space、全选/反选/清空/仅选、命中/无匹配和Cancel通过；再次Add仅草稿/Core5，显式CmdS后Core6。新Base引擎保留原筛选/容量/草稿方法，完整Tab/全部容量/IME/AX未重验。",
+          "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+          "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+          "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+          "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+          "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+          "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        ],
+        "evidence": [
+          "benchmarks/dialogs-layout-design-audit.json",
+          "benchmarks/dialogs-layout-asset-audit.json",
+          "benchmarks/dialogs-layout-build.json",
+          "benchmarks/dialogs-layout-source-scope.json",
+          "benchmarks/dialogs-layout-final-gui-validation.json",
+          "benchmarks/dialogs-layout-interaction-core-proofs.json",
+          "benchmarks/dialogs-layout-original-fields-proof.json",
+          "benchmarks/dialogs-layout-process-lifecycle.json",
+          "benchmarks/dialogs-layout-performance-summary.json",
+          "screenshots/dialogs-layout-final-picker-wide.png",
+          "screenshots/dialogs-layout-final-picker-small.png"
+        ]
       }
     },
     {
@@ -434,78 +453,129 @@
       "node": "60:27",
       "title": "08 / STUDIO V2 · 同步 WorkBuddy",
       "source": "ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs",
-      "detail": "部分：526原生确认/两尺寸、取消/无隐式Enter、仅同步/当前草稿与全部saved范围、非法文件/重试、守卫下写入后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验",
+      "detail": "部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-27",
       "visual_review": {
         "id": "60:27",
         "name": "08 / STUDIO V2 · 同步 WorkBuddy",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+          "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+          "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+          "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+          "states": "确认Cancel不写；仅同步一次，将6模型写入隔离HOME/models.json，config.installed为6个模型安装条目、ID集合相同。Core真实HOME kernel保护已预检；未点击Restart/Unsync，不将隔离同步当真实WorkBuddy重启验收。",
+          "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+          "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+          "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+          "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+          "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+          "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        ],
+        "evidence": [
+          "benchmarks/dialogs-layout-design-audit.json",
+          "benchmarks/dialogs-layout-asset-audit.json",
+          "benchmarks/dialogs-layout-build.json",
+          "benchmarks/dialogs-layout-source-scope.json",
+          "benchmarks/dialogs-layout-final-gui-validation.json",
+          "benchmarks/dialogs-layout-interaction-core-proofs.json",
+          "benchmarks/dialogs-layout-original-fields-proof.json",
+          "benchmarks/dialogs-layout-process-lifecycle.json",
+          "benchmarks/dialogs-layout-performance-summary.json",
+          "screenshots/dialogs-layout-final-sync-wide.png",
+          "screenshots/dialogs-layout-final-sync-small.png"
+        ]
       }
     },
     {
       "node": "60:249",
       "title": "09 / STUDIO V2 · 新建价格规则",
       "source": "statistics/price_layout.rs, stats_controller.rs, stats_backend.rs",
-      "detail": "部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续",
+      "detail": "部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-249",
       "visual_review": {
         "id": "60:249",
         "name": "09 / STUDIO V2 · 新建价格规则",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+          "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+          "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+          "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+          "states": "-1被本地decimal校验拒绝、规则0；纠正1.5/6/CNY/cache0并滚动取回备注实际输入后保存，规则1/revision1。原14费用快照逐字段不变，新本地mock请求500/50/550费用1050000nanos。旧错误在重新提交前仍显示，未改原校验逻辑。",
+          "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+          "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+          "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+          "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+          "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+          "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        ],
+        "evidence": [
+          "benchmarks/dialogs-layout-design-audit.json",
+          "benchmarks/dialogs-layout-asset-audit.json",
+          "benchmarks/dialogs-layout-build.json",
+          "benchmarks/dialogs-layout-source-scope.json",
+          "benchmarks/dialogs-layout-final-gui-validation.json",
+          "benchmarks/dialogs-layout-interaction-core-proofs.json",
+          "benchmarks/dialogs-layout-original-fields-proof.json",
+          "benchmarks/dialogs-layout-process-lifecycle.json",
+          "benchmarks/dialogs-layout-performance-summary.json",
+          "screenshots/dialogs-layout-final-price-wide.png",
+          "screenshots/dialogs-layout-final-price-small.png"
+        ]
       }
     },
     {
       "node": "60:475",
       "title": "10 / STUDIO V2 · 请求详情",
       "source": "statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs",
-      "detail": "部分：原650×770/分组/代理与导入/本次快照/错误重试/关闭证据保留；0b43修长Tooltip横向溢出，真实请求模型提示两尺寸完整/30s同图、More键盘/长值及价格@1/零与未知/小窗底部已验；三精确hover/完整无障碍/跨平台与整帧待续",
+      "detail": "部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-475",
       "visual_review": {
         "id": "60:475",
         "name": "10 / STUDIO V2 · 请求详情",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
+          "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
+          "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+          "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
+          "states": "真实新gpt6记录CNY¥0.00105、500/50/550；窄窗内滚取回费用/耗时/速度，更多详情1.5/6/0/0@1、Esc返回及Close通过；无缓存仍—、0ms/无速度，不冒充Figma样例89.4%/172.8tok/s。",
+          "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
+          "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
+          "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
+          "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
+          "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
+          "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        ],
+        "evidence": [
+          "benchmarks/dialogs-layout-design-audit.json",
+          "benchmarks/dialogs-layout-asset-audit.json",
+          "benchmarks/dialogs-layout-build.json",
+          "benchmarks/dialogs-layout-source-scope.json",
+          "benchmarks/dialogs-layout-final-gui-validation.json",
+          "benchmarks/dialogs-layout-interaction-core-proofs.json",
+          "benchmarks/dialogs-layout-original-fields-proof.json",
+          "benchmarks/dialogs-layout-process-lifecycle.json",
+          "benchmarks/dialogs-layout-performance-summary.json",
+          "screenshots/dialogs-layout-final-detail-wide.png",
+          "screenshots/dialogs-layout-final-detail-small.png"
+        ]
       }
     },
     {
@@ -4280,6 +4350,58 @@
       "date": "2026-10-31T05:06:17+08:00",
       "commit_subject": "fix(gpui): align Studio protocol tabs and field typography",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 63,
+      "title": "模型选择、同步确认、价格规则与请求详情首审",
+      "status": "recorded",
+      "summary": "官方MCP刷新51:2仍40唯一画板，读取59:11/60:27/60:249/60:475完整高保真上下文、内含渲染及1440×900原图。33个资源用指定curl重新下载，30与已有本地资源逐字节相同，3装饰窗口控件保留真实OS控件。完整壳/文字角色/资源与剩余差异见设计审查、资源核对、清单。四帧完成首审，不作整帧最终通过。",
+      "highlights": [
+        "官方MCP刷新51:2仍40唯一画板，读取59:11/60:27/60:249/60:475完整高保真上下文、内含渲染及1440×900原图。33个资源用指定curl重新下载，30与已有本地资源逐字节相同，3装饰窗口控件保留真实OS控件。完整壳/文字角色/资源与剩余差异见设计审查、资源核对、清单。四帧完成首审，不作整帧最终通过。",
+        "仅四Rust视图变更：Model Picker在Studio复用model_editor已采用的Native BaseCheckbox引擎，显式15px指示器、原12px model-check.svg及15px文字间隔；既有项灰勾禁用、可选项主色，原on_change状态请求转入同一set_picker_checked/list focus，筛选/容量/Add草稿逻辑块字节未变，旧皮肤保留原KitCheckbox分支。徽章EEEDFF居中、按钮文字12/17、搜索body色、标题光学校正；Sync标题约上移9px，main/notice权重校正，Studio用原生RefreshCw25替代将20px工具栏SVG错误放大到25px；Price字段body色13/18、label17/Medium、货币前缀和128px徽章；Detail只将请求ID设Inter Medium，其他行保持Not",
+        "最终76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c，42,442,656 bytes，较旧db899增加16,512 bytes；fmt/206tests（204通过、2既有忽略）/strict all-targets clippy/Intel all-targets类型检查/arm64 release均0，四源码构建及验收后SHA一致。初始bool闭包类型推断编译错误在门禁前修正并保留；52ff中间候选虽门禁0，但新Button child Label自带前景使禁用Clear看似可用，停止验收，改为div继承原生disabled/hover前景后完整重建重验。其他3文件与52ff字节相同，未把中间截图当最终。见冻结构建、中间记录。"
+      ],
+      "limits": [
+        "未见明显持续退化，UI RSS增加0.305MiB，合计差-0.070MiB；小样本不作统计等价或优化结论。RSS可能重复共享页，150ms峰值采样可能漏峰，排除mock/client；原ui_record_ready_ms含CUA等待不作比较，process→gpui记录标记不等于首帧/可交互，Core ready早于UI。默认Providers负载不是弹窗FPS/输入时延/长期CPU/泄漏测量。Intel类型检查不代表硬件，完整键盘/IME/AX/HiDPI/Windows及Intel实机仍未终验。"
+      ],
+      "evidence": [
+        {
+          "label": "设计审查",
+          "href": "benchmarks/dialogs-layout-design-audit.json"
+        },
+        {
+          "label": "资源核对",
+          "href": "benchmarks/dialogs-layout-asset-audit.json"
+        },
+        {
+          "label": "清单",
+          "href": "benchmarks/dialogs-layout-inventory.json"
+        },
+        {
+          "label": "源码范围",
+          "href": "benchmarks/dialogs-layout-source-scope.json"
+        },
+        {
+          "label": "冻结构建",
+          "href": "benchmarks/dialogs-layout-build.json"
+        },
+        {
+          "label": "中间记录",
+          "href": "benchmarks/dialogs-layout-intermediate-52ff-gui-validation.json"
+        },
+        {
+          "label": "真实GUI",
+          "href": "benchmarks/dialogs-layout-final-gui-validation.json"
+        },
+        {
+          "label": "标题像素",
+          "href": "benchmarks/dialogs-layout-title-final.json"
+        }
+      ],
+      "commit": "617836e9681885e7a3b122d7403125f7d74af843",
+      "date": "2026-10-31T06:07:16+08:00",
+      "commit_subject": "fix(gpui): align Studio picker and business dialogs",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -5135,6 +5257,51 @@
         "not_reviewed": 31,
         "reviewing": 0,
         "reviewed_with_differences": 9,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T05:48:56+08:00",
+      "note": "UI63按真实施工阶段更新；未完成的价格、性能和本批提交不计通过。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 31,
+        "reviewing": 0,
+        "reviewed_with_differences": 9,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T06:08:08+08:00",
+      "note": "UI63已提交；4帧完成首审与真实交互，仍保留共用遮罩、关闭控件和精确几何差异。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 27,
+        "reviewing": 0,
+        "reviewed_with_differences": 13,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T06:08:09+08:00",
+      "note": "UI63完成后继续共享差异收敛；不丢弃协议光学及其余27帧首审，不缩减全量目标。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 27,
+        "reviewing": 0,
+        "reviewed_with_differences": 13,
         "reviewed": 0
       }
     }
