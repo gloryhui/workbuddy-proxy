@@ -130,15 +130,16 @@ def main():
     report = {"version": 1, "updated_at": now, "project": "WorkBuddy Studio V2",
               "branch": git("branch", "--show-current"), "code_head": git("log", "-1", "--format=%H", "--", "gpui/src", "gpui/assets"),
               "phase": ("开发中 · 分项实机验收穿插" if counts["pending"]
-                        else "逐帧初审已覆盖 · 专项验收与差异修复"),
+                        else "界面终验记录齐备 · 总体验收待核对" if counts["verified"] == len(frames)
+                        else "专项验收与差异修复 · 全量逐帧终验未完成"),
               "goal_status": args.goal_status or previous.get("goal_status", "unknown"),
               "counts": counts, "total_frames": len(frames), "recorded_tasks": len(recorded),
               "current_task": current, "latest_task": latest, "frames": frames,
               "timeline": timeline, "history": history[-200:],
               "verification": [
-                  {"title": "40 帧最终视觉复核", "detail": f"当前 {counts['partial']} 帧有阶段性证据、{counts['reused']} 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"},
+                  {"title": "40 帧逐帧一比一终验", "detail": f"当前 {counts['verified']} 帧最终验收、{counts['partial']} 帧有阶段性证据、{counts['reused']} 帧复用待核对。专项任务数不等于已验收界面数；每帧仍需核对完整布局、资产、状态和交互，部分通过不等于整体验收。"},
                   {"title": "键盘、IME 与无障碍", "detail": "已完成若干控件真实键盘路径；完整 Tab 顺序、中文输入法及辅助功能仍需统一复核。"},
-                  {"title": "平台与生命周期", "detail": "macOS arm64 实机持续验证；Intel 目前只有类型检查，Windows、HiDPI 与完整托盘生命周期仍按矩阵保留待验。"},
+                  {"title": "平台与生命周期", "detail": "macOS arm64 实机持续验证；Intel 与 Windows 分别记录类型检查、发行版链接、译运行和实机证据，范围以任务记录与矩阵为准。译运行不替代实机，HiDPI 与完整托盘生命周期仍需核对。"},
                   {"title": "性能与证据口径", "detail": "保留真实新旧版本对比、核心/UI/合计 RSS、启动记录和请求 p50/p95。UI 就绪记录不是首帧或可交互时间。"}],
               "sources": [{"label": "40 帧映射", "href": "figma_node_map.md"},
                           {"label": "实施与 QA 原文", "href": "baseline_and_qa.md"},

@@ -198,12 +198,12 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T11:14:34+08:00",
+  "updated_at": "2026-10-30T14:51:34+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
-  "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
-  "goal_status": "blocked",
+  "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
+  "goal_status": "active",
   "counts": {
     "pending": 0,
     "partial": 40,
@@ -213,10 +213,10 @@
   "total_frames": 40,
   "recorded_tasks": 51,
   "current_task": {
-    "id": 51,
-    "title": "模型编辑 Escape 与满载目录回归",
-    "status": "recorded",
-    "description": "补模型输入专属Esc路由并保留组合优先级；最终两尺寸普通/真实拼音Esc和256行首末实拍通过，容量/草稿边界、资源和原始基准留证。"
+    "id": 52,
+    "title": "Intel 发行版与 Rosetta 实跑验证",
+    "status": "validating",
+    "description": "Figma已恢复，最新59:279/59:484已读取。Intel Core/UI发行版链接及192项Rosetta测试通过；真实GUI草稿与一次保存已核对，两尺寸截图、原始基准和清理正在收尾。当前并非40帧全量一比一终验。"
   },
   "latest_task": {
     "id": 51,
@@ -3212,12 +3212,20 @@
       "partial": 40,
       "reused": 0,
       "verified": 0
+    },
+    {
+      "date": "2026-10-30T14:51:34+08:00",
+      "note": "按用户要求同步当前阶段：第52项为验收中，51是已提交专项任务数，不能当作51个界面通过。40个界面均仍部分验收/0整帧最终验收；Intel项结束后继续逐帧设计对照与差异修复。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
     }
   ],
   "verification": [
     {
-      "title": "40 帧最终视觉复核",
-      "detail": "当前 40 帧有阶段性证据、0 帧复用待核对。每帧仍按具体未完成项继续，部分通过不等于整体验收。"
+      "title": "40 帧逐帧一比一终验",
+      "detail": "当前 0 帧最终验收、40 帧有阶段性证据、0 帧复用待核对。专项任务数不等于已验收界面数；每帧仍需核对完整布局、资产、状态和交互，部分通过不等于整体验收。"
     },
     {
       "title": "键盘、IME 与无障碍",
@@ -3225,7 +3233,7 @@
     },
     {
       "title": "平台与生命周期",
-      "detail": "macOS arm64 实机持续验证；Intel 目前只有类型检查，Windows、HiDPI 与完整托盘生命周期仍按矩阵保留待验。"
+      "detail": "macOS arm64 实机持续验证；Intel 与 Windows 分别记录类型检查、发行版链接、译运行和实机证据，范围以任务记录与矩阵为准。译运行不替代实机，HiDPI 与完整托盘生命周期仍需核对。"
     },
     {
       "title": "性能与证据口径",

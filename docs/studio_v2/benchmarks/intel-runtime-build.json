@@ -1,0 +1,127 @@
+{
+  "scope": "In-progress UI52: completed Intel release linking and translated release unit tests; actual GUI draft/save verified, screenshots/performance/cleanup still pending. No production source or dependencies changed.",
+  "base_head": "4e7744548a52ad447f4514eb340c7fe5827b900f",
+  "binaries": {
+    "native_core": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy",
+      "architecture": "arm64",
+      "bytes": 8428096,
+      "sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+      "mach_o_deployment_commands": [
+        "11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 12.0\n      sdk 26.2\n   ntools 1\n     tool 3\n  version 1230.1"
+      ]
+    },
+    "native_ui": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+      "architecture": "arm64",
+      "bytes": 15246800,
+      "sha256": "675fba1473a408507335b9b4bee8d4606e1ba27039e6416920a62a6751b7ef9e",
+      "mach_o_deployment_commands": [
+        "11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 12.0\n      sdk 26.2\n   ntools 1\n     tool 3\n  version 1230.1"
+      ]
+    },
+    "intel_core": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/x86_64-apple-darwin/release/workbuddy-proxy",
+      "architecture": "x86_64",
+      "bytes": 8951416,
+      "sha256": "921ba7b965a402ea534a4a1e43f33fff82dbc2404dfc79ad7b48609cedc316b0",
+      "mach_o_deployment_commands": [
+        "10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 12.0\n      sdk 26.2\n   ntools 1\n     tool 3\n  version 1230.1"
+      ]
+    },
+    "intel_ui": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/x86_64-apple-darwin/release/workbuddy-proxy-gpui",
+      "architecture": "x86_64",
+      "bytes": 16552232,
+      "sha256": "f2d443d2ba1ae886746250c36e34fc2879b4317e10555dd33399a2fc68078f59",
+      "mach_o_deployment_commands": [
+        "10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 12.0\n      sdk 26.2\n   ntools 1\n     tool 3\n  version 1230.1"
+      ]
+    },
+    "host": {
+      "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: aarch64-apple-darwin\nrelease: 1.98.1\nLLVM version: 22.1.8\n",
+      "translated_uname": "x86_64",
+      "translated_sysctl": "1",
+      "hardware": "Apple Silicon; x86_64 processes are translated, not Intel hardware"
+    },
+    "test_harness": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/x86_64-apple-darwin/release/deps/workbuddy_proxy_gpui-b345f7593752f4d0",
+      "architecture": "x86_64",
+      "sha256": "0b7a95782a38193034566304447815cf82291b54d371dbe1312596149d93a972"
+    }
+  },
+  "gpui_release_build": {
+    "role": "gpui",
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--offline",
+      "--release",
+      "--target",
+      "x86_64-apple-darwin",
+      "--manifest-path",
+      "gpui/Cargo.toml"
+    ],
+    "seconds": 192.827,
+    "exit": 0,
+    "shared_target_cache": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target",
+    "cargo_jobs": 2,
+    "isolated_temp": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round43.q6fstj3l/tmp"
+  },
+  "core_release_build": {
+    "role": "core",
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--offline",
+      "--release",
+      "--target",
+      "x86_64-apple-darwin"
+    ],
+    "seconds": 91.925,
+    "exit": 0,
+    "shared_target_cache": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target",
+    "cargo_jobs": 2,
+    "isolated_temp": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round43.q6fstj3l/tmp"
+  },
+  "release_tests": {
+    "command": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "gpui/Cargo.toml",
+      "--locked",
+      "--offline",
+      "--release",
+      "--target",
+      "x86_64-apple-darwin"
+    ],
+    "seconds": 146.778,
+    "exit": 0,
+    "tests_passed": 192,
+    "tests_ignored": 2,
+    "boundary": "Thin x86_64 release test harness executed on Apple Silicon via available Rosetta; not Intel hardware."
+  },
+  "figma_readback": {
+    "authentication_restored": true,
+    "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "high_fidelity_nodes": [
+      "59:279",
+      "59:484"
+    ],
+    "screenshot_returned": true,
+    "full_40_frame_1_to_1_acceptance": false
+  },
+  "source_sha256": {
+    "gpui/src/main.rs": "a933fc22014d184f2b9b382a4a68addd027209073cae223275334ed587216893",
+    "gpui/src/ui.rs": "f94b4376c993fe98377ccb180809c4e1ad98d11dc4370721123b63437676834c",
+    "gpui/src/ui/model_editor.rs": "72035e3d9c5957c53d63b8bcf767b7c3dd88ed0351b2d79923677cf8f757e947",
+    "src/config.rs": "eae0b4ac1ee00115bb7ab795546dd294eb51d94236259f7649e85dfa96e9809f"
+  },
+  "limitations": [
+    "x86_64 on Apple Silicon via Rosetta is not Intel hardware acceptance.",
+    "Successful linking/tests do not establish full visual,IME,reader,Windows or HiDPI acceptance."
+  ]
+}
