@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T08:59:38+08:00",
+  "updated_at": "2026-10-30T10:10:54+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "7b69af0e5da2bae1a352a990b365cacbb6118717",
+  "code_head": "c000c98d296adc10dc3ffca6194475aea0c1c637",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -13,64 +13,63 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 49,
+  "recorded_tasks": 50,
   "current_task": {
-    "id": 49,
-    "title": "模型目录数量与配置来源标记",
+    "id": 50,
+    "title": "真实拼音 IME 与模型名称取消控制符守卫",
     "status": "recorded",
-    "description": "补齐94×27数量和65×27来源标记，修复29px行内裁切；最终两尺寸中英/选中态、编辑取消/能力模式独立/模型载荷保持和六轮性能留证。"
+    "description": "当前青简逐键拼音、组合取消/提交、UndoRedo、显式保存与冷重开已验；仅模型显示名加入既有Core控制字符规则，两尺寸原生2×截图和六轮性能留证，保留RSS上升观察。"
   },
   "latest_task": {
-    "id": 49,
-    "title": "模型目录数量与配置来源标记",
+    "id": 50,
+    "title": "真实拼音 IME 与模型名称取消控制符守卫",
     "status": "recorded",
-    "summary": "补齐模型目录数量94×27和逐行“自定义/Custom”65×27原生标记，并修复29px行内的裁切与垂直对齐；保留三列虚拟表格、模型值、选择、编辑/取消和能力语义。证据：编译、真实交互/配置、资源/像素、1440中文、1100英文、选中态、六轮性能、清理。",
+    "summary": "在当前青简输入源完成真实逐键拼音→Space汉字、组合Esc/Return、UndoRedo、草稿/显式保存和独立冷载入，并修复模型显示名在组合取消后混入U+001B的问题。证据：编译、真实交互/落盘、方法边界、1440请求尺寸原生2×图、1100请求尺寸原生2×图、冷重开、六轮性能、清理。",
     "highlights": [
-      "补齐模型目录数量94×27和逐行“自定义/Custom”65×27原生标记，并修复29px行内的裁切与垂直对齐；保留三列虚拟表格、模型值、选择、编辑/取消和能力语义。证据：编译、真实交互/配置、资源/像素、1440中文、1100英文、选中态、六轮性能、清理。",
-      "官方MCP重读54:246高保真context/截图：54:249数量标记94×27，54:262等来源标记65×27，圆角9/底色#F3F5FA/11px文字#778196。来源标记对应选中供应商配置模型，源码Draft::from_provider→self.models→Models.rows可追溯；它不表示capabilities是否手动覆盖，不按模型名称猜测、不新增分类API或修改Core数据。首次新基线983c的实拍确实仅有数量文字、无行来源标记，见基线记录。",
-      "只修改model_table.rs和ui/providers.rs：原生Div/Label与既有token，数量区保留响应式紧凑头，标题组min142为数量标记留位；ID文本flex1/min0、右侧固定标记，长ID仍省略并保留既有完整值Tooltip。模型表继续3列/29px行/32px头，原列宽算法、选择/容量约束、28px编辑按钮和事件未改。可见15px编辑SVG与新Figma资源逐字节一致，SHAd19ec85f…；没有引入图片截图资产或改变原资源。"
+      "在当前青简输入源完成真实逐键拼音→Space汉字、组合Esc/Return、UndoRedo、草稿/显式保存和独立冷载入，并修复模型显示名在组合取消后混入U+001B的问题。证据：编译、真实交互/落盘、方法边界、1440请求尺寸原生2×图、1100请求尺寸原生2×图、冷重开、六轮性能、清理。",
+      "用户明确授权只读TISCopyCurrentKeyboardInputSource取得当前名称/ID后，本轮测试侧共5次仅读LocalizedName/InputSourceID并CFRelease：初始、旧GPUI字段聚焦、修复GPUI字段聚焦、保存后、cold，均为青简/app.qingjian.inputmethod.Hans。没有列举/选择输入源、改模式/设置、外部按键注入、外部AX/全局bounds或剪贴板接口；产品内部TIS调用未计数/未监控。输入源名称本身不是组合通过证据，本轮实际用CUA单独pressKey n/i/h/a/o、未typeText/setValue，见原生下划线拼音和Space落字。",
+      "旧b921真实现场：你好前缀后追加下划线ni'hao，Esc取消组合/保留弹窗但新鲜CUA字段值为你好+U+001B，码点U+4F60/U+597D/U+001B，见旧版原图与原值/生命周期。控制字符在图片中不可见，不能只凭截图判断；该编辑未确认/保存，Cancel取消后草稿仍你好，旧Core文件仍model-1。当前gpui-base0.7.3单行normalize_input只去换行，Core config.rs原规则已拒char::is_control；未把到达字段的字符归责于青简、平台或自动化哪一层。"
     ],
     "limits": [
-      "新1轮p95.374ms与旧2轮.364ms波动均保留，并补新→旧反向.205/.204ms，未复现持续尖峰。旧→新中位Core12.39→12.42/UI72.41→72.88/合计84.72→85.30MiB，峰值135.98→136.94MiB，p50.172→.173/p95.204→.208ms，大请求.087→.086s，Core ready246.087→214.985/UI记录ready693.685→674.658ms；保留增加值，不宣称优化/统计等效或因果定位。每版3样本且后台/缓存未控制；ready非首帧，RSS共享页可能双计，tray单列。原基准默认Statistics，不是新增标记的Providers满载渲",
-      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮补齐模型目录两类设计标记及行内裁切差异，独立长ID提示、完整视觉/全部皮肤/真实IME/AX读屏、跨平台/HiDPI、物理托盘/窗口位移及最小化、首帧和公网更新成功仍待验。Goal active，HTML继续仅静态检查。"
+      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮通过的是当前青简源的模型显示名专项；其他字段/输入源、候选面板、完整AX读屏/视觉/全部HiDPI/跨平台、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active；HTML继续仅静态检查。"
     ],
     "evidence": [
       {
         "label": "编译",
-        "href": "benchmarks/model-directory-badges-build.json"
+        "href": "benchmarks/ime-escape-build.json"
       },
       {
-        "label": "真实交互/配置",
-        "href": "benchmarks/model-directory-badges-gui-validation.json"
+        "label": "真实交互/落盘",
+        "href": "benchmarks/ime-escape-gui-validation.json"
       },
       {
-        "label": "资源/像素",
-        "href": "benchmarks/model-directory-badges-visual-validation.json"
+        "label": "方法边界",
+        "href": "benchmarks/ime-escape-method-boundaries.json"
       },
       {
-        "label": "1440中文",
-        "href": "screenshots/model-directory-badges-1440x900.png"
+        "label": "1440请求尺寸原生2×图",
+        "href": "screenshots/ime-escape-fixed-1440x900-2x.png"
       },
       {
-        "label": "1100英文",
-        "href": "screenshots/model-directory-badges-1100x700.png"
+        "label": "1100请求尺寸原生2×图",
+        "href": "screenshots/ime-escape-fixed-1100x700-2x.png"
       },
       {
-        "label": "选中态",
-        "href": "screenshots/model-directory-badges-selected-1100x700.png"
+        "label": "冷重开",
+        "href": "benchmarks/ime-escape-cold-reopen.json"
       },
       {
         "label": "六轮性能",
-        "href": "benchmarks/model-directory-badges-performance-summary.json"
+        "href": "benchmarks/ime-escape-performance-summary.json"
       },
       {
         "label": "清理",
-        "href": "benchmarks/model-directory-badges-cleanup.json"
+        "href": "benchmarks/ime-escape-cleanup.json"
       }
     ],
-    "commit": "7b69af0e5da2bae1a352a990b365cacbb6118717",
-    "date": "2026-10-30T08:58:38+08:00",
-    "commit_subject": "fix(studio): complete native model directory badges",
+    "commit": "c000c98d296adc10dc3ffca6194475aea0c1c637",
+    "date": "2026-10-30T10:10:37+08:00",
+    "commit_subject": "fix(studio): reject IME cancellation controls in model names",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2554,6 +2553,58 @@
       "date": "2026-10-30T08:58:38+08:00",
       "commit_subject": "fix(studio): complete native model directory badges",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 50,
+      "title": "真实拼音 IME 与模型名称取消控制符守卫",
+      "status": "recorded",
+      "summary": "在当前青简输入源完成真实逐键拼音→Space汉字、组合Esc/Return、UndoRedo、草稿/显式保存和独立冷载入，并修复模型显示名在组合取消后混入U+001B的问题。证据：编译、真实交互/落盘、方法边界、1440请求尺寸原生2×图、1100请求尺寸原生2×图、冷重开、六轮性能、清理。",
+      "highlights": [
+        "在当前青简输入源完成真实逐键拼音→Space汉字、组合Esc/Return、UndoRedo、草稿/显式保存和独立冷载入，并修复模型显示名在组合取消后混入U+001B的问题。证据：编译、真实交互/落盘、方法边界、1440请求尺寸原生2×图、1100请求尺寸原生2×图、冷重开、六轮性能、清理。",
+        "用户明确授权只读TISCopyCurrentKeyboardInputSource取得当前名称/ID后，本轮测试侧共5次仅读LocalizedName/InputSourceID并CFRelease：初始、旧GPUI字段聚焦、修复GPUI字段聚焦、保存后、cold，均为青简/app.qingjian.inputmethod.Hans。没有列举/选择输入源、改模式/设置、外部按键注入、外部AX/全局bounds或剪贴板接口；产品内部TIS调用未计数/未监控。输入源名称本身不是组合通过证据，本轮实际用CUA单独pressKey n/i/h/a/o、未typeText/setValue，见原生下划线拼音和Space落字。",
+        "旧b921真实现场：你好前缀后追加下划线ni'hao，Esc取消组合/保留弹窗但新鲜CUA字段值为你好+U+001B，码点U+4F60/U+597D/U+001B，见旧版原图与原值/生命周期。控制字符在图片中不可见，不能只凭截图判断；该编辑未确认/保存，Cancel取消后草稿仍你好，旧Core文件仍model-1。当前gpui-base0.7.3单行normalize_input只去换行，Core config.rs原规则已拒char::is_control；未把到达字段的字符归责于青简、平台或自动化哪一层。"
+      ],
+      "limits": [
+        "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮通过的是当前青简源的模型显示名专项；其他字段/输入源、候选面板、完整AX读屏/视觉/全部HiDPI/跨平台、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active；HTML继续仅静态检查。"
+      ],
+      "evidence": [
+        {
+          "label": "编译",
+          "href": "benchmarks/ime-escape-build.json"
+        },
+        {
+          "label": "真实交互/落盘",
+          "href": "benchmarks/ime-escape-gui-validation.json"
+        },
+        {
+          "label": "方法边界",
+          "href": "benchmarks/ime-escape-method-boundaries.json"
+        },
+        {
+          "label": "1440请求尺寸原生2×图",
+          "href": "screenshots/ime-escape-fixed-1440x900-2x.png"
+        },
+        {
+          "label": "1100请求尺寸原生2×图",
+          "href": "screenshots/ime-escape-fixed-1100x700-2x.png"
+        },
+        {
+          "label": "冷重开",
+          "href": "benchmarks/ime-escape-cold-reopen.json"
+        },
+        {
+          "label": "六轮性能",
+          "href": "benchmarks/ime-escape-performance-summary.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/ime-escape-cleanup.json"
+        }
+      ],
+      "commit": "c000c98d296adc10dc3ffca6194475aea0c1c637",
+      "date": "2026-10-30T10:10:37+08:00",
+      "commit_subject": "fix(studio): reject IME cancellation controls in model names",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2887,6 +2938,14 @@
     {
       "date": "2026-10-30T08:59:38+08:00",
       "note": "40部分验收/0最终；长ID提示、高密度标记网格、真实IME/AX与跨平台仍待专项。已收到只读输入源名称/ID授权，后续按窄范围验证。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T10:10:54+08:00",
+      "note": "小功能50已提交；40帧仍部分验收。候选面板、其他字段/输入源和跨平台等继续专项验证。HTML仅静态检查。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
