@@ -1,0 +1,15 @@
+{
+  "original_fields_and_bytes_preserved": true,
+  "provider_model_counts": [
+    2,
+    5
+  ],
+  "request_count": 0,
+  "appearance_after": {
+    "version": 1,
+    "skin": "studio_indigo"
+  },
+  "gate_pid_verified": 14591,
+  "gate_installed_before_test": true,
+  "scope": "All current63f native stage1 interactions completed before firstTest;noCoreconfig write or probe. Private instance alone redirects control to owned gate;actualCore remains live."
+}

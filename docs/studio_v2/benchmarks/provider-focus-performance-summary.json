@@ -1,0 +1,178 @@
+{
+  "order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "medians": {
+    "previous": {
+      "core_idle_rss_mib": 12.68,
+      "ui_idle_rss_mib": 84.5,
+      "idle_rss_mib": 97.18,
+      "sampled_peak_rss_mib": 146.175,
+      "large_seconds": 0.087,
+      "core_ready_ms": 44.9425,
+      "native_ui_process_to_record_ms": 803.9024999999999,
+      "p50": 0.17099999999999999,
+      "p95": 0.195
+    },
+    "current": {
+      "core_idle_rss_mib": 14.594999999999999,
+      "ui_idle_rss_mib": 85.05,
+      "idle_rss_mib": 99.64,
+      "sampled_peak_rss_mib": 145.18,
+      "large_seconds": 0.0845,
+      "core_ready_ms": 80.46100000000001,
+      "native_ui_process_to_record_ms": 757.0799999999999,
+      "p50": 0.172,
+      "p95": 0.191
+    }
+  },
+  "rows": [
+    {
+      "label": "previous1",
+      "core_idle_rss_mib": 12.41,
+      "ui_idle_rss_mib": 84.67,
+      "idle_rss_mib": 97.08,
+      "sampled_peak_rss_mib": 143.23,
+      "large_seconds": 0.087,
+      "core_ready_ms": 45.31,
+      "native_ui_process_to_record_ms": 858.025,
+      "proxied_loopback_ms": {
+        "p50": 0.17,
+        "p95": 0.195
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 17608,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 17609,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 17771,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "7d7ff1ea2988a2289f05242434f7d56a0b4b4f59df27b6dacdc6842f7c98ee44"
+    },
+    {
+      "label": "current1",
+      "core_idle_rss_mib": 14.66,
+      "ui_idle_rss_mib": 84.55,
+      "idle_rss_mib": 99.2,
+      "sampled_peak_rss_mib": 145.61,
+      "large_seconds": 0.085,
+      "core_ready_ms": 76.269,
+      "native_ui_process_to_record_ms": 741.279,
+      "proxied_loopback_ms": {
+        "p50": 0.171,
+        "p95": 0.189
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 17864,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 17865,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 18060,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "63f57fe10055b2679abff3525f349a4f98845621b71109efc67f80b55c6aef1e"
+    },
+    {
+      "label": "current2",
+      "core_idle_rss_mib": 14.53,
+      "ui_idle_rss_mib": 85.55,
+      "idle_rss_mib": 100.08,
+      "sampled_peak_rss_mib": 144.75,
+      "large_seconds": 0.084,
+      "core_ready_ms": 84.653,
+      "native_ui_process_to_record_ms": 772.881,
+      "proxied_loopback_ms": {
+        "p50": 0.173,
+        "p95": 0.193
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 18175,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 18176,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 18349,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "63f57fe10055b2679abff3525f349a4f98845621b71109efc67f80b55c6aef1e"
+    },
+    {
+      "label": "previous2",
+      "core_idle_rss_mib": 12.95,
+      "ui_idle_rss_mib": 84.33,
+      "idle_rss_mib": 97.28,
+      "sampled_peak_rss_mib": 149.12,
+      "large_seconds": 0.087,
+      "core_ready_ms": 44.575,
+      "native_ui_process_to_record_ms": 749.78,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.195
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 18443,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 18444,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 18613,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "7d7ff1ea2988a2289f05242434f7d56a0b4b4f59df27b6dacdc6842f7c98ee44"
+    }
+  ],
+  "limits": [
+    "Original benchmark unchanged:64models/1000small/80x1MiB concurrency4;sameCore25f,oldUI7d7/newUI63f;two short samples/version,all samples retained.",
+    "Core ready is measured before CUA launches the UI:benchmark.py109-111 then settings_pid;same Core binary. Higher current1/2 Core-ready samples retained,not attributed to UI code. Cause of timing/memory variation unconfirmed.",
+    "No causal optimization/statistical-equivalence claim. Shared pages may double count;component medians cannot be added as total median.",
+    "Process-to-record marker not first paint/interactivity;original ui_record_ready includes orchestration and is not startup comparison.",
+    "Loopback HTTP excludes TLS/public-network/model latency;default launch load not focus-event latency/FPS/IME/tray performance.",
+    "Artificial51.438s control hold only verifies native busy and is excluded from all performance samples."
+  ]
+}

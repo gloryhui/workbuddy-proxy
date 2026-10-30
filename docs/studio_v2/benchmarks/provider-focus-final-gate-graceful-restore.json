@@ -1,0 +1,6 @@
+{
+  "restored_at": "2026-10-31T03:50:38.518086+08:00",
+  "instance_restored_byte_exact": true,
+  "old_forward_server_grace_seconds": 3,
+  "scope": "Main atomically restores own private original instance before stopping forwarding server;3s allows requests that already read oldport to drain. gate-terminal instance_changed_during_gate=True is this documented caller restoration,not external drift."
+}

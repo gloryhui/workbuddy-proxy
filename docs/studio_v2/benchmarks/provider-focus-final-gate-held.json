@@ -1,0 +1,8 @@
+{
+  "pid": 14591,
+  "core_pid": 12908,
+  "held_command": "test",
+  "held_at": "2026-10-31T03:45:53.871198+08:00",
+  "test_forwarded_before_release": 0,
+  "scope": "Control transport delay in own isolated fixture,not a Core/network model delay. Auth headers and request bodies not recorded."
+}

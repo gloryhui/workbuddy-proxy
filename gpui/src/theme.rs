@@ -363,7 +363,14 @@ fn install(cx: &mut App, registered_families: Option<Vec<String>>) {
         colors.secondary_active = rgb(crate::theme::palette().border).into();
         colors.secondary_foreground = rgb(crate::theme::palette().dark).into();
         colors.secondary_hover = rgb(crate::theme::palette().border).into();
-        colors.selection = rgb(crate::theme::palette().ring).into();
+        // Studio's pale focus tint is nearly identical to its field fill.
+        // Use the same semantic accent translucently for visible text ranges;
+        // sidebar/log editors already project their own selection colours.
+        colors.selection = if current_skin() == Skin::StudioIndigo {
+            Hsla::from(rgb(crate::theme::palette().primary)).opacity(0.22)
+        } else {
+            rgb(crate::theme::palette().ring).into()
+        };
         colors.sidebar = rgb(color::SIDEBAR).into();
         colors.sidebar_accent = rgb(color::SIDEBAR_ACTIVE).into();
         colors.sidebar_accent_foreground = rgb(color::SIDEBAR_TEXT).into();

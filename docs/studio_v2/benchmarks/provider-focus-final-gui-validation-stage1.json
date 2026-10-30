@@ -1,0 +1,78 @@
+{
+  "ui_sha256": "63f57fe10055b2679abff3525f349a4f98845621b71109efc67f80b55c6aef1e",
+  "ui_pid": 13116,
+  "core_pid": 12908,
+  "window_number": 2743,
+  "cases": {
+    "selection": "Edit profile; Name Cmd+A visible tinted selection; Backspace emptied field; Cancel restored sub2api. Main measured #d4d3f9 selection pixels and #4c566d text.",
+    "focus": "Name click -> Tab Key field purple outline -> Tab eye purple outline; URL clicked purple outline with name/key clear",
+    "key": "Return showed synthetic key and Space restored masked; no plaintext saved or recorded",
+    "small": "1100x700 target, default and selected name shown; Mono selection observed then Studio restored, key remained masked"
+  },
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-default-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "cf43fd4028c0a16a1208539c6318cb40829554b31abea9cae8f30607f5fdd00a"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-name-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "2473663ff0c11b93f0fac2968baee331bd0cc5d4a77aa339df3ca4593a682f0b"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-eye-keyboard-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "fbc3989a3a88eef1735bade96b139f706ed97fdf11100c9100c6535877f3dd5e"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-url-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "7e16481a4c9f9d7d27d816a7853f3731ba8138ed153520a67f3ebe59b7c487f1"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-default-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "c00e6e605a39555eff41badc3b6397e6d8266fa0c3d7828bc25c103dce2ec422"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-name-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "6a36d4fcddf87864e57c0a7a36810511d9e70dbcdf84dec380474d4ec191c0a3"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-mono-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "ff662c7c8fa34a6b2be0d8d857c9b71d17e8babf10a28dd2700d26d51cbff4d6"
+    }
+  ],
+  "method": "native screencapture own PID onscreen layer0 window 2743 visually matched CUA; no crop/scale; default-wide byte-identical candidate-2743",
+  "limitations": [
+    "full accessibility and IME not verified",
+    "no Test, separate Save, Sync, or clipboard",
+    "no explicit activate/raise; actual foreground not asserted",
+    "busy pending"
+  ],
+  "close": "kept open for busy stage"
+}

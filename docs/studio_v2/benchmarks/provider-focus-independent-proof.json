@@ -1,0 +1,27 @@
+{
+  "original_fields_preserved": true,
+  "provider_model_counts": [
+    2,
+    5
+  ],
+  "source_status_token_counts": [
+    [
+      "connection_test",
+      200,
+      1,
+      500,
+      50,
+      550
+    ]
+  ],
+  "mock_posts": [
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 200,
+      "mode": "success"
+    }
+  ],
+  "pre_test_config_bytes_unchanged": true,
+  "scope": "Final63f only;source original fields all equal after one existing save-plus-Test;bytes differ because serialization defaults. Stage1 didnotSave/Test. Gate heldbefore actual probe,release after nativebusy/presetclick,exactly1CoreTest200/SSE. Config/credentials omitted."
+}

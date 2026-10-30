@@ -1,0 +1,62 @@
+{
+  "measurements": {
+    "reference": {
+      "image": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/key-reference.png",
+      "ink_box": [
+        322,
+        16,
+        337,
+        25
+      ],
+      "pixels": [
+        350,
+        40
+      ]
+    },
+    "previous": {
+      "image": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-native/fields-default-wide.png",
+      "ink_box": [
+        987,
+        412,
+        1002,
+        423
+      ],
+      "pixels": [
+        1440,
+        901
+      ]
+    },
+    "current": {
+      "image": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-default-wide.png",
+      "ink_box": [
+        992,
+        413,
+        1007,
+        424
+      ],
+      "pixels": [
+        1440,
+        901
+      ]
+    }
+  },
+  "scope": "EncodedRGB threshold r<175/g<185/b<200 on isolated eye ROI;original images unchanged. Compare reference field-local bbox translated by native field origin670,398. Not full AA equivalence.",
+  "final63f": {
+    "image": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-default-wide.png",
+    "ink_box": [
+      992,
+      413,
+      1007,
+      424
+    ],
+    "target_translated": [
+      992,
+      414,
+      1007,
+      423
+    ],
+    "x_edges_equal": true,
+    "vertical_center_equal": true,
+    "upper_lower_fringe_pixels": 1
+  }
+}

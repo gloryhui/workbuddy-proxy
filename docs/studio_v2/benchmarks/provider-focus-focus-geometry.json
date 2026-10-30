@@ -1,0 +1,112 @@
+{
+  "samples": {
+    "default": {
+      "name_edge": [
+        231,
+        234,
+        242
+      ],
+      "key_edge": [
+        231,
+        234,
+        242
+      ],
+      "url_edge": [
+        231,
+        234,
+        242
+      ],
+      "focus_accent_pixels_on_name_left": 0
+    },
+    "name": {
+      "name_edge": [
+        101,
+        92,
+        244
+      ],
+      "key_edge": [
+        231,
+        234,
+        242
+      ],
+      "url_edge": [
+        231,
+        234,
+        242
+      ],
+      "focus_accent_pixels_on_name_left": 17
+    },
+    "blurred": {
+      "name_edge": [
+        231,
+        234,
+        242
+      ],
+      "key_edge": [
+        231,
+        234,
+        242
+      ],
+      "url_edge": [
+        231,
+        234,
+        242
+      ],
+      "focus_accent_pixels_on_name_left": 0
+    }
+  },
+  "scope": "Original1440x901 PNG unchanged;encodedRGB native1x;name edge focus and blur transitions only,not complete keyboard/AX",
+  "final63f": {
+    "default": {
+      "name": [
+        231,
+        234,
+        242
+      ],
+      "key": [
+        231,
+        234,
+        242
+      ],
+      "url": [
+        231,
+        234,
+        242
+      ]
+    },
+    "name": {
+      "name": [
+        101,
+        92,
+        244
+      ],
+      "key": [
+        231,
+        234,
+        242
+      ],
+      "url": [
+        231,
+        234,
+        242
+      ]
+    },
+    "url": {
+      "name": [
+        231,
+        234,
+        242
+      ],
+      "key": [
+        231,
+        234,
+        242
+      ],
+      "url": [
+        101,
+        92,
+        244
+      ]
+    }
+  }
+}

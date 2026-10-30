@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-31T03:46:21.168914+08:00",
+  "captured_before_release": true,
+  "real_core_health": [
+    200,
+    "ready"
+  ],
+  "sqlite_requests": 0,
+  "mock_post_count": 0,
+  "scope": "First Test control request is held by owned forwarding gate;real Core remains ready and no probe/relay reached it yet. Native busy state is independently recorded by CUA."
+}

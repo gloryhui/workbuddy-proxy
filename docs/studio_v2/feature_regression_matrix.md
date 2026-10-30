@@ -66,3 +66,5 @@ Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重
 连接徽章（UI59）：实际TestReport与payload供应商ID、确认配置和单模型绑定；编辑隐藏旧结果、Cancel可恢复同配置历史记录、503替换成功、Save失败未完成、复制留空Key/能力/混合effort按原Save继承且新ID重绑定、重开不保留、Core控制失联清除/恢复不自动探测。11状态测试及204通过/2既有忽略、最终53f两尺寸/自然重绘、分版本真实交互和四轮原负载留证，具体范围见QA59与source-scope；不改Core/Test调用顺序，不将Core运行视作上游在线。完整视觉/键盘/IME/AX/平台仍待。
 
 连接输入默认样式（UI60）：Studio-only原生Input文本/背景/边框/10px圆角与19px行高、预设/协议触发器文字/圆角接入；排除思考菜单和旧皮肤分支，不改状态/业务处理。最终7d7名称Cancel、密码显隐再遮罩、菜单Esc、两尺寸/语言与Mono恢复、Test200/SSE、原字段及1/500/50/550读回和四轮原负载留证；两次中间候选颜色失败不算通过。busy未实际捕获/操作，焦点浅与眼睛左5px、AA/普通按钮/完整IME/AX/平台继续留差异，不作整帧终验。
+
+输入焦点/眼睛/选区与busy（UI61）：三Studio输入FocusHandle+Focus/Blur显示/清除原语义实线，原24px显隐按钮/17pxSVG位置与键盘描边修正；Studio原生选区用22%强调色，六旧皮肤分支保持。最终63f实际Tab到Key/眼睛、Return/Space显隐回mask、Cmd+A/Backspace/Cancel、两尺寸与Mono恢复；受控控制转发等待中8项视觉置灰、仅预设点击未开菜单，AX无enabled字段，其他disabled未逐个操作。仅一次真实Core Test200/SSE/1条550Token、原字段保留与四轮原负载留证；原100s产品超时不改，人为51.438s不作性能。普通按钮完整状态/IME/AX/平台等仍待，不作整帧通过。

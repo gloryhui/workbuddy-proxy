@@ -1,7 +1,7 @@
 //! Native provider summary, connection form and virtualized model directory.
 use super::*;
 use crate::theme::{color, size};
-use gpui_kit::component::Disableable;
+use gpui_kit::component::{Disableable, FocusableExt};
 
 fn section(number: &'static str, title: &'static str, cx: &App) -> Div {
     div()
@@ -71,6 +71,21 @@ impl Proxy {
             .with_size(px(24.))
             .size(px(24.))
             .p_0()
+            .when(
+                crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                |button| {
+                    button
+                        .relative()
+                        .left(px(5.5))
+                        .top(px(1.5))
+                        .focus_ring(false)
+                        .focus_visible(|style| {
+                            style.border_1().border_color(rgb(crate::theme::focus_color(
+                                crate::theme::current_skin(),
+                            )))
+                        })
+                },
+            )
             .disabled(self.busy)
             .tab_stop(true)
             .accessibility_label(label)
@@ -377,12 +392,12 @@ impl Proxy {
             .gap(px(12.))
             .overflow_y_scroll()
             .track_scroll(&self.provider_scroll)
-            .child(self.connection_card(cx))
+            .child(self.connection_card(window, cx))
             .child(self.model_directory(window.viewport_size().width < px(1320.), cx))
             .into_any_element()
     }
 
-    fn connection_card(&self, cx: &mut Context<Self>) -> AnyElement {
+    fn connection_card(&self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
         rail_card("provider-settings")
             .flex_shrink_0()
             .min_h(px(338.))
@@ -433,6 +448,8 @@ impl Proxy {
                                 crate::ui_components::provider_field(
                                     crate::ui_components::text_input(&self.name, self.busy)
                                         .aria_label(self.t("供应商名称", "Provider name")),
+                                    !self.busy
+                                        && self.name.read(cx).focus_handle(cx).is_focused(window),
                                 ),
                             ))
                             .child(field(
@@ -444,6 +461,8 @@ impl Proxy {
                                         self.key_visibility_button(cx),
                                     )
                                     .aria_label("API Key"),
+                                    !self.busy
+                                        && self.key.read(cx).focus_handle(cx).is_focused(window),
                                 ),
                             )),
                     )
@@ -471,6 +490,12 @@ impl Proxy {
                                     crate::ui_components::provider_field(
                                         crate::ui_components::text_input(&self.url, self.busy)
                                             .aria_label(self.t("API 地址", "API URL")),
+                                        !self.busy
+                                            && self
+                                                .url
+                                                .read(cx)
+                                                .focus_handle(cx)
+                                                .is_focused(window),
                                     ),
                                 )
                                 .gap(px(4.)),

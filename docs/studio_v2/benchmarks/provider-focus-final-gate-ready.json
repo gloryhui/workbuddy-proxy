@@ -1,0 +1,12 @@
+{
+  "pid": 14591,
+  "real_core_pid": 12908,
+  "own_port": 64871,
+  "original_instance_sha256": "0718c62ee2f78774ffb10e52bc925124a3bc70e4906d2429711bf5742d10a2c4",
+  "mutated_instance_sha256": "3c699d00d5831ca3f0de2f7e74b2baab69b1726b5609e6b461532abd1741bfa4",
+  "health_before": [
+    200,
+    "ready"
+  ],
+  "auth_headers_and_bodies_recorded": false
+}

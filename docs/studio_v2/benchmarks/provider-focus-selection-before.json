@@ -1,0 +1,15 @@
+{
+  "selection_rgb": [
+    244,
+    246,
+    255
+  ],
+  "selection_pixel_count": 614,
+  "field_background_rgb": [
+    243,
+    245,
+    250
+  ],
+  "field_background_pixel_count": 1210,
+  "scope": "Original native small selection screenshot;count within name text area,encodedRGB. Actual selection palette differs from field by1,1,5 RGB."
+}

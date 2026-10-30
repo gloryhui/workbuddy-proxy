@@ -1,0 +1,25 @@
+{
+  "checked_pids": [
+    8930,
+    8744,
+    8742,
+    13116,
+    12908,
+    12904,
+    14591,
+    17771,
+    17608,
+    17609,
+    18060,
+    17864,
+    17865,
+    18349,
+    18175,
+    18176,
+    18613,
+    18443,
+    18444
+  ],
+  "all_gone": true,
+  "scope": "19 UI/Core/fixture/gate/benchmark-child PIDs independently ps checked. Core/fixture/gate exited0 and mock-15 waited in original handles/reports;CUA ownsUI,only PIDgone no UIexit0 claim."
+}

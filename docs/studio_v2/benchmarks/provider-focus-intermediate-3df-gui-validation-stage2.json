@@ -1,0 +1,113 @@
+{
+  "ui_sha256": "3dfbfa11d2d205f231abb3034d3a87e17df20bb212641c6b70de498d8f79f263",
+  "ui_pid": 8930,
+  "core_pid": 8744,
+  "window_number": 2720,
+  "cases": {
+    "name": "click displayed purple focus border; click blank restored neutral; main measured #655cf4 and #e7eaf2",
+    "keyboard": "Name click then Tab visibly Key field focus, next Tab eye button focus; Return showed synthetic key and Space restored masked, no plaintext recorded",
+    "url": "click URL yielded purple outline; name/key no residual purple outline",
+    "selection": "Name Cmd+A then immediate screenshot; selection not reliably distinguishable by CUA image/AX; no clipboard",
+    "edit": "Edit profile, type UI61 draft, Cancel restored sub2api; no separate Save",
+    "small": "1100x700 target, URL focus visible, eye click showed then hid synthetic key; Mono name focus did not use Studio purple, restored Studio",
+    "selection_main_measurement": "Main independently measured 614 pixels #f4f6ff against field #f3f5fa; selection present but low contrast."
+  },
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-default-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "8261f80b6b1f259c5394aa3c8574fd7d70ec51f5d08c7443fc44e4e0ebbfd4d1"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-name-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "1248a15230aa3c50def204992ed3d718a2de903c5e83973b93c808cddb299245"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-blurred-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "acb8da47f5e4ffce62fbbf1835da01e3ac11f21a8a094174ed5ffd7b76ae400e"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-key-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "b2648aaf9c9ef87094ece280d991f98d974d00ac10af1a850a777836a442e9c4"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-eye-keyboard-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "df0d039d6e47b7752a41cd77b50328cce4d99e1be66762ab1939556c35c158f0"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-url-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "6efc60804834aad4f8e114be7c7441f5fd9c17a68cf2b334f3983a659a13ebef"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-default-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "64255d2321cb85515d01f80d4f681a746a50e9737b2deda8d1eec70e245dce9d"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-input-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "553fee94d04c8789837a5ebce7fd2c15502c911c157b1cd7c398c0ca81d9e6dd"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-mono-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "1ea52c8a3175e142a541c27f2d22269c9fb0a8177208f41a520ee5be2fb09684"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-restored-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "ab8dbbd22c36fb0b90f0c4dad5bdcceb93ad8d1041424f804995227e7aab84d2"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-name-selected-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "9a2c85c630e2e8656a8443ccf6959c8f73c004b6bf768a914f75331b9d0e19b0"
+    }
+  ],
+  "method": "native screencapture own PID onscreen layer0 2720, visually matched CUA, no crop/scale; default-wide byte-identical candidate-2720",
+  "limitations": [
+    "full selection and AX accessibility unverified",
+    "no Test, Save, Sync or clipboard",
+    "no explicit activate/raise; actual foreground not asserted",
+    "busy pending"
+  ],
+  "close": "CUA clicked fresh native close button for UI 8930; Core left to main; no exit status asserted"
+}

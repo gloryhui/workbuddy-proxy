@@ -254,14 +254,21 @@ pub fn masked_input(state: &Entity<InputState>, disabled: bool, toggle: Button) 
 /// Studio54:216 field presentation on the unchanged native input. The base
 /// editor paints ordinary text and password dots from inherited text_style,
 /// including its own disabled opacity; no editor-state projection is needed.
-pub fn provider_field(input: Input) -> Input {
+pub fn provider_field(input: Input, focused: bool) -> Input {
     input.when(
         crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
         |input| {
             input
                 .text_color(rgb(color::TEXT_2))
                 .bg(rgb(color::BG_TABLE_HEAD))
-                .border_color(rgb(color::BORDER))
+                // The native Studio ring is almost the canvas colour. Keep
+                // its editing engine, and paint a clear border on focus.
+                .focus_bordered(false)
+                .border_color(rgb(if focused {
+                    crate::theme::focus_color(crate::theme::current_skin())
+                } else {
+                    color::BORDER
+                }))
                 .rounded(px(radius::PROVIDER_FIELD))
                 .line_height(px(crate::theme::line_height::PROVIDER_FIELD))
         },

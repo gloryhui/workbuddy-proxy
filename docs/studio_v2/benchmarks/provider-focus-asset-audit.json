@@ -1,0 +1,15 @@
+{
+  "node": "54:233",
+  "parent": "54:231",
+  "local_asset": "gpui/assets/studio/provider-key-eye.svg",
+  "sha256": "6d37ac30da43e20031b7dcf834ac5b09cded84e89b8d05c8f83c6ab5d58091a6",
+  "bytes": 728,
+  "exact_fresh_official_match": true,
+  "native_root_dimensions": [
+    17,
+    17
+  ],
+  "handler_and_hit_size": "same toggle_masked handler and24x24 button",
+  "placement": "Studio-only relative right5.5/down1.5 to compensate native centered suffix;effective ink measured separately",
+  "focus": "Default54:231 has no focus-state export;existing semantic accent used for native text/button focus,not claiming a new Figma focus state."
+}

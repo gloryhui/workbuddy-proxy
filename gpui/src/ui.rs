@@ -923,7 +923,10 @@ impl Proxy {
         // from programmatic Input changes; the badge compares live fields.
         for state in [&this.name, &this.key, &this.url] {
             cx.subscribe(state, |_, _, event, cx| {
-                if matches!(event, InputEvent::Change) {
+                if matches!(
+                    event,
+                    InputEvent::Change | InputEvent::Focus | InputEvent::Blur
+                ) {
                     cx.notify();
                 }
             })

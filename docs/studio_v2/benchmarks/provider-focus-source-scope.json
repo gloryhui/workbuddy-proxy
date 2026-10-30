@@ -1,0 +1,16 @@
+{
+  "unchanged_between_3df_and_final": [
+    "gpui/src/ui.rs",
+    "gpui/src/ui/providers.rs",
+    "gpui/src/ui_components.rs"
+  ],
+  "changes": [
+    {
+      "file": "gpui/src/theme.rs",
+      "old_sha256": "85e7a68cfa4f687a94b013dc0daf4fea7524a4337af4380ca9476d9d07a8678f",
+      "new_sha256": "9d0c22eb9555b93f0f9f87079b3f4ead6f7711687d1ada444bc2770772569b75",
+      "diff": "--- 3df/gpui/src/theme.rs\n+++ final63f/gpui/src/theme.rs\n@@ -363,7 +363,14 @@\n         colors.secondary_active = rgb(crate::theme::palette().border).into();\n         colors.secondary_foreground = rgb(crate::theme::palette().dark).into();\n         colors.secondary_hover = rgb(crate::theme::palette().border).into();\n-        colors.selection = rgb(crate::theme::palette().ring).into();\n+        // Studio's pale focus tint is nearly identical to its field fill.\n+        // Use the same semantic accent translucently for visible text ranges;\n+        // sidebar/log editors already project their own selection colours.\n+        colors.selection = if current_skin() == Skin::StudioIndigo {\n+            Hsla::from(rgb(crate::theme::palette().primary)).opacity(0.22)\n+        } else {\n+            rgb(crate::theme::palette().ring).into()\n+        };\n         colors.sidebar = rgb(color::SIDEBAR).into();\n         colors.sidebar_accent = rgb(color::SIDEBAR_ACTIVE).into();\n         colors.sidebar_accent_foreground = rgb(color::SIDEBAR_TEXT).into();\n"
+    }
+  ],
+  "scope": "Only Studio global selection paint changed after3df. Three input/focus/eye/handler files byte-identical. Final63f repeated keyboard,selection,BackspaceCancel,two-size andbusy/recovery;intermediate3df noTest/configbytesunchanged."
+}

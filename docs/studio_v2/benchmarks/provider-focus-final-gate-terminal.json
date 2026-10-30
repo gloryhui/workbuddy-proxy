@@ -1,0 +1,18 @@
+{
+  "pid": 14591,
+  "real_core_pid": 12908,
+  "instance_restored_byte_exact": true,
+  "instance_changed_during_gate": true,
+  "real_core_health_after": [
+    200,
+    "ready"
+  ],
+  "state": {
+    "test_requests": 1,
+    "test_forwarded": 1,
+    "active": 0
+  },
+  "server_thread_joined": true,
+  "auth_headers_and_bodies_recorded": false,
+  "scope": "Only isolated instance port temporarily redirected;existing Test payload forwarded once to real Core after native observation."
+}

@@ -1,0 +1,269 @@
+{
+  "files": [
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/build.json",
+      "artifact": "benchmarks/provider-focus-build.json",
+      "sha256": "0b9980edd99d873b0010431f3ca4617bff6750e4a5473c9d1c73f620849de24f",
+      "bytes": 23300
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/intermediate-3df-build.json",
+      "artifact": "benchmarks/provider-focus-intermediate-3df-build.json",
+      "sha256": "06cbcc3a26db96cd39014573a09f7a691c17a627fbcc728e3e3d84b0e3092df1",
+      "bytes": 23237
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/asset-audit.json",
+      "artifact": "benchmarks/provider-focus-asset-audit.json",
+      "sha256": "5a11a5b27333a98f7dd3355889661720d4d7e43ae2ded736a44e14ffc332c6d8",
+      "bytes": 639
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/eye-geometry.json",
+      "artifact": "benchmarks/provider-focus-eye-geometry.json",
+      "sha256": "8b731d99f20df704a600807068a69ce211c1bcd65b524821f9fd3367ab7f81f5",
+      "bytes": 1513
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/focus-geometry.json",
+      "artifact": "benchmarks/provider-focus-focus-geometry.json",
+      "sha256": "5db2eeb74243558e3a673f118a1ff6f451a59c763833608d219b5fe41c6de5aa",
+      "bytes": 1602
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/selection-before.json",
+      "artifact": "benchmarks/provider-focus-selection-before.json",
+      "sha256": "e2b5e747284eedfe31b8bad6149a7e668d72bf9e72544be591910433ad60defb",
+      "bytes": 340
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/selection-after.json",
+      "artifact": "benchmarks/provider-focus-selection-after.json",
+      "sha256": "0fcba769649a6db8e1b63fc0ea39fa02a79ddee66ee984bb9998bf7f612ae37b",
+      "bytes": 933
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/independent-proof.json",
+      "artifact": "benchmarks/provider-focus-independent-proof.json",
+      "sha256": "7664f4ec71ae9c4b73cc7772a9eee4c7bbf1c47f44cb6d66817b7a919c41497d",
+      "bytes": 680
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/key-reference.png",
+      "artifact": "screenshots/provider-focus-figma-54-231-reference.png",
+      "sha256": "f3151903c3b2c2f9e3e2ee0d988ce728d6a5860ef2195ffb4f394e2103ad793b",
+      "bytes": 1318
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/pre-gui-proof.json",
+      "artifact": "benchmarks/provider-focus-intermediate-3df-pre-gui-proof.json",
+      "sha256": "ece3f59588fdd56e4f1557fe6db6061fd28e95d659dea650be7a869ff27a8888",
+      "bytes": 2644
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/post-gui-proof.json",
+      "artifact": "benchmarks/provider-focus-intermediate-3df-post-gui-proof.json",
+      "sha256": "e3c258cb31b569222a7511cb05d69bd64f4b0e56227efa8aba7e24e9462e278e",
+      "bytes": 541
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/terminal-status.json",
+      "artifact": "benchmarks/provider-focus-intermediate-3df-terminal-status.json",
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173",
+      "bytes": 316
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/gui-validation-stage2.json",
+      "artifact": "benchmarks/provider-focus-intermediate-3df-gui-validation-stage2.json",
+      "sha256": "5756f2ec639ebfa26b4d267797e8d61072861a909367b2cd813ccc266fa9097f",
+      "bytes": 4704
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-default-wide.png",
+      "artifact": "screenshots/provider-focus-intermediate-3df-focus-default-wide.png",
+      "sha256": "8261f80b6b1f259c5394aa3c8574fd7d70ec51f5d08c7443fc44e4e0ebbfd4d1",
+      "bytes": 204777
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-name-wide.png",
+      "artifact": "screenshots/provider-focus-intermediate-3df-focus-name-wide.png",
+      "sha256": "1248a15230aa3c50def204992ed3d718a2de903c5e83973b93c808cddb299245",
+      "bytes": 205107
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-blurred-wide.png",
+      "artifact": "screenshots/provider-focus-intermediate-3df-focus-blurred-wide.png",
+      "sha256": "acb8da47f5e4ffce62fbbf1835da01e3ac11f21a8a094174ed5ffd7b76ae400e",
+      "bytes": 204786
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-focus-main/focus-name-selected-small.png",
+      "artifact": "screenshots/provider-focus-intermediate-3df-focus-name-selected-small.png",
+      "sha256": "9a2c85c630e2e8656a8443ccf6959c8f73c004b6bf768a914f75331b9d0e19b0",
+      "bytes": 158241
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/pre-gui-proof.json",
+      "artifact": "benchmarks/provider-focus-final-pre-gui-proof.json",
+      "sha256": "4152bb7fe7cc1fb234aaf53a64c21cc7f72a3ea2030da184ebe9a02ebc1e82b7",
+      "bytes": 2656
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/post-gui-proof.json",
+      "artifact": "benchmarks/provider-focus-final-post-gui-proof.json",
+      "sha256": "97c482fcc6ac2ed62ccee15a2ed93ac3b881a36356658b3aae77f0273704a1b8",
+      "bytes": 596
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/terminal-status.json",
+      "artifact": "benchmarks/provider-focus-final-terminal-status.json",
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173",
+      "bytes": 316
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gui-validation-stage1.json",
+      "artifact": "benchmarks/provider-focus-final-gui-validation-stage1.json",
+      "sha256": "630e06e262183d628e9c8009ca5e8fc5cabfb79f2a82acbfe75ff1a0d4c29e89",
+      "bytes": 3212
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gui-validation.json",
+      "artifact": "benchmarks/provider-focus-final-gui-validation.json",
+      "sha256": "92f39497ec8d63c5d07f8bb8910f52e5ea3710082b2b5912a51a2c52d28883a1",
+      "bytes": 4957
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/stage1-independent-proof.json",
+      "artifact": "benchmarks/provider-focus-final-stage1-independent-proof.json",
+      "sha256": "c93a93090ce4c17decc68fc9e45ae256e13f806304e83319952c836a5e840c7b",
+      "bytes": 454
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gate-ready.json",
+      "artifact": "benchmarks/provider-focus-final-gate-ready.json",
+      "sha256": "74a306ad85ed75f0a09bb1917368fd6f77bb2026e6156fefe4ee61ceedb95de9",
+      "bytes": 353
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gate-held.json",
+      "artifact": "benchmarks/provider-focus-final-gate-held.json",
+      "sha256": "c706d9cf69a483e444550f99675680ab1af423e5e132e1d69677fa59e525f61f",
+      "bytes": 293
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gate-held-independent-proof.json",
+      "artifact": "benchmarks/provider-focus-final-gate-held-independent-proof.json",
+      "sha256": "15c8d4cb14ebd812bd7be9dccae1764a4867bedf74ff59a6a9c444c5afafcf5b",
+      "bytes": 373
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/native-busy-observed.json",
+      "artifact": "benchmarks/provider-focus-final-native-busy-observed.json",
+      "sha256": "22c4a502caa1f2eaef56e1986718f049606dc5271774e17ffa2b3f580763bfa1",
+      "bytes": 423
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gate-released.json",
+      "artifact": "benchmarks/provider-focus-final-gate-released.json",
+      "sha256": "f5021933e6c42f4690daacf8294c9d7dee05eaa99530ca0dd02d6561666a29f1",
+      "bytes": 133
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gate-graceful-restore.json",
+      "artifact": "benchmarks/provider-focus-final-gate-graceful-restore.json",
+      "sha256": "73e0df807812a3e911a9ebd40c1968b866df9a9f337dbd3d7f2d9e34e03cfe03",
+      "bytes": 401
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/gate-terminal.json",
+      "artifact": "benchmarks/provider-focus-final-gate-terminal.json",
+      "sha256": "bcc8080f9481e6579b3a35b6523a3d4c66613c5c592645bcb62652d047ccfcad",
+      "bytes": 482
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-default-wide.png",
+      "artifact": "screenshots/provider-focus-final-selection-default-wide.png",
+      "sha256": "cf43fd4028c0a16a1208539c6318cb40829554b31abea9cae8f30607f5fdd00a",
+      "bytes": 203979
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-name-wide.png",
+      "artifact": "screenshots/provider-focus-final-selection-name-wide.png",
+      "sha256": "2473663ff0c11b93f0fac2968baee331bd0cc5d4a77aa339df3ca4593a682f0b",
+      "bytes": 205678
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-eye-keyboard-wide.png",
+      "artifact": "screenshots/provider-focus-final-selection-eye-keyboard-wide.png",
+      "sha256": "fbc3989a3a88eef1735bade96b139f706ed97fdf11100c9100c6535877f3dd5e",
+      "bytes": 204558
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-url-wide.png",
+      "artifact": "screenshots/provider-focus-final-selection-url-wide.png",
+      "sha256": "7e16481a4c9f9d7d27d816a7853f3731ba8138ed153520a67f3ebe59b7c487f1",
+      "bytes": 204324
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-default-small.png",
+      "artifact": "screenshots/provider-focus-final-selection-default-small.png",
+      "sha256": "c00e6e605a39555eff41badc3b6397e6d8266fa0c3d7828bc25c103dce2ec422",
+      "bytes": 157301
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-name-small.png",
+      "artifact": "screenshots/provider-focus-final-selection-name-small.png",
+      "sha256": "6a36d4fcddf87864e57c0a7a36810511d9e70dbcdf84dec380474d4ec191c0a3",
+      "bytes": 157651
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/selection-mono-small.png",
+      "artifact": "screenshots/provider-focus-final-selection-mono-small.png",
+      "sha256": "ff662c7c8fa34a6b2be0d8d857c9b71d17e8babf10a28dd2700d26d51cbff4d6",
+      "bytes": 156166
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/busy-wide.png",
+      "artifact": "screenshots/provider-focus-final-busy-wide.png",
+      "sha256": "b0f0431e72fc624ff654e839a41ad57abd3ecf26d9b5005c986e911145a39842",
+      "bytes": 201977
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/busy-recovered-wide.png",
+      "artifact": "screenshots/provider-focus-final-busy-recovered-wide.png",
+      "sha256": "0e4cfa2f9c0bfce845823224b44b5f378d4b6895f16b0eedb12bb796e5165f0a",
+      "bytes": 227011
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/ui61-selection-final/busy-recovered-small.png",
+      "artifact": "screenshots/provider-focus-final-busy-recovered-small.png",
+      "sha256": "12cefde7979c0499f0f7056891d44076f2b0f3ac3f80a87b3fc1c2f2e4d40c90",
+      "bytes": 157712
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/performance-previous1.json",
+      "artifact": "benchmarks/provider-focus-performance-previous1.json",
+      "sha256": "fed4b52629a3b33ac23fb40d89f052362397bc9697f1b6cabe1f9123fbf8b723",
+      "bytes": 4511
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/performance-current1.json",
+      "artifact": "benchmarks/provider-focus-performance-current1.json",
+      "sha256": "b1582588d9509c36456cc11dc1c5f7fe8d24e6b89879fdf19219cc852368c0ca",
+      "bytes": 4512
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/performance-current2.json",
+      "artifact": "benchmarks/provider-focus-performance-current2.json",
+      "sha256": "9eb1c506ba2a8c3b30cf79ffc03cb8a61c2a4538a043e913dc6879961da9b820",
+      "bytes": 4514
+    },
+    {
+      "original": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round52.mwra9zi3/performance-previous2.json",
+      "artifact": "benchmarks/provider-focus-performance-previous2.json",
+      "sha256": "62bc44ec3d57291b06ae2b0141f0b873d526609d9b280154ac8a26a5689bc19b",
+      "bytes": 4513
+    }
+  ],
+  "scope": "Copies preserve original bytes. Final10nativePNGs all exported;only4 representative3df intermediatePNGs exported,other original3df paths in report retained privately. Raw instance/config/credentials,privatehelpers withmachine paths,temporaryFigmaURLs excluded. ExtraOSpixelrow preserved."
+}
