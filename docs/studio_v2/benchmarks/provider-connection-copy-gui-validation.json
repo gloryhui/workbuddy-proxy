@@ -1,0 +1,88 @@
+{
+  "ui_sha256": "3db2f1eda0fa9b74a758ccdd29017b11ac02016472afb037ff49c05eb6362e4d",
+  "ui_pid": 75703,
+  "core_pid": 75531,
+  "window_number": 2525,
+  "cases": {
+    "blank_url": "Copy A; clear URL; one Test yielded 未完成 and 上游地址格式不正确; UI counts remained 2 providers/5 models/0 requests; Cancel returned A. Main independently verified no Test record at that point.",
+    "blank_key_copy": "Copy A again, clear masked key with CUA select all/backspace; one Test created sub2api 副本 and showed 连接正常 HTTP 200/SSE; 3 providers/9 models. Main independently verified actual ID e1524390c5e4, new route IDs, inherited synthetic source key and preserved effort/capability fields.",
+    "existing_a": "A initially 未测试, one Test yielded 连接正常/HTTP200; after mock failure one Test yielded 测试失败/HTTP503.",
+    "independent_receipts": "switch back to copy without testing: copy remains 连接正常 HTTP200; Runtime global latest error remains A failure and does not imply copy failure.",
+    "idle": "Main separately measured 30s and reported stream count unchanged; CPU/RSS unpaired, no comparative conclusion."
+  },
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/copy-save-incomplete-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "1c914041e6649d9803cc72a390d4b4c5249fd21d1a13fd61417cae032dc61430"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/copy-inherited-passed-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "f67df969cd9b84639c7334acc3a67ca66c8b7bc9dbc5cd733ed91a04a2f147fd"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/copy-inherited-passed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "cbff4b88197b9d3e3e770dcf63e8e0a1974cd3af43ee5ea552eda5671e7532c2"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/existing-a-passed-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "3136b901b5e2dd79bc534420005d608c6dd3a1356c34ef8baf6a98b1c3fcf379"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/existing-a-passed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "c1b6c40efcff6120cb37e88bedf9a206a10bbd9222dfe71af0cf554832d29f41"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/existing-a-failed-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "b87d87680083783c3593163becfc1aa3cd40daa7c55abfc9992e5b2505c8f333"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/existing-a-failed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "7c5e6edb5bd5bbe7f79b320618b4cd08d699b3d505fbcd97f99e1694e551f873"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/copy-retained-passed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "50117c954194f1b138c46d4c982fce7232c3f8cf89d2a8f4517d6f7ec1f29634"
+    }
+  ],
+  "screenshot_method": "native screencapture, each own PID onscreen layer0 verified; window 2525 visually matched CUA; no crop/scale",
+  "limits": [
+    "no separate Save, Sync, Delete, clipboard, or additional tests",
+    "Test uses existing save-plus-test operation",
+    "no explicit activate/raise; actual foreground not asserted",
+    "no external AX or window bounds",
+    "Core/fixture termination delegated to main"
+  ],
+  "close": "CUA clicked fresh native close button for UI 75703; Core retained for main; exit status not asserted"
+}

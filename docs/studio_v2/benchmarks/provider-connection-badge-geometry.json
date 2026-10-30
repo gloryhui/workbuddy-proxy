@@ -1,0 +1,50 @@
+{
+  "reference": {
+    "green_ink_box_local": [
+      24,
+      9,
+      67,
+      19
+    ],
+    "centre_background": [
+      233,
+      248,
+      241
+    ]
+  },
+  "current": {
+    "green_ink_box_local": [
+      23,
+      8,
+      66,
+      19
+    ],
+    "centre_background": [
+      233,
+      248,
+      241
+    ]
+  },
+  "scope": "Original native image untouched. ICC conversion/mask in memory only. Current badge source targetrect[928,237,92,27]; ink mask green>red+30/blue+5 and green<220. Not entire frame equivalence.",
+  "final_eec3": {
+    "green_ink_box_local": [
+      24,
+      8,
+      67,
+      19
+    ],
+    "centre_background": [
+      233,
+      248,
+      241
+    ],
+    "source_target_rect": [
+      928,
+      237,
+      92,
+      27
+    ],
+    "icc_profile_present": false,
+    "colour_analysis": "No embedded ICC; encoded RGB pixel analysis, not a calibrated colour-space equivalence claim."
+  }
+}

@@ -19,6 +19,7 @@ pub struct Reply {
     pub synced: bool,
     pub creation: Option<crate::provider_create::Outcome>,
     pub saved_provider: Option<String>,
+    pub test_feedback: Option<crate::provider_connection::Feedback>,
 }
 pub struct Backend {
     pub jobs: SyncSender<Job>,
@@ -163,6 +164,7 @@ impl Backend {
                 while let Ok(job) = requests.recv() {
                     let mut creation = None;
                     let mut saved_provider = None;
+                    let mut test_feedback = None;
                     let (mut result, synced) = execute(
                         &job,
                         |step| {
@@ -207,6 +209,11 @@ impl Backend {
                                     Ok(value.to_string())
                                 } else {
                                     let result=call(&dir, &payload);
+                                    if job.tag == "test" && payload["command"] == "test" {
+                                        test_feedback = Some(crate::provider_connection::Feedback::from_result(
+                                            payload["provider_id"].as_str().unwrap_or(""), &result,
+                                        ));
+                                    }
                                     if result.is_ok() && payload["command"] == "save" {
                                         saved_provider=payload["provider_id"].as_str().map(str::to_owned);
                                     }
@@ -261,6 +268,7 @@ impl Backend {
                             synced,
                             creation,
                             saved_provider,
+                            test_feedback,
                         })
                         .is_err()
                     {

@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-31T02:12:52.936042+08:00",
+  "old_ui_pid": 75703,
+  "old_pid_gone": true,
+  "core_pid": 75531,
+  "old_sha256": "3db2f1eda0fa9b74a758ccdd29017b11ac02016472afb037ff49c05eb6362e4d",
+  "new_sha256": "53f7b2260ee5a7d2d917e1fa4f00513ddbf641c87fe745fd7deb5bea0a21e0a4",
+  "original_fixture_manifest_preserved": true,
+  "scope": "Only own unused copied UI executable replaced after nativeclose/PIDgone; Core/config untouched. Same bundle identity and private configuration will be reopened; original3db fixture proof remains historical, new process/proof separately labelled."
+}

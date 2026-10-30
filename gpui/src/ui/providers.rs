@@ -396,7 +396,15 @@ impl Proxy {
                     .flex()
                     .flex_col()
                     .gap(px(6.))
-                    .child(section("01", self.t("连接配置", "Connection settings"), cx))
+                    .child(
+                        div()
+                            .flex()
+                            .items_start()
+                            .justify_between()
+                            .h(px(25.))
+                            .child(section("01", self.t("连接配置", "Connection settings"), cx))
+                            .child(self.connection_badge(cx)),
+                    )
                     .child(
                         hint_line(self.t(
                             "账户凭证、协议与接口地址",
@@ -529,6 +537,96 @@ impl Proxy {
                             .text_ellipsis(),
                     ),
             )
+            .into_any_element()
+    }
+
+    fn connection_badge(&self, cx: &App) -> AnyElement {
+        use crate::provider_connection::{LiveFields, Status};
+        let id = self.selected();
+        let result = self
+            .drafts
+            .providers
+            .get(&id)
+            .map(|draft| {
+                self.connections.view(
+                    &id,
+                    LiveFields {
+                        name: self.name.read(cx).value().as_ref(),
+                        key: self.key.read(cx).value().as_ref(),
+                        upstream: self.url.read(cx).value().as_ref(),
+                        protocol: draft.protocol,
+                        settings: &draft.protocol_settings,
+                        effort: &self.effort,
+                    },
+                )
+            })
+            .unwrap_or((Status::Untested, "", ""));
+        let (status, model, http) = result;
+        let (label, ink, background) = match status {
+            Status::Passed => (
+                self.t("连接正常", "Test passed"),
+                color::SUCCESS,
+                color::SUCCESS_TINT,
+            ),
+            Status::Failed => (
+                self.t("测试失败", "Test failed"),
+                color::DANGER,
+                color::DANGER_BG,
+            ),
+            Status::Testing => (
+                self.t("测试中…", "Testing…"),
+                crate::theme::palette().dark,
+                crate::theme::palette().tint,
+            ),
+            Status::Incomplete => (
+                self.t("未完成", "Incomplete"),
+                color::TEXT_3,
+                color::BG_TABLE_HEAD,
+            ),
+            Status::Untested => (
+                self.t("未测试", "Not tested"),
+                color::TEXT_3,
+                color::BG_TABLE_HEAD,
+            ),
+        };
+        let explanation = match status {
+            Status::Passed => format!("{} {model} · {http}。{}", self.t("此窗口中上次测试通过：", "Last test passed in this window:"), self.t("仅代表该次被测配置，不表示持续在线；配置修改后需重测。", "This receipt covers that tested configuration, not continuous availability; retest after changes.")),
+            Status::Failed => format!("{} {model} · {http}。{}", self.t("该次测试未通过：", "This test failed:"), self.t("请查看活动日志。", "See activity logs.")),
+            Status::Testing => self.t("正在执行现有保存与连接测试，请稍候。", "Running the existing save and connection test; please wait.").into(),
+            Status::Incomplete => self.t("测试未完成，尚无可核对的连接结果；请查看活动日志。", "The test did not complete with a verifiable connection result; see activity logs.").into(),
+            Status::Untested => self.t("此配置尚无本窗口的有效测试记录，请点击测试连接。", "This configuration has no matching test receipt in this window; use Test connection.").into(),
+        };
+        div()
+            .id("provider-connection-status")
+            .role(Role::Status)
+            .aria_label(format!("{label} · {explanation}"))
+            .w(px(92.))
+            .h(px(27.))
+            .flex_none()
+            .mt(px(2.))
+            .flex()
+            .items_center()
+            .justify_center()
+            .rounded(px(9.))
+            .bg(rgb(background))
+            .child(
+                Label::new(label)
+                    .text_size(px(11.))
+                    .line_height(px(16.))
+                    .font_weight(FontWeight::MEDIUM)
+                    // Optical alignment of the native Noto ink with54:220;
+                    // the92×27 box and its position stay in the layout flow.
+                    .when(
+                        self.zh
+                            && cfg!(target_os = "macos")
+                            && crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                        |label| label.relative().left(px(1.)).top(px(0.5)),
+                    )
+                    .text_color(rgb(ink)),
+            )
+            .tooltip(move |window, cx| {
+                crate::ui_components::full_value_tooltip(explanation.clone(), window, cx)
+            })
             .into_any_element()
     }
 

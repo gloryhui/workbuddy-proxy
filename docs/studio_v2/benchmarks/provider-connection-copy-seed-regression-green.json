@@ -1,0 +1,15 @@
+{
+  "red_log": "copy-seed-regression-red.txt",
+  "red_exit_code": 101,
+  "green_build": "build.json",
+  "green_all_gates_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "green_ui_sha256": "3db2f1eda0fa9b74a758ccdd29017b11ac02016472afb037ff49c05eb6362e4d",
+  "fix": "Seed only this not-yet-created copy from its actual source; actual saved provider always takes precedence; no fallback for unrelated/created pending IDs. Blank credentials and omitted capabilities/per-model effort use existing pure Save rules.",
+  "scope": "Pure regression now green, native copied-key case pending. Private GUI orchestration wait extended4\u219210minutes to avoid handoff expiration; not a product startup/performance threshold or repeated launch."
+}

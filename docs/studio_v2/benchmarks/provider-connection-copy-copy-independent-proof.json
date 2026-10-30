@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-10-31T01:47:14.662197+08:00",
+  "original_provider_fields_preserved": true,
+  "provider_model_counts": [
+    3,
+    9
+  ],
+  "source_provider_id": "review-provider",
+  "new_provider_id": "e1524390c5e4",
+  "new_provider_name": "sub2api 副本",
+  "new_id_distinct_from_originals": true,
+  "credential_inherited_without_printing_value": true,
+  "source_models_semantics_preserved": true,
+  "efforts_after": [
+    "high",
+    "low",
+    "default",
+    "max"
+  ],
+  "output_limit_after": 8192,
+  "all_new_route_ids_disjoint": true,
+  "sqlite_requests": [
+    {
+      "provider_id": "e1524390c5e4",
+      "route_id": "b8a1146324aa",
+      "http_status": 200,
+      "source": "connection_test"
+    }
+  ],
+  "draft_selected_matches_actual_id": true,
+  "no_pending_local_creation": true,
+  "scope": "Final3db2 native Test from copy with empty Key, source mixed effort and8192cap. Root independently compares credentials only in memory, never writes their values to proof."
+}

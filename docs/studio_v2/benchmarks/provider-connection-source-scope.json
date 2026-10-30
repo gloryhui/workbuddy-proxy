@@ -1,0 +1,53 @@
+{
+  "comparisons": [
+    {
+      "from": "intermediate-eec3",
+      "to": "intermediate-3db2",
+      "unchanged_files": [
+        "gpui/src/backend.rs",
+        "gpui/src/main.rs",
+        "gpui/src/ui/provider_new.rs",
+        "gpui/src/ui/providers.rs"
+      ],
+      "changes": [
+        {
+          "file": "gpui/src/provider_connection.rs",
+          "old_sha256": "dd9ecbeca83fb86da16ab66f575fc35004991d515f0575542e92b4fa2c40a308",
+          "new_sha256": "f663adc4f996b06a2e3b8107fe5199a6569da8e051ed6e80a129adc4df46eb34",
+          "diff": "--- intermediate-eec3/gpui/src/provider_connection.rs\n+++ intermediate-3db2/gpui/src/provider_connection.rs\n@@ -101,6 +101,25 @@\n     observed: BTreeMap<String, Observed>,\n     receipts: BTreeMap<String, Receipt>,\n     pending: Option<Attempt>,\n+}\n+\n+pub fn seed_provider<'a>(\n+    cfg: &'a Config,\n+    pending: Option<&crate::provider_create::Pending>,\n+    id: &str,\n+) -> Option<&'a Provider> {\n+    cfg.providers\n+        .iter()\n+        .find(|provider| provider.id == id)\n+        .or_else(|| {\n+            // A local copy has no saved target yet. Duplicate inherits the source\n+            // credential/model defaults before applying the edited draft.\n+            let source = pending\n+                .filter(|pending| pending.id == id && !pending.created)?\n+                .source_id\n+                .as_deref()?;\n+            cfg.providers.iter().find(|provider| provider.id == source)\n+        })\n }\n \n fn digest(value: &impl serde::Serialize) -> [u8; 32] {\n@@ -496,4 +515,54 @@\n         assert!(!s.receipts.contains_key(\"local-cancel\"));\n         assert_eq!(s.view(\"a\", fields(&d)).0, Status::Passed);\n     }\n-}\n+\n+    #[test]\n+    fn copy_seed_preserves_blank_key_capabilities_and_legacy_effort_without_cross_binding() {\n+        let mut cfg = fixture();\n+        cfg.providers[0].models[0].reasoning_effort = \"high\".into();\n+        cfg.providers[0].models[0].capabilities =\n+            Some(serde_json::from_value(json!({\"maxOutputTokens\":8192})).unwrap());\n+        let mut d = Draft::from_provider(&cfg.providers[0]);\n+        d.name = \"Copied provider\".into();\n+        d.key.clear();\n+        d.effort = \"keep\".into();\n+        d.models[0].as_object_mut().unwrap().remove(\"capabilities\");\n+        let mut pending = crate::provider_create::Pending {\n+            id: \"local-copy\".into(),\n+            return_to: \"a\".into(),\n+            source_id: Some(\"a\".into()),\n+            created: false,\n+            uncertain: false,\n+        };\n+        let mut s = Connections::default();\n+        s.begin(\n+            &pending.id,\n+            &d,\n+            seed_provider(&cfg, Some(&pending), &pending.id),\n+            0,\n+        );\n+        // Duplicate/Save inherits the source credential and missing model fields,\n+        // generates new route IDs, then the original Test uses the actual ID.\n+        let mut copy = cfg.providers[0].clone();\n+        copy.id = \"created-copy\".into();\n+        copy.name = d.name.clone();\n+        copy.models[0].id = \"new-route\".into();\n+        copy.models[0].alias = \"new-alias\".into();\n+        copy.set_model_rows(&d.models, &d.effort).unwrap();\n+        cfg.providers.push(copy);\n+        let saved = Draft::from_provider(cfg.providers.last().unwrap());\n+        s.rebind(&pending.id, \"created-copy\");\n+        s.observe(\"created-copy\", &saved);\n+        s.finish(&cfg, Some(feedback(&cfg, \"created-copy\", 0, true)));\n+        assert_eq!(s.view(\"created-copy\", fields(&saved)).0, Status::Passed);\n+        assert_eq!(\n+            s.view(\"a\", fields(&Draft::from_provider(&cfg.providers[0])))\n+                .0,\n+            Status::Untested\n+        );\n+        assert!(seed_provider(&cfg, Some(&pending), \"b\").is_some_and(|p| p.id == \"b\"));\n+        assert!(seed_provider(&cfg, Some(&pending), \"other-local-draft\").is_none());\n+        pending.created = true;\n+        assert!(seed_provider(&cfg, Some(&pending), &pending.id).is_none());\n+    }\n+}\n"
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "old_sha256": "a2428089489c106af3e34120b0b38ef9cbec3175eccdf08f9fc1cc722bb6e631",
+          "new_sha256": "082f137cc76bac584647fbef0b12228f46fd825f9a652c7ef69af51f7fc5b6af",
+          "diff": "--- intermediate-eec3/gpui/src/ui.rs\n+++ intermediate-3db2/gpui/src/ui.rs\n@@ -1236,7 +1236,11 @@\n             self.connections.begin(\n                 &id,\n                 &draft,\n-                self.cfg.providers.iter().find(|p| p.id == id),\n+                crate::provider_connection::seed_provider(\n+                    &self.cfg,\n+                    self.drafts.pending.as_ref(),\n+                    &id,\n+                ),\n                 index,\n             );\n             if !self.busy {\n"
+        }
+      ]
+    },
+    {
+      "from": "intermediate-3db2",
+      "to": "final",
+      "unchanged_files": [
+        "gpui/src/backend.rs",
+        "gpui/src/main.rs",
+        "gpui/src/ui/provider_new.rs",
+        "gpui/src/ui/providers.rs"
+      ],
+      "changes": [
+        {
+          "file": "gpui/src/provider_connection.rs",
+          "old_sha256": "f663adc4f996b06a2e3b8107fe5199a6569da8e051ed6e80a129adc4df46eb34",
+          "new_sha256": "0ec46e1c017dfbd266593c28301cb865249af7579d3e7de1308691de1c1ce8fe",
+          "diff": "--- intermediate-3db2/gpui/src/provider_connection.rs\n+++ final/gpui/src/provider_connection.rs\n@@ -269,10 +269,13 @@\n         self.observed.retain(|id, _| drafts.contains_key(id));\n     }\n \n-    pub fn forget_results(&mut self) {\n+    /// Returns whether visible receipts changed; unchanged offline polls stay quiet.\n+    pub fn forget_results(&mut self) -> bool {\n+        let changed = !self.receipts.is_empty();\n         self.receipts.clear();\n         self.observed\n             .retain(|id, _| self.pending.as_ref().is_some_and(|a| a.provider == *id));\n+        changed\n     }\n \n     pub fn discard(&mut self, id: &str) {\n@@ -495,10 +498,12 @@\n         s.reconcile(&cfg, &BTreeMap::from([(\"a\".into(), d.clone())]));\n         assert_eq!(s.view(\"a\", fields(&d)).0, Status::Untested);\n         let (mut s, d) = passed(&cfg);\n-        s.forget_results();\n+        assert!(s.forget_results());\n         assert_eq!(s.view(\"a\", fields(&d)).0, Status::Untested);\n-        s.begin(\"a\", &d, Some(&cfg.providers[0]), 0);\n-        s.forget_results();\n+        assert!(!s.forget_results());\n+        s.begin(\"a\", &d, Some(&cfg.providers[0]), 0);\n+        assert!(!s.forget_results());\n+        assert_eq!(s.view(\"a\", fields(&d)).0, Status::Testing);\n         s.finish(&cfg, Some(feedback(&cfg, \"a\", 0, true)));\n         assert_eq!(s.view(\"a\", fields(&d)).0, Status::Passed);\n     }\n"
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "old_sha256": "082f137cc76bac584647fbef0b12228f46fd825f9a652c7ef69af51f7fc5b6af",
+          "new_sha256": "1a530c2fe342893be82f9a269f127c64d1d35c98f267923f9258d04d6e1e23d1",
+          "diff": "--- intermediate-3db2/gpui/src/ui.rs\n+++ final/gpui/src/ui.rs\n@@ -1605,13 +1605,18 @@\n                 // reply, so a core that stops answering can never keep showing\n                 // as healthy. A poll only carries a snapshot when the core\n                 // answered with valid JSON.\n+                let previous_state = self.core_state;\n                 self.core_state = if reply.snapshot.is_some() {\n                     CoreState::Responding\n                 } else {\n                     CoreState::Unreachable\n                 };\n-                if self.core_state == CoreState::Unreachable {\n-                    self.connections.forget_results();\n+                let receipts_changed =\n+                    self.core_state == CoreState::Unreachable && self.connections.forget_results();\n+                if previous_state != self.core_state || receipts_changed {\n+                    // Poll transitions must repaint without a later pointer/AX\n+                    // event. Steady idle/offline polls do not request redraws.\n+                    cx.notify();\n                 }\n             } else {\n                 self.busy = false;\n"
+        }
+      ]
+    }
+  ],
+  "scope": "eec3 ordinary edits/locale/skins;3db2 copy inheritance and saved-provider outcomes;final53f reopen and natural offline/recovery paint. Prior actions not all repeated on final. Render/backend/main/provider_new byte-identical across these three versions. eec3-to-final-source-scope private old report was 3db-specific and is superseded here."
+}

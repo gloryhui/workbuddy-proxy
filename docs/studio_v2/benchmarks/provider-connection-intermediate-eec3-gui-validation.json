@@ -1,0 +1,137 @@
+{
+  "ui_sha256": "eec38703d43d147514f575f58c8ff50b8ff6efe9f082b7bb704b3bb2ea9672ef",
+  "ui_pid": 63242,
+  "core_pid": 62704,
+  "window_number": 2432,
+  "stage1": {
+    "initial": "Provider A untested; Runtime running",
+    "test": "one UI test; CUA AX observed testing then passed deepseek-v4.1-flash HTTP 200; first SSE 4006ms",
+    "provider_switch": "B untested, returning A preserved passed",
+    "drafts": "name, first model display name, and protocol changes each changed status to untested; Cancel restored corresponding entry value and passed",
+    "language_skin": "English Test passed, Chinese restored; Mono to Studio preserved passed",
+    "caveat": "Test uses existing save-plus-test path. No separate Save or Sync clicked; language selection writes isolated preference."
+  },
+  "stage2": {
+    "test": "one UI test after fixture mock set failure; prior passed replaced by 测试失败, AX and wide log HTTP 503",
+    "small": "failure badge and Runtime failure text visible; inner log limited in viewport, scrolled but HTTP 503 not observed in small capture",
+    "retry": "one UI test after success restored, status returned to 连接正常 HTTP 200"
+  },
+  "stage3": {
+    "fault": "main temporarily routed only isolated instance control port to own 503 endpoint; real Core remained running and health 200 as independently reported by main",
+    "observed": "UI polling showed Runtime and sidebar 未响应, log 离线, footer 无法连接核心，代理状态未知, badge 未测试",
+    "recovery": "after main restored instance bytes and stopped fault service, poll showed Runtime/sidebar 运行中, log 实时, footer running, badge remained 未测试; no test"
+  },
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-untested-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "9137c9af20d155eddb7318815514250d726f89460331951a2bb54d7cba090189",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-passed-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "91c15e0f07de0ef0e4c452bb2880ed52b2c936aefc4bf573761a6b588da90828",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-passed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "16eae59dc24d11ea8cd9c5b13b33985e7c3f7594877308f9a7e180329db0fdf2",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-b-untested-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "e79575857cd993cf1bf6f48313420aa08c5453c096017acfdcbd3dcd9786abb6",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-edited-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "f51774e0c4300302e8db33c7ed1308f22f70a2ac4df3ed270f560f6f634a72a4",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-passed-en-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "9ac5546895575df494312a71b0552e38b969fd1a7aeaeaaa6ffff75b0cdcf56c",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-failed-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "cb306a3df6fe587ba334045008e099adae9b6ddfe136c379fd2055a57789b39f",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-failed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "0ef60e11a67aeefc6c449dd47e1af0ec57ee09d98d6a8fc7de22cbde341a4130",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-retried-passed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "826722ef08aecf4c5ea2a0d9fdb0dafaee964199652162a7e38872533561388e",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-control-unavailable-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "aae925f5ec59047b71ca3d767b9e0545cdc682d18e830c5edb625ccccf189b4a",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-connection-final/connection-recovered-untested-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "4e4a9675a9932edee5ca5e1a29908dd9773c8ed1352205f0f69c032aca1655e3",
+      "source": "native screencapture, PID 63242 onscreen layer0 window 2432, no crop or scale"
+    }
+  ],
+  "diagnostic_aliases": {
+    "candidate-2432.png": "identical bytes to connection-untested-wide.png",
+    "connection-testing-wide.png": "actual passed frame, identical bytes to connection-passed-wide.png; NOT testing evidence"
+  },
+  "limitations": [
+    "testing observed in CUA AX, not captured as standalone testing PNG",
+    "no explicit activate or raise; actual foreground not asserted",
+    "no external AX or global window bounds",
+    "no separate save, sync, delete or clipboard action",
+    "Core and fixture termination delegated to main"
+  ],
+  "close": "CUA clicked fresh native close button on UI 63242; Core left for main; no exit status asserted"
+}

@@ -1,0 +1,29 @@
+{
+  "checked_pids": [
+    89735,
+    89736,
+    89867,
+    90003,
+    90004,
+    90135,
+    90273,
+    90274,
+    90416,
+    90792,
+    90793,
+    91688,
+    90790,
+    56417,
+    56973,
+    62704,
+    63242,
+    70215,
+    75531,
+    75703,
+    85606,
+    67099,
+    87574
+  ],
+  "all_gone": true,
+  "scope": "Read-only independent ps check after all native and benchmark fixtures finished. CUA UI wait status unavailable; Core/mock wait statuses remain in individual reports."
+}

@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-31T01:45:19.152539+08:00",
+  "provider_model_counts_now": [
+    3,
+    9
+  ],
+  "source_status_now": [
+    [
+      "connection_test",
+      200,
+      1
+    ]
+  ],
+  "config_byte_sha_equal_to_initial": false,
+  "connection_tests_started_before_validation_image_mtime": 0,
+  "scope": "Independent current snapshot; timestamp-filter checks whether a Core Test existed before the earlier validation-failure screenshot. Later valid copy action may already have advanced the current snapshot."
+}

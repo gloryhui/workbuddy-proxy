@@ -1,0 +1,23 @@
+   Compiling workbuddy-proxy-gpui v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/gpui)
+    Finished `test` profile [unoptimized] target(s) in 5.38s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/main.rs (/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/debug/deps/workbuddy_proxy_gpui-984708bcc2df5515)
+
+running 1 test
+
+thread 'provider_connection::tests::copy_seed_preserves_blank_key_capabilities_and_legacy_effort_without_cross_binding' (986574) panicked at src/provider_connection.rs:546:9:
+assertion `left == right` failed
+  left: Untested
+ right: Passed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test provider_connection::tests::copy_seed_preserves_blank_key_capabilities_and_legacy_effort_without_cross_binding ... FAILED
+
+failures:
+
+failures:
+    provider_connection::tests::copy_seed_preserves_blank_key_capabilities_and_legacy_effort_without_cross_binding
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 205 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--bin workbuddy-proxy-gpui`

@@ -190,6 +190,7 @@ pub struct Proxy {
     /// Completion context is only known for successful creations in this window.
     /// Existing saved rows must not acquire an extra completion badge.
     saved_creations: BTreeMap<String, provider_new::CreationKind>,
+    connections: crate::provider_connection::Connections,
     provider_profile_focus: FocusHandle,
     backend: Backend,
     zh: bool,
@@ -798,6 +799,7 @@ impl Proxy {
             drafts,
             provider_edits: provider_edit::ProviderEdits::default(),
             saved_creations: BTreeMap::new(),
+            connections: Default::default(),
             provider_profile_focus: cx.focus_handle().tab_stop(false),
             backend,
             zh,
@@ -917,6 +919,16 @@ impl Proxy {
             },
         )
         .detach();
+        // Refresh only the owner view. Do not capture partially loaded forms
+        // from programmatic Input changes; the badge compares live fields.
+        for state in [&this.name, &this.key, &this.url] {
+            cx.subscribe(state, |_, _, event, cx| {
+                if matches!(event, InputEvent::Change) {
+                    cx.notify();
+                }
+            })
+            .detach();
+        }
         cx.subscribe(&this.effort_select, |this, _, event, cx| {
             if let SelectEvent::Confirm(Some(code)) = event {
                 this.effort = code.clone();
@@ -1086,28 +1098,30 @@ impl Proxy {
         if self.drafts.selected.is_empty() {
             return;
         }
-        self.drafts.providers.insert(
-            self.selected(),
-            Draft {
-                name: self.name.read(cx).value().to_string(),
-                key: self.key.read(cx).value().to_string(),
-                upstream: self.url.read(cx).value().to_string(),
-                protocol: self
-                    .drafts
-                    .providers
-                    .get(&self.selected())
-                    .map(|d| d.protocol)
-                    .unwrap_or_default(),
-                protocol_settings: self
-                    .drafts
-                    .providers
-                    .get(&self.selected())
-                    .map(|d| d.protocol_settings.clone())
-                    .unwrap_or_default(),
-                effort: self.effort.clone(),
-                models: self.models.clone(),
-            },
-        );
+        let id = self.selected();
+        let draft = Draft {
+            name: self.name.read(cx).value().to_string(),
+            key: self.key.read(cx).value().to_string(),
+            upstream: self.url.read(cx).value().to_string(),
+            protocol: self
+                .drafts
+                .providers
+                .get(&self.selected())
+                .map(|d| d.protocol)
+                .unwrap_or_default(),
+            protocol_settings: self
+                .drafts
+                .providers
+                .get(&self.selected())
+                .map(|d| d.protocol_settings.clone())
+                .unwrap_or_default(),
+            effort: self.effort.clone(),
+            models: self.models.clone(),
+        };
+        if self.drafts.providers.get(&id) != Some(&draft) {
+            self.connections.observe(&id, &draft);
+        }
+        self.drafts.providers.insert(id, draft);
     }
     fn load_form(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if !self.drafts.providers.contains_key(&self.drafts.selected) {
@@ -1124,6 +1138,7 @@ impl Proxy {
             .get(&self.selected())
             .cloned()
             .unwrap_or_default();
+        self.connections.observe(&self.selected(), &draft);
         for (state, value) in [
             (&self.name, draft.name),
             (&self.key, draft.key),
@@ -1207,12 +1222,32 @@ impl Proxy {
     }
     fn test(&mut self, cx: &mut Context<Self>) {
         let mut steps = self.save_steps(cx);
+        let was_busy = self.busy;
+        let id = self.selected();
+        let context = self.drafts.providers.get(&id).cloned();
+        let index = self.selection.rows.first().copied().unwrap_or(0);
         let mut test = json!({"command":"test","provider_id":self.selected()});
         if let Some(index) = self.selection.rows.first() {
             test["model_index"] = json!(index);
         }
         steps.push(test);
         self.send("test", steps, cx);
+        if !was_busy && let Some(draft) = context {
+            self.connections.begin(
+                &id,
+                &draft,
+                crate::provider_connection::seed_provider(
+                    &self.cfg,
+                    self.drafts.pending.as_ref(),
+                    &id,
+                ),
+                index,
+            );
+            if !self.busy {
+                // Queue rejection is not a successful probe or a connection failure.
+                self.connections.finish(&self.cfg, None);
+            }
+        }
     }
     fn dirty_steps(&mut self, cx: &App) -> Vec<Value> {
         self.capture(cx);
@@ -1391,6 +1426,7 @@ impl Proxy {
                 .map(|p| p.id.clone())
                 .unwrap_or_default();
         }
+        self.connections.reconcile(&cfg, &self.drafts.providers);
         self.cfg = cfg;
         self.port.update(cx, |s, cx| {
             s.set_value(self.cfg.port.to_string(), window, cx)
@@ -1433,6 +1469,7 @@ impl Proxy {
         self.saved_creations
             .retain(|id, _| cfg.providers.iter().any(|p| &p.id == id));
         self.delete_feedback.reconcile(&cfg);
+        self.connections.reconcile(&cfg, &self.drafts.providers);
         self.cfg = cfg;
         self.port.update(cx, |input, cx| {
             input.set_value(self.cfg.port.to_string(), window, cx)
@@ -1568,11 +1605,19 @@ impl Proxy {
                 // reply, so a core that stops answering can never keep showing
                 // as healthy. A poll only carries a snapshot when the core
                 // answered with valid JSON.
+                let previous_state = self.core_state;
                 self.core_state = if reply.snapshot.is_some() {
                     CoreState::Responding
                 } else {
                     CoreState::Unreachable
                 };
+                let receipts_changed =
+                    self.core_state == CoreState::Unreachable && self.connections.forget_results();
+                if previous_state != self.core_state || receipts_changed {
+                    // Poll transitions must repaint without a later pointer/AX
+                    // event. Steady idle/offline polls do not request redraws.
+                    cx.notify();
+                }
             } else {
                 self.busy = false;
                 match &reply.result {
@@ -1633,6 +1678,11 @@ impl Proxy {
                             .to_owned();
                     }
                 }
+                if let Some(outcome) = &reply.creation
+                    && let Some(id) = &outcome.provider_id
+                {
+                    self.connections.rebind(&outcome.local_id, id);
+                }
                 let creation_attempted = reply.creation.is_some();
                 let creation_saved = reply
                     .creation
@@ -1671,6 +1721,10 @@ impl Proxy {
                 if reply.synced || (reply.tag == "port" && reply.result.is_ok()) {
                     self.startup_report = None;
                     self.startup_sync_open = false;
+                }
+                if reply.tag == "test" {
+                    self.connections
+                        .finish(&self.cfg, reply.test_feedback.take());
                 }
                 let _ = self.drafts.persist(&self.dir);
                 cx.notify();

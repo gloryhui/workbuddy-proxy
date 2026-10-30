@@ -1,0 +1,30 @@
+{
+  "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "node": "54:220",
+  "source": "Official Figma get_design_context refreshed this round;parent54:216 placement from UI58 full54:2 context",
+  "reference": {
+    "width": 92,
+    "height": 27,
+    "radius": 9,
+    "background": "#e9f8f1",
+    "text": "连接正常",
+    "text_color": "#11976f",
+    "font": "Noto Sans SC Medium",
+    "font_size": 11,
+    "line_height": 16,
+    "text_left": 24,
+    "text_top": 6
+  },
+  "native_wide_rect": [
+    928,
+    237,
+    92,
+    27
+  ],
+  "limits": [
+    "One pixel upper antialias fringe remains in measured text mask. No full font-version/rasterizer equivalence claim.",
+    "Receipt is historical explicit single-model/current-config result, not ongoing upstream health.",
+    "Testing was seen in CUA/AX; no independent Testing PNG. Misnamed private testing image actually shows Passed and is excluded.",
+    "Native original PNGs1440x901/1100x701 preserve extra OS pixel row; no crop/scale."
+  ]
+}

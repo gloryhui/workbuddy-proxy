@@ -1,0 +1,65 @@
+{
+  "ui_sha256": "53f7b2260ee5a7d2d917e1fa4f00513ddbf641c87fe745fd7deb5bea0a21e0a4",
+  "ui_pid": 85606,
+  "core_pid": 75531,
+  "window_number": 2574,
+  "cases": {
+    "reopen": "previously tested copy selected after new UI process; status 未测试, proving session receipt not persisted",
+    "test": "one UI Test on copy yielded 连接正常 HTTP200 and SSE",
+    "control_fault": "main changed only isolated instance port to own 503 service while real Core remained healthy; after waiting 5 seconds, own-window native capture BEFORE CUA observation showed 未测试, Runtime/sidebar 未响应, log 离线; subsequent CUA AX confirmed 未测试",
+    "recovery": "main restored exact instance bytes and stopped fault service; after waiting 5 seconds, own-window native capture BEFORE CUA observation showed Runtime/sidebar 运行中 and log 实时, connection still 未测试; subsequent CUA AX confirmed 未测试"
+  },
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/reopened-copy-untested-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "7ddaef5bb3163b513d4aeace57fa446b90c82f8092491a5a794b03cafcd0f47f"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/final-copy-passed-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "e4b9460edfa20cbae9d248b5b2a78b51fe6137fdf7e915d59e6a5b06107552aa"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/final-copy-passed-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "5c2d7b4fccdb6d1025b50988e0139d84390b76c65a6461688b78ddcbba40fb2b"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/final-control-unavailable-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "ed3a47eb6f68ac2dc048d35e493051e926c9db295688734c647e3e90343238ee"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81/ui59-copy-fixed/final-control-recovered-untested-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "1cad21f72459a97b33052849fd9204d2281552bd03c9d185b252be2095ed3b73"
+    }
+  ],
+  "screenshot_method": "native screencapture after checking PID 85606 onscreen layer0 window 2574; own window identified visually; no crop or scaling",
+  "alias": "reopened-copy-untested-small.png is byte-identical to reopen-candidate-2574.png",
+  "limits": [
+    "fault was UI control transport injection, not Core shutdown",
+    "one Test only; no separate Save, Sync, Delete or clipboard",
+    "existing Test performs save-plus-test",
+    "no explicit activate or raise; actual foreground not asserted",
+    "no external AX or window bounds",
+    "Core and fixture shutdown delegated to main"
+  ],
+  "close": "CUA clicked fresh native close button for UI 85606; Core retained for main; exit status not asserted"
+}

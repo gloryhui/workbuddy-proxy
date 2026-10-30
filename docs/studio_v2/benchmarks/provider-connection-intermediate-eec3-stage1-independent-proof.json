@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-31T01:06:58.695352+08:00",
+  "original_fields_preserved": true,
+  "language_after": "zh",
+  "provider_model_counts": [
+    2,
+    5
+  ],
+  "source_status_counts": [
+    [
+      "connection_test",
+      200,
+      1
+    ],
+    [
+      "relay",
+      200,
+      14
+    ]
+  ],
+  "stream_post_count": 1,
+  "scope": "After final candidate successful Test and provider/name/model/protocol/language/skin interactions, before deliberate503. Existing Test and language selection write config; every original field restored, not a byte-no-write claim."
+}

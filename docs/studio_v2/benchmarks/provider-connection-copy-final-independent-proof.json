@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-31T02:27:41.018099+08:00",
+  "known_ui_pids_gone": [
+    75703,
+    85606
+  ],
+  "ui_exit_codes": [
+    null,
+    null
+  ],
+  "scope": "CUA owns UIs; disappearance only, not wait/exit0. Same private bundle/config/Core across3db\u219253f reopen; original fixture manifest plus separate reopened_ui retained.",
+  "sqlite_provider_http_counts": [
+    [
+      "e1524390c5e4",
+      200,
+      2
+    ],
+    [
+      "review-provider",
+      200,
+      1
+    ],
+    [
+      "review-provider",
+      503,
+      1
+    ]
+  ],
+  "sqlite_totals": [
+    4,
+    1500,
+    150,
+    1650
+  ],
+  "mock_stream_posts": [
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 200,
+      "mode": "success"
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 200,
+      "mode": "success"
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 503,
+      "mode": "failure"
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 200,
+      "mode": "success"
+    }
+  ],
+  "new_tests_after_reopen": 1,
+  "test_receipt_not_persisted_gui_report": "reopened-final-gui-validation.json",
+  "control_fault": {
+    "checked_at": "2026-10-31T02:23:28.411427+08:00",
+    "fault_pid": 87574,
+    "real_core_pid": 75531,
+    "owned_503_control_posts": 41,
+    "instance_restored_byte_exact": true,
+    "real_core_health_after_restore": [
+      200,
+      "ready"
+    ],
+    "auth_headers_and_bodies_recorded": false,
+    "fault_thread_joined": true,
+    "scope": "Simulated UI control transport unavailability; not a Core process shutdown. Private instance original bytes restored; no new Test/proxy request caused by fault server."
+  }
+}

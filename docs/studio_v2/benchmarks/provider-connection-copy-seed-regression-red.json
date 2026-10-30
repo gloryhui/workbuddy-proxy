@@ -1,0 +1,13 @@
+{
+  "command": "cargo test --manifest-path gpui/Cargo.toml --locked copy_seed_preserves_blank_key_capabilities_and_legacy_effort_without_cross_binding -- --nocapture",
+  "exit_code": 101,
+  "expected": "Passed",
+  "actual": "Untested",
+  "legacy_rule": "Preview seed selected only by current saved provider ID, ignoring a not-yet-created copy source.",
+  "log_sha256": "8862f9a3424ac3b51af30463e021798953ead4cc794930bd39c7e33e023d26b4",
+  "source_sha256": {
+    "gpui/src/provider_connection.rs": "7aaefa1a4d6615832cead4eac6d9b8d78b50125487749e9e2e7133fb72700034",
+    "gpui/src/ui.rs": "082f137cc76bac584647fbef0b12228f46fd825f9a652c7ef69af51f7fc5b6af"
+  },
+  "scope": "Pure regression, no GUI claim. Synthetic source credential/capabilities/legacy effort inherited by copy, actual Test response200; missing preview source hides valid receipt."
+}

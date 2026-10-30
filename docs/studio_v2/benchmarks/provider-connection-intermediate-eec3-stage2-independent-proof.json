@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-31T01:10:31.663882+08:00",
+  "source_status_counts": [
+    [
+      "connection_test",
+      200,
+      1
+    ],
+    [
+      "connection_test",
+      503,
+      1
+    ],
+    [
+      "relay",
+      200,
+      14
+    ]
+  ],
+  "synthetic_stream_posts": [
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 200,
+      "mode": "success"
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 503,
+      "mode": "failure"
+    }
+  ],
+  "mock_mode_restored": "success",
+  "scope": "Exactlytwo final native Test actions; first200 then503. No inference from visual badge alone."
+}

@@ -1,0 +1,94 @@
+{
+  "checked_at": "2026-10-31T01:56:52.298241+08:00",
+  "ui_pid": 75703,
+  "core_pid": 75531,
+  "samples": [
+    {
+      "seconds": 10.0051,
+      "processes": {
+        "ui": {
+          "rss_before_mib": 108.672,
+          "rss_after_mib": 108.688,
+          "cpu_single_core_percent": 3.5982
+        },
+        "core": {
+          "rss_before_mib": 13.781,
+          "rss_after_mib": 13.781,
+          "cpu_single_core_percent": 0.1999
+        }
+      }
+    },
+    {
+      "seconds": 10.0051,
+      "processes": {
+        "ui": {
+          "rss_before_mib": 108.688,
+          "rss_after_mib": 108.688,
+          "cpu_single_core_percent": 3.5981
+        },
+        "core": {
+          "rss_before_mib": 13.781,
+          "rss_after_mib": 13.781,
+          "cpu_single_core_percent": 0.0999
+        }
+      }
+    },
+    {
+      "seconds": 10.0051,
+      "processes": {
+        "ui": {
+          "rss_before_mib": 108.688,
+          "rss_after_mib": 108.688,
+          "cpu_single_core_percent": 3.3983
+        },
+        "core": {
+          "rss_before_mib": 13.781,
+          "rss_after_mib": 13.781,
+          "cpu_single_core_percent": 0.1999
+        }
+      }
+    }
+  ],
+  "before": {
+    "sqlite": [
+      [
+        "e1524390c5e4",
+        200,
+        1
+      ],
+      [
+        "review-provider",
+        200,
+        1
+      ],
+      [
+        "review-provider",
+        503,
+        1
+      ]
+    ],
+    "mock_stream_count": 3
+  },
+  "after": {
+    "sqlite": [
+      [
+        "e1524390c5e4",
+        200,
+        1
+      ],
+      [
+        "review-provider",
+        200,
+        1
+      ],
+      [
+        "review-provider",
+        503,
+        1
+      ]
+    ],
+    "mock_stream_count": 3
+  },
+  "no_new_probe_during30s": true,
+  "scope": "Final3db2 actual copied-provider receipt after savedA503,3providers9models; CUA operator paused all actions/trees/captures. ps cumulative CPU time has centisecond precision; deltaCPU/wall*100 one-core. Current-only, no matched baseline/FPS/input-latency claim."
+}

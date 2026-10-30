@@ -1,0 +1,10 @@
+{
+  "result": "startup_timeout_before_native_validation",
+  "fixture_exec_exit_code": 1,
+  "reported_error": "CUA launch timeout",
+  "cua_getApp_error": "Computer Use server error -10005: timeoutReached",
+  "core_pid": 70215,
+  "core_pid_gone": true,
+  "core_exit_code": null,
+  "scope": "No bound verifiable UI/no Test actions. Harness wait expired; Core cleanup ran but its exit code was not recorded on this early path. Do not claim native copy behavior passed or that CUA itself remained unavailable."
+}

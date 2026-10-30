@@ -1,0 +1,27 @@
+{
+  "candidate_sha256": "81dc3a77b99702e5f58dbdbb7b94ebc17932a026cf30d0a50d863ebe7a109a87",
+  "ui_pid": 56973,
+  "core_pid": 56417,
+  "observations": {
+    "initial": "CUA provider A showed 未测试 and Core running",
+    "single_test": "CUA clicked 测试连接 once; 测试中… observed in CUA screenshot and AX; no independent PNG",
+    "result": "CUA showed 连接正常; AX identified deepseek-v4.1-flash HTTP 200; log showed first SSE event 4007ms",
+    "repeated_test": false
+  },
+  "screenshot": {
+    "path": "connection-passed-wide.png",
+    "window_number": 2411,
+    "size_pixels": [
+      1440,
+      901
+    ],
+    "sha256": "4b47dbc5a2ac5e72f11be21d7e02d5c28047fc77b5e4d46d5bd999922bcbe097",
+    "identification": "main agent visually confirmed own PID onscreen layer0 capture"
+  },
+  "limitations": [
+    "Testing and untested states observed in CUA but not saved as independent PNG",
+    "No window bounds or external AX used",
+    "No explicit activate or raise; actual foreground not asserted"
+  ],
+  "close": "CUA clicked fresh native close button; Core left for main; no exit status asserted"
+}

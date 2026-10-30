@@ -124,6 +124,7 @@ impl Proxy {
         let Some(pending) = self.drafts.pending.take() else {
             return;
         };
+        self.connections.discard(&pending.id);
         if let Some(saved) = self.cfg.providers.iter().find(|p| p.id == pending.id) {
             self.drafts
                 .providers

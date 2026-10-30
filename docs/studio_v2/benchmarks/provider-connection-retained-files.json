@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-10-31T02:36:07.519178+08:00",
+  "deleted": [],
+  "freed_bytes": 0,
+  "retained": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+      "exists": true,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+      "uid": 501,
+      "files": 64,
+      "logical_bytes": 83852189
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr",
+      "exists": true,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr",
+      "uid": 501,
+      "files": 207,
+      "logical_bytes": 278808369
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "exists": true,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "uid": 501,
+      "files": 575,
+      "logical_bytes": 917996239
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8",
+      "exists": true,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8",
+      "uid": 501,
+      "files": 228,
+      "logical_bytes": 433749382
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81",
+      "exists": true,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81",
+      "uid": 501,
+      "files": 270,
+      "logical_bytes": 573703883
+    }
+  ],
+  "retained_total_bytes": 2288110062,
+  "system_disk_free_bytes": 43772669952,
+  "reason": "This round no deletion attempted. Prior round49 seven exact generated directories were rejected before process creation: approval required by policy,but AskForApproval is Never; older refused46/47/48 targets not retried or equivalently/parent-deleted. Current source/candidates/evidence and reused baseline retained. Shared Cargo/UV cache preserved.",
+  "scope": "Read-only inventory; logical file bytes, not allocated blocks. Source paths are historical machine evidence, not required project configuration."
+}

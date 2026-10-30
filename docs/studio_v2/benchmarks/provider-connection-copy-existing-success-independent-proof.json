@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-31T01:51:50.843880+08:00",
+  "provider_status_counts": [
+    [
+      "e1524390c5e4",
+      200,
+      1
+    ],
+    [
+      "review-provider",
+      200,
+      1
+    ]
+  ],
+  "scope": "One native successful Test for actual saved originalA plus copied target; identities distinct, no relay seed."
+}

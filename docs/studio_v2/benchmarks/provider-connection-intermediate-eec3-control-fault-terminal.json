@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-31T01:14:21.032493+08:00",
+  "fault_pid": 67099,
+  "real_core_pid": 62704,
+  "owned_503_control_posts": 34,
+  "instance_restored_byte_exact": true,
+  "real_core_health_after_restore": [
+    200,
+    "ready"
+  ],
+  "auth_headers_and_bodies_recorded": false,
+  "fault_thread_joined": true,
+  "scope": "Simulated UI control transport unavailability; not a Core process shutdown. Private instance original bytes restored; no new Test/proxy request caused by fault server."
+}
