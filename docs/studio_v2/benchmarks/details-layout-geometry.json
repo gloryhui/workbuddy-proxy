@@ -1,0 +1,79 @@
+{
+  "raw_sha256": "ad354f7879f1cb5e9130a49e2cbf56d45dcf6c384198578efcac61ba0c755b6f",
+  "raw_size": [
+    2880,
+    1802
+  ],
+  "raw_unmodified": true,
+  "analysis_only_icc_to_srgb": true,
+  "scale_inferred": 2,
+  "panel_horizontal_border_runs_px": [
+    [
+      566,
+      568
+    ],
+    [
+      728,
+      730
+    ],
+    [
+      806,
+      808
+    ],
+    [
+      1517,
+      1519
+    ],
+    [
+      1644,
+      1646
+    ]
+  ],
+  "table_header_fill_runs_px": [
+    [
+      730,
+      806
+    ]
+  ],
+  "stripe_runs_px_at_x620": [
+    [
+      912,
+      1014
+    ],
+    [
+      1120,
+      1222
+    ],
+    [
+      1328,
+      1430
+    ]
+  ],
+  "reference_logical": {
+    "panel": [
+      288,
+      283,
+      1120,
+      540
+    ],
+    "table_header": [
+      303,
+      364,
+      1088,
+      39
+    ],
+    "request_row_height": 52
+  },
+  "limitations": "Flat-fill runs measure current native pixels; no claim of full-frame/font/asset-slot equality. Native raw extra2physical rows retained.",
+  "findings": [
+    "Panel outer top283 logical, bottom823, height540 matches reference.",
+    "Table header starts364logical; native border+header extent40logical vs design39 remains a one-pixel table/body difference.",
+    "Alternate flat-fill runs are102physical pixels with208physical start delta across alternate rows, supporting52logical request row pitch.",
+    "Font fallback/weights, native table borders, column widths and retained extra business controls remain frame-level differences.",
+    "Footer pixel borders show32logical page-size selector and40logical page input; generic32px input style does not prove32px native paint. Input is a retained extra business control absent from the static frame."
+  ],
+  "footer_visible_border_height_logical": {
+    "page_size_select": 32,
+    "page_input": 40
+  }
+}

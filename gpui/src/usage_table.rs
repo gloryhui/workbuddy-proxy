@@ -870,7 +870,7 @@ impl TableDelegate for UsageRows {
             .bg(rgb(if row.is_multiple_of(2) {
                 0xffffff
             } else {
-                0xf8fafc
+                crate::theme::color::BG_NOTICE
             }))
             .on_click(move |_, window, cx| {
                 cx.stop_propagation();

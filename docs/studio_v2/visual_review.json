@@ -62,29 +62,41 @@
     {
       "id": "56:8",
       "name": "03 / STUDIO V2 · 用量明细",
-      "review_status": "reviewing",
-      "scope": "UI54已保存当前候选统计页空数据/14条真实隔离代理请求的1440宽窗实拍；完整整帧比对继续，未最终通过。",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI55完成首轮整页审查和局部修复；最新56:8、24资源清单、3aa候选真实两尺寸/筛选分页详情/汇总键盘及性能已记录，整帧仍保留差异。",
       "checks": {
-        "layout": "已记录宽窗副标题/汇总条/表格密度差异，1100及交互未完成",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "真实14条HTTP200本地Mock请求、7700 tokens有独立只读回查；不使用设计样例量值",
-        "interaction": "not_checked",
-        "native_1440": "当前bc7候选2880×1802原始实拍两份（含原生额外2物理行）",
-        "native_1100": "尚未实拍当前统计页"
+        "layout": "面板top283/height540及表头top364与稿对应，52px行距已测；原生表头含边框40px而稿39px，列宽/内边距仍有差异",
+        "colors": "隔行#F4F6FF和条数浅靛色已对齐；文字/状态/hover尚未全量逐项终验",
+        "typography": "Noto Sans SC与系统fallback/权重/字号存在差异，尚未最终统一",
+        "assets": "24资源中19字节一致、2仅局部clipID不同且完整绘制结构相同、3装饰traffic lights用真实系统控件；Select内置chevron及全部slot终验仍待续",
+        "states": "最终3aa内置0/自定义14/全部14、真实详情、分页和汇总通过；全状态矩阵未完成",
+        "interaction": "Tab/Space/Esc/Return汇总、分页/来源/详情、自动刷新不覆盖编辑且显式翻页同步输入通过；非完整键盘/IME/读屏",
+        "native_1440": "最终3aa2880×1802原始实拍已核对，含原生额外2物理行",
+        "native_1100": "最终3aa2200×1402原始表/范围汇总实拍已核对，内滚/固定pager/右侧列可达"
       },
       "differences": [
-        "副标题文案与设计不同，需结合真实统计范围核对。",
-        "实际范围汇总条占用额外高度，明细列表下移；保留真实汇总能力后再处理布局。",
-        "宽窗10条分页下仅6行完全可见、第7行部分可见，需要结合内部滚动及固定页脚审查密度。",
-        "动态请求量、模型、Token、费用和耗时来自隔离本地Mock，不替换为设计假数据。"
+        "字体fallback、权重/基线及部分单元格字号仍与Noto Sans SC/Inter设计不同。",
+        "原生表头含边框实际40px、稿39px，表体有约1px余差；列宽、标题/表格内边距与垂直列分隔仍待统一。",
+        "模型/供应商Select仍用Kit内置chevron，日期/刷新用Figma16px资源；完整静态slot/effective geometry尚未全部终验。",
+        "保留真实健康/更多筛选/清除、跳页/首列/右侧列等原业务控件，以及条数标签可打开真实范围汇总；与静态稿有额外可见控件。",
+        "统计页供应商栏的当前供应商高亮呈现仍与设计样例有差异，需按真实上下文核对。",
+        "后台自动刷新由既有window_active门控；本轮未主动前置，但实际前台状态未独立测量，不宣称所有后台截图即时。",
+        "完整键盘、IME/读屏、全部皮肤/状态和跨平台仍未最终验收。",
+        "分页按钮/页大小选择已为32px，跳页输入仍由Kit绘制40px；它是保留的额外业务控件，完整footer几何仍需统一。"
       ],
       "evidence": [
         "benchmarks/model-alignment-runtime-partial.json",
         "benchmarks/model-alignment-statistics-populated.json",
         "screenshots/model-alignment-statistics-1440x900-native-2x.png",
-        "screenshots/model-alignment-statistics-populated-1440x900-native-2x.png"
+        "screenshots/model-alignment-statistics-populated-1440x900-native-2x.png",
+        "benchmarks/details-layout-build.json",
+        "benchmarks/details-layout-design-audit.json",
+        "benchmarks/details-layout-gui-validation.json",
+        "benchmarks/details-layout-geometry.json",
+        "benchmarks/details-layout-performance-summary.json",
+        "benchmarks/details-layout-startup-comparison.json",
+        "screenshots/details-layout-1440x900-native-2x.png",
+        "screenshots/details-layout-1100x700-native-2x.png"
       ]
     },
     {

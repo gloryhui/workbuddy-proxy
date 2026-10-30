@@ -255,6 +255,43 @@ impl Statistics {
             .into_any_element()
     }
 
+    /// Keep the real range totals available without inserting a second bar
+    /// between the design's filters and request panel. The native popover
+    /// reads the same live dashboard as the analysis view's existing summary.
+    pub(super) fn request_count_summary(&self, cx: &mut Context<Self>) -> AnyElement {
+        let owner = cx.entity().downgrade();
+        Popover::new("request-range-summary")
+            .trigger(
+                stats_button("request-range-summary-trigger")
+                    .custom(
+                        gpui_kit::component::button::ButtonCustomVariant::new(cx)
+                            .color(rgb(crate::theme::toolbar_selection()).into())
+                            .foreground(rgb(crate::theme::palette().dark).into())
+                            .hover(rgb(crate::theme::palette().tint).into())
+                            .active(rgb(crate::theme::palette().tint).into()),
+                    )
+                    .bg(rgb(crate::theme::toolbar_selection()))
+                    .with_size(px(25.))
+                    .h(px(25.))
+                    .min_w(px(64.))
+                    .rounded(px(8.))
+                    .text_size(px(11.))
+                    .label(format!(
+                        "{} {}",
+                        self.total_rows.max(0),
+                        self.t("条", "rows")
+                    ))
+                    .tooltip(self.t("查看当前范围汇总", "View current range totals"))
+                    .accessibility_label(self.t("查看当前范围汇总", "View current range totals")),
+            )
+            .content(move |_, _, cx| {
+                owner
+                    .update(cx, |this, _| this.report_totals())
+                    .unwrap_or_else(|_| div().into_any_element())
+            })
+            .into_any_element()
+    }
+
     pub(super) fn reset_filters(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         self.source = crate::source_filter::SourceFilter::new();
         self.capture = crate::stats_controller::CaptureFilter::new();
@@ -279,7 +316,6 @@ impl Statistics {
                 .min_h_0()
                 .gap_2()
                 .overflow_hidden()
-                .child(self.report_totals())
                 .child(self.details(cx))
                 .into_any_element(),
             View::Summary => div()

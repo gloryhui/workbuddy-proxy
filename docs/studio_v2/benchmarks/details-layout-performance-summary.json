@@ -1,0 +1,159 @@
+{
+  "attempt_order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2",
+    "current3",
+    "previous3"
+  ],
+  "completed_samples": [
+    {
+      "label": "previous1",
+      "evidence": "details-layout-previous1-gui.json",
+      "core": 12.98,
+      "ui": 91.84,
+      "total": 104.83,
+      "peak": 151.3,
+      "p50": 0.172,
+      "p95": 0.203,
+      "large_seconds": 0.091,
+      "core_ready_ms": 508.631,
+      "native_ui_process_to_record_ms": 790.005,
+      "orchestrated_ui_record_ready_ms": 35705.149
+    },
+    {
+      "label": "current1",
+      "evidence": "details-layout-current1-gui.json",
+      "core": 10.91,
+      "ui": 92.42,
+      "total": 103.33,
+      "peak": 153.11,
+      "p50": 0.169,
+      "p95": 0.188,
+      "large_seconds": 0.088,
+      "core_ready_ms": 77.056,
+      "native_ui_process_to_record_ms": 1396.0,
+      "orchestrated_ui_record_ready_ms": 120181.056
+    },
+    {
+      "label": "current2",
+      "evidence": "details-layout-current2-gui.json",
+      "core": 13.27,
+      "ui": 92.53,
+      "total": 105.8,
+      "peak": 154.08,
+      "p50": 0.171,
+      "p95": 0.189,
+      "large_seconds": 0.089,
+      "core_ready_ms": 68.122,
+      "native_ui_process_to_record_ms": 625.477,
+      "orchestrated_ui_record_ready_ms": 18620.664
+    },
+    {
+      "label": "previous2",
+      "evidence": "details-layout-previous2-gui.json",
+      "core": 12.75,
+      "ui": 92.45,
+      "total": 105.2,
+      "peak": 155.75,
+      "p50": 0.143,
+      "p95": 0.189,
+      "large_seconds": 0.093,
+      "core_ready_ms": 43.248,
+      "native_ui_process_to_record_ms": 674.978,
+      "orchestrated_ui_record_ready_ms": 17446.589
+    },
+    {
+      "label": "current3",
+      "evidence": "details-layout-current3-gui.json",
+      "core": 10.91,
+      "ui": 93.11,
+      "total": 104.02,
+      "peak": 150.97,
+      "p50": 0.151,
+      "p95": 0.173,
+      "large_seconds": 0.088,
+      "core_ready_ms": 75.298,
+      "native_ui_process_to_record_ms": 868.126,
+      "orchestrated_ui_record_ready_ms": 30392.252
+    },
+    {
+      "label": "previous3",
+      "evidence": "details-layout-previous3-gui.json",
+      "core": 13.11,
+      "ui": 93.02,
+      "total": 106.12,
+      "peak": 150.52,
+      "p50": 0.17,
+      "p95": 0.194,
+      "large_seconds": 0.089,
+      "core_ready_ms": 68.048,
+      "native_ui_process_to_record_ms": 593.84,
+      "orchestrated_ui_record_ready_ms": 15230.881
+    }
+  ],
+  "median_of_three_each": {
+    "previous": {
+      "core": 12.98,
+      "ui": 92.45,
+      "total": 105.2,
+      "peak": 151.3,
+      "p50": 0.17,
+      "p95": 0.194,
+      "large_seconds": 0.091,
+      "core_ready_ms": 68.048,
+      "native_ui_process_to_record_ms": 674.978
+    },
+    "current": {
+      "core": 10.91,
+      "ui": 92.53,
+      "total": 104.02,
+      "peak": 153.11,
+      "p50": 0.169,
+      "p95": 0.188,
+      "large_seconds": 0.088,
+      "core_ready_ms": 75.298,
+      "native_ui_process_to_record_ms": 868.126
+    }
+  },
+  "current_minus_previous": {
+    "core": -2.07,
+    "ui": 0.08,
+    "total": -1.18,
+    "peak": 1.81,
+    "p50": -0.001,
+    "p95": -0.006,
+    "large_seconds": -0.003,
+    "core_ready_ms": 7.25,
+    "native_ui_process_to_record_ms": 193.148
+  },
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "original_workload_unchanged": true,
+  "launch_conditions": "Frozen release Core25f + previousUIbc7/currentUI3aa. Core headless under kernel profile, native UI launched by CUA background getApp with isolated env. No tray measured. Same launch harness within this series; not directly comparable to former rounds using different launch paths.",
+  "startup_diagnostic": {
+    "reason": "Original load-run native UI marker medians675→868ms (+193ms) and one new1396ms sample retained; controlled same-live-Core startup series added rather than dropping higher samples.",
+    "evidence": "details-layout-startup-comparison.json",
+    "same_core_medians": {
+      "previous": {
+        "native_process_to_record_ms": 206.888,
+        "cumulative_cpu_at_marker_observation_ms": 151.207
+      },
+      "current": {
+        "native_process_to_record_ms": 232.517,
+        "cumulative_cpu_at_marker_observation_ms": 143.031
+      }
+    },
+    "native_marker_delta_ms": 25.629,
+    "finding": "Controlled same-live-Core series did not reproduce the193ms gap; +25.629ms marker median retained. Exact cause of original startup variation unresolved; no claim of causality, equivalence or optimization.",
+    "failed_harness_attempt_preserved": true
+  },
+  "limitations": [
+    "Three short load samples per UI and three controlled startup samples per UI; all values retained.",
+    "Original ui_record_ready_ms includes CUA orchestration wait and must not be compared as product startup. Native proc_bsdinfo start→gpui.json mtime excludes pre-process LaunchServices/tool delay; not first paint/interactivity.",
+    "GUI is environment-isolated, not kernel sandboxed; background foreground state is not independently measured. No explicit activate/raise calls.",
+    "RSS shared pages may double-count; mock/CUA harness excluded; tray not measured. Loopback excludes TLS/public provider/model latency.",
+    "Default cached/empty Statistics load scenario does not measure populated-table paint/FPS/keyboard latency."
+  ],
+  "all_observed_pids_gone": true
+}

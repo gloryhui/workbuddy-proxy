@@ -1,0 +1,102 @@
+{
+  "order": [
+    "current1",
+    "previous2",
+    "previous3",
+    "current2",
+    "current3",
+    "previous4"
+  ],
+  "samples": [
+    {
+      "label": "current1",
+      "ui_pid": 25180,
+      "ui_sha256": "3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859",
+      "native_process_to_record_ms": 245.407,
+      "rss_at_marker_observation_mib": 65.438,
+      "cumulative_cpu_at_marker_observation_ms": 140.899,
+      "shared_core_pid": 11841,
+      "native_exit_code": null,
+      "native_exit_code_note": "CUA owns UI; only disappearance is observable here",
+      "ui_pid_gone": true,
+      "core_config_unchanged": true
+    },
+    {
+      "label": "previous2",
+      "ui_pid": 25359,
+      "ui_sha256": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+      "native_process_to_record_ms": 318.429,
+      "rss_at_marker_observation_mib": 74.656,
+      "cumulative_cpu_at_marker_observation_ms": 158.715,
+      "shared_core_pid": 11841,
+      "native_exit_code": null,
+      "native_exit_code_note": "CUA owns UI; only disappearance is observable here",
+      "ui_pid_gone": true,
+      "core_config_unchanged": true
+    },
+    {
+      "label": "previous3",
+      "ui_pid": 25517,
+      "ui_sha256": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+      "native_process_to_record_ms": 203.702,
+      "rss_at_marker_observation_mib": 66.156,
+      "cumulative_cpu_at_marker_observation_ms": 151.207,
+      "shared_core_pid": 11841,
+      "native_exit_code": null,
+      "native_exit_code_note": "CUA owns UI; only disappearance is observable here",
+      "ui_pid_gone": true,
+      "core_config_unchanged": true
+    },
+    {
+      "label": "current2",
+      "ui_pid": 25674,
+      "ui_sha256": "3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859",
+      "native_process_to_record_ms": 230.883,
+      "rss_at_marker_observation_mib": 79.125,
+      "cumulative_cpu_at_marker_observation_ms": 164.793,
+      "shared_core_pid": 11841,
+      "native_exit_code": null,
+      "native_exit_code_note": "CUA owns UI; only disappearance is observable here",
+      "ui_pid_gone": true,
+      "core_config_unchanged": true
+    },
+    {
+      "label": "current3",
+      "ui_pid": 25828,
+      "ui_sha256": "3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859",
+      "native_process_to_record_ms": 232.517,
+      "rss_at_marker_observation_mib": 63.547,
+      "cumulative_cpu_at_marker_observation_ms": 143.031,
+      "shared_core_pid": 11841,
+      "native_exit_code": null,
+      "native_exit_code_note": "CUA owns UI; only disappearance is observable here",
+      "ui_pid_gone": true,
+      "core_config_unchanged": true
+    },
+    {
+      "label": "previous4",
+      "ui_pid": 26062,
+      "ui_sha256": "bc7f7f13d3a3c2e59f101ac8f7a706e639ba566c922e3db1ea5601b813fb490a",
+      "native_process_to_record_ms": 206.888,
+      "rss_at_marker_observation_mib": 71.266,
+      "cumulative_cpu_at_marker_observation_ms": 150.953,
+      "shared_core_pid": 11841,
+      "native_exit_code": null,
+      "native_exit_code_note": "CUA owns UI; only disappearance is observable here",
+      "ui_pid_gone": true,
+      "core_config_unchanged": true
+    }
+  ],
+  "scope": "Same frozen release UI pair, same live protected Core11841, same config/HOME/Studio prefs/14real mock requests. CUA getApp background only. Marker is not first paint. CPU/RSS read shortly after marker observation, not an exact timestamp sample. All high values retained.",
+  "medians_by_version": {
+    "previous": {
+      "native_process_to_record_ms": 206.888,
+      "cumulative_cpu_at_marker_observation_ms": 151.207
+    },
+    "current": {
+      "native_process_to_record_ms": 232.517,
+      "cumulative_cpu_at_marker_observation_ms": 143.031
+    }
+  },
+  "failed_initial_harness_attempt": "details-layout-startup-harness-failure.json"
+}

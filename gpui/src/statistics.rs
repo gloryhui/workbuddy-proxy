@@ -1772,6 +1772,10 @@ impl Statistics {
         if tag.starts_with("rows-") {
             self.pending_rows = false;
             self.loading_rows = false;
+            let previous_page = match self.tab {
+                Tab::Requests => self.rows_cursors.page_number(),
+                _ => self.group_pages.page_number(),
+            };
             match self.tab {
                 Tab::Requests => {
                     if let Ok(page) =
@@ -1823,9 +1827,16 @@ impl Statistics {
                 Tab::Requests => self.rows_cursors.page_number(),
                 _ => self.group_pages.page_number(),
             };
-            self.page_input.update(cx, |state, cx| {
-                state.set_value(page.to_string(), window, cx)
-            });
+            // A same-page refresh must not replace an unsubmitted edit. A
+            // committed navigation still normalizes the input even when a
+            // mouse-activated pager button leaves focus in the text field.
+            if page != previous_page
+                || !self.page_input.read(cx).focus_handle(cx).is_focused(window)
+            {
+                self.page_input.update(cx, |state, cx| {
+                    state.set_value(page.to_string(), window, cx)
+                });
+            }
             return;
         }
         if tag.starts_with("filters-") {
@@ -2050,7 +2061,12 @@ impl Statistics {
     }
 
     pub fn page_subtitle(&self) -> &'static str {
-        if self.view == preferences::View::Settings {
+        if self.view == preferences::View::Details {
+            self.t(
+                "逐条查看用量、缓存命中、费用与响应性能",
+                "Inspect usage, cache hits, costs and response performance for each request",
+            )
+        } else if self.view == preferences::View::Settings {
             self.t(
                 "管理估算价格、存储策略和 WorkBuddy 本地用量",
                 "Manage estimated pricing, storage and local WorkBuddy usage",
@@ -2762,6 +2778,7 @@ impl Statistics {
             // Studio V2 uses a separate eight-column request log. Aggregate
             // rows retain their native table and existing sort handlers.
             Tab::Requests => crate::ui_components::log_table(&self.usage_table)
+                .with_size(px(52.))
                 .header_row_height(px(39.))
                 .into_any_element(),
             _ => crate::ui_components::table(&self.group_table)
@@ -2771,6 +2788,9 @@ impl Statistics {
         };
         stats_card("stats-details")
             .flex_1()
+            .when(self.view == preferences::View::Details, |panel| {
+                panel.max_h(px(540.))
+            })
             .min_h_0()
             .overflow_hidden()
             .gap_2()
@@ -2795,14 +2815,7 @@ impl Statistics {
                                             .font_weight(FontWeight::BOLD)
                                             .text_color(rgb(INK)),
                                     )
-                                    .child(crate::ui_components::tag(
-                                        crate::ui_components::TagKind::Primary,
-                                        format!(
-                                            "{} {}",
-                                            self.total_rows.max(0),
-                                            self.t("条", "rows")
-                                        ),
-                                    )),
+                                    .child(self.request_count_summary(cx)),
                             )
                             // The core supports only newest-first request ordering.
                             // Show its actual order without a non-functional menu.
@@ -2818,6 +2831,7 @@ impl Statistics {
                             "Proxy requests and WorkBuddy imports; unknown fields remain unknown",
                         ))
                         .w_full()
+                        .mb(px(10.))
                         .text_ellipsis()
                         .text_size(px(12.))
                         .text_color(rgb(MUTED)),
@@ -2863,6 +2877,9 @@ impl Statistics {
             .child(
                 stats_button("table-first-column")
                     .ghost()
+                    .when(self.view == preferences::View::Details, |button| {
+                        button.h(px(32.))
+                    })
                     .label(self.t("首列", "First"))
                     .tooltip(self.t("返回首列", "First column"))
                     .on_click(cx.listener(|this, _, _, cx| {
@@ -2879,6 +2896,9 @@ impl Statistics {
             .child(
                 stats_button("table-last-column")
                     .ghost()
+                    .when(self.view == preferences::View::Details, |button| {
+                        button.h(px(32.))
+                    })
                     .label(self.t("右侧列", "Rightmost"))
                     .tooltip(self.t("查看右侧列", "Rightmost columns"))
                     .on_click(cx.listener(|this, _, _, cx| {
@@ -2918,6 +2938,7 @@ impl Statistics {
                 ""
             };
         let busy = self.loading_rows;
+        let compact = self.view == preferences::View::Details;
         div()
             .flex()
             .items_center()
@@ -2947,6 +2968,7 @@ impl Statistics {
                     self.t("上一页", "Previous"),
                     busy || !previous,
                 )
+                .when(compact, |button| button.h(px(32.)))
                 .on_click(
                     cx.listener(move |this, _, _, cx| {
                         this.navigate_page(page.saturating_sub(1), cx)
@@ -2959,21 +2981,26 @@ impl Statistics {
                     self.t("下一页", "Next"),
                     busy || !next,
                 )
+                .when(compact, |button| button.h(px(32.)))
                 .on_click(cx.listener(move |this, _, _, cx| this.navigate_page(page + 1, cx))),
             )
             .child(
-                div()
-                    .w(px(125.))
-                    .child(crate::ui_components::select(&self.page_size_select, busy)),
+                div().w(px(125.)).child(
+                    crate::ui_components::select(&self.page_size_select, busy)
+                        .when(compact, |select| select.h(px(32.))),
+                ),
             )
             .child(Label::new(self.t("跳至", "Go to")).text_size(px(crate::theme::font::LABEL)))
-            .child(div().w(px(70.)).child(crate::ui_components::text_input(
-                &self.page_input,
-                busy || total == 0,
-            )))
+            .child(
+                div().w(px(70.)).child(
+                    crate::ui_components::text_input(&self.page_input, busy || total == 0)
+                        .when(compact, |input| input.h(px(32.))),
+                ),
+            )
             .child(
                 stats_button("page-go")
                     .ghost()
+                    .when(compact, |button| button.h(px(32.)))
                     .label(self.t("跳转", "Go"))
                     .disabled(busy || total == 0)
                     .on_click(cx.listener(|this, _, _, cx| this.jump_to_input(cx))),
@@ -3003,10 +3030,33 @@ impl Statistics {
             .pr_0()
             .py_0()
             .gap_3()
-            .bg(rgb(BG))
-            .when(self.view != preferences::View::Settings, |page| {
-                page.child(self.view_tabs(cx)).child(self.filters(cx))
+            .when(self.view == preferences::View::Details, |page| {
+                // Figma56:8: tabs47px, controls start8px later, then19px
+                // before the request panel. Wrapping controls may still grow.
+                page.gap_0()
+                    .child(
+                        div()
+                            .min_h(px(47.))
+                            .pt(px(2.))
+                            .flex_shrink_0()
+                            .child(self.view_tabs(cx)),
+                    )
+                    .child(
+                        div()
+                            .pt(px(8.))
+                            .pb(px(19.))
+                            .flex_shrink_0()
+                            .child(self.filters(cx)),
+                    )
             })
+            .bg(rgb(BG))
+            .when(
+                !matches!(
+                    self.view,
+                    preferences::View::Settings | preferences::View::Details
+                ),
+                |page| page.child(self.view_tabs(cx)).child(self.filters(cx)),
+            )
             .child(self.report_body(cx))
             .into_any_element()
     }

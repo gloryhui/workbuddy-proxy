@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-30T18:03:14+08:00",
+  "attempt": "first shared-core previous startup",
+  "product_failure": false,
+  "failure": "harness expected gpui-stop.json removed at UI exit; actual product main.rs removes old marker at next startup",
+  "ui_pid_record": "Not persisted before failing assertion; no invented exit code or timing sample",
+  "observed_post_state": {
+    "gpui_json_absent": true,
+    "gpui_stop_bytes": "{}",
+    "owned_startup_bundle_process_references": []
+  },
+  "failed_helper_sha256": "33396feb297c76e95472cc33d0463c465237098d5de57f17a1579a954a82bba2",
+  "handling": "Retain failed record, correct only harness expectation; no direct deletion or product behavior change. New unique sample labels, original six load samples kept."
+}

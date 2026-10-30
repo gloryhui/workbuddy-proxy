@@ -1,0 +1,361 @@
+{
+  "ui_sha256": "3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859",
+  "ui_pid": 20931,
+  "core_pid": 11841,
+  "launch": "CUA getApp exact bundle; no explicit activate or raise; foreground behavior not independently verified",
+  "data": "14 synthetic proxy requests, 7700 tokens",
+  "cases": {
+    "page_input": "5s refresh enabled, entered 2 while focused, AX still 2 after 7.5s; Jump produced page 2/2 with four rows and input 2; Previous returned page 1/2 and input 1",
+    "summary_keyboard": "Custom filter -> Tab -> Space opened summary 14/7700; Escape closed; Return reopened",
+    "filters": "Builtin 0; Custom 14; All restored 14",
+    "detail": "first row opened claude-opus-4.7 HTTP 200 completed, 500 input/50 output/550 total, nonstream, duration/TTFB 0ms and first content unavailable; closed",
+    "small": "CUA drag [2876,1794] to [2196,1394]; raw 2200x1402. Summary 14/7700, right-side columns exposed status, table scroll reached row7/8/9 with pager visible",
+    "closure": "CUA native Close invoked; ps showed PID20931 gone; parent handles Core health and wait"
+  },
+  "screenshots": [
+    {
+      "path": "screenshots/details-layout-1440x900-native-2x.png",
+      "width_px": 2880,
+      "height_px": 1802,
+      "sha256": "ad354f7879f1cb5e9130a49e2cbf56d45dcf6c384198578efcac61ba0c755b6f",
+      "pid": 20931,
+      "window_id": 594,
+      "method": "screencapture -x -o -l",
+      "postprocessing": "none"
+    },
+    {
+      "path": "screenshots/details-layout-1100x700-native-2x.png",
+      "width_px": 2200,
+      "height_px": 1402,
+      "sha256": "750b9da989b535ae47db258990a8dfd0a42af33aec580786c579852d9618da1b",
+      "pid": 20931,
+      "window_id": 594,
+      "method": "screencapture -x -o -l",
+      "postprocessing": "none"
+    },
+    {
+      "path": "screenshots/details-layout-summary-1100x700-native-2x.png",
+      "width_px": 2200,
+      "height_px": 1402,
+      "sha256": "be8c19da1f6cdb46b157eb051973d92d5190f936881601145c9ba531a68d8779",
+      "pid": 20931,
+      "window_id": 594,
+      "method": "screencapture -x -o -l",
+      "postprocessing": "none"
+    }
+  ],
+  "prior_versions": "ab28 broader pagination and 595 intermediate evidence retained separately; no mixing versions",
+  "limitations": [
+    "No full keyboard traversal, IME or screen-reader validation claimed.",
+    "5s input retention observed with focus; actual background foreground state not independently measured."
+  ],
+  "source_frame": "56:8",
+  "core_guard": {
+    "enforced": true,
+    "pid": 11841,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "post_ui": {
+    "core_health_http": 200,
+    "core_health_state": "ready",
+    "total_rows": 14,
+    "core_config_unchanged": true,
+    "all_ui_markers_removed": true,
+    "final_gui_source_sha256": "3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859",
+    "native_ui_exit_code": "Not available: CUA owns UI children; only original native close action and PID disappearance proven"
+  },
+  "terminal": {
+    "ui_exit_before_cleanup": null,
+    "ui_pid_gone_before_cleanup": true,
+    "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": null,
+    "ui_pid_gone_after_cleanup": true,
+    "core_exit_after_cleanup": 0
+  },
+  "fixture_exit_code": 0,
+  "intermediate_reports": {
+    "ab28": {
+      "ui_sha256": "ab28f608dd889e45947403cfd6370d6cb5b63771bb385d987bf865667b31066d",
+      "ui_pid": 13389,
+      "core_pid": 11841,
+      "background": "CUA getApp launched bundle; no explicit activate, raise or bringToFront; no independent assertion of foreground focus",
+      "cases": {
+        "summary": "14 records, 7700 tokens, WorkBuddy points unavailable",
+        "pagination": "next page 2/2 displayed four rows, previous restored 1/2; 20/page gave 1/1 of 14; restored 10/page",
+        "filters": "builtin 0, custom 14, all 14",
+        "detail": "first row opened claude-opus-4.7 HTTP 200 completed; 500 input/50 output/550 total, nonstream, 0ms duration/TTFB, first content unavailable; closed via button",
+        "small": "CUA drag [2876,1794] to [2196,1394]; small screenshot 2200x1402. Summary displayed 14/7700. Right-side columns button exposed status; table scroll exposed usage-row-7/8/9 with pager visible",
+        "summary_keyboard": "Escape closed popup; immediate Space did not reopen; CUA AX focus reported window so trigger focus restoration not established",
+        "jump": "setValue(2) had no effect; click, Cmd+A, typeText 2 produced AX Value 2; click Jump reverted field to 1 and screenshot still 1/2; jump not verified",
+        "closure": "CUA native Close invoked; Core retained for parent health/wait"
+      },
+      "screenshots": [
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr/details-ui55/final-wide-raw.png",
+          "width_px": 2880,
+          "height_px": 1802,
+          "sha256": "5d3b3baaa1e6705eb0f8c2fef32510903b9eb17d5b2d0a624d99d8985512d93d",
+          "ui_pid": 13389,
+          "window_id": 310,
+          "method": "screencapture -x -o -l",
+          "postprocessing": "none"
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr/details-ui55/final-small-raw.png",
+          "width_px": 2200,
+          "height_px": 1402,
+          "sha256": "f676ca058f3d88f6754857fb585bbc8f5fe0a3667926ff5541536b9467ca7750",
+          "ui_pid": 13389,
+          "window_id": 310,
+          "method": "screencapture -x -o -l",
+          "postprocessing": "none"
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr/details-ui55/final-small-summary-raw.png",
+          "width_px": 2200,
+          "height_px": 1402,
+          "sha256": "e427e8f2642d6f6a0e217e154a2ad90aa7bdbe929e5b6ed71a4a54b69e88308d",
+          "ui_pid": 13389,
+          "window_id": 310,
+          "method": "screencapture -x -o -l",
+          "postprocessing": "none"
+        }
+      ],
+      "limitations": [
+        "No full Tab or assistive-technology validation.",
+        "Small jump to page 2 did not succeed under tested path.",
+        "No claim of actual background focus or foreground changes from CUA API.",
+        "Prior intermediate UI screenshot and behavior are not final candidate."
+      ]
+    },
+    "595": {
+      "ui_sha256": "595ad99d45cece0f8540b6842ae5664e898a2acd2d71f9083916ea00f6e1452f",
+      "ui_pid": 19345,
+      "core_pid": 11841,
+      "launch": "CUA getApp exact bundle; no explicit activate or raise",
+      "scope": "synthetic 14 requests / 7700 tokens",
+      "cases": {
+        "page_input": "5s refresh enabled, entered 2 while focused, AX still 2 after 7.5s; clicked Jump, page 2/2 with four rows",
+        "previous": "clicked Previous, page returned 1/2; focused input remained 2 until focus left, subsequently returned 1",
+        "summary_keyboard": "Custom filter -> Tab -> Space opened 14/7700; Escape closed, Return reopened",
+        "small": "CUA drag [2876,1794] to [2196,1394], raw 2200x1402; right columns exposed status; table scroll showed usage-row-7/8/9 with pager visible",
+        "closure": "CUA native Close invoked, Core left for parent health/wait"
+      },
+      "screenshots": [
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr/details-ui55/updated-wide-raw.png",
+          "width_px": 2880,
+          "height_px": 1802,
+          "sha256": "a878c8789900e2b3d010b86f116dec5057c8bad756ec65096654d5c567af6832",
+          "pid": 19345,
+          "window_id": 524,
+          "method": "screencapture -x -o -l",
+          "postprocessing": "none"
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr/details-ui55/updated-small-raw.png",
+          "width_px": 2200,
+          "height_px": 1402,
+          "sha256": "56a1137947dbfc47a8a721c0d887bacb8674acec6b9099dbfe0d0587568a0197",
+          "pid": 19345,
+          "window_id": 524,
+          "method": "screencapture -x -o -l",
+          "postprocessing": "none"
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr/details-ui55/updated-small-summary-raw.png",
+          "width_px": 2200,
+          "height_px": 1402,
+          "sha256": "e156ee333a83b9946da856a70c5762fe5d3a9bff98c8577ec05770c6582041cf",
+          "pid": 19345,
+          "window_id": 524,
+          "method": "screencapture -x -o -l",
+          "postprocessing": "none"
+        }
+      ],
+      "prior_version": "Broad 10/20 pagination, filters, detail and prior bug reproduction are in ab28 evidence, not represented as repeated on 595ad.",
+      "limitations": [
+        "Only tested while input focus retained; no broad accessibility or IME claim.",
+        "No independent claim about whether system foreground changed.",
+        "Parent verifies process exit and Core health."
+      ]
+    },
+    "page_edit_comparison": {
+      "candidate": "ab28f608dd889e45947403cfd6370d6cb5b63771bb385d987bf865667b31066d",
+      "ui_pid": 15532,
+      "keyboard_summary": "Click Custom filter then Tab: visible focus at count; Space opened 14/7700, Escape closed; Return reopened",
+      "auto_off": "CUA selected refresh Off; typed 2, AX Value 2 remained after 6.5 s, Jump showed page 2/2 and four rows",
+      "auto_5s": "Returned page 1; CUA selected 5s, typed 2, AX Value 2 initially; after 7 s AX and visible field returned to 1",
+      "closure": "CUA native close invoked; parent to verify exit/wait",
+      "scope": "synthetic fixture; no Core/API/SQL changes"
+    },
+    "scope": "Prior-version raw paths are private retained artifacts; final screenshots above are the only final3aa captures. Intermediate coverage is not silently upgraded."
+  },
+  "read_only_db_aggregate": {
+    "rows": 14,
+    "input_tokens": 7000,
+    "output_tokens": 700,
+    "total_tokens": 7700
+  },
+  "independently_confirmed_pid_gone": {
+    "11839": true,
+    "11841": true,
+    "12083": true,
+    "13389": true,
+    "15532": true,
+    "19345": true,
+    "20931": true,
+    "16644": true,
+    "16648": true,
+    "18423": true,
+    "21104": true,
+    "21105": true,
+    "21690": true,
+    "21975": true,
+    "21976": true,
+    "22129": true,
+    "22231": true,
+    "22236": true,
+    "22379": true,
+    "22731": true,
+    "22732": true,
+    "22946": true,
+    "23070": true,
+    "23071": true,
+    "23208": true,
+    "25180": true,
+    "25359": true,
+    "25517": true,
+    "25674": true,
+    "25828": true,
+    "26062": true
+  },
+  "request_generation": {
+    "count": 14,
+    "statuses": [
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200
+    ],
+    "total_rows": 14,
+    "expected_total_tokens": 7700,
+    "source": "14 real HTTP requests via isolated Core to local Mock; no SQL writes or config mutations"
+  }
+}
