@@ -1214,3 +1214,26 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - Mac实际未锁定；一次ioreg解析错误把锁状态放到session行读取而未确认，随后读取root级IOConsoleLocked=false纠正，确认组前有有效值。三个夹具各自Core运行时保护与LaunchAgents四类deny已实查，GUI仅合成HOME/config/LSEnvironment、无内核沙盒；三UI原生Close0，Core/fixture全wait0、九PID独立消失。CUA旧组一次失去绑定，在进程仍活着时同exactpath重新选择一次恢复，未重启；未用外部AX/全局bounds/额外输入注入或权限更改。
 - 完成规范化路径/逐级父目录挂载与符号链接/UID501/全量普通单链接文件/进程与lsof预检，临删除清单SHA再核对后，按持续授权删除本轮单一Root42目录175文件，释放分配空间估计241,451,008bytes（230.27MiB），当前轮保留0；最终证据已在仓库。旧Root30保护项24.03MiB、Root41私有事件/说明12KiB保留且未读/哈希私有日志或重试删除，共享Cargo缓存与归属不明旧目录保持；系统盘清理后35,621,318,656bytes（33.17GiB）可用。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。长ID独立悬浮、其他输入/候选面板、完整AX读屏/视觉/所有HiDPI/Windows和Intel实机、物理托盘/窗口位移与最小化、首帧、公网更新成功及真实WorkBuddy重启等继续待验。本轮开始Goal为active；收尾get_goal返回blocked（updatedAt=1793327199），主代理与界面代理本轮均未调用Goal变更，来源未定位，不将该状态当作已完成或本轮无进展的审计结论。进度HTML按面板实际blocked记录，仍仅静态检查；自动后续需在Goal面板恢复。
+
+## 小功能 52：Intel 发行版与 Rosetta 实跑验证（2026-10-30，北京时间）
+
+- 新增真正链接的x86_64 Core/UI发行版、192项译运行测试及原生界面/保存/两尺寸与原始负载证据；本轮未修改产品Rust/Objective-C、资源、Core、依赖或工作流。证据：[构建/架构/测试](benchmarks/intel-runtime-build.json)、[实际GUI/保存/退出](benchmarks/intel-runtime-gui-validation.json)、[1440请求尺寸原生2×实拍](screenshots/intel-runtime-1440x900-2x.png)、[1100请求尺寸原生2×实拍](screenshots/intel-runtime-1100x700-2x.png)、[视觉记录](benchmarks/intel-runtime-visual-validation.json)、[四轮原基准](benchmarks/intel-runtime-performance-summary.json)、[清理](benchmarks/intel-runtime-cleanup.json)。
+- 这是Apple Silicon主机上的Rosetta译运行，不是Intel CPU/GPU实机或Windows验收。arch -x86_64 uname实返x86_64、译运行sysctl.proc_translated=1；两个发行版与实际测试harness均由lipo确认thin x86_64。沿用既有Cargo target缓存、--locked --offline、每构建jobs2和本轮系统临时目录，未安装/切换工具链、改锁文件或伪造编译器。
+- Core release链接91.925s、UI192.827s成功；Core921ba7b965a402ea534a4a1e43f33fff82dbc2404dfc79ad7b48609cedc316b0/8,951,416bytes，UIf2d443d2ba1ae886746250c36e34fc2879b4317e10555dd33399a2fc68078f59/16,552,232bytes。原生arm64仍Core25f/8,428,096与UI675f/15,246,800，源文件SHA对齐UI51。Mach-O minOS12.0/sdk26.2仅链接元数据，不是macOS12实机验证。x86 release cargo test构建及执行146.778s，真正用例运行0.13s，192passed/2既有ignored，harness为x86_64/SHA0b7a9578…。
+- Figma最初返回需要重新认证，暂停视觉修改并只做独立源码/编译检查；用户完成授权后，官方MCP59:279与59:484 metadata、高保真context和截图读取成功。设计最新弹窗728×800及资产已定位，当前仍沿用现有布局，未把这次Intel专项当成全局40帧或弹窗全部资产一比一通过。报告生成器现明确“专项验收与差异修复 · 全量逐帧终验未完成”，并区分专项任务数与已验收界面数；不再保留“Intel仅类型检查”的固定过时文案。
+- Mac实际未锁定。新夹具Core15369/UI15378/fixture15368，显式合成HOME/config/唯一bundle，2供应商3模型0请求。两个运行副本SHA与Intel发行版匹配，Core运行时kernel保护矩阵及真实LaunchAgents四类deny已核实；GUI仅隔离环境、无kernel profile，不宣称全角色沙盒或签名安装包验收，未操作真实WorkBuddy/供应商Key/登录项/外链。
+- CUA首行F2读Intel UI52/gpt-4.1、Esc关闭，Down/F2读model-2/model-a-2、Cancel关闭。首行显示名以CUA typeText输入ASCII Rosetta52（未setValue），确认后界面为草稿未保存；主代理独立读Core SHA6b410d7d…逐字节保持、原名Intel UI52，只有私有草稿Rosetta52。随后一次实际主页Save才使Core SHA变726f1da1…、首名Rosetta52/gpt4.1；另两模型id/name/model及2/3计数保持。没有脚本写字段冒充操作，也没有新增IME/候选/其他源通过结论。
+- 两张最终图为实际Intel UI15378/window64560，主代理已看原图：raw2880×1802/2200×1402，仅裁底2物理行输出2880×1800/2200×1400，逐像素/ICC一致，无缩放重绘；2×按请求尺寸和固定256逻辑侧栏在raw512px推得，没有OSscale/全局bounds查询。小窗实拍表单顶部/能力/固定底栏，限制字段需内部滚动；未知图片能力和来源提醒为真实状态，不为贴设计稿伪造自动识别值。遮罩在工具栏上方可见，左上系统屏幕控制指示保留。
+- CUA取消当前编辑后原生Close，UI15378确实消失，Core仍活且只读stats_health=ready，保存文件SHA保持；再写本轮fixture结束标记，Core/fixture都wait0，三PID独立确认消失。原生关窗只证明该夹具设置退出，不代替物理托盘菜单、窗口位移、最小化或Intel硬件生命周期验收。
+
+| 同源不同架构原始脚本顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 采样峰值MiB | 80×1MiB s | Core/UI记录ready ms |
+| --- | --- | --- | --- | --- | --- |
+| arm64 native | 10.91/77.11/88.02 | .171/.276 | 138.77 | .171 | 498.617/1628.687 |
+| x86译运行 intel | 12.00/57.01/69.00 | .192/.223 | 115.44 | .099 | 2004.895/4771.034 |
+| x86译运行 intel-run2 | 15.59/59.29/74.88 | .193/.228 | 126.25 | .096 | 1234.665/3339.827 |
+| arm64 native-run2 | 12.75/76.34/89.09 | .173/.196 | 138.03 | .091 | 225.408/893.679 |
+
+- scripts/benchmark.py SHA仍bc7e0537…，--help已查；不改原负载：--gui/1000小请求/64Core模型、80×1MiB并发4。各自正确架构Core/UI配对，Studio偏好前后回读、Core保护、四个自有子进程退出[-15,-15,0,0]和wait/Core/UI消失逐轮核对。只在私有wrapper保留本轮TemporaryDirectory至精确清理，未改变原脚本或负载。
+- 每架构仅2短样本，arm64→译运行中位Core11.830→13.795/UI76.725→58.150/合计88.555→71.940MiB，采样峰138.400→120.845MiB，p50.1720→.1925/p95.2360→.2255ms，大请求.1310→.0975s，Core ready362.013→1619.780/UI记录ready1261.183→4055.431ms。译运行启动记录明显更慢，原生首轮p95.276/大请求.171的较高值也保留；不宣称Intel实机性能通过、内存优化、统计等效或跨架构排名。部分系统翻译服务/共享缓存可能不在Core/UI计数内，后台/压缩/冷热缓存未控制；默认Statistics不是完整弹窗绘制/输入延迟/FPS，ready不是首帧，tray单列，RSS共享页可双计。
+- 按持续授权完成Root43规范绝对路径/逐级父目录挂载和非符号链接/UID501/全量普通单链接文件/进程与lsof预检、临执行清单SHA复核后，仅删除本轮单一目录119文件，释放分配空间估计155,406,336bytes（148.21MiB），当前轮临时保留0。复用Cargo缓存及两份新Intel发行产物保留；旧Root30保护项24.03MiB和Root41私有记录/说明12KiB保留，未读误截图/哈希私有事件或重试删除，其他归属不明旧目录未动。系统盘清理后36,870,594,560bytes（34.34GiB）可用。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。“52”是专项记录数，不是界面完成数；当前尚未完成40帧逐帧一比一终验。下一阶段按完整界面设计对照逐项修差异，Intel硬件/Windows/完整HiDPI、读屏、真实WorkBuddy重启、物理托盘与首帧等门禁继续保留；Goal active，进度HTML仍仅静态检查。

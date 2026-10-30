@@ -1,5 +1,5 @@
 {
-  "scope": "In-progress UI52: completed Intel release linking and translated release unit tests; actual GUI draft/save verified, screenshots/performance/cleanup still pending. No production source or dependencies changed.",
+  "scope": "UI52 complete release-link/test and translated runtime evidence; no production UI/Core/dependency changes. All runtime success is on Apple Silicon with Rosetta, not Intel hardware.",
   "base_head": "4e7744548a52ad447f4514eb340c7fe5827b900f",
   "binaries": {
     "native_core": {
@@ -102,7 +102,8 @@
     "exit": 0,
     "tests_passed": 192,
     "tests_ignored": 2,
-    "boundary": "Thin x86_64 release test harness executed on Apple Silicon via available Rosetta; not Intel hardware."
+    "boundary": "Thin x86_64 release test harness executed on Apple Silicon via available Rosetta; not Intel hardware.",
+    "test_execution_seconds": 0.13
   },
   "figma_readback": {
     "authentication_restored": true,
@@ -122,6 +123,7 @@
   },
   "limitations": [
     "x86_64 on Apple Silicon via Rosetta is not Intel hardware acceptance.",
-    "Successful linking/tests do not establish full visual,IME,reader,Windows or HiDPI acceptance."
+    "Successful linking/tests do not establish full visual,IME,reader,Windows or HiDPI acceptance.",
+    "Build and test command durations include compilation; test execution alone0.13s. Both Mach-O minOS12.0 metadata are not macOS12 runtime acceptance."
   ]
 }

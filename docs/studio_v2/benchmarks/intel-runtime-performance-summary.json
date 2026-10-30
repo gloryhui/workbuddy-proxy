@@ -1,0 +1,56 @@
+{
+  "ordered_runs": [
+    "native",
+    "intel",
+    "intel-run2",
+    "native-run2"
+  ],
+  "per_architecture_short_samples": 2,
+  "medians": {
+    "core_idle_rss_mib": {
+      "native_arm64": 11.83,
+      "translated_x86_64": 13.795
+    },
+    "ui_idle_rss_mib": {
+      "native_arm64": 76.725,
+      "translated_x86_64": 58.15
+    },
+    "idle_rss_mib": {
+      "native_arm64": 88.555,
+      "translated_x86_64": 71.94
+    },
+    "sampled_peak_rss_mib": {
+      "native_arm64": 138.4,
+      "translated_x86_64": 120.845
+    },
+    "core_ready_ms": {
+      "native_arm64": 362.0125,
+      "translated_x86_64": 1619.78
+    },
+    "ui_record_ready_ms": {
+      "native_arm64": 1261.183,
+      "translated_x86_64": 4055.4305
+    },
+    "large_seconds": {
+      "native_arm64": 0.131,
+      "translated_x86_64": 0.0975
+    },
+    "proxied_p50_ms": {
+      "native_arm64": 0.172,
+      "translated_x86_64": 0.1925
+    },
+    "proxied_p95_ms": {
+      "native_arm64": 0.23600000000000002,
+      "translated_x86_64": 0.2255
+    }
+  },
+  "workload": "Unchanged original scripts/benchmark.py --help verified, --gui --requests1000 --models64;80x1MiB concurrency4. Studio preference readback and Core sandbox verified eachrun. Same source, different instruction architectures on one AppleSilicon host.",
+  "startup_observation": "Translated Core/UI record readiness is materially slower in both samples; retain measurements without claiming Intel hardware performance qualification or attributing an exact cost to a particular JIT/cache layer.",
+  "memory_observation": "Translated per-process RSS was lower in these samples; this is not an optimization or architecture efficiency claim. Shared cache and translation services can lie outside measured Core/UI, background/cache/compression uncontrolled.",
+  "limits": [
+    "Only2shortsamples/arch, no statistical equivalence or platform ranking.",
+    "Ready is marker, not firstpaint/interactivity; defaultStatistics scene, not full model editor paint/typing latency/FPS.",
+    "UI RSS and sum can double count sharedpages; tray separate and mock/client excluded.",
+    "No production code change, so this is portability workload verification, not before-after optimization acceptance."
+  ]
+}

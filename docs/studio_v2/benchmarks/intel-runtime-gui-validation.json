@@ -1,0 +1,228 @@
+{
+  "initial_and_live_core_guard": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round43.q6fstj3l/intel-ui52",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round43.q6fstj3l/intel-ui52/WorkBuddy Proxy Review.app",
+      "core_pid": 15369,
+      "ui_pid": 15378,
+      "fixture_pid": 15368,
+      "port": 54229,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tintel-ui52",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 15378,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "921ba7b965a402ea534a4a1e43f33fff82dbc2404dfc79ad7b48609cedc316b0",
+        "ui": "f2d443d2ba1ae886746250c36e34fc2879b4317e10555dd33399a2fc68078f59"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 3,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "core_guard": {
+      "enforced": true,
+      "pid": 15369,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "initial": {
+      "config_sha256": "6b410d7d71c2d845fc20db21788f1ee9b4b6148026f2b5ce398438be294f1533",
+      "providers": 2,
+      "models": 3,
+      "model_projection": [
+        {
+          "id": "model-a-1",
+          "name": "Intel UI 52",
+          "model": "gpt-4.1"
+        },
+        {
+          "id": "model-a-2",
+          "name": "model-2",
+          "model": "model-a-2"
+        },
+        {
+          "id": "model-b-1",
+          "name": "model-b",
+          "model": "model-b-1"
+        }
+      ]
+    },
+    "runtime_binary_architecture": {
+      "core": "x86_64",
+      "ui": "x86_64"
+    },
+    "host": "arm64 with Rosetta available; not Intel hardware"
+  },
+  "before_explicit_save": {
+    "core_sha256": "6b410d7d71c2d845fc20db21788f1ee9b4b6148026f2b5ce398438be294f1533",
+    "core_unchanged": true,
+    "core_first_name": "Intel UI 52",
+    "draft_first_name": "Rosetta52",
+    "providers": 2,
+    "models": 3
+  },
+  "after_one_actual_home_save": {
+    "core_sha256": "726f1da11141ace7c0fdc6d68e45140d1d735b885242455535103fe2d2a202db",
+    "before_sha256": "6b410d7d71c2d845fc20db21788f1ee9b4b6148026f2b5ce398438be294f1533",
+    "first_model_name": "Rosetta52",
+    "models": [
+      {
+        "provider_id": "provider-a",
+        "id": "model-a-1",
+        "name": "Rosetta52",
+        "model": "gpt-4.1"
+      },
+      {
+        "provider_id": "provider-a",
+        "id": "model-a-2",
+        "name": "model-2",
+        "model": "model-a-2"
+      },
+      {
+        "provider_id": "provider-b",
+        "id": "model-b-1",
+        "name": "model-b",
+        "model": "model-b-1"
+      }
+    ],
+    "draft_first_name": "Rosetta52",
+    "providers": 2,
+    "explicit_save_observed": true
+  },
+  "post_native_ui_close": {
+    "core_alive_after_native_ui_close": true,
+    "ui_pid_gone": 15378,
+    "core_health_state": "ready",
+    "saved_first_name": "Rosetta52",
+    "config_sha256": "726f1da11141ace7c0fdc6d68e45140d1d735b885242455535103fe2d2a202db"
+  },
+  "terminal": {
+    "ui_exit_before_cleanup": 0,
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": 0,
+    "core_exit_after_cleanup": 0
+  },
+  "all_three_recorded_pids_gone": true,
+  "actual_cua_steps": [
+    "Selected first model, F2 read Intel UI52/gpt-4.1, Esc closed.",
+    "First row then Down F2 read model-2/model-a-2, native Cancel closed.",
+    "First display name CUA typeText ASCII Rosetta52, not setValue; confirm only draft. Core raw SHA unchanged before Save, draft actual value changed.",
+    "Actual home Save once; Core name Rosetta52 and other2 models/IDs preserved. No Sync,login item,real upstream,source switch or outsideAX/bounds query.",
+    "Reopen first model and resize to requested1440x900 and1100x700; two actual native translated GUI pictures, no pixel repaint.",
+    "Cancel current editor and native Close; UI gone, isolated Core remained alive and stats_health ready, saved file SHA still726f1da1…; then fixture stop marker, Core/fixture wait0."
+  ],
+  "method_boundary": "Thin x86_64 Core/UI binaries and x86_64 release unit harness were verified by lipo, host arm64 with translated sysctl1. This establishes actual translated execution, not Intel CPU/GPU or Windows/reader/fullIME/crossscale acceptance. GUI isolated HOME/config/LSEnvironment has no kernel profile; each live Core has complete protected matrix and LaunchAgents deny.",
+  "save_data_boundary": "Only this session2-provider3-model synthetic config and fakekeys/loopback; no real WorkBuddy profile or credentials.",
+  "test_coverage": "Ordinary model edit/cancel/row navigation/draft/one Save; no new IME/candidate or physical tray/minimize/drag assertions."
+}

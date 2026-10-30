@@ -1,0 +1,57 @@
+{
+  "images": [
+    {
+      "raw_name": "intel-modal-1440-raw.png",
+      "raw_sha256": "ccdbad1397973d6a9ea3f4fcd8a6a210fdd78db2250bf5310218d1b639a8ead6",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "requested_logical_window": [
+        1440,
+        900
+      ],
+      "committed_image": "screenshots/intel-runtime-1440x900-2x.png",
+      "committed_sha256": "50977b593135118a82fa8e9fc7c2d12053129a2d17be2b8c29f8c6b4006cf1cb",
+      "committed_pixels": [
+        2880,
+        1800
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true,
+      "raw_dpi_metadata": null
+    },
+    {
+      "raw_name": "intel-modal-1100-raw.png",
+      "raw_sha256": "ddaf0e34d01a79c9571f02afa4e9559f08e74bc3752486e12691ad0bc9805439",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "requested_logical_window": [
+        1100,
+        700
+      ],
+      "committed_image": "screenshots/intel-runtime-1100x700-2x.png",
+      "committed_sha256": "a1f1d7adf382898909dc43ced245b51f853ee66324fdc095dc5fbf9569fff792",
+      "committed_pixels": [
+        2200,
+        1400
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true,
+      "raw_dpi_metadata": null
+    }
+  ],
+  "capture": {
+    "ui_pid": 15378,
+    "core_pid": 15369,
+    "window_number": 64560,
+    "method": "Native own-PID windowNumber screencapture; no globalbounds/OSscale read",
+    "scale": "2x inferred from requested dimensions and fixed256 logical sidebar rendered512physical; raw extra2 physical rows only cropped. No resize/repaint. Not allHiDPI acceptance."
+  },
+  "observed": "Real saved Rosetta52/gpt-4.1; unknown metadata warning retained. Small screenshot shows top/flags/fixed footer, numeric limits require internal scroll. Scrim visibly above toolbar. Purple OS screen/control indicator remains upper-left.",
+  "design_readback": "Official Figma59:279 and59:484 high-fidelity context/screenshot read after user reauthentication. This round retains current layout/assets; not full40-frame or per-asset exact acceptance."
+}

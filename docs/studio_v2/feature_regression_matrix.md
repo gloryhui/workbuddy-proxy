@@ -6,6 +6,7 @@
 | --- | --- | --- |
 | 七功能工具栏独立定位与遮罩层级 | ui.rs::render/app_controls、ui_components.rs、theme.rs | 原top8/right32/300×36、36px按钮/20pxSVG/8px间距及七处理器保留，旧049两尺寸/点击/Restore和71ae快捷键证据保留；最终0892 Studio首Tab/反向七项清晰原生主色框、语言Enter/Space/Esc与Tab接续、皮肤双向Tab离开关闭/Esc恢复、Sync遮罩/两尺寸实拍/菜单CPU与八轮短测 Passed；OS焦点属性、完整IME/读屏/跨平台仍待验 |
 | Windows 标题栏与工具栏兼容性 | ui.rs::render、Kit TitleBar、gpui-pre-windows | UI43静态审计发现GitHub/Feedback与右上窗口按钮区域重叠，未作Windows运行结论；当前GNU check在依赖manifest资源编译缺windres处exit101，应用rc.exe另为源码前置条件，类型检查未完成。布局偏好待回复，Windows窗口按钮/Ctrl/IME/HiDPI/两尺寸与性能均待验；未改Mac top8/right32或工作流 |
+| Intel 发行版与译运行 | gpui/build.rs、原生Core/UI、scripts/benchmark.py | UI52真正x86_64 Core/UI release链接、thin x86_64测试harness192passed/2既有ignored、Rosetta实际F2/取消/草稿与一次Save、两尺寸和4轮原负载已验；源代码未改。AppleSilicon译运行不替代Intel CPU/GPU实机；译运行启动更慢/不同RSS计数及旧高值保留，不作硬件性能通过或跨架构排名 |
 | 六套旧皮肤 + 可选 Studio 靛蓝、保存失败不切换 | theme/skin.rs、ui/skin_controls.rs | 原七项选择/原键保存、默认Mono/Studio重开和非法目录测试保留；最终0892菜单内Blue→Studio落盘/草稿保持、Esc及双向Tab离开关闭已验；七皮肤工具按钮21组浅面焦点色对比回归通过，仅工具栏焦点样式变化，全局ring/selection不改；其他控件焦点/完整视觉与跨平台待续 |
 | 开机启动、失败回滚 | ui/autostart_notice.rs、ui.rs、assets.rs、原Core action | 原动作/忙碌禁用/回滚保留；真实假HOME开关/plist/失败重试、分候选Pending取消不重开/已聚焦Enter与Space/草稿筛选及重开、最终power/选中色/遮罩和持续hover实时更新、两尺寸与四轮短测 Passed，覆盖按候选分开记录。真实LaunchAgents受内核沙盒保护；0892 Studio新窗口Tab焦点已验，完整键盘/IME/无障碍/跨平台及实际OS登录待续 |
 | 检查更新、busy/error | ui/update_notice.rs、ui.rs::app_controls/tick、原Core update | 原force:true/网络/版本/缓存不改；原生等待、真实HTTP403与重试、Pending关闭不重开、X/外部/Esc/实际缩窗、草稿/Custom过滤/语言保持及模态遮罩、两尺寸/六轮短测 Passed；UI响应与原Core两项契约测试通过，公网成功未实机验。busy精确请求数、完整键盘/IME/无障碍/跨平台待续 |

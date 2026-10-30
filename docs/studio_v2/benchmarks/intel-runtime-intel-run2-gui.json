@@ -1,0 +1,168 @@
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "mode": "native GUI",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 8951416,
+  "idle_rss_mib": 74.88,
+  "core_idle_rss_mib": 15.59,
+  "measured_process_count": 2,
+  "ui_idle_rss_mib": 59.29,
+  "tray_idle_rss_mib": 18.37,
+  "core_ready_ms": 1234.665,
+  "ui_record_ready_ms": 3339.827,
+  "sampled_peak_rss_mib": 126.25,
+  "post_load_rss_mib": 126.25,
+  "small_request_count": 1000,
+  "direct_loopback_ms": {
+    "p50": 0.15,
+    "p95": 0.234
+  },
+  "proxied_loopback_ms": {
+    "p50": 0.193,
+    "p95": 0.228
+  },
+  "median_proxy_overhead_ms": 0.043,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.096,
+  "notes": "RSS sums instance.json core and gpui.json settings PIDs (shared pages can be counted twice); tray RSS is separate, headless has one PID. UI readiness is the gpui.json marker, not first paint or interactivity. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.",
+  "ui_sha256": "f2d443d2ba1ae886746250c36e34fc2879b4317e10555dd33399a2fc68078f59",
+  "ui_binary_bytes": 16552232,
+  "core_sha256": "921ba7b965a402ea534a4a1e43f33fff82dbc2404dfc79ad7b48609cedc316b0",
+  "core_sandbox_enforced": true,
+  "core_sandbox_proof": {
+    "enforced": true,
+    "pid": 22230,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "catalog_url_is_local": true,
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "fixture_wrapper_sha256": "aef90cdcd8c32c628d116b8f1555ace61e6243b041c9a2a0eb5545eec748cf34",
+  "owned_child_exit_codes": [
+    -15,
+    -15,
+    0,
+    0
+  ],
+  "all_owned_children_waited": true,
+  "core_pid": 22230,
+  "ui_pid": 22233,
+  "ui_process_gone": true,
+  "core_process_gone": true,
+  "temporary_fixtures_retained_until_session_cleanup": true,
+  "architecture_pair": "intel",
+  "appearance_preferences": {
+    "version": 1,
+    "skin": "studio_indigo"
+  },
+  "hardware_scope": "Apple Silicon, ARM native vs x86_64 via Rosetta; not Intel hardware or cross-platform ranking"
+}
