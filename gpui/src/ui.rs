@@ -764,6 +764,7 @@ impl Proxy {
                     zh,
                     busy: false,
                     column_width: px(230.),
+                    studio: crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
                 },
                 window,
                 cx,
@@ -1937,17 +1938,24 @@ impl Proxy {
             let chrome = crate::theme::space::PAGE_X * 2.
                 + relay::rail_width(window)
                 + relay::COLUMN_GAP
-                + crate::theme::space::CARD_SM * 2.
-                + 2.;
+                + if window.viewport_size().width >= px(1320.) {
+                    38.
+                } else {
+                    crate::theme::space::CARD_SM * 2.
+                }
+                // Card border plus the table's own two border pixels.
+                + 4.;
             window.viewport_size().width - px(chrome + crate::theme::size::SIDEBAR_WIDTH)
         };
         let column_width = ((width - crate::model_table::EDIT_COLUMN_WIDTH) / 2.).max(px(120.));
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let data = self.model_table.read(cx).delegate();
         if data.rows == self.models
             && data.selection == self.selection
             && data.zh == self.zh
             && data.busy == self.busy
             && data.column_width == column_width
+            && data.studio == studio
         {
             return;
         }
@@ -1956,9 +1964,11 @@ impl Proxy {
             data.rows = self.models.clone();
             data.selection = self.selection.clone();
             data.busy = self.busy;
-            let header_changed = data.zh != self.zh || data.column_width != column_width;
+            let header_changed =
+                data.zh != self.zh || data.column_width != column_width || data.studio != studio;
             data.zh = self.zh;
             data.column_width = column_width;
+            data.studio = studio;
             if header_changed {
                 table.refresh(cx);
             }
@@ -2442,6 +2452,7 @@ impl Render for Proxy {
                 .flex_col()
                 .flex_1()
                 .min_h_0()
+                .when(summary.is_some(), |column| column.max_h(px(659.)))
                 .gap(px(12.))
                 .when_some(summary, |column, summary| column.child(summary))
                 .child(
@@ -2470,22 +2481,37 @@ impl Render for Proxy {
             ),
             Page::Statistics => self.statistics.read(cx).page_subtitle(),
         };
+        // 54:2 uses28/41 with a96px heading flow; the reports52/56/57 use
+        // 27/39 with97px. Both subtitles keep their105px canvas anchor.
+        let provider_heading = self.page == Page::Providers;
         let heading = div()
             .flex()
             .flex_col()
             .flex_shrink_0()
-            // Figma52/56/57: title27/39, subtitle13/19. Preserve the original
-            // 97px heading flow so subtitle and report anchors stay in place.
-            .gap(px(10.))
-            .pb(px(29.))
+            .gap(px(if provider_heading { 8. } else { 10. }))
+            .pb(px(if provider_heading { 28. } else { 29. }))
             .child(
                 div().flex().items_start().gap_4().child(
                     div()
                         .flex_1()
                         .min_w_0()
-                        .text_size(px(crate::theme::font::PAGE_TITLE))
-                        .line_height(px(crate::theme::line_height::PAGE_TITLE))
+                        .text_size(px(if provider_heading {
+                            28.
+                        } else {
+                            crate::theme::font::PAGE_TITLE
+                        }))
+                        .line_height(px(if provider_heading {
+                            41.
+                        } else {
+                            crate::theme::line_height::PAGE_TITLE
+                        }))
                         .font_weight(FontWeight::BOLD)
+                        .when(
+                            !provider_heading
+                                && cfg!(target_os = "macos")
+                                && crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                            |title| title.relative().top(px(-1.)),
+                        )
                         .child(title),
                 ),
             )

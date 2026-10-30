@@ -4,10 +4,10 @@
 
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
-| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, layout.rs, source_controls.rs, usage_chart.rs | 部分：UI56首轮整帧/29资产审查及40a两尺寸实拍，283px起点/17px间距与真实14/7700已验；小窗图含tooltip，最新候选实拍/性能因Mac锁定待续，字体/完整状态未终验 |
-| 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 部分：侧栏/双卡/运行中心/日志交互通过；通用header无左创建完成徽标/普通Save/重开与两尺寸已验，完整视觉/无障碍待续 |
-| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 部分：八列/来源筛选/分页/详情/窄窗首末列已验；UI56的40a实测原SVG四箭头与表头outer39px、键盘/分页通过，最新候选/性能及完整视觉待续 |
-| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：UI56首轮整帧、40a两尺寸/2供应商5模型/14与7700范围浮层及小窗下卡滚动已验；表头低5.5px，b313修复标题列与314px切换区仅编译通过，解锁后补实拍/性能，未整帧通过 |
+| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, layout.rs, source_controls.rs, usage_chart.rs | 部分：UI56/57已完成两尺寸概览/共享布局/七原字体与六皮肤、真实22条12100Token及原负载；UI58共享标题墨迹低1px修复并实拍。真实图表/单点说明保留，完整视觉/键盘/IME/AX/跨平台待终验 |
+| 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 部分：UI58官方30资产/整帧首审留差异，五主要区域几何和Studio模型列宽对齐；两尺寸/单模型/256末行/编辑取消/200SSE与503/原字段保留/四轮负载已验。独立连接徽章、输入状态颜色/边框/AA及完整无障碍/跨平台待续 |
+| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 部分：八列/来源筛选/分页/详情/窄窗首末列已验；UI56/57最终候选两尺寸、14/22真实记录与原负载已验，a51表头top364/outer39；UI58共享标题墨迹修正。完整视觉/键盘/IME/AX/跨平台待终验 |
+| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：UI56/57最终两尺寸与原负载已验，汇总2供应商5模型/22条12100Token范围浮层、小窗右列下卡可滚；标题列/314px切换区与表头top363/38已实拍。UI58共享标题实现修正，本轮未重拍Summary，完整状态/视觉待终验 |
 | 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs | 部分：分区导航/价格卡CRUD与游标/快照/失败提示、采集/导入双卡及主要业务已验；整帧视觉、完整键盘/IME/无障碍待续 |
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui/model_picker.rs, ui.rs, ui/providers.rs | 部分：原生726×672/小窗自适应、38/4096虚拟候选、过滤与勾选/键盘、取消/确认草稿/显式保存、跨供应商256边界与错误/空态已验；完整IME/无障碍/跨平台待续 |
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui/model_editor.rs, model_options.rs, ui.rs | 部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；UI53首轮全帧审查/16px原生checkbox+12px原资源/颜色列对齐与两尺寸实拍已记录；仍有1.5px纵向、档位宽度、字体/阴影/共享资产余差，完整键盘IME/无障碍/跨平台待续，未整帧通过 |

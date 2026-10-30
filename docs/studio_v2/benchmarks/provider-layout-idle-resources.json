@@ -1,0 +1,59 @@
+{
+  "samples": [
+    {
+      "sample": 1,
+      "seconds": 10.0009,
+      "processes": {
+        "core": {
+          "pid": 35249,
+          "rss_before_mib": 13.422,
+          "rss_after_mib": 13.422,
+          "cpu_single_core_percent": 0.1312
+        },
+        "ui": {
+          "pid": 35756,
+          "rss_before_mib": 125.281,
+          "rss_after_mib": 125.281,
+          "cpu_single_core_percent": 0.7985
+        }
+      }
+    },
+    {
+      "sample": 2,
+      "seconds": 10.0052,
+      "processes": {
+        "core": {
+          "pid": 35249,
+          "rss_before_mib": 13.422,
+          "rss_after_mib": 13.422,
+          "cpu_single_core_percent": 0.1538
+        },
+        "ui": {
+          "pid": 35756,
+          "rss_before_mib": 125.281,
+          "rss_after_mib": 125.297,
+          "cpu_single_core_percent": 0.9129
+        }
+      }
+    },
+    {
+      "sample": 3,
+      "seconds": 10.0053,
+      "processes": {
+        "core": {
+          "pid": 35249,
+          "rss_before_mib": 13.422,
+          "rss_after_mib": 13.422,
+          "cpu_single_core_percent": 0.144
+        },
+        "ui": {
+          "pid": 35756,
+          "rss_before_mib": 125.297,
+          "rss_after_mib": 125.281,
+          "cpu_single_core_percent": 0.8661
+        }
+      }
+    }
+  ],
+  "scope": "Final ec7e actual native Providers view after stage1, current UI35756/Core35249. Three10s idle observations, GUI agent instructed no interaction/state/screenshot during sample. CPU%=delta native cumulative CPU seconds / wall seconds *100, one-core basis. Read-only native process resource API, not external UI/window querying. No baseline provider idle sample, FPS, first paint or statistical regression claim."
+}

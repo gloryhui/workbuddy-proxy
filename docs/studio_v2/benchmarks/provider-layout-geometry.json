@@ -1,0 +1,622 @@
+{
+  "ui_sha256": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f",
+  "reference_size": [
+    1440,
+    900
+  ],
+  "current_size": [
+    1440,
+    901
+  ],
+  "ink_boxes": {
+    "page_title": {
+      "reference": [
+        289,
+        65,
+        426,
+        90
+      ],
+      "first10a": [
+        289,
+        65,
+        426,
+        91
+      ],
+      "finalec7e": [
+        289,
+        65,
+        426,
+        91
+      ],
+      "slot": [
+        288,
+        56,
+        650,
+        100
+      ],
+      "colour": [
+        22,
+        28,
+        44
+      ]
+    },
+    "page_subtitle": {
+      "reference": [
+        298,
+        110,
+        541,
+        121
+      ],
+      "first10a": [
+        290,
+        109,
+        544,
+        121
+      ],
+      "finalec7e": [
+        290,
+        109,
+        544,
+        121
+      ],
+      "slot": [
+        288,
+        100,
+        900,
+        130
+      ],
+      "colour": [
+        119,
+        129,
+        150
+      ]
+    },
+    "summary_label": {
+      "reference": null,
+      "first10a": [
+        307,
+        184,
+        362,
+        192
+      ],
+      "finalec7e": [
+        307,
+        182,
+        362,
+        190
+      ],
+      "slot": [
+        300,
+        171,
+        380,
+        202
+      ],
+      "colour": [
+        119,
+        129,
+        150
+      ]
+    },
+    "summary_name": {
+      "reference": [
+        394,
+        180,
+        454,
+        195
+      ],
+      "first10a": [
+        394,
+        183,
+        454,
+        198
+      ],
+      "finalec7e": [
+        394,
+        180,
+        454,
+        195
+      ],
+      "slot": [
+        385,
+        170,
+        530,
+        202
+      ],
+      "colour": [
+        22,
+        28,
+        44
+      ]
+    },
+    "connection_title": {
+      "reference": [
+        343,
+        241,
+        409,
+        256
+      ],
+      "first10a": [
+        342,
+        241,
+        408,
+        256
+      ],
+      "finalec7e": [
+        343,
+        241,
+        409,
+        256
+      ],
+      "slot": [
+        335,
+        230,
+        600,
+        265
+      ],
+      "colour": [
+        22,
+        28,
+        44
+      ]
+    },
+    "connection_hint": {
+      "reference": [
+        323,
+        272,
+        450,
+        278
+      ],
+      "first10a": [
+        314,
+        270,
+        449,
+        280
+      ],
+      "finalec7e": [
+        314,
+        270,
+        449,
+        280
+      ],
+      "slot": [
+        305,
+        260,
+        730,
+        286
+      ],
+      "colour": [
+        119,
+        129,
+        150
+      ]
+    },
+    "protocol_link": {
+      "reference": [
+        312,
+        536,
+        374,
+        545
+      ],
+      "first10a": [
+        349,
+        535,
+        411,
+        544
+      ],
+      "finalec7e": [
+        313,
+        536,
+        375,
+        545
+      ],
+      "slot": [
+        305,
+        518,
+        500,
+        552
+      ],
+      "colour": [
+        79,
+        70,
+        217
+      ]
+    },
+    "url_hint": {
+      "reference": [
+        723,
+        536,
+        829,
+        542
+      ],
+      "first10a": [
+        661,
+        537,
+        888,
+        546
+      ],
+      "finalec7e": [
+        661,
+        537,
+        888,
+        546
+      ],
+      "slot": [
+        650,
+        524,
+        1025,
+        554
+      ],
+      "colour": [
+        119,
+        129,
+        150
+      ]
+    },
+    "model_title": {
+      "reference": [
+        342,
+        590,
+        408,
+        605
+      ],
+      "first10a": [
+        341,
+        591,
+        407,
+        606
+      ],
+      "finalec7e": [
+        342,
+        590,
+        408,
+        605
+      ],
+      "slot": [
+        330,
+        580,
+        450,
+        615
+      ],
+      "colour": [
+        22,
+        28,
+        44
+      ]
+    },
+    "model_header_name": {
+      "reference": [
+        325,
+        640,
+        370,
+        650
+      ],
+      "first10a": [
+        324,
+        639,
+        369,
+        649
+      ],
+      "finalec7e": [
+        325,
+        640,
+        370,
+        650
+      ],
+      "slot": [
+        310,
+        630,
+        540,
+        659
+      ],
+      "colour": [
+        119,
+        129,
+        150
+      ]
+    },
+    "runtime_title": {
+      "reference": [
+        1109,
+        244,
+        1171,
+        258
+      ],
+      "first10a": [
+        1108,
+        243,
+        1170,
+        257
+      ],
+      "finalec7e": [
+        1109,
+        244,
+        1171,
+        258
+      ],
+      "slot": [
+        1105,
+        232,
+        1260,
+        268
+      ],
+      "colour": [
+        22,
+        28,
+        44
+      ]
+    },
+    "logs_title": {
+      "reference": [
+        1110,
+        538,
+        1171,
+        552
+      ],
+      "first10a": [
+        1109,
+        537,
+        1171,
+        552
+      ],
+      "finalec7e": [
+        1110,
+        537,
+        1172,
+        552
+      ],
+      "slot": [
+        1106,
+        529,
+        1260,
+        565
+      ],
+      "colour": [
+        240,
+        243,
+        254
+      ]
+    }
+  },
+  "scope": "Native1x unchanged screenshots. ICC converted in memory only. Source bounds, fill bands, and text ink are distinct. Exact-colour boxes depend on rasterizer/AA; not full-frame or exact-font-version proof.",
+  "statistics_title_followup": {
+    "overview": {
+      "actual": [
+        290,
+        63,
+        394,
+        88
+      ],
+      "reference_title": [
+        290,
+        63,
+        394,
+        88
+      ],
+      "scope": "Both observed report routes use shared usage-statistics heading. Exact same observed ink box; not every route/state or font-version proof."
+    },
+    "details": {
+      "actual": [
+        290,
+        63,
+        394,
+        88
+      ],
+      "reference_title": [
+        290,
+        63,
+        394,
+        88
+      ],
+      "scope": "Both observed report routes use shared usage-statistics heading. Exact same observed ink box; not every route/state or font-version proof."
+    }
+  },
+  "source_target_rects": {
+    "summary": [
+      288,
+      166,
+      1120,
+      44
+    ],
+    "connection": [
+      288,
+      222,
+      755,
+      338
+    ],
+    "models": [
+      288,
+      572,
+      755,
+      253
+    ],
+    "runtime": [
+      1060,
+      222,
+      348,
+      279
+    ],
+    "logs": [
+      1060,
+      516,
+      348,
+      309
+    ]
+  },
+  "straight_edge_colours_at_source_target": {
+    "summary": {
+      "top": [
+        231,
+        234,
+        242
+      ],
+      "bottom": [
+        231,
+        234,
+        242
+      ],
+      "above": [
+        247,
+        248,
+        252
+      ],
+      "below": [
+        247,
+        248,
+        252
+      ],
+      "left": [
+        231,
+        234,
+        242
+      ],
+      "right": [
+        231,
+        234,
+        242
+      ]
+    },
+    "connection": {
+      "top": [
+        231,
+        234,
+        242
+      ],
+      "bottom": [
+        231,
+        234,
+        242
+      ],
+      "above": [
+        247,
+        248,
+        252
+      ],
+      "below": [
+        247,
+        248,
+        252
+      ],
+      "left": [
+        231,
+        234,
+        242
+      ],
+      "right": [
+        231,
+        234,
+        242
+      ]
+    },
+    "models": {
+      "top": [
+        231,
+        234,
+        242
+      ],
+      "bottom": [
+        231,
+        234,
+        242
+      ],
+      "above": [
+        247,
+        248,
+        252
+      ],
+      "below": [
+        247,
+        248,
+        252
+      ],
+      "left": [
+        231,
+        234,
+        242
+      ],
+      "right": [
+        231,
+        234,
+        242
+      ]
+    },
+    "runtime": {
+      "top": [
+        231,
+        234,
+        242
+      ],
+      "bottom": [
+        231,
+        234,
+        242
+      ],
+      "above": [
+        247,
+        248,
+        252
+      ],
+      "below": [
+        247,
+        248,
+        252
+      ],
+      "left": [
+        231,
+        234,
+        242
+      ],
+      "right": [
+        231,
+        234,
+        242
+      ]
+    },
+    "logs": {
+      "top": [
+        23,
+        28,
+        44
+      ],
+      "bottom": [
+        23,
+        28,
+        44
+      ],
+      "above": [
+        247,
+        248,
+        252
+      ],
+      "below": [
+        247,
+        248,
+        252
+      ],
+      "left": [
+        23,
+        28,
+        44
+      ],
+      "right": [
+        23,
+        28,
+        44
+      ]
+    }
+  },
+  "model_first_edit_final": {
+    "reference": [
+      979,
+      669,
+      991,
+      681
+    ],
+    "current": [
+      979,
+      669,
+      991,
+      681
+    ],
+    "method": "ICC conversion in memory only; own model first-row edit slot x967..1002 y664..685, select pixels max(R,G,B)<210 to exclude background/AA fringe. Same ink bounds; colour/AA distribution differs. Original native PNGs untouched."
+  }
+}

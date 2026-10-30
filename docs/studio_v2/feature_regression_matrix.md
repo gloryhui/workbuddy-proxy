@@ -60,3 +60,5 @@ UI53 全帧审查与原生能力控件：BaseCheckbox/Indicator继续使用Kit�
 
 
 Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重/许可证已查，Studio首次加载一次、Noto主字体/Inter已检查角色及process-local CJK named cascade、默认Mono/六旧键和旧native sans恢复路径保留。最终a51两尺寸三统计页/万单位/六皮肤与供应商/模型可见区抽查、195tests193pass2ignored及strictclippy/Inteltypecheck/release、四轮原负载通过专项验证；初始edb六轮和204ms marker增量保留，删除重复全族枚举后复测，不冒称因果优化。Core配置未变、UI关闭后Core200，再Core/fixture wait0，GUI所有PID消失。实际每字形PS身份/Figma字体版本、亿UI、模型小窗下方字段/其他协议完整状态/所有40帧/完整IME/AX/Windows与Intel硬件/HiDPI仍未验。准确范围和启动/RSS/文件尺寸成本见QA57。
+
+供应商整帧布局（UI58）：最终ec7e六个Rust/GPUI文件、五块主要区域及模型Studio列宽对齐；真实两尺寸、草稿删后取消恢复、模型/端口/协议/获取/新增弹窗取消、中英/Mono→Studio，以及各一次Test成功200/SSE与失败503均留证。Test原有先保存再测试语义保持，全部原字段递归读回一致，字节因新增序列化默认字段不同；16条SQLite按来源/HTTP独立核对。256容量End到fill-250、末行编辑取消、Add禁用及小窗footer可达。默认头部只隐藏原不可用Remove，选中即显示同一处理器；不删除选择/键盘/虚拟化。统计共享标题1px已在概览/明细原图修正。编译五门禁与四轮原负载完成，GUI关后Core200再正常退出，准确数据见QA58；独立连接徽章、输入状态颜色、原生边框/AA及完整IME/AX/跨平台仍待验，不升级为整帧最终通过。

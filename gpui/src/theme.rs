@@ -57,6 +57,7 @@ pub mod color {
     pub const TEXT_2: u32 = 0x4c566d;
     pub const TEXT_3: u32 = 0x778196;
     pub const TEXT_4: u32 = 0xa0a8b9;
+    pub const CONTROL_CARET: u32 = 0x8c96aa;
 
     pub const BORDER: u32 = 0xe7eaf2;
     pub const BORDER_INPUT: u32 = 0xd8dde9;
@@ -199,7 +200,7 @@ pub mod size {
     /// Studio protocol editor (61:42): fixed monospace key column.
     pub const MAPPING_LABEL_WIDTH: f32 = 94.;
     /// Provider page: the thinking-effort select width in the design's action row.
-    pub const EFFORT_SELECT_WIDTH: f32 = 200.;
+    pub const EFFORT_SELECT_WIDTH: f32 = 180.;
     pub const LIST_ROW_HEIGHT: f32 = 36.;
     pub const SEGMENT_BUTTON_HEIGHT: f32 = 32.;
     pub const TABLE_HEADER_HEIGHT: f32 = 32.;

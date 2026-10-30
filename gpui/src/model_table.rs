@@ -20,6 +20,7 @@ pub struct Models {
     pub zh: bool,
     pub busy: bool,
     pub column_width: Pixels,
+    pub studio: bool,
 }
 impl TableDelegate for Models {
     fn columns_count(&self, _: &App) -> usize {
@@ -30,23 +31,32 @@ impl TableDelegate for Models {
     }
     fn column(&self, i: usize, _: &App) -> Column {
         if i == 2 {
+            let edit_width = if self.studio {
+                px(75.)
+            } else {
+                EDIT_COLUMN_WIDTH
+            };
             return Column::new("edit", if self.zh { "操作" } else { "Actions" })
                 .paddings(Edges {
                     top: px(0.),
                     bottom: px(0.),
-                    left: px(8.),
-                    right: px(8.),
+                    left: px(if self.studio { 0. } else { 8. }),
+                    right: px(if self.studio { 0. } else { 8. }),
                 })
-                .width(EDIT_COLUMN_WIDTH)
-                .min_width(EDIT_COLUMN_WIDTH)
-                .max_width(EDIT_COLUMN_WIDTH)
+                .width(edit_width)
+                .min_width(edit_width)
+                .max_width(edit_width)
                 .resizable(false)
                 .selectable(false);
         }
         Column::new(
             if i == 0 { "name" } else { "model" },
             if i == 0 {
-                if self.zh { "显示名" } else { "Display name" }
+                if self.zh {
+                    "显示名称"
+                } else {
+                    "Display name"
+                }
             } else {
                 if self.zh {
                     "上游模型 ID"
@@ -59,10 +69,20 @@ impl TableDelegate for Models {
         .paddings(Edges {
             top: px(0.),
             bottom: px(0.),
-            left: px(8.),
-            right: px(8.),
+            left: px(if self.studio { 14. } else { 8. }),
+            right: px(if self.studio && i == 1 { 4. } else { 8. }),
         })
-        .width(self.column_width)
+        .width(if self.studio {
+            // At the design's713px inner width:263name/375ID/75actions.
+            // Preserve both120px minima and proportional contraction below it.
+            let available = self.column_width * 2. + EDIT_COLUMN_WIDTH - px(75.);
+            let name = (available * (263. / 638.))
+                .max(px(120.))
+                .min(available - px(120.));
+            if i == 0 { name } else { available - name }
+        } else {
+            self.column_width
+        })
         .min_width(px(120.))
     }
     fn render_header(
@@ -90,7 +110,16 @@ impl TableDelegate for Models {
             .flex()
             .items_center()
             .a11y_synthetic_children(move |tree| tree.parent_node().set_column_index(col))
-            .child(name)
+            .child(
+                Label::new(name)
+                    .when(self.studio, |label| {
+                        label.relative().left(px(1.)).top(px(1.))
+                    })
+                    .text_size(px(12.))
+                    .line_height(px(17.))
+                    .font_weight(gpui::FontWeight::MEDIUM)
+                    .text_color(rgb(crate::theme::color::TEXT_3)),
+            )
     }
     fn render_tr(
         &mut self,
@@ -163,6 +192,9 @@ impl TableDelegate for Models {
                 .h_full()
                 .flex()
                 .items_center()
+                .when(self.studio, |cell| {
+                    cell.w_full().justify_center().pl(px(4.))
+                })
                 .a11y_synthetic_children(|tree| tree.parent_node().set_column_index(2))
                 .child(
                     Button::new(("model-edit", i))
@@ -185,6 +217,7 @@ impl TableDelegate for Models {
                         .child(
                             Icon::default()
                                 .path("studio/model-edit.svg")
+                                .when(self.studio, |icon| icon.relative().top(px(2.)))
                                 .with_size(px(15.)),
                         )
                         .tooltip(label)
@@ -206,15 +239,21 @@ impl TableDelegate for Models {
         };
         // Long display names and model IDs are ellipsised inside their column.
         // The full value stays reachable on hover, so trimming the display never
-        // hides what was actually configured (FX03), and the model ID keeps the
-        // design's monospace code treatment (DESIGN_SPEC §1.2).
+        // hides what was actually configured (FX03). Studio54:2 uses Inter
+        // for upstream IDs; existing skins keep their original code face.
         let full = value.to_owned();
         let text = if col == 1 {
             Label::new(value.to_owned())
                 .flex_1()
                 .min_w_0()
                 .text_ellipsis()
-                .font_family(cx.theme().mono_font_family.clone())
+                .map(|text| {
+                    if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+                        crate::studio_fonts::latin(text, cx)
+                    } else {
+                        text.font_family(cx.theme().mono_font_family.clone())
+                    }
+                })
         } else {
             Label::new(value.to_owned()).w_full().text_ellipsis()
         };
@@ -233,7 +272,26 @@ impl TableDelegate for Models {
             .tooltip(move |window, cx| {
                 crate::ui_components::full_value_tooltip(full.clone(), window, cx)
             })
-            .child(text.text_size(px(crate::theme::font::BODY)))
+            .child(
+                text.text_size(px(
+                    if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+                        12.
+                    } else {
+                        crate::theme::font::BODY
+                    },
+                ))
+                .line_height(px(17.))
+                .font_weight(if col == 0 {
+                    gpui::FontWeight::MEDIUM
+                } else {
+                    gpui::FontWeight::NORMAL
+                })
+                .when(self.studio, |text| {
+                    text.relative()
+                        .top(px(1.))
+                        .when(col == 1, |text| text.left(px(1.)))
+                }),
+            )
             .when(col == 1, |cell| {
                 // These rows belong to the configured provider, rather than
                 // WorkBuddy's built-in model catalog. Capability mode is separate.

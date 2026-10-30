@@ -1,0 +1,202 @@
+{
+  "checked_at": "2026-10-31T00:01:04.110902+08:00",
+  "sample_order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "samples_per_version": 2,
+  "medians": {
+    "previous": {
+      "core_idle_rss_mib": 12.76,
+      "ui_idle_rss_mib": 83.96,
+      "idle_rss_mib": 96.72,
+      "sampled_peak_rss_mib": 144.0,
+      "core_ready_ms": 48.891,
+      "native_ui_process_to_record_ms": 802.263,
+      "large_seconds": 0.0875,
+      "proxy_p50_ms": 0.17,
+      "proxy_p95_ms": 0.224
+    },
+    "current": {
+      "core_idle_rss_mib": 13.665,
+      "ui_idle_rss_mib": 84.295,
+      "idle_rss_mib": 97.96,
+      "sampled_peak_rss_mib": 145.865,
+      "core_ready_ms": 63.4975,
+      "native_ui_process_to_record_ms": 762.843,
+      "large_seconds": 0.0845,
+      "proxy_p50_ms": 0.172,
+      "proxy_p95_ms": 0.19
+    }
+  },
+  "delta_current_minus_previous": {
+    "core_idle_rss_mib": 0.905,
+    "ui_idle_rss_mib": 0.335,
+    "idle_rss_mib": 1.24,
+    "sampled_peak_rss_mib": 1.865,
+    "core_ready_ms": 14.6065,
+    "native_ui_process_to_record_ms": -39.42,
+    "large_seconds": -0.003,
+    "proxy_p50_ms": 0.002,
+    "proxy_p95_ms": -0.034
+  },
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "ui_sha256": {
+    "previous": "a51d7d02dd3ab5f69b5c9b891511b355ac65ff42c371807e76d6c9f719c636f1",
+    "current": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f"
+  },
+  "workload": {
+    "original_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+    "unchanged": true,
+    "models": 64,
+    "small_requests": 1000,
+    "large_requests": 80,
+    "large_request_size_mib": 1,
+    "large_concurrency": 4,
+    "native_ui": "CUA getApp background launch, no activate/raise; actual foreground not measured"
+  },
+  "samples": [
+    {
+      "label": "previous1",
+      "core_idle_rss_mib": 12.94,
+      "ui_idle_rss_mib": 82.86,
+      "idle_rss_mib": 95.8,
+      "sampled_peak_rss_mib": 139.3,
+      "core_ready_ms": 52.365,
+      "native_ui_process_to_record_ms": 847.543,
+      "large_seconds": 0.088,
+      "proxied_loopback_ms": {
+        "p50": 0.169,
+        "p95": 0.188
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 43559,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 43560,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 43658,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "current1",
+      "core_idle_rss_mib": 12.77,
+      "ui_idle_rss_mib": 84.09,
+      "idle_rss_mib": 96.86,
+      "sampled_peak_rss_mib": 141.2,
+      "core_ready_ms": 46.403,
+      "native_ui_process_to_record_ms": 760.412,
+      "large_seconds": 0.083,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.189
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 43732,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 43736,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 43848,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "current2",
+      "core_idle_rss_mib": 14.56,
+      "ui_idle_rss_mib": 84.5,
+      "idle_rss_mib": 99.06,
+      "sampled_peak_rss_mib": 150.53,
+      "core_ready_ms": 80.592,
+      "native_ui_process_to_record_ms": 765.274,
+      "large_seconds": 0.086,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.191
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 44022,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 44023,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 44136,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "previous2",
+      "core_idle_rss_mib": 12.58,
+      "ui_idle_rss_mib": 85.06,
+      "idle_rss_mib": 97.64,
+      "sampled_peak_rss_mib": 148.7,
+      "core_ready_ms": 45.417,
+      "native_ui_process_to_record_ms": 756.983,
+      "large_seconds": 0.087,
+      "proxied_loopback_ms": {
+        "p50": 0.171,
+        "p95": 0.26
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 44200,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 44201,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 44342,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    }
+  ],
+  "boundaries": [
+    "Two short samples per version; no statistical equivalence, improvement, causality or durable regression claim. All high values retained including current2 Core ready80.592ms/peak150.53MiB and previous2 proxy p95.260ms.",
+    "Original ui_record_ready_ms includes CUA orchestration wait, excluded from startup comparisons. Native process start to gpui marker excludes pre-process wait, is not first paint or interactivity.",
+    "Default startup-view benchmark is not provider-table scroll/keyboard/latency/FPS/IME or tray performance. Final actual provider view has separate three10s idle samples without baseline, not a regression comparison.",
+    "RSS shared pages may double-count; total uses each measured per-run sum, not addition of component medians. Mock/client excluded; tray separate; loopback no TLS/Internet/model latency.",
+    "Same unchanged Core25f, oldUIa51/newUIec7e, macOS15.8.1arm64native1x. Not combined with earlier2x/otherfixture samples.",
+    "Core/mock waited0/-15; UI owned by CUA, only disappearance verified, no reaped exit code."
+  ]
+}

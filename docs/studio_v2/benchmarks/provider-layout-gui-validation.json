@@ -1,0 +1,840 @@
+{
+  "checked_at": "2026-10-31T00:00:13.638930+08:00",
+  "scope": "UI58 final ec7e actual native GUI and independent Core/data readback. All screenshots raw app window PNGs, no crop/resize/repaint. Mac native1x target1440x900 and1100x700 retain OS extra1 pixel row; no OSscale or external window bounds queried. Only synthetic loopback profiles/data. CUA background getApp without explicit activate/raise; actual foreground state not independently asserted.",
+  "final_gui": {
+    "candidate_sha256": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f",
+    "ui_pid": 35756,
+    "core_pid": 35249,
+    "capture": "native screencapture selected own PID onscreen layer0 window, uncropped 1x",
+    "screenshots": [
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-wide.png",
+        "pixels": [
+          1440,
+          901
+        ],
+        "sha256": "eafb9d7a0179e6cdc900051b97c44f774a466ba328818c2c54637a9ba73503bf",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/overview-wide.png",
+        "pixels": [
+          1440,
+          901
+        ],
+        "sha256": "db7c8737d209b550adf492834dc63710d145b643bbb0618499ff8b55a28b739e",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/details-wide.png",
+        "pixels": [
+          1440,
+          901
+        ],
+        "sha256": "66d60c87ea5a6a23db95c346c683247c31a518dbcf21f542e1599d5ce76201cf",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-small.png",
+        "pixels": [
+          1100,
+          701
+        ],
+        "sha256": "17e161302c962b290f5eaa6dba0cfe7591fc1a0aa751b9780278679c57bfa302",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-small-scroll.png",
+        "pixels": [
+          1100,
+          701
+        ],
+        "sha256": "09dd397a8c9a749ed29c50fb1ce4db3cfeb1ec8fd21d5b28dccfeb60013d3fb6",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-single-small.png",
+        "pixels": [
+          1100,
+          701
+        ],
+        "sha256": "0c3cd9ef3b859300497fb9a507caa7a56726bdde69a336441058ba0bf907108b",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-english-small.png",
+        "pixels": [
+          1100,
+          701
+        ],
+        "sha256": "2621250a63eeef6790e9d1371f498c24ce056eb755bd5ae9b302be0e0a0eae54",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-test-success-wide.png",
+        "pixels": [
+          1440,
+          901
+        ],
+        "sha256": "8bdf237ff2a4da8117321c4a7ecbcf5a825f4f3c0fd05dc5ae1f106f3d1ff327",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-test-failure-wide.png",
+        "pixels": [
+          1440,
+          901
+        ],
+        "sha256": "843ef560a353cdb6dd484cae5887bdc2d739856aadd49c253060258a1547aa28",
+        "window_number": 2200
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-test-failure-small.png",
+        "pixels": [
+          1100,
+          701
+        ],
+        "sha256": "c3a99c3de0eb91eb5fc6f7b938ad0f24e77042ca103a91d8725be6247b01d891",
+        "window_number": 2200
+      }
+    ],
+    "resize": "CUA drag [1438,899] to [1098,699] and back",
+    "stage1": {
+      "wide": "A four model rows, footer, runtime and log visible; stats Overview and Details captured",
+      "model_editor": "DeepSeek opened and Escape canceled",
+      "small": "center column scrolling reveals model card and footer; B one-model helper visible, returned A",
+      "draft_cancel": "Edit profile snapshot, selected first model, Delete model removed it from draft 4 to 3; Cancel changes restored original 4 including DeepSeek; no Save button invoked",
+      "dialogs": "Port settings Cancel; protocol options Escape; Fetch models loopback returned 5 and picker Cancel; Add model Cancel",
+      "locale_skin": "English small screenshot then Chinese restored; Mono then Studio observed; language change itself persists setting"
+    },
+    "stage2": {
+      "success": "one Test clicked; activity log reported HTTP 200 and valid SSE first event, upstream deepseek-v4.1-flash; no separate connection-success badge",
+      "failure": "after parent set isolated mock failure, one Test clicked; Runtime reported provider saved / follow-up operation failed / upstream rejected test; wide log HTTP 503; small log scrolled to final advice, 503 not simultaneously visible in small screenshot",
+      "scope": "no explicit Save, Sync, clipboard or clear logs actions; Test handler may persist provider as indicated by actual UI and parent must verify",
+      "small_scroll": "CUA scroll over right area shifted outer right column so Runtime heading moved above viewport; subsequent log scrolling exposed final advice. Runtime heading, error message and entire log are not all visible simultaneously; HTTP 503 captured in wide image."
+    },
+    "limitations": [
+      "No exact geometry inference from screenshots by GUI agent",
+      "Small log scroll reached final advice but HTTP 503 not simultaneously visible",
+      "No explicit activate/raise; actual foreground state not established",
+      "Full accessibility, all protocols and entire Figma frame not verified"
+    ],
+    "lifecycle": "CUA native close invoked for UI 35756; ps -p 35756 returned no row; Core not terminated by GUI agent; exit code/wait not observed"
+  },
+  "final_fixture": {
+    "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final",
+    "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/WorkBuddy Proxy Review.app",
+    "core_pid": 35249,
+    "ui_pid": 35756,
+    "fixture_pid": 35244,
+    "port": 55075,
+    "bundle_id": "com.workbuddy.proxy.codexreview.tui58-layout-final",
+    "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+    "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+    "source_guard_library_sha256": null,
+    "sandbox_ui_pid": 35756,
+    "gui_kernel_guard": false,
+    "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+    "binary_sha256": {
+      "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+      "ui": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f"
+    },
+    "synthetic_initial": {
+      "providers": 2,
+      "models": 5,
+      "requests": 0
+    },
+    "complete_bundle_signed": false,
+    "signature_identity": null
+  },
+  "pre_gui": {
+    "ready": {
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/WorkBuddy Proxy Review.app",
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui58-layout-final",
+      "core_pid": 35249,
+      "port": 55075
+    },
+    "core_proof": {
+      "enforced": true,
+      "pid": 35249,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "core_config_sha256_before": "58f35c032837d6f0b433df868b9b57d9ceb06584fca9b759b1566554b5684486",
+    "seed": {
+      "real_http_requests": 14,
+      "statuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "expected_input": 7000,
+      "expected_output": 700,
+      "expected_total": 7700
+    },
+    "ui_sha256": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f",
+    "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+  },
+  "stage1_config": {
+    "checked_at": "2026-10-30T23:40:30.682557+08:00",
+    "original_fields_preserved": true,
+    "original_provider_and_model_counts_preserved": [
+      2,
+      5
+    ],
+    "language_after": "zh",
+    "config_byte_sha_equal": false,
+    "method": "Recursive compare every original field and list length, including credentials without printing values; added serializer defaults do not invalidate original-field preservation. Not an all-field identity claim."
+  },
+  "stage2_config_and_sqlite": {
+    "checked_at": "2026-10-30T23:50:26.054960+08:00",
+    "original_fields_preserved": true,
+    "providers": 2,
+    "models": 5,
+    "requests_by_source_and_status": [
+      [
+        "connection_test",
+        200,
+        1
+      ],
+      [
+        "connection_test",
+        503,
+        1
+      ],
+      [
+        "relay",
+        200,
+        14
+      ]
+    ],
+    "mock_mode_restored": "success",
+    "note": "Existing Test auto-saves before testing; byte SHA may differ from serializer defaults, not a no-write action. All original configured fields recursively preserved."
+  },
+  "post_gui": {
+    "checked_at": "2026-10-30T23:52:08.922979+08:00",
+    "ui_pid": 35756,
+    "ui_pid_gone": true,
+    "ui_exit_code": null,
+    "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+    "core_pid": 35249,
+    "core_after_ui_closed": {
+      "http_status": 200,
+      "stats_health": "ready",
+      "config_sha256_unchanged": false,
+      "config_sha256_after": "5b35ba6608b785cb567ae670fd6eade275ca14b175a697fb32df35275b888018",
+      "counts": [
+        16,
+        7500,
+        750,
+        8250,
+        200,
+        503
+      ],
+      "by_source": [
+        [
+          "connection_test",
+          2
+        ],
+        [
+          "relay",
+          14
+        ]
+      ]
+    }
+  },
+  "terminal": {
+    "ui_exit_before_cleanup": null,
+    "ui_pid_gone_before_cleanup": true,
+    "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": null,
+    "ui_pid_gone_after_cleanup": true,
+    "core_exit_after_cleanup": 0
+  },
+  "screenshots": [
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/details-wide.png",
+      "artifact": "screenshots/provider-layout-details-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "bytes": 210214,
+      "sha256": "66d60c87ea5a6a23db95c346c683247c31a518dbcf21f542e1599d5ce76201cf",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/overview-wide.png",
+      "artifact": "screenshots/provider-layout-overview-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "bytes": 183534,
+      "sha256": "db7c8737d209b550adf492834dc63710d145b643bbb0618499ff8b55a28b739e",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-english-small.png",
+      "artifact": "screenshots/provider-layout-provider-english-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "bytes": 165900,
+      "sha256": "2621250a63eeef6790e9d1371f498c24ce056eb755bd5ae9b302be0e0a0eae54",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-single-small.png",
+      "artifact": "screenshots/provider-layout-provider-single-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "bytes": 163985,
+      "sha256": "0c3cd9ef3b859300497fb9a507caa7a56726bdde69a336441058ba0bf907108b",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-small-scroll.png",
+      "artifact": "screenshots/provider-layout-provider-small-scroll.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "bytes": 165001,
+      "sha256": "09dd397a8c9a749ed29c50fb1ce4db3cfeb1ec8fd21d5b28dccfeb60013d3fb6",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-small.png",
+      "artifact": "screenshots/provider-layout-provider-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "bytes": 156216,
+      "sha256": "17e161302c962b290f5eaa6dba0cfe7591fc1a0aa751b9780278679c57bfa302",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-test-failure-small.png",
+      "artifact": "screenshots/provider-layout-provider-test-failure-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "bytes": 161047,
+      "sha256": "c3a99c3de0eb91eb5fc6f7b938ad0f24e77042ca103a91d8725be6247b01d891",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-test-failure-wide.png",
+      "artifact": "screenshots/provider-layout-provider-test-failure-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "bytes": 226445,
+      "sha256": "843ef560a353cdb6dd484cae5887bdc2d739856aadd49c253060258a1547aa28",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-test-success-wide.png",
+      "artifact": "screenshots/provider-layout-provider-test-success-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "bytes": 225875,
+      "sha256": "8bdf237ff2a4da8117321c4a7ecbcf5a825f4f3c0fd05dc5ae1f106f3d1ff327",
+      "native_original_unchanged": true
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final/provider-wide.png",
+      "artifact": "screenshots/provider-layout-provider-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "bytes": 225018,
+      "sha256": "eafb9d7a0179e6cdc900051b97c44f774a466ba328818c2c54637a9ba73503bf",
+      "native_original_unchanged": true
+    }
+  ],
+  "capacity": {
+    "gui": {
+      "candidate_sha256": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f",
+      "ui_pid": 42189,
+      "core_pid": 41933,
+      "screenshots": [
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final/provider-capacity-wide.png",
+          "pixels": [
+            1440,
+            901
+          ],
+          "sha256": "68c4c14d7acb3e5ae0e08912799df5092e197eecd7472ad40a917ae4bc9d83d6",
+          "window_number": 2341
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final/provider-capacity-small.png",
+          "pixels": [
+            1100,
+            701
+          ],
+          "sha256": "b0eb25686acc9d925c290536b3f4635cfa6ea671337cbb6080c5a011c459a5c5",
+          "window_number": 2341
+        }
+      ],
+      "observed": {
+        "counts": "sub2api 255; runtime 2 providers / 256 models / 0 requests",
+        "add": "Add grey; clicked its visible position once, no dialog or count change",
+        "last": "clicked first table row then End; table displayed fill-247 through fill-250; clicked last row edit and AX displayed name and upstream ID fill-250; Escape closed editor",
+        "small": "CUA resize to 1100; center column scrolling reached table and footer; table inner scroll reached fill-250; selected row caused Remove button to appear, not invoked",
+        "close": "CUA native close invoked; Core not stopped by GUI agent"
+      },
+      "limitations": [
+        "No Save, Test, Sync or deletion performed",
+        "No explicit activation/raise; actual foreground state not established",
+        "No UI exit status/wait claimed"
+      ]
+    },
+    "fixture": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final/WorkBuddy Proxy Review.app",
+      "core_pid": 41933,
+      "ui_pid": 42189,
+      "fixture_pid": 41929,
+      "port": 65112,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui58-capacity-final",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 42189,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 256,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "pre_gui": {
+      "ready": {
+        "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final/WorkBuddy Proxy Review.app",
+        "bundle_id": "com.workbuddy.proxy.codexreview.tui58-capacity-final",
+        "core_pid": 41933,
+        "port": 65112
+      },
+      "core_proof": {
+        "enforced": true,
+        "pid": 41933,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "core_config_sha256_before": "aae476176aedfa1499a70e8a95ea2a11ca89b0e99ca8a358eb1bc1f98a3d55c6",
+      "seed": {
+        "real_http_requests": 0,
+        "statuses": [],
+        "expected_input": 0,
+        "expected_output": 0,
+        "expected_total": 0
+      },
+      "ui_sha256": "ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f",
+      "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+    },
+    "post_gui": {
+      "checked_at": "2026-10-30T23:57:33.312133+08:00",
+      "ui_pid": 42189,
+      "ui_pid_gone": true,
+      "ui_exit_code": null,
+      "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+      "core_pid": 41933,
+      "core_after_ui_closed": {
+        "http_status": 200,
+        "stats_health": "ready",
+        "config_sha256_unchanged": true,
+        "config_sha256_after": "aae476176aedfa1499a70e8a95ea2a11ca89b0e99ca8a358eb1bc1f98a3d55c6",
+        "counts": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "by_source": []
+      }
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    },
+    "screenshots": [
+      {
+        "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final/provider-capacity-small.png",
+        "artifact": "screenshots/provider-layout-capacity-provider-capacity-small.png",
+        "pixels": [
+          1100,
+          701
+        ],
+        "bytes": 164368,
+        "sha256": "b0eb25686acc9d925c290536b3f4635cfa6ea671337cbb6080c5a011c459a5c5",
+        "native_original_unchanged": true
+      },
+      {
+        "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final/provider-capacity-wide.png",
+        "artifact": "screenshots/provider-layout-capacity-provider-capacity-wide.png",
+        "pixels": [
+          1440,
+          901
+        ],
+        "bytes": 206768,
+        "sha256": "68c4c14d7acb3e5ae0e08912799df5092e197eecd7472ad40a917ae4bc9d83d6",
+        "native_original_unchanged": true
+      }
+    ]
+  },
+  "intermediate_10a": {
+    "gui": {
+      "candidate_sha256": "10a5ead82b5fa6362cc37038e1b12eaecc4453e155d6d3a4fdab825a879da0ba",
+      "ui_pid": 26986,
+      "core_pid": 26660,
+      "capture": "native screencapture on own PID onscreen layer0; 1x raw, no scaling or crop",
+      "screenshots": [
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-first/provider-wide.png",
+          "pixels": [
+            1440,
+            901
+          ],
+          "sha256": "00f6a5c8b128a02552de43b182fbf5fef3ea270558d737daaf975af66c0bf5a9",
+          "ui_pid": 26986,
+          "window_number": 2158
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-first/provider-small.png",
+          "pixels": [
+            1100,
+            701
+          ],
+          "sha256": "138a47bcea27a73464ffdd95072f232e265611673eddedd1497c0b177f36dc24",
+          "ui_pid": 26986,
+          "window_number": 2158
+        }
+      ],
+      "observed": {
+        "wide": "summary, connection card, four model rows and edit icons, effort/test/save footer, runtime center and activity log all visible; runtime 2 providers/5 models/14 requests",
+        "small": "CUA drag 1440x901 to 1100x701; center-column scroll exposed model card, effort, test and save; table independent scroll exposed fourth row; selecting first row exposed Delete model, not invoked; port/settings and log clear/copy icons visible but not invoked",
+        "provider_b": "OpenCode Go shows one model and visible single-model helper; switched back to sub2api",
+        "lifecycle": "CUA native close button invoked; Core left running for parent; exit/wait not observed by GUI agent"
+      },
+      "limitations": [
+        "No Test, Save, Sync, deletion or clipboard operation performed",
+        "Long names, empty states and popovers not tested",
+        "No exact geometry measured by GUI agent; parent comparing reference",
+        "No claim about actual foreground state or UI exit code"
+      ]
+    },
+    "post_gui": {
+      "checked_at": "2026-10-30T23:27:47.666410+08:00",
+      "ui_pid": 26986,
+      "ui_pid_gone": true,
+      "ui_exit_code": null,
+      "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+      "core_pid": 26660,
+      "core_after_ui_closed": {
+        "http_status": 200,
+        "stats_health": "ready",
+        "config_sha256_unchanged": true,
+        "config_sha256_after": "1345b9283633ca300ed303f69d324d24d1f931856b6e97f61bb4c335c59b78d1",
+        "counts": [
+          14,
+          7000,
+          700,
+          7700,
+          200,
+          200
+        ],
+        "by_source": [
+          [
+            "relay",
+            14
+          ]
+        ]
+      }
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    },
+    "screenshots": [
+      {
+        "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-first/provider-small.png",
+        "artifact": "screenshots/provider-layout-intermediate-10a-provider-small.png",
+        "pixels": [
+          1100,
+          701
+        ],
+        "bytes": 157348,
+        "sha256": "138a47bcea27a73464ffdd95072f232e265611673eddedd1497c0b177f36dc24",
+        "native_original_unchanged": true
+      },
+      {
+        "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-first/provider-wide.png",
+        "artifact": "screenshots/provider-layout-intermediate-10a-provider-wide.png",
+        "pixels": [
+          1440,
+          901
+        ],
+        "bytes": 227574,
+        "sha256": "00f6a5c8b128a02552de43b182fbf5fef3ea270558d737daaf975af66c0bf5a9",
+        "native_original_unchanged": true
+      }
+    ]
+  },
+  "limits": [
+    "Not full-frame final acceptance, every state, precise Figma font version, all keyboard/IME/AX or Windows/Intel hardware/HiDPI proof.",
+    "Connection success/failure come from actual existing Test report and SQLite; no independently bound connection-health badge implemented yet. Existing Test auto-saves before probing; original config fields preserved, byte SHA change is not denied.",
+    "Small failure state requires outer-right-column and inner-log scrolling; full runtime heading/error/log are not simultaneously visible.",
+    "Native border/rasterizer/colour-state differences and extra existing functional controls remain."
+  ]
+}

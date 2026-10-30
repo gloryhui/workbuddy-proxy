@@ -336,7 +336,11 @@ pub(super) fn control(
         .map(|item| item.title.clone())
         .unwrap_or_default();
     let trigger = crate::ui_components::action_button(("provider-menu", state.entity_id()))
-        .h(px(crate::theme::size::INPUT_HEIGHT))
+        .h(px(if menu.choices.kind == MenuKind::Effort {
+            34.
+        } else {
+            crate::theme::size::INPUT_HEIGHT
+        }))
         .w_full()
         .px(px(12.))
         .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
@@ -352,7 +356,20 @@ pub(super) fn control(
                 .items_center()
                 .justify_between()
                 .gap(px(8.))
-                .child(Label::new(title).text_size(px(13.)).text_ellipsis())
+                .child(
+                    Label::new(title)
+                        .text_size(px(if menu.choices.kind == MenuKind::Effort {
+                            12.
+                        } else {
+                            13.
+                        }))
+                        .line_height(px(if menu.choices.kind == MenuKind::Effort {
+                            17.
+                        } else {
+                            19.
+                        }))
+                        .text_ellipsis(),
+                )
                 .child(
                     svg()
                         .path(if menu.choices.kind == MenuKind::Effort {
@@ -365,7 +382,7 @@ pub(super) fn control(
                         } else {
                             16.
                         }))
-                        .text_color(rgb(MUTED)),
+                        .text_color(rgb(crate::theme::color::CONTROL_CARET)),
                 ),
         );
     if disabled {

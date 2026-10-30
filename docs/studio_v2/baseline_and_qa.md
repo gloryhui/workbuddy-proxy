@@ -1320,3 +1320,23 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - CUA后台getApp与原生交互/关闭，未显式activate/raise、不声称实际前台状态。截图仅按已核对PID取自己的onscreen layer0窗口number再原生screencapture；未使用外部AX/位置/尺寸或CGEvent点击按键。Core实际kernel guard及LaunchAgents四类读写deny通过，GUI仅环境隔离。关闭UI后Core health200/config SHA不变，SQLite只读核对22/11000/1100/12100，Core/fixture wait0；CUA拥有UI，只记录PID消失，不伪称UI exit0。十轮负载Core/mock真实wait0/−15，全部相关PID核对消失。
 - [保留文件清单](benchmarks/studio-fonts-retained-files.json)：本轮释放0，当前round48证据/候选和复用round46/47基线共约1262.09MiB，系统盘此时约41.99GiB。此前清理被拒的精确目标没有重试或等价/父目录绕过，共享Cargo/UV缓存复用；旧清理预检/拒绝另有原记录，不把未删文件称已清理。
 - 剩余40帧最终签收（40部分/0最终），首审35未开始/1审查中/4已审查保留差异；UI57完成共享字体基础及当前可见范围验证，不替代其余画板字体角色、完整视觉/键盘/IME/AX、所有协议状态及Windows/Intel硬件/HiDPI终验。Goal继续active，后续推进供应商整帧几何与共享标题余差。
+
+## 小功能 58：供应商页面几何、模型列布局与共享标题修正（2026-10-31）
+
+- 重新读取官方54:2完整高保真上下文和1440×900原始导出，仅修改六个Rust/GPUI布局文件。供应商标题28/41、96px布局流与统计27/39、97px布局流分别处理，副标题锚点保持；宽窗摘要166/44、连接222/338、模型572/253、运行222/279、日志516/309及755/348双列对齐。模型初始宽度估算补齐卡片/表体边框，Studio列为263/375/75，旧皮肤保留等列/64操作列；表体虚拟化、原28px编辑热区、选择/分页/取消/保存与既有事件保持。[设计资产核对](benchmarks/provider-layout-assets.json)中25份字节一致、2份仅局部clipPath ID及引用重命名、3装饰窗口按钮使用真实系统控件；未改Core、协议、配置格式、依赖或锁文件。
+- [冻结构建](benchmarks/provider-layout-build.json)：最终ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f、42,376,512bytes，六源码SHA全部匹配。fmt、195项测试（193通过/2既有忽略）、strict all-targets clippy、Intel类型检查和arm64 release均成功；Intel类型检查不等于硬件实跑。10a中间候选构建、两张图和原验证单独归档，不混为最终版结论。
+- [最终真实交互与独立数据读回](benchmarks/provider-layout-gui-validation.json)：UI35756/Core35249完成四模型宽窗、单模型帮助区、小窗内滚、首模型编辑Esc取消、编辑资料中删草稿4→3后Cancel恢复4、端口Cancel、协议Esc、Mock获取5模型后取消、Add取消、英文→中文和Mono→Studio回归。选中才显示原Remove动作；空选择原先不可用的删除按钮不占默认标题空间。[1440原图](screenshots/provider-layout-provider-wide.png)、[1100原图](screenshots/provider-layout-provider-small.png)及报告所列最终10张、容量2张、10a中间2张共14张逐字节复制原PNG；实际1440×901/1100×701保留系统额外1物理行，不裁剪、缩放或重绘，不查询外部AX/窗口bounds。
+- 在最终版各点击一次原Test：实际成功报告HTTP200及有效SSE，实际失败报告HTTP503；只读SQLite核对connection_test200×1/503×1及relay200×14，总16条/输入7500/输出750/总8250。既有Test会先保存供应商再测试，失败时现有提示如实说明“供应商已保存，后续操作失败”；不能将未点击Save按钮说成没有写入。递归读回确认全部原字段、2供应商/5模型及中文恢复，字节SHA因序列化新增默认字段不同。小窗错误态通过右栏外滚和日志内滚取回末尾建议，标题/错误/完整日志不能同时显示；503在宽图明确可见。Mock最终恢复成功模式，无实际上游Key或用户数据。
+- 另一个最终版隔离夹具UI42189/Core41933：A255/B1共256模型，Add灰色且实际点击不产生弹窗；表格End一次到fill-250，末行铅笔核对ID后Esc取消。1100小窗经外层和表体滚动可到末行、选中后Remove及固定底部操作。未Save/Test/Sync/删除，Core配置逐字节不变，0请求。两夹具均CUA后台getApp、未显式activate/raise，不保证实际前台状态；原生Close后UI消失，Core health200，再Core/fixture真实wait0。GUI进程归CUA所有，只记录PID消失，不伪称UI exit0。
+- [几何与墨迹测量](benchmarks/provider-layout-geometry.json)仅在内存ICC转sRGB：五块目标矩形直边颜色与边界已核对；摘要名称、连接/模型/运行标题、模型表头名称墨迹框对齐，首行编辑图标从x953移到设计x979，保持原点击事件。最终概览/明细共享标题均[290,63,394,88]，修复UI57低1px。协议链接仍向右1px，供应商标题底缘/日志标题及字体AA、原生表头边框、输入颜色/hover/focus、URL动态说明与日志额外业务动作仍有差异；精确Figma字体版本和全帧全部状态尚未证明一致。
+- [四轮原负载对照](benchmarks/provider-layout-performance-summary.json)：同Core25f、旧UIa51/新UIec7e、原脚本SHA bc7e0537…，--help已查，64模型/1000小请求/80×1MiB并发4不变，按P/C/C/P执行。两样本中位旧→新Core12.760→13.665/UI83.960→84.295/逐轮合计96.720→97.960MiB，峰144.000→145.865MiB，p50 .170→.172/p95 .224→.190ms，大请求.0875→.0845s；Core ready48.891→63.498/process→marker802.263→762.843ms。保留current2 Core80.592ms/峰150.53MiB和previous2 p95 .260ms，不称性能优化、统计等效或因果收益。
+
+| 原脚本执行顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 采样峰值MiB | 80×1MiB s | Core/process→marker ms |
+| --- | --- | --- | --- | --- | --- |
+| 旧a51 previous1 | 12.94/82.86/95.80 | .169/.188 | 139.30 | .088 | 52.365/847.543 |
+| 新ec7e current1 | 12.77/84.09/96.86 | .172/.189 | 141.20 | .083 | 46.403/760.412 |
+| 新ec7e current2 | 14.56/84.50/99.06 | .172/.191 | 150.53 | .086 | 80.592/765.274 |
+| 旧a51 previous2 | 12.58/85.06/97.64 | .171/.260 | 148.70 | .087 | 45.417/756.983 |
+
+- 原ui_record_ready包含CUA编排等待，不作为启动比较；native marker也不是首帧/可交互。默认启动页负载不是供应商表滚动、键盘、IME、FPS或托盘性能。[供应商空闲观察](benchmarks/provider-layout-idle-resources.json)为最终交互后3×10秒：UI约125.28MiB、单核CPU .7985/.9129/.8661%，Core13.422MiB/.1312/.1538/.1440%；没有同场景旧版基线，不作回归比较。RSS共享页可能双计，组件中位不能相加作合计；loopback没有公网/TLS/模型延迟。Core实际kernel及LaunchAgents四类deny已逐轮查询；四轮Core/mock真实wait0/−15，12个负载PID及三个GUI夹具9PID均独立确认消失。
+- 供应商54:2完成本轮整帧首审并保留明确差异：首审35未开始/0审查中/5已审查保留差异，40帧仍部分验收、0最终通过，剩余40。真实连接TestReport来源已找到，独立按供应商/被测配置绑定的“连接正常”徽章留到UI59；不以本地Core健康冒充上游健康。输入样式、全部状态、完整键盘/IME/AX、Windows/Intel硬件及HiDPI终验仍待续，Goal active。

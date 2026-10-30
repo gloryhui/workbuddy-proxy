@@ -3,22 +3,30 @@ use super::*;
 use crate::theme::{color, size};
 use gpui_kit::component::Disableable;
 
-fn section(number: &'static str, title: &'static str) -> Div {
+fn section(number: &'static str, title: &'static str, cx: &App) -> Div {
     div()
         .flex()
         .items_center()
-        .gap(px(12.))
+        .gap(px(3.))
+        .pl(px(if number == "02" { 1. } else { 0. }))
         .child(
-            Label::new(number)
+            crate::studio_fonts::latin(Label::new(number), cx)
+                .w(px(if number == "02" { 29. } else { 30. }))
                 .text_size(px(12.))
+                .line_height(px(17.))
+                .relative()
+                .top(px(2.))
                 .font_weight(FontWeight::SEMIBOLD)
                 .text_color(rgb(crate::theme::palette().primary)),
         )
         .child(
             Label::new(title)
+                .relative()
+                .left(px(1.))
+                .when(number == "02", |label| label.top(px(-1.)))
                 .text_size(px(17.))
                 .line_height(px(25.))
-                .font_weight(FontWeight::SEMIBOLD),
+                .font_weight(FontWeight::BOLD),
         )
 }
 
@@ -28,8 +36,12 @@ fn field(label: &'static str, control: impl IntoElement) -> Div {
         .flex_col()
         .flex_1()
         .min_w_0()
-        .gap(px(4.))
-        .child(field_label(label))
+        .gap(px(5.))
+        .child(
+            field_label(label)
+                .line_height(px(17.))
+                .font_weight(FontWeight::MEDIUM),
+        )
         .child(control)
 }
 
@@ -181,6 +193,8 @@ impl Proxy {
             .rounded(px(12.))
             .child(
                 Label::new(self.t("当前供应商", "Current provider"))
+                    .relative()
+                    .top(px(-2.))
                     .w(px(if self.zh { 76. } else { 104. }))
                     .flex_shrink_0()
                     .text_size(px(12.))
@@ -194,7 +208,10 @@ impl Proxy {
                     .min_w_0()
                     .text_ellipsis()
                     .text_size(px(16.))
-                    .font_weight(FontWeight::SEMIBOLD)
+                    .line_height(px(22.))
+                    .font_weight(FontWeight::BOLD)
+                    .relative()
+                    .top(px(-3.))
                     .child(display),
             )
             .child(
@@ -210,6 +227,8 @@ impl Proxy {
                     .child(
                         Label::new(model_count(self.models.len(), self.zh))
                             .text_size(px(11.))
+                            .line_height(px(15.))
+                            .font_weight(FontWeight::MEDIUM)
                             .text_color(rgb(color::TEXT_3)),
                     ),
             )
@@ -245,6 +264,8 @@ impl Proxy {
             .child(
                 div()
                     .id("provider-summary-status")
+                    .relative()
+                    .left(px(1.))
                     .aria_label(status)
                     .flex()
                     .items_center()
@@ -257,7 +278,13 @@ impl Proxy {
                     .rounded(px(9.))
                     .bg(rgb(background))
                     .child(div().size(px(6.)).flex_none().rounded_full().bg(rgb(ink)))
-                    .child(Label::new(status).text_size(px(11.)).text_color(rgb(ink))),
+                    .child(
+                        Label::new(status)
+                            .text_size(px(11.))
+                            .line_height(px(16.))
+                            .font_weight(FontWeight::MEDIUM)
+                            .text_color(rgb(ink)),
+                    ),
             )
             .child(
                 div()
@@ -359,23 +386,32 @@ impl Proxy {
         rail_card("provider-settings")
             .flex_shrink_0()
             .min_h(px(338.))
-            .gap(px(8.))
+            .pl(px(19.))
+            .pr(px(22.))
+            .pt(px(12.))
+            .pb(px(6.))
+            .gap_0()
             .child(
                 div()
                     .flex()
                     .flex_col()
-                    .gap(px(4.))
-                    .child(section("01", self.t("连接配置", "Connection settings")))
-                    .child(hint_line(self.t(
-                        "账户凭证、协议与接口地址",
-                        "Account credentials, protocol and endpoint",
-                    ))),
+                    .gap(px(6.))
+                    .child(section("01", self.t("连接配置", "Connection settings"), cx))
+                    .child(
+                        hint_line(self.t(
+                            "账户凭证、协议与接口地址",
+                            "Account credentials, protocol and endpoint",
+                        ))
+                        .text_size(px(12.))
+                        .line_height(px(17.)),
+                    ),
             )
             .child(
                 div()
                     .flex()
                     .flex_col()
-                    .gap(px(10.))
+                    .mt(px(19.))
+                    .gap(px(12.))
                     .child(field(
                         self.t("供应商预设", "Provider preset"),
                         self.preset_menu(cx),
@@ -383,7 +419,7 @@ impl Proxy {
                     .child(
                         div()
                             .flex()
-                            .gap(px(12.))
+                            .gap(px(13.))
                             .child(field(
                                 self.t("供应商名称", "Provider name"),
                                 crate::ui_components::text_input(&self.name, self.busy)
@@ -402,23 +438,29 @@ impl Proxy {
                     .child(
                         div()
                             .flex()
-                            .gap(px(12.))
-                            .child(field(
-                                self.t("上游协议", "Upstream protocol"),
-                                provider_choices::control(
-                                    &self.protocol_select,
-                                    self.busy,
+                            .mt(px(3.))
+                            .gap(px(13.))
+                            .child(
+                                field(
                                     self.t("上游协议", "Upstream protocol"),
-                                    None,
-                                    cx,
-                                ),
-                            ))
-                            .child(field(
-                                self.t("API 地址", "API URL"),
-                                crate::ui_components::text_input(&self.url, self.busy)
-                                    .aria_label(self.t("API 地址", "API URL"))
-                                    .font_family(cx.theme().mono_font_family.clone()),
-                            )),
+                                    provider_choices::control(
+                                        &self.protocol_select,
+                                        self.busy,
+                                        self.t("上游协议", "Upstream protocol"),
+                                        None,
+                                        cx,
+                                    ),
+                                )
+                                .gap(px(4.)),
+                            )
+                            .child(
+                                field(
+                                    self.t("API 地址", "API URL"),
+                                    crate::ui_components::text_input(&self.url, self.busy)
+                                        .aria_label(self.t("API 地址", "API URL")),
+                                )
+                                .gap(px(4.)),
+                            ),
                     ),
             )
             .child(
@@ -426,6 +468,7 @@ impl Proxy {
                     .flex()
                     .items_center()
                     .justify_between()
+                    .mt(px(11.))
                     .gap(px(12.))
                     .child(
                         Button::new("protocol-options")
@@ -433,8 +476,18 @@ impl Proxy {
                             .ghost()
                             .with_size(px(28.))
                             .h(px(28.))
+                            .w(px(145.))
                             .p_0()
-                            .label(self.t("协议选项", "Protocol options"))
+                            .accessibility_label(self.t("协议选项", "Protocol options"))
+                            .child(
+                                div().w_full().pl(px(3.)).relative().top(px(1.)).child(
+                                    Label::new(self.t("协议选项  →", "Protocol options  →"))
+                                        .text_size(px(12.))
+                                        .line_height(px(17.))
+                                        .font_weight(FontWeight::MEDIUM)
+                                        .text_color(rgb(crate::theme::palette().dark)),
+                                ),
+                            )
                             .text_color(rgb(crate::theme::palette().dark))
                             .on_click(cx.listener(|this, _, window, cx| {
                                 let draft = this
@@ -467,7 +520,11 @@ impl Proxy {
                     .child(
                         hint_line(self.url_hint())
                             .text_size(px(11.))
+                            .line_height(px(16.))
+                            .relative()
+                            .top(px(1.))
                             .flex_1()
+                            .max_w(px(360.))
                             .min_w_0()
                             .text_ellipsis(),
                     ),
@@ -535,7 +592,8 @@ impl Proxy {
                         div().min_h_0()
                             .when(self.models.len() == 1, |frame| frame.h(px(63.)).flex_shrink_0())
                             .when(self.models.len() != 1, |frame| frame.flex_1())
-                            .child(crate::ui_components::table(&self.model_table).with_size(px(29.))),
+                            .child(crate::ui_components::table(&self.model_table)
+                                .with_size(px(29.)).header_row_height(px(31.))),
                     )
                     .when(self.models.len() == 1, |table| {
                         table.child(
@@ -586,9 +644,12 @@ impl Proxy {
         rail_card("model-directory")
             .flex_1()
             .flex_shrink_0()
-            .min_h(px(if compact { 360. } else { 280. }))
+            .min_h(px(if compact { 360. } else { 253. }))
             .p(px(16.))
             .gap(px(8.))
+            .when(!compact, |card| {
+                card.pl(px(18.)).pr(px(20.)).pt(px(10.)).pb(px(3.)).gap_0()
+            })
             .child(
                 div()
                     .flex()
@@ -596,6 +657,9 @@ impl Proxy {
                     .justify_between()
                     .gap(px(8.))
                     .flex_shrink_0()
+                    .when(!compact, |header| {
+                        header.h(px(36.)).items_start().pr(px(3.))
+                    })
                     .when(compact, |header| header.flex_col().items_stretch())
                     .child(
                         div()
@@ -603,8 +667,9 @@ impl Proxy {
                             .items_center()
                             .gap(px(12.))
                             .child(
-                                section("02", self.t("模型目录", "Model directory"))
-                                    .min_w(px(142.))
+                                section("02", self.t("模型目录", "Model directory"), cx)
+                                    .min_w(px(139.))
+                                    .when(!compact, |section| section.pt(px(1.)))
                                     .flex_none(),
                             )
                             .child(
@@ -615,6 +680,7 @@ impl Proxy {
                                     .flex_none()
                                     .w(px(94.))
                                     .h(px(27.))
+                                    .when(!compact, |badge| badge.mt(px(1.)))
                                     .rounded(px(9.))
                                     .bg(rgb(color::BG_TABLE_HEAD))
                                     .child(
@@ -638,6 +704,7 @@ impl Proxy {
                                     self.busy,
                                     false,
                                 )
+                                .when(!compact, |button| button.w(px(111.)))
                                 .on_click(cx.listener(
                                     |this, _, _, cx| {
                                         this.fetch_provider_models(cx);
@@ -647,6 +714,7 @@ impl Proxy {
                             .child(
                                 crate::ui_components::action_button("model-add")
                                     .primary()
+                                    .when(!compact, |button| button.w(px(110.)))
                                     .accessibility_label(self.t("添加模型", "Add model"))
                                     .tooltip(self.t("添加模型", "Add model"))
                                     .disabled(add_disabled)
@@ -671,23 +739,45 @@ impl Proxy {
                                         this.edit(this.models.len(), true, window, cx)
                                     })),
                             )
-                            .child(
-                                crate::ui_components::named_icon_button(
-                                    "model-remove",
-                                    IconName::Close,
-                                    self.t("删除模型", "Remove models"),
-                                    self.t("删除模型", "Remove models"),
-                                    self.busy || self.selection.rows.is_empty(),
+                            // No disabled delete mark occupies the design's
+                            // default header. The original action appears as
+                            // soon as there is a selection it can remove.
+                            .when(!self.selection.rows.is_empty(), |actions| {
+                                actions.child(
+                                    crate::ui_components::named_icon_button(
+                                        "model-remove",
+                                        IconName::Close,
+                                        self.t("删除模型", "Remove models"),
+                                        self.t("删除模型", "Remove models"),
+                                        self.busy || self.selection.rows.is_empty(),
+                                    )
+                                    .on_click(cx.listener(
+                                        |this, _, window, cx| {
+                                            this.remove_models(&RemoveModels, window, cx)
+                                        },
+                                    )),
                                 )
-                                .on_click(cx.listener(
-                                    |this, _, window, cx| {
-                                        this.remove_models(&RemoveModels, window, cx)
-                                    },
-                                )),
-                            ),
+                            }),
                     ),
             )
-            .child(self.provider_model_table(keyboard_hint, cx))
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .flex_1()
+                    .min_h_0()
+                    .when(!compact, |table| table.mt(px(8.)))
+                    .child(self.provider_model_table(keyboard_hint, cx)),
+            )
+            .when(!compact, |card| {
+                card.child(
+                    div()
+                        .mt(px(3.))
+                        .h(px(1.))
+                        .flex_shrink_0()
+                        .bg(rgb(color::BORDER)),
+                )
+            })
             .when(compact, |card| {
                 card.child(hint_line(keyboard_hint).text_size(px(11.)))
             })
@@ -699,6 +789,7 @@ impl Proxy {
                     .justify_between()
                     .flex_shrink_0()
                     .gap(px(8.))
+                    .when(!compact, |footer| footer.mt(px(6.)).pl(px(1.)).pr(px(3.)))
                     .h(px(if compact { 84. } else { size::BUTTON_HEIGHT }))
                     .when(compact, |footer| footer.flex_col().items_stretch())
                     .child(
@@ -706,15 +797,29 @@ impl Proxy {
                             .flex()
                             .items_center()
                             .gap(px(8.))
-                            .child(field_label(self.t("思考强度", "Thinking effort")))
-                            .child(self.effort_menu(cx)),
+                            .child(field_label(self.t("思考强度", "Thinking effort")).when(
+                                !compact,
+                                |label| {
+                                    label
+                                        .w(px(66.))
+                                        .h(px(20.))
+                                        .line_height(px(17.))
+                                        .relative()
+                                        .top(px(-1.))
+                                },
+                            ))
+                            .child(
+                                div()
+                                    .when(!compact, |field| field.relative().top(px(-1.)))
+                                    .child(self.effort_menu(cx)),
+                            ),
                     )
                     .child(
                         div()
                             .flex()
                             .items_center()
                             .justify_end()
-                            .gap(px(8.))
+                            .gap(px(9.))
                             .child(
                                 crate::ui_components::button(
                                     "test",
@@ -723,6 +828,7 @@ impl Proxy {
                                     self.busy || self.models.is_empty(),
                                     self.busy,
                                 )
+                                .when(!compact, |button| button.w(px(106.)))
                                 .on_click(cx.listener(|this, _, _, cx| this.test(cx))),
                             )
                             .child(
@@ -733,6 +839,7 @@ impl Proxy {
                                     self.busy,
                                     self.busy,
                                 )
+                                .when(!compact, |button| button.w(px(107.)))
                                 .on_click(
                                     cx.listener(|this, _, window, cx| this.save(&Save, window, cx)),
                                 ),
