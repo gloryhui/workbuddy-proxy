@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T08:18:09+08:00",
+  "updated_at": "2026-10-30T08:33:56+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "d06877198201f107b9142340237430509a1cfc61",
+  "code_head": "aabb91cc2fdee92da04693ae996875aad24f97d1",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -13,64 +13,63 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 47,
+  "recorded_tasks": 48,
   "current_task": {
-    "id": 47,
-    "title": "模型表完整值提示限宽换行",
+    "id": 48,
+    "title": "侧栏选中底色恢复设计实色",
     "status": "recorded",
-    "description": "修复长显示名提示越窗，共享原生有界Tooltip；两尺寸实拍、编辑保存与More/Esc回归、六轮性能均留证。独立表格ID提示与完整专项仍待验。"
+    "description": "修复Kit默认混色导致选中导航/供应商行过暗；两尺寸与三皮肤像素、导航键盘/配置保护、四轮性能已验证。保留完整专项边界。"
   },
   "latest_task": {
-    "id": 47,
-    "title": "模型表完整值提示限宽换行",
+    "id": 48,
+    "title": "侧栏选中底色恢复设计实色",
     "status": "recorded",
-    "summary": "修复模型表长显示名提示越出窗口的问题，并将既有请求详情提示提取为共享GPUI组件；完整原值、列宽、选择/编辑/保存事件保持。证据：编译与资源、旧版缺陷、真实交互与落盘、视觉与像素、1440实拍、1100实拍、六轮性能、清理。",
+    "summary": "修复导航/供应商行选中底色被Kit混合后过暗的问题，只改ui/sidebar.rs的选中普通状态填充，保留原选择、导航、禁用及事件。证据：编译、基线缺陷、真实交互与配置、像素与资源、1440实拍、1100实拍、四轮性能、清理。",
     "highlights": [
-      "修复模型表长显示名提示越出窗口的问题，并将既有请求详情提示提取为共享GPUI组件；完整原值、列宽、选择/编辑/保存事件保持。证据：编译与资源、旧版缺陷、真实交互与落盘、视觉与像素、1440实拍、1100实拍、六轮性能、清理。",
-      "官方MCP重读54:246高保真context/截图；原15px模型编辑SVG与最新资源逐字节一致，SHAd19ec85f…，未改资源、28px按钮、29px模型行或标题/七项工具栏。仅ui_components.rs增加full_value_tooltip，内层Label max520/whitespace_normal/原主题popover前景色、外层max560；model_table.rs接入，detail_layout.rs复用同组件。不裁字符串、不插入数据换行、不加定时器/全局Kit改造，Core、配置格式、依赖与热路径未改。",
-      "基线0b43实拍自然CUA scroll触发首行name提示，单行文字越过窗口且TAIL-NAME47不可见，旧图主代理已查看。使用实际校验允许的233字节name与154字节model ID、64+1模型；修复c6ee两尺寸均自然显示五行name提示、尾标在框内，1440静置30秒后仍见。上游ID列的独立Tooltip未成功触发，明确未验，不由共享源码或完整AX Cell推断视觉通过。"
+      "修复导航/供应商行选中底色被Kit混合后过暗的问题，只改ui/sidebar.rs的选中普通状态填充，保留原选择、导航、禁用及事件。证据：编译、基线缺陷、真实交互与配置、像素与资源、1440实拍、1100实拍、四轮性能、清理。",
+      "官方MCP重读54:2/54:19及Mono62:308高保真context与截图，导航54:19/76:1344和供应商75:379/76:1376均要求实色#2D3251。新启动c6ee基线两处空白像素实际均为RGBA23/27/46/255（#171B2E），不是只凭旧截图推断。当前锁定gpui-component0.7.3的Custom.normal使用color.mix_oklab(theme.transparent,0.2)，实例style在其后refine；本轮对active导航及active且!busy供应商行设置已有SIDEBAR_ACTIVE背景，避开该普通态混合。未改Kit、palette/配置键、悬停/按住定义、toggled语义、焦点链、Core或依赖。",
+      "最终983c原生Studio1440/1100、Mono1100、Blue1100两处相同局部坐标均为RGBA45/50/81/255，与设计一致；精确色填充边界nav[16,221,240,264]与provider[20,399,236,437]，即224×43/216×38保持。两处可见原SVG与新Figma资源逐字节一致：server SHA57726a6b…/根18×18，supplier-selected SHA60118660…/根7×7；当前Icon槽与资源根同尺寸，无资源改写。槽尺寸不是墨迹包围框；其他未在本轮审查的整帧差异仍待续。"
     ],
     "limits": [
-      "前两组新p95与采样峰值均较高，因此补新→旧反向一组，保留同向小变化；旧→新中位：Core12.33→12.12、UI72.09→72.31、合计84.55→84.73MiB，峰值131.89→134.64MiB（+2.75），p50 0.172→0.171/p95 0.197→0.204ms（+0.007），大请求0.089→0.086s，Core ready213.374→214.662/UI记录ready679.639→799.116ms（+119.477）。没有隐藏上升或称性能优化；每版仅3样本/后台及缓存未控制，原Core相同、改动不增加启动任务，但这不是因果或统计等效证明。ready标记不是首帧/可交互，RSS共享页可能",
-      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享模型name提示越框修复；精确ID提示、完整视觉/真实IME/读屏/AX、Windows布局与实机、Intel实机/HiDPI、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active，进度HTML继续仅静态检查，未绕过先前浏览器本地文件拒绝。"
+      "最终983c原生Studio1440/1100、Mono1100、Blue1100两处相同局部坐标均为RGBA45/50/81/255，与设计一致；精确色填充边界nav[16,221,240,264]与provider[20,399,236,437]，即224×43/216×38保持。两处可见原SVG与新Figma资源逐字节一致：server SHA57726a6b…/根18×18，supplier-selected SHA60118660…/根7×7；当前Icon槽与资源根同尺寸，无资源改写。槽尺寸不是墨迹包围框；其他未在本轮审查的整帧差异仍待续。"
     ],
     "evidence": [
       {
-        "label": "编译与资源",
-        "href": "benchmarks/model-value-tooltip-build.json"
+        "label": "编译",
+        "href": "benchmarks/sidebar-selection-build.json"
       },
       {
-        "label": "旧版缺陷",
-        "href": "benchmarks/model-value-tooltip-before-gui.json"
+        "label": "基线缺陷",
+        "href": "benchmarks/sidebar-selection-before-gui.json"
       },
       {
-        "label": "真实交互与落盘",
-        "href": "benchmarks/model-value-tooltip-gui-validation.json"
+        "label": "真实交互与配置",
+        "href": "benchmarks/sidebar-selection-gui-validation.json"
       },
       {
-        "label": "视觉与像素",
-        "href": "benchmarks/model-value-tooltip-visual-validation.json"
+        "label": "像素与资源",
+        "href": "benchmarks/sidebar-selection-visual-validation.json"
       },
       {
         "label": "1440实拍",
-        "href": "screenshots/model-value-tooltip-1440x900.png"
+        "href": "screenshots/sidebar-selection-1440x900.png"
       },
       {
         "label": "1100实拍",
-        "href": "screenshots/model-value-tooltip-1100x700.png"
+        "href": "screenshots/sidebar-selection-1100x700.png"
       },
       {
-        "label": "六轮性能",
-        "href": "benchmarks/model-value-tooltip-performance-summary.json"
+        "label": "四轮性能",
+        "href": "benchmarks/sidebar-selection-performance-summary.json"
       },
       {
         "label": "清理",
-        "href": "benchmarks/model-value-tooltip-cleanup.json"
+        "href": "benchmarks/sidebar-selection-cleanup.json"
       }
     ],
-    "commit": "d06877198201f107b9142340237430509a1cfc61",
-    "date": "2026-10-30T08:17:59+08:00",
-    "commit_subject": "fix(studio): wrap complete model values in native tooltips",
+    "commit": "aabb91cc2fdee92da04693ae996875aad24f97d1",
+    "date": "2026-10-30T08:33:42+08:00",
+    "commit_subject": "fix(studio): preserve solid sidebar selection surfaces",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2449,6 +2448,58 @@
       "date": "2026-10-30T08:17:59+08:00",
       "commit_subject": "fix(studio): wrap complete model values in native tooltips",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 48,
+      "title": "侧栏选中底色恢复设计实色",
+      "status": "recorded",
+      "summary": "修复导航/供应商行选中底色被Kit混合后过暗的问题，只改ui/sidebar.rs的选中普通状态填充，保留原选择、导航、禁用及事件。证据：编译、基线缺陷、真实交互与配置、像素与资源、1440实拍、1100实拍、四轮性能、清理。",
+      "highlights": [
+        "修复导航/供应商行选中底色被Kit混合后过暗的问题，只改ui/sidebar.rs的选中普通状态填充，保留原选择、导航、禁用及事件。证据：编译、基线缺陷、真实交互与配置、像素与资源、1440实拍、1100实拍、四轮性能、清理。",
+        "官方MCP重读54:2/54:19及Mono62:308高保真context与截图，导航54:19/76:1344和供应商75:379/76:1376均要求实色#2D3251。新启动c6ee基线两处空白像素实际均为RGBA23/27/46/255（#171B2E），不是只凭旧截图推断。当前锁定gpui-component0.7.3的Custom.normal使用color.mix_oklab(theme.transparent,0.2)，实例style在其后refine；本轮对active导航及active且!busy供应商行设置已有SIDEBAR_ACTIVE背景，避开该普通态混合。未改Kit、palette/配置键、悬停/按住定义、toggled语义、焦点链、Core或依赖。",
+        "最终983c原生Studio1440/1100、Mono1100、Blue1100两处相同局部坐标均为RGBA45/50/81/255，与设计一致；精确色填充边界nav[16,221,240,264]与provider[20,399,236,437]，即224×43/216×38保持。两处可见原SVG与新Figma资源逐字节一致：server SHA57726a6b…/根18×18，supplier-selected SHA60118660…/根7×7；当前Icon槽与资源根同尺寸，无资源改写。槽尺寸不是墨迹包围框；其他未在本轮审查的整帧差异仍待续。"
+      ],
+      "limits": [
+        "最终983c原生Studio1440/1100、Mono1100、Blue1100两处相同局部坐标均为RGBA45/50/81/255，与设计一致；精确色填充边界nav[16,221,240,264]与provider[20,399,236,437]，即224×43/216×38保持。两处可见原SVG与新Figma资源逐字节一致：server SHA57726a6b…/根18×18，supplier-selected SHA60118660…/根7×7；当前Icon槽与资源根同尺寸，无资源改写。槽尺寸不是墨迹包围框；其他未在本轮审查的整帧差异仍待续。"
+      ],
+      "evidence": [
+        {
+          "label": "编译",
+          "href": "benchmarks/sidebar-selection-build.json"
+        },
+        {
+          "label": "基线缺陷",
+          "href": "benchmarks/sidebar-selection-before-gui.json"
+        },
+        {
+          "label": "真实交互与配置",
+          "href": "benchmarks/sidebar-selection-gui-validation.json"
+        },
+        {
+          "label": "像素与资源",
+          "href": "benchmarks/sidebar-selection-visual-validation.json"
+        },
+        {
+          "label": "1440实拍",
+          "href": "screenshots/sidebar-selection-1440x900.png"
+        },
+        {
+          "label": "1100实拍",
+          "href": "screenshots/sidebar-selection-1100x700.png"
+        },
+        {
+          "label": "四轮性能",
+          "href": "benchmarks/sidebar-selection-performance-summary.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/sidebar-selection-cleanup.json"
+        }
+      ],
+      "commit": "aabb91cc2fdee92da04693ae996875aad24f97d1",
+      "date": "2026-10-30T08:33:42+08:00",
+      "commit_subject": "fix(studio): preserve solid sidebar selection surfaces",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2766,6 +2817,14 @@
     {
       "date": "2026-10-30T08:18:09+08:00",
       "note": "40部分验收/0最终；本轮只完成模型name提示专项，保留性能小幅上升和平台验证边界。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T08:33:56+08:00",
+      "note": "40部分验收/0最终；仅修选中普通状态填充，busy/精确hover/IME/AX及跨平台仍待专项。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
