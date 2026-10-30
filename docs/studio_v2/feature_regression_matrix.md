@@ -54,3 +54,6 @@
 同步确认 `60:27` / `60:232` 与取消同步 `68:350` / `68:555` 已提取 `ui/sync_dialog.rs`，三按钮保持原save/install/restore与restart job顺序。正常隔离GUI验证文件/草稿语义，重启产品路径以denial-only guard核对部分成功；无guard的随机bundle脚本独立验证生命周期基础函数，未将其冒充真实WorkBuddy重启。启动地址不一致确认仍为原分支，后续视觉施工与整帧审计继续。
 
 UI53 全帧审查与原生能力控件：BaseCheckbox/Indicator继续使用Kit焦点、disabled、checked与键盘引擎，16px盒/12px原SVG/10px标签间距。最终af174 AUTO只读点击、手动六项依赖、Medium与AUTO点击/Space、两尺寸及限制滚动/全部取消已验；中间bb289在仅effort Label样式差异前的Confirm/主页Save由Core独立读回。最终候选完整Tab/ShiftTab/Enter、IME/AX/全帧视觉仍未通过；不扩大既有专项结论。
+
+
+统计共享控件与布局（UI56）：最终b313仅Rust/GPUI布局，Core/查询/原事件保持。四caret实际区域点击、模型方向/Enter筛选3/供应商12后恢复14、日期Today→7天/刷新Off→5、Jump/Prev及5秒设置下7.5秒未提交页码保留、Summary供应商2/模型5/原生范围浮层14记录7700Token、小窗内部滚动与右侧列、侧栏选中及回到供应商路由通过。两尺寸原生1×七图、编译门禁与六轮原负载均留证。UI由CUA原生Close/PID消失验证，Core随后health200/配置不变并正常退出。b313条数按钮完整键盘焦点未可靠观察；自动刷新实际响应/窗口active未独立测，1px明细表头、字体/完整IME/AX/跨平台仍待验；不能将中间40a或后续字体候选证据混作本版通过。

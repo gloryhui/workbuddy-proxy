@@ -1,0 +1,319 @@
+{
+  "source": "Official Figma get_design_context, latest Studio V2 page51:2; source URLs intentionally omitted.",
+  "frames": {
+    "52:2": [
+      {
+        "name": "imgIconSkin",
+        "file": "a7d16.svg"
+      },
+      {
+        "name": "imgIconAutostart",
+        "file": "af952.svg"
+      },
+      {
+        "name": "imgIconUpdates",
+        "file": "e9321.svg"
+      },
+      {
+        "name": "imgIconLanguage",
+        "file": "def90.svg"
+      },
+      {
+        "name": "imgIconRestore",
+        "file": "0ac56.svg"
+      },
+      {
+        "name": "imgIconGithub",
+        "file": "7bc0b.svg"
+      },
+      {
+        "name": "imgIconFeedback",
+        "file": "4a154.svg"
+      },
+      {
+        "name": "imgAppLogo",
+        "file": "91e75.png"
+      },
+      {
+        "name": "imgWindowControl",
+        "file": "1ccfc.svg"
+      },
+      {
+        "name": "imgWindowControl1",
+        "file": "7d50e.svg"
+      },
+      {
+        "name": "imgWindowControl2",
+        "file": "7f8ff.svg"
+      },
+      {
+        "name": "imgIconChart",
+        "file": "b6ecc.svg"
+      },
+      {
+        "name": "imgIconServer",
+        "file": "3ef59.svg"
+      },
+      {
+        "name": "imgIconSettings",
+        "file": "794e6.svg"
+      },
+      {
+        "name": "imgIconActivity",
+        "file": "d479d.svg"
+      },
+      {
+        "name": "imgIconLink",
+        "file": "2f5fe.svg"
+      },
+      {
+        "name": "imgIconSearch",
+        "file": "a1ba4.svg"
+      },
+      {
+        "name": "imgSupplierStatus",
+        "file": "ec1b5.svg"
+      },
+      {
+        "name": "imgSupplierStatus1",
+        "file": "86243.svg"
+      },
+      {
+        "name": "imgIconPlus",
+        "file": "06df8.svg"
+      },
+      {
+        "name": "imgIconCopy",
+        "file": "2791d.svg"
+      },
+      {
+        "name": "imgIconTrash",
+        "file": "8bc77.svg"
+      },
+      {
+        "name": "imgIconChevron",
+        "file": "49089.svg"
+      },
+      {
+        "name": "imgIconRefresh",
+        "file": "35b6b.svg"
+      },
+      {
+        "name": "imgIconGrid",
+        "file": "94da8.svg"
+      },
+      {
+        "name": "imgIconShield",
+        "file": "e015a.svg"
+      },
+      {
+        "name": "imgIconActivity1",
+        "file": "d940c.svg"
+      },
+      {
+        "name": "imgChartPathsNativeEditableVectors",
+        "file": "cec73.svg"
+      },
+      {
+        "name": "imgIconClock",
+        "file": "c68b6.svg"
+      }
+    ],
+    "57:8": [
+      {
+        "name": "imgIconSkin",
+        "file": "a7d16.svg"
+      },
+      {
+        "name": "imgIconAutostart",
+        "file": "af952.svg"
+      },
+      {
+        "name": "imgIconUpdates",
+        "file": "e9321.svg"
+      },
+      {
+        "name": "imgIconLanguage",
+        "file": "def90.svg"
+      },
+      {
+        "name": "imgIconRestore",
+        "file": "0ac56.svg"
+      },
+      {
+        "name": "imgIconGithub",
+        "file": "7bc0b.svg"
+      },
+      {
+        "name": "imgIconFeedback",
+        "file": "4a154.svg"
+      },
+      {
+        "name": "imgAppLogo",
+        "file": "91e75.png"
+      },
+      {
+        "name": "imgWindowControl",
+        "file": "1ccfc.svg"
+      },
+      {
+        "name": "imgWindowControl1",
+        "file": "7d50e.svg"
+      },
+      {
+        "name": "imgWindowControl2",
+        "file": "7f8ff.svg"
+      },
+      {
+        "name": "imgIconChart",
+        "file": "b6ecc.svg"
+      },
+      {
+        "name": "imgIconServer",
+        "file": "3ef59.svg"
+      },
+      {
+        "name": "imgIconSettings",
+        "file": "794e6.svg"
+      },
+      {
+        "name": "imgIconActivity",
+        "file": "d479d.svg"
+      },
+      {
+        "name": "imgIconLink",
+        "file": "2f5fe.svg"
+      },
+      {
+        "name": "imgIconSearch",
+        "file": "a1ba4.svg"
+      },
+      {
+        "name": "imgSupplierStatus",
+        "file": "ec1b5.svg"
+      },
+      {
+        "name": "imgSupplierStatus1",
+        "file": "86243.svg"
+      },
+      {
+        "name": "imgIconPlus",
+        "file": "06df8.svg"
+      },
+      {
+        "name": "imgIconCopy",
+        "file": "2791d.svg"
+      },
+      {
+        "name": "imgIconTrash",
+        "file": "8bc77.svg"
+      },
+      {
+        "name": "imgIconChevron",
+        "file": "49089.svg"
+      },
+      {
+        "name": "imgIconRefresh",
+        "file": "35b6b.svg"
+      }
+    ],
+    "56:8": [
+      {
+        "name": "imgIconSkin",
+        "file": "a7d16.svg"
+      },
+      {
+        "name": "imgIconAutostart",
+        "file": "af952.svg"
+      },
+      {
+        "name": "imgIconUpdates",
+        "file": "e9321.svg"
+      },
+      {
+        "name": "imgIconLanguage",
+        "file": "def90.svg"
+      },
+      {
+        "name": "imgIconRestore",
+        "file": "0ac56.svg"
+      },
+      {
+        "name": "imgIconGithub",
+        "file": "7bc0b.svg"
+      },
+      {
+        "name": "imgIconFeedback",
+        "file": "4a154.svg"
+      },
+      {
+        "name": "imgAppLogo",
+        "file": "91e75.png"
+      },
+      {
+        "name": "imgWindowControl",
+        "file": "1ccfc.svg"
+      },
+      {
+        "name": "imgWindowControl1",
+        "file": "7d50e.svg"
+      },
+      {
+        "name": "imgWindowControl2",
+        "file": "7f8ff.svg"
+      },
+      {
+        "name": "imgIconChart",
+        "file": "b6ecc.svg"
+      },
+      {
+        "name": "imgIconServer",
+        "file": "3ef59.svg"
+      },
+      {
+        "name": "imgIconSettings",
+        "file": "794e6.svg"
+      },
+      {
+        "name": "imgIconActivity",
+        "file": "d479d.svg"
+      },
+      {
+        "name": "imgIconLink",
+        "file": "2f5fe.svg"
+      },
+      {
+        "name": "imgIconSearch",
+        "file": "a1ba4.svg"
+      },
+      {
+        "name": "imgSupplierStatus",
+        "file": "ec1b5.svg"
+      },
+      {
+        "name": "imgSupplierStatus1",
+        "file": "86243.svg"
+      },
+      {
+        "name": "imgIconPlus",
+        "file": "06df8.svg"
+      },
+      {
+        "name": "imgIconCopy",
+        "file": "2791d.svg"
+      },
+      {
+        "name": "imgIconTrash",
+        "file": "8bc77.svg"
+      },
+      {
+        "name": "imgIconChevron",
+        "file": "49089.svg"
+      },
+      {
+        "name": "imgIconRefresh",
+        "file": "35b6b.svg"
+      }
+    ]
+  }
+}

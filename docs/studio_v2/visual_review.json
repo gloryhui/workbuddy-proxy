@@ -7,7 +7,10 @@
     "high_fidelity_context_read": [
       "59:484",
       "59:279",
-      "54:2"
+      "54:2",
+      "52:2",
+      "56:8",
+      "57:8"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -15,20 +18,37 @@
     {
       "id": "52:2",
       "name": "01 / STUDIO V2 · 使用概览",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "b313宽窗KPI top283、趋势top468、最近请求top748；17px段间距保留。真实单点缺失说明让趋势高263而稿246，小窗KPI重排，完整概览滚动/状态终验待续。",
+        "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
+        "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+        "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
+        "states": "2供应商/5模型/14真实Mock代理记录、总Token7700、成功率100%、缓存未知为—；未伪造设计样例数据。",
+        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
+        "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
+        "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "字体、字重、基线和部分卡内间距仍待逐项统一。",
+        "单日只有单点，保留缺失说明/真实走势图，趋势为263px，较静态稿246px高17px；不能为贴稿隐藏真实语义。",
+        "保留实际USD偏好、未知缓存/费用与真实14/7700，静态稿示例数值不作为验收目标。",
+        "小窗概览lower内容在可视区以下，完整滚动/焦点/IME/无障碍/皮肤及跨平台仍待终验。"
+      ],
+      "evidence": [
+        "benchmarks/shared-controls-design-manifests.json",
+        "benchmarks/shared-controls-design-audit.json",
+        "benchmarks/shared-controls-intermediate-40a-build.json",
+        "benchmarks/shared-controls-intermediate-40a-gui.json",
+        "benchmarks/shared-controls-intermediate-40a-geometry.json",
+        "benchmarks/shared-controls-build.json",
+        "benchmarks/shared-controls-gui-validation.json",
+        "benchmarks/shared-controls-geometry.json",
+        "benchmarks/shared-controls-performance-summary.json",
+        "screenshots/shared-controls-overview-1440x900-native-1x.png",
+        "screenshots/shared-controls-overview-1100x700-native-1x.png"
+      ]
     },
     {
       "id": "54:2",
@@ -63,26 +83,24 @@
       "id": "56:8",
       "name": "03 / STUDIO V2 · 用量明细",
       "review_status": "reviewed_with_differences",
-      "scope": "UI55完成首轮整页审查和局部修复；最新56:8、24资源清单、3aa候选真实两尺寸/筛选分页详情/汇总键盘及性能已记录，整帧仍保留差异。",
+      "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
       "checks": {
-        "layout": "面板top283/height540及表头top364与稿对应，52px行距已测；原生表头含边框40px而稿39px，列宽/内边距仍有差异",
-        "colors": "隔行#F4F6FF和条数浅靛色已对齐；文字/状态/hover尚未全量逐项终验",
-        "typography": "Noto Sans SC与系统fallback/权重/字号存在差异，尚未最终统一",
-        "assets": "24资源中19字节一致、2仅局部clipID不同且完整绘制结构相同、3装饰traffic lights用真实系统控件；Select内置chevron及全部slot终验仍待续",
-        "states": "最终3aa内置0/自定义14/全部14、真实详情、分页和汇总通过；全状态矩阵未完成",
-        "interaction": "Tab/Space/Esc/Return汇总、分页/来源/详情、自动刷新不覆盖编辑且显式翻页同步输入通过；非完整键盘/IME/读屏",
-        "native_1440": "最终3aa2880×1802原始实拍已核对，含原生额外2物理行",
-        "native_1100": "最终3aa2200×1402原始表/范围汇总实拍已核对，内滚/固定pager/右侧列可达"
+        "layout": "b313在1×下请求表头top363/outer39px，稿top364/39；高度已对齐，仍保留1px纵向位置差。面板top283/max540、52px行距保留，列宽/内边距待续。",
+        "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
+        "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+        "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
+        "states": "40a模型3/供应商12/全部14，页2为4行，Jump/Prev与原条数范围汇总14/7700通过；完整状态矩阵未验。",
+        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
+        "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
+        "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
       },
       "differences": [
         "字体fallback、权重/基线及部分单元格字号仍与Noto Sans SC/Inter设计不同。",
-        "原生表头含边框实际40px、稿39px，表体有约1px余差；列宽、标题/表格内边距与垂直列分隔仍待统一。",
-        "模型/供应商Select仍用Kit内置chevron，日期/刷新用Figma16px资源；完整静态slot/effective geometry尚未全部终验。",
         "保留真实健康/更多筛选/清除、跳页/首列/右侧列等原业务控件，以及条数标签可打开真实范围汇总；与静态稿有额外可见控件。",
-        "统计页供应商栏的当前供应商高亮呈现仍与设计样例有差异，需按真实上下文核对。",
         "后台自动刷新由既有window_active门控；本轮未主动前置，但实际前台状态未独立测量，不宣称所有后台截图即时。",
         "完整键盘、IME/读屏、全部皮肤/状态和跨平台仍未最终验收。",
-        "分页按钮/页大小选择已为32px，跳页输入仍由Kit绘制40px；它是保留的额外业务控件，完整footer几何仍需统一。"
+        "分页按钮/页大小选择已为32px，跳页输入仍由Kit绘制40px；它是保留的额外业务控件，完整footer几何仍需统一。",
+        "b313请求表头高度39px已对齐，top363与参考364仍差1px；四原SVG caret质心差x−.016/y−.036px，不代表全部控件状态通过。"
       ],
       "evidence": [
         "benchmarks/model-alignment-runtime-partial.json",
@@ -96,26 +114,53 @@
         "benchmarks/details-layout-performance-summary.json",
         "benchmarks/details-layout-startup-comparison.json",
         "screenshots/details-layout-1440x900-native-2x.png",
-        "screenshots/details-layout-1100x700-native-2x.png"
+        "screenshots/details-layout-1100x700-native-2x.png",
+        "benchmarks/shared-controls-design-manifests.json",
+        "benchmarks/shared-controls-design-audit.json",
+        "benchmarks/shared-controls-intermediate-40a-build.json",
+        "benchmarks/shared-controls-intermediate-40a-gui.json",
+        "benchmarks/shared-controls-intermediate-40a-geometry.json",
+        "benchmarks/shared-controls-build.json",
+        "benchmarks/shared-controls-gui-validation.json",
+        "benchmarks/shared-controls-geometry.json",
+        "benchmarks/shared-controls-performance-summary.json",
+        "screenshots/shared-controls-details-1440x900-native-1x.png",
+        "screenshots/shared-controls-details-1100x700-native-1x.png"
       ]
     },
     {
       "id": "57:8",
       "name": "04 / STUDIO V2 · 汇总分析",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "b313宽窗汇总面板top283、表头top363/outer38px符合参考；修复旧40a的5.5px下移，标题/说明独立左列与314px切换区实拍确认。字体、列宽/内边距仍待续。",
+        "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
+        "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+        "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
+        "states": "b313供应商2组/模型5组、条数浮层真实14记录/7700Token；小窗内部scroll取回Token构成7000输入/700输出和缓存覆盖卡，完整状态矩阵未终验。",
+        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
+        "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
+        "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "字体、字号/权重/基线、列宽及表格内边距尚未统一。",
+        "保留实际2供应商/5模型/14记录和分页/排序/首末列等原业务控件，不能伪造稿中的样例4组或删除功能。",
+        "Summary条数按钮鼠标浮层已验，键盘焦点未可靠观察；完整IME/无障碍/皮肤/跨平台未终验。"
+      ],
+      "evidence": [
+        "benchmarks/shared-controls-design-manifests.json",
+        "benchmarks/shared-controls-design-audit.json",
+        "benchmarks/shared-controls-intermediate-40a-build.json",
+        "benchmarks/shared-controls-intermediate-40a-gui.json",
+        "benchmarks/shared-controls-intermediate-40a-geometry.json",
+        "benchmarks/shared-controls-build.json",
+        "benchmarks/shared-controls-gui-validation.json",
+        "benchmarks/shared-controls-geometry.json",
+        "benchmarks/shared-controls-performance-summary.json",
+        "screenshots/shared-controls-summary-1440x900-native-1x.png",
+        "screenshots/shared-controls-summary-1100x700-native-1x.png"
+      ]
     },
     {
       "id": "58:8",

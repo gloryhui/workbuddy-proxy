@@ -2066,6 +2066,11 @@ impl Statistics {
                 "逐条查看用量、缓存命中、费用与响应性能",
                 "Inspect usage, cache hits, costs and response performance for each request",
             )
+        } else if self.view == preferences::View::Summary {
+            self.t(
+                "按供应商和模型汇总请求，比较使用规模与效率",
+                "Group requests by provider and model to compare usage and efficiency",
+            )
         } else if self.view == preferences::View::Settings {
             self.t(
                 "管理估算价格、存储策略和 WorkBuddy 本地用量",
@@ -2336,7 +2341,7 @@ impl Statistics {
         } else {
             self.range.title(self.zh).to_owned()
         };
-        Popover::new("stats-date-range")
+        let control = Popover::new("stats-date-range")
             .open(self.date_open)
             .trigger(
                 stats_button("stats-date-trigger")
@@ -2359,12 +2364,7 @@ impl Statistics {
                                     .text_size(px(12.))
                                     .text_color(rgb(crate::theme::color::TEXT_2)),
                             )
-                            .child(
-                                Icon::default()
-                                    .path("studio/stats-chevron.svg")
-                                    .with_size(px(16.))
-                                    .text_color(rgb(MUTED)),
-                            ),
+                            .child(source_controls::caret_spacer()),
                     )
                     .tooltip(tooltip)
                     .accessibility_label(self.t("选择日期范围", "Choose date range")),
@@ -2386,7 +2386,8 @@ impl Statistics {
                     .update(cx, |this, cx| this.date_panel(cx))
                     .unwrap_or_else(|_| div().into_any_element())
             })
-            .into_any_element()
+            .into_any_element();
+        source_controls::caret_surface(control)
     }
 
     fn refresh_control(&self, cx: &mut Context<Self>) -> AnyElement {
@@ -2402,7 +2403,7 @@ impl Statistics {
                 self.t("秒", "s")
             )
         };
-        Popover::new("stats-auto-refresh")
+        let control = Popover::new("stats-auto-refresh")
             .open(self.refresh_open)
             .trigger(
                 stats_button("stats-auto-trigger")
@@ -2416,7 +2417,7 @@ impl Statistics {
                     .child(
                         div().w_full().flex().items_center().justify_between().gap(px(6.))
                             .child(Label::new(label).text_size(px(12.)).text_color(rgb(crate::theme::color::TEXT_2)))
-                            .child(Icon::default().path("studio/stats-chevron.svg").with_size(px(16.)).text_color(rgb(MUTED))),
+                            .child(source_controls::caret_spacer()),
                     )
                     .tooltip(self.t(
                         "统计页面自动刷新间隔；仅刷新已采集的数据，不改变后台采集频率",
@@ -2462,7 +2463,8 @@ impl Statistics {
                     })
                     .unwrap_or_else(|_| div().into_any_element())
             })
-            .into_any_element()
+            .into_any_element();
+        source_controls::caret_surface(control)
     }
 
     fn filter_search(&self, provider: bool, cx: &mut Context<Self>) -> AnyElement {
@@ -2779,11 +2781,12 @@ impl Statistics {
             // rows retain their native table and existing sort handlers.
             Tab::Requests => crate::ui_components::log_table(&self.usage_table)
                 .with_size(px(52.))
-                .header_row_height(px(39.))
+                // Kit adds an outer one-pixel header divider.
+                .header_row_height(px(38.))
                 .into_any_element(),
             _ => crate::ui_components::table(&self.group_table)
                 .with_size(px(43.))
-                .header_row_height(px(38.))
+                .header_row_height(px(37.))
                 .into_any_element(),
         };
         stats_card("stats-details")
@@ -2838,7 +2841,14 @@ impl Statistics {
                     )
             })
             .when(self.tab != Tab::Requests, |panel| {
-                panel.child(self.analysis_table_header(cx))
+                // Figma57:8: the native border plus these insets place the
+                // title at (20,16) and the table at (15,80) within the card.
+                panel
+                    .pl(px(14.))
+                    .pr(px(16.))
+                    .pt(px(15.))
+                    .gap(px(12.))
+                    .child(self.analysis_table_header(cx))
             })
             .child(
                 div()
@@ -3030,8 +3040,8 @@ impl Statistics {
             .pr_0()
             .py_0()
             .gap_3()
-            .when(self.view == preferences::View::Details, |page| {
-                // Figma56:8: tabs47px, controls start8px later, then19px
+            .when(self.view != preferences::View::Settings, |page| {
+                // Figma52/56/57: tabs47px, controls start8px later, then19px
                 // before the request panel. Wrapping controls may still grow.
                 page.gap_0()
                     .child(
@@ -3050,13 +3060,6 @@ impl Statistics {
                     )
             })
             .bg(rgb(BG))
-            .when(
-                !matches!(
-                    self.view,
-                    preferences::View::Settings | preferences::View::Details
-                ),
-                |page| page.child(self.view_tabs(cx)).child(self.filters(cx)),
-            )
             .child(self.report_body(cx))
             .into_any_element()
     }

@@ -1,0 +1,172 @@
+{
+  "b313-details-wide.png": {
+    "raw": [
+      1440,
+      901
+    ],
+    "header_dominant_runs": [
+      [
+        350,
+        363,
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      [
+        363,
+        364,
+        [
+          231,
+          234,
+          242
+        ]
+      ],
+      [
+        364,
+        401,
+        [
+          243,
+          245,
+          250
+        ]
+      ],
+      [
+        401,
+        402,
+        [
+          231,
+          234,
+          242
+        ]
+      ],
+      [
+        402,
+        415,
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    ],
+    "carets_xy": [
+      [
+        422.994,
+        243.112
+      ],
+      [
+        610.994,
+        243.112
+      ],
+      [
+        732.994,
+        243.112
+      ],
+      [
+        924.994,
+        243.112
+      ]
+    ]
+  },
+  "b313-summary-wide.png": {
+    "raw": [
+      1440,
+      901
+    ],
+    "header_dominant_runs": [
+      [
+        350,
+        363,
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      [
+        363,
+        364,
+        [
+          231,
+          234,
+          242
+        ]
+      ],
+      [
+        364,
+        400,
+        [
+          243,
+          245,
+          250
+        ]
+      ],
+      [
+        400,
+        401,
+        [
+          231,
+          234,
+          242
+        ]
+      ],
+      [
+        401,
+        415,
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    ]
+  },
+  "overview-reference.png": {
+    "carets_xy": [
+      [
+        423.01,
+        243.148
+      ],
+      [
+        611.01,
+        243.148
+      ],
+      [
+        733.01,
+        243.148
+      ],
+      [
+        925.01,
+        243.148
+      ]
+    ]
+  },
+  "scope": "Native1x unchanged originals; ICC to sRGB only in memory; dominant bands include native header borders. No reconstruction/crop.",
+  "ui_sha256": "b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57",
+  "artifact_mapping": {
+    "b313-details-wide.png": "screenshots/shared-controls-details-1440x900-native-1x.png",
+    "b313-overview-wide.png": "screenshots/shared-controls-overview-1440x900-native-1x.png",
+    "b313-summary-wide.png": "screenshots/shared-controls-summary-1440x900-native-1x.png",
+    "b313-details-small.png": "screenshots/shared-controls-details-1100x700-native-1x.png",
+    "b313-overview-small.png": "screenshots/shared-controls-overview-1100x700-native-1x.png",
+    "b313-summary-small.png": "screenshots/shared-controls-summary-1100x700-native-1x.png",
+    "b313-summary-popup-small.png": "screenshots/shared-controls-summary-popup-1100x700-native-1x.png"
+  },
+  "effective_header_logical": {
+    "requests": {
+      "top": 363,
+      "height": 39,
+      "reference_top": 364,
+      "reference_height": 39,
+      "difference": "At native1x top is1px above the reference; retain as difference, no full-frame pass."
+    },
+    "summary": {
+      "top": 363,
+      "height": 38,
+      "reference_top": 363,
+      "reference_height": 38
+    }
+  }
+}

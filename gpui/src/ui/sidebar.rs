@@ -188,7 +188,9 @@ impl Proxy {
             .into_iter()
             .map(|provider| {
                 let id = provider.id.clone();
-                let active = self.page == Page::Providers && id == rail_selected;
+                // The current provider remains the editing context on the
+                // report pages too; selecting it still uses the same routing.
+                let active = id == rail_selected;
                 let name = crate::provider_filter::display_name(provider, &self.drafts).to_owned();
                 let models = self
                     .drafts

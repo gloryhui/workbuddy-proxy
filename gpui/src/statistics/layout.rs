@@ -259,10 +259,25 @@ impl Statistics {
     /// between the design's filters and request panel. The native popover
     /// reads the same live dashboard as the analysis view's existing summary.
     pub(super) fn request_count_summary(&self, cx: &mut Context<Self>) -> AnyElement {
+        self.range_count_summary(
+            "request-range-summary",
+            "request-range-summary-trigger",
+            format!("{} {}", self.total_rows.max(0), self.t("条", "rows")),
+            cx,
+        )
+    }
+
+    pub(super) fn range_count_summary(
+        &self,
+        popover_id: &'static str,
+        trigger_id: &'static str,
+        label: String,
+        cx: &mut Context<Self>,
+    ) -> AnyElement {
         let owner = cx.entity().downgrade();
-        Popover::new("request-range-summary")
+        Popover::new(popover_id)
             .trigger(
-                stats_button("request-range-summary-trigger")
+                stats_button(trigger_id)
                     .custom(
                         gpui_kit::component::button::ButtonCustomVariant::new(cx)
                             .color(rgb(crate::theme::toolbar_selection()).into())
@@ -276,11 +291,7 @@ impl Statistics {
                     .min_w(px(64.))
                     .rounded(px(8.))
                     .text_size(px(11.))
-                    .label(format!(
-                        "{} {}",
-                        self.total_rows.max(0),
-                        self.t("条", "rows")
-                    ))
+                    .label(label)
                     .tooltip(self.t("查看当前范围汇总", "View current range totals"))
                     .accessibility_label(self.t("查看当前范围汇总", "View current range totals")),
             )
@@ -325,7 +336,6 @@ impl Statistics {
                 .min_h_0()
                 .gap_2()
                 .overflow_hidden()
-                .child(self.report_totals())
                 .child(
                     div()
                         .id("statistics-analysis-scroll")
@@ -357,7 +367,7 @@ impl Statistics {
                 .flex_1()
                 .min_h_0()
                 .overflow_y_scroll()
-                .gap_3()
+                .gap(px(17.))
                 .child(self.overview(cx))
                 .child(self.trends(cx))
                 .child(self.recent_card(cx))

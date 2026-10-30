@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-30T21:29:39.117184+08:00",
+  "deleted_this_round": [],
+  "freed_bytes": 0,
+  "retained": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+      "files": 64,
+      "allocated_bytes": 84140032
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr",
+      "files": 207,
+      "allocated_bytes": 290770944
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "files": 283,
+      "allocated_bytes": 434679808
+    }
+  ],
+  "retained_allocated_bytes": 809590784,
+  "system_volume_free_bytes": 45654171648,
+  "scope": "Inventory only of this ongoing round48 and reused round46/47 baselines, not all machine temporary files. Round48 retains source/binary snapshots and raw GUI/performance fixtures for UI56 evidence and pending font comparison. Shared build caches unchanged.",
+  "prior_rejected_targets": [
+    "studio-v2-round46.wyah2h0f",
+    "studio-v2-round47.l5v17qlr",
+    "studio-v2-round48.g8914rm5/Inter-4.1.zip"
+  ],
+  "policy_note": "Earlier exact deletion commands were rejected: approval required by policy, but AskForApproval is set to Never. None of those targets or equivalent/parent deletion paths were retried. No deletion attempted in this status round."
+}

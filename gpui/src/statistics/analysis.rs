@@ -32,8 +32,12 @@ impl Statistics {
             .flex()
             .items_center()
             .gap(px(4.))
-            .p(px(4.))
+            .pl(px(4.))
+            .pr(px(6.))
+            .py(px(4.))
+            .w(px(314.))
             .h(px(38.))
+            .flex_none()
             .rounded(px(9.))
             .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
             .children(
@@ -51,7 +55,8 @@ impl Statistics {
                     stats_button(id)
                         .with_size(px(30.))
                         .h(px(30.))
-                        .w(px(145.))
+                        .w(px(if tab == Tab::Providers { 145. } else { 155. }))
+                        .rounded(px(7.))
                         .custom(
                             gpui_kit::component::button::ButtonCustomVariant::new(cx)
                                 .color(
@@ -66,7 +71,18 @@ impl Statistics {
                                 .hover(rgb(crate::theme::palette().tint).into())
                                 .active(rgb(crate::theme::palette().tint).into()),
                         )
-                        .label(label)
+                        .accessibility_label(label)
+                        .child(
+                            Label::new(label)
+                                .text_size(px(12.))
+                                .line_height(px(17.))
+                                .text_color(rgb(if active { INK } else { MUTED }))
+                                .font_weight(if active {
+                                    FontWeight::BOLD
+                                } else {
+                                    FontWeight::MEDIUM
+                                }),
+                        )
                         .toggled(active)
                         .on_click(cx.listener(move |this, _, _, cx| {
                             if this.tab == tab {
@@ -83,22 +99,26 @@ impl Statistics {
                         }))
                 }),
             );
-        div().flex().flex_col().gap(px(8.)).flex_shrink_0()
-            .child(div().flex().items_center().justify_between().flex_wrap().gap(px(8.))
-                .child(div().flex().items_center().gap(px(14.))
+        // The caption belongs to the left title column, independently of the
+        // 38px selector. Let both columns wrap only when the viewport needs it.
+        div().flex().items_start().justify_between().flex_wrap()
+            .min_h(px(52.)).pl(px(5.)).pr(px(13.)).gap(px(14.)).flex_shrink_0()
+            .child(div().flex().flex_col().flex_1().min_w(px(220.)).gap(px(5.))
+                .child(div().flex().items_start().h(px(27.)).gap(px(14.))
                     .child(Label::new(if self.tab == Tab::Providers {
                         self.t("供应商表现", "Provider performance")
                     } else { self.t("模型表现", "Model performance") })
+                        .min_w(px(118.)).h(px(20.)).line_height(px(24.)).flex_shrink_0()
                         .text_size(px(17.)).font_weight(FontWeight::BOLD).text_color(rgb(INK)))
-                    .child(crate::ui_components::tag(crate::ui_components::TagKind::Primary,
+                    .child(div().pt(px(2.)).child(self.range_count_summary("analysis-range-summary", "analysis-range-summary-trigger",
                         format!("{}{} {}", if self.total_groups > crate::stats_dto::MAX_COUNTED_GROUPS { "≥" } else { "" },
-                            self.total_groups.max(0), self.t("项", "groups")))))
-                .child(tabs))
-            .child(caption(if self.tab == Tab::Providers {
-                self.t("相同名称代表不同的上游记录组，保留各组统计", "Identical names may represent different upstream groups; each keeps its own totals")
-            } else {
-                self.t("按模型汇总，费用与积分分别统计", "Grouped by model; costs and credits remain separate")
-            }).w_full().text_ellipsis())
+                            self.total_groups.max(0), self.t("项", "groups")), cx))))
+                .child(caption(if self.tab == Tab::Providers {
+                    self.t("相同名称代表不同的上游记录组，保留各组统计", "Identical names may represent different upstream groups; each keeps its own totals")
+                } else {
+                    self.t("按模型汇总，费用与积分分别统计", "Grouped by model; costs and credits remain separate")
+                }).w_full().h(px(20.)).line_height(px(17.)).text_ellipsis()))
+            .child(tabs)
             .into_any_element()
     }
 

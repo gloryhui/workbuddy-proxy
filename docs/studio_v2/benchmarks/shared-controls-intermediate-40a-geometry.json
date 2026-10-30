@@ -1,0 +1,307 @@
+{
+  "caret_current": [
+    {
+      "slot": [
+        414,
+        234,
+        430,
+        250
+      ],
+      "colour_pixel_count": 76,
+      "paint_bbox_logical": [
+        418.0,
+        240.5,
+        428.0,
+        246.0
+      ]
+    },
+    {
+      "slot": [
+        602,
+        234,
+        618,
+        250
+      ],
+      "colour_pixel_count": 76,
+      "paint_bbox_logical": [
+        606.0,
+        240.5,
+        616.0,
+        246.0
+      ]
+    },
+    {
+      "slot": [
+        724,
+        234,
+        740,
+        250
+      ],
+      "colour_pixel_count": 76,
+      "paint_bbox_logical": [
+        728.0,
+        240.5,
+        738.0,
+        246.0
+      ]
+    },
+    {
+      "slot": [
+        916,
+        234,
+        932,
+        250
+      ],
+      "colour_pixel_count": 76,
+      "paint_bbox_logical": [
+        920.0,
+        240.5,
+        930.0,
+        246.0
+      ]
+    }
+  ],
+  "caret_reference": [
+    {
+      "slot": [
+        414,
+        234,
+        430,
+        250
+      ],
+      "colour_pixel_count": 10,
+      "paint_bbox_logical": [
+        418.0,
+        241.0,
+        428.0,
+        246.0
+      ]
+    },
+    {
+      "slot": [
+        602,
+        234,
+        618,
+        250
+      ],
+      "colour_pixel_count": 10,
+      "paint_bbox_logical": [
+        606.0,
+        241.0,
+        616.0,
+        246.0
+      ]
+    },
+    {
+      "slot": [
+        724,
+        234,
+        740,
+        250
+      ],
+      "colour_pixel_count": 10,
+      "paint_bbox_logical": [
+        728.0,
+        241.0,
+        738.0,
+        246.0
+      ]
+    },
+    {
+      "slot": [
+        916,
+        234,
+        932,
+        250
+      ],
+      "colour_pixel_count": 10,
+      "paint_bbox_logical": [
+        920.0,
+        241.0,
+        930.0,
+        246.0
+      ]
+    }
+  ],
+  "hidden_old_colour_counts": [
+    {
+      "slot": [
+        414,
+        234,
+        430,
+        250
+      ],
+      "colour_pixel_count": 0,
+      "paint_bbox_logical": null
+    },
+    {
+      "slot": [
+        602,
+        234,
+        618,
+        250
+      ],
+      "colour_pixel_count": 0,
+      "paint_bbox_logical": null
+    },
+    {
+      "slot": [
+        724,
+        234,
+        740,
+        250
+      ],
+      "colour_pixel_count": 0,
+      "paint_bbox_logical": null
+    },
+    {
+      "slot": [
+        916,
+        234,
+        932,
+        250
+      ],
+      "colour_pixel_count": 0,
+      "paint_bbox_logical": null
+    }
+  ],
+  "request_header_fill_runs_px": [
+    [
+      730,
+      804
+    ]
+  ],
+  "summary_header_fill_runs_px": [
+    [
+      739,
+      811
+    ]
+  ],
+  "scope": "In-memory ICC conversion and flat-fill measurements only; native raw images unchanged, no screenshot reconstruction. Native 2x physical runs include both one-logical-pixel borders; effective outer heights are measured, not inferred from Rust setters.",
+  "weighted_centroids": {
+    "reference_and_final": [
+      {
+        "file": "overview-reference.png",
+        "xy_area": [
+          [
+            423.01,
+            243.148,
+            25.751
+          ],
+          [
+            611.01,
+            243.148,
+            25.751
+          ],
+          [
+            733.01,
+            243.148,
+            25.751
+          ],
+          [
+            925.01,
+            243.148,
+            25.751
+          ]
+        ]
+      },
+      {
+        "file": "final-details-wide.png",
+        "xy_area": [
+          [
+            423.0,
+            243.113,
+            26.215
+          ],
+          [
+            611.0,
+            243.113,
+            26.215
+          ],
+          [
+            733.0,
+            243.113,
+            26.215
+          ],
+          [
+            925.0,
+            243.113,
+            26.215
+          ]
+        ]
+      }
+    ],
+    "scope": "Weighted stroke centroid after in-memory ICC to sRGB conversion. Native original 2x vs design1x; area/AA differences retained. Measures caret paint only, not full frame acceptance."
+  },
+  "effective_header_geometry_logical": {
+    "requests": {
+      "top": 364,
+      "height": 39,
+      "physical_runs": [
+        [
+          728,
+          730,
+          "border"
+        ],
+        [
+          730,
+          804,
+          "fill"
+        ],
+        [
+          804,
+          806,
+          "border"
+        ]
+      ],
+      "design_top": 364,
+      "design_height": 39
+    },
+    "summary": {
+      "top": 368.5,
+      "height": 38,
+      "physical_runs": [
+        [
+          737,
+          739,
+          "border"
+        ],
+        [
+          739,
+          811,
+          "fill"
+        ],
+        [
+          811,
+          813,
+          "border"
+        ]
+      ],
+      "design_top": 363,
+      "design_height": 38,
+      "remaining_difference": "Header height matches but header begins5.5 logical px lower; caption/title/table padding remain open."
+    }
+  },
+  "candidate_sha256": "40a2df712d8be3a7b86d8c74c57d0c94aedee4ac471a95c0e416e8646867e99c",
+  "overview_logical_bands": {
+    "kpi_top": 283,
+    "kpi_bottom": 451,
+    "trend_top": 468,
+    "trend_bottom": 731,
+    "recent_top": 748,
+    "gaps": [
+      17,
+      17
+    ],
+    "note": "One synthetic day has only one data point per series. Existing sparse-series hint grows chart to263px vs design246px; keep real-data semantics."
+  },
+  "artifact_mapping": {
+    "final-overview-wide.png": "screenshots/shared-controls-intermediate-40a-overview-1440x900-native-2x.png",
+    "final-details-wide.png": "screenshots/shared-controls-intermediate-40a-details-1440x900-native-2x.png",
+    "final-summary-wide.png": "screenshots/shared-controls-intermediate-40a-summary-1440x900-native-2x.png",
+    "final-overview-small.png": "screenshots/shared-controls-intermediate-40a-overview-1100x700-tooltip-native-2x.png",
+    "final-details-small.png": "screenshots/shared-controls-intermediate-40a-details-1100x700-tooltip-native-2x.png",
+    "final-summary-small.png": "screenshots/shared-controls-intermediate-40a-summary-1100x700-native-2x.png",
+    "final-summary-popup-small.png": "screenshots/shared-controls-intermediate-40a-summary-popup-1100x700-native-2x.png"
+  }
+}

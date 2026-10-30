@@ -1,0 +1,295 @@
+{
+  "ui_sha256": "40a2df712d8be3a7b86d8c74c57d0c94aedee4ac471a95c0e416e8646867e99c",
+  "ui_pid": 51198,
+  "window_id": 1397,
+  "core_pid_reported_by_parent": 38229,
+  "launch": "CUA getApp exact path, documented background launch; no explicit activate/raise",
+  "images": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-baseline/final-overview-wide.png",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "99aea5def1e010fe2dd7cfa1df1b44f75e781f668f874fd77b760081a5772214",
+      "bytes": 480633,
+      "public_artifact": "screenshots/shared-controls-intermediate-40a-overview-1440x900-native-2x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-baseline/final-details-wide.png",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "e73cb3a4a771a0698acea6d1165f555dab08c3d58e58fc8e1d4a4e7fbd948c5e",
+      "bytes": 562335,
+      "public_artifact": "screenshots/shared-controls-intermediate-40a-details-1440x900-native-2x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-baseline/final-summary-wide.png",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "c77549d6e84307b84eef36369f4b44832df41aec0eb5a860edf296739c6e456b",
+      "bytes": 456821,
+      "public_artifact": "screenshots/shared-controls-intermediate-40a-summary-1440x900-native-2x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-baseline/final-overview-small.png",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "5832665a770e782b6393c95283df956e5e1082285073ed232be502b1b5f83d87",
+      "bytes": 304324,
+      "public_artifact": "screenshots/shared-controls-intermediate-40a-overview-1100x700-tooltip-native-2x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-baseline/final-details-small.png",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "7def73e30a09ff54b94260299b03a0cd197f7397c71510e5702b980578803218",
+      "bytes": 391590,
+      "public_artifact": "screenshots/shared-controls-intermediate-40a-details-1100x700-tooltip-native-2x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-baseline/final-summary-small.png",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "86b8c1f503c29b7e9f389cf9c1519b25b676cf63c9622e0b84a56c94588e5a19",
+      "bytes": 347735,
+      "public_artifact": "screenshots/shared-controls-intermediate-40a-summary-1100x700-native-2x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-baseline/final-summary-popup-small.png",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "d4829dc26cdcb1ba3d2e0ef4e25d689aac61e6956b63fde8b9d4ba80ab6772bc",
+      "bytes": 364468,
+      "public_artifact": "screenshots/shared-controls-intermediate-40a-summary-popup-1100x700-native-2x.png"
+    }
+  ],
+  "capture": "native screencapture -x -o -l, raw without cropping or scaling",
+  "resize": "CUA drag from screenshot physical [2878,1799] to [2198,1399]; resulting raw 2200x1402, 2x nominal 1100x700 content and extra 2px lower window boundary",
+  "cases": {
+    "arrows": "each of model, provider, date, refresh glyph positions opened its control",
+    "model": "Down three times and Return selected gpt-6; AX had 3 rows; restored all",
+    "provider": "sub2api 12 visible, restored all",
+    "date": "Today selected then restored 7 days",
+    "refresh": "off then 5 seconds",
+    "page_draft": "with auto 5s setting, typed 2, after 7.5s still 2; Jump page 2/2, 4 rows; Prev page 1 with input normalized 1",
+    "details_keyboard": "Custom source then Tab with visible count focus, space opens dialog and Escape closes",
+    "summary": "provider count 2/model count 5, provider popup shows 14 records and 7700 tokens in small window",
+    "sidebar": "sub2api visibly selected on stats; clicking opens Providers for sub2api; returning stats retains selected",
+    "small_scroll": "CUA scroll down shows input/output token composition and cache/coverage card"
+  },
+  "limitations": [
+    "No independent proof of active-window state or that an automatic refresh response occurred during the 7.5-second page-draft interval",
+    "Summary count keyboard focus was not reliably observed; keyboard open unverified",
+    "Small overview/details screenshots include native tooltip; Overview lower content extends below viewport",
+    "Native close sent; process exit/wait not established by this report"
+  ],
+  "close": "CUA native close button clicked; Core retained for parent",
+  "candidate_scope": "Intermediate40a only. Mac locked during clean recapture; later b313 header layout has compile gates but no runtime evidence yet.",
+  "runtime": {
+    "checked_at": "2026-10-30T19:30:11.427727+08:00",
+    "initial": {
+      "core_guard": {
+        "enforced": true,
+        "pid": 38229,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "seed": {
+        "real_http_requests": 14,
+        "statuses": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "expected_total_tokens": 7700
+      },
+      "core_config_sha256": "b782e05532f4f43ac68c2e0a880c232d10adc6c0cfbbb765a8c9eec5b70dcc4c",
+      "baseline_ui_sha256": "3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859",
+      "mac_locked": false
+    },
+    "core_before_shutdown": {
+      "pid": 38229,
+      "http_status": 200,
+      "stats_health_state": "ready",
+      "core_config_sha256_unchanged": true,
+      "read_only_sqlite": {
+        "count": 14,
+        "input": 7000,
+        "output": 700,
+        "total": 7700,
+        "http_status_range": [
+          200,
+          200
+        ],
+        "groups": [
+          [
+            "OpenCode Go",
+            2
+          ],
+          [
+            "sub2api",
+            12
+          ]
+        ]
+      }
+    },
+    "native_closed_ui_pids": [
+      38858,
+      41327,
+      50286,
+      51198
+    ],
+    "lock_interrupted_reopen": {
+      "pid": 55149,
+      "normal_stop_file_used": true,
+      "pid_gone": true,
+      "reason": "CUA explicit lock error and IOConsoleLocked true; no unlock or GUI fallback attempted"
+    },
+    "scope": "40a intermediate GUI complete with tooltip-bearing small captures; later header refinements require a new final runtime validation and performance. GUI isolated by environment, not kernel profile. Core kernel protection evidence is recorded separately.",
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    },
+    "fixture_exit_code": 0,
+    "all_observed_pids_gone": true
+  },
+  "latest_candidate": {
+    "sha256": "b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57",
+    "build_evidence": "shared-controls-build.json",
+    "runtime": "not_run_mac_locked",
+    "performance": "not_run_mac_locked"
+  }
+}

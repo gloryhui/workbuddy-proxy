@@ -1,0 +1,301 @@
+{
+  "checked_at": "2026-10-30T21:28:35.390905+08:00",
+  "order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2",
+    "previous3",
+    "current3"
+  ],
+  "sample_count_per_version": 3,
+  "ui_previous_sha256": "3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859",
+  "ui_current_sha256": "b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "workload": {
+    "small_requests": 1000,
+    "core_models": 64,
+    "large_requests": 80,
+    "large_mib_each": 1,
+    "large_concurrency": 4
+  },
+  "display_scale": 1,
+  "comparison": {
+    "core_idle_rss_mib": {
+      "previous": [
+        11.73,
+        12.72,
+        12.61
+      ],
+      "current": [
+        10.83,
+        12.28,
+        12.94
+      ],
+      "previous_median": 12.61,
+      "current_median": 12.28,
+      "delta": -0.33
+    },
+    "ui_idle_rss_mib": {
+      "previous": [
+        87.73,
+        88.16,
+        90.12
+      ],
+      "current": [
+        88.61,
+        88.25,
+        88.61
+      ],
+      "previous_median": 88.16,
+      "current_median": 88.61,
+      "delta": 0.45
+    },
+    "idle_rss_mib": {
+      "previous": [
+        99.47,
+        100.88,
+        102.73
+      ],
+      "current": [
+        99.44,
+        100.53,
+        101.55
+      ],
+      "previous_median": 100.88,
+      "current_median": 100.53,
+      "delta": -0.35
+    },
+    "sampled_peak_rss_mib": {
+      "previous": [
+        146.44,
+        150.97,
+        150.05
+      ],
+      "current": [
+        156.56,
+        149.17,
+        150.94
+      ],
+      "previous_median": 150.05,
+      "current_median": 150.94,
+      "delta": 0.89
+    },
+    "core_ready_ms": {
+      "previous": [
+        67.562,
+        44.32,
+        45.005
+      ],
+      "current": [
+        53.931,
+        59.459,
+        48.184
+      ],
+      "previous_median": 45.005,
+      "current_median": 53.931,
+      "delta": 8.926
+    },
+    "native_ui_process_to_record_ms": {
+      "previous": [
+        1647.113,
+        697.511,
+        593.735
+      ],
+      "current": [
+        687.101,
+        663.41,
+        687.961
+      ],
+      "previous_median": 697.511,
+      "current_median": 687.101,
+      "delta": -10.41
+    },
+    "large_seconds": {
+      "previous": [
+        0.088,
+        0.085,
+        0.085
+      ],
+      "current": [
+        0.119,
+        0.088,
+        0.09
+      ],
+      "previous_median": 0.085,
+      "current_median": 0.09,
+      "delta": 0.005
+    },
+    "p50": {
+      "previous": [
+        0.17,
+        0.173,
+        0.171
+      ],
+      "current": [
+        0.169,
+        0.172,
+        0.175
+      ],
+      "previous_median": 0.171,
+      "current_median": 0.172,
+      "delta": 0.001
+    },
+    "p95": {
+      "previous": [
+        0.199,
+        0.203,
+        0.189
+      ],
+      "current": [
+        0.428,
+        0.195,
+        0.218
+      ],
+      "previous_median": 0.199,
+      "current_median": 0.218,
+      "delta": 0.019
+    }
+  },
+  "all_recorded_processes_gone": true,
+  "sample_evidence": [
+    "shared-controls-performance-previous1.json",
+    "shared-controls-performance-current1.json",
+    "shared-controls-performance-current2.json",
+    "shared-controls-performance-previous2.json",
+    "shared-controls-performance-previous3.json",
+    "shared-controls-performance-current3.json"
+  ],
+  "limits": [
+    "Three samples per version; descriptive comparison, not statistical equivalence or optimization proof.",
+    "current1 proxy p95 .428ms and large-workload .119s remain recorded. Additional pair p95 .189/.218ms does not reproduce .428ms but does not explain its cause.",
+    "RSS sums core/UI and may count shared pages twice. Each total is measured per sample; component medians are not added to produce the total median.",
+    "Core kernel sandbox verified; UI uses isolated environment only. CUA background getApp without explicit activate/raise; actual foreground state unmeasured.",
+    "Original UI record-ready includes CUA/tool orchestration wait and is not a startup comparison. Native process-start to gpui.json marker excludes pre-process wait but is not first paint/interactivity.",
+    "Original workload uses the GUI default startup view; does not measure statistics scrolling, dropdown latency, FPS, tray, or Internet/model/TLS performance.",
+    "Current series is native 1x. Prior 2x series and other fixtures cannot be directly pooled.",
+    "Core/mock exit codes were waited; CUA-owned UI exit code is unavailable, UI PID disappearance independently verified."
+  ],
+  "assessment": "Scoped validation completed with all six samples and increases retained. Median previous→current UI RSS88.16→88.61 MiB (+.45), total100.88→100.53 MiB (-.35), sampled peak150.05→150.94 MiB (+.89), p50 .171→.172ms, p95 .199→.218ms, large workload .085→.090s. Native process→marker697.511→687.101ms is not first paint. These short samples do not establish performance equivalence, improvement, or a causal regression.",
+  "initial_four_sample_comparison": {
+    "core_idle_rss_mib": {
+      "previous": [
+        11.73,
+        12.72
+      ],
+      "current": [
+        10.83,
+        12.28
+      ],
+      "previous_median": 12.225,
+      "current_median": 11.555,
+      "delta": -0.67
+    },
+    "ui_idle_rss_mib": {
+      "previous": [
+        87.73,
+        88.16
+      ],
+      "current": [
+        88.61,
+        88.25
+      ],
+      "previous_median": 87.945,
+      "current_median": 88.43,
+      "delta": 0.485
+    },
+    "idle_rss_mib": {
+      "previous": [
+        99.47,
+        100.88
+      ],
+      "current": [
+        99.44,
+        100.53
+      ],
+      "previous_median": 100.175,
+      "current_median": 99.985,
+      "delta": -0.19
+    },
+    "sampled_peak_rss_mib": {
+      "previous": [
+        146.44,
+        150.97
+      ],
+      "current": [
+        156.56,
+        149.17
+      ],
+      "previous_median": 148.705,
+      "current_median": 152.865,
+      "delta": 4.16
+    },
+    "core_ready_ms": {
+      "previous": [
+        67.562,
+        44.32
+      ],
+      "current": [
+        53.931,
+        59.459
+      ],
+      "previous_median": 55.941,
+      "current_median": 56.695,
+      "delta": 0.754
+    },
+    "native_ui_process_to_record_ms": {
+      "previous": [
+        1647.113,
+        697.511
+      ],
+      "current": [
+        687.101,
+        663.41
+      ],
+      "previous_median": 1172.312,
+      "current_median": 675.2555,
+      "delta": -497.0565
+    },
+    "large_seconds": {
+      "previous": [
+        0.088,
+        0.085
+      ],
+      "current": [
+        0.119,
+        0.088
+      ],
+      "previous_median": 0.0865,
+      "current_median": 0.1035,
+      "delta": 0.017
+    },
+    "p50": {
+      "previous": [
+        0.17,
+        0.173
+      ],
+      "current": [
+        0.169,
+        0.172
+      ],
+      "previous_median": 0.1715,
+      "current_median": 0.1705,
+      "delta": -0.001
+    },
+    "p95": {
+      "previous": [
+        0.199,
+        0.203
+      ],
+      "current": [
+        0.428,
+        0.195
+      ],
+      "previous_median": 0.201,
+      "current_median": 0.3115,
+      "delta": 0.1105
+    }
+  },
+  "additional_pair_reason": "Initial current1 p95 .428ms and large-workload .119s differed from the other three samples. One additional previous/current pair was run with unchanged workload and no extra GUI/CPU-heavy operations. All six samples retained; no selective deletion or lowered workload."
+}

@@ -1,0 +1,256 @@
+{
+  "ui_sha256": "b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57",
+  "ui_pid": 82226,
+  "core_pid": 81459,
+  "bundle_id": "com.workbuddy.proxy.codexreview.ui56.b313r48",
+  "capture_method": "native screencapture -x -o -l, own PID onscreen layer 0 window; no crop or scaling",
+  "resize": "CUA drag from [1438,899] to [1098,699] on 1440x901 window screenshot",
+  "captures": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/b313-details-wide.png",
+      "width_px": 1440,
+      "height_px": 901,
+      "sha256": "e40abdbca52b6f90286e822ff39dfcaabc0652524ab73777281c65da7967fc76",
+      "window_number": 1720,
+      "public_artifact": "screenshots/shared-controls-details-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/b313-overview-wide.png",
+      "width_px": 1440,
+      "height_px": 901,
+      "sha256": "d99b362355c17bf1c02bd5304e12dbaa50ea0dadd3c85ab70b801e8b602880c0",
+      "window_number": 1720,
+      "public_artifact": "screenshots/shared-controls-overview-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/b313-summary-wide.png",
+      "width_px": 1440,
+      "height_px": 901,
+      "sha256": "4b13e435714de2844c4df454ff69f056174809fb77eee039ea116ff9934c9320",
+      "window_number": 1720,
+      "public_artifact": "screenshots/shared-controls-summary-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/b313-details-small.png",
+      "width_px": 1100,
+      "height_px": 701,
+      "sha256": "d7bcabad3ea15c3e7f7fdf721203af59ef5b0f2b9ee8226e711ad8efe98f57d9",
+      "window_number": 1720,
+      "public_artifact": "screenshots/shared-controls-details-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/b313-overview-small.png",
+      "width_px": 1100,
+      "height_px": 701,
+      "sha256": "f5b030d6abb38c7a5ea1b99ca5af2898981dc092f998bd17e708f4cd48e207e3",
+      "window_number": 1720,
+      "public_artifact": "screenshots/shared-controls-overview-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/b313-summary-small.png",
+      "width_px": 1100,
+      "height_px": 701,
+      "sha256": "bbeaa29b057816dfb57435ea390052885e2091977144857ed7bd31dc2e73c116",
+      "window_number": 1720,
+      "public_artifact": "screenshots/shared-controls-summary-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/b313-summary-popup-small.png",
+      "width_px": 1100,
+      "height_px": 701,
+      "sha256": "a94097f7d6e421636eba2f951a1645d1c6488413305138cdd34c9adbe8b11804",
+      "window_number": 1720,
+      "public_artifact": "screenshots/shared-controls-summary-popup-1100x700-native-1x.png"
+    }
+  ],
+  "data": "isolated synthetic 2 providers, 5 models, 14 loopback requests, 7700 tokens",
+  "observed": {
+    "views": "Overview, Details and Summary at wide and small; supplier sidebar sub2api selected; clicking it routes to Providers and clicking Statistics returns",
+    "filters": "actual painted arrows clicked; model Down/Return gpt-6 gives 3; sub2api gives 12; both restored All 14; Today then 7 days; refresh Off then 5 seconds",
+    "summary": "Provider 2 and Model 5; small range popup 14 requests / 7700 tokens; Escape closes popup; rightmost columns accessible; scrolling reveals input 7000 / output 700 and cache / coverage",
+    "pagination": "5-second setting; input 2 retained after 7.5 seconds, Jump to page 2 with 4 rows, Prev to page 1 and input 1. Actual refresh tick/window-active state not independently established",
+    "close": "CUA native close button invoked on UI 82226; Core not stopped by this action"
+  },
+  "limitations": [
+    "Details count Tab focus could not be reliably identified in this run; Space/Escape keyboard route unverified on b313",
+    "Summary count keyboard route unverified",
+    "No claim about actual foreground state, UI exit code or wait",
+    "No external AX, global window bounds or external keyboard/click injection used"
+  ],
+  "independent_runtime": {
+    "initial": {
+      "fixture_ready": {
+        "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/shared-controls-final/WorkBuddy Proxy Review.app",
+        "bundle_id": "com.workbuddy.proxy.codexreview.tshared-controls-final",
+        "core_pid": 81459,
+        "port": 58335
+      },
+      "actual_bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/WorkBuddy Proxy UI56 B313.app",
+      "actual_bundle_id": "com.workbuddy.proxy.codexreview.ui56.b313r48",
+      "ui_sha256": "b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57",
+      "core_guard": {
+        "enforced": true,
+        "pid": 81459,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "core_config_sha256_before": "af2c497e03d1a2faefb2d721e733ab91974671db21b9785bff7181abca573ea0",
+      "seed": {
+        "real_http_requests": 14,
+        "statuses": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "expected_input": 7000,
+        "expected_output": 700,
+        "expected_total": 7700
+      },
+      "scope": "Core kernel protected; native GUI isolated via unique bundle and LSEnvironment only. Prepared fixture bundle is not launched; actual unique bundle identity overrides its older generic ID."
+    },
+    "ui_pid": 82226,
+    "ui_pid_gone": true,
+    "ui_exit_code": null,
+    "core_after_ui_closed": {
+      "http_status": 200,
+      "stats_health": "ready",
+      "config_sha256_unchanged": true,
+      "counts": [
+        14,
+        7000,
+        700,
+        7700,
+        200,
+        200
+      ]
+    },
+    "gui_scope": "Raw report contains actual1x screenshots; keyboard focus unverified this version, no assumed auto tick.",
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    },
+    "fixture_exit_code": 0,
+    "core_pid_gone": true
+  },
+  "scope": "UI56 b313 only, no font foundation code. Native1x output; not scaled from older2x images."
+}

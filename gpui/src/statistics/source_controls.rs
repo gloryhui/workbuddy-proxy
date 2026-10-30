@@ -6,6 +6,41 @@ use crate::{
     stats_dto::SourceScope,
 };
 
+/// Kit0.7.3 forces custom Select icons to its rem-based XSmall size and
+/// muted colour. Keep that native slot reserved, but paint the exact Figma
+/// caret separately so the Select's focus, menu and events remain untouched.
+pub(super) fn caret_spacer() -> Icon {
+    Icon::default()
+        .path("studio/stats-chevron.svg")
+        .with_size(px(16.))
+        .min_w(px(16.))
+        .max_w(px(16.))
+        .min_h(px(16.))
+        .max_h(px(16.))
+        .opacity(0.)
+}
+
+pub(super) fn caret_surface(control: impl IntoElement) -> AnyElement {
+    div()
+        .relative()
+        .w_full()
+        .h(px(42.))
+        .child(control)
+        // This decorative SVG has no hitbox/listener; pointer input reaches
+        // the same native trigger beneath it, including at the caret itself.
+        .child(
+            svg()
+                .path("studio/stats-chevron.svg")
+                .size(px(16.))
+                .absolute()
+                // Figma positions this inside the field's one-pixel border.
+                .top(px(13.))
+                .right(px(13.))
+                .text_color(rgb(0x8c96aa)),
+        )
+        .into_any_element()
+}
+
 impl Statistics {
     fn select_source(&mut self, scope: SourceScope, window: &mut Window, cx: &mut Context<Self>) {
         let started = self.event_metrics.begin();
@@ -276,16 +311,20 @@ impl Statistics {
         state: &Entity<ChoiceState>,
         label: &'static str,
     ) -> AnyElement {
-        crate::ui_components::select(state, false)
+        let control = crate::ui_components::select(state, false)
             .w_full()
             .h(px(42.))
+            .pl(px(12.))
+            .pr(px(13.))
+            .icon(caret_spacer())
             .rounded(px(10.))
             .bg(rgb(crate::theme::color::WHITE))
             .border_color(rgb(BORDER))
             .text_color(rgb(crate::theme::color::TEXT_2))
             .text_size(px(12.))
             .accessibility_label(label)
-            .into_any_element()
+            .into_any_element();
+        caret_surface(control)
     }
 
     fn filter_refresh(&self, cx: &mut Context<Self>) -> AnyElement {
