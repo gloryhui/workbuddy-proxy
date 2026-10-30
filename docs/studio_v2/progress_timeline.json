@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T15:43:55+08:00",
+  "updated_at": "2026-10-30T16:08:31+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
+  "code_head": "dcd0ec5647d050d54e15ab61080e4261c7a97bf7",
   "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
   "goal_status": "active",
   "counts": {
@@ -13,13 +13,13 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 52,
+  "recorded_tasks": 53,
   "remaining_final": 40,
   "visual_review": {
     "counts": {
       "not_reviewed": 39,
-      "reviewing": 1,
-      "reviewed_with_differences": 0,
+      "reviewing": 0,
+      "reviewed_with_differences": 1,
       "reviewed": 0
     },
     "source": "visual_review.json",
@@ -27,57 +27,60 @@
   },
   "current_task": {
     "id": 53,
-    "title": "全局逐帧视觉比对：模型编辑弹窗",
-    "status": "validating",
-    "description": "以最新 Figma 59:279 / 59:484 开始完整界面审查；已修控件尺寸、列对齐和局部颜色，编译与192项测试通过，真实交互、两尺寸截图及性能验证进行中。字体、原生弹窗阴影及共享背景保留差异，尚未整帧通过。"
+    "title": "全局逐帧审查：模型能力控件对齐",
+    "status": "recorded",
+    "description": "模型能力原生控件的局部修正已完成编译、192项测试、自动/手动交互、两尺寸原生实拍及8轮性能对比。首帧审查保留1.5px行偏移、档位宽度、字体/阴影和共享资产差异；39帧待首轮比对，40帧最终验收未完成。临时目录删除被执行策略拒绝，已保留并记录。"
   },
   "latest_task": {
-    "id": 52,
-    "title": "Intel 发行版与 Rosetta 实跑验证",
+    "id": 53,
+    "title": "全局逐帧视觉审查与模型能力控件对齐",
     "status": "recorded",
-    "summary": "新增真正链接的x86_64 Core/UI发行版、192项译运行测试及原生界面/保存/两尺寸与原始负载证据；本轮未修改产品Rust/Objective-C、资源、Core、依赖或工作流。证据：构建/架构/测试、实际GUI/保存/退出、1440请求尺寸原生2×实拍、1100请求尺寸原生2×实拍、视觉记录、四轮原基准、清理。",
+    "summary": "正式转入全局逐帧设计比对与差异修复，新增独立视觉审查台账；官方51:2元数据仍为40帧，59:279整帧/59:484弹窗高保真及1440×900参考已读取。本轮完成1帧首轮审查，保留明确差异；39帧尚未开始本轮完整比对，40帧最终验收均未通过。52/53等数字表示专项任务，不能作为界面完成率。证据：构建与范围、真实交互与保存边界、自动1440实拍、自动1100实拍、手动1440实拍、手动1100实拍、小窗限制字段、八轮性能。",
     "highlights": [
-      "新增真正链接的x86_64 Core/UI发行版、192项译运行测试及原生界面/保存/两尺寸与原始负载证据；本轮未修改产品Rust/Objective-C、资源、Core、依赖或工作流。证据：构建/架构/测试、实际GUI/保存/退出、1440请求尺寸原生2×实拍、1100请求尺寸原生2×实拍、视觉记录、四轮原基准、清理。",
-      "这是Apple Silicon主机上的Rosetta译运行，不是Intel CPU/GPU实机或Windows验收。arch -x86_64 uname实返x86_64、译运行sysctl.proc_translated=1；两个发行版与实际测试harness均由lipo确认thin x86_64。沿用既有Cargo target缓存、--locked --offline、每构建jobs2和本轮系统临时目录，未安装/切换工具链、改锁文件或伪造编译器。",
-      "Core release链接91.925s、UI192.827s成功；Core921ba7b965a402ea534a4a1e43f33fff82dbc2404dfc79ad7b48609cedc316b0/8,951,416bytes，UIf2d443d2ba1ae886746250c36e34fc2879b4317e10555dd33399a2fc68078f59/16,552,232bytes。原生arm64仍Core25f/8,428,096与UI675f/15,246,800，源文件SHA对齐UI51。Mach-O minOS12.0/sdk26.2仅链接元数据，不是macOS12实机验证。x86 release cargo test构建及执行146.778s，真正用例运行0.13s，192passed/2既有ignored，harness为x86_64/SHA0b7a9578…"
+      "正式转入全局逐帧设计比对与差异修复，新增独立视觉审查台账；官方51:2元数据仍为40帧，59:279整帧/59:484弹窗高保真及1440×900参考已读取。本轮完成1帧首轮审查，保留明确差异；39帧尚未开始本轮完整比对，40帧最终验收均未通过。52/53等数字表示专项任务，不能作为界面完成率。证据：构建与范围、真实交互与保存边界、自动1440实拍、自动1100实拍、手动1440实拍、手动1100实拍、小窗限制字段、八轮性能。",
+      "仅改Rust+GPUI模型布局/样式与原资源。原styled Checkbox受13px rem影响实际盒14.625px/勾11.375px/间距6.5px；改为组合相同Kit Base Checkbox/Indicator，显式16px盒、12px Figma原SVG、10px标签间距和原生focus-visible；自动只读保持设计颜色且仍disabled，手动依赖禁用继续淡化。同一Flag/get/set/unavailable/notify和能力、草稿、Confirm/Save所有owner回调保持；Core、model_options、能力规则、依赖/锁文件/工作流未改。局部Studio notice/档位使用#EEEDFF/#D5D1FF，三列起点0/198/398，字段329/331与数值对331/331、弹窗内边距对齐。保留AUTO开关、真实来源、未知图片警告、Help/",
+      "首次bb289编译与交互后，完整稿/实拍发现effort外层对齐与颜色被Kit内层及Label默认前景覆盖，仍为黑色居中；最终af174将Label显式满宽/19px行高/前景色修正，重新构建与实拍确认紫色左对齐。两版均保留测试/构建历史，不以编译成功代替渲染验收。最终fmt、192tests/2既有ignored、strict clippy all-targets、x86_64类型检查、arm64 release均成功；最终UI SHA af174b451fdcc28fe7631fae92116e1493aba1ab706e0c126929296e02161720/15,263,312bytes，Core仍25f/8,428,096。此版Intel仅类型检查，UI52旧版Rosetta实跑不自动扩展至此版；既有block0.1.6和Windows门禁保留。"
     ],
     "limits": [
-      "Figma最初返回需要重新认证，暂停视觉修改并只做独立源码/编译检查；用户完成授权后，官方MCP59:279与59:484 metadata、高保真context和截图读取成功。设计最新弹窗728×800及资产已定位，当前仍沿用现有布局，未把这次Intel专项当成全局40帧或弹窗全部资产一比一通过。报告生成器现明确“专项验收与差异修复 · 全量逐帧终验未完成”，并区分专项任务数与已验收界面数；不再保留“Intel仅类型检查”的固定过时文案。",
-      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。“52”是专项记录数，不是界面完成数；当前尚未完成40帧逐帧一比一终验。下一阶段按完整界面设计对照逐项修差异，Intel硬件/Windows/完整HiDPI、读屏、真实WorkBuddy重启、物理托盘与首帧等门禁继续保留；Goal active，进度HTML仍仅静态检查。"
+      "正式转入全局逐帧设计比对与差异修复，新增独立视觉审查台账；官方51:2元数据仍为40帧，59:279整帧/59:484弹窗高保真及1440×900参考已读取。本轮完成1帧首轮审查，保留明确差异；39帧尚未开始本轮完整比对，40帧最终验收均未通过。52/53等数字表示专项任务，不能作为界面完成率。证据：构建与范围、真实交互与保存边界、自动1440实拍、自动1100实拍、手动1440实拍、手动1100实拍、小窗限制字段、八轮性能。"
     ],
     "evidence": [
       {
-        "label": "构建/架构/测试",
-        "href": "benchmarks/intel-runtime-build.json"
+        "label": "构建与范围",
+        "href": "benchmarks/model-frame-build.json"
       },
       {
-        "label": "实际GUI/保存/退出",
-        "href": "benchmarks/intel-runtime-gui-validation.json"
+        "label": "真实交互与保存边界",
+        "href": "benchmarks/model-frame-gui-validation.json"
       },
       {
-        "label": "1440请求尺寸原生2×实拍",
-        "href": "screenshots/intel-runtime-1440x900-2x.png"
+        "label": "自动1440实拍",
+        "href": "screenshots/model-frame-auto-1440x900-native-2x.png"
       },
       {
-        "label": "1100请求尺寸原生2×实拍",
-        "href": "screenshots/intel-runtime-1100x700-2x.png"
+        "label": "自动1100实拍",
+        "href": "screenshots/model-frame-auto-1100x700-native-2x.png"
       },
       {
-        "label": "视觉记录",
-        "href": "benchmarks/intel-runtime-visual-validation.json"
+        "label": "手动1440实拍",
+        "href": "screenshots/model-frame-manual-1440x900-native-2x.png"
       },
       {
-        "label": "四轮原基准",
-        "href": "benchmarks/intel-runtime-performance-summary.json"
+        "label": "手动1100实拍",
+        "href": "screenshots/model-frame-manual-1100x700-native-2x.png"
       },
       {
-        "label": "清理",
-        "href": "benchmarks/intel-runtime-cleanup.json"
+        "label": "小窗限制字段",
+        "href": "screenshots/model-frame-limits-1100x700-native-2x.png"
+      },
+      {
+        "label": "八轮性能",
+        "href": "benchmarks/model-frame-performance-summary.json"
       }
     ],
-    "commit": "a44a1c3d0d38f2153f26dbaab23ce641072f8919",
-    "date": "2026-10-30T15:13:39+08:00",
-    "commit_subject": "docs(studio): record Intel release and translated runtime checks",
+    "commit": "dcd0ec5647d050d54e15ab61080e4261c7a97bf7",
+    "date": "2026-10-30T16:07:34+08:00",
+    "commit_subject": "fix(studio): align native model capability controls with Figma",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -241,30 +244,41 @@
       "node": "59:279",
       "title": "07 / STUDIO V2 · 编辑模型能力",
       "source": "ui/model_editor.rs, model_options.rs, ui.rs",
-      "detail": "部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；完整IME/无障碍/跨平台及精细审计待续",
+      "detail": "部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；UI53首轮全帧审查/16px原生checkbox+12px原资源/颜色列对齐与两尺寸实拍已记录；仍有1.5px纵向、档位宽度、字体/阴影/共享资产余差，完整键盘IME/无障碍/跨平台待续，未整帧通过",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-279",
       "visual_review": {
         "id": "59:279",
         "name": "07 / STUDIO V2 · 编辑模型能力",
-        "review_status": "reviewing",
-        "scope": "本轮完整界面设计比对进行中；高保真弹窗59:484已读，运行交互/两尺寸/性能仍在验证。",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI53 首轮完整界面审查已记录：高保真整帧/弹窗、31资产清单、几何与颜色测量、两尺寸自动/手动实拍及功能交互；保留明确差异，未最终通过。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "layout": "已测量；列起点/notice尺寸已对齐，仍有1.5px纵向与档位宽度余差",
+          "colors": "notice与checkbox主色经ICC分析符合；文字/按钮/背景仍需全量逐项核对",
+          "typography": "保留差异：Noto Sans SC设计与原生字体回退/权重/基线未统一",
+          "assets": "31设计资产中26份与本地字节完全一致；皮肤/侧栏链接2份哈希不同待视觉复核，3个装饰traffic lights沿用真实系统控件；未宣称所有slot几何通过",
+          "states": "最终候选AUTO只读与manual依赖/取消通过；中间版Confirm/Save独立读回通过",
+          "interaction": "最终候选AUTO点击+Space、能力和effort点击通过；完整Tab/ShiftTab/Enter、AX读屏待验",
+          "native_1440": "最终af174自动/手动2880x1802原生图已核对",
+          "native_1100": "最终af174自动/手动/限制滚动2200x1402原生图已核对"
         },
         "differences": [
-          "原生 Kit 弹窗阴影与稿中 0/18/42 阴影不同，尚未修正。",
-          "Figma 使用 Noto Sans SC；当前 macOS 原生字体回退仍需逐字与基线复核。",
-          "整帧共享背景、资产及扩展业务控件的对照仍待完成；不因局部控件修正标记整帧通过。"
+          "复选框两行相对Figma约低1.5逻辑像素；notice与确认按钮存在约0.5px纵向余差。",
+          "五档位按钮当前flex约125.2px，稿为124px，横向累计约4.8px；后续需处理宽/窄适配。",
+          "原生Kit双层黑色弹窗阴影与稿0/18/42 rgba(20,31,59,.22)不同，且Kit在调用方样式后覆盖。",
+          "设计Noto Sans SC与当前macOS系统字体回退、输入文字权重/基线仍有差异；取消按钮底色等局部外观待续。",
+          "共享背景/动态真实日志与状态不使用设计假数据；皮肤/侧栏链接SVG哈希不同，完整静态asset slot与effective geometry尚未全部通过。",
+          "Help/默认档位Select/自动模式开关为原业务交互保留；完整键盘和无障碍仍待统一终验。"
         ],
-        "evidence": []
+        "evidence": [
+          "benchmarks/model-frame-build.json",
+          "benchmarks/model-frame-gui-validation.json",
+          "benchmarks/model-frame-assets.json",
+          "benchmarks/model-frame-geometry.json",
+          "benchmarks/model-frame-performance-summary.json",
+          "screenshots/model-frame-auto-1440x900-native-2x.png",
+          "screenshots/model-frame-auto-1100x700-native-2x.png"
+        ]
       }
     },
     {
@@ -3436,6 +3450,58 @@
       "date": "2026-10-30T15:13:39+08:00",
       "commit_subject": "docs(studio): record Intel release and translated runtime checks",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 53,
+      "title": "全局逐帧视觉审查与模型能力控件对齐",
+      "status": "recorded",
+      "summary": "正式转入全局逐帧设计比对与差异修复，新增独立视觉审查台账；官方51:2元数据仍为40帧，59:279整帧/59:484弹窗高保真及1440×900参考已读取。本轮完成1帧首轮审查，保留明确差异；39帧尚未开始本轮完整比对，40帧最终验收均未通过。52/53等数字表示专项任务，不能作为界面完成率。证据：构建与范围、真实交互与保存边界、自动1440实拍、自动1100实拍、手动1440实拍、手动1100实拍、小窗限制字段、八轮性能。",
+      "highlights": [
+        "正式转入全局逐帧设计比对与差异修复，新增独立视觉审查台账；官方51:2元数据仍为40帧，59:279整帧/59:484弹窗高保真及1440×900参考已读取。本轮完成1帧首轮审查，保留明确差异；39帧尚未开始本轮完整比对，40帧最终验收均未通过。52/53等数字表示专项任务，不能作为界面完成率。证据：构建与范围、真实交互与保存边界、自动1440实拍、自动1100实拍、手动1440实拍、手动1100实拍、小窗限制字段、八轮性能。",
+        "仅改Rust+GPUI模型布局/样式与原资源。原styled Checkbox受13px rem影响实际盒14.625px/勾11.375px/间距6.5px；改为组合相同Kit Base Checkbox/Indicator，显式16px盒、12px Figma原SVG、10px标签间距和原生focus-visible；自动只读保持设计颜色且仍disabled，手动依赖禁用继续淡化。同一Flag/get/set/unavailable/notify和能力、草稿、Confirm/Save所有owner回调保持；Core、model_options、能力规则、依赖/锁文件/工作流未改。局部Studio notice/档位使用#EEEDFF/#D5D1FF，三列起点0/198/398，字段329/331与数值对331/331、弹窗内边距对齐。保留AUTO开关、真实来源、未知图片警告、Help/",
+        "首次bb289编译与交互后，完整稿/实拍发现effort外层对齐与颜色被Kit内层及Label默认前景覆盖，仍为黑色居中；最终af174将Label显式满宽/19px行高/前景色修正，重新构建与实拍确认紫色左对齐。两版均保留测试/构建历史，不以编译成功代替渲染验收。最终fmt、192tests/2既有ignored、strict clippy all-targets、x86_64类型检查、arm64 release均成功；最终UI SHA af174b451fdcc28fe7631fae92116e1493aba1ab706e0c126929296e02161720/15,263,312bytes，Core仍25f/8,428,096。此版Intel仅类型检查，UI52旧版Rosetta实跑不自动扩展至此版；既有block0.1.6和Windows门禁保留。"
+      ],
+      "limits": [
+        "正式转入全局逐帧设计比对与差异修复，新增独立视觉审查台账；官方51:2元数据仍为40帧，59:279整帧/59:484弹窗高保真及1440×900参考已读取。本轮完成1帧首轮审查，保留明确差异；39帧尚未开始本轮完整比对，40帧最终验收均未通过。52/53等数字表示专项任务，不能作为界面完成率。证据：构建与范围、真实交互与保存边界、自动1440实拍、自动1100实拍、手动1440实拍、手动1100实拍、小窗限制字段、八轮性能。"
+      ],
+      "evidence": [
+        {
+          "label": "构建与范围",
+          "href": "benchmarks/model-frame-build.json"
+        },
+        {
+          "label": "真实交互与保存边界",
+          "href": "benchmarks/model-frame-gui-validation.json"
+        },
+        {
+          "label": "自动1440实拍",
+          "href": "screenshots/model-frame-auto-1440x900-native-2x.png"
+        },
+        {
+          "label": "自动1100实拍",
+          "href": "screenshots/model-frame-auto-1100x700-native-2x.png"
+        },
+        {
+          "label": "手动1440实拍",
+          "href": "screenshots/model-frame-manual-1440x900-native-2x.png"
+        },
+        {
+          "label": "手动1100实拍",
+          "href": "screenshots/model-frame-manual-1100x700-native-2x.png"
+        },
+        {
+          "label": "小窗限制字段",
+          "href": "screenshots/model-frame-limits-1100x700-native-2x.png"
+        },
+        {
+          "label": "八轮性能",
+          "href": "benchmarks/model-frame-performance-summary.json"
+        }
+      ],
+      "commit": "dcd0ec5647d050d54e15ab61080e4261c7a97bf7",
+      "date": "2026-10-30T16:07:34+08:00",
+      "commit_subject": "fix(studio): align native model capability controls with Figma",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -3826,6 +3892,21 @@
         "not_reviewed": 39,
         "reviewing": 1,
         "reviewed_with_differences": 0,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T16:08:31+08:00",
+      "note": "完成UI-53专项并记录首帧全局审查差异；39帧未首轮比对、40帧未最终通过，临时清理受策略限制",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 39,
+        "reviewing": 0,
+        "reviewed_with_differences": 1,
         "reviewed": 0
       }
     }
