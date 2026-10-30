@@ -204,10 +204,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-31T03:11:22+08:00",
+  "updated_at": "2026-10-31T04:06:45+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "76cda069a3f2c154e5c3b9281ac823dcc9f12bea",
+  "code_head": "e47267476e7b9544a6a575c253f62adc65a69ce4",
   "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
   "goal_status": "active",
   "counts": {
@@ -217,7 +217,7 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 60,
+  "recorded_tasks": 61,
   "remaining_final": 40,
   "visual_review": {
     "counts": {
@@ -230,59 +230,61 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 61,
-    "title": "供应商输入焦点、密码图标与禁用态",
+    "id": 62,
+    "title": "四协议完整画板首审与共享表单差异",
     "status": "planned",
-    "description": "下一项修正原生输入焦点可见性和密码图标相对参考左5px差异，并用可控夹具补禁用态实际观察；本项尚未实施。保留现有输入/遮罩/按钮处理与40帧完整目标，最终剩余40。"
+    "description": "下一批先刷新51:2清单，再集中读取61:289/61:561/61:838/61:1111四协议完整画板与资源，对照当前Rust原生弹窗识别并收敛共享表单差异；本批尚未实施。保持40帧完整范围和真实协议/草稿/保存语义，最终剩余40。"
   },
   "latest_task": {
-    "id": 60,
-    "title": "连接表单默认色、原生输入样式与菜单触发器",
+    "id": 61,
+    "title": "输入焦点、密码图标、清晰选区与受控禁用态",
     "status": "recorded",
-    "summary": "重新读取官方54:216完整高保真上下文与局部截图，按设计核对将Studio名称/Key/地址及预设/协议触发器的默认文字#4c566d、背景#f3f5fa、边框#e7eaf2、10px圆角、13/19文字规格接入原生控件。只改theme、ui_components、providers和provider_choices四个Rust文件；思考强度菜单排除于此次触发器修正，六旧皮肤保留原配置/样式路径。InputState、密码遮罩、焦点、",
+    "summary": "对照最新官方54:231/54:233，保留17px原SVG、24px原按钮及toggle_masked处理，Studio按钮右移5.5/下移1.5逻辑像素，并添加原生键盘焦点描边。原资产核对逐字节匹配本轮官方下载，眼睛几何中参考局部墨迹[322,16,337,25]按字段原点[670,398]平移后，当前x边界完全相同、垂直中心相同，上下各1px栅格余差保留，不改画布或SVG路径。原Figma默认态不含焦点/选区状态；焦点采用既有语义",
     "highlights": [
-      "重新读取官方54:216完整高保真上下文与局部截图，按设计核对将Studio名称/Key/地址及预设/协议触发器的默认文字#4c566d、背景#f3f5fa、边框#e7eaf2、10px圆角、13/19文字规格接入原生控件。只改theme、ui_components、providers和provider_choices四个Rust文件；思考强度菜单排除于此次触发器修正，六旧皮肤保留原配置/样式路径。InputState、密码遮罩、焦点、菜单SelectEvent及原保存/Test处理器保持，不改Core、协议、查询、依赖或锁文件。最终实现是原Input的局部样式，无额外状态、预绘制回调、计时器或IO。",
-      "冻结构建：最终7d7ff1ea2988a2289f05242434f7d56a0b4b4f59df27b6dacdc6842f7c98ee44，42,426,128bytes，与UI59文件尺寸相同、SHA不同。fmt、206测试（204通过/2既有忽略）、strict all-targets clippy、Intel类型检查及arm64 release全0；构建前后四源码SHA冻结一致。Intel类型检查不是Intel硬件验收。7cf4/e330两个中间候选虽编译通过，但实拍名称/URL仍为旧#161c2c，未放行；按源码差异保留失败版本，最终移除无效编辑器颜色投影，依据gpui-base单行/密码绘制实际使用window.text_style().color，直接设置Input.text_color。一次开发构建期间改动源码的结果未作实机依据，一次未使用参数clippy失败也在最终完整",
-      "最终原生交互：唯一隔离UI98282/Core98113，名称输入UI60 draft后Cancel恢复；Key显示/隐藏标签正确并恢复masked，未记录/截图明文；预设打开Esc、协议Down/Up后Esc保留Chat；名称方向/Shift键后值不变，但选区未可靠辨认。1100小窗表单可读、中心滚动取回模型表/底栏；英文→中文、Mono→Studio恢复，输入和协议值保留。1440默认原图、1100默认原图及焦点/Mono/恢复/成功两尺寸共七张最终图逐字节归档；加中间版本三张实拍和官方局部参考，均见证据映射。原始1440×901/1100×701保留OS额外1物理行，不裁剪/缩放/重绘。"
+      "对照最新官方54:231/54:233，保留17px原SVG、24px原按钮及toggle_masked处理，Studio按钮右移5.5/下移1.5逻辑像素，并添加原生键盘焦点描边。原资产核对逐字节匹配本轮官方下载，眼睛几何中参考局部墨迹[322,16,337,25]按字段原点[670,398]平移后，当前x边界完全相同、垂直中心相同，上下各1px栅格余差保留，不改画布或SVG路径。原Figma默认态不含焦点/选区状态；焦点采用既有语义强调色，不宣称新增了Figma焦点稿。",
+      "三个Studio输入根据原FocusHandle显示#655cf4实线边框，失焦恢复#e7eaf2，busy时不显示焦点色；仅在原Change/Focus/Blur事件通知owner，不捕获部分加载表单、不新增计时器或IO。原ring色#f4f6ff与字段bg#f3f5fa仅差RGB1/1/5，实拍旧选区确有614像素而非没有选区；统一Studio原生文本选择填充为既有强调色22%透明，最终选区为#d4d3f9同614像素，文字仍#4c566d。六旧皮肤选择色和输入样式分支保持，sidebar/log自身选择样式不改。只修改theme、ui_components、ui/providers和ui四个Rust文件，不改Core、协议、依赖/锁文件、保存格式或Test调用顺序。",
+      "最终冻结构建：63f57fe10055b2679abff3525f349a4f98845621b71109efc67f80b55c6aef1e、42,426,128bytes，与旧7d7尺寸相同、SHA不同；fmt、206测试（204通过/2既有忽略）、strict all-targets clippy、Intel类型检查及arm64 release均0，构建前后四源码SHA一致。一次初始缺少FocusableExt导入的编译错误已在最终门禁前修正，未作实机依据。版本范围证明3df到最终仅Theme选择色变化，其余三个焦点/眼睛/处理器文件字节相同；3df中间实机无Test、0请求/Core配置逐字节不变，不混称其截图为最终版。Intel检查不是Intel硬件实机验收。"
     ],
-    "limits": [],
+    "limits": [
+      "焦点像素记录名称default/focus/blur边框#e7eaf2→#655cf4→#e7eaf2，另两框不误亮；最终版复验键盘与实际取消。图像检验是原生1× encodedRGB，原图不改，不代表准确字体版本、全字形/边框AA、完整IME/读屏或全部控件键盘门禁已通过。"
+    ],
     "evidence": [
       {
-        "label": "设计核对",
-        "href": "benchmarks/provider-fields-design-audit.json"
+        "label": "原资产核对",
+        "href": "benchmarks/provider-focus-asset-audit.json"
       },
       {
-        "label": "冻结构建",
-        "href": "benchmarks/provider-fields-build.json"
+        "label": "眼睛几何",
+        "href": "benchmarks/provider-focus-eye-geometry.json"
       },
       {
-        "label": "源码差异",
-        "href": "benchmarks/provider-fields-source-scope.json"
+        "label": "实拍旧选区",
+        "href": "benchmarks/provider-focus-selection-before.json"
+      },
+      {
+        "label": "最终选区",
+        "href": "benchmarks/provider-focus-selection-after.json"
+      },
+      {
+        "label": "最终冻结构建",
+        "href": "benchmarks/provider-focus-build.json"
+      },
+      {
+        "label": "版本范围",
+        "href": "benchmarks/provider-focus-source-scope.json"
       },
       {
         "label": "最终原生交互",
-        "href": "benchmarks/provider-fields-final-gui-validation.json"
+        "href": "benchmarks/provider-focus-final-gui-validation.json"
       },
       {
-        "label": "1440默认原图",
-        "href": "screenshots/provider-fields-final-fields-default-wide.png"
-      },
-      {
-        "label": "1100默认原图",
-        "href": "screenshots/provider-fields-final-fields-default-small.png"
-      },
-      {
-        "label": "证据映射",
-        "href": "benchmarks/provider-fields-artifacts.json"
-      },
-      {
-        "label": "像素核对",
-        "href": "benchmarks/provider-fields-geometry.json"
+        "label": "1440选区原图",
+        "href": "screenshots/provider-focus-final-selection-name-wide.png"
       }
     ],
-    "commit": "76cda069a3f2c154e5c3b9281ac823dcc9f12bea",
-    "date": "2026-10-31T03:10:56+08:00",
-    "commit_subject": "fix(gpui): match Studio connection field presentation",
+    "commit": "e47267476e7b9544a6a575c253f62adc65a69ce4",
+    "date": "2026-10-31T04:05:51+08:00",
+    "commit_subject": "fix(gpui): make Studio input focus and selection visible",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -342,27 +344,27 @@
       "node": "54:2",
       "title": "02 / STUDIO V2 · 供应商管理",
       "source": "ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs",
-      "detail": "部分：UI58官方30资产/整帧首审留差异，五主要区域几何和Studio模型列宽对齐；两尺寸/单模型/256末行/编辑取消/200SSE与503/原字段保留/四轮负载已验。UI59连接徽章已完成身份/配置绑定、复制继承、两尺寸/故障恢复与原负载；UI60默认输入/触发器颜色边框圆角与两尺寸/原负载已验；焦点/密码图标/禁用态、AA及完整无障碍/跨平台待续",
+      "detail": "部分：UI58官方30资产/整帧首审留差异，五主要区域几何和Studio模型列宽对齐；两尺寸/单模型/256末行/编辑取消/200SSE与503/原字段保留/四轮负载已验。UI59连接徽章已完成身份/配置绑定、复制继承、两尺寸/故障恢复与原负载；UI60默认输入/触发器颜色边框圆角与两尺寸/原负载已验；UI61焦点/选区可见、眼睛位置与受控busy/恢复已实拍；普通按钮完整状态、AA及完整无障碍/跨平台待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=54-2",
       "visual_review": {
         "id": "54:2",
         "name": "02 / STUDIO V2 · 供应商管理",
         "review_status": "reviewed_with_differences",
-        "scope": "UI58重新读取完整官方54:2、30资产及原始导出，最终ec7e两尺寸/默认与单模型/256容量/真实Test成功和失败及原负载对照完成；整帧保留明确差异，未最终通过。 UI59连接徽章专项完成，最终53f重开/两尺寸/自然故障刷新留证；整帧仍保留差异。 UI60最终7d7默认输入/触发器样式、两尺寸真实交互及原负载完成，焦点/密码图标/禁用态等继续留差异。",
+        "scope": "UI58供应商整帧几何/30资产首审，UI59连接徽章，UI60默认输入/触发器样式，UI61最终63f焦点/眼睛/清晰选区、两尺寸、受控busy与原负载留证；保留明确差异，未整帧最终通过。",
         "checks": {
           "layout": "最终ec7e原始1x宽窗的摘要[288,166,1120,44]、连接[288,222,755,338]、模型[288,572,755,253]、运行[1060,222,348,279]、日志[1060,516,348,309]四直边已核对；原4模型/底栏完整，小窗中心/右栏/表体各自可滚。错误提示允许卡片增高，不硬裁掉真实状态。",
-          "colors": "原图按ICC在内存转sRGB，主要背景/边框已采样；caret沿用同原SVG/#8C96AA。输入底色/文字、按钮及全部hover/focus/disabled、全帧颜色仍有差异，未完整通过。 UI60最终名称/URL/协议实心像素#4c566d、背景#f3f5fa、边框#e7eaf2已测，旧ink为0；全部状态颜色未通过。",
+          "colors": "默认输入/触发器body#4c566d、fill#f3f5fa、line#e7eaf2已测；UI61三输入焦点采用原语义#655cf4，名称选区从近似底色改为22%强调填充、实拍#d4d3f9。busy八项视觉置灰但仅预设实际点击，普通按钮完整状态/全帧AA未终验。",
           "typography": "Provider28/41与96px流区别于统计27/39与97px。原Noto Sans SC/Inter按连接/摘要/模型/运行角色使用；若干标题/表头墨迹框和首行编辑图标已对齐，供应商标题下缘/日志/AA和精确字体版本仍不同或未证明。",
           "assets": "30个官方原资产：25本地字节一致，2完整XML仅本地clipPath ID及引用重命名，3装饰trafficlights使用真实OS系统控件。首行编辑墨迹[979,669,991,681]对齐，原28px热区/处理器保留；其余状态槽位尚未全验。",
           "states": "默认2供应商5模型与单模型帮助区；实际草稿删4→3后Cancel恢复4。最终Test各一次200/SSE与503，独立SQLite确认14relay200+1test200+1test503。容量2供应商256模型、A255/B1、Add点击无效。UI58当时未实现徽章；当前见UI59记录。 UI59按实际TestReport绑定供应商/配置，五状态、编辑取消/失败替换、复制继承、新ID、重开清空及Core控制故障恢复已分版本实测。",
-          "interaction": "模型/端口/协议/获取5候选/新增取消、中英恢复、Mono→Studio、选中显示Remove、宽窄滚动已验。256容量End到fill-250并编辑核ID后Esc，未Save/Test/Sync/删除。主夹具Test原先保存再测试语义保持、所有原字段递归一致；序列化新增默认值导致字节SHA不同。完整键盘/IME/AX未验。 UI60最终名称修改Cancel、Key显隐再遮罩、预设/协议Esc、两尺寸/语言及Mono恢复、一次Test200/SSE留证；未捕获busy，禁用未验。",
+          "interaction": "模型/端口/协议/获取5候选/新增取消、中英恢复、Mono→Studio、选中显示Remove、宽窄滚动已验。256容量End到fill-250并编辑核ID后Esc，未Save/Test/Sync/删除。主夹具Test原先保存再测试语义保持、所有原字段递归一致；序列化新增默认值导致字节SHA不同。完整键盘/IME/AX未验。 UI60最终名称修改Cancel、Key显隐再遮罩、预设/协议Esc、两尺寸/语言及Mono恢复、一次Test200/SSE留证；未捕获busy，禁用未验。 UI61最终63f Name→Tab Key→Tab眼睛/Return Space显隐回遮罩、URL不串框、Cmd+A+Backspace清空/Cancel、两尺寸/Mono恢复，以及受控busy中预设点击无菜单、200后恢复与直连恢复均留证；未逐个点击其余disabled控件，不等于完整IME/AX。",
           "native_1440": "最终ec7e原始1440×901/目标1440×900/native1x，默认四行/底栏/运行/日志、Test200及503、256满载分别留原图；没有裁掉原生额外1行。",
           "native_1100": "最终ec7e原始1100×701/目标1100×700/native1x，默认/中心滚动/单模型/英文/失败/256末行和底栏均有原图。失败需右栏外滚和日志内滚，Runtime标题/错误/完整日志不可同时显示。"
         },
         "differences": [
           "UI59已实现92×27独立连接徽章，原生字形上缘AA仍差1px；仅为显式单模型/被测配置历史结果，非持续上游健康。最终53f重开/故障自然刷新已验，普通编辑/语言路径为明确标注的eec3证据。",
-          "UI60默认连接输入/预设协议触发器颜色与10px圆角接入；焦点框浅、密码图标墨迹相对参考左5px、普通按钮状态仍待修验。圆角栅格/标题日志AA、协议链接右1px及原生表头边框仍有差异，字体版本/全角色未证明一致。",
+          "UI61已解决输入焦点浅、眼睛左5px和近似底色选区；眼睛x边界/垂直中心匹配，仍有上下各1px AA，圆角栅格/日志标题/表头边框及字体版本等余差。busy图中编辑资料文字仍呈强调色，普通操作按钮完整hover/focus/disabled状态继续；八项禁用只做视觉与预设点击，其他处理器未逐个实测。",
           "保留真实URL动态说明、原有日志复制清空、手动模型元数据/额外业务按钮与实际计数；不写死参考的端口、名称、请求0或上游连接正常。",
           "小窗默认下部内容通过中心内滚取回；错误态右栏可滚且日志保留内滚，不能把截图当作完整键盘/IME/AX或全状态通过。",
           "首帧模型宽度估算补齐两层边框并与预绘制宽度相符；尚无首帧闪动/输入延迟/FPS录制。Windows/Intel硬件/HiDPI及全部状态未终验。"
@@ -403,7 +405,18 @@
           "benchmarks/provider-fields-independent-proof.json",
           "benchmarks/provider-fields-performance-summary.json",
           "screenshots/provider-fields-final-fields-default-wide.png",
-          "screenshots/provider-fields-final-fields-default-small.png"
+          "screenshots/provider-fields-final-fields-default-small.png",
+          "benchmarks/provider-focus-build.json",
+          "benchmarks/provider-focus-asset-audit.json",
+          "benchmarks/provider-focus-eye-geometry.json",
+          "benchmarks/provider-focus-selection-after.json",
+          "benchmarks/provider-focus-final-gui-validation.json",
+          "benchmarks/provider-focus-final-gate-held-independent-proof.json",
+          "benchmarks/provider-focus-independent-proof.json",
+          "benchmarks/provider-focus-performance-summary.json",
+          "screenshots/provider-focus-final-selection-name-wide.png",
+          "screenshots/provider-focus-final-selection-name-small.png",
+          "screenshots/provider-focus-final-busy-wide.png"
         ]
       }
     },
@@ -1499,7 +1512,7 @@
     },
     {
       "title": "供应商管理",
-      "implemented": "搜索、0/1/2/20/64列表、新增/复制/编辑/删除、草稿恢复与保存主要路径已验；UI58补齐两尺寸主区域、256模型末行及Test200/SSE与503；UI59完成按供应商/配置绑定的连接徽章、复制继承及故障恢复；UI60补齐默认连接输入/菜单触发器样式及真实回归。",
+      "implemented": "搜索、0/1/2/20/64列表、新增/复制/编辑/删除、草稿恢复与保存主要路径已验；UI58补齐两尺寸主区域、256模型末行及Test200/SSE与503；UI59完成按供应商/配置绑定的连接徽章、复制继承及故障恢复；UI60补齐默认连接输入/菜单触发器样式；UI61完成输入焦点/选区/眼睛位置与受控busy实拍及恢复。",
       "pending": "完整视觉、全部busy/异常状态、无障碍和跨平台待验。",
       "tasks": [
         4,
@@ -1510,7 +1523,8 @@
         33,
         58,
         59,
-        60
+        60,
+        61
       ]
     },
     {
@@ -4302,6 +4316,58 @@
       "date": "2026-10-31T03:10:56+08:00",
       "commit_subject": "fix(gpui): match Studio connection field presentation",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 61,
+      "title": "输入焦点、密码图标、清晰选区与受控禁用态",
+      "status": "recorded",
+      "summary": "对照最新官方54:231/54:233，保留17px原SVG、24px原按钮及toggle_masked处理，Studio按钮右移5.5/下移1.5逻辑像素，并添加原生键盘焦点描边。原资产核对逐字节匹配本轮官方下载，眼睛几何中参考局部墨迹[322,16,337,25]按字段原点[670,398]平移后，当前x边界完全相同、垂直中心相同，上下各1px栅格余差保留，不改画布或SVG路径。原Figma默认态不含焦点/选区状态；焦点采用既有语义",
+      "highlights": [
+        "对照最新官方54:231/54:233，保留17px原SVG、24px原按钮及toggle_masked处理，Studio按钮右移5.5/下移1.5逻辑像素，并添加原生键盘焦点描边。原资产核对逐字节匹配本轮官方下载，眼睛几何中参考局部墨迹[322,16,337,25]按字段原点[670,398]平移后，当前x边界完全相同、垂直中心相同，上下各1px栅格余差保留，不改画布或SVG路径。原Figma默认态不含焦点/选区状态；焦点采用既有语义强调色，不宣称新增了Figma焦点稿。",
+        "三个Studio输入根据原FocusHandle显示#655cf4实线边框，失焦恢复#e7eaf2，busy时不显示焦点色；仅在原Change/Focus/Blur事件通知owner，不捕获部分加载表单、不新增计时器或IO。原ring色#f4f6ff与字段bg#f3f5fa仅差RGB1/1/5，实拍旧选区确有614像素而非没有选区；统一Studio原生文本选择填充为既有强调色22%透明，最终选区为#d4d3f9同614像素，文字仍#4c566d。六旧皮肤选择色和输入样式分支保持，sidebar/log自身选择样式不改。只修改theme、ui_components、ui/providers和ui四个Rust文件，不改Core、协议、依赖/锁文件、保存格式或Test调用顺序。",
+        "最终冻结构建：63f57fe10055b2679abff3525f349a4f98845621b71109efc67f80b55c6aef1e、42,426,128bytes，与旧7d7尺寸相同、SHA不同；fmt、206测试（204通过/2既有忽略）、strict all-targets clippy、Intel类型检查及arm64 release均0，构建前后四源码SHA一致。一次初始缺少FocusableExt导入的编译错误已在最终门禁前修正，未作实机依据。版本范围证明3df到最终仅Theme选择色变化，其余三个焦点/眼睛/处理器文件字节相同；3df中间实机无Test、0请求/Core配置逐字节不变，不混称其截图为最终版。Intel检查不是Intel硬件实机验收。"
+      ],
+      "limits": [
+        "焦点像素记录名称default/focus/blur边框#e7eaf2→#655cf4→#e7eaf2，另两框不误亮；最终版复验键盘与实际取消。图像检验是原生1× encodedRGB，原图不改，不代表准确字体版本、全字形/边框AA、完整IME/读屏或全部控件键盘门禁已通过。"
+      ],
+      "evidence": [
+        {
+          "label": "原资产核对",
+          "href": "benchmarks/provider-focus-asset-audit.json"
+        },
+        {
+          "label": "眼睛几何",
+          "href": "benchmarks/provider-focus-eye-geometry.json"
+        },
+        {
+          "label": "实拍旧选区",
+          "href": "benchmarks/provider-focus-selection-before.json"
+        },
+        {
+          "label": "最终选区",
+          "href": "benchmarks/provider-focus-selection-after.json"
+        },
+        {
+          "label": "最终冻结构建",
+          "href": "benchmarks/provider-focus-build.json"
+        },
+        {
+          "label": "版本范围",
+          "href": "benchmarks/provider-focus-source-scope.json"
+        },
+        {
+          "label": "最终原生交互",
+          "href": "benchmarks/provider-focus-final-gui-validation.json"
+        },
+        {
+          "label": "1440选区原图",
+          "href": "screenshots/provider-focus-final-selection-name-wide.png"
+        }
+      ],
+      "commit": "e47267476e7b9544a6a575c253f62adc65a69ce4",
+      "date": "2026-10-31T04:05:51+08:00",
+      "commit_subject": "fix(gpui): make Studio input focus and selection visible",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -5058,6 +5124,51 @@
     {
       "date": "2026-10-31T03:11:22+08:00",
       "note": "UI60完成后排入UI61；仍为分项差异修复与验收阶段，全局最终验收未完成。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 0,
+        "reviewed_with_differences": 5,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T03:24:58+08:00",
+      "note": "UI61进入冻结候选实机验证；保留40帧完整目标，未升级整帧最终通过。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 0,
+        "reviewed_with_differences": 5,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T04:06:45+08:00",
+      "note": "UI61代码及证据已提交：修复选区低对比并真实捕获busy；不将人为控制等待计作性能。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 0,
+        "reviewed_with_differences": 5,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T04:06:45+08:00",
+      "note": "UI61完成后转入四协议完整画板首审；35帧待首审、5帧已审查保留差异，全局最终验收未完成。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
