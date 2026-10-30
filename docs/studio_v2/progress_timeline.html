@@ -198,10 +198,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T10:10:54+08:00",
+  "updated_at": "2026-10-30T11:11:42+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "c000c98d296adc10dc3ffca6194475aea0c1c637",
+  "code_head": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -211,63 +211,61 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 50,
+  "recorded_tasks": 51,
   "current_task": {
-    "id": 50,
-    "title": "真实拼音 IME 与模型名称取消控制符守卫",
+    "id": 51,
+    "title": "模型编辑 Escape 与满载目录回归",
     "status": "recorded",
-    "description": "当前青简逐键拼音、组合取消/提交、UndoRedo、显式保存与冷重开已验；仅模型显示名加入既有Core控制字符规则，两尺寸原生2×截图和六轮性能留证，保留RSS上升观察。"
+    "description": "补模型输入专属Esc路由并保留组合优先级；最终两尺寸普通/真实拼音Esc和256行首末实拍通过，旧版容量搜索与256范围删除草稿边界、对齐滚动资源及原始基准留证。"
   },
   "latest_task": {
-    "id": 50,
-    "title": "真实拼音 IME 与模型名称取消控制符守卫",
+    "id": 51,
+    "title": "模型编辑 Escape 与满载目录回归",
     "status": "recorded",
-    "summary": "在当前青简输入源完成真实逐键拼音→Space汉字、组合Esc/Return、UndoRedo、草稿/显式保存和独立冷载入，并修复模型显示名在组合取消后混入U+001B的问题。证据：编译、真实交互/落盘、方法边界、1440请求尺寸原生2×图、1100请求尺寸原生2×图、冷重开、六轮性能、清理。",
+    "summary": "为模型编辑输入框补明确的原生Escape关闭路由，并完成64供应商/256模型的满载专项。证据：编译、旧版与失败中间版、真实交互/生命周期/配置、1440请求尺寸原生2×图、1100请求尺寸原生2×图、组合取消小窗、资源、性能、清理。",
     "highlights": [
-      "在当前青简输入源完成真实逐键拼音→Space汉字、组合Esc/Return、UndoRedo、草稿/显式保存和独立冷载入，并修复模型显示名在组合取消后混入U+001B的问题。证据：编译、真实交互/落盘、方法边界、1440请求尺寸原生2×图、1100请求尺寸原生2×图、冷重开、六轮性能、清理。",
-      "用户明确授权只读TISCopyCurrentKeyboardInputSource取得当前名称/ID后，本轮测试侧共5次仅读LocalizedName/InputSourceID并CFRelease：初始、旧GPUI字段聚焦、修复GPUI字段聚焦、保存后、cold，均为青简/app.qingjian.inputmethod.Hans。没有列举/选择输入源、改模式/设置、外部按键注入、外部AX/全局bounds或剪贴板接口；产品内部TIS调用未计数/未监控。输入源名称本身不是组合通过证据，本轮实际用CUA单独pressKey n/i/h/a/o、未typeText/setValue，见原生下划线拼音和Space落字。",
-      "旧b921真实现场：你好前缀后追加下划线ni'hao，Esc取消组合/保留弹窗但新鲜CUA字段值为你好+U+001B，码点U+4F60/U+597D/U+001B，见旧版原图与原值/生命周期。控制字符在图片中不可见，不能只凭截图判断；该编辑未确认/保存，Cancel取消后草稿仍你好，旧Core文件仍model-1。当前gpui-base0.7.3单行normalize_input只去换行，Core config.rs原规则已拒char::is_control；未把到达字段的字符归责于青简、平台或自动化哪一层。"
+      "为模型编辑输入框补明确的原生Escape关闭路由，并完成64供应商/256模型的满载专项。证据：编译、旧版与失败中间版、真实交互/生命周期/配置、1440请求尺寸原生2×图、1100请求尺寸原生2×图、组合取消小窗、资源、性能、清理。",
+      "沿用54:246/59:279布局和资源，本轮无新设计context读取、无视觉重设计。只改main.rs/ui.rs：ModelEditor > Input专属DismissModelInput在模型窗口层接收Esc，仅读取当前焦点InputState的非空marked_text_range；有组合则dispatch原Input::Escape，否则调用既有dismiss。没有改写字符串、修改Kit/依赖/Core/配置/API、全局抢键或新增重绘计时器；六个输入句柄采用既有实体。",
+      "旧87eb不是必现故障：宽窗MODEL256和MODEL005的直接Esc曾保持表单，后者两次新鲜树间隔600ms仍开/值不变；标题空白再Esc能关，后来同宽窗256及小窗001直接Esc也通过，均保留。仅增加父级ProxyModal路由的dcd7仍未通过，见失败实拍及中间编译；不将编译绿灯当GUI通过或把所有旧现象归于单一层。"
     ],
-    "limits": [
-      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮通过的是当前青简源的模型显示名专项；其他字段/输入源、候选面板、完整AX读屏/视觉/全部HiDPI/跨平台、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active；HTML继续仅静态检查。"
-    ],
+    "limits": [],
     "evidence": [
       {
         "label": "编译",
-        "href": "benchmarks/ime-escape-build.json"
+        "href": "benchmarks/model-editor-escape-build.json"
       },
       {
-        "label": "真实交互/落盘",
-        "href": "benchmarks/ime-escape-gui-validation.json"
+        "label": "旧版与失败中间版",
+        "href": "benchmarks/model-editor-escape-before-gui.json"
       },
       {
-        "label": "方法边界",
-        "href": "benchmarks/ime-escape-method-boundaries.json"
+        "label": "真实交互/生命周期/配置",
+        "href": "benchmarks/model-editor-escape-gui-validation.json"
       },
       {
         "label": "1440请求尺寸原生2×图",
-        "href": "screenshots/ime-escape-fixed-1440x900-2x.png"
+        "href": "screenshots/model-editor-escape-1440x900-2x.png"
       },
       {
         "label": "1100请求尺寸原生2×图",
-        "href": "screenshots/ime-escape-fixed-1100x700-2x.png"
+        "href": "screenshots/model-editor-escape-1100x700-2x.png"
       },
       {
-        "label": "冷重开",
-        "href": "benchmarks/ime-escape-cold-reopen.json"
+        "label": "组合取消小窗",
+        "href": "screenshots/model-editor-escape-ime-1100x700-2x.png"
       },
       {
-        "label": "六轮性能",
-        "href": "benchmarks/ime-escape-performance-summary.json"
+        "label": "资源",
+        "href": "benchmarks/model-editor-escape-resources.json"
       },
       {
-        "label": "清理",
-        "href": "benchmarks/ime-escape-cleanup.json"
+        "label": "性能",
+        "href": "benchmarks/model-editor-escape-performance-summary.json"
       }
     ],
-    "commit": "c000c98d296adc10dc3ffca6194475aea0c1c637",
-    "date": "2026-10-30T10:10:37+08:00",
-    "commit_subject": "fix(studio): reject IME cancellation controls in model names",
+    "commit": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
+    "date": "2026-10-30T11:11:14+08:00",
+    "commit_subject": "fix(studio): route model input escape through editor",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2803,6 +2801,56 @@
       "date": "2026-10-30T10:10:37+08:00",
       "commit_subject": "fix(studio): reject IME cancellation controls in model names",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 51,
+      "title": "模型编辑 Escape 与满载目录回归",
+      "status": "recorded",
+      "summary": "为模型编辑输入框补明确的原生Escape关闭路由，并完成64供应商/256模型的满载专项。证据：编译、旧版与失败中间版、真实交互/生命周期/配置、1440请求尺寸原生2×图、1100请求尺寸原生2×图、组合取消小窗、资源、性能、清理。",
+      "highlights": [
+        "为模型编辑输入框补明确的原生Escape关闭路由，并完成64供应商/256模型的满载专项。证据：编译、旧版与失败中间版、真实交互/生命周期/配置、1440请求尺寸原生2×图、1100请求尺寸原生2×图、组合取消小窗、资源、性能、清理。",
+        "沿用54:246/59:279布局和资源，本轮无新设计context读取、无视觉重设计。只改main.rs/ui.rs：ModelEditor > Input专属DismissModelInput在模型窗口层接收Esc，仅读取当前焦点InputState的非空marked_text_range；有组合则dispatch原Input::Escape，否则调用既有dismiss。没有改写字符串、修改Kit/依赖/Core/配置/API、全局抢键或新增重绘计时器；六个输入句柄采用既有实体。",
+        "旧87eb不是必现故障：宽窗MODEL256和MODEL005的直接Esc曾保持表单，后者两次新鲜树间隔600ms仍开/值不变；标题空白再Esc能关，后来同宽窗256及小窗001直接Esc也通过，均保留。仅增加父级ProxyModal路由的dcd7仍未通过，见失败实拍及中间编译；不将编译绿灯当GUI通过或把所有旧现象归于单一层。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "编译",
+          "href": "benchmarks/model-editor-escape-build.json"
+        },
+        {
+          "label": "旧版与失败中间版",
+          "href": "benchmarks/model-editor-escape-before-gui.json"
+        },
+        {
+          "label": "真实交互/生命周期/配置",
+          "href": "benchmarks/model-editor-escape-gui-validation.json"
+        },
+        {
+          "label": "1440请求尺寸原生2×图",
+          "href": "screenshots/model-editor-escape-1440x900-2x.png"
+        },
+        {
+          "label": "1100请求尺寸原生2×图",
+          "href": "screenshots/model-editor-escape-1100x700-2x.png"
+        },
+        {
+          "label": "组合取消小窗",
+          "href": "screenshots/model-editor-escape-ime-1100x700-2x.png"
+        },
+        {
+          "label": "资源",
+          "href": "benchmarks/model-editor-escape-resources.json"
+        },
+        {
+          "label": "性能",
+          "href": "benchmarks/model-editor-escape-performance-summary.json"
+        }
+      ],
+      "commit": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
+      "date": "2026-10-30T11:11:14+08:00",
+      "commit_subject": "fix(studio): route model input escape through editor",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -3144,6 +3192,14 @@
     {
       "date": "2026-10-30T10:10:54+08:00",
       "note": "小功能50已提交；40帧仍部分验收。候选面板、其他字段/输入源和跨平台等继续专项验证。HTML仅静态检查。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T11:11:42+08:00",
+      "note": "小功能51已提交；仍为40部分验收/0整帧最终验收。长ID独立悬浮、其他输入/读屏/跨平台等继续验证；保留失败中间版、错位采样及RSS增量。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
