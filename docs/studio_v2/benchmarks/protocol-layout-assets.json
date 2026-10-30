@@ -1,0 +1,1039 @@
+{
+  "frames": [
+    "61:289",
+    "61:561",
+    "61:838",
+    "61:1111"
+  ],
+  "assets": [
+    {
+      "file": "a7d16.svg",
+      "variables": [
+        "imgIconSkin"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 1263,
+      "sha256": "ef0a3eb4f3f51d472f3779888bacf0d6985b62c26382c4519e391fd39ef5b9af",
+      "same_as_UI58_official_bytes": false,
+      "local": [
+        "gpui/assets/studio/skin.svg"
+      ],
+      "exact_local": [],
+      "consistent_id_ref_rename_equivalent": [
+        "gpui/assets/studio/skin.svg"
+      ],
+      "classification": "Full vector XML equal after consistent local clipPath ID/ref renaming only.",
+      "local_sha256": {
+        "gpui/assets/studio/skin.svg": "a436b23f97b29c443390ec7487aeec0a542656d5199066d047927aa94c39e4b9"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "af952.svg",
+      "variables": [
+        "imgIconAutostart"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 810,
+      "sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/autostart.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/autostart.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/autostart.svg": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "e9321.svg",
+      "variables": [
+        "imgIconUpdates"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 847,
+      "sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/updates.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/updates.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/updates.svg": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "def90.svg",
+      "variables": [
+        "imgIconLanguage"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 779,
+      "sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/language.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/language.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/language.svg": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "0ac56.svg",
+      "variables": [
+        "imgIconRestore"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 410,
+      "sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/restore.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/restore.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/restore.svg": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "7bc0b.svg",
+      "variables": [
+        "imgIconGithub"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 926,
+      "sha256": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/github.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/github.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/github.svg": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "4a154.svg",
+      "variables": [
+        "imgIconFeedback"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 663,
+      "sha256": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/feedback.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/feedback.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/feedback.svg": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "91e75.png",
+      "variables": [
+        "imgAppLogo"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 920,
+      "sha256": "fc9535b8221ea589bab32977aba991f67cbaca48ee0c16edf12e6cc42be97f9f",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/brand.png"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/brand.png"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/brand.png": "fc9535b8221ea589bab32977aba991f67cbaca48ee0c16edf12e6cc42be97f9f"
+      }
+    },
+    {
+      "file": "1ccfc.svg",
+      "variables": [
+        "imgWindowControl"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 244,
+      "sha256": "49f388449ca210fa8679950605fa5f711c3a87fd0584b689d738a80fdfae6778",
+      "same_as_UI58_official_bytes": true,
+      "local": [],
+      "exact_local": [],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Native OS window control replaces the decorative sample; no vector imitation.",
+      "local_sha256": {},
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "11",
+        "height": "11",
+        "viewBox": "0 0 11 11",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "7d50e.svg",
+      "variables": [
+        "imgWindowControl1"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 244,
+      "sha256": "3d58c570ed48c09340899d9d110b15c5206fb7902a148c04b2b860c40bd47c70",
+      "same_as_UI58_official_bytes": true,
+      "local": [],
+      "exact_local": [],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Native OS window control replaces the decorative sample; no vector imitation.",
+      "local_sha256": {},
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "11",
+        "height": "11",
+        "viewBox": "0 0 11 11",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "7f8ff.svg",
+      "variables": [
+        "imgWindowControl2"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 244,
+      "sha256": "ca87dadf8a172b0444c8def1db96f16f1f9401e51cb0fc82de0d4a853977db69",
+      "same_as_UI58_official_bytes": true,
+      "local": [],
+      "exact_local": [],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Native OS window control replaces the decorative sample; no vector imitation.",
+      "local_sha256": {},
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "11",
+        "height": "11",
+        "viewBox": "0 0 11 11",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "b6ecc.svg",
+      "variables": [
+        "imgIconChart"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 356,
+      "sha256": "16fac074729a091ed259de916c9b874913c150cf8de2e2c1e163adaf0c106bd3",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/nav-chart.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/nav-chart.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/nav-chart.svg": "16fac074729a091ed259de916c9b874913c150cf8de2e2c1e163adaf0c106bd3"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "3ef59.svg",
+      "variables": [
+        "imgIconServer"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 906,
+      "sha256": "57726a6ba98a954b43238478e90a7a2251948a48274b66fa91a8687563c47ac8",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/nav-server.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/nav-server.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/nav-server.svg": "57726a6ba98a954b43238478e90a7a2251948a48274b66fa91a8687563c47ac8"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "794e6.svg",
+      "variables": [
+        "imgIconSettings"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 733,
+      "sha256": "d6d3c4983820054a71088ac9f2ae3e46439abea28812e89b13bd3e17d6bb679f",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/nav-settings.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/nav-settings.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/nav-settings.svg": "d6d3c4983820054a71088ac9f2ae3e46439abea28812e89b13bd3e17d6bb679f"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "d479d.svg",
+      "variables": [
+        "imgIconActivity"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 353,
+      "sha256": "360b3500920256de8cc6df2397603a44d38d54b764eac5e6b00864c0d48dbce3",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/relay-activity.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/relay-activity.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/relay-activity.svg": "360b3500920256de8cc6df2397603a44d38d54b764eac5e6b00864c0d48dbce3"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "2f5fe.svg",
+      "variables": [
+        "imgIconLink"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 1052,
+      "sha256": "674542754d160c55afb36a9a65aac9d73118f054f2c98317dd3fc636243425f1",
+      "same_as_UI58_official_bytes": false,
+      "local": [
+        "gpui/assets/studio/relay-link.svg"
+      ],
+      "exact_local": [],
+      "consistent_id_ref_rename_equivalent": [
+        "gpui/assets/studio/relay-link.svg"
+      ],
+      "classification": "Full vector XML equal after consistent local clipPath ID/ref renaming only.",
+      "local_sha256": {
+        "gpui/assets/studio/relay-link.svg": "365239f84a7f4ea639059e2dcd53976e741358d7a566b3e91677d031f76c1e9b"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "15",
+        "height": "15",
+        "viewBox": "0 0 15 15",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "a1ba4.svg",
+      "variables": [
+        "imgIconSearch"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 651,
+      "sha256": "a2fe39908e879d6081130f39199ec06284a9c5ca644d6c007d172a7bb698c2ac",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/provider-search.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/provider-search.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/provider-search.svg": "a2fe39908e879d6081130f39199ec06284a9c5ca644d6c007d172a7bb698c2ac"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "17",
+        "height": "17",
+        "viewBox": "0 0 17 17",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "ec1b5.svg",
+      "variables": [
+        "imgSupplierStatus"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 241,
+      "sha256": "601186600a596199a79d947277464e1d52f95cdf8bf61de3c00c81d33be36092",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/supplier-selected.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/supplier-selected.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/supplier-selected.svg": "601186600a596199a79d947277464e1d52f95cdf8bf61de3c00c81d33be36092"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "7",
+        "height": "7",
+        "viewBox": "0 0 7 7",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "86243.svg",
+      "variables": [
+        "imgSupplierStatus1"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 241,
+      "sha256": "9c7463aedf7e2bc39fca2f67a77990ee1a10ed451c581a4eb4174f8390f53d28",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/supplier-default.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/supplier-default.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/supplier-default.svg": "9c7463aedf7e2bc39fca2f67a77990ee1a10ed451c581a4eb4174f8390f53d28"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "7",
+        "height": "7",
+        "viewBox": "0 0 7 7",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "06df8.svg",
+      "variables": [
+        "imgIconPlus"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 327,
+      "sha256": "71793d1e70d185659da689d0483cc602dada3dcb7380b6e03396de1426a06e33",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/supplier-add.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/supplier-add.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/supplier-add.svg": "71793d1e70d185659da689d0483cc602dada3dcb7380b6e03396de1426a06e33"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "2791d.svg",
+      "variables": [
+        "imgIconCopy"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 665,
+      "sha256": "61a78771901dbb70a3d80d7433d31de4072565e45183b59666c67ed3db632850",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/supplier-copy.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/supplier-copy.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/supplier-copy.svg": "61a78771901dbb70a3d80d7433d31de4072565e45183b59666c67ed3db632850"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "8bc77.svg",
+      "variables": [
+        "imgIconTrash"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 442,
+      "sha256": "f2cf12fef0f0ff859160a063fd817d1bcfa7ee63b40cebc301553984f211516d",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/supplier-delete.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/supplier-delete.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/supplier-delete.svg": "f2cf12fef0f0ff859160a063fd817d1bcfa7ee63b40cebc301553984f211516d"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "d4ab6.svg",
+      "variables": [
+        "imgIconChevron"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 338,
+      "sha256": "ee4c74f7eabc72df6f675b78340f9f0750eb39d6e3361f7dc146ab61d0ab1e84",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/provider-chevron.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/provider-chevron.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/provider-chevron.svg": "ee4c74f7eabc72df6f675b78340f9f0750eb39d6e3361f7dc146ab61d0ab1e84"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "3213b.svg",
+      "variables": [
+        "imgIconEye"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 728,
+      "sha256": "6d37ac30da43e20031b7dcf834ac5b09cded84e89b8d05c8f83c6ab5d58091a6",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/provider-key-eye.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/provider-key-eye.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/provider-key-eye.svg": "6d37ac30da43e20031b7dcf834ac5b09cded84e89b8d05c8f83c6ab5d58091a6"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "17",
+        "height": "17",
+        "viewBox": "0 0 17 17",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "30aa3.svg",
+      "variables": [
+        "imgIconEdit"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 360,
+      "sha256": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/model-edit.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/model-edit.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/model-edit.svg": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "15",
+        "height": "15",
+        "viewBox": "0 0 15 15",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "4523d.svg",
+      "variables": [
+        "imgIconChevron1"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 344,
+      "sha256": "9f29669d79d2b9d26d1fb66528ae86d4a8d9c7e984515ae8db628ca32fc79de2",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/provider-effort-chevron.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/provider-effort-chevron.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/provider-effort-chevron.svg": "9f29669d79d2b9d26d1fb66528ae86d4a8d9c7e984515ae8db628ca32fc79de2"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "14",
+        "height": "14",
+        "viewBox": "0 0 14 14",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "aad6f.svg",
+      "variables": [
+        "imgIconActivity1"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 376,
+      "sha256": "8791792b3a96a13c77530a5be615005e8ce97a155960b74985d2a4f256f7f6a9",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/runtime-activity.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/runtime-activity.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/runtime-activity.svg": "8791792b3a96a13c77530a5be615005e8ce97a155960b74985d2a4f256f7f6a9"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "19",
+        "height": "19",
+        "viewBox": "0 0 19 19",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "a7779.svg",
+      "variables": [
+        "imgIconCopy1"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 665,
+      "sha256": "a804b500030bf837780376f1371c8d25ea573cafb67837f17a463fa742ae0c44",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/runtime-copy.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/runtime-copy.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/runtime-copy.svg": "a804b500030bf837780376f1371c8d25ea573cafb67837f17a463fa742ae0c44"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "97d77.svg",
+      "variables": [
+        "imgIconTerminal"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 694,
+      "sha256": "01411a8f683675a7eb137690609ea402fb59f9623891be2d142e6f992628c2f8",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/log-terminal.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/log-terminal.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/log-terminal.svg": "01411a8f683675a7eb137690609ea402fb59f9623891be2d142e6f992628c2f8"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "19",
+        "height": "19",
+        "viewBox": "0 0 19 19",
+        "fill": "none"
+      }
+    },
+    {
+      "file": "b5dcb.svg",
+      "variables": [
+        "imgIconEdit1"
+      ],
+      "frames": [
+        "61-1111",
+        "61-289",
+        "61-561",
+        "61-838"
+      ],
+      "bytes": 380,
+      "sha256": "3b9654f03672b67eda821e02f59e487b94f95b1e8e0b7abe11e33c134890bc1b",
+      "same_as_UI58_official_bytes": true,
+      "local": [
+        "gpui/assets/studio/profile-edit.svg"
+      ],
+      "exact_local": [
+        "gpui/assets/studio/profile-edit.svg"
+      ],
+      "consistent_id_ref_rename_equivalent": [],
+      "classification": "Exact local bytes",
+      "local_sha256": {
+        "gpui/assets/studio/profile-edit.svg": "3b9654f03672b67eda821e02f59e487b94f95b1e8e0b7abe11e33c134890bc1b"
+      },
+      "svg_root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      }
+    }
+  ],
+  "counts": {
+    "exact": 25,
+    "id_only_equivalent": 2,
+    "native_OS_controls": 3
+  },
+  "scope": "All30 shared assets freshly downloaded via instructed curl. Exact bytes or fullXML equality after consistent localID/reference renaming,not path rewriting.3decorative trafficlights use required realOSwindow controls. Protocol body native controls;Figma caret/close are text,not separate SVG assets."
+}

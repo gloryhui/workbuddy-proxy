@@ -1,0 +1,329 @@
+{
+  "artifacts": [
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/asset-audit.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-assets.json",
+      "bytes": 28877,
+      "sha256": "e09693d2e91bd6bfe26709d06f34fb6cb2ac39ad1489e370dd3739a02e691f29"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/source-scope.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-source-scope.json",
+      "bytes": 3253,
+      "sha256": "b50a9660b6aced98e01588be5d3f86ca9713442ae9a73e3fb36ff90861be0650"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/build.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-build.json",
+      "bytes": 23141,
+      "sha256": "3ee0a1c529d63fe9b8815bd38994e552de2aaf4d3bc8652e2a17a93ea875e552"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/reference-61-289.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-figma-61-289.png",
+      "bytes": 165906,
+      "sha256": "2caae64970bc76f936f23ddd0e2fd34fb642bb20dde79e603cceb836f1cdf5b0"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/reference-61-561.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-figma-61-561.png",
+      "bytes": 166412,
+      "sha256": "fc7b6ed45d76060942ba46bf3e3a6bb6441ddafa24381173e48fe091c771bc69"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/reference-61-838.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-figma-61-838.png",
+      "bytes": 168301,
+      "sha256": "b561ba9881436de6232eb6df5d8774fcc299aa4837d0bff68cd9e96edd367b57"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/reference-61-1111.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-figma-61-1111.png",
+      "bytes": 161698,
+      "sha256": "cd025c1117bc9e47a4f34e5dc5302f113b56e0d6dc0d53e955f200d858c7e0ed"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-chat-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-chat-wide.png",
+      "bytes": 222216,
+      "sha256": "81cbcf087ec52d87f541cdc243017ff8fdfcb7fa97cf4cd20e6ffa6d7c072006"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-chat-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-chat-small.png",
+      "bytes": 148758,
+      "sha256": "29a77641abfd40f4a2a3e6b66b0378a519b998fc24fe91b68db3576b620f2718"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-responses-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-responses-wide.png",
+      "bytes": 222556,
+      "sha256": "c362339c980001ae2789c66477b9722a3e662fed65616721df23ab8b9c51d694"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-responses-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-responses-small.png",
+      "bytes": 148757,
+      "sha256": "c92ff31e97b8ed931e00187bf7a8d9310671a5b97087c76d6d01e72979e45dc4"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-anthropic-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-anthropic-wide.png",
+      "bytes": 225034,
+      "sha256": "d713502b97508b862a570fd54c96ab1ea778e063110c36722af8af701923a52a"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-anthropic-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-anthropic-small.png",
+      "bytes": 151387,
+      "sha256": "1c6553e4c6bb74d33a933d78039ea368e3c5b59cb6fc31b80b3e1e0111b0166a"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-gemini-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-gemini-wide.png",
+      "bytes": 216959,
+      "sha256": "976114f4925132fff57fa7c30fabce12e90c5669a43df396b9fbdd6155510399"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-gemini-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-gemini-small.png",
+      "bytes": 144443,
+      "sha256": "f89e1a8158340db40e0abaec3aabc86cdca32031fa5b4fe19458f4de8e11e083"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-gemini-scroll-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-gemini-scroll-small.png",
+      "bytes": 143327,
+      "sha256": "f0c0d29570cbed518be36a437c627905f3a50695aa5d16117b4d82f22bc67583"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-tab-focus-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-tab-focus-wide.png",
+      "bytes": 222036,
+      "sha256": "6245347b016827f28bfdd4cac914f5a205d725f619665d28a51998e96d851918"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final/intermediate-089a-gui-validation.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-089a-gui-validation.json",
+      "bytes": 1565,
+      "sha256": "809584928ba90208187c60de201ef855a996125e0a4d9021d372ff1e0dbab6f0"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final/post-gui-proof.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-089a-post-gui-proof.json",
+      "bytes": 543,
+      "sha256": "0ccb0e4edf6c8bc27c3e1a13d04acdd72f0313f07727908510f1d0d95b7cdb54"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final/terminal-status.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-089a-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final/final-chat-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-intermediate-089a-chat-wide.png",
+      "bytes": 222402,
+      "sha256": "e8f3a6509a9cd8bd73b4d39f364762e1c32ee61ab1fc838cc7808cd8f794a0a9"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final2/intermediate-1389-gui-validation.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-1389-gui-validation.json",
+      "bytes": 1140,
+      "sha256": "5da14a82d33ca1353d6575f7e645adf73b24da95dcce753bff8e128073e26752"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final2/post-gui-proof.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-1389-post-gui-proof.json",
+      "bytes": 543,
+      "sha256": "a55b326a4432de1aaaca38905bb3436de06cc9ba74a99b1a7b5ab9defcca7605"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final2/terminal-status.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-1389-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final2/final-chat-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-intermediate-1389-chat-wide.png",
+      "bytes": 223043,
+      "sha256": "eff4300f2549c2ff36d4bd19fc039971655163e41371679c4d92181151967987"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/intermediate-089a-build.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-089a-build.json",
+      "bytes": 23142,
+      "sha256": "aa810d9366e182d22994b6748c7fe557ab50327781c62bea82909dd5ee9d57cf"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/intermediate-1389-build.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-1389-build.json",
+      "bytes": 23142,
+      "sha256": "cc20278f4dcb700651b5454216013468919f6efdca7867030fc92f86defd1aac"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/intermediate-089a-pixels.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-089a-pixels.json",
+      "bytes": 2366,
+      "sha256": "34fb80e869788c71873b81ef0ba225b00c02234b486fdfd56f0a6bf943ef79ee"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/intermediate-1389-pixels.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-1389-pixels.json",
+      "bytes": 2367,
+      "sha256": "a1a0e3e64eaaa497de848f03f1cbb0a9e2a98d396c37b0122956497d87e92fff"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/final-pixels.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-final-pixels.json",
+      "bytes": 2367,
+      "sha256": "ef0d8c39d78bddb928c81493cfdfd32f7a2b1e9350bf5bb53314ced95fd2c006"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-gui-validation.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-baseline-gui-validation.json",
+      "bytes": 2654,
+      "sha256": "e503704f25d8a0f21bdea3bcac3b917e4e38683d4c77c9632f541dd2f3bf8686"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/post-gui-proof.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-baseline-post-gui-proof.json",
+      "bytes": 543,
+      "sha256": "4289ea3c02381a96bf4ebcb5c1d45742ff07cc27247e899d671b9dc19ec12997"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/terminal-status.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-baseline-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-chat-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-baseline-chat-wide.png",
+      "bytes": 222599,
+      "sha256": "9b8c8e27f312e342c633b22936c87473f7be88e0772056316a751624eb36733a"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-responses-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-baseline-responses-wide.png",
+      "bytes": 223515,
+      "sha256": "bb09a65fd5f5eba60a49d6842dde6d80209b89a26aa8b3a5705580776fd3992f"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-anthropic-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-baseline-anthropic-wide.png",
+      "bytes": 225935,
+      "sha256": "16ff9d77248402a720921ddcadfc8ea5be9d13fa53f2b275a036e7682359f7a8"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-gemini-wide.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-baseline-gemini-wide.png",
+      "bytes": 217384,
+      "sha256": "f4fbafae6e2d17c1dfde1d7564c5e103dbda243af8ab6547e681695af221fc13"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-gemini-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-baseline-gemini-small.png",
+      "bytes": 145385,
+      "sha256": "c7ab5c29aaab4e4586cdaa245d5b9f2146d2a918444bf6f5abfacb35a4a150a5"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/design-audit.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-design-audit.json",
+      "bytes": 62674,
+      "sha256": "1e5d7bf204f724b253791fd19af9e9d38e52510dd5e6f0deaf31ba0a8ef96ffd"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/original-fields-proof.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-original-fields-proof.json",
+      "bytes": 656,
+      "sha256": "b291a6b88725bd084b112f316af69c90b4fb4352f77f27eacbc1484975be88ba"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-gui-validation.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-final-gui-validation.json",
+      "bytes": 9854,
+      "sha256": "272441b741e7b473f851f3a37c3cafa458dfb0b12cdf311477c9a492811a98f0"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/stage-core-proofs.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-stage-core-proofs.json",
+      "bytes": 6743,
+      "sha256": "a869f5f3cc1dc12eaf25dca078d182a3b17ec1ade82138dafc16c8708d2122ef"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/post-gui-proof.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-post-gui-proof.json",
+      "bytes": 544,
+      "sha256": "27255548cd913812e6d99b7d6011f79733c5c090d113c21617c3f5a9a6a9164f"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/terminal-status.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-invalid-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-invalid-small.png",
+      "bytes": 149980,
+      "sha256": "8cccfa528ca3a2cedfd831fce738dc02ffc4b75538b67411f952fa5c58182ba4"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-anthropic-invalid-small.png",
+      "repo": "docs/studio_v2/screenshots/protocol-layout-final-anthropic-invalid-small.png",
+      "bytes": 154891,
+      "sha256": "365ade61b9404c8ef9fdab5485e14666f7a19a13c5c7d6801d39e785a9742e63"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/performance-previous1.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-performance-previous1.json",
+      "bytes": 4513,
+      "sha256": "337f493dc10899f88eea5cbb8b5977b9e2ea1dd4803b6e05badec1ff5f6d0516"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/performance-current1.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-performance-current1.json",
+      "bytes": 4512,
+      "sha256": "8c9a137042bbce1c6237f272437784ac4c833f04a431fc0897af99f7bbd314e7"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/performance-current2.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-performance-current2.json",
+      "bytes": 4513,
+      "sha256": "53436012e1362ba1edfb71ac64b2d71f6551a4ba510c0bcb970b400322840208"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/performance-previous2.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-performance-previous2.json",
+      "bytes": 4512,
+      "sha256": "dc676b74a8fd1b67afd0dcddbb3ce7fdb7ba496af16bf0a703e5dad930b2f902"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/performance-summary.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-performance-summary.json",
+      "bytes": 2616,
+      "sha256": "b1dc172b1f535ae5f4216dba3a4722655ef2ca6748566e65431025d72c2f15b4"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/benchmark-driver.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-benchmark-driver.json",
+      "bytes": 617,
+      "sha256": "c1226c216b158782bd10c0ff4350b86f8569fe7c750dd67e6f7657894f5a7528"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/intermediate-1389-roles.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-intermediate-1389-roles.json",
+      "bytes": 4121,
+      "sha256": "11b4aaf8685319caf560487fc46d41746395a8f3d73c680e06b14c157a17fbab"
+    },
+    {
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/process-lifecycle.json",
+      "repo": "docs/studio_v2/benchmarks/protocol-layout-process-lifecycle.json",
+      "bytes": 5085,
+      "sha256": "86743d9b4861fda0519099eab90b05ec1a4adc6dc08c20328008df8e524f6403"
+    }
+  ],
+  "method": "Every original PNG/JSON listed was copied byte-for-byte; annotated inventory and later aggregate reports are separate. Intermediate filename final is not final status; exported prefix distinguishes versions."
+}

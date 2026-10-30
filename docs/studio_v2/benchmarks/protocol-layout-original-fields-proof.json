@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-31T04:56:15.416204+08:00",
+  "all_original_config_fields_recursively_preserved": true,
+  "checked_nodes": 49,
+  "scope": "Original fixture had implicit Chat/default protocol settings. Explicit fourSave operations added expected protocol/settings fields; every originally present config value and list order remains equal, including provider B, URLs, synthetic keys and all5model original fields. Values/secrets are not emitted.",
+  "final_config_sha256": "e4e702a716a96c80895598a12d9f503e61d38b91dd92094298842f53138a1ef7",
+  "expected_final_protocol": "gemini_generate_content",
+  "expected_final_budget": 256,
+  "requests": 0
+}

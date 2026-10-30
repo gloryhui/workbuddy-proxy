@@ -1,0 +1,219 @@
+{
+  "candidate_sha256": "db89949f8ae49819e8c72951c5cfb2a4c1ba3c391ccd459dd743c3363ae7f899",
+  "ui_pid": 33794,
+  "core_pid": 33612,
+  "main_window_number": 2937,
+  "scope": "isolated fixture; GUI environment isolated, Core kernel guard independently checked by parent",
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-chat-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "81cbcf087ec52d87f541cdc243017ff8fdfcb7fa97cf4cd20e6ffa6d7c072006",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-responses-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "c362339c980001ae2789c66477b9722a3e662fed65616721df23ab8b9c51d694",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-anthropic-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "d713502b97508b862a570fd54c96ab1ea778e063110c36722af8af701923a52a",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-gemini-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "976114f4925132fff57fa7c30fabce12e90c5669a43df396b9fbdd6155510399",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-chat-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "29a77641abfd40f4a2a3e6b66b0378a519b998fc24fe91b68db3576b620f2718",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-responses-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "c92ff31e97b8ed931e00187bf7a8d9310671a5b97087c76d6d01e72979e45dc4",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-anthropic-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "1c6553e4c6bb74d33a933d78039ea368e3c5b59cb6fc31b80b3e1e0111b0166a",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-gemini-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "f89e1a8158340db40e0abaec3aabc86cdca32031fa5b4fe19458f4de8e11e083",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-tab-focus-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "6245347b016827f28bfdd4cac914f5a205d725f619665d28a51998e96d851918",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-gemini-scroll-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "f0c0d29570cbed518be36a437c627905f3a50695aa5d16117b4d82f22bc67583",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-invalid-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "8cccfa528ca3a2cedfd831fce738dc02ffc4b75538b67411f952fa5c58182ba4",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final3/final-anthropic-invalid-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "365ade61b9404c8ef9fdab5485e14666f7a19a13c5c7d6801d39e785a9742e63",
+      "capture": "native screencapture, UI PID 33794 onscreen layer 0 window 2937; chat-wide copied byte-for-byte from candidate-2937"
+    }
+  ],
+  "interactions": {
+    "tabs": "Chat, Responses, Anthropic, Gemini clicked, then Return and Space; modal and selected tab remained. Chat Space and Return were performed in separate interactions. No Apply during this check.",
+    "small_scroll": "Gemini body scrolled to max mapping while Apply footer remained visible.",
+    "invalid_responses": "max not-a-level survived Chat round-trip, Apply showed Invalid Responses effort override; Escape closed, reopening Responses showed max empty.",
+    "chat": "Azure API Key applied to draft then separately saved with Cmd+S after applied acknowledgement.",
+    "responses": "max high applied and saved separately; saved Azure authentication carried into Responses.",
+    "anthropic": "8192/token budget/minimal 128 rejected with at-least-1024 message; changed minimal to 1024, applied and saved separately after observer acknowledgement.",
+    "gemini": "token budget/minimal 256 applied and saved separately after observer acknowledgement.",
+    "save_observation": "Each Cmd+S showed Saved and activity log saved; observer confirmed separately.",
+    "native_close": "CUA clicked native close button index 66 after final Saved; no claim about exit code or wait; Core left running for parent."
+  },
+  "observer_acknowledgements": [
+    {
+      "stage": "cancelled",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": true,
+      "config_sha256": "8fdd8a8d11532b59f2553e4a070a763ca596f1bd1f05c4533c8fa1f37e8ecf2e",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "chat-applied",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": true,
+      "config_sha256": "8fdd8a8d11532b59f2553e4a070a763ca596f1bd1f05c4533c8fa1f37e8ecf2e",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "chat-saved",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": false,
+      "config_sha256": "f31009c3664c5291597c7cd2d1e3416b84410257e3f528113a2812c67e5fdf00",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "responses-applied",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": true,
+      "config_sha256": "f31009c3664c5291597c7cd2d1e3416b84410257e3f528113a2812c67e5fdf00",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "responses-saved",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": false,
+      "config_sha256": "56bf355f0a73eeb50d93e1704b8762ef97b696532fa9fad84e76651d3e5e3542",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "anthropic-applied",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": true,
+      "config_sha256": "56bf355f0a73eeb50d93e1704b8762ef97b696532fa9fad84e76651d3e5e3542",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "anthropic-saved",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": false,
+      "config_sha256": "59c2894465dd0bb737568ab44bc3f6b55a57d38bebcd74b89830e0da3b2753c1",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "gemini-applied",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": true,
+      "config_sha256": "59c2894465dd0bb737568ab44bc3f6b55a57d38bebcd74b89830e0da3b2753c1",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    },
+    {
+      "stage": "gemini-saved",
+      "ok": true,
+      "core_config_unchanged_since_previous_save": false,
+      "config_sha256": "e4e702a716a96c80895598a12d9f503e61d38b91dd92094298842f53138a1ef7",
+      "requests": 0,
+      "mock_posts": 0,
+      "core_health": "ready"
+    }
+  ],
+  "limitations": [
+    "CUA background getApp; no explicit activate or raise, actual foreground state not asserted.",
+    "No external AX/window bounds or synthesized mouse/key input.",
+    "Raw screenshots retain native extra row, no scaling or crop.",
+    "Only documented keyboard interactions observed; full accessibility/IME not assessed.",
+    "Differences in native X, scrim, select and mapping title remain for design audit; no full-frame 1:1 claim.",
+    "No Test, Sync, external vendor request or clipboard use."
+  ]
+}

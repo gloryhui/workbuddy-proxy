@@ -68,3 +68,6 @@ Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重
 连接输入默认样式（UI60）：Studio-only原生Input文本/背景/边框/10px圆角与19px行高、预设/协议触发器文字/圆角接入；排除思考菜单和旧皮肤分支，不改状态/业务处理。最终7d7名称Cancel、密码显隐再遮罩、菜单Esc、两尺寸/语言与Mono恢复、Test200/SSE、原字段及1/500/50/550读回和四轮原负载留证；两次中间候选颜色失败不算通过。busy未实际捕获/操作，焦点浅与眼睛左5px、AA/普通按钮/完整IME/AX/平台继续留差异，不作整帧终验。
 
 输入焦点/眼睛/选区与busy（UI61）：三Studio输入FocusHandle+Focus/Blur显示/清除原语义实线，原24px显隐按钮/17pxSVG位置与键盘描边修正；Studio原生选区用22%强调色，六旧皮肤分支保持。最终63f实际Tab到Key/眼睛、Return/Space显隐回mask、Cmd+A/Backspace/Cancel、两尺寸与Mono恢复；受控控制转发等待中8项视觉置灰、仅预设点击未开菜单，AX无enabled字段，其他disabled未逐个操作。仅一次真实Core Test200/SSE/1条550Token、原字段保留与四轮原负载留证；原100s产品超时不改，人为51.438s不作性能。普通按钮完整状态/IME/AX/平台等仍待，不作整帧通过。
+
+
+四协议整帧首审与共享表单（UI62）：仅两Rust渲染文件，Studio标签几何/左对齐、原生selected+active白底、徽章色/Inter、字段文字和标题光学位置修正；load/read/parse/validate/switch_to与Apply/Save处理保持。最终db899四协议×两尺寸原始PNG、四tab各Return/Space、Responses非法文本往返/取消重开、Anthropic128正确拒绝→1024合法、四协议Apply与CmdS分步及九Core快照均留证。49个原配置节点递归相同，2供应商5模型0请求；UI关后Core200再正常退出。五编译门禁/204通过2忽略及P/C/C/P原负载四轮完成；旧63f、新db899性能与小样本限制见QA62。两个中间候选白底未生效不作通过，scope/原始照片与Core无副作用证据保留。四帧改为已审查保留差异，仍有Select/映射标题光学、原生X/scrim及完整状态/键盘/IME/AX/平台差异，不宣称整帧最终验收。

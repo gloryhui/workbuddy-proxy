@@ -1,0 +1,1969 @@
+{
+  "checked_at": "2026-10-31T05:02:37.412309+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54",
+  "real_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54",
+  "type": "private session-owned disposable test/build directory",
+  "owner_uid": 501,
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "scope_evidence": "ownership.json UI62; private basename created in this session, all4nativefixture/4benchmark known processes gone; no symlinks, same device, all descendants same user. Original54 PNG/JSON artifacts preserved and hashes verified in repo; actual2Rustfiles and sharedCargo cache outside target.",
+  "files": [
+    {
+      "relative": "fixture-background.py",
+      "bytes": 14924,
+      "mtime_ns": 1793391262221625060,
+      "inode": 164936476
+    },
+    {
+      "relative": "process-start",
+      "bytes": 33664,
+      "mtime_ns": 1793385667812450834,
+      "inode": 164936482
+    },
+    {
+      "relative": "performance-current2.json",
+      "bytes": 4513,
+      "mtime_ns": 1793393805358265865,
+      "inode": 164942428
+    },
+    {
+      "relative": "preflight-seed.py",
+      "bytes": 2574,
+      "mtime_ns": 1793391262221738936,
+      "inode": 164936477
+    },
+    {
+      "relative": "run-gates.py",
+      "bytes": 2621,
+      "mtime_ns": 1793392151162412317,
+      "inode": 164936479
+    },
+    {
+      "relative": "ownership.json",
+      "bytes": 224,
+      "mtime_ns": 1793390968044095902,
+      "inode": 164936148
+    },
+    {
+      "relative": "benchmark-current2.log",
+      "bytes": 2132,
+      "mtime_ns": 1793393805369190392,
+      "inode": 164942446
+    },
+    {
+      "relative": "analyze-roles.swift",
+      "bytes": 1723,
+      "mtime_ns": 1793392901696949196,
+      "inode": 164939784
+    },
+    {
+      "relative": "intermediate-1389-source-scope.json",
+      "bytes": 2935,
+      "mtime_ns": 1793392606888827209,
+      "inode": 164939579
+    },
+    {
+      "relative": "context-61-1111.txt",
+      "bytes": 70298,
+      "mtime_ns": 1793391036377664206,
+      "inode": 164936210
+    },
+    {
+      "relative": "context-61-838.txt",
+      "bytes": 71540,
+      "mtime_ns": 1793391036372448528,
+      "inode": 164936209
+    },
+    {
+      "relative": "reference-61-289.png",
+      "bytes": 165906,
+      "mtime_ns": 1793391763998612748,
+      "inode": 164937427
+    },
+    {
+      "relative": "benchmark-current1.log",
+      "bytes": 2131,
+      "mtime_ns": 1793393781750050025,
+      "inode": 164942226
+    },
+    {
+      "relative": "resume-ui62.json",
+      "bytes": 9676,
+      "mtime_ns": 1793393643126661347,
+      "inode": 164939497
+    },
+    {
+      "relative": "pending-benchmark.json",
+      "bytes": 403,
+      "mtime_ns": 1793393805616202941,
+      "inode": 164941893
+    },
+    {
+      "relative": "reference-61-561.png",
+      "bytes": 166412,
+      "mtime_ns": 1793391764821776638,
+      "inode": 164937428
+    },
+    {
+      "relative": "performance-previous2.json",
+      "bytes": 4512,
+      "mtime_ns": 1793393828230149199,
+      "inode": 164942635
+    },
+    {
+      "relative": "intermediate-089a-pixels.json",
+      "bytes": 2366,
+      "mtime_ns": 1793392532801327498,
+      "inode": 164939016
+    },
+    {
+      "relative": "baseline-ui",
+      "bytes": 42426128,
+      "mtime_ns": 1793388985564998399,
+      "inode": 164936481
+    },
+    {
+      "relative": "reference-61-1111.png",
+      "bytes": 161698,
+      "mtime_ns": 1793391767399394973,
+      "inode": 164937438
+    },
+    {
+      "relative": "intermediate-1389-build.json",
+      "bytes": 23142,
+      "mtime_ns": 1793392555019200064,
+      "inode": 164939578
+    },
+    {
+      "relative": "source-scope.json",
+      "bytes": 3253,
+      "mtime_ns": 1793392985698848803,
+      "inode": 164938618
+    },
+    {
+      "relative": "benchmark-driver.json",
+      "bytes": 617,
+      "mtime_ns": 1793393828240767061,
+      "inode": 164942016
+    },
+    {
+      "relative": "run-benchmarks.py",
+      "bytes": 1542,
+      "mtime_ns": 1793393629099391294,
+      "inode": 164941682
+    },
+    {
+      "relative": "artifact-map.json",
+      "bytes": 17236,
+      "mtime_ns": 1793393916155041557,
+      "inode": 164940970
+    },
+    {
+      "relative": "performance-previous1.json",
+      "bytes": 4513,
+      "mtime_ns": 1793393755439101110,
+      "inode": 164942010
+    },
+    {
+      "relative": "original-fields-proof.json",
+      "bytes": 656,
+      "mtime_ns": 1793393775416362027,
+      "inode": 164942124
+    },
+    {
+      "relative": "candidate-ui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392853897144754,
+      "inode": 164938162
+    },
+    {
+      "relative": "intermediate-1389-roles.json",
+      "bytes": 4121,
+      "mtime_ns": 1793392902105772200,
+      "inode": 164939785
+    },
+    {
+      "relative": "context-61-289.txt",
+      "bytes": 71140,
+      "mtime_ns": 1793391036359644857,
+      "inode": 164936207
+    },
+    {
+      "relative": "intermediate-089a-ui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392208103443732,
+      "inode": 164938889
+    },
+    {
+      "relative": "download-assets.py",
+      "bytes": 2567,
+      "mtime_ns": 1793391815691070662,
+      "inode": 164937305
+    },
+    {
+      "relative": "modal-specs.json",
+      "bytes": 56110,
+      "mtime_ns": 1793391228611324021,
+      "inode": 164936435
+    },
+    {
+      "relative": "reference-61-838.png",
+      "bytes": 168301,
+      "mtime_ns": 1793391766355107156,
+      "inode": 164937437
+    },
+    {
+      "relative": "asset-downloads.json",
+      "bytes": 10107,
+      "mtime_ns": 1793391281059310534,
+      "inode": 164936475
+    },
+    {
+      "relative": "benchmark-previous2.log",
+      "bytes": 2136,
+      "mtime_ns": 1793393828240613561,
+      "inode": 164942640
+    },
+    {
+      "relative": "performance-summary.json",
+      "bytes": 2616,
+      "mtime_ns": 1793393915777508935,
+      "inode": 164942808
+    },
+    {
+      "relative": "observe-stages.py",
+      "bytes": 4159,
+      "mtime_ns": 1793393545237196284,
+      "inode": 164938747
+    },
+    {
+      "relative": "intermediate-089a-build.json",
+      "bytes": 23142,
+      "mtime_ns": 1793392208275185987,
+      "inode": 164938890
+    },
+    {
+      "relative": "benchmark-previous1.log",
+      "bytes": 2137,
+      "mtime_ns": 1793393755449479681,
+      "inode": 164942015
+    },
+    {
+      "relative": "analyze-pixels.swift",
+      "bytes": 949,
+      "mtime_ns": 1793392532100978885,
+      "inode": 164939014
+    },
+    {
+      "relative": "inventory.json",
+      "bytes": 11578,
+      "mtime_ns": 1793391036350466639,
+      "inode": 164936206
+    },
+    {
+      "relative": "process-lifecycle.json",
+      "bytes": 5085,
+      "mtime_ns": 1793394066724696929,
+      "inode": 164942959
+    },
+    {
+      "relative": "intermediate-1389-ui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392554839801817,
+      "inode": 164939577
+    },
+    {
+      "relative": "design-audit.json",
+      "bytes": 62674,
+      "mtime_ns": 1793393425604984147,
+      "inode": 164938651
+    },
+    {
+      "relative": "asset-audit.json",
+      "bytes": 28877,
+      "mtime_ns": 1793391822388170703,
+      "inode": 164937574
+    },
+    {
+      "relative": "intermediate-089a-source-scope.json",
+      "bytes": 2317,
+      "mtime_ns": 1793392338471888821,
+      "inode": 164938891
+    },
+    {
+      "relative": "benchmark-background.py",
+      "bytes": 7613,
+      "mtime_ns": 1793391262222270233,
+      "inode": 164936480
+    },
+    {
+      "relative": "finish-fixture.py",
+      "bytes": 1871,
+      "mtime_ns": 1793391262221835437,
+      "inode": 164936478
+    },
+    {
+      "relative": "intermediate-1389-pixels.json",
+      "bytes": 2367,
+      "mtime_ns": 1793392741008842674,
+      "inode": 164939580
+    },
+    {
+      "relative": "build.json",
+      "bytes": 23141,
+      "mtime_ns": 1793392854067671295,
+      "inode": 164938049
+    },
+    {
+      "relative": "final-pixels.json",
+      "bytes": 2367,
+      "mtime_ns": 1793393124117601855,
+      "inode": 164939510
+    },
+    {
+      "relative": "performance-current1.json",
+      "bytes": 4512,
+      "mtime_ns": 1793393781740761032,
+      "inode": 164942221
+    },
+    {
+      "relative": "context-61-561.txt",
+      "bytes": 72333,
+      "mtime_ns": 1793391036366795887,
+      "inode": 164936208
+    },
+    {
+      "relative": "ui62-protocol-baseline/fixture.json",
+      "bytes": 1293,
+      "mtime_ns": 1793391326289822394,
+      "inode": 164936688
+    },
+    {
+      "relative": "ui62-protocol-baseline/native-acceptance-finished",
+      "bytes": 52,
+      "mtime_ns": 1793391891309105221,
+      "inode": 164937708
+    },
+    {
+      "relative": "ui62-protocol-baseline/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793391891528188206,
+      "inode": 164937709
+    },
+    {
+      "relative": "ui62-protocol-baseline/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793391263834983288,
+      "inode": 164936501
+    },
+    {
+      "relative": "ui62-protocol-baseline/baseline-gemini-small.png",
+      "bytes": 145385,
+      "mtime_ns": 1793391783743764990,
+      "inode": 164937458
+    },
+    {
+      "relative": "ui62-protocol-baseline/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793391262661682270,
+      "inode": 164936503
+    },
+    {
+      "relative": "ui62-protocol-baseline/baseline-chat-wide.png",
+      "bytes": 222599,
+      "mtime_ns": 1793391618807373820,
+      "inode": 164937129
+    },
+    {
+      "relative": "ui62-protocol-baseline/post-gui-proof.json",
+      "bytes": 543,
+      "mtime_ns": 1793391891309005595,
+      "inode": 164937707
+    },
+    {
+      "relative": "ui62-protocol-baseline/cua-launch-ready.json",
+      "bytes": 253,
+      "mtime_ns": 1793391263774174588,
+      "inode": 164936519
+    },
+    {
+      "relative": "ui62-protocol-baseline/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "inode": 164936502
+    },
+    {
+      "relative": "ui62-protocol-baseline/baseline-gemini-wide.png",
+      "bytes": 217384,
+      "mtime_ns": 1793391744563588536,
+      "inode": 164937382
+    },
+    {
+      "relative": "ui62-protocol-baseline/baseline-anthropic-wide.png",
+      "bytes": 225935,
+      "mtime_ns": 1793391703243901198,
+      "inode": 164937273
+    },
+    {
+      "relative": "ui62-protocol-baseline/candidate-2836.png",
+      "bytes": 222599,
+      "mtime_ns": 1793391414542108850,
+      "inode": 164936903
+    },
+    {
+      "relative": "ui62-protocol-baseline/baseline-responses-wide.png",
+      "bytes": 223515,
+      "mtime_ns": 1793391662618633223,
+      "inode": 164937207
+    },
+    {
+      "relative": "ui62-protocol-baseline/candidate-2847.png",
+      "bytes": 222599,
+      "mtime_ns": 1793391414537326552,
+      "inode": 164936898
+    },
+    {
+      "relative": "ui62-protocol-baseline/pre-gui-proof.json",
+      "bytes": 2660,
+      "mtime_ns": 1793391281020312890,
+      "inode": 164936526
+    },
+    {
+      "relative": "ui62-protocol-baseline/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793391281020454850,
+      "inode": 164936527
+    },
+    {
+      "relative": "ui62-protocol-baseline/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793391263774044753,
+      "inode": 164936518
+    },
+    {
+      "relative": "ui62-protocol-baseline/baseline-gui-validation.json",
+      "bytes": 2654,
+      "mtime_ns": 1793391855422688827,
+      "inode": 164937660
+    },
+    {
+      "relative": "ui62-protocol-baseline/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793391262656171173,
+      "inode": 164936493
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793391325693427766,
+      "inode": 164936643
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/config.json",
+      "bytes": 1052,
+      "mtime_ns": 1793391262656060005,
+      "inode": 164936492
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793391263732073995,
+      "inode": 164936511
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793391263733845137,
+      "inode": 164936512
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793391263676888852,
+      "inode": 164936505
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/gpui-drafts.json",
+      "bytes": 2174,
+      "mtime_ns": 1793391837272587456,
+      "inode": 164937587
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793391262655923545,
+      "inode": 164936491
+    },
+    {
+      "relative": "ui62-protocol-baseline/config/usage.sqlite3",
+      "bytes": 233472,
+      "mtime_ns": 1793391891408279361,
+      "inode": 164936507
+    },
+    {
+      "relative": "ui62-protocol-baseline/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2703,
+      "mtime_ns": 1793391263774005586,
+      "inode": 164936517
+    },
+    {
+      "relative": "ui62-protocol-baseline/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426128,
+      "mtime_ns": 1793388985564998399,
+      "inode": 164936516
+    },
+    {
+      "relative": "bench-ui62-current2/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393802748387055,
+      "inode": 164942349
+    },
+    {
+      "relative": "bench-ui62-current2/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793393782067276877,
+      "inode": 164942243
+    },
+    {
+      "relative": "bench-ui62-current2/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793393805333145413,
+      "inode": 164942429
+    },
+    {
+      "relative": "bench-ui62-current2/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793393781806923563,
+      "inode": 164942239
+    },
+    {
+      "relative": "bench-ui62-current2/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793393781868284577,
+      "inode": 164942241
+    },
+    {
+      "relative": "bench-ui62-current2/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793393803189285765,
+      "inode": 164942380
+    },
+    {
+      "relative": "bench-ui62-current2/config.pre-v0.3-1429d003d5af23c1808e626340d6bbae812b6aef949bbc97.bak",
+      "bytes": 170,
+      "mtime_ns": 1793393781917398322,
+      "inode": 164942245
+    },
+    {
+      "relative": "bench-ui62-current2/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793393781964967492,
+      "inode": 164942252
+    },
+    {
+      "relative": "bench-ui62-current2/usage.sqlite3-shm",
+      "bytes": 32768,
+      "mtime_ns": 1793393781961273095,
+      "inode": 164942251
+    },
+    {
+      "relative": "bench-ui62-current2/usage.sqlite3-wal",
+      "bytes": 4478472,
+      "mtime_ns": 1793393805207645232,
+      "inode": 164942250
+    },
+    {
+      "relative": "bench-ui62-current2/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393781927896101,
+      "inode": 164942244
+    },
+    {
+      "relative": "bench-ui62-current2/gpui-drafts.json",
+      "bytes": 868,
+      "mtime_ns": 1793393805294680071,
+      "inode": 164942441
+    },
+    {
+      "relative": "bench-ui62-current2/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793393805333435744,
+      "inode": 164942443
+    },
+    {
+      "relative": "bench-ui62-current2/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793393781806563690,
+      "inode": 164942238
+    },
+    {
+      "relative": "bench-ui62-current2/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793393781806467232,
+      "inode": 164942237
+    },
+    {
+      "relative": "bench-ui62-current2/usage.sqlite3",
+      "bytes": 1204224,
+      "mtime_ns": 1793393805208265062,
+      "inode": 164942248
+    },
+    {
+      "relative": "bench-ui62-current2/WorkBuddy Proxy Protocol Bench current2.app/Contents/Info.plist",
+      "bytes": 2623,
+      "mtime_ns": 1793393781977138137,
+      "inode": 164942257
+    },
+    {
+      "relative": "bench-ui62-current2/WorkBuddy Proxy Protocol Bench current2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392853897144754,
+      "inode": 164942256
+    },
+    {
+      "relative": "bench-ui62-previous2/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393825588762927,
+      "inode": 164942572
+    },
+    {
+      "relative": "bench-ui62-previous2/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793393805689815725,
+      "inode": 164942467
+    },
+    {
+      "relative": "bench-ui62-previous2/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793393828190211407,
+      "inode": 164942636
+    },
+    {
+      "relative": "bench-ui62-previous2/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793393805431435068,
+      "inode": 164942459
+    },
+    {
+      "relative": "bench-ui62-previous2/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793393805493750161,
+      "inode": 164942462
+    },
+    {
+      "relative": "bench-ui62-previous2/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793393826071722541,
+      "inode": 164942609
+    },
+    {
+      "relative": "bench-ui62-previous2/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793393805586416596,
+      "inode": 164942477
+    },
+    {
+      "relative": "bench-ui62-previous2/usage.sqlite3-shm",
+      "bytes": 32768,
+      "mtime_ns": 1793393805586365596,
+      "inode": 164942476
+    },
+    {
+      "relative": "bench-ui62-previous2/usage.sqlite3-wal",
+      "bytes": 4383712,
+      "mtime_ns": 1793393828116414998,
+      "inode": 164942475
+    },
+    {
+      "relative": "bench-ui62-previous2/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393805554758719,
+      "inode": 164942468
+    },
+    {
+      "relative": "bench-ui62-previous2/gpui-drafts.json",
+      "bytes": 868,
+      "mtime_ns": 1793393828153157391,
+      "inode": 164942637
+    },
+    {
+      "relative": "bench-ui62-previous2/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793393828190644738,
+      "inode": 164942638
+    },
+    {
+      "relative": "bench-ui62-previous2/config.pre-v0.3-6ad8ebec15560e90a8f2d95e6c03731c2e5d96f27084432f.bak",
+      "bytes": 170,
+      "mtime_ns": 1793393805544188066,
+      "inode": 164942469
+    },
+    {
+      "relative": "bench-ui62-previous2/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793393805430917904,
+      "inode": 164942458
+    },
+    {
+      "relative": "bench-ui62-previous2/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793393805430807780,
+      "inode": 164942457
+    },
+    {
+      "relative": "bench-ui62-previous2/usage.sqlite3",
+      "bytes": 1212416,
+      "mtime_ns": 1793393828117356369,
+      "inode": 164942473
+    },
+    {
+      "relative": "bench-ui62-previous2/WorkBuddy Proxy Protocol Bench previous2.app/Contents/Info.plist",
+      "bytes": 2638,
+      "mtime_ns": 1793393805598745574,
+      "inode": 164942482
+    },
+    {
+      "relative": "bench-ui62-previous2/WorkBuddy Proxy Protocol Bench previous2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426128,
+      "mtime_ns": 1793388985564998399,
+      "inode": 164942481
+    },
+    {
+      "relative": "ui62-protocol-final/fixture.json",
+      "bytes": 1284,
+      "mtime_ns": 1793392245829957011,
+      "inode": 164938325
+    },
+    {
+      "relative": "ui62-protocol-final/native-acceptance-finished",
+      "bytes": 52,
+      "mtime_ns": 1793392567228118368,
+      "inode": 164939060
+    },
+    {
+      "relative": "ui62-protocol-final/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793392567604587272,
+      "inode": 164939061
+    },
+    {
+      "relative": "ui62-protocol-final/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793392215599377166,
+      "inode": 164938213
+    },
+    {
+      "relative": "ui62-protocol-final/final-chat-wide.png",
+      "bytes": 222402,
+      "mtime_ns": 1793392403722945244,
+      "inode": 164938711
+    },
+    {
+      "relative": "ui62-protocol-final/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793392215019369923,
+      "inode": 164938215
+    },
+    {
+      "relative": "ui62-protocol-final/post-gui-proof.json",
+      "bytes": 543,
+      "mtime_ns": 1793392567228037911,
+      "inode": 164939059
+    },
+    {
+      "relative": "ui62-protocol-final/final-tab-focus-wide.png",
+      "bytes": 222250,
+      "mtime_ns": 1793392461650087091,
+      "inode": 164938839
+    },
+    {
+      "relative": "ui62-protocol-final/cua-launch-ready.json",
+      "bytes": 247,
+      "mtime_ns": 1793392215575401922,
+      "inode": 164938230
+    },
+    {
+      "relative": "ui62-protocol-final/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "inode": 164938214
+    },
+    {
+      "relative": "ui62-protocol-final/stage-initial.json",
+      "bytes": 379,
+      "mtime_ns": 1793392302799013843,
+      "inode": 164938518
+    },
+    {
+      "relative": "ui62-protocol-final/intermediate-089a-gui-validation.json",
+      "bytes": 1565,
+      "mtime_ns": 1793392537919406478,
+      "inode": 164939028
+    },
+    {
+      "relative": "ui62-protocol-final/pre-gui-proof.json",
+      "bytes": 2654,
+      "mtime_ns": 1793392219194723669,
+      "inode": 164938242
+    },
+    {
+      "relative": "ui62-protocol-final/candidate-2879.png",
+      "bytes": 222402,
+      "mtime_ns": 1793392377517599775,
+      "inode": 164938671
+    },
+    {
+      "relative": "ui62-protocol-final/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793392219194833462,
+      "inode": 164938243
+    },
+    {
+      "relative": "ui62-protocol-final/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793392215575274129,
+      "inode": 164938229
+    },
+    {
+      "relative": "ui62-protocol-final/candidate-2894.png",
+      "bytes": 222402,
+      "mtime_ns": 1793392377524364814,
+      "inode": 164938676
+    },
+    {
+      "relative": "ui62-protocol-final/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793392215009878643,
+      "inode": 164938205
+    },
+    {
+      "relative": "ui62-protocol-final/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793392245225603769,
+      "inode": 164938279
+    },
+    {
+      "relative": "ui62-protocol-final/config/config.json",
+      "bytes": 1052,
+      "mtime_ns": 1793392215009674391,
+      "inode": 164938204
+    },
+    {
+      "relative": "ui62-protocol-final/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793392215495233759,
+      "inode": 164938222
+    },
+    {
+      "relative": "ui62-protocol-final/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793392215497291367,
+      "inode": 164938223
+    },
+    {
+      "relative": "ui62-protocol-final/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793392215441011655,
+      "inode": 164938216
+    },
+    {
+      "relative": "ui62-protocol-final/config/gpui-drafts.json",
+      "bytes": 2174,
+      "mtime_ns": 1793392520060644607,
+      "inode": 164938988
+    },
+    {
+      "relative": "ui62-protocol-final/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793392215009579806,
+      "inode": 164938203
+    },
+    {
+      "relative": "ui62-protocol-final/config/usage.sqlite3",
+      "bytes": 233472,
+      "mtime_ns": 1793392567321533580,
+      "inode": 164938218
+    },
+    {
+      "relative": "ui62-protocol-final/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2664,
+      "mtime_ns": 1793392215575232254,
+      "inode": 164938228
+    },
+    {
+      "relative": "ui62-protocol-final/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392208103443732,
+      "inode": 164938227
+    },
+    {
+      "relative": "design-assets/4523d.svg",
+      "bytes": 344,
+      "mtime_ns": 1793391821434661759,
+      "inode": 164937551
+    },
+    {
+      "relative": "design-assets/0ac56.svg",
+      "bytes": 410,
+      "mtime_ns": 1793391720796355582,
+      "inode": 164937332
+    },
+    {
+      "relative": "design-assets/d4ab6.svg",
+      "bytes": 338,
+      "mtime_ns": 1793391820434765179,
+      "inode": 164937546
+    },
+    {
+      "relative": "design-assets/30aa3.svg",
+      "bytes": 360,
+      "mtime_ns": 1793391821219374027,
+      "inode": 164937548
+    },
+    {
+      "relative": "design-assets/86243.svg",
+      "bytes": 241,
+      "mtime_ns": 1793391819487381767,
+      "inode": 164937541
+    },
+    {
+      "relative": "design-assets/3213b.svg",
+      "bytes": 728,
+      "mtime_ns": 1793391820485502909,
+      "inode": 164937547
+    },
+    {
+      "relative": "design-assets/8bc77.svg",
+      "bytes": 442,
+      "mtime_ns": 1793391820419093576,
+      "inode": 164937545
+    },
+    {
+      "relative": "design-assets/e9321.svg",
+      "bytes": 847,
+      "mtime_ns": 1793391719861829989,
+      "inode": 164937315
+    },
+    {
+      "relative": "design-assets/b5dcb.svg",
+      "bytes": 380,
+      "mtime_ns": 1793391822385821466,
+      "inode": 164937573
+    },
+    {
+      "relative": "design-assets/ec1b5.svg",
+      "bytes": 241,
+      "mtime_ns": 1793391819476171383,
+      "inode": 164937540
+    },
+    {
+      "relative": "design-assets/7d50e.svg",
+      "bytes": 244,
+      "mtime_ns": 1793391817568128609,
+      "inode": 164937532
+    },
+    {
+      "relative": "design-assets/794e6.svg",
+      "bytes": 733,
+      "mtime_ns": 1793391818529636981,
+      "inode": 164937536
+    },
+    {
+      "relative": "design-assets/4a154.svg",
+      "bytes": 663,
+      "mtime_ns": 1793391817155727487,
+      "inode": 164937531
+    },
+    {
+      "relative": "design-assets/7bc0b.svg",
+      "bytes": 926,
+      "mtime_ns": 1793391816637998110,
+      "inode": 164937528
+    },
+    {
+      "relative": "design-assets/2f5fe.svg",
+      "bytes": 1052,
+      "mtime_ns": 1793391818603328067,
+      "inode": 164937538
+    },
+    {
+      "relative": "design-assets/1ccfc.svg",
+      "bytes": 244,
+      "mtime_ns": 1793391816667396877,
+      "inode": 164937529
+    },
+    {
+      "relative": "design-assets/b6ecc.svg",
+      "bytes": 356,
+      "mtime_ns": 1793391817663985876,
+      "inode": 164937534
+    },
+    {
+      "relative": "design-assets/aad6f.svg",
+      "bytes": 376,
+      "mtime_ns": 1793391821427072043,
+      "inode": 164937550
+    },
+    {
+      "relative": "design-assets/af952.svg",
+      "bytes": 810,
+      "mtime_ns": 1793391719864353436,
+      "inode": 164937317
+    },
+    {
+      "relative": "design-assets/a7d16.svg",
+      "bytes": 1263,
+      "mtime_ns": 1793391719859926633,
+      "inode": 164937314
+    },
+    {
+      "relative": "design-assets/d479d.svg",
+      "bytes": 353,
+      "mtime_ns": 1793391818549767554,
+      "inode": 164937537
+    },
+    {
+      "relative": "design-assets/a1ba4.svg",
+      "bytes": 651,
+      "mtime_ns": 1793391819051741327,
+      "inode": 164937539
+    },
+    {
+      "relative": "design-assets/91e75.png",
+      "bytes": 920,
+      "mtime_ns": 1793391816687506950,
+      "inode": 164937530
+    },
+    {
+      "relative": "design-assets/3ef59.svg",
+      "bytes": 906,
+      "mtime_ns": 1793391818086851956,
+      "inode": 164937535
+    },
+    {
+      "relative": "design-assets/7f8ff.svg",
+      "bytes": 244,
+      "mtime_ns": 1793391817615695467,
+      "inode": 164937533
+    },
+    {
+      "relative": "design-assets/2791d.svg",
+      "bytes": 665,
+      "mtime_ns": 1793391820147870761,
+      "inode": 164937544
+    },
+    {
+      "relative": "design-assets/97d77.svg",
+      "bytes": 694,
+      "mtime_ns": 1793391822167181862,
+      "inode": 164937564
+    },
+    {
+      "relative": "design-assets/a7779.svg",
+      "bytes": 665,
+      "mtime_ns": 1793391821412872958,
+      "inode": 164937549
+    },
+    {
+      "relative": "design-assets/06df8.svg",
+      "bytes": 327,
+      "mtime_ns": 1793391819559336624,
+      "inode": 164937542
+    },
+    {
+      "relative": "design-assets/def90.svg",
+      "bytes": 779,
+      "mtime_ns": 1793391719980554362,
+      "inode": 164937318
+    },
+    {
+      "relative": "review/ui-live-current.json",
+      "bytes": 1287,
+      "mtime_ns": 1793392982631583113,
+      "inode": 164936689
+    },
+    {
+      "relative": "ui62-protocol-final3/fixture.json",
+      "bytes": 1287,
+      "mtime_ns": 1793392982631326074,
+      "inode": 164939955
+    },
+    {
+      "relative": "ui62-protocol-final3/final-anthropic-wide.png",
+      "bytes": 225034,
+      "mtime_ns": 1793393258262556300,
+      "inode": 164940545
+    },
+    {
+      "relative": "ui62-protocol-final3/responses-applied.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393470320957221,
+      "inode": 164941228
+    },
+    {
+      "relative": "ui62-protocol-final3/final-responses-small.png",
+      "bytes": 148757,
+      "mtime_ns": 1793393323327058035,
+      "inode": 164940745
+    },
+    {
+      "relative": "ui62-protocol-final3/final-invalid-small.png",
+      "bytes": 149980,
+      "mtime_ns": 1793393364544867699,
+      "inode": 164940900
+    },
+    {
+      "relative": "ui62-protocol-final3/gemini-saved.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393653137262693,
+      "inode": 164941740
+    },
+    {
+      "relative": "ui62-protocol-final3/final-gui-validation.json",
+      "bytes": 9854,
+      "mtime_ns": 1793393703395072479,
+      "inode": 164941783
+    },
+    {
+      "relative": "ui62-protocol-final3/native-acceptance-finished",
+      "bytes": 52,
+      "mtime_ns": 1793393718299107682,
+      "inode": 164941858
+    },
+    {
+      "relative": "ui62-protocol-final3/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793393718898849732,
+      "inode": 164941860
+    },
+    {
+      "relative": "ui62-protocol-final3/chat-saved.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393447124661073,
+      "inode": 164941126
+    },
+    {
+      "relative": "ui62-protocol-final3/chat-saved.ack.json",
+      "bytes": 723,
+      "mtime_ns": 1793393447298954679,
+      "inode": 164941127
+    },
+    {
+      "relative": "ui62-protocol-final3/final-responses-wide.png",
+      "bytes": 222556,
+      "mtime_ns": 1793393242977988172,
+      "inode": 164940501
+    },
+    {
+      "relative": "ui62-protocol-final3/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793392956527262559,
+      "inode": 164939864
+    },
+    {
+      "relative": "ui62-protocol-final3/gemini-saved.ack.json",
+      "bytes": 779,
+      "mtime_ns": 1793393653256074825,
+      "inode": 164941741
+    },
+    {
+      "relative": "ui62-protocol-final3/final-chat-wide.png",
+      "bytes": 222216,
+      "mtime_ns": 1793393091718863774,
+      "inode": 164940221
+    },
+    {
+      "relative": "ui62-protocol-final3/final-chat-small.png",
+      "bytes": 148758,
+      "mtime_ns": 1793393309837705265,
+      "inode": 164940720
+    },
+    {
+      "relative": "ui62-protocol-final3/anthropic-saved.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393594485782489,
+      "inode": 164941566
+    },
+    {
+      "relative": "ui62-protocol-final3/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793392955984412488,
+      "inode": 164939866
+    },
+    {
+      "relative": "ui62-protocol-final3/post-gui-proof.json",
+      "bytes": 544,
+      "mtime_ns": 1793393718298978350,
+      "inode": 164941857
+    },
+    {
+      "relative": "ui62-protocol-final3/cancelled.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393391934784366,
+      "inode": 164940982
+    },
+    {
+      "relative": "ui62-protocol-final3/final-tab-focus-wide.png",
+      "bytes": 222036,
+      "mtime_ns": 1793393212924926958,
+      "inode": 164940439
+    },
+    {
+      "relative": "ui62-protocol-final3/anthropic-saved.ack.json",
+      "bytes": 781,
+      "mtime_ns": 1793393594548723953,
+      "inode": 164941567
+    },
+    {
+      "relative": "ui62-protocol-final3/cua-launch-ready.json",
+      "bytes": 249,
+      "mtime_ns": 1793392956492426732,
+      "inode": 164939881
+    },
+    {
+      "relative": "ui62-protocol-final3/final-gemini-scroll-small.png",
+      "bytes": 143327,
+      "mtime_ns": 1793393299024813312,
+      "inode": 164940682
+    },
+    {
+      "relative": "ui62-protocol-final3/anthropic-applied.ack.json",
+      "bytes": 759,
+      "mtime_ns": 1793393570721210127,
+      "inode": 164941520
+    },
+    {
+      "relative": "ui62-protocol-final3/candidate-2948.png",
+      "bytes": 222216,
+      "mtime_ns": 1793393065539293663,
+      "inode": 164940192
+    },
+    {
+      "relative": "ui62-protocol-final3/responses-applied.ack.json",
+      "bytes": 729,
+      "mtime_ns": 1793393470527201789,
+      "inode": 164941229
+    },
+    {
+      "relative": "ui62-protocol-final3/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "inode": 164939865
+    },
+    {
+      "relative": "ui62-protocol-final3/final-gemini-small.png",
+      "bytes": 144443,
+      "mtime_ns": 1793393284914922039,
+      "inode": 164940644
+    },
+    {
+      "relative": "ui62-protocol-final3/chat-applied.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393432177613569,
+      "inode": 164941105
+    },
+    {
+      "relative": "ui62-protocol-final3/anthropic-applied.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393570656757879,
+      "inode": 164941519
+    },
+    {
+      "relative": "ui62-protocol-final3/gemini-applied.ack.json",
+      "bytes": 779,
+      "mtime_ns": 1793393634916529851,
+      "inode": 164941708
+    },
+    {
+      "relative": "ui62-protocol-final3/responses-saved.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393485893183430,
+      "inode": 164941262
+    },
+    {
+      "relative": "ui62-protocol-final3/final-anthropic-invalid-small.png",
+      "bytes": 154891,
+      "mtime_ns": 1793393540295881632,
+      "inode": 164941436
+    },
+    {
+      "relative": "ui62-protocol-final3/pre-gui-proof.json",
+      "bytes": 2656,
+      "mtime_ns": 1793392960297805377,
+      "inode": 164939884
+    },
+    {
+      "relative": "ui62-protocol-final3/stage-core-proofs.json",
+      "bytes": 6743,
+      "mtime_ns": 1793393653255785952,
+      "inode": 164940983
+    },
+    {
+      "relative": "ui62-protocol-final3/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793392960297935042,
+      "inode": 164939885
+    },
+    {
+      "relative": "ui62-protocol-final3/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793392956492293234,
+      "inode": 164939880
+    },
+    {
+      "relative": "ui62-protocol-final3/final-gemini-wide.png",
+      "bytes": 216959,
+      "mtime_ns": 1793393268469292717,
+      "inode": 164940588
+    },
+    {
+      "relative": "ui62-protocol-final3/cancelled.ack.json",
+      "bytes": 477,
+      "mtime_ns": 1793393392067104550,
+      "inode": 164940984
+    },
+    {
+      "relative": "ui62-protocol-final3/responses-saved.ack.json",
+      "bytes": 758,
+      "mtime_ns": 1793393486013568349,
+      "inode": 164941263
+    },
+    {
+      "relative": "ui62-protocol-final3/gemini-applied.ready",
+      "bytes": 5,
+      "mtime_ns": 1793393634735757166,
+      "inode": 164941707
+    },
+    {
+      "relative": "ui62-protocol-final3/candidate-2937.png",
+      "bytes": 222216,
+      "mtime_ns": 1793393065534372461,
+      "inode": 164940187
+    },
+    {
+      "relative": "ui62-protocol-final3/chat-applied.ack.json",
+      "bytes": 480,
+      "mtime_ns": 1793393432215511195,
+      "inode": 164941106
+    },
+    {
+      "relative": "ui62-protocol-final3/final-anthropic-small.png",
+      "bytes": 151387,
+      "mtime_ns": 1793393333675187538,
+      "inode": 164940781
+    },
+    {
+      "relative": "ui62-protocol-final3/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793392955940609250,
+      "inode": 164939856
+    },
+    {
+      "relative": "ui62-protocol-final3/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793392982155189352,
+      "inode": 164939917
+    },
+    {
+      "relative": "ui62-protocol-final3/config/config.json",
+      "bytes": 2428,
+      "mtime_ns": 1793393645256010280,
+      "inode": 164941717
+    },
+    {
+      "relative": "ui62-protocol-final3/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793392956424611395,
+      "inode": 164939873
+    },
+    {
+      "relative": "ui62-protocol-final3/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793392956426708000,
+      "inode": 164939874
+    },
+    {
+      "relative": "ui62-protocol-final3/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793392956372163324,
+      "inode": 164939867
+    },
+    {
+      "relative": "ui62-protocol-final3/config/gpui-drafts.json",
+      "bytes": 2233,
+      "mtime_ns": 1793393697607731434,
+      "inode": 164941813
+    },
+    {
+      "relative": "ui62-protocol-final3/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793392955940428918,
+      "inode": 164939854
+    },
+    {
+      "relative": "ui62-protocol-final3/config/usage.sqlite3",
+      "bytes": 233472,
+      "mtime_ns": 1793393718472173616,
+      "inode": 164939869
+    },
+    {
+      "relative": "ui62-protocol-final3/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2677,
+      "mtime_ns": 1793392956492248526,
+      "inode": 164939879
+    },
+    {
+      "relative": "ui62-protocol-final3/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392853897144754,
+      "inode": 164939878
+    },
+    {
+      "relative": "bench-ui62-current1/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393779135540031,
+      "inode": 164942148
+    },
+    {
+      "relative": "bench-ui62-current1/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793393755766855073,
+      "inode": 164942037
+    },
+    {
+      "relative": "bench-ui62-current1/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793393781715865286,
+      "inode": 164942222
+    },
+    {
+      "relative": "bench-ui62-current1/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793393755505200016,
+      "inode": 164942029
+    },
+    {
+      "relative": "bench-ui62-current1/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793393755567027445,
+      "inode": 164942031
+    },
+    {
+      "relative": "bench-ui62-current1/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793393779602922601,
+      "inode": 164942191
+    },
+    {
+      "relative": "bench-ui62-current1/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793393755663261570,
+      "inode": 164942046
+    },
+    {
+      "relative": "bench-ui62-current1/usage.sqlite3-shm",
+      "bytes": 32768,
+      "mtime_ns": 1793393755663220195,
+      "inode": 164942045
+    },
+    {
+      "relative": "bench-ui62-current1/usage.sqlite3-wal",
+      "bytes": 4494952,
+      "mtime_ns": 1793393781621617901,
+      "inode": 164942044
+    },
+    {
+      "relative": "bench-ui62-current1/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393755627715379,
+      "inode": 164942038
+    },
+    {
+      "relative": "bench-ui62-current1/gpui-drafts.json",
+      "bytes": 868,
+      "mtime_ns": 1793393781680481928,
+      "inode": 164942223
+    },
+    {
+      "relative": "bench-ui62-current1/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793393781716321367,
+      "inode": 164942225
+    },
+    {
+      "relative": "bench-ui62-current1/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793393755504839935,
+      "inode": 164942028
+    },
+    {
+      "relative": "bench-ui62-current1/config.pre-v0.3-6a64b98051cc82963e6ce721b12d19ba75e3fd76dda63046.bak",
+      "bytes": 170,
+      "mtime_ns": 1793393755617055518,
+      "inode": 164942039
+    },
+    {
+      "relative": "bench-ui62-current1/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793393755504735977,
+      "inode": 164942027
+    },
+    {
+      "relative": "bench-ui62-current1/usage.sqlite3",
+      "bytes": 1204224,
+      "mtime_ns": 1793393781623555307,
+      "inode": 164942042
+    },
+    {
+      "relative": "bench-ui62-current1/WorkBuddy Proxy Protocol Bench current1.app/Contents/Info.plist",
+      "bytes": 2623,
+      "mtime_ns": 1793393755676555417,
+      "inode": 164942051
+    },
+    {
+      "relative": "bench-ui62-current1/WorkBuddy Proxy Protocol Bench current1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392853897144754,
+      "inode": 164942050
+    },
+    {
+      "relative": "bench-ui62-previous1/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393752575984240,
+      "inode": 164941936
+    },
+    {
+      "relative": "bench-ui62-previous1/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793393723035501649,
+      "inode": 164941878
+    },
+    {
+      "relative": "bench-ui62-previous1/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793393755406078157,
+      "inode": 164942011
+    },
+    {
+      "relative": "bench-ui62-previous1/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793393722768472954,
+      "inode": 164941875
+    },
+    {
+      "relative": "bench-ui62-previous1/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793393722827939270,
+      "inode": 164941876
+    },
+    {
+      "relative": "bench-ui62-previous1/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793393753285584135,
+      "inode": 164941990
+    },
+    {
+      "relative": "bench-ui62-previous1/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793393722931929896,
+      "inode": 164941887
+    },
+    {
+      "relative": "bench-ui62-previous1/usage.sqlite3-shm",
+      "bytes": 32768,
+      "mtime_ns": 1793393722927626627,
+      "inode": 164941886
+    },
+    {
+      "relative": "bench-ui62-previous1/usage.sqlite3-wal",
+      "bytes": 4288952,
+      "mtime_ns": 1793393755325478825,
+      "inode": 164941885
+    },
+    {
+      "relative": "bench-ui62-previous1/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793393722891122566,
+      "inode": 164941879
+    },
+    {
+      "relative": "bench-ui62-previous1/config.pre-v0.3-e33ffcbec9f2be2921505c2431d7b2f1d82ac404a3e7283d.bak",
+      "bytes": 170,
+      "mtime_ns": 1793393722880102874,
+      "inode": 164941880
+    },
+    {
+      "relative": "bench-ui62-previous1/gpui-drafts.json",
+      "bytes": 868,
+      "mtime_ns": 1793393755366460863,
+      "inode": 164942012
+    },
+    {
+      "relative": "bench-ui62-previous1/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793393755406331322,
+      "inode": 164942014
+    },
+    {
+      "relative": "bench-ui62-previous1/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793393722768144914,
+      "inode": 164941874
+    },
+    {
+      "relative": "bench-ui62-previous1/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793393722768044081,
+      "inode": 164941873
+    },
+    {
+      "relative": "bench-ui62-previous1/usage.sqlite3",
+      "bytes": 1200128,
+      "mtime_ns": 1793393755326179072,
+      "inode": 164941883
+    },
+    {
+      "relative": "bench-ui62-previous1/WorkBuddy Proxy Protocol Bench previous1.app/Contents/Info.plist",
+      "bytes": 2638,
+      "mtime_ns": 1793393722949095973,
+      "inode": 164941892
+    },
+    {
+      "relative": "bench-ui62-previous1/WorkBuddy Proxy Protocol Bench previous1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426128,
+      "mtime_ns": 1793388985564998399,
+      "inode": 164941891
+    },
+    {
+      "relative": "ui62-protocol-final2/fixture.json",
+      "bytes": 1287,
+      "mtime_ns": 1793392611643583822,
+      "inode": 164939219
+    },
+    {
+      "relative": "ui62-protocol-final2/native-acceptance-finished",
+      "bytes": 52,
+      "mtime_ns": 1793392881019783562,
+      "inode": 164939776
+    },
+    {
+      "relative": "ui62-protocol-final2/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793392881388407793,
+      "inode": 164939777
+    },
+    {
+      "relative": "ui62-protocol-final2/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793392572893680455,
+      "inode": 164939091
+    },
+    {
+      "relative": "ui62-protocol-final2/final-chat-wide.png",
+      "bytes": 223043,
+      "mtime_ns": 1793392726694393529,
+      "inode": 164939488
+    },
+    {
+      "relative": "ui62-protocol-final2/candidate-2914.png",
+      "bytes": 223043,
+      "mtime_ns": 1793392695200116914,
+      "inode": 164939448
+    },
+    {
+      "relative": "ui62-protocol-final2/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793392571650527730,
+      "inode": 164939093
+    },
+    {
+      "relative": "ui62-protocol-final2/post-gui-proof.json",
+      "bytes": 543,
+      "mtime_ns": 1793392881019622646,
+      "inode": 164939775
+    },
+    {
+      "relative": "ui62-protocol-final2/cua-launch-ready.json",
+      "bytes": 249,
+      "mtime_ns": 1793392572858241134,
+      "inode": 164939108
+    },
+    {
+      "relative": "ui62-protocol-final2/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "inode": 164939092
+    },
+    {
+      "relative": "ui62-protocol-final2/intermediate-1389-gui-validation.json",
+      "bytes": 1140,
+      "mtime_ns": 1793392849306291248,
+      "inode": 164939700
+    },
+    {
+      "relative": "ui62-protocol-final2/pre-gui-proof.json",
+      "bytes": 2656,
+      "mtime_ns": 1793392587018470241,
+      "inode": 164939122
+    },
+    {
+      "relative": "ui62-protocol-final2/candidate-2925.png",
+      "bytes": 223043,
+      "mtime_ns": 1793392695206193188,
+      "inode": 164939453
+    },
+    {
+      "relative": "ui62-protocol-final2/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793392587018672406,
+      "inode": 164939123
+    },
+    {
+      "relative": "ui62-protocol-final2/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793392572858106927,
+      "inode": 164939107
+    },
+    {
+      "relative": "ui62-protocol-final2/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793392571642572724,
+      "inode": 164939083
+    },
+    {
+      "relative": "ui62-protocol-final2/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793392611080156662,
+      "inode": 164939172
+    },
+    {
+      "relative": "ui62-protocol-final2/config/config.json",
+      "bytes": 1052,
+      "mtime_ns": 1793392571642475475,
+      "inode": 164939082
+    },
+    {
+      "relative": "ui62-protocol-final2/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793392572790721628,
+      "inode": 164939100
+    },
+    {
+      "relative": "ui62-protocol-final2/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793392572794811796,
+      "inode": 164939101
+    },
+    {
+      "relative": "ui62-protocol-final2/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793392572750052025,
+      "inode": 164939094
+    },
+    {
+      "relative": "ui62-protocol-final2/config/gpui-drafts.json",
+      "bytes": 2174,
+      "mtime_ns": 1793392831544238467,
+      "inode": 164939679
+    },
+    {
+      "relative": "ui62-protocol-final2/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793392571642386726,
+      "inode": 164939081
+    },
+    {
+      "relative": "ui62-protocol-final2/config/usage.sqlite3",
+      "bytes": 233472,
+      "mtime_ns": 1793392881174574633,
+      "inode": 164939096
+    },
+    {
+      "relative": "ui62-protocol-final2/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2677,
+      "mtime_ns": 1793392572858064095,
+      "inode": 164939106
+    },
+    {
+      "relative": "ui62-protocol-final2/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42426144,
+      "mtime_ns": 1793392554839801817,
+      "inode": 164939105
+    }
+  ],
+  "directories": [
+    "ui62-protocol-baseline",
+    "bench-ui62-current2",
+    "bench-ui62-previous2",
+    "ui62-protocol-final",
+    "design-assets",
+    "review",
+    "ui62-protocol-final3",
+    "bench-ui62-current1",
+    "bench-ui62-previous1",
+    "ui62-protocol-final2",
+    "tmp",
+    "ui62-protocol-baseline/home",
+    "ui62-protocol-baseline/xdg-config",
+    "ui62-protocol-baseline/config",
+    "ui62-protocol-baseline/localappdata",
+    "ui62-protocol-baseline/WorkBuddy Proxy Review.app",
+    "ui62-protocol-baseline/xdg-data",
+    "ui62-protocol-baseline/appdata",
+    "ui62-protocol-baseline/xdg-cache",
+    "ui62-protocol-baseline/tmp",
+    "ui62-protocol-baseline/xdg-state",
+    "ui62-protocol-baseline/home/.workbuddy",
+    "ui62-protocol-baseline/home/.workbuddy/projects",
+    "ui62-protocol-baseline/home/.workbuddy/projects/demo",
+    "ui62-protocol-baseline/WorkBuddy Proxy Review.app/Contents",
+    "ui62-protocol-baseline/WorkBuddy Proxy Review.app/Contents/MacOS",
+    "bench-ui62-current2/home",
+    "bench-ui62-current2/xdg-config",
+    "bench-ui62-current2/localappdata",
+    "bench-ui62-current2/xdg-data",
+    "bench-ui62-current2/WorkBuddy Proxy Protocol Bench current2.app",
+    "bench-ui62-current2/appdata",
+    "bench-ui62-current2/xdg-cache",
+    "bench-ui62-current2/tmp",
+    "bench-ui62-current2/xdg-state",
+    "bench-ui62-current2/WorkBuddy Proxy Protocol Bench current2.app/Contents",
+    "bench-ui62-current2/WorkBuddy Proxy Protocol Bench current2.app/Contents/MacOS",
+    "bench-ui62-previous2/home",
+    "bench-ui62-previous2/xdg-config",
+    "bench-ui62-previous2/localappdata",
+    "bench-ui62-previous2/WorkBuddy Proxy Protocol Bench previous2.app",
+    "bench-ui62-previous2/xdg-data",
+    "bench-ui62-previous2/appdata",
+    "bench-ui62-previous2/xdg-cache",
+    "bench-ui62-previous2/tmp",
+    "bench-ui62-previous2/xdg-state",
+    "bench-ui62-previous2/WorkBuddy Proxy Protocol Bench previous2.app/Contents",
+    "bench-ui62-previous2/WorkBuddy Proxy Protocol Bench previous2.app/Contents/MacOS",
+    "ui62-protocol-final/home",
+    "ui62-protocol-final/xdg-config",
+    "ui62-protocol-final/config",
+    "ui62-protocol-final/localappdata",
+    "ui62-protocol-final/WorkBuddy Proxy Review.app",
+    "ui62-protocol-final/xdg-data",
+    "ui62-protocol-final/appdata",
+    "ui62-protocol-final/xdg-cache",
+    "ui62-protocol-final/tmp",
+    "ui62-protocol-final/xdg-state",
+    "ui62-protocol-final/home/.workbuddy",
+    "ui62-protocol-final/home/.workbuddy/projects",
+    "ui62-protocol-final/home/.workbuddy/projects/demo",
+    "ui62-protocol-final/WorkBuddy Proxy Review.app/Contents",
+    "ui62-protocol-final/WorkBuddy Proxy Review.app/Contents/MacOS",
+    "ui62-protocol-final3/home",
+    "ui62-protocol-final3/xdg-config",
+    "ui62-protocol-final3/config",
+    "ui62-protocol-final3/localappdata",
+    "ui62-protocol-final3/WorkBuddy Proxy Review.app",
+    "ui62-protocol-final3/xdg-data",
+    "ui62-protocol-final3/appdata",
+    "ui62-protocol-final3/xdg-cache",
+    "ui62-protocol-final3/tmp",
+    "ui62-protocol-final3/xdg-state",
+    "ui62-protocol-final3/home/.workbuddy",
+    "ui62-protocol-final3/home/.workbuddy/projects",
+    "ui62-protocol-final3/home/.workbuddy/projects/demo",
+    "ui62-protocol-final3/WorkBuddy Proxy Review.app/Contents",
+    "ui62-protocol-final3/WorkBuddy Proxy Review.app/Contents/MacOS",
+    "bench-ui62-current1/home",
+    "bench-ui62-current1/xdg-config",
+    "bench-ui62-current1/localappdata",
+    "bench-ui62-current1/xdg-data",
+    "bench-ui62-current1/appdata",
+    "bench-ui62-current1/WorkBuddy Proxy Protocol Bench current1.app",
+    "bench-ui62-current1/xdg-cache",
+    "bench-ui62-current1/tmp",
+    "bench-ui62-current1/xdg-state",
+    "bench-ui62-current1/WorkBuddy Proxy Protocol Bench current1.app/Contents",
+    "bench-ui62-current1/WorkBuddy Proxy Protocol Bench current1.app/Contents/MacOS",
+    "bench-ui62-previous1/home",
+    "bench-ui62-previous1/xdg-config",
+    "bench-ui62-previous1/WorkBuddy Proxy Protocol Bench previous1.app",
+    "bench-ui62-previous1/localappdata",
+    "bench-ui62-previous1/xdg-data",
+    "bench-ui62-previous1/appdata",
+    "bench-ui62-previous1/xdg-cache",
+    "bench-ui62-previous1/tmp",
+    "bench-ui62-previous1/xdg-state",
+    "bench-ui62-previous1/WorkBuddy Proxy Protocol Bench previous1.app/Contents",
+    "bench-ui62-previous1/WorkBuddy Proxy Protocol Bench previous1.app/Contents/MacOS",
+    "ui62-protocol-final2/home",
+    "ui62-protocol-final2/xdg-config",
+    "ui62-protocol-final2/config",
+    "ui62-protocol-final2/localappdata",
+    "ui62-protocol-final2/WorkBuddy Proxy Review.app",
+    "ui62-protocol-final2/xdg-data",
+    "ui62-protocol-final2/appdata",
+    "ui62-protocol-final2/xdg-cache",
+    "ui62-protocol-final2/tmp",
+    "ui62-protocol-final2/xdg-state",
+    "ui62-protocol-final2/home/.workbuddy",
+    "ui62-protocol-final2/home/.workbuddy/projects",
+    "ui62-protocol-final2/home/.workbuddy/projects/demo",
+    "ui62-protocol-final2/WorkBuddy Proxy Review.app/Contents",
+    "ui62-protocol-final2/WorkBuddy Proxy Review.app/Contents/MacOS"
+  ],
+  "file_count": 297,
+  "directory_count": 115,
+  "logical_bytes": 573518280,
+  "logical_mib": 546.95,
+  "ancestors": [
+    {
+      "path": "/",
+      "device": 16777233,
+      "mount": true,
+      "uid": 0
+    },
+    {
+      "path": "/private",
+      "device": 16777233,
+      "mount": false,
+      "uid": 0
+    },
+    {
+      "path": "/private/var",
+      "device": 16777233,
+      "mount": false,
+      "uid": 0
+    },
+    {
+      "path": "/private/var/folders",
+      "device": 16777233,
+      "mount": false,
+      "uid": 0
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "device": 16777233,
+      "mount": false,
+      "uid": 0
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "device": 16777233,
+      "mount": false,
+      "uid": 501
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "device": 16777233,
+      "mount": false,
+      "uid": 501
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54",
+      "device": 16777233,
+      "mount": false,
+      "uid": 501
+    }
+  ],
+  "regenerable": "Copied old/current/intermediate release executables, local mock DBs/configs/home/environment, original Figma temporary downloads and verification helper/scripts. Public evidence committed next; no real user data/core source/git/shared caches included.",
+  "process_references": [],
+  "lsof": "lsof +D exact target exit1/no rows (none open)",
+  "process_check_at": "2026-10-31T05:03:00.008750+08:00",
+  "free_bytes_before": 42002153472
+}

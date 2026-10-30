@@ -1,0 +1,276 @@
+[
+  {
+    "path" : "\/private\/var\/folders\/zg\/0qx2fqyj0h5fmsk421t3ypy80000gn\/T\/studio-v2-round53.6h7war54\/reference-61-289.png",
+    "pixels" : [
+      1440,
+      900
+    ],
+    "point_samples" : [
+      {
+        "rgb" : [
+          255,
+          255,
+          255
+        ],
+        "xy" : [
+          500,
+          190
+        ]
+      },
+      {
+        "rgb" : [
+          255,
+          255,
+          255
+        ],
+        "xy" : [
+          550,
+          200
+        ]
+      },
+      {
+        "rgb" : [
+          238,
+          237,
+          255
+        ],
+        "xy" : [
+          987,
+          120
+        ]
+      },
+      {
+        "rgb" : [
+          138,
+          140,
+          153
+        ],
+        "xy" : [
+          1400,
+          840
+        ]
+      },
+      {
+        "rgb" : [
+          243,
+          245,
+          250
+        ],
+        "xy" : [
+          440,
+          180
+        ]
+      },
+      {
+        "rgb" : [
+          255,
+          255,
+          255
+        ],
+        "xy" : [
+          450,
+          180
+        ]
+      }
+    ],
+    "roles" : [
+      {
+        "ink_bounds" : [
+          436,
+          237,
+          502,
+          248
+        ],
+        "name" : "auth_label"
+      },
+      {
+        "ink_bounds" : [
+          450,
+          266,
+          595,
+          277
+        ],
+        "name" : "auth_value"
+      },
+      {
+        "ink_bounds" : [
+          437,
+          326,
+          482,
+          336
+        ],
+        "name" : "mode_label"
+      },
+      {
+        "ink_bounds" : [
+          450,
+          355,
+          584,
+          366
+        ],
+        "name" : "mode_value"
+      },
+      {
+        "ink_bounds" : [
+          437,
+          411,
+          525,
+          424
+        ],
+        "name" : "mapping_title"
+      },
+      {
+        "ink_bounds" : [
+          909,
+          774,
+          971,
+          785
+        ],
+        "name" : "apply_text"
+      }
+    ],
+    "title_dark_ink_bounds" : [
+      437,
+      114,
+      554,
+      132
+    ]
+  },
+  {
+    "path" : "\/private\/var\/folders\/zg\/0qx2fqyj0h5fmsk421t3ypy80000gn\/T\/studio-v2-round53.6h7war54\/ui62-protocol-final2\/final-chat-wide.png",
+    "pixels" : [
+      1440,
+      901
+    ],
+    "point_samples" : [
+      {
+        "rgb" : [
+          245,
+          247,
+          251
+        ],
+        "xy" : [
+          500,
+          191
+        ]
+      },
+      {
+        "rgb" : [
+          245,
+          247,
+          251
+        ],
+        "xy" : [
+          550,
+          201
+        ]
+      },
+      {
+        "rgb" : [
+          238,
+          237,
+          255
+        ],
+        "xy" : [
+          987,
+          121
+        ]
+      },
+      {
+        "rgb" : [
+          135,
+          138,
+          150
+        ],
+        "xy" : [
+          1400,
+          841
+        ]
+      },
+      {
+        "rgb" : [
+          243,
+          245,
+          250
+        ],
+        "xy" : [
+          440,
+          181
+        ]
+      },
+      {
+        "rgb" : [
+          245,
+          247,
+          251
+        ],
+        "xy" : [
+          450,
+          181
+        ]
+      }
+    ],
+    "roles" : [
+      {
+        "ink_bounds" : [
+          436,
+          238,
+          502,
+          249
+        ],
+        "name" : "auth_label"
+      },
+      {
+        "ink_bounds" : [
+          450,
+          270,
+          596,
+          281
+        ],
+        "name" : "auth_value"
+      },
+      {
+        "ink_bounds" : [
+          437,
+          328,
+          482,
+          338
+        ],
+        "name" : "mode_label"
+      },
+      {
+        "ink_bounds" : [
+          450,
+          360,
+          585,
+          371
+        ],
+        "name" : "mode_value"
+      },
+      {
+        "ink_bounds" : [
+          437,
+          414,
+          525,
+          427
+        ],
+        "name" : "mapping_title"
+      },
+      {
+        "ink_bounds" : [
+          910,
+          775,
+          972,
+          786
+        ],
+        "name" : "apply_text"
+      }
+    ],
+    "title_dark_ink_bounds" : [
+      437,
+      115,
+      554,
+      133
+    ]
+  }
+]

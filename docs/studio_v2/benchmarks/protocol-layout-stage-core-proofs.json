@@ -1,0 +1,235 @@
+[
+  {
+    "stage": "cancelled",
+    "checked_at": "2026-10-31T04:49:52.066631+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "8fdd8a8d11532b59f2553e4a070a763ca596f1bd1f05c4533c8fa1f37e8ecf2e",
+    "core_config_unchanged_since_previous_save": true,
+    "provider_a_protocol": "openai_chat",
+    "provider_a_settings": {},
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "chat-applied",
+    "checked_at": "2026-10-31T04:50:32.215140+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "8fdd8a8d11532b59f2553e4a070a763ca596f1bd1f05c4533c8fa1f37e8ecf2e",
+    "core_config_unchanged_since_previous_save": true,
+    "provider_a_protocol": "openai_chat",
+    "provider_a_settings": {},
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "chat-saved",
+    "checked_at": "2026-10-31T04:50:47.298590+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "f31009c3664c5291597c7cd2d1e3416b84410257e3f528113a2812c67e5fdf00",
+    "core_config_unchanged_since_previous_save": false,
+    "provider_a_protocol": "openai_chat",
+    "provider_a_settings": {
+      "authentication": "azure_api_key",
+      "anthropic_version": "2023-06-01",
+      "default_max_output_tokens": 4096,
+      "reasoning_profile": {
+        "mode": "none",
+        "budgets": {},
+        "levels": {}
+      },
+      "responses_efforts": {}
+    },
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "responses-applied",
+    "checked_at": "2026-10-31T04:51:10.526745+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "f31009c3664c5291597c7cd2d1e3416b84410257e3f528113a2812c67e5fdf00",
+    "core_config_unchanged_since_previous_save": true,
+    "provider_a_protocol": "openai_chat",
+    "provider_a_settings": {
+      "authentication": "azure_api_key",
+      "anthropic_version": "2023-06-01",
+      "default_max_output_tokens": 4096,
+      "reasoning_profile": {
+        "mode": "none",
+        "budgets": {},
+        "levels": {}
+      },
+      "responses_efforts": {}
+    },
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "responses-saved",
+    "checked_at": "2026-10-31T04:51:26.013033+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "56bf355f0a73eeb50d93e1704b8762ef97b696532fa9fad84e76651d3e5e3542",
+    "core_config_unchanged_since_previous_save": false,
+    "provider_a_protocol": "openai_responses",
+    "provider_a_settings": {
+      "authentication": "azure_api_key",
+      "anthropic_version": "2023-06-01",
+      "default_max_output_tokens": 4096,
+      "reasoning_profile": {
+        "mode": "none",
+        "budgets": {},
+        "levels": {}
+      },
+      "responses_efforts": {
+        "max": "high"
+      }
+    },
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "anthropic-applied",
+    "checked_at": "2026-10-31T04:52:50.720799+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "56bf355f0a73eeb50d93e1704b8762ef97b696532fa9fad84e76651d3e5e3542",
+    "core_config_unchanged_since_previous_save": true,
+    "provider_a_protocol": "openai_responses",
+    "provider_a_settings": {
+      "authentication": "azure_api_key",
+      "anthropic_version": "2023-06-01",
+      "default_max_output_tokens": 4096,
+      "reasoning_profile": {
+        "mode": "none",
+        "budgets": {},
+        "levels": {}
+      },
+      "responses_efforts": {
+        "max": "high"
+      }
+    },
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "anthropic-saved",
+    "checked_at": "2026-10-31T04:53:14.548285+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "59c2894465dd0bb737568ab44bc3f6b55a57d38bebcd74b89830e0da3b2753c1",
+    "core_config_unchanged_since_previous_save": false,
+    "provider_a_protocol": "anthropic_messages",
+    "provider_a_settings": {
+      "authentication": "protocol_default",
+      "anthropic_version": "2023-06-01",
+      "default_max_output_tokens": 8192,
+      "reasoning_profile": {
+        "mode": "anthropic_budget",
+        "budgets": {
+          "minimal": 1024
+        },
+        "levels": {}
+      },
+      "responses_efforts": {}
+    },
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "gemini-applied",
+    "checked_at": "2026-10-31T04:53:54.915962+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "59c2894465dd0bb737568ab44bc3f6b55a57d38bebcd74b89830e0da3b2753c1",
+    "core_config_unchanged_since_previous_save": true,
+    "provider_a_protocol": "anthropic_messages",
+    "provider_a_settings": {
+      "authentication": "protocol_default",
+      "anthropic_version": "2023-06-01",
+      "default_max_output_tokens": 8192,
+      "reasoning_profile": {
+        "mode": "anthropic_budget",
+        "budgets": {
+          "minimal": 1024
+        },
+        "levels": {}
+      },
+      "responses_efforts": {}
+    },
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  },
+  {
+    "stage": "gemini-saved",
+    "checked_at": "2026-10-31T04:54:13.255561+08:00",
+    "ok": true,
+    "core_pid": 33612,
+    "ui_pid": 33794,
+    "config_sha256": "e4e702a716a96c80895598a12d9f503e61d38b91dd92094298842f53138a1ef7",
+    "core_config_unchanged_since_previous_save": false,
+    "provider_a_protocol": "gemini_generate_content",
+    "provider_a_settings": {
+      "authentication": "protocol_default",
+      "anthropic_version": "2023-06-01",
+      "default_max_output_tokens": 4096,
+      "reasoning_profile": {
+        "mode": "gemini_budget",
+        "budgets": {
+          "minimal": 256
+        },
+        "levels": {}
+      },
+      "responses_efforts": {}
+    },
+    "provider_b_protocol": "openai_chat",
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "mock_posts": 0,
+    "core_health": "ready"
+  }
+]

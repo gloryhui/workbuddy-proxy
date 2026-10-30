@@ -1,0 +1,62 @@
+{
+  "ui_sha256": "63f57fe10055b2679abff3525f349a4f98845621b71109efc67f80b55c6aef1e",
+  "ui_pid": 25032,
+  "core_pid": 24673,
+  "window_number": 2836,
+  "cases": {
+    "tabs": "CUA selected Chat, Responses, Anthropic, Gemini, without applying or editing",
+    "defaults": "Chat/Responses auth Protocol default, Native effort; Anthropic output 4096 and Unconfigured; Gemini Unconfigured. Mapping inputs empty.",
+    "small": "CUA resize to 1100x700 target; Gemini initial screenshot; inner scroll retrieved max row with fixed Apply visible, not clicked",
+    "cancel": "Escape closed modal; provider protocol remained OpenAI Chat Completions and name unchanged in CUA"
+  },
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-chat-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "9b8c8e27f312e342c633b22936c87473f7be88e0772056316a751624eb36733a"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-responses-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "bb09a65fd5f5eba60a49d6842dde6d80209b89a26aa8b3a5705580776fd3992f"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-anthropic-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "16ff9d77248402a720921ddcadfc8ea5be9d13fa53f2b275a036e7682359f7a8"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-gemini-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "f4fbafae6e2d17c1dfde1d7564c5e103dbda243af8ab6547e681695af221fc13"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-baseline/baseline-gemini-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "c7ab5c29aaab4e4586cdaa245d5b9f2146d2a918444bf6f5abfacb35a4a150a5"
+    }
+  ],
+  "method": "native screencapture PID onscreen layer0 window 2836 visually matched CUA; no crop or scale; chat file byte-identical candidate-2836",
+  "limits": [
+    "did not Apply, Save, Test, Sync or edit",
+    "config/draft byte comparison delegated to main",
+    "no explicit activate/raise; actual foreground not asserted",
+    "Core termination delegated to main"
+  ],
+  "close": "CUA clicked fresh native close button on UI25032; no exit status asserted"
+}

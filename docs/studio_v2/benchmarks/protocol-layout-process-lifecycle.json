@@ -1,0 +1,201 @@
+{
+  "checked_at": "2026-10-31T05:00:44.299233+08:00",
+  "known_processes": 24,
+  "all_known_pids_gone": true,
+  "entries": [
+    {
+      "fixture": "ui62-protocol-baseline",
+      "kind": "fixture",
+      "pid": 24666,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "PID gone; original exec handle82183 is missing/terminal. Its exit-code output is unavailable in this audit, so no exact fixture exit code asserted."
+    },
+    {
+      "fixture": "ui62-protocol-baseline",
+      "kind": "core",
+      "pid": 24673,
+      "pid_gone": true,
+      "exit_code": 0,
+      "note": "Core/fixture terminal process/exec handle completed0"
+    },
+    {
+      "fixture": "ui62-protocol-baseline",
+      "kind": "ui",
+      "pid": 25032,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "UI owned by CUA, cannot reap exit code"
+    },
+    {
+      "fixture": "ui62-protocol-final",
+      "kind": "fixture",
+      "pid": 29668,
+      "pid_gone": true,
+      "exit_code": 0,
+      "note": "Core/fixture terminal process/exec handle completed0"
+    },
+    {
+      "fixture": "ui62-protocol-final",
+      "kind": "core",
+      "pid": 29672,
+      "pid_gone": true,
+      "exit_code": 0,
+      "note": "Core/fixture terminal process/exec handle completed0"
+    },
+    {
+      "fixture": "ui62-protocol-final",
+      "kind": "ui",
+      "pid": 29881,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "UI owned by CUA, cannot reap exit code"
+    },
+    {
+      "fixture": "ui62-protocol-final2",
+      "kind": "fixture",
+      "pid": 31587,
+      "pid_gone": true,
+      "exit_code": 0,
+      "note": "Core/fixture terminal process/exec handle completed0"
+    },
+    {
+      "fixture": "ui62-protocol-final2",
+      "kind": "core",
+      "pid": 31588,
+      "pid_gone": true,
+      "exit_code": 0,
+      "note": "Core/fixture terminal process/exec handle completed0"
+    },
+    {
+      "fixture": "ui62-protocol-final2",
+      "kind": "ui",
+      "pid": 31858,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "UI owned by CUA, cannot reap exit code"
+    },
+    {
+      "fixture": "ui62-protocol-final3",
+      "kind": "fixture",
+      "pid": 33611,
+      "pid_gone": true,
+      "exit_code": 0,
+      "note": "Core/fixture terminal process/exec handle completed0"
+    },
+    {
+      "fixture": "ui62-protocol-final3",
+      "kind": "core",
+      "pid": 33612,
+      "pid_gone": true,
+      "exit_code": 0,
+      "note": "Core/fixture terminal process/exec handle completed0"
+    },
+    {
+      "fixture": "ui62-protocol-final3",
+      "kind": "ui",
+      "pid": 33794,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "UI owned by CUA, cannot reap exit code"
+    },
+    {
+      "fixture": "previous1",
+      "kind": "ui",
+      "pid": 37747,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "CUA-owned UI; helper saw PID gone"
+    },
+    {
+      "fixture": "previous1",
+      "kind": "mock",
+      "pid": 37536,
+      "pid_gone": true,
+      "exit_code": -15,
+      "waited": true
+    },
+    {
+      "fixture": "previous1",
+      "kind": "core",
+      "pid": 37537,
+      "pid_gone": true,
+      "exit_code": 0,
+      "waited": true
+    },
+    {
+      "fixture": "current1",
+      "kind": "ui",
+      "pid": 37942,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "CUA-owned UI; helper saw PID gone"
+    },
+    {
+      "fixture": "current1",
+      "kind": "mock",
+      "pid": 37785,
+      "pid_gone": true,
+      "exit_code": -15,
+      "waited": true
+    },
+    {
+      "fixture": "current1",
+      "kind": "core",
+      "pid": 37787,
+      "pid_gone": true,
+      "exit_code": 0,
+      "waited": true
+    },
+    {
+      "fixture": "current2",
+      "kind": "ui",
+      "pid": 38090,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "CUA-owned UI; helper saw PID gone"
+    },
+    {
+      "fixture": "current2",
+      "kind": "mock",
+      "pid": 37966,
+      "pid_gone": true,
+      "exit_code": -15,
+      "waited": true
+    },
+    {
+      "fixture": "current2",
+      "kind": "core",
+      "pid": 37968,
+      "pid_gone": true,
+      "exit_code": 0,
+      "waited": true
+    },
+    {
+      "fixture": "previous2",
+      "kind": "ui",
+      "pid": 38227,
+      "pid_gone": true,
+      "exit_code": null,
+      "note": "CUA-owned UI; helper saw PID gone"
+    },
+    {
+      "fixture": "previous2",
+      "kind": "mock",
+      "pid": 38132,
+      "pid_gone": true,
+      "exit_code": -15,
+      "waited": true
+    },
+    {
+      "fixture": "previous2",
+      "kind": "core",
+      "pid": 38137,
+      "pid_gone": true,
+      "exit_code": 0,
+      "waited": true
+    }
+  ],
+  "source_still_frozen": true,
+  "observers": "1389 observer exit1 after deliberately closing discarded UI, no stages; final original observer intentionally TERM143 at ResponsesSaved to correct invalid Anthropic synthetic test expectation128\u21921024, resumed from retained5verified records with Core SHA equality, resumed observer terminal0 after9stages. These are harness lifecycle facts, not product failures."
+}

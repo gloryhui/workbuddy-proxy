@@ -1,0 +1,33 @@
+{
+  "status": "intermediate_not_passed",
+  "ui_sha256": "089a8dc57c9637d7c5b80fba4a3de9d79b7782dc6bfcfd8972345aafaefa4288",
+  "ui_pid": 29881,
+  "core_pid": 29672,
+  "window_number": 2879,
+  "actions": "Opened Chat, clicked Chat then Space: modal remained open; clicked Responses then Return: Responses selected and modal remained. Esc closed modal; underlying protocol remained Chat. No Apply, input, Save or Test.",
+  "issue": "Main found selected tab background transparent vs white design; halted further checks.",
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final/final-chat-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "e8f3a6509a9cd8bd73b4d39f364762e1c32ee61ab1fc838cc7808cd8f794a0a9"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final/final-tab-focus-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "c8c1cec919c77214ef167125d35a482e307aaa431d4d5609f6bef94caeab021f"
+    }
+  ],
+  "method": "native screencapture of visually matched own PID onscreen layer0 window; no crop/scale. final-chat-wide is byte-identical candidate-2879; labels final in filename are intermediate evidence only.",
+  "close": "CUA fresh native close button clicked; Core retained for main; exit status not asserted",
+  "limits": [
+    "No explicit activate/raise; actual foreground not asserted",
+    "Remaining 8-frame checks not done"
+  ]
+}

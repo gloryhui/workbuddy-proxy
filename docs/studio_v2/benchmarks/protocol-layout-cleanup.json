@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-31T05:04:29.765208+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54",
+  "target_still_exists": true,
+  "deleted_files": 0,
+  "freed_bytes": 0,
+  "retained_files": 297,
+  "retained_logical_bytes": 573518745,
+  "retained_mib": 546.95,
+  "system_data_free_bytes": 41998589952,
+  "system_data_free_gib": 39.11,
+  "result": "Blocked by automatic approval review: approval required by policy, AskForApproval Never. No retry, alternate deletion, parent-target expansion, or approval-policy changes. Existing prior-round denied targets untouched.",
+  "processes": "24knownfixture/benchmarkPIDs gone; necessary originals/JSON preserved in repo; original source/build cache outside target."
+}

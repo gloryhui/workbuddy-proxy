@@ -285,8 +285,10 @@ impl Editor {
         scroll: &ScrollHandle,
         height: Pixels,
         needs_gutter: bool,
+        cx: &App,
     ) -> AnyElement {
         let t = |cn: &str, en: &str| if zh { cn.to_owned() } else { en.to_owned() };
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let openai = matches!(
             self.protocol,
             UpstreamProtocol::OpenaiChat | UpstreamProtocol::OpenaiResponses
@@ -300,12 +302,20 @@ impl Editor {
                 .flex_col()
                 .flex_none()
                 .gap(px(3.))
-                .child(Self::field_label(label))
+                .child(Self::field_label(label).when(studio, |label| {
+                    label
+                        .line_height(px(17.))
+                        .h(px(18.))
+                        .font_weight(FontWeight::MEDIUM)
+                }))
                 .child(control)
         };
         let input = |state: &Entity<InputState>, label: String, h: f32| {
             Styled::h(crate::ui_components::text_input(state, false), px(h))
                 .text_size(px(12.))
+                .when(studio, |control| {
+                    control.text_color(rgb(color::TEXT_2)).line_height(px(17.))
+                })
                 .rounded(px(9.))
                 .bg(rgb(color::BG_TABLE_HEAD))
                 .border_color(rgb(color::BORDER))
@@ -318,6 +328,9 @@ impl Editor {
                 .w_full()
                 .h(px(38.))
                 .text_size(px(12.))
+                .when(studio, |control| {
+                    control.text_color(rgb(color::TEXT_2)).line_height(px(17.))
+                })
                 .rounded(px(9.))
                 .bg(rgb(color::BG_TABLE_HEAD))
                 .border_color(rgb(color::BORDER))
@@ -340,7 +353,9 @@ impl Editor {
                     .child(div().mt(px(10.)).h(px(35.)).flex_none().px(px(13.))
                         .flex().items_center().rounded(px(9.)).bg(rgb(color::BG_TABLE_HEAD))
                         .child(Label::new("Anthropic-Version: 2023-06-01")
-                            .font_family(mono.clone()).text_size(px(12.)).text_color(rgb(color::TEXT_2))))
+                            .font_family(mono.clone()).text_size(px(12.)).text_color(rgb(color::TEXT_2))
+                            .when(studio, |label| crate::studio_fonts::latin(label, cx)
+                                .font_weight(FontWeight::MEDIUM).line_height(px(17.)))))
             }))
             .child(div().flex_none().pt(px(if gemini { 22. } else { 0. }))
                 .pb(px(if gemini { 47. } else if anthropic { 31. } else { 26. }))
@@ -375,7 +390,9 @@ impl Editor {
                         .child(div().w(px(crate::theme::size::MAPPING_LABEL_WIDTH)).h(px(33.)).flex_shrink_0().px(px(12.))
                             .rounded(px(7.)).bg(rgb(color::BG_TABLE_HEAD)).flex().items_center()
                             .child(Label::new(effort).font_family(mono.clone()).text_size(px(12.))
-                                .text_color(rgb(color::TEXT_2))))
+                                .text_color(rgb(color::TEXT_2))
+                                .when(studio, |label| crate::studio_fonts::latin(label, cx)
+                                    .font_weight(FontWeight::MEDIUM).line_height(px(17.)))))
                         .child(div().flex_1().min_w_0().child(input(state, format!("{effort} mapping"), row_height)))
                 }));
         div()

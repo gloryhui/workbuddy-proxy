@@ -1,0 +1,541 @@
+{
+  "source": "Official Figma MCP get_metadata page51:2 refreshed2026-10-31; direct numbered Studio frame inventory",
+  "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page_id": "51:2",
+  "raw_xml_characters": 778199,
+  "frames": [
+    {
+      "type": "frame",
+      "id": "52:2",
+      "name": "01 / STUDIO V2 · 使用概览",
+      "x": "60",
+      "y": "80",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "54:2",
+      "name": "02 / STUDIO V2 · 供应商管理",
+      "x": "1650",
+      "y": "80",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "56:8",
+      "name": "03 / STUDIO V2 · 用量明细",
+      "x": "60",
+      "y": "1120",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "57:8",
+      "name": "04 / STUDIO V2 · 汇总分析",
+      "x": "1650",
+      "y": "1120",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "58:8",
+      "name": "05 / STUDIO V2 · 统计设置",
+      "x": "3240",
+      "y": "1120",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "59:11",
+      "name": "06 / STUDIO V2 · 选择模型",
+      "x": "3240",
+      "y": "80",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "59:279",
+      "name": "07 / STUDIO V2 · 编辑模型能力",
+      "x": "4830",
+      "y": "80",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "60:27",
+      "name": "08 / STUDIO V2 · 同步 WorkBuddy",
+      "x": "60",
+      "y": "2160",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "60:249",
+      "name": "09 / STUDIO V2 · 新建价格规则",
+      "x": "4830",
+      "y": "1120",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "60:475",
+      "name": "10 / STUDIO V2 · 请求详情",
+      "x": "1650",
+      "y": "2160",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "61:289",
+      "name": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
+      "x": "3240",
+      "y": "2160",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "61:561",
+      "name": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
+      "x": "4830",
+      "y": "2160",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "61:838",
+      "name": "11 / STUDIO V2 · 协议选项 · Anthropic",
+      "x": "6420",
+      "y": "2160",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "61:1111",
+      "name": "11 / STUDIO V2 · 协议选项 · Gemini",
+      "x": "8010",
+      "y": "2160",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "62:308",
+      "name": "13 / STUDIO V2 · 黑白主题示例",
+      "x": "6420",
+      "y": "80",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "64:335",
+      "name": "14 / STUDIO V2 · 外观与主题",
+      "x": "8010",
+      "y": "80",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "66:320",
+      "name": "17 / STUDIO V2 · 上游协议下拉",
+      "x": "60",
+      "y": "3200",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "66:538",
+      "name": "18 / STUDIO V2 · 供应商预设搜索",
+      "x": "1650",
+      "y": "3200",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "66:760",
+      "name": "19 / STUDIO V2 · API Key 显示演示",
+      "x": "3240",
+      "y": "3200",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "67:338",
+      "name": "20 / STUDIO V2 · OpenCode Go 供应商",
+      "x": "4830",
+      "y": "3200",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "67:548",
+      "name": "21 / STUDIO V2 · 思考强度菜单",
+      "x": "6420",
+      "y": "3200",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "68:350",
+      "name": "22 / STUDIO V2 · 取消同步确认",
+      "x": "8010",
+      "y": "3200",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "69:359",
+      "name": "23 / STUDIO V2 · 编辑模型价格",
+      "x": "6420",
+      "y": "1120",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "78:364",
+      "name": "24 / STUDIO V2 · 新增供应商草稿",
+      "x": "60",
+      "y": "4350",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "78:605",
+      "name": "25 / STUDIO V2 · 编辑供应商资料",
+      "x": "1650",
+      "y": "4350",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "78:843",
+      "name": "26 / STUDIO V2 · 复制供应商草稿",
+      "x": "3240",
+      "y": "4350",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "78:1080",
+      "name": "27 / STUDIO V2 · 删除供应商确认",
+      "x": "4830",
+      "y": "4350",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "78:1325",
+      "name": "28 / STUDIO V2 · 供应商满载滚动 (64)",
+      "x": "6420",
+      "y": "4350",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "78:1804",
+      "name": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go",
+      "x": "8010",
+      "y": "4350",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "79:400",
+      "name": "30 / STUDIO V2 · 64 个供应商搜索",
+      "x": "60",
+      "y": "5570",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "79:885",
+      "name": "31 / STUDIO V2 · 新供应商保存完成",
+      "x": "1650",
+      "y": "5570",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "79:1102",
+      "name": "32 / STUDIO V2 · 供应商复制完成",
+      "x": "3240",
+      "y": "5570",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "80:418",
+      "name": "33 / STUDIO V2 · 供应商搜索（2个）",
+      "x": "4830",
+      "y": "5570",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "80:646",
+      "name": "34 / STUDIO V2 · 编辑 OpenCode Go",
+      "x": "6420",
+      "y": "5570",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "80:864",
+      "name": "35 / STUDIO V2 · 删除 OpenCode Go 确认",
+      "x": "8010",
+      "y": "5570",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "80:1114",
+      "name": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api",
+      "x": "9600",
+      "y": "5570",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "104:1378",
+      "name": "37 / STUDIO V2 · 开机启动已开启（原型）",
+      "x": "60",
+      "y": "6900",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "104:1605",
+      "name": "38 / STUDIO V2 · 检查更新交互（原型）",
+      "x": "1650",
+      "y": "6900",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "104:1823",
+      "name": "39 / STUDIO V2 · 语言切换菜单",
+      "x": "3240",
+      "y": "6900",
+      "width": "1440",
+      "height": "900"
+    },
+    {
+      "type": "frame",
+      "id": "104:2046",
+      "name": "40 / STUDIO V2 · 恢复默认窗口尺寸（原型）",
+      "x": "4830",
+      "y": "6900",
+      "width": "1440",
+      "height": "900"
+    }
+  ],
+  "other_top_level_nodes": [
+    {
+      "type": "frame",
+      "id": "51:63",
+      "name": "Studio V2 / Button",
+      "x": "10800",
+      "y": "160",
+      "width": "600",
+      "height": "80"
+    },
+    {
+      "type": "symbol",
+      "id": "51:64",
+      "name": "Studio V2 / Input",
+      "x": "11380",
+      "y": "272",
+      "width": "82",
+      "height": "40"
+    },
+    {
+      "type": "symbol",
+      "id": "51:66",
+      "name": "Studio V2 / Select",
+      "x": "10800",
+      "y": "384",
+      "width": "108",
+      "height": "40"
+    },
+    {
+      "type": "symbol",
+      "id": "51:68",
+      "name": "Studio V2 / Search",
+      "x": "11090",
+      "y": "384",
+      "width": "146",
+      "height": "40"
+    },
+    {
+      "type": "symbol",
+      "id": "51:70",
+      "name": "Studio V2 / NavActive",
+      "x": "11380",
+      "y": "384",
+      "width": "102",
+      "height": "40"
+    },
+    {
+      "type": "symbol",
+      "id": "51:72",
+      "name": "Studio V2 / NavDefault",
+      "x": "10800",
+      "y": "496",
+      "width": "115",
+      "height": "40"
+    },
+    {
+      "type": "symbol",
+      "id": "51:74",
+      "name": "Studio V2 / StatusRunning",
+      "x": "11090",
+      "y": "496",
+      "width": "109",
+      "height": "29"
+    },
+    {
+      "type": "symbol",
+      "id": "51:76",
+      "name": "Studio V2 / Tag",
+      "x": "11380",
+      "y": "496",
+      "width": "104",
+      "height": "25"
+    },
+    {
+      "type": "symbol",
+      "id": "51:78",
+      "name": "Studio V2 / TabActive",
+      "x": "10800",
+      "y": "608",
+      "width": "54",
+      "height": "34"
+    },
+    {
+      "type": "symbol",
+      "id": "51:80",
+      "name": "Studio V2 / TabDefault",
+      "x": "11090",
+      "y": "608",
+      "width": "80",
+      "height": "34"
+    },
+    {
+      "type": "symbol",
+      "id": "51:82",
+      "name": "Studio V2 / TableRow",
+      "x": "11380",
+      "y": "608",
+      "width": "149",
+      "height": "46"
+    },
+    {
+      "type": "symbol",
+      "id": "51:84",
+      "name": "Studio V2 / Metric",
+      "x": "10800",
+      "y": "720",
+      "width": "106",
+      "height": "108"
+    },
+    {
+      "type": "symbol",
+      "id": "51:86",
+      "name": "Studio V2 / Dialog",
+      "x": "11090",
+      "y": "720",
+      "width": "82",
+      "height": "132"
+    },
+    {
+      "type": "symbol",
+      "id": "51:88",
+      "name": "Studio V2 / TerminalLog",
+      "x": "11380",
+      "y": "720",
+      "width": "226",
+      "height": "58"
+    },
+    {
+      "type": "frame",
+      "id": "61:288",
+      "name": "Studio V2 / Protocol Options",
+      "x": "10800",
+      "y": "2300",
+      "width": "1340",
+      "height": "1550"
+    },
+    {
+      "type": "frame",
+      "id": "71:364",
+      "name": "GPUI / STUDIO V2 · 开发交付契约",
+      "x": "8040",
+      "y": "80",
+      "width": "1100",
+      "height": "2698"
+    },
+    {
+      "type": "frame",
+      "id": "83:454",
+      "name": "Studio V2 / SupplierRow",
+      "x": "10800",
+      "y": "4500",
+      "width": "736",
+      "height": "74"
+    },
+    {
+      "type": "symbol",
+      "id": "83:455",
+      "name": "Studio V2 / SupplierActionBar",
+      "x": "10800",
+      "y": "4620",
+      "width": "224",
+      "height": "44"
+    },
+    {
+      "type": "symbol",
+      "id": "103:442",
+      "name": "Studio V2 / SystemToolbar · 7 Actions",
+      "x": "10800",
+      "y": "4780",
+      "width": "300",
+      "height": "36"
+    }
+  ]
+}

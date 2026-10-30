@@ -1,0 +1,1352 @@
+{
+  "checked_at": "2026-10-31T04:32:47.321810+08:00",
+  "official_file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "official_page": "51:2",
+  "frames": [
+    "61:289",
+    "61:561",
+    "61:838",
+    "61:1111"
+  ],
+  "components": [
+    "61:42",
+    "61:103",
+    "61:169",
+    "61:231"
+  ],
+  "reference_frame_size": [
+    1440,
+    900
+  ],
+  "reference_modal": {
+    "left_top": [
+      410,
+      88
+    ],
+    "width_height": [
+      620,
+      724
+    ],
+    "radius": 18,
+    "content_left": 25,
+    "switch_top": 86,
+    "switch_width_height": [
+      568,
+      40
+    ],
+    "footer_top": 664
+  },
+  "component_specs": {
+    "61-289": [
+      {
+        "id": "61:43",
+        "name": "上游协议选项",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[29px] left-[25px] text-[20px] text-[color:var(--studio-ink,#161c2c)] top-[19px] w-[340px]"
+      },
+      {
+        "id": "61:44",
+        "name": "Protocol Tag",
+        "class": "absolute bg-[var(--studio-accent-tint,#eeedff)] h-[27px] left-[460px] overflow-clip rounded-[8px] top-[21px] w-[126px]"
+      },
+      {
+        "id": "61:45",
+        "name": "CHAT",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[16px] left-[12px] not-italic text-[11px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[104px]"
+      },
+      {
+        "id": "61:46",
+        "name": "×",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]"
+      },
+      {
+        "id": "61:47",
+        "name": "配置不同上游协议的思考参数，不改变 WorkBuddy 本地入口。",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[54px] w-[563px]"
+      },
+      {
+        "id": "61:48",
+        "name": "Protocol Switch",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[40px] left-[25px] overflow-clip rounded-[10px] top-[86px] w-[568px]"
+      },
+      {
+        "id": "61:49",
+        "name": "@PROTOCOL:OpenAI Chat",
+        "class": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-accent-line,#d5d1ff)] border-solid h-[32px] left-[4px] overflow-clip rounded-[8px] top-[4px] w-[123px]"
+      },
+      {
+        "id": "61:50",
+        "name": "Chat",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[101px]"
+      },
+      {
+        "id": "61:51",
+        "name": "@PROTOCOL:OpenAI Responses",
+        "class": "absolute h-[32px] left-[142px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:52",
+        "name": "Responses",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[102px]"
+      },
+      {
+        "id": "61:53",
+        "name": "@PROTOCOL:Anthropic",
+        "class": "absolute h-[32px] left-[282px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:54",
+        "name": "Anthropic",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[102px]"
+      },
+      {
+        "id": "61:55",
+        "name": "@PROTOCOL:Gemini",
+        "class": "absolute h-[32px] left-[422px] overflow-clip rounded-[8px] top-[4px] w-[137px]"
+      },
+      {
+        "id": "61:56",
+        "name": "Gemini",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[115px]"
+      },
+      {
+        "id": "61:57",
+        "name": "API Key 认证",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[145px] w-[205px]"
+      },
+      {
+        "id": "61:58",
+        "name": "Select / Auth",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[38px] left-[25px] overflow-clip rounded-[9px] top-[165px] w-[567px]"
+      },
+      {
+        "id": "61:59",
+        "name": "协议默认 / Protocol default",
+        "class": "absolute h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[539px]"
+      },
+      {
+        "id": "61:60",
+        "name": "⌄",
+        "class": "absolute leading-[20px] left-[544px] size-[18px] text-[14px] text-[color:var(--studio-secondary,#778196)] top-[6px]"
+      },
+      {
+        "id": "61:61",
+        "name": "思考模式",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[234px] w-[205px]"
+      },
+      {
+        "id": "61:62",
+        "name": "Select / Thinking mode",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[38px] left-[25px] overflow-clip rounded-[9px] top-[254px] w-[567px]"
+      },
+      {
+        "id": "61:63",
+        "name": "原生 effort / Native effort",
+        "class": "absolute h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[539px]"
+      },
+      {
+        "id": "61:64",
+        "name": "⌄",
+        "class": "absolute leading-[20px] left-[544px] size-[18px] text-[14px] text-[color:var(--studio-secondary,#778196)] top-[6px]"
+      },
+      {
+        "id": "61:65",
+        "name": "思考强度映射",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[22px] left-[25px] text-[15px] text-[color:var(--studio-ink,#161c2c)] top-[318px] w-[252px]"
+      },
+      {
+        "id": "61:66",
+        "name": "Hint / Mapping semantics",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft-blue,#f4f6ff)] font-['Noto_Sans_SC:Regular'] font-normal h-[53px] leading-[16px] left-[25px] overflow-clip rounded-[10px] text-[11px] top-[345px] w-[567px]"
+      },
+      {
+        "id": "61:67",
+        "name": "留空表示不配置。预算模式填正整数；档位模式填写原生 level。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[532px]"
+      },
+      {
+        "id": "61:68",
+        "name": "具体映射请遵循供应商文档，避免把 Token 预算误当成档位。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-secondary,#778196)] top-[28px] w-[533px]"
+      },
+      {
+        "id": "61:69",
+        "name": "Mapping / minimal",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[404px] w-[567px]"
+      },
+      {
+        "id": "61:70",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:71",
+        "name": "minimal",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:72",
+        "name": "@MAP:minimal",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:73",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:74",
+        "name": "Mapping / low",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[445px] w-[567px]"
+      },
+      {
+        "id": "61:75",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:76",
+        "name": "low",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:77",
+        "name": "@MAP:low",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:78",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:79",
+        "name": "Mapping / medium",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[486px] w-[567px]"
+      },
+      {
+        "id": "61:80",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:81",
+        "name": "medium",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:82",
+        "name": "@MAP:medium",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:83",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:84",
+        "name": "Mapping / high",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[527px] w-[567px]"
+      },
+      {
+        "id": "61:85",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:86",
+        "name": "high",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:87",
+        "name": "@MAP:high",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:88",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:89",
+        "name": "Mapping / xhigh",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[568px] w-[567px]"
+      },
+      {
+        "id": "61:90",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:91",
+        "name": "xhigh",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:92",
+        "name": "@MAP:xhigh",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:93",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:94",
+        "name": "Mapping / max",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[609px] w-[567px]"
+      },
+      {
+        "id": "61:95",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:96",
+        "name": "max",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:97",
+        "name": "@MAP:max",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:98",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:99",
+        "name": "Footer divider",
+        "class": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[25px] top-[664px] w-[567px]"
+      },
+      {
+        "id": "61:100",
+        "name": "修改保留在草稿中，保存供应商后生效",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[16px] left-[25px] text-[11px] text-[color:var(--studio-secondary,#778196)] top-[679px] w-[390px]"
+      },
+      {
+        "id": "61:101",
+        "name": "@ACTION:应用到草稿",
+        "class": "absolute bg-[var(--studio-accent,#655cf4)] h-[38px] left-[468px] overflow-clip rounded-[10px] top-[671px] w-[123px]"
+      },
+      {
+        "id": "61:102",
+        "name": "应用到草稿",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold leading-[19px] left-[29px] text-[13px] text-[color:var(--studio-white,white)] top-[10px] whitespace-nowrap"
+      }
+    ],
+    "61-561": [
+      {
+        "id": "61:104",
+        "name": "上游协议选项",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[29px] left-[25px] text-[20px] text-[color:var(--studio-ink,#161c2c)] top-[19px] w-[340px]"
+      },
+      {
+        "id": "61:105",
+        "name": "Protocol Tag",
+        "class": "absolute bg-[var(--studio-accent-tint,#eeedff)] h-[27px] left-[460px] overflow-clip rounded-[8px] top-[21px] w-[126px]"
+      },
+      {
+        "id": "61:106",
+        "name": "RESPONSES",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[16px] left-[12px] not-italic text-[11px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[104px]"
+      },
+      {
+        "id": "61:107",
+        "name": "×",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]"
+      },
+      {
+        "id": "61:108",
+        "name": "配置不同上游协议的思考参数，不改变 WorkBuddy 本地入口。",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[54px] w-[563px]"
+      },
+      {
+        "id": "61:109",
+        "name": "Protocol Switch",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[40px] left-[25px] overflow-clip rounded-[10px] top-[86px] w-[568px]"
+      },
+      {
+        "id": "61:110",
+        "name": "@PROTOCOL:OpenAI Chat",
+        "class": "absolute h-[32px] left-[4px] overflow-clip rounded-[8px] top-[4px] w-[123px]"
+      },
+      {
+        "id": "61:111",
+        "name": "Chat",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[101px]"
+      },
+      {
+        "id": "61:112",
+        "name": "@PROTOCOL:OpenAI Responses",
+        "class": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-accent-line,#d5d1ff)] border-solid h-[32px] left-[142px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:113",
+        "name": "Responses",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[102px]"
+      },
+      {
+        "id": "61:114",
+        "name": "@PROTOCOL:Anthropic",
+        "class": "absolute h-[32px] left-[282px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:115",
+        "name": "Anthropic",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[102px]"
+      },
+      {
+        "id": "61:116",
+        "name": "@PROTOCOL:Gemini",
+        "class": "absolute h-[32px] left-[422px] overflow-clip rounded-[8px] top-[4px] w-[137px]"
+      },
+      {
+        "id": "61:117",
+        "name": "Gemini",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[115px]"
+      },
+      {
+        "id": "61:118",
+        "name": "API Key 认证",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[145px] w-[205px]"
+      },
+      {
+        "id": "61:119",
+        "name": "Select / Auth",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[38px] left-[25px] overflow-clip rounded-[9px] top-[165px] w-[567px]"
+      },
+      {
+        "id": "61:120",
+        "name": "协议默认 / Protocol default",
+        "class": "absolute h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[539px]"
+      },
+      {
+        "id": "61:121",
+        "name": "⌄",
+        "class": "absolute leading-[20px] left-[544px] size-[18px] text-[14px] text-[color:var(--studio-secondary,#778196)] top-[6px]"
+      },
+      {
+        "id": "61:122",
+        "name": "思考模式",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[234px] w-[205px]"
+      },
+      {
+        "id": "61:123",
+        "name": "Select / Thinking mode",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[38px] left-[25px] overflow-clip rounded-[9px] top-[254px] w-[567px]"
+      },
+      {
+        "id": "61:124",
+        "name": "原生 effort / Native effort",
+        "class": "absolute h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[539px]"
+      },
+      {
+        "id": "61:125",
+        "name": "⌄",
+        "class": "absolute leading-[20px] left-[544px] size-[18px] text-[14px] text-[color:var(--studio-secondary,#778196)] top-[6px]"
+      },
+      {
+        "id": "61:126",
+        "name": "思考强度映射",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[22px] left-[25px] text-[15px] text-[color:var(--studio-ink,#161c2c)] top-[317px] w-[252px]"
+      },
+      {
+        "id": "61:127",
+        "name": "Hint / Mapping semantics",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft-blue,#f4f6ff)] font-['Noto_Sans_SC:Regular'] font-normal h-[45px] leading-[16px] left-[25px] overflow-clip rounded-[10px] text-[11px] top-[344px] w-[567px]"
+      },
+      {
+        "id": "61:128",
+        "name": "留空表示不配置。预算模式填正整数；档位模式填写原生 level。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[532px]"
+      },
+      {
+        "id": "61:129",
+        "name": "Responses 留空沿用原生 effort，max 需显式映射。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-secondary,#778196)] top-[28px] w-[531px]"
+      },
+      {
+        "id": "61:130",
+        "name": "Mapping / none",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[396px] w-[567px]"
+      },
+      {
+        "id": "61:131",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:132",
+        "name": "none",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:133",
+        "name": "@MAP:none",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:134",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:135",
+        "name": "Mapping / minimal",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[432px] w-[567px]"
+      },
+      {
+        "id": "61:136",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:137",
+        "name": "minimal",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:138",
+        "name": "@MAP:minimal",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:139",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:140",
+        "name": "Mapping / low",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[468px] w-[567px]"
+      },
+      {
+        "id": "61:141",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:142",
+        "name": "low",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:143",
+        "name": "@MAP:low",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:144",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:145",
+        "name": "Mapping / medium",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[504px] w-[567px]"
+      },
+      {
+        "id": "61:146",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:147",
+        "name": "medium",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:148",
+        "name": "@MAP:medium",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:149",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:150",
+        "name": "Mapping / high",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[540px] w-[567px]"
+      },
+      {
+        "id": "61:151",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:152",
+        "name": "high",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:153",
+        "name": "@MAP:high",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:154",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:155",
+        "name": "Mapping / xhigh",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[576px] w-[567px]"
+      },
+      {
+        "id": "61:156",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:157",
+        "name": "xhigh",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:158",
+        "name": "@MAP:xhigh",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:159",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:160",
+        "name": "Mapping / max",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[612px] w-[567px]"
+      },
+      {
+        "id": "61:161",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:162",
+        "name": "max",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:163",
+        "name": "@MAP:max",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:164",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:165",
+        "name": "Footer divider",
+        "class": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[25px] top-[664px] w-[567px]"
+      },
+      {
+        "id": "61:166",
+        "name": "修改保留在草稿中，保存供应商后生效",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[16px] left-[25px] text-[11px] text-[color:var(--studio-secondary,#778196)] top-[679px] w-[390px]"
+      },
+      {
+        "id": "61:167",
+        "name": "@ACTION:应用到草稿",
+        "class": "absolute bg-[var(--studio-accent,#655cf4)] h-[38px] left-[468px] overflow-clip rounded-[10px] top-[671px] w-[123px]"
+      },
+      {
+        "id": "61:168",
+        "name": "应用到草稿",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold leading-[19px] left-[29px] text-[13px] text-[color:var(--studio-white,white)] top-[10px] whitespace-nowrap"
+      }
+    ],
+    "61-838": [
+      {
+        "id": "61:170",
+        "name": "上游协议选项",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[29px] left-[25px] text-[20px] text-[color:var(--studio-ink,#161c2c)] top-[19px] w-[340px]"
+      },
+      {
+        "id": "61:171",
+        "name": "Protocol Tag",
+        "class": "absolute bg-[var(--studio-accent-tint,#eeedff)] h-[27px] left-[460px] overflow-clip rounded-[8px] top-[21px] w-[126px]"
+      },
+      {
+        "id": "61:172",
+        "name": "MESSAGES",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[16px] left-[12px] not-italic text-[11px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[104px]"
+      },
+      {
+        "id": "61:173",
+        "name": "×",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]"
+      },
+      {
+        "id": "61:174",
+        "name": "配置不同上游协议的思考参数，不改变 WorkBuddy 本地入口。",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[54px] w-[563px]"
+      },
+      {
+        "id": "61:175",
+        "name": "Protocol Switch",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[40px] left-[25px] overflow-clip rounded-[10px] top-[86px] w-[568px]"
+      },
+      {
+        "id": "61:176",
+        "name": "@PROTOCOL:OpenAI Chat",
+        "class": "absolute h-[32px] left-[4px] overflow-clip rounded-[8px] top-[4px] w-[123px]"
+      },
+      {
+        "id": "61:177",
+        "name": "Chat",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[101px]"
+      },
+      {
+        "id": "61:178",
+        "name": "@PROTOCOL:OpenAI Responses",
+        "class": "absolute h-[32px] left-[142px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:179",
+        "name": "Responses",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[102px]"
+      },
+      {
+        "id": "61:180",
+        "name": "@PROTOCOL:Anthropic",
+        "class": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-accent-line,#d5d1ff)] border-solid h-[32px] left-[282px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:181",
+        "name": "Anthropic",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[102px]"
+      },
+      {
+        "id": "61:182",
+        "name": "@PROTOCOL:Gemini",
+        "class": "absolute h-[32px] left-[422px] overflow-clip rounded-[8px] top-[4px] w-[137px]"
+      },
+      {
+        "id": "61:183",
+        "name": "Gemini",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[115px]"
+      },
+      {
+        "id": "61:184",
+        "name": "默认最大输出 Token",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[143px] w-[240px]"
+      },
+      {
+        "id": "61:185",
+        "name": "Input / Default maximum output tokens",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[25px] overflow-clip rounded-[9px] top-[162px] w-[567px]"
+      },
+      {
+        "id": "61:186",
+        "name": "4096",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[539px]"
+      },
+      {
+        "id": "61:187",
+        "name": "Anthropic version row",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[35px] left-[25px] overflow-clip rounded-[9px] top-[210px] w-[567px]"
+      },
+      {
+        "id": "61:188",
+        "name": "Anthropic-Version: 2023-06-01",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[13px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[483px]"
+      },
+      {
+        "id": "61:189",
+        "name": "思考模式",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[257px] w-[205px]"
+      },
+      {
+        "id": "61:190",
+        "name": "Select / Thinking mode",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[38px] left-[25px] overflow-clip rounded-[9px] top-[277px] w-[567px]"
+      },
+      {
+        "id": "61:191",
+        "name": "固定预算 / Token budget",
+        "class": "absolute h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[539px]"
+      },
+      {
+        "id": "61:192",
+        "name": "⌄",
+        "class": "absolute leading-[20px] left-[544px] size-[18px] text-[14px] text-[color:var(--studio-secondary,#778196)] top-[6px]"
+      },
+      {
+        "id": "61:193",
+        "name": "思考强度映射",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[22px] left-[25px] text-[15px] text-[color:var(--studio-ink,#161c2c)] top-[346px] w-[252px]"
+      },
+      {
+        "id": "61:194",
+        "name": "Hint / Mapping semantics",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft-blue,#f4f6ff)] font-['Noto_Sans_SC:Regular'] font-normal h-[53px] leading-[16px] left-[25px] overflow-clip rounded-[10px] text-[11px] top-[373px] w-[567px]"
+      },
+      {
+        "id": "61:195",
+        "name": "留空表示不配置。预算模式填正整数；档位模式填写原生 level。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[532px]"
+      },
+      {
+        "id": "61:196",
+        "name": "具体映射请遵循供应商文档，避免把 Token 预算误当成档位。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-secondary,#778196)] top-[28px] w-[533px]"
+      },
+      {
+        "id": "61:197",
+        "name": "Mapping / minimal",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[431px] w-[567px]"
+      },
+      {
+        "id": "61:198",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:199",
+        "name": "minimal",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:200",
+        "name": "@MAP:minimal",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:201",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:202",
+        "name": "Mapping / low",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[468px] w-[567px]"
+      },
+      {
+        "id": "61:203",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:204",
+        "name": "low",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:205",
+        "name": "@MAP:low",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:206",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:207",
+        "name": "Mapping / medium",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[505px] w-[567px]"
+      },
+      {
+        "id": "61:208",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:209",
+        "name": "medium",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:210",
+        "name": "@MAP:medium",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:211",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:212",
+        "name": "Mapping / high",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[542px] w-[567px]"
+      },
+      {
+        "id": "61:213",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:214",
+        "name": "high",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:215",
+        "name": "@MAP:high",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:216",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:217",
+        "name": "Mapping / xhigh",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[579px] w-[567px]"
+      },
+      {
+        "id": "61:218",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:219",
+        "name": "xhigh",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:220",
+        "name": "@MAP:xhigh",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:221",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:222",
+        "name": "Mapping / max",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[616px] w-[567px]"
+      },
+      {
+        "id": "61:223",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:224",
+        "name": "max",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:225",
+        "name": "@MAP:max",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:226",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:227",
+        "name": "Footer divider",
+        "class": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[25px] top-[664px] w-[567px]"
+      },
+      {
+        "id": "61:228",
+        "name": "修改保留在草稿中，保存供应商后生效",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[16px] left-[25px] text-[11px] text-[color:var(--studio-secondary,#778196)] top-[679px] w-[390px]"
+      },
+      {
+        "id": "61:229",
+        "name": "@ACTION:应用到草稿",
+        "class": "absolute bg-[var(--studio-accent,#655cf4)] h-[38px] left-[468px] overflow-clip rounded-[10px] top-[671px] w-[123px]"
+      },
+      {
+        "id": "61:230",
+        "name": "应用到草稿",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold leading-[19px] left-[29px] text-[13px] text-[color:var(--studio-white,white)] top-[10px] whitespace-nowrap"
+      }
+    ],
+    "61-1111": [
+      {
+        "id": "61:232",
+        "name": "上游协议选项",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[29px] left-[25px] text-[20px] text-[color:var(--studio-ink,#161c2c)] top-[19px] w-[340px]"
+      },
+      {
+        "id": "61:233",
+        "name": "Protocol Tag",
+        "class": "absolute bg-[var(--studio-accent-tint,#eeedff)] h-[27px] left-[460px] overflow-clip rounded-[8px] top-[21px] w-[126px]"
+      },
+      {
+        "id": "61:234",
+        "name": "GEMINI",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[16px] left-[12px] not-italic text-[11px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[104px]"
+      },
+      {
+        "id": "61:235",
+        "name": "×",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]"
+      },
+      {
+        "id": "61:236",
+        "name": "配置不同上游协议的思考参数，不改变 WorkBuddy 本地入口。",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[54px] w-[563px]"
+      },
+      {
+        "id": "61:237",
+        "name": "Protocol Switch",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[40px] left-[25px] overflow-clip rounded-[10px] top-[86px] w-[568px]"
+      },
+      {
+        "id": "61:238",
+        "name": "@PROTOCOL:OpenAI Chat",
+        "class": "absolute h-[32px] left-[4px] overflow-clip rounded-[8px] top-[4px] w-[123px]"
+      },
+      {
+        "id": "61:239",
+        "name": "Chat",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[101px]"
+      },
+      {
+        "id": "61:240",
+        "name": "@PROTOCOL:OpenAI Responses",
+        "class": "absolute h-[32px] left-[142px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:241",
+        "name": "Responses",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[102px]"
+      },
+      {
+        "id": "61:242",
+        "name": "@PROTOCOL:Anthropic",
+        "class": "absolute h-[32px] left-[282px] overflow-clip rounded-[8px] top-[4px] w-[124px]"
+      },
+      {
+        "id": "61:243",
+        "name": "Anthropic",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[7px] w-[102px]"
+      },
+      {
+        "id": "61:244",
+        "name": "@PROTOCOL:Gemini",
+        "class": "absolute bg-[var(--studio-surface,white)] border border-[var(--studio-accent-line,#d5d1ff)] border-solid h-[32px] left-[422px] overflow-clip rounded-[8px] top-[4px] w-[137px]"
+      },
+      {
+        "id": "61:245",
+        "name": "Gemini",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[17px] left-[15px] text-[12px] text-[color:var(--studio-accent-dark,#4f46d9)] top-[6px] w-[115px]"
+      },
+      {
+        "id": "61:246",
+        "name": "思考模式",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Medium'] font-medium h-[18px] leading-[17px] left-[25px] text-[12px] text-[color:var(--studio-secondary,#778196)] top-[149px] w-[205px]"
+      },
+      {
+        "id": "61:247",
+        "name": "Select / Thinking mode",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid font-['Noto_Sans_SC:Regular'] font-normal h-[38px] left-[25px] overflow-clip rounded-[9px] top-[169px] w-[567px]"
+      },
+      {
+        "id": "61:248",
+        "name": "思考档位 / Thinking level",
+        "class": "absolute h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[539px]"
+      },
+      {
+        "id": "61:249",
+        "name": "⌄",
+        "class": "absolute leading-[20px] left-[544px] size-[18px] text-[14px] text-[color:var(--studio-secondary,#778196)] top-[6px]"
+      },
+      {
+        "id": "61:250",
+        "name": "思考强度映射",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold h-[18px] leading-[22px] left-[25px] text-[15px] text-[color:var(--studio-ink,#161c2c)] top-[254px] w-[252px]"
+      },
+      {
+        "id": "61:251",
+        "name": "Hint / Mapping semantics",
+        "class": "[word-break:break-word] absolute bg-[var(--studio-soft-blue,#f4f6ff)] font-['Noto_Sans_SC:Regular'] font-normal h-[56px] leading-[16px] left-[25px] overflow-clip rounded-[10px] text-[11px] top-[281px] w-[567px]"
+      },
+      {
+        "id": "61:252",
+        "name": "留空表示不配置。预算模式填正整数；档位模式填写原生 level。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-body,#4c566d)] top-[11px] w-[532px]"
+      },
+      {
+        "id": "61:253",
+        "name": "具体映射请遵循供应商文档，避免把 Token 预算误当成档位。",
+        "class": "absolute h-[18px] left-[13px] text-[color:var(--studio-secondary,#778196)] top-[28px] w-[533px]"
+      },
+      {
+        "id": "61:254",
+        "name": "Mapping / minimal",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[344px] w-[567px]"
+      },
+      {
+        "id": "61:255",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:256",
+        "name": "minimal",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:257",
+        "name": "@MAP:minimal",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:258",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:259",
+        "name": "Mapping / low",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[393px] w-[567px]"
+      },
+      {
+        "id": "61:260",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:261",
+        "name": "low",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:262",
+        "name": "@MAP:low",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:263",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:264",
+        "name": "Mapping / medium",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[442px] w-[567px]"
+      },
+      {
+        "id": "61:265",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:266",
+        "name": "medium",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:267",
+        "name": "@MAP:medium",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:268",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:269",
+        "name": "Mapping / high",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[491px] w-[567px]"
+      },
+      {
+        "id": "61:270",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:271",
+        "name": "high",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:272",
+        "name": "@MAP:high",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:273",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:274",
+        "name": "Mapping / xhigh",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[540px] w-[567px]"
+      },
+      {
+        "id": "61:275",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:276",
+        "name": "xhigh",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:277",
+        "name": "@MAP:xhigh",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:278",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:279",
+        "name": "Mapping / max",
+        "class": "absolute h-[37px] left-[25px] overflow-clip top-[589px] w-[567px]"
+      },
+      {
+        "id": "61:280",
+        "name": "Effort key",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] h-[33px] left-0 overflow-clip rounded-[7px] top-[2px] w-[94px]"
+      },
+      {
+        "id": "61:281",
+        "name": "max",
+        "class": "[word-break:break-word] absolute font-['Inter:Medium'] font-medium h-[18px] leading-[17px] left-[12px] not-italic text-[12px] text-[color:var(--studio-body,#4c566d)] top-[9px] w-[78px]"
+      },
+      {
+        "id": "61:282",
+        "name": "@MAP:max",
+        "class": "absolute bg-[var(--studio-soft,#f3f5fa)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[38px] left-[105px] overflow-clip rounded-[9px] top-px w-[462px]"
+      },
+      {
+        "id": "61:283",
+        "name": "​",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[17px] left-[12px] text-[12px] text-[color:var(--studio-body,#4c566d)] top-[8px] w-[434px]"
+      },
+      {
+        "id": "61:284",
+        "name": "Footer divider",
+        "class": "absolute bg-[var(--studio-line,#e7eaf2)] h-px left-[25px] top-[664px] w-[567px]"
+      },
+      {
+        "id": "61:285",
+        "name": "修改保留在草稿中，保存供应商后生效",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[16px] left-[25px] text-[11px] text-[color:var(--studio-secondary,#778196)] top-[679px] w-[390px]"
+      },
+      {
+        "id": "61:286",
+        "name": "@ACTION:应用到草稿",
+        "class": "absolute bg-[var(--studio-accent,#655cf4)] h-[38px] left-[468px] overflow-clip rounded-[10px] top-[671px] w-[123px]"
+      },
+      {
+        "id": "61:287",
+        "name": "应用到草稿",
+        "class": "[word-break:break-word] absolute font-['Noto_Sans_SC:Bold'] font-bold leading-[19px] left-[29px] text-[13px] text-[color:var(--studio-white,white)] top-[10px] whitespace-nowrap"
+      }
+    ]
+  },
+  "asset_audit": "protocol-layout-assets.json",
+  "inventory_refreshed_unique_frame_count": 40,
+  "reference_method": "Official get_metadata, full high fidelity get_design_context and get_screenshot; saved original PNGs. No reconstruction or approximate asset recreation.",
+  "comparisons": "Root inspected all4 official full-frame PNGs and final db899 fourwide/foursmall original native PNGs, plus Gemini small scroll/max and keyboardfocus capture. This is full-frame first review with recorded differences, not final acceptance.",
+  "known_differences": [
+    "Real OS titlebar and extra captured row; originals retained without crop/scale.",
+    "Native close button vector and shared scrim color remain visually different.",
+    "Actual provider model names, empty mappings, unconfigured modes, port and log state differ from static example.",
+    "Figma static mapping row containers overlap or clip oversized child input; real native inputs remain operable and independently scrollable.",
+    "All full-frame final acceptance and unsupported platform/accessibility/IME evidence remain incomplete.",
+    "Chat Select populated value ink remains3px lower after OS-row accounting, mapping heading2px lower; precise fields/footer typography and optical offsets remain follow-up work, not silently accepted."
+  ],
+  "confirmed_final_chat_pixels": {
+    "candidate_sha256": "db89949f8ae49819e8c72951c5cfb2a4c1ba3c391ccd459dd743c3363ae7f899",
+    "reference_title_ink": [
+      437,
+      114,
+      554,
+      132
+    ],
+    "native_title_ink": [
+      437,
+      115,
+      554,
+      133
+    ],
+    "native_system_extra_row": 1,
+    "selected_fill_rgb": [
+      255,
+      255,
+      255
+    ],
+    "badge_fill_rgb": [
+      238,
+      237,
+      255
+    ],
+    "native_scrim_canvas_rgb": [
+      135,
+      138,
+      150
+    ],
+    "reference_scrim_canvas_rgb": [
+      138,
+      140,
+      153
+    ]
+  },
+  "color_pair_contrast": [
+    {
+      "foreground": "#4c566d",
+      "background": "#f3f5fa",
+      "ratio": 6.733
+    },
+    {
+      "foreground": "#778196",
+      "background": "#ffffff",
+      "ratio": 3.914
+    },
+    {
+      "foreground": "#4f46d9",
+      "background": "#ffffff",
+      "ratio": 6.541
+    }
+  ],
+  "contrast_scope": "Computed intended flat color pairs only. Muted secondary matches explicit Figma but is below4.5:1 for small normal text; not accessibility acceptance. Does not test compositing, glyph AA or actual screen-reader behavior.",
+  "native_default_review": {
+    "ui_pid": 33794,
+    "core_pid": 33612,
+    "window_number": 2937,
+    "wide_encoded_pixels": [
+      1440,
+      901
+    ],
+    "small_encoded_pixels": [
+      1100,
+      701
+    ],
+    "logical_targets": [
+      [
+        1440,
+        900
+      ],
+      [
+        1100,
+        700
+      ]
+    ],
+    "method": "Original own-PID native screencapture PNGs, no cropping/scaling/redrawing. Extra OS row retained.",
+    "default_values": "Chat/Responses Protocol default and Native effort, empty mappings; Anthropic4096/Unconfigured/version2023-06-01; GeminiUnconfigured. Prototype sample modes not imposed.",
+    "small": "Inner scroll reaches max; fixed header/tabs and Apply footer remain readable. Top field is clipped naturally inside body scroll when scrolled to end, below fixed tabs.",
+    "keyboard": "Agent observed each4tab click then Return and Space preserve corresponding modal/tab, no Apply. Native focus image retains semantic primary border; default Figma state uses D5D1FF."
+  }
+}

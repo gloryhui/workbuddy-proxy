@@ -61,6 +61,7 @@ impl Proxy {
 
     fn protocol_tabs(&self, window: &Window, cx: &mut Context<Self>) -> Div {
         let active = self.protocol_options.protocol();
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         div()
             .flex()
             .items_center()
@@ -68,7 +69,7 @@ impl Proxy {
             .h(px(40.))
             .flex_none()
             .p(px(4.))
-            .gap(px(4.))
+            .gap(px(if studio { 0. } else { 4. }))
             .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
             .rounded(px(10.))
             .children(
@@ -83,11 +84,28 @@ impl Proxy {
                             .h(px(32.))
                             .rounded(px(8.))
                             .text_size(px(12.))
-                            .label(title)
+                            .when(studio, |button| {
+                                button.px(px(14.)).accessibility_label(title).child(
+                                    div()
+                                        .w_full()
+                                        .text_size(px(12.))
+                                        .line_height(px(17.))
+                                        .font_weight(if selected {
+                                            FontWeight::BOLD
+                                        } else {
+                                            FontWeight::MEDIUM
+                                        })
+                                        .child(title),
+                                )
+                            })
+                            .when(!studio, |button| button.label(title))
                             .toggled(selected)
+                            .selected(studio && selected)
                             .border_1()
                             .border_color(rgb(if scope_focused {
                                 crate::theme::palette().primary
+                            } else if selected && studio {
+                                0xd5d1ff
                             } else if selected {
                                 crate::theme::palette().border
                             } else {
@@ -111,13 +129,24 @@ impl Proxy {
                                         })
                                         .into(),
                                     )
-                                    .hover(rgb(crate::theme::palette().tint).into()),
+                                    .hover(rgb(crate::theme::palette().tint).into())
+                                    // Native selected styling reads active; toggled only exposes AX pressed.
+                                    .active(if studio && selected {
+                                        rgb(crate::theme::color::BG_BAR).into()
+                                    } else {
+                                        cx.theme().transparent
+                                    }),
                             )
                             .on_click(cx.listener(move |this, _, window, cx| {
                                 this.select_protocol_tab(index, window, cx);
                             }));
                         div()
-                            .flex_1()
+                            .when(studio, |tab| {
+                                tab.w(px([123., 124., 124., 137.][index]))
+                                    .flex_none()
+                                    .ml(px([0., 15., 16., 16.][index]))
+                            })
+                            .when(!studio, |tab| tab.flex_1())
                             .min_w_0()
                             .h(px(32.))
                             .track_focus(&self.protocol_tab_focus[index])
@@ -138,6 +167,7 @@ impl Proxy {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) -> AnyElement {
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let height = surface_height(window) - px(36.);
         let footer_height = if self.protocol_error.is_some() {
             98.
@@ -173,15 +203,20 @@ impl Proxy {
             &self.protocol_scroll,
             form_height,
             surface_height(window) < px(724.) || self.protocol_error.is_some(),
+            cx,
         );
         div().flex().flex_col().w_full().h(height).gap_0()
             .child(div().flex().flex_col().h(px(66.)).flex_none().gap(px(4.))
-                .child(div().flex().items_center().justify_between().h(px(29.)).flex_none().pr(px(9.)).gap(px(12.))
+                .child(div().flex().items_center().justify_between().h(px(29.)).flex_none().pr(px(if studio { 7. } else { 9. })).gap(px(12.))
                     .child(Label::new(self.t("上游协议选项", "Upstream protocol options"))
-                        .text_size(px(20.)).line_height(px(29.)).font_weight(FontWeight::BOLD).text_color(rgb(INK)))
-                    .child(Tag::custom(rgb(crate::theme::palette().tint).into(), rgb(crate::theme::palette().dark).into(),
-                        rgb(crate::theme::palette().tint).into()).small().h(px(27.)).w(px(126.))
-                        .rounded(px(8.)).text_size(px(11.)).child(tag)))
+                        .text_size(px(20.)).line_height(px(29.)).font_weight(FontWeight::BOLD).text_color(rgb(INK))
+                        .when(studio, |title| title.relative().top(px(-1.))))
+                    .child(Tag::custom(rgb(if studio { 0xeeedff } else { crate::theme::palette().tint }).into(), rgb(crate::theme::palette().dark).into(),
+                        rgb(if studio { 0xeeedff } else { crate::theme::palette().tint }).into()).small().h(px(27.)).w(px(126.))
+                        .rounded(px(8.)).text_size(px(11.))
+                        .when(studio, |tag| crate::studio_fonts::latin(tag, cx)
+                            .font_weight(FontWeight::MEDIUM).line_height(px(16.)).px(px(11.)).py_0())
+                        .child(tag)))
                 .child(Label::new(self.t("配置不同上游协议的思考参数，不改变 WorkBuddy 本地入口。",
                     "Configure upstream thinking parameters; the local WorkBuddy entry is unchanged."))
                     .text_size(px(12.)).line_height(px(17.)).text_color(rgb(MUTED))))

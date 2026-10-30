@@ -1,0 +1,24 @@
+{
+  "status": "intermediate_not_passed",
+  "ui_sha256": "1389fb25f04c21819c5db337409f51c7767a6daa19f5b5672e87e5cdfa874141",
+  "ui_pid": 31858,
+  "core_pid": 31588,
+  "window_number": 2914,
+  "observation": "Chat default shown, main verified selected tab background still transparent vs design white; remaining checks halted. Escape closed modal, underlying protocol remained Chat.",
+  "screenshot": {
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round53.6h7war54/ui62-protocol-final2/final-chat-wide.png",
+    "pixels": [
+      1440,
+      901
+    ],
+    "sha256": "eff4300f2549c2ff36d4bd19fc039971655163e41371679c4d92181151967987",
+    "method": "native screencapture own PID onscreen layer0 2914 matched CUA; byte-identical candidate-2914; no crop/scale"
+  },
+  "limits": [
+    "No Apply, input, Save, Test, Sync or stage marker",
+    "Filename final denotes initially intended delivery, this is intermediate only",
+    "No explicit activate/raise; actual foreground not asserted",
+    "Core retained for main"
+  ],
+  "close": "CUA clicked fresh native close button UI31858; exit status not asserted"
+}

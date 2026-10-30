@@ -1,0 +1,65 @@
+{
+  "checked_at": "2026-10-31T04:58:35.777322+08:00",
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "n_per_version": 2,
+  "source_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "same_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "previous_ui_sha256": "63f57fe10055b2679abff3525f349a4f98845621b71109efc67f80b55c6aef1e",
+  "current_ui_sha256": "db89949f8ae49819e8c72951c5cfb2a4c1ba3c391ccd459dd743c3363ae7f899",
+  "load": {
+    "providers": 1,
+    "models": 64,
+    "small_requests": 1000,
+    "large_requests": 80,
+    "large_request_size_mib": 1,
+    "large_concurrency": 4
+  },
+  "medians": {
+    "previous": {
+      "idle_rss_mib": 96.415,
+      "core_idle_rss_mib": 12.575,
+      "ui_idle_rss_mib": 83.84,
+      "core_ready_ms": 48.461,
+      "native_ui_process_to_record_ms": 812.1775,
+      "sampled_peak_rss_mib": 142.99,
+      "large_seconds": 0.0845,
+      "proxied_p50_ms": 0.171,
+      "proxied_p95_ms": 0.188
+    },
+    "current": {
+      "idle_rss_mib": 97.415,
+      "core_idle_rss_mib": 12.705,
+      "ui_idle_rss_mib": 84.71,
+      "core_ready_ms": 47.9085,
+      "native_ui_process_to_record_ms": 776.667,
+      "sampled_peak_rss_mib": 146.62,
+      "large_seconds": 0.0855,
+      "proxied_p50_ms": 0.163,
+      "proxied_p95_ms": 0.1935
+    }
+  },
+  "verdict": "No marked sustained regression observed in this4run scope; small n, not equivalence or a general optimization claim.",
+  "limits": [
+    "Two runs each only, same Mac arm64 release. Not Windows/Intel hardware/HiDPI/FPS/input latency/IME/long CPU/leak validation.",
+    "Sum of two process RSS may double count shared pages; excludes mock/client; sampled peaks are150ms sampling and may miss peaks.",
+    "Raw ui_record_ready_ms includes CUA orchestration wait; excluded from startup comparison. Native process\u2192gpui.json marker excludes pre-process launch wait but is not first paint/interactivity. Core ready timestamp precedes UI process.",
+    "All control/kernel permission checks are Core-only; GUI uses unique bundle and isolated environment, no GUI kernel-guard claim.",
+    "Native interactive fixture has2providers5models/0requests, distinct from standard benchmark1provider64models load."
+  ],
+  "new_minus_old": {
+    "idle_rss_mib": 1.0,
+    "core_idle_rss_mib": 0.13,
+    "ui_idle_rss_mib": 0.87,
+    "core_ready_ms": -0.5525,
+    "native_ui_process_to_record_ms": -35.5105,
+    "sampled_peak_rss_mib": 3.63,
+    "large_seconds": 0.001,
+    "proxied_p50_ms": -0.008,
+    "proxied_p95_ms": 0.0055
+  }
+}
