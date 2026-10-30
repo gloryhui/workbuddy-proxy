@@ -13,6 +13,9 @@ fn navigation(
 ) -> Button {
     Button::new(id)
         .custom(crate::ui_components::sidebar_variant(active, cx))
+        // Kit blends a custom variant's normal fill with transparency.
+        // Pin the selected surface; keep its native hover/active styles.
+        .when(active, |button| button.bg(rgb(color::SIDEBAR_ACTIVE)))
         .with_size(px(size::NAV_ROW_HEIGHT))
         .w_full()
         .h(px(size::NAV_ROW_HEIGHT))
@@ -194,6 +197,9 @@ impl Proxy {
                     .map_or(provider.models.len(), |draft| draft.models.len());
                 Button::new(SharedString::from(format!("provider-{id}")))
                     .custom(crate::ui_components::sidebar_variant(active, cx))
+                    .when(active && !self.busy, |button| {
+                        button.bg(rgb(color::SIDEBAR_ACTIVE))
+                    })
                     .with_size(px(size::PROVIDER_ROW_HEIGHT))
                     .h(px(size::PROVIDER_ROW_HEIGHT))
                     .w_full()

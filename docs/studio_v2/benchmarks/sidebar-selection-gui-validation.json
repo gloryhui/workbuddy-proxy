@@ -1,0 +1,337 @@
+{
+  "lifecycle": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round39.dduxj0_d/fixed-ui48",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round39.dduxj0_d/fixed-ui48/WorkBuddy Proxy Review.app",
+      "core_pid": 64406,
+      "ui_pid": 64412,
+      "fixture_pid": 64405,
+      "port": 59774,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui48fixed-ui48",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 64412,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "983c1eea4d056d2d7c6a8c071e03e61e1d8d1c6e1a3568c2841c670d4f15b179"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 3,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "core_guard": {
+      "enforced": true,
+      "pid": 64406,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "all_three_pids_independently_gone": true,
+    "fixture_direct_wait_exit": 0,
+    "synthetic_models_sentinel_unchanged": true
+  },
+  "events": {
+    "ui_sha256": "983c1eea4d056d2d7c6a8c071e03e61e1d8d1c6e1a3568c2841c670d4f15b179",
+    "ui_pid": 64412,
+    "core_pid": 64406,
+    "fixture_pid": 64405,
+    "window_id": 62728,
+    "images": [
+      {
+        "file": "studio-1440-raw.png",
+        "sha256": "60b270a5ca555847a21ec10deefaa9fc5e0a71976f530903f2e55b69cded2bb3",
+        "pixels": [
+          1440,
+          901
+        ]
+      },
+      {
+        "file": "studio-1100-raw.png",
+        "sha256": "cf22e3710d89ccf3fb5f7f374832c1d10eaf54b8e842e797cdbbbdc964969fff",
+        "pixels": [
+          1100,
+          701
+        ]
+      },
+      {
+        "file": "mono-1100-raw.png",
+        "sha256": "188d205db093ba1d4fd286073003c8859df52d15d4e0edd3b54a6fcd8877dd4b",
+        "pixels": [
+          1100,
+          701
+        ]
+      },
+      {
+        "file": "blue-1100-raw.png",
+        "sha256": "e6aebafbe82a539e3b5f03b93a19a1e9f47c5c710e13544bc6d81288d2b2cd7d",
+        "pixels": [
+          1100,
+          701
+        ]
+      }
+    ],
+    "capture": "native screencapture current synthetic PID onscreen layer0; raw, no crop or scaling",
+    "cases": {
+      "selected": "Studio Providers and sub2api selected, original pointer away from rail; parent independently measured nav/provider RGBA 45,50,81,255 on both sizes, Mono and Blue.",
+      "switching": "Clicked OpenCode Go then sub2api; tree showed corresponding names and B1/A2 models. Clicked Statistics, Settings, Providers.",
+      "keyboard": "In Providers, Escape then Tab showed visible focus around Statistics; Return opened Statistics usage records.",
+      "appearance": "In synthetic profile switched Studio to Mono to Blue to Studio using native menu; actual skin changed and final menu showed Studio selected.",
+      "parent_readback": "Core config remained SHA prefix e810b24e; appearance studio_indigo; parent measured selected nav 224x43 and provider 216x38.",
+      "sampling": "30s UI 0.467% single core RSS 99.875 to 99.828 MiB; Core 0.100% and 10.875 MiB stable. Short sample only."
+    },
+    "not_verified": [
+      "Busy disabled state",
+      "Real sustained hover or pressed state",
+      "External native accessibility properties",
+      "IME composition"
+    ],
+    "safety": "Synthetic profile, loopback; no clipboard or external AX/TIS/global bounds queried.",
+    "ui_close": {
+      "pid": 64412,
+      "method": "CUA native close button",
+      "result": "click returned without error; exit/wait to be verified by fixture owner"
+    }
+  },
+  "environment": {
+    "checked_at": "2026-10-30T08:25:29.242967+08:00",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "macos": "15.8.1",
+    "console_locked": false,
+    "baseline-ui48": {
+      "initial_config_sha256": "34a4fef521d2868d69721f494534b930f79615d38e637b75b5bca08043cab951"
+    },
+    "fixed-ui48": {
+      "initial_config_sha256": "e810b24e0cb12f4ef24967e7a458f0df00c81d07082fc73cb94a87d6fd55e14c"
+    }
+  },
+  "core_config_proof": {
+    "sha256": "e810b24e0cb12f4ef24967e7a458f0df00c81d07082fc73cb94a87d6fd55e14c",
+    "unchanged_since_initial": true,
+    "providers": 2,
+    "models": 3,
+    "requests_expected": 0,
+    "autostart": false,
+    "language": "zh"
+  },
+  "appearance_preferences_after_interaction": {
+    "version": 1,
+    "skin": "studio_indigo"
+  },
+  "resource_sample": {
+    "scene": "sidebar-selection-idle",
+    "checked_at": "2026-10-30T08:29:30.794841+08:00",
+    "ui_sha256": "983c1eea4d056d2d7c6a8c071e03e61e1d8d1c6e1a3568c2841c670d4f15b179",
+    "elapsed_seconds": 30.005059457966127,
+    "metrics": {
+      "core": {
+        "pid": 64406,
+        "start_rss_mib": 10.875,
+        "end_rss_mib": 10.875,
+        "cpu_percent_one_core": 0.1
+      },
+      "ui": {
+        "pid": 64412,
+        "start_rss_mib": 99.875,
+        "end_rss_mib": 99.828125,
+        "cpu_percent_one_core": 0.467
+      }
+    },
+    "scope": "Current candidate only; no CUA input during30s; ps cumulativeCPU TIME centisecond resolution; not frame time,old/new equivalence or long-term leak measurement"
+  },
+  "images": [
+    {
+      "case": "fixed-ui48",
+      "raw_file": "studio-1440-raw.png",
+      "raw_sha256": "60b270a5ca555847a21ec10deefaa9fc5e0a71976f530903f2e55b69cded2bb3",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "committed_image": "screenshots/sidebar-selection-1440x900.png",
+      "committed_sha256": "b2d561b5d60858b96e5dc20448efbfa6612bc203d4199da70e89ee162db936ad",
+      "committed_px": [
+        1440,
+        900
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    },
+    {
+      "case": "fixed-ui48",
+      "raw_file": "studio-1100-raw.png",
+      "raw_sha256": "cf22e3710d89ccf3fb5f7f374832c1d10eaf54b8e842e797cdbbbdc964969fff",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/sidebar-selection-1100x700.png",
+      "committed_sha256": "33e1ca9092fa5544b9f3b6b3a43ddc3c4ba0103c6f24d70867abf03a108d2e19",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    },
+    {
+      "case": "fixed-ui48",
+      "raw_file": "mono-1100-raw.png",
+      "raw_sha256": "188d205db093ba1d4fd286073003c8859df52d15d4e0edd3b54a6fcd8877dd4b",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/sidebar-selection-mono-1100x700.png",
+      "committed_sha256": "f86e46bc3d33824e6c51845f878775ea3b94d8a83f8b8ba7d195a1cf22a86e17",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    },
+    {
+      "case": "fixed-ui48",
+      "raw_file": "blue-1100-raw.png",
+      "raw_sha256": "e6aebafbe82a539e3b5f03b93a19a1e9f47c5c710e13544bc6d81288d2b2cd7d",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/sidebar-selection-blue-1100x700.png",
+      "committed_sha256": "ea12a2fdf41f828ab3faabfb0f7218a00c4a4346352c5e34b4ccad73c0a3db7e",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    }
+  ],
+  "limits": [
+    "Only Studio/Mono/Blue live scene samples; other four skins not individually exercised this round.",
+    "Busy path remains disabled and excluded from pinned fill in source; no forced busy runtime case.",
+    "Native AX/reader, IME, exact pointer-held hover, Windows/Intel/HiDPI and whole-frame acceptance not proved."
+  ]
+}

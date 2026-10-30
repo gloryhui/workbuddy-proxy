@@ -1,0 +1,313 @@
+{
+  "feature": "UI-48 solid selected sidebar fill",
+  "figma_file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "nodes": [
+    "54:19",
+    "75:379",
+    "76:1344",
+    "76:1376"
+  ],
+  "context_screenshots_read": true,
+  "baseline_color": "#171B2E",
+  "design_and_current_color": "#2D3251",
+  "actual_pixel_checks": {
+    "studio-1440-raw.png": {
+      "samples": {
+        "navigation": {
+          "local_px": [
+            200,
+            240
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        },
+        "provider": {
+          "local_px": [
+            200,
+            418
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        }
+      },
+      "exact_fill_extent_local_px": {
+        "navigation": [
+          16,
+          221,
+          240,
+          264
+        ],
+        "provider": [
+          20,
+          399,
+          236,
+          437
+        ]
+      }
+    },
+    "studio-1100-raw.png": {
+      "samples": {
+        "navigation": {
+          "local_px": [
+            200,
+            240
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        },
+        "provider": {
+          "local_px": [
+            200,
+            418
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        }
+      },
+      "exact_fill_extent_local_px": {
+        "navigation": [
+          16,
+          221,
+          240,
+          264
+        ],
+        "provider": [
+          20,
+          399,
+          236,
+          437
+        ]
+      }
+    },
+    "mono-1100-raw.png": {
+      "samples": {
+        "navigation": {
+          "local_px": [
+            200,
+            240
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        },
+        "provider": {
+          "local_px": [
+            200,
+            418
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        }
+      },
+      "exact_fill_extent_local_px": {
+        "navigation": [
+          16,
+          221,
+          240,
+          264
+        ],
+        "provider": [
+          20,
+          399,
+          236,
+          437
+        ]
+      }
+    },
+    "blue-1100-raw.png": {
+      "samples": {
+        "navigation": {
+          "local_px": [
+            200,
+            240
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        },
+        "provider": {
+          "local_px": [
+            200,
+            418
+          ],
+          "rgba": [
+            45,
+            50,
+            81,
+            255
+          ]
+        }
+      },
+      "exact_fill_extent_local_px": {
+        "navigation": [
+          16,
+          221,
+          240,
+          264
+        ],
+        "provider": [
+          20,
+          399,
+          236,
+          437
+        ]
+      }
+    }
+  },
+  "design_assets": [
+    {
+      "asset": "nav-server.svg",
+      "root_width": "18",
+      "root_height": "18",
+      "source_sha256": "57726a6ba98a954b43238478e90a7a2251948a48274b66fa91a8687563c47ac8",
+      "same_as_latest_figma": true
+    },
+    {
+      "asset": "supplier-selected.svg",
+      "root_width": "7",
+      "root_height": "7",
+      "source_sha256": "601186600a596199a79d947277464e1d52f95cdf8bf61de3c00c81d33be36092",
+      "same_as_latest_figma": true
+    }
+  ],
+  "images": [
+    {
+      "case": "baseline-ui48",
+      "raw_file": "selected-1440-raw.png",
+      "raw_sha256": "a8f0215465dddb342a89103c2b9b3a6fe4d71d4a33bf19dea7806e6e3d89e2f0",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "committed_image": "screenshots/sidebar-selection-before-1440x900.png",
+      "committed_sha256": "7a6963475ae1a77811bbf3f09704ab56ebc718a9d9f7e05cb978b4d49eb5ec6d",
+      "committed_px": [
+        1440,
+        900
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    },
+    {
+      "case": "fixed-ui48",
+      "raw_file": "studio-1440-raw.png",
+      "raw_sha256": "60b270a5ca555847a21ec10deefaa9fc5e0a71976f530903f2e55b69cded2bb3",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "committed_image": "screenshots/sidebar-selection-1440x900.png",
+      "committed_sha256": "b2d561b5d60858b96e5dc20448efbfa6612bc203d4199da70e89ee162db936ad",
+      "committed_px": [
+        1440,
+        900
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    },
+    {
+      "case": "fixed-ui48",
+      "raw_file": "studio-1100-raw.png",
+      "raw_sha256": "cf22e3710d89ccf3fb5f7f374832c1d10eaf54b8e842e797cdbbbdc964969fff",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/sidebar-selection-1100x700.png",
+      "committed_sha256": "33e1ca9092fa5544b9f3b6b3a43ddc3c4ba0103c6f24d70867abf03a108d2e19",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    },
+    {
+      "case": "fixed-ui48",
+      "raw_file": "mono-1100-raw.png",
+      "raw_sha256": "188d205db093ba1d4fd286073003c8859df52d15d4e0edd3b54a6fcd8877dd4b",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/sidebar-selection-mono-1100x700.png",
+      "committed_sha256": "f86e46bc3d33824e6c51845f878775ea3b94d8a83f8b8ba7d195a1cf22a86e17",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    },
+    {
+      "case": "fixed-ui48",
+      "raw_file": "blue-1100-raw.png",
+      "raw_sha256": "e6aebafbe82a539e3b5f03b93a19a1e9f47c5c710e13544bc6d81288d2b2cd7d",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/sidebar-selection-blue-1100x700.png",
+      "committed_sha256": "ea12a2fdf41f828ab3faabfb0f7218a00c4a4346352c5e34b4ccad73c0a3db7e",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "processing": "Pixel-exact bottom1 row crop preserving ICC, no scaling or repaint",
+      "crop_rgba_identity_verified": true,
+      "parent_viewed_raw": true
+    }
+  ],
+  "geometry": {
+    "nav_logical_px": [
+      224,
+      43
+    ],
+    "provider_row_logical_px": [
+      216,
+      38
+    ],
+    "nav_svg_slot_px": 18,
+    "provider_svg_slot_px": 7,
+    "note": "Fill extents measured in raw native pixels at current1x capture; SVG drawing slots are unchanged source values, not colored ink bounds."
+  },
+  "sdk": {
+    "crate": "gpui-component0.7.3",
+    "button_source_sha256": "07118eb2453dbcf1f12ce495db4e6e97dd816d2d1c9b3de137af66db6234fa63",
+    "observed_normal_fill_expression": "colors.color.mix_oklab(cx.theme().transparent,0.2)",
+    "instance_refine_after_normal": true,
+    "source_only_not_new_toolkit_patch": true
+  },
+  "scope": "Only selected navigation/provider normal surface; explicit instance fill, original Kit hover/active/disabled/focus and handlers preserved. Not whole-frame or all-state acceptance.",
+  "checked_at": "2026-10-30T08:31:02.006964+08:00"
+}

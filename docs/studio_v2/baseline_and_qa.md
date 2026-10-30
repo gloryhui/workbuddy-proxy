@@ -1098,3 +1098,25 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 前两组新p95与采样峰值均较高，因此补新→旧反向一组，保留同向小变化；旧→新中位：Core12.33→12.12、UI72.09→72.31、合计84.55→84.73MiB，峰值131.89→134.64MiB（+2.75），p50 0.172→0.171/p95 0.197→0.204ms（+0.007），大请求0.089→0.086s，Core ready213.374→214.662/UI记录ready679.639→799.116ms（+119.477）。没有隐藏上升或称性能优化；每版仅3样本/后台及缓存未控制，原Core相同、改动不增加启动任务，但这不是因果或统计等效证明。ready标记不是首帧/可交互，RSS共享页可能双计，tray原JSON另列。未见需回滚该局部修复的明显大幅资源/吞吐退化，首帧仍待专门测量。
 - 两UI通过CUA原生Close exit0，fixture各自停止/wait Core0、直接fixture wait0，主代理独立确认六PID消失；六轮benchmark四个自有子进程均[-15,-15,0,0]并wait，所记Core/UI均已消失。完整路径/UID501/父组件挂载及非符号链接/全量单链接普通文件/进程及lsof预检，临执行清单SHA复核后，按持续授权删除本轮193个自有可再生测试文件，释放估计253,513,728bytes（241.77MiB）；本轮临时保留0。旧root30保护项24.03MiB保留，未读取误截图或重试删除，共享Cargo缓存不动；系统盘清理后39,853,604,864bytes（37.12GiB）可用。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享模型name提示越框修复；精确ID提示、完整视觉/真实IME/读屏/AX、Windows布局与实机、Intel实机/HiDPI、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active，进度HTML继续仅静态检查，未绕过先前浏览器本地文件拒绝。
+
+## 小功能 48：侧栏选中底色恢复设计实色（2026-10-30，北京时间）
+
+- 修复导航/供应商行选中底色被Kit混合后过暗的问题，只改ui/sidebar.rs的选中普通状态填充，保留原选择、导航、禁用及事件。证据：[编译](benchmarks/sidebar-selection-build.json)、[基线缺陷](benchmarks/sidebar-selection-before-gui.json)、[真实交互与配置](benchmarks/sidebar-selection-gui-validation.json)、[像素与资源](benchmarks/sidebar-selection-visual-validation.json)、[1440实拍](screenshots/sidebar-selection-1440x900.png)、[1100实拍](screenshots/sidebar-selection-1100x700.png)、[四轮性能](benchmarks/sidebar-selection-performance-summary.json)、[清理](benchmarks/sidebar-selection-cleanup.json)。
+- 官方MCP重读54:2/54:19及Mono62:308高保真context与截图，导航54:19/76:1344和供应商75:379/76:1376均要求实色#2D3251。新启动c6ee基线两处空白像素实际均为RGBA23/27/46/255（#171B2E），不是只凭旧截图推断。当前锁定gpui-component0.7.3的Custom.normal使用color.mix_oklab(theme.transparent,0.2)，实例style在其后refine；本轮对active导航及active且!busy供应商行设置已有SIDEBAR_ACTIVE背景，避开该普通态混合。未改Kit、palette/配置键、悬停/按住定义、toggled语义、焦点链、Core或依赖。
+- 最终983c原生Studio1440/1100、[Mono1100](screenshots/sidebar-selection-mono-1100x700.png)、[Blue1100](screenshots/sidebar-selection-blue-1100x700.png)两处相同局部坐标均为RGBA45/50/81/255，与设计一致；精确色填充边界nav[16,221,240,264]与provider[20,399,236,437]，即224×43/216×38保持。两处可见原SVG与新Figma资源逐字节一致：server SHA57726a6b…/根18×18，supplier-selected SHA60118660…/根7×7；当前Icon槽与资源根同尺寸，无资源改写。槽尺寸不是墨迹包围框；其他未在本轮审查的整帧差异仍待续。
+- 保护忙碌样式时补充!self.busy条件后重新跑完整门禁，最终fmt0.580s、192 tests/2既有ignored5.443s、严格clippy all-targets/-Dwarnings2.193s、Intel check1.819s、Release41.406s通过。UI983c1eea4d056d2d7c6a8c071e03e61e1d8d1c6e1a3568c2841c670d4f15b179/15,246,768bytes，基线c6ee、Core仍25f/8,428,096bytes；Intel只是类型检查，block0.1.6提示和UI43 Windows编译/布局问题保留。
+- Mac实际IOConsoleLocked=No，Rust/Cargo1.98.1、macOS15.8.1。基线UI62786/Core62781、最终UI64412/Core64406均为唯一bundle/显式合成HOME/config；各Core完整kernel保护及真实LaunchAgents四类deny核实。GUI未kernel沙箱，不称全角色保护；所有Key/上游合成，2供应商3模型0请求，没有同步/重启真实WorkBuddy、登录项或外链动作。
+- Terra仅用CUA：A→B→A实际切换，三导航鼠标切换；Providers中Esc→Tab明确焦点环在“数据统计”，Return进入明细；Mono→Blue→Studio逐项真实选择、最后回Providers/A。主代理最终Core config SHAe810b24e…与该实例初始逐字节一致，appearance实读version1/studio_indigo，模型与数量、languagezh/autostartfalse保持。只复核此范围，不将全部键盘/读屏/IME视为通过；原busy禁用分支本轮未强制触发，精确hover/按住效果也未独立实测。
+- 五张原图均由主代理查看，只选各自PID/onscreen/layer0 window62709/62728用原生screencapture；raw1440×901/1100×701转目标图仅Pillow裁底1行并保留ICC，逐像素RGBA比对通过，无sips转换、缩放或重绘。resize是CUA原生边角操作，不能当窗口位移或HiDPI验收。没有外部AX/TIS/全局bounds/剪贴板/CGEvent调用。
+- 最终恢复Studio的小窗Providers无浮层，30.005s无CUA输入，Core0.100%单核/RSS10.875→10.875MiB，UI0.467%/RSS99.875→99.828MiB。ps累计TIME百分秒分辨率，不是GPU/帧时延；单版本短样本，不能证明优化、长期泄漏或全场景占用。
+
+| 原脚本实际顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 峰值RSS MiB | 80×1MiB耗时s | Core/UI记录ready ms |
+| --- | --- | --- | --- | --- | --- |
+| 旧c6ee第1轮 | 12.19/72.02/84.20 | 0.172/0.202 | 135.47 | 0.090 | 417.710/1028.049 |
+| 新983c第1轮 | 11.91/72.27/84.17 | 0.154/0.185 | 134.84 | 0.089 | 210.590/772.319 |
+| 旧c6ee第2轮 | 12.52/72.94/85.45 | 0.171/0.205 | 134.53 | 0.086 | 209.655/683.226 |
+| 新983c第2轮 | 12.22/72.38/84.59 | 0.171/0.194 | 132.27 | 0.086 | 214.249/665.502 |
+
+- 本轮先运行原benchmark --help，脚本SHA仍bc7e0537…；四轮同Core25f/Studio实读/64模型/1000小请求/80×1MiB并发4，默认Statistics页，非Providers渲染负载。旧→新中位：Core12.355→12.065、UI72.480→72.325、合计84.825→84.380MiB，峰值135.000→133.555MiB，p50 0.1715→0.1625/p95 0.2035→0.1895ms，大请求0.0880→0.0875s，Core ready313.683→212.420/UI记录ready855.638→718.911ms。未见明显持续退化，不据每版仅2个/缓存与后台未控制样本宣称优化或统计等效；ready不是首帧/可交互，RSS共享页可能双计，tray原JSON另列。
+- 两UI经CUA原生Close exit0，fixture各自停止/wait Core0、直接fixture wait0；主代理独立确认六PID消失。四轮原基准自有子进程数组均[-15,-15,0,0]且wait，所记Core/UI独立核对消失。完整规范化路径/UID501/父组件非符号链接及挂载边界/全量单链接普通文件/进程与lsof预检，临执行清单SHA复核后，按持续授权删除本轮146个自有可再生文件，释放189,698,048bytes（180.91MiB），本轮临时保留0。旧root30保护项24.03MiB继续保留，未读误截图/重试删除，共享Cargo缓存不动；系统盘清理后39,827,292,160bytes（37.09GiB）可用。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮修复共享选中底色，不替代其他整帧视觉/精确hover/真实IME/读屏/AX、Windows布局与实机、Intel实机/HiDPI、托盘/位移与最小化、首帧和公网更新成功验收。Goal active；HTML只静态校验，未绕过既有浏览器本地文件拒绝。
