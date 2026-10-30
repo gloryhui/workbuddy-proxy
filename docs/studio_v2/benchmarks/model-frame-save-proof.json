@@ -1,0 +1,80 @@
+{
+  "core_sha_unchanged": true,
+  "core_model": {
+    "id": "model-a-1",
+    "name": "deepseek-v4.1-flash",
+    "model": "deepseek-v4.1-flash"
+  },
+  "draft_sha256": "c3ea7d99cafa410942a6714c35d969830ba199f04c5bef8e284ae6183397ce16",
+  "draft_path": "config/gpui-drafts.json",
+  "manual_draft_model": {
+    "id": "model-a-1",
+    "name": "deepseek-v4.1-flash",
+    "model": "deepseek-v4.1-flash",
+    "reasoning_effort": "default",
+    "capabilities": {
+      "supportsToolCall": true,
+      "supportsImages": false,
+      "supportsReasoning": true,
+      "onlyReasoning": false,
+      "useCustomProtocol": true,
+      "reasoning": {
+        "defaultEffort": "high",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "max"
+        ],
+        "canDisableThinking": true
+      },
+      "maxInputTokens": 1000000,
+      "contextWindow": {
+        "defaultLength": 300000,
+        "supportedLengths": [
+          128000,
+          300000,
+          1000000
+        ]
+      }
+    }
+  },
+  "saved_model": {
+    "id": "model-a-1",
+    "alias": "wbp-0ce857313829",
+    "name": "deepseek-v4.1-flash",
+    "model": "deepseek-v4.1-flash",
+    "reasoning_effort": "default",
+    "capabilities": {
+      "supportsToolCall": true,
+      "supportsImages": false,
+      "supportsReasoning": true,
+      "onlyReasoning": false,
+      "useCustomProtocol": true,
+      "reasoning": {
+        "defaultEffort": "high",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "max"
+        ],
+        "canDisableThinking": true
+      },
+      "maxInputTokens": 1000000,
+      "contextWindow": {
+        "defaultLength": 300000,
+        "supportedLengths": [
+          128000,
+          300000,
+          1000000
+        ]
+      }
+    }
+  },
+  "saved_config_sha256": "47f5df6927e2f6ab714f7f7589c45ec96782040d540b2b147254a297b27f034a",
+  "saved_model_equals_manual_draft_except_generated_alias": true,
+  "providers": 2,
+  "models": 5,
+  "comparison_note": "Initial exact object assertion detected existing Core-generated alias; compare every draft field and record alias separately. No product code modified for this normalization."
+}

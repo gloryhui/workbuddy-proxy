@@ -1,0 +1,454 @@
+{
+  "ui_sha256": "af174b451fdcc28fe7631fae92116e1493aba1ab706e0c126929296e02161720",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "pids": {
+    "ui": 41160,
+    "core": 41158,
+    "fixture": 41154
+  },
+  "screen": "Studio Chinese; synthetic providers 2, models 5, requests 0",
+  "initial_model": "deepseek-v4.1-flash",
+  "cases": {
+    "auto": "builtin AUTO tools/images/reasoning on; low/high/max on, mid/xhigh off; default high; input 1000000, output empty, context 300000, options 128000/300000/1000000",
+    "auto_readonly": "click tools and mid produced no AX value change",
+    "manual": "tools/images toggled off; reasoning off caused only/allow-off clicks to leave values unchanged; reasoning restored then only enabled, automatically setting allow-off off; custom protocol and mid toggled on",
+    "auto_keyboard": "small window click AUTO on to off, then Space changed off to on",
+    "cancel": "manual edits canceled; reopened AUTO with original values, then canceled without confirm or save",
+    "small_scroll": "CUA scroll within form reached all four limits while footer remained visible",
+    "exit": "CUA clicked native close after cancel; Core and fixture left to parent for health and wait"
+  },
+  "screenshots": [
+    {
+      "file": "auto-wide-raw.png",
+      "sha256": "d9363e3d1342c77bfb7bbb91e7a32f9fe97458515e9360c459f5db971083dd73",
+      "width_px": 2880,
+      "height_px": 1802,
+      "method": "macOS screencapture -x -o -l",
+      "ui_pid": 41160,
+      "window_id": 65400,
+      "postprocessing": "none",
+      "evidence": "screenshots/model-frame-auto-1440x900-native-2x.png"
+    },
+    {
+      "file": "manual-wide-raw.png",
+      "sha256": "0165ad6f9023e956dac87baace7968018acb444ebae5ae8cef43a9a77a1497c7",
+      "width_px": 2880,
+      "height_px": 1802,
+      "method": "macOS screencapture -x -o -l",
+      "ui_pid": 41160,
+      "window_id": 65400,
+      "postprocessing": "none",
+      "evidence": "screenshots/model-frame-manual-1440x900-native-2x.png"
+    },
+    {
+      "file": "auto-small-raw.png",
+      "sha256": "88e1cccbb877007ffedf01af15ea3cfe06215383dc9e1b3e13ce8ccd72681657",
+      "width_px": 2200,
+      "height_px": 1402,
+      "method": "macOS screencapture -x -o -l",
+      "ui_pid": 41160,
+      "window_id": 65400,
+      "postprocessing": "none",
+      "evidence": "screenshots/model-frame-auto-1100x700-native-2x.png"
+    },
+    {
+      "file": "manual-small-raw.png",
+      "sha256": "47fb0911a6719633c9ff8766240ee601269866f0f2390556e5a7eced317ca057",
+      "width_px": 2200,
+      "height_px": 1402,
+      "method": "macOS screencapture -x -o -l",
+      "ui_pid": 41160,
+      "window_id": 65400,
+      "postprocessing": "none",
+      "evidence": "screenshots/model-frame-manual-1100x700-native-2x.png"
+    },
+    {
+      "file": "manual-small-limits-raw.png",
+      "sha256": "b8784d9b93001795a69e7736967c9a07605dba22d9aaaa42613cb13a66c96d88",
+      "width_px": 2200,
+      "height_px": 1402,
+      "method": "macOS screencapture -x -o -l",
+      "ui_pid": 41160,
+      "window_id": 65400,
+      "postprocessing": "none",
+      "evidence": "screenshots/model-frame-limits-1100x700-native-2x.png"
+    }
+  ],
+  "resize": "CUA drag from [2876,1794] to [2196,1394] in window screenshot physical coordinate space; raw native captures no crop or resize",
+  "limitations": [
+    "Full Tab/ShiftTab and Enter focus routing not independently verified on this final candidate.",
+    "No full-frame pixel-perfect claim; shared font, shadow, background and measured spacing differences remain under review.",
+    "Core configuration readback and process exit/wait are handled by parent."
+  ],
+  "intermediate_save_validation": {
+    "ui_sha256": "bb289da7c2310bb84456d48ea9b8f812a7dbc26e35227fc10019fff9733ccae8",
+    "source_delta_to_final": "Only effort Label w_full,line_height,text_color; event owners, model options and Core unchanged.",
+    "proof": "benchmarks/model-frame-save-proof.json",
+    "scope": "Actual confirm creates private draft while Core config SHA unchanged; subsequent native home Save persists all draft model fields, plus existing Core generated alias. Final af174 repeated manual/readonly/dependency/Space/cancel but did not Confirm/Save."
+  },
+  "intermediate_escape_validation": {
+    "ui_sha256": "bb289da7c2310bb84456d48ea9b8f812a7dbc26e35227fc10019fff9733ccae8",
+    "passed": [
+      "Focused Name ordinary Esc closes editor",
+      "Help first Esc closes Help only; second Esc closes editor"
+    ],
+    "not_verified": [
+      "Reliable full Tab/ShiftTab/Enter routing"
+    ]
+  },
+  "parent_cancel_proof": {
+    "ui_pid": 41160,
+    "ui_gone": true,
+    "core_alive_before_marker": true,
+    "all_cancelled_core_sha_unchanged": true,
+    "config_sha256": "36503768bed88a7851aaf9ea5d91c9d28991289a75242ff67bfe664d4a2aa71a"
+  },
+  "fixture_exit": {
+    "all_three_groups_ui_core_fixture_exited_and_waited": true,
+    "all9_pids_independently_gone": true
+  },
+  "guards": [
+    {
+      "group": "model-before-ui53",
+      "core_guard": {
+        "enforced": true,
+        "pid": 32190,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "gui_kernel_guard": false
+    },
+    {
+      "group": "model-final-ui53",
+      "core_guard": {
+        "enforced": true,
+        "pid": 37851,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "gui_kernel_guard": false
+    },
+    {
+      "group": "model-final2-ui53",
+      "core_guard": {
+        "enforced": true,
+        "pid": 41158,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "gui_kernel_guard": false
+    }
+  ]
+}

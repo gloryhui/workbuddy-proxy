@@ -1,0 +1,189 @@
+{
+  "order": [
+    "previous",
+    "current",
+    "current-run2",
+    "previous-run2",
+    "previous-run3",
+    "current-run3",
+    "current-run4",
+    "previous-run4"
+  ],
+  "runs": [
+    {
+      "label": "previous",
+      "evidence": "model-frame-previous-gui.json",
+      "core": 10.59,
+      "ui": 61.94,
+      "total": 72.53,
+      "peak": 118.92,
+      "p50": 0.185,
+      "p95": 0.371,
+      "large_seconds": 0.096,
+      "core_ready_ms": 1075.172,
+      "ui_record_ready_ms": 2308.593
+    },
+    {
+      "label": "current",
+      "evidence": "model-frame-current-gui.json",
+      "core": 12.5,
+      "ui": 75.61,
+      "total": 88.11,
+      "peak": 140.08,
+      "p50": 0.185,
+      "p95": 0.26,
+      "large_seconds": 0.104,
+      "core_ready_ms": 232.37,
+      "ui_record_ready_ms": 1081.606
+    },
+    {
+      "label": "current-run2",
+      "evidence": "model-frame-current-run2-gui.json",
+      "core": 12.72,
+      "ui": 74.03,
+      "total": 86.75,
+      "peak": 136.77,
+      "p50": 0.173,
+      "p95": 0.206,
+      "large_seconds": 0.089,
+      "core_ready_ms": 236.196,
+      "ui_record_ready_ms": 904.753
+    },
+    {
+      "label": "previous-run2",
+      "evidence": "model-frame-previous-run2-gui.json",
+      "core": 12.38,
+      "ui": 75.31,
+      "total": 87.69,
+      "peak": 133.8,
+      "p50": 0.173,
+      "p95": 0.197,
+      "large_seconds": 0.089,
+      "core_ready_ms": 226.056,
+      "ui_record_ready_ms": 814.53
+    },
+    {
+      "label": "previous-run3",
+      "evidence": "model-frame-previous-run3-gui.json",
+      "core": 12.77,
+      "ui": 74.55,
+      "total": 87.31,
+      "peak": 131.77,
+      "p50": 0.174,
+      "p95": 0.199,
+      "large_seconds": 0.091,
+      "core_ready_ms": 255.989,
+      "ui_record_ready_ms": 868.212
+    },
+    {
+      "label": "current-run3",
+      "evidence": "model-frame-current-run3-gui.json",
+      "core": 10.89,
+      "ui": 81.52,
+      "total": 92.41,
+      "peak": 143.75,
+      "p50": 0.171,
+      "p95": 0.191,
+      "large_seconds": 0.086,
+      "core_ready_ms": 198.34,
+      "ui_record_ready_ms": 695.144
+    },
+    {
+      "label": "current-run4",
+      "evidence": "model-frame-current-run4-gui.json",
+      "core": 12.27,
+      "ui": 79.06,
+      "total": 91.33,
+      "peak": 140.61,
+      "p50": 0.173,
+      "p95": 0.204,
+      "large_seconds": 0.087,
+      "core_ready_ms": 231.679,
+      "ui_record_ready_ms": 731.894
+    },
+    {
+      "label": "previous-run4",
+      "evidence": "model-frame-previous-run4-gui.json",
+      "core": 13.2,
+      "ui": 76.02,
+      "total": 89.22,
+      "peak": 136.19,
+      "p50": 0.173,
+      "p95": 0.198,
+      "large_seconds": 0.086,
+      "core_ready_ms": 246.145,
+      "ui_record_ready_ms": 738.943
+    }
+  ],
+  "current_minus_previous": {
+    "core": -0.19,
+    "ui": 2.405,
+    "total": 2.22,
+    "peak": 7.56,
+    "p50": -0.0005,
+    "p95": 0.0065,
+    "large_seconds": -0.002,
+    "core_ready_ms": -19.0425,
+    "ui_record_ready_ms": -23.0475
+  },
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "same_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "previous_ui_sha256": "675fba1473a408507335b9b4bee8d4606e1ba27039e6416920a62a6751b7ef9e",
+  "current_ui_sha256": "af174b451fdcc28fe7631fae92116e1493aba1ab706e0c126929296e02161720",
+  "workload": "Original --gui --requests1000 --models64, 80x1MiB concurrency4, isolated Studio prefs read back before/after. No benchmark source edits.",
+  "limitations": [
+    "Only4 short samples per version; no statistical equivalence, optimization or causal conclusion. Every increase retained.",
+    "Default Statistics cached/empty table is not model-dialog paint, FPS, typing latency, first paint or interactivity.",
+    "RSS shared pages may double count; tray separate, mock/client excluded; local loopback excludes TLS/public network/model latency.",
+    "Core kernel protection verified; GUI isolated HOME/config environment without kernel guard."
+  ],
+  "initial_four_run_median": {
+    "previous": {
+      "core": 11.485,
+      "ui": 68.625,
+      "total": 80.11,
+      "peak": 126.36000000000001,
+      "p50": 0.179,
+      "p95": 0.28400000000000003,
+      "large_seconds": 0.0925,
+      "core_ready_ms": 650.614,
+      "ui_record_ready_ms": 1561.5614999999998
+    },
+    "current": {
+      "core": 12.61,
+      "ui": 74.82,
+      "total": 87.43,
+      "peak": 138.425,
+      "p50": 0.179,
+      "p95": 0.23299999999999998,
+      "large_seconds": 0.0965,
+      "core_ready_ms": 234.28300000000002,
+      "ui_record_ready_ms": 993.1795
+    }
+  },
+  "median_of_four_each": {
+    "previous": {
+      "core": 12.575,
+      "ui": 74.93,
+      "total": 87.5,
+      "peak": 132.78500000000003,
+      "p50": 0.1735,
+      "p95": 0.1985,
+      "large_seconds": 0.09,
+      "core_ready_ms": 251.067,
+      "ui_record_ready_ms": 841.371
+    },
+    "current": {
+      "core": 12.385,
+      "ui": 77.33500000000001,
+      "total": 89.72,
+      "peak": 140.34500000000003,
+      "p50": 0.173,
+      "p95": 0.205,
+      "large_seconds": 0.088,
+      "core_ready_ms": 232.0245,
+      "ui_record_ready_ms": 818.3235
+    }
+  },
+  "additional_run_reason": "Initial2-per-version median UI+6.195/combined+7.320MiB, prior first sample had lowerRSS and slowerready. Preserved all samples and added two reverse pairs to inspect unresolved variation; no change to product/workload and no discarded sample. Extra wrapper only extends permitted unique labels; each wrapper hash retained in raw result."
+}

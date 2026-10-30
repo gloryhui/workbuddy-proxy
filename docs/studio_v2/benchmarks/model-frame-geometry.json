@@ -1,0 +1,186 @@
+{
+  "source_sha256": "d9363e3d1342c77bfb7bbb91e7a32f9fe97458515e9360c459f5db971083dd73",
+  "raw_size": [
+    2880,
+    1802
+  ],
+  "analysis_only_icc_to_srgb": true,
+  "raw_icc_profile": "L272U",
+  "raw_image_unmodified": true,
+  "flat_fill_components": {
+    "(238, 237, 255)": [
+      {
+        "bbox_px": [
+          1319,
+          1025,
+          1565,
+          1093
+        ],
+        "fill_pixel_count": 15851
+      },
+      {
+        "bbox_px": [
+          1868,
+          1025,
+          2114,
+          1093
+        ],
+        "fill_pixel_count": 15356
+      },
+      {
+        "bbox_px": [
+          770,
+          1025,
+          1016,
+          1093
+        ],
+        "fill_pixel_count": 15854
+      },
+      {
+        "bbox_px": [
+          768,
+          467,
+          2112,
+          621
+        ],
+        "fill_pixel_count": 186622
+      }
+    ],
+    "(101, 92, 244)": [
+      {
+        "bbox_px": [
+          1896,
+          1575,
+          2116,
+          1647
+        ],
+        "fill_pixel_count": 13941
+      },
+      {
+        "bbox_px": [
+          1164,
+          823,
+          1196,
+          855
+        ],
+        "fill_pixel_count": 836
+      },
+      {
+        "bbox_px": [
+          1164,
+          749,
+          1196,
+          781
+        ],
+        "fill_pixel_count": 836
+      },
+      {
+        "bbox_px": [
+          1564,
+          749,
+          1596,
+          781
+        ],
+        "fill_pixel_count": 836
+      },
+      {
+        "bbox_px": [
+          768,
+          749,
+          800,
+          781
+        ],
+        "fill_pixel_count": 836
+      },
+      {
+        "bbox_px": [
+          986,
+          504,
+          1018,
+          536
+        ],
+        "fill_pixel_count": 836
+      }
+    ]
+  },
+  "inferred_scale": 2,
+  "scale_basis": "CUA requested1440x900; raw2880x1802 and fixed256logical sidebar512physical. No OS scale or global bounds query.",
+  "reference": {
+    "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "frame": "59:279",
+    "dialog": "59:484",
+    "png_size": [
+      1440,
+      900
+    ],
+    "png_sha256": "4d41492a661e7b79991560f1b31d7ad722052cd725575e6594721a4213025f80",
+    "download": "Official Figma screenshot, curl command supplied by tool; analysis reference only, never implementation asset.",
+    "fill_components_logical": {
+      "notice": [
+        384,
+        233,
+        1056,
+        310
+      ],
+      "checked_flags": [
+        [
+          384,
+          373,
+          400,
+          389
+        ],
+        [
+          582,
+          373,
+          598,
+          389
+        ],
+        [
+          782,
+          373,
+          798,
+          389
+        ],
+        [
+          582,
+          410,
+          598,
+          426
+        ]
+      ],
+      "selected_efforts": [
+        [
+          385,
+          512,
+          507,
+          546
+        ],
+        [
+          657,
+          512,
+          779,
+          546
+        ],
+        [
+          929,
+          512,
+          1051,
+          546
+        ]
+      ],
+      "confirm": [
+        948,
+        787,
+        1058,
+        823
+      ]
+    }
+  },
+  "findings": [
+    "AUTO notice measured672x77 logical with #EEEDFF after ICC conversion; checkbox32x32 physical =>16logical and exact primary #655CF4; starts384/582/782 match reference.",
+    "Checkbox first-row top374.5 vs reference373 logical, second411.5 vs410;1.5logical downward residual.",
+    "Native effort flex distributes width about125.2 vs Figma124, accumulating about4.8logical horizontal drift; not full layout pass.",
+    "Native notice top233.5 vs reference233; confirm top787.5 vs787. Half-pixel residual retained.",
+    "Raw display-profile screenshot converted in memory for color analysis only; untouched native capture is the delivered evidence. Antialiasing, font fallback, shadow and system indicator prohibit whole-image equality claims."
+  ]
+}

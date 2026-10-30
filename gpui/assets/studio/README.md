@@ -17,3 +17,5 @@ Statistics filter row `52:87` supplies `stats-refresh.svg` (18px, layer `52:104`
 Overview KPI grid `52:107` supplies `kpi-grid.svg`, `kpi-shield.svg`, and `kpi-activity.svg` (18px each; layers `52:130`, `52:139`, `52:146`). The main Token surface and cards are native GPUI. The hero's bar area uses real recent dashboard time buckets; it never embeds the design's fixed decorative values as usage data.
 
 Recent activity `52:191` supplies `recent-clock.svg` (18px, layer `52:192`). The native recent-request card reads the existing `stats_requests` API with its own first-page read intent, rather than embedding the design's sample request or reusing a paginated table row.
+
+Model editor `59:484` / full frame `59:279` supplies `model-check.svg` (12×12, layers `93:490/492/494`), refreshed through official MCP on 2026-10-30. The native Base Checkbox indicator is 16×16 with this exact unchanged vector centered at its original 12px size. Automatic read-only state retains checked colors while remaining natively disabled. See the per-frame visual ledger for open typography, shadow and spacing differences; this asset change does not mark the entire frame accepted.

@@ -1237,3 +1237,29 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 每架构仅2短样本，arm64→译运行中位Core11.830→13.795/UI76.725→58.150/合计88.555→71.940MiB，采样峰138.400→120.845MiB，p50.1720→.1925/p95.2360→.2255ms，大请求.1310→.0975s，Core ready362.013→1619.780/UI记录ready1261.183→4055.431ms。译运行启动记录明显更慢，原生首轮p95.276/大请求.171的较高值也保留；不宣称Intel实机性能通过、内存优化、统计等效或跨架构排名。部分系统翻译服务/共享缓存可能不在Core/UI计数内，后台/压缩/冷热缓存未控制；默认Statistics不是完整弹窗绘制/输入延迟/FPS，ready不是首帧，tray单列，RSS共享页可双计。
 - 按持续授权完成Root43规范绝对路径/逐级父目录挂载和非符号链接/UID501/全量普通单链接文件/进程与lsof预检、临执行清单SHA复核后，仅删除本轮单一目录119文件，释放分配空间估计155,406,336bytes（148.21MiB），当前轮临时保留0。复用Cargo缓存及两份新Intel发行产物保留；旧Root30保护项24.03MiB和Root41私有记录/说明12KiB保留，未读误截图/哈希私有事件或重试删除，其他归属不明旧目录未动。系统盘清理后36,870,594,560bytes（34.34GiB）可用。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。“52”是专项记录数，不是界面完成数；当前尚未完成40帧逐帧一比一终验。下一阶段按完整界面设计对照逐项修差异，Intel硬件/Windows/完整HiDPI、读屏、真实WorkBuddy重启、物理托盘与首帧等门禁继续保留；Goal active，进度HTML仍仅静态检查。
+
+## 小功能 53：全局逐帧视觉审查与模型能力控件对齐（2026-10-30，北京时间）
+
+- 正式转入全局逐帧设计比对与差异修复，新增独立视觉审查台账；官方51:2元数据仍为40帧，59:279整帧/59:484弹窗高保真及1440×900参考已读取。本轮完成1帧首轮审查，保留明确差异；39帧尚未开始本轮完整比对，40帧最终验收均未通过。52/53等数字表示专项任务，不能作为界面完成率。证据：[构建与范围](benchmarks/model-frame-build.json)、[真实交互与保存边界](benchmarks/model-frame-gui-validation.json)、[自动1440实拍](screenshots/model-frame-auto-1440x900-native-2x.png)、[自动1100实拍](screenshots/model-frame-auto-1100x700-native-2x.png)、[手动1440实拍](screenshots/model-frame-manual-1440x900-native-2x.png)、[手动1100实拍](screenshots/model-frame-manual-1100x700-native-2x.png)、[小窗限制字段](screenshots/model-frame-limits-1100x700-native-2x.png)、[八轮性能](benchmarks/model-frame-performance-summary.json)。
+- 仅改Rust+GPUI模型布局/样式与原资源。原styled Checkbox受13px rem影响实际盒14.625px/勾11.375px/间距6.5px；改为组合相同Kit Base Checkbox/Indicator，显式16px盒、12px Figma原SVG、10px标签间距和原生focus-visible；自动只读保持设计颜色且仍disabled，手动依赖禁用继续淡化。同一Flag/get/set/unavailable/notify和能力、草稿、Confirm/Save所有owner回调保持；Core、model_options、能力规则、依赖/锁文件/工作流未改。局部Studio notice/档位使用#EEEDFF/#D5D1FF，三列起点0/198/398，字段329/331与数值对331/331、弹窗内边距对齐。保留AUTO开关、真实来源、未知图片警告、Help/default Select等原业务功能。
+- 首次bb289编译与交互后，完整稿/实拍发现effort外层对齐与颜色被Kit内层及Label默认前景覆盖，仍为黑色居中；最终af174将Label显式满宽/19px行高/前景色修正，重新构建与实拍确认紫色左对齐。两版均保留测试/构建历史，不以编译成功代替渲染验收。最终fmt、192tests/2既有ignored、strict clippy all-targets、x86_64类型检查、arm64 release均成功；最终UI SHA af174b451fdcc28fe7631fae92116e1493aba1ab706e0c126929296e02161720/15,263,312bytes，Core仍25f/8,428,096。此版Intel仅类型检查，UI52旧版Rosetta实跑不自动扩展至此版；既有block0.1.6和Windows门禁保留。
+- 最终af174实测AUTO内置Tools/Images/Reasoning、low/high/max与1000000/300000正确，点击只读Tools/Mid不改变值；关闭AUTO后六项与Medium实际可切换，Reasoning关时Only/AllowOff无效，Only开自动关闭AllowOff并禁用，Custom保留。小窗先点击AUTO关，再真实Space切回开。小窗内层滚动触达全部四限制，固定footer可见；所有编辑Cancel，主代理核Core SHA仍f458279a…不变。普通Name Esc和Help首Esc关说明/第二Esc关编辑器在中间bb289实测；最终候选完整Tab/ShiftTab/Enter、IME/AX读屏仍未重新逐项验收。
+- bb289另实际Confirm手动草稿，主代理确认Core原SHA逐字节不变、仅私有draft改变；主页一次真实Save才使Core SHA变47f5df69…，模型id/name/model/reasoning_effort及所有capabilities字段与draft一致，Core按既有逻辑新增alias wbp-0ce857313829。最初整对象比较因alias多字段失败，明确记录后逐个draft字段比较，不修改产品绕过；2供应商/5模型保持。最终af174与其仅effort Label样式差异，保存owner与Core同源，但不把这次Save写成最终版新做的操作。
+- Mac未锁；三个独占合成夹具各自live Core kernel权限与LaunchAgents四类deny已验，GUI仅隔离HOME/config/LSEnvironment、无内核沙盒。三UI原生Close后Core存活，结束marker触发Core/fixture退出且父进程wait0；9PID独立确认消失。最终window65400/UI41160，五张交付图逐字节复制原生raw，宽2880×1802/小2200×1402，未裁剪、缩放或重绘。2×来自请求尺寸/固定256逻辑侧栏512物理像素；无OSscale/全局bounds查询，底部包含原生额外2物理行，系统屏幕控制指示保留。
+- [资产核对](benchmarks/model-frame-assets.json)：31个设计静态资源中26个与本地字节一致；皮肤20px和侧栏链接15px两SVG哈希不同待视觉复核，3个装饰traffic lights沿用真实系统控件。新model-check.svg原12×12/SHA b63afd04…未经改写，无临时Figma URL运行时引用。[几何/颜色测量](benchmarks/model-frame-geometry.json)：仅在内存中按raw L272U ICC转sRGB分析，交付PNG保持原样；notice672×77、#EEEDFF与checkbox16×16/#655CF4及列384/582/782符合参考。仍测得checkbox两行约低1.5逻辑像素，notice/confirm约0.5px偏移，effort flex约125.2px而稿124px、累计约4.8px；原生Kit后置双黑阴影与稿0/18/42不同，Noto Sans SC与系统回退/字重/基线、Cancel底色及共享背景资产slot几何仍未全通过。整帧保留差异，不标一比一通过。
+
+| 原脚本执行顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 采样峰值MiB | 80×1MiB s | Core/UI记录ready ms |
+| --- | --- | --- | --- | --- | --- |
+| 旧675f previous | 10.59/61.94/72.53 | .185/.371 | 118.92 | .096 | 1075.172/2308.593 |
+| 新af174 current | 12.50/75.61/88.11 | .185/.260 | 140.08 | .104 | 232.370/1081.606 |
+| 新af174 current-run2 | 12.72/74.03/86.75 | .173/.206 | 136.77 | .089 | 236.196/904.753 |
+| 旧675f previous-run2 | 12.38/75.31/87.69 | .173/.197 | 133.80 | .089 | 226.056/814.530 |
+| 旧675f previous-run3 | 12.77/74.55/87.31 | .174/.199 | 131.77 | .091 | 255.989/868.212 |
+| 新af174 current-run3 | 10.89/81.52/92.41 | .171/.191 | 143.75 | .086 | 198.340/695.144 |
+| 新af174 current-run4 | 12.27/79.06/91.33 | .173/.204 | 140.61 | .087 | 231.679/731.894 |
+| 旧675f previous-run4 | 13.20/76.02/89.22 | .173/.198 | 136.19 | .086 | 246.145/738.943 |
+
+- scripts/benchmark.py SHA仍bc7e0537…，--help已查，原--gui/1000小请求/64Core模型/80×1MiB并发4不改，同25f Core/Studio偏好前后回读。初始每版2样本UI中位+6.195/合计+7.320MiB，旧首轮RSS较低但启动记录较慢，因未解波动追加两组反向配对；保留全部8样本，没有删除高值或降低负载。每版4样本中位旧→新Core12.575→12.385/UI74.930→77.335/合计87.500→89.720MiB，峰值132.785→140.345MiB，p50.1735→.1730/p95.1985→.2050ms，大请求.090→.088s，Core ready251.067→232.025/UI记录ready841.371→818.324ms。UI+2.405/合计+2.220/峰值+7.560MiB与p95+.0065ms均保留，不宣称优化、等效或内存因果；仍为短样本，默认Statistics可能缓存空表，不替代模型弹窗绘制、输入延迟/FPS/首帧。RSS共享页可能双计，tray单列。八轮自有4子进程均[-15,-15,0,0]且wait/Core/UI消失，Core保护成功；额外wrapper仅允许新标签，原负载不变，各hash保留。
+
+- Root44已完成规范绝对路径/系统临时归属/逐级父目录挂载与非符号链接/UID501/全量普通单链接/进程与lsof预检，临执行再次核对同一清单SHA。对精确单一目录的rm命令被执行策略拒绝：需要approval但AskForApproval=Never；未改用等价删除或重试绕过。故本轮清理0、仍保留289文件/341,610,496分配bytes（325.79MiB），已退出无引用且交付证据已导出，详[清理记录](benchmarks/model-frame-cleanup.json)。共享Cargo缓存保持；旧Root30保护项24.03MiB、Root41私有记录/说明12KiB保留，未读/哈希私有事件或重试删除。系统盘当前36,423,729,152bytes（33.92GiB）可用。
+- 剩余40帧最终验收（40部分/0最终）；全局视觉首轮39未开始、1已审查且保留差异。当前Goal active；进度HTML继续仅静态检查，未通过本地地址被拒后的替代浏览器路径绕过。下一步继续全局差异修复和逐帧对照，不以本次局部native控件修正宣称整帧通过。

@@ -13,6 +13,104 @@ use gpui_kit::component::{
 const SOFT: u32 = crate::theme::color::BG_TABLE_HEAD;
 const BORDER: u32 = crate::theme::color::BORDER;
 
+fn accent_tint() -> u32 {
+    if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+        0xeeedff
+    } else {
+        crate::theme::palette().tint
+    }
+}
+
+fn accent_line() -> u32 {
+    if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+        0xd5d1ff
+    } else {
+        crate::theme::palette().border
+    }
+}
+
+// The styled Kit Checkbox derives its indicator from rems and fixes its mark
+// asset. Compose its same native Base engine to retain focus, keyboard, checked
+// and disabled semantics with Figma's explicit 16/12px parts instead.
+fn model_checkbox(
+    id: impl Into<ElementId>,
+    label: &'static str,
+    checked: bool,
+    disabled: bool,
+    read_only: bool,
+    on_change: impl Fn(&bool, &mut Window, &mut App) + 'static,
+) -> gpui_kit::base::Checkbox {
+    let primary = rgb(crate::theme::palette().primary);
+    let dim = disabled && !read_only;
+    gpui_kit::base::Checkbox::new(id)
+        .checked(checked)
+        .disabled(disabled)
+        .accessibility_label(label)
+        .flex()
+        .items_center()
+        .gap(px(10.))
+        .h(px(20.))
+        .rounded(px(5.))
+        .focus_visible(move |style| {
+            style.shadow(vec![
+                BoxShadow::new(px(0.), px(0.), primary.into())
+                    .blur_radius(px(0.))
+                    .spread_radius(px(1.)),
+            ])
+        })
+        .child(
+            gpui_kit::base::CheckboxIndicator::new()
+                .checked(checked)
+                .disabled(disabled)
+                .flex()
+                .items_center()
+                .justify_center()
+                .flex_none()
+                .size(px(16.))
+                .rounded(px(5.))
+                .border_1()
+                .border_color(if checked {
+                    primary
+                } else {
+                    rgb(crate::theme::color::BORDER_INPUT)
+                })
+                .bg(if checked {
+                    primary
+                } else {
+                    rgb(crate::theme::color::WHITE)
+                })
+                .when(dim, |part| part.opacity(0.5))
+                .when(checked, |part| {
+                    part.child(
+                        svg()
+                            .path("studio/model-check.svg")
+                            .size(px(12.))
+                            .text_color(rgb(0xffffff)),
+                    )
+                }),
+        )
+        .child(
+            Label::new(label)
+                .text_size(px(13.))
+                .line_height(px(19.))
+                .text_color(rgb(if dim {
+                    MUTED
+                } else if checked {
+                    INK
+                } else {
+                    crate::theme::color::TEXT_2
+                })),
+        )
+        .on_change(move |state, _, window, cx| {
+            window.prevent_default();
+            on_change(
+                &(state == gpui_kit::base::CheckboxState::Checked),
+                window,
+                cx,
+            );
+        })
+}
+
 pub(super) fn surface_height(window: &Window) -> Pixels {
     (window.viewport_size().height - px(64.)).min(px(800.))
 }
@@ -185,12 +283,9 @@ impl Proxy {
             .px(px(16.))
             .pt(px(13.))
             .pb(px(14.))
+            .mr(px(2.))
             .rounded(px(12.))
-            .bg(rgb(if automatic {
-                crate::theme::palette().tint
-            } else {
-                SOFT
-            }))
+            .bg(rgb(if automatic { accent_tint() } else { SOFT }))
             .child(
                 div()
                     .flex()
@@ -209,10 +304,14 @@ impl Proxy {
                         .min_w(px(80.))
                         .rounded(px(9.))
                         .text_size(px(11.))
-                        .child(if automatic { "AUTO" } else { "MANUAL" }),
+                        .child(if automatic {
+                            "● AUTO"
+                        } else {
+                            "MANUAL"
+                        }),
                     )
                     .child(
-                        crate::ui_components::checkbox(
+                        model_checkbox(
                             "model-capabilities-auto",
                             self.t(
                                 "自动识别模型能力（取消后自定义）",
@@ -220,15 +319,8 @@ impl Proxy {
                             ),
                             automatic,
                             false,
-                        )
-                        .text_size(px(13.))
-                        .font_weight(FontWeight::SEMIBOLD)
-                        .tooltip(self.t(
-                            "使用内置模型规则与 models.dev 元数据，取消勾选后手动覆盖",
-                            "Use built-in rules and models.dev metadata; uncheck to customize",
-                        ))
-                        .on_change(cx.listener(
-                            |this, enabled: &bool, window, cx| {
+                            false,
+                            cx.listener(|this, enabled: &bool, window, cx| {
                                 if *enabled {
                                     let model = this.model_id_for_options(cx);
                                     this.model_options.load(
@@ -242,8 +334,19 @@ impl Proxy {
                                     this.model_options.automatic = false;
                                 }
                                 cx.notify();
-                            },
-                        )),
+                            }),
+                        )
+                        .text_size(px(13.))
+                        .font_weight(FontWeight::SEMIBOLD)
+                        .tooltip({
+                            let text = self.t(
+                                "使用内置模型规则与 models.dev 元数据，取消勾选后手动覆盖",
+                                "Use built-in rules and models.dev metadata; uncheck to customize",
+                            ).to_owned();
+                            move |window, cx| {
+                                crate::ui_components::full_value_tooltip(text.clone(), window, cx)
+                            }
+                        }),
                     ),
             )
             .child(caption(self.model_source_note()).h(px(20.)).flex_none())
@@ -301,7 +404,7 @@ impl Proxy {
             div()
                 .flex()
                 .items_center()
-                .gap(px(12.))
+                .gap_0()
                 .h(px(20.))
                 .flex_none()
                 .mt(px(if row == 0 { 12. } else { 17. }))
@@ -312,23 +415,26 @@ impl Proxy {
                             && !self.model_options.value.supports_reasoning)
                         || (matches!(flag, Flag::DisableThinking)
                             && self.model_options.value.only_reasoning);
-                    crate::ui_components::checkbox(
+                    model_checkbox(
                         ("model-capability", row * 3 + column),
                         self.t(cn, en),
                         flag.get(&self.model_options.value)
                             && !(matches!(flag, Flag::CustomProtocol) && self.native_protocol()),
                         unavailable,
+                        self.model_options.automatic,
+                        cx.listener(move |this, enabled: &bool, _, cx| {
+                            flag.set(&mut this.model_options.value, *enabled);
+                            cx.notify();
+                        }),
                     )
-                    .flex_1()
+                    .when(column < 2, |cell| {
+                        cell.flex_none()
+                            .w(px(if column == 0 { 198. } else { 200. }))
+                    })
+                    .when(column == 2, |cell| cell.flex_1())
                     .min_w_0()
                     .text_size(px(13.))
                     .h(px(20.))
-                    .on_change(cx.listener(
-                        move |this, enabled: &bool, _, cx| {
-                            flag.set(&mut this.model_options.value, *enabled);
-                            cx.notify();
-                        },
-                    ))
                 }))
         });
         div()
@@ -341,17 +447,23 @@ impl Proxy {
                 div()
                     .flex()
                     .items_center()
-                    .justify_between()
-                    .gap(px(12.))
+                    .gap_0()
                     .h(px(24.))
                     .flex_none()
-                    .child(title(self.t("模型能力", "Capabilities")))
+                    .child(
+                        title(self.t("模型能力", "Capabilities"))
+                            .w(px(154.))
+                            .flex_none(),
+                    )
                     .child(
                         Label::new(self.t(
                             "WorkBuddy 能力声明，不修改转发的消息",
                             "Capabilities only; messages are unchanged",
                         ))
                         .text_size(px(11.))
+                        .flex_1()
+                        .min_w_0()
+                        .text_ellipsis()
                         .text_color(rgb(MUTED)),
                     )
                     .child(self.model_capability_help()),
@@ -388,14 +500,7 @@ impl Proxy {
                     .justify_start()
                     .custom(
                         ButtonCustomVariant::new(cx)
-                            .color(
-                                rgb(if active {
-                                    crate::theme::palette().tint
-                                } else {
-                                    SOFT
-                                })
-                                .into(),
-                            )
+                            .color(rgb(if active { accent_tint() } else { SOFT }).into())
                             .foreground(
                                 rgb(if active {
                                     crate::theme::palette().dark
@@ -404,13 +509,42 @@ impl Proxy {
                                 })
                                 .into(),
                             )
-                            .hover(rgb(crate::theme::palette().tint).into()),
+                            .hover(rgb(accent_tint()).into()),
                     )
-                    .label(self.t(cn, en))
+                    .px(px(11.))
+                    .bg(rgb(if active { accent_tint() } else { SOFT }))
+                    .text_color(rgb(if active {
+                        crate::theme::palette().dark
+                    } else {
+                        MUTED
+                    }))
+                    .border_1()
+                    .border_color(rgb(if active { accent_line() } else { SOFT }))
+                    .accessibility_label(self.t(cn, en))
+                    .child(
+                        Label::new(if active {
+                            format!("✓  {}", self.t(cn, en))
+                        } else {
+                            self.t(cn, en).to_owned()
+                        })
+                        .w_full()
+                        .text_size(px(13.))
+                        .line_height(px(19.))
+                        .text_color(rgb(if active {
+                            crate::theme::palette().dark
+                        } else {
+                            MUTED
+                        }))
+                        .font_weight(if active {
+                            FontWeight::BOLD
+                        } else {
+                            FontWeight::MEDIUM
+                        }),
+                    )
                     .toggled(active)
                     .disabled(disabled)
-                    .when(active, |button| {
-                        button.icon(Icon::new(IconName::Check).with_size(px(14.)))
+                    .when(disabled && !self.model_options.automatic, |button| {
+                        button.opacity(0.5)
                     })
                     .on_click(cx.listener(move |this, _, _, cx| {
                         let efforts = &mut this.model_options.value.reasoning.supported_efforts;
@@ -508,17 +642,15 @@ impl Proxy {
         let needs_gutter =
             surface_height(window) < px(800.) || self.model_edit_error.is_some() || unknown_image;
         let pair = |start: usize, labels: [(&'static str, &'static str); 2]| {
-            div()
-                .flex()
-                .gap(px(14.))
-                .flex_none()
-                .children(labels.into_iter().enumerate().map(|(offset, (cn, en))| {
+            div().flex().gap(px(11.)).pr(px(1.)).flex_none().children(
+                labels.into_iter().enumerate().map(|(offset, (cn, en))| {
                     let label = self.t(cn, en);
                     field(
                         label,
                         input(&self.model_options.limits[start + offset], automatic, label),
                     )
-                }))
+                }),
+            )
         };
         let rows = div()
             .id("model-editor-rows")
@@ -531,14 +663,19 @@ impl Proxy {
             .child(
                 div()
                     .flex()
-                    .gap(px(14.))
+                    .gap(px(13.))
+                    .pr(px(1.))
                     .pt(px(20.))
                     .flex_none()
                     .track_focus(&self.model_editor_focus[0])
-                    .child(field(
-                        self.t("显示名称", "Display name"),
-                        input(&self.edit_name, false, self.t("显示名称", "Display name")),
-                    ))
+                    .child(
+                        field(
+                            self.t("显示名称", "Display name"),
+                            input(&self.edit_name, false, self.t("显示名称", "Display name")),
+                        )
+                        .flex_none()
+                        .w(px(329.)),
+                    )
                     .child(field(
                         self.t("上游模型 ID", "Upstream model ID"),
                         input(
@@ -640,7 +777,7 @@ impl Proxy {
                             .items_center()
                             .justify_between()
                             .h(px(30.))
-                            .pr(px(14.))
+                            .pr(px(13.))
                             .flex_none()
                             .child(
                                 Label::new(if self.new_model {

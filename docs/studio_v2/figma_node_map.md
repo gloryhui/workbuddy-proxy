@@ -10,7 +10,7 @@
 | 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：表卡/两指标卡/真实排序/分组分页/两尺寸已验，完整视觉与无障碍待续 |
 | 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs | 部分：分区导航/价格卡CRUD与游标/快照/失败提示、采集/导入双卡及主要业务已验；整帧视觉、完整键盘/IME/无障碍待续 |
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui/model_picker.rs, ui.rs, ui/providers.rs | 部分：原生726×672/小窗自适应、38/4096虚拟候选、过滤与勾选/键盘、取消/确认草稿/显式保存、跨供应商256边界与错误/空态已验；完整IME/无障碍/跨平台待续 |
-| 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui/model_editor.rs, model_options.rs, ui.rs | 部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；完整IME/无障碍/跨平台及精细审计待续 |
+| 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui/model_editor.rs, model_options.rs, ui.rs | 部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；UI53首轮全帧审查/16px原生checkbox+12px原资源/颜色列对齐与两尺寸实拍已记录；仍有1.5px纵向、档位宽度、字体/阴影/共享资产余差，完整键盘IME/无障碍/跨平台待续，未整帧通过 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：526原生确认/两尺寸、取消/无隐式Enter、仅同步/当前草稿与全部saved范围、非法文件/重试、守卫下写入后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验 |
 | 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续 |
 | 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 部分：原650×770/分组/代理与导入/本次快照/错误重试/关闭证据保留；0b43修长Tooltip横向溢出，真实请求模型提示两尺寸完整/30s同图、More键盘/长值及价格@1/零与未知/小窗底部已验；三精确hover/完整无障碍/跨平台与整帧待续 |
@@ -98,3 +98,5 @@ Windows专项（小功能43）：实际锁定Kit0.7.3/pre-windows0.3.9源码的�
 共享模型输入与满载专项（小功能51）：沿用54:246/59:279布局资源，无新设计读取；675f仅main.rs/ui.rs增加模型输入专属Escape路由并保留原生marked composition优先。宽首末/小末行F2普通Esc、两尺寸逐键拼音首Esc仅取消组合/再Esc关闭及256首末标记网格已验；旧87eb64/256容量/搜索空态/256范围删除仅草稿与Core不变、当前对齐16次滚动资源、四确认原基准及一保留预检已留证。独立长ID悬浮/其他源和数字字段/完整视觉AX跨平台仍未验；旧Esc冲突和失败中间版见QA51，40部分/0最终保持。
 
 平台专项（小功能52）：官方Figma59:279/59:484在用户重新授权后恢复高保真读取。当前同源Intel Core/UI发行版已真实链接并以Rosetta执行192 release测试、编辑/草稿/实际Save与两尺寸native截图、4轮原负载；译运行不是Intel实机，未修改UI布局资产，完整40帧一比一验收和平台门禁保持未完成。报告现区分专项任务数/画板完成数，40部分/0最终，详QA52。
+
+全局逐帧首轮审查（小功能53）：已重新读取51:2完整40帧清单及59:279/59:484高保真和1440×900参考。独立台账 `visual_review.json` 目前39帧尚未开始、1帧已审查保留差异；这不替代主表最终验收。模型checkbox/notice几何和颜色、31资产哈希核对、最终两尺寸真实交互与8轮原基准见QA53。实际发现1.5px行偏移、五档位flex宽度、系统字体、Kit阴影和共享SVG差异，40部分/0最终保持。

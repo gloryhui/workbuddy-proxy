@@ -1,0 +1,85 @@
+{
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round44.auxj1uyj",
+  "type": "single owned session directory",
+  "ownership": {
+    "task": "studio-v2-ui53",
+    "scope": "full-frame visual review59:279 and native model checkbox fidelity regression",
+    "repo": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+    "base_head": "3e3aeae191c1469a57a5117af70e9db846bd9358"
+  },
+  "canonical_os_temp_parent": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+  "ancestors": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round44.auxj1uyj",
+      "mount": false,
+      "uid": 501,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "mount": false,
+      "uid": 501,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "mount": false,
+      "uid": 501,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "mount": false,
+      "uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var/folders",
+      "mount": false,
+      "uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/private/var",
+      "mount": false,
+      "uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/private",
+      "mount": false,
+      "uid": 0,
+      "device": 16777232
+    },
+    {
+      "path": "/",
+      "mount": true,
+      "uid": 0,
+      "device": 16777232
+    }
+  ],
+  "file_count": 289,
+  "directory_count": 131,
+  "logical_bytes": 326107966,
+  "allocated_bytes": 341610496,
+  "inventory_sha256": "002401c8eb82ce7ae875760dcec94c4c7d4de8c9e3296d09e1bcc86c316a6834",
+  "all_files_regular_single_link_uid501": true,
+  "no_child_mounts_or_symlinks": true,
+  "process_path_references": [],
+  "lsof_exit": 1,
+  "lsof_empty": true,
+  "basis": "Only current UI53 synthetic fixtures, copied binaries, local design references, benchmark copies, generated build/test logs and helper scripts. Final evidence already exported to repository. Shared Cargo caches and protected older roots excluded.",
+  "authorization": "Standing user authorization for explicitly verified safe session directories.",
+  "deleted": false,
+  "deletion_blocked": true,
+  "deletion_error": "exec_command rejected rm -rf exact preflighted Root44: approval required by policy, but AskForApproval is set to Never. No equivalent deletion attempted.",
+  "current_session_temporary_allocated_bytes_retained": 341610496,
+  "freed_allocated_bytes": 0,
+  "system_data_free_bytes": 36423729152,
+  "historical_retained": {
+    "root30_protected_bytes": 25198592,
+    "root41_private_allocated_bytes": 12288,
+    "note": "Prior recorded sizes retained; no protected image/private event log read, hash or deletion attempted."
+  },
+  "shared_cargo_caches_preserved": true
+}

@@ -1,0 +1,101 @@
+{
+  "feature": "UI53 full-frame59:279 design review / native model control fidelity",
+  "base_head": "3e3aeae191c1469a57a5117af70e9db846bd9358",
+  "ui_sha256": "bb289da7c2310bb84456d48ea9b8f812a7dbc26e35227fc10019fff9733ccae8",
+  "ui_bytes": 15263312,
+  "baseline_ui_sha256": "675fba1473a408507335b9b4bee8d4606e1ba27039e6416920a62a6751b7ef9e",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.654
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 5.821
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 3.018
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 2.206
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 42.28
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/ui.rs": "45494ee28aeb0e6ddaeee9ab9ebf39be6ff480984af1c4acd3c4707e4be14396",
+    "gpui/src/ui/model_editor.rs": "095d3dd624770e52c627d7be04d442fc629a7f9408e5e6a6ac3dcff1e5301a8e",
+    "gpui/assets/studio/model-check.svg": "b63afd044d1a495e928d07202880b660b5ce9693a7588e7886744893d2035d54",
+    "gpui/src/model_options.rs": "412d5555d817eedcc39f8b86f0fbe6cf3cd8df32ed46ac7bcf91bb8a091b73cb",
+    "src/capabilities.rs": "b0e8f3f359aab766912d015ff657f312a75ca3b367aa795758d620fdf2e60bf4"
+  },
+  "scope": "Model dialog native Base Checkbox/Indicator composition with exact Figma12px vector,16px box, state-aware paint; local model accent tint, column/field/popup inset alignment. Same owner callbacks/disabled/auto/manual logic, native focus/keyboard/input and all data/Core behavior preserved. No global palette or dependency change.",
+  "figma": {
+    "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "page_id": "51:2",
+    "metadata_frames": 40,
+    "context_node": "59:484",
+    "screenshot_read": true,
+    "asset_root_size": [
+      12,
+      12
+    ]
+  },
+  "limitations": [
+    "Build/test success does not prove native interaction, geometry or full-frame acceptance.",
+    "Intel check here is typecheck; UI52 x86 release runtime evidence applies older675f version, not this candidate.",
+    "Native Kit dialog shadow and system font selection require explicit audit; do not label full frame matched from partial fixes.",
+    "Existing block0.1.6 and Windows toolchain/caption gates remain."
+  ]
+}

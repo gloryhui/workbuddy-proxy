@@ -52,3 +52,5 @@
 模型能力编辑 `59:279` / `59:484` 已提取 `ui/model_editor.rs`，保留设计未呈现的默认思考Select、真实元数据来源、未知图片警告及完整媒体/Chat URL说明；六能力Flag逻辑、模型能力五档与原验证器保持。局部错误不再写入Runtime，固定底栏/原生滚动/缓存焦点组与布局后单次校正解决缩窗及错误时的遮挡；全面IME/无障碍/跨平台继续保留待办。
 
 同步确认 `60:27` / `60:232` 与取消同步 `68:350` / `68:555` 已提取 `ui/sync_dialog.rs`，三按钮保持原save/install/restore与restart job顺序。正常隔离GUI验证文件/草稿语义，重启产品路径以denial-only guard核对部分成功；无guard的随机bundle脚本独立验证生命周期基础函数，未将其冒充真实WorkBuddy重启。启动地址不一致确认仍为原分支，后续视觉施工与整帧审计继续。
+
+UI53 全帧审查与原生能力控件：BaseCheckbox/Indicator继续使用Kit焦点、disabled、checked与键盘引擎，16px盒/12px原SVG/10px标签间距。最终af174 AUTO只读点击、手动六项依赖、Medium与AUTO点击/Space、两尺寸及限制滚动/全部取消已验；中间bb289在仅effort Label样式差异前的Confirm/主页Save由Core独立读回。最终候选完整Tab/ShiftTab/Enter、IME/AX/全帧视觉仍未通过；不扩大既有专项结论。

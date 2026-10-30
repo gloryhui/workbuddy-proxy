@@ -5,7 +5,8 @@
     "page_id": "51:2",
     "inventory_source": "Official Figma MCP page metadata refreshed 2026-10-30; exactly40 matching state frames",
     "high_fidelity_context_read": [
-      "59:484"
+      "59:484",
+      "59:279"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -121,24 +122,35 @@
     {
       "id": "59:279",
       "name": "07 / STUDIO V2 · 编辑模型能力",
-      "review_status": "reviewing",
-      "scope": "本轮完整界面设计比对进行中；高保真弹窗59:484已读，运行交互/两尺寸/性能仍在验证。",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI53 首轮完整界面审查已记录：高保真整帧/弹窗、31资产清单、几何与颜色测量、两尺寸自动/手动实拍及功能交互；保留明确差异，未最终通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "已测量；列起点/notice尺寸已对齐，仍有1.5px纵向与档位宽度余差",
+        "colors": "notice与checkbox主色经ICC分析符合；文字/按钮/背景仍需全量逐项核对",
+        "typography": "保留差异：Noto Sans SC设计与原生字体回退/权重/基线未统一",
+        "assets": "31设计资产中26份与本地字节完全一致；皮肤/侧栏链接2份哈希不同待视觉复核，3个装饰traffic lights沿用真实系统控件；未宣称所有slot几何通过",
+        "states": "最终候选AUTO只读与manual依赖/取消通过；中间版Confirm/Save独立读回通过",
+        "interaction": "最终候选AUTO点击+Space、能力和effort点击通过；完整Tab/ShiftTab/Enter、AX读屏待验",
+        "native_1440": "最终af174自动/手动2880x1802原生图已核对",
+        "native_1100": "最终af174自动/手动/限制滚动2200x1402原生图已核对"
       },
       "differences": [
-        "原生 Kit 弹窗阴影与稿中 0/18/42 阴影不同，尚未修正。",
-        "Figma 使用 Noto Sans SC；当前 macOS 原生字体回退仍需逐字与基线复核。",
-        "整帧共享背景、资产及扩展业务控件的对照仍待完成；不因局部控件修正标记整帧通过。"
+        "复选框两行相对Figma约低1.5逻辑像素；notice与确认按钮存在约0.5px纵向余差。",
+        "五档位按钮当前flex约125.2px，稿为124px，横向累计约4.8px；后续需处理宽/窄适配。",
+        "原生Kit双层黑色弹窗阴影与稿0/18/42 rgba(20,31,59,.22)不同，且Kit在调用方样式后覆盖。",
+        "设计Noto Sans SC与当前macOS系统字体回退、输入文字权重/基线仍有差异；取消按钮底色等局部外观待续。",
+        "共享背景/动态真实日志与状态不使用设计假数据；皮肤/侧栏链接SVG哈希不同，完整静态asset slot与effective geometry尚未全部通过。",
+        "Help/默认档位Select/自动模式开关为原业务交互保留；完整键盘和无障碍仍待统一终验。"
       ],
-      "evidence": []
+      "evidence": [
+        "benchmarks/model-frame-build.json",
+        "benchmarks/model-frame-gui-validation.json",
+        "benchmarks/model-frame-assets.json",
+        "benchmarks/model-frame-geometry.json",
+        "benchmarks/model-frame-performance-summary.json",
+        "screenshots/model-frame-auto-1440x900-native-2x.png",
+        "screenshots/model-frame-auto-1100x700-native-2x.png"
+      ]
     },
     {
       "id": "60:27",
