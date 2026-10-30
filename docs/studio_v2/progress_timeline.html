@@ -198,10 +198,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T08:33:56+08:00",
+  "updated_at": "2026-10-30T08:59:38+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "aabb91cc2fdee92da04693ae996875aad24f97d1",
+  "code_head": "7b69af0e5da2bae1a352a990b365cacbb6118717",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -211,63 +211,64 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 48,
+  "recorded_tasks": 49,
   "current_task": {
-    "id": 48,
-    "title": "侧栏选中底色恢复设计实色",
+    "id": 49,
+    "title": "模型目录数量与配置来源标记",
     "status": "recorded",
-    "description": "修复Kit默认混色导致选中导航/供应商行过暗；两尺寸与三皮肤像素、导航键盘/配置保护、四轮性能已验证。保留完整专项边界。"
+    "description": "补齐94×27数量和65×27来源标记，修复29px行内裁切；最终两尺寸中英/选中态、编辑取消/能力模式独立/模型载荷保持和六轮性能留证。"
   },
   "latest_task": {
-    "id": 48,
-    "title": "侧栏选中底色恢复设计实色",
+    "id": 49,
+    "title": "模型目录数量与配置来源标记",
     "status": "recorded",
-    "summary": "修复导航/供应商行选中底色被Kit混合后过暗的问题，只改ui/sidebar.rs的选中普通状态填充，保留原选择、导航、禁用及事件。证据：编译、基线缺陷、真实交互与配置、像素与资源、1440实拍、1100实拍、四轮性能、清理。",
+    "summary": "补齐模型目录数量94×27和逐行“自定义/Custom”65×27原生标记，并修复29px行内的裁切与垂直对齐；保留三列虚拟表格、模型值、选择、编辑/取消和能力语义。证据：编译、真实交互/配置、资源/像素、1440中文、1100英文、选中态、六轮性能、清理。",
     "highlights": [
-      "修复导航/供应商行选中底色被Kit混合后过暗的问题，只改ui/sidebar.rs的选中普通状态填充，保留原选择、导航、禁用及事件。证据：编译、基线缺陷、真实交互与配置、像素与资源、1440实拍、1100实拍、四轮性能、清理。",
-      "官方MCP重读54:2/54:19及Mono62:308高保真context与截图，导航54:19/76:1344和供应商75:379/76:1376均要求实色#2D3251。新启动c6ee基线两处空白像素实际均为RGBA23/27/46/255（#171B2E），不是只凭旧截图推断。当前锁定gpui-component0.7.3的Custom.normal使用color.mix_oklab(theme.transparent,0.2)，实例style在其后refine；本轮对active导航及active且!busy供应商行设置已有SIDEBAR_ACTIVE背景，避开该普通态混合。未改Kit、palette/配置键、悬停/按住定义、toggled语义、焦点链、Core或依赖。",
-      "最终983c原生Studio1440/1100、Mono1100、Blue1100两处相同局部坐标均为RGBA45/50/81/255，与设计一致；精确色填充边界nav[16,221,240,264]与provider[20,399,236,437]，即224×43/216×38保持。两处可见原SVG与新Figma资源逐字节一致：server SHA57726a6b…/根18×18，supplier-selected SHA60118660…/根7×7；当前Icon槽与资源根同尺寸，无资源改写。槽尺寸不是墨迹包围框；其他未在本轮审查的整帧差异仍待续。"
+      "补齐模型目录数量94×27和逐行“自定义/Custom”65×27原生标记，并修复29px行内的裁切与垂直对齐；保留三列虚拟表格、模型值、选择、编辑/取消和能力语义。证据：编译、真实交互/配置、资源/像素、1440中文、1100英文、选中态、六轮性能、清理。",
+      "官方MCP重读54:246高保真context/截图：54:249数量标记94×27，54:262等来源标记65×27，圆角9/底色#F3F5FA/11px文字#778196。来源标记对应选中供应商配置模型，源码Draft::from_provider→self.models→Models.rows可追溯；它不表示capabilities是否手动覆盖，不按模型名称猜测、不新增分类API或修改Core数据。首次新基线983c的实拍确实仅有数量文字、无行来源标记，见基线记录。",
+      "只修改model_table.rs和ui/providers.rs：原生Div/Label与既有token，数量区保留响应式紧凑头，标题组min142为数量标记留位；ID文本flex1/min0、右侧固定标记，长ID仍省略并保留既有完整值Tooltip。模型表继续3列/29px行/32px头，原列宽算法、选择/容量约束、28px编辑按钮和事件未改。可见15px编辑SVG与新Figma资源逐字节一致，SHAd19ec85f…；没有引入图片截图资产或改变原资源。"
     ],
     "limits": [
-      "最终983c原生Studio1440/1100、Mono1100、Blue1100两处相同局部坐标均为RGBA45/50/81/255，与设计一致；精确色填充边界nav[16,221,240,264]与provider[20,399,236,437]，即224×43/216×38保持。两处可见原SVG与新Figma资源逐字节一致：server SHA57726a6b…/根18×18，supplier-selected SHA60118660…/根7×7；当前Icon槽与资源根同尺寸，无资源改写。槽尺寸不是墨迹包围框；其他未在本轮审查的整帧差异仍待续。"
+      "新1轮p95.374ms与旧2轮.364ms波动均保留，并补新→旧反向.205/.204ms，未复现持续尖峰。旧→新中位Core12.39→12.42/UI72.41→72.88/合计84.72→85.30MiB，峰值135.98→136.94MiB，p50.172→.173/p95.204→.208ms，大请求.087→.086s，Core ready246.087→214.985/UI记录ready693.685→674.658ms；保留增加值，不宣称优化/统计等效或因果定位。每版3样本且后台/缓存未控制；ready非首帧，RSS共享页可能双计，tray单列。原基准默认Statistics，不是新增标记的Providers满载渲",
+      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮补齐模型目录两类设计标记及行内裁切差异，独立长ID提示、完整视觉/全部皮肤/真实IME/AX读屏、跨平台/HiDPI、物理托盘/窗口位移及最小化、首帧和公网更新成功仍待验。Goal active，HTML继续仅静态检查。"
     ],
     "evidence": [
       {
         "label": "编译",
-        "href": "benchmarks/sidebar-selection-build.json"
+        "href": "benchmarks/model-directory-badges-build.json"
       },
       {
-        "label": "基线缺陷",
-        "href": "benchmarks/sidebar-selection-before-gui.json"
+        "label": "真实交互/配置",
+        "href": "benchmarks/model-directory-badges-gui-validation.json"
       },
       {
-        "label": "真实交互与配置",
-        "href": "benchmarks/sidebar-selection-gui-validation.json"
+        "label": "资源/像素",
+        "href": "benchmarks/model-directory-badges-visual-validation.json"
       },
       {
-        "label": "像素与资源",
-        "href": "benchmarks/sidebar-selection-visual-validation.json"
+        "label": "1440中文",
+        "href": "screenshots/model-directory-badges-1440x900.png"
       },
       {
-        "label": "1440实拍",
-        "href": "screenshots/sidebar-selection-1440x900.png"
+        "label": "1100英文",
+        "href": "screenshots/model-directory-badges-1100x700.png"
       },
       {
-        "label": "1100实拍",
-        "href": "screenshots/sidebar-selection-1100x700.png"
+        "label": "选中态",
+        "href": "screenshots/model-directory-badges-selected-1100x700.png"
       },
       {
-        "label": "四轮性能",
-        "href": "benchmarks/sidebar-selection-performance-summary.json"
+        "label": "六轮性能",
+        "href": "benchmarks/model-directory-badges-performance-summary.json"
       },
       {
         "label": "清理",
-        "href": "benchmarks/sidebar-selection-cleanup.json"
+        "href": "benchmarks/model-directory-badges-cleanup.json"
       }
     ],
-    "commit": "aabb91cc2fdee92da04693ae996875aad24f97d1",
-    "date": "2026-10-30T08:33:42+08:00",
-    "commit_subject": "fix(studio): preserve solid sidebar selection surfaces",
+    "commit": "7b69af0e5da2bae1a352a990b365cacbb6118717",
+    "date": "2026-10-30T08:58:38+08:00",
+    "commit_subject": "fix(studio): complete native model directory badges",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2698,6 +2699,59 @@
       "date": "2026-10-30T08:33:42+08:00",
       "commit_subject": "fix(studio): preserve solid sidebar selection surfaces",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 49,
+      "title": "模型目录数量与配置来源标记",
+      "status": "recorded",
+      "summary": "补齐模型目录数量94×27和逐行“自定义/Custom”65×27原生标记，并修复29px行内的裁切与垂直对齐；保留三列虚拟表格、模型值、选择、编辑/取消和能力语义。证据：编译、真实交互/配置、资源/像素、1440中文、1100英文、选中态、六轮性能、清理。",
+      "highlights": [
+        "补齐模型目录数量94×27和逐行“自定义/Custom”65×27原生标记，并修复29px行内的裁切与垂直对齐；保留三列虚拟表格、模型值、选择、编辑/取消和能力语义。证据：编译、真实交互/配置、资源/像素、1440中文、1100英文、选中态、六轮性能、清理。",
+        "官方MCP重读54:246高保真context/截图：54:249数量标记94×27，54:262等来源标记65×27，圆角9/底色#F3F5FA/11px文字#778196。来源标记对应选中供应商配置模型，源码Draft::from_provider→self.models→Models.rows可追溯；它不表示capabilities是否手动覆盖，不按模型名称猜测、不新增分类API或修改Core数据。首次新基线983c的实拍确实仅有数量文字、无行来源标记，见基线记录。",
+        "只修改model_table.rs和ui/providers.rs：原生Div/Label与既有token，数量区保留响应式紧凑头，标题组min142为数量标记留位；ID文本flex1/min0、右侧固定标记，长ID仍省略并保留既有完整值Tooltip。模型表继续3列/29px行/32px头，原列宽算法、选择/容量约束、28px编辑按钮和事件未改。可见15px编辑SVG与新Figma资源逐字节一致，SHAd19ec85f…；没有引入图片截图资产或改变原资源。"
+      ],
+      "limits": [
+        "新1轮p95.374ms与旧2轮.364ms波动均保留，并补新→旧反向.205/.204ms，未复现持续尖峰。旧→新中位Core12.39→12.42/UI72.41→72.88/合计84.72→85.30MiB，峰值135.98→136.94MiB，p50.172→.173/p95.204→.208ms，大请求.087→.086s，Core ready246.087→214.985/UI记录ready693.685→674.658ms；保留增加值，不宣称优化/统计等效或因果定位。每版3样本且后台/缓存未控制；ready非首帧，RSS共享页可能双计，tray单列。原基准默认Statistics，不是新增标记的Providers满载渲",
+        "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮补齐模型目录两类设计标记及行内裁切差异，独立长ID提示、完整视觉/全部皮肤/真实IME/AX读屏、跨平台/HiDPI、物理托盘/窗口位移及最小化、首帧和公网更新成功仍待验。Goal active，HTML继续仅静态检查。"
+      ],
+      "evidence": [
+        {
+          "label": "编译",
+          "href": "benchmarks/model-directory-badges-build.json"
+        },
+        {
+          "label": "真实交互/配置",
+          "href": "benchmarks/model-directory-badges-gui-validation.json"
+        },
+        {
+          "label": "资源/像素",
+          "href": "benchmarks/model-directory-badges-visual-validation.json"
+        },
+        {
+          "label": "1440中文",
+          "href": "screenshots/model-directory-badges-1440x900.png"
+        },
+        {
+          "label": "1100英文",
+          "href": "screenshots/model-directory-badges-1100x700.png"
+        },
+        {
+          "label": "选中态",
+          "href": "screenshots/model-directory-badges-selected-1100x700.png"
+        },
+        {
+          "label": "六轮性能",
+          "href": "benchmarks/model-directory-badges-performance-summary.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/model-directory-badges-cleanup.json"
+        }
+      ],
+      "commit": "7b69af0e5da2bae1a352a990b365cacbb6118717",
+      "date": "2026-10-30T08:58:38+08:00",
+      "commit_subject": "fix(studio): complete native model directory badges",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -3023,6 +3077,14 @@
     {
       "date": "2026-10-30T08:33:56+08:00",
       "note": "40部分验收/0最终；仅修选中普通状态填充，busy/精确hover/IME/AX及跨平台仍待专项。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T08:59:38+08:00",
+      "note": "40部分验收/0最终；长ID提示、高密度标记网格、真实IME/AX与跨平台仍待专项。已收到只读输入源名称/ID授权，后续按窄范围验证。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
