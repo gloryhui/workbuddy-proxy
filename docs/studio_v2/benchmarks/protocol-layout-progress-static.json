@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-31T05:08:04.155130+08:00",
+  "recorded_tasks": 62,
+  "remaining_final": 40,
+  "visual_review": {
+    "not_reviewed": 31,
+    "reviewing": 0,
+    "reviewed_with_differences": 9,
+    "reviewed": 0
+  },
+  "current_task": 63,
+  "current_status": "planned",
+  "html_json_equal": true,
+  "frames_unique": 40,
+  "relative_links_exist": 406,
+  "javascript_node_check_exit": 0,
+  "diff_check_exit": 0,
+  "html_sha256": "f18957c6cb4e21ab7cb07463045a092fd1d4ed854e3c21842b328cac989f8319",
+  "json_sha256": "9fcacc93725abee1982eab5f07c4791ac3356b067aad6bfda819a1e708d55677",
+  "browser_render": "Not retested; historical local-file browser limitation remains. Static checks are not rendered/interactive validation."
+}
