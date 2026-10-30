@@ -204,10 +204,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-31T00:09:57+08:00",
+  "updated_at": "2026-10-31T02:38:04+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "87570e27eb8e10969ab3cc658448fff9d155600b",
+  "code_head": "ca2f651f70347083554d93e5381751cec5f88ad6",
   "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
   "goal_status": "active",
   "counts": {
@@ -217,7 +217,7 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 58,
+  "recorded_tasks": 59,
   "remaining_final": 40,
   "visual_review": {
     "counts": {
@@ -230,62 +230,62 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 59,
-    "title": "供应商连接状态绑定真实测试结果",
-    "status": "developing",
-    "description": "已追踪现有Test先保存再测试的调用链及Core TestReport；下一项仅在GPUI把反馈绑定到被测供应商和配置，处理编辑、切换与失败后的陈旧成功状态，保留原事件/Core协议和持久化行为。当前尚未实现独立连接徽章；后续补两尺寸真实交互和原负载验证。已有58条已提交施工记录，40个界面仍部分验收、最终剩余40。"
+    "id": 60,
+    "title": "供应商输入框与按钮状态设计差异",
+    "status": "planned",
+    "description": "下一项先核对官方输入/按钮的默认、hover、focus、disabled角色及现有原生控件约束，再按真实交互和两尺寸证据收敛差异；本项尚未实施。完整40帧范围保持，最终剩余40。"
   },
   "latest_task": {
-    "id": 58,
-    "title": "供应商页面几何、模型列布局与共享标题修正",
+    "id": 59,
+    "title": "供应商连接测试徽章、结果绑定与自然刷新",
     "status": "recorded",
-    "summary": "重新读取官方54:2完整高保真上下文和1440×900原始导出，仅修改六个Rust/GPUI布局文件。供应商标题28/41、96px布局流与统计27/39、97px布局流分别处理，副标题锚点保持；宽窗摘要166/44、连接222/338、模型572/253、运行222/279、日志516/309及755/348双列对齐。模型初始宽度估算补齐卡片/表体边框，Studio列为263/375/75，旧皮肤保留等列/64操作列；表体虚拟化、原2",
+    "summary": "按官方54:220实现92×27、圆角9、11/16文字的连接徽章，宽窗[928,237,92,27]，连接标题及下方布局不移位。设计核对与几何测量保留参考原图、背景#e9f8f1及文本左缘对齐；上缘AA仍差1px，准确字体版本/整帧一致性未证明。未测试/测试中/成功/失败/未完成均有独立状态与说明，使用既有原生Tooltip和Status语义；Testing由CUA观察，没有独立Testing PNG，误命名的私有Passed图不作为",
     "highlights": [
-      "重新读取官方54:2完整高保真上下文和1440×900原始导出，仅修改六个Rust/GPUI布局文件。供应商标题28/41、96px布局流与统计27/39、97px布局流分别处理，副标题锚点保持；宽窗摘要166/44、连接222/338、模型572/253、运行222/279、日志516/309及755/348双列对齐。模型初始宽度估算补齐卡片/表体边框，Studio列为263/375/75，旧皮肤保留等列/64操作列；表体虚拟化、原28px编辑热区、选择/分页/取消/保存与既有事件保持。设计资产核对中25份字节一致、2份仅局部clipPath ID及引用重命名、3装饰窗口按钮使用真实系统控件；未改Core、协议、配置格式、依赖或锁文件。",
-      "冻结构建：最终ec7e3f78466cfb079086decf219a82990f87bab3a0a410577018fbb39fea528f、42,376,512bytes，六源码SHA全部匹配。fmt、195项测试（193通过/2既有忽略）、strict all-targets clippy、Intel类型检查和arm64 release均成功；Intel类型检查不等于硬件实跑。10a中间候选构建、两张图和原验证单独归档，不混为最终版结论。",
-      "最终真实交互与独立数据读回：UI35756/Core35249完成四模型宽窗、单模型帮助区、小窗内滚、首模型编辑Esc取消、编辑资料中删草稿4→3后Cancel恢复4、端口Cancel、协议Esc、Mock获取5模型后取消、Add取消、英文→中文和Mono→Studio回归。选中才显示原Remove动作；空选择原先不可用的删除按钮不占默认标题空间。1440原图、1100原图及报告所列最终10张、容量2张、10a中间2张共14张逐字节复制原PNG；实际1440×901/1100×701保留系统额外1物理行，不裁剪、缩放或重绘，不查询外部AX/窗口bounds。"
+      "按官方54:220实现92×27、圆角9、11/16文字的连接徽章，宽窗[928,237,92,27]，连接标题及下方布局不移位。设计核对与几何测量保留参考原图、背景#e9f8f1及文本左缘对齐；上缘AA仍差1px，准确字体版本/整帧一致性未证明。未测试/测试中/成功/失败/未完成均有独立状态与说明，使用既有原生Tooltip和Status语义；Testing由CUA观察，没有独立Testing PNG，误命名的私有Passed图不作为Testing证据。",
+      "徽章仅记录当前窗口内显式Test的单模型/被测配置结果，不将本地Core运行当作上游健康。实际Test payload的provider_id与TestReport的模型/协议/端点/思考设置及确认保存配置共同绑定；同名供应商不会串结果，修改立即隐藏旧结果，取消恢复相同配置可恢复历史记录，失败替换旧成功，Save校验失败为未完成。复制时以实际新ID重绑定，并按原Save规则继承留空Key、混合思考强度和模型能力。结果不落盘，重开回到未测试；Core控制连接失效清除历史结果，恢复不自动测试。只改六个Rust/GPUI文件，未改Core、协议实现、依赖/锁文件、配置格式或既有先保存再Test调用顺序；没有新增健康轮询。",
+      "冻结构建：最终53f7b2260ee5a7d2d917e1fa4f00513ddbf641c87fe745fd7deb5bea0a21e0a4、42,426,128bytes，相对ec7e增加49,616bytes。fmt、206测试（204通过/2既有忽略）、strict all-targets clippy、Intel类型检查及arm64 release均0；含11项结果身份/配置/生命周期测试。复制回归红灯记录修复前预期失败101，绿灯及最终门禁确认通过。Intel类型检查不是Intel硬件实机通过。"
     ],
     "limits": [
-      "几何与墨迹测量仅在内存ICC转sRGB：五块目标矩形直边颜色与边界已核对；摘要名称、连接/模型/运行标题、模型表头名称墨迹框对齐，首行编辑图标从x953移到设计x979，保持原点击事件。最终概览/明细共享标题均[290,63,394,88]，修复UI57低1px。协议链接仍向右1px，供应商标题底缘/日志标题及字体AA、原生表头边框、输入颜色/hover/focus、URL动态说明与日志额外业务动作仍有差异；精确Figma字体版本和全帧全部状态尚未证明一致。",
-      "供应商54:2完成本轮整帧首审并保留明确差异：首审35未开始/0审查中/5已审查保留差异，40帧仍部分验收、0最终通过，剩余40。真实连接TestReport来源已找到，独立按供应商/被测配置绑定的“连接正常”徽章留到UI59；不以本地Core健康冒充上游健康。输入样式、全部状态、完整键盘/IME/AX、Windows/Intel硬件及HiDPI终验仍待续，Goal active。"
+      "3db2复制与原供应商交互：复制清空URL后一次Test仅发生原客户端Save校验失败、徽章未完成，该截图之前Core Test为0，随后取消。再次复制清空Key，一次Test成功创建实际新ID和四条新route，保留源凭据、high/low/default/max思考设置及8192输出能力；原2供应商字段保留，最终3供应商9模型。原A另各Test一次200与503；切回复制供应商保留其自己的成功，不受A失败影响。Runtime区域仍显示既有全局最新动作错误，不把它解释为复制供应商失败。独立读回只记录凭据继承布尔值，不输出Key。",
+      "40帧仍部分验收、0最终通过，剩余40；首审35未开始/0审查中/5已审查保留差异。UI59完成本连接徽章专项，不代表供应商整帧最终通过；输入/按钮/hover/focus/disabled、边框/文字AA、完整键盘/IME/AX、其他35帧首审与平台终验继续，Goal active。下一项UI60推进供应商输入与按钮状态差异。"
     ],
     "evidence": [
       {
-        "label": "设计资产核对",
-        "href": "benchmarks/provider-layout-assets.json"
+        "label": "设计核对",
+        "href": "benchmarks/provider-connection-design-audit.json"
+      },
+      {
+        "label": "几何测量",
+        "href": "benchmarks/provider-connection-badge-geometry.json"
       },
       {
         "label": "冻结构建",
-        "href": "benchmarks/provider-layout-build.json"
+        "href": "benchmarks/provider-connection-build.json"
       },
       {
-        "label": "最终真实交互与独立数据读回",
-        "href": "benchmarks/provider-layout-gui-validation.json"
+        "label": "复制回归红灯",
+        "href": "benchmarks/provider-connection-copy-seed-regression-red.json"
       },
       {
-        "label": "1440原图",
-        "href": "screenshots/provider-layout-provider-wide.png"
+        "label": "绿灯",
+        "href": "benchmarks/provider-connection-copy-seed-regression-green.json"
       },
       {
-        "label": "1100原图",
-        "href": "screenshots/provider-layout-provider-small.png"
+        "label": "eec3交互记录",
+        "href": "benchmarks/provider-connection-intermediate-eec3-gui-validation.json"
       },
       {
-        "label": "几何与墨迹测量",
-        "href": "benchmarks/provider-layout-geometry.json"
+        "label": "源码差异范围",
+        "href": "benchmarks/provider-connection-source-scope.json"
       },
       {
-        "label": "四轮原负载对照",
-        "href": "benchmarks/provider-layout-performance-summary.json"
-      },
-      {
-        "label": "供应商空闲观察",
-        "href": "benchmarks/provider-layout-idle-resources.json"
+        "label": "3db2复制与原供应商交互",
+        "href": "benchmarks/provider-connection-copy-gui-validation.json"
       }
     ],
-    "commit": "87570e27eb8e10969ab3cc658448fff9d155600b",
-    "date": "2026-10-31T00:06:15+08:00",
-    "commit_subject": "fix(studio): align provider panels and preserve model interactions",
+    "commit": "ca2f651f70347083554d93e5381751cec5f88ad6",
+    "date": "2026-10-31T02:37:47+08:00",
+    "commit_subject": "feat(gpui): bind provider connection badges to explicit test results",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -345,26 +345,26 @@
       "node": "54:2",
       "title": "02 / STUDIO V2 · 供应商管理",
       "source": "ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs",
-      "detail": "部分：UI58官方30资产/整帧首审留差异，五主要区域几何和Studio模型列宽对齐；两尺寸/单模型/256末行/编辑取消/200SSE与503/原字段保留/四轮负载已验。独立连接徽章、输入状态颜色/边框/AA及完整无障碍/跨平台待续",
+      "detail": "部分：UI58官方30资产/整帧首审留差异，五主要区域几何和Studio模型列宽对齐；两尺寸/单模型/256末行/编辑取消/200SSE与503/原字段保留/四轮负载已验。UI59连接徽章已完成身份/配置绑定、复制继承、两尺寸/故障恢复与原负载；输入状态颜色/边框/AA及完整无障碍/跨平台待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=54-2",
       "visual_review": {
         "id": "54:2",
         "name": "02 / STUDIO V2 · 供应商管理",
         "review_status": "reviewed_with_differences",
-        "scope": "UI58重新读取完整官方54:2、30资产及原始导出，最终ec7e两尺寸/默认与单模型/256容量/真实Test成功和失败及原负载对照完成；整帧保留明确差异，未最终通过。",
+        "scope": "UI58重新读取完整官方54:2、30资产及原始导出，最终ec7e两尺寸/默认与单模型/256容量/真实Test成功和失败及原负载对照完成；整帧保留明确差异，未最终通过。 UI59连接徽章专项完成，最终53f重开/两尺寸/自然故障刷新留证；整帧仍保留差异。",
         "checks": {
           "layout": "最终ec7e原始1x宽窗的摘要[288,166,1120,44]、连接[288,222,755,338]、模型[288,572,755,253]、运行[1060,222,348,279]、日志[1060,516,348,309]四直边已核对；原4模型/底栏完整，小窗中心/右栏/表体各自可滚。错误提示允许卡片增高，不硬裁掉真实状态。",
           "colors": "原图按ICC在内存转sRGB，主要背景/边框已采样；caret沿用同原SVG/#8C96AA。输入底色/文字、按钮及全部hover/focus/disabled、全帧颜色仍有差异，未完整通过。",
           "typography": "Provider28/41与96px流区别于统计27/39与97px。原Noto Sans SC/Inter按连接/摘要/模型/运行角色使用；若干标题/表头墨迹框和首行编辑图标已对齐，供应商标题下缘/日志/AA和精确字体版本仍不同或未证明。",
           "assets": "30个官方原资产：25本地字节一致，2完整XML仅本地clipPath ID及引用重命名，3装饰trafficlights使用真实OS系统控件。首行编辑墨迹[979,669,991,681]对齐，原28px热区/处理器保留；其余状态槽位尚未全验。",
-          "states": "默认2供应商5模型与单模型帮助区；实际草稿删4→3后Cancel恢复4。最终Test各一次200/SSE与503，独立SQLite确认14relay200+1test200+1test503。容量2供应商256模型、A255/B1、Add点击无效。连接徽章未实现，不用CoreState冒充真实上游连接。",
+          "states": "默认2供应商5模型与单模型帮助区；实际草稿删4→3后Cancel恢复4。最终Test各一次200/SSE与503，独立SQLite确认14relay200+1test200+1test503。容量2供应商256模型、A255/B1、Add点击无效。UI58当时未实现徽章；当前见UI59记录。 UI59按实际TestReport绑定供应商/配置，五状态、编辑取消/失败替换、复制继承、新ID、重开清空及Core控制故障恢复已分版本实测。",
           "interaction": "模型/端口/协议/获取5候选/新增取消、中英恢复、Mono→Studio、选中显示Remove、宽窄滚动已验。256容量End到fill-250并编辑核ID后Esc，未Save/Test/Sync/删除。主夹具Test原先保存再测试语义保持、所有原字段递归一致；序列化新增默认值导致字节SHA不同。完整键盘/IME/AX未验。",
           "native_1440": "最终ec7e原始1440×901/目标1440×900/native1x，默认四行/底栏/运行/日志、Test200及503、256满载分别留原图；没有裁掉原生额外1行。",
           "native_1100": "最终ec7e原始1100×701/目标1100×700/native1x，默认/中心滚动/单模型/英文/失败/256末行和底栏均有原图。失败需右栏外滚和日志内滚，Runtime标题/错误/完整日志不可同时显示。"
         },
         "differences": [
-          "独立连接正常徽章尚未实现；现有Core diagnostic TestReport与真实成功/失败路径已定位，UI59需绑定被测供应商和配置、编辑/失败防陈旧成功。",
+          "UI59已实现92×27独立连接徽章，原生字形上缘AA仍差1px；仅为显式单模型/被测配置历史结果，非持续上游健康。最终53f重开/故障自然刷新已验，普通编辑/语言路径为明确标注的eec3证据。",
           "供应商标题墨迹下缘/日志标题与AA、协议链接右1px、原生表头边框和输入颜色/按钮状态仍有差异；准确Figma字体版本/全角色尚未证明一致。",
           "保留真实URL动态说明、原有日志复制清空、手动模型元数据/额外业务按钮与实际计数；不写死参考的端口、名称、请求0或上游连接正常。",
           "小窗默认下部内容通过中心内滚取回；错误态右栏可滚且日志保留内滚，不能把截图当作完整键盘/IME/AX或全状态通过。",
@@ -390,7 +390,15 @@
           "screenshots/provider-layout-provider-test-failure-wide.png",
           "screenshots/provider-layout-provider-test-failure-small.png",
           "screenshots/provider-layout-capacity-provider-capacity-wide.png",
-          "screenshots/provider-layout-capacity-provider-capacity-small.png"
+          "screenshots/provider-layout-capacity-provider-capacity-small.png",
+          "benchmarks/provider-connection-build.json",
+          "benchmarks/provider-connection-design-audit.json",
+          "benchmarks/provider-connection-source-scope.json",
+          "benchmarks/provider-connection-copy-reopened-final-gui-validation.json",
+          "benchmarks/provider-connection-copy-final-independent-proof.json",
+          "benchmarks/provider-connection-performance-summary.json",
+          "screenshots/provider-connection-copy-final-copy-passed-wide.png",
+          "screenshots/provider-connection-copy-final-copy-passed-small.png"
         ]
       }
     },
@@ -1486,7 +1494,7 @@
     },
     {
       "title": "供应商管理",
-      "implemented": "搜索、0/1/2/20/64列表、新增/复制/编辑/删除、草稿恢复与保存主要路径已验；UI58补齐两尺寸主区域、256模型末行及Test200/SSE与503。",
+      "implemented": "搜索、0/1/2/20/64列表、新增/复制/编辑/删除、草稿恢复与保存主要路径已验；UI58补齐两尺寸主区域、256模型末行及Test200/SSE与503；UI59完成按供应商/配置绑定的连接徽章、复制继承及故障恢复。",
       "pending": "完整视觉、全部busy/异常状态、无障碍和跨平台待验。",
       "tasks": [
         4,
@@ -1495,7 +1503,8 @@
         27,
         29,
         33,
-        58
+        58,
+        59
       ]
     },
     {
@@ -4184,6 +4193,59 @@
       "date": "2026-10-31T00:06:15+08:00",
       "commit_subject": "fix(studio): align provider panels and preserve model interactions",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 59,
+      "title": "供应商连接测试徽章、结果绑定与自然刷新",
+      "status": "recorded",
+      "summary": "按官方54:220实现92×27、圆角9、11/16文字的连接徽章，宽窗[928,237,92,27]，连接标题及下方布局不移位。设计核对与几何测量保留参考原图、背景#e9f8f1及文本左缘对齐；上缘AA仍差1px，准确字体版本/整帧一致性未证明。未测试/测试中/成功/失败/未完成均有独立状态与说明，使用既有原生Tooltip和Status语义；Testing由CUA观察，没有独立Testing PNG，误命名的私有Passed图不作为",
+      "highlights": [
+        "按官方54:220实现92×27、圆角9、11/16文字的连接徽章，宽窗[928,237,92,27]，连接标题及下方布局不移位。设计核对与几何测量保留参考原图、背景#e9f8f1及文本左缘对齐；上缘AA仍差1px，准确字体版本/整帧一致性未证明。未测试/测试中/成功/失败/未完成均有独立状态与说明，使用既有原生Tooltip和Status语义；Testing由CUA观察，没有独立Testing PNG，误命名的私有Passed图不作为Testing证据。",
+        "徽章仅记录当前窗口内显式Test的单模型/被测配置结果，不将本地Core运行当作上游健康。实际Test payload的provider_id与TestReport的模型/协议/端点/思考设置及确认保存配置共同绑定；同名供应商不会串结果，修改立即隐藏旧结果，取消恢复相同配置可恢复历史记录，失败替换旧成功，Save校验失败为未完成。复制时以实际新ID重绑定，并按原Save规则继承留空Key、混合思考强度和模型能力。结果不落盘，重开回到未测试；Core控制连接失效清除历史结果，恢复不自动测试。只改六个Rust/GPUI文件，未改Core、协议实现、依赖/锁文件、配置格式或既有先保存再Test调用顺序；没有新增健康轮询。",
+        "冻结构建：最终53f7b2260ee5a7d2d917e1fa4f00513ddbf641c87fe745fd7deb5bea0a21e0a4、42,426,128bytes，相对ec7e增加49,616bytes。fmt、206测试（204通过/2既有忽略）、strict all-targets clippy、Intel类型检查及arm64 release均0；含11项结果身份/配置/生命周期测试。复制回归红灯记录修复前预期失败101，绿灯及最终门禁确认通过。Intel类型检查不是Intel硬件实机通过。"
+      ],
+      "limits": [
+        "3db2复制与原供应商交互：复制清空URL后一次Test仅发生原客户端Save校验失败、徽章未完成，该截图之前Core Test为0，随后取消。再次复制清空Key，一次Test成功创建实际新ID和四条新route，保留源凭据、high/low/default/max思考设置及8192输出能力；原2供应商字段保留，最终3供应商9模型。原A另各Test一次200与503；切回复制供应商保留其自己的成功，不受A失败影响。Runtime区域仍显示既有全局最新动作错误，不把它解释为复制供应商失败。独立读回只记录凭据继承布尔值，不输出Key。",
+        "40帧仍部分验收、0最终通过，剩余40；首审35未开始/0审查中/5已审查保留差异。UI59完成本连接徽章专项，不代表供应商整帧最终通过；输入/按钮/hover/focus/disabled、边框/文字AA、完整键盘/IME/AX、其他35帧首审与平台终验继续，Goal active。下一项UI60推进供应商输入与按钮状态差异。"
+      ],
+      "evidence": [
+        {
+          "label": "设计核对",
+          "href": "benchmarks/provider-connection-design-audit.json"
+        },
+        {
+          "label": "几何测量",
+          "href": "benchmarks/provider-connection-badge-geometry.json"
+        },
+        {
+          "label": "冻结构建",
+          "href": "benchmarks/provider-connection-build.json"
+        },
+        {
+          "label": "复制回归红灯",
+          "href": "benchmarks/provider-connection-copy-seed-regression-red.json"
+        },
+        {
+          "label": "绿灯",
+          "href": "benchmarks/provider-connection-copy-seed-regression-green.json"
+        },
+        {
+          "label": "eec3交互记录",
+          "href": "benchmarks/provider-connection-intermediate-eec3-gui-validation.json"
+        },
+        {
+          "label": "源码差异范围",
+          "href": "benchmarks/provider-connection-source-scope.json"
+        },
+        {
+          "label": "3db2复制与原供应商交互",
+          "href": "benchmarks/provider-connection-copy-gui-validation.json"
+        }
+      ],
+      "commit": "ca2f651f70347083554d93e5381751cec5f88ad6",
+      "date": "2026-10-31T02:37:47+08:00",
+      "commit_subject": "feat(gpui): bind provider connection badges to explicit test results",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -4850,6 +4912,51 @@
     {
       "date": "2026-10-31T00:09:57+08:00",
       "note": "进入UI59连接状态绑定；现有CoreState只表示本地核心响应，不能代替上游连接测试结果。Goal继续active。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 0,
+        "reviewed_with_differences": 5,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T00:40:45+08:00",
+      "note": "UI59代码及五编译门禁完成，转入实机验证；按用户询问明确当前尚非最终验收，剩余40帧。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 0,
+        "reviewed_with_differences": 5,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T02:38:03+08:00",
+      "note": "UI59代码与证据已提交：连接徽章专项完成，未升级供应商整帧最终验收。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 0,
+        "reviewed_with_differences": 5,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T02:38:04+08:00",
+      "note": "UI59完成后排入UI60；继续分项开发与验收，尚未进入全局最终验收。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
