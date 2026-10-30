@@ -1,13 +1,13 @@
 {
-  "checked_at": "2026-10-30T21:32:02.747521+08:00",
+  "checked_at": "2026-10-30T22:20:50.973077+08:00",
   "functional_module_count": 7,
-  "functional_task_links_checked": 40,
+  "functional_task_links_checked": 41,
   "embedded_json_matches": true,
   "remaining_final": 40,
   "frame_count": 40,
-  "recorded_tasks": 56,
+  "recorded_tasks": 57,
   "unique_html_ids": 42,
-  "local_references_checked": 430,
+  "local_references_checked": 462,
   "base_style_exact_bytes": 17102,
   "inline_javascript_syntax_passed": [
     0,
