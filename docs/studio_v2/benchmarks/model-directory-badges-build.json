@@ -1,0 +1,99 @@
+{
+  "feature": "UI-49 native model directory count and custom origin badges",
+  "base_commit": "e4324aeeba390cd48a2d603b9ebbafeb3272e4f8",
+  "source_changed": true,
+  "ui_sha256": "b92130b75949f4445507663cc6d7b285028044149226cd893493af15e32b0b0b",
+  "ui_bytes": 15246768,
+  "baseline_ui_sha256": "983c1eea4d056d2d7c6a8c071e03e61e1d8d1c6e1a3568c2841c670d4f15b179",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.517
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 4.359
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 2.003
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 1.724
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 39.372
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/model_table.rs": "2fe4f1476d4a595bc55beeed1112ed4cbf078ba2e0a7eb5a6fb12687632c8364",
+    "gpui/src/ui/providers.rs": "4ad235129017a986ba168ca890d6bfc68c76c54e0ab0460e5fa799174a244662",
+    "gpui/src/state.rs": "e892d9db509ff5dfb152600cd13b1231375b8106d5c3edb87691d0869ac0ebff"
+  },
+  "scope": "Two GPUI layout files add native count94x27 and provider-origin Custom65x27 badges. Capability automatic/manual settings remain separate and unchanged; explicit zero vertical column padding and centered full-height cells keep badges inside29px rows, including selected borders. No substring/inserted data newlines/timer/global toolkit patch or core/config/API/dependency change.",
+  "design": {
+    "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "page": "51:2",
+    "component_nodes": [
+      "54:246",
+      "54:249",
+      "54:262"
+    ],
+    "context_and_screenshot_read": true,
+    "model_edit_asset_unchanged": true
+  },
+  "limitations": [
+    "Compilation is not visual acceptance; final b921 native badge geometry and clipping checks are recorded separately from the intermediate ff2 candidate.",
+    "Intel only typecheck,block0.1.6 future incompatibility remains.",
+    "Windows resource compilation and caption overlap fromUI43 remain unresolved."
+  ]
+}

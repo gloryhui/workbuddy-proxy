@@ -1,0 +1,163 @@
+{
+  "feature": "UI-49 original benchmark before/after",
+  "checked_at": "2026-10-30T08:56:19.111677+08:00",
+  "sequence": [
+    "previous",
+    "current",
+    "previous-run2",
+    "current-run2",
+    "current-run3",
+    "previous-run3"
+  ],
+  "runs": {
+    "previous": {
+      "core_idle_rss_mib": 12.31,
+      "ui_idle_rss_mib": 72.41,
+      "idle_rss_mib": 84.72,
+      "sampled_peak_rss_mib": 135.98,
+      "core_ready_ms": 426.42,
+      "ui_record_ready_ms": 1011.912,
+      "large_seconds": 0.087,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.197
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "current": {
+      "core_idle_rss_mib": 14.61,
+      "ui_idle_rss_mib": 72.41,
+      "idle_rss_mib": 87.02,
+      "sampled_peak_rss_mib": 138.77,
+      "core_ready_ms": 263.593,
+      "ui_record_ready_ms": 880.659,
+      "large_seconds": 0.095,
+      "proxied_loopback_ms": {
+        "p50": 0.192,
+        "p95": 0.374
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "previous-run2": {
+      "core_idle_rss_mib": 13.08,
+      "ui_idle_rss_mib": 73.22,
+      "idle_rss_mib": 86.3,
+      "sampled_peak_rss_mib": 137.31,
+      "core_ready_ms": 206.925,
+      "ui_record_ready_ms": 693.685,
+      "large_seconds": 0.097,
+      "proxied_loopback_ms": {
+        "p50": 0.199,
+        "p95": 0.364
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "current-run2": {
+      "core_idle_rss_mib": 12.42,
+      "ui_idle_rss_mib": 72.88,
+      "idle_rss_mib": 85.3,
+      "sampled_peak_rss_mib": 132.89,
+      "core_ready_ms": 214.985,
+      "ui_record_ready_ms": 656.256,
+      "large_seconds": 0.086,
+      "proxied_loopback_ms": {
+        "p50": 0.173,
+        "p95": 0.208
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "current-run3": {
+      "core_idle_rss_mib": 11.91,
+      "ui_idle_rss_mib": 73.06,
+      "idle_rss_mib": 84.97,
+      "sampled_peak_rss_mib": 136.94,
+      "core_ready_ms": 208.656,
+      "ui_record_ready_ms": 674.658,
+      "large_seconds": 0.085,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.205
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    },
+    "previous-run3": {
+      "core_idle_rss_mib": 12.39,
+      "ui_idle_rss_mib": 72.02,
+      "idle_rss_mib": 84.41,
+      "sampled_peak_rss_mib": 133.02,
+      "core_ready_ms": 246.087,
+      "ui_record_ready_ms": 680.844,
+      "large_seconds": 0.087,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.204
+      },
+      "owned_child_exit_codes": [
+        -15,
+        -15,
+        0,
+        0
+      ]
+    }
+  },
+  "medians": {
+    "previous": {
+      "core_idle_rss_mib": 12.39,
+      "ui_idle_rss_mib": 72.41,
+      "idle_rss_mib": 84.72,
+      "sampled_peak_rss_mib": 135.98,
+      "core_ready_ms": 246.087,
+      "ui_record_ready_ms": 693.685,
+      "large_seconds": 0.087,
+      "proxy_p50_ms": 0.172,
+      "proxy_p95_ms": 0.204
+    },
+    "current": {
+      "core_idle_rss_mib": 12.42,
+      "ui_idle_rss_mib": 72.88,
+      "idle_rss_mib": 85.3,
+      "sampled_peak_rss_mib": 136.94,
+      "core_ready_ms": 214.985,
+      "ui_record_ready_ms": 674.658,
+      "large_seconds": 0.086,
+      "proxy_p50_ms": 0.173,
+      "proxy_p95_ms": 0.208
+    }
+  },
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "actual_ui_scene": "Benchmark default Statistics page; separate current Providers badge30s sample are in model-directory-badges-gui-validation.json",
+  "workload": "Original unchanged script: nativeGUI, same25f Core, Studio preference readback,64 models,1000 small requests and80x1MiB/concurrency4. Private wrapper protects Core, attests kernel protection and defers session temp deletion for full preflight.",
+  "conclusion": "Initial current p95.374ms and second previous p95.364ms prompted reverse-order confirmation; current-run3.205ms/previous-run3.204ms. Original spikes remain recorded; no sustained spike tied to current UI reproduced. Three short samples per version do not establish optimization or statistical equivalence.",
+  "limits": [
+    "Only3 samples per version; host background activity and cold/warm cache variation not controlled.",
+    "RSS sum may doublecount shared pages; tray separately reported in raw runs.",
+    "UI record ready is not first paint/interactive time.",
+    "No Windows/Intel runtime, GPU timing, long-duration leak or real vendor measurement."
+  ],
+  "all_recorded_core_ui_pids_independently_gone": true
+}

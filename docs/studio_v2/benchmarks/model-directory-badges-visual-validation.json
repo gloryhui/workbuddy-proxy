@@ -1,0 +1,260 @@
+{
+  "feature": "UI-49 native model count and provider-origin Custom badges",
+  "figma_file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "nodes": [
+    "54:246",
+    "54:249",
+    "54:262"
+  ],
+  "context_screenshot_read": true,
+  "source_definition": "Rows come from selected configured provider models via Draft::from_provider, independent from automatic/manual capability mode; no added classification API.",
+  "design_asset": {
+    "node": "54:264",
+    "file": "model-edit.svg",
+    "sha256": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68",
+    "root_px": 15,
+    "byte_identical": true
+  },
+  "intermediate_pixels": {
+    "count": {
+      "bounds_local_px": [
+        459,
+        594,
+        553,
+        621
+      ],
+      "size_px": [
+        94,
+        27
+      ]
+    },
+    "row0": {
+      "bounds_local_px": [
+        887,
+        671,
+        952,
+        695
+      ],
+      "size_px": [
+        65,
+        24
+      ]
+    },
+    "row1": {
+      "bounds_local_px": [
+        887,
+        700,
+        952,
+        724
+      ],
+      "size_px": [
+        65,
+        24
+      ]
+    },
+    "row2": {
+      "bounds_local_px": [
+        887,
+        729,
+        952,
+        753
+      ],
+      "size_px": [
+        65,
+        24
+      ]
+    }
+  },
+  "final_normal_pixels": {
+    "count": {
+      "bounds_local_px": [
+        459,
+        594,
+        553,
+        621
+      ],
+      "size_px": [
+        94,
+        27
+      ]
+    },
+    "row0": {
+      "bounds_local_px": [
+        887,
+        667,
+        952,
+        694
+      ],
+      "size_px": [
+        65,
+        27
+      ]
+    },
+    "row1": {
+      "bounds_local_px": [
+        887,
+        696,
+        952,
+        723
+      ],
+      "size_px": [
+        65,
+        27
+      ]
+    },
+    "row2": {
+      "bounds_local_px": [
+        887,
+        725,
+        952,
+        752
+      ],
+      "size_px": [
+        65,
+        27
+      ]
+    }
+  },
+  "selected_pixels": {
+    "count": {
+      "bounds_local_px": [
+        471,
+        314,
+        565,
+        341
+      ],
+      "size_px": [
+        94,
+        27
+      ]
+    },
+    "selected_row0": {
+      "bounds_local_px": [
+        591,
+        427,
+        664,
+        454
+      ],
+      "size_px": [
+        73,
+        27
+      ],
+      "scope": "Selected surface and badge share this RGB, so ROI cannot isolate badge width; actual inner band height27 is visible between selection borders. Badge width65 separately verified in unselected wide image and unchanged source."
+    }
+  },
+  "images": [
+    {
+      "case": "baseline-ui49",
+      "raw_file": "model-baseline-1440-raw.png",
+      "raw_sha256": "6e5c71df24874863e7bfcc16e627dcb8e6e35847ad60f3a60bf05f0c8e9a5889",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "committed_image": "screenshots/model-directory-badges-before-1440x900.png",
+      "committed_sha256": "a00faa996f694b33a8c2aee882f8be836dd797451c436befe17b0e18665205ea",
+      "committed_px": [
+        1440,
+        900
+      ],
+      "parent_viewed_raw": true,
+      "processing": "Pixel-exact bottom1 row crop preserving ICC; no scaling, sips or repaint",
+      "crop_rgba_identity_verified": true
+    },
+    {
+      "case": "fixed-ui49",
+      "raw_file": "model-1440-raw.png",
+      "raw_sha256": "0919c21aeb33808abe6febdf9fe26edf8f3de6102f16e44a820c96a995ce6003",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "committed_image": "screenshots/model-directory-badges-intermediate-1440x900.png",
+      "committed_sha256": "2d942dc3a7d04f4dbb118af09af5a423531d98c79cf3d591929114fff90f370e",
+      "committed_px": [
+        1440,
+        900
+      ],
+      "parent_viewed_raw": true,
+      "processing": "Pixel-exact bottom1 row crop preserving ICC; no scaling, sips or repaint",
+      "crop_rgba_identity_verified": true
+    },
+    {
+      "case": "fixed2-ui49",
+      "raw_file": "model-1440-raw.png",
+      "raw_sha256": "581e2a1764b91e5892281dea9a958a58b0ed7569626e2050ba27f2c40cbca1d7",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "committed_image": "screenshots/model-directory-badges-1440x900.png",
+      "committed_sha256": "d14750205270e1834c13bfd94a3101b710a036c62eeff187e060f7c7cf5c3c79",
+      "committed_px": [
+        1440,
+        900
+      ],
+      "parent_viewed_raw": true,
+      "processing": "Pixel-exact bottom1 row crop preserving ICC; no scaling, sips or repaint",
+      "crop_rgba_identity_verified": true
+    },
+    {
+      "case": "fixed2-ui49",
+      "raw_file": "model-1100-raw.png",
+      "raw_sha256": "85f67112872649d911cec79ef539d12eb47fb9ebbd43f188bbc4f82b5f54f4b1",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/model-directory-badges-1100x700.png",
+      "committed_sha256": "759701ec7eea4362dd09fd08c168a3231e4c5243be28e24e291368a322f9db0f",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "parent_viewed_raw": true,
+      "processing": "Pixel-exact bottom1 row crop preserving ICC; no scaling, sips or repaint",
+      "crop_rgba_identity_verified": true
+    },
+    {
+      "case": "fixed2-ui49",
+      "raw_file": "model-1100-selected-raw.png",
+      "raw_sha256": "76dcc801fdaa708107e0868da51e3f3e55eaa43ec2baffda1306f522046d2623",
+      "raw_px": [
+        1100,
+        701
+      ],
+      "committed_image": "screenshots/model-directory-badges-selected-1100x700.png",
+      "committed_sha256": "4b7b75ff3631c1852554c800e161a2ae89f4509cf6f08bbde52c7c7c7367b1b6",
+      "committed_px": [
+        1100,
+        700
+      ],
+      "parent_viewed_raw": true,
+      "processing": "Pixel-exact bottom1 row crop preserving ICC; no scaling, sips or repaint",
+      "crop_rgba_identity_verified": true
+    }
+  ],
+  "geometry": {
+    "count": [
+      94,
+      27
+    ],
+    "origin": [
+      65,
+      27
+    ],
+    "row_height": 29,
+    "header_height": 32,
+    "columns": 3,
+    "edit_button": 28,
+    "edit_svg_root": 15
+  },
+  "layout": "Final explicit zero vertical column padding and full-height centered cells/header keep both27px chip and selected row border inside fixed29px native row; native virtualization and callbacks retained.",
+  "limits": [
+    "Selected background matches chip RGB, so selected width not independently isolated by RGB; width65 measured in unselected wide image, selected interior band27 and label visible.",
+    "Selected small screenshot contains actual short gpt-4o tooltip; tooltip-free main image retained separately.",
+    "Long ID table tooltip, all skins, reader/AX/real IME/Windows/Intel runtime/HiDPI and whole frame acceptance remain unproved.",
+    "No independent full badge-grid screenshot at256-model capacity this round; original benchmark runs defaultStatistics, not Providers rendering."
+  ],
+  "checked_at": "2026-10-30T08:56:19.037687+08:00"
+}

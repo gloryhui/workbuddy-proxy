@@ -31,6 +31,12 @@ impl TableDelegate for Models {
     fn column(&self, i: usize, _: &App) -> Column {
         if i == 2 {
             return Column::new("edit", if self.zh { "操作" } else { "Actions" })
+                .paddings(Edges {
+                    top: px(0.),
+                    bottom: px(0.),
+                    left: px(8.),
+                    right: px(8.),
+                })
                 .width(EDIT_COLUMN_WIDTH)
                 .min_width(EDIT_COLUMN_WIDTH)
                 .max_width(EDIT_COLUMN_WIDTH)
@@ -49,6 +55,13 @@ impl TableDelegate for Models {
                 }
             },
         )
+        // Leave room for the 27px badge and a selected row's two borders.
+        .paddings(Edges {
+            top: px(0.),
+            bottom: px(0.),
+            left: px(8.),
+            right: px(8.),
+        })
         .width(self.column_width)
         .min_width(px(120.))
     }
@@ -74,6 +87,8 @@ impl TableDelegate for Models {
             .role(Role::ColumnHeader)
             .aria_label(name.clone())
             .size_full()
+            .flex()
+            .items_center()
             .a11y_synthetic_children(move |tree| tree.parent_node().set_column_index(col))
             .child(name)
     }
@@ -145,6 +160,9 @@ impl TableDelegate for Models {
             return div()
                 .id(("model-action-cell", i))
                 .role(Role::Cell)
+                .h_full()
+                .flex()
+                .items_center()
                 .a11y_synthetic_children(|tree| tree.parent_node().set_column_index(2))
                 .child(
                     Button::new(("model-edit", i))
@@ -193,7 +211,8 @@ impl TableDelegate for Models {
         let full = value.to_owned();
         let text = if col == 1 {
             Label::new(value.to_owned())
-                .w_full()
+                .flex_1()
+                .min_w_0()
                 .text_ellipsis()
                 .font_family(cx.theme().mono_font_family.clone())
         } else {
@@ -205,12 +224,36 @@ impl TableDelegate for Models {
             .aria_label(value.to_owned())
             .a11y_synthetic_children(move |tree| tree.parent_node().set_column_index(col))
             .w_full()
+            .h_full()
             .min_w_0()
+            .flex()
+            .items_center()
+            .gap(px(8.))
             .overflow_hidden()
             .tooltip(move |window, cx| {
                 crate::ui_components::full_value_tooltip(full.clone(), window, cx)
             })
             .child(text.text_size(px(crate::theme::font::BODY)))
+            .when(col == 1, |cell| {
+                // These rows belong to the configured provider, rather than
+                // WorkBuddy's built-in model catalog. Capability mode is separate.
+                cell.child(
+                    div()
+                        .flex()
+                        .items_center()
+                        .justify_center()
+                        .flex_none()
+                        .w(px(65.))
+                        .h(px(27.))
+                        .rounded(px(9.))
+                        .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
+                        .child(
+                            Label::new(if self.zh { "自定义" } else { "Custom" })
+                                .text_size(px(11.))
+                                .text_color(rgb(crate::theme::color::TEXT_3)),
+                        ),
+                )
+            })
             .into_any_element()
     }
     // The three explicit columns fill the container without Kit's 12px trailing cell.

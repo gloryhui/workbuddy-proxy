@@ -602,11 +602,26 @@ impl Proxy {
                             .flex()
                             .items_center()
                             .gap(px(12.))
-                            .child(section("02", self.t("模型目录", "Model directory")))
                             .child(
-                                Label::new(model_count(self.models.len(), self.zh))
-                                    .text_size(px(11.))
-                                    .text_color(rgb(color::TEXT_3)),
+                                section("02", self.t("模型目录", "Model directory"))
+                                    .min_w(px(142.))
+                                    .flex_none(),
+                            )
+                            .child(
+                                div()
+                                    .flex()
+                                    .items_center()
+                                    .justify_center()
+                                    .flex_none()
+                                    .w(px(94.))
+                                    .h(px(27.))
+                                    .rounded(px(9.))
+                                    .bg(rgb(color::BG_TABLE_HEAD))
+                                    .child(
+                                        Label::new(model_count(self.models.len(), self.zh))
+                                            .text_size(px(11.))
+                                            .text_color(rgb(color::TEXT_3)),
+                                    ),
                             ),
                     )
                     .child(

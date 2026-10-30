@@ -1120,3 +1120,30 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 本轮先运行原benchmark --help，脚本SHA仍bc7e0537…；四轮同Core25f/Studio实读/64模型/1000小请求/80×1MiB并发4，默认Statistics页，非Providers渲染负载。旧→新中位：Core12.355→12.065、UI72.480→72.325、合计84.825→84.380MiB，峰值135.000→133.555MiB，p50 0.1715→0.1625/p95 0.2035→0.1895ms，大请求0.0880→0.0875s，Core ready313.683→212.420/UI记录ready855.638→718.911ms。未见明显持续退化，不据每版仅2个/缓存与后台未控制样本宣称优化或统计等效；ready不是首帧/可交互，RSS共享页可能双计，tray原JSON另列。
 - 两UI经CUA原生Close exit0，fixture各自停止/wait Core0、直接fixture wait0；主代理独立确认六PID消失。四轮原基准自有子进程数组均[-15,-15,0,0]且wait，所记Core/UI独立核对消失。完整规范化路径/UID501/父组件非符号链接及挂载边界/全量单链接普通文件/进程与lsof预检，临执行清单SHA复核后，按持续授权删除本轮146个自有可再生文件，释放189,698,048bytes（180.91MiB），本轮临时保留0。旧root30保护项24.03MiB继续保留，未读误截图/重试删除，共享Cargo缓存不动；系统盘清理后39,827,292,160bytes（37.09GiB）可用。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮修复共享选中底色，不替代其他整帧视觉/精确hover/真实IME/读屏/AX、Windows布局与实机、Intel实机/HiDPI、托盘/位移与最小化、首帧和公网更新成功验收。Goal active；HTML只静态校验，未绕过既有浏览器本地文件拒绝。
+
+## 小功能 49：模型目录数量与配置来源标记（2026-10-30，北京时间）
+
+- 补齐模型目录数量94×27和逐行“自定义/Custom”65×27原生标记，并修复29px行内的裁切与垂直对齐；保留三列虚拟表格、模型值、选择、编辑/取消和能力语义。证据：[编译](benchmarks/model-directory-badges-build.json)、[真实交互/配置](benchmarks/model-directory-badges-gui-validation.json)、[资源/像素](benchmarks/model-directory-badges-visual-validation.json)、[1440中文](screenshots/model-directory-badges-1440x900.png)、[1100英文](screenshots/model-directory-badges-1100x700.png)、[选中态](screenshots/model-directory-badges-selected-1100x700.png)、[六轮性能](benchmarks/model-directory-badges-performance-summary.json)、[清理](benchmarks/model-directory-badges-cleanup.json)。
+- 官方MCP重读54:246高保真context/截图：54:249数量标记94×27，54:262等来源标记65×27，圆角9/底色#F3F5FA/11px文字#778196。来源标记对应选中供应商配置模型，源码Draft::from_provider→self.models→Models.rows可追溯；它不表示capabilities是否手动覆盖，不按模型名称猜测、不新增分类API或修改Core数据。首次新基线983c的[实拍](screenshots/model-directory-badges-before-1440x900.png)确实仅有数量文字、无行来源标记，见[基线记录](benchmarks/model-directory-badges-before-gui.json)。
+- 只修改model_table.rs和ui/providers.rs：原生Div/Label与既有token，数量区保留响应式紧凑头，标题组min142为数量标记留位；ID文本flex1/min0、右侧固定标记，长ID仍省略并保留既有完整值Tooltip。模型表继续3列/29px行/32px头，原列宽算法、选择/容量约束、28px编辑按钮和事件未改。可见15px编辑SVG与新Figma资源逐字节一致，SHAd19ec85f…；没有引入图片截图资产或改变原资源。
+- 中间ff2f实拍暴露Kit Size29列仍默认上下4px padding，27px标记可见仅65×24、ID文字下移；保留[中间图](screenshots/model-directory-badges-intermediate-1440x900.png)和[候选记录](benchmarks/model-directory-badges-intermediate-gui.json)，不算最终通过。最终明确三列上下padding0、保留水平8px，满高居中cell/header/原生动作槽；为选中行两边框保留27px内高。没有改Kit、加定时器或用更高行高掩盖问题。
+- 最终b921宽图实测数量[459,594,553,621]为94×27；三行来源标记[887,667,952,694]、[887,696,952,723]、[887,725,952,752]均65×27完整。英文选中图数量仍94×27，两条选中线之间内高27/文字可见；选中色与标记底色相同，RGB不能独立隔离选中标记宽度，不假称从该图量得65。宽图已实测宽65，源码宽度同一；小窗无Tooltip主图与含真实短gpt-4o Tooltip的选中图分开，后者不是长ID提示验收。
+- 所有垂直布局修复后重新通过fmt0.517s、192 tests/2既有ignored4.359s、严格clippy all-targets/-Dwarnings2.003s、Intel check1.724s、Release39.372s。最终UIb92130b75949f4445507663cc6d7b285028044149226cd893493af15e32b0b0b/15,246,768bytes；基线983c、Core仍25f/8,428,096bytes。Intel只是类型检查，原block0.1.6提示与Windows资源编译/标题栏问题保留。
+- Mac实际未锁定，Rust/Cargo1.98.1、macOS15.8.1。三组唯一bundle/显式合成HOME配置，基线UI70759/Core70750、中间UI72257/Core72256、最终UI74634/Core74633，各Core内核保护/真实LaunchAgents四类deny分别核实；GUI无内核沙盒，不称全角色保护。全部合成Key/loopback地址，2供应商4模型0请求，无真实WorkBuddy同步/登录项/外链或实际供应商调用。
+- 最终CUA实际A3→B1→A3计数，点击Auto49徽标区域选行→F2正确打开gpt-4o、自动on→Esc；点击Manual49铅笔显示manual49、自动off/图片on→Esc，两种能力模式均显示配置来源Custom。打开Long49后ID字段End真实显示TAIL-ID49并Esc取消；独立长ID表格Tooltip未验证，不反复猜全局坐标或由完整AX值推断视觉通过。中文→English后数量/三行标记与主页Save可见；没有点击模型Save或主页Save。
+- 语言动作预期写Core配置，最终整文件SHA9ac458be…，不称初始字节未变。以初始真实私有Draft的已解析模型投影及最终Core配置文件独立比较id/name/model/reasoning_effort/capabilities，全部载荷SHA同69702c5efcfe5030b0582adff8456b70bf6eebb86af1751107dbd094a8ac8129；手动图片flag保留、自动模型capabilities仍null。还核对供应商id/name/upstream/api_key及local_key/port/installed与该实例原始值相等，只导出核对布尔和哈希，不提交Key。language=en/autostartfalse与2/4保持。
+- 最终小窗Providers静置30.005s无CUA输入，Core0.100%单核/RSS12.625→9.688MiB，UI0.433%/RSS109.109→97.031MiB。此为短时波动，不据下降宣称优化或长期泄漏结果。ps累计TIME百分秒分辨率，非GPU/首帧/输入延迟。原benchmark先查--help，SHA仍bc7e0537…，同Core25f/Studio实读/64模型/1000小请求/80×1MiB并发4。
+
+| 原脚本实际顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 峰值RSS MiB | 80×1MiB耗时s | Core/UI记录ready ms |
+| --- | --- | --- | --- | --- | --- |
+| 旧983c第1轮 | 12.31/72.41/84.72 | 0.172/0.197 | 135.98 | 0.087 | 426.420/1011.912 |
+| 新b921第1轮 | 14.61/72.41/87.02 | 0.192/0.374 | 138.77 | 0.095 | 263.593/880.659 |
+| 旧983c第2轮 | 13.08/73.22/86.30 | 0.199/0.364 | 137.31 | 0.097 | 206.925/693.685 |
+| 新b921第2轮 | 12.42/72.88/85.30 | 0.173/0.208 | 132.89 | 0.086 | 214.985/656.256 |
+| 新b921反向确认 | 11.91/73.06/84.97 | 0.172/0.205 | 136.94 | 0.085 | 208.656/674.658 |
+| 旧983c反向确认 | 12.39/72.02/84.41 | 0.172/0.204 | 133.02 | 0.087 | 246.087/680.844 |
+
+- 新1轮p95.374ms与旧2轮.364ms波动均保留，并补新→旧反向.205/.204ms，未复现持续尖峰。旧→新中位Core12.39→12.42/UI72.41→72.88/合计84.72→85.30MiB，峰值135.98→136.94MiB，p50.172→.173/p95.204→.208ms，大请求.087→.086s，Core ready246.087→214.985/UI记录ready693.685→674.658ms；保留增加值，不宣称优化/统计等效或因果定位。每版3样本且后台/缓存未控制；ready非首帧，RSS共享页可能双计，tray单列。原基准默认Statistics，不是新增标记的Providers满载渲染，256模型标记网格/滚动与高密度资源样本仍待专项。
+- 五张图均主代理查看，只选自己PID/onscreen/layer0 window62819/62836/62885原生screencapture；raw1440×901/1100×701仅Pillow精确裁底1行、保留ICC并逐像素RGBA比对，无缩放/重绘或sips转换。resize是CUA边角操作，不作窗口位移/HiDPI通过；没有外部AX/TIS/全局bounds/剪贴板/CGEvent调用。
+- 三UI经CUA原生Close exit0，各fixture停止/wait Core0、直接fixture wait0，主代理独立确认九PID消失；六轮基准自有子进程数组均[-15,-15,0,0]且wait，所记Core/UI已独立核对消失。完整规范化路径/UID501/父组件符号链接与挂载边界/全量单链接普通文件/进程与lsof预检，临执行清单SHA复核后，按持续授权删除本轮212个自有可再生测试文件，释放276,353,024bytes（263.55MiB），本轮临时保留0。旧root30保护项24.03MiB继续保留，未读误截图/重试删除，Cargo缓存不动；系统盘清理后39,829,184,512bytes（37.09GiB）可用。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮补齐模型目录两类设计标记及行内裁切差异，独立长ID提示、完整视觉/全部皮肤/真实IME/AX读屏、跨平台/HiDPI、物理托盘/窗口位移及最小化、首帧和公网更新成功仍待验。Goal active，HTML继续仅静态检查。

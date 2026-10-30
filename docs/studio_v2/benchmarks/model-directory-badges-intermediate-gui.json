@@ -1,0 +1,354 @@
+{
+  "lifecycle": {
+    "manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round40.fy4t0jg3/fixed-ui49",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round40.fy4t0jg3/fixed-ui49/WorkBuddy Proxy Review.app",
+      "core_pid": 72256,
+      "ui_pid": 72257,
+      "fixture_pid": 72255,
+      "port": 63145,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tui49fixed-ui49",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 72257,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "ff2f782dd38a26353e52ee4298261c89262f9a31662761a1ec38d8012023dcfb"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 4,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "core_guard": {
+      "enforced": true,
+      "pid": 72256,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": 0,
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": 0,
+      "core_exit_after_cleanup": 0
+    },
+    "all_fixture_core_ui_pids_independently_gone": true,
+    "fixture_direct_wait_exit": 0,
+    "synthetic_models_sentinel_unchanged": true
+  },
+  "build": {
+    "feature": "UI-49 native model directory count and custom origin badges",
+    "base_commit": "e4324aeeba390cd48a2d603b9ebbafeb3272e4f8",
+    "source_changed": true,
+    "ui_sha256": "ff2f782dd38a26353e52ee4298261c89262f9a31662761a1ec38d8012023dcfb",
+    "ui_bytes": 15246768,
+    "baseline_ui_sha256": "983c1eea4d056d2d7c6a8c071e03e61e1d8d1c6e1a3568c2841c670d4f15b179",
+    "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "core_bytes": 8428096,
+    "gate_timings": {
+      "fmt": {
+        "command": [
+          "cargo",
+          "fmt",
+          "--manifest-path",
+          "gpui/Cargo.toml",
+          "--all",
+          "--check"
+        ],
+        "exit": 0,
+        "seconds": 0.521
+      },
+      "test": {
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "--manifest-path",
+          "gpui/Cargo.toml"
+        ],
+        "exit": 0,
+        "seconds": 4.882
+      },
+      "clippy": {
+        "command": [
+          "cargo",
+          "clippy",
+          "--locked",
+          "--manifest-path",
+          "gpui/Cargo.toml",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit": 0,
+        "seconds": 2.139
+      },
+      "intel": {
+        "command": [
+          "cargo",
+          "check",
+          "--locked",
+          "--manifest-path",
+          "gpui/Cargo.toml",
+          "--target",
+          "x86_64-apple-darwin"
+        ],
+        "exit": 0,
+        "seconds": 1.781
+      },
+      "release": {
+        "command": [
+          "cargo",
+          "build",
+          "--locked",
+          "--manifest-path",
+          "gpui/Cargo.toml",
+          "--release"
+        ],
+        "exit": 0,
+        "seconds": 40.246
+      }
+    },
+    "tests_passed": 192,
+    "tests_ignored": 2,
+    "source_sha256": {
+      "gpui/src/model_table.rs": "1ea084d34fa11610f324984d61aac53402ec4f6b25ad3ca49153a9fc3a29ac8d",
+      "gpui/src/ui/providers.rs": "4ad235129017a986ba168ca890d6bfc68c76c54e0ab0460e5fa799174a244662",
+      "gpui/src/state.rs": "e892d9db509ff5dfb152600cd13b1231375b8106d5c3edb87691d0869ac0ebff"
+    },
+    "scope": "Two GPUI layout files add native count94x27 and provider-origin Custom65x27 badges. Capability automatic/manual settings remain separate and unchanged. No substring/inserted data newlines/timer/global toolkit patch or core/config/API/dependency change.",
+    "design": {
+      "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+      "page": "51:2",
+      "dialog": "54:246",
+      "context_and_screenshot_read": true,
+      "model_edit_asset_unchanged": true
+    },
+    "limitations": [
+      "Candidate compilation success does not prove fixed tooltip; actual final GUI required.",
+      "Intel only typecheck,block0.1.6 future incompatibility remains.",
+      "Windows resource compilation and caption overlap fromUI43 remain unresolved."
+    ]
+  },
+  "events": {
+    "candidate": "intermediate; row vertical padding under review, not final",
+    "ui_sha256": "ff2f782dd38a26353e52ee4298261c89262f9a31662761a1ec38d8012023dcfb",
+    "ui_pid": 72257,
+    "core_pid": 72256,
+    "fixture_pid": 72255,
+    "window_id": 62836,
+    "images": [
+      {
+        "file": "model-1440-raw.png",
+        "size_px": [
+          1440,
+          901
+        ],
+        "sha256": "0919c21aeb33808abe6febdf9fe26edf8f3de6102f16e44a820c96a995ce6003"
+      },
+      {
+        "file": "model-1100-raw.png",
+        "size_px": [
+          1100,
+          701
+        ],
+        "sha256": "9bba8f45857a6876eaf7bf202435364faeb273e309a665ebf640a7297bb44341"
+      }
+    ],
+    "cases": {
+      "source_badges": "Both automatic Auto49 and manually configured Manual49 plus Long49 show Custom; labels denote configured provider source, not capability mode.",
+      "count": "A3 to B1 to A3 visible via actual provider selection; runtime 2 providers/4 models/0 requests.",
+      "keyboard": "Clicked first row badge region then F2 opened Auto49/gpt-4o, auto on; Escape closed.",
+      "manual": "Clicked Manual49 edit; manual49, auto off and image on; Escape, no edits or save.",
+      "long_id": "One natural-scroll attempt did not reveal tooltip; clicked Long49 edit then ID End; TAIL-ID49 visually shown; Escape, no edits.",
+      "language": "Changed synthetic profile Chinese to English; Language saved observed; therefore entire config bytes cannot be claimed unchanged."
+    },
+    "limitations": [
+      "Row badge bottom padding under review; image is intermediate.",
+      "Direct long ID tooltip not verified.",
+      "No screenshot crop or scaling."
+    ]
+  },
+  "pixels": {
+    "count": {
+      "bounds_local_px": [
+        459,
+        594,
+        553,
+        621
+      ],
+      "size_px": [
+        94,
+        27
+      ]
+    },
+    "row0": {
+      "bounds_local_px": [
+        887,
+        671,
+        952,
+        695
+      ],
+      "size_px": [
+        65,
+        24
+      ]
+    },
+    "row1": {
+      "bounds_local_px": [
+        887,
+        700,
+        952,
+        724
+      ],
+      "size_px": [
+        65,
+        24
+      ]
+    },
+    "row2": {
+      "bounds_local_px": [
+        887,
+        729,
+        952,
+        753
+      ],
+      "size_px": [
+        65,
+        24
+      ]
+    }
+  },
+  "finding": "Intermediate ff2 candidate has requested27px badges clipped to24px by default Kit cell vertical padding; rejected for final delivery.",
+  "images": [
+    {
+      "case": "fixed-ui49",
+      "raw_file": "model-1440-raw.png",
+      "raw_sha256": "0919c21aeb33808abe6febdf9fe26edf8f3de6102f16e44a820c96a995ce6003",
+      "raw_px": [
+        1440,
+        901
+      ],
+      "committed_image": "screenshots/model-directory-badges-intermediate-1440x900.png",
+      "committed_sha256": "2d942dc3a7d04f4dbb118af09af5a423531d98c79cf3d591929114fff90f370e",
+      "committed_px": [
+        1440,
+        900
+      ],
+      "parent_viewed_raw": true,
+      "processing": "Pixel-exact bottom1 row crop preserving ICC; no scaling, sips or repaint",
+      "crop_rgba_identity_verified": true
+    }
+  ]
+}
