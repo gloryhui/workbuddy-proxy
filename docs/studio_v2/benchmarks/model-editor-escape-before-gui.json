@@ -1,0 +1,29 @@
+{
+  "binary_ui": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+  "source": "Actual CUA app interactions summarized from the delegated UI operator; native external AX properties not queried.",
+  "capacity": {
+    "providers": 64,
+    "models": 256,
+    "requests": 0,
+    "configured_distribution": "256 models on Capacity001, 63 providers empty",
+    "upstream_model_id_utf8_bytes": 160
+  },
+  "steps": [
+    "Wide actual gray Add model/Add provider/Copy clicks left the tree and counts unchanged. AX did not independently expose disabled.",
+    "Wide row001 End reached rows252-256; F2 opened MODEL256 with full TAIL256 ID. Home returned first row.",
+    "Old wide direct Escape remained open on MODEL256 and MODEL005; MODEL005 had two fresh trees 600ms apart with unchanged full values. Title blank then Escape closed. Later wide MODEL256 direct Escape passed, so not called deterministic.",
+    "Small MODEL001 F2 direct Escape passed with two fresh trees 600ms apart; no failure screenshot fabricated.",
+    "CUA temporarily lost app binding while the old process stayed alive; one same-exactpath getApp reselect restored it without restart.",
+    "Capacity064 search yielded1/64 and kept current001/256 until click. Clicking064 gave local0/global256; clearing then selecting001 restored256.",
+    "Final table row click Home ShiftEnd reached row256, Backspace removed all256 in draft. Add model re-enabled; no Save. Independent post-close Core SHA unchanged and draft0.",
+    "Natural scroll did not produce a visible ID Tooltip tail; independent long ID hover remains unverified."
+  ],
+  "resource_alignment": {
+    "wide_idle": "30.003949s, actual no-popup Providers directory",
+    "old_small_sample": "File named scroll-small, but sampled02:23:19-49UTC before actual16 scroll actions02:23:51.055-02:24:06.028UTC; must not be reported as scroll CPU."
+  },
+  "first_candidate": {
+    "ui_sha256": "dcd7ba7648c327128d98c3d23fe504d9efe3d79c88594b804bdbb2b1805a813d",
+    "result": "Failed: adding only ancestor ProxyModal route did not close MODEL001 input after F2 Escape, two fresh trees600ms apart; unchanged160byte ID. Saved native screenshot. Cancel then Close, no IME or Save in this candidate."
+  }
+}

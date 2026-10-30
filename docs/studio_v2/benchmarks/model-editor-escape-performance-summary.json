@@ -1,0 +1,66 @@
+{
+  "ordered_confirmed_runs": [
+    "previous-run2",
+    "current",
+    "current-run2",
+    "previous-run3"
+  ],
+  "per_version_confirmed_samples": 2,
+  "medians": {
+    "core_idle_rss_mib": {
+      "previous": 11.665,
+      "current": 12.595,
+      "delta": 0.9300000000000015
+    },
+    "ui_idle_rss_mib": {
+      "previous": 74.475,
+      "current": 76.33500000000001,
+      "delta": 1.8600000000000136
+    },
+    "idle_rss_mib": {
+      "previous": 86.14,
+      "current": 88.93,
+      "delta": 2.7900000000000063
+    },
+    "sampled_peak_rss_mib": {
+      "previous": 133.445,
+      "current": 135.36,
+      "delta": 1.9150000000000205
+    },
+    "large_seconds": {
+      "previous": 0.095,
+      "current": 0.091,
+      "delta": -0.0040000000000000036
+    },
+    "core_ready_ms": {
+      "previous": 198.2375,
+      "current": 195.19,
+      "delta": -3.0475000000000136
+    },
+    "ui_record_ready_ms": {
+      "previous": 678.558,
+      "current": 711.351,
+      "delta": 32.793000000000006
+    },
+    "proxied_p50_ms": {
+      "previous": 0.1725,
+      "current": 0.173,
+      "delta": 0.0005000000000000004
+    },
+    "proxied_p95_ms": {
+      "previous": 0.21,
+      "current": 0.20750000000000002,
+      "delta": -0.0024999999999999745
+    }
+  },
+  "unpaired_preflight": "previous-gui.json retained, metrics complete but postrun retention/appearance assertion failed after original TemporaryDirectory auto-cleaned. Excluded from confirmed medians, not discarded. Runner fixed to retain owned folders and read back appearance before/after.",
+  "workload": "Unchanged scripts/benchmark.py --gui --requests1000 --models64;80x1MiB concurrency4. Studio preference file verified. Default Statistics scene, not Providers256 rendering or model input latency.",
+  "comparison": "Two direction pairs old-new then new-old; same25f Core and release build modes. First pair Core/UI+5.44MiB combined, reverse pair new89.20/old89.06MiB. Keep all increases; background/cache/memory compression not controlled, no causality/equivalence/optimization claim.",
+  "actual_gui_resources": "Separate resources.json contains real64provider/256model Providers scroll sample with marker-aligned16calls, and postscroll stationary sample. Old small missed-scroll record explicitly excluded as scroll evidence.",
+  "limits": [
+    "2 samples/version are short observations, not statistical acceptance or firstpaint/interaction latency.",
+    "RSS shared pages may double count; tray measured separately, mock/client excluded.",
+    "Record-ready is gpui.json marker, not first paint.",
+    "No full cross-platform/HiDPI/IME/reader or long-term leak claim."
+  ]
+}

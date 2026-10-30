@@ -1,0 +1,239 @@
+{
+  "images": [
+    {
+      "version": "87eb",
+      "raw_image": "capacity-ui51/wide-first-raw.png",
+      "raw_sha256": "0c8aadbe2f7594aa424626ed8208b8dd07f28376e96c21490e1d2a54de6ad60c",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "requested_logical_window": [
+        1440,
+        900
+      ],
+      "committed_image": "screenshots/model-editor-escape-before-wide-2x.png",
+      "committed_sha256": "9e977592dd9d7024665db200aae6b1707fedda044c7ca22d897b24fccfe78ad6",
+      "committed_pixels": [
+        2880,
+        1800
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "87eb",
+      "raw_image": "capacity-ui51/small-first-raw.png",
+      "raw_sha256": "8a52555baefb89ba2acb75f7aaaddbe737b7444e46f6012dc32cbf0d1a02ef1d",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "requested_logical_window": [
+        1100,
+        700
+      ],
+      "committed_image": "screenshots/model-editor-escape-before-small-2x.png",
+      "committed_sha256": "d58efdcd47e6fb10caa12459dd442236275434f33a9a92c3fbb40d36c4959467",
+      "committed_pixels": [
+        2200,
+        1400
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "87eb",
+      "raw_image": "capacity-ui51/small-range-end-raw.png",
+      "raw_sha256": "01df30116720e8c92eb202de1240d597ef59317daa194bb9fe27087492396a7e",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "requested_logical_window": [
+        1100,
+        700
+      ],
+      "committed_image": "screenshots/model-editor-escape-before-range-small-2x.png",
+      "committed_sha256": "0c1632a3b4e5c87740fddfe26c39fe7e0a48d39b137e55d48cc92c9b85ad613f",
+      "committed_pixels": [
+        2200,
+        1400
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "dcd7",
+      "raw_image": "capacity-fixed-ui51/dcd7-f2-escape-still-open-raw.png",
+      "raw_sha256": "ea73787db1b2e1d73daf9cd711454f9b21d9adf0e3e26f4e44980f69a6258aaf",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "requested_logical_window": [
+        1440,
+        900
+      ],
+      "committed_image": "screenshots/model-editor-escape-intermediate-failure-2x.png",
+      "committed_sha256": "c1a574f1b56172675afd36e8e8e3a4b910376c5837242cdeb959db87718a463c",
+      "committed_pixels": [
+        2880,
+        1800
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "675f",
+      "raw_image": "capacity-final-ui51/wide-first-raw.png",
+      "raw_sha256": "d5732907ed607db8b2fc6b67a2237f0913a01598f57629a3b4301f867982e1db",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "requested_logical_window": [
+        1440,
+        900
+      ],
+      "committed_image": "screenshots/model-editor-escape-1440x900-2x.png",
+      "committed_sha256": "d1fc5a28f2b6bc8ca5aa1c61c1e33913caa2353e8260cb8fd242d7e6f4aea800",
+      "committed_pixels": [
+        2880,
+        1800
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "675f",
+      "raw_image": "capacity-final-ui51/wide-last-raw.png",
+      "raw_sha256": "3482805ac1215170e617232a13986a883cff840776ce9bd24dd1cab30bf7547b",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "requested_logical_window": [
+        1440,
+        900
+      ],
+      "committed_image": "screenshots/model-editor-escape-last-1440x900-2x.png",
+      "committed_sha256": "aee7c41e0d4fa383140858f06c6a46df6eecbda420d9403513a8ea62810ed38d",
+      "committed_pixels": [
+        2880,
+        1800
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "675f",
+      "raw_image": "capacity-final-ui51/wide-ime-after-escape-raw.png",
+      "raw_sha256": "af0571c78157955889c4e4a76ea0bdf7323e69ffcfa624d374ce8b74896fa34c",
+      "raw_pixels": [
+        2880,
+        1802
+      ],
+      "requested_logical_window": [
+        1440,
+        900
+      ],
+      "committed_image": "screenshots/model-editor-escape-ime-1440x900-2x.png",
+      "committed_sha256": "1ebefa3f736cda81c6698437f7297c684f9a00adad4710c263e9cb4beee9c49f",
+      "committed_pixels": [
+        2880,
+        1800
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "675f",
+      "raw_image": "capacity-final-ui51/small-first-raw.png",
+      "raw_sha256": "86c0641c1fddc8a3537feb011c19346b24956b07dada96bd699c7921b245e248",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "requested_logical_window": [
+        1100,
+        700
+      ],
+      "committed_image": "screenshots/model-editor-escape-1100x700-2x.png",
+      "committed_sha256": "ae2e3ac9e4a92a99d27a33717d22357ce15e12bf511d1a506fa7449a51a87b07",
+      "committed_pixels": [
+        2200,
+        1400
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "675f",
+      "raw_image": "capacity-final-ui51/small-last-raw.png",
+      "raw_sha256": "c6c9ca46e3b384ec4e5568957ff4446e0d51214c5a3c7b5b9816a3ad2457ab49",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "requested_logical_window": [
+        1100,
+        700
+      ],
+      "committed_image": "screenshots/model-editor-escape-last-1100x700-2x.png",
+      "committed_sha256": "c0bd0be8e88d2e3472d7b4ec141ce0555527bcf3d802b99781b03f32f1ec27ce",
+      "committed_pixels": [
+        2200,
+        1400
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    },
+    {
+      "version": "675f",
+      "raw_image": "capacity-final-ui51/small-ime-after-escape-raw.png",
+      "raw_sha256": "04294e142b3bc538745623ac6be9ddf1c054bf0882d9fccfb3d5ea605e594fe7",
+      "raw_pixels": [
+        2200,
+        1402
+      ],
+      "requested_logical_window": [
+        1100,
+        700
+      ],
+      "committed_image": "screenshots/model-editor-escape-ime-1100x700-2x.png",
+      "committed_sha256": "64bad16935e9da8bdd3e07620a66fa364b2d42d1a579f6bd3b27ccc2e283ab59",
+      "committed_pixels": [
+        2200,
+        1400
+      ],
+      "pixel_identity_after_bottom_two_row_crop": true,
+      "raw_dpi_metadata": null,
+      "icc_preserved": true,
+      "main_agent_viewed_raw": true
+    }
+  ],
+  "method": "Native own-PID windowNumber screencapture; CUA observations and native pixels. Only bottom2 physical rows cropped, no resize/repaint. All ten raw sources main-agent viewed.",
+  "scale_boundary": "Current2x inferred from requested sizes and fixed256 logical sidebar rendered512physical px; no OS backingScaleFactor or global bounds query. Raw has2extra physical rows. Not full HiDPI acceptance.",
+  "capture_overlay": "Small purple screen/control indicator at upper-left remains in raw/native output; not treated as an application design element.",
+  "layout": "Existing54:246/59:279 layout/assets unchanged; no fresh Figma design read this round.",
+  "long_id_tooltip": "Independent exact hover and visible tail not verified; full160byte value read through actual native editor, not claimed as Tooltip pass."
+}

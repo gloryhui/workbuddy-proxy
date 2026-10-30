@@ -1181,3 +1181,36 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 六轮旧→新中位：Core12.34→12.38/UI74.25→78.39/合计86.59→90.16MiB，峰值133.38→139.05MiB，p50均.172/p95.200→.194ms，大请求.090→.086s，Core ready224.240→221.125/UI记录ready695.398→679.206ms。明确保留UI+4.14/合计+3.57/峰值+5.67MiB观察项，不宣称优化或统计等效；每版仅3短样本、后台/缓存未控制，反向同尺寸只核对一组、不证明因果。ready不是首帧/可交互，RSS共享页可能双计。反向照片显示缓存明细空表/初始供应商模型，而不是1000行GUI绘制，不用HTTP吞吐替代UI满载性能。
 - 完成规范化绝对路径/UID501/父组件挂载与非符号链接/各目标内全量单链接普通文件/进程和lsof预检、临执行清单SHA复核，按持续授权仅删除清单41个具体目标中的335个自有可再生文件，释放366,891,008bytes（349.89MiB）。Root41父目录不作为删除目标；保留无法归属的native-events.jsonl及ownership/retention共3文件、12,288bytes分配空间（12KiB），不读取或哈希私有日志内容。旧root30保护项24.03MiB仍保留且未读误图/重试删除，共享Cargo缓存不动；系统盘清理后38,287,470,592bytes（35.66GiB）可用。
 - 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮通过的是当前青简源的模型显示名专项；其他字段/输入源、候选面板、完整AX读屏/视觉/全部HiDPI/跨平台、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active；HTML继续仅静态检查。
+
+## 小功能 51：模型编辑 Escape 与满载目录回归（2026-10-30，北京时间）
+
+- 为模型编辑输入框补明确的原生Escape关闭路由，并完成64供应商/256模型的满载专项。证据：[编译](benchmarks/model-editor-escape-build.json)、[旧版与失败中间版](benchmarks/model-editor-escape-before-gui.json)、[真实交互/生命周期/配置](benchmarks/model-editor-escape-gui-validation.json)、[1440请求尺寸原生2×图](screenshots/model-editor-escape-1440x900-2x.png)、[1100请求尺寸原生2×图](screenshots/model-editor-escape-1100x700-2x.png)、[组合取消小窗](screenshots/model-editor-escape-ime-1100x700-2x.png)、[资源](benchmarks/model-editor-escape-resources.json)、[性能](benchmarks/model-editor-escape-performance-summary.json)、[清理](benchmarks/model-editor-escape-cleanup.json)。
+- 沿用54:246/59:279布局和资源，本轮无新设计context读取、无视觉重设计。只改main.rs/ui.rs：ModelEditor > Input专属DismissModelInput在模型窗口层接收Esc，仅读取当前焦点InputState的非空marked_text_range；有组合则dispatch原Input::Escape，否则调用既有dismiss。没有改写字符串、修改Kit/依赖/Core/配置/API、全局抢键或新增重绘计时器；六个输入句柄采用既有实体。
+- 旧87eb不是必现故障：宽窗MODEL256和MODEL005的直接Esc曾保持表单，后者两次新鲜树间隔600ms仍开/值不变；标题空白再Esc能关，后来同宽窗256及小窗001直接Esc也通过，均保留。仅增加父级ProxyModal路由的dcd7仍未通过，见[失败实拍](screenshots/model-editor-escape-intermediate-failure-2x.png)及[中间编译](benchmarks/model-editor-escape-intermediate-build.json)；不将编译绿灯当GUI通过或把所有旧现象归于单一层。
+- 最终675f宽窗MODEL001/F2和End→MODEL256/F2、1100小窗MODEL256/F2后普通Esc都关闭，均有两次新鲜树含600ms后确认；完整160字节上游ID及TAIL001/TAIL256在编辑字段可读。宽/小窗显示名各以单独n/i/h/a/o键观察下划线ni'hao，Space得你好，End追加下划线ni'hao后首Esc保留编辑框且精确U+4F60/U+597D、无U+001B，再Esc取消关闭。未用typeText/setValue生成中文、未切源/额外查TIS、未做候选面板或其他输入源通过声明；四个数字输入/完整读屏仍不在实测结论内。
+- 旧87eb合成夹具有64供应商，Capacity001含全部256模型，其他63为空；每个上游ID160bytes，均合法加载。灰色Add model/Add provider/Copy实际点击不改变计数/不打开框，AX未独立暴露disabled；End首末行、F2、Home可用。搜索Capacity064为1/64且未点击前保持001/256，选064为空表而全局256、清除返回001恢复256；Home→ShiftEnd→Backspace真实把全256移除到草稿0、Add重新可用。未Save，关闭后主代理独立读Core SHA仍97b393c9…/256，草稿实际0；这些容量/搜索/范围删除证据归旧版，当前两尺寸256标记网格/首末/IME证据归675f，不混版本。
+- 最终夹具从同一生成规则重新创建，未复制旧草稿。全模型规范载荷SHA仍4a5cbfa264ce37b5ea75768f8633e38b72679b25b0109d422dc31cded7c8e28c；所有确认/取消后Core SHA仍d16193ab…逐字节相同，64/256/0，SQLite只读usage_requests为0，每个供应商草稿的id/name/model/effort/capabilities投影全部与保存配置一致。没有Save/Sync、真实上游、登录项或外链操作。
+- 最终fmt0.713s、192 tests/2既有ignored9.438s、strict clippy4.306s、Intel check3.330s、Release57.001s通过；UI SHA675fba1473a408507335b9b4bee8d4606e1ba27039e6416920a62a6751b7ef9e/15,246,800bytes，比87eb多16bytes，Core仍25f/8,428,096bytes。Intel只是类型检查，block0.1.6既有提示及Windows资源/标题栏门禁保持。
+- [视觉记录](benchmarks/model-editor-escape-visual-validation.json)共10张原生图全部由主代理查看：旧3/中间失败1/最终6；raw宽2880×1802、小2200×1402，仅裁底2物理行交付2880×1800/2200×1400，像素/ICC逐一保持，无缩放重绘。2×按请求尺寸及固定256逻辑侧栏在raw512px推得，未查OS backingScaleFactor/全局bounds；左上原生屏幕控制指示仍保留，不当应用设计差异。独立长ID Tooltip尾标仍未触发，不用完整AX字段或F2回读替代视觉悬浮通过。
+
+| 实际Providers场景 | 版本/时长 | Core/UI单核CPU | UI RSS MiB首→尾/峰 |
+| --- | --- | --- | --- |
+| 宽窗首行无浮层静置 | 旧87eb/30.004s | 0.100%/0.700% | 47.859→57.047/57.047 |
+| 小窗准备阶段，未覆盖计划滚动 | 旧87eb/30.005s | 0.067%/1.066% | 41.984→61.562/62.078 |
+| 小窗表区16次上下滚动所在样本 | 新675f/30.005s | 0.100%/2.666% | 89.906→109.406/109.406 |
+| 停滚后静置 | 新675f/30.000s | 0.100%/0.867% | 107.344→84.594/107.359 |
+
+- 第一段小窗采样文件原名scroll-small，但根据文件mtime推算约02:23:19–49UTC，实际16次动作02:23:51–02:24:06在其后，明确保留为准备场景，不报滚动CPU。修复后样本实记02:50:54.786–02:51:24.799UTC，共享marker启动后，CUA16次动作02:51:07.337–22.344全落区间内；CPU是整个30秒含静止部分平均。因RSS增长加测停滚后静置，保留下降而不推断优化/长期无泄漏；ps TIME百分秒、无GPU/帧率/首帧/输入延迟，场景缓存不同不能当新旧UI比较。
+
+| 原始脚本确认样本顺序 | Core/UI/合计空闲RSS MiB | p50/p95 ms | 采样峰值MiB | 80×1MiB s | Core/UI记录ready ms |
+| --- | --- | --- | --- | --- | --- |
+| 旧87eb previous-run2 | 10.55/72.67/83.22 | .175/.213 | 130.45 | .101 | 202.564/711.679 |
+| 新675f current | 12.55/76.11/88.66 | .173/.212 | 134.83 | .089 | 194.426/759.012 |
+| 新675f current-run2 | 12.64/76.56/89.20 | .173/.203 | 135.89 | .093 | 195.954/663.690 |
+| 旧87eb previous-run3 | 12.78/76.28/89.06 | .170/.207 | 136.44 | .089 | 193.911/645.437 |
+
+- 原scripts/benchmark.py SHA仍bc7e0537…、--help已查；同25f Core/Release/Studio偏好回读/64个Core模型、1000小请求、80×1MiB并发4。先旧→新再新→旧，确认每版2短样本；旧→新中位Core11.665→12.595/UI74.475→76.335/合计86.14→88.93MiB，采样峰值133.445→135.360MiB，p50.1725→.1730/p95.2100→.2075ms，大请求.095→.091s，Core ready198.238→195.190/UI记录ready678.558→711.351ms。UI+1.86/合计+2.79/峰值+1.915MiB和UI记录+32.793ms均保留，不宣称优化、等效或因果；反向总RSS89.20/89.06仅差.14。默认Statistics且可能缓存空表，不替代本轮实际Providers256资源采样；ready非首帧，RSS共享页可能双计，tray单列。
+- 另保留一次未配对旧版预检previous：Core/UI/合计10.94/78.20/89.14MiB、p50/p95.171/.195ms、采样峰142.98MiB、大请求.130s、记录ready414.027/1047.650ms。原始负载及退出已完成，但原TemporaryDirectory自动清理后运行器的外观/保留目录回读断言失败，明确排除确认组；修运行器后用全新标签保留目录并前后回读外观，未覆写/丢弃此样本。五轮自有子进程均[-15,-15,0,0]且wait、Core/UI消失，原负载未改。
+- Mac实际未锁定；一次ioreg解析错误把锁状态放到session行读取而未确认，随后读取root级IOConsoleLocked=false纠正，确认组前有有效值。三个夹具各自Core运行时保护与LaunchAgents四类deny已实查，GUI仅合成HOME/config/LSEnvironment、无内核沙盒；三UI原生Close0，Core/fixture全wait0、九PID独立消失。CUA旧组一次失去绑定，在进程仍活着时同exactpath重新选择一次恢复，未重启；未用外部AX/全局bounds/额外输入注入或权限更改。
+- 完成规范化路径/逐级父目录挂载与符号链接/UID501/全量普通单链接文件/进程与lsof预检，临删除清单SHA再核对后，按持续授权删除本轮单一Root42目录175文件，释放分配空间估计241,451,008bytes（230.27MiB），当前轮保留0；最终证据已在仓库。旧Root30保护项24.03MiB、Root41私有事件/说明12KiB保留且未读/哈希私有日志或重试删除，共享Cargo缓存与归属不明旧目录保持；系统盘清理后35,621,318,656bytes（33.17GiB）可用。
+- 剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。长ID独立悬浮、其他输入/候选面板、完整AX读屏/视觉/所有HiDPI/Windows和Intel实机、物理托盘/窗口位移与最小化、首帧、公网更新成功及真实WorkBuddy重启等继续待验。Goal active；进度HTML仍仅静态检查。

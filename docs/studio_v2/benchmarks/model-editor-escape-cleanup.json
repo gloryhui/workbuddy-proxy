@@ -1,0 +1,2013 @@
+{
+  "performed": true,
+  "preflight": {
+    "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5",
+    "owner": {
+      "task": "studio-v2-ui51",
+      "scope": "isolated native model directory 64 provider / 256 model capacity and long ID verification",
+      "repo": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+      "base_head": "e86f6318794c54aed386cba1f9f98a38bf300661"
+    },
+    "type": "single session-owned temporary directory",
+    "uid": 501,
+    "regular_files": 175,
+    "allocated_bytes": 241451008,
+    "entries": [
+      {
+        "path": "before-close-state.json",
+        "type": "file",
+        "size": 297,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "before-gui.json",
+        "type": "file",
+        "size": 2235,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "build.json",
+        "type": "file",
+        "size": 1316,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "candidate-build.json",
+        "type": "file",
+        "size": 2717,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "candidate-clippy.log",
+        "type": "file",
+        "size": 411,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "candidate-fmt.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "candidate-intel.log",
+        "type": "file",
+        "size": 411,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "candidate-release.log",
+        "type": "file",
+        "size": 414,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "candidate-test.log",
+        "type": "file",
+        "size": 18483,
+        "allocated": 20480,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51",
+        "type": "directory",
+        "size": 800,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/WorkBuddy Proxy Review.app",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/WorkBuddy Proxy Review.app/Contents",
+        "type": "directory",
+        "size": 128,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/WorkBuddy Proxy Review.app/Contents/Info.plist",
+        "type": "file",
+        "size": 2664,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/WorkBuddy Proxy Review.app/Contents/MacOS",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246800,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/config",
+        "type": "directory",
+        "size": 288,
+        "allocated": 0,
+        "mode": 448
+      },
+      {
+        "path": "capacity-final-ui51/config/appearance.json",
+        "type": "file",
+        "size": 39,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/config/config.json",
+        "type": "file",
+        "size": 78581,
+        "allocated": 81920,
+        "mode": 384
+      },
+      {
+        "path": "capacity-final-ui51/config/gpui-drafts.json",
+        "type": "file",
+        "size": 120525,
+        "allocated": 122880,
+        "mode": 384
+      },
+      {
+        "path": "capacity-final-ui51/config/gpui.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/config/instance.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/config/startup.log",
+        "type": "file",
+        "size": 49,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/config/usage.sqlite3",
+        "type": "file",
+        "size": 233472,
+        "allocated": 262144,
+        "mode": 384
+      },
+      {
+        "path": "capacity-final-ui51/core.log",
+        "type": "file",
+        "size": 108,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/fixture.json",
+        "type": "file",
+        "size": 1250,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/gpui.log",
+        "type": "file",
+        "size": 180,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/home",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/home/.workbuddy",
+        "type": "directory",
+        "size": 128,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/home/.workbuddy/models.json",
+        "type": "file",
+        "size": 2,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/home/.workbuddy/projects",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/home/.workbuddy/projects/demo",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/native-acceptance-finished",
+        "type": "file",
+        "size": 5,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/review-core",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/small-first-raw.png",
+        "type": "file",
+        "size": 424677,
+        "allocated": 425984,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/small-ime-after-escape-raw.png",
+        "type": "file",
+        "size": 374689,
+        "allocated": 376832,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/small-last-raw.png",
+        "type": "file",
+        "size": 423310,
+        "allocated": 425984,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/source-protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/terminal-status.json",
+        "type": "file",
+        "size": 132,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/tmp",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/wide-first-raw.png",
+        "type": "file",
+        "size": 572062,
+        "allocated": 573440,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/wide-ime-after-escape-raw.png",
+        "type": "file",
+        "size": 614546,
+        "allocated": 618496,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/wide-last-raw.png",
+        "type": "file",
+        "size": 571174,
+        "allocated": 573440,
+        "mode": 420
+      },
+      {
+        "path": "capacity-final-ui51/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-final-ui51/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51",
+        "type": "directory",
+        "size": 640,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/WorkBuddy Proxy Review.app",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/WorkBuddy Proxy Review.app/Contents",
+        "type": "directory",
+        "size": 128,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/WorkBuddy Proxy Review.app/Contents/Info.plist",
+        "type": "file",
+        "size": 2664,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/WorkBuddy Proxy Review.app/Contents/MacOS",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246784,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/config",
+        "type": "directory",
+        "size": 288,
+        "allocated": 0,
+        "mode": 448
+      },
+      {
+        "path": "capacity-fixed-ui51/config/appearance.json",
+        "type": "file",
+        "size": 39,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/config/config.json",
+        "type": "file",
+        "size": 78581,
+        "allocated": 81920,
+        "mode": 384
+      },
+      {
+        "path": "capacity-fixed-ui51/config/gpui-drafts.json",
+        "type": "file",
+        "size": 120525,
+        "allocated": 122880,
+        "mode": 384
+      },
+      {
+        "path": "capacity-fixed-ui51/config/gpui.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/config/instance.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/config/startup.log",
+        "type": "file",
+        "size": 49,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/config/usage.sqlite3",
+        "type": "file",
+        "size": 233472,
+        "allocated": 262144,
+        "mode": 384
+      },
+      {
+        "path": "capacity-fixed-ui51/core.log",
+        "type": "file",
+        "size": 108,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/dcd7-f2-escape-still-open-raw.png",
+        "type": "file",
+        "size": 617148,
+        "allocated": 618496,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/fixture.json",
+        "type": "file",
+        "size": 1250,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/gpui.log",
+        "type": "file",
+        "size": 180,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/home",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/home/.workbuddy",
+        "type": "directory",
+        "size": 128,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/home/.workbuddy/models.json",
+        "type": "file",
+        "size": 2,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/home/.workbuddy/projects",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/home/.workbuddy/projects/demo",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/native-acceptance-finished",
+        "type": "file",
+        "size": 5,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/review-core",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/source-protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/terminal-status.json",
+        "type": "file",
+        "size": 132,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-fixed-ui51/tmp",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-fixed-ui51/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51",
+        "type": "directory",
+        "size": 704,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/WorkBuddy Proxy Review.app",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/WorkBuddy Proxy Review.app/Contents",
+        "type": "directory",
+        "size": 128,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/WorkBuddy Proxy Review.app/Contents/Info.plist",
+        "type": "file",
+        "size": 2586,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/WorkBuddy Proxy Review.app/Contents/MacOS",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246784,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/config",
+        "type": "directory",
+        "size": 288,
+        "allocated": 0,
+        "mode": 448
+      },
+      {
+        "path": "capacity-ui51/config/appearance.json",
+        "type": "file",
+        "size": 39,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/config/config.json",
+        "type": "file",
+        "size": 78581,
+        "allocated": 81920,
+        "mode": 384
+      },
+      {
+        "path": "capacity-ui51/config/gpui-drafts.json",
+        "type": "file",
+        "size": 34503,
+        "allocated": 36864,
+        "mode": 384
+      },
+      {
+        "path": "capacity-ui51/config/gpui.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/config/instance.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/config/startup.log",
+        "type": "file",
+        "size": 49,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/config/usage.sqlite3",
+        "type": "file",
+        "size": 233472,
+        "allocated": 262144,
+        "mode": 384
+      },
+      {
+        "path": "capacity-ui51/core.log",
+        "type": "file",
+        "size": 175,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/fixture.json",
+        "type": "file",
+        "size": 1232,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/gpui.log",
+        "type": "file",
+        "size": 180,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/home",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/home/.workbuddy",
+        "type": "directory",
+        "size": 128,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/home/.workbuddy/models.json",
+        "type": "file",
+        "size": 2,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/home/.workbuddy/projects",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/home/.workbuddy/projects/demo",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/native-acceptance-finished",
+        "type": "file",
+        "size": 5,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/review-core",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/small-first-raw.png",
+        "type": "file",
+        "size": 424163,
+        "allocated": 425984,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/small-range-end-raw.png",
+        "type": "file",
+        "size": 423067,
+        "allocated": 425984,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/source-protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/terminal-status.json",
+        "type": "file",
+        "size": 132,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/tmp",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/wide-first-raw.png",
+        "type": "file",
+        "size": 571175,
+        "allocated": 573440,
+        "mode": 420
+      },
+      {
+        "path": "capacity-ui51/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "capacity-ui51/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "dcd7-close-state.json",
+        "type": "file",
+        "size": 209,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "final-data-state.json",
+        "type": "file",
+        "size": 382,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "final-initial.json",
+        "type": "file",
+        "size": 4631,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "first-candidate-build.json",
+        "type": "file",
+        "size": 2534,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "fixed-initial.json",
+        "type": "file",
+        "size": 4631,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "fixture.py",
+        "type": "file",
+        "size": 10508,
+        "allocated": 12288,
+        "mode": 420
+      },
+      {
+        "path": "initial.json",
+        "type": "file",
+        "size": 4613,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "ownership.json",
+        "type": "file",
+        "size": 267,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current",
+        "type": "directory",
+        "size": 416,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2",
+        "type": "directory",
+        "size": 416,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2.log",
+        "type": "file",
+        "size": 1275,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/home",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs",
+        "type": "directory",
+        "size": 608,
+        "allocated": 0,
+        "mode": 448
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/appearance.json",
+        "type": "file",
+        "size": 39,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/config.json",
+        "type": "file",
+        "size": 15822,
+        "allocated": 16384,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/config.pre-v0.3-169ec8b93df4a485dec21ddfb7a59287a98a2f67816859c6.bak",
+        "type": "file",
+        "size": 170,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/frontend.json",
+        "type": "file",
+        "size": 19,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/frontend.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/gpui-drafts.json",
+        "type": "file",
+        "size": 868,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/gpui-startup.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/gpui-stop.json",
+        "type": "file",
+        "size": 2,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/gpui.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/instance.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/mock-port",
+        "type": "file",
+        "size": 5,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/mock-start.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/process.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/startup.log",
+        "type": "file",
+        "size": 49,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/usage.sqlite3",
+        "type": "file",
+        "size": 1204224,
+        "allocated": 2162688,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/usage.sqlite3-shm",
+        "type": "file",
+        "size": 32768,
+        "allocated": 32768,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/tmp/workbuddy-proxy-bench-vcp6k6fs/usage.sqlite3-wal",
+        "type": "file",
+        "size": 4511432,
+        "allocated": 5283840,
+        "mode": 384
+      },
+      {
+        "path": "perf-current-run2/workbuddy-proxy",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246800,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current-run2/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current.log",
+        "type": "file",
+        "size": 1272,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/home",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0",
+        "type": "directory",
+        "size": 608,
+        "allocated": 0,
+        "mode": 448
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/appearance.json",
+        "type": "file",
+        "size": 39,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/config.json",
+        "type": "file",
+        "size": 15822,
+        "allocated": 16384,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/config.pre-v0.3-7c0402de6ba4fa657272bbc08b0047380148f60b122a4f18.bak",
+        "type": "file",
+        "size": 170,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/frontend.json",
+        "type": "file",
+        "size": 19,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/frontend.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/gpui-drafts.json",
+        "type": "file",
+        "size": 868,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/gpui-startup.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/gpui-stop.json",
+        "type": "file",
+        "size": 2,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/gpui.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/instance.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/mock-port",
+        "type": "file",
+        "size": 5,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/mock-start.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/process.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/startup.log",
+        "type": "file",
+        "size": 49,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/usage.sqlite3",
+        "type": "file",
+        "size": 1212416,
+        "allocated": 2162688,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/usage.sqlite3-shm",
+        "type": "file",
+        "size": 32768,
+        "allocated": 32768,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/tmp/workbuddy-proxy-bench-edl6_we0/usage.sqlite3-wal",
+        "type": "file",
+        "size": 4474352,
+        "allocated": 5283840,
+        "mode": 384
+      },
+      {
+        "path": "perf-current/workbuddy-proxy",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246800,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-current/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous",
+        "type": "directory",
+        "size": 416,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2",
+        "type": "directory",
+        "size": 416,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2.log",
+        "type": "file",
+        "size": 1278,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/home",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs",
+        "type": "directory",
+        "size": 608,
+        "allocated": 0,
+        "mode": 448
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/appearance.json",
+        "type": "file",
+        "size": 39,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/config.json",
+        "type": "file",
+        "size": 15822,
+        "allocated": 16384,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/config.pre-v0.3-48f689d64bc703afcf8cb7ea6823450d0b930940e60de90d.bak",
+        "type": "file",
+        "size": 170,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/frontend.json",
+        "type": "file",
+        "size": 19,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/frontend.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/gpui-drafts.json",
+        "type": "file",
+        "size": 868,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/gpui-startup.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/gpui-stop.json",
+        "type": "file",
+        "size": 2,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/gpui.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/instance.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/mock-port",
+        "type": "file",
+        "size": 5,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/mock-start.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/process.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/startup.log",
+        "type": "file",
+        "size": 49,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/usage.sqlite3",
+        "type": "file",
+        "size": 1204224,
+        "allocated": 2162688,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/usage.sqlite3-shm",
+        "type": "file",
+        "size": 32768,
+        "allocated": 32768,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/tmp/workbuddy-proxy-bench-_s5yhsbs/usage.sqlite3-wal",
+        "type": "file",
+        "size": 4416672,
+        "allocated": 5283840,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run2/workbuddy-proxy",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246784,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run2/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3",
+        "type": "directory",
+        "size": 416,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3.log",
+        "type": "file",
+        "size": 1277,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/home",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp",
+        "type": "directory",
+        "size": 96,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox",
+        "type": "directory",
+        "size": 608,
+        "allocated": 0,
+        "mode": 448
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/appearance.json",
+        "type": "file",
+        "size": 39,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/config.json",
+        "type": "file",
+        "size": 15822,
+        "allocated": 16384,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/config.pre-v0.3-5d8f8a3fd37599976b737a43e04ea4a560545e660c9a72cd.bak",
+        "type": "file",
+        "size": 170,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/frontend.json",
+        "type": "file",
+        "size": 19,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/frontend.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/gpui-drafts.json",
+        "type": "file",
+        "size": 868,
+        "allocated": 4096,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/gpui-startup.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/gpui-stop.json",
+        "type": "file",
+        "size": 2,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/gpui.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/instance.lock",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/mock-port",
+        "type": "file",
+        "size": 5,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/mock-start.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/process.log",
+        "type": "file",
+        "size": 0,
+        "allocated": 0,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/startup.log",
+        "type": "file",
+        "size": 49,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/usage.sqlite3",
+        "type": "file",
+        "size": 1204224,
+        "allocated": 2162688,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/usage.sqlite3-shm",
+        "type": "file",
+        "size": 32768,
+        "allocated": 32768,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/tmp/workbuddy-proxy-bench-w7ynguox/usage.sqlite3-wal",
+        "type": "file",
+        "size": 4424912,
+        "allocated": 5283840,
+        "mode": 384
+      },
+      {
+        "path": "perf-previous-run3/workbuddy-proxy",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246784,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous-run3/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous.log",
+        "type": "file",
+        "size": 1271,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous/appdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/home",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/localappdata",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/protection.sb",
+        "type": "file",
+        "size": 327,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "perf-previous/tmp",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/workbuddy-proxy",
+        "type": "file",
+        "size": 8428096,
+        "allocated": 8429568,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/workbuddy-proxy-gpui",
+        "type": "file",
+        "size": 15246784,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/xdg-cache",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/xdg-config",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/xdg-data",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf-previous/xdg-state",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      },
+      {
+        "path": "perf.py",
+        "type": "file",
+        "size": 7129,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "previous-ui",
+        "type": "file",
+        "size": 15246784,
+        "allocated": 15249408,
+        "mode": 493
+      },
+      {
+        "path": "resources-idle-small.json",
+        "type": "file",
+        "size": 7882,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "resources-idle-wide.json",
+        "type": "file",
+        "size": 7702,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "resources-scroll-small-fixed.json",
+        "type": "file",
+        "size": 7884,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "resources-scroll-small.json",
+        "type": "file",
+        "size": 7741,
+        "allocated": 8192,
+        "mode": 420
+      },
+      {
+        "path": "sample-fixed.py",
+        "type": "file",
+        "size": 2223,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "sample.py",
+        "type": "file",
+        "size": 1719,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "scroll-fixed-start",
+        "type": "file",
+        "size": 4,
+        "allocated": 4096,
+        "mode": 420
+      },
+      {
+        "path": "tmp",
+        "type": "directory",
+        "size": 64,
+        "allocated": 0,
+        "mode": 493
+      }
+    ],
+    "inventory_sha256": "a8ebb5c12ef27373bdeddeb23826141e346c4efb441cd5ce81facf94f320f87b",
+    "process_path_references": 0,
+    "lsof_references": 0,
+    "canonical_temp_boundary_checked": true,
+    "parent_symlinks_checked": true,
+    "child_mounts_symlinks_and_hardlinks_absent": true,
+    "scope": "Only this session synthetic configs/databases/copied release binaries, compiler scratch, scripts/logs, resource samples and native photos already exported; shared Cargo caches and protected old roots outside target."
+  },
+  "ancestor_metadata": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5",
+      "real_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5",
+      "uid": 501,
+      "device": 16777232,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "real_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777232,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "real_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777232,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "real_path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777232,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "real_path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777232,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "real_path": "/private/var",
+      "uid": 0,
+      "device": 16777232,
+      "mount": false
+    },
+    {
+      "path": "/private",
+      "real_path": "/private",
+      "uid": 0,
+      "device": 16777232,
+      "mount": false
+    },
+    {
+      "path": "/",
+      "real_path": "/",
+      "uid": 0,
+      "device": 16777232,
+      "mount": true
+    }
+  ],
+  "final_inventory_sha256_rechecked": true,
+  "all_processes_and_references_rechecked": true,
+  "retained_current_session_bytes": 0,
+  "retained_protected_older_roots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round30.g5izvnv3",
+      "allocated_bytes": 25198592,
+      "protected_wrong_window_image_not_read_or_deleted": true,
+      "permitted_fixture_and_perf_text_templates_read_for_reuse": true
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round41.yze15j8d",
+      "allocated_bytes": 12288,
+      "private_event_contents_not_read_hashed_or_deleted": true
+    }
+  ],
+  "system_data_free_bytes_after": 35621318656,
+  "shared_cargo_caches_retained": true,
+  "other_unknown_project_temp_directories_untouched": true
+}

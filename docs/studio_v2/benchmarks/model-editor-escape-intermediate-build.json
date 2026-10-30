@@ -1,0 +1,96 @@
+{
+  "feature": "UI-51 model editor local Escape route and full capacity validation",
+  "base_commit": "e86f6318794c54aed386cba1f9f98a38bf300661",
+  "source_changed": true,
+  "ui_sha256": "dcd7ba7648c327128d98c3d23fe504d9efe3d79c88594b804bdbb2b1805a813d",
+  "ui_bytes": 15246784,
+  "baseline_ui_sha256": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.741
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 5.907
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 3.195
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 2.867
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 50.992
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/ui.rs": "166613e9fbfb35440e5f8c728a44a284d7d6fc33b2cea9ec94962117f54e1d63",
+    "gpui/src/ui/model_editor.rs": "72035e3d9c5957c53d63b8bcf767b7c3dd88ed0351b2d79923677cf8f757e947",
+    "src/config.rs": "eae0b4ac1ee00115bb7ab795546dd294eb51d94236259f7649e85dfa96e9809f"
+  },
+  "scope": "Extend the existing native modal-local Escape route to model editor; preserve InputState, composition and all data handlers. Real plain Esc and composition regressions required.",
+  "design": {
+    "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "mapped_nodes": [
+      "54:246",
+      "59:279"
+    ],
+    "new_design_read": false,
+    "layout_and_assets_unchanged": true
+  },
+  "limitations": [
+    "Candidate build is not GUI acceptance.",
+    "Intel typecheck only; existing block0.1.6 warning and Windows gates remain."
+  ]
+}

@@ -1,0 +1,736 @@
+{
+  "lifecycle_groups": [
+    {
+      "manifest": {
+        "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5/capacity-ui51",
+        "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5/capacity-ui51/WorkBuddy Proxy Review.app",
+        "core_pid": 24127,
+        "ui_pid": 24143,
+        "fixture_pid": 24109,
+        "port": 51475,
+        "bundle_id": "com.workbuddy.proxy.codexreview.tcapacity-ui51",
+        "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+        "source_guard_library_sha256": null,
+        "sandbox_ui_pid": 24143,
+        "gui_kernel_guard": false,
+        "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+        "binary_sha256": {
+          "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+          "ui": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba"
+        },
+        "synthetic_initial": {
+          "providers": 64,
+          "models": 256,
+          "requests": 0
+        },
+        "complete_bundle_signed": false,
+        "signature_identity": null
+      },
+      "core_guard": {
+        "enforced": true,
+        "pid": 24127,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "initial": {
+        "config_sha256": "97b393c9baa2ceeb167698136f8b27a246c6b77df6c08353672ac93bd76dedfd",
+        "providers": 64,
+        "models": 256,
+        "provider_model_counts": [
+          256,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "model_payload_sha256": "4a5cbfa264ce37b5ea75768f8633e38b72679b25b0109d422dc31cded7c8e28c",
+        "first_model": {
+          "id": "model-001",
+          "name": "MODEL 001",
+          "model": "studio-v2-model-001-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-TAIL001"
+        },
+        "last_model": {
+          "id": "model-256",
+          "name": "MODEL 256",
+          "model": "studio-v2-model-256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-TAIL256"
+        }
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": 0,
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": 0,
+        "core_exit_after_cleanup": 0
+      },
+      "all_three_recorded_processes_gone": true
+    },
+    {
+      "manifest": {
+        "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5/capacity-fixed-ui51",
+        "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5/capacity-fixed-ui51/WorkBuddy Proxy Review.app",
+        "core_pid": 35276,
+        "ui_pid": 35287,
+        "fixture_pid": 35275,
+        "port": 49269,
+        "bundle_id": "com.workbuddy.proxy.codexreview.tcapacity-fixed-ui51",
+        "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+        "source_guard_library_sha256": null,
+        "sandbox_ui_pid": 35287,
+        "gui_kernel_guard": false,
+        "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+        "binary_sha256": {
+          "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+          "ui": "dcd7ba7648c327128d98c3d23fe504d9efe3d79c88594b804bdbb2b1805a813d"
+        },
+        "synthetic_initial": {
+          "providers": 64,
+          "models": 256,
+          "requests": 0
+        },
+        "complete_bundle_signed": false,
+        "signature_identity": null
+      },
+      "core_guard": {
+        "enforced": true,
+        "pid": 35276,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "initial": {
+        "config_sha256": "51d26794292bcbe4ebee38a2c16eeebda0163036fc2f5bda12b90f23d2e3a10b",
+        "providers": 64,
+        "models": 256,
+        "provider_model_counts": [
+          256,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "model_payload_sha256": "4a5cbfa264ce37b5ea75768f8633e38b72679b25b0109d422dc31cded7c8e28c",
+        "first_model": {
+          "id": "model-001",
+          "name": "MODEL 001",
+          "model": "studio-v2-model-001-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-TAIL001"
+        },
+        "last_model": {
+          "id": "model-256",
+          "name": "MODEL 256",
+          "model": "studio-v2-model-256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-TAIL256"
+        }
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": 0,
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": 0,
+        "core_exit_after_cleanup": 0
+      },
+      "all_three_recorded_processes_gone": true
+    },
+    {
+      "manifest": {
+        "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5/capacity-final-ui51",
+        "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round42.q1wi_kk5/capacity-final-ui51/WorkBuddy Proxy Review.app",
+        "core_pid": 37843,
+        "ui_pid": 37851,
+        "fixture_pid": 37842,
+        "port": 55106,
+        "bundle_id": "com.workbuddy.proxy.codexreview.tcapacity-final-ui51",
+        "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+        "source_guard_library_sha256": null,
+        "sandbox_ui_pid": 37851,
+        "gui_kernel_guard": false,
+        "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+        "binary_sha256": {
+          "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+          "ui": "675fba1473a408507335b9b4bee8d4606e1ba27039e6416920a62a6751b7ef9e"
+        },
+        "synthetic_initial": {
+          "providers": 64,
+          "models": 256,
+          "requests": 0
+        },
+        "complete_bundle_signed": false,
+        "signature_identity": null
+      },
+      "core_guard": {
+        "enforced": true,
+        "pid": 37843,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "initial": {
+        "config_sha256": "d16193abdad57950bcaabec9196167835db9f266c75e672f8746dab1f5c4674a",
+        "providers": 64,
+        "models": 256,
+        "provider_model_counts": [
+          256,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "model_payload_sha256": "4a5cbfa264ce37b5ea75768f8633e38b72679b25b0109d422dc31cded7c8e28c",
+        "first_model": {
+          "id": "model-001",
+          "name": "MODEL 001",
+          "model": "studio-v2-model-001-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-TAIL001"
+        },
+        "last_model": {
+          "id": "model-256",
+          "name": "MODEL 256",
+          "model": "studio-v2-model-256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-TAIL256"
+        }
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": 0,
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": 0,
+        "core_exit_after_cleanup": 0
+      },
+      "all_three_recorded_processes_gone": true
+    }
+  ],
+  "old_post_close_draft_boundary": {
+    "core_config_sha256": "97b393c9baa2ceeb167698136f8b27a246c6b77df6c08353672ac93bd76dedfd",
+    "core_config_unchanged": true,
+    "core_models": 256,
+    "draft_selected": "provider-001",
+    "draft_provider001_models": 0,
+    "draft_models_total": 0,
+    "save_performed": false,
+    "ui_pid_gone": 24143
+  },
+  "intermediate_post_close": {
+    "core_config_unchanged": true,
+    "core_config_sha256": "51d26794292bcbe4ebee38a2c16eeebda0163036fc2f5bda12b90f23d2e3a10b",
+    "ui_gone": 35287,
+    "save_performed": false,
+    "composition_not_tested": true
+  },
+  "final_data_state": {
+    "core_config_sha256": "d16193abdad57950bcaabec9196167835db9f266c75e672f8746dab1f5c4674a",
+    "core_config_unchanged": true,
+    "providers": 64,
+    "models": 256,
+    "requests_readonly_sqlite": 0,
+    "all_draft_model_projections_match_saved_config": true,
+    "selected": "provider-001",
+    "appearance": {
+      "version": 1,
+      "skin": "studio_indigo"
+    },
+    "no_explicit_save": true
+  },
+  "final_observations": {
+    "wide_plain_escape": "MODEL001 F2 and MODEL256 End/F2 then single Esc each closed editor, fresh trees including600ms later. Complete160byte IDs TAIL001/TAIL256 read.",
+    "small_plain_escape": "MODEL256 F2 single Esc closed, fresh trees including600ms later.",
+    "wide_and_small_actual_ime": "Focused display name CmdA then individual n/i/h/a/o produced underlined ni'hao; Space yielded你好. End then individual nihao produced further underlined composition. First Esc left editor open with exactly你好/U+4F60,U+597D and noU+001B; second Esc cancelled modal. No typeText/setValue used to generate Chinese.",
+    "actual_field_scope": "Display name composition and initial upstream model ID plain Escape; other input sources, native candidate panel and all numeric input/reader/platform cases not claimed.",
+    "images": "Finalsix native photos and priorfour compared by main agent; see visual-validation JSON.",
+    "save_and_sync": "No Save,Sync,external links or login item operations; final64/256/0 and all draft model projections exactly match saved configuration."
+  },
+  "methods": {
+    "mac_lock_checks": "CUA precheck IOConsoleLocked=No, actual screenshots throughout; later corrected root-level ioreg plist IOConsoleLocked=false before confirmed benchmark batch. A first parser incorrectly looked in console rows and did not establish state.",
+    "gui": "CUA only; ownPID/layer/windowNumber selection and user-authorized screencapture, no global bounds/OS scale query/native external AX fields/extra input-source queries or switching/CGEvent injection.",
+    "kernel_guard": "Each live Core protection and real LaunchAgents deny checked. GUI uses isolated HOME/config/LSEnvironment but no kernel profile; not full-role sandbox acceptance.",
+    "private_retained_files": "Root30 protected wrong-window image and Root41 private native events never read,hashed,deleted or retried this round."
+  },
+  "limitations": [
+    "Long ID exact hover/tail Tooltip not verified.",
+    "Old Escape outcomes conflicted; no rate or universal failure claim. Intermediate parent-only routing failed and remains documented.",
+    "CPU/RSS are short process observations, not GPU,FPS,first paint,input latency,leak proof or equivalent old-new UI-scene comparison.",
+    "Native candidate UI,other sources/fields,full reader/AX,all HiDPI/Windows/Intel runtime and full-frame visual acceptance remain open."
+  ]
+}

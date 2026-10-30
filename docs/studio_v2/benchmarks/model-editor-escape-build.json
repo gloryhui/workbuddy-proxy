@@ -1,0 +1,97 @@
+{
+  "feature": "UI-51 model editor local Escape route and full capacity validation",
+  "base_commit": "e86f6318794c54aed386cba1f9f98a38bf300661",
+  "source_changed": true,
+  "ui_sha256": "675fba1473a408507335b9b4bee8d4606e1ba27039e6416920a62a6751b7ef9e",
+  "ui_bytes": 15246800,
+  "baseline_ui_sha256": "87ebbb96ed3e46c8ffd471739539fd32b1f0fcccb8dd71eaf298717690c369ba",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_bytes": 8428096,
+  "gate_timings": {
+    "fmt": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.713
+    },
+    "test": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml"
+      ],
+      "exit": 0,
+      "seconds": 9.438
+    },
+    "clippy": {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 4.306
+    },
+    "intel": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit": 0,
+      "seconds": 3.33
+    },
+    "release": {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release"
+      ],
+      "exit": 0,
+      "seconds": 57.001
+    }
+  },
+  "tests_passed": 192,
+  "tests_ignored": 2,
+  "source_sha256": {
+    "gpui/src/main.rs": "a933fc22014d184f2b9b382a4a68addd027209073cae223275334ed587216893",
+    "gpui/src/ui.rs": "f94b4376c993fe98377ccb180809c4e1ad98d11dc4370721123b63437676834c",
+    "gpui/src/ui/model_editor.rs": "72035e3d9c5957c53d63b8bcf767b7c3dd88ed0351b2d79923677cf8f757e947",
+    "src/config.rs": "eae0b4ac1ee00115bb7ab795546dd294eb51d94236259f7649e85dfa96e9809f"
+  },
+  "scope": "Add a model-editor input-specific Escape action. Inspect only the focused native input marked range: forward composition to native Input Escape, otherwise close the editor. No input text rewrite, global binding, dependency or Core changes; real GUI regression required.",
+  "design": {
+    "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "mapped_nodes": [
+      "54:246",
+      "59:279"
+    ],
+    "new_design_read": false,
+    "layout_and_assets_unchanged": true
+  },
+  "limitations": [
+    "Candidate build is not GUI acceptance.",
+    "Intel typecheck only; existing block0.1.6 warning and Windows gates remain."
+  ]
+}

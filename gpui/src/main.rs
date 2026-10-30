@@ -353,6 +353,7 @@ fn main() {
                 KeyBinding::new("enter", ui::ActivateProtocolTab, Some("ProtocolTab")),
                 KeyBinding::new("space", ui::ActivateProtocolTab, Some("ProtocolTab")),
                 KeyBinding::new("escape", ui::Dismiss, Some("ProxyModal")),
+                KeyBinding::new("escape", ui::DismissModelInput, Some("ModelEditor > Input")),
                 KeyBinding::new(
                     "enter",
                     ui::ActivateProviderProfileControl,

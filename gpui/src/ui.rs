@@ -58,6 +58,7 @@ gpui_kit::actions!(
         ModelNextControl,
         ModelPreviousControl,
         Dismiss,
+        DismissModelInput,
         Quit,
         ActivateProtocolTab,
         ActivateProviderDeleteControl,
@@ -1865,6 +1866,32 @@ impl Proxy {
             .into();
         cx.notify();
     }
+    fn dismiss_model_input(
+        &mut self,
+        _: &DismissModelInput,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
+        // Resolve composition before closing the editor. The input action is
+        // different from the dialog's Cancel action, so a plain Escape needs
+        // an explicit route from inputs in this window-layer modal.
+        let composing = [&self.edit_name, &self.edit_model]
+            .into_iter()
+            .chain(self.model_options.limits.iter())
+            .any(|input| {
+                input.update(cx, |state, cx| {
+                    state.focus_handle(cx).is_focused(window)
+                        && state
+                            .marked_text_range(window, cx)
+                            .is_some_and(|range| !range.is_empty())
+                })
+            });
+        if composing {
+            window.dispatch_action(Box::new(gpui_kit::component::input::Escape), cx);
+        } else {
+            self.dismiss(&Dismiss, window, cx);
+        }
+    }
     fn dismiss(&mut self, _: &Dismiss, window: &mut Window, cx: &mut Context<Self>) {
         self.picker = None;
         self.editing = None;
@@ -2560,6 +2587,10 @@ impl Render for ModalBody {
                             // a local dismissal route too, not only input focus.
                             body.key_context("ProxyModal")
                                 .on_action(cx.listener(Proxy::dismiss))
+                        })
+                        .when(this.editing.is_some(), |body| {
+                            body.key_context("ModelEditor")
+                                .on_action(cx.listener(Proxy::dismiss_model_input))
                         })
                         .when(this.delete_open, |body| {
                             body.on_key_down(cx.listener(Proxy::scroll_provider_delete))
