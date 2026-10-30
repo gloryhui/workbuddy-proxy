@@ -1,0 +1,738 @@
+{
+  "version": 1,
+  "figma": {
+    "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "page_id": "51:2",
+    "inventory_source": "Official Figma MCP page metadata refreshed 2026-10-30; exactly40 matching state frames",
+    "high_fidelity_context_read": [
+      "59:484"
+    ]
+  },
+  "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
+  "frames": [
+    {
+      "id": "52:2",
+      "name": "01 / STUDIO V2 · 使用概览",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "54:2",
+      "name": "02 / STUDIO V2 · 供应商管理",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "56:8",
+      "name": "03 / STUDIO V2 · 用量明细",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "57:8",
+      "name": "04 / STUDIO V2 · 汇总分析",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "58:8",
+      "name": "05 / STUDIO V2 · 统计设置",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "59:11",
+      "name": "06 / STUDIO V2 · 选择模型",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "59:279",
+      "name": "07 / STUDIO V2 · 编辑模型能力",
+      "review_status": "reviewing",
+      "scope": "本轮完整界面设计比对进行中；高保真弹窗59:484已读，运行交互/两尺寸/性能仍在验证。",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [
+        "原生 Kit 弹窗阴影与稿中 0/18/42 阴影不同，尚未修正。",
+        "Figma 使用 Noto Sans SC；当前 macOS 原生字体回退仍需逐字与基线复核。",
+        "整帧共享背景、资产及扩展业务控件的对照仍待完成；不因局部控件修正标记整帧通过。"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "60:27",
+      "name": "08 / STUDIO V2 · 同步 WorkBuddy",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "60:249",
+      "name": "09 / STUDIO V2 · 新建价格规则",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "60:475",
+      "name": "10 / STUDIO V2 · 请求详情",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "61:289",
+      "name": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "61:561",
+      "name": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "61:838",
+      "name": "11 / STUDIO V2 · 协议选项 · Anthropic",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "61:1111",
+      "name": "11 / STUDIO V2 · 协议选项 · Gemini",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "62:308",
+      "name": "13 / STUDIO V2 · 黑白主题示例",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "64:335",
+      "name": "14 / STUDIO V2 · 外观与主题",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "66:320",
+      "name": "17 / STUDIO V2 · 上游协议下拉",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "66:538",
+      "name": "18 / STUDIO V2 · 供应商预设搜索",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "66:760",
+      "name": "19 / STUDIO V2 · API Key 显示演示",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "67:338",
+      "name": "20 / STUDIO V2 · OpenCode Go 供应商",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "67:548",
+      "name": "21 / STUDIO V2 · 思考强度菜单",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "68:350",
+      "name": "22 / STUDIO V2 · 取消同步确认",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "69:359",
+      "name": "23 / STUDIO V2 · 编辑模型价格",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "78:364",
+      "name": "24 / STUDIO V2 · 新增供应商草稿",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "78:605",
+      "name": "25 / STUDIO V2 · 编辑供应商资料",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "78:843",
+      "name": "26 / STUDIO V2 · 复制供应商草稿",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "78:1080",
+      "name": "27 / STUDIO V2 · 删除供应商确认",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "78:1325",
+      "name": "28 / STUDIO V2 · 供应商满载滚动 (64)",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "78:1804",
+      "name": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "79:400",
+      "name": "30 / STUDIO V2 · 64 个供应商搜索",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "79:885",
+      "name": "31 / STUDIO V2 · 新供应商保存完成",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "79:1102",
+      "name": "32 / STUDIO V2 · 供应商复制完成",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "80:418",
+      "name": "33 / STUDIO V2 · 供应商搜索（2个）",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "80:646",
+      "name": "34 / STUDIO V2 · 编辑 OpenCode Go",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "80:864",
+      "name": "35 / STUDIO V2 · 删除 OpenCode Go 确认",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "80:1114",
+      "name": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "104:1378",
+      "name": "37 / STUDIO V2 · 开机启动已开启（原型）",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "104:1605",
+      "name": "38 / STUDIO V2 · 检查更新交互（原型）",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "104:1823",
+      "name": "39 / STUDIO V2 · 语言切换菜单",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    },
+    {
+      "id": "104:2046",
+      "name": "40 / STUDIO V2 · 恢复默认窗口尺寸（原型）",
+      "review_status": "not_reviewed",
+      "scope": "Pending full-frame review",
+      "checks": {
+        "layout": "not_checked",
+        "colors": "not_checked",
+        "typography": "not_checked",
+        "assets": "not_checked",
+        "states": "not_checked",
+        "interaction": "not_checked",
+        "native_1440": "not_checked",
+        "native_1100": "not_checked"
+      },
+      "differences": [],
+      "evidence": []
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T15:13:40+08:00",
+  "updated_at": "2026-10-30T15:43:55+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
@@ -14,11 +14,22 @@
   },
   "total_frames": 40,
   "recorded_tasks": 52,
+  "remaining_final": 40,
+  "visual_review": {
+    "counts": {
+      "not_reviewed": 39,
+      "reviewing": 1,
+      "reviewed_with_differences": 0,
+      "reviewed": 0
+    },
+    "source": "visual_review.json",
+    "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
+  },
   "current_task": {
-    "id": 52,
-    "title": "Intel 发行版与 Rosetta 实跑验证",
-    "status": "recorded",
-    "description": "Intel Core/UI已真实链接，192项x86发行测试和实际译运行编辑/草稿/一次Save、两尺寸实拍及四轮原负载已完成。Rosetta启动更慢，不能替代Intel实机。下阶段转入40帧逐帧一比一比对与差异修复。"
+    "id": 53,
+    "title": "全局逐帧视觉比对：模型编辑弹窗",
+    "status": "validating",
+    "description": "以最新 Figma 59:279 / 59:484 开始完整界面审查；已修控件尺寸、列对齐和局部颜色，编译与192项测试通过，真实交互、两尺寸截图及性能验证进行中。字体、原生弹窗阴影及共享背景保留差异，尚未整帧通过。"
   },
   "latest_task": {
     "id": 52,
@@ -76,7 +87,25 @@
       "source": "statistics/overview.rs, layout.rs, source_controls.rs, usage_chart.rs",
       "detail": "部分：导航/筛选、四KPI/详细指标/空值已验；四KPI/趋势/计费/最近请求已验，整帧最终审计待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=52-2"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=52-2",
+      "visual_review": {
+        "id": "52:2",
+        "name": "01 / STUDIO V2 · 使用概览",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "54:2",
@@ -84,7 +113,25 @@
       "source": "ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs",
       "detail": "部分：侧栏/双卡/运行中心/日志交互通过；通用header无左创建完成徽标/普通Save/重开与两尺寸已验，完整视觉/无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=54-2"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=54-2",
+      "visual_review": {
+        "id": "54:2",
+        "name": "02 / STUDIO V2 · 供应商管理",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "56:8",
@@ -92,7 +139,25 @@
       "source": "statistics/*, usage_table.rs",
       "detail": "部分：八列/来源筛选/分页/详情/窄窗首末列已验，整帧最终审计待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=56-8"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=56-8",
+      "visual_review": {
+        "id": "56:8",
+        "name": "03 / STUDIO V2 · 用量明细",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "57:8",
@@ -100,7 +165,25 @@
       "source": "statistics/analysis.rs, layout.rs, usage_table.rs",
       "detail": "部分：表卡/两指标卡/真实排序/分组分页/两尺寸已验，完整视觉与无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=57-8"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=57-8",
+      "visual_review": {
+        "id": "57:8",
+        "name": "04 / STUDIO V2 · 汇总分析",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "58:8",
@@ -108,7 +191,25 @@
       "source": "statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs",
       "detail": "部分：分区导航/价格卡CRUD与游标/快照/失败提示、采集/导入双卡及主要业务已验；整帧视觉、完整键盘/IME/无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=58-8"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=58-8",
+      "visual_review": {
+        "id": "58:8",
+        "name": "05 / STUDIO V2 · 统计设置",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "59:11",
@@ -116,7 +217,25 @@
       "source": "ui/model_picker.rs, ui.rs, ui/providers.rs",
       "detail": "部分：原生726×672/小窗自适应、38/4096虚拟候选、过滤与勾选/键盘、取消/确认草稿/显式保存、跨供应商256边界与错误/空态已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-11"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-11",
+      "visual_review": {
+        "id": "59:11",
+        "name": "06 / STUDIO V2 · 选择模型",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "59:279",
@@ -124,7 +243,29 @@
       "source": "ui/model_editor.rs, model_options.rs, ui.rs",
       "detail": "部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；完整IME/无障碍/跨平台及精细审计待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-279"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-279",
+      "visual_review": {
+        "id": "59:279",
+        "name": "07 / STUDIO V2 · 编辑模型能力",
+        "review_status": "reviewing",
+        "scope": "本轮完整界面设计比对进行中；高保真弹窗59:484已读，运行交互/两尺寸/性能仍在验证。",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [
+          "原生 Kit 弹窗阴影与稿中 0/18/42 阴影不同，尚未修正。",
+          "Figma 使用 Noto Sans SC；当前 macOS 原生字体回退仍需逐字与基线复核。",
+          "整帧共享背景、资产及扩展业务控件的对照仍待完成；不因局部控件修正标记整帧通过。"
+        ],
+        "evidence": []
+      }
     },
     {
       "node": "60:27",
@@ -132,7 +273,25 @@
       "source": "ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs",
       "detail": "部分：526原生确认/两尺寸、取消/无隐式Enter、仅同步/当前草稿与全部saved范围、非法文件/重试、守卫下写入后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-27"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-27",
+      "visual_review": {
+        "id": "60:27",
+        "name": "08 / STUDIO V2 · 同步 WorkBuddy",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "60:249",
@@ -140,7 +299,25 @@
       "source": "statistics/price_layout.rs, stats_controller.rs, stats_backend.rs",
       "detail": "部分：原生574×625布局/两尺寸/四费率与备注/币种模式/取消与Enter/焦点自动滚动/校验已验；完整IME/无障碍/跨平台与精细视觉待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-249"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-249",
+      "visual_review": {
+        "id": "60:249",
+        "name": "09 / STUDIO V2 · 新建价格规则",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "60:475",
@@ -148,7 +325,25 @@
       "source": "statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs",
       "detail": "部分：原650×770/分组/代理与导入/本次快照/错误重试/关闭证据保留；0b43修长Tooltip横向溢出，真实请求模型提示两尺寸完整/30s同图、More键盘/长值及价格@1/零与未知/小窗底部已验；三精确hover/完整无障碍/跨平台与整帧待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-475"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-475",
+      "visual_review": {
+        "id": "60:475",
+        "name": "10 / STUDIO V2 · 请求详情",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "61:289",
@@ -156,7 +351,25 @@
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
       "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-289"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-289",
+      "visual_review": {
+        "id": "61:289",
+        "name": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "61:561",
@@ -164,7 +377,25 @@
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
       "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-561"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-561",
+      "visual_review": {
+        "id": "61:561",
+        "name": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "61:838",
@@ -172,7 +403,25 @@
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
       "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-838"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-838",
+      "visual_review": {
+        "id": "61:838",
+        "name": "11 / STUDIO V2 · 协议选项 · Anthropic",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "61:1111",
@@ -180,7 +429,25 @@
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
       "detail": "部分：620×724原生四tab/两尺寸、认证Azure/各协议真实字段与映射/8192输出、临时输入往返、Apply仅草稿/显式保存、标签Enter/Space不误应用、Tab/ShiftTab/缩窗、X/Esc及菜单优先Esc/标题空白Esc已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-1111"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-1111",
+      "visual_review": {
+        "id": "61:1111",
+        "name": "11 / STUDIO V2 · 协议选项 · Gemini",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "62:308",
@@ -188,7 +455,25 @@
       "source": "ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs",
       "detail": "部分：Mono交替行/真实SVG路由、多选跨皮肤与语言/草稿保留、两尺寸和四轮性能已验；完整精细视觉/IME/无障碍及跨平台仍待专项",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=62-308"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=62-308",
+      "visual_review": {
+        "id": "62:308",
+        "name": "13 / STUDIO V2 · 黑白主题示例",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "64:335",
@@ -196,7 +481,25 @@
       "source": "ui/skin_controls.rs, theme/skin.rs, ui_components.rs",
       "detail": "部分：原七项配置保留；最终0892菜单内Blue→Studio落盘/草稿、Esc与正反Tab离开关闭、Studio七工具按钮清晰焦点/两尺寸与菜单CPU/八轮短测已验；其他控件焦点/完整视觉/IME/读屏/原生AX及跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=64-335"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=64-335",
+      "visual_review": {
+        "id": "64:335",
+        "name": "14 / STUDIO V2 · 外观与主题",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "66:320",
@@ -204,7 +507,25 @@
       "source": "ui/provider_choices.rs, ui/providers.rs, ui.rs",
       "detail": "部分：原生361×233/53px行与2px间隔、四项说明/选中标记、鼠标/方向Enter/Esc/外部取消、仅草稿/显式保存与两尺寸已验；完整IME/无障碍/跨平台及精细整帧待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-320"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-320",
+      "visual_review": {
+        "id": "66:320",
+        "name": "17 / STUDIO V2 · 上游协议下拉",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "66:538",
@@ -212,7 +533,25 @@
       "source": "ui/provider_choices.rs, ui.rs, presets.rs",
       "detail": "部分：原生436×377/41px内嵌搜索/36px行、地区/Azure/空结果与Enter守卫、清除/取消/重开、真实预设草稿及loopback显式保存、两尺寸已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-538"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-538",
+      "visual_review": {
+        "id": "66:538",
+        "name": "18 / STUDIO V2 · 供应商预设搜索",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "66:760",
@@ -220,7 +559,25 @@
       "source": "ui/providers.rs, ui_components.rs, ui.rs",
       "detail": "部分：17px设计眼睛SVG、原toggle_masked、鼠标/Tab Enter/Space显隐、中英名称及secure AX无值、仅合成Key两尺寸实拍已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-760"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-760",
+      "visual_review": {
+        "id": "66:760",
+        "name": "19 / STUDIO V2 · API Key 显示演示",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "67:338",
@@ -228,7 +585,25 @@
       "source": "ui/providers.rs, ui.rs, ui/provider_feedback.rs",
       "detail": "部分：真实B单模型、664×50原生提示/英文小窗换行、1→2→1草稿切换/无Core保存与两尺寸已验；完整精细视觉/IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-338"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-338",
+      "visual_review": {
+        "id": "67:338",
+        "name": "20 / STUDIO V2 · OpenCode Go 供应商",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "67:548",
@@ -236,7 +611,25 @@
       "source": "ui/provider_choices.rs, ui.rs",
       "detail": "部分：原生232×258/33px行与2px间隔、六档原值、鼠标/方向Enter及Low真实保存、长英文/语言切换保值、两尺寸已验；完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-548"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=67-548",
+      "visual_review": {
+        "id": "67:548",
+        "name": "21 / STUDIO V2 · 思考强度菜单",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "68:350",
@@ -244,7 +637,25 @@
       "source": "ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs",
       "detail": "部分：原生确认/两尺寸、取消/仅移除、保留providers与草稿/恢复原条目、守卫下移除后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=68-350"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=68-350",
+      "visual_review": {
+        "id": "68:350",
+        "name": "22 / STUDIO V2 · 取消同步确认",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "69:359",
@@ -252,7 +663,25 @@
       "source": "statistics/price_layout.rs, stats_controller.rs, stats_backend.rs",
       "detail": "部分：原生编辑布局/身份锁定/取消恢复/版本冲突及手动刷新重开/旧快照金额保护已验；完整IME/无障碍/跨平台与精细视觉待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=69-359"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=69-359",
+      "visual_review": {
+        "id": "69:359",
+        "name": "23 / STUDIO V2 · 编辑模型价格",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "78:364",
@@ -260,7 +689,25 @@
       "source": "ui/provider_new.rs, ui/providers.rs, provider_create.rs, draft_discovery.rs, state.rs",
       "detail": "部分：独立pending/取消/切换恢复/重开、零供应商真实发现/自动能力及小窗Save、最终两尺寸已验，精细视觉/IME/无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-364"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-364",
+      "visual_review": {
+        "id": "78:364",
+        "name": "24 / STUDIO V2 · 新增供应商草稿",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "78:605",
@@ -268,7 +715,25 @@
       "source": "ui/provider_edit.rs, ui/providers.rs, ui.rs, state.rs, main.rs",
       "detail": "部分：原位编辑/取消完整草稿与选择、A/B独立、保存边界、重开草稿、两尺寸已验；整帧精细审计及IME/无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-605"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-605",
+      "visual_review": {
+        "id": "78:605",
+        "name": "25 / STUDIO V2 · 编辑供应商资料",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "78:843",
@@ -276,7 +741,25 @@
       "source": "ui/provider_new.rs, provider_create.rs, ui/sidebar.rs, ui/providers.rs",
       "detail": "部分：来源dirty先保存/副本本地取消、显式Save/Test真实新目标/新路由和混合effort已验；最终两尺寸及Cancel补验、四轮性能及1000请求复核已验，完整审计待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-843"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-843",
+      "visual_review": {
+        "id": "78:843",
+        "name": "26 / STUDIO V2 · 复制供应商草稿",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "78:1080",
@@ -284,7 +767,25 @@
       "source": "ui/provider_delete.rs, ui/sidebar.rs, ui.rs, main.rs",
       "detail": "部分：532原生删除确认/保存目标与dirty/取消键盘/失败重试/无自动同步、两尺寸与合法长名实拍及四轮性能已验；完整视觉/无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1080"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1080",
+      "visual_review": {
+        "id": "78:1080",
+        "name": "27 / STUDIO V2 · 删除供应商确认",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "78:1325",
@@ -292,7 +793,25 @@
       "source": "ui/sidebar.rs, ui.rs, provider_filter.rs",
       "detail": "部分：最新高保真已读、native选中行/缩窗自动可见、手动9秒不回跳、固定CRUD/64容量与两尺寸已验；通用header差异已在小功能30修正，整帧/键盘/无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1325"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1325",
+      "visual_review": {
+        "id": "78:1325",
+        "name": "28 / STUDIO V2 · 供应商满载滚动 (64)",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "78:1804",
@@ -300,7 +819,25 @@
       "source": "ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs",
       "detail": "部分：真实删A只剩B1、ID集合验证/绑定幸存者的会话Deleted1、dirty/edit/Save/重开、两尺寸与计数已验；失败后可信配置对齐/原错误、dirty与Cancel/重开、异常文件守卫及恢复重试、两尺寸已验；Core-unresponsive与完整审计待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1804"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=78-1804",
+      "visual_review": {
+        "id": "78:1804",
+        "name": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "79:400",
@@ -308,7 +845,25 @@
       "source": "ui.rs, provider_filter.rs",
       "detail": "部分：最新高保真已读、64末行1/64与无结果0/64、清除恢复选中行/保持草稿/两尺寸与容量已验；独立搜索态实拍及完整键盘/无障碍待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-400"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-400",
+      "visual_review": {
+        "id": "79:400",
+        "name": "30 / STUDIO V2 · 64 个供应商搜索",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "79:885",
@@ -316,7 +871,25 @@
       "source": "ui/providers.rs, ui/provider_new.rs, ui.rs",
       "detail": "部分：真实Save与绿色完成徽标、dirty/失败/Cancel及两尺寸实拍、四轮性能已验；精细整帧/IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-885"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-885",
+      "visual_review": {
+        "id": "79:885",
+        "name": "31 / STUDIO V2 · 新供应商保存完成",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "79:1102",
@@ -324,7 +897,25 @@
       "source": "ui/providers.rs, ui/provider_new.rs, ui.rs",
       "detail": "部分：成功copy真实ID的会话徽标、dirty/Cancel/切换不串标/重开genericSaved、两尺寸与四轮性能已验；精细整帧/IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-1102"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=79-1102",
+      "visual_review": {
+        "id": "79:1102",
+        "name": "32 / STUDIO V2 · 供应商复制完成",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "80:418",
@@ -332,7 +923,25 @@
       "source": "ui.rs, provider_filter.rs",
       "detail": "部分：过滤/草稿保护通过，最终侧栏视觉待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-418"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-418",
+      "visual_review": {
+        "id": "80:418",
+        "name": "33 / STUDIO V2 · 供应商搜索（2个）",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "80:646",
@@ -340,7 +949,25 @@
       "source": "ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, model_table.rs, ui.rs",
       "detail": "部分：B原位编辑/取消恢复已有未保存名称和模型、A独立草稿/仅B显式保存、单模型白行/Studio交替行与原生选中边线、两尺寸四图/遮罩/重开及四轮性能已验；完整精细视觉/键盘/IME/无障碍及跨平台仍待专项",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-646"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-646",
+      "visual_review": {
+        "id": "80:646",
+        "name": "34 / STUDIO V2 · 编辑 OpenCode Go",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "80:864",
@@ -348,7 +975,25 @@
       "source": "ui/provider_delete.rs, ui/sidebar.rs, ui.rs",
       "detail": "部分：高保真已读，同一动态目标/模型数的原生确认；真实B键盘Space删除/小窗长名与两尺寸已验，整帧最终审计待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-864"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-864",
+      "visual_review": {
+        "id": "80:864",
+        "name": "35 / STUDIO V2 · 删除 OpenCode Go 确认",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "80:1114",
@@ -356,7 +1001,25 @@
       "source": "ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs",
       "detail": "部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；失败后只读配置对齐/幸存dirty与异常文件守卫已验；完整视觉/IME/无障碍/跨平台与Core-unresponsive待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-1114"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=80-1114",
+      "visual_review": {
+        "id": "80:1114",
+        "name": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "104:1378",
@@ -364,7 +1027,25 @@
       "source": "ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs",
       "detail": "部分：原生提示/实际开关与隔离plist、分候选失败回滚/重试和Pending关闭、动态Tooltip实时刷新、遮罩/两尺寸与四轮性能已验；初始Tab/完整键盘/IME/无障碍及跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1378"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1378",
+      "visual_review": {
+        "id": "104:1378",
+        "name": "37 / STUDIO V2 · 开机启动已开启（原型）",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "104:1605",
@@ -372,7 +1053,25 @@
       "source": "ui/update_notice.rs, ui.rs",
       "detail": "部分：299×113原生等待/实际HTTP403与重试、关闭不回包重开、Esc/X/外部/缩窗、草稿筛选/遮罩/两尺寸与六轮性能已验；公网成功/完整键盘/IME/无障碍及跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1605"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1605",
+      "visual_review": {
+        "id": "104:1605",
+        "name": "38 / STUDIO V2 · 检查更新交互（原型）",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "104:1823",
@@ -380,7 +1079,25 @@
       "source": "ui/language_menu.rs, ui.rs",
       "detail": "部分：原241×184/三模式保存与重复不写/取消/草稿筛选/重开等证据保留；最终0892 Studio工具焦点/Enter与Space打开/Esc返回/复开及Tab接续已验，菜单30s CPU样本已留；长期CPU/完整IME/读屏/原生AX及跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1823"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-1823",
+      "visual_review": {
+        "id": "104:1823",
+        "name": "39 / STUDIO V2 · 语言切换菜单",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     },
     {
       "node": "104:2046",
@@ -388,7 +1105,25 @@
       "source": "ui/window_restore.rs, ui.rs",
       "detail": "部分：原生提示/两尺寸、普通/zoom/全屏恢复、缩窗Esc/X、真实Enter/Space、草稿筛选/遮罩与四轮性能已验；超时失败、完整IME/无障碍/跨平台待续",
       "status": "partial",
-      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-2046"
+      "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=104-2046",
+      "visual_review": {
+        "id": "104:2046",
+        "name": "40 / STUDIO V2 · 恢复默认窗口尺寸（原型）",
+        "review_status": "not_reviewed",
+        "scope": "Pending full-frame review",
+        "checks": {
+          "layout": "not_checked",
+          "colors": "not_checked",
+          "typography": "not_checked",
+          "assets": "not_checked",
+          "states": "not_checked",
+          "interaction": "not_checked",
+          "native_1440": "not_checked",
+          "native_1100": "not_checked"
+        },
+        "differences": [],
+        "evidence": []
+      }
     }
   ],
   "timeline": [
@@ -3078,6 +3813,21 @@
       "partial": 40,
       "reused": 0,
       "verified": 0
+    },
+    {
+      "date": "2026-10-30T15:43:09+08:00",
+      "note": "转入全局逐帧设计比对；独立展示视觉审查覆盖与剩余40帧最终验收",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 39,
+        "reviewing": 1,
+        "reviewed_with_differences": 0,
+        "reviewed": 0
+      }
     }
   ],
   "verification": [
@@ -3106,6 +3856,10 @@
     {
       "label": "实施与 QA 原文",
       "href": "baseline_and_qa.md"
+    },
+    {
+      "label": "逐帧视觉审查台账",
+      "href": "visual_review.json"
     },
     {
       "label": "功能保护矩阵",

@@ -63,6 +63,23 @@ def blame_lines():
     return result
 
 
+def visual_review(frames):
+    review = json.loads((DOCS / "visual_review.json").read_text(encoding="utf-8"))
+    entries = review["frames"]
+    ids = [entry["id"] for entry in entries]
+    if len(ids) != len(set(ids)) or set(ids) != {frame["node"] for frame in frames}:
+        raise ValueError("Visual review must cover the same 40 unique mapped frames; report not updated")
+    statuses = ["not_reviewed", "reviewing", "reviewed_with_differences", "reviewed"]
+    if any(entry["review_status"] not in statuses for entry in entries):
+        raise ValueError("Unrecognized visual review status; report not updated")
+    by_id = {entry["id"]: entry for entry in entries}
+    for frame in frames:
+        frame["visual_review"] = by_id[frame["node"]]
+    return {"counts": {status: sum(entry["review_status"] == status for entry in entries)
+                       for status in statuses}, "source": "visual_review.json",
+            "meaning": review["meaning"]}
+
+
 def tasks():
     source = (DOCS / "baseline_and_qa.md").read_text(encoding="utf-8")
     headers = list(re.finditer(r"^## 小功能\s+(\d+)：(.+)$", source, re.M))
@@ -113,6 +130,7 @@ def main():
         if value is not None:
             current[key] = value
     frames, timeline = frame_rows(), tasks()
+    review = visual_review(frames)
     if current.get("status") == "recorded" and not any(
         task["id"] == current.get("id") and task["commit"] for task in timeline
     ):
@@ -126,7 +144,8 @@ def main():
     previous_counts = {key: previous.get("counts", {}).get(key, 0) for key in counts}
     if args.note or not history or previous_counts != counts or previous.get("current_task") != current:
         history.append({"date": now, "note": args.note or "同步当前任务与画板验收状态",
-                        **counts})
+                        **counts, "remaining_final": len(frames) - counts["verified"],
+                        "visual_review": review["counts"]})
     report = {"version": 1, "updated_at": now, "project": "WorkBuddy Studio V2",
               "branch": git("branch", "--show-current"), "code_head": git("log", "-1", "--format=%H", "--", "gpui/src", "gpui/assets"),
               "phase": ("开发中 · 分项实机验收穿插" if counts["pending"]
@@ -134,6 +153,7 @@ def main():
                         else "专项验收与差异修复 · 全量逐帧终验未完成"),
               "goal_status": args.goal_status or previous.get("goal_status", "unknown"),
               "counts": counts, "total_frames": len(frames), "recorded_tasks": len(recorded),
+              "remaining_final": len(frames) - counts["verified"], "visual_review": review,
               "current_task": current, "latest_task": latest, "frames": frames,
               "timeline": timeline, "history": history[-200:],
               "verification": [
@@ -143,6 +163,7 @@ def main():
                   {"title": "性能与证据口径", "detail": "保留真实新旧版本对比、核心/UI/合计 RSS、启动记录和请求 p50/p95。UI 就绪记录不是首帧或可交互时间。"}],
               "sources": [{"label": "40 帧映射", "href": "figma_node_map.md"},
                           {"label": "实施与 QA 原文", "href": "baseline_and_qa.md"},
+                          {"label": "逐帧视觉审查台账", "href": "visual_review.json"},
                           {"label": "功能保护矩阵", "href": "feature_regression_matrix.md"}]}
     payload = json.dumps(report, ensure_ascii=False, indent=2).replace("</", "<\\/")
     html = PAGE.read_text(encoding="utf-8")
