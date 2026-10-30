@@ -1,0 +1,199 @@
+{
+  "checked_at": "2026-10-31T07:15:53.992500+08:00",
+  "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page": "51:2",
+  "inventory": "40unique official frames refreshed UI64",
+  "frames": {
+    "61:1111": {
+      "context_chars": 69163,
+      "context_sha256": "04eed27d413ee264771b6b4d0ba874a0050558939f9ea300c28f028fc52ec1af",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]\" data-node-id=\"61:235\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"61:1315\" data-name=\"Overlay / Protocol scrim\" />",
+      "modal_geometry": [
+        "<StudioV2ProtocolOptions className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[724px] left-[410px] rounded-[18px] top-[88px] w-[620px]\" />"
+      ]
+    },
+    "61:838": {
+      "context_chars": 70393,
+      "context_sha256": "a6b4e8cdc5f8da6d2ab5856af39ef193b37a8bde7f7c01c6fd7f599cd2058be4",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]\" data-node-id=\"61:173\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"61:1042\" data-name=\"Overlay / Protocol scrim\" />",
+      "modal_geometry": [
+        "<StudioV2ProtocolOptions className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[724px] left-[410px] rounded-[18px] top-[88px] w-[620px]\" />"
+      ]
+    },
+    "68:350": {
+      "context_chars": 57963,
+      "context_sha256": "5ae2bac744fe8ed45a58b4860cffd0f1f751f4d04a7ea967229c4554458eaddc",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[28px] left-[492px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[18px] w-[22px]\" data-node-id=\"68:559\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"68:554\" data-name=\"Overlay / scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[318px] left-[457px] overflow-clip rounded-[18px] shadow-[0px_18px_38px_0px_rgba(18,28,61,0.22)] top-[274px] w-[526px]\" data-node-id=\"68:555\" data-name=\"Dialog / Sync Confirmation\">"
+      ]
+    },
+    "78:1080": {
+      "context_chars": 58551,
+      "context_sha256": "485a2b784ace5e5b4777c9be05434f1ba30fd6f3269773e3a146331928e53b00",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal leading-[27px] left-[496px] size-[20px] text-[19px] text-[color:var(--studio-secondary,#778196)] top-[19px]\" data-node-id=\"78:1314\">",
+      "overlay": "<div className=\"absolute bg-[rgba(18,23,43,0.49)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"78:1309\" data-name=\"Overlay / Delete warning scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[322px] left-[454px] overflow-clip rounded-[18px] shadow-[0px_19px_40px_0px_rgba(18,28,64,0.21)] top-[271px] w-[532px]\" data-node-id=\"78:1310\" data-name=\"Dialog / Delete Supplier\">"
+      ]
+    },
+    "60:27": {
+      "context_chars": 58162,
+      "context_sha256": "ed99e01d8852e22438545a5f7fcd9f2c9dc4b6168bb17c020d6ae93bef2fb5e9",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[28px] left-[492px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[18px] w-[22px]\" data-node-id=\"60:236\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"60:231\" data-name=\"Overlay / scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[318px] left-[457px] overflow-clip rounded-[18px] shadow-[0px_18px_38px_0px_rgba(18,28,61,0.22)] top-[274px] w-[526px]\" data-node-id=\"60:232\" data-name=\"Dialog / Sync Confirmation\">"
+      ]
+    },
+    "80:864": {
+      "context_chars": 58482,
+      "context_sha256": "cb40c0cd7ca7700b935412b6f8e3d70aacbe8d523f90f6a1c8d3effffe7ddf04",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal leading-[27px] left-[496px] size-[20px] text-[19px] text-[color:var(--studio-secondary,#778196)] top-[19px]\" data-node-id=\"80:1097\">",
+      "overlay": "<div className=\"absolute bg-[rgba(18,23,43,0.49)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"80:1092\" data-name=\"Overlay / Delete warning scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[322px] left-[454px] overflow-clip rounded-[18px] shadow-[0px_19px_40px_0px_rgba(18,28,64,0.21)] top-[271px] w-[532px]\" data-node-id=\"80:1093\" data-name=\"Dialog / Delete Supplier\">"
+      ]
+    },
+    "61:289": {
+      "context_chars": 69995,
+      "context_sha256": "77e99fe95db9d45d6206bfd3c9631055dc6c8f46d57c17d71573d7c1fb8260cf",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]\" data-node-id=\"61:46\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"61:493\" data-name=\"Overlay / Protocol scrim\" />",
+      "modal_geometry": [
+        "<StudioV2ProtocolOptions className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[724px] left-[410px] rounded-[18px] top-[88px] w-[620px]\" />"
+      ]
+    },
+    "60:475": {
+      "context_chars": 67175,
+      "context_sha256": "6796f7fb1f05e9480a949c455f99573857a66f1cacf3da2e95104b20021a9c59",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[25px] left-[620px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[23px]\" data-node-id=\"60:696\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"60:691\" data-name=\"Overlay / scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[770px] left-[395px] overflow-clip rounded-[18px] shadow-[0px_18px_38px_0px_rgba(18,28,61,0.22)] top-[72px] w-[650px]\" data-node-id=\"60:692\" data-name=\"Dialog / Usage Detail\">"
+      ]
+    },
+    "60:249": {
+      "context_chars": 60774,
+      "context_sha256": "6e65f85a56a8aea314f22779858e18d9cb5543e30214cfcd5b9e0b1f2b28975d",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[28px] left-[542px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]\" data-node-id=\"60:439\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"60:434\" data-name=\"Overlay / scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[625px] left-[433px] overflow-clip rounded-[18px] shadow-[0px_18px_38px_0px_rgba(18,28,61,0.22)] top-[135px] w-[574px]\" data-node-id=\"60:435\" data-name=\"Dialog / New Pricing Rule\">"
+      ]
+    },
+    "59:279": {
+      "context_chars": 70596,
+      "context_sha256": "8521c7e5d061c2bfb887e7e3a6b369ad9b972402815a09024a908254cd0443a6",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[29px] left-[697px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[18px] w-[19px]\" data-node-id=\"59:488\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"59:483\" data-name=\"Overlay / Dimmed scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[800px] left-[356px] overflow-clip rounded-[18px] shadow-[0px_18px_42px_0px_rgba(20,31,59,0.22)] top-[45px] w-[728px]\" data-node-id=\"59:484\" data-name=\"Dialog / Edit Model\">"
+      ]
+    },
+    "59:11": {
+      "context_chars": 68464,
+      "context_sha256": "cae9faa021342e4aa6ff097a8b22a18a12fcad210fd5fb71cc9808cb6aed4a3c",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[20px] leading-[29px] left-[698px] text-[20px] text-[color:var(--studio-secondary,#778196)] top-[20px] w-[21px]\" data-node-id=\"59:221\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"59:215\" data-name=\"Overlay / Dimmed scrim\" />",
+      "modal_geometry": [
+        "<div className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[672px] left-[357px] overflow-clip rounded-[18px] shadow-[0px_18px_42px_0px_rgba(20,31,59,0.22)] top-[93px] w-[726px]\" data-node-id=\"59:216\" data-name=\"Dialog / Model Picker\">"
+      ]
+    },
+    "61:561": {
+      "context_chars": 71208,
+      "context_sha256": "cfb8c26e486f756ef366fdc8a5d8c5d14729c576d83bb9c851e2c5d7d4afcd00",
+      "has_render": true,
+      "sparse": false,
+      "root_reference_size": [
+        1440,
+        900
+      ],
+      "close_text_spec": "<p className=\"[word-break:break-word] absolute font-['Noto_Sans_SC:Regular'] font-normal h-[18px] leading-[26px] left-[587px] text-[18px] text-[color:var(--studio-secondary,#778196)] top-[19px] w-[21px]\" data-node-id=\"61:107\">",
+      "overlay": "<div className=\"absolute bg-[rgba(19,23,46,0.48)] h-[900px] left-0 top-0 w-[1440px]\" data-node-id=\"61:765\" data-name=\"Overlay / Protocol scrim\" />",
+      "modal_geometry": [
+        "<StudioV2ProtocolOptions className=\"absolute bg-[var(--studio-surface,white)] border border-[var(--studio-line,#e7eaf2)] border-solid h-[724px] left-[410px] rounded-[18px] top-[88px] w-[620px]\" />"
+      ]
+    }
+  },
+  "candidate_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+  "scope": "Shared modalClose/backdrop and known price/detail presentation geometry. New fullframe firstreviews68:350/78:1080/80:864; preexisting global/underlay differences remain. No frame finalacceptance.",
+  "remaining_differences": [
+    "Native glyph AA and some close ink bounds differ1-2px despite matching declaredNoto/size/leading; full typography versions notproved.",
+    "Protocol select text/mappingheading/footer residualgeometry fromUI62 retained; not editedhere.",
+    "NativeKit shadow differs fromFigma; shadowarea pixel must not be called a flat scrim proof.",
+    "Warning rgba49% preserved, flatcanvasencodedRGB stilldiffers~1GB inref; no allsurfacepixelidentityclaim.",
+    "Picker fiveactualcandidates leaveextraemptylistwhite ratherthanprototypefull38rows/softfill; realdata retained.",
+    "Sync/Unsync use nativeRefreshCw for Figma literalcirculararrow, retained as preexistingdifference.",
+    "Fullframe underlay/assets/states/nativekeyboard/IME/AX/HiDPI/Windows/Intelhardware andlongperformance remainfullGoal work."
+  ]
+}

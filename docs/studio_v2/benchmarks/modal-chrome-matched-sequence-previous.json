@@ -1,0 +1,23 @@
+{
+  "candidate": "76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c",
+  "ui_pid": 81620,
+  "core_pid": 81477,
+  "window_id": 3917,
+  "sequence": [
+    "Statistics settings → New Price; sub2api / gpt-6 / input -1; Save produced local plain decimal error; mouse X",
+    "Mono → New Price default → mouse X",
+    "Studio → Providers → Chat default; pointer outside dialog"
+  ],
+  "image": {
+    "file": "matched-chat-wide.png",
+    "size": [
+      1440,
+      901
+    ],
+    "sha256": "de6ba5b9d5724d39401e3e0ca9de20764b1168dab5c2219e636da5d9d5bc5658",
+    "method": "native screencapture; own PID onscreen layer0 window visually matched"
+  },
+  "no_valid_save_sync_restart": true,
+  "explicit_activate_raise": false,
+  "actual_foreground": "not asserted"
+}

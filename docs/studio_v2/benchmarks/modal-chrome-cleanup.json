@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-31T07:36:44.816579+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl",
+  "status": "retained: exact rm denied byautomaticapproval policy",
+  "rejection": "approval required by policy, but AskForApproval is set to Never",
+  "deleted_bytes": 0,
+  "freed_bytes_by_this_action": 0,
+  "retained_files": 545,
+  "retained_apparent_bytes": 689258498,
+  "retained_allocated_upper_bound_bytes": 698929152,
+  "data_free_now_bytes": 40680734720,
+  "all30trackedpayloadprocesses_gone": true,
+  "delivery113files_sha_verified": true,
+  "other_targets": "Earlier refused roots not retried; no equivalent method, parenttarget, permission or policy changes. SharedCargo cache untouched.",
+  "scope": "Cleanup limitation does not prevent scoped source/GUI/performance work or shrink full40frame Goal."
+}

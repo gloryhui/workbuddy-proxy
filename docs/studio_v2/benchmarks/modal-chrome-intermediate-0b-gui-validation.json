@@ -1,0 +1,101 @@
+{
+  "status": "intermediate: Return on focused close did not close, not final",
+  "ui_sha256": "0b23656dc3c3f2b9a87761fa969b03fb23229e54f1107cdf09eb82a9aca38a8c",
+  "ui_pid": 68273,
+  "core_pid": 66167,
+  "window": 3516,
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-chat-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "e5484a3e299d253e13e2aa3aac01864fb9e4f762a5ef72183df2dc3fa3aab50b"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-responses-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "7311ef8ac9c9fd345bfd698d8a06dd83799a1b4626f99ec658d403f8e4529aa2"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-anthropic-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "b508844e7c0e0811f762593a84b3ceec19d17a5db4e493712d460213995d7ecb"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-gemini-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "593400501b71c47ea18c3f68b1814e751f3b8ef4fc0f0f15ae32ce365311bab9"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-picker-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "45206c0c044a04f15bb3249b5eb2c928fb8161f0df3fd0b9b72434e6e94e334b"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-editor-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "4c943e2092431c7ec3350c44707f7c8308dde79ad7cd4c7df3a253fafb2e3325"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-sync-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "565477093bec01464f87a8651cac22dcf8696b0f7262bbdaa2355a59503bf50f"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/close-keyboard-focus-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "3a843a785765d122c2f7dff0ca99303a7f1ae87b5cda04c7fb793f11ab50e086"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-price-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "147673b397f5f772a4df76153f5a54dd7a2062461fa2dc29937cedc4a9f1e781"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/modal-detail-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "986b87ac7c14b668cdccce1618b086cad77e7ee00bfd3c018de8ce1ea43d4ddd"
+    }
+  ],
+  "observations": [
+    "Chat close clicked and temporary minimal mapping discarded; reopen empty.",
+    "Language toolbar click under modal did not open menu.",
+    "Sync modal Tab then ShiftTab visibly focused close; Space closed. Reopen same path visibly focused close; Return left modal open on two fresh observations.",
+    "Picker, model editor, price close clicked; request detail Esc closed.",
+    "No Apply, Save, Sync, Remove, Test or Restart.",
+    "CUA native window close clicked; Core retained for parent."
+  ],
+  "limits": [
+    "Background getApp without explicit activate/raise; actual foreground not asserted.",
+    "No external AX/bounds or CGEvent input; native raw unscaled screenshots."
+  ]
+}

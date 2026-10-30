@@ -1,0 +1,475 @@
+{
+  "default": [
+    {
+      "name": "delete-a-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 159891,
+      "sha256": "e93989e22dee0b6e8a68dee6b5405451293894c6f0234ea2fe10b561f12f1c74"
+    },
+    {
+      "name": "delete-a-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 245289,
+      "sha256": "838ee20ba6e9a1bfbeea288402324758505534f86218020ab60f7a626e6488e4"
+    },
+    {
+      "name": "delete-b-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 163696,
+      "sha256": "a8e42e199afdafd8128e7e2f36180c592f2752dabc52808b011698bc9133a09c"
+    },
+    {
+      "name": "delete-b-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 242133,
+      "sha256": "cd13ef9d617aa04396648f89ebbf6c4a353ea60feb8efff24a01de0cbd1509aa"
+    },
+    {
+      "name": "modal-anthropic-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 152523,
+      "sha256": "5ac57f7ae72f10b3b98a1d9c869d09ad33051a6b748a144194d51b657344f56b"
+    },
+    {
+      "name": "modal-anthropic-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 249808,
+      "sha256": "c4ef4f0b5a826f554d6dec679ad328e45791408084668f02830877f60e342f1a"
+    },
+    {
+      "name": "modal-chat-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 149965,
+      "sha256": "ebb480a9214a3f272a75fe14b178cd2e77c19638f5a0007290844ba5c7ba5ef5"
+    },
+    {
+      "name": "modal-chat-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 246546,
+      "sha256": "07dfd6be5e93441ef0451315273df8132598c479d03d0e8905b8d50e2550271a"
+    },
+    {
+      "name": "modal-detail-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 151550,
+      "sha256": "191513a757fe86b718e140afea4986de5a5688aecfd2448afabb84b1f417cfbe"
+    },
+    {
+      "name": "modal-detail-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 227352,
+      "sha256": "cb2d7fe583aad1936f68c0b3754f3b8bca04f30d85881d59084b4988f89160f9"
+    },
+    {
+      "name": "modal-editor-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 149193,
+      "sha256": "a599038fa704e6622731217d75b047f62496bbc203d69a5f863bbbd8cb1c88bc"
+    },
+    {
+      "name": "modal-editor-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 257798,
+      "sha256": "5f89c056db2c828c8dbd90b14a499c0c5aad0fa8f8372b948b3723f526282ff0"
+    },
+    {
+      "name": "modal-gemini-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 145669,
+      "sha256": "25e5b5591e62a1fb2ed8846b1b951e509de54940628871f0e8e69088f3f649ff"
+    },
+    {
+      "name": "modal-gemini-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 241697,
+      "sha256": "90cf6a9072c4bbd822d38b992f0aebf351562409baf558fdff53b50d03e8e936"
+    },
+    {
+      "name": "modal-picker-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 126366,
+      "sha256": "cb3dac6410f16e6ca1fc419257273b697ffdba418a84af25114b194f3944d298"
+    },
+    {
+      "name": "modal-picker-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 230704,
+      "sha256": "05e41112d73d6e93461803cabab3e522f700fec1dcf8af506e76aa3f97a630a1"
+    },
+    {
+      "name": "modal-price-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 129258,
+      "sha256": "468f85355f1e58badaa77dc69fcae0305ec3221d1e9311609b812bef48f7e953"
+    },
+    {
+      "name": "modal-price-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 203021,
+      "sha256": "62b548ffe8058bd3744bdc7337ad479d5c3ba70634967cd44d2dc01647c42e6a"
+    },
+    {
+      "name": "modal-responses-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 149893,
+      "sha256": "d2b0075c85115df82f97e5d849fcec09110c75298ab8e57fa73d81f5fbfbdb47"
+    },
+    {
+      "name": "modal-responses-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 247126,
+      "sha256": "ed8a9568a219f186c369b37720345ef44d936a3a4538c93a2ecf7766d677714f"
+    },
+    {
+      "name": "modal-sync-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 166303,
+      "sha256": "88b04c812a654d49a6c8ea640a9db04e2867ad59decf27a900f8683cb49d440d"
+    },
+    {
+      "name": "modal-sync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 252674,
+      "sha256": "33a08be19e47a39a9efea1b7a4225580b20353da7214e94392c234b2bf9941ad"
+    },
+    {
+      "name": "modal-unsync-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 167467,
+      "sha256": "291503b1fe6769b8e6aaa79afc369e4df983d511dcbb44dc36e5d1a92b69e0d3"
+    },
+    {
+      "name": "modal-unsync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 253955,
+      "sha256": "7ff71342ea98ae50618ce9f88aa7cc7ce6ce90c94f99170d4dcbf1ba989d2a17"
+    }
+  ],
+  "all": [
+    {
+      "name": "candidate-3670.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 203021,
+      "sha256": "62b548ffe8058bd3744bdc7337ad479d5c3ba70634967cd44d2dc01647c42e6a"
+    },
+    {
+      "name": "delete-a-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 159891,
+      "sha256": "e93989e22dee0b6e8a68dee6b5405451293894c6f0234ea2fe10b561f12f1c74"
+    },
+    {
+      "name": "delete-a-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 245289,
+      "sha256": "838ee20ba6e9a1bfbeea288402324758505534f86218020ab60f7a626e6488e4"
+    },
+    {
+      "name": "delete-b-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 163696,
+      "sha256": "a8e42e199afdafd8128e7e2f36180c592f2752dabc52808b011698bc9133a09c"
+    },
+    {
+      "name": "delete-b-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 242133,
+      "sha256": "cd13ef9d617aa04396648f89ebbf6c4a353ea60feb8efff24a01de0cbd1509aa"
+    },
+    {
+      "name": "modal-anthropic-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 152523,
+      "sha256": "5ac57f7ae72f10b3b98a1d9c869d09ad33051a6b748a144194d51b657344f56b"
+    },
+    {
+      "name": "modal-anthropic-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 249808,
+      "sha256": "c4ef4f0b5a826f554d6dec679ad328e45791408084668f02830877f60e342f1a"
+    },
+    {
+      "name": "modal-chat-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 149965,
+      "sha256": "ebb480a9214a3f272a75fe14b178cd2e77c19638f5a0007290844ba5c7ba5ef5"
+    },
+    {
+      "name": "modal-chat-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 246546,
+      "sha256": "07dfd6be5e93441ef0451315273df8132598c479d03d0e8905b8d50e2550271a"
+    },
+    {
+      "name": "modal-detail-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 151550,
+      "sha256": "191513a757fe86b718e140afea4986de5a5688aecfd2448afabb84b1f417cfbe"
+    },
+    {
+      "name": "modal-detail-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 227352,
+      "sha256": "cb2d7fe583aad1936f68c0b3754f3b8bca04f30d85881d59084b4988f89160f9"
+    },
+    {
+      "name": "modal-editor-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 149193,
+      "sha256": "a599038fa704e6622731217d75b047f62496bbc203d69a5f863bbbd8cb1c88bc"
+    },
+    {
+      "name": "modal-editor-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 257798,
+      "sha256": "5f89c056db2c828c8dbd90b14a499c0c5aad0fa8f8372b948b3723f526282ff0"
+    },
+    {
+      "name": "modal-gemini-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 145669,
+      "sha256": "25e5b5591e62a1fb2ed8846b1b951e509de54940628871f0e8e69088f3f649ff"
+    },
+    {
+      "name": "modal-gemini-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 241697,
+      "sha256": "90cf6a9072c4bbd822d38b992f0aebf351562409baf558fdff53b50d03e8e936"
+    },
+    {
+      "name": "modal-picker-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 126366,
+      "sha256": "cb3dac6410f16e6ca1fc419257273b697ffdba418a84af25114b194f3944d298"
+    },
+    {
+      "name": "modal-picker-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 230704,
+      "sha256": "05e41112d73d6e93461803cabab3e522f700fec1dcf8af506e76aa3f97a630a1"
+    },
+    {
+      "name": "modal-price-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 129258,
+      "sha256": "468f85355f1e58badaa77dc69fcae0305ec3221d1e9311609b812bef48f7e953"
+    },
+    {
+      "name": "modal-price-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 203021,
+      "sha256": "62b548ffe8058bd3744bdc7337ad479d5c3ba70634967cd44d2dc01647c42e6a"
+    },
+    {
+      "name": "modal-responses-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 149893,
+      "sha256": "d2b0075c85115df82f97e5d849fcec09110c75298ab8e57fa73d81f5fbfbdb47"
+    },
+    {
+      "name": "modal-responses-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 247126,
+      "sha256": "ed8a9568a219f186c369b37720345ef44d936a3a4538c93a2ecf7766d677714f"
+    },
+    {
+      "name": "modal-sync-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 166303,
+      "sha256": "88b04c812a654d49a6c8ea640a9db04e2867ad59decf27a900f8683cb49d440d"
+    },
+    {
+      "name": "modal-sync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 252674,
+      "sha256": "33a08be19e47a39a9efea1b7a4225580b20353da7214e94392c234b2bf9941ad"
+    },
+    {
+      "name": "modal-unsync-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 167467,
+      "sha256": "291503b1fe6769b8e6aaa79afc369e4df983d511dcbb44dc36e5d1a92b69e0d3"
+    },
+    {
+      "name": "modal-unsync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 253955,
+      "sha256": "7ff71342ea98ae50618ce9f88aa7cc7ce6ce90c94f99170d4dcbf1ba989d2a17"
+    },
+    {
+      "name": "price-invalid-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "bytes": 133110,
+      "sha256": "d02e1dc743439a94da826bf58f6538f7af1009e2fcf842a3a1746f1e5fc0de24"
+    },
+    {
+      "name": "price-invalid-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 207334,
+      "sha256": "c2c1786af2d36edb1de23520a893e37e04c336920c24539e0b5b8fff387bad68"
+    },
+    {
+      "name": "sync-close-focused-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 253002,
+      "sha256": "e0b87027e411b7541ce6f0a836162da953240fb318c93d30dd21e5709028f9b9"
+    }
+  ],
+  "no_resize_crop_redraw": true
+}

@@ -1,0 +1,685 @@
+{
+  "exported_at": "2026-10-31T07:28:57.956720+08:00",
+  "files": [
+    {
+      "source": "reference-59-11.png",
+      "export": "screenshots/modal-chrome-reference-59-11.png",
+      "bytes": 251240,
+      "sha256": "466892f509aa19ec1a400800389f57618bad334c6627056f80faafb2eb0661d4"
+    },
+    {
+      "source": "reference-59-279.png",
+      "export": "screenshots/modal-chrome-reference-59-279.png",
+      "bytes": 267190,
+      "sha256": "4d41492a661e7b79991560f1b31d7ad722052cd725575e6594721a4213025f80"
+    },
+    {
+      "source": "reference-60-249.png",
+      "export": "screenshots/modal-chrome-reference-60-249.png",
+      "bytes": 227629,
+      "sha256": "c091a4331ba51af7cdc4a548c27260f08747cfe85e0abf9e1379dd150d04d051"
+    },
+    {
+      "source": "reference-60-27.png",
+      "export": "screenshots/modal-chrome-reference-60-27.png",
+      "bytes": 229238,
+      "sha256": "cb102fe00fc951a41372536885897d207f9338b2cc9cb52c7dcc068740b9b83e"
+    },
+    {
+      "source": "reference-60-475.png",
+      "export": "screenshots/modal-chrome-reference-60-475.png",
+      "bytes": 250178,
+      "sha256": "e5aaa2942ac5b3cb88f60a2ecf3e791bfca66d0ae165c28ac0b6edf8fc3b6646"
+    },
+    {
+      "source": "reference-61-1111.png",
+      "export": "screenshots/modal-chrome-reference-61-1111.png",
+      "bytes": 161698,
+      "sha256": "cd025c1117bc9e47a4f34e5dc5302f113b56e0d6dc0d53e955f200d858c7e0ed"
+    },
+    {
+      "source": "reference-61-289.png",
+      "export": "screenshots/modal-chrome-reference-61-289.png",
+      "bytes": 165906,
+      "sha256": "2caae64970bc76f936f23ddd0e2fd34fb642bb20dde79e603cceb836f1cdf5b0"
+    },
+    {
+      "source": "reference-61-561.png",
+      "export": "screenshots/modal-chrome-reference-61-561.png",
+      "bytes": 166412,
+      "sha256": "fc7b6ed45d76060942ba46bf3e3a6bb6441ddafa24381173e48fe091c771bc69"
+    },
+    {
+      "source": "reference-61-838.png",
+      "export": "screenshots/modal-chrome-reference-61-838.png",
+      "bytes": 168301,
+      "sha256": "b561ba9881436de6232eb6df5d8774fcc299aa4837d0bff68cd9e96edd367b57"
+    },
+    {
+      "source": "reference-68-350.png",
+      "export": "screenshots/modal-chrome-reference-68-350.png",
+      "bytes": 232237,
+      "sha256": "51e0a55de2751aec3e139be5cad75ff548986c8d87a36dd4cdfc372f46296be2"
+    },
+    {
+      "source": "reference-78-1080.png",
+      "export": "screenshots/modal-chrome-reference-78-1080.png",
+      "bytes": 226825,
+      "sha256": "f652af9bc6180e055eecabc72bd5252570bdb7a4b7ddc610c92b90b3924382b6"
+    },
+    {
+      "source": "reference-80-864.png",
+      "export": "screenshots/modal-chrome-reference-80-864.png",
+      "bytes": 227818,
+      "sha256": "1bc17d18ab8b001e1ba45fc44960a8b8d85d13797ab1adc2ebe222f501972ac3"
+    },
+    {
+      "source": "ui64-baseline/delete-a-small.png",
+      "export": "screenshots/modal-chrome-baseline-delete-a-small.png",
+      "bytes": 160988,
+      "sha256": "b6e811b62d3aaae99266b33dcd296d55f17db296c12e4754becbfb21be7729d3"
+    },
+    {
+      "source": "ui64-baseline/delete-a-wide.png",
+      "export": "screenshots/modal-chrome-baseline-delete-a-wide.png",
+      "bytes": 246114,
+      "sha256": "c7e3f18aea21c37968d62ba9cc667d244bec8c73e0abb47d2b9a2c5ad758cece"
+    },
+    {
+      "source": "ui64-baseline/delete-b-small.png",
+      "export": "screenshots/modal-chrome-baseline-delete-b-small.png",
+      "bytes": 161532,
+      "sha256": "ae7b59ea4a62ba176eda6c10094e7f22edc512ec4516031ad358a4b8aa233103"
+    },
+    {
+      "source": "ui64-baseline/delete-b-wide.png",
+      "export": "screenshots/modal-chrome-baseline-delete-b-wide.png",
+      "bytes": 243119,
+      "sha256": "2299842630499c067afa9baa8e2ada43bccdb20389841977b23b3f1644a6d73f"
+    },
+    {
+      "source": "ui64-baseline/modal-anthropic-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-anthropic-small.png",
+      "bytes": 151518,
+      "sha256": "329ff97d35bae4e17a3a05937442330cc7e02e23b77fc76331abc0aca4e5de87"
+    },
+    {
+      "source": "ui64-baseline/modal-anthropic-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-anthropic-wide.png",
+      "bytes": 248801,
+      "sha256": "abace8e9cab7d4334f9341ade16d01d9d977ab8fd649c7ac1dd09994899258ff"
+    },
+    {
+      "source": "ui64-baseline/modal-chat-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-chat-small.png",
+      "bytes": 149143,
+      "sha256": "ab54b4b4f1e34185af6321fc2d929006ea07fc9191205e63c9bca4d8e122cd33"
+    },
+    {
+      "source": "ui64-baseline/modal-chat-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-chat-wide.png",
+      "bytes": 245730,
+      "sha256": "70dd3ff716d5175f6df1945f604575f217b996ca39520969ffd1dd8ad71a46bc"
+    },
+    {
+      "source": "ui64-baseline/modal-detail-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-detail-small.png",
+      "bytes": 151225,
+      "sha256": "63c258937763847a103c4ca2c64c9f161c67a81df0db71a0082fe3e3625b60d4"
+    },
+    {
+      "source": "ui64-baseline/modal-detail-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-detail-wide.png",
+      "bytes": 226090,
+      "sha256": "cccb0b345bb07d488c747a0896dc41f67fc2d58faeec0a0747eca24dde05d89b"
+    },
+    {
+      "source": "ui64-baseline/modal-editor-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-editor-small.png",
+      "bytes": 150462,
+      "sha256": "25c077bb59ac0e673d0ebbe079c422cdfd62f5325919153428f670126fad50e3"
+    },
+    {
+      "source": "ui64-baseline/modal-editor-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-editor-wide.png",
+      "bytes": 256597,
+      "sha256": "facc91d77d977a324321a6b7790405f638b8844219f949934cd433b71e9e5ed8"
+    },
+    {
+      "source": "ui64-baseline/modal-gemini-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-gemini-small.png",
+      "bytes": 144549,
+      "sha256": "3b99a46b30dd18561688ee0ddc0c2a007771a6e230b5dec1769bcf869163c285"
+    },
+    {
+      "source": "ui64-baseline/modal-gemini-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-gemini-wide.png",
+      "bytes": 240689,
+      "sha256": "aa7717fdb8bd072f0f446fdc43cced582ff01173f1e07e4b0bb47796bdbe4578"
+    },
+    {
+      "source": "ui64-baseline/modal-picker-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-picker-small.png",
+      "bytes": 126317,
+      "sha256": "24d4cf72ef0839ba5aedaa19fb5ccbd6d19398a408dbff35098af035f3aa72a0"
+    },
+    {
+      "source": "ui64-baseline/modal-picker-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-picker-wide.png",
+      "bytes": 229371,
+      "sha256": "288c42eca28215e4694220bfa4bbeb7b2691052bcc37624c6a65a6107356ac83"
+    },
+    {
+      "source": "ui64-baseline/modal-price-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-price-small.png",
+      "bytes": 129570,
+      "sha256": "315da0769fa1911e92291f753cef14072b0be7e007ae50ba0c106bfb9d5fc6d0"
+    },
+    {
+      "source": "ui64-baseline/modal-price-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-price-wide.png",
+      "bytes": 202631,
+      "sha256": "32112bb6689e18a9a0ab0e4f31fd37c1b66cfa96c4b1e32d900d3d19ec73a7d3"
+    },
+    {
+      "source": "ui64-baseline/modal-responses-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-responses-small.png",
+      "bytes": 148861,
+      "sha256": "584d9447bc2e5ff36ec7a63a96d8387777a084a267207824b46e5345089d61ee"
+    },
+    {
+      "source": "ui64-baseline/modal-responses-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-responses-wide.png",
+      "bytes": 246298,
+      "sha256": "354f4f524001fd4e4af343d6c3935692a31d9038c95adfb45795265375690ae5"
+    },
+    {
+      "source": "ui64-baseline/modal-sync-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-sync-small.png",
+      "bytes": 168752,
+      "sha256": "1ae2530278a0b38dccbddf4b62b13f040af0eecb218c257908cf240e4dc8147c"
+    },
+    {
+      "source": "ui64-baseline/modal-sync-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-sync-wide.png",
+      "bytes": 251902,
+      "sha256": "e9ce6624ced8db62501a819c504908a4daddabfcd688ae6800d516c89b513280"
+    },
+    {
+      "source": "ui64-baseline/modal-unsync-small.png",
+      "export": "screenshots/modal-chrome-baseline-modal-unsync-small.png",
+      "bytes": 170021,
+      "sha256": "85963958d1247d7fdc410f72c4fb67b309b6912096f918acedfd9d9f91493186"
+    },
+    {
+      "source": "ui64-baseline/modal-unsync-wide.png",
+      "export": "screenshots/modal-chrome-baseline-modal-unsync-wide.png",
+      "bytes": 253254,
+      "sha256": "bd3f4e73c249cf031cce57e644aab24b403943f50fd5c2448600e434236d7d95"
+    },
+    {
+      "source": "ui64-final3/modal-chat-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-chat-wide.png",
+      "bytes": 246546,
+      "sha256": "07dfd6be5e93441ef0451315273df8132598c479d03d0e8905b8d50e2550271a"
+    },
+    {
+      "source": "ui64-final3/modal-chat-small.png",
+      "export": "screenshots/modal-chrome-final-modal-chat-small.png",
+      "bytes": 149965,
+      "sha256": "ebb480a9214a3f272a75fe14b178cd2e77c19638f5a0007290844ba5c7ba5ef5"
+    },
+    {
+      "source": "ui64-final3/modal-responses-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-responses-wide.png",
+      "bytes": 247126,
+      "sha256": "ed8a9568a219f186c369b37720345ef44d936a3a4538c93a2ecf7766d677714f"
+    },
+    {
+      "source": "ui64-final3/modal-responses-small.png",
+      "export": "screenshots/modal-chrome-final-modal-responses-small.png",
+      "bytes": 149893,
+      "sha256": "d2b0075c85115df82f97e5d849fcec09110c75298ab8e57fa73d81f5fbfbdb47"
+    },
+    {
+      "source": "ui64-final3/modal-anthropic-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-anthropic-wide.png",
+      "bytes": 249808,
+      "sha256": "c4ef4f0b5a826f554d6dec679ad328e45791408084668f02830877f60e342f1a"
+    },
+    {
+      "source": "ui64-final3/modal-anthropic-small.png",
+      "export": "screenshots/modal-chrome-final-modal-anthropic-small.png",
+      "bytes": 152523,
+      "sha256": "5ac57f7ae72f10b3b98a1d9c869d09ad33051a6b748a144194d51b657344f56b"
+    },
+    {
+      "source": "ui64-final3/modal-gemini-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-gemini-wide.png",
+      "bytes": 241697,
+      "sha256": "90cf6a9072c4bbd822d38b992f0aebf351562409baf558fdff53b50d03e8e936"
+    },
+    {
+      "source": "ui64-final3/modal-gemini-small.png",
+      "export": "screenshots/modal-chrome-final-modal-gemini-small.png",
+      "bytes": 145669,
+      "sha256": "25e5b5591e62a1fb2ed8846b1b951e509de54940628871f0e8e69088f3f649ff"
+    },
+    {
+      "source": "ui64-final3/modal-picker-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-picker-wide.png",
+      "bytes": 230704,
+      "sha256": "05e41112d73d6e93461803cabab3e522f700fec1dcf8af506e76aa3f97a630a1"
+    },
+    {
+      "source": "ui64-final3/modal-picker-small.png",
+      "export": "screenshots/modal-chrome-final-modal-picker-small.png",
+      "bytes": 126366,
+      "sha256": "cb3dac6410f16e6ca1fc419257273b697ffdba418a84af25114b194f3944d298"
+    },
+    {
+      "source": "ui64-final3/modal-sync-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-sync-wide.png",
+      "bytes": 252674,
+      "sha256": "33a08be19e47a39a9efea1b7a4225580b20353da7214e94392c234b2bf9941ad"
+    },
+    {
+      "source": "ui64-final3/modal-sync-small.png",
+      "export": "screenshots/modal-chrome-final-modal-sync-small.png",
+      "bytes": 166303,
+      "sha256": "88b04c812a654d49a6c8ea640a9db04e2867ad59decf27a900f8683cb49d440d"
+    },
+    {
+      "source": "ui64-final3/modal-unsync-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-unsync-wide.png",
+      "bytes": 253955,
+      "sha256": "7ff71342ea98ae50618ce9f88aa7cc7ce6ce90c94f99170d4dcbf1ba989d2a17"
+    },
+    {
+      "source": "ui64-final3/modal-unsync-small.png",
+      "export": "screenshots/modal-chrome-final-modal-unsync-small.png",
+      "bytes": 167467,
+      "sha256": "291503b1fe6769b8e6aaa79afc369e4df983d511dcbb44dc36e5d1a92b69e0d3"
+    },
+    {
+      "source": "ui64-final3/modal-editor-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-editor-wide.png",
+      "bytes": 257798,
+      "sha256": "5f89c056db2c828c8dbd90b14a499c0c5aad0fa8f8372b948b3723f526282ff0"
+    },
+    {
+      "source": "ui64-final3/modal-editor-small.png",
+      "export": "screenshots/modal-chrome-final-modal-editor-small.png",
+      "bytes": 149193,
+      "sha256": "a599038fa704e6622731217d75b047f62496bbc203d69a5f863bbbd8cb1c88bc"
+    },
+    {
+      "source": "ui64-final3/modal-price-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-price-wide.png",
+      "bytes": 203021,
+      "sha256": "62b548ffe8058bd3744bdc7337ad479d5c3ba70634967cd44d2dc01647c42e6a"
+    },
+    {
+      "source": "ui64-final3/modal-price-small.png",
+      "export": "screenshots/modal-chrome-final-modal-price-small.png",
+      "bytes": 129258,
+      "sha256": "468f85355f1e58badaa77dc69fcae0305ec3221d1e9311609b812bef48f7e953"
+    },
+    {
+      "source": "ui64-final3/modal-detail-wide.png",
+      "export": "screenshots/modal-chrome-final-modal-detail-wide.png",
+      "bytes": 227352,
+      "sha256": "cb2d7fe583aad1936f68c0b3754f3b8bca04f30d85881d59084b4988f89160f9"
+    },
+    {
+      "source": "ui64-final3/modal-detail-small.png",
+      "export": "screenshots/modal-chrome-final-modal-detail-small.png",
+      "bytes": 151550,
+      "sha256": "191513a757fe86b718e140afea4986de5a5688aecfd2448afabb84b1f417cfbe"
+    },
+    {
+      "source": "ui64-final3/delete-a-wide.png",
+      "export": "screenshots/modal-chrome-final-delete-a-wide.png",
+      "bytes": 245289,
+      "sha256": "838ee20ba6e9a1bfbeea288402324758505534f86218020ab60f7a626e6488e4"
+    },
+    {
+      "source": "ui64-final3/delete-a-small.png",
+      "export": "screenshots/modal-chrome-final-delete-a-small.png",
+      "bytes": 159891,
+      "sha256": "e93989e22dee0b6e8a68dee6b5405451293894c6f0234ea2fe10b561f12f1c74"
+    },
+    {
+      "source": "ui64-final3/delete-b-wide.png",
+      "export": "screenshots/modal-chrome-final-delete-b-wide.png",
+      "bytes": 242133,
+      "sha256": "cd13ef9d617aa04396648f89ebbf6c4a353ea60feb8efff24a01de0cbd1509aa"
+    },
+    {
+      "source": "ui64-final3/delete-b-small.png",
+      "export": "screenshots/modal-chrome-final-delete-b-small.png",
+      "bytes": 163696,
+      "sha256": "a8e42e199afdafd8128e7e2f36180c592f2752dabc52808b011698bc9133a09c"
+    },
+    {
+      "source": "ui64-final3/price-invalid-wide.png",
+      "export": "screenshots/modal-chrome-final-price-invalid-wide.png",
+      "bytes": 207334,
+      "sha256": "c2c1786af2d36edb1de23520a893e37e04c336920c24539e0b5b8fff387bad68"
+    },
+    {
+      "source": "ui64-final3/price-invalid-small.png",
+      "export": "screenshots/modal-chrome-final-price-invalid-small.png",
+      "bytes": 133110,
+      "sha256": "d02e1dc743439a94da826bf58f6538f7af1009e2fcf842a3a1746f1e5fc0de24"
+    },
+    {
+      "source": "ui64-final3/sync-close-focused-wide.png",
+      "export": "screenshots/modal-chrome-final-sync-close-focused-wide.png",
+      "bytes": 253002,
+      "sha256": "e0b87027e411b7541ce6f0a836162da953240fb318c93d30dd21e5709028f9b9"
+    },
+    {
+      "source": "ui64-final/modal-chat-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-chat-wide.png",
+      "bytes": 247833,
+      "sha256": "e5484a3e299d253e13e2aa3aac01864fb9e4f762a5ef72183df2dc3fa3aab50b"
+    },
+    {
+      "source": "ui64-final/modal-responses-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-responses-wide.png",
+      "bytes": 248554,
+      "sha256": "7311ef8ac9c9fd345bfd698d8a06dd83799a1b4626f99ec658d403f8e4529aa2"
+    },
+    {
+      "source": "ui64-final/modal-anthropic-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-anthropic-wide.png",
+      "bytes": 251271,
+      "sha256": "b508844e7c0e0811f762593a84b3ceec19d17a5db4e493712d460213995d7ecb"
+    },
+    {
+      "source": "ui64-final/modal-gemini-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-gemini-wide.png",
+      "bytes": 242971,
+      "sha256": "593400501b71c47ea18c3f68b1814e751f3b8ef4fc0f0f15ae32ce365311bab9"
+    },
+    {
+      "source": "ui64-final/modal-picker-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-picker-wide.png",
+      "bytes": 231770,
+      "sha256": "45206c0c044a04f15bb3249b5eb2c928fb8161f0df3fd0b9b72434e6e94e334b"
+    },
+    {
+      "source": "ui64-final/modal-editor-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-editor-wide.png",
+      "bytes": 258610,
+      "sha256": "4c943e2092431c7ec3350c44707f7c8308dde79ad7cd4c7df3a253fafb2e3325"
+    },
+    {
+      "source": "ui64-final/modal-sync-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-sync-wide.png",
+      "bytes": 254154,
+      "sha256": "565477093bec01464f87a8651cac22dcf8696b0f7262bbdaa2355a59503bf50f"
+    },
+    {
+      "source": "ui64-final/close-keyboard-focus-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-close-keyboard-focus-wide.png",
+      "bytes": 254494,
+      "sha256": "3a843a785765d122c2f7dff0ca99303a7f1ae87b5cda04c7fb793f11ab50e086"
+    },
+    {
+      "source": "ui64-final/modal-price-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-price-wide.png",
+      "bytes": 203617,
+      "sha256": "147673b397f5f772a4df76153f5a54dd7a2062461fa2dc29937cedc4a9f1e781"
+    },
+    {
+      "source": "ui64-final/modal-detail-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-0b-modal-detail-wide.png",
+      "bytes": 227951,
+      "sha256": "986b87ac7c14b668cdccce1618b086cad77e7ee00bfd3c018de8ce1ea43d4ddd"
+    },
+    {
+      "source": "ui64-final2/modal-price-wide.png",
+      "export": "screenshots/modal-chrome-intermediate-a48-modal-price-wide.png",
+      "bytes": 202735,
+      "sha256": "d6598be3295a8d256b6c21688c1723d062903a193ff439b3325ff3143cdf5719"
+    },
+    {
+      "source": "ui64-final2/modal-price-small.png",
+      "export": "screenshots/modal-chrome-intermediate-a48-modal-price-small.png",
+      "bytes": 129020,
+      "sha256": "9a80f7af3b399bd095da73bd62b543be5505cf959b3954585713675d7c845c8a"
+    },
+    {
+      "source": "ui64-matched-previous/matched-chat-wide.png",
+      "export": "screenshots/modal-chrome-matched-previous-chat-wide.png",
+      "bytes": 243715,
+      "sha256": "de6ba5b9d5724d39401e3e0ca9de20764b1168dab5c2219e636da5d9d5bc5658"
+    },
+    {
+      "source": "ui64-matched-current/matched-chat-wide.png",
+      "export": "screenshots/modal-chrome-matched-current-chat-wide.png",
+      "bytes": 246246,
+      "sha256": "444665337303b3b8adcca59cc2b69d82aa01edeb27c69fe3b646889513194648"
+    },
+    {
+      "source": "build.json",
+      "export": "benchmarks/modal-chrome-build.json",
+      "bytes": 23439,
+      "sha256": "5c1d34f622a6fdf9623a8c0dceb15c23978821e5b77d2aa81f3c9905d16d5c6c"
+    },
+    {
+      "source": "source-scope.json",
+      "export": "benchmarks/modal-chrome-source-scope.json",
+      "bytes": 3354,
+      "sha256": "656decc391c357f9e172ae86b3db339e0fe21a8e345b0d13f3e3344875238324"
+    },
+    {
+      "source": "design-audit.json",
+      "export": "benchmarks/modal-chrome-design-audit.json",
+      "bytes": 13329,
+      "sha256": "60ba12e4ddb73eac9e25bb774bff576c4cd0f8e2adecbb51a057e83afb01f730"
+    },
+    {
+      "source": "figma-inventory.json",
+      "export": "benchmarks/modal-chrome-figma-inventory.json",
+      "bytes": 7082,
+      "sha256": "585581f76024438de5e35d412808bc76af59eb162b1673accf0e5bf399abcb12"
+    },
+    {
+      "source": "context-inventory.json",
+      "export": "benchmarks/modal-chrome-context-inventory.json",
+      "bytes": 1527,
+      "sha256": "da2fe1e29508fa97ff738d822c1aed387db3d5f94947dfbe92105831d0543f9b"
+    },
+    {
+      "source": "asset-audit.json",
+      "export": "benchmarks/modal-chrome-asset-audit.json",
+      "bytes": 25532,
+      "sha256": "07de3d31fa7a65611d56cace95e4ba44cbb9564f9546d6c7570ed7c6c1bf3311"
+    },
+    {
+      "source": "asset-audit-more.json",
+      "export": "benchmarks/modal-chrome-asset-audit-more.json",
+      "bytes": 73662,
+      "sha256": "44dac2836b0c09e8943c61334302e8a6b722920c2777e293f2f47f4910bb213f"
+    },
+    {
+      "source": "chrome-pixels.json",
+      "export": "benchmarks/modal-chrome-chrome-pixels.json",
+      "bytes": 9875,
+      "sha256": "e67f2fd23dba17ccbcb187bf46cc4222a6860aa4eaf47dc9ebd9e5e8a288769d"
+    },
+    {
+      "source": "price-pixels.json",
+      "export": "benchmarks/modal-chrome-price-pixels.json",
+      "bytes": 4943,
+      "sha256": "62ebe9562f8eb9baff3b10841d0565486f16816f08baeecb0382cfaa7465793b"
+    },
+    {
+      "source": "detail-pixels.json",
+      "export": "benchmarks/modal-chrome-detail-pixels.json",
+      "bytes": 1034,
+      "sha256": "efdb6f7e196c97d31febf9dff86c40c8e800ad623e90aae9a39973eb7923799c"
+    },
+    {
+      "source": "shell-pixels.json",
+      "export": "benchmarks/modal-chrome-shell-pixels.json",
+      "bytes": 10484,
+      "sha256": "d82abe1d49af2f26ebe42c548f4bc2c91e5cf0885d0fde3b457d41d4822e2e2f"
+    },
+    {
+      "source": "baseline-image-inventory.json",
+      "export": "benchmarks/modal-chrome-baseline-images.json",
+      "bytes": 4585,
+      "sha256": "6f23d01988e390918f1a55ebdf882e8bdcbb00447562922614d303bcd75884c0"
+    },
+    {
+      "source": "ui64-final3/final-image-inventory.json",
+      "export": "benchmarks/modal-chrome-final-images.json",
+      "bytes": 10940,
+      "sha256": "6e36c846a271c10ec3b048edeab186b33cc500cd60788acd2a9d7fff2bcd5262"
+    },
+    {
+      "source": "ui64-final3/final-gui-validation.json",
+      "export": "benchmarks/modal-chrome-final-gui-validation.json",
+      "bytes": 6979,
+      "sha256": "3bcfee7d7299cf9cdb3885edda97cde9be5d8a50718333deff07b223a88a8c11"
+    },
+    {
+      "source": "ui64-final3/all-cancel-core-proof.json",
+      "export": "benchmarks/modal-chrome-all-cancel-core-proof.json",
+      "bytes": 439,
+      "sha256": "fb377f1fffe14e77aaf4d4411c03882d27b9253f8a4628f7583693ad86f086d9"
+    },
+    {
+      "source": "ui64-final3/invalid-price-core-proof.json",
+      "export": "benchmarks/modal-chrome-invalid-price-core-proof.json",
+      "bytes": 272,
+      "sha256": "ad78ceb46af40e64b56040d0f330ba219da3ec8bfa895ab89c8b4d4ed98dbfac"
+    },
+    {
+      "source": "ui64-final/intermediate-0b-gui-validation.json",
+      "export": "benchmarks/modal-chrome-intermediate-0b-gui-validation.json",
+      "bytes": 3798,
+      "sha256": "989e2d9974ff02228782daa04650a5ddee8902090ab0dbbaceb87adf31781c75"
+    },
+    {
+      "source": "ui64-final2/intermediate-a48-gui-validation.json",
+      "export": "benchmarks/modal-chrome-intermediate-a48-gui-validation.json",
+      "bytes": 1389,
+      "sha256": "5f7ac1eb947f0e36cfd87f16bc27378d5c06edcaf64485bdaaa509347ebc69d3"
+    },
+    {
+      "source": "intermediate-0b-build.json",
+      "export": "benchmarks/modal-chrome-intermediate-0b-build.json",
+      "bytes": 23439,
+      "sha256": "721187c5f62d3b38928c94fa008b94b5316c76db97c90ef045e10441b8274cc7"
+    },
+    {
+      "source": "intermediate-a48-build.json",
+      "export": "benchmarks/modal-chrome-intermediate-a48-build.json",
+      "bytes": 23439,
+      "sha256": "97cca5506a5af32d7e7b6cb923d41d5c2dfbe775e4d9f0e7e9364715bed5f8b7"
+    },
+    {
+      "source": "intermediate-0b-price-pixels.json",
+      "export": "benchmarks/modal-chrome-intermediate-0b-price-pixels.json",
+      "bytes": 4943,
+      "sha256": "27e7732552d6240a6ec654e267d5cc63327212586e98b19fc3a5d9e4be206f3f"
+    },
+    {
+      "source": "intermediate-a48-price-pixels.json",
+      "export": "benchmarks/modal-chrome-intermediate-a48-price-pixels.json",
+      "bytes": 4943,
+      "sha256": "e8e096d536ddcc9a7706ddd5fd98c0ed663b8fe2a7bed77389c209dd27db9327"
+    },
+    {
+      "source": "performance-summary.json",
+      "export": "benchmarks/modal-chrome-performance-summary.json",
+      "bytes": 22561,
+      "sha256": "788078699e3f798c4a04fae03a94ccf0dc1988f4532231f1cc2508fa2b7e1867"
+    },
+    {
+      "source": "matched-performance-summary.json",
+      "export": "benchmarks/modal-chrome-matched-performance-summary.json",
+      "bytes": 1203,
+      "sha256": "cfc323e7383ded2c6b583bccd4cb6eeb0725c7334f0fa5a6d201ac3e743be952"
+    },
+    {
+      "source": "lifecycle.json",
+      "export": "benchmarks/modal-chrome-lifecycle.json",
+      "bytes": 5064,
+      "sha256": "8f5e4bcf8aab5fc0a95c6c443d9fc834d4f590f157dcbcda113cedd682c1f191"
+    },
+    {
+      "source": "isolation-data-proof.json",
+      "export": "benchmarks/modal-chrome-isolation-data-proof.json",
+      "bytes": 29460,
+      "sha256": "6e98895cc8899bd406e350a73fe2960222082144a6128d04abf7af11ea7dfb32"
+    },
+    {
+      "source": "ui64-baseline/idle-chat.json",
+      "export": "benchmarks/modal-chrome-idle-baseline-captures.json",
+      "bytes": 9296,
+      "sha256": "7a7bac65d1b030fb8ed4a8280a13b65af0fa3f954ca6615910110da5835429b9"
+    },
+    {
+      "source": "ui64-final3/idle-chat.json",
+      "export": "benchmarks/modal-chrome-idle-final-captures.json",
+      "bytes": 9414,
+      "sha256": "77aa8c2099a73bc6b303e2f952b5424fa7b6840f0298ce4013bac9581fd01c6e"
+    },
+    {
+      "source": "performance-previous1.json",
+      "export": "benchmarks/modal-chrome-performance-previous1.json",
+      "bytes": 4515,
+      "sha256": "619c99885ae25ef056af885f8c0532b077ce90f473521dc8d1640b1169849032"
+    },
+    {
+      "source": "performance-current1.json",
+      "export": "benchmarks/modal-chrome-performance-current1.json",
+      "bytes": 4514,
+      "sha256": "e94444975dbdd15086651c9151449d5512f7d077e9761541a0711236ac988816"
+    },
+    {
+      "source": "performance-current2.json",
+      "export": "benchmarks/modal-chrome-performance-current2.json",
+      "bytes": 4511,
+      "sha256": "213bff0897f3bf063c972e7627929c0ea21c96c1c616ce7c15f7c4af2045eaab"
+    },
+    {
+      "source": "performance-previous2.json",
+      "export": "benchmarks/modal-chrome-performance-previous2.json",
+      "bytes": 4511,
+      "sha256": "0558eaa5fde9029e1a1fc614038c5ec0f6d43fd9fc37533d92d69468ce2ae449"
+    },
+    {
+      "source": "ui64-matched-previous/idle-chat.json",
+      "export": "benchmarks/modal-chrome-idle-matched-previous.json",
+      "bytes": 9295,
+      "sha256": "78bb401b360a6cda0b73e98277720da34dcb467b216a8bfa2a0e716781395a21"
+    },
+    {
+      "source": "ui64-matched-previous/sequence.json",
+      "export": "benchmarks/modal-chrome-matched-sequence-previous.json",
+      "bytes": 780,
+      "sha256": "600eb67f142a89d6b2cba5dbe8e3bcbb31b2d16f903d37e098552958fced2923"
+    },
+    {
+      "source": "ui64-matched-current/idle-chat.json",
+      "export": "benchmarks/modal-chrome-idle-matched-current.json",
+      "bytes": 9299,
+      "sha256": "e6c2a2fb582442b7140ade8299ccbee9539c190330d5956f1909049452c7f907"
+    },
+    {
+      "source": "ui64-matched-current/sequence.json",
+      "export": "benchmarks/modal-chrome-matched-sequence-current.json",
+      "bytes": 780,
+      "sha256": "a9c567be2415847d168fe223660dfbd4f2eefdb6436aea4206c6adc7defabaf7"
+    }
+  ],
+  "scope": "Byte-identical originals and sanitized derived reports. Full context temporary asset URLs and config/management credentials are not exported. Intermediate0b/a48 are not final5c63.",
+  "final_ui_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77"
+}

@@ -1,0 +1,398 @@
+[
+  {
+    "name" : "chat",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      411,
+      89,
+      1028,
+      810
+    ]
+  },
+  {
+    "name" : "chat",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "chat",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "responses",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      411,
+      89,
+      1028,
+      810
+    ]
+  },
+  {
+    "name" : "responses",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "responses",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "anthropic",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      411,
+      89,
+      1028,
+      810
+    ]
+  },
+  {
+    "name" : "anthropic",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "anthropic",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "gemini",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      411,
+      89,
+      1028,
+      810
+    ]
+  },
+  {
+    "name" : "gemini",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "gemini",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      411,
+      90,
+      1028,
+      811
+    ]
+  },
+  {
+    "name" : "picker",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      358,
+      94,
+      1081,
+      763
+    ]
+  },
+  {
+    "name" : "picker",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      358,
+      94,
+      1081,
+      763
+    ]
+  },
+  {
+    "name" : "picker",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      358,
+      94,
+      1081,
+      763
+    ]
+  },
+  {
+    "name" : "editor",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      357,
+      46,
+      1082,
+      843
+    ]
+  },
+  {
+    "name" : "editor",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      357,
+      46,
+      1082,
+      843
+    ]
+  },
+  {
+    "name" : "editor",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      357,
+      46,
+      1082,
+      843
+    ]
+  },
+  {
+    "name" : "sync",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      458,
+      275,
+      981,
+      590
+    ]
+  },
+  {
+    "name" : "sync",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      458,
+      275,
+      981,
+      590
+    ]
+  },
+  {
+    "name" : "sync",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      458,
+      275,
+      981,
+      590
+    ]
+  },
+  {
+    "name" : "unsync",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      458,
+      275,
+      981,
+      590
+    ]
+  },
+  {
+    "name" : "unsync",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      458,
+      275,
+      981,
+      590
+    ]
+  },
+  {
+    "name" : "unsync",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      458,
+      275,
+      981,
+      590
+    ]
+  },
+  {
+    "name" : "price",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      434,
+      136,
+      1005,
+      758
+    ]
+  },
+  {
+    "name" : "price",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      434,
+      139,
+      1005,
+      761
+    ]
+  },
+  {
+    "name" : "price",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      434,
+      136,
+      1005,
+      758
+    ]
+  },
+  {
+    "name" : "detail",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      396,
+      73,
+      1043,
+      840
+    ]
+  },
+  {
+    "name" : "detail",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      396,
+      74,
+      1043,
+      841
+    ]
+  },
+  {
+    "name" : "detail",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      396,
+      74,
+      1043,
+      841
+    ]
+  },
+  {
+    "name" : "delete-a",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      455,
+      272,
+      984,
+      591
+    ]
+  },
+  {
+    "name" : "delete-a",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      455,
+      272,
+      984,
+      591
+    ]
+  },
+  {
+    "name" : "delete-a",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      455,
+      272,
+      984,
+      591
+    ]
+  },
+  {
+    "name" : "delete-b",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "reference",
+    "white_fill_bounds_inclusive" : [
+      455,
+      272,
+      984,
+      591
+    ]
+  },
+  {
+    "name" : "delete-b",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "baseline",
+    "white_fill_bounds_inclusive" : [
+      455,
+      272,
+      984,
+      591
+    ]
+  },
+  {
+    "name" : "delete-b",
+    "scope" : "Full native PNG read only; excludes OS sharing indicator by ROI x>=200\/y>=30; pure white mask is modal surface after dimming.",
+    "version" : "final3",
+    "white_fill_bounds_inclusive" : [
+      455,
+      272,
+      984,
+      591
+    ]
+  }
+]

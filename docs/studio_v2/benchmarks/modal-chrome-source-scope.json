@@ -1,0 +1,56 @@
+{
+  "base_head": "537261a35873043d6391445c90c6cfa845cee0e8",
+  "files": [
+    {
+      "path": "gpui/src/statistics/detail_layout.rs",
+      "before_sha256": "f713b44311fb2a8c718681e9ca5e21acba0158ba46aede7117c5b7be2a419032",
+      "after_sha256": "a5228e904e90e6d7d55e873ac1edc500b7a6e4008241ce8bacf95ff9cc22ae28"
+    },
+    {
+      "path": "gpui/src/statistics/price_layout.rs",
+      "before_sha256": "fcad6cef02dc31ba2733c9ff11eb281a9e01e5f797bf98506ed50d837fdd1d2f",
+      "after_sha256": "ab2bb5c48b135e4b51e8301c2e052fb6ab4b4f636dc971f8187d4544b0f375dc"
+    },
+    {
+      "path": "gpui/src/theme.rs",
+      "before_sha256": "9d0c22eb9555b93f0f9f87079b3f4ead6f7711687d1ada444bc2770772569b75",
+      "after_sha256": "5f65bdae238b67bfd2d23e9da4c11c28de3348030558d5fb0df482daa782dfc4"
+    },
+    {
+      "path": "gpui/src/ui.rs",
+      "before_sha256": "c52a0ba30cbdbd707d6aaaa904076d772d2561b130115970dd498c2c57f5fba4",
+      "after_sha256": "cc31ab66a5a07587352bcdd18b0163fbcfdf13b8a953c9de4fefd44af57e39eb"
+    },
+    {
+      "path": "gpui/src/ui_components.rs",
+      "before_sha256": "fbb8f82717706fc760c958af849aa8e3a06d4ce055be6a11e146f69f4525279d",
+      "after_sha256": "f4c4669f5757750071edb7f376a9e20be04d75bf5799e066a01fe7d895ca7aaa"
+    }
+  ],
+  "unchanged_blocks": {
+    "gpui/src/ui.rs:.on_ok(move |_, window, cx| {": true,
+    "gpui/src/statistics/price_layout.rs:.on_ok(move |_, _, cx| {": true,
+    "gpui/src/statistics/detail_layout.rs:fn cost_text(": true
+  },
+  "frozen_gate_sources_match": true,
+  "scope": "Five Rust presentation files only; native Base Cancel trigger, overlay appearance, price fields and detail row geometry. No core, config schema, dependencies, lockfiles, workflows or feature handlers changed.",
+  "normal_overlay": "rgba(19,23,46,.48), encoded122/255 alpha",
+  "warning_overlay": "Prior rgba(18,23,43,.49), encoded125/255, restored on delete close; old skins retain prior default",
+  "close_engine": "Public gpui_kit::base::DialogClose::trigger, its original Button and Cancel dispatch; no Proxy dismiss replacement",
+  "keyboard_ax_limit": "Native engine reused; actual full keyboard/AX acceptance pending",
+  "close_variants": [
+    "Protocol",
+    "ModelPicker",
+    "ModelEditor",
+    "ProviderDelete",
+    "Sync and Unsync",
+    "Price",
+    "RequestDetail"
+  ],
+  "final_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+  "release_bytes": 42459200,
+  "close_enter_fix": "Only focusedClose.on_action(nativeConfirm) stops propagation and dispatches nativeCancel; form on_ok unchanged. Actual a48 Return andSpace passed.",
+  "price_geometry": "Studio-only explicit42pxcontrolslots, label20/gap1 (modelgap2), groupmargins18/16/28/18, mode258/22/240, pricepairs253/13/253, footer67/error97; original label retainedbelowfold withmargin40, scroll/focushandlersunchanged",
+  "final_native_keyboard": "5c63 actual SyncClose focus ring thenReturn andSpace eachclose; fullnativecheck continuing",
+  "price_pixel_result": "5c63 all12 sampled header/input/footer raw y coordinates reference+1; Title[461,164,583,183]vsref[461,163,583,182]. Native PNG901rows vsreference900; this does not by itself prove a universal offset cause. Price shell whitebounds exactlysame asreference; other shells have0/1px rawdifferences. Some Label AA bounds differ1px; not fullframe finalacceptance."
+}

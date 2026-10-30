@@ -21,7 +21,10 @@
       "59:11",
       "60:27",
       "60:249",
-      "60:475"
+      "60:475",
+      "68:350",
+      "78:1080",
+      "80:864"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -264,22 +267,21 @@
       "id": "59:11",
       "name": "06 / STUDIO V2 · 选择模型",
       "review_status": "reviewed_with_differences",
-      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
-        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
-        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
         "states": "已有灰勾不变、可选model-b-1鼠标与Space、全选/反选/清空/仅选、命中/无匹配和Cancel通过；再次Add仅草稿/Core5，显式CmdS后Core6。新Base引擎保留原筛选/容量/草稿方法，完整Tab/全部容量/IME/AX未重验。",
-        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
-        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
-        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-picker-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-picker-small.png"
       },
       "differences": [
-        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
-        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
-        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
-        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        "普通遮罩/原生关闭呈现已修；原生阴影、×墨迹和部分AA仍与参考不同。",
+        "真实5候选/4既有时列表下方空白仍白色，稿件满38行/soft填充不能冒充真实数据。",
+        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
       ],
       "evidence": [
         "benchmarks/dialogs-layout-design-audit.json",
@@ -292,23 +294,28 @@
         "benchmarks/dialogs-layout-process-lifecycle.json",
         "benchmarks/dialogs-layout-performance-summary.json",
         "screenshots/dialogs-layout-final-picker-wide.png",
-        "screenshots/dialogs-layout-final-picker-small.png"
+        "screenshots/dialogs-layout-final-picker-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "59:279",
       "name": "07 / STUDIO V2 · 编辑模型能力",
       "review_status": "reviewed_with_differences",
-      "scope": "UI53首轮整帧审查后，UI54补布局余差修复；当前bc7候选两尺寸、取消/确认草稿、遮罩和局部键盘已验，整帧保留差异。 UI57 a51另有字体全局影响两尺寸抽查，供应商/模型可见文字未见缺字；模型小窗下方字段未滚动，完整布局仍待。",
+      "scope": "UI53首轮整帧审查后，UI54补布局余差修复；当前bc7候选两尺寸、取消/确认草稿、遮罩和局部键盘已验，整帧保留差异。 UI57 a51另有字体全局影响两尺寸抽查，供应商/模型可见文字未见缺字；模型小窗下方字段未滚动，完整布局仍待。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "复选框相对稿从低1.5px收敛至低0.5px；wide档位横向124px已对齐，小窗内部滚动/固定动作可达",
-        "colors": "notice与checkbox主色经ICC分析符合；文字/按钮/背景仍需全量逐项核对",
-        "typography": "UI57最终a51接入原始Noto Sans SC/Inter及已审查的共享侧栏/统计文字角色，真实两尺寸与六皮肤/万单位检查完成。实际每字形PostScript来源、准确Figma字体版本、其余全部角色/状态仍未终验；不是全帧排版一致。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "UI54两份共享SVG替换为官方精确导出；模型帧28份本地精确匹配，3个装饰traffic lights仍使用真实系统控件；非全slot验收",
         "states": "当前bc7 AUTO只读、manual图片/medium更改、取消复原及确认后草稿重开通过；Core配置未写",
-        "interaction": "当前bc7两尺寸遮罩不穿透、局部Tab/ShiftTab可见caret及Space通过；完整遍历/Enter/IME/读屏未验",
-        "native_1440": "当前bc7 AUTO/manual2880×1802原图已核对",
-        "native_1100": "当前bc7 manual/限制滚动2200×1402原图已核对"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-editor-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-editor-small.png"
       },
       "differences": [
         "UI54原生2×测得复选框两行从低1.5px收敛至低0.5px，notice/确认约0.5px差；UI57原生1×字体抽查未逐像素重测这些槽位。",
@@ -316,7 +323,8 @@
         "原生Kit双层黑色弹窗阴影与稿0/18/42 rgba(20,31,59,.22)不同，Kit在调用方样式后覆盖。",
         "UI57 Studio已接入原Noto Sans SC，原系统fallback差异的源码原因已处理；模型全部文字角色/权重/基线与精细颜色仍待逐项审查。UI54取消白底保持。",
         "共享背景/动态日志与状态保持真实；完整静态asset slot/effective geometry仍待全量验收。",
-        "Help/默认档位Select/自动模式开关保留原业务；完整键盘/IME/无障碍和跨平台未最终通过。"
+        "Help/默认档位Select/自动模式开关保留原业务；完整键盘/IME/无障碍和跨平台未最终通过。",
+        "UI64遮罩和×已改，取消/Enter/Space共用引擎实测；旧阴影/细字体/亚像素差异继续保留。"
       ],
       "evidence": [
         "benchmarks/model-frame-build.json",
@@ -332,29 +340,33 @@
         "screenshots/model-alignment-limits-1100x700-native-2x.png",
         "screenshots/studio-fonts-model-1440x900-native-1x.png",
         "screenshots/studio-fonts-model-1100x700-native-1x.png",
-        "benchmarks/studio-fonts-gui-validation.json"
+        "benchmarks/studio-fonts-gui-validation.json",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "60:27",
       "name": "08 / STUDIO V2 · 同步 WorkBuddy",
       "review_status": "reviewed_with_differences",
-      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
-        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
-        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
         "states": "确认Cancel不写；仅同步一次，将6模型写入隔离HOME/models.json，config.installed为6个模型安装条目、ID集合相同。Core真实HOME kernel保护已预检；未点击Restart/Unsync，不将隔离同步当真实WorkBuddy重启验收。",
-        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
-        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
-        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-sync-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-sync-small.png"
       },
       "differences": [
-        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
-        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
-        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
-        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        "普通遮罩/原生关闭呈现已修；原生阴影、×墨迹和部分AA仍与参考不同。",
+        "原生RefreshCw/Info与稿中文字循环箭头/提示符形状不同；所有已保存供应商文案保留真实业务语义。",
+        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
       ],
       "evidence": [
         "benchmarks/dialogs-layout-design-audit.json",
@@ -367,29 +379,34 @@
         "benchmarks/dialogs-layout-process-lifecycle.json",
         "benchmarks/dialogs-layout-performance-summary.json",
         "screenshots/dialogs-layout-final-sync-wide.png",
-        "screenshots/dialogs-layout-final-sync-small.png"
+        "screenshots/dialogs-layout-final-sync-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "60:249",
       "name": "09 / STUDIO V2 · 新建价格规则",
       "review_status": "reviewed_with_differences",
-      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
-        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
-        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
         "states": "-1被本地decimal校验拒绝、规则0；纠正1.5/6/CNY/cache0并滚动取回备注实际输入后保存，规则1/revision1。原14费用快照逐字段不变，新本地mock请求500/50/550费用1050000nanos。旧错误在重新提交前仍显示，未改原校验逻辑。",
-        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
-        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
-        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-price-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-price-small.png"
       },
       "differences": [
-        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
-        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
-        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
-        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        "普通遮罩/原生关闭呈现已修；原生阴影、×墨迹和部分AA仍与参考不同。",
+        "UI64已修壳、520字段宽、258/240及253/253分列和页脚；12条线原图y均参考+1，部分Label墨迹约1px；未证明原图额外1行是所有偏移的统一原因。",
+        "原有备注移至默认视口后，实际滚动可输入并X取消；完整有效保存/错误/锁定状态沿用既有专项证据，本批只重复无效保存。",
+        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
       ],
       "evidence": [
         "benchmarks/dialogs-layout-design-audit.json",
@@ -402,29 +419,34 @@
         "benchmarks/dialogs-layout-process-lifecycle.json",
         "benchmarks/dialogs-layout-performance-summary.json",
         "screenshots/dialogs-layout-final-price-wide.png",
-        "screenshots/dialogs-layout-final-price-small.png"
+        "screenshots/dialogs-layout-final-price-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "60:475",
       "name": "10 / STUDIO V2 · 请求详情",
       "review_status": "reviewed_with_differences",
-      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。",
+      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
-        "colors": "Studio Picker徽章EEEDFF、筛选按钮F3/E7/body色、禁用前景继承；checked既有项MUTED/白check，可选为primary；价格输入和Select文字4C566D。原生focus/hover/disabled语义保留并实测Clear0不动作；并非所有状态颜色/AA终验。",
-        "typography": "四标题墨迹经OS额外行校正均与参考边界相同；Picker按钮12/17、模型13/19、badge11；价格字段13/18与label17/Medium；详情RequestID InterMedium、其他行NotoRegular12/17。第一批详情正常行仍约低1px，不宣称准确字体版本/全字形。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
         "states": "真实新gpt6记录CNY¥0.00105、500/50/550；窄窗内滚取回费用/耗时/速度，更多详情1.5/6/0/0@1、Esc返回及Close通过；无缓存仍—、0ms/无速度，不冒充Figma样例89.4%/172.8tok/s。",
-        "interaction": "9个独立Core阶段均true；原49配置节点保留，预期新增A模型/6安装条目/1价格规则及1本地请求。关UI后Core200/ready，随后Core/fixture0，已记录21个PID消失。Mono→Studio Picker各打开/Cancel，六旧皮肤全状态、完整键盘/IME/AX与跨平台仍待。",
-        "native_1440": "最终769原始1440×901/native1×，目标逻辑1440×900，四类默认原图均逐图检查；包含OS额外1行，不裁剪/缩放/重绘。静态样例数据与真实夹具数据区别保留。",
-        "native_1100": "最终769原始1100×701/native1×，四类默认原图及勾选/错误/备注/新请求底部/Mono共5补图已查。详情下方需内滚；价格备注初始部分裁切，经内滚完整可达，不将全部字段同屏当通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-detail-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-detail-small.png"
       },
       "differences": [
-        "共享scrim仍为旧rgba，原生Close小图标位置/颜色/尺寸与Figma×不同；Sync/Info适配原生vector，不作一比一glyph声明。",
-        "详情正常行扣OSrow后仍约低1px、组分隔线约高1px；价格shell约低2px、scrollgutter使字段窄12px，计价/币种列宽与稿不同；精确几何/边框AA继续待修。",
-        "价格额外备注保留在可滚动body，默认顶部部分被viewport剪裁，但已滚动取回输入；Picker真实5候选/4既有使列表下方空白为白而非稿soft。动态计数、真实数据与同步全部已保存供应商文案保留。",
-        "本批覆盖指定真实交互和Mono抽查；所有模式/故障/键盘/IME/AX/六皮肤完整状态、HiDPI/其他平台硬件及最终全量对照仍未完成。"
+        "普通遮罩/原生关闭呈现已修；原生阴影、×墨迹和部分AA仍与参考不同。",
+        "UI64正常行/组线已修，三条线原图y为160/425/533，对稿159/424/532；×墨迹/全帧边框AA和原生阴影仍有差异。",
+        "真实14请求、0ms/未知缓存与速度等缺失语义保留，不填写稿中虚构数字。",
+        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
       ],
       "evidence": [
         "benchmarks/dialogs-layout-design-audit.json",
@@ -437,26 +459,31 @@
         "benchmarks/dialogs-layout-process-lifecycle.json",
         "benchmarks/dialogs-layout-performance-summary.json",
         "screenshots/dialogs-layout-final-detail-wide.png",
-        "screenshots/dialogs-layout-final-detail-small.png"
+        "screenshots/dialogs-layout-final-detail-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "61:289",
       "name": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
       "review_status": "reviewed_with_differences",
-      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。",
+      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-        "colors": "默认Chat选中底原PNG两点255/255/255、徽章238/237/255，与官方参考匹配；选中边框D5D1FF、焦点保留语义主色，字段文字4C566D。共享scrim仍与参考不同，未作全部状态AA/对比度验收。",
-        "typography": "Studio标题光学上移1px，Inter Medium用于徽章/映射key/Anthropic-Version，字段12/17、labelMedium；Chat标题墨迹参考[437,114,554,132]、原图[437,115,554,133]为OS额外行。Select值/映射标题仍有光学偏差，字体版本和全字形来源不作终验。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
         "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-        "interaction": "四tab各点选后Return及Space均不Apply；Apply只改draft，后续显式CmdS才持久化，Azure跨Chat→Responses保留。49个原配置节点递归保持，Core/UI关闭边界独立核实。完整Tab/ShiftTab、全部错误字段自动卷入、IME/读屏/跨平台仍待。",
-        "native_1440": "最终db899原始1440×901 native1×，目标逻辑1440×900，四协议默认各图并保留焦点图；无裁剪/缩放/重绘。真实端口/模型/日志不冒充稿件样例。",
-        "native_1100": "最终db899原始1100×701 native1×，四协议默认各图、Gemini末行与两错误图已查；固定footer可见，body内部滚动。未把所有协议全部字段/完整键盘/IME/AX标为通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-chat-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-chat-small.png"
       },
       "differences": [
-        "全局原生遮罩仍rgba(18,23,43,.49)，设计rgba(19,23,46,.48)；画布采样135/138/150对参考138/140/153。原生X颜色/尺寸/位置与稿件×文字不同，保留原生关闭与Esc。",
+        "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
         "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
         "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
         "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
@@ -472,26 +499,31 @@
         "benchmarks/protocol-layout-post-gui-proof.json",
         "benchmarks/protocol-layout-performance-summary.json",
         "screenshots/protocol-layout-final-chat-wide.png",
-        "screenshots/protocol-layout-final-chat-small.png"
+        "screenshots/protocol-layout-final-chat-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "61:561",
       "name": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
       "review_status": "reviewed_with_differences",
-      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。",
+      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-        "colors": "默认Chat选中底原PNG两点255/255/255、徽章238/237/255，与官方参考匹配；选中边框D5D1FF、焦点保留语义主色，字段文字4C566D。共享scrim仍与参考不同，未作全部状态AA/对比度验收。",
-        "typography": "Studio标题光学上移1px，Inter Medium用于徽章/映射key/Anthropic-Version，字段12/17、labelMedium；Chat标题墨迹参考[437,114,554,132]、原图[437,115,554,133]为OS额外行。Select值/映射标题仍有光学偏差，字体版本和全字形来源不作终验。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
         "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-        "interaction": "四tab各点选后Return及Space均不Apply；Apply只改draft，后续显式CmdS才持久化，Azure跨Chat→Responses保留。49个原配置节点递归保持，Core/UI关闭边界独立核实。完整Tab/ShiftTab、全部错误字段自动卷入、IME/读屏/跨平台仍待。",
-        "native_1440": "最终db899原始1440×901 native1×，目标逻辑1440×900，四协议默认各图并保留焦点图；无裁剪/缩放/重绘。真实端口/模型/日志不冒充稿件样例。",
-        "native_1100": "最终db899原始1100×701 native1×，四协议默认各图、Gemini末行与两错误图已查；固定footer可见，body内部滚动。未把所有协议全部字段/完整键盘/IME/AX标为通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-responses-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-responses-small.png"
       },
       "differences": [
-        "全局原生遮罩仍rgba(18,23,43,.49)，设计rgba(19,23,46,.48)；画布采样135/138/150对参考138/140/153。原生X颜色/尺寸/位置与稿件×文字不同，保留原生关闭与Esc。",
+        "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
         "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
         "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
         "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
@@ -507,26 +539,31 @@
         "benchmarks/protocol-layout-post-gui-proof.json",
         "benchmarks/protocol-layout-performance-summary.json",
         "screenshots/protocol-layout-final-responses-wide.png",
-        "screenshots/protocol-layout-final-responses-small.png"
+        "screenshots/protocol-layout-final-responses-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "61:838",
       "name": "11 / STUDIO V2 · 协议选项 · Anthropic",
       "review_status": "reviewed_with_differences",
-      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。",
+      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-        "colors": "默认Chat选中底原PNG两点255/255/255、徽章238/237/255，与官方参考匹配；选中边框D5D1FF、焦点保留语义主色，字段文字4C566D。共享scrim仍与参考不同，未作全部状态AA/对比度验收。",
-        "typography": "Studio标题光学上移1px，Inter Medium用于徽章/映射key/Anthropic-Version，字段12/17、labelMedium；Chat标题墨迹参考[437,114,554,132]、原图[437,115,554,133]为OS额外行。Select值/映射标题仍有光学偏差，字体版本和全字形来源不作终验。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
         "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-        "interaction": "四tab各点选后Return及Space均不Apply；Apply只改draft，后续显式CmdS才持久化，Azure跨Chat→Responses保留。49个原配置节点递归保持，Core/UI关闭边界独立核实。完整Tab/ShiftTab、全部错误字段自动卷入、IME/读屏/跨平台仍待。",
-        "native_1440": "最终db899原始1440×901 native1×，目标逻辑1440×900，四协议默认各图并保留焦点图；无裁剪/缩放/重绘。真实端口/模型/日志不冒充稿件样例。",
-        "native_1100": "最终db899原始1100×701 native1×，四协议默认各图、Gemini末行与两错误图已查；固定footer可见，body内部滚动。未把所有协议全部字段/完整键盘/IME/AX标为通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-anthropic-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-anthropic-small.png"
       },
       "differences": [
-        "全局原生遮罩仍rgba(18,23,43,.49)，设计rgba(19,23,46,.48)；画布采样135/138/150对参考138/140/153。原生X颜色/尺寸/位置与稿件×文字不同，保留原生关闭与Esc。",
+        "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
         "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
         "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
         "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
@@ -542,26 +579,31 @@
         "benchmarks/protocol-layout-post-gui-proof.json",
         "benchmarks/protocol-layout-performance-summary.json",
         "screenshots/protocol-layout-final-anthropic-wide.png",
-        "screenshots/protocol-layout-final-anthropic-small.png"
+        "screenshots/protocol-layout-final-anthropic-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
       "id": "61:1111",
       "name": "11 / STUDIO V2 · 协议选项 · Gemini",
       "review_status": "reviewed_with_differences",
-      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。",
+      "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
         "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-        "colors": "默认Chat选中底原PNG两点255/255/255、徽章238/237/255，与官方参考匹配；选中边框D5D1FF、焦点保留语义主色，字段文字4C566D。共享scrim仍与参考不同，未作全部状态AA/对比度验收。",
-        "typography": "Studio标题光学上移1px，Inter Medium用于徽章/映射key/Anthropic-Version，字段12/17、labelMedium；Chat标题墨迹参考[437,114,554,132]、原图[437,115,554,133]为OS额外行。Select值/映射标题仍有光学偏差，字体版本和全字形来源不作终验。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
         "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
         "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-        "interaction": "四tab各点选后Return及Space均不Apply；Apply只改draft，后续显式CmdS才持久化，Azure跨Chat→Responses保留。49个原配置节点递归保持，Core/UI关闭边界独立核实。完整Tab/ShiftTab、全部错误字段自动卷入、IME/读屏/跨平台仍待。",
-        "native_1440": "最终db899原始1440×901 native1×，目标逻辑1440×900，四协议默认各图并保留焦点图；无裁剪/缩放/重绘。真实端口/模型/日志不冒充稿件样例。",
-        "native_1100": "最终db899原始1100×701 native1×，四协议默认各图、Gemini末行与两错误图已查；固定footer可见，body内部滚动。未把所有协议全部字段/完整键盘/IME/AX标为通过。"
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-gemini-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-gemini-small.png"
       },
       "differences": [
-        "全局原生遮罩仍rgba(18,23,43,.49)，设计rgba(19,23,46,.48)；画布采样135/138/150对参考138/140/153。原生X颜色/尺寸/位置与稿件×文字不同，保留原生关闭与Esc。",
+        "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
         "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
         "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
         "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
@@ -577,7 +619,12 @@
         "benchmarks/protocol-layout-post-gui-proof.json",
         "benchmarks/protocol-layout-performance-summary.json",
         "screenshots/protocol-layout-final-gemini-wide.png",
-        "screenshots/protocol-layout-final-gemini-small.png"
+        "screenshots/protocol-layout-final-gemini-small.png",
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
       ]
     },
     {
@@ -709,20 +756,31 @@
     {
       "id": "68:350",
       "name": "22 / STUDIO V2 · 取消同步确认",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI64 official full high-fidelity context/reference and baseline two-size native captures read. Shared close/scrim candidate compiled; final native interaction and full-frame comparison still underway. No final acceptance. UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "完整画板壳/层级与54:2共用背景核对；526×318取消同步及532×322删除壳白色填充框实拍与参考相同，最小窗按钮可见；静态样例数据不写死。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
+        "assets": "本帧30个资源全部按官方curl下载，原生槽位沿用已审54:2；逐字节或仅一致clipID/ref重命名等价，3窗口装饰保留真实OS控件。完整有效几何仍随全量终验。",
+        "states": "隔离真实Mock两供应商/5模型（A4/B1）/14请求7700Token；取消不删除、不移除、不重启。动态日志/未测试连接状态保真。",
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-unsync-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-unsync-small.png"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "共用背景/真实端口、14条日志和连接未测试状态与静态稿不同，保持真实语义。",
+        "×墨迹1-2px、原生阴影及警告背景约1通道颜色差异仍保留；不能以声明RGBA相同当作全像素相同。",
+        "原生RefreshCw/Info与稿中文字箭头/提示符不同；保留原功能与已有文案。",
+        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+      ],
+      "evidence": [
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
+      ]
     },
     {
       "id": "69:359",
@@ -799,20 +857,30 @@
     {
       "id": "78:1080",
       "name": "27 / STUDIO V2 · 删除供应商确认",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI64 official full high-fidelity context/reference and baseline two-size native captures read. Shared close/scrim candidate compiled; final native interaction and full-frame comparison still underway. No final acceptance. UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "完整画板壳/层级与54:2共用背景核对；526×318取消同步及532×322删除壳白色填充框实拍与参考相同，最小窗按钮可见；静态样例数据不写死。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
+        "assets": "本帧30个资源全部按官方curl下载，原生槽位沿用已审54:2；逐字节或仅一致clipID/ref重命名等价，3窗口装饰保留真实OS控件。完整有效几何仍随全量终验。",
+        "states": "隔离真实Mock两供应商/5模型（A4/B1）/14请求7700Token；取消不删除、不移除、不重启。动态日志/未测试连接状态保真。",
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-delete-a-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-delete-a-small.png"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "共用背景/真实端口、14条日志和连接未测试状态与静态稿不同，保持真实语义。",
+        "×墨迹1-2px、原生阴影及警告背景约1通道颜色差异仍保留；不能以声明RGBA相同当作全像素相同。",
+        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+      ],
+      "evidence": [
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
+      ]
     },
     {
       "id": "78:1325",
@@ -943,20 +1011,30 @@
     {
       "id": "80:864",
       "name": "35 / STUDIO V2 · 删除 OpenCode Go 确认",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI64 official full high-fidelity context/reference and baseline two-size native captures read. Shared close/scrim candidate compiled; final native interaction and full-frame comparison still underway. No final acceptance. UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "完整画板壳/层级与54:2共用背景核对；526×318取消同步及532×322删除壳白色填充框实拍与参考相同，最小窗按钮可见；静态样例数据不写死。",
+        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
+        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
+        "assets": "本帧30个资源全部按官方curl下载，原生槽位沿用已审54:2；逐字节或仅一致clipID/ref重命名等价，3窗口装饰保留真实OS控件。完整有效几何仍随全量终验。",
+        "states": "隔离真实Mock两供应商/5模型（A4/B1）/14请求7700Token；取消不删除、不移除、不重启。动态日志/未测试连接状态保真。",
+        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
+        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-delete-b-wide.png",
+        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-delete-b-small.png"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "共用背景/真实端口、14条日志和连接未测试状态与静态稿不同，保持真实语义。",
+        "×墨迹1-2px、原生阴影及警告背景约1通道颜色差异仍保留；不能以声明RGBA相同当作全像素相同。",
+        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+      ],
+      "evidence": [
+        "benchmarks/modal-chrome-design-audit.json",
+        "benchmarks/modal-chrome-final-gui-validation.json",
+        "benchmarks/modal-chrome-artifacts.json",
+        "benchmarks/modal-chrome-shell-pixels.json",
+        "benchmarks/modal-chrome-isolation-data-proof.json"
+      ]
     },
     {
       "id": "80:1114",

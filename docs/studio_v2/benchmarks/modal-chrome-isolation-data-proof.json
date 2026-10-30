@@ -1,0 +1,1094 @@
+{
+  "fixtures": [
+    {
+      "fixture": "ui64-baseline",
+      "pre_gui_proof": {
+        "ready": {
+          "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-baseline/WorkBuddy Proxy Review.app",
+          "bundle_id": "com.workbuddy.proxy.codexreview.tui64-baseline",
+          "core_pid": 63153,
+          "port": 62866
+        },
+        "core_proof": {
+          "enforced": true,
+          "pid": 63153,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "launchagents_permissions": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "core_config_sha256_before": "2b83d3f351912b4910d110a9e978c2a4c36165056311a0908fce50d8de971759",
+        "seed": {
+          "real_http_requests": 14,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "expected_input": 7000,
+          "expected_output": 700,
+          "expected_total": 7700
+        },
+        "ui_sha256": "76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c",
+        "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "post_gui": {
+        "checked_at": "2026-10-31T06:31:08.174475+08:00",
+        "ui_pid": 63356,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 63153,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "2b83d3f351912b4910d110a9e978c2a4c36165056311a0908fce50d8de971759",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "price_rules_after_exit": 0
+    },
+    {
+      "fixture": "ui64-final",
+      "pre_gui_proof": {
+        "ready": {
+          "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final/WorkBuddy Proxy Review.app",
+          "bundle_id": "com.workbuddy.proxy.codexreview.tui64-final",
+          "core_pid": 66167,
+          "port": 51329
+        },
+        "core_proof": {
+          "enforced": true,
+          "pid": 66167,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "launchagents_permissions": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "core_config_sha256_before": "1df3fc5874fdf8d36465331c1a5462b6e2fb4fa4d5141ccdebc229105f98e295",
+        "seed": {
+          "real_http_requests": 0,
+          "statuses": [],
+          "expected_input": 0,
+          "expected_output": 0,
+          "expected_total": 0
+        },
+        "ui_sha256": "0b23656dc3c3f2b9a87761fa969b03fb23229e54f1107cdf09eb82a9aca38a8c",
+        "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "post_gui": {
+        "checked_at": "2026-10-31T06:42:08.246415+08:00",
+        "ui_pid": 68273,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 66167,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "1df3fc5874fdf8d36465331c1a5462b6e2fb4fa4d5141ccdebc229105f98e295",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "price_rules_after_exit": 0
+    },
+    {
+      "fixture": "ui64-final2",
+      "pre_gui_proof": {
+        "ready": {
+          "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final2/WorkBuddy Proxy Review.app",
+          "bundle_id": "com.workbuddy.proxy.codexreview.tui64-final2",
+          "core_pid": 73019,
+          "port": 61600
+        },
+        "core_proof": {
+          "enforced": true,
+          "pid": 73019,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "launchagents_permissions": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "core_config_sha256_before": "f364e64088dee450921348d2d3811210cf2913a55b59770cc7497c080869c027",
+        "seed": {
+          "real_http_requests": 14,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "expected_input": 7000,
+          "expected_output": 700,
+          "expected_total": 7700
+        },
+        "ui_sha256": "a48b8c9f27c417406c84cda85316a8d2dbb578c707a4b4a2883275b3eb0fec72",
+        "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "post_gui": {
+        "checked_at": "2026-10-31T06:51:51.309499+08:00",
+        "ui_pid": 73194,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 73019,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "f364e64088dee450921348d2d3811210cf2913a55b59770cc7497c080869c027",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "price_rules_after_exit": 0
+    },
+    {
+      "fixture": "ui64-final3",
+      "pre_gui_proof": {
+        "ready": {
+          "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-final3/WorkBuddy Proxy Review.app",
+          "bundle_id": "com.workbuddy.proxy.codexreview.tui64-final3",
+          "core_pid": 75196,
+          "port": 65187
+        },
+        "core_proof": {
+          "enforced": true,
+          "pid": 75196,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "launchagents_permissions": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "core_config_sha256_before": "64c46bf18f4fde7c571f692b833c3a5d86c40622a0a5c78a0d6e1aab55aaabf7",
+        "seed": {
+          "real_http_requests": 14,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "expected_input": 7000,
+          "expected_output": 700,
+          "expected_total": 7700
+        },
+        "ui_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+        "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "post_gui": {
+        "checked_at": "2026-10-31T07:10:56.689568+08:00",
+        "ui_pid": 75334,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 75196,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "64c46bf18f4fde7c571f692b833c3a5d86c40622a0a5c78a0d6e1aab55aaabf7",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "price_rules_after_exit": 0
+    },
+    {
+      "fixture": "ui64-matched-previous",
+      "pre_gui_proof": {
+        "ready": {
+          "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-matched-previous/WorkBuddy Proxy Review.app",
+          "bundle_id": "com.workbuddy.proxy.codexreview.tui64-matched-previous",
+          "core_pid": 81477,
+          "port": 51561
+        },
+        "core_proof": {
+          "enforced": true,
+          "pid": 81477,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "launchagents_permissions": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "core_config_sha256_before": "3e43b9438e01d2ef6c290ab8d2ddd8c864d03f545283d9a087c47d1cfbad5e7f",
+        "seed": {
+          "real_http_requests": 14,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "expected_input": 7000,
+          "expected_output": 700,
+          "expected_total": 7700
+        },
+        "ui_sha256": "76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c",
+        "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "post_gui": {
+        "checked_at": "2026-10-31T07:21:46.110092+08:00",
+        "ui_pid": 81620,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 81477,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "3e43b9438e01d2ef6c290ab8d2ddd8c864d03f545283d9a087c47d1cfbad5e7f",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "price_rules_after_exit": 0
+    },
+    {
+      "fixture": "ui64-matched-current",
+      "pre_gui_proof": {
+        "ready": {
+          "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl/ui64-matched-current/WorkBuddy Proxy Review.app",
+          "bundle_id": "com.workbuddy.proxy.codexreview.tui64-matched-current",
+          "core_pid": 84127,
+          "port": 54760
+        },
+        "core_proof": {
+          "enforced": true,
+          "pid": 84127,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O",
+          "launchagents_permissions": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "core_config_sha256_before": "6f630c59d58906435faea06524120892f6d50530cbddeb915277bb480d399931",
+        "seed": {
+          "real_http_requests": 14,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "expected_input": 7000,
+          "expected_output": 700,
+          "expected_total": 7700
+        },
+        "ui_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+        "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "post_gui": {
+        "checked_at": "2026-10-31T07:27:14.996545+08:00",
+        "ui_pid": 84262,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 84127,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "6f630c59d58906435faea06524120892f6d50530cbddeb915277bb480d399931",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "price_rules_after_exit": 0
+    }
+  ],
+  "scope": "Sourceguard kernel enforced Core; GUI unique bundle/LSEnvironment, notkernelguarded; no real WorkBuddy/systemtoggle/restart/links used."
+}

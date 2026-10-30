@@ -1,0 +1,36 @@
+{
+  "candidate": "intermediate a48",
+  "ui_sha256": "a48b8c9f27c417406c84cda85316a8d2dbb578c707a4b4a2883275b3eb0fec72",
+  "ui_pid": 73194,
+  "core_pid": 73019,
+  "window_id": 3611,
+  "sync_close_keyboard": {
+    "focus": "Tab then ShiftTab produced visible purple outline on X",
+    "return": "closed modal",
+    "space": "reopened, Tab then ShiftTab, Space closed modal",
+    "sync_or_restart_clicked": false
+  },
+  "price": {
+    "screenshots": [
+      {
+        "file": "modal-price-wide.png",
+        "width": 1440,
+        "height": 901,
+        "sha256": "d6598be3295a8d256b6c21688c1723d062903a193ff439b3325ff3143cdf5719",
+        "method": "native screencapture; own UI PID 73194 layer 0 window 3611"
+      },
+      {
+        "file": "modal-price-small.png",
+        "width": 1100,
+        "height": 701,
+        "sha256": "9a80f7af3b399bd095da73bd62b543be5505cf959b3954585713675d7c845c8a",
+        "method": "native screencapture; own UI PID 73194 layer 0 window 3611"
+      }
+    ],
+    "remark": "1100 window: scrolled body to remark, typed UI64 draft, X cancelled; reopened remark empty",
+    "save_clicked": false,
+    "parent_review": "select label and title alignment need further correction; intermediate only"
+  },
+  "native_window_close": "CUA close button clicked after cancelling price",
+  "foreground": "no explicit activate or raise; actual foreground not asserted"
+}

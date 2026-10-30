@@ -17,6 +17,23 @@ pub fn apply_skin(skin: Skin, cx: &mut App) {
     install(cx, registered_families);
 }
 
+/// Kit reads its backdrop from the active theme. Select it only at a modal
+/// boundary, and restore the normal Studio backdrop when the warning closes.
+pub fn dialog_overlay(warning: bool, cx: &mut App) {
+    if current_skin() != Skin::StudioIndigo {
+        return;
+    }
+    let overlay = rgba(if warning {
+        color::SCRIM_RGBA
+    } else {
+        color::DIALOG_SCRIM_RGBA
+    })
+    .into();
+    if Theme::global(cx).overlay != overlay {
+        Theme::update(cx, |theme| theme.colors.overlay = overlay);
+    }
+}
+
 /// A monochrome accent must remain visible on the midnight navigation surface.
 pub fn sidebar_accent() -> u32 {
     if current_skin() == Skin::Monochrome {
@@ -94,9 +111,10 @@ pub mod color {
     pub const DRAFT_TINT: u32 = 0xfff3e4;
     pub const MODEL_EMPTY: u32 = 0xf5f6fe;
 
-    /// Shared Studio overlay: rgba(18, 23, 43, .49), from delete frames
-    /// 78:1080 / 80:864, encoded as RGBA for Kit's native modal layer.
+    /// Warning overlay and legacy skin default: delete frames 78:1080/80:864.
     pub const SCRIM_RGBA: u32 = 0x12172b7d;
+    /// Normal Studio modal overlay: protocol/picker/sync/price/detail frames.
+    pub const DIALOG_SCRIM_RGBA: u32 = 0x13172e7a;
 
     pub const CHART_INPUT: u32 = 0x6c61f8;
     pub const CHART_OUTPUT: u32 = 0x2e9e6b;
@@ -347,7 +365,12 @@ fn install(cx: &mut App, registered_families: Option<Vec<String>>) {
         colors.list_hover = rgb(color::BG_TABLE_HEAD).into();
         colors.muted = rgb(color::BG_DISABLED).into();
         colors.muted_foreground = rgb(color::TEXT_3).into();
-        colors.overlay = rgba(color::SCRIM_RGBA).into();
+        colors.overlay = rgba(if current_skin() == Skin::StudioIndigo {
+            color::DIALOG_SCRIM_RGBA
+        } else {
+            color::SCRIM_RGBA
+        })
+        .into();
         colors.popover = rgb(color::WHITE).into();
         colors.popover_foreground = rgb(color::TEXT_1).into();
         colors.primary = rgb(crate::theme::palette().primary).into();

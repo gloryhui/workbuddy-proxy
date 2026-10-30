@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-31T07:35:35.942979+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl",
+  "type": "Session-owned synthetic test configs/SQLite, copied executables/bundles, helper scripts, downloaded reference assets and evidence workingcopies",
+  "project": "workbuddy-proxy Studio V2 UI64",
+  "uid": 501,
+  "parents": [
+    {
+      "path": "/",
+      "symlink": false,
+      "mount": true,
+      "uid": 0,
+      "device": 16777233
+    },
+    {
+      "path": "/private",
+      "symlink": false,
+      "mount": false,
+      "uid": 0,
+      "device": 16777233
+    },
+    {
+      "path": "/private/var",
+      "symlink": false,
+      "mount": false,
+      "uid": 0,
+      "device": 16777233
+    },
+    {
+      "path": "/private/var/folders",
+      "symlink": false,
+      "mount": false,
+      "uid": 0,
+      "device": 16777233
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "symlink": false,
+      "mount": false,
+      "uid": 0,
+      "device": 16777233
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "symlink": false,
+      "mount": false,
+      "uid": 501,
+      "device": 16777233
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "symlink": false,
+      "mount": false,
+      "uid": 501,
+      "device": 16777233
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl",
+      "symlink": false,
+      "mount": false,
+      "uid": 501,
+      "device": 16777233
+    }
+  ],
+  "files": 545,
+  "apparent_bytes": 689258498,
+  "allocated_bytes_upper_bound": 698929152,
+  "symlink_owner_mount_issues": [],
+  "lsof_open_references": false,
+  "tracked_payload_pids_gone": 30,
+  "archived_files": 113,
+  "archived_bytes_sha_verified": true,
+  "next_baseline_shared_release_sha256_verified": true,
+  "reproducible": "Rust source + unchanged public benchmarks and existing reusable UI63 testhelpers; actualoriginalPNG/reports preserved in113archived files. No real profile/database/cache or repository source in target.",
+  "data_free_before_bytes": 40681295872,
+  "status": "preflight only; no deletion executed"
+}

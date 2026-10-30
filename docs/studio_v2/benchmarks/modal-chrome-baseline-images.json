@@ -1,0 +1,218 @@
+[
+  {
+    "file": "delete-a-small.png",
+    "bytes": 160988,
+    "sha256": "b6e811b62d3aaae99266b33dcd296d55f17db296c12e4754becbfb21be7729d3",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "delete-a-wide.png",
+    "bytes": 246114,
+    "sha256": "c7e3f18aea21c37968d62ba9cc667d244bec8c73e0abb47d2b9a2c5ad758cece",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "delete-b-small.png",
+    "bytes": 161532,
+    "sha256": "ae7b59ea4a62ba176eda6c10094e7f22edc512ec4516031ad358a4b8aa233103",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "delete-b-wide.png",
+    "bytes": 243119,
+    "sha256": "2299842630499c067afa9baa8e2ada43bccdb20389841977b23b3f1644a6d73f",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-anthropic-small.png",
+    "bytes": 151518,
+    "sha256": "329ff97d35bae4e17a3a05937442330cc7e02e23b77fc76331abc0aca4e5de87",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-anthropic-wide.png",
+    "bytes": 248801,
+    "sha256": "abace8e9cab7d4334f9341ade16d01d9d977ab8fd649c7ac1dd09994899258ff",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-chat-small.png",
+    "bytes": 149143,
+    "sha256": "ab54b4b4f1e34185af6321fc2d929006ea07fc9191205e63c9bca4d8e122cd33",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-chat-wide.png",
+    "bytes": 245730,
+    "sha256": "70dd3ff716d5175f6df1945f604575f217b996ca39520969ffd1dd8ad71a46bc",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-detail-small.png",
+    "bytes": 151225,
+    "sha256": "63c258937763847a103c4ca2c64c9f161c67a81df0db71a0082fe3e3625b60d4",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-detail-wide.png",
+    "bytes": 226090,
+    "sha256": "cccb0b345bb07d488c747a0896dc41f67fc2d58faeec0a0747eca24dde05d89b",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-editor-small.png",
+    "bytes": 150462,
+    "sha256": "25c077bb59ac0e673d0ebbe079c422cdfd62f5325919153428f670126fad50e3",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-editor-wide.png",
+    "bytes": 256597,
+    "sha256": "facc91d77d977a324321a6b7790405f638b8844219f949934cd433b71e9e5ed8",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-gemini-small.png",
+    "bytes": 144549,
+    "sha256": "3b99a46b30dd18561688ee0ddc0c2a007771a6e230b5dec1769bcf869163c285",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-gemini-wide.png",
+    "bytes": 240689,
+    "sha256": "aa7717fdb8bd072f0f446fdc43cced582ff01173f1e07e4b0bb47796bdbe4578",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-picker-small.png",
+    "bytes": 126317,
+    "sha256": "24d4cf72ef0839ba5aedaa19fb5ccbd6d19398a408dbff35098af035f3aa72a0",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-picker-wide.png",
+    "bytes": 229371,
+    "sha256": "288c42eca28215e4694220bfa4bbeb7b2691052bcc37624c6a65a6107356ac83",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-price-small.png",
+    "bytes": 129570,
+    "sha256": "315da0769fa1911e92291f753cef14072b0be7e007ae50ba0c106bfb9d5fc6d0",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-price-wide.png",
+    "bytes": 202631,
+    "sha256": "32112bb6689e18a9a0ab0e4f31fd37c1b66cfa96c4b1e32d900d3d19ec73a7d3",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-responses-small.png",
+    "bytes": 148861,
+    "sha256": "584d9447bc2e5ff36ec7a63a96d8387777a084a267207824b46e5345089d61ee",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-responses-wide.png",
+    "bytes": 246298,
+    "sha256": "354f4f524001fd4e4af343d6c3935692a31d9038c95adfb45795265375690ae5",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-sync-small.png",
+    "bytes": 168752,
+    "sha256": "1ae2530278a0b38dccbddf4b62b13f040af0eecb218c257908cf240e4dc8147c",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-sync-wide.png",
+    "bytes": 251902,
+    "sha256": "e9ce6624ced8db62501a819c504908a4daddabfcd688ae6800d516c89b513280",
+    "size": [
+      1440,
+      901
+    ]
+  },
+  {
+    "file": "modal-unsync-small.png",
+    "bytes": 170021,
+    "sha256": "85963958d1247d7fdc410f72c4fb67b309b6912096f918acedfd9d9f91493186",
+    "size": [
+      1100,
+      701
+    ]
+  },
+  {
+    "file": "modal-unsync-wide.png",
+    "bytes": 253254,
+    "sha256": "bd3f4e73c249cf031cce57e644aab24b403943f50fd5c2448600e434236d7d95",
+    "size": [
+      1440,
+      901
+    ]
+  }
+]

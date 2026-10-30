@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-31T07:42:14.201579+08:00",
+  "embedded_json_identical": true,
+  "unique_frames": 40,
+  "counts": {
+    "not_reviewed": 24,
+    "reviewing": 0,
+    "reviewed_with_differences": 16,
+    "reviewed": 0
+  },
+  "remaining_final": 40,
+  "relative_hrefs_existing": 428,
+  "node_check_exit_code": 0,
+  "browser": "Notretested: prior localfile toolpolicy refusal remains; noalternate-path bypass. Existing renderer/styles unchanged, data-only timeline update."
+}

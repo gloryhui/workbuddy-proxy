@@ -1,0 +1,243 @@
+{
+  "checked_at": "2026-10-31T07:27:15.535580+08:00",
+  "tracked_payload_pids": [
+    {
+      "fixture": "ui64-baseline",
+      "kind": "core",
+      "pid": 63153,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-baseline",
+      "kind": "ui",
+      "pid": 63356,
+      "gone": true,
+      "exit_code": null,
+      "ui_note": "CUA owned, exitcode unavailable"
+    },
+    {
+      "fixture": "ui64-baseline",
+      "kind": "fixture",
+      "pid": 63151,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-final",
+      "kind": "core",
+      "pid": 66167,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-final",
+      "kind": "ui",
+      "pid": 68273,
+      "gone": true,
+      "exit_code": null,
+      "ui_note": "CUA owned, exitcode unavailable"
+    },
+    {
+      "fixture": "ui64-final",
+      "kind": "fixture",
+      "pid": 66166,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-final2",
+      "kind": "core",
+      "pid": 73019,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-final2",
+      "kind": "ui",
+      "pid": 73194,
+      "gone": true,
+      "exit_code": null,
+      "ui_note": "CUA owned, exitcode unavailable"
+    },
+    {
+      "fixture": "ui64-final2",
+      "kind": "fixture",
+      "pid": 73018,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-final3",
+      "kind": "core",
+      "pid": 75196,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-final3",
+      "kind": "ui",
+      "pid": 75334,
+      "gone": true,
+      "exit_code": null,
+      "ui_note": "CUA owned, exitcode unavailable"
+    },
+    {
+      "fixture": "ui64-final3",
+      "kind": "fixture",
+      "pid": 75195,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-matched-previous",
+      "kind": "core",
+      "pid": 81477,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-matched-previous",
+      "kind": "ui",
+      "pid": 81620,
+      "gone": true,
+      "exit_code": null,
+      "ui_note": "CUA owned, exitcode unavailable"
+    },
+    {
+      "fixture": "ui64-matched-previous",
+      "kind": "fixture",
+      "pid": 81473,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-matched-current",
+      "kind": "core",
+      "pid": 84127,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "ui64-matched-current",
+      "kind": "ui",
+      "pid": 84262,
+      "gone": true,
+      "exit_code": null,
+      "ui_note": "CUA owned, exitcode unavailable"
+    },
+    {
+      "fixture": "ui64-matched-current",
+      "kind": "fixture",
+      "pid": 84123,
+      "gone": true,
+      "exit_code": 0,
+      "ui_note": null
+    },
+    {
+      "fixture": "benchmark-previous1",
+      "kind": "mock",
+      "pid": 80725,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-previous1",
+      "kind": "core",
+      "pid": 80726,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-previous1",
+      "kind": "ui",
+      "pid": 80965,
+      "gone": true,
+      "exit_code": null
+    },
+    {
+      "fixture": "benchmark-current1",
+      "kind": "mock",
+      "pid": 80998,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-current1",
+      "kind": "core",
+      "pid": 81000,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-current1",
+      "kind": "ui",
+      "pid": 81091,
+      "gone": true,
+      "exit_code": null
+    },
+    {
+      "fixture": "benchmark-current2",
+      "kind": "mock",
+      "pid": 81117,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-current2",
+      "kind": "core",
+      "pid": 81119,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-current2",
+      "kind": "ui",
+      "pid": 81186,
+      "gone": true,
+      "exit_code": null
+    },
+    {
+      "fixture": "benchmark-previous2",
+      "kind": "mock",
+      "pid": 81213,
+      "exit_code": -15,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-previous2",
+      "kind": "core",
+      "pid": 81215,
+      "exit_code": 0,
+      "waited": true,
+      "gone": true
+    },
+    {
+      "fixture": "benchmark-previous2",
+      "kind": "ui",
+      "pid": 81265,
+      "gone": true,
+      "exit_code": null
+    }
+  ],
+  "all_gone": true,
+  "scope": "Six manualfixtureUI/Core/Python mockhost plusfourbenchmarkUI/Core/mock. Build/script/driver exit statuses separately toolwaited0. NoUIexitcode invented."
+}

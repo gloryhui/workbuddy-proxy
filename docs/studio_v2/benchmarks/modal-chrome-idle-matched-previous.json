@@ -1,0 +1,436 @@
+{
+  "at": "2026-10-31T07:16:22.860055+08:00",
+  "pids": {
+    "core": 81477,
+    "ui": 81620
+  },
+  "process_start_identifiers": {
+    "core": "1793401982881087",
+    "ui": "1793401998960064"
+  },
+  "ui_sha256": "76917815141d12caf61adb98f52b916e70ac802e20a8f0338576480c91686b1c",
+  "state": "Studio Chinese Chat protocol modal open at1440x900 logical, pointer outside; CUA agent paused for sample",
+  "elapsed_seconds": 30.005102708004415,
+  "metrics": {
+    "core": {
+      "cpu_delta_seconds": 0.04,
+      "cpu_percent_one_core": 0.133,
+      "rss_median_mib": 13.03125,
+      "rss_peak_sample_mib": 13.03125
+    },
+    "ui": {
+      "cpu_delta_seconds": 0.28,
+      "cpu_percent_one_core": 0.933,
+      "rss_median_mib": 124.359375,
+      "rss_peak_sample_mib": 124.359375
+    }
+  },
+  "samples": [
+    {
+      "elapsed": 0,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.35,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 5.94,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 1.0050694580058916,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.35,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 5.95,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 2.0051349170025787,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.35,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 5.96,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 3.002839375003532,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.36,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 5.97,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 4.0051521670029615,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.36,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 5.98,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 5.000948375003645,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.36,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 5.99,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 6.00505858300312,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.36,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.0,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 7.004682375001721,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.36,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.01,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 8.004713458001788,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.36,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.02,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 9.00470245800534,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.36,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.02,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 10.005143417001818,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.37,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.03,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 11.005098583002109,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.37,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.04,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 12.001086958000087,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.37,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.05,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 13.005097500004922,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.37,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.06,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 14.002947375003714,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.37,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.07,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 15.005129417004355,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.37,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.08,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 16.00505300000077,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.37,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.09,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 17.0035023330056,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.38,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.1,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 18.004705417006335,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.38,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.11,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 19.00467091700557,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.38,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.11,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 20.005076083005406,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.38,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.12,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 21.004686874999607,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.38,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.13,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 22.00174316700577,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.38,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.14,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 23.005077167006675,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.38,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.15,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 24.005092583000078,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.39,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.16,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 25.002882542001316,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.39,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.17,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 26.003831125002762,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.39,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.18,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 27.0046975830046,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.39,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.19,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 28.005138000000443,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.39,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.2,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 29.000541667002835,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.39,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.21,
+          "rss_mib": 124.359375
+        }
+      }
+    },
+    {
+      "elapsed": 30.005102708004415,
+      "processes": {
+        "core": {
+          "cpu_seconds": 0.39,
+          "rss_mib": 13.03125
+        },
+        "ui": {
+          "cpu_seconds": 6.22,
+          "rss_mib": 124.359375
+        }
+      }
+    }
+  ],
+  "limits": "One30s sample per version, ps cumulative time resolution0.01s,1s RSS sampling. CPU% is one logical core equivalent; no FPS/input latency/leak/long-run or statistical equivalence claim. Other desktop activity uncontrolled.",
+  "history_before_sample": "Fixed cold-start sequence: negativepriceerror->mouseX, MonoPriceDefault->mouseX, restoreStudio->Providers->Chat; noothermodals/validSave/Enter",
+  "comparison_caution": "Matched shortsequence n1perversion; doesnotcoverall24capturehistory orproveleakabsence."
+}

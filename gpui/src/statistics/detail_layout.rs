@@ -38,7 +38,7 @@ fn row(
                     label
                         .line_height(px(17.))
                         .font_weight(FontWeight::NORMAL)
-                        .when(!wrap, |label| label.relative().top(px(-3.)))
+                        .when(!wrap, |label| label.relative().top(px(-4.)))
                 }),
         )
         .child(
@@ -53,7 +53,7 @@ fn row(
                     label
                         .line_height(px(17.))
                         .font_weight(FontWeight::NORMAL)
-                        .when(!wrap, |label| label.relative().top(px(-3.)))
+                        .when(!wrap, |label| label.relative().top(px(-4.)))
                         .when(!wrap && index == 0, |label| {
                             crate::studio_fonts::latin(label, cx).font_weight(FontWeight::MEDIUM)
                         })
@@ -180,6 +180,7 @@ impl Statistics {
     }
 
     fn open_detail_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        crate::theme::dialog_overlay(false, cx);
         let owner = cx.entity().downgrade();
         let observer = cx.entity().clone();
         let body = cx.new(|cx| {
@@ -188,6 +189,7 @@ impl Statistics {
                 owner: owner.clone(),
             }
         });
+        let zh = self.zh;
         window.open_dialog(cx, move |dialog, window, _| {
             let close_owner = owner.clone();
             let height = (window.viewport_size().height - px(64.)).min(px(770.));
@@ -201,11 +203,23 @@ impl Statistics {
                 .rounded(px(18.))
                 .border_color(rgb(BORDER))
                 .margin_top(((window.viewport_size().height - height) / 2. + px(7.)).max(px(16.)))
-                .close_button(true)
+                .close_button(crate::theme::current_skin() != crate::theme::Skin::StudioIndigo)
                 .overlay_closable(true)
                 .content({
                     let body = body.clone();
-                    move |content, _, _| content.gap_0().child(body.clone())
+                    move |content, _, _| {
+                        content.gap_0().child(body.clone()).when(
+                            crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                            |content| {
+                                content
+                                    .relative()
+                                    .child(crate::ui_components::studio_dialog_close(
+                                        crate::ui_components::DialogCloseKind::RequestDetail,
+                                        zh,
+                                    ))
+                            },
+                        )
+                    }
                 })
                 .on_close(move |_, _, cx| {
                     let _ = close_owner.update(cx, |this, cx| this.clear_detail(cx));
@@ -448,7 +462,24 @@ impl Statistics {
                         cx,
                     )
                     .when(index == 6 || index == 9, |row| {
-                        row.border_b_1().border_color(rgb(BORDER))
+                        row.when(
+                            crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                            |row| {
+                                row.relative().child(
+                                    div()
+                                        .absolute()
+                                        .bottom(px(-1.))
+                                        .left_0()
+                                        .w_full()
+                                        .h(px(1.))
+                                        .bg(rgb(BORDER)),
+                                )
+                            },
+                        )
+                        .when(
+                            crate::theme::current_skin() != crate::theme::Skin::StudioIndigo,
+                            |row| row.border_b_1().border_color(rgb(BORDER)),
+                        )
                     })
                 }),
         )

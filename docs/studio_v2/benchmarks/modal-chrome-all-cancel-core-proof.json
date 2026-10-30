@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T07:05:08.291433+08:00",
+  "core_config_sha256_unchanged": true,
+  "usage_counts": [
+    14,
+    7000,
+    700,
+    7700
+  ],
+  "price_rules": 0,
+  "installed_models": 0,
+  "private_workbuddy_models_file_exact_empty_array": true,
+  "real_user_profile_not_used": "Unique bundle/LSEnvironment, source kernel guarded Core; GUI bootstrap not kernel guarded. CUA only ownfixture; no external restart/links/systemtoggle."
+}

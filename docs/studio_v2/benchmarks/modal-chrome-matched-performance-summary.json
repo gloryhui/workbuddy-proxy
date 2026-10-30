@@ -1,0 +1,34 @@
+{
+  "scope": "Same shortnativeCUAsequence onfresh old769 andnew5c; n1 each; Core25f same14records7700, zero price rule, unchangedconfig, closed thenCore0",
+  "previous": {
+    "core": {
+      "cpu_delta_seconds": 0.04,
+      "cpu_percent_one_core": 0.133,
+      "rss_median_mib": 13.03125,
+      "rss_peak_sample_mib": 13.03125
+    },
+    "ui": {
+      "cpu_delta_seconds": 0.28,
+      "cpu_percent_one_core": 0.933,
+      "rss_median_mib": 124.359375,
+      "rss_peak_sample_mib": 124.359375
+    }
+  },
+  "current": {
+    "core": {
+      "cpu_delta_seconds": 0.05,
+      "cpu_percent_one_core": 0.167,
+      "rss_median_mib": 13.546875,
+      "rss_peak_sample_mib": 13.546875
+    },
+    "ui": {
+      "cpu_delta_seconds": 0.27,
+      "cpu_percent_one_core": 0.9,
+      "rss_median_mib": 123.578125,
+      "rss_peak_sample_mib": 123.578125
+    }
+  },
+  "delta_ui_rss_mib": -0.78125,
+  "initial_capture_samples": "Old24captures111MiB vsnew24+invalid+Mono133MiB had different histories and are not a comparable regression test. Matchedpairdoesnotprove allcause/caches orlongrunabsence.",
+  "conclusion": "No obvious regression observed in this matchedshortscope; originalPCCP workload remains primary."
+}

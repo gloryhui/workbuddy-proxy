@@ -74,3 +74,9 @@ Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重
 
 
 四类业务弹窗整帧首审（UI63）：仅model_picker/sync_dialog/price_layout/detail_layout四Rust视图；Studio Picker复用现有NativeBaseCheckbox引擎与原12pxcheck资产/15px指示器/15px间隔，事件适配后仍走原set_picker_checked/list focus，六旧皮肤保留KitCheckbox。徽章/标题/字段文字、详情IDInter及行光学位置修正，最终769全门禁0/204pass2ignored。八默认原图与五交互原图、鼠标/Space/筛选/取消/Add到draft→显式Save的5→6模型边界；仅隔离HOME同步6模型、原49节点保持；价格-1拒绝再1.5/6/CNY/cache0/备注保存，原14费用快照不变，未来本地请求CNY0.00105/550Token，详情内滚/更多/Esc/Close通过。九Core阶段与21PID终态、四轮原负载留证。52ff中间版childLabel盖掉disabled前景不算通过，修为div继承并重建重验；注意raw observer字段installed_profiles实为安装模型条目，补充证明解释6条/单私有models.json。Mono→Studio抽查不等于六皮肤全部状态，Restart/完整键盘/IME/AX/平台及精确视觉仍待，不作整帧终验。
+
+### UI64 共用弹窗专项（2026-10-31）
+
+- 七类原生关闭外观覆盖12状态：四协议、Picker、模型编辑、同步/取消同步、两供应商删除、价格、详情；保留Base Cancel及原on_ok/on_close。实际发现0b焦点X的Enter被Confirm截走，修复为关闭控件专属Confirm→Cancel；5c63真实Return/Space通过。
+- 价格42px原生控件槽、字段分列/行距/页脚、备注滚动取消及两尺寸负价拒绝通过；详情行线/小窗More→Esc/X通过。两尺寸默认24图及3补图、配置逐字节不变、0规则/0安装/私有WorkBuddy文件仍空/14条7700Token见[GUI](benchmarks/modal-chrome-final-gui-validation.json)、[独立数据](benchmarks/modal-chrome-isolation-data-proof.json)。
+- 原始P/C/C/P负载与一对相同短操作历史的30秒对照未见明显回退；n2/n1不作等价/优化/泄漏结论，见[负载](benchmarks/modal-chrome-performance-summary.json)、[匹配序列](benchmarks/modal-chrome-matched-performance-summary.json)。源码保留六旧皮肤分支，本版只复测Mono回Studio；其余全量键盘/IME/AX/HiDPI和平台门禁继续保留。

@@ -1432,3 +1432,30 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 未见明显持续退化，UI RSS增加0.305MiB，合计差-0.070MiB；小样本不作统计等价或优化结论。RSS可能重复共享页，150ms峰值采样可能漏峰，排除mock/client；原ui_record_ready_ms含CUA等待不作比较，process→gpui记录标记不等于首帧/可交互，Core ready早于UI。默认Providers负载不是弹窗FPS/输入时延/长期CPU/泄漏测量。Intel类型检查不代表硬件，完整键盘/IME/AX/HiDPI/Windows及Intel实机仍未终验。
 - 本轮4帧由待审变为已审查保留差异，台账27待审/13保留差异/0最终通过，40帧仍部分验收、最终剩余40。共享scrim/原生X与glyph、价格shell/gutter/列宽及额外备注初始裁切、详情1px正文/组线与其他完整状态继续收敛；不以13张照片或分项Passed升级整帧通过。Goal保持active。
 - 已逐字节归档56份原PNG/JSON。沿用已知审批限制，本轮没有重试被拒的Root53或等价删除，也未改策略或删父目录；新的自有Root54保留457.27MiB供复用，释放0，系统Data余38.61GiB。所有相关进程已结束。见[证据映射](benchmarks/dialogs-layout-artifacts.json)、[临时材料保留说明](benchmarks/dialogs-layout-cleanup.json)。
+
+
+## 小功能 64：共用弹窗关闭与遮罩、价格和详情几何（2026-10-31）
+
+- Studio关闭按钮现复用原生Cancel，聚焦×按Return/Space均可关闭；普通/删除遮罩分开，价格控件/行距/页脚及详情行线已收敛。最终5c63的12状态两尺寸、草稿取消和受控校验通过，限定性能范围未见明显回退；这是专项成果，40帧最终终验仍未完成。优先证据：[真实GUI](benchmarks/modal-chrome-final-gui-validation.json)、[1440价格](screenshots/modal-chrome-final-modal-price-wide.png)、[1100价格](screenshots/modal-chrome-final-modal-price-small.png)、[源码](benchmarks/modal-chrome-source-scope.json)、[构建](benchmarks/modal-chrome-build.json)、[原负载](benchmarks/modal-chrome-performance-summary.json)、[相同序列](benchmarks/modal-chrome-matched-performance-summary.json)、[清理限制](benchmarks/modal-chrome-cleanup.json)。
+
+- 官方 MCP 重新读取 51:2，仍为40个唯一画板；本批读取四协议、Picker、模型编辑、同步/取消同步、两供应商删除、价格、详情12个完整高保真上下文及1440×900原图。首批33个唯一资源按指定curl下载（28字节一致、2仅一致clip ID/ref重命名等价、3装饰窗口控件保留真实OS）；新补4画板121个资源实例另逐一下载核对（103字节一致、6上述等价、12 OS装饰）。未导出临时资源URL或配置密钥。取消同步68:350、删除78:1080/80:864完成整帧首审但保留差异：台账现24未首审、16已审有差异、0最终通过，最终仍剩40帧。见[设计审查](benchmarks/modal-chrome-design-audit.json)、[资源](benchmarks/modal-chrome-asset-audit.json)、[新增实例](benchmarks/modal-chrome-asset-audit-more.json)、[40帧清单](benchmarks/modal-chrome-figma-inventory.json)。
+- 仅修改5个Rust呈现文件：`ui_components.rs`复用公开BaseDialogClose及其原生Button/Cancel引擎，按Figma文字节点×的Noto Regular18/19/20、行高与槽位提供32px点击区/hover/键盘边框/中英名称；挂在Kit裁剪区内，不新增代理业务回调。普通Studio遮罩改rgba(19,23,46,.48)，删除仍用原rgba(18,23,43,.49)，关闭后恢复普通值，六旧皮肤维持原值和Kit关闭分支。`ui.rs`和两统计弹窗接入同一控件，原确认/保存/取消/焦点回调保留。价格增加原生控件42px外框，避免Select百分比根高度压缩标签；520宽字段、258/22/240模式币种、253/13/253价格对、逐行间隔及固定页脚按稿收敛，原备注留在可滚动区并保留Tab滚动。详情保持36px行高，以独立分隔线消除border导致的行内中心差。无Core、配置格式、依赖/锁文件、版本或workflow修改。见[源码范围](benchmarks/modal-chrome-source-scope.json)。
+- 最终冻结5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77，42,459,200 bytes，较旧769178增加16,544 bytes。fmt、206测试（204通过/2既有忽略）、strict all-targets clippy、Intel all-targets类型检查、arm64 release均0，构建与验收后5源码SHA一致。0b中间版实测焦点X可Space但Return被Dialog的Confirm截走，停止该版验收；修为仅聚焦Close的Confirm→原生Cancel，业务on_ok不变。a48重验Return/Space通过，价格仍有Select标签挤缩和标题1px问题；进一步修正为最终5c63，重新完整编译与真实验收。中间版本均独立标识，见[最终构建](benchmarks/modal-chrome-build.json)、[0b失败现场](benchmarks/modal-chrome-intermediate-0b-gui-validation.json)、[a48中间现场](benchmarks/modal-chrome-intermediate-a48-gui-validation.json)。
+- Computer Use完成旧版24张与最终5c63的24张默认原图（12状态×2尺寸），最终另3张备注/负价格补图。目标逻辑1440×900/1100×700，实际原图1440×901/1100×701，不裁剪、缩放或重绘。主代理检查关键原图/两尺寸及像素：普通平坦遮罩采样对齐；价格壳白填充框与参考相同，12条头部/字段/页脚边界原图y均参考+1，标题[461,164,583,183]对稿[461,163,583,182]；详情三线160/425/533对159/424/532。原图多1行不证明所有偏移都有同一原因，×墨迹及部分标签AA仍差1–2px，原生阴影也不同，未以专项像素当整帧终验。见[GUI](benchmarks/modal-chrome-final-gui-validation.json)、[价格宽](screenshots/modal-chrome-final-modal-price-wide.png)、[价格窄](screenshots/modal-chrome-final-modal-price-small.png)、[小窗错误](screenshots/modal-chrome-final-price-invalid-small.png)、[价格像素](benchmarks/modal-chrome-price-pixels.json)、[详情像素](benchmarks/modal-chrome-detail-pixels.json)、[壳边界](benchmarks/modal-chrome-shell-pixels.json)、[关闭/遮罩像素](benchmarks/modal-chrome-chrome-pixels.json)。
+- 实际逐类鼠标×关闭；Sync焦点环可见后Return和Space各关闭；Chat映射输入后×取消、复开为空；遮罩下语言按钮点击不打开菜单；小窗备注滚动输入后×取消、复开为空；价格两尺寸输入-1保存均本地报错且按钮可见，未执行合法保存；详情小窗内滚/More→Esc只关More，再×关详情；Mono原生关闭后回Studio。6个隔离手工夹具各以真实本地HTTP模拟14条7000输入/700输出/7700总Token，最终配置SHA逐字节不变、0价格规则、0安装、私有WorkBuddy文件仍为空；关UI后Core仍health200/ready，再正常停止。仅本轮Core有内核文件保护，GUI为独立bundle/LSEnvironment而非内核沙盒；未使用真实Profile、外链、开机启动、同步/重启/删除、Test或剪贴板。见[独立数据/隔离](benchmarks/modal-chrome-isolation-data-proof.json)、[取消数据](benchmarks/modal-chrome-all-cancel-core-proof.json)。
+- 同一固定Core25f24ad6、原`benchmark.py` SHA bc7e0537及1000小请求/64模型/80×1MiB/4并发负载不变，原生UI用旧769和新5c作P/C/C/P各2轮，全部0。中位数如下；Core ready早于UI启动，process→gpui记录不是首帧/可交互，原ui_record_ready包含CUA等待不作启动比较。旧启动1522.189ms样本完整保留，不丢弃较慢值，不据此宣称优化。RSS可能重复共享页，150ms峰值可能漏峰，排除mock/client；样本小且桌面调度未受控。
+
+| 原始负载指标 | 旧769 | 新5c63 |
+|---|---:|---:|
+| Core RSS MiB | 12.835 | 12.875 |
+| UI RSS MiB | 83.545 | 84.730 |
+| 合计 RSS MiB | 96.380 | 97.610 |
+| 采样峰值 MiB | 143.875 | 145.885 |
+| Core ready ms | 49.510 | 44.753 |
+| UI进程→记录 ms | 1136.697 | 809.090 |
+| 请求 p50 / p95 ms | 0.171 / 0.192 | 0.162 / 0.186 |
+| 80个大请求 s | 0.088 | 0.087 |
+
+- 首次24图后的30秒UI CPU两版均0.29s，但RSS110.969→133.344MiB历史不一致（新版另有错误和换肤），不能直接作为回退结论。因此补一对全新进程相同短序列：负价错误→×、Mono默认价格→×、恢复Studio→Chat，均14条/0规则/原配置未变。相同序列30秒UI RSS旧124.359、新123.578MiB，CPU0.28/0.27s，Core RSS13.031/13.547MiB；各n1，原始负载各n2，限定范围未见明显回退，不作统计等价、内存优化或“所有差异由缓存造成”结论；无FPS/输入延迟/长期CPU/泄漏证明。见[原负载](benchmarks/modal-chrome-performance-summary.json)、[匹配序列](benchmarks/modal-chrome-matched-performance-summary.json)。
+- 30个已记录测试载荷PID均退出：6手工夹具Core/host为0，4基准Core为0/mock预期TERM -15，UI由CUA拥有，只证明PID消失，不捏造退出码；其他脚本/构建/driver已等待0。77张原始PNG与36份报告共113文件逐字节校验归档，见[生命周期](benchmarks/modal-chrome-lifecycle.json)、[交付SHA清单](benchmarks/modal-chrome-artifacts.json)。本轮657.33MiB临时副本已完整预检、30进程退出且113交付SHA一致；逐字面绝对路径rm被自动审批拒绝（需要审批而AskForApproval=Never），未改用等价删除或父目录，释放0、保留657.33MiB，共享Cargo缓存未动，系统Data可用见[清理报告](benchmarks/modal-chrome-cleanup.json)及[预检](benchmarks/modal-chrome-cleanup-preflight.json)。
+- 完整目标继续：四协议Select文字/映射标题/footer光学差异，Picker空白填充、Sync文字箭头与原生vector、Kit阴影、字体/AA/逻辑坐标、其余24帧首审和全量状态尚待。仅Mono实测不代替六皮肤全部状态，Intel类型检查不代表硬件；完整键盘/IME/AX/HiDPI、Windows/Intel实机及长期性能仍未终验。Windows目标机复验至少运行`cargo test --manifest-path gpui/Cargo.toml --locked`、`cargo build --release --manifest-path gpui/Cargo.toml --locked`，再按`docs/WINDOWS-SCREENSHOTS.md`实拍两尺寸；本轮未在Windows实测。Goal保持完整40帧，不以本批专项通过缩减最终范围。

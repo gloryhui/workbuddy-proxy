@@ -150,6 +150,74 @@ pub fn icon_button_sized(
         .disabled(disabled)
 }
 
+/// Text geometry exported by the Studio modal frames. Figma uses the Noto
+/// multiplication glyph here, rather than the smaller Kit Close vector.
+#[derive(Clone, Copy)]
+pub enum DialogCloseKind {
+    Protocol,
+    ModelPicker,
+    ModelEditor,
+    ProviderDelete,
+    Sync,
+    Price,
+    RequestDetail,
+}
+
+/// Present the design's close control through the same native Cancel engine
+/// used by Kit. Mount in a relative DialogContent: its position compensates
+/// for the surface top padding. Keep the 32px button inside Kit's clipped
+/// content area so its focus ring and entire hit area remain available.
+pub fn studio_dialog_close(kind: DialogCloseKind, zh: bool) -> gpui_kit::base::DialogClose {
+    let (top, right, width, size, leading, padding_top) = match kind {
+        DialogCloseKind::Protocol => (19., 12., 21., 18., 26., 20.),
+        DialogCloseKind::ModelPicker => (20., 7., 21., 20., 29., 20.),
+        DialogCloseKind::ModelEditor => (18., 12., 19., 20., 29., 21.),
+        DialogCloseKind::ProviderDelete => (19., 16., 20., 19., 27., 22.),
+        DialogCloseKind::Sync => (18., 12., 22., 20., 28., 22.),
+        DialogCloseKind::Price => (19., 11., 21., 20., 28., 22.),
+        DialogCloseKind::RequestDetail => (19., 7., 23., 18., 25., 21.),
+    };
+    gpui_kit::base::DialogClose::new()
+        .absolute()
+        .top_0()
+        .right(px(right - 1. - (32. - width) / 2.))
+        .trigger(move |button| {
+            button
+                .accessibility_label(if zh { "关闭" } else { "Close" })
+                .size(px(32.))
+                .flex_none()
+                .border_1()
+                .border_color(transparent_black())
+                .rounded(px(6.))
+                .cursor_pointer()
+                .text_color(rgb(color::TEXT_3))
+                .hover(|style| {
+                    style
+                        .bg(rgb(color::BG_TABLE_HEAD))
+                        .text_color(rgb(color::TEXT_1))
+                })
+                .focus_visible(|style| style.border_color(rgb(crate::theme::palette().primary)))
+                // Dialog's Enter binding produces Confirm before GPUI's
+                // button-role keyboard click. A focused Close must cancel,
+                // never submit the form or silently consume that Enter.
+                .on_action(|_: &gpui_kit::component::dialog::Confirm, window, cx| {
+                    cx.stop_propagation();
+                    window.dispatch_action(Box::new(gpui_kit::component::dialog::Cancel), cx);
+                })
+                .child(
+                    div()
+                        .relative()
+                        .top(px(top - padding_top - 1. - (32. - leading) / 2.))
+                        .w(px(width))
+                        .h(px(leading))
+                        .text_size(px(size))
+                        .line_height(px(leading))
+                        .font_weight(FontWeight::NORMAL)
+                        .child("×"),
+                )
+        })
+}
+
 /// Studio V2's exported vectors at their native 20px size, inside Kit buttons.
 /// Keep Kit focus, tooltips and disabled semantics for all seven system actions.
 pub fn system_button(

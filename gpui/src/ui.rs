@@ -2043,6 +2043,7 @@ impl Proxy {
             || self.pending_port.is_some()
             || self.protocol_open;
         if active && !self.dialog_open {
+            crate::theme::dialog_overlay(self.delete_open, cx);
             self.dialog_open = true;
             let owner = cx.entity().downgrade();
             let observer = cx.entity().clone();
@@ -2097,7 +2098,19 @@ impl Proxy {
                         .rounded(px(18.))
                         .border_color(rgb(crate::theme::color::BORDER))
                         .margin_top(provider_delete::margin_top(window))
-                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                        .content(move |content, _, _| {
+                            content.gap_0().child(content_body.clone()).when(
+                                crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                                |content| {
+                                    content.relative().child(
+                                        crate::ui_components::studio_dialog_close(
+                                            crate::ui_components::DialogCloseKind::ProviderDelete,
+                                            sync_zh,
+                                        ),
+                                    )
+                                },
+                            )
+                        })
                 } else if is_protocol {
                     let height = protocol_dialog::surface_height(window);
                     let content_body = body.clone();
@@ -2111,7 +2124,19 @@ impl Proxy {
                         .rounded(px(18.))
                         .border_color(rgb(crate::theme::color::BORDER))
                         .margin_top(((window.viewport_size().height - height) / 2.).max(px(16.)))
-                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                        .content(move |content, _, _| {
+                            content.gap_0().child(content_body.clone()).when(
+                                crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                                |content| {
+                                    content.relative().child(
+                                        crate::ui_components::studio_dialog_close(
+                                            crate::ui_components::DialogCloseKind::Protocol,
+                                            sync_zh,
+                                        ),
+                                    )
+                                },
+                            )
+                        })
                 } else if is_sync_confirmation {
                     let content_body = body.clone();
                     dialog
@@ -2130,7 +2155,19 @@ impl Proxy {
                                 - px(17.))
                             .max(px(16.)),
                         )
-                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                        .content(move |content, _, _| {
+                            content.gap_0().child(content_body.clone()).when(
+                                crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                                |content| {
+                                    content.relative().child(
+                                        crate::ui_components::studio_dialog_close(
+                                            crate::ui_components::DialogCloseKind::Sync,
+                                            sync_zh,
+                                        ),
+                                    )
+                                },
+                            )
+                        })
                 } else if is_model_editor {
                     let height = model_editor::surface_height(window);
                     let content_body = body.clone();
@@ -2148,7 +2185,19 @@ impl Proxy {
                         .margin_top(
                             ((window.viewport_size().height - height) / 2. - px(5.)).max(px(16.)),
                         )
-                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                        .content(move |content, _, _| {
+                            content.gap_0().child(content_body.clone()).when(
+                                crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                                |content| {
+                                    content.relative().child(
+                                        crate::ui_components::studio_dialog_close(
+                                            crate::ui_components::DialogCloseKind::ModelEditor,
+                                            sync_zh,
+                                        ),
+                                    )
+                                },
+                            )
+                        })
                 } else if is_picker {
                     let height = model_picker::surface_height(window);
                     let content_body = body.clone();
@@ -2164,12 +2213,31 @@ impl Proxy {
                         .margin_top(
                             ((window.viewport_size().height - height) / 2. - px(21.)).max(px(16.)),
                         )
-                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                        .content(move |content, _, _| {
+                            content.gap_0().child(content_body.clone()).when(
+                                crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                                |content| {
+                                    content.relative().child(
+                                        crate::ui_components::studio_dialog_close(
+                                            crate::ui_components::DialogCloseKind::ModelPicker,
+                                            sync_zh,
+                                        ),
+                                    )
+                                },
+                            )
+                        })
                 } else {
                     dialog.w(px(width)).child(body.clone())
                 };
                 dialog
-                    .close_button(true)
+                    .close_button(
+                        !(crate::theme::current_skin() == crate::theme::Skin::StudioIndigo
+                            && (is_protocol
+                                || is_picker
+                                || is_model_editor
+                                || is_provider_delete
+                                || is_sync_confirmation)),
+                    )
                     .overlay_closable(false)
                     .on_ok(move |_, window, cx| {
                         let _ = confirm_owner.update(cx, |this, cx| {
@@ -2194,6 +2262,7 @@ impl Proxy {
                         false
                     })
                     .on_close(move |_, window, cx| {
+                        crate::theme::dialog_overlay(false, cx);
                         let _ = owner.update(cx, |this, cx| {
                             this.dialog_open = false;
                             this.dismiss(&Dismiss, window, cx);
@@ -2201,6 +2270,7 @@ impl Proxy {
                     })
             });
         } else if !active && self.dialog_open {
+            crate::theme::dialog_overlay(false, cx);
             self.dialog_open = false;
             window.close_dialog(cx);
             self.table_focus.focus(window, cx);

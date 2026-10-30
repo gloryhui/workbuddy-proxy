@@ -1,0 +1,677 @@
+[
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      1002,
+      116,
+      1011,
+      125
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 20,
+    "name" : "chat",
+    "opaque_gray_pixels" : 1,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "chat",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      1000,
+      117,
+      1011,
+      127
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 40,
+    "name" : "chat",
+    "opaque_gray_pixels" : 20,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      1059,
+      122,
+      1070,
+      134
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 46,
+    "name" : "picker",
+    "opaque_gray_pixels" : 2,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "picker",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      1059,
+      123,
+      1070,
+      135
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 47,
+    "name" : "picker",
+    "opaque_gray_pixels" : 24,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      136,
+      137,
+      150
+    ],
+    "close_gray_ink_box" : [
+      1058,
+      73,
+      1069,
+      85
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 46,
+    "name" : "editor",
+    "opaque_gray_pixels" : 2,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      134,
+      137,
+      149
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "editor",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      137,
+      139,
+      152
+    ],
+    "close_gray_ink_box" : [
+      1057,
+      73,
+      1068,
+      85
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 47,
+    "name" : "editor",
+    "opaque_gray_pixels" : 24,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      954,
+      301,
+      965,
+      313
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 46,
+    "name" : "sync",
+    "opaque_gray_pixels" : 2,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "sync",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      953,
+      301,
+      964,
+      313
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 47,
+    "name" : "sync",
+    "opaque_gray_pixels" : 24,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      954,
+      301,
+      965,
+      313
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 46,
+    "name" : "unsync",
+    "opaque_gray_pixels" : 2,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "unsync",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      953,
+      301,
+      964,
+      313
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 47,
+    "name" : "unsync",
+    "opaque_gray_pixels" : 24,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      980,
+      163,
+      991,
+      175
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 46,
+    "name" : "price",
+    "opaque_gray_pixels" : 2,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "price",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      979,
+      163,
+      990,
+      175
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 47,
+    "name" : "price",
+    "opaque_gray_pixels" : 24,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      1020,
+      100,
+      1029,
+      109
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 20,
+    "name" : "detail",
+    "opaque_gray_pixels" : 1,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "detail",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      138,
+      140,
+      153
+    ],
+    "close_gray_ink_box" : [
+      1018,
+      101,
+      1029,
+      111
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 40,
+    "name" : "detail",
+    "opaque_gray_pixels" : 20,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      41
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      137,
+      149
+    ],
+    "close_gray_ink_box" : [
+      955,
+      299,
+      965,
+      310
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 42,
+    "name" : "delete-a",
+    "opaque_gray_pixels" : 2,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      40
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "delete-a",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+      953,
+      300,
+      965,
+      311
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 45,
+    "name" : "delete-a",
+    "opaque_gray_pixels" : 22,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "final"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      137,
+      149
+    ],
+    "close_gray_ink_box" : [
+      955,
+      299,
+      965,
+      310
+    ],
+    "dimensions" : [
+      1440,
+      900
+    ],
+    "gray_pixels" : 42,
+    "name" : "delete-b",
+    "opaque_gray_pixels" : 2,
+    "sidebar_pixel_250_100" : [
+      18,
+      22,
+      40
+    ],
+    "version" : "reference"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 0,
+    "name" : "delete-b",
+    "opaque_gray_pixels" : 0,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "baseline"
+  },
+  {
+    "canvas_pixel_1100_70" : [
+      135,
+      138,
+      150
+    ],
+    "close_gray_ink_box" : [
+      953,
+      300,
+      965,
+      311
+    ],
+    "dimensions" : [
+      1440,
+      901
+    ],
+    "gray_pixels" : 45,
+    "name" : "delete-b",
+    "opaque_gray_pixels" : 22,
+    "sidebar_pixel_250_100" : [
+      17,
+      22,
+      40
+    ],
+    "version" : "final"
+  }
+]

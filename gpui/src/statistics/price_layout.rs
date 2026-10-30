@@ -9,10 +9,29 @@ use gpui_kit::component::{
 const SURFACE: u32 = crate::theme::color::BG_TABLE_HEAD;
 
 fn field(label: &'static str, control: impl IntoElement) -> Div {
+    let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
+    // Kit Select exposes a100% height semantic root. Give every form control
+    // its42px slot so that root cannot shrink the20px label in a flex column.
+    let control = if studio {
+        div()
+            .w_full()
+            .h(px(42.))
+            .flex_none()
+            .child(control)
+            .into_any_element()
+    } else {
+        control.into_any_element()
+    };
     div()
         .flex()
         .flex_col()
-        .gap(px(6.))
+        .gap(px(
+            if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+                1.
+            } else {
+                6.
+            },
+        ))
         .flex_1()
         .min_w_0()
         .flex_shrink_0()
@@ -22,7 +41,12 @@ fn field(label: &'static str, control: impl IntoElement) -> Div {
                 .text_color(rgb(MUTED))
                 .when(
                     crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
-                    |label| label.line_height(px(17.)).font_weight(FontWeight::MEDIUM),
+                    |label| {
+                        label
+                            .h(px(20.))
+                            .line_height(px(17.))
+                            .font_weight(FontWeight::MEDIUM)
+                    },
                 ),
         )
         .child(control)
@@ -72,6 +96,7 @@ impl Statistics {
     }
 
     pub(crate) fn open_price_dialog(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        crate::theme::dialog_overlay(false, cx);
         self.price_open = true;
         self.price_form_scroll.set_offset(point(px(0.), px(0.)));
         self.sync_price_providers(window, cx);
@@ -83,6 +108,7 @@ impl Statistics {
                 owner: owner.clone(),
             }
         });
+        let zh = self.zh;
         window.open_dialog(cx, move |dialog, window, _| {
             let height = (window.viewport_size().height - px(64.)).min(px(625.));
             let close_owner = owner.clone();
@@ -92,17 +118,45 @@ impl Statistics {
                 .h(height)
                 .p(px(26.))
                 .pt(px(22.))
-                .pb(px(10.))
+                .pb(px(
+                    if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+                        6.
+                    } else {
+                        10.
+                    },
+                ))
                 .rounded(px(18.))
                 .border_color(rgb(BORDER))
                 .bg(rgb(PANEL))
-                .margin_top(((window.viewport_size().height - height) / 2.).max(px(16.)))
-                .close_button(true)
+                .margin_top(
+                    ((window.viewport_size().height - height) / 2.
+                        - px(
+                            if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+                                2.5
+                            } else {
+                                0.
+                            },
+                        ))
+                    .max(px(16.)),
+                )
+                .close_button(crate::theme::current_skin() != crate::theme::Skin::StudioIndigo)
                 // Kit's child slot adds its own whole-body scrollbar. The content
                 // slot lets the form scroll while header and actions remain fixed.
                 .content({
                     let body = body.clone();
-                    move |content, _, _| content.gap_0().child(body.clone())
+                    move |content, _, _| {
+                        content.gap_0().child(body.clone()).when(
+                            crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                            |content| {
+                                content
+                                    .relative()
+                                    .child(crate::ui_components::studio_dialog_close(
+                                        crate::ui_components::DialogCloseKind::Price,
+                                        zh,
+                                    ))
+                            },
+                        )
+                    }
                 })
                 .on_ok(move |_, _, cx| {
                     let _ = save_owner.update(cx, |this, cx| this.save_price(cx));
@@ -120,12 +174,13 @@ impl Statistics {
     fn price_body(&self, window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
         let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let height = (window.viewport_size().height - px(64.)).min(px(625.));
-        let body_height = height - px(34.); // Native surface padding and border.
+        let body_height = height - px(if studio { 30. } else { 34. }); // Native padding and border.
         let header_height = if self.zh { 67. } else { 84. };
-        let footer_height = if self.price_draft.error.is_some() {
-            120.
-        } else {
-            90.
+        let footer_height = match (studio, self.price_draft.error.is_some()) {
+            (true, true) => 97.,
+            (true, false) => 67.,
+            (false, true) => 120.,
+            (false, false) => 90.,
         };
         let form_height = (body_height - px(header_height + footer_height)).max(px(100.));
         let symbol = match self
@@ -170,29 +225,33 @@ impl Statistics {
             .id("price-form-rows")
             .flex()
             .flex_col()
-            .gap(px(16.))
-            .pt(px(20.))
+            .gap(px(if studio { 0. } else { 16. }))
+            .pt(px(if studio { 25. } else { 20. }))
             .pb(px(20.))
-            .pr(px(12.))
+            .pr(px(if studio { 0. } else { 12. }))
             .child(field(
                 provider_label,
                 select_style(crate::ui_components::select(&self.price_provider, locked))
                     .accessibility_label(provider_label),
             ))
-            .child(field(
-                model_label,
-                input(&self.price_model, locked, model_label),
-            ))
+            .child(
+                field(model_label, input(&self.price_model, locked, model_label))
+                    .when(studio, |field| field.mt(px(18.)).gap(px(2.))),
+            )
             .child(
                 div()
                     .flex()
-                    .gap(px(16.))
+                    .gap(px(if studio { 22. } else { 16. }))
+                    .when(studio, |row| row.mt(px(16.)))
                     .flex_shrink_0()
-                    .child(field(
-                        mode_label,
-                        select_style(crate::ui_components::select(&self.price_mode, false))
-                            .accessibility_label(mode_label),
-                    ))
+                    .child(
+                        field(
+                            mode_label,
+                            select_style(crate::ui_components::select(&self.price_mode, false))
+                                .accessibility_label(mode_label),
+                        )
+                        .when(studio, |field| field.flex_none().w(px(258.))),
+                    )
                     .child(field(
                         currency_label,
                         select_style(crate::ui_components::select(&self.price_currency, false))
@@ -202,49 +261,66 @@ impl Statistics {
             .child(
                 div()
                     .flex()
-                    .gap(px(14.))
+                    .gap(px(if studio { 13. } else { 14. }))
+                    .when(studio, |row| row.mt(px(28.)))
                     .flex_shrink_0()
-                    .child(field(
-                        self.t("输入价格 / 百万", "Input / million"),
-                        price(
-                            &self.price_input,
+                    .child(
+                        field(
                             self.t("输入价格 / 百万", "Input / million"),
-                        ),
-                    ))
-                    .child(field(
-                        self.t("输出价格 / 百万", "Output / million"),
-                        price(
-                            &self.price_output,
+                            price(
+                                &self.price_input,
+                                self.t("输入价格 / 百万", "Input / million"),
+                            ),
+                        )
+                        .when(studio, |field| field.flex_none().w(px(253.))),
+                    )
+                    .child(
+                        field(
                             self.t("输出价格 / 百万", "Output / million"),
-                        ),
-                    )),
+                            price(
+                                &self.price_output,
+                                self.t("输出价格 / 百万", "Output / million"),
+                            ),
+                        )
+                        .when(studio, |field| field.flex_none().w(px(253.))),
+                    ),
             )
             .child(
                 div()
                     .flex()
-                    .gap(px(14.))
+                    .gap(px(if studio { 13. } else { 14. }))
+                    .when(studio, |row| row.mt(px(18.)))
                     .flex_shrink_0()
-                    .child(field(
-                        self.t("缓存读取 / 百万", "Cache read / million"),
-                        price(
-                            &self.price_read,
+                    .child(
+                        field(
                             self.t("缓存读取 / 百万", "Cache read / million"),
-                        ),
-                    ))
-                    .child(field(
-                        self.t("缓存写入 / 百万", "Cache write / million"),
-                        price(
-                            &self.price_write,
+                            price(
+                                &self.price_read,
+                                self.t("缓存读取 / 百万", "Cache read / million"),
+                            ),
+                        )
+                        .when(studio, |field| field.flex_none().w(px(253.))),
+                    )
+                    .child(
+                        field(
                             self.t("缓存写入 / 百万", "Cache write / million"),
-                        ),
-                    )),
+                            price(
+                                &self.price_write,
+                                self.t("缓存写入 / 百万", "Cache write / million"),
+                            ),
+                        )
+                        .when(studio, |field| field.flex_none().w(px(253.))),
+                    ),
             )
             // The existing label is deliberately retained below the design's
             // fields; it remains reachable without stretching the native modal.
-            .child(field(
-                self.t("备注", "Label"),
-                input(&self.price_label, false, self.t("备注", "Label")),
-            ))
+            .child(
+                field(
+                    self.t("备注", "Label"),
+                    input(&self.price_label, false, self.t("备注", "Label")),
+                )
+                .when(studio, |field| field.mt(px(40.))),
+            )
             .when(locked, |rows| {
                 rows.child(
                     Label::new(self.t(
@@ -273,23 +349,26 @@ impl Statistics {
                     .child(Label::new(if self.price_draft.is_editing() { self.t("编辑价格", "Edit price") }
                         else { self.t("新建价格规则", "New price rule") })
                         .text_size(px(21.)).font_weight(FontWeight::BOLD).text_color(rgb(INK))
-                        .when(studio, |title| title.relative().top(px(-1.))))
+                        .when(studio, |title| title.line_height(px(29.)).relative().top(px(0.))))
                     .child(Tag::custom(rgb(SURFACE).into(), rgb(0x4c566d).into(), rgb(SURFACE).into())
                         .small().h(px(27.)).rounded(px(9.)).px(px(14.)).text_size(px(11.))
                         .when(studio, |tag| tag.w(px(128.)).justify_center().font_weight(FontWeight::MEDIUM)
                             .line_height(px(15.)).relative().top(px(-2.)))
                         .child(self.t("每百万 Token", "Per million tokens"))))
-                .child(div().text_size(px(12.)).line_height(px(17.)).text_color(rgb(MUTED)).child(self.t(
+                .child(div().text_size(px(12.)).line_height(px(17.)).text_color(rgb(MUTED))
+                    .when(studio, |text| text.relative().top(px(1.))).child(self.t(
                     "为指定供应商及上游模型设置估算价格，保存后仅影响新请求。",
                     "Set estimated prices for a provider and upstream model. Saving affects new requests only.")))
-                .child(div().h(px(1.)).w_full().bg(rgb(BORDER))))
+                .child(div().h(px(1.)).w_full().bg(rgb(BORDER))
+                    .when(studio, |line| line.relative().top(px(5.)))) )
             .child(form)
-            .child(div().flex().flex_col().flex_none().gap(px(10.)).h(px(footer_height))
+            .child(div().flex().flex_col().flex_none().gap(px(if studio { 2. } else { 10. })).h(px(footer_height))
                 .border_t_1().border_color(rgb(BORDER)).pt(px(12.))
                 .when_some(self.price_draft.error.clone(), |footer, error| footer.child(
                     div().text_size(px(12.)).line_height(px(16.)).text_color(rgb(0xc94f5e)).child(error)))
                 .child(Label::new(self.t("不修改历史请求：已有调用仍保留原有价格快照", "Existing requests keep their original price snapshots"))
-                    .text_size(px(11.)).text_color(rgb(MUTED)))
+                    .text_size(px(11.)).text_color(rgb(MUTED))
+                    .when(studio, |text| text.line_height(px(15.))))
                 .child(div().flex().items_center().justify_end().gap(px(9.))
                     .child(stats_button("price-cancel").outline().h(px(36.)).min_w(px(82.)).rounded(px(9.))
                         .label(self.t("取消", "Cancel"))

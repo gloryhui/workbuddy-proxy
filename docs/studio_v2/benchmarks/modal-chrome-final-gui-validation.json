@@ -1,0 +1,248 @@
+{
+  "ui_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+  "ui_pid": 75334,
+  "core_pid": 75196,
+  "window_id": 3670,
+  "screenshots": [
+    {
+      "file": "modal-chat-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "07dfd6be5e93441ef0451315273df8132598c479d03d0e8905b8d50e2550271a"
+    },
+    {
+      "file": "modal-chat-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "ebb480a9214a3f272a75fe14b178cd2e77c19638f5a0007290844ba5c7ba5ef5"
+    },
+    {
+      "file": "modal-responses-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "ed8a9568a219f186c369b37720345ef44d936a3a4538c93a2ecf7766d677714f"
+    },
+    {
+      "file": "modal-responses-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "d2b0075c85115df82f97e5d849fcec09110c75298ab8e57fa73d81f5fbfbdb47"
+    },
+    {
+      "file": "modal-anthropic-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "c4ef4f0b5a826f554d6dec679ad328e45791408084668f02830877f60e342f1a"
+    },
+    {
+      "file": "modal-anthropic-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "5ac57f7ae72f10b3b98a1d9c869d09ad33051a6b748a144194d51b657344f56b"
+    },
+    {
+      "file": "modal-gemini-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "90cf6a9072c4bbd822d38b992f0aebf351562409baf558fdff53b50d03e8e936"
+    },
+    {
+      "file": "modal-gemini-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "25e5b5591e62a1fb2ed8846b1b951e509de54940628871f0e8e69088f3f649ff"
+    },
+    {
+      "file": "modal-picker-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "05e41112d73d6e93461803cabab3e522f700fec1dcf8af506e76aa3f97a630a1"
+    },
+    {
+      "file": "modal-picker-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "cb3dac6410f16e6ca1fc419257273b697ffdba418a84af25114b194f3944d298"
+    },
+    {
+      "file": "modal-sync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "33a08be19e47a39a9efea1b7a4225580b20353da7214e94392c234b2bf9941ad"
+    },
+    {
+      "file": "modal-sync-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "88b04c812a654d49a6c8ea640a9db04e2867ad59decf27a900f8683cb49d440d"
+    },
+    {
+      "file": "modal-unsync-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "7ff71342ea98ae50618ce9f88aa7cc7ce6ce90c94f99170d4dcbf1ba989d2a17"
+    },
+    {
+      "file": "modal-unsync-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "291503b1fe6769b8e6aaa79afc369e4df983d511dcbb44dc36e5d1a92b69e0d3"
+    },
+    {
+      "file": "modal-editor-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "5f89c056db2c828c8dbd90b14a499c0c5aad0fa8f8372b948b3723f526282ff0"
+    },
+    {
+      "file": "modal-editor-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "a599038fa704e6622731217d75b047f62496bbc203d69a5f863bbbd8cb1c88bc"
+    },
+    {
+      "file": "modal-price-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "62b548ffe8058bd3744bdc7337ad479d5c3ba70634967cd44d2dc01647c42e6a"
+    },
+    {
+      "file": "modal-price-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "468f85355f1e58badaa77dc69fcae0305ec3221d1e9311609b812bef48f7e953"
+    },
+    {
+      "file": "modal-detail-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "cb2d7fe583aad1936f68c0b3754f3b8bca04f30d85881d59084b4988f89160f9"
+    },
+    {
+      "file": "modal-detail-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "191513a757fe86b718e140afea4986de5a5688aecfd2448afabb84b1f417cfbe"
+    },
+    {
+      "file": "delete-a-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "838ee20ba6e9a1bfbeea288402324758505534f86218020ab60f7a626e6488e4"
+    },
+    {
+      "file": "delete-a-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "e93989e22dee0b6e8a68dee6b5405451293894c6f0234ea2fe10b561f12f1c74"
+    },
+    {
+      "file": "delete-b-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "cd13ef9d617aa04396648f89ebbf6c4a353ea60feb8efff24a01de0cbd1509aa"
+    },
+    {
+      "file": "delete-b-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "a8e42e199afdafd8128e7e2f36180c592f2752dabc52808b011698bc9133a09c"
+    },
+    {
+      "file": "price-invalid-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "c2c1786af2d36edb1de23520a893e37e04c336920c24539e0b5b8fff387bad68"
+    },
+    {
+      "file": "price-invalid-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "d02e1dc743439a94da826bf58f6538f7af1009e2fcf842a3a1746f1e5fc0de24"
+    },
+    {
+      "file": "sync-close-focused-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "e0b87027e411b7541ce6f0a836162da953240fb318c93d30dd21e5709028f9b9"
+    }
+  ],
+  "screenshot_method": "native screencapture, own onscreen layer-0 window after PID check; unscaled original, OS extra row",
+  "cases": {
+    "sync_keyboard": "Tab then ShiftTab produced visible X focus; Return closed; reopened and same route Space closed. No sync or restart clicked.",
+    "mouse_close": "X clicked for protocol, picker, model editor, sync, unsync, delete A and B, price, detail.",
+    "protocol_cancel": "typed ui64draft into Chat minimal mapping; X closed; reopened field empty",
+    "mask": "clicked underlying language toolbar position while protocol modal open; no language menu appeared",
+    "price_remark": "small body scrolled; typed UI64 draft; X cancelled; reopened empty",
+    "price_invalid": "sub2api/gpt-6 input -1; clicked Save once in each size; local plain decimal error displayed; X cancelled. Parent independently verified 0 price rules after wide case.",
+    "detail": "1100 body scrolled to cost, latency and output speed; More opened, Escape closed More, X closed detail",
+    "mono": "selected Mono, opened price dialog, native Close closed; restored Studio",
+    "provider_models": "2 providers and 5 models; 14 synthetic records, two local model fetches"
+  },
+  "limitations": [
+    "No Apply, valid price Save, Sync, Unsync removal, Restart, Delete, Test or clipboard action.",
+    "No explicit activate or raise; actual foreground not asserted.",
+    "Native accessibility selected values and complete keyboard or IME accessibility not assessed.",
+    "Default protocol sample values are actual fixture values, not Figma example data."
+  ],
+  "lifecycle": {
+    "chat_esc": "closed",
+    "window_close": "CUA native close button clicked",
+    "ui_pid_present_after_close": false,
+    "core": "left to parent for health and wait"
+  }
+}
