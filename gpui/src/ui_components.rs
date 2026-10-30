@@ -251,6 +251,23 @@ pub fn masked_input(state: &Entity<InputState>, disabled: bool, toggle: Button) 
         .suffix(toggle)
 }
 
+/// Studio54:216 field presentation on the unchanged native input. The base
+/// editor paints ordinary text and password dots from inherited text_style,
+/// including its own disabled opacity; no editor-state projection is needed.
+pub fn provider_field(input: Input) -> Input {
+    input.when(
+        crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+        |input| {
+            input
+                .text_color(rgb(color::TEXT_2))
+                .bg(rgb(color::BG_TABLE_HEAD))
+                .border_color(rgb(color::BORDER))
+                .rounded(px(radius::PROVIDER_FIELD))
+                .line_height(px(crate::theme::line_height::PROVIDER_FIELD))
+        },
+    )
+}
+
 /// Filter/search input with compact text and the shared 36px hit area.
 pub fn compact_input(state: &Entity<InputState>, disabled: bool) -> Input {
     text_input(state, disabled)

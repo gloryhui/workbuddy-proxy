@@ -128,6 +128,7 @@ pub mod line_height {
     pub const PAGE_TITLE: f32 = 39.;
     pub const DIALOG_TITLE: f32 = 24.;
     pub const BODY: f32 = 20.;
+    pub const PROVIDER_FIELD: f32 = 19.;
     pub const LABEL: f32 = 18.;
     pub const HERO: f32 = 52.;
     pub const TABLE_ROW: f32 = 20.;
@@ -158,6 +159,7 @@ pub mod space {
 /// Corner radii from DESIGN_SPEC §1.3.
 pub mod radius {
     pub const CONTROL: f32 = 9.;
+    pub const PROVIDER_FIELD: f32 = 10.;
     pub const TABLE: f32 = 10.;
     pub const CARD: f32 = 16.;
     pub const DIALOG: f32 = 18.;

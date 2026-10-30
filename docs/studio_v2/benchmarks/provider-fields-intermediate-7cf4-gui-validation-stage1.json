@@ -1,0 +1,46 @@
+{
+  "status": "intermediate_not_passed",
+  "ui_sha256": "7cf4f48772d0dadc5c17b85522f211a7f1a760275a110900ed962c13e37e74c8",
+  "ui_pid": 95372,
+  "core_pid": 95166,
+  "window_number": 2633,
+  "observed": [
+    "Provider A initial status untested, 2 providers 5 models 0 requests",
+    "Clicked name field: caret visible; Home, Right, Shift+Right left value unchanged; selection visibility not established",
+    "Main independently measured name and URL text #161c2c rather than target #4c566d; protocol text matched target"
+  ],
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-final/candidate-2633.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "034b2f56fc993548470f4b67c5a0ec0ed80b82cb424b149f86039060b313d0ad"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-final/fields-default-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "034b2f56fc993548470f4b67c5a0ec0ed80b82cb424b149f86039060b313d0ad"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-final/fields-focus-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "537d3588e005175607e7b66d86d3eafd80c714729d6f1a83b777f1a79492f989"
+    }
+  ],
+  "method": "native screencapture own PID onscreen layer0 2633 matched CUA; no crop or scale; default alias byte-identical to candidate-2633",
+  "limitations": [
+    "remaining stage1 interrupted on confirmed color mismatch",
+    "no Test, Save, Sync, or password reveal",
+    "no explicit activate or raise; actual foreground not asserted",
+    "Core remains for main"
+  ],
+  "close": "CUA clicked fresh native close button on UI 95372; Core retained for main; exit status not asserted"
+}

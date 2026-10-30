@@ -1,0 +1,45 @@
+{
+  "figma": {
+    "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "node": "54:216",
+    "source": "Fresh official get_design_context including screenshot",
+    "field_nodes": [
+      "54:223",
+      "54:229",
+      "54:231",
+      "54:238",
+      "54:242"
+    ],
+    "defaults": {
+      "height": 40,
+      "radius": 10,
+      "text_size": 13,
+      "line_height": 19,
+      "background": "#f3f5fa",
+      "border": "#e7eaf2",
+      "foreground": "#4c566d"
+    }
+  },
+  "implementation": {
+    "files": [
+      "gpui/src/theme.rs",
+      "gpui/src/ui_components.rs",
+      "gpui/src/ui/providers.rs",
+      "gpui/src/ui/provider_choices.rs"
+    ],
+    "native_controls": "Existing Kit Input and Button/MenuState, unchanged state/handlers/masking/keyboard; Studio-only paint",
+    "excluded": "Effort trigger and six old skins retain original profiles. No core/config/dependency change.",
+    "root_cause": {
+      "package": "gpui-base0.7.3",
+      "file": "src/input/base/element.rs",
+      "sha256": "cdb211ebe96ecfd1625e1b7aa29c8d6eee3f28e012bf9be2edd9b50ed6f7527d",
+      "lines": "2539-2557",
+      "finding": "Populated and masked text uses dim(window.text_style().color), not editor_style.foreground. Disabled dims that foreground by0.5. Final fix sets local Input.text_color; editor projections/wrappers removed."
+    }
+  },
+  "limits": [
+    "Official54:216 exports default state;hover/active/focus continue native Kit behavior,not claimed exact Figma state match.",
+    "Full provider frame/buttons/keyboard/IME/AX/platform gates remain separate.",
+    "Different actual URL and other synthetic values are not hardcoded to design samples."
+  ]
+}

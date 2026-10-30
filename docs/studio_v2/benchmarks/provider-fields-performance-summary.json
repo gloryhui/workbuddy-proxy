@@ -1,0 +1,177 @@
+{
+  "order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "medians": {
+    "previous": {
+      "core_idle_rss_mib": 12.615,
+      "ui_idle_rss_mib": 83.445,
+      "idle_rss_mib": 96.065,
+      "sampled_peak_rss_mib": 142.265,
+      "large_seconds": 0.086,
+      "core_ready_ms": 47.8335,
+      "native_ui_process_to_record_ms": 850.2864999999999,
+      "p50": 0.17099999999999999,
+      "p95": 0.191
+    },
+    "current": {
+      "core_idle_rss_mib": 12.735,
+      "ui_idle_rss_mib": 84.555,
+      "idle_rss_mib": 97.28999999999999,
+      "sampled_peak_rss_mib": 145.55,
+      "large_seconds": 0.0845,
+      "core_ready_ms": 45.976,
+      "native_ui_process_to_record_ms": 728.0055,
+      "p50": 0.16099999999999998,
+      "p95": 0.1825
+    }
+  },
+  "rows": [
+    {
+      "label": "previous1",
+      "core_idle_rss_mib": 12.48,
+      "ui_idle_rss_mib": 83.34,
+      "idle_rss_mib": 95.83,
+      "sampled_peak_rss_mib": 141.56,
+      "large_seconds": 0.086,
+      "core_ready_ms": 49.337,
+      "native_ui_process_to_record_ms": 939.975,
+      "proxied_loopback_ms": {
+        "p50": 0.17,
+        "p95": 0.19
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 2347,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 2348,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 2491,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "53f7b2260ee5a7d2d917e1fa4f00513ddbf641c87fe745fd7deb5bea0a21e0a4"
+    },
+    {
+      "label": "current1",
+      "core_idle_rss_mib": 13.03,
+      "ui_idle_rss_mib": 84.77,
+      "idle_rss_mib": 97.8,
+      "sampled_peak_rss_mib": 145.52,
+      "large_seconds": 0.085,
+      "core_ready_ms": 44.506,
+      "native_ui_process_to_record_ms": 706.703,
+      "proxied_loopback_ms": {
+        "p50": 0.15,
+        "p95": 0.172
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 2678,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 2679,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 2836,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "7d7ff1ea2988a2289f05242434f7d56a0b4b4f59df27b6dacdc6842f7c98ee44"
+    },
+    {
+      "label": "current2",
+      "core_idle_rss_mib": 12.44,
+      "ui_idle_rss_mib": 84.34,
+      "idle_rss_mib": 96.78,
+      "sampled_peak_rss_mib": 145.58,
+      "large_seconds": 0.084,
+      "core_ready_ms": 47.446,
+      "native_ui_process_to_record_ms": 749.308,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.193
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 2950,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 2951,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 3091,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "7d7ff1ea2988a2289f05242434f7d56a0b4b4f59df27b6dacdc6842f7c98ee44"
+    },
+    {
+      "label": "previous2",
+      "core_idle_rss_mib": 12.75,
+      "ui_idle_rss_mib": 83.55,
+      "idle_rss_mib": 96.3,
+      "sampled_peak_rss_mib": 142.97,
+      "large_seconds": 0.086,
+      "core_ready_ms": 46.33,
+      "native_ui_process_to_record_ms": 760.598,
+      "proxied_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.192
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 3184,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 3185,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 3361,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      },
+      "ui_sha256": "53f7b2260ee5a7d2d917e1fa4f00513ddbf641c87fe745fd7deb5bea0a21e0a4"
+    }
+  ],
+  "limits": [
+    "Original benchmark unchanged:64 models/1000 small/80x1MiB concurrency4;same Core25f;old UI53f/new final7d7.",
+    "Two short samples per version;no causal optimization or statistical equivalence claim. All samples retained.",
+    "Shared pages can double-count in RSS;component medians cannot be added as total median.",
+    "Process-to-record is not first paint/interactivity;original ui_record_ready includes CUA waiting and is excluded from startup comparison.",
+    "Loopback HTTP excludes public network/TLS/model latency;default launch load does not verify field input latency,FPS,IME or tray."
+  ]
+}

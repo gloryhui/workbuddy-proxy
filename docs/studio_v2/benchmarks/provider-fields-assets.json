@@ -1,0 +1,31 @@
+{
+  "source": "Official54:216 fresh high-fidelity context;downloaded unchanged via instructed curl",
+  "slots": [
+    {
+      "local": "gpui/assets/studio/provider-chevron.svg",
+      "sha256": "ee4c74f7eabc72df6f675b78340f9f0750eb39d6e3361f7dc146ab61d0ab1e84",
+      "bytes": 338,
+      "slots": [
+        "54:225",
+        "54:240"
+      ],
+      "native_size": 16,
+      "equal_to_fresh_official_asset": true
+    },
+    {
+      "local": "gpui/assets/studio/provider-key-eye.svg",
+      "sha256": "6d37ac30da43e20031b7dcf834ac5b09cded84e89b8d05c8f83c6ab5d58091a6",
+      "bytes": 728,
+      "slots": [
+        "54:233"
+      ],
+      "native_size": 17,
+      "equal_to_fresh_official_asset": true
+    }
+  ],
+  "callsites": [
+    "gpui/src/ui/provider_choices.rs:control",
+    "gpui/src/ui/providers.rs:key_visibility_button"
+  ],
+  "note": "Native dimensions retained; no new asset substitution"
+}

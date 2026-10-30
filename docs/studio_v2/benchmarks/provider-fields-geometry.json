@@ -1,0 +1,247 @@
+{
+  "scope": "Original PNG unchanged;ICC to sRGB in memory when embedded,otherwise encodedRGB. Count of opaque same-color pixels is not full glyph/AA/font equivalence.",
+  "reference_name": {
+    "box": [
+      34,
+      186,
+      115,
+      208
+    ],
+    "target_body_pixels": 25,
+    "old_ink_pixels": 0,
+    "exact_body_bbox_local": [
+      3,
+      7,
+      47,
+      20
+    ]
+  },
+  "intermediate": {
+    "name": {
+      "box": [
+        321,
+        409,
+        402,
+        431
+      ],
+      "target_body_pixels": 0,
+      "old_ink_pixels": 14,
+      "exact_body_bbox_local": null
+    },
+    "url": {
+      "box": [
+        682,
+        484,
+        920,
+        505
+      ],
+      "target_body_pixels": 0,
+      "old_ink_pixels": 62,
+      "exact_body_bbox_local": null
+    },
+    "protocol": {
+      "box": [
+        321,
+        484,
+        490,
+        505
+      ],
+      "target_body_pixels": 114,
+      "old_ink_pixels": 0,
+      "exact_body_bbox_local": [
+        1,
+        5,
+        152,
+        17
+      ]
+    },
+    "samples": {
+      "name_bg": [
+        243,
+        245,
+        250
+      ],
+      "name_edge": [
+        231,
+        234,
+        242
+      ],
+      "url_bg": [
+        243,
+        245,
+        250
+      ],
+      "url_edge": [
+        231,
+        234,
+        242
+      ]
+    }
+  },
+  "intermediate_prepaint": {
+    "name": {
+      "box": [
+        321,
+        409,
+        402,
+        431
+      ],
+      "target_body_pixels": 0,
+      "old_ink_pixels": 14,
+      "exact_body_bbox_local": null
+    },
+    "url": {
+      "box": [
+        682,
+        484,
+        920,
+        505
+      ],
+      "target_body_pixels": 0,
+      "old_ink_pixels": 54,
+      "exact_body_bbox_local": null
+    },
+    "protocol": {
+      "box": [
+        321,
+        484,
+        490,
+        505
+      ],
+      "target_body_pixels": 114,
+      "old_ink_pixels": 0,
+      "exact_body_bbox_local": [
+        1,
+        5,
+        152,
+        17
+      ]
+    },
+    "samples": {
+      "name_bg": [
+        243,
+        245,
+        250
+      ],
+      "name_edge": [
+        231,
+        234,
+        242
+      ],
+      "url_bg": [
+        243,
+        245,
+        250
+      ],
+      "url_edge": [
+        231,
+        234,
+        242
+      ]
+    }
+  },
+  "final": {
+    "name": {
+      "box": [
+        321,
+        409,
+        402,
+        431
+      ],
+      "target_body_pixels": 14,
+      "old_ink_pixels": 0,
+      "exact_body_bbox_local": [
+        1,
+        7,
+        41,
+        14
+      ]
+    },
+    "url": {
+      "box": [
+        682,
+        484,
+        920,
+        505
+      ],
+      "target_body_pixels": 56,
+      "old_ink_pixels": 0,
+      "exact_body_bbox_local": [
+        12,
+        6,
+        152,
+        15
+      ]
+    },
+    "protocol": {
+      "box": [
+        321,
+        484,
+        490,
+        505
+      ],
+      "target_body_pixels": 114,
+      "old_ink_pixels": 0,
+      "exact_body_bbox_local": [
+        1,
+        5,
+        152,
+        17
+      ]
+    },
+    "samples": {
+      "name_bg": [
+        243,
+        245,
+        250
+      ],
+      "name_edge": [
+        231,
+        234,
+        242
+      ],
+      "url_bg": [
+        243,
+        245,
+        250
+      ],
+      "url_edge": [
+        231,
+        234,
+        242
+      ]
+    }
+  },
+  "remaining_native_raster_differences": {
+    "name_top_left11x11_different_pixels": 25,
+    "preset_chevron_reference_ink_box": [
+      707,
+      120,
+      717,
+      126
+    ],
+    "preset_chevron_native_ink_box": [
+      994,
+      341,
+      1004,
+      347
+    ],
+    "reference_to_native_translation": [
+      287,
+      221
+    ],
+    "eye_reference_ink_box": [
+      705,
+      193,
+      720,
+      202
+    ],
+    "eye_native_ink_box": [
+      987,
+      412,
+      1002,
+      423
+    ],
+    "interpretation": "Preset chevron ink box translates exactly. Existing key-toggle ink left is5px left of translated reference; vertical/AA ink bounds also differ. Eye asset bytes and17px wrapper unchanged this round; leave explicit full-frame difference,not pixel-equality claim. Rounded corner raster differs despite10px token."
+  }
+}

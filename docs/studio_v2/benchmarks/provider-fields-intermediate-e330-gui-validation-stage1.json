@@ -1,0 +1,24 @@
+{
+  "status": "intermediate_not_passed",
+  "ui_sha256": "e330986fd392aabc13575b13f5dbdef5cc7f8d5241cc87b6e3ec56cf7038482c",
+  "ui_pid": 96730,
+  "core_pid": 96560,
+  "window_number": 2658,
+  "observed": "Provider A untested, masked key, 2 providers 5 models 0 requests. Main measured name/URL target body-color pixels zero while old ink pixels remained; preset/protocol correct.",
+  "screenshot": {
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-prepaint/fields-default-wide.png",
+    "pixels": [
+      1440,
+      901
+    ],
+    "sha256": "bc5433d2e4aad5b8aeb7fccdc07950986658fa185ce29b148f5fddf1b079c3d0",
+    "source": "native screencapture; own PID onscreen layer0 window matched CUA; byte-identical candidate-2658 alias; no crop/scale"
+  },
+  "limitations": [
+    "remaining interactions stopped after confirmed mismatch",
+    "no Test, Save, Sync or key reveal",
+    "no explicit activate or raise; actual foreground not asserted",
+    "Core retained for main"
+  ],
+  "close": "CUA clicked fresh native close button on UI 96730; Core retained for main; exit status not asserted"
+}

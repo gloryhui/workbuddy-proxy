@@ -1,0 +1,31 @@
+{
+  "original_fields_preserved": true,
+  "provider_model_counts": [
+    2,
+    5
+  ],
+  "language_after": "zh",
+  "sqlite_source_status_counts": [
+    [
+      "connection_test",
+      200,
+      1
+    ]
+  ],
+  "sqlite_totals": [
+    1,
+    500,
+    50,
+    550
+  ],
+  "mock_posts": [
+    {
+      "model": "deepseek-v4.1-flash",
+      "stream": true,
+      "status": 200,
+      "mode": "success"
+    }
+  ],
+  "stage1_request_count": 0,
+  "scope": "Final7d7 only. One explicit UI Test preserves original save-then-test behavior;10000ms intentional Mock delay is not product latency performance. Raw credentials/config omitted. Disabled state not observed this round."
+}

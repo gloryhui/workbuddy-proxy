@@ -11,7 +11,8 @@
       "52:2",
       "56:8",
       "57:8",
-      "54:220"
+      "54:220",
+      "54:216"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -64,20 +65,20 @@
       "id": "54:2",
       "name": "02 / STUDIO V2 · 供应商管理",
       "review_status": "reviewed_with_differences",
-      "scope": "UI58重新读取完整官方54:2、30资产及原始导出，最终ec7e两尺寸/默认与单模型/256容量/真实Test成功和失败及原负载对照完成；整帧保留明确差异，未最终通过。 UI59连接徽章专项完成，最终53f重开/两尺寸/自然故障刷新留证；整帧仍保留差异。",
+      "scope": "UI58重新读取完整官方54:2、30资产及原始导出，最终ec7e两尺寸/默认与单模型/256容量/真实Test成功和失败及原负载对照完成；整帧保留明确差异，未最终通过。 UI59连接徽章专项完成，最终53f重开/两尺寸/自然故障刷新留证；整帧仍保留差异。 UI60最终7d7默认输入/触发器样式、两尺寸真实交互及原负载完成，焦点/密码图标/禁用态等继续留差异。",
       "checks": {
         "layout": "最终ec7e原始1x宽窗的摘要[288,166,1120,44]、连接[288,222,755,338]、模型[288,572,755,253]、运行[1060,222,348,279]、日志[1060,516,348,309]四直边已核对；原4模型/底栏完整，小窗中心/右栏/表体各自可滚。错误提示允许卡片增高，不硬裁掉真实状态。",
-        "colors": "原图按ICC在内存转sRGB，主要背景/边框已采样；caret沿用同原SVG/#8C96AA。输入底色/文字、按钮及全部hover/focus/disabled、全帧颜色仍有差异，未完整通过。",
+        "colors": "原图按ICC在内存转sRGB，主要背景/边框已采样；caret沿用同原SVG/#8C96AA。输入底色/文字、按钮及全部hover/focus/disabled、全帧颜色仍有差异，未完整通过。 UI60最终名称/URL/协议实心像素#4c566d、背景#f3f5fa、边框#e7eaf2已测，旧ink为0；全部状态颜色未通过。",
         "typography": "Provider28/41与96px流区别于统计27/39与97px。原Noto Sans SC/Inter按连接/摘要/模型/运行角色使用；若干标题/表头墨迹框和首行编辑图标已对齐，供应商标题下缘/日志/AA和精确字体版本仍不同或未证明。",
         "assets": "30个官方原资产：25本地字节一致，2完整XML仅本地clipPath ID及引用重命名，3装饰trafficlights使用真实OS系统控件。首行编辑墨迹[979,669,991,681]对齐，原28px热区/处理器保留；其余状态槽位尚未全验。",
         "states": "默认2供应商5模型与单模型帮助区；实际草稿删4→3后Cancel恢复4。最终Test各一次200/SSE与503，独立SQLite确认14relay200+1test200+1test503。容量2供应商256模型、A255/B1、Add点击无效。UI58当时未实现徽章；当前见UI59记录。 UI59按实际TestReport绑定供应商/配置，五状态、编辑取消/失败替换、复制继承、新ID、重开清空及Core控制故障恢复已分版本实测。",
-        "interaction": "模型/端口/协议/获取5候选/新增取消、中英恢复、Mono→Studio、选中显示Remove、宽窄滚动已验。256容量End到fill-250并编辑核ID后Esc，未Save/Test/Sync/删除。主夹具Test原先保存再测试语义保持、所有原字段递归一致；序列化新增默认值导致字节SHA不同。完整键盘/IME/AX未验。",
+        "interaction": "模型/端口/协议/获取5候选/新增取消、中英恢复、Mono→Studio、选中显示Remove、宽窄滚动已验。256容量End到fill-250并编辑核ID后Esc，未Save/Test/Sync/删除。主夹具Test原先保存再测试语义保持、所有原字段递归一致；序列化新增默认值导致字节SHA不同。完整键盘/IME/AX未验。 UI60最终名称修改Cancel、Key显隐再遮罩、预设/协议Esc、两尺寸/语言及Mono恢复、一次Test200/SSE留证；未捕获busy，禁用未验。",
         "native_1440": "最终ec7e原始1440×901/目标1440×900/native1x，默认四行/底栏/运行/日志、Test200及503、256满载分别留原图；没有裁掉原生额外1行。",
         "native_1100": "最终ec7e原始1100×701/目标1100×700/native1x，默认/中心滚动/单模型/英文/失败/256末行和底栏均有原图。失败需右栏外滚和日志内滚，Runtime标题/错误/完整日志不可同时显示。"
       },
       "differences": [
         "UI59已实现92×27独立连接徽章，原生字形上缘AA仍差1px；仅为显式单模型/被测配置历史结果，非持续上游健康。最终53f重开/故障自然刷新已验，普通编辑/语言路径为明确标注的eec3证据。",
-        "供应商标题墨迹下缘/日志标题与AA、协议链接右1px、原生表头边框和输入颜色/按钮状态仍有差异；准确Figma字体版本/全角色尚未证明一致。",
+        "UI60默认连接输入/预设协议触发器颜色与10px圆角接入；焦点框浅、密码图标墨迹相对参考左5px、普通按钮状态仍待修验。圆角栅格/标题日志AA、协议链接右1px及原生表头边框仍有差异，字体版本/全角色未证明一致。",
         "保留真实URL动态说明、原有日志复制清空、手动模型元数据/额外业务按钮与实际计数；不写死参考的端口、名称、请求0或上游连接正常。",
         "小窗默认下部内容通过中心内滚取回；错误态右栏可滚且日志保留内滚，不能把截图当作完整键盘/IME/AX或全状态通过。",
         "首帧模型宽度估算补齐两层边框并与预绘制宽度相符；尚无首帧闪动/输入延迟/FPS录制。Windows/Intel硬件/HiDPI及全部状态未终验。"
@@ -110,7 +111,15 @@
         "benchmarks/provider-connection-copy-final-independent-proof.json",
         "benchmarks/provider-connection-performance-summary.json",
         "screenshots/provider-connection-copy-final-copy-passed-wide.png",
-        "screenshots/provider-connection-copy-final-copy-passed-small.png"
+        "screenshots/provider-connection-copy-final-copy-passed-small.png",
+        "benchmarks/provider-fields-build.json",
+        "benchmarks/provider-fields-design-audit.json",
+        "benchmarks/provider-fields-geometry.json",
+        "benchmarks/provider-fields-final-gui-validation.json",
+        "benchmarks/provider-fields-independent-proof.json",
+        "benchmarks/provider-fields-performance-summary.json",
+        "screenshots/provider-fields-final-fields-default-wide.png",
+        "screenshots/provider-fields-final-fields-default-small.png"
       ]
     },
     {

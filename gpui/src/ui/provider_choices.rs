@@ -329,6 +329,8 @@ pub(super) fn control(
     cx: &App,
 ) -> AnyElement {
     let menu = state.read(cx);
+    let studio_field = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo
+        && menu.choices.kind != MenuKind::Effort;
     let title = menu
         .selected
         .as_ref()
@@ -345,6 +347,9 @@ pub(super) fn control(
         .px(px(12.))
         .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
         .border_color(rgb(crate::theme::color::BORDER))
+        .when(studio_field, |button| {
+            button.rounded(px(crate::theme::radius::PROVIDER_FIELD))
+        })
         .track_focus(&menu.focus)
         .disabled(disabled)
         .accessibility_label(format!("{label}: {title}"))
@@ -358,6 +363,13 @@ pub(super) fn control(
                 .gap(px(8.))
                 .child(
                     Label::new(title)
+                        .when(studio_field, |label| {
+                            label.text_color(rgb(if disabled {
+                                crate::theme::color::TEXT_4
+                            } else {
+                                crate::theme::color::TEXT_2
+                            }))
+                        })
                         .text_size(px(if menu.choices.kind == MenuKind::Effort {
                             12.
                         } else {

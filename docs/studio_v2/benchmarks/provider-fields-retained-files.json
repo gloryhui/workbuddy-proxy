@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-10-31T03:07:52.243990+08:00",
+  "deleted": [],
+  "freed_bytes": 0,
+  "retained": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+      "uid": 501,
+      "logical_bytes": 83852189,
+      "files": 64
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr",
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr",
+      "uid": 501,
+      "logical_bytes": 278808369,
+      "files": 207
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "uid": 501,
+      "logical_bytes": 917996239,
+      "files": 575
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8",
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8",
+      "uid": 501,
+      "logical_bytes": 433749382,
+      "files": 228
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81",
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round50.cg_5__81",
+      "uid": 501,
+      "logical_bytes": 573703043,
+      "files": 272
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt",
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt",
+      "uid": 501,
+      "logical_bytes": 561890593,
+      "files": 203
+    }
+  ],
+  "retained_total_bytes": 2849999815,
+  "system_disk_free_bytes": 43147284480,
+  "scope": "Read-only logical file-byte inventory,not allocated blocks. This round no deletion attempted;previous exact deletions rejected by runtime policyNever were not retried/equivalently/parent-deleted. Current candidates/evidence and reused baseline retained;shared Cargo/UV cache reused. Historical absolute paths are evidence,not portable project requirements."
+}

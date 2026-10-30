@@ -1,0 +1,11 @@
+{
+  "original_fields_preserved": true,
+  "original_provider_model_counts": [
+    2,
+    5
+  ],
+  "language_after": "zh",
+  "request_count_before_test": 0,
+  "config_bytes_equal_to_before": false,
+  "note": "Recursive original fields equal; bytes can differ due serialization defaults/format. Raw values/credentials not recorded."
+}

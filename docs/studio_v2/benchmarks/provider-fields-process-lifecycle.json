@@ -1,0 +1,27 @@
+{
+  "checked_pids": [
+    95372,
+    95166,
+    95165,
+    96730,
+    96560,
+    96556,
+    98282,
+    98113,
+    98112,
+    2491,
+    2347,
+    2348,
+    2836,
+    2678,
+    2679,
+    3091,
+    2950,
+    2951,
+    3361,
+    3184,
+    3185
+  ],
+  "all_gone": true,
+  "scope": "21 GUI/Core/fixture/benchmark child PIDs independently ps checked after terminal records. CUA owns UI;no UI wait/exit0 claim. Core/fixture wait0,mock wait-15 remain in their reports."
+}

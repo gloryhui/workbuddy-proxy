@@ -430,17 +430,21 @@ impl Proxy {
                             .gap(px(13.))
                             .child(field(
                                 self.t("供应商名称", "Provider name"),
-                                crate::ui_components::text_input(&self.name, self.busy)
-                                    .aria_label(self.t("供应商名称", "Provider name")),
+                                crate::ui_components::provider_field(
+                                    crate::ui_components::text_input(&self.name, self.busy)
+                                        .aria_label(self.t("供应商名称", "Provider name")),
+                                ),
                             ))
                             .child(field(
                                 "API Key",
-                                crate::ui_components::masked_input(
-                                    &self.key,
-                                    self.busy,
-                                    self.key_visibility_button(cx),
-                                )
-                                .aria_label("API Key"),
+                                crate::ui_components::provider_field(
+                                    crate::ui_components::masked_input(
+                                        &self.key,
+                                        self.busy,
+                                        self.key_visibility_button(cx),
+                                    )
+                                    .aria_label("API Key"),
+                                ),
                             )),
                     )
                     .child(
@@ -464,8 +468,10 @@ impl Proxy {
                             .child(
                                 field(
                                     self.t("API 地址", "API URL"),
-                                    crate::ui_components::text_input(&self.url, self.busy)
-                                        .aria_label(self.t("API 地址", "API URL")),
+                                    crate::ui_components::provider_field(
+                                        crate::ui_components::text_input(&self.url, self.busy)
+                                            .aria_label(self.t("API 地址", "API URL")),
+                                    ),
                                 )
                                 .gap(px(4.)),
                             ),

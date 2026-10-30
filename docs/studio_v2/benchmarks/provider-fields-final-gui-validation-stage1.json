@@ -1,0 +1,66 @@
+{
+  "ui_sha256": "7d7ff1ea2988a2289f05242434f7d56a0b4b4f59df27b6dacdc6842f7c98ee44",
+  "ui_pid": 98282,
+  "core_pid": 98113,
+  "window_number": 2673,
+  "stage1": {
+    "initial": "Provider A, 2 providers/5 models/0 requests; masked key; main independently measured target name/URL/protocol color and background/border",
+    "focus": "clicked name: caret visible but outline shallow. Home/Right/Shift+Right did not change value; selection not reliably discerned",
+    "edit_cancel": "explicit Edit profile, typed UI60 draft, Cancel restored sub2api",
+    "key": "clicked show then hide; accessible label changed accordingly and restored masked; no plaintext captured or recorded",
+    "preset_protocol": "preset opened/Esc closed; protocol Down/Up moved selection then Esc; Chat retained",
+    "small": "CUA corner drag to 1100x700 target; name/masked key/url/preset/protocol visible and readable; center scroll retrieved model table/footer",
+    "language_skin": "English then Chinese, Mono then Studio; name/protocol preserved; language saves isolated preference"
+  },
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-native/fields-default-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "6d9e1841893c4a6d0ad71485f659fdc6a8ddb7bec41cd7f75eb1d61e7f1abcf4"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-native/fields-focus-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "11e7126d148b2202d30c8d1212d98130b4531b8a172940243aa82e946294a13d"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-native/fields-default-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "95c667db947707d122c4192a7a84df2c300d193c1a7acf61f397425a7631db50"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-native/fields-mono-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "8908af514dbc5e6857800420ecf96b3f7baa9c881cdc30f805d05cbb9232fc2a"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round51.9euy2zwt/ui60-fields-native/fields-restored-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "c3670597b549524491613ee5bf55d65f39373b7da9d05893cb82806c15301f83"
+    }
+  ],
+  "method": "native screencapture, own PID onscreen layer0 window 2673 visually matched CUA, no crop or scale; default wide byte-identical candidate-2673",
+  "limitations": [
+    "selection and full keyboard/AX accessibility not proven",
+    "name focus border faint",
+    "main noted eye icon design offset remains",
+    "no Test, Save, Sync or clipboard in stage1",
+    "no explicit activate/raise; actual foreground not asserted"
+  ],
+  "close": "UI kept open for busy stage"
+}
