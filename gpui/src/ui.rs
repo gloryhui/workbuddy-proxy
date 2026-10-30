@@ -2474,8 +2474,10 @@ impl Render for Proxy {
             .flex()
             .flex_col()
             .flex_shrink_0()
-            .gap(px(8.))
-            .pb(px(28.))
+            // Figma52/56/57: title27/39, subtitle13/19. Preserve the original
+            // 97px heading flow so subtitle and report anchors stay in place.
+            .gap(px(10.))
+            .pb(px(29.))
             .child(
                 div().flex().items_start().gap_4().child(
                     div()
@@ -2490,10 +2492,10 @@ impl Render for Proxy {
             .child(
                 Label::new(subtitle)
                     .text_size(px(crate::theme::font::BODY))
-                    .line_height(px(20.))
+                    .line_height(px(19.))
                     .text_color(rgb(crate::theme::color::TEXT_3)),
             );
-        // Page titles keep their original flow and spacing. Window actions are
+        // Page headings keep their original anchors and total flow height. Actions are
         // positioned separately at the window root, below Kit's modal layers.
         let content = div()
             .relative()

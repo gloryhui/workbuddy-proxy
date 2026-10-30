@@ -1,0 +1,2042 @@
+{
+  "figma": {
+    "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+    "page": "51:2",
+    "source": "Official Figma MCP full design context plus included screenshots refreshed2026-10-30. Normalized design code unchanged from earlier UI56 reads.",
+    "numbered_frames": [
+      {
+        "id": "52:2",
+        "name": "01 / STUDIO V2 · 使用概览"
+      },
+      {
+        "id": "54:2",
+        "name": "02 / STUDIO V2 · 供应商管理"
+      },
+      {
+        "id": "56:8",
+        "name": "03 / STUDIO V2 · 用量明细"
+      },
+      {
+        "id": "57:8",
+        "name": "04 / STUDIO V2 · 汇总分析"
+      },
+      {
+        "id": "58:8",
+        "name": "05 / STUDIO V2 · 统计设置"
+      },
+      {
+        "id": "59:11",
+        "name": "06 / STUDIO V2 · 选择模型"
+      },
+      {
+        "id": "59:279",
+        "name": "07 / STUDIO V2 · 编辑模型能力"
+      },
+      {
+        "id": "60:27",
+        "name": "08 / STUDIO V2 · 同步 WorkBuddy"
+      },
+      {
+        "id": "60:249",
+        "name": "09 / STUDIO V2 · 新建价格规则"
+      },
+      {
+        "id": "60:475",
+        "name": "10 / STUDIO V2 · 请求详情"
+      },
+      {
+        "id": "61:289",
+        "name": "11 / STUDIO V2 · 协议选项 · OpenAI Chat"
+      },
+      {
+        "id": "61:561",
+        "name": "11 / STUDIO V2 · 协议选项 · OpenAI Responses"
+      },
+      {
+        "id": "61:838",
+        "name": "11 / STUDIO V2 · 协议选项 · Anthropic"
+      },
+      {
+        "id": "61:1111",
+        "name": "11 / STUDIO V2 · 协议选项 · Gemini"
+      },
+      {
+        "id": "62:308",
+        "name": "13 / STUDIO V2 · 黑白主题示例"
+      },
+      {
+        "id": "64:335",
+        "name": "14 / STUDIO V2 · 外观与主题"
+      },
+      {
+        "id": "66:320",
+        "name": "17 / STUDIO V2 · 上游协议下拉"
+      },
+      {
+        "id": "66:538",
+        "name": "18 / STUDIO V2 · 供应商预设搜索"
+      },
+      {
+        "id": "66:760",
+        "name": "19 / STUDIO V2 · API Key 显示演示"
+      },
+      {
+        "id": "67:338",
+        "name": "20 / STUDIO V2 · OpenCode Go 供应商"
+      },
+      {
+        "id": "67:548",
+        "name": "21 / STUDIO V2 · 思考强度菜单"
+      },
+      {
+        "id": "68:350",
+        "name": "22 / STUDIO V2 · 取消同步确认"
+      },
+      {
+        "id": "69:359",
+        "name": "23 / STUDIO V2 · 编辑模型价格"
+      },
+      {
+        "id": "78:364",
+        "name": "24 / STUDIO V2 · 新增供应商草稿"
+      },
+      {
+        "id": "78:605",
+        "name": "25 / STUDIO V2 · 编辑供应商资料"
+      },
+      {
+        "id": "78:843",
+        "name": "26 / STUDIO V2 · 复制供应商草稿"
+      },
+      {
+        "id": "78:1080",
+        "name": "27 / STUDIO V2 · 删除供应商确认"
+      },
+      {
+        "id": "78:1325",
+        "name": "28 / STUDIO V2 · 供应商满载滚动 (64)"
+      },
+      {
+        "id": "78:1804",
+        "name": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go"
+      },
+      {
+        "id": "79:400",
+        "name": "30 / STUDIO V2 · 64 个供应商搜索"
+      },
+      {
+        "id": "79:885",
+        "name": "31 / STUDIO V2 · 新供应商保存完成"
+      },
+      {
+        "id": "79:1102",
+        "name": "32 / STUDIO V2 · 供应商复制完成"
+      },
+      {
+        "id": "80:418",
+        "name": "33 / STUDIO V2 · 供应商搜索（2个）"
+      },
+      {
+        "id": "80:646",
+        "name": "34 / STUDIO V2 · 编辑 OpenCode Go"
+      },
+      {
+        "id": "80:864",
+        "name": "35 / STUDIO V2 · 删除 OpenCode Go 确认"
+      },
+      {
+        "id": "80:1114",
+        "name": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api"
+      },
+      {
+        "id": "104:1378",
+        "name": "37 / STUDIO V2 · 开机启动已开启（原型）"
+      },
+      {
+        "id": "104:1605",
+        "name": "38 / STUDIO V2 · 检查更新交互（原型）"
+      },
+      {
+        "id": "104:1823",
+        "name": "39 / STUDIO V2 · 语言切换菜单"
+      },
+      {
+        "id": "104:2046",
+        "name": "40 / STUDIO V2 · 恢复默认窗口尺寸（原型）"
+      }
+    ],
+    "ledger_ids_match": true,
+    "contract_id": "71:364"
+  },
+  "roles": {
+    "52:2": [
+      {
+        "sample": "● 代理服务正常",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#11976f"
+      },
+      {
+        "sample": "WorkBuddy 同步已就绪",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "本地运行 · 不上传密钥",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "WorkBuddy",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 17,
+        "line_height_px": 24,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "PROXY · DESKTOP",
+        "font": "Inter:Medium",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "WORKSPACE",
+        "font": "Inter:Semi_Bold",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "数据统计",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "供应商管理",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "统计设置",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "本地代理",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "运行中",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "127.0.0.1:18080",
+        "font": "Inter:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "{`v0.5.7  ·  RUST / GPUI`}",
+        "font": "Inter:Medium",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "供应商",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "2 / 64",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "搜索供应商",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "sub2api",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "4",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "1",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "新增",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": null
+      },
+      {
+        "sample": "复制",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "删除",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#c94f5e"
+      },
+      {
+        "sample": "用量概览",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 27,
+        "line_height_px": 39,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "掌握模型请求、Token 消耗与缓存表现",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "概览",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "用量明细",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#778196"
+      },
+      {
+        "sample": "汇总分析",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#778196"
+      },
+      {
+        "sample": "全部模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "全部供应商",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "7 天",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "自动刷新 · 5 秒",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "全部模型",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "内置模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "自定义模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "TOKEN VOLUME",
+        "font": "Inter:Semi_Bold",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#adb8ca"
+      },
+      {
+        "sample": "509",
+        "font": "Inter:Bold",
+        "size_px": 47,
+        "line_height_px": 67,
+        "color": null
+      },
+      {
+        "sample": "万",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 21,
+        "line_height_px": 30,
+        "color": null
+      },
+      {
+        "sample": "当前筛选范围内的 Token 用量",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#adb8ca"
+      },
+      {
+        "sample": "用量记录",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "92",
+        "font": "Inter:Bold",
+        "size_px": 34,
+        "line_height_px": 49,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "6 代理 · 86 导入",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "代理成功率",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "100.0%",
+        "font": "Inter:Bold",
+        "size_px": 27,
+        "line_height_px": 39,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "仅统计代理请求",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "缓存命中率",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "86.3%",
+        "font": "Inter:Bold",
+        "size_px": 34,
+        "line_height_px": 49,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "缓存读取 431万",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "使用趋势",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 16,
+        "line_height_px": 23,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "Token 使用量",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "7 天",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "500万",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "375万",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "250万",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "125万",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "10/01",
+        "font": "Inter:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "10/07",
+        "font": "Inter:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "10/14",
+        "font": "Inter:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "10/21",
+        "font": "Inter:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "10/28",
+        "font": "Inter:Regular",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "输入",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "缓存读取",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "费用与计费",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 16,
+        "line_height_px": 23,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "CNY",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "¥ 0.00",
+        "font": "Inter:Bold",
+        "size_px": 31,
+        "line_height_px": 44,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "代理估算费用",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "WorkBuddy 积分",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "—",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 18,
+        "line_height_px": 26,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "导入用量费用未定价",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "86 条导入",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#b57a35"
+      },
+      {
+        "sample": "最近请求",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "10-20 16:14:29",
+        "font": "Inter:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "4.90万 Token",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "200 · 已完成",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      }
+    ],
+    "56:8": [
+      {
+        "sample": "● 代理服务正常",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#11976f"
+      },
+      {
+        "sample": "WorkBuddy 同步已就绪",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "本地运行 · 不上传密钥",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "WorkBuddy",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 17,
+        "line_height_px": 24,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "PROXY · DESKTOP",
+        "font": "Inter:Medium",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "WORKSPACE",
+        "font": "Inter:Semi_Bold",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "数据统计",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "供应商管理",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "统计设置",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "本地代理",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "运行中",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "127.0.0.1:18080",
+        "font": "Inter:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "{`v0.5.7  ·  RUST / GPUI`}",
+        "font": "Inter:Medium",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "供应商",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "2 / 64",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "搜索供应商",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "sub2api",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "4",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "1",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "新增",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": null
+      },
+      {
+        "sample": "复制",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "删除",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#c94f5e"
+      },
+      {
+        "sample": "用量明细",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 27,
+        "line_height_px": 39,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "逐条查看用量、缓存命中、费用与响应性能",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "概览",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#778196"
+      },
+      {
+        "sample": "用量明细",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "汇总分析",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#778196"
+      },
+      {
+        "sample": "全部模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "全部供应商",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "7 天",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "自动刷新 · 5 秒",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "全部模型",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "内置模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "自定义模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "请求记录",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 17,
+        "line_height_px": 24,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "92 条",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "代理请求和 WorkBuddy 导入统一展示，未知字段保留原始状态",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "时间 · 最新优先",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "⌄",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 17,
+        "line_height_px": 24,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "10-20 16:14:29",
+        "font": "Inter:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "4.90万",
+        "font": "Inter:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "{`↓4.77万  ↑1324`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "89.4%",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "¥0",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "9.65s",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "200 · 完成",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "10-20 16:14:07",
+        "font": "Inter:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "4.59万",
+        "font": "Inter:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "{`↓4.27万  ↑3231`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "83.0%",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "¥0",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "20.83s",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "200 · 完成",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "10-20 16:13:46",
+        "font": "Inter:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "4.03万",
+        "font": "Inter:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "{`↓3.55万  ↑4844`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "90.9%",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "¥0",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "19.80s",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "200 · 完成",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "10-20 16:13:41",
+        "font": "Inter:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "3.25万",
+        "font": "Inter:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "{`↓3.23万  ↑207`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "97.8%",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "¥0",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "4.53s",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "200 · 完成",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "10-20 16:12:58",
+        "font": "Inter:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "3.24万",
+        "font": "Inter:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "{`↓3.16万  ↑732`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "0.0%",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#b57a35"
+      },
+      {
+        "sample": "¥0",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "7.23s",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "200 · 完成",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "10-20 16:12:57",
+        "font": "Inter:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "575",
+        "font": "Inter:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "{`↓540  ↑35`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "0.0%",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#b57a35"
+      },
+      {
+        "sample": "¥0",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "1.03s",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "200 · 完成",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "10-17 18:01:58",
+        "font": "Inter:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "WorkBuddy custom",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "deepseek-v4.1-flash",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "4.35万",
+        "font": "Inter:Bold",
+        "size_px": 15,
+        "line_height_px": 21,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "{`↓4.29万  ↑622`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "94.9%",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "—",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "—",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "已记录",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "{`第 1 / 5 页   ·   共 92 条`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "{`‹  上一页`}",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#a0a8b9"
+      },
+      {
+        "sample": "{`下一页  ›`}",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "{`20 条/页  ⌄`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      }
+    ],
+    "57:8": [
+      {
+        "sample": "● 代理服务正常",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#11976f"
+      },
+      {
+        "sample": "WorkBuddy 同步已就绪",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "本地运行 · 不上传密钥",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "WorkBuddy",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 17,
+        "line_height_px": 24,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "PROXY · DESKTOP",
+        "font": "Inter:Medium",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "WORKSPACE",
+        "font": "Inter:Semi_Bold",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "数据统计",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "供应商管理",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "统计设置",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "本地代理",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "运行中",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "127.0.0.1:18080",
+        "font": "Inter:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "{`v0.5.7  ·  RUST / GPUI`}",
+        "font": "Inter:Medium",
+        "size_px": 10,
+        "line_height_px": 14,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "供应商",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "2 / 64",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "搜索供应商",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "sub2api",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "4",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "1",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#929bb0"
+      },
+      {
+        "sample": "新增",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": null
+      },
+      {
+        "sample": "复制",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#f0f3fe"
+      },
+      {
+        "sample": "删除",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#c94f5e"
+      },
+      {
+        "sample": "汇总分析",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 27,
+        "line_height_px": 39,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "按供应商和模型汇总请求，比较使用规模与效率",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "概览",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#636e8a"
+      },
+      {
+        "sample": "用量明细",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#636e8a"
+      },
+      {
+        "sample": "汇总分析",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 14,
+        "line_height_px": 20,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "全部模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "全部供应商",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "7 天",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "自动刷新 · 5 秒",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "全部模型",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "内置模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "自定义模型",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 19,
+        "color": "#778196"
+      },
+      {
+        "sample": "供应商表现",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 17,
+        "line_height_px": 24,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "4 项",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "相同名称代表不同的上游记录组，保留各组统计",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "供应商统计",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "模型统计",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "供应商",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "请求数",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "输入 / 输出",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "缓存命中率",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "估算费用",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "用量覆盖",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "WorkBuddy custom",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "27",
+        "font": "Inter:Semi_Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "{`↓194万  ↑2.30万`}",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "90.3%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "未定价",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "100.0%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "WorkBuddy custom",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "37",
+        "font": "Inter:Semi_Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "{`↓162万  ↑3.03万`}",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "79.1%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "未定价",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "100.0%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "WorkBuddy custom",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "22",
+        "font": "Inter:Semi_Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "{`↓126万  ↑2.44万`}",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "91.2%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "未定价",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "100.0%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "OpenCode Go",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 13,
+        "line_height_px": 18,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "6",
+        "font": "Inter:Semi_Bold",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "{`↓19.0万  ↑1.04万`}",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "74.6%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4f46d9"
+      },
+      {
+        "sample": "¥0",
+        "font": "Noto_Sans_SC:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "100.0%",
+        "font": "Inter:Medium",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#11976f"
+      },
+      {
+        "sample": "按总 Token 排序",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "{`第 1/1 页  ·  4 条记录`}",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 11,
+        "line_height_px": 16,
+        "color": "#778196"
+      },
+      {
+        "sample": "Token 构成",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 16,
+        "line_height_px": 23,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "输入与输出分开计算",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "509万",
+        "font": "Inter:Bold",
+        "size_px": 32,
+        "line_height_px": 45,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "当前范围总用量",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "输入 Token",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "输出 Token",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#4c566d"
+      },
+      {
+        "sample": "缓存与覆盖",
+        "font": "Noto_Sans_SC:Bold",
+        "size_px": 16,
+        "line_height_px": 23,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "缓存读取命中率",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "86.3%",
+        "font": "Inter:Bold",
+        "size_px": 27,
+        "line_height_px": 38,
+        "color": "#161c2c"
+      },
+      {
+        "sample": "已记录用量完整性",
+        "font": "Noto_Sans_SC:Regular",
+        "size_px": 12,
+        "line_height_px": 17,
+        "color": "#778196"
+      },
+      {
+        "sample": "100.0%",
+        "font": "Inter:Bold",
+        "size_px": 18,
+        "line_height_px": 26,
+        "color": "#11976f"
+      }
+    ]
+  },
+  "note": "Design examples only, never used as runtime usage data. Inherited text styles are recorded separately for native table headers. Source targets and CPU build checks do not establish rendered geometry or final frame acceptance."
+}

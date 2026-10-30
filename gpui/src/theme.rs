@@ -12,8 +12,9 @@ mod skin;
 pub use skin::{Skin, current_skin, load_skin, palette, save_skin};
 
 pub fn apply_skin(skin: Skin, cx: &mut App) {
+    let registered_families = crate::studio_fonts::prepare(skin == Skin::StudioIndigo, cx);
     skin::select(skin);
-    install(cx);
+    install(cx, registered_families);
 }
 
 /// A monochrome accent must remain visible on the midnight navigation surface.
@@ -55,6 +56,7 @@ pub mod color {
     pub const TEXT_1: u32 = 0x161c2c;
     pub const TEXT_2: u32 = 0x4c566d;
     pub const TEXT_3: u32 = 0x778196;
+    pub const TEXT_4: u32 = 0xa0a8b9;
 
     pub const BORDER: u32 = 0xe7eaf2;
     pub const BORDER_INPUT: u32 = 0xd8dde9;
@@ -104,9 +106,9 @@ pub mod color {
     pub const WHITE: u32 = 0xffffff;
 }
 
-/// Typography sizes from DESIGN_SPEC §1.2. Sizes are logical pixels.
+/// Shared sizes in logical pixels; the page title follows Figma52/56/57.
 pub mod font {
-    pub const PAGE_TITLE: f32 = 28.;
+    pub const PAGE_TITLE: f32 = 27.;
     pub const DIALOG_TITLE: f32 = 18.;
     /// The card-title range is 14–16; 15 is the shared middle value.
     pub const CARD_TITLE: f32 = 15.;
@@ -122,7 +124,7 @@ pub mod font {
 
 /// Line heights paired with the sizes above.
 pub mod line_height {
-    pub const PAGE_TITLE: f32 = 41.;
+    pub const PAGE_TITLE: f32 = 39.;
     pub const DIALOG_TITLE: f32 = 24.;
     pub const BODY: f32 = 20.;
     pub const LABEL: f32 = 18.;
@@ -244,15 +246,19 @@ pub mod shadow {
 ///
 /// `Theme::change` remains the only mode switch; `Theme::update` carries every
 /// visual value. No page, window, key binding or platform lifecycle is touched.
-pub fn install(cx: &mut App) {
+fn install(cx: &mut App, registered_families: Option<Vec<String>>) {
     Theme::change(ThemeMode::Light, None, cx);
 
     // Font families are resolved from the fonts GPUI actually sees. A failed
     // or missing name is not evidence that the family is unavailable; it only
     // means this candidate cannot be selected. The Kit-resolved system family
     // remains the fallback when no explicit candidate is found.
-    let installed = cx.text_system().all_font_names();
-    let sans_family = resolve_sans(&installed);
+    let installed = registered_families.unwrap_or_else(|| cx.text_system().all_font_names());
+    let sans_family = if current_skin() == Skin::StudioIndigo {
+        crate::studio_fonts::sans(cx).or_else(|| resolve_sans(&installed))
+    } else {
+        resolve_sans(&installed).or_else(|| crate::studio_fonts::original_sans(cx))
+    };
     let mono_family = resolve_mono(&installed);
 
     Theme::update(cx, move |theme| {

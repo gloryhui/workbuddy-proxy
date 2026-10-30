@@ -1,0 +1,310 @@
+{
+  "checked_at": "2026-10-30T22:01:06.047550+08:00",
+  "baseline_ui_sha256": "b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57",
+  "initial_ui_sha256": "edb6b3fb84ff81efa05a5d78fa2c15d43715747e7166c3349e3b6e521bca3421",
+  "final_ui_sha256": "a51d7d02dd3ab5f69b5c9b891511b355ac65ff42c371807e76d6c9f719c636f1",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "workload": {
+    "models": 64,
+    "small_requests": 1000,
+    "large_requests": 80,
+    "large_size_mib": 1,
+    "large_concurrency": 4
+  },
+  "native_scale": 1,
+  "initial": {
+    "order": [
+      "previous1",
+      "current1",
+      "current2",
+      "previous2",
+      "previous3",
+      "current3"
+    ],
+    "sample_count_each": 3,
+    "comparison": {
+      "core_idle_rss_mib": {
+        "previous": [
+          12.16,
+          13.28,
+          13.86
+        ],
+        "current": [
+          13.58,
+          12.14,
+          13.06
+        ],
+        "previous_median": 13.28,
+        "current_median": 13.06,
+        "delta": -0.22
+      },
+      "ui_idle_rss_mib": {
+        "previous": [
+          87.94,
+          89.08,
+          88.91
+        ],
+        "current": [
+          86.22,
+          86.5,
+          85.72
+        ],
+        "previous_median": 88.91,
+        "current_median": 86.22,
+        "delta": -2.69
+      },
+      "idle_rss_mib": {
+        "previous": [
+          100.09,
+          102.36,
+          102.77
+        ],
+        "current": [
+          99.8,
+          98.64,
+          98.78
+        ],
+        "previous_median": 102.36,
+        "current_median": 98.78,
+        "delta": -3.58
+      },
+      "sampled_peak_rss_mib": {
+        "previous": [
+          146.72,
+          148.2,
+          150.77
+        ],
+        "current": [
+          145.67,
+          146.8,
+          144.09
+        ],
+        "previous_median": 148.2,
+        "current_median": 145.67,
+        "delta": -2.53
+      },
+      "core_ready_ms": {
+        "previous": [
+          43.102,
+          46.391,
+          46.851
+        ],
+        "current": [
+          42.781,
+          42.864,
+          47.875
+        ],
+        "previous_median": 46.391,
+        "current_median": 42.864,
+        "delta": -3.527
+      },
+      "native_ui_process_to_record_ms": {
+        "previous": [
+          812.198,
+          591.04,
+          591.109
+        ],
+        "current": [
+          1205.673,
+          795.163,
+          794.356
+        ],
+        "previous_median": 591.109,
+        "current_median": 795.163,
+        "delta": 204.054
+      },
+      "large_seconds": {
+        "previous": [
+          0.086,
+          0.087,
+          0.086
+        ],
+        "current": [
+          0.087,
+          0.086,
+          0.086
+        ],
+        "previous_median": 0.086,
+        "current_median": 0.086,
+        "delta": 0.0
+      },
+      "p50": {
+        "previous": [
+          0.173,
+          0.172,
+          0.172
+        ],
+        "current": [
+          0.151,
+          0.173,
+          0.172
+        ],
+        "previous_median": 0.172,
+        "current_median": 0.172,
+        "delta": 0.0
+      },
+      "p95": {
+        "previous": [
+          0.194,
+          0.192,
+          0.195
+        ],
+        "current": [
+          0.175,
+          0.198,
+          0.19
+        ],
+        "previous_median": 0.194,
+        "current_median": 0.19,
+        "delta": -0.004
+      }
+    },
+    "decision": "Process→marker median591.109→795.163ms (+204.054ms). Held delivery, inspected pinned code and removed duplicate first-registration font inventory enumeration. All initial high/low values retained."
+  },
+  "final": {
+    "order": [
+      "previous1",
+      "current1",
+      "current2",
+      "previous2"
+    ],
+    "sample_count_each": 2,
+    "comparison": {
+      "core_idle_rss_mib": {
+        "previous": [
+          12.88,
+          12.62
+        ],
+        "current": [
+          12.36,
+          12.02
+        ],
+        "previous_median": 12.75,
+        "current_median": 12.19,
+        "delta": -0.56
+      },
+      "ui_idle_rss_mib": {
+        "previous": [
+          88.73,
+          88.75
+        ],
+        "current": [
+          84.14,
+          84.5
+        ],
+        "previous_median": 88.74,
+        "current_median": 84.32,
+        "delta": -4.42
+      },
+      "idle_rss_mib": {
+        "previous": [
+          101.61,
+          101.38
+        ],
+        "current": [
+          96.5,
+          96.52
+        ],
+        "previous_median": 101.495,
+        "current_median": 96.51,
+        "delta": -4.985
+      },
+      "sampled_peak_rss_mib": {
+        "previous": [
+          144.33,
+          147.16
+        ],
+        "current": [
+          151.56,
+          141.06
+        ],
+        "previous_median": 145.745,
+        "current_median": 146.31,
+        "delta": 0.565
+      },
+      "core_ready_ms": {
+        "previous": [
+          54.826,
+          41.293
+        ],
+        "current": [
+          48.037,
+          43.167
+        ],
+        "previous_median": 48.0595,
+        "current_median": 45.602,
+        "delta": -2.4575
+      },
+      "native_ui_process_to_record_ms": {
+        "previous": [
+          793.207,
+          687.989
+        ],
+        "current": [
+          730.051,
+          741.092
+        ],
+        "previous_median": 740.598,
+        "current_median": 735.5715,
+        "delta": -5.0265
+      },
+      "large_seconds": {
+        "previous": [
+          0.088,
+          0.086
+        ],
+        "current": [
+          0.093,
+          0.086
+        ],
+        "previous_median": 0.087,
+        "current_median": 0.0895,
+        "delta": 0.0025
+      },
+      "p50": {
+        "previous": [
+          0.171,
+          0.172
+        ],
+        "current": [
+          0.172,
+          0.172
+        ],
+        "previous_median": 0.1715,
+        "current_median": 0.172,
+        "delta": 0.0005
+      },
+      "p95": {
+        "previous": [
+          0.198,
+          0.192
+        ],
+        "current": [
+          0.191,
+          0.194
+        ],
+        "previous_median": 0.195,
+        "current_median": 0.1925,
+        "delta": -0.0025
+      }
+    },
+    "decision": "One fresh P/C/C/P group after the source fix. Process→marker medians740.598→735.5715ms, UI RSS88.74→84.32MiB, peak145.745→146.31MiB. No broad performance-equivalence or causal speedup claim; short-sample variations and executable growth retained."
+  },
+  "binary_bytes": {
+    "core": 8428096,
+    "baseline_ui": 15279824,
+    "final_ui": 42376512,
+    "original_font_faces": 26889052
+  },
+  "limits": [
+    "All ten original workloads retained. Do not pool the two groups or select only faster samples. Core/UI total is measured per sample; separate component medians are not summed.",
+    "First font candidate made an additional all_font_names call immediately before theme installation enumerated again. Reuse that one inventory on first install only; later skin switches continue querying current inventory. The removed duplicate is established by source; these groups alone do not quantify its causal speedup.",
+    "Native process→gpui marker is not first paint/interactivity. Original ui_record_ready includes CUA orchestration waits and cannot compare product startup.",
+    "Pinned native startup applies skin/font preparation before Proxy writes gpui.json. UI benchmark default view workload is not statistics scrolling/menu latency/FPS/IME; tray not measured.",
+    "RSS can double-count shared pages; original binary_bytes field is Core bytes only. UI executable growth is recorded separately.",
+    "All Core/mock children waited0/-15; CUA-owned UI exit codes unavailable, PIDs independently verified gone.",
+    "Core kernel protected; UI environment only. Background CUA getApp, no explicit activate/raise; actual foreground state unmeasured.",
+    "Same macOS15.8.1 arm64 release /native1x group only; no hardware Windows/Intel/HiDPI acceptance. Loopback excludes Internet/TLS/model latency."
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "ui_sha256": "a51d7d02dd3ab5f69b5c9b891511b355ac65ff42c371807e76d6c9f719c636f1",
+  "native_scale": 1,
+  "details_header_bands": [
+    [
+      350,
+      364,
+      [
+        255,
+        255,
+        255
+      ]
+    ],
+    [
+      364,
+      365,
+      [
+        231,
+        234,
+        242
+      ]
+    ],
+    [
+      365,
+      402,
+      [
+        243,
+        245,
+        250
+      ]
+    ],
+    [
+      402,
+      403,
+      [
+        231,
+        234,
+        242
+      ]
+    ],
+    [
+      403,
+      420,
+      [
+        255,
+        255,
+        255
+      ]
+    ]
+  ],
+  "summary_header_bands": [
+    [
+      350,
+      363,
+      [
+        255,
+        255,
+        255
+      ]
+    ],
+    [
+      363,
+      364,
+      [
+        231,
+        234,
+        242
+      ]
+    ],
+    [
+      364,
+      400,
+      [
+        243,
+        245,
+        250
+      ]
+    ],
+    [
+      400,
+      401,
+      [
+        231,
+        234,
+        242
+      ]
+    ],
+    [
+      401,
+      420,
+      [
+        255,
+        255,
+        255
+      ]
+    ]
+  ],
+  "effective_header_logical": {
+    "requests": {
+      "top": 364,
+      "height": 39,
+      "reference_top": 364,
+      "reference_height": 39
+    },
+    "summary": {
+      "top": 363,
+      "height": 38,
+      "reference_top": 363,
+      "reference_height": 38
+    }
+  },
+  "ink_slots": {
+    "page_title": {
+      "reference": [
+        290,
+        63,
+        394,
+        88
+      ],
+      "current": [
+        290,
+        64,
+        394,
+        89
+      ],
+      "slot": [
+        288,
+        56,
+        650,
+        100
+      ],
+      "target_colour": [
+        22,
+        28,
+        44
+      ]
+    },
+    "page_subtitle": {
+      "reference": [
+        289,
+        110,
+        500,
+        121
+      ],
+      "current": [
+        289,
+        109,
+        500,
+        121
+      ],
+      "slot": [
+        288,
+        100,
+        730,
+        130
+      ],
+      "target_colour": [
+        119,
+        129,
+        150
+      ]
+    }
+  },
+  "scope": "In-memory ICC conversion, dominant flat-fill header bands, and exact-colour non-AA ink boxes only. Native originals untouched. Title ink is1px below reference; subtitle same lower bound with1px differing upper ink. Not full baseline/rasterizer/version or frame equivalence proof."
+}

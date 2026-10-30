@@ -171,7 +171,7 @@ impl Statistics {
             .into_any_element()
     }
 
-    pub(super) fn analysis_cards(&self) -> AnyElement {
+    pub(super) fn analysis_cards(&self, cx: &App) -> AnyElement {
         let summary = self.dashboard.as_ref().map(|dashboard| &dashboard.summary);
         let input = summary.and_then(|summary| summary.input_tokens);
         let output = summary.and_then(|summary| summary.output_tokens);
@@ -212,10 +212,14 @@ impl Statistics {
                             .build(window, cx)
                     })
                     .child(
-                        Label::new(usage_table::compact(total, self.zh))
-                            .text_size(px(32.))
-                            .font_weight(FontWeight::BOLD)
-                            .text_color(rgb(INK)),
+                        crate::studio_fonts::latin(
+                            Label::new(usage_table::compact(total, self.zh)),
+                            cx,
+                        )
+                        .text_size(px(32.))
+                        .line_height(px(45.))
+                        .font_weight(FontWeight::BOLD)
+                        .text_color(rgb(INK)),
                     )
                     .child(caption(
                         self.t("当前范围已记录用量", "Recorded usage in this range"),
@@ -335,8 +339,9 @@ impl Statistics {
                     .items_center()
                     .gap(px(24.))
                     .child(
-                        Label::new(usage_table::percent(cache))
+                        crate::studio_fonts::latin(Label::new(usage_table::percent(cache)), cx)
                             .text_size(px(27.))
+                            .line_height(px(38.))
                             .font_weight(FontWeight::BOLD)
                             .text_color(rgb(INK)),
                     )
@@ -369,8 +374,9 @@ impl Statistics {
                         self.t("已记录用量完整性", "Recorded usage completeness"),
                     ))
                     .child(
-                        Label::new(usage_table::percent(coverage))
+                        crate::studio_fonts::latin(Label::new(usage_table::percent(coverage)), cx)
                             .text_size(px(18.))
+                            .line_height(px(26.))
                             .font_weight(FontWeight::BOLD)
                             .text_color(rgb(if coverage.is_some() { OK } else { MUTED })),
                     ),

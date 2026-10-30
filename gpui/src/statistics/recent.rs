@@ -158,9 +158,14 @@ impl Statistics {
                         .flex_wrap()
                         .gap(px(14.))
                         .child(
-                            Label::new(usage_table::timestamp(row.started_at_ms, self.zh))
-                                .text_size(px(12.))
-                                .text_color(rgb(MUTED)),
+                            crate::studio_fonts::latin(
+                                Label::new(usage_table::timestamp(row.started_at_ms, self.zh)),
+                                cx,
+                            )
+                            .text_size(px(12.))
+                            .line_height(px(17.))
+                            .font_weight(FontWeight::NORMAL)
+                            .text_color(rgb(MUTED)),
                         )
                         .child(
                             Label::new(if row.provider_name.is_empty() {

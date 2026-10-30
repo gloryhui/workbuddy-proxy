@@ -1,0 +1,112 @@
+{
+  "registration": [
+    {
+      "descriptors": 1,
+      "callback_done": 1,
+      "errors": [
+        {
+          "description": "The operation couldn’t be completed. (com.apple.CoreText.CTFontManagerErrorDomain error 303.)",
+          "code": 303
+        }
+      ],
+      "file": "NotoSansSC-Regular.otf",
+      "process_scope": true
+    },
+    {
+      "descriptors": 1,
+      "callback_done": 1,
+      "errors": [
+        {
+          "description": "The operation couldn’t be completed. (com.apple.CoreText.CTFontManagerErrorDomain error 303.)",
+          "code": 303
+        }
+      ],
+      "file": "NotoSansSC-Medium.otf",
+      "process_scope": true
+    },
+    {
+      "descriptors": 1,
+      "callback_done": 1,
+      "errors": [
+        {
+          "description": "The operation couldn’t be completed. (com.apple.CoreText.CTFontManagerErrorDomain error 303.)",
+          "code": 303
+        }
+      ],
+      "file": "NotoSansSC-Bold.otf",
+      "process_scope": true
+    }
+  ],
+  "before_name_cascade": [
+    {
+      "font": "Inter-Regular",
+      "start": 0,
+      "length": 4
+    },
+    {
+      "font": "PingFangSC-Regular",
+      "start": 4,
+      "length": 1
+    }
+  ],
+  "scope": "Headless process-local font parsing and shaping only; no app, window, input or persistent font installation.",
+  "faces": [
+    {
+      "postscript": "NotoSansSC-Regular",
+      "native_weight": 0,
+      "file": "NotoSansSC-Regular.otf",
+      "family": "Noto Sans SC"
+    },
+    {
+      "postscript": "NotoSansSC-Medium",
+      "native_weight": 0.20000000298023224,
+      "file": "NotoSansSC-Medium.otf",
+      "family": "Noto Sans SC"
+    },
+    {
+      "postscript": "NotoSansSC-Bold",
+      "native_weight": 0.4000000059604645,
+      "file": "NotoSansSC-Bold.otf",
+      "family": "Noto Sans SC"
+    },
+    {
+      "postscript": "Inter-Regular",
+      "native_weight": 0,
+      "file": "Inter-Regular.ttf",
+      "family": "Inter"
+    },
+    {
+      "postscript": "Inter-Medium",
+      "native_weight": 0.20000000298023224,
+      "file": "Inter-Medium.ttf",
+      "family": "Inter"
+    },
+    {
+      "postscript": "Inter-SemiBold",
+      "native_weight": 0.30000001192092896,
+      "file": "Inter-SemiBold.ttf",
+      "family": "Inter"
+    },
+    {
+      "postscript": "Inter-Bold",
+      "native_weight": 0.4000000059604645,
+      "file": "Inter-Bold.ttf",
+      "family": "Inter"
+    }
+  ],
+  "after_process_registration_cascade": [
+    {
+      "font": "Inter-Regular",
+      "start": 0,
+      "length": 4
+    },
+    {
+      "font": "PingFangSC-Regular",
+      "start": 4,
+      "length": 1
+    }
+  ],
+  "probe_source": "#import <Foundation/Foundation.h>\n#import <CoreText/CoreText.h>\n#import <CoreGraphics/CoreGraphics.h>\nstatic NSArray *runs(CTFontRef font) {\n    CTFontDescriptorRef original=CTFontCopyFontDescriptor(font);\n    NSDictionary *fallback=@{(__bridge id)kCTFontFamilyNameAttribute:@\"Noto Sans SC\"};\n    NSDictionary *attrs=@{(__bridge id)kCTFontCascadeListAttribute:@[fallback]};\n    CTFontDescriptorRef fallbackDescriptor=CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)fallback);\n    attrs=@{(__bridge id)kCTFontCascadeListAttribute:@[(__bridge id)fallbackDescriptor]};\n    CTFontDescriptorRef desc=CTFontDescriptorCreateCopyWithAttributes(original,(__bridge CFDictionaryRef)attrs);\n    CTFontRef copy=CTFontCreateCopyWithAttributes(font,15,NULL,desc);\n    NSAttributedString *text=[[NSAttributedString alloc] initWithString:@\"14.5万\" attributes:@{(__bridge id)kCTFontAttributeName:(__bridge id)copy}];\n    CTLineRef line=CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)text);\n    NSMutableArray *out=[NSMutableArray array];\n    for(id object in (__bridge NSArray *)CTLineGetGlyphRuns(line)) {\n        CTRunRef run=(__bridge CTRunRef)object;\n        CTFontRef face=CFDictionaryGetValue(CTRunGetAttributes(run),kCTFontAttributeName);\n        CFStringRef name=CTFontCopyPostScriptName(face);CFRange range=CTRunGetStringRange(run);\n        [out addObject:@{@\"font\":(__bridge id)name,@\"start\":@(range.location),@\"length\":@(range.length)}];CFRelease(name);\n    }\n    CFRelease(line);CFRelease(copy);CFRelease(desc);CFRelease(fallbackDescriptor);CFRelease(original);return out;\n}\nint main(int argc,const char **argv) { @autoreleasepool {\n    if(argc!=2)return 2;\n    NSString *dir=[NSString stringWithUTF8String:argv[1]];\n    NSArray *names=@[@\"NotoSansSC-Regular.otf\",@\"NotoSansSC-Medium.otf\",@\"NotoSansSC-Bold.otf\",@\"Inter-Regular.ttf\",@\"Inter-Medium.ttf\",@\"Inter-SemiBold.ttf\",@\"Inter-Bold.ttf\"];\n    NSMutableArray *fonts=[NSMutableArray array],*faces=[NSMutableArray array];\n    for(NSString *name in names) {\n        NSData *data=[NSData dataWithContentsOfFile:[dir stringByAppendingPathComponent:name]];if(!data)return 3;\n        CGDataProviderRef provider=CGDataProviderCreateWithCFData((__bridge CFDataRef)data);CGFontRef graphics=CGFontCreateWithDataProvider(provider);if(!graphics)return 4;\n        CTFontRef font=CTFontCreateWithGraphicsFont(graphics,15,NULL,NULL);\n        CFStringRef family=CTFontCopyFamilyName(font),postscript=CTFontCopyPostScriptName(font);CFDictionaryRef traits=CTFontCopyTraits(font);\n        [faces addObject:@{@\"file\":name,@\"family\":(__bridge id)family,@\"postscript\":(__bridge id)postscript,@\"native_weight\":((__bridge NSDictionary *)traits)[(__bridge id)kCTFontWeightTrait]}];\n        [fonts addObject:(__bridge id)font];CFRelease(traits);CFRelease(postscript);CFRelease(family);CFRelease(font);CGFontRelease(graphics);CGDataProviderRelease(provider);\n    }\n    NSArray *before=runs((__bridge CTFontRef)fonts[3]);NSMutableArray *registration=[NSMutableArray array];\n    for(NSString *name in [names subarrayWithRange:NSMakeRange(0,3)]) {\n        NSData *data=[NSData dataWithContentsOfFile:[dir stringByAppendingPathComponent:name]];\n        CFArrayRef descriptors=CTFontManagerCreateFontDescriptorsFromData((__bridge CFDataRef)data);\n        CFIndex count=descriptors?CFArrayGetCount(descriptors):0;\n        dispatch_semaphore_t sem=dispatch_semaphore_create(0);\n        __block NSMutableArray *errors=[NSMutableArray array];\n        if(count)CTFontManagerRegisterFontDescriptors(descriptors,kCTFontManagerScopeProcess,true,^bool(CFArrayRef es,bool done) {\n            for(id e in (__bridge NSArray *)es) [errors addObject:@{@\"code\":@(((NSError *)e).code),@\"description\":((NSError *)e).localizedDescription}];\n            if(done)dispatch_semaphore_signal(sem);return true;\n        });\n        long wait=count?dispatch_semaphore_wait(sem,dispatch_time(DISPATCH_TIME_NOW,3*NSEC_PER_SEC)):-1;\n        [registration addObject:@{@\"file\":name,@\"process_scope\":@YES,@\"descriptors\":@(count),@\"callback_done\":@(wait==0),@\"errors\":errors}];if(descriptors)CFRelease(descriptors);\n    }\n    NSArray *after=runs((__bridge CTFontRef)fonts[3]);NSDictionary *result=@{@\"faces\":faces,@\"before_name_cascade\":before,@\"after_process_registration_cascade\":after,@\"registration\":registration,@\"scope\":@\"Headless process-local font parsing and shaping only; no app, window, input or persistent font installation.\"};\n    NSData *json=[NSJSONSerialization dataWithJSONObject:result options:NSJSONWritingPrettyPrinted error:NULL];fwrite(json.bytes,1,json.length,stdout);puts(\"\");\n}return 0;}\n",
+  "probe_source_sha256": "1dc8ab498269bfb635f9b42d6b466bdd8fd79fe98c0f683e0e4f23638c9f8ebd",
+  "reproduce": "Write probe_source to a temporary .m file; compile with clang -fobjc-arc -framework Foundation -framework CoreText -framework CoreGraphics; pass the absolute path to gpui/assets/fonts as the sole program argument. No app/window is created."
+}

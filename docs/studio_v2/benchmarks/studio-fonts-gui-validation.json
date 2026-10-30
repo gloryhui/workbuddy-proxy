@@ -1,0 +1,364 @@
+{
+  "candidate_sha256": "a51d7d02dd3ab5f69b5c9b891511b355ac65ff42c371807e76d6c9f719c636f1",
+  "ui_pid": 8592,
+  "core_pid": 8347,
+  "capture": "native screencapture; own PID onscreen layer0 window ID; no crop or scale",
+  "resize": "CUA drag [1438,899] to [1098,699] and reverse",
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-details-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "e6d382be85bbd4669a219403b77d4c99c51c74dc3abc374c891318a6f726be83",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-details-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-overview-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "a92b140a336a860adc9de7a5022bdc7097b750b92986476ee4f356aaa4f9bb24",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-overview-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-summary-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "1cadc7565821fe5980213ac49c35821b333262b3656b37acd90f4ce5a213a586",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-summary-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-details-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "6a7fa6fb23baf5e68a5a6b8985953685b6a5094c6e5529b07982e64e116a3e19",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-details-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-overview-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "72b5566c1bba43517f30873d87f5b5994b5036b1044280de15d80e10709cff59",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-overview-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-summary-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "a34cf203535fe3bd387e2daf08f5a664a26b2d198160ad9a1029abea293b53eb",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-summary-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-summary-popup-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "818f16d41b30f0555a7a6a8c4a918c0f389cbeefb1a642d778b05a10c391ba73",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-summary-popup-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-summary-cards-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "8ec28b477b7ef1f1697f2e1b4d0ef2d2e512edf829d13bd6aff7e47fb6dd2ae1",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-summary-cards-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-mono-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "e3289d45d029f517ff8ec99755b17080a9f3c77277dc1f8ff107b9a01abb8cc3",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-mono-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-blue-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "5a22d4ee5aaf3602d3d7b05d663df96bdc4d5d787ae3ee2e2a10fdaa2b93fab0",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-blue-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-studio-restored-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "8ec28b477b7ef1f1697f2e1b4d0ef2d2e512edf829d13bd6aff7e47fb6dd2ae1",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-studio-restored-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-providers-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "944b4b2de8033f01ef81cf6b608a8a514494d716abffeab717a6154be8c23d41",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-providers-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-providers-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "8725d095e52065aae6db436d8116ff98e9eb7d373732c11ef4b3803e37ff641d",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-providers-1100x700-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-model-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "2b046e1a821763b71d0016e5fa18d22f4931217edd3b7d08726633848f376293",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-model-1440x900-native-1x.png"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/fonts-model-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "f9b51d8b0b2de80dc3995326aa4690fa513584c28a27f4665e4c056a3f12ad93",
+      "window_id": 2001,
+      "artifact": "screenshots/studio-fonts-model-1100x700-native-1x.png"
+    }
+  ],
+  "observed": {
+    "statistics": "22 records, 12100 total / 11000 input / 1100 output, 100% success, unknown cache; 1.21万 and 1.10万 visibly legible; provider 2, model 5; range popup 22 and 1.21万",
+    "filter": "gpt-6 selected via Down/Return yielded 3, restored All 22",
+    "small": "rightmost table columns reached and Token/cache cards reached by scrolling",
+    "skins": "Mono, Blue, Wisteria, Rose, Amber, Teal each clicked and visually inspected; Studio restored, menu closed; visible Chinese/Latin retained",
+    "provider_model": "Studio provider and DeepSeek model editor inspected at both sizes; visible labels, numbers and buttons legible, small editor lower fields outside viewport, modal scrolling not tested; no save or confirmation; Esc cancels"
+  },
+  "limitations": [
+    "亿 and other languages not tested",
+    "Small table truncates long names with ellipsis; small modal does not show every field simultaneously",
+    "No explicit activation/raise; actual foreground state not established",
+    "No full accessibility, IME, protocol or platform coverage; cannot infer exact fallback font from pixels"
+  ],
+  "lifecycle": "CUA native close invoked for UI8592; Core left to parent; no exit code/wait claimed",
+  "independent_runtime": {
+    "pre": {
+      "ready": {
+        "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/WorkBuddy Proxy Review.app",
+        "bundle_id": "com.workbuddy.proxy.codexreview.tfonts-enum-native",
+        "core_pid": 8347,
+        "port": 64110
+      },
+      "core_proof": {
+        "enforced": true,
+        "pid": 8347,
+        "sandboxed": true,
+        "protected_permissions": {
+          "workbuddy": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_macos": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "proxy_unix": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          },
+          "installed_app": {
+            "file-read-data": [
+              1,
+              1
+            ],
+            "file-write-data": [
+              1,
+              1
+            ],
+            "file-write-create": [
+              1,
+              1
+            ],
+            "file-write-unlink": [
+              1,
+              1
+            ]
+          }
+        },
+        "synthetic_permissions": {
+          "file-read-data": 0,
+          "file-write-data": 0,
+          "file-write-create": 0,
+          "file-write-unlink": 0
+        },
+        "protected_root_exists": {
+          "workbuddy": true,
+          "proxy_macos": true,
+          "proxy_unix": false,
+          "installed_app": true
+        },
+        "method": "sandbox_check permission queries, no protected file I/O",
+        "launchagents_permissions": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "core_config_sha256_before": "3bd7d9a91f41cae5e3d1f40aad1c2b4047b1bfe1ac485ced874fab2ed3d8d346",
+      "seed": {
+        "real_http_requests": 22,
+        "statuses": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "counts": [
+          22,
+          11000,
+          1100,
+          12100,
+          200,
+          200
+        ]
+      },
+      "ui_sha256": "a51d7d02dd3ab5f69b5c9b891511b355ac65ff42c371807e76d6c9f719c636f1",
+      "isolation": "Core kernel protected; GUI unique bundle and LSEnvironment only. Synthetic real loopback responses, no direct DB writes."
+    },
+    "runtime_manifest": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-enum-native/WorkBuddy Proxy Review.app",
+      "core_pid": 8347,
+      "ui_pid": 8592,
+      "fixture_pid": 8343,
+      "port": 64110,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tfonts-enum-native",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 8592,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "a51d7d02dd3ab5f69b5c9b891511b355ac65ff42c371807e76d6c9f719c636f1"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 5,
+        "requests": 0
+      },
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "post": {
+      "checked_at": "2026-10-30T22:11:08.288607+08:00",
+      "ui_pid": 8592,
+      "ui_pid_gone": true,
+      "ui_exit_code": null,
+      "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+      "core_pid": 8347,
+      "core_after_ui_closed": {
+        "http_status": 200,
+        "stats_health": "ready",
+        "config_sha256_unchanged": true,
+        "counts": [
+          22,
+          11000,
+          1100,
+          12100,
+          200,
+          200
+        ]
+      }
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    },
+    "fixture_exit_code": 0,
+    "all_recorded_pids_gone": true,
+    "appearance_after": {
+      "version": 1,
+      "skin": "studio_indigo"
+    }
+  },
+  "scope": "Final a51 native1x only. UI kernel isolation not claimed; Core protected. GUI glyph legibility/visible layout/theme switching checked, actual per-glyph font PostScript identity and exact Figma font-version equality not observed. Model small lower fields not scrolled this round."
+}

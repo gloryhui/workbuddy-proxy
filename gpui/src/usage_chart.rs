@@ -345,7 +345,7 @@ impl Plot for UsagePlot {
         let width = rect.size.width.as_f32();
         let height = rect.size.height.as_f32();
         let grid = rgb(0xeff2f6);
-        let muted = rgb(0x8591a2);
+        let muted = rgb(crate::theme::color::TEXT_4);
 
         // Horizontal grid plus value labels.
         let mut labels = Vec::new();
@@ -384,13 +384,14 @@ impl Plot for UsagePlot {
         }
 
         // X axis labels: at most eight, never overlapping by construction.
+        let mut date_labels = Vec::new();
         let count = self.points.len();
         if count > 0 {
             let show_date =
                 self.points.last().unwrap().end_ms - self.points[0].start_ms > 36 * 3_600_000;
             for index in tick_indices(count, width) {
                 let x = Self::x_for(&self.points, &rect, index);
-                labels.push(
+                date_labels.push(
                     PlotText::new(
                         bucket_label(&self.points[index], show_date),
                         point(px(x), px(height + 6.)),
@@ -408,6 +409,22 @@ impl Plot for UsagePlot {
             window,
             cx,
         );
+        // Figma52:2 uses Inter Regular for dates, and Noto for the value axis.
+        // Scoping the native painter preserves its grid, scaling and series.
+        let date_style = crate::studio_fonts::latin_style(cx).map(|mut style| {
+            style.font_weight = Some(FontWeight::NORMAL);
+            style
+        });
+        window.with_text_style(date_style, |window| {
+            PlotLabel::new(date_labels).paint(
+                &Bounds {
+                    origin: rect.origin,
+                    size: rect.size,
+                },
+                window,
+                cx,
+            );
+        });
 
         if ymax.is_none() {
             return;

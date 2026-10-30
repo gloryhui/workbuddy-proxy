@@ -9,6 +9,7 @@ fn navigation(
     icon: &'static str,
     label: &'static str,
     active: bool,
+    line_height: f32,
     cx: &App,
 ) -> Button {
     Button::new(id)
@@ -57,7 +58,12 @@ fn navigation(
                 .child(
                     Label::new(label)
                         .text_size(px(13.))
-                        .font_weight(FontWeight::SEMIBOLD)
+                        .line_height(px(line_height))
+                        .font_weight(if active {
+                            FontWeight::BOLD
+                        } else {
+                            FontWeight::MEDIUM
+                        })
                         .text_color(rgb(if active {
                             color::SIDEBAR_TEXT
                         } else {
@@ -241,8 +247,9 @@ impl Proxy {
                                     .min_w_0()
                                     .text_ellipsis()
                                     .text_size(px(13.))
+                                    .line_height(px(18.))
                                     .font_weight(if active {
-                                        FontWeight::SEMIBOLD
+                                        FontWeight::BOLD
                                     } else {
                                         FontWeight::MEDIUM
                                     })
@@ -256,6 +263,8 @@ impl Proxy {
                             .child(
                                 Label::new(models.to_string())
                                     .text_size(px(12.))
+                                    .line_height(px(17.))
+                                    .font_weight(FontWeight::MEDIUM)
                                     .text_color(rgb(color::SIDEBAR_MUTED)),
                             ),
                     )
@@ -293,11 +302,14 @@ impl Proxy {
                         Label::new("WorkBuddy")
                             .text_color(rgb(color::SIDEBAR_TEXT))
                             .text_size(px(17.))
+                            .line_height(px(24.))
                             .font_weight(FontWeight::BOLD),
                     )
                     .child(
-                        Label::new("PROXY · DESKTOP")
+                        crate::studio_fonts::latin(Label::new("PROXY · DESKTOP"), cx)
                             .text_size(px(10.))
+                            .line_height(px(14.))
+                            .font_weight(FontWeight::MEDIUM)
                             .text_color(rgb(color::SIDEBAR_MUTED)),
                     ),
             );
@@ -314,6 +326,7 @@ impl Proxy {
                     "studio/nav-chart.svg",
                     self.t("数据统计", "Statistics"),
                     self.page == Page::Statistics && !settings,
+                    19.,
                     cx,
                 )
                 .on_click(cx.listener(|this, _, window, cx| {
@@ -328,6 +341,7 @@ impl Proxy {
                     "studio/nav-server.svg",
                     self.t("供应商管理", "Providers"),
                     self.page == Page::Providers,
+                    19.,
                     cx,
                 )
                 .on_click(cx.listener(|this, _, window, cx| {
@@ -342,6 +356,7 @@ impl Proxy {
                     "studio/nav-settings.svg",
                     self.t("统计设置", "Statistics settings"),
                     self.page == Page::Statistics && settings,
+                    18.,
                     cx,
                 )
                 .on_click(cx.listener(|this, _, window, cx| {
@@ -384,7 +399,8 @@ impl Proxy {
                                         Label::new(self.t("供应商", "Providers"))
                                             .text_color(rgb(color::SIDEBAR_TEXT))
                                             .text_size(px(13.))
-                                            .font_weight(FontWeight::SEMIBOLD),
+                                            .line_height(px(18.))
+                                            .font_weight(FontWeight::BOLD),
                                     )
                                     .child(
                                         Icon::new(if self.providers_expanded {
@@ -413,6 +429,8 @@ impl Proxy {
                             )
                         })
                         .text_size(px(12.))
+                        .line_height(px(17.))
+                        .font_weight(FontWeight::MEDIUM)
                         .text_color(rgb(color::SIDEBAR_MUTED)),
                     ),
             )
@@ -482,8 +500,10 @@ impl Proxy {
                     .bg(rgb(color::SIDEBAR_LINE)),
             )
             .child(
-                Label::new("WORKSPACE")
+                crate::studio_fonts::latin(Label::new("WORKSPACE"), cx)
                     .text_size(px(10.))
+                    .line_height(px(14.))
+                    .font_weight(FontWeight::SEMIBOLD)
                     .text_color(rgb(color::SIDEBAR_MUTED))
                     .mt(px(24.))
                     .ml(px(10.))
@@ -493,13 +513,18 @@ impl Proxy {
             .child(providers)
             .child(self.sidebar_relay(compact, cx))
             .child(
-                Label::new(format!("v{}  ·  RUST / GPUI", env!("CARGO_PKG_VERSION")))
-                    .text_size(px(10.))
-                    .text_color(rgb(color::SIDEBAR_MUTED))
-                    .flex_shrink_0()
-                    .h(px(20.))
-                    .mt(px(if compact { 12. } else { 26. }))
-                    .ml(px(8.)),
+                crate::studio_fonts::latin(
+                    Label::new(format!("v{}  ·  RUST / GPUI", env!("CARGO_PKG_VERSION"))),
+                    cx,
+                )
+                .text_size(px(10.))
+                .line_height(px(14.))
+                .font_weight(FontWeight::MEDIUM)
+                .text_color(rgb(color::SIDEBAR_MUTED))
+                .flex_shrink_0()
+                .h(px(20.))
+                .mt(px(if compact { 12. } else { 26. }))
+                .ml(px(8.)),
             )
             .into_any_element()
     }
@@ -627,7 +652,8 @@ impl Proxy {
                         Label::new(self.t("本地代理", "Local relay"))
                             .text_color(rgb(color::SIDEBAR_TEXT))
                             .text_size(px(12.))
-                            .font_weight(FontWeight::SEMIBOLD)
+                            .line_height(px(17.))
+                            .font_weight(FontWeight::BOLD)
                             .flex_1()
                             .min_w_0()
                             .text_ellipsis(),
@@ -643,6 +669,8 @@ impl Proxy {
                             .child(
                                 Label::new(status)
                                     .text_size(px(11.))
+                                    .line_height(px(16.))
+                                    .font_weight(FontWeight::MEDIUM)
                                     .text_color(rgb(color::SIDEBAR_TEXT)),
                             ),
                     ),
@@ -669,9 +697,11 @@ impl Proxy {
                             .w_full()
                             .min_w_0()
                             .child(
-                                Label::new(address.to_owned())
+                                crate::studio_fonts::latin(Label::new(address.to_owned()), cx)
                                     .text_color(rgb(color::SIDEBAR_TEXT))
                                     .text_size(px(13.))
+                                    .line_height(px(19.))
+                                    .font_weight(FontWeight::MEDIUM)
                                     .flex_1()
                                     .min_w_0()
                                     .text_ellipsis(),

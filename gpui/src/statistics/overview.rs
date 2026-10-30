@@ -11,6 +11,16 @@ struct Card {
     hint: String,
     exact: String,
 }
+
+struct PrimaryMetric {
+    label: &'static str,
+    value: String,
+    hint: String,
+    exact: String,
+    icon: &'static str,
+    font_size: f32,
+    line_height: f32,
+}
 fn text(zh: bool, cn: &'static str, en: &'static str) -> &'static str {
     if zh { cn } else { en }
 }
@@ -232,15 +242,16 @@ fn spark_heights(samples: &[Option<i64>]) -> Vec<Option<f32>> {
 }
 
 impl Statistics {
-    fn primary_metric(
-        &self,
-        label: &'static str,
-        value: String,
-        hint: String,
-        exact: String,
-        icon: &'static str,
-        width: f32,
-    ) -> AnyElement {
+    fn primary_metric(&self, metric: PrimaryMetric, width: f32, cx: &App) -> AnyElement {
+        let PrimaryMetric {
+            label,
+            value,
+            hint,
+            exact,
+            icon,
+            font_size,
+            line_height,
+        } = metric;
         div()
             .id(icon)
             .w(px(width))
@@ -271,15 +282,28 @@ impl Statistics {
                             .with_size(px(18.))
                             .text_color(rgb(crate::theme::palette().primary)),
                     )
-                    .child(Label::new(label).text_size(px(12.)).text_color(rgb(MUTED))),
+                    .child(
+                        Label::new(label)
+                            .text_size(px(12.))
+                            .line_height(px(17.))
+                            .font_weight(FontWeight::MEDIUM)
+                            .text_color(rgb(MUTED)),
+                    ),
             )
             .child(
-                Label::new(value)
-                    .text_size(px(34.))
+                crate::studio_fonts::latin(Label::new(value), cx)
+                    .text_size(px(font_size))
+                    .line_height(px(line_height))
                     .font_weight(FontWeight::BOLD)
                     .text_color(rgb(INK)),
             )
-            .child(Label::new(hint).text_size(px(11.)).text_color(rgb(MUTED)))
+            .child(
+                Label::new(hint)
+                    .text_size(px(11.))
+                    .line_height(px(16.))
+                    .font_weight(FontWeight::MEDIUM)
+                    .text_color(rgb(MUTED)),
+            )
             .into_any_element()
     }
 
@@ -406,8 +430,10 @@ impl Statistics {
             })
             .child(
                 div().flex().items_center().justify_between().child(
-                    Label::new("TOKEN VOLUME")
+                    crate::studio_fonts::latin(Label::new("TOKEN VOLUME"), cx)
                         .text_size(px(11.))
+                        .line_height(px(16.))
+                        .font_weight(FontWeight::SEMIBOLD)
                         .text_color(rgb(crate::theme::color::TERMINAL_TEXT)),
                 ),
             )
@@ -417,9 +443,9 @@ impl Statistics {
                     .items_end()
                     .gap(px(14.))
                     .child(
-                        Label::new(amount.to_string())
+                        crate::studio_fonts::latin(Label::new(amount.to_string()), cx)
                             .text_size(px(47.))
-                            .line_height(px(58.))
+                            .line_height(px(67.))
                             .font_weight(FontWeight::BOLD)
                             .text_color(rgb(crate::theme::color::WHITE)),
                     )
@@ -501,32 +527,47 @@ impl Statistics {
         }
         let metrics = div().flex().gap(px(METRIC_GAP as f32)).children([
             self.primary_metric(
-                self.t("用量记录", "Usage records"),
-                summary_cards[0].value.clone(),
-                summary_cards[0].hint.clone(),
-                summary_cards[0].exact.clone(),
-                "studio/kpi-grid.svg",
+                PrimaryMetric {
+                    label: self.t("用量记录", "Usage records"),
+                    value: summary_cards[0].value.clone(),
+                    hint: summary_cards[0].hint.clone(),
+                    exact: summary_cards[0].exact.clone(),
+                    icon: "studio/kpi-grid.svg",
+                    font_size: 34.,
+                    line_height: 49.,
+                },
                 metric_width,
+                cx,
             ),
             self.primary_metric(
-                self.t("代理成功率", "Proxy success rate"),
-                summary_cards[1].value.clone(),
-                self.t("仅统计代理请求", "Proxy requests only").into(),
-                summary_cards[1].exact.clone(),
-                "studio/kpi-shield.svg",
+                PrimaryMetric {
+                    label: self.t("代理成功率", "Proxy success rate"),
+                    value: summary_cards[1].value.clone(),
+                    hint: self.t("仅统计代理请求", "Proxy requests only").into(),
+                    exact: summary_cards[1].exact.clone(),
+                    icon: "studio/kpi-shield.svg",
+                    font_size: 27.,
+                    line_height: 39.,
+                },
                 metric_width,
+                cx,
             ),
             self.primary_metric(
-                self.t("缓存命中率", "Cache hit rate"),
-                usage_table::percent(summary.cache_hit_rate),
-                format!(
-                    "{} {}",
-                    self.t("缓存读取", "Cache read"),
-                    usage_table::compact(summary.cache_read_tokens, self.zh)
-                ),
-                summary_cards[3].exact.clone(),
-                "studio/kpi-activity.svg",
+                PrimaryMetric {
+                    label: self.t("缓存命中率", "Cache hit rate"),
+                    value: usage_table::percent(summary.cache_hit_rate),
+                    hint: format!(
+                        "{} {}",
+                        self.t("缓存读取", "Cache read"),
+                        usage_table::compact(summary.cache_read_tokens, self.zh)
+                    ),
+                    exact: summary_cards[3].exact.clone(),
+                    icon: "studio/kpi-activity.svg",
+                    font_size: 34.,
+                    line_height: 49.,
+                },
                 metric_width,
+                cx,
             ),
         ]);
         div()

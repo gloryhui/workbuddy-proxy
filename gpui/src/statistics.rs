@@ -2362,6 +2362,8 @@ impl Statistics {
                             .child(
                                 Label::new(self.range.title(self.zh))
                                     .text_size(px(12.))
+                                    .line_height(px(17.))
+                                    .font_weight(FontWeight::MEDIUM)
                                     .text_color(rgb(crate::theme::color::TEXT_2)),
                             )
                             .child(source_controls::caret_spacer()),
@@ -2416,7 +2418,7 @@ impl Statistics {
                     .rounded(px(10.))
                     .child(
                         div().w_full().flex().items_center().justify_between().gap(px(6.))
-                            .child(Label::new(label).text_size(px(12.)).text_color(rgb(crate::theme::color::TEXT_2)))
+                            .child(Label::new(label).text_size(px(12.)).line_height(px(17.)).font_weight(FontWeight::MEDIUM).text_color(rgb(crate::theme::color::TEXT_2)))
                             .child(source_controls::caret_spacer()),
                     )
                     .tooltip(self.t(
@@ -2815,6 +2817,7 @@ impl Statistics {
                                     .child(
                                         Label::new(self.t("请求记录", "Request records"))
                                             .text_size(px(17.))
+                                            .line_height(px(24.))
                                             .font_weight(FontWeight::BOLD)
                                             .text_color(rgb(INK)),
                                     )
@@ -2837,6 +2840,7 @@ impl Statistics {
                         .mb(px(10.))
                         .text_ellipsis()
                         .text_size(px(12.))
+                        .line_height(px(17.))
                         .text_color(rgb(MUTED)),
                     )
             })

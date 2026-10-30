@@ -57,3 +57,6 @@ UI53 全帧审查与原生能力控件：BaseCheckbox/Indicator继续使用Kit�
 
 
 统计共享控件与布局（UI56）：最终b313仅Rust/GPUI布局，Core/查询/原事件保持。四caret实际区域点击、模型方向/Enter筛选3/供应商12后恢复14、日期Today→7天/刷新Off→5、Jump/Prev及5秒设置下7.5秒未提交页码保留、Summary供应商2/模型5/原生范围浮层14记录7700Token、小窗内部滚动与右侧列、侧栏选中及回到供应商路由通过。两尺寸原生1×七图、编译门禁与六轮原负载均留证。UI由CUA原生Close/PID消失验证，Core随后health200/配置不变并正常退出。b313条数按钮完整键盘焦点未可靠观察；自动刷新实际响应/窗口active未独立测，1px明细表头、字体/完整IME/AX/跨平台仍待验；不能将中间40a或后续字体候选证据混作本版通过。
+
+
+Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重/许可证已查，Studio首次加载一次、Noto主字体/Inter已检查角色及process-local CJK named cascade、默认Mono/六旧键和旧native sans恢复路径保留。最终a51两尺寸三统计页/万单位/六皮肤与供应商/模型可见区抽查、195tests193pass2ignored及strictclippy/Inteltypecheck/release、四轮原负载通过专项验证；初始edb六轮和204ms marker增量保留，删除重复全族枚举后复测，不冒称因果优化。Core配置未变、UI关闭后Core200，再Core/fixture wait0，GUI所有PID消失。实际每字形PS身份/Figma字体版本、亿UI、模型小窗下方字段/其他协议完整状态/所有40帧/完整IME/AX/Windows与Intel硬件/HiDPI仍未验。准确范围和启动/RSS/文件尺寸成本见QA57。

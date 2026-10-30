@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-30T22:12:39.843483+08:00",
+  "deleted_this_round": [],
+  "freed_bytes": 0,
+  "retained": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+      "files": 64,
+      "allocated_bytes": 84140032
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr",
+      "files": 207,
+      "allocated_bytes": 290770944
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "files": 572,
+      "allocated_bytes": 948482048
+    }
+  ],
+  "retained_allocated_bytes": 1323393024,
+  "system_volume_free_bytes": 45083521024,
+  "scope": "Read-only inventory of current owned round48 and reused baselines46/47. Not an inventory of every system temporary file. Core/mock children and both GUI fixtures are stopped; source snapshots, raw intermediate captures and frozen candidates retained as necessary evidence and for later frame comparison. Shared Cargo/UV caches unchanged.",
+  "prior_rejected_targets": [
+    "studio-v2-round46.wyah2h0f",
+    "studio-v2-round47.l5v17qlr",
+    "studio-v2-round48.g8914rm5/Inter-4.1.zip"
+  ],
+  "policy_note": "Earlier precise cleanup rejected: approval required by policy, but AskForApproval is set to Never. No rejected target, alternate method or parent deletion retried. Existing studio-fonts-cleanup.json retains original preflight/refusal."
+}

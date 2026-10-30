@@ -1,0 +1,34 @@
+{
+  "checked_at": "2026-10-30T20:08:28.302448+08:00",
+  "compile_command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "gpui/Cargo.toml",
+    "--target",
+    "x86_64-apple-darwin",
+    "--release",
+    "--locked",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "compile_exit": 0,
+  "compile_seconds": 21.15,
+  "compile_stderr": "   Compiling workbuddy-proxy-gpui v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/gpui)\n    Finished `release` profile [optimized] target(s) in 21.11s\nwarning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n",
+  "test_artifacts": [
+    "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/x86_64-apple-darwin/release/deps/workbuddy_proxy_gpui-b345f7593752f4d0"
+  ],
+  "run_command": [
+    "/usr/bin/arch",
+    "-x86_64",
+    "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/x86_64-apple-darwin/release/deps/workbuddy_proxy_gpui-b345f7593752f4d0",
+    "studio_fonts::macos::tests::embedded_cjk_faces_resolve_by_name_after_registration_and_duplicate_registration",
+    "--exact",
+    "--nocapture"
+  ],
+  "run_exit": 0,
+  "run_stdout": "\nrunning 1 test\ntest studio_fonts::macos::tests::embedded_cjk_faces_resolve_by_name_after_registration_and_duplicate_registration ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 194 filtered out; finished in 0.09s\n\n",
+  "run_stderr": "",
+  "test_sha256": "6177e1e8914f9ae8f05d0e2bdf035c87a44e180b223683c0891ccc1c96d32827",
+  "scope": "Only the headless embedded-font registration/name/CJK-glyph test was executed under Rosetta. No native Intel hardware or window/UI acceptance claimed."
+}

@@ -322,6 +322,8 @@ impl Statistics {
             .border_color(rgb(BORDER))
             .text_color(rgb(crate::theme::color::TEXT_2))
             .text_size(px(12.))
+            .line_height(px(17.))
+            .font_weight(FontWeight::MEDIUM)
             .accessibility_label(label)
             .into_any_element();
         caret_surface(control)

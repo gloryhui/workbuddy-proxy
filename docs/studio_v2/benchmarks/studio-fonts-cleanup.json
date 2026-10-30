@@ -1,0 +1,70 @@
+{
+  "checked_at": "2026-10-30T20:03:27.785606+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/Inter-4.1.zip",
+  "type": "regular downloaded release ZIP",
+  "owner_uid": 501,
+  "nlink": 1,
+  "bytes": 33707794,
+  "allocated_bytes": 33710080,
+  "sha256": "9883fdd4a49d4fb66bd8177ba6625ef9a64aa45899767dde3d36aa425756b11e",
+  "parents": [
+    {
+      "path": "/",
+      "symlink": false,
+      "device": 16777233,
+      "mount": true
+    },
+    {
+      "path": "/private",
+      "symlink": false,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "symlink": false,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "symlink": false,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "symlink": false,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "symlink": false,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "symlink": false,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "symlink": false,
+      "device": 16777233,
+      "mount": false
+    }
+  ],
+  "lsof_exit": 1,
+  "open_references": false,
+  "project": "WorkBuddy Studio V2 font integration",
+  "reproducible": "Pinned public Inter4.1 archive URL and SHA256 recorded; all4 selected original faces and license copied and rehashed in repo; no unique user data.",
+  "purpose": "Delete only this duplicate distribution archive; preserve fonts, licenses, native probes, frozen candidates and fixture evidence.",
+  "result": "denied_by_automatic_approval_policy",
+  "rejection": "approval required by policy, but AskForApproval is set to Never",
+  "target_still_exists": true,
+  "freed_bytes": 0,
+  "no_equivalent_retry": true
+}

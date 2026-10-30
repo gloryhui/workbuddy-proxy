@@ -34,6 +34,7 @@ mod stats_controller;
 #[allow(dead_code)]
 #[path = "../../src/stats/dto.rs"]
 mod stats_dto;
+mod studio_fonts;
 mod theme;
 mod ui;
 mod ui_components;

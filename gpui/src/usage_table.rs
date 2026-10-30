@@ -384,16 +384,69 @@ pub fn cost_hint(status: CostStatus, zh: bool) -> String {
     }
 }
 
+/// Text roles from Figma56:8/57:8. Keep names and localized explanations in
+/// Noto; only the explicitly Latin/number roles use the embedded Inter faces.
+#[derive(Clone, Copy)]
+enum CellFont {
+    Header,
+    Body,
+    Timestamp,
+    Latency,
+    GroupName,
+    GroupCount,
+    Ratio,
+    TokenTotal,
+    Breakdown,
+}
+
+fn table_label(text: impl Into<SharedString>, role: CellFont, color: u32, cx: &App) -> Label {
+    let (size, leading, weight, latin) = match role {
+        CellFont::Header => (11., 16., FontWeight::MEDIUM, false),
+        CellFont::Body => (12., 17., FontWeight::MEDIUM, false),
+        CellFont::Timestamp => (11., 16., FontWeight::MEDIUM, true),
+        CellFont::Latency => (12., 17., FontWeight::NORMAL, false),
+        CellFont::GroupName => (13., 18., FontWeight::MEDIUM, false),
+        CellFont::GroupCount => (12., 17., FontWeight::SEMIBOLD, true),
+        CellFont::Ratio => (12., 17., FontWeight::MEDIUM, true),
+        CellFont::TokenTotal => (15., 21., FontWeight::BOLD, true),
+        CellFont::Breakdown => (11., 16., FontWeight::NORMAL, false),
+    };
+    let label = Label::new(text)
+        .text_size(px(size))
+        .line_height(px(leading))
+        .font_weight(weight)
+        .text_color(rgb(color));
+    if latin {
+        crate::studio_fonts::latin(label, cx)
+    } else {
+        label
+    }
+}
+
+fn header_cell(title: SharedString, cx: &App) -> Div {
+    div()
+        .size_full()
+        .min_w_0()
+        .overflow_hidden()
+        .flex()
+        .items_center()
+        .child(
+            table_label(title, CellFont::Header, crate::theme::color::TEXT_3, cx)
+                .w_full()
+                .text_ellipsis(),
+        )
+}
+
 /// Single-line cell with an ellipsis and an optional hover tooltip.
 fn cell(
     primary: String,
     hint: Option<String>,
     color: u32,
     id: (&'static str, usize),
+    font: CellFont,
+    cx: &App,
 ) -> AnyElement {
-    let text = Label::new(primary)
-        .text_size(px(crate::theme::font::BODY))
-        .text_color(rgb(color))
+    let text = table_label(primary, font, color, cx)
         .w_full()
         .text_ellipsis();
     div()
@@ -414,7 +467,7 @@ fn cell(
 }
 
 /// Studio V2 keeps totals and the input/output split in their own column.
-fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+fn token_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElement {
     if is_charge(item) {
         return cell(
             if zh { "Token 不适用" } else { "Tokens N/A" }.into(),
@@ -428,6 +481,8 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
             ),
             crate::theme::color::TEXT_3,
             ("usage-tokens", row),
+            CellFont::Body,
+            cx,
         );
     }
     let hint = format!(
@@ -448,24 +503,31 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
         .flex()
         .flex_col()
         .justify_center()
-        .gap(px(3.))
+        .gap_0()
         .tooltip(move |window, cx| {
             gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
         })
         .child(
-            Label::new(compact(item.total_tokens, zh))
-                .w_full()
-                .text_ellipsis()
-                .text_size(px(15.))
-                .font_weight(FontWeight::BOLD)
-                .text_color(rgb(crate::theme::color::TEXT_1)),
+            table_label(
+                compact(item.total_tokens, zh),
+                CellFont::TokenTotal,
+                crate::theme::color::TEXT_1,
+                cx,
+            )
+            .w_full()
+            .text_ellipsis(),
         )
         .child(
-            muted(format!(
-                "↓ {}  ↑ {}",
-                compact(item.input_tokens, zh),
-                compact(item.output_tokens, zh)
-            ))
+            table_label(
+                format!(
+                    "↓ {}  ↑ {}",
+                    compact(item.input_tokens, zh),
+                    compact(item.output_tokens, zh)
+                ),
+                CellFont::Breakdown,
+                crate::theme::color::TEXT_3,
+                cx,
+            )
             .w_full()
             .text_ellipsis(),
         )
@@ -473,13 +535,15 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
 }
 
 /// Ratios are calculated only from compatible, known normalized counters.
-fn cache_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+fn cache_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElement {
     if is_charge(item) {
         return cell(
             "—".into(),
             None,
             crate::theme::color::TEXT_3,
             ("usage-cache", row),
+            CellFont::Body,
+            cx,
         );
     }
     let hit = cache_rate(item.cache_read_tokens, item.input_tokens);
@@ -532,17 +596,13 @@ fn cache_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
                     )
                 }),
         )
-        .child(
-            Label::new(percent(hit))
-                .text_size(px(12.))
-                .text_color(rgb(ink)),
-        )
+        .child(table_label(percent(hit), CellFont::Body, ink, cx))
         .into_any_element()
 }
 
 /// Provider cell: the captured provider name plus the origin pill the design
 /// puts inside this column. Both values keep their own tooltip text.
-fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+fn provider_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElement {
     let hint = format!(
         "{}\nID: {}\n{}\n{}",
         item.provider_name,
@@ -567,12 +627,15 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
             gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
         })
         .child(
-            Label::new(item.provider_name.clone())
-                .flex_1()
-                .min_w_0()
-                .text_ellipsis()
-                .text_size(px(crate::theme::font::BODY))
-                .text_color(rgb(0x19334d)),
+            table_label(
+                item.provider_name.clone(),
+                CellFont::Body,
+                crate::theme::color::TEXT_1,
+                cx,
+            )
+            .flex_1()
+            .min_w_0()
+            .text_ellipsis(),
         )
         .when(is_tool_charge(item), |this| {
             this.child(
@@ -606,7 +669,7 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
 
 /// Estimated cost cell: the amount on the first line and the WorkBuddy credit
 /// on the second, preserving independent currency and credit values.
-fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
+fn cost_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElement {
     if item.source == Source::JsonlImport && item.origin.is_imported() {
         let credit = item
             .workbuddy_credit_nanos
@@ -630,12 +693,22 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
             .justify_center()
             .h_full()
             .gap_1()
-            .child(strong(value))
-            .child(crate::usage_table::muted(if zh {
-                "日志记录值"
-            } else {
-                "Logged amount"
-            }))
+            .child(table_label(
+                value,
+                CellFont::Body,
+                crate::theme::color::TEXT_2,
+                cx,
+            ))
+            .child(table_label(
+                if zh {
+                    "日志记录值"
+                } else {
+                    "Logged amount"
+                },
+                CellFont::Breakdown,
+                crate::theme::color::TEXT_3,
+                cx,
+            ))
             .into_any_element();
     }
     let status = item
@@ -697,20 +770,30 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool) -> AnyElement {
             gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
         })
         .child(
-            Label::new(amount_text)
-                .w_full()
-                .min_w_0()
-                .text_ellipsis()
-                .text_size(px(crate::theme::font::BODY))
-                .text_color(rgb(if muted { 0x8a98a7 } else { 0x19334d })),
+            table_label(
+                amount_text,
+                CellFont::Body,
+                if muted {
+                    crate::theme::color::TEXT_3
+                } else {
+                    crate::theme::color::TEXT_2
+                },
+                cx,
+            )
+            .w_full()
+            .min_w_0()
+            .text_ellipsis(),
         )
         .child(
-            Label::new(format!("{} {credit}", if zh { "点数" } else { "Credits" }))
-                .w_full()
-                .min_w_0()
-                .text_ellipsis()
-                .text_size(px(crate::theme::font::LABEL))
-                .text_color(rgb(0x6b7c90)),
+            table_label(
+                format!("{} {credit}", if zh { "点数" } else { "Credits" }),
+                CellFont::Breakdown,
+                crate::theme::color::TEXT_3,
+                cx,
+            )
+            .w_full()
+            .min_w_0()
+            .text_ellipsis(),
         )
         .into_any_element()
 }
@@ -857,6 +940,16 @@ impl TableDelegate for UsageRows {
             .selectable(false)
     }
 
+    fn render_th(
+        &mut self,
+        index: usize,
+        _: &mut Window,
+        cx: &mut Context<TableState<Self>>,
+    ) -> impl IntoElement {
+        // Kit still owns header clicks, sorting, resizing and accessibility.
+        header_cell(self.column(index, cx).name, cx)
+    }
+
     fn render_tr(
         &mut self,
         row: usize,
@@ -883,7 +976,7 @@ impl TableDelegate for UsageRows {
         row: usize,
         col: usize,
         _: &mut Window,
-        _: &mut Context<TableState<Self>>,
+        cx: &mut Context<TableState<Self>>,
     ) -> impl IntoElement {
         let zh = self.zh;
         let item = &self.rows[row];
@@ -903,10 +996,12 @@ impl TableDelegate for UsageRows {
                     },
                     item.request_id
                 )),
-                0x19334d,
+                crate::theme::color::TEXT_2,
                 ("usage-time", row),
+                CellFont::Timestamp,
+                cx,
             ),
-            1 => provider_cell(item, row, zh),
+            1 => provider_cell(item, row, zh, cx),
             2 => cell(
                 model_text(item, zh),
                 Some(format!(
@@ -922,12 +1017,14 @@ impl TableDelegate for UsageRows {
                     },
                     requested_text(item, zh)
                 )),
-                0x19334d,
+                crate::theme::color::TEXT_2,
                 ("usage-model", row),
+                CellFont::Body,
+                cx,
             ),
-            3 => token_cell(item, row, zh),
-            4 => cache_cell(item, row, zh),
-            5 => cost_cell(item, row, zh),
+            3 => token_cell(item, row, zh, cx),
+            4 => cache_cell(item, row, zh, cx),
+            5 => cost_cell(item, row, zh, cx),
             6 => cell(
                 duration(item.duration_ms),
                 Some(format!(
@@ -941,8 +1038,10 @@ impl TableDelegate for UsageRows {
                     rate_text(item),
                     rate_hint(item.stream, zh)
                 )),
-                0x19334d,
+                crate::theme::color::TEXT_2,
                 ("usage-latency", row),
+                CellFont::Latency,
+                cx,
             ),
             _ => {
                 let (text, _) = usage_label(item.usage_status, zh);
@@ -957,11 +1056,13 @@ impl TableDelegate for UsageRows {
                         if zh { "用量" } else { "Usage" }
                     )),
                     match item.outcome {
-                        Outcome::Completed => 0x2f7d4f,
-                        Outcome::InFlight | Outcome::Recorded => 0x8a98a7,
+                        Outcome::Completed => crate::theme::color::SUCCESS,
+                        Outcome::InFlight | Outcome::Recorded => crate::theme::color::TEXT_3,
                         _ => 0xa4424a,
                     },
                     ("usage-status", row),
+                    CellFont::Body,
+                    cx,
                 )
             }
         };
@@ -1093,6 +1194,15 @@ impl TableDelegate for GroupRows {
             .selectable(false)
     }
 
+    fn render_th(
+        &mut self,
+        index: usize,
+        _: &mut Window,
+        cx: &mut Context<TableState<Self>>,
+    ) -> impl IntoElement {
+        header_cell(self.column(index, cx).name, cx)
+    }
+
     fn render_tr(
         &mut self,
         row: usize,
@@ -1113,7 +1223,7 @@ impl TableDelegate for GroupRows {
         row: usize,
         col: usize,
         _: &mut Window,
-        _: &mut Context<TableState<Self>>,
+        cx: &mut Context<TableState<Self>>,
     ) -> impl IntoElement {
         let zh = self.zh;
         let item = &self.rows[row];
@@ -1128,6 +1238,8 @@ impl TableDelegate for GroupRows {
                 )),
                 crate::theme::color::TEXT_1,
                 ("group-key", row),
+                CellFont::GroupName,
+                cx,
             ),
             1 => cell(
                 summary.request_count.to_string(),
@@ -1140,8 +1252,10 @@ impl TableDelegate for GroupRows {
                     if zh { "取消" } else { "Cancelled" },
                     summary.cancelled_count
                 )),
-                crate::theme::color::TEXT_1,
+                crate::theme::color::TEXT_2,
                 ("group-requests", row),
+                CellFont::GroupCount,
+                cx,
             ),
             2 => cell(
                 format!(
@@ -1157,8 +1271,10 @@ impl TableDelegate for GroupRows {
                     exact(summary.output_tokens),
                     exact(summary.total_tokens)
                 )),
-                crate::theme::color::TEXT_1,
+                crate::theme::color::TEXT_2,
                 ("group-tokens", row),
+                CellFont::Body,
+                cx,
             ),
             3 => cell(
                 percent(summary.cache_hit_rate),
@@ -1174,6 +1290,8 @@ impl TableDelegate for GroupRows {
                 )),
                 crate::theme::palette().dark,
                 ("group-cache", row),
+                CellFont::Ratio,
+                cx,
             ),
             4 => {
                 if summary.proxy_record_count == 0
@@ -1192,8 +1310,10 @@ impl TableDelegate for GroupRows {
                             }
                             .into(),
                         ),
-                        crate::theme::color::TEXT_1,
+                        crate::theme::color::TEXT_2,
                         ("group-cost", row),
+                        CellFont::Body,
+                        cx,
                     );
                 }
                 let text = if summary.costs.is_empty() {
@@ -1227,8 +1347,14 @@ impl TableDelegate for GroupRows {
                         if zh { "未定价" } else { "Unpriced" },
                         summary.unpriced_request_count
                     )),
-                    crate::theme::color::TEXT_1,
+                    if summary.costs.is_empty() {
+                        crate::theme::color::TEXT_3
+                    } else {
+                        crate::theme::color::TEXT_2
+                    },
                     ("group-cost", row),
+                    CellFont::Body,
+                    cx,
                 )
             }
             _ => cell(
@@ -1243,6 +1369,8 @@ impl TableDelegate for GroupRows {
                     crate::theme::color::TEXT_3
                 },
                 ("group-coverage", row),
+                CellFont::Ratio,
+                cx,
             ),
         }
     }

@@ -19,22 +19,22 @@
       "id": "52:2",
       "name": "01 / STUDIO V2 · 使用概览",
       "review_status": "reviewed_with_differences",
-      "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
+      "scope": "UI56完整官方设计/资产审查，UI57最终a51字体与统计两尺寸可见交互、六旧皮肤及原负载性能对照完成；保留差异，未整帧最终验收。",
       "checks": {
         "layout": "b313宽窗KPI top283、趋势top468、最近请求top748；17px段间距保留。真实单点缺失说明让趋势高263而稿246，小窗KPI重排，完整概览滚动/状态终验待续。",
         "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
-        "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+        "typography": "UI57最终a51接入原始Noto Sans SC/Inter及已审查的共享侧栏/统计文字角色，真实两尺寸与六皮肤/万单位检查完成。实际每字形PostScript来源、准确Figma字体版本、其余全部角色/状态仍未终验；不是全帧排版一致。",
         "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
-        "states": "2供应商/5模型/14真实Mock代理记录、总Token7700、成功率100%、缓存未知为—；未伪造设计样例数据。",
-        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
-        "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
-        "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
+        "states": "UI57真实22条/输入11000/输出1100/总12100/全200；model gpt-6=3再All22、供应商2/模型5、未知缓存保持—，中文万可读，亿UI未覆盖。",
+        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。 UI57另测模型方向/Return3→All22、Summary2/5与范围22/1.21万/右侧列/下方卡。完整键盘、真实auto tick和所有协议状态未重验。",
+        "native_1440": "UI57 a51原始1440×901/native1×，目标逻辑1440×900，保留系统额外1行；22条真实Mock请求/12100Token，不冒充设计样例数据。",
+        "native_1100": "UI57 a51原始1100×701/native1×已查；长供应商/模型名省略，Summary右侧列/下方卡可滚动取回；不等于全部状态/完整键盘或概览下方全量终验。"
       },
       "differences": [
-        "字体、字重、基线和部分卡内间距仍待逐项统一。",
         "单日只有单点，保留缺失说明/真实走势图，趋势为263px，较静态稿246px高17px；不能为贴稿隐藏真实语义。",
-        "保留实际USD偏好、未知缓存/费用与真实14/7700，静态稿示例数值不作为验收目标。",
-        "小窗概览lower内容在可视区以下，完整滚动/焦点/IME/无障碍/皮肤及跨平台仍待终验。"
+        "保留实际USD偏好、未知缓存/费用与当前真实22/12100，静态稿示例数值不作为验收目标。",
+        "小窗概览lower内容在可视区以下，完整滚动/焦点/IME/无障碍/皮肤及跨平台仍待终验。",
+        "UI57共享字体及已检查角色已接入；标题同色非AA墨迹比参考低1px，副标题同下缘/上缘墨迹差1px，准确字体版本与全帧栅格/所有文字角色仍待核对。列宽/内边距和完整键盘/IME/AX/平台门禁继续保留。"
       ],
       "evidence": [
         "benchmarks/shared-controls-design-manifests.json",
@@ -47,18 +47,24 @@
         "benchmarks/shared-controls-geometry.json",
         "benchmarks/shared-controls-performance-summary.json",
         "screenshots/shared-controls-overview-1440x900-native-1x.png",
-        "screenshots/shared-controls-overview-1100x700-native-1x.png"
+        "screenshots/shared-controls-overview-1100x700-native-1x.png",
+        "benchmarks/studio-fonts-build.json",
+        "benchmarks/studio-fonts-gui-validation.json",
+        "benchmarks/studio-fonts-geometry.json",
+        "benchmarks/studio-fonts-performance-summary.json",
+        "screenshots/studio-fonts-overview-1440x900-native-1x.png",
+        "screenshots/studio-fonts-overview-1100x700-native-1x.png"
       ]
     },
     {
       "id": "54:2",
       "name": "02 / STUDIO V2 · 供应商管理",
       "review_status": "reviewing",
-      "scope": "UI54最新54:2源码/资产审查及当前bc7候选两尺寸供应商实拍完成；整帧差异仍在审查，未最终通过。",
+      "scope": "UI54最新54:2源码/资产审查及当前bc7候选两尺寸供应商实拍完成；整帧差异仍在审查，未最终通过。 UI57 a51另有字体全局影响两尺寸抽查，供应商/模型可见文字未见缺字；模型小窗下方字段未滚动，完整布局仍待。",
       "checks": {
         "layout": "源码核对：1440列宽755/348和17间距；发现初始表宽估算差53px/小窗5px，候选已统一，未实拍确认",
         "colors": "待真实渲染对照",
-        "typography": "已列字体/权重/基线待验",
+        "typography": "UI57最终a51接入原始Noto Sans SC/Inter及已审查的共享侧栏/统计文字角色，真实两尺寸与六皮肤/万单位检查完成。实际每字形PostScript来源、准确Figma字体版本、其余全部角色/状态仍未终验；不是全帧排版一致。",
         "assets": "供应商30资产对应模型帧前30，除3装饰traffic lights使用真实系统控件外27份本地精确匹配；本轮2份更新仍在候选工作树",
         "states": "待当前候选实机验证；原专项证据不升级为整帧通过",
         "interaction": "模型弹窗取消/确认草稿、AUTO只读、遮罩、局部键盘通过；供应商完整业务与首帧表现未全验",
@@ -66,7 +72,7 @@
         "native_1100": "bc7候选2200×1402原始供应商实拍已核对；模型目录需内部滚动"
       },
       "differences": [
-        "首帧模型表宽估算旧宽窗774/小窗434px，实际布局应721/429；候选共用rail_width和COLUMN_GAP，仍待运行验证。",
+        "UI54已共用rail_width/COLUMN_GAP修正原首帧列宽估算，UI54/57都有两尺寸实拍；首帧闪动未录制，不能用静态截图替代。",
         "标题/副标题位置保持；源码推算摘要条/双列内容比设计约低1px，待当前实拍复核。",
         "模型卡min280/flex、运行中心/日志内容自适应与稿253/279/309px静态高度存在差异，需结合额外业务控件与滚动核对。",
         "设计“连接正常”徽章没有对应渲染；需找到真实测试/状态来源，不能用静态样例冒充连接成功。",
@@ -76,31 +82,33 @@
         "benchmarks/provider-frame-source-audit.json",
         "benchmarks/model-alignment-gui-validation.json",
         "screenshots/model-alignment-provider-1440x900-native-2x.png",
-        "screenshots/model-alignment-provider-1100x700-native-2x.png"
+        "screenshots/model-alignment-provider-1100x700-native-2x.png",
+        "screenshots/studio-fonts-providers-1440x900-native-1x.png",
+        "screenshots/studio-fonts-providers-1100x700-native-1x.png",
+        "benchmarks/studio-fonts-gui-validation.json"
       ]
     },
     {
       "id": "56:8",
       "name": "03 / STUDIO V2 · 用量明细",
       "review_status": "reviewed_with_differences",
-      "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
+      "scope": "UI56完整官方设计/资产审查，UI57最终a51字体与统计两尺寸可见交互、六旧皮肤及原负载性能对照完成；保留差异，未整帧最终验收。",
       "checks": {
-        "layout": "b313在1×下请求表头top363/outer39px，稿top364/39；高度已对齐，仍保留1px纵向位置差。面板top283/max540、52px行距保留，列宽/内边距待续。",
+        "layout": "UI57 a51在native1×测得请求表头top364/outer39px符合参考，UI56的1px顶部差在当前文字规格下消失；面板top283/max540、52px行距保留。列宽/内边距仍待完整终验。",
         "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
-        "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+        "typography": "UI57最终a51接入原始Noto Sans SC/Inter及已审查的共享侧栏/统计文字角色，真实两尺寸与六皮肤/万单位检查完成。实际每字形PostScript来源、准确Figma字体版本、其余全部角色/状态仍未终验；不是全帧排版一致。",
         "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
-        "states": "40a模型3/供应商12/全部14，页2为4行，Jump/Prev与原条数范围汇总14/7700通过；完整状态矩阵未验。",
-        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
-        "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
-        "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
+        "states": "UI57真实22条/输入11000/输出1100/总12100/全200；model gpt-6=3再All22、供应商2/模型5、未知缓存保持—，中文万可读，亿UI未覆盖。",
+        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。 UI57另测模型方向/Return3→All22、Summary2/5与范围22/1.21万/右侧列/下方卡。完整键盘、真实auto tick和所有协议状态未重验。",
+        "native_1440": "UI57 a51原始1440×901/native1×，目标逻辑1440×900，保留系统额外1行；22条真实Mock请求/12100Token，不冒充设计样例数据。",
+        "native_1100": "UI57 a51原始1100×701/native1×已查；长供应商/模型名省略，Summary右侧列/下方卡可滚动取回；不等于全部状态/完整键盘或概览下方全量终验。"
       },
       "differences": [
-        "字体fallback、权重/基线及部分单元格字号仍与Noto Sans SC/Inter设计不同。",
         "保留真实健康/更多筛选/清除、跳页/首列/右侧列等原业务控件，以及条数标签可打开真实范围汇总；与静态稿有额外可见控件。",
         "后台自动刷新由既有window_active门控；本轮未主动前置，但实际前台状态未独立测量，不宣称所有后台截图即时。",
         "完整键盘、IME/读屏、全部皮肤/状态和跨平台仍未最终验收。",
         "分页按钮/页大小选择已为32px，跳页输入仍由Kit绘制40px；它是保留的额外业务控件，完整footer几何仍需统一。",
-        "b313请求表头高度39px已对齐，top363与参考364仍差1px；四原SVG caret质心差x−.016/y−.036px，不代表全部控件状态通过。"
+        "UI57共享字体及已检查角色已接入；标题同色非AA墨迹比参考低1px，副标题同下缘/上缘墨迹差1px，准确字体版本与全帧栅格/所有文字角色仍待核对。列宽/内边距和完整键盘/IME/AX/平台门禁继续保留。"
       ],
       "evidence": [
         "benchmarks/model-alignment-runtime-partial.json",
@@ -125,28 +133,34 @@
         "benchmarks/shared-controls-geometry.json",
         "benchmarks/shared-controls-performance-summary.json",
         "screenshots/shared-controls-details-1440x900-native-1x.png",
-        "screenshots/shared-controls-details-1100x700-native-1x.png"
+        "screenshots/shared-controls-details-1100x700-native-1x.png",
+        "benchmarks/studio-fonts-build.json",
+        "benchmarks/studio-fonts-gui-validation.json",
+        "benchmarks/studio-fonts-geometry.json",
+        "benchmarks/studio-fonts-performance-summary.json",
+        "screenshots/studio-fonts-details-1440x900-native-1x.png",
+        "screenshots/studio-fonts-details-1100x700-native-1x.png"
       ]
     },
     {
       "id": "57:8",
       "name": "04 / STUDIO V2 · 汇总分析",
       "review_status": "reviewed_with_differences",
-      "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
+      "scope": "UI56完整官方设计/资产审查，UI57最终a51字体与统计两尺寸可见交互、六旧皮肤及原负载性能对照完成；保留差异，未整帧最终验收。",
       "checks": {
         "layout": "b313宽窗汇总面板top283、表头top363/outer38px符合参考；修复旧40a的5.5px下移，标题/说明独立左列与314px切换区实拍确认。字体、列宽/内边距仍待续。",
         "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
-        "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+        "typography": "UI57最终a51接入原始Noto Sans SC/Inter及已审查的共享侧栏/统计文字角色，真实两尺寸与六皮肤/万单位检查完成。实际每字形PostScript来源、准确Figma字体版本、其余全部角色/状态仍未终验；不是全帧排版一致。",
         "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
-        "states": "b313供应商2组/模型5组、条数浮层真实14记录/7700Token；小窗内部scroll取回Token构成7000输入/700输出和缓存覆盖卡，完整状态矩阵未终验。",
-        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
-        "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
-        "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
+        "states": "UI57真实22条/输入11000/输出1100/总12100/全200；model gpt-6=3再All22、供应商2/模型5、未知缓存保持—，中文万可读，亿UI未覆盖。",
+        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。 UI57另测模型方向/Return3→All22、Summary2/5与范围22/1.21万/右侧列/下方卡。完整键盘、真实auto tick和所有协议状态未重验。",
+        "native_1440": "UI57 a51原始1440×901/native1×，目标逻辑1440×900，保留系统额外1行；22条真实Mock请求/12100Token，不冒充设计样例数据。",
+        "native_1100": "UI57 a51原始1100×701/native1×已查；长供应商/模型名省略，Summary右侧列/下方卡可滚动取回；不等于全部状态/完整键盘或概览下方全量终验。"
       },
       "differences": [
-        "字体、字号/权重/基线、列宽及表格内边距尚未统一。",
-        "保留实际2供应商/5模型/14记录和分页/排序/首末列等原业务控件，不能伪造稿中的样例4组或删除功能。",
-        "Summary条数按钮鼠标浮层已验，键盘焦点未可靠观察；完整IME/无障碍/皮肤/跨平台未终验。"
+        "保留实际2供应商/5模型/22记录和分页/排序/首末列等原业务控件，不能伪造稿中的样例4组或删除功能。",
+        "Summary条数按钮鼠标浮层已验，键盘焦点未可靠观察；完整IME/无障碍/皮肤/跨平台未终验。",
+        "UI57共享字体及已检查角色已接入；标题同色非AA墨迹比参考低1px，副标题同下缘/上缘墨迹差1px，准确字体版本与全帧栅格/所有文字角色仍待核对。列宽/内边距和完整键盘/IME/AX/平台门禁继续保留。"
       ],
       "evidence": [
         "benchmarks/shared-controls-design-manifests.json",
@@ -159,7 +173,13 @@
         "benchmarks/shared-controls-geometry.json",
         "benchmarks/shared-controls-performance-summary.json",
         "screenshots/shared-controls-summary-1440x900-native-1x.png",
-        "screenshots/shared-controls-summary-1100x700-native-1x.png"
+        "screenshots/shared-controls-summary-1100x700-native-1x.png",
+        "benchmarks/studio-fonts-build.json",
+        "benchmarks/studio-fonts-gui-validation.json",
+        "benchmarks/studio-fonts-geometry.json",
+        "benchmarks/studio-fonts-performance-summary.json",
+        "screenshots/studio-fonts-summary-1440x900-native-1x.png",
+        "screenshots/studio-fonts-summary-1100x700-native-1x.png"
       ]
     },
     {
@@ -202,11 +222,11 @@
       "id": "59:279",
       "name": "07 / STUDIO V2 · 编辑模型能力",
       "review_status": "reviewed_with_differences",
-      "scope": "UI53首轮整帧审查后，UI54补布局余差修复；当前bc7候选两尺寸、取消/确认草稿、遮罩和局部键盘已验，整帧保留差异。",
+      "scope": "UI53首轮整帧审查后，UI54补布局余差修复；当前bc7候选两尺寸、取消/确认草稿、遮罩和局部键盘已验，整帧保留差异。 UI57 a51另有字体全局影响两尺寸抽查，供应商/模型可见文字未见缺字；模型小窗下方字段未滚动，完整布局仍待。",
       "checks": {
         "layout": "复选框相对稿从低1.5px收敛至低0.5px；wide档位横向124px已对齐，小窗内部滚动/固定动作可达",
         "colors": "notice与checkbox主色经ICC分析符合；文字/按钮/背景仍需全量逐项核对",
-        "typography": "保留差异：Noto Sans SC设计与原生字体回退/权重/基线未统一",
+        "typography": "UI57最终a51接入原始Noto Sans SC/Inter及已审查的共享侧栏/统计文字角色，真实两尺寸与六皮肤/万单位检查完成。实际每字形PostScript来源、准确Figma字体版本、其余全部角色/状态仍未终验；不是全帧排版一致。",
         "assets": "UI54两份共享SVG替换为官方精确导出；模型帧28份本地精确匹配，3个装饰traffic lights仍使用真实系统控件；非全slot验收",
         "states": "当前bc7 AUTO只读、manual图片/medium更改、取消复原及确认后草稿重开通过；Core配置未写",
         "interaction": "当前bc7两尺寸遮罩不穿透、局部Tab/ShiftTab可见caret及Space通过；完整遍历/Enter/IME/读屏未验",
@@ -214,10 +234,10 @@
         "native_1100": "当前bc7 manual/限制滚动2200×1402原图已核对"
       },
       "differences": [
-        "复选框两行从比稿低1.5px收敛至低0.5px；notice与确认按钮仍有约0.5px纵向余差。",
+        "UI54原生2×测得复选框两行从低1.5px收敛至低0.5px，notice/确认约0.5px差；UI57原生1×字体抽查未逐像素重测这些槽位。",
         "wide档位外宽124px与稿横向对齐；small弹窗需内部滚动，完整响应式视觉仍待终验。",
         "原生Kit双层黑色弹窗阴影与稿0/18/42 rgba(20,31,59,.22)不同，Kit在调用方样式后覆盖。",
-        "设计Noto Sans SC与macOS系统字体回退、权重/基线差异继续；取消背景本轮已改白，未宣称全色彩通过。",
+        "UI57 Studio已接入原Noto Sans SC，原系统fallback差异的源码原因已处理；模型全部文字角色/权重/基线与精细颜色仍待逐项审查。UI54取消白底保持。",
         "共享背景/动态日志与状态保持真实；完整静态asset slot/effective geometry仍待全量验收。",
         "Help/默认档位Select/自动模式开关保留原业务；完整键盘/IME/无障碍和跨平台未最终通过。"
       ],
@@ -232,7 +252,10 @@
         "benchmarks/model-alignment-gui-validation.json",
         "benchmarks/model-alignment-geometry.json",
         "screenshots/model-alignment-manual-1440x900-native-2x.png",
-        "screenshots/model-alignment-limits-1100x700-native-2x.png"
+        "screenshots/model-alignment-limits-1100x700-native-2x.png",
+        "screenshots/studio-fonts-model-1440x900-native-1x.png",
+        "screenshots/studio-fonts-model-1100x700-native-1x.png",
+        "benchmarks/studio-fonts-gui-validation.json"
       ]
     },
     {

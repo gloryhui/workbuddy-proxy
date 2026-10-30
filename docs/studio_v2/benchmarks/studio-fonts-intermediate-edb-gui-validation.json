@@ -1,0 +1,298 @@
+{
+  "candidate_sha256": "edb6b3fb84ff81efa05a5d78fa2c15d43715747e7166c3349e3b6e521bca3421",
+  "ui_pid": 187,
+  "core_pid": 99631,
+  "screenshots": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-details-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "0b82672466d787ce834d433c85f4d6692ed2054df5d5bdec0adf04492d10f3a6",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-overview-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "ca16fc0e35e463aae4cdadad921acf310c748abc681f0bd50454f40dfbbbd1bf",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-summary-wide.png",
+      "width": 1440,
+      "height": 901,
+      "sha256": "4036f5b791f0798850f05b085c3b6924d13845b65b547fb70328c6a3f15cf81d",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-details-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "48fa04ffa2f1abf181346455e028b41fee6fb49e47abc21bd0bd4f2e61038c01",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-overview-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "e92cf124cacffd5c5bbb9798431064aa8631cd2d4d98f657e0fde69ecfda23b7",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-summary-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "31c1f459400c2dd5521a3169c2304bb59253314e6f3e0eb7e8801946aa241ae1",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-summary-popup-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "cf51cbb192f4bc03b4cd28e8e998ffde766270c6c95ead9a3d0ed70fc302c9f2",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-mono-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "9132a5a78b300dfb571b324efedd7d48ff6bfb058ec0dbeea0f670368afadbd1",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-blue-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "a77c074ea925b0c9532e96c26ed2555029e114326c5cc117b58ee522a51c1cb2",
+      "window_id": 1924
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-studio-restored-small.png",
+      "width": 1100,
+      "height": 701,
+      "sha256": "8fa7a7bac7bf12ca93e1dc95f6327a06848b148c824f278491dd4d6b7c8074a6",
+      "window_id": 1924
+    }
+  ],
+  "capture": "native screencapture own PID onscreen layer0, unscaled and uncropped",
+  "resize": "CUA drag [1438,899] to [1098,699]",
+  "observed": {
+    "wide": "Details 14, Overview 7700/14/100%/unknown cache, Summary provider 2; visible text, titles, filters, table headings and numbers showed no missing-glyph boxes or overlaps",
+    "small": "Summary provider 2 / model 5 and popup 14/7700; rightmost columns and lower Token/cache cards reached; Details gpt-6 3 then All 14",
+    "themes": "Mono, Blue, Wisteria, Rose, Amber, Teal each selected and visually inspected; Studio Indigo restored, menu closed; visible Chinese/Latin retained",
+    "units": "Overview graph axis 1.00万 was visible; 亿 and large-value headline fallback not tested"
+  },
+  "limitations": [
+    "Small Details truncates long provider/model names with ellipsis",
+    "No claim all glyphs, languages, accessibility or long-value formatting tested",
+    "No explicit activation/raise performed; actual foreground status not established"
+  ],
+  "additional_units": {
+    "action": "CUA manual refresh following eight additional actual local requests",
+    "observed": "Overview 1.21 万 / 22 / 100%; Summary Token composition 1.21万, input 1.10万, output 1100; model 5, provider 2; Chinese 万 visible without missing-glyph box",
+    "captures": [
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-units-overview-small.png",
+        "width": 1100,
+        "height": 701,
+        "sha256": "27afbcdf2565e5b0121a311c90fe197fa934d88f4ab180d19f0be0f806084268",
+        "window_id": 1924
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-units-summary-small.png",
+        "width": 1100,
+        "height": 701,
+        "sha256": "8e45d56a29a30f949d0b2878050ba922c40c5213a24a66d52736facab54e543f",
+        "window_id": 1924
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/fonts-units-summary-wide.png",
+        "width": 1440,
+        "height": 901,
+        "sha256": "c61bdbb34efcb4afd83b0367e550e520067fca9e9b814fc461975871e2001c14",
+        "window_id": 1924
+      }
+    ],
+    "not_covered": "亿; no claim about exact font fallback implementation"
+  },
+  "lifecycle": "CUA native close invoked for UI PID 187; Core not stopped; exit code/wait not observed by GUI agent",
+  "independent_pre_runtime": {
+    "ready": {
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5/fonts-edb-native/WorkBuddy Proxy Review.app",
+      "bundle_id": "com.workbuddy.proxy.codexreview.tfonts-edb-native",
+      "core_pid": 99631,
+      "port": 63447
+    },
+    "core_proof": {
+      "enforced": true,
+      "pid": 99631,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "launchagents_permissions": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "core_config_sha256_before": "592478c64b9f5107a98221812fd69bc4715fe1b8ef8ee83d233a1b1810de8733",
+    "seed": {
+      "real_http_requests": 14,
+      "statuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "expected_input": 7000,
+      "expected_output": 700,
+      "expected_total": 7700,
+      "earlier_seed_attempt": {
+        "status": 400,
+        "cause": "Fixture used internal model id instead of published alias; corrected client payload, no product change. Counts must be read back independently."
+      }
+    },
+    "ui_sha256": "edb6b3fb84ff81efa05a5d78fa2c15d43715747e7166c3349e3b6e521bca3421",
+    "isolation": "Core kernel sandbox enforced; GUI unique bundle and LSEnvironment only. Synthetic data; no system font installation."
+  },
+  "independent_post_runtime": {
+    "checked_at": "2026-10-30T21:46:28.798849+08:00",
+    "ui_pid": 187,
+    "ui_pid_gone": true,
+    "ui_exit_code": null,
+    "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+    "core_pid": 99631,
+    "core_after_ui_closed": {
+      "http_status": 200,
+      "stats_health": "ready",
+      "config_sha256_unchanged": true,
+      "counts": [
+        22,
+        11000,
+        1100,
+        12100,
+        200,
+        200
+      ]
+    }
+  },
+  "terminal": {
+    "ui_exit_before_cleanup": null,
+    "ui_pid_gone_before_cleanup": true,
+    "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": null,
+    "ui_pid_gone_after_cleanup": true,
+    "core_exit_after_cleanup": 0
+  },
+  "fixture_exit_code": 0,
+  "scope": "Intermediate edb6 only, before removal of duplicate inventory scan. Raw screenshot hashes/paths retained in the owned fixture; final a51 screenshots are a separate deliverable. No current-candidate GUI claim from this report."
+}

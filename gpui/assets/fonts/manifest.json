@@ -1,0 +1,221 @@
+{
+  "noto_commit": "f8d157532fbfaeda587e826d4cd5b21a49186f7c",
+  "inter_distribution": {
+    "bytes": 33707794,
+    "sha256": "9883fdd4a49d4fb66bd8177ba6625ef9a64aa45899767dde3d36aa425756b11e",
+    "source": "https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip",
+    "selected_entries": [
+      "extras/ttf/Inter-Medium.ttf",
+      "extras/ttf/Inter-Bold.ttf",
+      "extras/ttf/Inter-Regular.ttf",
+      "extras/ttf/Inter-SemiBold.ttf"
+    ]
+  },
+  "fonts": [
+    {
+      "file": "Inter-Bold.ttf",
+      "bytes": 420428,
+      "sha256": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f",
+      "weight": 700,
+      "names": {
+        "1": [
+          "Inter"
+        ],
+        "2": [
+          "Bold"
+        ],
+        "6": [
+          "Inter-Bold"
+        ],
+        "16": [],
+        "17": []
+      },
+      "cmap_size": 2852,
+      "variable": false,
+      "has_ui_chinese": false,
+      "has_basic_latin": true,
+      "archive_member": "extras/ttf/Inter-Bold.ttf",
+      "license": "Inter-LICENSE.txt"
+    },
+    {
+      "file": "Inter-Medium.ttf",
+      "bytes": 417300,
+      "sha256": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+      "weight": 500,
+      "names": {
+        "1": [
+          "Inter Medium"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "6": [
+          "Inter-Medium"
+        ],
+        "16": [
+          "Inter"
+        ],
+        "17": [
+          "Medium"
+        ]
+      },
+      "cmap_size": 2852,
+      "variable": false,
+      "has_ui_chinese": false,
+      "has_basic_latin": true,
+      "archive_member": "extras/ttf/Inter-Medium.ttf",
+      "license": "Inter-LICENSE.txt"
+    },
+    {
+      "file": "Inter-Regular.ttf",
+      "bytes": 411640,
+      "sha256": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+      "weight": 400,
+      "names": {
+        "1": [
+          "Inter"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "6": [
+          "Inter-Regular"
+        ],
+        "16": [],
+        "17": []
+      },
+      "cmap_size": 2852,
+      "variable": false,
+      "has_ui_chinese": false,
+      "has_basic_latin": true,
+      "archive_member": "extras/ttf/Inter-Regular.ttf",
+      "license": "Inter-LICENSE.txt"
+    },
+    {
+      "file": "Inter-SemiBold.ttf",
+      "bytes": 419744,
+      "sha256": "78a843fade9d4612a5567302fb595b56976eb5fcebf4fea5a5912d638bafcde3",
+      "weight": 600,
+      "names": {
+        "1": [
+          "Inter SemiBold"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "6": [
+          "Inter-SemiBold"
+        ],
+        "16": [
+          "Inter"
+        ],
+        "17": [
+          "SemiBold"
+        ]
+      },
+      "cmap_size": 2852,
+      "variable": false,
+      "has_ui_chinese": false,
+      "has_basic_latin": true,
+      "archive_member": "extras/ttf/Inter-SemiBold.ttf",
+      "license": "Inter-LICENSE.txt"
+    },
+    {
+      "file": "NotoSansSC-Bold.otf",
+      "bytes": 8543168,
+      "sha256": "c6cb5a93abaa9edc8ee7463b7ebb7f42d618d40e6ed2f7a5371c97b0b64767c0",
+      "weight": 700,
+      "names": {
+        "1": [
+          "Noto Sans SC"
+        ],
+        "2": [
+          "Bold"
+        ],
+        "6": [
+          "NotoSansSC-Bold"
+        ],
+        "16": [],
+        "17": []
+      },
+      "cmap_size": 30890,
+      "variable": false,
+      "has_ui_chinese": true,
+      "has_basic_latin": true,
+      "source": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/SubsetOTF/SC/NotoSansSC-Bold.otf",
+      "git_blob_sha": "bcc11bc30e65b69b9e5a508c3e2138197c5543cf",
+      "license": "Noto-LICENSE.txt"
+    },
+    {
+      "file": "NotoSansSC-Medium.otf",
+      "bytes": 8345436,
+      "sha256": "7633f5a016d4dd95e685a69633d818aabc4644c4b08e26bd35b1b30c45ed5dda",
+      "weight": 500,
+      "names": {
+        "1": [
+          "Noto Sans SC Medium"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "6": [
+          "NotoSansSC-Medium"
+        ],
+        "16": [
+          "Noto Sans SC"
+        ],
+        "17": [
+          "Medium"
+        ]
+      },
+      "cmap_size": 30890,
+      "variable": false,
+      "has_ui_chinese": true,
+      "has_basic_latin": true,
+      "source": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/SubsetOTF/SC/NotoSansSC-Medium.otf",
+      "git_blob_sha": "fafdfebf3103db4dc81d33ebd55b6786e08c9ebe",
+      "license": "Noto-LICENSE.txt"
+    },
+    {
+      "file": "NotoSansSC-Regular.otf",
+      "bytes": 8331336,
+      "sha256": "faa6c9df652116dde789d351359f3d7e5d2285a2b2a1f04a2d7244df706d5ea9",
+      "weight": 400,
+      "names": {
+        "1": [
+          "Noto Sans SC"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "6": [
+          "NotoSansSC-Regular"
+        ],
+        "16": [],
+        "17": []
+      },
+      "cmap_size": 30890,
+      "variable": false,
+      "has_ui_chinese": true,
+      "has_basic_latin": true,
+      "source": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf",
+      "git_blob_sha": "fc0fda9394367c16c1af7555a2ae4d5e2e6a6f02",
+      "license": "Noto-LICENSE.txt"
+    }
+  ],
+  "licenses": [
+    {
+      "file": "Noto-LICENSE.txt",
+      "bytes": 4301,
+      "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "file": "Inter-LICENSE.txt",
+      "bytes": 4380,
+      "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+    }
+  ],
+  "font_bytes": 26889052,
+  "asset_changes": "None: original upstream face bytes, no subsetting or renamed families.",
+  "runtime_scope": "On-demand native UI only; process-local registrations, no system font installation. Startup/RSS and full-frame rendering remain unverified while Mac locked."
+}

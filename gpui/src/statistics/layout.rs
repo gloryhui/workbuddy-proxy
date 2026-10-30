@@ -291,7 +291,13 @@ impl Statistics {
                     .min_w(px(64.))
                     .rounded(px(8.))
                     .text_size(px(11.))
-                    .label(label)
+                    .child(
+                        Label::new(label)
+                            .text_size(px(11.))
+                            .line_height(px(16.))
+                            .font_weight(FontWeight::MEDIUM)
+                            .text_color(rgb(crate::theme::palette().dark)),
+                    )
                     .tooltip(self.t("查看当前范围汇总", "View current range totals"))
                     .accessibility_label(self.t("查看当前范围汇总", "View current range totals")),
             )
@@ -356,7 +362,7 @@ impl Statistics {
                                 .min_h_0()
                                 .child(self.details(cx)),
                         )
-                        .child(self.analysis_cards()),
+                        .child(self.analysis_cards(cx)),
                 )
                 .into_any_element(),
             View::Overview => div()
