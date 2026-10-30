@@ -1340,3 +1340,5 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 原ui_record_ready包含CUA编排等待，不作为启动比较；native marker也不是首帧/可交互。默认启动页负载不是供应商表滚动、键盘、IME、FPS或托盘性能。[供应商空闲观察](benchmarks/provider-layout-idle-resources.json)为最终交互后3×10秒：UI约125.28MiB、单核CPU .7985/.9129/.8661%，Core13.422MiB/.1312/.1538/.1440%；没有同场景旧版基线，不作回归比较。RSS共享页可能双计，组件中位不能相加作合计；loopback没有公网/TLS/模型延迟。Core实际kernel及LaunchAgents四类deny已逐轮查询；四轮Core/mock真实wait0/−15，12个负载PID及三个GUI夹具9PID均独立确认消失。
 - 供应商54:2完成本轮整帧首审并保留明确差异：首审35未开始/0审查中/5已审查保留差异，40帧仍部分验收、0最终通过，剩余40。真实连接TestReport来源已找到，独立按供应商/被测配置绑定的“连接正常”徽章留到UI59；不以本地Core健康冒充上游健康。输入样式、全部状态、完整键盘/IME/AX、Windows/Intel硬件及HiDPI终验仍待续，Goal active。
+
+- [保留文件与清理记录](benchmarks/provider-layout-retained-files.json)：证据提交87570e2后已完成7个自有生成目录/159普通单链接文件的规范绝对路径、逐级父目录/挂载/UID501、全量SHA/inode/mtime与lsof临执行复核，预计339.40MiB。实际删除在创建进程前被运行时策略拒绝：approval required by policy, but AskForApproval is set to Never。没有重试、替代语言/父目录删除或修改策略，释放0；本轮保留约413.65MiB，与复用round46/47/48合计约1634.97MiB，系统盘此时约41.47GiB可用。旧拒绝目标、共享Cargo/UV缓存保持。

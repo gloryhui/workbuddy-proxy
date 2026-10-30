@@ -1,0 +1,110 @@
+{
+  "checked_at": "2026-10-31T00:09:20.590429+08:00",
+  "project": "workbuddy-proxy/StudioV2 UI58",
+  "evidence_commit": "87570e27eb8e10969ab3cc658448fff9d155600b",
+  "cleanup_attempt": {
+    "targets": [
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-first",
+        "kind": "owned generated test fixture directory",
+        "owner_uid": 501,
+        "files": 23,
+        "logical_bytes": 51440728,
+        "allocated_bytes_estimate": 51519488
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-layout-final",
+        "kind": "owned generated test fixture directory",
+        "owner_uid": 501,
+        "files": 39,
+        "logical_bytes": 52949302,
+        "allocated_bytes_estimate": 53075968
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/ui58-capacity-final",
+        "kind": "owned generated test fixture directory",
+        "owner_uid": 501,
+        "files": 25,
+        "logical_bytes": 51553631,
+        "allocated_bytes_estimate": 51638272
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/bench-ui58-previous1",
+        "kind": "owned generated test fixture directory",
+        "owner_uid": 501,
+        "files": 18,
+        "logical_bytes": 48124652,
+        "allocated_bytes_estimate": 49913856
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/bench-ui58-current1",
+        "kind": "owned generated test fixture directory",
+        "owner_uid": 501,
+        "files": 18,
+        "logical_bytes": 48071125,
+        "allocated_bytes_estimate": 49913856
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/bench-ui58-current2",
+        "kind": "owned generated test fixture directory",
+        "owner_uid": 501,
+        "files": 18,
+        "logical_bytes": 48083509,
+        "allocated_bytes_estimate": 49913856
+      },
+      {
+        "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8/bench-ui58-previous2",
+        "kind": "owned generated test fixture directory",
+        "owner_uid": 501,
+        "files": 18,
+        "logical_bytes": 48046420,
+        "allocated_bytes_estimate": 49913856
+      }
+    ],
+    "preflight": "Normalized literal absolute paths; each parent non-symlink/mount observed, UID501; all159 ordinary single-link files SHA/inode/mtime revalidated; target list exact; lsof empty; all21 test PIDs independently gone; evidence committed before action.",
+    "preflight_manifest_sha256": "955d85ed02c7de36f615e4f37a0b191b2a4e8c3ec318a2a377c9b50a45ad2c78",
+    "execution": "Rejected by runtime command policy before process creation",
+    "reason": "approval required by policy, but AskForApproval is set to Never",
+    "deleted": false,
+    "freed_bytes": 0,
+    "targets_still_exist": true,
+    "retry": "No retry, alternative deletion, parent deletion, configuration/policy change or repeated user approval request."
+  },
+  "retained_roots": [
+    {
+      "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f",
+      "files": 64,
+      "logical_bytes": 83852189,
+      "allocated_bytes_estimate": 84140032,
+      "other_entries_not_followed": 0,
+      "reason": "Reused historical baseline/evidence, earlier refused exact deletions not retried"
+    },
+    {
+      "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round47.l5v17qlr",
+      "files": 207,
+      "logical_bytes": 278808369,
+      "allocated_bytes_estimate": 290770944,
+      "other_entries_not_followed": 0,
+      "reason": "Reused historical baseline/evidence, earlier refused exact deletions not retried"
+    },
+    {
+      "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round48.g8914rm5",
+      "files": 575,
+      "logical_bytes": 917996239,
+      "allocated_bytes_estimate": 947531776,
+      "other_entries_not_followed": 0,
+      "reason": "Reused historical baseline/evidence, earlier refused exact deletions not retried"
+    },
+    {
+      "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round49.8gkpr6s8",
+      "files": 226,
+      "logical_bytes": 433738273,
+      "allocated_bytes_estimate": 441544704,
+      "other_entries_not_followed": 0,
+      "reason": "Current UI58 evidence/binaries plus refused cleanup targets"
+    }
+  ],
+  "retained_logical_bytes_total": 1714395070,
+  "system_free_bytes": 44525780992,
+  "cache": "Existing Cargo and UV caches reused, not removed. Inventory only these4known round roots, not all system temp."
+}

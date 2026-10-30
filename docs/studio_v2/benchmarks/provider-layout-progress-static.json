@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-31T00:10:28.838826+08:00",
+  "html_sha256": "313b3a719473a8a9610817a3550103da8e7fc15a1b4f6defc31a385652db71bc",
+  "json_sha256": "10221518094addfe546473871b01d8b77c95e2f2981d88b96c099d670d24ef24",
+  "embedded_json_identical": true,
+  "inline_javascript_node_syntax_check": {
+    "exit_code": 0,
+    "script_blocks": 2
+  },
+  "counts": {
+    "recorded_tasks": 58,
+    "remaining_final_frames": 40,
+    "visual_review": {
+      "not_reviewed": 35,
+      "reviewing": 0,
+      "reviewed_with_differences": 5,
+      "reviewed": 0
+    }
+  },
+  "scope": "Static data/link/JavaScript syntax verification only. Browser rendering, theme/filter/expand/responsive interactions not retested; existing browser tool local-file refusal remains a separate boundary."
+}
