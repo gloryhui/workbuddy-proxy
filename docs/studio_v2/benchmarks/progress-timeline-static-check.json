@@ -1,6 +1,6 @@
 {
   "scope": "Static source/data/link checks only; no browser execution or rendering",
-  "checked_at": "2026-10-30T14:52:37+08:00",
+  "checked_at": "2026-10-30T15:13:42+08:00",
   "embedded_json_matches_external": true,
   "frame_count": 40,
   "frame_status_counts": {
@@ -9,15 +9,15 @@
     "reused": 0,
     "verified": 0
   },
-  "committed_task_records": 51,
+  "committed_task_records": 52,
   "recorded_goal_status": "active",
   "current_task": {
     "id": 52,
-    "status": "validating"
+    "status": "recorded"
   },
   "phase_matches_frame_status": true,
   "task_count_distinguished_from_frame_acceptance": true,
-  "local_file_references_checked": 324,
+  "local_file_references_checked": 330,
   "missing_local_files": 0,
   "referenced_commit_objects_exist": true,
   "html_ids_unique": true,

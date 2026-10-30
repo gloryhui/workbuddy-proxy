@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T14:51:34+08:00",
+  "updated_at": "2026-10-30T15:13:40+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
@@ -13,61 +13,60 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 51,
+  "recorded_tasks": 52,
   "current_task": {
     "id": 52,
     "title": "Intel 发行版与 Rosetta 实跑验证",
-    "status": "validating",
-    "description": "Figma已恢复，最新59:279/59:484已读取。Intel Core/UI发行版链接及192项Rosetta测试通过；真实GUI草稿与一次保存已核对，两尺寸截图、原始基准和清理正在收尾。当前并非40帧全量一比一终验。"
+    "status": "recorded",
+    "description": "Intel Core/UI已真实链接，192项x86发行测试和实际译运行编辑/草稿/一次Save、两尺寸实拍及四轮原负载已完成。Rosetta启动更慢，不能替代Intel实机。下阶段转入40帧逐帧一比一比对与差异修复。"
   },
   "latest_task": {
-    "id": 51,
-    "title": "模型编辑 Escape 与满载目录回归",
+    "id": 52,
+    "title": "Intel 发行版与 Rosetta 实跑验证",
     "status": "recorded",
-    "summary": "为模型编辑输入框补明确的原生Escape关闭路由，并完成64供应商/256模型的满载专项。证据：编译、旧版与失败中间版、真实交互/生命周期/配置、1440请求尺寸原生2×图、1100请求尺寸原生2×图、组合取消小窗、资源、性能、清理。",
+    "summary": "新增真正链接的x86_64 Core/UI发行版、192项译运行测试及原生界面/保存/两尺寸与原始负载证据；本轮未修改产品Rust/Objective-C、资源、Core、依赖或工作流。证据：构建/架构/测试、实际GUI/保存/退出、1440请求尺寸原生2×实拍、1100请求尺寸原生2×实拍、视觉记录、四轮原基准、清理。",
     "highlights": [
-      "为模型编辑输入框补明确的原生Escape关闭路由，并完成64供应商/256模型的满载专项。证据：编译、旧版与失败中间版、真实交互/生命周期/配置、1440请求尺寸原生2×图、1100请求尺寸原生2×图、组合取消小窗、资源、性能、清理。",
-      "沿用54:246/59:279布局和资源，本轮无新设计context读取、无视觉重设计。只改main.rs/ui.rs：ModelEditor > Input专属DismissModelInput在模型窗口层接收Esc，仅读取当前焦点InputState的非空marked_text_range；有组合则dispatch原Input::Escape，否则调用既有dismiss。没有改写字符串、修改Kit/依赖/Core/配置/API、全局抢键或新增重绘计时器；六个输入句柄采用既有实体。",
-      "旧87eb不是必现故障：宽窗MODEL256和MODEL005的直接Esc曾保持表单，后者两次新鲜树间隔600ms仍开/值不变；标题空白再Esc能关，后来同宽窗256及小窗001直接Esc也通过，均保留。仅增加父级ProxyModal路由的dcd7仍未通过，见失败实拍及中间编译；不将编译绿灯当GUI通过或把所有旧现象归于单一层。"
+      "新增真正链接的x86_64 Core/UI发行版、192项译运行测试及原生界面/保存/两尺寸与原始负载证据；本轮未修改产品Rust/Objective-C、资源、Core、依赖或工作流。证据：构建/架构/测试、实际GUI/保存/退出、1440请求尺寸原生2×实拍、1100请求尺寸原生2×实拍、视觉记录、四轮原基准、清理。",
+      "这是Apple Silicon主机上的Rosetta译运行，不是Intel CPU/GPU实机或Windows验收。arch -x86_64 uname实返x86_64、译运行sysctl.proc_translated=1；两个发行版与实际测试harness均由lipo确认thin x86_64。沿用既有Cargo target缓存、--locked --offline、每构建jobs2和本轮系统临时目录，未安装/切换工具链、改锁文件或伪造编译器。",
+      "Core release链接91.925s、UI192.827s成功；Core921ba7b965a402ea534a4a1e43f33fff82dbc2404dfc79ad7b48609cedc316b0/8,951,416bytes，UIf2d443d2ba1ae886746250c36e34fc2879b4317e10555dd33399a2fc68078f59/16,552,232bytes。原生arm64仍Core25f/8,428,096与UI675f/15,246,800，源文件SHA对齐UI51。Mach-O minOS12.0/sdk26.2仅链接元数据，不是macOS12实机验证。x86 release cargo test构建及执行146.778s，真正用例运行0.13s，192passed/2既有ignored，harness为x86_64/SHA0b7a9578…"
     ],
-    "limits": [],
+    "limits": [
+      "Figma最初返回需要重新认证，暂停视觉修改并只做独立源码/编译检查；用户完成授权后，官方MCP59:279与59:484 metadata、高保真context和截图读取成功。设计最新弹窗728×800及资产已定位，当前仍沿用现有布局，未把这次Intel专项当成全局40帧或弹窗全部资产一比一通过。报告生成器现明确“专项验收与差异修复 · 全量逐帧终验未完成”，并区分专项任务数与已验收界面数；不再保留“Intel仅类型检查”的固定过时文案。",
+      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。“52”是专项记录数，不是界面完成数；当前尚未完成40帧逐帧一比一终验。下一阶段按完整界面设计对照逐项修差异，Intel硬件/Windows/完整HiDPI、读屏、真实WorkBuddy重启、物理托盘与首帧等门禁继续保留；Goal active，进度HTML仍仅静态检查。"
+    ],
     "evidence": [
       {
-        "label": "编译",
-        "href": "benchmarks/model-editor-escape-build.json"
+        "label": "构建/架构/测试",
+        "href": "benchmarks/intel-runtime-build.json"
       },
       {
-        "label": "旧版与失败中间版",
-        "href": "benchmarks/model-editor-escape-before-gui.json"
+        "label": "实际GUI/保存/退出",
+        "href": "benchmarks/intel-runtime-gui-validation.json"
       },
       {
-        "label": "真实交互/生命周期/配置",
-        "href": "benchmarks/model-editor-escape-gui-validation.json"
+        "label": "1440请求尺寸原生2×实拍",
+        "href": "screenshots/intel-runtime-1440x900-2x.png"
       },
       {
-        "label": "1440请求尺寸原生2×图",
-        "href": "screenshots/model-editor-escape-1440x900-2x.png"
+        "label": "1100请求尺寸原生2×实拍",
+        "href": "screenshots/intel-runtime-1100x700-2x.png"
       },
       {
-        "label": "1100请求尺寸原生2×图",
-        "href": "screenshots/model-editor-escape-1100x700-2x.png"
+        "label": "视觉记录",
+        "href": "benchmarks/intel-runtime-visual-validation.json"
       },
       {
-        "label": "组合取消小窗",
-        "href": "screenshots/model-editor-escape-ime-1100x700-2x.png"
+        "label": "四轮原基准",
+        "href": "benchmarks/intel-runtime-performance-summary.json"
       },
       {
-        "label": "资源",
-        "href": "benchmarks/model-editor-escape-resources.json"
-      },
-      {
-        "label": "性能",
-        "href": "benchmarks/model-editor-escape-performance-summary.json"
+        "label": "清理",
+        "href": "benchmarks/intel-runtime-cleanup.json"
       }
     ],
-    "commit": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
-    "date": "2026-10-30T11:11:14+08:00",
-    "commit_subject": "fix(studio): route model input escape through editor",
+    "commit": "a44a1c3d0d38f2153f26dbaab23ce641072f8919",
+    "date": "2026-10-30T15:13:39+08:00",
+    "commit_subject": "docs(studio): record Intel release and translated runtime checks",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2653,6 +2652,55 @@
       "date": "2026-10-30T11:11:14+08:00",
       "commit_subject": "fix(studio): route model input escape through editor",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 52,
+      "title": "Intel 发行版与 Rosetta 实跑验证",
+      "status": "recorded",
+      "summary": "新增真正链接的x86_64 Core/UI发行版、192项译运行测试及原生界面/保存/两尺寸与原始负载证据；本轮未修改产品Rust/Objective-C、资源、Core、依赖或工作流。证据：构建/架构/测试、实际GUI/保存/退出、1440请求尺寸原生2×实拍、1100请求尺寸原生2×实拍、视觉记录、四轮原基准、清理。",
+      "highlights": [
+        "新增真正链接的x86_64 Core/UI发行版、192项译运行测试及原生界面/保存/两尺寸与原始负载证据；本轮未修改产品Rust/Objective-C、资源、Core、依赖或工作流。证据：构建/架构/测试、实际GUI/保存/退出、1440请求尺寸原生2×实拍、1100请求尺寸原生2×实拍、视觉记录、四轮原基准、清理。",
+        "这是Apple Silicon主机上的Rosetta译运行，不是Intel CPU/GPU实机或Windows验收。arch -x86_64 uname实返x86_64、译运行sysctl.proc_translated=1；两个发行版与实际测试harness均由lipo确认thin x86_64。沿用既有Cargo target缓存、--locked --offline、每构建jobs2和本轮系统临时目录，未安装/切换工具链、改锁文件或伪造编译器。",
+        "Core release链接91.925s、UI192.827s成功；Core921ba7b965a402ea534a4a1e43f33fff82dbc2404dfc79ad7b48609cedc316b0/8,951,416bytes，UIf2d443d2ba1ae886746250c36e34fc2879b4317e10555dd33399a2fc68078f59/16,552,232bytes。原生arm64仍Core25f/8,428,096与UI675f/15,246,800，源文件SHA对齐UI51。Mach-O minOS12.0/sdk26.2仅链接元数据，不是macOS12实机验证。x86 release cargo test构建及执行146.778s，真正用例运行0.13s，192passed/2既有ignored，harness为x86_64/SHA0b7a9578…"
+      ],
+      "limits": [
+        "Figma最初返回需要重新认证，暂停视觉修改并只做独立源码/编译检查；用户完成授权后，官方MCP59:279与59:484 metadata、高保真context和截图读取成功。设计最新弹窗728×800及资产已定位，当前仍沿用现有布局，未把这次Intel专项当成全局40帧或弹窗全部资产一比一通过。报告生成器现明确“专项验收与差异修复 · 全量逐帧终验未完成”，并区分专项任务数与已验收界面数；不再保留“Intel仅类型检查”的固定过时文案。",
+        "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。“52”是专项记录数，不是界面完成数；当前尚未完成40帧逐帧一比一终验。下一阶段按完整界面设计对照逐项修差异，Intel硬件/Windows/完整HiDPI、读屏、真实WorkBuddy重启、物理托盘与首帧等门禁继续保留；Goal active，进度HTML仍仅静态检查。"
+      ],
+      "evidence": [
+        {
+          "label": "构建/架构/测试",
+          "href": "benchmarks/intel-runtime-build.json"
+        },
+        {
+          "label": "实际GUI/保存/退出",
+          "href": "benchmarks/intel-runtime-gui-validation.json"
+        },
+        {
+          "label": "1440请求尺寸原生2×实拍",
+          "href": "screenshots/intel-runtime-1440x900-2x.png"
+        },
+        {
+          "label": "1100请求尺寸原生2×实拍",
+          "href": "screenshots/intel-runtime-1100x700-2x.png"
+        },
+        {
+          "label": "视觉记录",
+          "href": "benchmarks/intel-runtime-visual-validation.json"
+        },
+        {
+          "label": "四轮原基准",
+          "href": "benchmarks/intel-runtime-performance-summary.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/intel-runtime-cleanup.json"
+        }
+      ],
+      "commit": "a44a1c3d0d38f2153f26dbaab23ce641072f8919",
+      "date": "2026-10-30T15:13:39+08:00",
+      "commit_subject": "docs(studio): record Intel release and translated runtime checks",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -3018,6 +3066,14 @@
     {
       "date": "2026-10-30T14:51:34+08:00",
       "note": "按用户要求同步当前阶段：第52项为验收中，51是已提交专项任务数，不能当作51个界面通过。40个界面均仍部分验收/0整帧最终验收；Intel项结束后继续逐帧设计对照与差异修复。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T15:13:40+08:00",
+      "note": "第52项专项已归档；专项记录52不等于界面完成52。40帧仍部分验收/0整帧最终验收，下一阶段按完整界面逐帧对照最新Figma。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
