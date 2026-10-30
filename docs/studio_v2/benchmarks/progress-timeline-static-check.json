@@ -1,36 +1,18 @@
 {
-  "scope": "Static source/data/link checks only; no browser execution or rendering",
-  "checked_at": "2026-10-30T18:21:09+08:00",
-  "embedded_json_matches_external": true,
+  "checked_at": "2026-10-30T21:32:02.747521+08:00",
+  "functional_module_count": 7,
+  "functional_task_links_checked": 40,
+  "embedded_json_matches": true,
+  "remaining_final": 40,
   "frame_count": 40,
-  "frame_status_counts": {
-    "pending": 0,
-    "partial": 40,
-    "reused": 0,
-    "verified": 0
-  },
-  "visual_review_counts": {
-    "not_reviewed": 37,
-    "reviewing": 1,
-    "reviewed_with_differences": 2,
-    "reviewed": 0
-  },
-  "committed_task_records": 55,
-  "recorded_goal_status": "active",
-  "current_task": {
-    "id": 55,
-    "status": "recorded"
-  },
-  "referenced_commit_objects_exist": true,
-  "html_ids_unique": true,
-  "local_file_references_checked": 383,
-  "unique_local_files": 353,
-  "missing_local_files": 0,
-  "inline_javascript_node_syntax_checks": 2,
-  "python_ast_parse": "passed",
-  "invalid_recorded_transition_rejected_without_writes": true,
-  "reference_base_stylesheet_exact_match": true,
-  "stylesheet_bytes": 17102,
-  "javascript_syntax_check_input": "stdin; no temporary files created",
-  "browser_validation": "Not verified; prior local-file refusal was not bypassed. No browser rendering attempted."
+  "recorded_tasks": 56,
+  "unique_html_ids": 42,
+  "local_references_checked": 430,
+  "base_style_exact_bytes": 17102,
+  "inline_javascript_syntax_passed": [
+    0,
+    2
+  ],
+  "invalid_recorded_task_rejected_without_writes": true,
+  "scope": "Static HTML/JSON/source/JavaScript checks only; no browser rendering claimed."
 }

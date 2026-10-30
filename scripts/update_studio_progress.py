@@ -155,6 +155,14 @@ def main():
               "counts": counts, "total_frames": len(frames), "recorded_tasks": len(recorded),
               "remaining_final": len(frames) - counts["verified"], "visual_review": review,
               "current_task": current, "latest_task": latest, "frames": frames,
+              "functional_modules": [
+                  {"title": "工具栏与窗口菜单", "implemented": "七功能工具栏已落地；语言、皮肤、恢复窗口、开机启动反馈和更新等待/失败状态已有 macOS 专项证据。", "pending": "公网更新成功、实际系统登录、外链完整路径和跨平台仍待验。", "tasks": [1, 23, 34, 35, 36, 37, 41]},
+                  {"title": "供应商管理", "implemented": "搜索、0/1/2/20/64列表、新增/复制/编辑/删除、独立草稿、取消/保存及失败恢复的主要路径已验。", "pending": "完整视觉、全部busy/异常状态、无障碍和跨平台待验。", "tasks": [4, 25, 26, 27, 29, 33]},
+                  {"title": "模型管理与四协议", "implemented": "4096发现候选、256容量、多选/键盘、能力编辑和四协议真实字段/草稿确认/显式保存已实现并分项实测。", "pending": "部分长ID提示、完整IME/无障碍和跨平台待验。", "tasks": [20, 21, 24, 31, 40, 50, 51]},
+                  {"title": "统计与请求详情", "implemented": "概览、明细、汇总、筛选、分页、最近请求和请求详情已分项实测；共享布局修正已完成两尺寸交互截图及六轮性能对照。", "pending": "后续字体候选的实机/性能、明细1px位置差、精细视觉及完整键盘待续。", "tasks": [9, 10, 11, 12, 13, 15, 19, 45, 55, 56]},
+                  {"title": "价格、采集与本地导入", "implemented": "价格规则增改删/四费率/修订快照、币种、保留策略、采集/导入暂停恢复及去重主要路径已验。", "pending": "完整异常/键盘/IME/无障碍与跨平台待验。", "tasks": [16, 17, 18]},
+                  {"title": "草稿与同步确认", "implemented": "草稿恢复、同步/取消同步原生确认、当前/全部范围及无隐式应用边界已有分项证据。", "pending": "真实WorkBuddy重启、生产回滚及完整失败状态待验。", "tasks": [22, 26, 27, 33]},
+                  {"title": "日志与进程生命周期", "implemented": "日志复制/清空/滚动、关闭UI保留核心/托盘、单实例与重开主要路径已实测。", "pending": "物理托盘菜单点击、完整重启/回滚与Windows/Intel硬件实机待验。", "tasks": [7, 42, 52]}],
               "timeline": timeline, "history": history[-200:],
               "verification": [
                   {"title": "40 帧逐帧一比一终验", "detail": f"当前 {counts['verified']} 帧最终验收、{counts['partial']} 帧有阶段性证据、{counts['reused']} 帧复用待核对。专项任务数不等于已验收界面数；每帧仍需核对完整布局、资产、状态和交互，部分通过不等于整体验收。"},

@@ -164,7 +164,7 @@
     <aside class="rail">
       <div class="rail-title mono">PROJECT INDEX</div>
       <nav class="rail-nav" aria-label="进度目录">
-        <a href="#current"><span class="dot active"></span>当前推进</a><a href="#frames"><span class="dot"></span>40 张画板</a><a href="#timeline-area"><span class="dot done"></span>施工时间线</a><a href="#verification"><span class="dot"></span>统一验收待办</a><a href="#history-area"><span class="dot"></span>更新记录</a>
+        <a href="#current"><span class="dot active"></span>当前推进</a><a href="#features"><span class="dot"></span>功能落地</a><a href="#frames"><span class="dot"></span>40 张画板</a><a href="#timeline-area"><span class="dot done"></span>施工时间线</a><a href="#verification"><span class="dot"></span>统一验收待办</a><a href="#history-area"><span class="dot"></span>更新记录</a>
       </nav>
       <div class="rail-note">每完成一项任务，同步 QA、画板映射与本页。<br><br><a href="figma_node_map.md">画板映射 ↗</a><br><a href="feature_regression_matrix.md">功能保护矩阵 ↗</a><br><a href="baseline_and_qa.md">实施与验证记录 ↗</a></div>
     </aside>
@@ -173,9 +173,14 @@
         <div class="section-top"><div><p class="eyebrow">CURRENT WORK / DEVELOP & VERIFY</p><h2 id="current-title">当前推进</h2></div><span class="pill" id="goal-state">Goal 状态以报告记录为准</span></div>
         <div class="closeout-current" id="current-task"></div>
         <p class="current-note" id="baseline"></p>
-        <div class="scope-note">数量口径：“剩余最终验收”包含所有未最终通过的画板。“视觉审查”记录本轮全局比对进展；已审查仍可有差异。历史专项证据和提交数量不等于整帧一比一通过。</div>
+        <div class="scope-note">数量口径：40 是状态画板的最终签收范围；功能落地情况见下方概览。施工任务包含开发、修复和专项验证。“视觉审查”记录逐帧比对进展，已审查仍可保留差异。</div>
         <p class="current-note" id="visual-review-summary"></p>
         <div class="coverage" id="coverage" role="img"></div><div class="coverage-labels" id="coverage-labels"></div>
+      </section>
+      <section class="panel" id="features" aria-labelledby="features-title">
+        <div class="section-top"><h2 id="features-title">功能已落地 · 分项验证情况</h2><span class="small">按业务模块汇总</span></div>
+        <p class="basis">主要界面与交互已有开发和 macOS 专项证据。每项仍列出待验范围；完整记录见功能保护矩阵。</p>
+        <div class="carryovers" id="functional-modules"></div>
       </section>
       <section class="panel" id="frames" aria-labelledby="frames-title">
         <div class="section-top"><h2 id="frames-title">40 张画板 · 当前状态</h2><span class="small">以设计映射表为准</span></div>
@@ -199,10 +204,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T18:19:50+08:00",
+  "updated_at": "2026-10-30T21:31:36+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "750ae14cd6eb347f8e7a54adec68b01b54a4270e",
+  "code_head": "44c6840f1c15091b577b44f4711d0aa20b20d7c1",
   "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
   "goal_status": "active",
   "counts": {
@@ -212,72 +217,74 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 55,
+  "recorded_tasks": 56,
   "remaining_final": 40,
   "visual_review": {
     "counts": {
-      "not_reviewed": 37,
+      "not_reviewed": 35,
       "reviewing": 1,
-      "reviewed_with_differences": 2,
+      "reviewed_with_differences": 4,
       "reviewed": 0
     },
     "source": "visual_review.json",
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 55,
-    "title": "用量明细整页布局与真实范围汇总",
-    "status": "recorded",
-    "description": "UI55已提交750ae14：用量明细整页局部对齐、条数标签真实范围汇总、自动刷新页码草稿保护与显式分页同步。最终3aa两尺寸实拍、分页/来源/详情/键盘、192tests及编译、六轮原负载和六次共享Core启动专项已归档。剩余40帧最终验收（37未整帧审查、1审查中、2保留差异）。下一步继续共享控件及其余整帧对照，字体/表格/Select箭头/跨平台等差异仍开放。CUA后台优先；清理被策略拒绝，合计暂留357.54MiB。"
+    "id": 57,
+    "title": "Studio 字体与文本角色对齐",
+    "status": "validating",
+    "description": "统计共享布局UI56已提交：两尺寸七张原生图、真实交互和六轮原负载对照完成，保留明细1px及完整键盘等差异。当前推进UI57字体角色：官方Noto Sans SC/Inter字体及共享侧栏、表格和统计文字已接入，编译门禁通过，最新候选尚待两尺寸实机与性能验证。全局40帧尚未最终签收。"
   },
   "latest_task": {
-    "id": 55,
-    "title": "用量明细整页布局、范围汇总与页码草稿保护",
+    "id": 56,
+    "title": "统计共享筛选、汇总标题与侧栏上下文布局",
     "status": "recorded",
-    "summary": "按最新56:8对齐明细副标题、47px页签区/筛选间距、283px面板起点和540px最大高度；请求行改52px、隔行使用#F4F6FF，仅明细页分页按钮/页大小选择收为32px，跳页输入仍由Kit绘制40px，窄窗继续收缩/换行。原独立范围条移入请求条数标签的原生Popover，仍读取原dashboard.summary，不删真实记录数/Token/积分；汇总分析视图原范围条不变。只改Rust/GPUI展示和UI输入同步，Core/协",
+    "summary": "对照最新52:2/56:8/57:8统一47px页签、筛选区和283px宽窗内容起点；四个下拉caret使用同一16px原SVG及#8C96AA，在原生Select/Popover保留的槽位上独立装饰绘制，不改变点击/焦点和菜单处理。概览段间距17px，Summary标题/说明独立左列、314px分组切换区及38px有效表头，原范围汇总移入条数标签Popover，仍显示原dashboard真实字段。侧栏在统计页保留当前供应商选中上下文，",
     "highlights": [
-      "按最新56:8对齐明细副标题、47px页签区/筛选间距、283px面板起点和540px最大高度；请求行改52px、隔行使用#F4F6FF，仅明细页分页按钮/页大小选择收为32px，跳页输入仍由Kit绘制40px，窄窗继续收缩/换行。原独立范围条移入请求条数标签的原生Popover，仍读取原dashboard.summary，不删真实记录数/Token/积分；汇总分析视图原范围条不变。只改Rust/GPUI展示和UI输入同步，Core/协议/查询序列化/原分页及保存格式未改。",
-      "构建门禁：最终UI3aa4a5cfb6fd9d5b082a0949b2940583a8da4da3e9fb8c1dd17c6d3d9a371859的fmt、194tests（192通过/2忽略）、strict all-targets clippy、Intel类型检查及arm64 release均通过。ab28与595的中间构建/交互记录另保留；Intel这里只是类型检查，未宣称本版Intel/Windows实机通过。",
-      "最终真实交互与独立数据核验：CUA通过文档提供的后台getApp启动精确隔离bundle，未显式activate/raise；不声称实际前台未改变。最终UI20931对2供应商/5模型/14条真实本地Mock代理请求，实测内置0/自定义14/全部14、跳页/返回、汇总Tab→Space/Esc/Return、请求详情HTTP200/500输入+50输出/550总量和小窗滚动/右侧列。较早ab28另测下一页4条/20条页大小再恢复10；最终scope以各版记录为准。结束只读SQLite复核14/7000/700/7700，Core配置SHA始终不变。"
+      "对照最新52:2/56:8/57:8统一47px页签、筛选区和283px宽窗内容起点；四个下拉caret使用同一16px原SVG及#8C96AA，在原生Select/Popover保留的槽位上独立装饰绘制，不改变点击/焦点和菜单处理。概览段间距17px，Summary标题/说明独立左列、314px分组切换区及38px有效表头，原范围汇总移入条数标签Popover，仍显示原dashboard真实字段。侧栏在统计页保留当前供应商选中上下文，点击路由保持。仅改五个Rust/GPUI布局文件，Core、查询、依赖、保存格式和原业务事件不变。",
+      "冻结构建门禁：最终UI b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57的fmt、194项测试（192通过/2既有忽略）、strict all-targets clippy、Intel类型检查及arm64 release通过。提交使用该次五文件源码快照；后续字体代码不包含在本版或本版实机结论中，Intel类型检查也不是硬件实机通过。",
+      "真实交互与独立数据读回：Mac解锁后，CUA后台getApp启动唯一隔离bundle，实际UI82226/Core81459；未显式activate/raise，不声称实际前台未变。四caret区域真实点击、模型方向/Return筛选3、供应商筛选12后恢复全部14、Today→7天、刷新Off→5均通过。输入页码2等7.5秒保留，Jump到2/2四条、Prev回1/2且输入同步；没有独立证实等待期间自动响应发生。Summary供应商2/模型5、范围浮层14记录/7700Token、小窗内滚取回7000输入/700输出和右侧列均实测；侧栏选中和返回供应商路由可用。本版条数按钮键盘焦点未可靠观察，不沿用中间40a键盘通过结论。"
     ],
-    "limits": [],
+    "limits": [
+      "40帧继续部分验收、0最终验收，剩余40；逐帧首审35未开始、1审查中、4已审查保留差异。当前阶段为专项验收与差异修复，尚未全局一比一通过；字体、明细1px、完整键盘/IME/AX、全部状态及跨平台待续，Goal保持active。进度HTML将功能主体落地和画板最终签收分开展示，施工记录数不作为功能或画板完成数。"
+    ],
     "evidence": [
       {
-        "label": "构建门禁",
-        "href": "benchmarks/details-layout-build.json"
+        "label": "冻结构建门禁",
+        "href": "benchmarks/shared-controls-build.json"
       },
       {
-        "label": "最终真实交互与独立数据核验",
-        "href": "benchmarks/details-layout-gui-validation.json"
+        "label": "真实交互与独立数据读回",
+        "href": "benchmarks/shared-controls-gui-validation.json"
       },
       {
-        "label": "1440最终原图",
-        "href": "screenshots/details-layout-1440x900-native-2x.png"
+        "label": "1440明细",
+        "href": "screenshots/shared-controls-details-1440x900-native-1x.png"
       },
       {
-        "label": "1100最终原图",
-        "href": "screenshots/details-layout-1100x700-native-2x.png"
+        "label": "1440概览",
+        "href": "screenshots/shared-controls-overview-1440x900-native-1x.png"
       },
       {
-        "label": "小窗真实范围汇总",
-        "href": "screenshots/details-layout-summary-1100x700-native-2x.png"
+        "label": "1440汇总",
+        "href": "screenshots/shared-controls-summary-1440x900-native-1x.png"
       },
       {
-        "label": "像素测量",
-        "href": "benchmarks/details-layout-geometry.json"
+        "label": "1100明细",
+        "href": "screenshots/shared-controls-details-1100x700-native-1x.png"
       },
       {
-        "label": "设计与资产审查",
-        "href": "benchmarks/details-layout-design-audit.json"
+        "label": "1100概览",
+        "href": "screenshots/shared-controls-overview-1100x700-native-1x.png"
       },
       {
-        "label": "六轮原负载对照",
-        "href": "benchmarks/details-layout-performance-summary.json"
+        "label": "1100汇总",
+        "href": "screenshots/shared-controls-summary-1100x700-native-1x.png"
       }
     ],
-    "commit": "750ae14cd6eb347f8e7a54adec68b01b54a4270e",
-    "date": "2026-10-30T18:19:17+08:00",
-    "commit_subject": "fix(studio): align usage records and preserve page edits during refresh",
+    "commit": "44c6840f1c15091b577b44f4711d0aa20b20d7c1",
+    "date": "2026-10-30T21:30:59+08:00",
+    "commit_subject": "fix(studio): align shared statistics controls and summary layout",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -285,26 +292,43 @@
       "node": "52:2",
       "title": "01 / STUDIO V2 · 使用概览",
       "source": "statistics/overview.rs, layout.rs, source_controls.rs, usage_chart.rs",
-      "detail": "部分：导航/筛选、四KPI/详细指标/空值已验；四KPI/趋势/计费/最近请求已验，整帧最终审计待续",
+      "detail": "部分：UI56首轮整帧/29资产审查及40a两尺寸实拍，283px起点/17px间距与真实14/7700已验；小窗图含tooltip，最新候选实拍/性能因Mac锁定待续，字体/完整状态未终验",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=52-2",
       "visual_review": {
         "id": "52:2",
         "name": "01 / STUDIO V2 · 使用概览",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "layout": "b313宽窗KPI top283、趋势top468、最近请求top748；17px段间距保留。真实单点缺失说明让趋势高263而稿246，小窗KPI重排，完整概览滚动/状态终验待续。",
+          "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
+          "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+          "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
+          "states": "2供应商/5模型/14真实Mock代理记录、总Token7700、成功率100%、缓存未知为—；未伪造设计样例数据。",
+          "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
+          "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
+          "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "字体、字重、基线和部分卡内间距仍待逐项统一。",
+          "单日只有单点，保留缺失说明/真实走势图，趋势为263px，较静态稿246px高17px；不能为贴稿隐藏真实语义。",
+          "保留实际USD偏好、未知缓存/费用与真实14/7700，静态稿示例数值不作为验收目标。",
+          "小窗概览lower内容在可视区以下，完整滚动/焦点/IME/无障碍/皮肤及跨平台仍待终验。"
+        ],
+        "evidence": [
+          "benchmarks/shared-controls-design-manifests.json",
+          "benchmarks/shared-controls-design-audit.json",
+          "benchmarks/shared-controls-intermediate-40a-build.json",
+          "benchmarks/shared-controls-intermediate-40a-gui.json",
+          "benchmarks/shared-controls-intermediate-40a-geometry.json",
+          "benchmarks/shared-controls-build.json",
+          "benchmarks/shared-controls-gui-validation.json",
+          "benchmarks/shared-controls-geometry.json",
+          "benchmarks/shared-controls-performance-summary.json",
+          "screenshots/shared-controls-overview-1440x900-native-1x.png",
+          "screenshots/shared-controls-overview-1100x700-native-1x.png"
+        ]
       }
     },
     {
@@ -348,33 +372,31 @@
       "node": "56:8",
       "title": "03 / STUDIO V2 · 用量明细",
       "source": "statistics/*, usage_table.rs",
-      "detail": "部分：八列/来源筛选/分页/详情/窄窗首末列已验，整帧最终审计待续",
+      "detail": "部分：八列/来源筛选/分页/详情/窄窗首末列已验；UI56的40a实测原SVG四箭头与表头outer39px、键盘/分页通过，最新候选/性能及完整视觉待续",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=56-8",
       "visual_review": {
         "id": "56:8",
         "name": "03 / STUDIO V2 · 用量明细",
         "review_status": "reviewed_with_differences",
-        "scope": "UI55完成首轮整页审查和局部修复；最新56:8、24资源清单、3aa候选真实两尺寸/筛选分页详情/汇总键盘及性能已记录，整帧仍保留差异。",
+        "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
         "checks": {
-          "layout": "面板top283/height540及表头top364与稿对应，52px行距已测；原生表头含边框40px而稿39px，列宽/内边距仍有差异",
-          "colors": "隔行#F4F6FF和条数浅靛色已对齐；文字/状态/hover尚未全量逐项终验",
-          "typography": "Noto Sans SC与系统fallback/权重/字号存在差异，尚未最终统一",
-          "assets": "24资源中19字节一致、2仅局部clipID不同且完整绘制结构相同、3装饰traffic lights用真实系统控件；Select内置chevron及全部slot终验仍待续",
-          "states": "最终3aa内置0/自定义14/全部14、真实详情、分页和汇总通过；全状态矩阵未完成",
-          "interaction": "Tab/Space/Esc/Return汇总、分页/来源/详情、自动刷新不覆盖编辑且显式翻页同步输入通过；非完整键盘/IME/读屏",
-          "native_1440": "最终3aa2880×1802原始实拍已核对，含原生额外2物理行",
-          "native_1100": "最终3aa2200×1402原始表/范围汇总实拍已核对，内滚/固定pager/右侧列可达"
+          "layout": "b313在1×下请求表头top363/outer39px，稿top364/39；高度已对齐，仍保留1px纵向位置差。面板top283/max540、52px行距保留，列宽/内边距待续。",
+          "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
+          "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+          "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
+          "states": "40a模型3/供应商12/全部14，页2为4行，Jump/Prev与原条数范围汇总14/7700通过；完整状态矩阵未验。",
+          "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
+          "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
+          "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
         },
         "differences": [
           "字体fallback、权重/基线及部分单元格字号仍与Noto Sans SC/Inter设计不同。",
-          "原生表头含边框实际40px、稿39px，表体有约1px余差；列宽、标题/表格内边距与垂直列分隔仍待统一。",
-          "模型/供应商Select仍用Kit内置chevron，日期/刷新用Figma16px资源；完整静态slot/effective geometry尚未全部终验。",
           "保留真实健康/更多筛选/清除、跳页/首列/右侧列等原业务控件，以及条数标签可打开真实范围汇总；与静态稿有额外可见控件。",
-          "统计页供应商栏的当前供应商高亮呈现仍与设计样例有差异，需按真实上下文核对。",
           "后台自动刷新由既有window_active门控；本轮未主动前置，但实际前台状态未独立测量，不宣称所有后台截图即时。",
           "完整键盘、IME/读屏、全部皮肤/状态和跨平台仍未最终验收。",
-          "分页按钮/页大小选择已为32px，跳页输入仍由Kit绘制40px；它是保留的额外业务控件，完整footer几何仍需统一。"
+          "分页按钮/页大小选择已为32px，跳页输入仍由Kit绘制40px；它是保留的额外业务控件，完整footer几何仍需统一。",
+          "b313请求表头高度39px已对齐，top363与参考364仍差1px；四原SVG caret质心差x−.016/y−.036px，不代表全部控件状态通过。"
         ],
         "evidence": [
           "benchmarks/model-alignment-runtime-partial.json",
@@ -388,7 +410,18 @@
           "benchmarks/details-layout-performance-summary.json",
           "benchmarks/details-layout-startup-comparison.json",
           "screenshots/details-layout-1440x900-native-2x.png",
-          "screenshots/details-layout-1100x700-native-2x.png"
+          "screenshots/details-layout-1100x700-native-2x.png",
+          "benchmarks/shared-controls-design-manifests.json",
+          "benchmarks/shared-controls-design-audit.json",
+          "benchmarks/shared-controls-intermediate-40a-build.json",
+          "benchmarks/shared-controls-intermediate-40a-gui.json",
+          "benchmarks/shared-controls-intermediate-40a-geometry.json",
+          "benchmarks/shared-controls-build.json",
+          "benchmarks/shared-controls-gui-validation.json",
+          "benchmarks/shared-controls-geometry.json",
+          "benchmarks/shared-controls-performance-summary.json",
+          "screenshots/shared-controls-details-1440x900-native-1x.png",
+          "screenshots/shared-controls-details-1100x700-native-1x.png"
         ]
       }
     },
@@ -396,26 +429,42 @@
       "node": "57:8",
       "title": "04 / STUDIO V2 · 汇总分析",
       "source": "statistics/analysis.rs, layout.rs, usage_table.rs",
-      "detail": "部分：表卡/两指标卡/真实排序/分组分页/两尺寸已验，完整视觉与无障碍待续",
+      "detail": "部分：UI56首轮整帧、40a两尺寸/2供应商5模型/14与7700范围浮层及小窗下卡滚动已验；表头低5.5px，b313修复标题列与314px切换区仅编译通过，解锁后补实拍/性能，未整帧通过",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=57-8",
       "visual_review": {
         "id": "57:8",
         "name": "04 / STUDIO V2 · 汇总分析",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI56官方高保真整帧/资产审查、最终b313真实两尺寸交互与六轮原负载对照完成；保留差异，未整帧最终验收。后续字体候选另行验收。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "layout": "b313宽窗汇总面板top283、表头top363/outer38px符合参考；修复旧40a的5.5px下移，标题/说明独立左列与314px切换区实拍确认。字体、列宽/内边距仍待续。",
+          "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
+          "typography": "本版b313仍使用系统fallback，和设计Noto Sans SC/Inter存在差异。后续字体角色候选编译已过，但尚未完成实机/性能验收，不能反写本版通过。",
+          "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
+          "states": "b313供应商2组/模型5组、条数浮层真实14记录/7700Token；小窗内部scroll取回Token构成7000输入/700输出和缓存覆盖卡，完整状态矩阵未终验。",
+          "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。",
+          "native_1440": "b313原始1440×901、原生1×实拍已检查；目标逻辑1440×900，保留原生额外1物理行。与旧40a的2×原图分别归档。",
+          "native_1100": "b313原始1100×701、原生1×实拍已检查；目标逻辑1100×700，保留原生额外1物理行。明细/汇总内滚及右侧列已实测，概览下方完整滚动仍待终验。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "字体、字号/权重/基线、列宽及表格内边距尚未统一。",
+          "保留实际2供应商/5模型/14记录和分页/排序/首末列等原业务控件，不能伪造稿中的样例4组或删除功能。",
+          "Summary条数按钮鼠标浮层已验，键盘焦点未可靠观察；完整IME/无障碍/皮肤/跨平台未终验。"
+        ],
+        "evidence": [
+          "benchmarks/shared-controls-design-manifests.json",
+          "benchmarks/shared-controls-design-audit.json",
+          "benchmarks/shared-controls-intermediate-40a-build.json",
+          "benchmarks/shared-controls-intermediate-40a-gui.json",
+          "benchmarks/shared-controls-intermediate-40a-geometry.json",
+          "benchmarks/shared-controls-build.json",
+          "benchmarks/shared-controls-gui-validation.json",
+          "benchmarks/shared-controls-geometry.json",
+          "benchmarks/shared-controls-performance-summary.json",
+          "screenshots/shared-controls-summary-1440x900-native-1x.png",
+          "screenshots/shared-controls-summary-1100x700-native-1x.png"
+        ]
       }
     },
     {
@@ -1372,6 +1421,97 @@
         "differences": [],
         "evidence": []
       }
+    }
+  ],
+  "functional_modules": [
+    {
+      "title": "工具栏与窗口菜单",
+      "implemented": "七功能工具栏已落地；语言、皮肤、恢复窗口、开机启动反馈和更新等待/失败状态已有 macOS 专项证据。",
+      "pending": "公网更新成功、实际系统登录、外链完整路径和跨平台仍待验。",
+      "tasks": [
+        1,
+        23,
+        34,
+        35,
+        36,
+        37,
+        41
+      ]
+    },
+    {
+      "title": "供应商管理",
+      "implemented": "搜索、0/1/2/20/64列表、新增/复制/编辑/删除、独立草稿、取消/保存及失败恢复的主要路径已验。",
+      "pending": "完整视觉、全部busy/异常状态、无障碍和跨平台待验。",
+      "tasks": [
+        4,
+        25,
+        26,
+        27,
+        29,
+        33
+      ]
+    },
+    {
+      "title": "模型管理与四协议",
+      "implemented": "4096发现候选、256容量、多选/键盘、能力编辑和四协议真实字段/草稿确认/显式保存已实现并分项实测。",
+      "pending": "部分长ID提示、完整IME/无障碍和跨平台待验。",
+      "tasks": [
+        20,
+        21,
+        24,
+        31,
+        40,
+        50,
+        51
+      ]
+    },
+    {
+      "title": "统计与请求详情",
+      "implemented": "概览、明细、汇总、筛选、分页、最近请求和请求详情已分项实测；共享布局修正已完成两尺寸交互截图及六轮性能对照。",
+      "pending": "后续字体候选的实机/性能、明细1px位置差、精细视觉及完整键盘待续。",
+      "tasks": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        19,
+        45,
+        55,
+        56
+      ]
+    },
+    {
+      "title": "价格、采集与本地导入",
+      "implemented": "价格规则增改删/四费率/修订快照、币种、保留策略、采集/导入暂停恢复及去重主要路径已验。",
+      "pending": "完整异常/键盘/IME/无障碍与跨平台待验。",
+      "tasks": [
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "title": "草稿与同步确认",
+      "implemented": "草稿恢复、同步/取消同步原生确认、当前/全部范围及无隐式应用边界已有分项证据。",
+      "pending": "真实WorkBuddy重启、生产回滚及完整失败状态待验。",
+      "tasks": [
+        22,
+        26,
+        27,
+        33
+      ]
+    },
+    {
+      "title": "日志与进程生命周期",
+      "implemented": "日志复制/清空/滚动、关闭UI保留核心/托盘、单实例与重开主要路径已实测。",
+      "pending": "物理托盘菜单点击、完整重启/回滚与Windows/Intel硬件实机待验。",
+      "tasks": [
+        7,
+        42,
+        52
+      ]
     }
   ],
   "timeline": [
@@ -3838,6 +3978,58 @@
       "date": "2026-10-30T18:19:17+08:00",
       "commit_subject": "fix(studio): align usage records and preserve page edits during refresh",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 56,
+      "title": "统计共享筛选、汇总标题与侧栏上下文布局",
+      "status": "recorded",
+      "summary": "对照最新52:2/56:8/57:8统一47px页签、筛选区和283px宽窗内容起点；四个下拉caret使用同一16px原SVG及#8C96AA，在原生Select/Popover保留的槽位上独立装饰绘制，不改变点击/焦点和菜单处理。概览段间距17px，Summary标题/说明独立左列、314px分组切换区及38px有效表头，原范围汇总移入条数标签Popover，仍显示原dashboard真实字段。侧栏在统计页保留当前供应商选中上下文，",
+      "highlights": [
+        "对照最新52:2/56:8/57:8统一47px页签、筛选区和283px宽窗内容起点；四个下拉caret使用同一16px原SVG及#8C96AA，在原生Select/Popover保留的槽位上独立装饰绘制，不改变点击/焦点和菜单处理。概览段间距17px，Summary标题/说明独立左列、314px分组切换区及38px有效表头，原范围汇总移入条数标签Popover，仍显示原dashboard真实字段。侧栏在统计页保留当前供应商选中上下文，点击路由保持。仅改五个Rust/GPUI布局文件，Core、查询、依赖、保存格式和原业务事件不变。",
+        "冻结构建门禁：最终UI b313ba2148c3c0c60e3bb63b33a6704ec8a76f38c8105963ad9965c578521a57的fmt、194项测试（192通过/2既有忽略）、strict all-targets clippy、Intel类型检查及arm64 release通过。提交使用该次五文件源码快照；后续字体代码不包含在本版或本版实机结论中，Intel类型检查也不是硬件实机通过。",
+        "真实交互与独立数据读回：Mac解锁后，CUA后台getApp启动唯一隔离bundle，实际UI82226/Core81459；未显式activate/raise，不声称实际前台未变。四caret区域真实点击、模型方向/Return筛选3、供应商筛选12后恢复全部14、Today→7天、刷新Off→5均通过。输入页码2等7.5秒保留，Jump到2/2四条、Prev回1/2且输入同步；没有独立证实等待期间自动响应发生。Summary供应商2/模型5、范围浮层14记录/7700Token、小窗内滚取回7000输入/700输出和右侧列均实测；侧栏选中和返回供应商路由可用。本版条数按钮键盘焦点未可靠观察，不沿用中间40a键盘通过结论。"
+      ],
+      "limits": [
+        "40帧继续部分验收、0最终验收，剩余40；逐帧首审35未开始、1审查中、4已审查保留差异。当前阶段为专项验收与差异修复，尚未全局一比一通过；字体、明细1px、完整键盘/IME/AX、全部状态及跨平台待续，Goal保持active。进度HTML将功能主体落地和画板最终签收分开展示，施工记录数不作为功能或画板完成数。"
+      ],
+      "evidence": [
+        {
+          "label": "冻结构建门禁",
+          "href": "benchmarks/shared-controls-build.json"
+        },
+        {
+          "label": "真实交互与独立数据读回",
+          "href": "benchmarks/shared-controls-gui-validation.json"
+        },
+        {
+          "label": "1440明细",
+          "href": "screenshots/shared-controls-details-1440x900-native-1x.png"
+        },
+        {
+          "label": "1440概览",
+          "href": "screenshots/shared-controls-overview-1440x900-native-1x.png"
+        },
+        {
+          "label": "1440汇总",
+          "href": "screenshots/shared-controls-summary-1440x900-native-1x.png"
+        },
+        {
+          "label": "1100明细",
+          "href": "screenshots/shared-controls-details-1100x700-native-1x.png"
+        },
+        {
+          "label": "1100概览",
+          "href": "screenshots/shared-controls-overview-1100x700-native-1x.png"
+        },
+        {
+          "label": "1100汇总",
+          "href": "screenshots/shared-controls-summary-1100x700-native-1x.png"
+        }
+      ],
+      "commit": "44c6840f1c15091b577b44f4711d0aa20b20d7c1",
+      "date": "2026-10-30T21:30:59+08:00",
+      "commit_subject": "fix(studio): align shared statistics controls and summary layout",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -4350,6 +4542,111 @@
         "reviewed_with_differences": 2,
         "reviewed": 0
       }
+    },
+    {
+      "date": "2026-10-30T18:35:39+08:00",
+      "note": "开始UI56：共享筛选箭头/表头布局与概览、汇总整帧比对；后台CUA基线验证进行中。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 37,
+        "reviewing": 1,
+        "reviewed_with_differences": 2,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T19:06:12+08:00",
+      "note": "UI56进度刷新：首轮真实交互已通过，最新布局编译完成；当前处于差异修复与专项验收，等待最终两尺寸截图、回归及性能门禁。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 37,
+        "reviewing": 1,
+        "reviewed_with_differences": 2,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T19:11:07+08:00",
+      "note": "UI56进入最终候选验收：40a全部构建门禁通过，后台Computer Use正在补两尺寸实机证据。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 37,
+        "reviewing": 1,
+        "reviewed_with_differences": 2,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T19:34:18+08:00",
+      "note": "UI56锁屏续写：b313补齐汇总标题列/314px切换区后构建门禁通过；40a实机证据已存，Mac锁定使最新实拍/性能待续。未提交，Goal保持active。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 1,
+        "reviewed_with_differences": 4,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T20:12:16+08:00",
+      "note": "Mac锁定期间完成字体基础代码和arm64/Intel类型检查/Rosetta无界面字体测试；统计布局b313与字体c4e分别冻结待实机/性能，均未提交。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 1,
+        "reviewed_with_differences": 4,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T21:14:34+08:00",
+      "note": "按功能模块展示已落地成果与待验项，区分施工记录和画板终验。b313两尺寸实拍完成，转入原负载性能对照。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 1,
+        "reviewed_with_differences": 4,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-30T21:31:36+08:00",
+      "note": "UI56统计共享布局已提交，更新功能落地七组概览并区分施工记录与画板终验；进入UI57字体验收，剩余40帧。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 35,
+        "reviewing": 1,
+        "reviewed_with_differences": 4,
+        "reviewed": 0
+      }
     }
   ],
   "verification": [
@@ -4403,7 +4700,7 @@ function themeButton(){const dark=document.documentElement.dataset.theme==='dark
 $('theme-toggle').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('workbuddy.studio.timeline.theme',t)}catch(_){}themeButton()};themeButton();
 $('phase').textContent=data.phase;$('updated').textContent=date(data.updated_at);
 const goalNames={active:'Goal 持续推进',paused:'自动 Goal 暂停',blocked:'Goal 受阻',complete:'Goal 已完成'};$('goal-state').textContent=goalNames[data.goal_status]||'Goal 状态待同步';$('goal-state').className='pill '+(data.goal_status==='active'?'active':data.goal_status==='complete'?'done':'pending');
-for(const[value,label,small]of [[data.remaining_final+'/'+data.total_frames,'剩余最终验收','包含所有未最终通过的画板'],[data.counts.verified,'整帧最终通过','完整设计与交互核对通过'],[data.counts.partial,'部分验收','已有阶段证据，仍需复核'],[data.recorded_tasks,'已提交分项','任务数不等于界面完成率']])$('stats').append(node('div',{class:'stat'},[node('span',{},label),node('strong',{},value),node('small',{},small)]));
+for(const[value,label,small]of [[data.remaining_final+'/'+data.total_frames,'待最终签收画板','状态画板范围，功能落地情况见下方'],[data.counts.verified,'整帧最终通过','完整设计与交互核对通过'],[data.counts.partial,'有阶段证据画板','仍需逐帧复核'],[data.recorded_tasks,'已提交施工记录','包含开发、修复和专项验证']])$('stats').append(node('div',{class:'stat'},[node('span',{},label),node('strong',{},value),node('small',{},small)]));
 const current=data.current_task||{};$('current-stage').textContent='UI-'+current.id+' · '+(names[current.status]||'推进中');$('current-task').append(node('div',{},[node('strong',{},'UI-'+current.id+' · '+current.title),node('p',{},current.description||'按已记录任务继续推进')]),pill(current.status));
 $('baseline').textContent='分支 '+data.branch+' · 最近界面代码基线 '+data.code_head.slice(0,7)+' · 最近已提交 UI-'+data.latest_task.id+' '+data.latest_task.title;
 for(const status of ['verified','partial','reused','pending']){const count=data.counts[status]||0;if(count)$('coverage').append(node('span',{class:status,style:'flex:'+count,title:names[status]+' '+count}));if(count)$('coverage-labels').append(node('span',{},[node('b',{},count+' '),names[status]]))}
@@ -4418,6 +4715,7 @@ const timeline=[...data.timeline];if(current.id&&!timeline.some(t=>t.id===curren
 else{const t=timeline.find(t=>t.id===current.id);if(t&&!t.commit){t.status=current.status;t.summary=current.description||t.summary}}
 function renderTasks(){filters('task-filters',[['all','全部'],['recorded','已提交'],['current','当前推进']],taskFilter,v=>{taskFilter=v;renderTasks()});const query=$('task-search').value.trim().toLowerCase();const rows=timeline.filter(t=>(taskFilter==='all'||taskFilter==='recorded'&&t.status==='recorded'||taskFilter==='current'&&t.id===current.id)&&[t.id,t.title,t.summary,...t.highlights,...t.limits].join(' ').toLowerCase().includes(query)).sort((a,b)=>b.id-a.id);$('task-result').textContent='显示 '+rows.length+' / '+timeline.length+' 项记录';$('task-total').textContent=data.recorded_tasks+' 个已提交分项 · 当前 UI-'+current.id;$('timeline').replaceChildren(...rows.map(t=>{const d=node('details',{class:'phase',id:'task-'+t.id,'data-status':t.status==='recorded'?'done':t.id===current.id?'active':'pending'});if(t.id===current.id)d.open=true;d.append(node('summary',{},[node('div',{class:'phase-heading'},[node('span',{class:'chevron','aria-hidden':true},'›'),node('span',{class:'phase-code mono'},'UI-'+String(t.id).padStart(2,'0')),node('h3',{},t.title),pill(t.status)]),node('p',{class:'phase-summary'},t.summary)]));const body=node('div',{class:'phase-body'},[node('p',{class:'phase-date mono'},t.date?date(t.date)+' · 对应记录提交 '+t.commit.slice(0,7):'当前任务 · 尚未形成最终提交'),node('ul',{},t.highlights.map(x=>node('li',{},x)))]);if(t.limits.length)body.append(node('div',{class:'limits'},t.limits.map(x=>node('p',{},x))));const evidence=node('div',{class:'phase-links'},t.evidence.map(e=>link(e.label,e.href)));if(t.commit)evidence.append(link(t.commit.slice(0,7)+' · Git提交','https://github.com/gloryhui/workbuddy-proxy/commit/'+t.commit));evidence.append(link('QA原文',t.source||'baseline_and_qa.md'));body.append(evidence);d.append(body);return d}));if(!rows.length)$('timeline').append(node('div',{class:'empty'},'没有匹配的施工记录。'))}
 $('task-search').oninput=renderTasks;renderTasks();$('expand-all').onclick=()=>{const details=[...$('timeline').querySelectorAll('details')];const open=details.some(d=>!d.open);details.forEach(d=>d.open=open);$('expand-all').textContent=open?'收起明细':'展开明细'};
+for(const item of data.functional_modules||[])$('functional-modules').append(node('article',{class:'carryover'},[pill('partial','主体已落地'),node('strong',{},item.title),node('p',{},item.implemented),node('p',{},'待验：'+item.pending),node('div',{class:'phase-links'},item.tasks.map(id=>link('UI-'+id,'#task-'+id))),link('功能保护矩阵','feature_regression_matrix.md')]));
 for(const item of data.verification)$('carryovers').append(node('div',{class:'carryover'},[pill('pending','仍需复核'),node('strong',{},item.title),node('p',{},item.detail)]));
 for(const item of [...data.history].reverse())$('history').append(node('article',{class:'history-entry'},[node('time',{dateTime:item.date},date(item.date)),node('h3',{},item.note),node('p',{},'剩余最终验收 '+(item.remaining_final??(40-item.verified))+' / 40 · '+item.partial+' 部分验收 · '+item.reused+' 复用待核对')]));
 const images=data.latest_task.evidence.filter(e=>/\.(png|jpg|jpeg)$/.test(e.href)).slice(0,3);$('gallery-task').textContent='UI-'+data.latest_task.id+' · '+data.latest_task.commit.slice(0,7);for(const item of images){const a=link('',item.href);a.replaceChildren(node('img',{src:item.href,alt:item.label,loading:'lazy'}),node('span',{},item.label));$('gallery').append(a)}if(!images.length)$('latest-evidence').hidden=true;
