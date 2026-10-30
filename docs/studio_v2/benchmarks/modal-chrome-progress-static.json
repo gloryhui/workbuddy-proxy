@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-31T07:42:14.201579+08:00",
+  "at": "2026-10-31T07:46:48.916930+08:00",
   "embedded_json_identical": true,
   "unique_frames": 40,
   "counts": {
@@ -11,5 +11,8 @@
   "remaining_final": 40,
   "relative_hrefs_existing": 428,
   "node_check_exit_code": 0,
-  "browser": "Notretested: prior localfile toolpolicy refusal remains; noalternate-path bypass. Existing renderer/styles unchanged, data-only timeline update."
+  "browser": "Notretested: prior localfile toolpolicy refusal remains; noalternate-path bypass. Existing renderer/styles unchanged, data-only timeline update.",
+  "recorded_tasks": 64,
+  "latest_task_commit": "88c2e3c760339b2c9446e5cdb318efe2cf52a946",
+  "current_task": 65
 }
