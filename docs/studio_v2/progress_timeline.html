@@ -198,10 +198,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-30T07:54:34+08:00",
+  "updated_at": "2026-10-30T08:18:09+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "a2dfa9527175af114773386b409eef393e5598c9",
+  "code_head": "d06877198201f107b9142340237430509a1cfc61",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
   "goal_status": "active",
   "counts": {
@@ -211,61 +211,64 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 46,
+  "recorded_tasks": 47,
   "current_task": {
-    "id": 46,
-    "title": "Unicode 编辑、保存与冷载入验收",
+    "id": 47,
+    "title": "模型表完整值提示限宽换行",
     "status": "recorded",
-    "description": "同0b43字节完成setValue后的Unicode编辑、取消/草稿/显式保存和新Core/UI冷载入；两尺寸及资源证据已留，真实中文IME与只读输入源授权仍待办。"
+    "description": "修复长显示名提示越窗，共享原生有界Tooltip；两尺寸实拍、编辑保存与More/Esc回归、六轮性能均留证。独立表格ID提示与完整专项仍待验。"
   },
   "latest_task": {
-    "id": 46,
-    "title": "Unicode 编辑、保存与冷载入验收",
+    "id": 47,
+    "title": "模型表完整值提示限宽换行",
     "status": "recorded",
-    "summary": "本轮未改产品源码，补齐模型显示名Unicode编辑/取消/草稿/显式保存和新Core/UI冷载入证据；真实中文IME仍未验收，不把程序赋值当组合输入。证据：构建复用与源码、真实操作与落盘、方法边界、1440中文、1100英文、冷载入、资源验证、清理。",
+    "summary": "修复模型表长显示名提示越出窗口的问题，并将既有请求详情提示提取为共享GPUI组件；完整原值、列宽、选择/编辑/保存事件保持。证据：编译与资源、旧版缺陷、真实交互与落盘、视觉与像素、1440实拍、1100实拍、六轮性能、清理。",
     "highlights": [
-      "本轮未改产品源码，补齐模型显示名Unicode编辑/取消/草稿/显式保存和新Core/UI冷载入证据；真实中文IME仍未验收，不把程序赋值当组合输入。证据：构建复用与源码、真实操作与落盘、方法边界、1440中文、1100英文、冷载入、资源验证、清理。",
-      "当前UI仍0b43629a…/15,246,768bytes、Core仍25f/8,428,096bytes，与UI45最终构建逐哈希一致；相关应用源码未变。复用UI45的192 tests/2既有ignored、fmt/严格clippy/Intel check/Release及包含当前0b43/25f的六轮旧/新原benchmark对照，本轮不冒称重新编译或重复请求基准。macOS实际15.8.1/Apple Silicon，ioreg No锁定。",
-      "只读核对实际锁定gpui-pre-macos0.3.9：marked_text_range存在时及IME可打印键先交inputContext.handleEvent，之后才回应用keybindings。gpui-base0.7.3提供UTF16 marked range，普通单行Enter传播/PressEnter；显示名是无应用ASCII过滤/数字mask的原生InputState，当前normalize_input只去单行换行符。这是源码路径，不是OS组合输入通过；同时以缓存.crate SHA核对Cargo.lock，并逐字节比较两个已读源文件，未改缓存/依赖（未发现.cargo-checksum.json时改用只读archive member校验，未解压写入）。"
+      "修复模型表长显示名提示越出窗口的问题，并将既有请求详情提示提取为共享GPUI组件；完整原值、列宽、选择/编辑/保存事件保持。证据：编译与资源、旧版缺陷、真实交互与落盘、视觉与像素、1440实拍、1100实拍、六轮性能、清理。",
+      "官方MCP重读54:246高保真context/截图；原15px模型编辑SVG与最新资源逐字节一致，SHAd19ec85f…，未改资源、28px按钮、29px模型行或标题/七项工具栏。仅ui_components.rs增加full_value_tooltip，内层Label max520/whitespace_normal/原主题popover前景色、外层max560；model_table.rs接入，detail_layout.rs复用同组件。不裁字符串、不插入数据换行、不加定时器/全局Kit改造，Core、配置格式、依赖与热路径未改。",
+      "基线0b43实拍自然CUA scroll触发首行name提示，单行文字越过窗口且TAIL-NAME47不可见，旧图主代理已查看。使用实际校验允许的233字节name与154字节model ID、64+1模型；修复c6ee两尺寸均自然显示五行name提示、尾标在框内，1440静置30秒后仍见。上游ID列的独立Tooltip未成功触发，明确未验，不由共享源码或完整AX Cell推断视觉通过。"
     ],
-    "limits": [],
+    "limits": [
+      "前两组新p95与采样峰值均较高，因此补新→旧反向一组，保留同向小变化；旧→新中位：Core12.33→12.12、UI72.09→72.31、合计84.55→84.73MiB，峰值131.89→134.64MiB（+2.75），p50 0.172→0.171/p95 0.197→0.204ms（+0.007），大请求0.089→0.086s，Core ready213.374→214.662/UI记录ready679.639→799.116ms（+119.477）。没有隐藏上升或称性能优化；每版仅3样本/后台及缓存未控制，原Core相同、改动不增加启动任务，但这不是因果或统计等效证明。ready标记不是首帧/可交互，RSS共享页可能",
+      "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享模型name提示越框修复；精确ID提示、完整视觉/真实IME/读屏/AX、Windows布局与实机、Intel实机/HiDPI、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active，进度HTML继续仅静态检查，未绕过先前浏览器本地文件拒绝。"
+    ],
     "evidence": [
       {
-        "label": "构建复用与源码",
-        "href": "benchmarks/unicode-input-build.json"
+        "label": "编译与资源",
+        "href": "benchmarks/model-value-tooltip-build.json"
       },
       {
-        "label": "真实操作与落盘",
-        "href": "benchmarks/unicode-input-gui-validation.json"
+        "label": "旧版缺陷",
+        "href": "benchmarks/model-value-tooltip-before-gui.json"
       },
       {
-        "label": "方法边界",
-        "href": "benchmarks/unicode-input-method-boundaries.json"
+        "label": "真实交互与落盘",
+        "href": "benchmarks/model-value-tooltip-gui-validation.json"
       },
       {
-        "label": "1440中文",
-        "href": "screenshots/unicode-input-1440x900.png"
+        "label": "视觉与像素",
+        "href": "benchmarks/model-value-tooltip-visual-validation.json"
       },
       {
-        "label": "1100英文",
-        "href": "screenshots/unicode-input-1100x700.png"
+        "label": "1440实拍",
+        "href": "screenshots/model-value-tooltip-1440x900.png"
       },
       {
-        "label": "冷载入",
-        "href": "benchmarks/unicode-input-cold-reopen.json"
+        "label": "1100实拍",
+        "href": "screenshots/model-value-tooltip-1100x700.png"
       },
       {
-        "label": "资源验证",
-        "href": "benchmarks/unicode-input-performance-validation.json"
+        "label": "六轮性能",
+        "href": "benchmarks/model-value-tooltip-performance-summary.json"
       },
       {
         "label": "清理",
-        "href": "benchmarks/unicode-input-cleanup.json"
+        "href": "benchmarks/model-value-tooltip-cleanup.json"
       }
     ],
-    "commit": "42b19cf0d00612934b303f25eb9859b96957522d",
-    "date": "2026-10-30T07:54:06+08:00",
-    "commit_subject": "test(studio): record Unicode editing and cold-load validation",
+    "commit": "d06877198201f107b9142340237430509a1cfc61",
+    "date": "2026-10-30T08:17:59+08:00",
+    "commit_subject": "fix(studio): wrap complete model values in native tooltips",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2591,6 +2594,59 @@
       "date": "2026-10-30T07:54:06+08:00",
       "commit_subject": "test(studio): record Unicode editing and cold-load validation",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 47,
+      "title": "模型表完整值提示限宽换行",
+      "status": "recorded",
+      "summary": "修复模型表长显示名提示越出窗口的问题，并将既有请求详情提示提取为共享GPUI组件；完整原值、列宽、选择/编辑/保存事件保持。证据：编译与资源、旧版缺陷、真实交互与落盘、视觉与像素、1440实拍、1100实拍、六轮性能、清理。",
+      "highlights": [
+        "修复模型表长显示名提示越出窗口的问题，并将既有请求详情提示提取为共享GPUI组件；完整原值、列宽、选择/编辑/保存事件保持。证据：编译与资源、旧版缺陷、真实交互与落盘、视觉与像素、1440实拍、1100实拍、六轮性能、清理。",
+        "官方MCP重读54:246高保真context/截图；原15px模型编辑SVG与最新资源逐字节一致，SHAd19ec85f…，未改资源、28px按钮、29px模型行或标题/七项工具栏。仅ui_components.rs增加full_value_tooltip，内层Label max520/whitespace_normal/原主题popover前景色、外层max560；model_table.rs接入，detail_layout.rs复用同组件。不裁字符串、不插入数据换行、不加定时器/全局Kit改造，Core、配置格式、依赖与热路径未改。",
+        "基线0b43实拍自然CUA scroll触发首行name提示，单行文字越过窗口且TAIL-NAME47不可见，旧图主代理已查看。使用实际校验允许的233字节name与154字节model ID、64+1模型；修复c6ee两尺寸均自然显示五行name提示、尾标在框内，1440静置30秒后仍见。上游ID列的独立Tooltip未成功触发，明确未验，不由共享源码或完整AX Cell推断视觉通过。"
+      ],
+      "limits": [
+        "前两组新p95与采样峰值均较高，因此补新→旧反向一组，保留同向小变化；旧→新中位：Core12.33→12.12、UI72.09→72.31、合计84.55→84.73MiB，峰值131.89→134.64MiB（+2.75），p50 0.172→0.171/p95 0.197→0.204ms（+0.007），大请求0.089→0.086s，Core ready213.374→214.662/UI记录ready679.639→799.116ms（+119.477）。没有隐藏上升或称性能优化；每版仅3样本/后台及缓存未控制，原Core相同、改动不增加启动任务，但这不是因果或统计等效证明。ready标记不是首帧/可交互，RSS共享页可能",
+        "剩余0待初审、40部分验收、0复用待核对、0整帧最终验收。本轮完成共享模型name提示越框修复；精确ID提示、完整视觉/真实IME/读屏/AX、Windows布局与实机、Intel实机/HiDPI、物理托盘/窗口位移和最小化、首帧、公网更新成功仍待验。Goal active，进度HTML继续仅静态检查，未绕过先前浏览器本地文件拒绝。"
+      ],
+      "evidence": [
+        {
+          "label": "编译与资源",
+          "href": "benchmarks/model-value-tooltip-build.json"
+        },
+        {
+          "label": "旧版缺陷",
+          "href": "benchmarks/model-value-tooltip-before-gui.json"
+        },
+        {
+          "label": "真实交互与落盘",
+          "href": "benchmarks/model-value-tooltip-gui-validation.json"
+        },
+        {
+          "label": "视觉与像素",
+          "href": "benchmarks/model-value-tooltip-visual-validation.json"
+        },
+        {
+          "label": "1440实拍",
+          "href": "screenshots/model-value-tooltip-1440x900.png"
+        },
+        {
+          "label": "1100实拍",
+          "href": "screenshots/model-value-tooltip-1100x700.png"
+        },
+        {
+          "label": "六轮性能",
+          "href": "benchmarks/model-value-tooltip-performance-summary.json"
+        },
+        {
+          "label": "清理",
+          "href": "benchmarks/model-value-tooltip-cleanup.json"
+        }
+      ],
+      "commit": "d06877198201f107b9142340237430509a1cfc61",
+      "date": "2026-10-30T08:17:59+08:00",
+      "commit_subject": "fix(studio): wrap complete model values in native tooltips",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -2900,6 +2956,14 @@
     {
       "date": "2026-10-30T07:54:34+08:00",
       "note": "完成 UI-46 验收记录；待初审0/待最终40，Goal active，真实IME未验",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T08:18:09+08:00",
+      "note": "40部分验收/0最终；本轮只完成模型name提示专项，保留性能小幅上升和平台验证边界。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
