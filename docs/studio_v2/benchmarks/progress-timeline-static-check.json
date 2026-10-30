@@ -1,6 +1,6 @@
 {
   "scope": "Static source/data/link checks only; no browser execution or rendering",
-  "checked_at": "2026-10-30T11:11:44+08:00",
+  "checked_at": "2026-10-30T11:14:35+08:00",
   "embedded_json_matches_external": true,
   "frame_count": 40,
   "frame_status_counts": {
@@ -10,7 +10,7 @@
     "verified": 0
   },
   "committed_task_records": 51,
-  "recorded_goal_status": "active",
+  "recorded_goal_status": "blocked",
   "goal_badge_uses_recorded_status": true,
   "literal_html_links_and_anchors_checked": true,
   "phase_matches_frame_status": true,

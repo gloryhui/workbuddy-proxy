@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T11:11:42+08:00",
+  "updated_at": "2026-10-30T11:14:34+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "03dbff7d5283934edb004fda3ccc18fc571a0bb8",
   "phase": "逐帧初审已覆盖 · 专项验收与差异修复",
-  "goal_status": "active",
+  "goal_status": "blocked",
   "counts": {
     "pending": 0,
     "partial": 40,
@@ -18,7 +18,7 @@
     "id": 51,
     "title": "模型编辑 Escape 与满载目录回归",
     "status": "recorded",
-    "description": "补模型输入专属Esc路由并保留组合优先级；最终两尺寸普通/真实拼音Esc和256行首末实拍通过，旧版容量搜索与256范围删除草稿边界、对齐滚动资源及原始基准留证。"
+    "description": "补模型输入专属Esc路由并保留组合优先级；最终两尺寸普通/真实拼音Esc和256行首末实拍通过，容量/草稿边界、资源和原始基准留证。"
   },
   "latest_task": {
     "id": 51,
@@ -3002,6 +3002,14 @@
     {
       "date": "2026-10-30T11:11:42+08:00",
       "note": "小功能51已提交；仍为40部分验收/0整帧最终验收。长ID独立悬浮、其他输入/读屏/跨平台等继续验证；保留失败中间版、错位采样及RSS增量。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0
+    },
+    {
+      "date": "2026-10-30T11:14:34+08:00",
+      "note": "收尾Goal工具返回blocked，主代理与界面代理本轮均未修改状态，来源未定位；已完成UI51并推送，不把该状态当完成或无进展结论。自动后续需在Goal面板恢复；40部分验收/0整帧最终验收保持。",
       "pending": 0,
       "partial": 40,
       "reused": 0,
