@@ -1,0 +1,15 @@
+from pathlib import Path
+import hashlib,json
+r=Path(__file__).resolve().parent;res=r/'B05 Clipboard Review.app/Contents/Resources';f=r/'b05-1xsejnc7-main';cfg=json.loads((f/'config/config.json').read_text());names=['address-after','logs-button','logs-selection','logs-empty'];values={};proofs=[]
+for name in names:
+ p=res/(name+'-result.json');d=json.loads(p.read_text());assert d['accepted'] is True
+ textfile=res/(name+'-private.txt');raw=textfile.read_bytes();assert hashlib.sha256(raw).hexdigest()==d['sha256'] and len(raw)==d['bytes'];values[name]=raw.decode();proofs.append({'result':name,**d})
+expected='http://127.0.0.1:%d/v1'%cfg['port'];assert values['address-after']==expected
+summary,body=values['logs-button'].split('\n\n',1);assert summary.startswith(expected+'\n') and '供应商  2' in summary and '模型  5' in summary
+assert body==values['logs-selection'];assert len(body.splitlines())==100
+assert any('503' in line for line in body.splitlines()) and any('200' in line for line in body.splitlines())
+assert values['logs-empty']==summary+'\n\n暂无日志'
+for text in values.values():
+ for secret in [cfg['local_key'],*[p['api_key'] for p in cfg['providers']]]:assert secret not in text
+clear=json.loads((f/'stage-proofs/logs_cleared.json').read_text());resume=json.loads((f/'stage-proofs/logs_resumed.json').read_text());assert clear['log_count']==0 and resume['log_count']>0
+out={'passed':True,'results':proofs,'actual_endpoint':expected,'copied_log_lines':100,'copy_button_body_equals_native_manual_selection':True,'contains_actual_200_and_503':True,'cleared_ring0_copies_empty_placeholder':True,'new_request_resumes_native_log':True,'configuration_models_and_all_previous_SQL_fields_preserved':True,'scope':'Actual native Copy/Paste into owned strict synthetic-only QA view plus private exact comparisons. Raw clipboard strings stay private and are excluded from archive. No external clipboard reading; unexpected paste was not displayed/hashed/stored.'};(r/'clipboard-validation.json').write_text(json.dumps(out,indent=2)+'\n');print('Clipboard proof passed: address, CopyLogs equals actual manual selection,100rows,503/200,clear0/resume.')

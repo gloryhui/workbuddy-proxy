@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-31T22:24:29.129240+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7",
+  "removed": true,
+  "files_removed": 553,
+  "logical_bytes_removed": 618783447,
+  "observed_apfs_free_delta_bytes": 626675712,
+  "free_after_bytes": 36887621632,
+  "current_round_retained_bytes": 0,
+  "retained_outside_target": [
+    "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core"
+  ],
+  "scope": "Only exact preflight-verified task-created synthetic root, non-forced rm-r. APFS delta may include concurrent application activity."
+}

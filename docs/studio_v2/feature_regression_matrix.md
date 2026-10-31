@@ -112,3 +112,10 @@ B01 / QA68完整批次：最新19份官方完整设计与同一2a12，38主图/9
 - 三语言/七主题、隔离开机真实失败重试、更新受控状态和独立一次真实公网检查、普通窗口恢复及模态遮罩；12张实际两尺寸PNG。
 - 原14请求/14成本全字段保护至15/15，业务配置除声明语言/开机保存及既有Serde默认外保持，统计设置与价格不变；Core/夹具退出0、UI PIDgone。
 - P/C/C/P原负载各n2；全部性能成本和R01输入/R02系统/R03长期性能/R04安装发行边界详见[QA71](baseline_and_qa.md)、[交互与数据](benchmarks/b04-native-consolidated.json)、[性能](benchmarks/b04-performance-summary.json)。
+
+## B05 / UI72 整批保护记录（2026-10-31）
+
+- 同78候选只修日志阅读锚点；原同步/移除、代理Core、native重启和配置格式保留。
+- 草稿保存/全部同步/手工ID冲突拒绝覆盖/坏JSON恢复/受控真实重启/端口监听迁移及部分成功；两帧四张实际原图。
+- 100条阅读/复制清空、原14历史保护至156；正常冷启动、关窗转发、用户手动物理托盘设置/退出，CUA观察与用户动作来源分开记录。
+- 原P/C/C/P负载全0、每轮SQL2090/2090；峰值+3.33MiB与此前成本仍属R03，不冒称可正式发布。详见[QA72](baseline_and_qa.md)、[集中证据](benchmarks/b05-native-consolidated.json)、[性能](benchmarks/b05-performance-summary.json)。

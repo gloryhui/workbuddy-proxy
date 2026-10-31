@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "user_statement": "已打开设置",
+    "tray_pid": 99411,
+    "core_pid": 99412,
+    "new_ui_pid": 490,
+    "independent_proof": "cold_reopen",
+    "method": "User physical tray action, CUA observed existing window and draft; not automated status-item access"
+  },
+  "quit": {
+    "user_statement": "已退出",
+    "pids_gone": [
+      99411,
+      99412,
+      490
+    ],
+    "independent_proof": "cold_quit",
+    "method": "User physical tray Quit; CUA/OS/SQL/metadata independently verified; exit codes unavailable for CUA/orphan product processes"
+  }
+}

@@ -1,0 +1,36 @@
+{"await_cua": {"label": "previous2", "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/bench-b05-previous2/WorkBuddy Proxy Lifecycle Bench previous2.app", "core_pid": 3819, "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/bench-b05-previous2", "ui_sha256": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f"}}
+{"ui_bound": 3965, "native_process_to_record_ms": 826.683, "await_cua_relay": true}
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "mode": "native GUI",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 8428096,
+  "idle_rss_mib": 125.64,
+  "core_idle_rss_mib": 20.88,
+  "measured_process_count": 2,
+  "ui_idle_rss_mib": 104.77,
+  "tray_idle_rss_mib": null,
+  "core_ready_ms": 44.705,
+  "ui_record_ready_ms": 25015.759,
+  "sampled_peak_rss_mib": 171.34,
+  "post_load_rss_mib": 171.34,
+  "small_request_count": 1000,
+  "direct_loopback_ms": {
+    "p50": 0.147,
+    "p95": 0.308
+  },
+  "proxied_loopback_ms": {
+    "p50": 0.172,
+    "p95": 0.197
+  },
+  "median_proxy_overhead_ms": 0.024,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.088,
+  "notes": "RSS sums instance.json core and gpui.json settings PIDs (shared pages can be counted twice); tray RSS is separate, headless has one PID. UI readiness is the gpui.json marker, not first paint or interactivity. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied."
+}
+{"completed": "previous2", "evidence": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/performance-previous2.json", "terminal": {"children": [{"kind": "mock", "pid": 3815, "exit_code": -15, "waited": true}, {"kind": "core", "pid": 3819, "exit_code": 0, "waited": true}], "ui_pid": 3965, "ui_child_owned_by": "CUA service, not fixture; exit code unavailable", "ui_pid_gone": true}}

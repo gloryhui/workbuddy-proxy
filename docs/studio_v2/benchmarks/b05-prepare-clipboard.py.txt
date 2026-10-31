@@ -1,0 +1,18 @@
+from pathlib import Path
+import argparse,hashlib,json,os,plistlib,subprocess,urllib.request
+r=Path(__file__).resolve().parent;p=argparse.ArgumentParser();p.add_argument('fixture');p.add_argument('kind',choices=['address','logs','selection']);p.add_argument('result',choices=['address-before','address-after','logs-button','logs-selection','logs-empty']);a=p.parse_args();f=Path(a.fixture).resolve();assert f.parent==r
+app=r/'B05 Clipboard Review.app';mac=app/'Contents/MacOS';res=app/'Contents/Resources';mac.mkdir(parents=True,exist_ok=True);res.mkdir(exist_ok=True);exe=mac/'probe'
+if not exe.exists():
+ cmd=['xcrun','clang','-fobjc-arc','-framework','AppKit',str(r/'clipboard-probe.m'),'-o',str(exe)];z=subprocess.run(cmd,capture_output=True,text=True);(r/'clipboard-build.json').write_text(json.dumps({'exit_code':z.returncode,'output':z.stdout+z.stderr,'source_sha256':hashlib.sha256((r/'clipboard-probe.m').read_bytes()).hexdigest()},indent=2)+'\n');assert z.returncode==0,'Clipboard probe compile failed'
+(app/'Contents/Info.plist').write_bytes(plistlib.dumps({'CFBundleExecutable':'probe','CFBundleIdentifier':'com.workbuddy.codexreview.b05clip.1xsejnc7','CFBundleName':'B05 Clipboard Review','CFBundlePackageType':'APPL','LSUIElement':True,'NSHighResolutionCapable':True}))
+cfg=json.loads((f/'config/config.json').read_text());inst=json.loads((f/'config/instance.json').read_text());opener=urllib.request.build_opener(urllib.request.ProxyHandler({}));q=urllib.request.Request('http://127.0.0.1:%d/_control/action'%inst['port'],data=b'{"command":"snapshot"}',headers={'Content-Type':'application/json','Authorization':'Bearer '+inst['management_key']})
+with opener.open(q,timeout=12) as z:snap=json.loads(json.loads(z.read())['message'])
+forbidden=[cfg['local_key'],inst['management_key'],*[p['api_key'] for p in cfg['providers']]]
+assert cfg['language'] in ['zh','en'], 'Clipboard fixture requires known explicit language'
+labels=['供应商','模型','请求'] if cfg['language']=='zh' else ['Providers','Models','Requests']
+summary=snap['url']+'\n'+'   ·   '.join(label+'  '+str(snap[key]) for label,key in zip(labels,['providers','models','requests']))
+meta={'kind':a.kind,'result':a.result,'url':snap['url'],'summary':summary,'forbidden':forbidden}
+if a.kind=='selection':
+ accepted=res/'logs-button-result.json';prior=json.loads(accepted.read_text());assert prior['accepted'] is True
+ text=(res/'logs-button-private.txt').read_text();assert text.startswith(summary+'\n\n');meta['selection']=text.split('\n\n',1)[1]
+dest=res/'expected-private.json';dest.write_text(json.dumps(meta)+'\n');os.chmod(dest,0o600);print(json.dumps({'bundle':str(app),'expected_kind':a.kind,'result':a.result,'expected_url':snap['url'],'proxy_count':snap['requests']}))

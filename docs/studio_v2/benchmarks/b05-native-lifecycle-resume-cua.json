@@ -1,0 +1,43 @@
+{
+  "scope": "Cold lifecycle in isolated test app; user performed physical status-item operations; CUA operated and observed settings window only.",
+  "launch": {
+    "method": "CUA getApp on prepared isolated app, normal background launch",
+    "first_getApp_result": "timeoutReached; processes verified and already-running helper bound without restart",
+    "tray_pid": 99411,
+    "core_pid": 99412,
+    "initial_ui_pid": 99413,
+    "cold_three": "passed; HTTP 200"
+  },
+  "close_window": {
+    "method": "CUA native close button",
+    "cold_two": "passed; tray and core retained, UI absent, HTTP 200"
+  },
+  "reopen": {
+    "user_manual_source": "User chat reply: 已打开设置",
+    "method": "User operated physical test tray Settings; CUA did not operate status item",
+    "new_ui_pid": 490,
+    "cold_reopen": "passed; same core and tray, one new UI, HTTP 200",
+    "draft": "B05 unsaved B, model-b / model-b-1, visually marked unsaved",
+    "card_before_observer_request": {
+      "providers": 2,
+      "models": 5,
+      "requests": 2,
+      "port": 50695
+    }
+  },
+  "quit": {
+    "user_manual_source": "User chat reply: 已退出",
+    "method": "User operated physical test tray Quit",
+    "cold_quit": "passed; all three roles absent, instance.json/frontend.json/gpui.json absent",
+    "ps_pids_absent": [
+      99411,
+      99412,
+      490
+    ],
+    "exit_codes": "not observed"
+  },
+  "screenshots": "CUA screenshots observed in tool output; no native PNG saved in this resume phase",
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true,
+  "proofs": "lifecycle-stage-proofs/cold_three.json, cold_two.json, cold_reopen.json, cold_quit.json"
+}

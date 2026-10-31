@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T21:46:36.148551+08:00",
+  "action": "target-refuse",
+  "stage": "port_target_refuse",
+  "config_sha256_unchanged": "1290b3b4c838cd1b43810efa6e247aca2fbdeed7125d7c90873b86e00e54d610",
+  "result": {
+    "target_mode": {
+      "refuse": true,
+      "break_launch": false
+    },
+    "target_pid": 92565
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

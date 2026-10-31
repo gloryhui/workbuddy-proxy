@@ -1,0 +1,126 @@
+{
+  "at": "2026-10-31T19:53:48.118997+08:00",
+  "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page": "51:2",
+  "frames": [
+    {
+      "node": "60:27",
+      "full_context_blocks": [
+        {
+          "name": "60-27-text-0.txt",
+          "bytes": 56981,
+          "sha256": "439c7feaebecceb97a4d779cf9cc0ab2dbb9d97e224e2772da4b6b4f8622934f",
+          "pixels": null
+        },
+        {
+          "name": "60-27-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454",
+          "pixels": null
+        },
+        {
+          "name": "60-27-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac",
+          "pixels": null
+        },
+        {
+          "name": "60-27-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8",
+          "pixels": null
+        },
+        {
+          "name": "60-27-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215",
+          "pixels": null
+        },
+        {
+          "name": "60-27-reference.png",
+          "bytes": 148172,
+          "sha256": "97b29c264458edf00bacd13565c1b0ad8806a352eade48816ed4a8739bd46952",
+          "pixels": [
+            1024,
+            640
+          ]
+        }
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ],
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "dialog_logical_bounds": [
+        457,
+        274,
+        526,
+        318
+      ]
+    },
+    {
+      "node": "68:350",
+      "full_context_blocks": [
+        {
+          "name": "68-350-text-0.txt",
+          "bytes": 56816,
+          "sha256": "e6e8308949438e4c01c922efd68855ce939274e17a78eb68fa6df5ecec00cf4e",
+          "pixels": null
+        },
+        {
+          "name": "68-350-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454",
+          "pixels": null
+        },
+        {
+          "name": "68-350-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac",
+          "pixels": null
+        },
+        {
+          "name": "68-350-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8",
+          "pixels": null
+        },
+        {
+          "name": "68-350-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215",
+          "pixels": null
+        },
+        {
+          "name": "68-350-reference.png",
+          "bytes": 150186,
+          "sha256": "d8e27b23765a4b00b0ed917dd1f46a5068a69ff0849e1df4d3fc69fc88aa8d0d",
+          "pixels": [
+            1024,
+            640
+          ]
+        }
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ],
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "dialog_logical_bounds": [
+        457,
+        274,
+        526,
+        318
+      ]
+    }
+  ],
+  "assets": "Both contexts all60 provided URLs downloaded with instructed curl-L,30 unique resources;25 exact/2 wholeXML localID-reference equivalents/3 nativeOS decorations. No provided image used as application UI, no SVG path extraction/redraw.",
+  "scope": "Latest full high-fidelity contexts include original screenshots. Native diagrams, real data and original save/install/restore/restart order remain authoritative. Figma static sample counts are not product data.",
+  "transport_diagnostic": "Initial plain stdin closed; oversized NodeJS payload rejected at64000byte auto-review limit, not executed. Context data then copied byte-exact over a non-echoing own PTY stdin writer, no code payload size workaround or data loss. Curl35 transport error recovered only for missing assets."
+}

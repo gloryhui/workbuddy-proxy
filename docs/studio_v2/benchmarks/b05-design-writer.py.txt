@@ -1,0 +1,12 @@
+from pathlib import Path
+import sys,json,base64,hashlib,struct
+r=Path(__file__).resolve().parent
+for _ in range(2):
+ v=json.loads(sys.stdin.readline());stem=v['node'].replace(':','-');items=[]
+ for i,c in enumerate(v['content']):
+  if c['type']=='text':p=r/'figma'/(stem+'-text-'+str(i)+'.txt');raw=c['text'].encode()
+  elif c['type']=='image':
+   assert c['mimeType']=='image/png';p=r/'figma'/(stem+'-reference.png');raw=base64.b64decode(c['data']);assert raw[:8]==b'\x89PNG\r\n\x1a\n'
+  else:continue
+  p.write_bytes(raw);items.append({'name':p.name,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'pixels':list(struct.unpack('>II',raw[16:24])) if c['type']=='image' else None})
+ (r/'figma'/(stem+'-manifest.json')).write_text(json.dumps(items,indent=2)+'\n');print('saved '+v['node'],flush=True)

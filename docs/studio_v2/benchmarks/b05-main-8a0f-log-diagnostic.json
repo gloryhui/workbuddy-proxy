@@ -1,0 +1,36 @@
+{
+  "candidate_sha256": "8a0f03d55f112ab0b60064e4f9b493ccd33ca16f79ddee44b07069516aa681ca",
+  "ui_pid": 64770,
+  "core_pid": 61219,
+  "guard": "same PID guard_installed nonce b05-owned-target-1xsejnc7",
+  "before": "127 requests, scrollback roughly 89–98, first 89 partially clipped",
+  "after": "one real isolated request, total 128, view jumped to 29–37 and remained there on fresh observation",
+  "result": "failed; not signed off",
+  "screenshots": [
+    {
+      "file": "8a0f-log-wide-before.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "7f82773f6e392eee4d06defe727ee604fa63a2665c4950e02af1bc44fcdef179"
+    },
+    {
+      "file": "8a0f-log-wide-after.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "783be43250ba8746251c16edf7f780f28ddc6d29d7d7f24c8c381b600d42b033"
+    }
+  ],
+  "small_and_burst": "not attempted after failure",
+  "closure": {
+    "method": "CUA native close button",
+    "pid_gone_verified": true,
+    "exit_code": "not observed",
+    "acceptance_finished_marker_written": false
+  },
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true
+}

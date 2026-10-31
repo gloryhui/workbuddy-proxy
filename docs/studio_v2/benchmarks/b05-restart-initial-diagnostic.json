@@ -1,0 +1,5 @@
+{
+  "phase": "compile before any target launch",
+  "failure": "QA helper audit function collided with macOS system audit declaration",
+  "correction": "prefix QA-only function b05_audit; no product source changes"
+}

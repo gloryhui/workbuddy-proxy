@@ -1,0 +1,12 @@
+from pathlib import Path
+import argparse,datetime,hashlib,json,sqlite3,time,urllib.request,urllib.error
+r=Path(__file__).resolve().parent;p=argparse.ArgumentParser();p.add_argument('fixture');p.add_argument('--count',type=int,default=1);p.add_argument('--stage',required=True);args=p.parse_args();f=Path(args.fixture).resolve();assert f.parent==r and 0<=args.count<=120
+cfgpath=f/'config/config.json';raw=cfgpath.read_bytes();cfg=json.loads(raw);inst=json.loads((f/'config/instance.json').read_text());port=inst['port'];models=f/'home/.workbuddy/models.json';source=models.read_bytes();opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+for i in range(args.count):
+ req=urllib.request.Request('http://127.0.0.1:%d/v1/chat/completions'%port,data=json.dumps({'model':cfg['providers'][0]['models'][0]['alias'],'messages':[{'role':'user','content':'B05 synthetic log sequence'}]}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+cfg['local_key']})
+ with opener.open(req,timeout=10) as resp:assert resp.status==200;resp.read()
+assert cfgpath.read_bytes()==raw and models.read_bytes()==source
+req=urllib.request.Request('http://127.0.0.1:%d/_control/action'%port,data=b'{"command":"snapshot"}',headers={'Content-Type':'application/json','Authorization':'Bearer '+inst['management_key']})
+with opener.open(req,timeout=10) as response:snap=json.loads(json.loads(response.read())['message'])
+logs=snap.get('logs',[]);out={'at':datetime.datetime.now().astimezone().isoformat(),'stage':args.stage,'new_actual_HTTP200':args.count,'snapshot_keys':list(snap),'log_count':len(logs),'log_rows':logs,'core_config_sha256':hashlib.sha256(raw).hexdigest(),'models_sha256':hashlib.sha256(source).hexdigest(),'config_and_models_exact':True,'scope':'Only synthetic real local proxy requests; no management writes and no GUI input.'};assert len(logs)<=100
+(f/('logs-'+args.stage+'.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'stage':args.stage,'new_requests':args.count,'log_count':len(logs)}))

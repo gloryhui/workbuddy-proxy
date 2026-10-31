@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "candidate_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
+  "ui_pid": 78723,
+  "core_pid": 61219,
+  "native_images": [
+    {
+      "file": "78f84-log-small-burst-before.png",
+      "sha256": "381a32bd9c6563867c3e7043c65d0b4022fe57f26d5655fcb8f04d059914d544",
+      "native_pixels": [
+        1100,
+        701
+      ]
+    },
+    {
+      "file": "78f84-log-small-burst-after.png",
+      "sha256": "237046b10541493e0ca9e824e483199ec757a04a9e643504e5013399f8048e15",
+      "native_pixels": [
+        1100,
+        701
+      ]
+    },
+    {
+      "file": "78f84-log-wide-before.png",
+      "sha256": "a29f013c4561ddfcaf406420f13da5fb482533934942c28b18f3ca062bec1f95",
+      "native_pixels": [
+        1440,
+        901
+      ]
+    },
+    {
+      "file": "78f84-log-wide-after.png",
+      "sha256": "98898403c57d0da3bbbce1af83d9eddc30ed6694b27040443f1235a2c18cd784",
+      "native_pixels": [
+        1440,
+        901
+      ]
+    }
+  ],
+  "parent_visual_review": "Inspected original small pair137→140: entry59 and upper/lower clipping remain at same location. Inspected wide pair142→143: entries88–96 remain at same locations. No rescale/crop/AA gate.",
+  "delegated_native_observations": "Original mac_ui actor reported small single140→141 retained entry59, bottom141→142 followed latest row142, and no-new-log idle retained view; these observations had no separate saved final78 PNG beyond the listed before/after pairs. Real HTTP proofs below and log_complete data checkpoint corroborate counts; no image invented.",
+  "real_HTTP_proofs": [
+    "logs-final78_burst.json",
+    "logs-final78_small_single.json",
+    "logs-final78_bottom.json",
+    "logs-final78_wide_single.json"
+  ],
+  "data_checkpoint": "stage-proofs/log_complete.json",
+  "limits": "Full user-selection/resize/page-change races during bounded async correction remain R01; no idle timer added."
+}

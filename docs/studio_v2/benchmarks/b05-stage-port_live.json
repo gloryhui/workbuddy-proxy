@@ -1,0 +1,77 @@
+{
+  "at": "2026-10-31T21:46:30.863375+08:00",
+  "stage": "port_live",
+  "core_pid": 61219,
+  "ui_pid": 78723,
+  "config_sha256": "1290b3b4c838cd1b43810efa6e247aca2fbdeed7125d7c90873b86e00e54d610",
+  "name_a": "B05 verified A",
+  "language": "zh",
+  "port": 50428,
+  "installed": 5,
+  "models": {
+    "valid": true,
+    "sha256": "c6295b9c178dc24c89e0d80f49318d184bdf9d5d01a6a66800849d52a568b737",
+    "rows": 7,
+    "managed_ids": [
+      "B05 verified A/claude-opus-4.7",
+      "B05 verified A/deepseek-v4.1-flash",
+      "B05 verified A/gpt-6",
+      "B05 verified A/gpt-6.1",
+      "OpenCode Go/model-b-1"
+    ],
+    "unrelated_and_original_fields_preserved": true
+  },
+  "settings_unchanged": {
+    "enabled": true,
+    "retention_days": 180,
+    "default_currency": "CNY",
+    "revision": 1
+  },
+  "prices_unchanged": 3,
+  "history": {
+    "usage_requests": {
+      "rows": 145,
+      "all_fields_preserved": true,
+      "sha256": "f60fa2b35408c46834d78ab1e91c6994c34c6a0bb24552235b22365d2eecfcfd"
+    },
+    "usage_costs": {
+      "rows": 145,
+      "all_fields_preserved": true,
+      "sha256": "a18102a9dc597172e66d92774e01dd3874a034dc79c92a571b799d049dff8039"
+    }
+  },
+  "snapshot_counts": {
+    "providers": 2,
+    "models": 5,
+    "requests": 145,
+    "running": null,
+    "url": "http://127.0.0.1:50428/v1"
+  },
+  "log_count": 100,
+  "UI_restart_events": [
+    "guard_installed",
+    "lookup_redirected",
+    "terminate_owned",
+    "open_owned",
+    "opened_owned",
+    "lookup_redirected",
+    "terminate_owned",
+    "lookup_redirected",
+    "terminate_owned",
+    "open_owned",
+    "opened_owned",
+    "lookup_redirected",
+    "terminate_owned",
+    "open_owned",
+    "open_owned_failed",
+    "lookup_redirected",
+    "url_redirected",
+    "open_owned",
+    "opened_owned",
+    "lookup_redirected",
+    "terminate_owned",
+    "open_owned",
+    "opened_owned"
+  ],
+  "scope": "Read-only Core/files/SQL proofs. Only declared real native A-name/install/port/language saves accepted; UI input, target restart and screenshots require actor proof separately. No actual user WorkBuddy integration claim."
+}

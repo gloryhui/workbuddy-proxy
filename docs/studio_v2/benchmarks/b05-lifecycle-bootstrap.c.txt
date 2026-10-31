@@ -1,0 +1,28 @@
+/* QA only: normal product tray spawns unchanged Core/UI. Apply source-file
+ * protection to headless Core before main; redirect restart identity only in
+ * the exact owned settings helper. Native GUI remains CUA-bindable. */
+#include <crt_externs.h>
+#include <dlfcn.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <mach-o/dyld.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+static void load(const char *name){const char *p=getenv(name);if(!p||!dlopen(p,RTLD_NOW|RTLD_LOCAL))_exit(85);}
+__attribute__((constructor))static void bootstrap(void){
+ const char *proof=getenv("B05_LIFECYCLE_PROOFS"),*tray=getenv("B05_LIFECYCLE_TRAY"),*ui=getenv("B05_LIFECYCLE_UI");
+ if(!proof||!tray||!ui)_exit(86);
+ char executable[PATH_MAX],actual[PATH_MAX];uint32_t size=sizeof(executable);
+ if(_NSGetExecutablePath(executable,&size)||!realpath(executable,actual))_exit(87);
+ int argc=*_NSGetArgc();char **argv=*_NSGetArgv();int headless=0;
+ for(int n=1;n<argc;n++)if(strcmp(argv[n],"--headless")==0)headless=1;
+ const char *role="other_inherited";
+ if(strcmp(actual,tray)==0){if(headless){load("B05_CORE_GUARD_LIBRARY");role="protected_core";}else role="tray";}
+ else if(strcmp(actual,ui)==0){load("B05_UI_GUARD_LIBRARY");role="guarded_ui";}
+ char path[PATH_MAX],body[160];int len=snprintf(path,sizeof(path),"%s/%d.json",proof,getpid());
+ if(len<0||len>=(int)sizeof(path))_exit(88);
+ int fd=open(path,O_CREAT|O_EXCL|O_WRONLY,0600);len=snprintf(body,sizeof(body),"{\"pid\":%d,\"ppid\":%d,\"role\":\"%s\"}\n",getpid(),getppid(),role);
+ if(fd<0||write(fd,body,(size_t)len)!=len)_exit(89);close(fd);
+}

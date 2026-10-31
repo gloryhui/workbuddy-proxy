@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-31T21:50:46.475315+08:00",
+  "stage": "final_log_failure",
+  "actual_HTTP": 503,
+  "log_tail": [
+    {
+      "message": "Synced 5 models to disk; reopen the WorkBuddy model list. If an existing conversation reports missing endpoint or API key, fully quit and reopen WorkBuddy, then continue the same conversation / 已同步 5 项配置到文件，请重开 WorkBuddy 模型列表；旧会话若提示缺少地址或 Key，请完全退出并重开 WorkBuddy 后继续原会话",
+      "time": 1793454491990
+    },
+    {
+      "message": "已移除代理同步的模型，原有条目已保留",
+      "time": 1793454511637
+    },
+    {
+      "message": "HTTP 200 · 147 requests",
+      "time": 1793454526524
+    },
+    {
+      "message": "HTTP 200 · 148 requests",
+      "time": 1793454640735
+    },
+    {
+      "message": "HTTP 503 · 149 requests",
+      "time": 1793454646474
+    }
+  ],
+  "log_count": 100,
+  "config_sha256": "bf68b9af06485f9ee4aa24de7e65a1639e5f41227390e9ae8d814cb46c40a401",
+  "models_sha256": "5491d5e8042555ad979b974927d948ed5a21a592b62b983bd6786cb405747329",
+  "config_models_byte_exact": true,
+  "mock_returned_to_success": true,
+  "scope": "Real loopback proxy503 through owned synthetic upstream failure then fixture-only recovery; no management writes or GUI input."
+}

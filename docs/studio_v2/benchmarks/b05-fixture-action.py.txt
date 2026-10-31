@@ -1,0 +1,36 @@
+from pathlib import Path
+import argparse,datetime,hashlib,json,os,subprocess,time,urllib.parse,socket
+r=Path(__file__).resolve().parent;p=argparse.ArgumentParser();p.add_argument('fixture');p.add_argument('action',choices=['models-invalid','models-repair','target-start','target-refuse','target-break-launch','target-normal','target-repair','target-pid','occupied-port','fresh-port']);p.add_argument('--stage',required=True);a=p.parse_args();f=Path(a.fixture).resolve();assert f.parent==r
+for parent in [f,*f.parents]:
+ if not parent.is_relative_to(r):break
+ assert not parent.is_symlink() and parent.stat().st_uid==os.getuid()
+config=f/'config/config.json';before=config.read_bytes();cfg=json.loads(before);models=f/'home/.workbuddy/models.json';before_models=models.read_bytes();inject=json.loads((r/'restart-env-private.json').read_text());env=dict(os.environ,**inject);target=Path(inject['B05_TARGET_APP']);assert target.resolve()==target and target.parent==r and target.stat().st_uid==os.getuid();mode=target/'Contents/Resources/mode.json';result={}
+def target_control(operation):
+ x=subprocess.run([str(r/'restart-entry-driver'),operation,inject['B05_TARGET_ID']],env=env,capture_output=True,text=True,timeout=10);assert x.returncode==0,(operation,x.returncode);return int(x.stdout.strip())
+def wait(fn):
+ deadline=time.monotonic()+12
+ while time.monotonic()<deadline:
+  if fn():return
+  time.sleep(.1)
+ raise AssertionError('Owned test target did not settle')
+if a.action=='models-invalid':
+ saved=f/'models-before-invalid-private.json';assert models.is_file() and not models.is_symlink() and not saved.exists();json.loads(before_models);models.rename(saved);models.write_text('{"models":');(f/'models-fault-private.json').write_text(json.dumps({'saved':str(saved),'invalid_sha256':hashlib.sha256(models.read_bytes()).hexdigest()})+'\n');result={'models_invalid':True,'original_preserved':True}
+elif a.action=='models-repair':
+ saved=f/'models-before-invalid-private.json';fault=f/('models-invalid-'+a.stage+'.txt');assert saved.is_file() and models.is_file() and not fault.exists();models.rename(fault);saved.rename(models);result={'models_repaired':True,'invalid_diagnostic_retained':fault.name}
+elif a.action in ['target-refuse','target-break-launch','target-normal']:
+ mode.write_text(json.dumps({'refuse':a.action=='target-refuse','break_launch':a.action=='target-break-launch'})+'\n');result={'target_mode':json.loads(mode.read_text()),'target_pid':target_control('pid')}
+elif a.action=='target-start':
+ assert target_control('count')==0;assert not json.loads(mode.read_text()).get('refuse');x=subprocess.run(['open','-g','-n',str(target)],capture_output=True,text=True);assert x.returncode==0;wait(lambda:target_control('pid')>0);result={'target_pid':target_control('pid'),'scope':'Fixture setup only; not a product UI restart result.'}
+elif a.action=='target-repair':
+ assert target_control('count')==0;exe=target/'Contents/MacOS/fixture';saved=target/'Contents/MacOS/fixture.preserved';assert saved.is_file() and not exe.exists();saved.rename(exe);mode.write_text('{}\n');result={'owned_executable_repaired':True}
+elif a.action=='target-pid':result={'target_pid':target_control('pid')}
+elif a.action=='occupied-port':
+ port=urllib.parse.urlparse(cfg['providers'][0]['upstream']).port;assert port and port!=cfg['port']
+ with socket.create_connection(('127.0.0.1',port),timeout=3):pass
+ result={'occupied_port':port,'owner':'Existing own fixture mock server, no extra holder process.'}
+elif a.action=='fresh-port':
+ with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
+ assert port!=cfg['port'];result={'fresh_port':port,'scope':'Vacancy measured now; actual Core bind result remains authoritative.'}
+assert config.read_bytes()==before,'Fixture helper must not change product config'
+if a.action not in ['models-invalid','models-repair']:assert models.read_bytes()==before_models
+out={'at':datetime.datetime.now().astimezone().isoformat(),'action':a.action,'stage':a.stage,'config_sha256_unchanged':hashlib.sha256(before).hexdigest(),'result':result,'scope':'Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy.'};(f/('fixture-action-'+a.stage+'.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False))

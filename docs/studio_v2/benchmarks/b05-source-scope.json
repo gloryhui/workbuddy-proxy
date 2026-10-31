@@ -1,0 +1,35 @@
+{
+  "runtime_files": [
+    "gpui/src/ui.rs",
+    "gpui/src/ui/log_scroll.rs"
+  ],
+  "same_sync_unsync_step_owners": [
+    "sync",
+    "unsync"
+  ],
+  "Core_native_restart_scripts_dependencies_unchanged": true,
+  "UI_scope": "Follow new logs only at tail. Retain a cached visible middle anchor across100-row expiry using UTF8 offsets and actual viewport geometry after paint; finite callbacks only, no new idle poll/timer.",
+  "candidate_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
+  "new_tests": "2 helper regressions;206 pass/2 existing ignore. Native old failure and final wide/small single/burst/idle/tail plus all B05 transaction/clipboard/lifecycle and four original workloads complete.",
+  "source_sha256": {
+    "gpui/src/ui.rs": "97b34683d95a35735725cf86400a4b24f6f257eeaf1a4cbf0893d7f7ea10b529",
+    "gpui/src/ui/log_scroll.rs": "1f20fccfa0af76bf341cab6c327d77685ee20eaa8b51287502236e628b71b2c2"
+  },
+  "native_status": "B05 feature checks complete; full R01-R04 release gates pending.",
+  "initial_failures": {
+    "fe113": "No forced tail, but old-row expiry shifts one line.",
+    "8a0f": "Immediate cursor reveal runs before Input layout exists and resets reading to top.",
+    "compile_diagnostic": "RopeExt trait import required, preserved build-missing-trait-diagnostic.json.",
+    "e98ac": "Single passed but batch3 failed; offscreen correction still added scroll offset twice.",
+    "candidate2f1a": "Native reveal deferred override fixed, but duplicate scroll offset still broke batch3."
+  },
+  "correction": "Use a cached visible row only; after text paints, measure valid cached geometry, revealing an offscreen retained anchor with the native Input display map only if necessary. Finite callbacks, no idle loop; text/scroll guard ignores stale work.",
+  "coordinate_fix": "Pinned Input implementation mutates last_bounds.origin by scroll_offset; range_to_bounds is already viewport-relative. Never add scroll_offset a second time.",
+  "at": "2026-10-31T22:24:13.977509+08:00",
+  "acceptance_sources": [
+    "b05-native-consolidated.json",
+    "b05-log-final-validation.json",
+    "b05-native-lifecycle-summary.json",
+    "b05-performance-summary.json"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "status": "partial; physical status-item control unavailable with current CUA API",
+  "original_ui": 78723,
+  "original_ui_native_close": "gone verified by ps",
+  "core": 61219,
+  "tray": 94889,
+  "initial_helper": 94899,
+  "initial_getApp": "timeoutReached -10005; process inspection established launch succeeded without retry",
+  "settings_binding": "CUA inventory unique helper bundle then getApp rebound existing helper; draft B visible; PIDs unchanged",
+  "warm_three": "parent observer passed, HTTP200",
+  "warm_two": "native helper close; observer passed Core61219 Tray94889 UI0 HTTP200",
+  "physical_status_menu": "not verified: CUA documentation exposes App/Tab objects but no macOS global status-item surface; tray has no window and initial getApp timed out; no CLI show or external input used",
+  "cold": "not started; waiting physical menu/quit or parent disposition",
+  "foreground": "no explicit activate/raise; actual foreground not asserted"
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-31T21:43:22.304835+08:00",
+  "action": "target-repair",
+  "stage": "target_executable_repaired",
+  "config_sha256_unchanged": "b1ec8422addba70043f4dc3642b6c4f89536aa10950a73ca452dd87f4c766be4",
+  "result": {
+    "owned_executable_repaired": true
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

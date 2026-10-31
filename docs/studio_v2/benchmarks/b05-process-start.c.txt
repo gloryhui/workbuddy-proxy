@@ -1,0 +1,4 @@
+#include <libproc.h>
+#include <stdlib.h>
+#include <stdio.h>
+int main(int argc,char **argv){struct proc_bsdinfo b={0};if(argc!=2)return 1;if(proc_pidinfo(atoi(argv[1]),PROC_PIDTBSDINFO,0,&b,sizeof(b))!=sizeof(b))return 2;printf("%llu\n",(unsigned long long)b.pbi_start_tvsec*1000000+b.pbi_start_tvusec);return 0;}

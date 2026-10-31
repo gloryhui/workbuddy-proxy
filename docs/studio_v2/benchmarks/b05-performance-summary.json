@@ -1,0 +1,414 @@
+{
+  "at": "2026-10-31T22:20:06.855287+08:00",
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "n_each": 2,
+  "candidate_ui_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
+  "baseline_ui_sha256": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "metrics": {
+    "core_rss_mib": {
+      "previous": {
+        "samples": [
+          21.19,
+          20.88
+        ],
+        "median": 21.035,
+        "range": [
+          20.88,
+          21.19
+        ]
+      },
+      "current": {
+        "samples": [
+          20.77,
+          20.88
+        ],
+        "median": 20.825,
+        "range": [
+          20.77,
+          20.88
+        ]
+      },
+      "delta": -0.21,
+      "percent": -0.998
+    },
+    "ui_rss_mib": {
+      "previous": {
+        "samples": [
+          106.73,
+          104.77
+        ],
+        "median": 105.75,
+        "range": [
+          104.77,
+          106.73
+        ]
+      },
+      "current": {
+        "samples": [
+          106.19,
+          105.42
+        ],
+        "median": 105.805,
+        "range": [
+          105.42,
+          106.19
+        ]
+      },
+      "delta": 0.055,
+      "percent": 0.052
+    },
+    "combined_rss_mib": {
+      "previous": {
+        "samples": [
+          127.92,
+          125.64
+        ],
+        "median": 126.78,
+        "range": [
+          125.64,
+          127.92
+        ]
+      },
+      "current": {
+        "samples": [
+          126.95,
+          126.3
+        ],
+        "median": 126.625,
+        "range": [
+          126.3,
+          126.95
+        ]
+      },
+      "delta": -0.155,
+      "percent": -0.122
+    },
+    "sampled_peak_mib": {
+      "previous": {
+        "samples": [
+          176.34,
+          171.34
+        ],
+        "median": 173.84,
+        "range": [
+          171.34,
+          176.34
+        ]
+      },
+      "current": {
+        "samples": [
+          179.7,
+          174.64
+        ],
+        "median": 177.17,
+        "range": [
+          174.64,
+          179.7
+        ]
+      },
+      "delta": 3.33,
+      "percent": 1.916
+    },
+    "core_ready_ms": {
+      "previous": {
+        "samples": [
+          55.441,
+          44.705
+        ],
+        "median": 50.073,
+        "range": [
+          44.705,
+          55.441
+        ]
+      },
+      "current": {
+        "samples": [
+          47.728,
+          49.303
+        ],
+        "median": 48.5155,
+        "range": [
+          47.728,
+          49.303
+        ]
+      },
+      "delta": -1.5575,
+      "percent": -3.11
+    },
+    "process_to_marker_ms": {
+      "previous": {
+        "samples": [
+          1114.443,
+          826.683
+        ],
+        "median": 970.563,
+        "range": [
+          826.683,
+          1114.443
+        ]
+      },
+      "current": {
+        "samples": [
+          912.277,
+          768.514
+        ],
+        "median": 840.3955000000001,
+        "range": [
+          768.514,
+          912.277
+        ]
+      },
+      "delta": -130.1675,
+      "percent": -13.412
+    },
+    "direct_p50_ms": {
+      "previous": {
+        "samples": [
+          0.147,
+          0.147
+        ],
+        "median": 0.147,
+        "range": [
+          0.147,
+          0.147
+        ]
+      },
+      "current": {
+        "samples": [
+          0.146,
+          0.155
+        ],
+        "median": 0.1505,
+        "range": [
+          0.146,
+          0.155
+        ]
+      },
+      "delta": 0.0035,
+      "percent": 2.381
+    },
+    "direct_p95_ms": {
+      "previous": {
+        "samples": [
+          0.286,
+          0.308
+        ],
+        "median": 0.297,
+        "range": [
+          0.286,
+          0.308
+        ]
+      },
+      "current": {
+        "samples": [
+          0.305,
+          0.197
+        ],
+        "median": 0.251,
+        "range": [
+          0.197,
+          0.305
+        ]
+      },
+      "delta": -0.046,
+      "percent": -15.488
+    },
+    "proxy_p50_ms": {
+      "previous": {
+        "samples": [
+          0.172,
+          0.172
+        ],
+        "median": 0.172,
+        "range": [
+          0.172,
+          0.172
+        ]
+      },
+      "current": {
+        "samples": [
+          0.171,
+          0.15
+        ],
+        "median": 0.1605,
+        "range": [
+          0.15,
+          0.171
+        ]
+      },
+      "delta": -0.0115,
+      "percent": -6.686
+    },
+    "proxy_p95_ms": {
+      "previous": {
+        "samples": [
+          0.198,
+          0.197
+        ],
+        "median": 0.1975,
+        "range": [
+          0.197,
+          0.198
+        ]
+      },
+      "current": {
+        "samples": [
+          0.197,
+          0.179
+        ],
+        "median": 0.188,
+        "range": [
+          0.179,
+          0.197
+        ]
+      },
+      "delta": -0.0095,
+      "percent": -4.81
+    },
+    "large_seconds": {
+      "previous": {
+        "samples": [
+          0.089,
+          0.088
+        ],
+        "median": 0.0885,
+        "range": [
+          0.088,
+          0.089
+        ]
+      },
+      "current": {
+        "samples": [
+          0.09,
+          0.087
+        ],
+        "median": 0.0885,
+        "range": [
+          0.087,
+          0.09
+        ]
+      },
+      "delta": 0.0,
+      "percent": 0.0
+    },
+    "diagnostic_peak_core_rss_mib": {
+      "previous": {
+        "samples": [
+          69.484,
+          66.578
+        ],
+        "median": 68.031,
+        "range": [
+          66.578,
+          69.484
+        ]
+      },
+      "current": {
+        "samples": [
+          73.484,
+          69.219
+        ],
+        "median": 71.35149999999999,
+        "range": [
+          69.219,
+          73.484
+        ]
+      },
+      "delta": 3.3205,
+      "percent": 4.881
+    },
+    "diagnostic_peak_ui_rss_mib": {
+      "previous": {
+        "samples": [
+          106.859,
+          105.266
+        ],
+        "median": 106.0625,
+        "range": [
+          105.266,
+          106.859
+        ]
+      },
+      "current": {
+        "samples": [
+          106.219,
+          105.781
+        ],
+        "median": 106.0,
+        "range": [
+          105.781,
+          106.219
+        ]
+      },
+      "delta": -0.0625,
+      "percent": -0.059
+    },
+    "diagnostic_peak_combined_rss_mib": {
+      "previous": {
+        "samples": [
+          176.344,
+          171.344
+        ],
+        "median": 173.844,
+        "range": [
+          171.344,
+          176.344
+        ]
+      },
+      "current": {
+        "samples": [
+          179.703,
+          174.641
+        ],
+        "median": 177.172,
+        "range": [
+          174.641,
+          179.703
+        ]
+      },
+      "delta": 3.328,
+      "percent": 1.914
+    }
+  },
+  "condition": "Same arm64 machine/Studio/fixed Core;1000 actual preseed requests persisted behind20-request barriers, extra save64 before native launch and original save64 retained. Same native relay/1100to1440 restore/syncCancel/unsyncCancel/logTail flow, raw PNG SHA and10s dwell. Original1000small+80x1MiB/concurrency4 unchanged.",
+  "limits": [
+    "n2 each is short diagnostic evidence; no statistical equivalence, long-term leak, FPS or input-latency claim.",
+    "RSS can double-count shared pages; sampled peaks can miss spikes. vmmap footprint/heap/IOSurface are different metrics.",
+    "ui_record_ready_ms includes CUA waiting and is not compared; process-to-marker is not first paint or interactivity.",
+    "Valid postload-live vmmap is collected only after original timed request/peak/settled results finalize and before original UI shutdown. Legacy finally vmmap-after remains invalid process-gone output and is not interpreted.",
+    "R03 remains pending and retains earlier B01/UI67/B03 costs, including B03 process-to-marker cost."
+  ],
+  "raw_evidence": [
+    "b05-performance-previous1.json",
+    "b05-performance-current1.json",
+    "b05-performance-current2.json",
+    "b05-performance-previous2.json"
+  ],
+  "assessment": "ACCEPTED for B05 interface delivery and short workload correctness only. Four unchanged workloads and actual terminal checks passed. UI idle RSS +0.055MiB/combined -0.155MiB; sampled peak +3.33MiB remains explicit R03 diagnostic cost. Proxy p95 -0.0095ms and process-to-marker -130.1675ms. Not a regression-free, long-term or release-performance claim.",
+  "SQL_after_original_workload": {
+    "previous1": {
+      "usage_requests": 2090,
+      "usage_costs": 2090
+    },
+    "current1": {
+      "usage_requests": 2090,
+      "usage_costs": 2090
+    },
+    "current2": {
+      "usage_requests": 2090,
+      "usage_costs": 2090
+    },
+    "previous2": {
+      "usage_requests": 2090,
+      "usage_costs": 2090
+    }
+  },
+  "actual_native_conditions": "performance-b05-cua.json"
+}

@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T21:42:51.615395+08:00",
+  "action": "target-break-launch",
+  "stage": "target_bad_launch",
+  "config_sha256_unchanged": "3c2f31ba58aff0d88133a930b90306609f18989d73ce020d44cee17b09a1927c",
+  "result": {
+    "target_mode": {
+      "refuse": false,
+      "break_launch": true
+    },
+    "target_pid": 91520
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

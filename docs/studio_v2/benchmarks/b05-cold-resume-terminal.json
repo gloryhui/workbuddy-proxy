@@ -1,0 +1,7 @@
+{
+  "mock_pid": 99321,
+  "exit_code": 0,
+  "waited": true,
+  "failure": null,
+  "scope": "Owned same-port mock only, after user pause verified old roles gone. User/manual native tray actions and CUA window observations are separate. Old interrupted session did not gain terminal0 acceptance."
+}

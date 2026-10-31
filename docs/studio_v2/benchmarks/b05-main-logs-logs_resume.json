@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-31T21:53:16.792543+08:00",
+  "stage": "logs_resume",
+  "new_actual_HTTP200": 1,
+  "snapshot_keys": [
+    "autostart",
+    "logs",
+    "models",
+    "providers",
+    "requests",
+    "status",
+    "uptime",
+    "url"
+  ],
+  "log_count": 1,
+  "log_rows": [
+    {
+      "message": "HTTP 200 · 151 requests",
+      "time": 1793454796792
+    }
+  ],
+  "core_config_sha256": "bf68b9af06485f9ee4aa24de7e65a1639e5f41227390e9ae8d814cb46c40a401",
+  "models_sha256": "5491d5e8042555ad979b974927d948ed5a21a592b62b983bd6786cb405747329",
+  "config_and_models_exact": true,
+  "scope": "Only synthetic real local proxy requests; no management writes and no GUI input."
+}

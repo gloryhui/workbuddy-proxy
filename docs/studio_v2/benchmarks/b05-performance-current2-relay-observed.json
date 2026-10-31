@@ -1,0 +1,30 @@
+{
+  "label": "current2",
+  "ui_pid": 3623,
+  "window_id": 12286,
+  "relay_visible": true,
+  "log_at_tail": true,
+  "sync_and_unsync_cancelled": true,
+  "logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "relay-before.png",
+  "screenshot_sha256": "1e34b9430a2911d3a8e4c1c03964a9ff3180babbffd9bf777a7c43442ee21ae6",
+  "pixels": [
+    1440,
+    900
+  ],
+  "operations": [
+    "getApp background",
+    "drag bottom right 1440x900 to 1100x700",
+    "restore default 1440x900",
+    "close size notice",
+    "provider management relay",
+    "open Sync then Cancel",
+    "open Unsync then Cancel",
+    "click log, super+End, click blank header"
+  ],
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true
+}

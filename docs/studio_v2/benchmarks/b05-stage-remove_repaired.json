@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-31T21:40:08.628242+08:00",
+  "stage": "remove_repaired",
+  "core_pid": 61219,
+  "ui_pid": 78723,
+  "config_sha256": "3c2f31ba58aff0d88133a930b90306609f18989d73ce020d44cee17b09a1927c",
+  "name_a": "B05 verified A",
+  "language": "zh",
+  "port": 64645,
+  "installed": 5,
+  "models": {
+    "valid": true,
+    "sha256": "e0fdd085e5c438c8500b6003be0bbb5899ee2c549588ba835f2e622e9c9295df",
+    "rows": 7,
+    "managed_ids": [
+      "B05 verified A/claude-opus-4.7",
+      "B05 verified A/deepseek-v4.1-flash",
+      "B05 verified A/gpt-6",
+      "B05 verified A/gpt-6.1",
+      "OpenCode Go/model-b-1"
+    ],
+    "unrelated_and_original_fields_preserved": true
+  },
+  "settings_unchanged": {
+    "enabled": true,
+    "retention_days": 180,
+    "default_currency": "CNY",
+    "revision": 1
+  },
+  "prices_unchanged": 3,
+  "history": {
+    "usage_requests": {
+      "rows": 143,
+      "all_fields_preserved": true,
+      "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+    },
+    "usage_costs": {
+      "rows": 143,
+      "all_fields_preserved": true,
+      "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+    }
+  },
+  "snapshot_counts": {
+    "providers": 2,
+    "models": 5,
+    "requests": 143,
+    "running": null,
+    "url": "http://127.0.0.1:64645/v1"
+  },
+  "log_count": 100,
+  "UI_restart_events": [
+    "guard_installed"
+  ],
+  "scope": "Read-only Core/files/SQL proofs. Only declared real native A-name/install/port/language saves accepted; UI input, target restart and screenshots require actor proof separately. No actual user WorkBuddy integration claim."
+}

@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-31T21:38:35.275820+08:00",
+  "action": "models-invalid",
+  "stage": "sync_fault",
+  "config_sha256_unchanged": "27e564c0e77ca7a46877aa896d791adacef7a7cd66315edfa37d46440e81939b",
+  "result": {
+    "models_invalid": true,
+    "original_preserved": true
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

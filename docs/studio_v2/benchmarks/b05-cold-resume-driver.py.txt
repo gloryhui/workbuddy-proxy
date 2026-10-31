@@ -1,0 +1,24 @@
+from pathlib import Path
+import json,os,subprocess,sys,time,traceback
+r=Path(__file__).resolve().parent;f=r/'b05-1xsejnc7-main';child=None;failure=None
+try:
+ for line in subprocess.check_output(['ps','-axo','command='],text=True).splitlines():assert not line.startswith(str(r)+'/'),'Old owned executable still live'
+ assert not (r/'cold-mock-ready.json').exists()
+ log=(r/'cold-resume-mock.log').open('wb');child=subprocess.Popen([sys.executable,'-u',str(r/'cold-mock.py')],stdin=subprocess.DEVNULL,stdout=log,stderr=log)
+ while not (r/'cold-mock-ready.json').exists():
+  assert child.poll() is None,'Cold mock failed';time.sleep(.05)
+ ready=json.loads((r/'cold-mock-ready.json').read_text());assert ready['pid']==child.pid;print(json.dumps({'cold_mock_ready':ready}),flush=True)
+ end=time.monotonic()+1800
+ while not (r/'lifecycle-stage-proofs/cold_quit.json').exists():
+  assert child.poll() is None
+  if time.monotonic()>end:raise TimeoutError('Waiting for actual manual cold tray Quit evidence')
+  time.sleep(.2)
+ final=json.loads((r/'lifecycle-stage-proofs/cold_quit.json').read_text());assert final['passed'] and all(not pids for pids in final['roles'].values())
+except BaseException:failure=traceback.format_exc()
+finally:
+ if child:
+  if child.poll() is None:child.terminate()
+  child.wait(timeout=8);log.close()
+ terminal={'mock_pid':child.pid if child else None,'exit_code':child.returncode if child else None,'waited':child is not None,'failure':failure,'scope':'Owned same-port mock only, after user pause verified old roles gone. User/manual native tray actions and CUA window observations are separate. Old interrupted session did not gain terminal0 acceptance.'};(r/'cold-resume-terminal.json').write_text(json.dumps(terminal,indent=2)+'\n')
+if failure:raise RuntimeError(failure)
+assert child.returncode==0;print('Owned cold-resume mock terminal0 after actual user tray Quit',flush=True)

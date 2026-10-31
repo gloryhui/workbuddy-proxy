@@ -1,0 +1,14 @@
+{
+  "runtime_files": [
+    "gpui/src/ui.rs",
+    "gpui/src/ui/log_scroll.rs"
+  ],
+  "same_sync_unsync_step_owners": [
+    "sync",
+    "unsync"
+  ],
+  "Core_native_restart_scripts_dependencies_unchanged": true,
+  "UI_scope": "Follow new logs only at tail, retain prior offset while reading. When old rows expire at100 cap, align retained first visible entry by byte offsets and actual wrapped geometry after paint, bounded callback only; stale/new user scroll ignored. No polling/timer added.",
+  "candidate_sha256": "fe11308907c870efcdd3cfcd1a0b424b578ac808df89c1adb85fd66918d67534",
+  "new_tests": "2 helper regressions cover UTF8 bytes, several expired rows, duplicates/pure append and full history replacement; native A/B still required."
+}

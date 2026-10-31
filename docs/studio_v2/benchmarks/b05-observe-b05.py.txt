@@ -1,0 +1,48 @@
+from pathlib import Path
+import argparse,copy,datetime,hashlib,json,os,sqlite3,urllib.request,urllib.parse
+r=Path(__file__).resolve().parent;p=argparse.ArgumentParser();p.add_argument('fixture');p.add_argument('stage');p.add_argument('--name-a');p.add_argument('--installed',type=int,choices=[0,5]);p.add_argument('--language',choices=['zh','en','auto']);p.add_argument('--port',type=int);p.add_argument('--unchanged',action='store_true');p.add_argument('--invalid-models',action='store_true');p.add_argument('--models-unchanged',action='store_true');a=p.parse_args();f=Path(a.fixture).resolve();assert f.parent==r
+raw=(f/'config/config.json').read_bytes();cfg=json.loads(raw);inst=json.loads((f/'config/instance.json').read_text());ready=json.loads((f/'cua-launch-ready.json').read_text());assert inst['pid']==ready['core_pid'] and inst['port']==cfg['port'];opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+def call(name):
+ q=urllib.request.Request('http://127.0.0.1:%d/_control/action'%inst['port'],data=json.dumps({'command':name}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+inst['management_key']})
+ with opener.open(q,timeout=12) as z:return json.loads(json.loads(z.read())['message'])
+def norm(v):
+ v=copy.deepcopy(v)
+ for provider in v['providers']:
+  provider.setdefault('protocol','openai_chat');provider.setdefault('protocol_settings',{'authentication':'protocol_default','anthropic_version':'2023-06-01','default_max_output_tokens':4096,'reasoning_profile':{'mode':'none','budgets':{},'levels':{}},'responses_efforts':{}})
+  for m in provider['models']:m.setdefault('capabilities',None)
+ return v
+checkpoint=f/'b05-checkpoint-private.json';initial=norm(json.loads((f/'config-before.json').read_text()));history_path=f/'b05-history-private.json';history=json.loads((history_path if history_path.exists() else f/'history-before-private.json').read_text());models_raw=(f/'home/.workbuddy/models.json').read_bytes();original=json.loads((f/'models-original-private.json').read_text());sha=lambda b:hashlib.sha256(b).hexdigest()
+health=call('stats_health');assert health['state']=='ready';settings=call('stats_settings_get');settings={k:settings[k] for k in ['enabled','retention_days','default_currency','revision']};prices={v['rule_id']:{k:w for k,w in v.items() if k!='referenced'} for v in call('stats_prices_list')['items']};snap=call('snapshot');assert len(snap['logs'])<=100
+for secret in [cfg['local_key'],inst['management_key'],*[v['api_key'] for v in cfg['providers']]]:assert secret not in json.dumps(snap['logs'])
+if a.stage=='logs_cleared':assert len(snap['logs'])==0,'Clear must empty native Core ring, not usage history'
+if a.stage=='logs_resumed':assert 0<len(snap['logs'])<=100 and any('200' in x.get('message','') for x in snap['logs'])
+with sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True) as db:
+ db.row_factory=sqlite3.Row;db.execute('BEGIN');current={table:{x['request_id']:dict(x) for x in db.execute('SELECT * FROM '+table)} for table in history}
+for table,rows in history.items():assert all(current[table].get(k)==v for k,v in rows.items()),('protected history changed',table)
+if a.stage=='initial':
+ assert not checkpoint.exists();assert cfg['providers'][0]['name']=='sub2api' and not cfg['installed'] and cfg['language']=='zh';assert json.loads(models_raw)==original
+ prev={'name_a':cfg['providers'][0]['name'],'installed':0,'language':cfg['language'],'port':cfg['port'],'settings':settings,'prices':prices,'config_sha256':sha(raw),'models_sha256':sha(models_raw)}
+else:prev=json.loads(checkpoint.read_text())
+name=a.name_a or prev['name_a'];assert name in ['sub2api','B05 saved A','B05 retry A','B05 verified A'];assert cfg['providers'][0]['name']==name and cfg['language']==(a.language or prev['language']) and cfg['port']==(a.port or prev['port'])
+expected=copy.deepcopy(initial);expected['providers'][0]['name']=name;expected['installed']=cfg['installed'];expected['port']=cfg['port'];expected['language']=cfg['language'];assert norm(cfg)==expected,'Unexpected business config change outside declared A name/install/port/language'
+assert settings==prev['settings'] and prices==prev['prices'];count=len(cfg['installed']);assert count==(a.installed if a.installed is not None else prev['installed'])
+if a.unchanged:assert sha(raw)==prev['config_sha256'] and sha(models_raw)==prev['models_sha256']
+if a.models_unchanged:assert sha(models_raw)==prev['models_sha256']
+if a.invalid_models:
+ try:json.loads(models_raw)
+ except json.JSONDecodeError:pass
+ else:raise AssertionError('Expected actual invalid synthetic models file')
+ model_proof={'valid':False,'sha256':sha(models_raw)}
+else:
+ doc=json.loads(models_raw);rows=doc['models'];mapping={x['id']:x for x in rows};assert len(mapping)==len(rows);assert doc['extension']==original['extension'];ids={x['id'] for x in cfg['installed']};assert len(ids)==count
+ for item in cfg['installed']:
+  assert mapping[item['id']]==item['expected'];url=urllib.parse.urlparse(mapping[item['id']]['url']);assert url.hostname=='127.0.0.1' and url.port==cfg['port'];assert mapping[item['id']]['apiKey']==cfg['local_key']
+ for item in original['models']:
+  if item['id'] in ids:assert next(x for x in cfg['installed'] if x['id']==item['id'])['previous']==item
+  else:assert mapping[item['id']]==item
+ if not count:assert doc==original
+ model_proof={'valid':True,'sha256':sha(models_raw),'rows':len(rows),'managed_ids':sorted(ids),'unrelated_and_original_fields_preserved':True}
+meta=f/'config/gpui.json';ui_pid=json.loads(meta.read_text())['pid'] if meta.exists() else prev.get('ui_pid');assert ui_pid
+wire=[json.loads(s) for s in (r/'restart-guard-audit.jsonl').read_text().splitlines()];events=[v for v in wire if v['process_pid']==ui_pid];assert events and events[0]['event']=='guard_installed' and events[0]['nonce']=='b05-owned-target-1xsejnc7';assert not any(v['event'] in ['termination_blocked','force_always_blocked','open_blocked','unexpected_target_blocked','unexpected_open_result'] for v in events)
+protected={table:{'rows':len(rows),'all_fields_preserved':True,'sha256':sha(json.dumps(rows,sort_keys=True).encode())} for table,rows in current.items()};out={'at':datetime.datetime.now().astimezone().isoformat(),'stage':a.stage,'core_pid':ready['core_pid'],'ui_pid':ui_pid,'config_sha256':sha(raw),'name_a':name,'language':cfg['language'],'port':cfg['port'],'installed':count,'models':model_proof,'settings_unchanged':settings,'prices_unchanged':len(prices),'history':protected,'snapshot_counts':{k:snap.get(k) for k in ['providers','models','requests','running','url']},'log_count':len(snap['logs']),'UI_restart_events':[v['event'] for v in events],'scope':'Read-only Core/files/SQL proofs. Only declared real native A-name/install/port/language saves accepted; UI input, target restart and screenshots require actor proof separately. No actual user WorkBuddy integration claim.'}
+(f/'stage-proofs').mkdir(exist_ok=True);(f/'stage-proofs'/(a.stage+'.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');checkpoint.write_text(json.dumps({'name_a':name,'installed':count,'language':cfg['language'],'port':cfg['port'],'settings':settings,'prices':prices,'config_sha256':sha(raw),'models_sha256':sha(models_raw),'ui_pid':ui_pid})+'\n');history_path.write_text(json.dumps(current)+'\n');os.chmod(checkpoint,0o600);os.chmod(history_path,0o600);print(json.dumps({k:out[k] for k in ['stage','name_a','installed','language','port','log_count']},ensure_ascii=False))

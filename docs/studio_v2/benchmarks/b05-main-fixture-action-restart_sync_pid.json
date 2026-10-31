@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-31T21:41:05.189983+08:00",
+  "action": "target-pid",
+  "stage": "restart_sync_pid",
+  "config_sha256_unchanged": "3c2f31ba58aff0d88133a930b90306609f18989d73ce020d44cee17b09a1927c",
+  "result": {
+    "target_pid": 91008
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

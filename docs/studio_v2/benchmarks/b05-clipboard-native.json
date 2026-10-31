@@ -1,0 +1,46 @@
+{
+  "operations": "CUA actual endpoint copy, log button copy, text Cmd+A/C, empty log copy, each pasted into isolated own whitelist probe and native closed",
+  "results": {
+    "address-after": {
+      "bytes": 25,
+      "kind": "address",
+      "accepted": true,
+      "characters": 25,
+      "sha256": "1063c61eed88fe0d40585e08574da8c3e11bea0653eaaadd627b7865643b5fb1"
+    },
+    "logs-button": {
+      "bytes": 4808,
+      "kind": "logs",
+      "accepted": true,
+      "characters": 3572,
+      "sha256": "5c5091a763932e9dcafceb95a5906aae0aaf1f59502f3502618c802ec74625da"
+    },
+    "logs-selection": {
+      "bytes": 4732,
+      "kind": "selection",
+      "accepted": true,
+      "characters": 3512,
+      "sha256": "fc0acf04daf962e2358a37393476797734a7dc7d357e5da1556714805726e0c5"
+    },
+    "logs-empty": {
+      "bytes": 88,
+      "kind": "logs",
+      "accepted": true,
+      "characters": 64,
+      "sha256": "796ba02ecb54327ac3b79a7095d72f51c5132dbd054c9e8b4cbd9b3c950eaae0"
+    }
+  },
+  "button_body_equals_selection": true,
+  "selected_line_count": 100,
+  "last_three_statuses": [
+    200,
+    503,
+    200
+  ],
+  "clear_observer": "logs_cleared passed, ring0 and SQL/config preserved",
+  "resume_observer": "logs_resumed passed, ring1",
+  "limitations": [
+    "No pbpaste or unexpected clipboard content read",
+    "Values are synthetic and copied to disposable test probe only"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T21:42:20.817752+08:00",
+  "action": "target-normal",
+  "stage": "target_repaired",
+  "config_sha256_unchanged": "b1ec8422addba70043f4dc3642b6c4f89536aa10950a73ca452dd87f4c766be4",
+  "result": {
+    "target_mode": {
+      "refuse": false,
+      "break_launch": false
+    },
+    "target_pid": 91008
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

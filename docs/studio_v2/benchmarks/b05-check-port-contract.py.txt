@@ -1,0 +1,34 @@
+from pathlib import Path
+import hashlib,json,os,sys,time,traceback
+r=Path(__file__).resolve().parent;repo=Path.cwd();os.environ.update(TMPDIR=str(r/'tmp'),TMP=str(r/'tmp'),TEMP=str(r/'tmp'));sys.path.insert(0,str(repo/'scripts'))
+import port_change,subprocess
+from workbuddy_import_ui_sandbox import write_profile,command,kernel_protection,profile_text,protected_locations
+from workbuddy_import_test import real_user_home
+core=Path(json.loads((r/'ownership.json').read_text())['reused_core']);assert hashlib.sha256(core.read_bytes()).hexdigest()=='25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5';folder=r/'contract-port-retry1';assert not folder.exists();folder.mkdir()
+class Retain:
+ def __init__(self,*a,**kw):self.name=str(folder)
+ def __enter__(self):return self.name
+ def __exit__(self,*a):pass
+port_change.tempfile.TemporaryDirectory=Retain
+policy=folder/'core-protection.sb';policy.write_text(profile_text([*protected_locations(real_user_home()).values(),Path(real_user_home())/'Library/LaunchAgents']));original=subprocess.Popen;children=[];proofs=[]
+def launch(argv,*a,**kw):
+ if str(argv[0])==str(core):
+  child=original(command(policy,core,list(argv[1:])),*a,**kw);children.append(child);proof=None
+  for _ in range(100):
+   assert child.poll() is None,'Core exited during policy setup'
+   proof=kernel_protection(real_user_home(),folder,child.pid)
+   if proof['enforced']:break
+   time.sleep(.05)
+  assert proof and proof['enforced'];proofs.append(proof);return child
+ return original(argv,*a,**kw)
+subprocess.Popen=launch;sys.argv=['port_change.py','--exe',str(core)];started=time.monotonic();error=None
+try:port_change.main()
+except BaseException:error=traceback.format_exc()
+finally:
+ terminal=[{'pid':p.pid,'exit_code':p.poll()} for p in children]
+ if any(p.poll() is None for p in children):
+  for p in children:
+   if p.poll() is None:p.terminate();p.wait(timeout=8)
+  error=(error or '')+'\nUnexpected live contract child required cleanup.'
+ out={'passed':error is None,'script_sha256':hashlib.sha256((repo/'scripts/port_change.py').read_bytes()).hexdigest(),'core_sha256':hashlib.sha256(core.read_bytes()).hexdigest(),'seconds':round(time.monotonic()-started,3),'kernel_proofs':proofs,'terminal':terminal,'error':error,'scope':'Original existing port_change.py unchanged; retained own temporary context and Core kernel guard only. Real occupied/invalid port rejection, file transaction and live SSE migration; not native GUI confirmation or WorkBuddy restart.'};(r/'port-contract.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps({'passed':out['passed'],'seconds':out['seconds'],'children':terminal}))
+if error:raise SystemExit(error)

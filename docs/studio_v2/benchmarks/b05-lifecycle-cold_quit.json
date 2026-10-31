@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-31T22:11:46.613545+08:00",
+  "stage": "cold_quit",
+  "passed": true,
+  "roles": {
+    "core": [],
+    "tray": [],
+    "ui": []
+  },
+  "processes": [],
+  "core_kernel_guard": null,
+  "actual_proxy_HTTP": null,
+  "config_sha256": "bf68b9af06485f9ee4aa24de7e65a1639e5f41227390e9ae8d814cb46c40a401",
+  "models_sha256": "5491d5e8042555ad979b974927d948ed5a21a592b62b983bd6786cb405747329",
+  "history": {
+    "usage_requests": {
+      "rows": 156,
+      "previous_rows_all_fields_preserved": true
+    },
+    "usage_costs": {
+      "rows": 156,
+      "previous_rows_all_fields_preserved": true
+    }
+  },
+  "snapshot": null,
+  "scope": "Read-only native process/metadata, permission attestation, SQL/config proofs plus declared synthetic real HTTP. Physical tray menu and draft rendering require separate CUA actor observations."
+}

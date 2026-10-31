@@ -1,0 +1,997 @@
+{
+  "at": "2026-10-31T22:15:39.605349+08:00",
+  "candidate_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
+  "baseline_ui_sha256": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f",
+  "frame_count": 2,
+  "required_frame_size_pairs": 4,
+  "images": [
+    {
+      "node": "60:27",
+      "file": "60-27-wide.png",
+      "logical_size": [
+        1440,
+        900
+      ],
+      "native_pixels": [
+        1440,
+        901
+      ],
+      "scale": 1,
+      "bytes": 255420,
+      "sha256": "c3659f8a9a8925c65020ecd16f822ca49a1f21082f439095b036fee00c83780c",
+      "unmodified": true
+    },
+    {
+      "node": "60:27",
+      "file": "60-27-small.png",
+      "logical_size": [
+        1100,
+        700
+      ],
+      "native_pixels": [
+        1100,
+        701
+      ],
+      "scale": 1,
+      "bytes": 169855,
+      "sha256": "8aaf47cecfae425d5b1ba4834f0ab8cb2b1e627f3cdd2583c86e3f61fb2a04d6",
+      "unmodified": true
+    },
+    {
+      "node": "68:350",
+      "file": "68-350-wide.png",
+      "logical_size": [
+        1440,
+        900
+      ],
+      "native_pixels": [
+        1440,
+        901
+      ],
+      "scale": 1,
+      "bytes": 256689,
+      "sha256": "538e969ffdecef37f116f50b6c2ef99ad5a10312de035487b0db6f67372a9ec0",
+      "unmodified": true
+    },
+    {
+      "node": "68:350",
+      "file": "68-350-small.png",
+      "logical_size": [
+        1100,
+        700
+      ],
+      "native_pixels": [
+        1100,
+        701
+      ],
+      "scale": 1,
+      "bytes": 171027,
+      "sha256": "cf445ab8020e4b2496e661f765057367c178e9fa51a578a52421c40aa622c0df",
+      "unmodified": true
+    }
+  ],
+  "main_ui_pid_for_formal_frames": 78723,
+  "main_fixture_initial_ui_metadata_is_historical": "fe113 initial diagnostic, final78 transitions preserved; initial fixture.json was not overwritten to fake final candidate",
+  "stages": [
+    {
+      "stage": "confirmations_complete",
+      "file": "confirmations_complete.json",
+      "sha256": "0770f5261cd30551f8ddaebb7ee9a4ed8f832fe7f195835228638bdcfb7173bd",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "draft_sync_cancel",
+      "file": "draft_sync_cancel.json",
+      "sha256": "ee2b51f1f29743c39e3135004270ba317d8cfcec6429b324a73eac2756702ecf",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "drafts_only",
+      "file": "drafts_only.json",
+      "sha256": "62d62680b4f4a5264a2d06407ea73440f12732d8f5ceef1db3c86930fbec86c2",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "english_confirmations",
+      "file": "english_confirmations.json",
+      "sha256": "ce9e82c33842a21b4128c37354a8f9970500d0e55c55a808cf091af036645c58",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "final_log_requests",
+      "file": "final_log_requests.json",
+      "sha256": "a75cead5a5ca5450ea213e98d7d61e982bd3737fffad324ec79378abea3aa08f",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 50695,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 150,
+          "all_fields_preserved": true,
+          "sha256": "4b3576ef073c890696a643b07d2e4ec46fd8e18f90e04e37f2665259c99dd134"
+        },
+        "usage_costs": {
+          "rows": 150,
+          "all_fields_preserved": true,
+          "sha256": "0a38ae4d5855c1bc9978dbcb01391790520f6e2be17c44e3b3abe89576970772"
+        }
+      }
+    },
+    {
+      "stage": "final_proxy",
+      "file": "final_proxy.json",
+      "sha256": "5f91689739cd3825253587685d79b49188baff0b72a756d351c23449647c3d9b",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 50695,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 147,
+          "all_fields_preserved": true,
+          "sha256": "0109acaab4f42ff0bd960aca9b5eb82f27b144f0931f667783dca81a9a588585"
+        },
+        "usage_costs": {
+          "rows": 147,
+          "all_fields_preserved": true,
+          "sha256": "0945f5e7b4f31d6b81d8d98a68410aaf55f8dd0522ed1b8c34a045f7e5eb4452"
+        }
+      }
+    },
+    {
+      "stage": "final_unsynced",
+      "file": "final_unsynced.json",
+      "sha256": "a138bda0248f5c9c06fad686fd21d7e3f50ddfb6304dc5ce002e838dae9bb672",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 50695,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 146,
+          "all_fields_preserved": true,
+          "sha256": "cd423df2dc182b9e9407cd32cc1151dd725ddc2d401a23defd2b212aa978f859"
+        },
+        "usage_costs": {
+          "rows": 146,
+          "all_fields_preserved": true,
+          "sha256": "e68ad39d11eed901f548944faacf87753350d60c09ee3ae727240b01be6199ec"
+        }
+      }
+    },
+    {
+      "stage": "initial",
+      "file": "initial.json",
+      "sha256": "239f9fbc338b8864b6e8627d95c6fd305a5b2b09937a13f206cabb4cb82ffc87",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 141,
+          "all_fields_preserved": true,
+          "sha256": "5f1d9e4e967734ff5ba6e02cdeab31b6aed28e24e579edbcc81342b372db4e4a"
+        },
+        "usage_costs": {
+          "rows": 141,
+          "all_fields_preserved": true,
+          "sha256": "37f814e33cd18c54c786949d91200635cc54b28dde05b69dfc72a5e42bf0d0d3"
+        }
+      }
+    },
+    {
+      "stage": "language_en_saved",
+      "file": "language_en_saved.json",
+      "sha256": "1a8f60617cfff85ed1b17a3fe0a15ba5660919ba577b19faf71b61e3ad534ccc",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "language_zh_saved",
+      "file": "language_zh_saved.json",
+      "sha256": "a8f5dc21fa313fcd6c221a279238452b71d19fb908f38df1c4e55022f7bef941",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "log_complete",
+      "file": "log_complete.json",
+      "sha256": "2d830c2468138ebbf094e9c401bcd7eb4c3fc34b3d7116f193c868fc028bb59e",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "logs_cleared",
+      "file": "logs_cleared.json",
+      "sha256": "ea9ef1a24579b93818f069300b72a028316b08691a315573f446f071dc7a0d7b",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 50695,
+      "log_count": 0,
+      "history": {
+        "usage_requests": {
+          "rows": 150,
+          "all_fields_preserved": true,
+          "sha256": "4b3576ef073c890696a643b07d2e4ec46fd8e18f90e04e37f2665259c99dd134"
+        },
+        "usage_costs": {
+          "rows": 150,
+          "all_fields_preserved": true,
+          "sha256": "0a38ae4d5855c1bc9978dbcb01391790520f6e2be17c44e3b3abe89576970772"
+        }
+      }
+    },
+    {
+      "stage": "logs_resumed",
+      "file": "logs_resumed.json",
+      "sha256": "1aefeb3bd64f18bfe4c69c20a51ca1489e29c0930e2006fbf04a6086d4c42c45",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 50695,
+      "log_count": 1,
+      "history": {
+        "usage_requests": {
+          "rows": 151,
+          "all_fields_preserved": true,
+          "sha256": "32e10790a747199c9f9cf03923fe7465cd30d6ff745a28ad78d1dd11d42b7736"
+        },
+        "usage_costs": {
+          "rows": 151,
+          "all_fields_preserved": true,
+          "sha256": "a73f788da8dfa8c39cedf2032ec3b2edf13f6b22d2adf7eaf69ec5abea79dacb"
+        }
+      }
+    },
+    {
+      "stage": "modal_mask",
+      "file": "modal_mask.json",
+      "sha256": "367fd4c587f911f0b8f5d5369087238d26bb85eff871280c82306927e52257ca",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "port_cancel",
+      "file": "port_cancel.json",
+      "sha256": "a919fa968605b6536b30df3a6d1722f5901439bbb1b05768793976196f0a5d10",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "port_invalid",
+      "file": "port_invalid.json",
+      "sha256": "86c9ec78a143f552062947ed8d98d03dd0cef0ae7f587520044fdee6c8b9a63c",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "port_live",
+      "file": "port_live.json",
+      "sha256": "ebe51d4562a5ec7fbde86159ce76603f7743a2b59ad34dc273949df9d3d6d72b",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 50428,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 145,
+          "all_fields_preserved": true,
+          "sha256": "f60fa2b35408c46834d78ab1e91c6994c34c6a0bb24552235b22365d2eecfcfd"
+        },
+        "usage_costs": {
+          "rows": 145,
+          "all_fields_preserved": true,
+          "sha256": "a18102a9dc597172e66d92774e01dd3874a034dc79c92a571b799d049dff8039"
+        }
+      }
+    },
+    {
+      "stage": "port_occupied",
+      "file": "port_occupied.json",
+      "sha256": "4b1bb52b0c7cfd230986f747226e51ae3440e3bfb11fd410f7ae35b41c6dd036",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "port_partial",
+      "file": "port_partial.json",
+      "sha256": "34841b93d1f1c3450115e7552e6e189c6743183b63e781e3632ae3dc2d9f4938",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 50695,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 145,
+          "all_fields_preserved": true,
+          "sha256": "f60fa2b35408c46834d78ab1e91c6994c34c6a0bb24552235b22365d2eecfcfd"
+        },
+        "usage_costs": {
+          "rows": 145,
+          "all_fields_preserved": true,
+          "sha256": "a18102a9dc597172e66d92774e01dd3874a034dc79c92a571b799d049dff8039"
+        }
+      }
+    },
+    {
+      "stage": "port_recovered",
+      "file": "port_recovered.json",
+      "sha256": "b3a30bdc3e37024c8bb665f174dfa0cc8ad89308fd440c6393de49360ae26914",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 50695,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 146,
+          "all_fields_preserved": true,
+          "sha256": "cd423df2dc182b9e9407cd32cc1151dd725ddc2d401a23defd2b212aa978f859"
+        },
+        "usage_costs": {
+          "rows": 146,
+          "all_fields_preserved": true,
+          "sha256": "e68ad39d11eed901f548944faacf87753350d60c09ee3ae727240b01be6199ec"
+        }
+      }
+    },
+    {
+      "stage": "port_saved",
+      "file": "port_saved.json",
+      "sha256": "9e8c5355193d63a094345f4618d5c75d51b049d0f03c453216b6b1b7d019741a",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 50428,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "remove_failed",
+      "file": "remove_failed.json",
+      "sha256": "cc9934d4d317e973121be26c273746e880de85537d73702aa7d8b0a4620f8e96",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "remove_fault_ready",
+      "file": "remove_fault_ready.json",
+      "sha256": "a3f9eb529d28c81189486e93cf29692ea95990229b4cc15cd9b889dde7725323",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "remove_repaired",
+      "file": "remove_repaired.json",
+      "sha256": "ca07418dd61bee26b867f61fb1a49e19e9b5336524a62a2231b1b676eaaa0aaf",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "remove_retry_saved",
+      "file": "remove_retry_saved.json",
+      "sha256": "feb7f1e072042c40790e4bd23c954af8c03a421c68a6ced0be15354591f3db03",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "restart_open_recovered",
+      "file": "restart_open_recovered.json",
+      "sha256": "acf5eff63530b2ab1bbfb8f8ec24463f16d4c0f35ce31483cbc671833b971e0d",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "restart_remove_open_failed",
+      "file": "restart_remove_open_failed.json",
+      "sha256": "b842f79944056bfabb9dd80c245db78d8ded5c72dd1a3e428c082514d636eb64",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "restart_remove_timeout",
+      "file": "restart_remove_timeout.json",
+      "sha256": "519c2c646e717f053d7d5150d2a46ab256e15e0998445dbeecb2eaf12b5f332b",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "restart_retry_saved",
+      "file": "restart_retry_saved.json",
+      "sha256": "90194c4d3e598b7863990a4c3c5daaa61da5b2e09c72b6391bc0b5bf0ff55b11",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "restart_sync_proxy",
+      "file": "restart_sync_proxy.json",
+      "sha256": "5f2282d2134982d5d9e3bd43fd7e7447bc28566fa309a44e705f040cabc4fcc7",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+        },
+        "usage_costs": {
+          "rows": 144,
+          "all_fields_preserved": true,
+          "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+        }
+      }
+    },
+    {
+      "stage": "restart_sync_saved",
+      "file": "restart_sync_saved.json",
+      "sha256": "3211d85d59b7d82a026687fd5fcaa0a52d13492ac8673587dffff2c88b2df541",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_cancel_wide",
+      "file": "sync_cancel_wide.json",
+      "sha256": "1b77caa123413f12df4165403cf637c8222b3e308d2b61bfea10b417395a4627",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_collision_failed",
+      "file": "sync_collision_failed.json",
+      "sha256": "23d4d771e9b1af66d90a48d823d032d66336b1cc4767eb8b893775b92a3bda63",
+      "name_a": "B05 saved A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_esc_small",
+      "file": "sync_esc_small.json",
+      "sha256": "718f937462b3a14022d27f477ac144bf32c26d40f3acce662597f3395ce8fcec",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_failed",
+      "file": "sync_failed.json",
+      "sha256": "1023d4236071c969d3e2f610be342bd12dcd8bcfdcd8511b86ce5c8fc97363e3",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_fault_ready",
+      "file": "sync_fault_ready.json",
+      "sha256": "c93eac0da0cf10eb39886367734384e05e28a73c44f140cfb49d286a4ad1f72a",
+      "name_a": "B05 retry A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_repaired",
+      "file": "sync_repaired.json",
+      "sha256": "f73469196933fe99e931650c01e3d45b5c7aed82483d9ae69cb2296b32ab4aec",
+      "name_a": "B05 verified A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_retry_saved",
+      "file": "sync_retry_saved.json",
+      "sha256": "7d58c88e88b6873e9f54aac4e5c1b50f1f4b0e7bd48a99ad22904fc99932ff66",
+      "name_a": "B05 verified A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "sync_saved",
+      "file": "sync_saved.json",
+      "sha256": "9984b0f706ebc54cf5df921176e4256f8eb484d51305864c28eef60d4ec8b10f",
+      "name_a": "B05 retry A",
+      "installed": 5,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "unsync_cancel_small",
+      "file": "unsync_cancel_small.json",
+      "sha256": "044dcd959157df8e85d16172e4bcc238af221867452e625f5824141f06a5dbb1",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "unsync_enter_small",
+      "file": "unsync_enter_small.json",
+      "sha256": "1dd5d1c92cca8dc6e79d87b742927255e78db0d2e8ed2f34e744791a95031529",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "unsync_saved",
+      "file": "unsync_saved.json",
+      "sha256": "b03708a772d9ab5d6cef6b6408d07b7401a74ecae92eee918bcb16fd2992dbda",
+      "name_a": "B05 retry A",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    },
+    {
+      "stage": "unsync_x_wide",
+      "file": "unsync_x_wide.json",
+      "sha256": "ddd696219ce27966b53ec315f9a5a16b28aa4ffe2e30404c668d101b47fd6dc8",
+      "name_a": "sub2api",
+      "installed": 0,
+      "port": 64645,
+      "log_count": 100,
+      "history": {
+        "usage_requests": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "5d2ceb41771a749b3d69d43937a27e82da40f2f66d4ea9fcba371cc475352da3"
+        },
+        "usage_costs": {
+          "rows": 143,
+          "all_fields_preserved": true,
+          "sha256": "3d691b6cc926474e4451ece7a513aff59d42e4cf6802590b0527486443f8f5c8"
+        }
+      }
+    }
+  ],
+  "native_transactions_actor": "native-sync-partial-summary.json",
+  "clipboard": "clipboard-validation.json",
+  "lifecycle": "native-lifecycle-summary.json",
+  "log_fix": "log-final-validation.json",
+  "business_scope": "Only2 Rust UI files for log reading. Original sync/unsync method bodies byte-identical; original Core/native/scripts/config schema/dependencies unchanged. Current-draft save then ALL saved providers install, restore never saves B draft. Manual ID collision correctly refused, not overwritten. Native restart actually targets only owned Cocoa app via QA identity layer; real installed WorkBuddy integration is not claimed.",
+  "interruption": "First Main terminal unknown because user pause; explicit audit retained. Complete later normal cold startup/user physicalSettings/Quit independently proves lifecycle. No invented orphan/CUA exit code.",
+  "final_history": {
+    "usage_requests": {
+      "rows": 156,
+      "previous_rows_all_fields_preserved": true
+    },
+    "usage_costs": {
+      "rows": 156,
+      "previous_rows_all_fields_preserved": true
+    }
+  },
+  "release_limits": "R01-R04 remain pending. Native1x1px outer edges/AA noted. No performance acceptance until separate four-round report; no public release."
+}

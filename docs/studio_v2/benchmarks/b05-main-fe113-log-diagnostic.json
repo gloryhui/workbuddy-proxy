@@ -1,0 +1,52 @@
+{
+  "candidate": "fe11308907c870efcdd3cfcd1a0b424b578ac808df89c1adb85fd66918d67534",
+  "ui_pid": 61790,
+  "guard": "guard_installed nonce b05-owned-target-1xsejnc7",
+  "result": "diagnostic; anchor correction incomplete, no final signoff",
+  "wide": "124 requests, scrollback approx 86–95; after +1 request and redraw approx 87–96, did not jump to bottom but shifted one line",
+  "bottom": "after returning to bottom, +1 produced 126 and 118–126 visible",
+  "small": "1100x700 right log card showed about one full text line; before around 48, after +1 around 49; no jump to bottom but shifted one line",
+  "requests_total": 127,
+  "images": [
+    {
+      "file": "new-log-before.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "14f30c4bbd96721a2f7f6cc7313d5f1eac4c42af6e05fe5a508a3cee9f9cbf94"
+    },
+    {
+      "file": "new-log-after.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "a208434c75eb40ae9ea5bc0f9ed67699c4c318bbe1be8651b8e541c868517daf"
+    },
+    {
+      "file": "new-log-small-before.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "340164019dd6e7473345f59a1e69af7081186d4e7826a9f93aa530c3f0bf0172"
+    },
+    {
+      "file": "new-log-small-after.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "d7cc1b93ad28fbb221fa085342f5d86555cd91f60cc1cd6e12025f08563e2503"
+    }
+  ],
+  "closure": {
+    "method": "CUA native close",
+    "ui_pid_gone_verified": true,
+    "exit_code": "not observed",
+    "acceptance_finished_marker_written": false
+  },
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true
+}

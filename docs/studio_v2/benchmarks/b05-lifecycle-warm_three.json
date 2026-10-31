@@ -1,0 +1,166 @@
+{
+  "at": "2026-10-31T21:55:12.328964+08:00",
+  "stage": "warm_three",
+  "passed": true,
+  "roles": {
+    "core": [
+      61219
+    ],
+    "tray": [
+      94889
+    ],
+    "ui": [
+      94899
+    ]
+  },
+  "processes": [
+    {
+      "pid": 61219,
+      "ppid": 61214,
+      "role": "core",
+      "command": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/b05-1xsejnc7-main/review-core --headless --config-dir /private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/b05-1xsejnc7-main/config --port 64645"
+    },
+    {
+      "pid": 94889,
+      "ppid": 1,
+      "role": "tray",
+      "command": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/WorkBuddy B05 Lifecycle Review.app/Contents/MacOS/workbuddy-proxy"
+    },
+    {
+      "pid": 94899,
+      "ppid": 94889,
+      "role": "ui",
+      "command": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/WorkBuddy B05 Lifecycle Review.app/Contents/MacOS/../Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui --config-dir /private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/b05-1xsejnc7-main/config"
+    }
+  ],
+  "core_kernel_guard": {
+    "enforced": true,
+    "pid": 61219,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "actual_proxy_HTTP": 200,
+  "config_sha256": "bf68b9af06485f9ee4aa24de7e65a1639e5f41227390e9ae8d814cb46c40a401",
+  "models_sha256": "5491d5e8042555ad979b974927d948ed5a21a592b62b983bd6786cb405747329",
+  "history": {
+    "usage_requests": {
+      "rows": 152,
+      "previous_rows_all_fields_preserved": true
+    },
+    "usage_costs": {
+      "rows": 152,
+      "previous_rows_all_fields_preserved": true
+    }
+  },
+  "snapshot": {
+    "providers": 2,
+    "models": 5,
+    "requests": 152,
+    "url": "http://127.0.0.1:50695/v1"
+  },
+  "scope": "Read-only native process/metadata, permission attestation, SQL/config proofs plus declared synthetic real HTTP. Physical tray menu and draft rendering require separate CUA actor observations."
+}

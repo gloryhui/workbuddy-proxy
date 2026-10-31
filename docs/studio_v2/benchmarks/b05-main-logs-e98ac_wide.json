@@ -1,0 +1,422 @@
+{
+  "at": "2026-10-31T20:36:56.313057+08:00",
+  "stage": "e98ac_wide",
+  "new_actual_HTTP200": 1,
+  "snapshot_keys": [
+    "autostart",
+    "logs",
+    "models",
+    "providers",
+    "requests",
+    "status",
+    "uptime",
+    "url"
+  ],
+  "log_count": 100,
+  "log_rows": [
+    {
+      "message": "HTTP 200 · 30 requests",
+      "time": 1793448389404
+    },
+    {
+      "message": "HTTP 200 · 31 requests",
+      "time": 1793448389404
+    },
+    {
+      "message": "HTTP 200 · 32 requests",
+      "time": 1793448389405
+    },
+    {
+      "message": "HTTP 200 · 33 requests",
+      "time": 1793448389405
+    },
+    {
+      "message": "HTTP 200 · 34 requests",
+      "time": 1793448389405
+    },
+    {
+      "message": "HTTP 200 · 35 requests",
+      "time": 1793448389406
+    },
+    {
+      "message": "HTTP 200 · 36 requests",
+      "time": 1793448389406
+    },
+    {
+      "message": "HTTP 200 · 37 requests",
+      "time": 1793448389406
+    },
+    {
+      "message": "HTTP 200 · 38 requests",
+      "time": 1793448389407
+    },
+    {
+      "message": "HTTP 200 · 39 requests",
+      "time": 1793448389407
+    },
+    {
+      "message": "HTTP 200 · 40 requests",
+      "time": 1793448389408
+    },
+    {
+      "message": "HTTP 200 · 41 requests",
+      "time": 1793448389408
+    },
+    {
+      "message": "HTTP 200 · 42 requests",
+      "time": 1793448389408
+    },
+    {
+      "message": "HTTP 200 · 43 requests",
+      "time": 1793448389409
+    },
+    {
+      "message": "HTTP 200 · 44 requests",
+      "time": 1793448389409
+    },
+    {
+      "message": "HTTP 200 · 45 requests",
+      "time": 1793448389409
+    },
+    {
+      "message": "HTTP 200 · 46 requests",
+      "time": 1793448389410
+    },
+    {
+      "message": "HTTP 200 · 47 requests",
+      "time": 1793448389410
+    },
+    {
+      "message": "HTTP 200 · 48 requests",
+      "time": 1793448389410
+    },
+    {
+      "message": "HTTP 200 · 49 requests",
+      "time": 1793448389411
+    },
+    {
+      "message": "HTTP 200 · 50 requests",
+      "time": 1793448389411
+    },
+    {
+      "message": "HTTP 200 · 51 requests",
+      "time": 1793448389412
+    },
+    {
+      "message": "HTTP 200 · 52 requests",
+      "time": 1793448389412
+    },
+    {
+      "message": "HTTP 200 · 53 requests",
+      "time": 1793448389412
+    },
+    {
+      "message": "HTTP 200 · 54 requests",
+      "time": 1793448389413
+    },
+    {
+      "message": "HTTP 200 · 55 requests",
+      "time": 1793448389413
+    },
+    {
+      "message": "HTTP 200 · 56 requests",
+      "time": 1793448389414
+    },
+    {
+      "message": "HTTP 200 · 57 requests",
+      "time": 1793448389414
+    },
+    {
+      "message": "HTTP 200 · 58 requests",
+      "time": 1793448389414
+    },
+    {
+      "message": "HTTP 200 · 59 requests",
+      "time": 1793448389415
+    },
+    {
+      "message": "HTTP 200 · 60 requests",
+      "time": 1793448389415
+    },
+    {
+      "message": "HTTP 200 · 61 requests",
+      "time": 1793448389415
+    },
+    {
+      "message": "HTTP 200 · 62 requests",
+      "time": 1793448389416
+    },
+    {
+      "message": "HTTP 200 · 63 requests",
+      "time": 1793448389416
+    },
+    {
+      "message": "HTTP 200 · 64 requests",
+      "time": 1793448389416
+    },
+    {
+      "message": "HTTP 200 · 65 requests",
+      "time": 1793448389417
+    },
+    {
+      "message": "HTTP 200 · 66 requests",
+      "time": 1793448389417
+    },
+    {
+      "message": "HTTP 200 · 67 requests",
+      "time": 1793448389417
+    },
+    {
+      "message": "HTTP 200 · 68 requests",
+      "time": 1793448389418
+    },
+    {
+      "message": "HTTP 200 · 69 requests",
+      "time": 1793448389418
+    },
+    {
+      "message": "HTTP 200 · 70 requests",
+      "time": 1793448389418
+    },
+    {
+      "message": "HTTP 200 · 71 requests",
+      "time": 1793448389419
+    },
+    {
+      "message": "HTTP 200 · 72 requests",
+      "time": 1793448389419
+    },
+    {
+      "message": "HTTP 200 · 73 requests",
+      "time": 1793448389419
+    },
+    {
+      "message": "HTTP 200 · 74 requests",
+      "time": 1793448389420
+    },
+    {
+      "message": "HTTP 200 · 75 requests",
+      "time": 1793448389420
+    },
+    {
+      "message": "HTTP 200 · 76 requests",
+      "time": 1793448389420
+    },
+    {
+      "message": "HTTP 200 · 77 requests",
+      "time": 1793448389421
+    },
+    {
+      "message": "HTTP 200 · 78 requests",
+      "time": 1793448389421
+    },
+    {
+      "message": "HTTP 200 · 79 requests",
+      "time": 1793448389421
+    },
+    {
+      "message": "HTTP 200 · 80 requests",
+      "time": 1793448389422
+    },
+    {
+      "message": "HTTP 200 · 81 requests",
+      "time": 1793448389422
+    },
+    {
+      "message": "HTTP 200 · 82 requests",
+      "time": 1793448389422
+    },
+    {
+      "message": "HTTP 200 · 83 requests",
+      "time": 1793448389423
+    },
+    {
+      "message": "HTTP 200 · 84 requests",
+      "time": 1793448389423
+    },
+    {
+      "message": "HTTP 200 · 85 requests",
+      "time": 1793448389423
+    },
+    {
+      "message": "HTTP 200 · 86 requests",
+      "time": 1793448389424
+    },
+    {
+      "message": "HTTP 200 · 87 requests",
+      "time": 1793448389424
+    },
+    {
+      "message": "HTTP 200 · 88 requests",
+      "time": 1793448389424
+    },
+    {
+      "message": "HTTP 200 · 89 requests",
+      "time": 1793448389424
+    },
+    {
+      "message": "HTTP 200 · 90 requests",
+      "time": 1793448389425
+    },
+    {
+      "message": "HTTP 200 · 91 requests",
+      "time": 1793448389425
+    },
+    {
+      "message": "HTTP 200 · 92 requests",
+      "time": 1793448389425
+    },
+    {
+      "message": "HTTP 200 · 93 requests",
+      "time": 1793448389425
+    },
+    {
+      "message": "HTTP 200 · 94 requests",
+      "time": 1793448389426
+    },
+    {
+      "message": "HTTP 200 · 95 requests",
+      "time": 1793448389426
+    },
+    {
+      "message": "HTTP 200 · 96 requests",
+      "time": 1793448389426
+    },
+    {
+      "message": "HTTP 200 · 97 requests",
+      "time": 1793448389426
+    },
+    {
+      "message": "HTTP 200 · 98 requests",
+      "time": 1793448389427
+    },
+    {
+      "message": "HTTP 200 · 99 requests",
+      "time": 1793448389427
+    },
+    {
+      "message": "HTTP 200 · 100 requests",
+      "time": 1793448389427
+    },
+    {
+      "message": "HTTP 200 · 101 requests",
+      "time": 1793448389427
+    },
+    {
+      "message": "HTTP 200 · 102 requests",
+      "time": 1793448389428
+    },
+    {
+      "message": "HTTP 200 · 103 requests",
+      "time": 1793448389428
+    },
+    {
+      "message": "HTTP 200 · 104 requests",
+      "time": 1793448389428
+    },
+    {
+      "message": "HTTP 200 · 105 requests",
+      "time": 1793448389428
+    },
+    {
+      "message": "HTTP 200 · 106 requests",
+      "time": 1793448389429
+    },
+    {
+      "message": "HTTP 200 · 107 requests",
+      "time": 1793448389429
+    },
+    {
+      "message": "HTTP 200 · 108 requests",
+      "time": 1793448389429
+    },
+    {
+      "message": "HTTP 200 · 109 requests",
+      "time": 1793448389430
+    },
+    {
+      "message": "HTTP 200 · 110 requests",
+      "time": 1793448389430
+    },
+    {
+      "message": "HTTP 200 · 111 requests",
+      "time": 1793448389430
+    },
+    {
+      "message": "HTTP 200 · 112 requests",
+      "time": 1793448389430
+    },
+    {
+      "message": "HTTP 200 · 113 requests",
+      "time": 1793448389431
+    },
+    {
+      "message": "HTTP 200 · 114 requests",
+      "time": 1793448389431
+    },
+    {
+      "message": "HTTP 200 · 115 requests",
+      "time": 1793448389431
+    },
+    {
+      "message": "HTTP 200 · 116 requests",
+      "time": 1793448389431
+    },
+    {
+      "message": "HTTP 200 · 117 requests",
+      "time": 1793448389432
+    },
+    {
+      "message": "HTTP 200 · 118 requests",
+      "time": 1793448389432
+    },
+    {
+      "message": "HTTP 200 · 119 requests",
+      "time": 1793448389432
+    },
+    {
+      "message": "HTTP 200 · 120 requests",
+      "time": 1793448389432
+    },
+    {
+      "message": "HTTP 200 · 121 requests",
+      "time": 1793448389433
+    },
+    {
+      "message": "HTTP 200 · 122 requests",
+      "time": 1793448389433
+    },
+    {
+      "message": "HTTP 200 · 123 requests",
+      "time": 1793448389434
+    },
+    {
+      "message": "HTTP 200 · 124 requests",
+      "time": 1793448389434
+    },
+    {
+      "message": "HTTP 200 · 125 requests",
+      "time": 1793448558116
+    },
+    {
+      "message": "HTTP 200 · 126 requests",
+      "time": 1793448652242
+    },
+    {
+      "message": "HTTP 200 · 127 requests",
+      "time": 1793448767433
+    },
+    {
+      "message": "HTTP 200 · 128 requests",
+      "time": 1793449261593
+    },
+    {
+      "message": "HTTP 200 · 129 requests",
+      "time": 1793450216312
+    }
+  ],
+  "core_config_sha256": "1ab1814c0322fec79a92a9e5e2361a0dec397b1c96d03489293ab9e0bb8de9bb",
+  "models_sha256": "6627388581ce87219c9283efdf3dbc34d49831eb25e46161684a86bc52986480",
+  "config_and_models_exact": true,
+  "scope": "Only synthetic real local proxy requests; no management writes and no GUI input."
+}

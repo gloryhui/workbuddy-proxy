@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-31T21:45:01.858860+08:00",
+  "action": "occupied-port",
+  "stage": "port_occupied_value",
+  "config_sha256_unchanged": "3c2f31ba58aff0d88133a930b90306609f18989d73ce020d44cee17b09a1927c",
+  "result": {
+    "occupied_port": 64644,
+    "owner": "Existing own fixture mock server, no extra holder process."
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

@@ -1,5 +1,6 @@
 mod autostart_notice;
 mod language_menu;
+mod log_scroll;
 mod model_editor;
 mod model_navigation;
 pub(crate) use model_navigation::bindings as model_navigation_bindings;
@@ -1552,11 +1553,65 @@ impl Proxy {
             text
         };
         if text != self.log_text {
-            self.log_text = text;
+            let previous = std::mem::replace(&mut self.log_text, text);
             self.logs.update(cx, |s, cx| {
+                let offset = s.scroll_offset();
+                let end = previous.len();
+                let follow = previous.is_empty()
+                    || s.visible_row_range().is_none()
+                    || s.range_to_bounds(&(end..end))
+                        .is_some_and(|tail| tail.bottom() <= s.input_bounds().bottom() + px(1.));
+                let anchor = (!follow)
+                    .then(|| s.visible_row_range())
+                    .flatten()
+                    .and_then(|rows| {
+                        let middle = (rows.start + rows.end.saturating_sub(1)) / 2;
+                        log_scroll::retained_anchor(&previous, &self.log_text, middle)
+                    })
+                    .and_then(|(old, new)| {
+                        s.range_to_bounds(&(old..old))
+                            .map(|bounds| (new, bounds.top()))
+                    });
                 s.set_value(self.log_text.clone(), window, cx);
-                // Textarea clamps this to the actual bottom after laying out the new text.
-                s.set_scroll_offset(point(px(0.), px(-f32::MAX)), cx);
+                s.set_scroll_offset(
+                    if follow {
+                        point(px(0.), px(-f32::MAX))
+                    } else {
+                        offset
+                    },
+                    cx,
+                );
+                if let Some((byte, y)) = anchor {
+                    let expected = self.log_text.clone();
+                    // Input publishes its layout at paint. Read the new geometry
+                    // after that frame, once; never poll or overwrite a newer scroll.
+                    cx.on_next_frame(window, move |_, window, cx| {
+                        cx.on_next_frame(window, move |s, window, cx| {
+                            if s.value().as_ref() != expected.as_str()
+                                || s.scroll_offset() != offset
+                            {
+                                return;
+                            }
+                            if log_scroll::restore_anchor(s, byte, y, offset, cx) {
+                                return;
+                            }
+                            // set_value invalidates the display map. Reveal an
+                            // offscreen anchor only after the new text painted.
+                            s.set_selected_range(byte..byte, cx);
+                            cx.on_next_frame(window, move |s, _, cx| {
+                                let revealed = s.scroll_offset();
+                                if s.value().as_ref() == expected.as_str()
+                                    && s.selected_range() == (byte..byte)
+                                    && s.prepaint_caret_geometry().is_some_and(|geometry| {
+                                        geometry.scroll_offset() == revealed
+                                    })
+                                {
+                                    log_scroll::restore_anchor(s, byte, y, revealed, cx);
+                                }
+                            });
+                        });
+                    });
+                }
             });
             cx.notify();
         }

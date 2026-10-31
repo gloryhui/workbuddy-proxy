@@ -1,0 +1,16 @@
+{
+  "ui_sha256": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f",
+  "ui_pid": 56251,
+  "core_config_byte_exact": true,
+  "workbuddy_document_equal_original": true,
+  "protected14_requests_and_costs_all_fields_unchanged": true,
+  "sql_counts": {
+    "usage_requests": 126,
+    "usage_costs": 126
+  },
+  "restart_guard_UI_events": [
+    "guard_installed"
+  ],
+  "native_report": "native-look-summary.json",
+  "assessment": "Old d08 actual native: no-new-log reading stays; one new HTTP125 forces view86–95 to117–125; bottom nextHTTP126 follows. Only Cancel on two confirmations, no save/install/restore/restart."
+}

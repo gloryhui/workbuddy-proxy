@@ -1,0 +1,45 @@
+from pathlib import Path
+import argparse,datetime,hashlib,json,os,sqlite3,subprocess,sys,time,urllib.request,urllib.error
+r=Path(__file__).resolve().parent;repo=Path.cwd();f=r/'b05-1xsejnc7-main';p=argparse.ArgumentParser();p.add_argument('stage');p.add_argument('--expect',choices=['three','two','gone'],required=True);p.add_argument('--proxy',action='store_true');a=p.parse_args();sys.path.insert(0,str(repo/'scripts'))
+from workbuddy_import_test import real_user_home
+from workbuddy_import_ui_sandbox import kernel_protection
+prep=json.loads((r/'lifecycle-prepare.json').read_text());app=Path(prep['app']);tray=app/'Contents/MacOS/workbuddy-proxy';ui=app/'Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui';old=f/'WorkBuddy Proxy B05 Review.app/Contents/MacOS/workbuddy-proxy-gpui';oldcore=f/'review-core';raw_ui=app/'Contents/MacOS/../Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui'
+roles={'core':[],'tray':[],'ui':[]};commands={}
+for line in subprocess.check_output(['ps','-axo','pid=,ppid=,command='],text=True).splitlines():
+ items=line.strip().split(None,2)
+ if len(items)!=3:continue
+ pid,ppid,cmd=items;role=None
+ for exe in [tray,ui,raw_ui,old,oldcore]:
+  if cmd==str(exe) or cmd.startswith(str(exe)+' '):
+   role='ui' if exe.resolve() in [ui.resolve(),old.resolve()] else 'core' if '--headless' in cmd.split() else 'tray';break
+ if role:roles[role].append(int(pid));commands[int(pid)]={'pid':int(pid),'ppid':int(ppid),'role':role,'command':cmd}
+expected={'three':{'core':1,'tray':1,'ui':1},'two':{'core':1,'tray':1,'ui':0},'gone':{'core':0,'tray':0,'ui':0}}[a.expect];assert {k:len(v) for k,v in roles.items()}==expected,roles
+cfgraw=(f/'config/config.json').read_bytes();cfg=json.loads(cfgraw);checkpoint=json.loads((f/'b05-checkpoint-private.json').read_text());sha=lambda v:hashlib.sha256(v).hexdigest();assert sha(cfgraw)==checkpoint['config_sha256'],'Lifecycle unexpectedly changed business config'
+models=(f/'home/.workbuddy/models.json').read_bytes();assert sha(models)==checkpoint['models_sha256'];assert not cfg['installed'];assert json.loads(models)==json.loads((f/'models-original-private.json').read_text());assert cfg['providers'][1]['name']=='OpenCode Go'
+history=json.loads((f/'b05-history-private.json').read_text());opener=urllib.request.build_opener(urllib.request.ProxyHandler({}));proof=None;snap=None;actual_proxy=None
+if roles['core']:
+ inst=json.loads((f/'config/instance.json').read_text());assert inst['pid']==roles['core'][0] and inst['port']==cfg['port']
+ proof=kernel_protection(real_user_home(),f,inst['pid']);assert proof['enforced'],proof
+ import ctypes
+ lib=ctypes.CDLL('/usr/lib/libsandbox.1.dylib');check=lib.sandbox_check;check.argtypes=[ctypes.c_int,ctypes.c_char_p,ctypes.c_int];check.restype=ctypes.c_int;flag=1|ctypes.c_int.in_dll(lib,'SANDBOX_CHECK_NO_REPORT').value
+ launch=Path(real_user_home())/'Library/LaunchAgents';denials={op:[check(inst['pid'],op.encode(),flag,ctypes.c_char_p(os.fsencode(q))) for q in [launch,launch/'.qa-permission-query-only']] for op in ['file-read-data','file-write-data','file-write-create','file-write-unlink']};assert all(v>0 for values in denials.values() for v in values);proof['launchagents_permissions']=denials
+ def call(command):
+  req=urllib.request.Request('http://127.0.0.1:%d/_control/action'%inst['port'],data=json.dumps({'command':command}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+inst['management_key']})
+  with opener.open(req,timeout=12) as z:return json.loads(json.loads(z.read())['message'])
+ assert call('stats_health')['state']=='ready';settings=call('stats_settings_get');assert {k:settings[k] for k in ['enabled','retention_days','default_currency','revision']}==checkpoint['settings'];prices={v['rule_id']:{k:w for k,w in v.items() if k!='referenced'} for v in call('stats_prices_list')['items']};assert prices==checkpoint['prices']
+ if a.proxy:
+  req=urllib.request.Request('http://127.0.0.1:%d/v1/chat/completions'%inst['port'],data=json.dumps({'model':cfg['providers'][0]['models'][0]['alias'],'messages':[{'role':'user','content':'B05 actual lifecycle proxy acceptance'}]}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+cfg['local_key']})
+  with opener.open(req,timeout=12) as z:actual_proxy=z.status;assert actual_proxy==200;z.read()
+  time.sleep(.3)
+ snap=call('snapshot');assert snap['providers']==2 and snap['models']==5 and snap['url']=='http://127.0.0.1:%d/v1'%cfg['port']
+ if roles['ui']:
+  assert json.loads((f/'config/gpui.json').read_text())['pid']==roles['ui'][0]
+  events=[json.loads(x) for x in (r/'restart-guard-audit.jsonl').read_text().splitlines()];assert any(x['process_pid']==roles['ui'][0] and x['event']=='guard_installed' for x in events)
+else:
+ assert not (f/'config/instance.json').exists();assert not (f/'config/frontend.json').exists();assert not (f/'config/gpui.json').exists()
+with sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True) as db:
+ db.row_factory=sqlite3.Row;db.execute('BEGIN');current={table:{x['request_id']:dict(x) for x in db.execute('SELECT * FROM '+table)} for table in history}
+for table,rows in history.items():assert all(current[table].get(k)==v for k,v in rows.items()),table
+assert (f/'config/config.json').read_bytes()==cfgraw and (f/'home/.workbuddy/models.json').read_bytes()==models
+out={'at':datetime.datetime.now().astimezone().isoformat(),'stage':a.stage,'passed':True,'roles':roles,'processes':list(commands.values()),'core_kernel_guard':proof,'actual_proxy_HTTP':actual_proxy,'config_sha256':sha(cfgraw),'models_sha256':sha(models),'history':{t:{'rows':len(rows),'previous_rows_all_fields_preserved':True} for t,rows in current.items()},'snapshot':{k:snap.get(k) for k in ['providers','models','requests','url']} if snap else None,'scope':'Read-only native process/metadata, permission attestation, SQL/config proofs plus declared synthetic real HTTP. Physical tray menu and draft rendering require separate CUA actor observations.'}
+(r/'lifecycle-stage-proofs').mkdir(exist_ok=True);(r/'lifecycle-stage-proofs'/(a.stage+'.json')).write_text(json.dumps(out,indent=2)+'\n');historyfile=f/'b05-history-private.json';historyfile.write_text(json.dumps(current)+'\n');os.chmod(historyfile,0o600);print(json.dumps({'stage':a.stage,'passed':True,'roles':roles,'actual_proxy_HTTP':actual_proxy}))

@@ -1,0 +1,14 @@
+#import "workbuddy_restart.m"
+#include <stdio.h>
+int main(int argc,const char **argv){ @autoreleasepool {
+    if(argc!=3)return 99;
+    NSApplication *application=NSApplication.sharedApplication;[application setActivationPolicy:NSApplicationActivationPolicyProhibited];
+    NSString *mode=[NSString stringWithUTF8String:argv[1]],*identifier=[NSString stringWithUTF8String:argv[2]];
+    if([mode isEqualToString:@"count"]){printf("%lu\n",(unsigned long)[NSRunningApplication runningApplicationsWithBundleIdentifier:identifier].count);return 0;}
+    if([mode isEqualToString:@"pid"]){NSRunningApplication *app=[NSRunningApplication runningApplicationsWithBundleIdentifier:identifier].firstObject;printf("%d\n",app?app.processIdentifier:0);return 0;}
+    if([mode isEqualToString:@"quit"]){for(NSRunningApplication *a in [NSRunningApplication runningApplicationsWithBundleIdentifier:identifier])[a terminate];printf("0\n");return 0;}
+    __block BOOL finished=NO;__block int result=99;
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{int code=wb_restart_workbuddy();dispatch_async(dispatch_get_main_queue(),^{result=code;finished=YES;});});
+    while(!finished)[NSRunLoop.currentRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.02]];
+    printf("%d\n",result);return 0;
+} }

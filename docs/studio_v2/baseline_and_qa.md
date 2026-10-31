@@ -1625,3 +1625,26 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 本批判断：ACCEPTED for B04 interface delivery and short workload correctness only: four unchanged workloads/terminal checks passed; proxy p95 -0.011ms and process-to-marker -109.4935ms. Recorded UI RSS +11.005MiB, combined +12.56MiB, peak +16.565MiB remain explicit R03 work. Preload footprint/allocated heap are similar; no regression-free or release-performance claim. 有效负载前footprint中位数旧120.3M/新119.35M、malloc allocated旧21.0M/新21.1M，不能排除RSS回退；[资源原行](benchmarks/b04-resource-diagnostics.json)。全部慢样本与成本保留；n2不证明统计等价、长期泄漏、FPS/输入延迟或R03发布通过，B03等此前成本继续留在R03。完整busy点击拦截/精确去重、键盘/IME/AX与全主题矩阵仍R01；本批不显式activate/raise但实际前台效果未计量，标题拖动、全屏Spaces、真实登录、外链浏览器启动和其他平台仍R02。GitHub/反馈保留原目标与cx.open_url，不冒称当前已实际打开或提交反馈。
 - 归档167项/12.933MiB，逐份SHA核验。所有子进程退出、完整目录/父链/所有者/引用清单预检后，仅非强制删除本轮确切临时目录：384.845MiB/440文件，本轮临时保留0；实测APFS可用变化+387.133MiB、系统盘余31.317GiB，并发应用可能影响差值。共享Cargo、固定Core46和此前拒删目录保留。[归档](benchmarks/b04-artifacts.json)、[清理预检](benchmarks/b04-cleanup-preflight.json)、[结果](benchmarks/b04-cleanup.json)。下一批B05；正式版门禁未通过，未公开发布。
+
+## 小功能 72：B05同步、日志与生命周期整批签收（2026-10-31）
+
+- 本批2帧/5任务通过，累计40/40、剩余界面0；下一批R01。R01–R04仍未通过，Goal active，未公开发布。冻结UI `78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc`、Core25f；两份最新完整官方设计和原始参考图、30种资源25字节一致/2全XML等价/3原生系统装饰，布局未重新设计。[设计](benchmarks/b05-design-audit.json)、[资源](benchmarks/b05-asset-audit.json)、[四图视觉](benchmarks/b05-visual-review.json)。
+- 唯一产品改动是2份Rust日志呈现代码：旧d08在上滚阅读时每次新增都强制到底；新78仅在底部跟随，100条过期时用缓存可见中间锚点/UTF8偏移/真实viewport几何有限帧恢复。Input几何已包含滚动偏移，修正重复叠加；没有新增空闲轮询。宽窗142→143保持88–96，小窗137→140保持59与上下裁切；单条/idle/底部由原委派原生观察和真实HTTP证明补充，未伪造额外PNG。初始fe/8a/e98/2f失败和一次缺trait编译诊断保留。原sync/unsync方法逐字节保持，Core/native/scripts/配置schema/依赖不变；206pass/2既有ignore、fmt/strictClippy/Intel类型检查/arm64release全0，Intel不是硬件验收。[源码](benchmarks/b05-source-scope.json)、[旧问题](benchmarks/b05-log-baseline-validation.json)、[最终日志](benchmarks/b05-log-final-validation.json)、[构建](benchmarks/b05-build.json)。
+- 真实CUA完成两弹窗宽/小、Cancel/X/Esc/中性Return/遮罩/English→中文；正式4张PNG原始1440×901和1100×701，逻辑1440×900和1100×700、当前1x，1px窗口边缘不裁掉。Figma正文称当前供应商；现有行为保存当前草稿后安装全部已保存供应商，产品文案如实保留全部范围。首次A保存后遇预置手工ID冲突，Core正确拒绝覆盖；这是夹具原预期错误，未改Core。换非冲突测试名成功同步5条，原2手工条目和扩展字段保留；B未保存草稿不被移除操作提交。坏JSON的保存后失败/移除失败/修复重试、受控目标真实20s拒绝退出和真实OS重开失败/修复均完成。[交互](benchmarks/b05-native-sync-partial-summary.json)、[集中证据](benchmarks/b05-native-consolidated.json)、[冲突诊断](benchmarks/b05-sync-collision-diagnostic.json)。
+- 端口0/65536/二次确认取消/实际占用拒绝不改配置；同Core61219从64645迁至50428，旧端口拒绝新连接，新端点真实转发；再迁50695后目标拒绝退出，UI正确保留端口/模型URL已提交的部分成功，不虚报回滚。原端口脚本的SSE连续性/回滚/持久化契约也通过，原脚本未改。重启链通过QA身份路由只作用唯一受控Cocoa目标，真实用户WorkBuddy未被打开/退出；不称实际客户端互操作通过，发行核对留R02。[原生链](benchmarks/b05-native-sync-partial-summary.json)、[端口契约](benchmarks/b05-port-contract.json)、[原native预检](benchmarks/b05-restart-preflight.json)。
+- 原生地址/日志复制到专用严格合成白名单视图，100行按钮正文与日志框Cmd+A/C选区逐字相同，200/503/200可见；清空ring0不删除SQL，再请求ring1。原14请求/成本全字段保护至156，声明之外的配置/模型/统计设置/3价格保持。首次Main会话被用户暂停中断，无自然terminal0，独立审计明确保留。恢复后正常Tray启动自然派生Core99412/UI99413、关窗后Core/Tray仍转发；用户手动物理Settings重开唯一UI490，B草稿恢复，随后用户物理Quit三角色/metadata全消失。CUA仅窗口观察，不能伪称托盘自动化；所属孤儿进程退出码不可得，独立Mock实际wait0。[复制](benchmarks/b05-clipboard-validation.json)、[生命周期](benchmarks/b05-native-lifecycle-summary.json)、[用户动作来源](benchmarks/b05-manual-user-actions.json)、[中断审计](benchmarks/b05-pause-interruption-audit.json)。
+- P/C/C/P各n2，同Core/arm64/Studio/1x同1440×900原图、同resize1100→恢复1440→两弹窗取消→日志尾操作，1000真实预置（每20持久化屏障）、64模型、10s驻留、每PID0.1s采样。原benchmark.py不改，1000小/80×1MiB/并发4全部0，每轮SQL2090请求/2090成本。有效postload-live vmmap在原计时/峰值/settled结果完成后、UI停止前采集；旧finally输出为进程已停的诊断，不拿来解释内存。所有样本保留，进程→marker不是首帧，n2不证明长期泄漏/FPS/输入延迟/R03发布通过。[性能](benchmarks/b05-performance-summary.json)、[四轮实际条件](benchmarks/b05-performance-b05-cua.json)、[资源原行](benchmarks/b05-resource-diagnostics.json)。
+
+| 短轮中位数，每版n=2 | 旧d08 | 新78 | 差值 |
+|---|---:|---:|---:|
+| Core RSS MiB | 21.0350 | 20.8250 | -0.2100 |
+| UI RSS MiB | 105.7500 | 105.8050 | +0.0550 |
+| 合计RSS MiB | 126.7800 | 126.6250 | -0.1550 |
+| 采样峰值 MiB | 173.8400 | 177.1700 | +3.3300 |
+| 进程→记录 ms | 970.5630 | 840.3955 | -130.1675 |
+| 代理p50 ms | 0.1720 | 0.1605 | -0.0115 |
+| 代理p95 ms | 0.1975 | 0.1880 | -0.0095 |
+| 80大请求 s | 0.0885 | 0.0885 | +0.0000 |
+
+- 本批判断：ACCEPTED for B05 interface delivery and short workload correctness only. Four unchanged workloads and actual terminal checks passed. UI idle RSS +0.055MiB/combined -0.155MiB; sampled peak +3.33MiB remains explicit R03 diagnostic cost. Proxy p95 -0.0095ms and process-to-marker -130.1675ms. Not a regression-free, long-term or release-performance claim. B01/B03/B04的既有RSS/marker等成本仍留R03，未被本批小幅结果抵消；完整输入/IME/辅助技术/平台/实际客户端/长期性能与安装发行仍待R01–R04。
+- 归档262项/6.156MiB并逐份SHA核对；私有配置/Key/SQL/剪贴板正文/Figma签名URL与程序副本不进归档。全部进程退出、确切目录/父链/所有者/文件范围/lsof预检及临执行复核后，非强制删除唯一专用临时根：553文件/590.118MiB；实际APFS可用变化+597.645MiB、余34.354GiB，本轮临时保留0。共享Cargo/Core46保留；并发应用可能影响空间差值。[归档](benchmarks/b05-artifacts.json)、[清理预检](benchmarks/b05-cleanup-preflight.json)、[结果](benchmarks/b05-cleanup.json)。

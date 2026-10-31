@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-31T21:42:14.006684+08:00",
+  "stage": "restart_remove_timeout",
+  "core_pid": 61219,
+  "ui_pid": 78723,
+  "config_sha256": "b1ec8422addba70043f4dc3642b6c4f89536aa10950a73ca452dd87f4c766be4",
+  "name_a": "B05 verified A",
+  "language": "zh",
+  "port": 64645,
+  "installed": 0,
+  "models": {
+    "valid": true,
+    "sha256": "5491d5e8042555ad979b974927d948ed5a21a592b62b983bd6786cb405747329",
+    "rows": 2,
+    "managed_ids": [],
+    "unrelated_and_original_fields_preserved": true
+  },
+  "settings_unchanged": {
+    "enabled": true,
+    "retention_days": 180,
+    "default_currency": "CNY",
+    "revision": 1
+  },
+  "prices_unchanged": 3,
+  "history": {
+    "usage_requests": {
+      "rows": 144,
+      "all_fields_preserved": true,
+      "sha256": "f24b74a67f5e767b09020fe376a7e4da4ecc6cb92916c421806d69bdfe953149"
+    },
+    "usage_costs": {
+      "rows": 144,
+      "all_fields_preserved": true,
+      "sha256": "5e6b0e67f397628e54c96f2ee62b4e4c5540e9a12ae1974c927b772cbe109730"
+    }
+  },
+  "snapshot_counts": {
+    "providers": 2,
+    "models": 5,
+    "requests": 144,
+    "running": null,
+    "url": "http://127.0.0.1:64645/v1"
+  },
+  "log_count": 100,
+  "UI_restart_events": [
+    "guard_installed",
+    "lookup_redirected",
+    "terminate_owned",
+    "open_owned",
+    "opened_owned",
+    "lookup_redirected",
+    "terminate_owned"
+  ],
+  "scope": "Read-only Core/files/SQL proofs. Only declared real native A-name/install/port/language saves accepted; UI input, target restart and screenshots require actor proof separately. No actual user WorkBuddy integration claim."
+}

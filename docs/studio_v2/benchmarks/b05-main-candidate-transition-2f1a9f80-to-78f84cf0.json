@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-31T21:00:21.518414+08:00",
+  "previous_ui_pid_gone": 75799,
+  "previous_sha256": "2f1a9f80ddcf746e35add9e05d8c73a39bd85f3791bde1bce1b7326f293458be",
+  "current_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
+  "core_pid_unchanged": 61219,
+  "config_and_models_byte_exact": true,
+  "open_binary_references": 0,
+  "scope": "Only own stopped Main UI copy changed, previous originals retained; guard proof required for reopened PID."
+}

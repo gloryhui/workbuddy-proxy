@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-31T21:45:47.606216+08:00",
+  "action": "fresh-port",
+  "stage": "port_new_value",
+  "config_sha256_unchanged": "3c2f31ba58aff0d88133a930b90306609f18989d73ce020d44cee17b09a1927c",
+  "result": {
+    "fresh_port": 50428,
+    "scope": "Vacancy measured now; actual Core bind result remains authoritative."
+  },
+  "scope": "Owned synthetic models/native target setup only; no save/install/restore/set_port management action, no GUI event injection, never actual WorkBuddy."
+}

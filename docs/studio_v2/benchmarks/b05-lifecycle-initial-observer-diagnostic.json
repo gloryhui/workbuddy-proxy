@@ -1,0 +1,5 @@
+{
+  "harness_failure": "Expected UI path spelling canonical; product launches MacOS/../Helpers path. Actual PID94899 existed, parent94889, Core61219. No product action repeated.",
+  "correction": "Accept only the exact known product helper argv spelling as well as canonical spelling, resolve to the same exact owned helper. No broadened process matching.",
+  "CUA_initial": "-10005 timeoutReached, actual product processes alive; actor rebinds same existing bundle/PIDs, no restart"
+}

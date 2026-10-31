@@ -1,0 +1,71 @@
+{
+  "candidate_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
+  "ui_pid": 78723,
+  "core_pid": 61219,
+  "status": "sections 1-5 complete; UI/Core remain running for lifecycle/clipboard handoff",
+  "images": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/b05-1xsejnc7-main/60-27-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "c3659f8a9a8925c65020ecd16f822ca49a1f21082f439095b036fee00c83780c",
+      "window_id": 11855,
+      "capture": "native screencapture -x -o; 1x"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/b05-1xsejnc7-main/68-350-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "538e969ffdecef37f116f50b6c2ef99ad5a10312de035487b0db6f67372a9ec0",
+      "window_id": 11855,
+      "capture": "native screencapture -x -o; 1x"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/b05-1xsejnc7-main/60-27-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "8aaf47cecfae425d5b1ba4834f0ab8cb2b1e627f3cdd2583c86e3f61fb2a04d6",
+      "window_id": 11859,
+      "capture": "native screencapture -x -o; 1x"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b05.1xsejnc7/b05-1xsejnc7-main/68-350-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "cf445ab8020e4b2496e661f765057367c178e9fa51a578a52421c40aa622c0df",
+      "window_id": 11859,
+      "capture": "native screencapture -x -o; 1x"
+    }
+  ],
+  "confirmations": "Both dialogs wide/small, Cancel/X/Escape; neutral Return in Unsync stayed open and did not apply; mask prevented toolbar language click; English controls readable then Chinese restored.",
+  "drafts_and_sync": "A and B drafts independently entered; cancel preserved Core. First sync saved A then rejected manual ID collision, installed 0 and no overwrite; parent independently checked sync_collision_failed. A renamed B05 retry A and only sync installed 5; B remained unsaved; only remove restored original 2 manual entries.",
+  "faults": "Malformed owned models JSON caused A save then failed sync before restart; repaired and synced 5. Malformed file also caused remove failure without saving B; repair and remove restored original entries. Declared observer stages all passed.",
+  "owned_target": "Only fixture-owned Cocoa target; native product restart path. PIDs 90936→91008; refusal retained 91008, UI reported 20s/no force (result observed 32.6s after click, not precise latency); recovery 91520; launch break produced open_owned_failed after exit; repair launched 91794; valid port restart launched 92565; port refusal retained 92565; recovery launched 93146. Not a real installed WorkBuddy test.",
+  "ports": {
+    "original": 64645,
+    "cancelled": 50094,
+    "occupied": 64644,
+    "committed": 50428,
+    "partial_committed": 50695,
+    "old_port_connect_ex": 61,
+    "partial_notice": "本地端口和已保存的地址已更新；WorkBuddy 在 20 秒内未退出，未强制结束",
+    "final_installed": 0,
+    "proxy_requests": "successful after committed and partial ports and final unsync"
+  },
+  "observer": "Every specified stage passed, except original sync_saved assertion which identified manual ID collision; corrected fixture expectation and observer independently verified failure, no product retry of collision.",
+  "limits": [
+    "No real WorkBuddy, user configuration or external app targeted.",
+    "No explicit activate/raise; actual foreground not asserted.",
+    "Formal PNGs retained original pixels and system edge.",
+    "B05 not complete; clipboard and physical tray lifecycle remain.",
+    "No claim full keyboard accessibility or external system integration."
+  ]
+}
