@@ -196,12 +196,12 @@
 <script id="progress-data" type="application/json">
 {
   "version": 2,
-  "updated_at": "2026-11-01T00:15:19+08:00",
+  "updated_at": "2026-11-01T01:05:24+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "30427fe793c22ab58db9bea793b016666a725c03",
+  "code_head": "1f9ecaee1a00f7b19b923e7ab7cb70eb09f548db",
   "phase": "界面终验记录齐备 · 总体验收待核对",
-  "goal_status": "active",
+  "goal_status": "paused",
   "counts": {
     "pending": 0,
     "partial": 0,
@@ -209,7 +209,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 74,
+  "recorded_tasks": 75,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -223,61 +223,25 @@
   },
   "current_task": {
     "id": 75,
-    "title": "R01 剩余共享状态、输入与无障碍验收",
-    "status": "developing",
-    "description": "R01.5最新40参考/80原生图集中签收通过，剩余界面0；Issue3品牌绑定修复已完成macOS1x两尺寸前后验证，200%及Windows仍待补证。继续R01其余4项，R02–R04未通过。"
+    "title": "R01输入冷读与表格语义收口，暂停交接",
+    "status": "recorded",
+    "description": "已归档真实输入、Unicode独立冷读、21主题语言组合、忙态去重及表格语义修复。其余发布门禁待新会话继续，不声明R01整批通过。"
   },
   "latest_task": {
-    "id": 74,
-    "title": "Issue3侧栏品牌白边与清晰度修复",
+    "id": 75,
+    "title": "R01表格语义修复、输入冷读与暂停交接",
     "status": "recorded",
-    "summary": "读取本仓库全部开放Issue，当前仅#3。用户最新明确授权安排修复，保留青蓝吉祥物、圆角方形及既有撞色主题。根因是40×40索引色设计导出图自身带白边（外10%边缘278个亮中性像素），控件没有border/background/shadow；128×128现有App Icon边缘无同类亮像素。只把侧栏图片绑定改为已嵌入的brand.png，无图片编辑、裁切、新依赖、字体或间距改动。根因、交付摘要。",
+    "summary": "请求/汇总表补原生Table/Row/ColumnHeader/Cell角色、全值名称及行列索引；不改视觉、事件、计算、DTO或Core。横向虚拟化不能靠当前可见列顺序推断索引。b29角色/名称及两尺寸6张主图、2ce键盘和e1f最终构建分开记，未用旧截图冒充最终候选。源码与构建、原生表格、索引原因。",
     "highlights": [
-      "读取本仓库全部开放Issue，当前仅#3。用户最新明确授权安排修复，保留青蓝吉祥物、圆角方形及既有撞色主题。根因是40×40索引色设计导出图自身带白边（外10%边缘278个亮中性像素），控件没有border/background/shadow；128×128现有App Icon边缘无同类亮像素。只把侧栏图片绑定改为已嵌入的brand.png，无图片编辑、裁切、新依赖、字体或间距改动。根因、交付摘要。",
-      "2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。原生验证、前宽、后宽、前小、后小。",
-      "fmt、206pass/2既有ignore、strict Clippy、Intel类型检查和arm64 Release全部0；历史15条请求及成本完整保持。跨零点价格日更仅3规则revision1→2，配置/费率不变，严格保护只接受单独核实的精确转换digest，原先失败断言保留而未篡改。构建、业务保护、跨日转换。"
+      "请求/汇总表补原生Table/Row/ColumnHeader/Cell角色、全值名称及行列索引；不改视觉、事件、计算、DTO或Core。横向虚拟化不能靠当前可见列顺序推断索引。b29角色/名称及两尺寸6张主图、2ce键盘和e1f最终构建分开记，未用旧截图冒充最终候选。源码与构建、原生表格、索引原因。",
+      "e1f真实held Test重复点击只到达1次，save/test各1；controlled update亦1次，完成后未重开已隐藏提示。皮肤菜单实际可打开，未宣称所有入口禁用；关闭×未独立实测，受控更新非公开端到端更新。忙态记录。",
+      "7主题×zh/en/auto实际21组合有各自业务不变证明，7张1100×700代表原图已逐张查看；英文协议选项固定中英别名如实保留，auto随本机显示中文，不声称全部状态或真实AT通过。主题语言。"
     ],
-    "limits": [
-      "2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。原生验证、前宽、后宽、前小、后小。",
-      "本项代码及当前可用macOS1x两尺寸验证完成。仅有1920×1080的1x显示环境，200% HiDPI与Windows实机尚未验证，Issue保持开放待补证；128源像素充足不等于已做2x运行。未修改代理核心/功能逻辑，未公开发布；R01其余4项与R02–R04继续，剩余界面0。"
-    ],
-    "evidence": [
-      {
-        "label": "根因",
-        "href": "benchmarks/issue3-root-cause.json"
-      },
-      {
-        "label": "交付摘要",
-        "href": "benchmarks/issue3-summary.json"
-      },
-      {
-        "label": "原生验证",
-        "href": "benchmarks/issue3-native-verification.json"
-      },
-      {
-        "label": "前宽",
-        "href": "screenshots/issue3-before-wide.png"
-      },
-      {
-        "label": "后宽",
-        "href": "screenshots/issue3-after-wide.png"
-      },
-      {
-        "label": "前小",
-        "href": "screenshots/issue3-before-small.png"
-      },
-      {
-        "label": "后小",
-        "href": "screenshots/issue3-after-small.png"
-      },
-      {
-        "label": "构建",
-        "href": "benchmarks/issue3-build.json"
-      }
-    ],
-    "commit": "30427fe793c22ab58db9bea793b016666a725c03",
-    "date": "2026-11-01T00:15:18+08:00",
-    "commit_subject": "fix(studio): reuse sharp borderless sidebar brand icon",
+    "limits": [],
+    "evidence": [],
+    "commit": "1f9ecaee1a00f7b19b923e7ab7cb70eb09f548db",
+    "date": "2026-11-01T01:04:54+08:00",
+    "commit_subject": "fix(studio): expose usage table semantics and archive input validation",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2493,11 +2457,11 @@
     "version": 2,
     "title": "Studio V2 正式版批次计划",
     "as_of": "2026-11-01",
-    "state": "active",
+    "state": "paused",
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 74,
+    "historical_tasks": 75,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3472,15 +3436,15 @@
           "B04",
           "B05"
         ],
-        "completed_summary": "40帧/80原生主图对最新40份官方参考的集中签收完成；表格语义修复及真实键盘/busy补证推进中，R01其余4项未通过。",
+        "completed_summary": "40帧/80主图集中签收完成；表格语义修复、键盘/busy、21主题语言组合、真实Qingjian IME及Unicode独立Core/UI冷读已归档。用户要求本轮收口后暂停；R01其余4项仅部分完成，不签收整项。",
         "delivery": "对共享组件统一验收，不让同一键盘/主题待办在40帧中重复执行。",
         "tasks": [
           {
             "id": "R01.1",
             "title": "共享状态与层级矩阵",
             "acceptance": "pending",
-            "completed": "部分输入/按钮的default/hover/focus/disabled/busy/error/success已有实拍。",
-            "remaining": "按唯一组件一次测全状态，并抽查各布局实例；消除穿透、不可读与误导状态。 B01 busy视觉有原图，但CUA -10005后坐标点击已在恢复期并触发第二次隔离Test；最终候选的忙态点击矩阵仍须真实复验。旧版benchmark外部save64后活动表保留1行的刷新/草稿边界也需核清，不能只读运行卡计数。 QA71 Checking两尺寸原图显示禁用外观，未实测busy期间点击拦截/服务端精确去重；两个额外latest是拍图请求，不能作为重复提交缺陷或拦截成功。",
+            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。",
+            "remaining": "补唯一组件全状态/slot矩阵及外部save64后活动表刷新和草稿边界。Test busy去重已实测；皮肤菜单可打开，不能宣称所有入口禁用。检查更新是受控UI边界，单独关闭×及公开更新端到端未验。",
             "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
             "history_tasks": [
               41,
@@ -3488,15 +3452,16 @@
               59,
               60,
               61,
-              64
+              64,
+              75
             ]
           },
           {
             "id": "R01.2",
             "title": "完整键盘与焦点恢复",
             "acceptance": "pending",
-            "completed": "工具栏、模型列表、协议tab、部分统计与关闭按钮已有实测。",
-            "remaining": "按完整路径测Tab/ShiftTab/方向/Enter/Space/Esc、快捷键、开关层焦点与虚拟列表首末。 QA70原生表头拖宽两端点无可见变化，CUA无连续多点按住API；仍须用支持的真实输入验证拖宽及刷新/resize保持，不能把布局单测冒充原生成功。详情立即连续Esc与动画/焦点时序也统一复查。",
+            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。",
+            "remaining": "复验下一页按钮变disabled后的反向焦点恢复；用受支持真实输入补表头拖宽及刷新/resize保持，既有两端点CUA拖动无可见变化，不能声明成功。完整路径焦点回归仍待收口。",
             "acceptance_check": "无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。",
             "history_tasks": [
               40,
@@ -3505,35 +3470,38 @@
               51,
               62,
               64,
-              67
+              67,
+              75
             ]
           },
           {
             "id": "R01.3",
             "title": "中文IME、Unicode与编辑撤销",
             "acceptance": "pending",
-            "completed": "真实拼音composition、中文/emoji保存冷载入和Escape守卫已有专项。",
-            "remaining": "覆盖名称/Key/URL/模型/搜索/价格备注等不同输入引擎，检查composition中Enter/Esc与切换/取消。",
+            "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。",
+            "remaining": "不同输入引擎的composition中Enter/Esc和切换/取消仍须逐引擎补齐；本轮真实composition在模型名称，其余字段paste/undo不冒称IME。Key为隔离合成值，安全AX不回传完整值，未声明AX精确读回。",
             "acceptance_check": "合成未提交时不误保存/关闭；字符串往返不损坏；原输入源恢复；CUA typeText不冒充IME。",
             "history_tasks": [
               46,
               50,
-              51
+              51,
+              75
             ]
           },
           {
             "id": "R01.4",
             "title": "辅助功能与七主题/三语言",
             "acceptance": "pending",
-            "completed": "部分原生role/name/selected语义和皮肤/语言保持已查。",
-            "remaining": "读屏核对名称/角色/值/禁用/错误/顺序；七主题×三语言用代表性路径矩阵集中抽查。",
+            "completed": "修复请求/汇总表Table/Row/ColumnHeader/Cell名称、完整值和索引；真实CUA树及两尺寸原图已查。七主题×三语言21组合均经真实交互和业务不变断言；7张中文主题代表原图已审阅。",
+            "remaining": "真实辅助技术完成主路径尚未通过；用户反映旁白干扰后已关闭，禁止自动开启VoiceOver或系统辅助功能。表格AX不等于读屏签收。其余关键控件名称/角色/顺序需集中核对；不重复21或280张同类截图。",
             "acceptance_check": "无无名关键控件，真实辅助技术能完成主路径；所有皮肤/语言可读且无截断，不要求重做280张相同截图。",
             "history_tasks": [
               34,
               38,
               40,
               41,
-              57
+              57,
+              75
             ]
           },
           {
@@ -3568,7 +3536,8 @@
         "acceptance_evidence": [
           "benchmarks/r01-consolidated-visual-review.json",
           "benchmarks/r01-original-eighty-audit.json",
-          "benchmarks/r01-latest-reference-manifest.json"
+          "benchmarks/r01-latest-reference-manifest.json",
+          "benchmarks/r01-input-summary.json"
         ],
         "frame_details": [],
         "reviewed_frames": 0
@@ -4073,7 +4042,7 @@
       "tasks": 50,
       "passed_tasks": 32
     },
-    "goal_status": "active"
+    "goal_status": "paused"
   },
   "timeline": [
     {
@@ -7504,6 +7473,23 @@
       "date": "2026-11-01T00:15:18+08:00",
       "commit_subject": "fix(studio): reuse sharp borderless sidebar brand icon",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 75,
+      "title": "R01表格语义修复、输入冷读与暂停交接",
+      "status": "recorded",
+      "summary": "请求/汇总表补原生Table/Row/ColumnHeader/Cell角色、全值名称及行列索引；不改视觉、事件、计算、DTO或Core。横向虚拟化不能靠当前可见列顺序推断索引。b29角色/名称及两尺寸6张主图、2ce键盘和e1f最终构建分开记，未用旧截图冒充最终候选。源码与构建、原生表格、索引原因。",
+      "highlights": [
+        "请求/汇总表补原生Table/Row/ColumnHeader/Cell角色、全值名称及行列索引；不改视觉、事件、计算、DTO或Core。横向虚拟化不能靠当前可见列顺序推断索引。b29角色/名称及两尺寸6张主图、2ce键盘和e1f最终构建分开记，未用旧截图冒充最终候选。源码与构建、原生表格、索引原因。",
+        "e1f真实held Test重复点击只到达1次，save/test各1；controlled update亦1次，完成后未重开已隐藏提示。皮肤菜单实际可打开，未宣称所有入口禁用；关闭×未独立实测，受控更新非公开端到端更新。忙态记录。",
+        "7主题×zh/en/auto实际21组合有各自业务不变证明，7张1100×700代表原图已逐张查看；英文协议选项固定中英别名如实保留，auto随本机显示中文，不声称全部状态或真实AT通过。主题语言。"
+      ],
+      "limits": [],
+      "evidence": [],
+      "commit": "1f9ecaee1a00f7b19b923e7ab7cb70eb09f548db",
+      "date": "2026-11-01T01:04:54+08:00",
+      "commit_subject": "fix(studio): expose usage table semantics and archive input validation",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -8725,6 +8711,21 @@
     {
       "date": "2026-11-01T00:15:19+08:00",
       "note": "完成40帧集中签收与Issue3品牌实现；保留完整输入、辅助技术、平台与发行门禁。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T01:05:24+08:00",
+      "note": "用户要求完成当前任务后暂停Goal；交接见docs/studio_v2/SESSION_HANDOFF.md。剩余界面0/40，18项发布任务待验，禁止自动开启旁白。",
       "pending": 0,
       "partial": 0,
       "reused": 0,

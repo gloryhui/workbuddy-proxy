@@ -827,7 +827,7 @@
         "benchmarks/r01-consolidated-visual-review.json",
         "benchmarks/r01-original-eighty-audit.json",
         "benchmarks/r01-latest-reference-manifest.json",
-        "benchmarks/r01-input-handoff/summary.json"
+        "benchmarks/r01-input-summary.json"
       ]
     },
     {
