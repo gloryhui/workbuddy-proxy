@@ -1,0 +1,147 @@
+{
+  "official": {
+    "clock": [
+      307,
+      751,
+      322,
+      766
+    ],
+    "heading": [
+      333,
+      750,
+      392,
+      764
+    ],
+    "provider": [
+      460,
+      790,
+      544,
+      803
+    ],
+    "status_digits": [
+      1218,
+      789,
+      1247,
+      797
+    ],
+    "tag_y_height": [
+      778,
+      805,
+      28
+    ],
+    "timestamp": [
+      311,
+      790,
+      392,
+      798
+    ],
+    "token_digit": [
+      870,
+      790,
+      878,
+      798
+    ],
+    "white_interior_y": [
+      733,
+      821,
+      89
+    ]
+  },
+  "previous475f": {
+    "clock": [
+      306.5,
+      747,
+      321,
+      761.5
+    ],
+    "heading": [
+      333,
+      748,
+      391.5,
+      762
+    ],
+    "provider": [
+      459.5,
+      785,
+      543.5,
+      798
+    ],
+    "status_digits": [
+      1217,
+      786,
+      1246,
+      794.5
+    ],
+    "tag_y_height": [
+      777,
+      802.5,
+      26
+    ],
+    "timestamp": [
+      309.5,
+      785.5,
+      393.5,
+      794
+    ],
+    "token_digit": [
+      869,
+      786,
+      878.5,
+      795
+    ],
+    "white_interior_y": [
+      732,
+      820.5,
+      89
+    ]
+  },
+  "current_e25a": {
+    "clock": [
+      306.5,
+      750.5,
+      321,
+      765
+    ],
+    "heading": [
+      333,
+      749,
+      391.5,
+      763
+    ],
+    "provider": [
+      459.5,
+      789.5,
+      543.5,
+      802.5
+    ],
+    "status_digits": [
+      1217,
+      788.5,
+      1246,
+      797
+    ],
+    "tag_y_height": [
+      777,
+      804.5,
+      28
+    ],
+    "timestamp": [
+      309.5,
+      789,
+      390,
+      797.5
+    ],
+    "token_digit": [
+      869,
+      789.5,
+      878.5,
+      798.5
+    ],
+    "white_interior_y": [
+      733,
+      821.5,
+      89
+    ]
+  },
+  "scope": "Native originals, logical coordinates derived from raw2x pixels. Numeric geometry, same-text provider/heading and selected glyph regions; dynamic values differ. Different ICC/AA means pixel-perfect RGB/glyph identity is not claimed."
+}

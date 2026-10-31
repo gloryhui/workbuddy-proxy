@@ -1,0 +1,28 @@
+{
+  "node": "52:191",
+  "full_frame": "52:2",
+  "original_clock_sha256": "6e7b4455065ef612067f489d8b61a23efdf95ff513ecca2a671c9b76e2dcb492",
+  "local_asset": "gpui/assets/studio/recent-clock.svg",
+  "exact_bytes": true,
+  "intrinsic_root": {
+    "width": "18",
+    "height": "18",
+    "viewBox": "0 0 18 18"
+  },
+  "callsite_size": [
+    18,
+    18
+  ],
+  "source_changes": "Native recent card top spacing,28px model tag and line-box alignment only; existing data and handlers unchanged.",
+  "figma_slot": "52:192",
+  "figma_slot_geometry": [
+    17,
+    17,
+    18,
+    18
+  ],
+  "asset_route_present": true,
+  "callsite": "gpui/src/statistics/recent.rs: recent_card original clock",
+  "rendered_geometry": "Native18px slot, current raw2x ink bounds recorded in recent-geometry.json; not resized to different intrinsic dimensions.",
+  "native_group_alignment": "Header preserves native flex and actual line21; original asset reused with primary palette. No SVG paths read/modified."
+}

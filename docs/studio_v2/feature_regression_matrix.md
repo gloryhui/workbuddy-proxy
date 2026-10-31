@@ -86,3 +86,6 @@ UI65设置与主题/协议菜单（最终e6abd）：7个Rust呈现/资源文件�
 
 
 UI66使用概览：仅overview/trends/recent原生布局，保留原2处理器、Core/统计计算/配置/依赖不变。1bfd完整真实0→22→23自然更新、模型5/供应商2/来源0与22/日期、四图例与币种、七指标内滚末项/费用趋势/Esc、最近200详情550及503失败已通过；475f只补两处clock/标题paint后另验两尺寸/下方滚动/详情/失败，版本边界明确。原22请求与22费用快照、设置/价格与Core配置逐字段SHA保持；204pass2ignore/五门禁0与P/C/C/P各n2留证，合计RSS83.21→85.47MiB且范围重叠，不作优化或等价结论。见[QA66](baseline_and_qa.md)、[最终GUI](benchmarks/overview-closure-final-gui.json)、[历史保护](benchmarks/overview-closure-final-data-preservation-proof.json)、[性能](benchmarks/overview-closure-performance-summary.json)。实际标签26/28和最近行光学差异、图表hover/完整键盘IME/AX/平台待终验；仍在52:2同帧收口，剩余最终验收40。
+
+
+UI67使用概览同版收口：仅recent原生margin/gap/28px模型标签，原详情listener与渲染方法外字节保持。冻结e25a全门禁0/204pass2ignore；完整真实0→22→23、模型5/供应商2/来源循环、日期/清筛选/侧栏搜索、来源方向键→Tab焦点/Return/Esc/ShiftTab、币种/费用趋势/七指标内滚/200详情及503失败、两尺寸十原图通过。CUA图表真实点拖动显示22/22/22与11000/1100/—，不冒称无按键hover；模型下拉无文本搜索框，空态详情仅视觉置灰。原22请求/22费用快照/设置/价格及Core配置SHA保持，27测试PID退出。原负载八轮保留最初v2空闲差异；统一尺寸/操作后空闲合计+0.58MiB，组合峰值+12.63MiB仍记成本，current2直连和代理同慢，短轮不作优化/等价/长时性能结论。详见QA67和overview-recent-closure证据。已知最近结构差异收口，完整状态/hover/键盘IME/AX/六皮肤与平台专项继续；剩余最终40，后续56:8整帧核对。时间线待较大完整功能节点统一刷新。

@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-31T10:55:19.940148+08:00",
+  "config_sha256_unchanged": true,
+  "seeded22_all_request_fields_sha256_before": "00fe728f9ebf29ca2c8a920e9c18c4bd38a848c8d76b4043ff1fd7484e73b8a5",
+  "seeded22_all_request_fields_sha256_after": "00fe728f9ebf29ca2c8a920e9c18c4bd38a848c8d76b4043ff1fd7484e73b8a5",
+  "seeded22_rows_unchanged": true,
+  "settings_and_prices_before": {
+    "stats_settings": {
+      "rows": 1,
+      "all_fields_sha256": "d60ba54d4d5525816390fecf5e6aa84e53b03d72be0e45f21d438a57817642ac"
+    },
+    "stats_model_prices": {
+      "rows": 0,
+      "all_fields_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "seeded22_usage_costs": {
+      "rows": 22,
+      "all_fields_sha256": "6bea9cff5533b35a0e9911bb452a5c3cddf6513feb6fe3a2eb102bfd1f1b22b7"
+    }
+  },
+  "settings_and_prices_after": {
+    "stats_settings": {
+      "rows": 1,
+      "all_fields_sha256": "d60ba54d4d5525816390fecf5e6aa84e53b03d72be0e45f21d438a57817642ac"
+    },
+    "stats_model_prices": {
+      "rows": 0,
+      "all_fields_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "seeded22_usage_costs": {
+      "rows": 22,
+      "all_fields_sha256": "6bea9cff5533b35a0e9911bb452a5c3cddf6513feb6fe3a2eb102bfd1f1b22b7"
+    }
+  },
+  "counts": [
+    23,
+    11000,
+    1100,
+    12100
+  ],
+  "by_status": [
+    [
+      200,
+      22
+    ],
+    [
+      503,
+      1
+    ]
+  ],
+  "scope": "Independent read-only SQL after native GUI interaction. 23rd row is explicitly injected real503; no direct DB writes. UI preferences are separate and not business config."
+}

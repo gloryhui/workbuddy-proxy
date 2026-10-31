@@ -1,0 +1,21 @@
+{
+  "visual_statuses": {
+    "reviewed_with_differences": 21,
+    "not_reviewed": 19
+  },
+  "checked_at": "2026-10-31T11:32:10.396657+08:00",
+  "archived_hashes_pass": 58,
+  "qa_links_pass": 16,
+  "five_compiler_gates_exit0": true,
+  "source_frozen_sha_matches": true,
+  "timeline_untouched": true,
+  "remaining_final_frames": 40,
+  "dirty_paths_scoped": 66,
+  "performance_cost_retained": "v3 UI+1.69MiB/combined+0.58MiB/sampled peak+12.63MiB; no optimization or all-platform final acceptance claim",
+  "cleanup_target_absent": true,
+  "archive_format": {
+    "exact_copies": 50,
+    "display_normalized_vmmap": 8,
+    "full_raw_vmmap_utf8_and_sha_preserved_in_manifest": true
+  }
+}

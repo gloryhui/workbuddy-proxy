@@ -87,10 +87,11 @@ impl Statistics {
         stats_card("stats-recent-request")
             .flex_shrink_0()
             .min_h(px(91.))
+            .mt(px(1.))
             .rounded(px(14.))
             .px(px(20.))
             .py(px(12.))
-            .gap(px(12.))
+            .gap(px(11.))
             .child(
                 div()
                     .h(px(21.))
@@ -108,6 +109,7 @@ impl Statistics {
                                 Icon::default()
                                     .path("studio/recent-clock.svg")
                                     .with_size(px(18.))
+                                    .mt(px(5.))
                                     .text_color(rgb(crate::theme::palette().primary)),
                             )
                             .child(
@@ -169,6 +171,9 @@ impl Statistics {
                                 Label::new(usage_table::timestamp(row.started_at_ms, self.zh)),
                                 cx,
                             )
+                            // Figma row labels start 8px below the 28px tag.
+                            // A centered line receives half its top margin.
+                            .mt(px(5.))
                             .when(wide, |label| label.w(px(150.)))
                             .text_size(px(12.))
                             .line_height(px(17.))
@@ -181,6 +186,7 @@ impl Statistics {
                             } else {
                                 row.provider_name.clone()
                             })
+                            .mt(px(7.))
                             .text_size(px(13.))
                             .line_height(px(19.))
                             .font_weight(FontWeight::MEDIUM)
@@ -190,6 +196,7 @@ impl Statistics {
                         .child(
                             div()
                                 .w(px(196.))
+                                .h(px(28.))
                                 .when(wide, |tag| tag.mr(px(64.)))
                                 .px(px(12.))
                                 .py(px(5.))
@@ -210,6 +217,7 @@ impl Statistics {
                                 "{} Token",
                                 usage_table::compact(row.total_tokens, self.zh)
                             ))
+                            .mt(px(5.))
                             .when(wide, |label| label.flex_1())
                             .text_size(px(12.))
                             .line_height(px(17.))
@@ -218,6 +226,7 @@ impl Statistics {
                         )
                         .child(
                             Label::new(status)
+                                .mt(px(3.))
                                 .when(wide, |label| label.w(px(171.)))
                                 .text_size(px(12.))
                                 .line_height(px(17.))

@@ -1,0 +1,83 @@
+{
+  "rounds": [
+    {
+      "ui_pid": 75779,
+      "overview_visible": true,
+      "target_logical_size": [
+        1440,
+        900
+      ],
+      "screenshot": "performance-window.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "screenshot_sha256": "c388013fe865e5640bb332f70e9211f11e6bb9f371329d43259971c6675cd64f",
+      "steps": "CUA resize 1100→1440, overview 22",
+      "window_id": 6014,
+      "label": "previous1",
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v3-previous1"
+    },
+    {
+      "ui_pid": 77940,
+      "overview_visible": true,
+      "target_logical_size": [
+        1440,
+        900
+      ],
+      "screenshot": "performance-window.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "screenshot_sha256": "24e7b328a0b6e6498ea6d2e486cfa6ae691ecd8340737d3e46723dfd50913db3",
+      "steps": "CUA resize 1100→1440, overview 22",
+      "window_id": 6095,
+      "label": "current1",
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v3-current1"
+    },
+    {
+      "ui_pid": 79346,
+      "overview_visible": true,
+      "target_logical_size": [
+        1440,
+        900
+      ],
+      "screenshot": "performance-window.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "screenshot_sha256": "fb52857b583d3d6683c05f52f05dc2ab4a21431d789568d44df7c3f9e4c0e442",
+      "steps": "CUA resize 1100 to 1440; overview 22",
+      "window_id": 6154,
+      "label": "current2",
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v3-current2"
+    },
+    {
+      "ui_pid": 80465,
+      "overview_visible": true,
+      "target_logical_size": [
+        1440,
+        900
+      ],
+      "screenshot": "performance-window.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "screenshot_sha256": "79d643b22fc6be6d0054ccb09e34e51aa6618096cf1bd8305e81d1ee424c1a2a",
+      "steps": "CUA resize 1100 to 1440; overview 22",
+      "window_id": 6219,
+      "label": "previous2",
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v3-previous2"
+    }
+  ],
+  "method": "CUA background getApp; CUA drag resize 1100x700 then 1440x900; overview shows 22; own PID onscreen layer 0 window identified by native screenshots; no image scaling or cropping",
+  "boundaries": [
+    "No explicit activate or raise; actual foreground state not independently established.",
+    "Token shown as missing is benchmark Mock data semantics.",
+    "Observed marker is not a startup or interaction timing measurement.",
+    "Wrapper controls ready marker, benchmark load, and process shutdown."
+  ]
+}

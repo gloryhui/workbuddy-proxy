@@ -4,7 +4,7 @@
 
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
-| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, trends.rs, recent.rs, layout.rs, usage_chart.rs | 部分：UI66主KPI454/204/204/210、趋势/计费694/410与246高及最近91px布局；真实0→22→23/12100/95.7%、筛选/币种/七指标/详情及两尺寸、P/C/C/P通过。最近标签26/28与行光学位置、hover/完整键盘IME/AX/平台仍待同帧终验 |
+| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, trends.rs, recent.rs, layout.rs, usage_chart.rs | 部分：UI66主布局＋UI67最近28px标签/行位修复，同版自然0→22→23/12100/95.7%、筛选/币种/指标/详情、方向键/焦点和两尺寸通过；图表拖动真实点已验。匹配短测空闲合计+0.58MiB/峰值+12.63MiB保留；完整状态/无按键hover/IME/AX/六皮肤及平台终验仍待 |
 | 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 部分：UI58官方30资产/整帧首审留差异，五主要区域几何和Studio模型列宽对齐；两尺寸/单模型/256末行/编辑取消/200SSE与503/原字段保留/四轮负载已验。UI59连接徽章已完成身份/配置绑定、复制继承、两尺寸/故障恢复与原负载；UI60默认输入/触发器颜色边框圆角与两尺寸/原负载已验；UI61焦点/选区可见、眼睛位置与受控busy/恢复已实拍；普通按钮完整状态、AA及完整无障碍/跨平台待续 |
 | 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 部分：八列/来源筛选/分页/详情/窄窗首末列已验；UI56/57最终候选两尺寸、14/22真实记录与原负载已验，a51表头top364/outer39；UI58共享标题墨迹修正。完整视觉/键盘/IME/AX/跨平台待终验 |
 | 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：UI56/57最终两尺寸与原负载已验，汇总2供应商5模型/22条12100Token范围浮层、小窗右列下卡可滚；标题列/314px切换区与表头top363/38已实拍。UI58共享标题实现修正，本轮未重拍Summary，完整状态/视觉待终验 |

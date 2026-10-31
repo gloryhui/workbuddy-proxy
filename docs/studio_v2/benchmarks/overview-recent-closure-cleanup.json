@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-31T11:30:24.881277+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz",
+  "command": "rm -r -- '/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz'",
+  "exit_code": 0,
+  "target_absent": true,
+  "removed_ordinary_files": 296,
+  "removed_logical_bytes": 531564353,
+  "data_free_bytes_before": 32342458368,
+  "data_free_bytes_after": 32884559872,
+  "observed_apfs_free_delta_bytes": 542101504,
+  "delta_note": "Actual observed APFS free-space change; other running applications can change the shared volume concurrently. Logical size is not claimed as physical freed bytes.",
+  "this_round_temporary_bytes_retained": 0,
+  "prior_denied_targets_retained": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn",
+      "files": 356,
+      "logical_bytes": 596509451,
+      "retained_reason": "Earlier concrete deletion was rejected; not retried with altered options or equivalent tools."
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u",
+      "files": 313,
+      "logical_bytes": 495495288,
+      "retained_reason": "Earlier concrete deletion was rejected; not retried with altered options or equivalent tools."
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl",
+      "files": 545,
+      "logical_bytes": 689258905,
+      "retained_reason": "Earlier concrete deletion was rejected; not retried with altered options or equivalent tools."
+    }
+  ],
+  "shared_cargo_target_untouched": true,
+  "retained_evidence_count": 58
+}

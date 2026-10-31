@@ -1,0 +1,683 @@
+{
+  "at": "2026-10-31T11:29:23.143445+08:00",
+  "candidate_ui_sha256": "e25a27455acaecab3762a7791e9e33a5caf11fcc8656aa2bf2600b37c0fbe67c",
+  "baseline_ui_sha256": "475f07cf10665b5dc503736740657e0c55456989e008c6118122706df7d732fc",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "load": {
+    "small_requests": 1000,
+    "models": 64,
+    "large_requests": 80,
+    "large_mib": 1,
+    "concurrency": 4
+  },
+  "series": {
+    "v2": {
+      "sequence": [
+        "previous1",
+        "current1",
+        "current2",
+        "previous2"
+      ],
+      "n_each": 2,
+      "metrics": {
+        "core_rss_mib": {
+          "previous": {
+            "samples": [
+              11.09,
+              10.17
+            ],
+            "median": 10.629999999999999,
+            "range": [
+              10.17,
+              11.09
+            ]
+          },
+          "current": {
+            "samples": [
+              11.14,
+              11.58
+            ],
+            "median": 11.36,
+            "range": [
+              11.14,
+              11.58
+            ]
+          },
+          "delta": 0.73,
+          "percent": 6.867
+        },
+        "ui_rss_mib": {
+          "previous": {
+            "samples": [
+              90.06,
+              81.06
+            ],
+            "median": 85.56,
+            "range": [
+              81.06,
+              90.06
+            ]
+          },
+          "current": {
+            "samples": [
+              101.08,
+              91.95
+            ],
+            "median": 96.515,
+            "range": [
+              91.95,
+              101.08
+            ]
+          },
+          "delta": 10.955,
+          "percent": 12.804
+        },
+        "combined_rss_mib": {
+          "previous": {
+            "samples": [
+              101.16,
+              91.23
+            ],
+            "median": 96.195,
+            "range": [
+              91.23,
+              101.16
+            ]
+          },
+          "current": {
+            "samples": [
+              112.22,
+              103.53
+            ],
+            "median": 107.875,
+            "range": [
+              103.53,
+              112.22
+            ]
+          },
+          "delta": 11.68,
+          "percent": 12.142
+        },
+        "sampled_peak_mib": {
+          "previous": {
+            "samples": [
+              153.97,
+              153.12
+            ],
+            "median": 153.54500000000002,
+            "range": [
+              153.12,
+              153.97
+            ]
+          },
+          "current": {
+            "samples": [
+              168.02,
+              159.36
+            ],
+            "median": 163.69,
+            "range": [
+              159.36,
+              168.02
+            ]
+          },
+          "delta": 10.145,
+          "percent": 6.607
+        },
+        "core_ready_ms": {
+          "previous": {
+            "samples": [
+              62.423,
+              47.014
+            ],
+            "median": 54.718500000000006,
+            "range": [
+              47.014,
+              62.423
+            ]
+          },
+          "current": {
+            "samples": [
+              45.655,
+              49.102
+            ],
+            "median": 47.3785,
+            "range": [
+              45.655,
+              49.102
+            ]
+          },
+          "delta": -7.34,
+          "percent": -13.414
+        },
+        "process_to_marker_ms": {
+          "previous": {
+            "samples": [
+              1126.507,
+              956.506
+            ],
+            "median": 1041.5065,
+            "range": [
+              956.506,
+              1126.507
+            ]
+          },
+          "current": {
+            "samples": [
+              1199.783,
+              808.747
+            ],
+            "median": 1004.2649999999999,
+            "range": [
+              808.747,
+              1199.783
+            ]
+          },
+          "delta": -37.2415,
+          "percent": -3.576
+        },
+        "direct_p50_ms": {
+          "previous": {
+            "samples": [
+              0.154,
+              0.178
+            ],
+            "median": 0.16599999999999998,
+            "range": [
+              0.154,
+              0.178
+            ]
+          },
+          "current": {
+            "samples": [
+              0.215,
+              0.167
+            ],
+            "median": 0.191,
+            "range": [
+              0.167,
+              0.215
+            ]
+          },
+          "delta": 0.025,
+          "percent": 15.06
+        },
+        "direct_p95_ms": {
+          "previous": {
+            "samples": [
+              0.199,
+              0.993
+            ],
+            "median": 0.596,
+            "range": [
+              0.199,
+              0.993
+            ]
+          },
+          "current": {
+            "samples": [
+              0.539,
+              0.374
+            ],
+            "median": 0.4565,
+            "range": [
+              0.374,
+              0.539
+            ]
+          },
+          "delta": -0.1395,
+          "percent": -23.406
+        },
+        "proxy_p50_ms": {
+          "previous": {
+            "samples": [
+              0.15,
+              0.228
+            ],
+            "median": 0.189,
+            "range": [
+              0.15,
+              0.228
+            ]
+          },
+          "current": {
+            "samples": [
+              0.256,
+              0.171
+            ],
+            "median": 0.21350000000000002,
+            "range": [
+              0.171,
+              0.256
+            ]
+          },
+          "delta": 0.0245,
+          "percent": 12.963
+        },
+        "proxy_p95_ms": {
+          "previous": {
+            "samples": [
+              0.199,
+              0.556
+            ],
+            "median": 0.37750000000000006,
+            "range": [
+              0.199,
+              0.556
+            ]
+          },
+          "current": {
+            "samples": [
+              0.584,
+              0.287
+            ],
+            "median": 0.4355,
+            "range": [
+              0.287,
+              0.584
+            ]
+          },
+          "delta": 0.058,
+          "percent": 15.364
+        },
+        "large_seconds": {
+          "previous": {
+            "samples": [
+              0.1,
+              0.132
+            ],
+            "median": 0.116,
+            "range": [
+              0.1,
+              0.132
+            ]
+          },
+          "current": {
+            "samples": [
+              0.11,
+              0.106
+            ],
+            "median": 0.108,
+            "range": [
+              0.106,
+              0.11
+            ]
+          },
+          "delta": -0.008,
+          "percent": -6.897
+        }
+      }
+    },
+    "v3": {
+      "sequence": [
+        "previous1",
+        "current1",
+        "current2",
+        "previous2"
+      ],
+      "n_each": 2,
+      "metrics": {
+        "core_rss_mib": {
+          "previous": {
+            "samples": [
+              10.28,
+              10.97
+            ],
+            "median": 10.625,
+            "range": [
+              10.28,
+              10.97
+            ]
+          },
+          "current": {
+            "samples": [
+              9.53,
+              9.5
+            ],
+            "median": 9.515,
+            "range": [
+              9.5,
+              9.53
+            ]
+          },
+          "delta": -1.11,
+          "percent": -10.447
+        },
+        "ui_rss_mib": {
+          "previous": {
+            "samples": [
+              65.25,
+              66.39
+            ],
+            "median": 65.82,
+            "range": [
+              65.25,
+              66.39
+            ]
+          },
+          "current": {
+            "samples": [
+              62.55,
+              72.47
+            ],
+            "median": 67.50999999999999,
+            "range": [
+              62.55,
+              72.47
+            ]
+          },
+          "delta": 1.69,
+          "percent": 2.568
+        },
+        "combined_rss_mib": {
+          "previous": {
+            "samples": [
+              75.53,
+              77.36
+            ],
+            "median": 76.445,
+            "range": [
+              75.53,
+              77.36
+            ]
+          },
+          "current": {
+            "samples": [
+              72.08,
+              81.97
+            ],
+            "median": 77.025,
+            "range": [
+              72.08,
+              81.97
+            ]
+          },
+          "delta": 0.58,
+          "percent": 0.759
+        },
+        "sampled_peak_mib": {
+          "previous": {
+            "samples": [
+              125.5,
+              124.03
+            ],
+            "median": 124.765,
+            "range": [
+              124.03,
+              125.5
+            ]
+          },
+          "current": {
+            "samples": [
+              141.73,
+              133.06
+            ],
+            "median": 137.39499999999998,
+            "range": [
+              133.06,
+              141.73
+            ]
+          },
+          "delta": 12.63,
+          "percent": 10.123
+        },
+        "core_ready_ms": {
+          "previous": {
+            "samples": [
+              76.248,
+              65.641
+            ],
+            "median": 70.9445,
+            "range": [
+              65.641,
+              76.248
+            ]
+          },
+          "current": {
+            "samples": [
+              49.802,
+              50.06
+            ],
+            "median": 49.931,
+            "range": [
+              49.802,
+              50.06
+            ]
+          },
+          "delta": -21.0135,
+          "percent": -29.62
+        },
+        "process_to_marker_ms": {
+          "previous": {
+            "samples": [
+              1282.066,
+              1283.708
+            ],
+            "median": 1282.8870000000002,
+            "range": [
+              1282.066,
+              1283.708
+            ]
+          },
+          "current": {
+            "samples": [
+              1213.751,
+              1696.166
+            ],
+            "median": 1454.9585,
+            "range": [
+              1213.751,
+              1696.166
+            ]
+          },
+          "delta": 172.0715,
+          "percent": 13.413
+        },
+        "direct_p50_ms": {
+          "previous": {
+            "samples": [
+              0.155,
+              0.154
+            ],
+            "median": 0.1545,
+            "range": [
+              0.154,
+              0.155
+            ]
+          },
+          "current": {
+            "samples": [
+              0.156,
+              0.527
+            ],
+            "median": 0.3415,
+            "range": [
+              0.156,
+              0.527
+            ]
+          },
+          "delta": 0.187,
+          "percent": 121.036
+        },
+        "direct_p95_ms": {
+          "previous": {
+            "samples": [
+              0.201,
+              0.202
+            ],
+            "median": 0.2015,
+            "range": [
+              0.201,
+              0.202
+            ]
+          },
+          "current": {
+            "samples": [
+              0.211,
+              1.801
+            ],
+            "median": 1.006,
+            "range": [
+              0.211,
+              1.801
+            ]
+          },
+          "delta": 0.8045,
+          "percent": 399.256
+        },
+        "proxy_p50_ms": {
+          "previous": {
+            "samples": [
+              0.149,
+              0.174
+            ],
+            "median": 0.16149999999999998,
+            "range": [
+              0.149,
+              0.174
+            ]
+          },
+          "current": {
+            "samples": [
+              0.163,
+              0.593
+            ],
+            "median": 0.378,
+            "range": [
+              0.163,
+              0.593
+            ]
+          },
+          "delta": 0.2165,
+          "percent": 134.056
+        },
+        "proxy_p95_ms": {
+          "previous": {
+            "samples": [
+              0.182,
+              0.234
+            ],
+            "median": 0.20800000000000002,
+            "range": [
+              0.182,
+              0.234
+            ]
+          },
+          "current": {
+            "samples": [
+              0.263,
+              1.867
+            ],
+            "median": 1.065,
+            "range": [
+              0.263,
+              1.867
+            ]
+          },
+          "delta": 0.857,
+          "percent": 412.019
+        },
+        "large_seconds": {
+          "previous": {
+            "samples": [
+              0.125,
+              0.107
+            ],
+            "median": 0.11599999999999999,
+            "range": [
+              0.107,
+              0.125
+            ]
+          },
+          "current": {
+            "samples": [
+              0.18,
+              0.213
+            ],
+            "median": 0.1965,
+            "range": [
+              0.18,
+              0.213
+            ]
+          },
+          "delta": 0.0805,
+          "percent": 69.397
+        }
+      }
+    }
+  },
+  "vmmap_after": {
+    "previous1": {
+      "physical_footprint_mib": 167.1,
+      "malloc_total_line": [
+        "TOTAL",
+        "884.0M",
+        "21.7M",
+        "21.2M",
+        "8784K",
+        "48225",
+        "17.8M",
+        "12.0M",
+        "41%",
+        "45"
+      ],
+      "iosurface_line": "IOSurface                         60.4M    60.4M    40.3M    20.1M       0K    60.4M       0K        5"
+    },
+    "current1": {
+      "physical_footprint_mib": 171.9,
+      "malloc_total_line": [
+        "TOTAL",
+        "1.4G",
+        "18.3M",
+        "18.0M",
+        "16.6M",
+        "49876",
+        "18.9M",
+        "15.8M",
+        "46%",
+        "49"
+      ],
+      "iosurface_line": "IOSurface                         60.5M    60.4M    40.2M    20.1M       0K    60.4M       0K        9"
+    },
+    "current2": {
+      "physical_footprint_mib": 172.7,
+      "malloc_total_line": [
+        "TOTAL",
+        "1.4G",
+        "17.3M",
+        "17.2M",
+        "18.2M",
+        "51322",
+        "18.5M",
+        "16.8M",
+        "48%",
+        "49"
+      ],
+      "iosurface_line": "IOSurface                         60.5M    60.4M    40.3M    20.1M       0K    60.4M       0K        8"
+    },
+    "previous2": {
+      "physical_footprint_mib": 170.7,
+      "malloc_total_line": [
+        "TOTAL",
+        "1.4G",
+        "20.3M",
+        "19.9M",
+        "13.5M",
+        "50611",
+        "19.1M",
+        "14.2M",
+        "43%",
+        "50"
+      ],
+      "iosurface_line": "IOSurface                         60.4M    60.4M    60.4M       0K       0K    60.4M       0K        5"
+    }
+  },
+  "assessment": {
+    "v2": "Initial uncontrolled window history: current UI idle RSS +10.955 MiB; not accepted from this series alone. Every sample retained.",
+    "v3": "Same native resize1100→1440, overview22 and10second dwell, verified raw2880×1802. UI idle delta +1.69MiB, combined +0.58MiB. Initial large idle delta not reproduced; combined sampled peak +12.63MiB is retained, not called an optimization.",
+    "diagnostic": "vmmap after current footprint171.9/172.7 versus previous167.1/170.7MiB; malloc allocated18.9/18.5 versus17.8/19.1MiB; IOSurface resident60.4MiB all four. Different metrics are not substituted for RSS. Not proof of root cause or absence of leaks.",
+    "latency": "v3 current2 direct p95=1.801ms and proxy1.867ms, unlike other runs. Control also slow; cannot attribute that isolated delay to UI. No benchmark parameters or acceptance thresholds changed.",
+    "scope": "Limited native arm64 short-run regression evidence; no stable large idle regression after matched conditions. Small samples/desktop load uncontrolled, sampled peaks can miss maxima. No statistical equivalence, performance improvement, long-term CPU/FPS/leak or cross-platform claim. UI marker is not first paint/interactivity; CUA waiting excluded only in separately recorded process-to-marker metric."
+  }
+}

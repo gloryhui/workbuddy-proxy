@@ -1,0 +1,11 @@
+{
+  "commit": "e5d8bfbf0f3c7db4997cfece8575bd6fc66357b0",
+  "repo": "gloryhui/workbuddy-proxy",
+  "combined": {
+    "statuses": []
+  },
+  "pr_runs": {
+    "workflow_runs": []
+  },
+  "scope": "Parent-commit read-only evidence only. The two local workflows limit push triggers to main/codex/gpui-preview; no Windows hardware or candidate CI success is claimed."
+}

@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-31T10:32:26.972990+08:00",
+  "real_local_http_requests": 22,
+  "statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "counts": [
+    22,
+    11000,
+    1100,
+    12100,
+    200,
+    200
+  ],
+  "provider_counts": [
+    [
+      "OpenCode Go",
+      2
+    ],
+    [
+      "sub2api",
+      20
+    ]
+  ],
+  "config_sha256_unchanged": true,
+  "core_config_sha256": "1a736ea8f3055708ba583d56f6aaaf04b1c2d18212db094462e5ae88cb975eab",
+  "no_direct_sql_writes": true,
+  "scope": "Synthetic local fixture through unchanged actual Core HTTP path; zero requests before injection. Cache fields absent and remain unknown; no fabricated Figma metrics."
+}

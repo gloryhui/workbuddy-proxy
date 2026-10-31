@@ -1,0 +1,42 @@
+{
+  "rounds": [
+    {
+      "label": "previous1",
+      "core_pid": 68771,
+      "ui_pid": 69120,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-previous1/WorkBuddy Proxy Overview Bench previous1.app",
+      "observed": "Overview 22 records / success 100% / Token —",
+      "window_number": "not queried",
+      "ready": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-previous1/overview-ready.json"
+    },
+    {
+      "label": "current1",
+      "core_pid": 69349,
+      "ui_pid": 69831,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-current1/WorkBuddy Proxy Overview Bench current1.app",
+      "observed": "Overview 22 records / success 100% / Token —",
+      "window_number": "not queried",
+      "ready": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-current1/overview-ready.json"
+    },
+    {
+      "label": "current2",
+      "core_pid": 70078,
+      "ui_pid": 70550,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-current2/WorkBuddy Proxy Overview Bench current2.app",
+      "observed": "Overview 22 records / success 100% / Token —",
+      "window_number": "not queried",
+      "ready": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-current2/overview-ready.json"
+    },
+    {
+      "label": "previous2",
+      "core_pid": 70790,
+      "ui_pid": 71305,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-previous2/WorkBuddy Proxy Overview Bench previous2.app",
+      "observed": "Overview 22 records / success 100% / Token —",
+      "window_number": "not queried",
+      "ready": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/bench-ui67-v2-previous2/overview-ready.json"
+    }
+  ],
+  "procedure": "CUA background getApp, select Overview; no explicit activate/raise; actual foreground unverified",
+  "boundary": "Marker proves observed UI state only. Driver evidence determines workload and process terminal status."
+}

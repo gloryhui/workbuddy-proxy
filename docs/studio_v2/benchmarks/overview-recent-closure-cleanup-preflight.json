@@ -1,0 +1,114 @@
+{
+  "at": "2026-10-31T11:29:48.984894+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz",
+  "owner_uid": 501,
+  "creation_record": {
+    "created_at": "2026-10-31T10:24:28.751693+08:00",
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz",
+    "creator_pid": 57151,
+    "owner": 501,
+    "creation_method": "tempfile.mkdtemp(prefix=studio-v2-round58.) in active UI67 thread",
+    "scope": "Task-specific UI67 synthetic fixture, binary copies and temporary compiler files. Shared Cargo target reused; no recursive deletion of previously rejected Root57.",
+    "baseline_ui_sha256": "475f07cf10665b5dc503736740657e0c55456989e008c6118122706df7d732fc",
+    "free_data_gib": 31.093
+  },
+  "components": [
+    {
+      "path": "/",
+      "uid": 0,
+      "type": 16384,
+      "symlink": false,
+      "mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "type": 16384,
+      "symlink": false,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "type": 16384,
+      "symlink": false,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "type": 16384,
+      "symlink": false,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "type": 16384,
+      "symlink": false,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "type": 16384,
+      "symlink": false,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "type": 16384,
+      "symlink": false,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz",
+      "uid": 501,
+      "type": 16384,
+      "symlink": false,
+      "mount": false
+    }
+  ],
+  "ordinary_files": 296,
+  "directories": 114,
+  "logical_bytes": 531564353,
+  "allocated_bytes": 547205120,
+  "all_descendants_owned_ordinary_no_symlink_no_mount": true,
+  "scope": "Recorded UI67 isolated apps, synthetic configs/SQLite, copied binaries and helpers. Original code/evidence/shared Cargo target outside target. All retained evidence hashes verified.",
+  "archived_count": 58,
+  "recorded_payload_pids_gone": [
+    59249,
+    59250,
+    59470,
+    68770,
+    68771,
+    69120,
+    69348,
+    69349,
+    69831,
+    70076,
+    70078,
+    70550,
+    70788,
+    70790,
+    71305,
+    75472,
+    75476,
+    75779,
+    76878,
+    76880,
+    77940,
+    78873,
+    78878,
+    79346,
+    80239,
+    80243,
+    80465
+  ],
+  "lsof_exit": 1,
+  "lsof_output_empty": true,
+  "deletion_attempted": false,
+  "previous_denied_targets_not_retried": true,
+  "data_free_bytes": 32342458368
+}

@@ -1,0 +1,113 @@
+{
+  "ui_sha256": "e25a27455acaecab3762a7791e9e33a5caf11fcc8656aa2bf2600b37c0fbe67c",
+  "ui_pid": 59470,
+  "core_pid": 59250,
+  "window_number": 5540,
+  "launch": "CUA background getApp, no explicit activate/raise; actual foreground not measured",
+  "capture": "Native screencapture own PID onscreen layer0 window; raw PNG no cropping or scaling",
+  "images": {
+    "empty-wide.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/empty-wide.png",
+      "sha256": "6d4b79f8655f091bdcaa9bb50d7288c44d5b89499f9df65c2fdd08b2f41e6aaf",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    "empty-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/empty-small.png",
+      "sha256": "844c075ed2323575cf84eb0d4cb030ad798f08568d92544f6e4cbfad99d82142",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "populated-wide.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/populated-wide.png",
+      "sha256": "62e27a7123f5dfbcb69209ed59973fc20eec9c234fd0ed532413bc535a4b9967",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    "populated-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/populated-small.png",
+      "sha256": "e129df1fa0fd994b9a5fefa89cc48d4cd138ea0e45e4eb752b7c2a7d1e3321e3",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "populated-bottom-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/populated-bottom-small.png",
+      "sha256": "2d7d80211ba7357936e3edfa97ded3b137b2e230346618fa0b7fcf6019a21916",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "metrics-bottom-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/metrics-bottom-small.png",
+      "sha256": "721c1407fdaf5061db26806b51b3ed4c7bbbbfaafb601c325cc3b3dadd75c7eb",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "chart-drag-tooltip-wide.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/chart-drag-tooltip-wide.png",
+      "sha256": "84b4f214969c0b2b24ec90ea8c553e4ee7c13dddea5c4d04da68fe36c38d4a40",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    "failed-wide.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/failed-wide.png",
+      "sha256": "fda67a63b19dc9cd3a8b16b4652217206aabca181865283511d024f57f41736a",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    "failed-top-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/failed-top-small.png",
+      "sha256": "a6b44e6242ea26c6b8c983a0b0ec4a84522f171625926d8b3308f758ff4c0aa5",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "failed-bottom-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round58.f0lf8ccz/ui67-final/failed-bottom-small.png",
+      "sha256": "dc96ea4b9365567f8f8fbbfa69d79557d1b556f5bff83b8342edf6e9f3e73ff2",
+      "pixels": [
+        2200,
+        1402
+      ]
+    }
+  },
+  "cases": {
+    "empty": "0 records and unavailable detail shown visually; 7d and 5s",
+    "natural_refresh": "No manual refresh after seed; 0→22/12100/100% then 23/12100/95.7%; actual active state unmeasured",
+    "model": "Clicked model selector; Down 3 and Return selected gpt-6, 5 records/2750; restored all via pointer. The selector exposed no search field; no model text-search claim.",
+    "provider": "OpenCode Go yielded 2/1100; All yielded22; selecting B then clear filters restored All",
+    "source_and_keyboard": "Clicked built-in gave 0; visible focus outline, Right selected custom 22 then Right wrapped All. Tab focused metrics button with visible ring, Return opened, Esc closed, ShiftTab visibly returned to source group.",
+    "date": "Today applied then 7 days restored",
+    "supplier_search": "CUA typeText OpenCode filtered sidebar then cleared; not IME composition",
+    "metric_popover": "Opened and Esc closed; 1100 internal scroll reveals WorkBuddy points final item",
+    "currency": "USD —→CNY ¥0→USD —",
+    "cost_trend": "Opened and Esc closed",
+    "recent_detail": "Opened actual OpenCode Go model-b-1 HTTP200, 500 input/50 output/550 total, closed",
+    "chart": "CUA native drag from [1850,1225] to [1890,1225] produced tooltip 22/22/22 input11000 output1100 cache-read—. This is drag, not unpressed hover. Initial wide screenshot naturally showed a different missing bucket tooltip.",
+    "small_scroll": "Billing and recent row reached using content scrolling; not same frame as top",
+    "failure": "23/95.7%/12100; recent 503 failed and Token —"
+  },
+  "limitations": [
+    "Empty detail disabled was visually grey, not clicked",
+    "No model dropdown text search was exposed",
+    "No external AX, bounds or CGEvent input; no explicit activate or raise",
+    "No full keyboard/IME/screen-reader/hardware cross-platform acceptance",
+    "Graph tooltip drag is not evidence of unpressed hover"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "source_file": "gpui/src/statistics/recent.rs",
+  "outside_render_method_byte_identical": true,
+  "read_state_and_query_prefix_sha256": "5a710d5ace4333961cfb4041d9c7c879235e0f690814c481c025a416754441a8",
+  "tests_and_suffix_sha256": "92e33b4efd8938c343ebb3d19cf38370a0a52a228f16df9a439eb0ca011bed99",
+  "render_tree_calls_before_after": {
+    ".child(": [
+      15,
+      15
+    ],
+    ".on_click(": [
+      1,
+      1
+    ],
+    ".when_some(": [
+      1,
+      1
+    ],
+    ".when(": [
+      6,
+      6
+    ],
+    "Label::new(": [
+      8,
+      8
+    ],
+    "Icon::default()": [
+      1,
+      1
+    ]
+  },
+  "meaning": "No new widget tree nodes, callbacks, data reads or query/state logic; only margin/gap and model tag height changed. Runtime geometry/interaction/performance remain separately evidenced."
+}

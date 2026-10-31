@@ -1,0 +1,94 @@
+{
+  "ui_pid": 75779,
+  "core_pid": 75476,
+  "pixels": [
+    2880,
+    1802
+  ],
+  "target_logical_size": [
+    1440,
+    900
+  ],
+  "observed": {
+    "ui_pid": 75779,
+    "overview_visible": true,
+    "target_logical_size": [
+      1440,
+      900
+    ],
+    "screenshot": "performance-window.png",
+    "pixels": [
+      2880,
+      1802
+    ],
+    "screenshot_sha256": "c388013fe865e5640bb332f70e9211f11e6bb9f371329d43259971c6675cd64f",
+    "steps": "CUA resize 1100\u21921440, overview 22",
+    "window_id": 6014
+  },
+  "samples": [
+    {
+      "seconds": 0.0,
+      "core_rss_mib": 9.719,
+      "ui_rss_mib": 67.188
+    },
+    {
+      "seconds": 1.01,
+      "core_rss_mib": 9.656,
+      "ui_rss_mib": 67.188
+    },
+    {
+      "seconds": 2.012,
+      "core_rss_mib": 8.812,
+      "ui_rss_mib": 64.484
+    },
+    {
+      "seconds": 3.017,
+      "core_rss_mib": 8.969,
+      "ui_rss_mib": 64.531
+    },
+    {
+      "seconds": 4.022,
+      "core_rss_mib": 9.688,
+      "ui_rss_mib": 64.828
+    },
+    {
+      "seconds": 5.024,
+      "core_rss_mib": 9.766,
+      "ui_rss_mib": 64.953
+    },
+    {
+      "seconds": 6.025,
+      "core_rss_mib": 9.766,
+      "ui_rss_mib": 65.094
+    },
+    {
+      "seconds": 7.029,
+      "core_rss_mib": 9.766,
+      "ui_rss_mib": 65.125
+    },
+    {
+      "seconds": 8.032,
+      "core_rss_mib": 9.766,
+      "ui_rss_mib": 65.172
+    },
+    {
+      "seconds": 9.036,
+      "core_rss_mib": 9.859,
+      "ui_rss_mib": 65.219
+    }
+  ],
+  "vmmap": [
+    {
+      "phase": "before",
+      "exit_code": 0,
+      "file": "vmmap-before.txt"
+    },
+    {
+      "phase": "after",
+      "exit_code": 0,
+      "file": "vmmap-after.txt"
+    }
+  ],
+  "settle_seconds": 10.695,
+  "scope": "Same CUA resize1100x700 then1440x900/overview22, raw PNG verified,10seconds RSS sample and read-only own-PID vmmap summaries before unchanged benchmark. Not raw memory contents; no privilege or process permission changes."
+}

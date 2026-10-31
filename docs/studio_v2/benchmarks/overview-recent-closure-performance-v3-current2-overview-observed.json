@@ -1,0 +1,16 @@
+{
+  "ui_pid": 79346,
+  "overview_visible": true,
+  "target_logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "performance-window.png",
+  "pixels": [
+    2880,
+    1802
+  ],
+  "screenshot_sha256": "fb52857b583d3d6683c05f52f05dc2ab4a21431d789568d44df7c3f9e4c0e442",
+  "steps": "CUA resize 1100 to 1440; overview 22",
+  "window_id": 6154
+}
