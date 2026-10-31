@@ -1,0 +1,30 @@
+[
+  {
+    "workflow": "ci.yml",
+    "at": "2026-11-01T05:36:30.961865+08:00",
+    "verified_remote_source": "b2d3bb4b66c12847d982f0254bf84c2762c5ceb1",
+    "exit_code": 0,
+    "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41244387171\n",
+    "stderr": "",
+    "actual_run": {
+      "conclusion": "",
+      "headSha": "b2d3bb4b66c12847d982f0254bf84c2762c5ceb1",
+      "status": "queued",
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41244387171"
+    }
+  },
+  {
+    "workflow": "desktop.yml",
+    "at": "2026-11-01T05:36:35.418013+08:00",
+    "verified_remote_source": "b2d3bb4b66c12847d982f0254bf84c2762c5ceb1",
+    "exit_code": 0,
+    "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41244392316\n",
+    "stderr": "",
+    "actual_run": {
+      "conclusion": "",
+      "headSha": "b2d3bb4b66c12847d982f0254bf84c2762c5ceb1",
+      "status": "queued",
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41244392316"
+    }
+  }
+]

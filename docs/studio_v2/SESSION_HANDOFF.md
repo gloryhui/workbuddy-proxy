@@ -2,7 +2,20 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA79）
+## 最新进展（QA80）
+
+- 最新运行时代码 `9570451`，Core `13c4998`（SHA256 `1146f58a`）、UI `46585f86`；代码已推送，证据/时间线为其后docs提交，以Git核对最终HEAD。[QA80总结](benchmarks/rc-round80-summary.json)。
+- 已修复SQLite启动Busy/Locked导致stats永久停用；可关闭的250ms迁移重试，永久/schema-too-new仍拒绝，recovery/run/interval同事务。三项确定性红绿回归、真实启动前7秒锁释放同PID恢复通过。Core580/27命令/91源码hash，GPUI213pass+2既有ignore/6检查/77源码hash、158导入/15故障/19发现/10创建和真实Core ignored补验全部通过。首个probe文件名不匹配是fixture错误，原件保留。
+- 条件列表通知与精确投影缓存已原生验复选/仅选2→1→0、反选/清空、搜索、键盘、主题语言往返及冷重开。长显示名真实截断，但正常单击未观察到完整Tooltip，AX全名不当提示证据。R01全状态/实际slot、真实拖宽、逐引擎IME、真实AT仍缺；**禁止自动开启旁白/系统辅助功能/更改输入源。**
+- 最终4096弹窗900秒UI RSS+1.25MiB、CPU6.707%单核，未证明CPU改善；allocated27.3M稳定、碎片+0.8M。一次Tab后300秒CPU1.693%/RSS−.063MiB，但真实焦点目标未确立，不能断言光标根因。保留4905/6d93/4658全部观察和stripped profiler，不再用猜测优化替代诊断。[长时证据](benchmarks/startup-recovery/long-observe/observation-comparison.json)。
+- 最终同Core1146基线a6e/UIba525→当前4658的连续主P2/C3/C4/P3已完成；原current1额外菜单操作污染，原三轮诊断全部保留，新顺序在P2开始前预定。UI空闲中位差0、合计−.515MiB、峰值−1.865MiB、启动marker+209.764ms/p95−.0035ms；1562ms慢样本保留，n2描述值不是首帧/FPS/等价结论，R03.2/.3仍pending。[全部7轮](benchmarks/startup-recovery/native-final957/summary.json)。
+- 当前957 Core41246370582/Desktop41246381635四job实际success，4份ZIP size/SHA及原JSON/两Windows GDI原PNG已核对。13c/b2各四job成功，7bec Desktop也已全绿但Core156/2首次失败不抹除。一次SSL push失败后误派发旧13c两个自有重复run，核实head后取消，正常push/remote校验才派发正确源码；未TLS绕过/重跑到绿。[最终CI/产物](benchmarks/startup-recovery/ci-957/artifact-validation.json)。
+- **纠正QA79原生失败解释：** fixture的B05_TARGET_ID为不合法denied.final前缀，guard要求b05target；CLI预检错误79/正确0，现原生轮正常。历史UI退出码未知，不能断言当时退出79；撤回CUA服务故障归因，原始故障材料保留。
+- 原生longfixture1014请求/成本逐字段一致，原配置字段全部保留；四次允许language写只补384个既有typed defaults（64protocol+64settings+256capsnull），**配置字节/原始结构并非不变**。provider/model写0；基准harness的合成save64 setup另计。所有本轮UI/Core/mock/driver已退出，UI由CUA拥有，退出码不可得。
+- 精确专用根`studio-v2-startup-recovery.fe_ffldu`已按完整预检/即时复核删除1970文件、1,194,828,019B约1.11GiB，本轮临时保留0。**不要重启已删除bundle。** 必要基线50,905,007B约48.55MiB与共享缓存/非本轮preview保留；系统盘约33.91GiB。[清理](benchmarks/startup-recovery/cleanup.json)。
+- **剩余界面0/40，15项发布任务pending，Goal active。** R03.1/R03.4/R04.1已签收。下一步继续R01真实缺口及R03启动慢样本/焦点CPU/长时结论，再推进平台、真实旧版升级、签名公证和分发；没有公开发布授权，不重做40帧或21主题。
+
+## 上一轮进展（QA79）
 
 - 运行时代码已推送：`771a7a7`（读取线程恢复保留已接受的scan_id与状态）、`7bec6cc`（过期/繁忙批次重试成功不再误标失败，永久存储错误仍失败）。当前Core SHA256 `7fa463c3788be3c91b3ec2b929544a23ad24c648fa342cf57d68085a71ad8b34`，UI仍`490530dd`；源码87文件hash/24命令全部本地通过，Core577pass，真实158导入/15故障/19发现/10创建及两既有GPUIignore补验通过。[本轮总结](benchmarks/rc-round79-summary.json)。
 - 首次失败均保留，没有放宽期限/ignore/重跑到绿。771的Core41235308376与Desktop内Windows/arm64success，**失败job124637734315实际是macos-15-intel**（依据job.name，不能按ID顺序猜）；同scan_id failed/已提交全字节/无pending、writerfailure1。真实writerACK注入已红绿复现这一失败类，但旧日志没拒绝code，不能断言历史根因唯一确定。

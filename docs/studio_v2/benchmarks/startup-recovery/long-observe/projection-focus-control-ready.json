@@ -1,0 +1,20 @@
+{
+  "ui_pid": 66674,
+  "core_pid": 44667,
+  "prior_900s_end": {
+    "image": "projection-idle-end.jpg",
+    "ax": "projection-idle-end.ax.txt",
+    "sha256": "b8b4c4b96affa6057cb467b901d5c7b3dc872808b5797ba0b365eb36564c21eb",
+    "mtime": "2026-11-01T06:21:54.437811+08:00",
+    "state": "4096 matches, empty search, zero selected"
+  },
+  "action": "one Tab key; no candidate checkbox toggled",
+  "after_tab": {
+    "image": "projection-focus-control-start.jpg",
+    "ax": "projection-focus-control-start.ax.txt",
+    "sha256": "1a3da2a1d98243c850e7746decfdadfd13b09b1be679a870c8880d9d16d27a1a",
+    "state": "4096 matches, empty search, zero selected",
+    "focus": "AX reports standard window; screenshot shows subtle button shading but no independently unambiguous focus ring, so focused element is unconfirmed"
+  },
+  "idle_start_conservative": "2026-11-01T06:22:25.196295+08:00"
+}

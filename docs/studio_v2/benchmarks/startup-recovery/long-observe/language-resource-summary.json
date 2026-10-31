@@ -1,0 +1,33 @@
+{
+  "completed": true,
+  "elapsed_seconds": 300.01,
+  "samples": 61,
+  "processes": {
+    "ui": {
+      "first_minute_median_mib": 122.0,
+      "last_minute_median_mib": 121.9375,
+      "median_delta_mib": -0.0625,
+      "rss_mib_min": 121.9375,
+      "rss_mib_max": 122.0,
+      "linear_slope_mib_per_minute": -0.01025256074726375,
+      "cpu_seconds_delta": 5.5,
+      "average_cpu_percent_one_core": 1.8332722242591915
+    },
+    "core": {
+      "first_minute_median_mib": 14.28125,
+      "last_minute_median_mib": 14.453125,
+      "median_delta_mib": 0.171875,
+      "rss_mib_min": 14.28125,
+      "rss_mib_max": 14.453125,
+      "linear_slope_mib_per_minute": 0.038812678194448016,
+      "cpu_seconds_delta": 0.4700000000000002,
+      "average_cpu_percent_one_core": 0.15666144461851278
+    }
+  },
+  "notes": [
+    "Cumulative CPU/time (100%=onecore), noFPS orinputlatency claims.",
+    "Livevmmapcollection isoutside UIinput; RSSincludes sharedpages and isnotfootprint.",
+    "All samples retained; no directmatchedA/B withQA78 separateCore/history.",
+    "No UIinteractions orscreenshots during300s, endstate confirmation aftertimer requestedseparately."
+  ]
+}

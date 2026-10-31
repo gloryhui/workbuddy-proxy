@@ -1,0 +1,18 @@
+[
+  {
+    "workflow": "ci.yml",
+    "at": "2026-11-01T04:42:32.659073+08:00",
+    "head_sha": "13c49986654576b6c01af00ab3c4aa6a47817a69",
+    "exit_code": 0,
+    "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41240159276\n",
+    "stderr": ""
+  },
+  {
+    "workflow": "desktop.yml",
+    "at": "2026-11-01T04:42:35.309618+08:00",
+    "head_sha": "13c49986654576b6c01af00ab3c4aa6a47817a69",
+    "exit_code": 0,
+    "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41240162604\n",
+    "stderr": ""
+  }
+]

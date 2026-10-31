@@ -1,0 +1,70 @@
+{
+  "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "verified_artifacts": [
+    {
+      "id": 13060545088,
+      "name": "workbuddy-proxy-windows-x64",
+      "bytes": 60734196,
+      "sha256": "8aba173b7b087c4add1832aa96220129b47f7c855d97afb7b506ac59f56c226f",
+      "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+      "run_id": 41246381635
+    },
+    {
+      "id": 13058599355,
+      "name": "workbuddy-import-core-reports",
+      "bytes": 4760,
+      "sha256": "91d226fae308b6fd8bcb7e9c9e5270bbc5964038dcfdcd35baa0513dddff5085",
+      "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+      "run_id": 41246370582
+    },
+    {
+      "id": 13060022608,
+      "name": "workbuddy-proxy-macos-x64",
+      "bytes": 39647648,
+      "sha256": "117a641ff579509349c5897339cfb59fbf1ad8c943eed32b7ec773ccdde8a3b2",
+      "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+      "run_id": 41246381635
+    },
+    {
+      "id": 13060775696,
+      "name": "workbuddy-proxy-macos-arm64",
+      "bytes": 38304358,
+      "sha256": "e912e02066c4f751e9367923faf0333b0631966c0c13caf01b9308a45d02ca79",
+      "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+      "run_id": 41246381635
+    }
+  ],
+  "reports": [
+    {
+      "path": "workbuddy-proxy-windows-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "passed": 158,
+      "failed": 0
+    },
+    {
+      "path": "workbuddy-import-core-reports/workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "passed": 158,
+      "failed": 0
+    },
+    {
+      "path": "workbuddy-import-core-reports/os-faults/report.json",
+      "result": "PASS",
+      "passed": 15,
+      "failed": 0
+    },
+    {
+      "path": "workbuddy-proxy-macos-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "passed": 158,
+      "failed": 0
+    },
+    {
+      "path": "workbuddy-proxy-macos-arm64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "passed": 158,
+      "failed": 0
+    }
+  ],
+  "scope": "Raw ZIP SHA/size and selected originalJSON/PNG bytehashes verified. No public release/package installation on user machine. Runner lifecycle/benchmark reports retained. Historical13c/b2 separate."
+}

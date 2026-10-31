@@ -1,0 +1,33 @@
+{
+  "complete": true,
+  "all_artifacts": [
+    {
+      "artifact": 13060545088,
+      "name": "workbuddy-proxy-windows-x64",
+      "members": 8,
+      "bytes": 60734196,
+      "digest_verified": true
+    },
+    {
+      "artifact": 13058599355,
+      "name": "workbuddy-import-core-reports",
+      "members": 2,
+      "bytes": 4760,
+      "digest_verified": true
+    },
+    {
+      "artifact": 13060022608,
+      "name": "workbuddy-proxy-macos-x64",
+      "members": 3,
+      "bytes": 39647648,
+      "digest_verified": true
+    },
+    {
+      "artifact": 13060775696,
+      "name": "workbuddy-proxy-macos-arm64",
+      "members": 3,
+      "bytes": 38304358,
+      "digest_verified": true
+    }
+  ]
+}

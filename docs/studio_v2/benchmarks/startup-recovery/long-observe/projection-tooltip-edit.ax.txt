@@ -1,0 +1,172 @@
+Window: "", App: WorkBuddy Proxy QA80 Picker Projection.
+0 standard window Secondary Actions: Raise
+	1 container (showing 3-103 of 103 items)
+		2 button 折叠或展开供应商列表
+		3 text field (settable) 搜索供应商
+		4 toggle button (settable, boolean) sub2api, Value: on
+		5 toggle button (settable, boolean) OpenCode Go, Value: off
+		6 toggle button (settable, boolean) 演示供应商 03, Value: off
+		7 toggle button (settable, boolean) 演示供应商 04, Value: off
+		8 toggle button (settable, boolean) 演示供应商 05, Value: off
+		9 toggle button (settable, boolean) 演示供应商 06, Value: off
+		10 toggle button (settable, boolean) 演示供应商 07, Value: off
+		11 toggle button (settable, boolean) 演示供应商 08, Value: off
+		12 toggle button (settable, boolean) 演示供应商 09, Value: off
+		13 toggle button (settable, boolean) 演示供应商 10, Value: off
+		14 toggle button (settable, boolean) 演示供应商 11, Value: off
+		15 toggle button (settable, boolean) 演示供应商 12, Value: off
+		16 toggle button (settable, boolean) 演示供应商 13, Value: off
+		17 toggle button (settable, boolean) 演示供应商 14, Value: off
+		18 toggle button (settable, boolean) 演示供应商 15, Value: off
+		19 toggle button (settable, boolean) 演示供应商 16, Value: off
+		20 toggle button (settable, boolean) 演示供应商 17, Value: off
+		21 toggle button (settable, boolean) 演示供应商 18, Value: off
+		22 toggle button (settable, boolean) 演示供应商 19, Value: off
+		23 toggle button (settable, boolean) 演示供应商 20, Value: off
+		24 toggle button (settable, boolean) 演示供应商 21, Value: off
+		25 toggle button (settable, boolean) 演示供应商 22, Value: off
+		26 toggle button (settable, boolean) 演示供应商 23, Value: off
+		27 toggle button (settable, boolean) 演示供应商 24, Value: off
+		28 toggle button (settable, boolean) 演示供应商 25, Value: off
+		29 toggle button (settable, boolean) 演示供应商 26, Value: off
+		30 toggle button (settable, boolean) 演示供应商 27, Value: off
+		31 toggle button (settable, boolean) 演示供应商 28, Value: off
+		32 toggle button (settable, boolean) 演示供应商 29, Value: off
+		33 toggle button (settable, boolean) 演示供应商 30, Value: off
+		34 toggle button (settable, boolean) 演示供应商 31, Value: off
+		35 toggle button (settable, boolean) 演示供应商 32, Value: off
+		36 toggle button (settable, boolean) 演示供应商 33, Value: off
+		37 toggle button (settable, boolean) 演示供应商 34, Value: off
+		38 toggle button (settable, boolean) 演示供应商 35, Value: off
+		39 toggle button (settable, boolean) 演示供应商 36, Value: off
+		40 toggle button (settable, boolean) 演示供应商 37, Value: off
+		41 toggle button (settable, boolean) 演示供应商 38, Value: off
+		42 toggle button (settable, boolean) 演示供应商 39, Value: off
+		43 toggle button (settable, boolean) 演示供应商 40, Value: off
+		44 toggle button (settable, boolean) 演示供应商 41, Value: off
+		45 toggle button (settable, boolean) 演示供应商 42, Value: off
+		46 toggle button (settable, boolean) 演示供应商 43, Value: off
+		47 toggle button (settable, boolean) 演示供应商 44, Value: off
+		48 toggle button (settable, boolean) 演示供应商 45, Value: off
+		49 toggle button (settable, boolean) 演示供应商 46, Value: off
+		50 toggle button (settable, boolean) 演示供应商 47, Value: off
+		51 toggle button (settable, boolean) 演示供应商 48, Value: off
+		52 toggle button (settable, boolean) 演示供应商 49, Value: off
+		53 toggle button (settable, boolean) 演示供应商 50, Value: off
+		54 toggle button (settable, boolean) 演示供应商 51, Value: off
+		55 toggle button (settable, boolean) 演示供应商 52, Value: off
+		56 toggle button (settable, boolean) 演示供应商 53, Value: off
+		57 toggle button (settable, boolean) 演示供应商 54, Value: off
+		58 toggle button (settable, boolean) 演示供应商 55, Value: off
+		59 toggle button (settable, boolean) 演示供应商 56, Value: off
+		60 toggle button (settable, boolean) 演示供应商 57, Value: off
+		61 toggle button (settable, boolean) 演示供应商 58, Value: off
+		62 toggle button (settable, boolean) 演示供应商 59, Value: off
+		63 toggle button (settable, boolean) 演示供应商 60, Value: off
+		64 toggle button (settable, boolean) 演示供应商 61, Value: off
+		65 toggle button (settable, boolean) 演示供应商 62, Value: off
+		66 toggle button (settable, boolean) 演示供应商 63, Value: off
+		67 toggle button (settable, boolean) 演示供应商 64, Value: off
+		68 button 新增供应商
+		69 button 复制供应商
+		70 button 删除供应商
+		71 button 复制代理地址
+		72 button 编辑供应商资料
+		73 container 未测试 · 此配置尚无本窗口的有效测试记录，请点击测试连接。
+		74 button 供应商预设: 自定义地址
+		75 text field (settable) 供应商名称, Value: sub2api, Placeholder: 填写供应商名称
+		76 secure text field API Key, Placeholder: 填写 API Key
+			77 button 显示 API Key
+		78 button 上游协议: OpenAI Chat Completions
+		79 text field (settable) API 地址, Value: http://127.0.0.1:62329/v1, Placeholder: 填写供应商提供的 API 基础地址
+		80 button 协议选项
+		81 button 获取模型
+		82 button 添加模型
+		83 table 模型目录 · Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑, ID: provider-model-table
+			84 row
+				85 cell 显示名称
+				86 cell 上游模型 ID
+				87 cell 操作
+			88 row deepseek-v4.1-flash · 未选择, ID: model-0
+				89 cell deepseek-v4.1-flash
+				90 cell deepseek-v4.1-flash
+				91 cell
+					92 button 编辑模型: deepseek-v4.1-flash
+			93 row gpt-6 · 未选择, ID: model-1
+				94 cell gpt-6
+				95 cell gpt-6
+				96 cell
+					97 button 编辑模型: gpt-6
+			98 row gpt-6.1 · 未选择, ID: model-2
+				99 cell gpt-6.1
+				100 cell gpt-6.1
+				101 cell
+					102 button 编辑模型: gpt-6.1
+			103 row claude-opus-4.7 · 未选择, ID: model-3
+				104 cell claude-opus-4.7
+				105 cell claude-opus-4.7
+				106 cell
+					107 button 编辑模型: claude-opus-4.7
+		108 button 思考强度: 跟随 WorkBuddy
+		109 button 测试连接
+		110 button 保存配置
+		111 button 复制代理地址
+		112 button 端口设置
+		113 button 同步 WorkBuddy
+		114 button 取消同步
+		115 button 清空日志
+		116 button 复制日志
+		117 text entry area (settable) 活动日志, Value: 04:52:53：HTTP 200 · 927 requests
+04:52:53：HTTP 200 · 928 requests
+04:52:53：HTTP 200 · 929 requests
+04:52:53：HTTP 200 · 930 requests
+04:52:53：HTTP 200 · 931 requests
+04:52:53：HTTP 200 · 932 requests
+04:52:53：HTTP 200 · 933 requests
+04:52:53：HTTP 200 · 934 requests
+04:52:53：HTTP 200 · 935 requests
+04:52:53：HTTP 200 · 936 requests
+04:52:53：HTTP 200 · 937 requests
+04:52:53：HTTP 200 · 938 requests
+04:52:53：HTTP 200 · 939 requests
+04:52:53：HTTP 200 · 940 requests
+04:52:53：HTTP 200 · 941 requests
+04:52:53：HTTP 200
+		118 button 皮肤设置
+		119 toggle button (settable, boolean) 开机启动, Value: off
+		120 button 检查更新
+		121 button 界面语言
+		122 button 恢复默认窗口尺寸
+		123 button GitHub 项目主页
+		124 button (settable, unknown) 提交反馈
+		125 dialog (settable, unknown) 编辑模型
+			126 text field (settable) 显示名称, Value: QA80 完整提示 中文🙂 Long display value for clipped model cell 0123456789 END, Placeholder: 默认使用模型 ID
+			127 text field (settable) 上游模型 ID, Value: deepseek-v4.1-flash, Placeholder: 填写模型 ID
+			128 checkbox (settable, boolean) 自动识别模型能力（取消后自定义）, Value: on
+			129 button (settable, unknown) 能力说明
+			130 checkbox (settable, boolean) 工具调用, Value: on
+			131 checkbox (settable, boolean) 图片输入, Value: on
+			132 checkbox (settable, boolean) 思考模式, Value: on
+			133 checkbox (settable, boolean) 仅思考模式, Value: off
+			134 checkbox (settable, boolean) 允许关闭思考, Value: on
+			135 checkbox (settable, boolean) 自定义协议, Value: off
+			136 pop up button (settable) 默认思考强度, Value: 高
+			137 toggle button (settable, boolean) 低, Value: on
+			138 toggle button (settable, boolean) 中, Value: off
+			139 toggle button (settable, boolean) 高, Value: on
+			140 toggle button (settable, boolean) 超高, Value: off
+			141 toggle button (settable, boolean) 极致, Value: on
+			142 text field (settable) 最大输入 tokens, Value: 1000000, Placeholder: 留空使用默认值
+			143 text field (settable) 最大输出 tokens, Placeholder: 留空使用默认值
+			144 text field (settable) 默认上下文长度, Value: 300000, Placeholder: 留空使用默认值
+			145 text field (settable) 可选上下文长度（逗号分隔）, Value: 128000, 300000, 1000000, Placeholder: 例如 128000, 300000, 1000000
+			146 button (settable, unknown) 取消
+			147 button (settable, unknown) 确认修改
+		148 button (settable, unknown) 关闭
+	149 close button
+	150 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	151 minimize button
+152 menu bar
+	153 WorkBuddy Proxy QA80 Picker Projection
+
+The focused UI element is 0 standard window Secondary Actions: Raise

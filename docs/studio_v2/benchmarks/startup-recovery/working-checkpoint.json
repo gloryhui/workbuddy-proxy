@@ -1,0 +1,16 @@
+{
+  "state": "recorded_QA80_no_live_owned_processes",
+  "runtime_commit": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "core_commit": "13c49986654576b6c01af00ab3c4aa6a47817a69",
+  "source_summary": "../rc-round80-summary.json",
+  "all_owned_ui_core_mock_drivers_exited": true,
+  "deleted_temporary_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu",
+  "session_temporary_bytes_remaining": 0,
+  "retained_baseline_kit_bytes": 50905007,
+  "current_UI_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+  "current_Core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+  "remaining_frames": 0,
+  "pending_release_tasks": 15,
+  "Goal": "active",
+  "next": "R01 fullstate/slot, realdrag, supportedIME/manualAT gaps; R03 markeroutlier/focusCPU+longmemory verdict; platform/oldversionupgrade/signing/distribution stillpending. Never automaticallyenableVoiceOver/AT/inputsource; do notrelaunch deletedbundles, no publicrelease."
+}

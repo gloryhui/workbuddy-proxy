@@ -1,0 +1,19 @@
+{
+  "session": "01a192ed-9fb7-77c3-b543-da7332068939",
+  "uid": 501,
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu",
+  "worktree": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "purpose": "QA80 SQLite initialization lock recovery red-green tests/full contracts/isolated Core verification; no GUI",
+  "at": "2026-11-01T04:29:44.069118+08:00",
+  "original_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "prior_candidate_core_sha256": "7fa463c3788be3c91b3ec2b929544a23ad24c648fa342cf57d68085a71ad8b34",
+  "activities": [
+    "startuprecovery redgreen/fullcontracts/realCoreprobe",
+    "sameCore nativePCCP4905",
+    "long4096observations old4905/notify6d93/projection4658 andnativefunctional",
+    "CIartifact downloads/privateURLs",
+    "projectionmicrobench andcurrentUIchecks",
+    "final4658sameCorePCCP planned",
+    "Final7native957rounds;current1historycontamination retained andpredeterminedprimaryP2/C3/C4/P3 complete"
+  ]
+}

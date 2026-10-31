@@ -1,0 +1,46 @@
+{
+  "raw_copy": true,
+  "files": [
+    {
+      "path": "ci-runs.json",
+      "bytes": 542,
+      "sha256": "aeb83dbdac5d4a84d9e411d19476d8ff00624c9cabacca5902c61959eb6747c9"
+    },
+    {
+      "path": "ci-dispatch.json",
+      "bytes": 540,
+      "sha256": "b2b26e2a21ff77f040705c50e95201cfcde1a2579f34b068d4efb81124db4beb"
+    },
+    {
+      "path": "picker-ci-dispatch.json",
+      "bytes": 536,
+      "sha256": "c20f5740dc4d2b69f1e51cb376bf702597192712a1c1e6f8074f20508de44e8d"
+    },
+    {
+      "path": "picker-ci-correct-dispatch.json",
+      "bytes": 1012,
+      "sha256": "22e63a65f01cfb80983a42ddc1a043b42b670b8d30adbe03d4a558f6cce224be"
+    },
+    {
+      "path": "picker-ci-runs.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "picker-misdispatch-cancel.json",
+      "bytes": 745,
+      "sha256": "37209c2ea215730468bbeacc0fe572ba80b411bce19e53f44910df2420352db0"
+    },
+    {
+      "path": "picker-misdispatch-investigation.json",
+      "bytes": 601,
+      "sha256": "84cc98320211ecbe59d660d41e8b599b5ebc8b8a430638cc5b4146fee880f122"
+    },
+    {
+      "path": "projection-ci-dispatch.json",
+      "bytes": 1012,
+      "sha256": "1048537d723f7d7ba8ae8dc711944eb4a25106554fcd2a6b81f69a78806f0cc8"
+    }
+  ],
+  "error_scope": "OwnSSLpushfailed then dispatch ran on old13c. Head mismatch detected; own41244232391/41244235522 verifiedold13c and cancelled; correctnormalpush/remotebinding then b2/957dispatch. No TLS bypass/force/rerun-to-green. Originalsuccessful13cruns retained."
+}

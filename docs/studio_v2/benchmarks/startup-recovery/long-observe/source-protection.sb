@@ -1,0 +1,8 @@
+(version 1)
+(allow default)
+(deny file-read-data file-write*
+    (subpath "/Users/glory/.workbuddy")
+    (subpath "/Users/glory/Library/Application Support/WorkBuddyProxy")
+    (subpath "/Users/glory/.config/workbuddy-proxy")
+    (subpath "/Applications/WorkBuddy Proxy.app")
+    (subpath "/Users/glory/Library/LaunchAgents"))

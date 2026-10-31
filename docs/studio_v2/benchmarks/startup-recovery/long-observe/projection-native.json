@@ -1,0 +1,37 @@
+{
+  "ui_pid": 65989,
+  "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+  "core_pid": 44667,
+  "guard_installed_same_pid": true,
+  "checks": {
+    "selection": "0000 and 0001 checked: AX and visual, count2",
+    "selected_filter": "two rows→uncheck 0000 gives one row→uncheck 0001 gives empty filtered list, then all4096",
+    "invert_and_clear": "from zero invert 4096 checked, visible rows on; clear returns zero and visible rows off",
+    "keyboard": "click 0000 then Space off; Down Space 0001 on; Space off",
+    "search": "4095 gives one unchecked; no-such-model-qa80 gives 0; clear gives 4096",
+    "scroll": "tail 4095 and first 0000 observed",
+    "cancel_reopen": "Cancel closed, later reopen shows 4096 and 0",
+    "preferences": "blue-white→Studio Indigo, English→简体中文; observed refresh and restored"
+  },
+  "provider_model_add_save_delete": false,
+  "evidence_prefixes": [
+    "projection-zero",
+    "projection-selected-two",
+    "projection-only-two",
+    "projection-only-one",
+    "projection-only-empty",
+    "projection-invert",
+    "projection-clear",
+    "projection-key",
+    "projection-search",
+    "projection-no-match",
+    "projection-tail",
+    "projection-theme-blue",
+    "projection-theme-studio",
+    "projection-english",
+    "projection-chinese",
+    "projection-reopened"
+  ],
+  "recorded_at": "2026-11-01T05:58:02.065841+08:00",
+  "images": "original CUA JPEGs; each prefix paired with .jpg and .ax.txt"
+}

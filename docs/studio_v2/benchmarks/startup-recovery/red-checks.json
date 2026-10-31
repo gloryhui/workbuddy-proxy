@@ -1,0 +1,23 @@
+[
+  {
+    "name": "startup-lock-before",
+    "test": "stats::tests::startup_database_lock_recovers_without_restarting_or_duplicate_intervals",
+    "exit_code": 101,
+    "expected_red": true,
+    "seconds": 12.516
+  },
+  {
+    "name": "startup-shutdown-before",
+    "test": "stats::tests::shutdown_interrupts_startup_lock_retries_without_creating_a_run",
+    "exit_code": 101,
+    "expected_red": true,
+    "seconds": 4.583
+  },
+  {
+    "name": "startup-atomic-before",
+    "test": "stats::store::tests::failed_startup_rolls_back_recovery_and_run_bookkeeping_together",
+    "exit_code": 101,
+    "expected_red": true,
+    "seconds": 0.124
+  }
+]

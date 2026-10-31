@@ -1,0 +1,25 @@
+{
+  "old_ui_pid": 44931,
+  "ui_pid_absent": true,
+  "core_pid": 44667,
+  "core_pid_present": true,
+  "language_idle_end": {
+    "image": "language-idle-end.jpg",
+    "ax": "language-idle-end.ax.txt",
+    "image_sha256": "db387f4e047fa02207c9c3c608b3428e5a9dfd29c70807f3da09746217c76ca1",
+    "captured_at": "2026-11-01T05:27:49.608631+08:00",
+    "options": [
+      "跟随系统",
+      "简体中文 (selected)",
+      "English"
+    ]
+  },
+  "actions": [
+    "Escape closed language menu",
+    "native window close"
+  ],
+  "language_selection_changed": false,
+  "core_stopped": false,
+  "post_close_app_lookup": false,
+  "checked_at": "2026-11-01T05:28:01.797110+08:00"
+}

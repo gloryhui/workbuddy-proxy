@@ -1,0 +1,14 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/main.rs (/Volumes/1TB/Downloads/git/workbuddy-proxy/target/debug/deps/workbuddy_proxy-4822dc3a02dc7397)
+
+running 1 test
+test stats::workbuddy_import::runtime::tests::credit_tests::a_full_scan_retries_a_stale_writer_snapshot_but_reports_a_storage_failure ... workbuddy import batch rejected: stats_workbuddy_stale_batch
+injected stats_workbuddy_stale_batch: scan="57d5f82ba0ee1dd6dcb088af692756be04b1837f42eabcc3", state="completed", writer_failures=1
+workbuddy import batch rejected: stats_workbuddy_scan_busy
+injected stats_workbuddy_scan_busy: scan="66b6d191dd815aaec155364e6b8ba3fea9c748c906daf236", state="completed", writer_failures=1
+workbuddy import batch rejected: stats_unavailable
+injected stats_unavailable: scan="245595d62d9d80a4af87db5900d4eb9d3750aae426e00b61", state="failed", writer_failures=1
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 579 filtered out; finished in 0.74s
+

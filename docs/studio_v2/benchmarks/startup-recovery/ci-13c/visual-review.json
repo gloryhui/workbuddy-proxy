@@ -1,0 +1,21 @@
+{
+  "source_commit": "13c49986654576b6c01af00ab3c4aa6a47817a69",
+  "images": [
+    {
+      "path": "workbuddy-proxy-windows-x64/bench-results/windows-native/windows-ci-1440x900.png",
+      "pixels": [
+        1442,
+        901
+      ],
+      "review": "Raw GDI screenshot viewed by parent; synthetic provider64 models/0requests/defaultEnglish. Caption and toolbar visibly separated, no credentials/userdata visible; no actual hit/IME/scale acceptance."
+    },
+    {
+      "path": "workbuddy-proxy-windows-x64/bench-results/windows-native/windows-ci-1100x700.png",
+      "pixels": [
+        1102,
+        701
+      ],
+      "review": "Raw GDI screenshot viewed by parent; synthetic provider64 models/0requests/defaultEnglish. Caption and toolbar visibly separated, no credentials/userdata visible; no actual hit/IME/scale acceptance."
+    }
+  ]
+}

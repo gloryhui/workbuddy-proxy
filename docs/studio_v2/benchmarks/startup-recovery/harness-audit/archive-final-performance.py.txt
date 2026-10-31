@@ -1,0 +1,29 @@
+from pathlib import Path
+import json,hashlib,statistics,subprocess
+root=Path(__file__).resolve().parent;r=root/'performance-projection-final';out=Path.cwd()/'docs/studio_v2/benchmarks/startup-recovery/native-final957';out.mkdir(exist_ok=True)
+primary=['previous2','current3','current4','previous3'];alllabels=['previous1','current1','current2',*primary];assert len(set(alllabels))==7
+for n in ['driver-terminal.json','extension-driver-terminal.json']:assert json.loads((r/n).read_text())['active_child'] is None
+reports={x:json.loads((r/('performance-'+x+'.json')).read_text()) for x in alllabels}
+for x,d in reports.items():
+ assert d['core_sha256']=='1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e' and d['terminal']['ui_pid_gone'] and all(c['waited'] and c['exit_code']==(0 if c['kind']=='core' else -15) for c in d['terminal']['children'])
+ assert d['ui_sha256']==('ba525f80d2a135be3ae1b7628f5271b1fa467f7594d4dcb66e50f9bdc6c8c74c' if x.startswith('previous') else '46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4')
+ assert subprocess.run(['ps','-p',str(d['terminal']['ui_pid']),'-o','pid='],capture_output=True).returncode==1
+rows=[];nonce=json.loads((r/'restart-env-private.json').read_text())['B05_GUARD_NONCE'].encode()
+def raw(p,name):
+ blob=p.read_bytes();assert nonce not in blob;q=out/name;q.parent.mkdir(exist_ok=True,parents=True);assert not q.exists() or q.read_bytes()==blob;q.write_bytes(blob);rows.append({'path':name,'bytes':len(blob),'sha256':hashlib.sha256(blob).hexdigest(),'raw_copy':True})
+for n in ['freeze.json','measurement-plan.json','driver-results.json','driver-terminal.json','extension-driver-results.json','extension-driver-terminal.json','guard-preflight-result.json','performance-window-pixels.json','native-cua-summary.json']:raw(r/n,n)
+for label in alllabels:
+ raw(r/('performance-'+label+'.json'),'performance-'+label+'.json');raw(r/('benchmark-'+label+'.log'),'benchmark-'+label+'.log.txt')
+ f=r/('matched-'+label)
+ for n in ['matched-condition.json','seed-proof.json','preui-models.json','models-ready.json','postload-live-validity.json','language-observed.json','language-before.jpg','language-before.ax.txt','vmmap-before.txt','vmmap-postload-live.txt','vmmap-after.txt','resource-samples.json','terminal.json','gpui-stop.json','failure.txt']:
+  if (f/n).exists():raw(f/n,'matched-'+label+'/'+n)
+metrics={}
+getters={k:(lambda d,k=k:d[k]) for k in ['core_idle_rss_mib','ui_idle_rss_mib','idle_rss_mib','sampled_peak_rss_mib','native_ui_process_to_record_ms','core_ready_ms','large_seconds']};getters.update(proxy_p50=lambda d:d['proxied_loopback_ms']['p50'],proxy_p95=lambda d:d['proxied_loopback_ms']['p95'],direct_p50=lambda d:d['direct_loopback_ms']['p50'],direct_p95=lambda d:d['direct_loopback_ms']['p95'])
+for k,fn in getters.items():
+ prev=[fn(reports[x]) for x in ['previous2','previous3']];cur=[fn(reports[x]) for x in ['current3','current4']];metrics[k]={'previous_samples':prev,'current_samples':cur,'delta':statistics.median(cur)-statistics.median(prev)}
+summary={'scope':'Final957 UI4658 versusa6e UIba525, bothcommonCore1146, finalcontiguous primaryP/C/C/P,n2each. Not completeoldCore25f applicationbaseline; priorstage separate. No equivalence/optimization/FPS/firstpaint claims.','primary_sequence':primary,'diagnostic_sequence':['previous1','current1','current2'],'diagnostic_reason':'current1 extra language-menu close/reopen+duplicate screenshot EEXIST, raw originalnot overwritten. PredeterminedfinalP2/C3/C4/P3 beforeP2started, retainall7/rawnumbers. No selectionbyresult or rerunfailedproducttest.','metrics':metrics,'all_samples':[{k:d[k] for k in ['label','ui_sha256','core_sha256','core_ready_ms','native_ui_process_to_record_ms','core_idle_rss_mib','ui_idle_rss_mib','idle_rss_mib','sampled_peak_rss_mib','proxied_loopback_ms','direct_loopback_ms','separate_peak_rss_mib','terminal']} for d in reports.values()],'binary_sizes':json.loads((r/'freeze.json').read_text())['binaries'],'unchanged_workload':'1000realHTTPpreseed/persistencebarrier20+64models; originalbenchmark1000small+80x1MiB@4; oneprescribednative1100/languageEsc/themeEsc/restore1440/notificationClose/languageOpen,10sdwell. Allraw1440x900JPEG+AX retained.','limits':['Process→record marker excludes toolprelaunch wait but isnotfirstpaint/interactive readiness; orchestrationinclusive ui_record_ready_ms notusedforstartupcomparison.','Allslow samples retained. OS cache/memorypressure/foregroundeffect not independentlycontrolled; n2 descriptivemedian, no precisioncausal subtraction ofheadlesscontrol.','RSSandfootprintdistinct; validlivepostloadvmmap only, not vmmap-after processdisappearance.','Proxyrequestlatency isnotUIFPS/inputlatency.','HistoricalB01/B03/B04 costs and priorstages remain; thisUI-only finalsameCore protocol doesnoterase them.']}
+(out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');(out/'manifest.json').write_text(json.dumps({'raw_files':rows,'private_excluded':'Configs/DB/managementkeys/privateenv/nonce/binarycopies not archived'},indent=2)+'\n')
+audit=out/'harness-audit';audit.mkdir(exist_ok=True);sources=[]
+for n in ['benchmark-driver.py','benchmark-matched.py','benchmark-extension-driver.py','benchmark-matched-extension.py','restart-identity-guard.m','process-start.c']:
+ p=r/n;q=audit/(n+'.txt');q.write_text(p.read_text().replace(str(root),'SESSION_ROOT'));sources.append({'path':q.name,'raw_source_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'archive_sha256':hashlib.sha256(q.read_bytes()).hexdigest(),'path_substitution_only':True})
+(audit/'manifest.json').write_text(json.dumps({'executable':False,'scope':'Historicalaudit SESSION_ROOT placeholder; reverify currentpaths/source/ownership/platform beforeanynewrun.','sources':sources},indent=2)+'\n');print(json.dumps({'raw_files':len(rows),'primary':primary,'metrics':metrics}),flush=True)

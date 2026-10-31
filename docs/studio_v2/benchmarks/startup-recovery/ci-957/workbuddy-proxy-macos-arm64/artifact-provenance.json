@@ -1,0 +1,26 @@
+{
+  "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "run_id": 41246381635,
+  "id": 13060775696,
+  "name": "workbuddy-proxy-macos-arm64",
+  "bytes": 38304358,
+  "sha256": "e912e02066c4f751e9367923faf0333b0631966c0c13caf01b9308a45d02ca79",
+  "verified_at": "2026-11-01T06:28:34.419497+08:00",
+  "members": [
+    {
+      "path": "dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 24192,
+      "sha256": "f276c359bb4136b95b774d30199b54ad06898a0029cc71a671ef227a43dfb3d1"
+    },
+    {
+      "path": "bench-results/core-macos-arm64.json",
+      "bytes": 1220,
+      "sha256": "7e1a9a377d4ccd7abcd97706d3dd170b8b3be414a1d197d027577e9c9ec2e5a1"
+    },
+    {
+      "path": "bench-results/gpui-macos-arm64.json",
+      "bytes": 1160,
+      "sha256": "ec06b41efa9c975b23cc39a0477ad729ca5506fd9618e820689563c4547465d6"
+    }
+  ]
+}

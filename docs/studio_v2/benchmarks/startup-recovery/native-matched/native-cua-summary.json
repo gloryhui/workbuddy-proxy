@@ -1,0 +1,87 @@
+{
+  "round_order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "rounds": [
+    {
+      "label": "previous1",
+      "ui_pid": 41584,
+      "driver_state": "passed",
+      "driver_exit_code": 0,
+      "ui_pid_gone": true,
+      "ui_exit_code": "unavailable: CUA service owns UI",
+      "pixels": [
+        1440,
+        900
+      ],
+      "screenshot_sha256": "4b8d371f5d78d8e6d39180f5bfdd03d93f642b4e4f6b4907f2e4509452ace487",
+      "observed_at": "2026-11-01T04:43:43.886289+08:00",
+      "screenshot": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-previous1/language-before.jpg",
+      "ax": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-previous1/language-before.ax.txt",
+      "observation": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-previous1/language-observed.json",
+      "performance": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/performance-previous1.json"
+    },
+    {
+      "label": "current1",
+      "ui_pid": 41867,
+      "driver_state": "passed",
+      "driver_exit_code": 0,
+      "ui_pid_gone": true,
+      "ui_exit_code": "unavailable: CUA service owns UI",
+      "pixels": [
+        1440,
+        900
+      ],
+      "screenshot_sha256": "8766cbeadff01e6fcb492cb87c982ab99e39a0f9dce0eaa027082a421f40214d",
+      "observed_at": "2026-11-01T04:44:33.931941+08:00",
+      "screenshot": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-current1/language-before.jpg",
+      "ax": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-current1/language-before.ax.txt",
+      "observation": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-current1/language-observed.json",
+      "performance": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/performance-current1.json"
+    },
+    {
+      "label": "current2",
+      "ui_pid": 42161,
+      "driver_state": "passed",
+      "driver_exit_code": 0,
+      "ui_pid_gone": true,
+      "ui_exit_code": "unavailable: CUA service owns UI",
+      "pixels": [
+        1440,
+        900
+      ],
+      "screenshot_sha256": "a83f514d594dbeb5357b2965bc331bb769214cbd757427efafa17fa3f67f9060",
+      "observed_at": "2026-11-01T04:45:25.537332+08:00",
+      "screenshot": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-current2/language-before.jpg",
+      "ax": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-current2/language-before.ax.txt",
+      "observation": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-current2/language-observed.json",
+      "performance": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/performance-current2.json"
+    },
+    {
+      "label": "previous2",
+      "ui_pid": 42454,
+      "driver_state": "passed",
+      "driver_exit_code": 0,
+      "ui_pid_gone": true,
+      "ui_exit_code": "unavailable: CUA service owns UI",
+      "pixels": [
+        1440,
+        900
+      ],
+      "screenshot_sha256": "b7b06aa0a65c65a9afb71cb062ef174384a3b2808f3bbdda24abb971d0616a7b",
+      "observed_at": "2026-11-01T04:46:13.101967+08:00",
+      "screenshot": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-previous2/language-before.jpg",
+      "ax": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-previous2/language-before.ax.txt",
+      "observation": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/matched-previous2/language-observed.json",
+      "performance": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-final/performance-previous2.json"
+    }
+  ],
+  "common_observations": "Providers page, 1 provider/64 models, 3 language and 7 theme options, 1440x900 logical restore prompt; no language or theme selection",
+  "screenshot_format": "original CUA JPEG, all 1440x900 pixels; no crop, resize or transcode",
+  "explicit_activate_or_raise": false,
+  "foreground_effect": "unmeasured",
+  "performance_interpretation": "Parent agent assesses benchmark results separately."
+}

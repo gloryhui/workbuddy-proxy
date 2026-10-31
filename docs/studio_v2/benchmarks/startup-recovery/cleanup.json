@@ -1,0 +1,85 @@
+{
+  "at": "2026-11-01T06:47:55.269138+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu",
+  "type": "owned dedicated temporary directory",
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "session": "01a192ed-9fb7-77c3-b543-da7332068939",
+  "uid": 501,
+  "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu",
+  "parents": [
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "mount": true,
+      "type": "directory"
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false,
+      "type": "directory"
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false,
+      "type": "directory"
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false,
+      "type": "directory"
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false,
+      "type": "directory"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false,
+      "type": "directory"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false,
+      "type": "directory"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false,
+      "type": "directory"
+    }
+  ],
+  "files": 1970,
+  "directories": 573,
+  "logical_bytes": 1194828019,
+  "inventory_sha256": "751fbaf2afa70401acf10c9ef33da0cd95d4f82324a8ed5cb66e86f9d10b20eb",
+  "all_entries_regular_or_directory_owned_no_symlink_or_nested_mount": true,
+  "all_drivers_terminal": true,
+  "open_handles": 0,
+  "process_references_excluding_preflight_ancestors": 0,
+  "regenerable": "This session created all testfixtures/syntheticDB/config/binarycopies/profilers/artifactZIPs; necessary raw reports/images/harnesssource archived underrepo, sharedCargo/baselinekit outside target.",
+  "delete_executed": true,
+  "system_disk_free_before_bytes": 35199619072,
+  "deleted_at": "2026-11-01T06:48:39.573027+08:00",
+  "method": "rm -r -- exactliteralabsoluteverifiedroot, noforce",
+  "target_exists_after": false,
+  "session_temporary_bytes_remaining": 0,
+  "retained_baseline_kit_bytes": 50905007,
+  "shared_cargo_and_unowned_previews": "retained; outsideverifiedcleanupscope",
+  "system_disk_free_after_bytes": 36409307136
+}

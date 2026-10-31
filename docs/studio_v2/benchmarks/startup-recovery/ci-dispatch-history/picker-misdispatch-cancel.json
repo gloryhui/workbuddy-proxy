@@ -1,0 +1,20 @@
+[
+  {
+    "id": 41244232391,
+    "head_sha": "13c49986654576b6c01af00ab3c4aa6a47817a69",
+    "reason": "This-session accidental duplicate13c dispatch afterb2 pushTLSfailure; original13c successes untouched.",
+    "exit_code": 0,
+    "stdout": "\u2713 Request to cancel workflow 41244232391 submitted.\n",
+    "stderr": "",
+    "at": "2026-11-01T05:35:47.629617+08:00"
+  },
+  {
+    "id": 41244235522,
+    "head_sha": "13c49986654576b6c01af00ab3c4aa6a47817a69",
+    "reason": "This-session accidental duplicate13c dispatch afterb2 pushTLSfailure; original13c successes untouched.",
+    "exit_code": 0,
+    "stdout": "\u2713 Request to cancel workflow 41244235522 submitted.\n",
+    "stderr": "",
+    "at": "2026-11-01T05:35:50.192555+08:00"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "rounds": 5000,
+  "ids": 4096,
+  "models": 255,
+  "uncached_seconds": 0.900394458,
+  "cached_seconds": 0.026181917,
+  "uncached_us_each": 180.0788916,
+  "cached_us_each": 5.236383399999999,
+  "scope": "Standalone std-only release projection microbench; reusedmembershipset/excludesJSON,Kitlayout,GPU,callbacks; cannotconvert toobservedFPS orinputlatency or proveUICPUcause."
+}

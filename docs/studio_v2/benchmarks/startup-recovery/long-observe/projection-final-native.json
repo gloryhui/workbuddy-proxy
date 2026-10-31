@@ -1,0 +1,36 @@
+{
+  "ui_pid": 66674,
+  "ui_pid_absent": true,
+  "core_pid": 44667,
+  "core_pid_present": true,
+  "focus_observation": "300-second sampler completed=true before UI actions; end screenshot/AX saved",
+  "local_model_edit": {
+    "original_display_name": "deepseek-v4.1-flash",
+    "temporary_display_name": "QA80 完整提示 中文🙂 Long display value for clipped model cell 0123456789 END",
+    "model_id": "deepseek-v4.1-flash unchanged in UI",
+    "confirmed_local_only": true,
+    "restored_display_name": "deepseek-v4.1-flash",
+    "restoration_visual_and_ax": true,
+    "whole_draft_byte_equality": "not asserted; capability normalization possible",
+    "global_provider_save_clicked": false
+  },
+  "tooltip": {
+    "clipped_cell_visibly_confirmed": true,
+    "action": "single click at [435,675], pointer remained there, waited 2 seconds",
+    "result": "no full-value tooltip observed; unverified / gap",
+    "ax_full_cell_name": "present; does not establish tooltip",
+    "evidence": [
+      "projection-tooltip-edit.jpg",
+      "projection-tooltip-edit.ax.txt",
+      "projection-tooltip-clipped.jpg",
+      "projection-tooltip-clipped.ax.txt",
+      "projection-tooltip-after-click.jpg",
+      "projection-tooltip-after-click.ax.txt",
+      "projection-tooltip-restored.jpg",
+      "projection-tooltip-restored.ax.txt"
+    ]
+  },
+  "post_close_app_lookup": false,
+  "core_stopped": false,
+  "checked_at": "2026-11-01T06:31:43.083376+08:00"
+}

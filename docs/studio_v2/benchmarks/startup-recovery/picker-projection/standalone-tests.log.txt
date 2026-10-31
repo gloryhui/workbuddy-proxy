@@ -1,0 +1,10 @@
+
+running 5 tests
+test tests::closing_releases_the_snapshot_and_reopening_starts_fresh ... ok
+test tests::same_length_replacement_and_query_changes_never_reuse_stale_rows ... ok
+test tests::same_count_selection_and_membership_changes_refresh_the_projection ... ok
+test tests::unicode_search_keeps_whitespace_and_exact_membership_semantics ... ok
+test tests::unchanged_discovery_does_not_recompute_on_caret_paints ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+

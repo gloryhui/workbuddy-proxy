@@ -1,0 +1,22 @@
+   Compiling workbuddy-proxy v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.79s
+     Running unittests src/main.rs (/Volumes/1TB/Downloads/git/workbuddy-proxy/target/debug/deps/workbuddy_proxy-4822dc3a02dc7397)
+
+running 1 test
+test stats::tests::startup_database_lock_recovers_without_restarting_or_duplicate_intervals ... statistics disabled: database is locked
+
+thread 'stats::tests::startup_database_lock_recovers_without_restarting_or_duplicate_intervals' (3992794) panicked at src/stats/mod.rs:2649:9:
+assertion `left == right` failed: Some("stats_storage_unavailable")
+  left: Disabled
+ right: Migrating
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    stats::tests::startup_database_lock_recovers_without_restarting_or_duplicate_intervals
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 579 filtered out; finished in 7.30s
+
+error: test failed, to rerun pass `--bin workbuddy-proxy`

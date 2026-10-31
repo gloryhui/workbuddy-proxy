@@ -1,0 +1,28 @@
+{
+  "old_ui_pid": 65989,
+  "old_ui_pid_confirmed_absent_before_reopen": true,
+  "new_ui_pid": 66674,
+  "core_pid": 44667,
+  "guard_installed_same_pid": true,
+  "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+  "matching_candidates": 4096,
+  "selected": 0,
+  "search": "",
+  "first_candidate": "long-discovery-0000",
+  "language": "简体中文",
+  "theme": "Studio Indigo (visually consistent)",
+  "search_focus": "clicked empty field; AX reports window, so focus not independently confirmed",
+  "screenshot": "projection-cold-idle-start.jpg",
+  "screenshot_sha256": "90c384792a1e421210c751bd6653608593b246a8b67276bf72eb3d65c605b49b",
+  "pixels": [
+    1440,
+    900
+  ],
+  "ax": "projection-cold-idle-start.ax.txt",
+  "idle_start_conservative": "2026-11-01T05:59:14.375607+08:00",
+  "no_checkbox_selection_or_preferences_changes": true,
+  "no_provider_model_add_save_delete": true,
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true,
+  "comparison_limit": "separate cold UI process, same Core/fixture; prior functional process changed/restored preferences"
+}

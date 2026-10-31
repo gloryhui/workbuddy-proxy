@@ -1,0 +1,471 @@
+{
+  "scope": "Final957 UI4658 versusa6e UIba525, bothcommonCore1146, finalcontiguous primaryP/C/C/P,n2each. Not completeoldCore25f applicationbaseline; priorstage separate. No equivalence/optimization/FPS/firstpaint claims.",
+  "primary_sequence": [
+    "previous2",
+    "current3",
+    "current4",
+    "previous3"
+  ],
+  "diagnostic_sequence": [
+    "previous1",
+    "current1",
+    "current2"
+  ],
+  "diagnostic_reason": "current1 extra language-menu close/reopen+duplicate screenshot EEXIST, raw originalnot overwritten. PredeterminedfinalP2/C3/C4/P3 beforeP2started, retainall7/rawnumbers. No selectionbyresult or rerunfailedproducttest.",
+  "metrics": {
+    "core_idle_rss_mib": {
+      "previous_samples": [
+        16.56,
+        16.61
+      ],
+      "current_samples": [
+        16.06,
+        16.08
+      ],
+      "delta": -0.5150000000000006
+    },
+    "ui_idle_rss_mib": {
+      "previous_samples": [
+        108.48,
+        107.22
+      ],
+      "current_samples": [
+        107.98,
+        107.72
+      ],
+      "delta": 0.0
+    },
+    "idle_rss_mib": {
+      "previous_samples": [
+        125.05,
+        123.83
+      ],
+      "current_samples": [
+        124.05,
+        123.8
+      ],
+      "delta": -0.5150000000000006
+    },
+    "sampled_peak_rss_mib": {
+      "previous_samples": [
+        172.22,
+        172.67
+      ],
+      "current_samples": [
+        174.8,
+        166.36
+      ],
+      "delta": -1.8649999999999807
+    },
+    "native_ui_process_to_record_ms": {
+      "previous_samples": [
+        1103.449,
+        818.85
+      ],
+      "current_samples": [
+        1562.402,
+        779.425
+      ],
+      "delta": 209.76400000000012
+    },
+    "core_ready_ms": {
+      "previous_samples": [
+        48.186,
+        47.341
+      ],
+      "current_samples": [
+        51.369,
+        44.562
+      ],
+      "delta": 0.20199999999999818
+    },
+    "large_seconds": {
+      "previous_samples": [
+        0.087,
+        0.087
+      ],
+      "current_samples": [
+        0.093,
+        0.09
+      ],
+      "delta": 0.004500000000000004
+    },
+    "proxy_p50": {
+      "previous_samples": [
+        0.191,
+        0.191
+      ],
+      "current_samples": [
+        0.184,
+        0.193
+      ],
+      "delta": -0.0025000000000000022
+    },
+    "proxy_p95": {
+      "previous_samples": [
+        0.221,
+        0.225
+      ],
+      "current_samples": [
+        0.217,
+        0.222
+      ],
+      "delta": -0.003500000000000003
+    },
+    "direct_p50": {
+      "previous_samples": [
+        0.17,
+        0.172
+      ],
+      "current_samples": [
+        0.169,
+        0.172
+      ],
+      "delta": -0.0005000000000000004
+    },
+    "direct_p95": {
+      "previous_samples": [
+        0.352,
+        0.328
+      ],
+      "current_samples": [
+        0.321,
+        0.33
+      ],
+      "delta": -0.014499999999999957
+    }
+  },
+  "all_samples": [
+    {
+      "label": "previous1",
+      "ui_sha256": "ba525f80d2a135be3ae1b7628f5271b1fa467f7594d4dcb66e50f9bdc6c8c74c",
+      "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "core_ready_ms": 584.011,
+      "native_ui_process_to_record_ms": 889.199,
+      "core_idle_rss_mib": 15.31,
+      "ui_idle_rss_mib": 107.53,
+      "idle_rss_mib": 122.84,
+      "sampled_peak_rss_mib": 168.38,
+      "proxied_loopback_ms": {
+        "p50": 0.193,
+        "p95": 0.223
+      },
+      "direct_loopback_ms": {
+        "p50": 0.174,
+        "p95": 0.339
+      },
+      "separate_peak_rss_mib": {
+        "core_rss_mib": 60.844,
+        "ui_rss_mib": 107.531,
+        "combined_rss_mib": 168.375
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 77919,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 77920,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 78271,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "current1",
+      "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+      "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "core_ready_ms": 296.003,
+      "native_ui_process_to_record_ms": 1014.455,
+      "core_idle_rss_mib": 15.67,
+      "ui_idle_rss_mib": 108.84,
+      "idle_rss_mib": 124.52,
+      "sampled_peak_rss_mib": 166.95,
+      "proxied_loopback_ms": {
+        "p50": 0.19,
+        "p95": 0.221
+      },
+      "direct_loopback_ms": {
+        "p50": 0.173,
+        "p95": 0.341
+      },
+      "separate_peak_rss_mib": {
+        "core_rss_mib": 58.109,
+        "ui_rss_mib": 108.844,
+        "combined_rss_mib": 166.953
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 78916,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 78920,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 79250,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "current2",
+      "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+      "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "core_ready_ms": 47.352,
+      "native_ui_process_to_record_ms": 816.918,
+      "core_idle_rss_mib": 16.38,
+      "ui_idle_rss_mib": 107.09,
+      "idle_rss_mib": 123.47,
+      "sampled_peak_rss_mib": 165.22,
+      "proxied_loopback_ms": {
+        "p50": 0.189,
+        "p95": 0.22
+      },
+      "direct_loopback_ms": {
+        "p50": 0.171,
+        "p95": 0.325
+      },
+      "separate_peak_rss_mib": {
+        "core_rss_mib": 57.938,
+        "ui_rss_mib": 107.578,
+        "combined_rss_mib": 165.219
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 80405,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 80406,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 80471,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "previous2",
+      "ui_sha256": "ba525f80d2a135be3ae1b7628f5271b1fa467f7594d4dcb66e50f9bdc6c8c74c",
+      "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "core_ready_ms": 48.186,
+      "native_ui_process_to_record_ms": 1103.449,
+      "core_idle_rss_mib": 16.56,
+      "ui_idle_rss_mib": 108.48,
+      "idle_rss_mib": 125.05,
+      "sampled_peak_rss_mib": 172.22,
+      "proxied_loopback_ms": {
+        "p50": 0.191,
+        "p95": 0.221
+      },
+      "direct_loopback_ms": {
+        "p50": 0.17,
+        "p95": 0.352
+      },
+      "separate_peak_rss_mib": {
+        "core_rss_mib": 63.734,
+        "ui_rss_mib": 108.859,
+        "combined_rss_mib": 172.219
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 80795,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 80799,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 80837,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "current3",
+      "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+      "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "core_ready_ms": 51.369,
+      "native_ui_process_to_record_ms": 1562.402,
+      "core_idle_rss_mib": 16.06,
+      "ui_idle_rss_mib": 107.98,
+      "idle_rss_mib": 124.05,
+      "sampled_peak_rss_mib": 174.8,
+      "proxied_loopback_ms": {
+        "p50": 0.184,
+        "p95": 0.217
+      },
+      "direct_loopback_ms": {
+        "p50": 0.169,
+        "p95": 0.321
+      },
+      "separate_peak_rss_mib": {
+        "core_rss_mib": 66.766,
+        "ui_rss_mib": 108.484,
+        "combined_rss_mib": 174.797
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 81312,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 81316,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 81394,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "current4",
+      "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+      "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "core_ready_ms": 44.562,
+      "native_ui_process_to_record_ms": 779.425,
+      "core_idle_rss_mib": 16.08,
+      "ui_idle_rss_mib": 107.72,
+      "idle_rss_mib": 123.8,
+      "sampled_peak_rss_mib": 166.36,
+      "proxied_loopback_ms": {
+        "p50": 0.193,
+        "p95": 0.222
+      },
+      "direct_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.33
+      },
+      "separate_peak_rss_mib": {
+        "core_rss_mib": 58.484,
+        "ui_rss_mib": 108.219,
+        "combined_rss_mib": 166.359
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 81739,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 81740,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 81803,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "label": "previous3",
+      "ui_sha256": "ba525f80d2a135be3ae1b7628f5271b1fa467f7594d4dcb66e50f9bdc6c8c74c",
+      "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "core_ready_ms": 47.341,
+      "native_ui_process_to_record_ms": 818.85,
+      "core_idle_rss_mib": 16.61,
+      "ui_idle_rss_mib": 107.22,
+      "idle_rss_mib": 123.83,
+      "sampled_peak_rss_mib": 172.67,
+      "proxied_loopback_ms": {
+        "p50": 0.191,
+        "p95": 0.225
+      },
+      "direct_loopback_ms": {
+        "p50": 0.172,
+        "p95": 0.328
+      },
+      "separate_peak_rss_mib": {
+        "core_rss_mib": 65.328,
+        "ui_rss_mib": 107.375,
+        "combined_rss_mib": 172.703
+      },
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 82133,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 82134,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 82199,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    }
+  ],
+  "binary_sizes": {
+    "candidate-core": {
+      "sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "bytes": 8428112,
+      "source": "Current frozen13cCore held fixed across bothUIs"
+    },
+    "baseline-core": {
+      "sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "bytes": 8428112,
+      "source": "Current frozen13cCore held fixed across bothUIs"
+    },
+    "candidate-ui": {
+      "sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+      "bytes": 42525408,
+      "source": "Frozen957release sharedcache"
+    },
+    "baseline-ui": {
+      "sha256": "ba525f80d2a135be3ae1b7628f5271b1fa467f7594d4dcb66e50f9bdc6c8c74c",
+      "bytes": 42475728,
+      "source": "a6e baseline referencekit"
+    }
+  },
+  "unchanged_workload": "1000realHTTPpreseed/persistencebarrier20+64models; originalbenchmark1000small+80x1MiB@4; oneprescribednative1100/languageEsc/themeEsc/restore1440/notificationClose/languageOpen,10sdwell. Allraw1440x900JPEG+AX retained.",
+  "limits": [
+    "Process\u2192record marker excludes toolprelaunch wait but isnotfirstpaint/interactive readiness; orchestrationinclusive ui_record_ready_ms notusedforstartupcomparison.",
+    "Allslow samples retained. OS cache/memorypressure/foregroundeffect not independentlycontrolled; n2 descriptivemedian, no precisioncausal subtraction ofheadlesscontrol.",
+    "RSSandfootprintdistinct; validlivepostloadvmmap only, not vmmap-after processdisappearance.",
+    "Proxyrequestlatency isnotUIFPS/inputlatency.",
+    "HistoricalB01/B03/B04 costs and priorstages remain; thisUI-only finalsameCore protocol doesnoterase them."
+  ]
+}

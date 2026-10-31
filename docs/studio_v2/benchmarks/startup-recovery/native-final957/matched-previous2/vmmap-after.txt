@@ -1,0 +1,2 @@
+vmmap[81191]: vmmap cannot examine process 80837 (with name like '80837') because it no longer appears to be running.
+vmmap[81191]: [fatal] mach port for process 0 not valid

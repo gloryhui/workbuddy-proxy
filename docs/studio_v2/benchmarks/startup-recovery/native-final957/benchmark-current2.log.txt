@@ -1,0 +1,36 @@
+{"await_cua": {"label": "current2", "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-projection-final/matched-current2/WorkBuddy Proxy RC80 Projection Final current2.app", "core_pid": 80406, "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-projection-final/matched-current2", "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4"}}
+{"ui_bound": 80471, "native_process_to_record_ms": 816.918, "await_cua_native_page": true}
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit",
+  "architecture": "arm64",
+  "mode": "native GUI",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 8428112,
+  "idle_rss_mib": 123.47,
+  "core_idle_rss_mib": 16.38,
+  "measured_process_count": 2,
+  "ui_idle_rss_mib": 107.09,
+  "tray_idle_rss_mib": null,
+  "core_ready_ms": 47.352,
+  "ui_record_ready_ms": 12754.329,
+  "sampled_peak_rss_mib": 165.22,
+  "post_load_rss_mib": 165.22,
+  "small_request_count": 1000,
+  "direct_loopback_ms": {
+    "p50": 0.171,
+    "p95": 0.325
+  },
+  "proxied_loopback_ms": {
+    "p50": 0.189,
+    "p95": 0.22
+  },
+  "median_proxy_overhead_ms": 0.018,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.087,
+  "notes": "RSS sums instance.json core and gpui.json settings PIDs (shared pages can be counted twice); tray RSS is separate, headless has one PID. UI readiness is the gpui.json marker, not first paint or interactivity. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied."
+}
+{"completed": "current2", "evidence": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-recovery.fe_ffldu/performance-projection-final/performance-current2.json", "terminal": {"children": [{"kind": "mock", "pid": 80405, "exit_code": -15, "waited": true}, {"kind": "core", "pid": 80406, "exit_code": 0, "waited": true}], "ui_pid": 80471, "ui_child_owned_by": "CUA service, not fixture; exit code unavailable", "ui_pid_gone": true}}

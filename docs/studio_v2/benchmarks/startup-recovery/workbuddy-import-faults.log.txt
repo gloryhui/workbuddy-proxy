@@ -1,0 +1,15 @@
+  PASS faults: child OS file limit rejects real SQLite WAL growth limit=524288 max_wal=524288 committed=128 error=stats_unavailable
+  PASS faults: proxy forwarding survives the filesystem write refusal 
+  PASS faults: removing OS write limit recovers exact usage without duplicates [(5000, 60000, 500000000000)]
+  PASS faults: SIGKILL targets a genuinely incomplete committed backfill base=5000 committed=5128 target=55000
+  PASS faults: crash restart resumes to exact token and credit totals [(55000, 660000, 5500000000000)]
+  PASS faults: crash recovery leaves one ledger identity per source message [(55000, 55000)]
+  PASS sandbox: sandbox under system temp                       True
+  PASS sandbox: sandbox is not real home                        True
+  PASS sandbox: sandbox outside real data roots                 True
+  PASS sandbox: profile vars inside sandbox                     True
+  PASS sandbox: temp vars inside sandbox                        True
+  PASS sandbox: config dir inside sandbox                       True
+  PASS sandbox: source root inside sandbox                      True
+  PASS sandbox: catalog url is local                            True
+  PASS sandbox: real profiles unchanged                         True

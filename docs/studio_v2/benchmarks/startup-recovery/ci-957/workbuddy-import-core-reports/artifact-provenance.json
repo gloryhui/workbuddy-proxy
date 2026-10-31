@@ -1,0 +1,21 @@
+{
+  "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "run_id": 41246370582,
+  "id": 13058599355,
+  "name": "workbuddy-import-core-reports",
+  "bytes": 4760,
+  "sha256": "91d226fae308b6fd8bcb7e9c9e5270bbc5964038dcfdcd35baa0513dddff5085",
+  "members": [
+    {
+      "path": "os-faults/report.json",
+      "bytes": 3242,
+      "sha256": "d730ee0096313d1217cb336b246a98202e5bc37f1ad9334836230de9aae70693"
+    },
+    {
+      "path": "workbuddy_import_test.json/report.json",
+      "bytes": 22431,
+      "sha256": "1e2bc4f07e9b825bae897d20c3523a49336b24b7dcc56b11a113b99400b96fb0"
+    }
+  ],
+  "verified_at": "2026-11-01T06:23:06.185308+08:00"
+}

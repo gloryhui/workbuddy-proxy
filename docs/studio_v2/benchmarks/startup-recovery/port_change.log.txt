@@ -1,0 +1,1 @@
+PASS: occupied/invalid ports keep all files and old listener; same-port no-op; same core and live SSE survive rebinding; owned/manual WorkBuddy URLs migrate without changing other entries; malformed configuration is rejected; restore and persisted restart work; empty-provider migration works

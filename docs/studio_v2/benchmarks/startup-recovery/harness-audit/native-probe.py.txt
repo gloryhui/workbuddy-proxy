@@ -1,0 +1,58 @@
+from pathlib import Path
+import os,sys,json,time,subprocess,sqlite3,hashlib,signal
+r=Path(__file__).resolve().parent
+for name in ['TMPDIR','TMP','TEMP']:os.environ[name]=str(r/'tmp')
+sys.path.insert(0,str(Path.cwd()/'scripts'))
+import workbuddy_import_test as h
+from workbuddy_import_ui_sandbox import profile_text,protected_locations,kernel_protection
+exe=Path('/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy');expected=json.loads((Path.cwd()/'docs/studio_v2/benchmarks/startup-recovery/core-checks.json').read_text());assert expected['state']=='passed';assert hashlib.sha256(exe.read_bytes()).hexdigest()==expected['core_sha256']
+sandbox=h.Sandbox();sandbox._temp._finalizer.detach();(r/'native-probe-sandbox.json').write_text(json.dumps({'root':str(sandbox.root),'created_this_probe':True})+'\n')
+policy=r/'protection.sb';policy.write_text(profile_text([*protected_locations(sandbox.real_home).values(),sandbox.real_home/'Library/LaunchAgents']))
+original=subprocess.Popen;children=[];proofs=[]
+def launch(command,*a,**kw):
+ if isinstance(command,(list,tuple)) and Path(command[0]).resolve()==exe:
+  command=['/usr/bin/sandbox-exec','-f',str(policy),*command]
+ p=original(command,*a,**kw);children.append(p);return p
+subprocess.Popen=launch
+port=h.free_port();sandbox.write_core_config(port);log=r/'core-corrected.log';blocker=None;rows=[];running=None;handle=None
+def status():
+ key=json.loads((sandbox.config_dir/'instance.json').read_text())['management_key'];return json.loads(h.control(port,key,{'command':'stats_health'})['message'])
+try:
+ running,handle,ready=h.start_importer(sandbox,exe,port,log);assert ready;proofs.append(kernel_protection(sandbox.real_home,sandbox.root,running.pid));assert proofs[-1]['enforced'];h.enable_import(sandbox,b'synthetic');h.stop_core(running,port,sandbox,handle);running=None;handle=None
+ blocker=sqlite3.connect(sandbox.config_dir/'usage.sqlite3',timeout=1);blocker.execute('BEGIN EXCLUSIVE')
+ running,handle,ready=h.start_importer(sandbox,exe,port,log);assert ready;proofs.append(kernel_protection(sandbox.real_home,sandbox.root,running.pid));assert proofs[-1]['enforced']
+ for _ in range(30):
+  value=status();rows.append({'stage':'lock-held','health':value})
+  if value.get('error_code')=='stats_storage_busy':break
+  time.sleep(.1)
+ assert rows[-1]['health']['state']=='migrating' and rows[-1]['health']['error_code']=='stats_storage_busy',rows[-1]
+ time.sleep(7)
+ held=status();assert held['state']=='migrating' and held['error_code']=='stats_storage_busy';rows.append({'stage':'after7secondlock','health':held})
+ blocker.rollback();blocker.close();blocker=None
+ source=sandbox.source_root/'projects/startup';source.mkdir(parents=True);(source/'startup.jsonl').write_text(h.mixed_line('startup','recovered',10,2,0.1)+'\n')
+ released=time.monotonic();deadline=released+30
+ while True:
+  value=status();rows.append({'stage':'after-lock-release','seconds':round(time.monotonic()-released,3),'health':value})
+  if value['state']=='ready':break
+  assert time.monotonic()<deadline
+  time.sleep(.1)
+ while True:
+  with sqlite3.connect('file:'+str(sandbox.config_dir/'usage.sqlite3')+'?mode=ro',uri=True) as db:count=db.execute('SELECT COUNT(*) FROM usage_requests').fetchone()[0]
+  if count==1:break
+  assert time.monotonic()<deadline,count
+  time.sleep(.1)
+ with sqlite3.connect('file:'+str(sandbox.config_dir/'usage.sqlite3')+'?mode=ro',uri=True) as db:
+  assert db.execute('SELECT COUNT(*) FROM stats_runs').fetchone()[0]==2
+  assert db.execute('SELECT COUNT(*) FROM stats_collection_intervals GROUP BY run_id').fetchall()==[(1,),(1,)]
+  assert db.execute('SELECT COUNT(*) FROM workbuddy_import_ledger WHERE state=\'imported\'').fetchone()[0]==1
+  assert db.execute('SELECT SUM(total_tokens),SUM(workbuddy_credit_nanos) FROM usage_requests').fetchone()==(12,100000000)
+ rows.append({'stage':'imported-without-restart','requests':count,'runs':2,'intervals_each_run':1,'tokens':12,'credit_nanos':100000000})
+ assert all(p['enforced'] for p in proofs)
+ print(json.dumps({'reproduced':True,'proxy_health_ready_while_locked':ready,'recovered_same_process':True,'requests':count,'observations':len(rows)}),flush=True)
+finally:
+ if blocker is not None:blocker.rollback();blocker.close()
+ if running is not None:h.stop_core(running,port,sandbox,handle)
+ for p in children:
+  if p.poll() is None:p.terminate()
+  p.wait(timeout=10)
+ report={'core_sha256':hashlib.sha256(exe.read_bytes()).hexdigest(),'scope':'Deterministic realCore startup-lock recovery: initialstats lock, proxyhealthready, stats migrating/busy during7slock, release→ready/imported withoutrestart within30s;2run/1intervaleach/1import+exacttokens/credit. OriginalCI attribution stillseparate. NoGUI orrealuser data.','rows':rows,'kernel_protection':proofs,'real_profiles_unchanged':sandbox.real_profiles_unchanged(),'children':[{'pid':p.pid,'exit_code':p.returncode,'waited':True} for p in children]};(r/'native-probe-report.json').write_text(json.dumps(report,indent=2)+'\n')

@@ -1,0 +1,30 @@
+{
+  "label": "current2",
+  "ui_pid": 42161,
+  "page": "providers",
+  "providers": 1,
+  "models": 64,
+  "language_menu_visible": true,
+  "logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "language-before.jpg",
+  "screenshot_sha256": "a83f514d594dbeb5357b2965bc331bb769214cbd757427efafa17fa3f67f9060",
+  "pixels": [
+    1440,
+    900
+  ],
+  "observed_at": "2026-11-01T04:45:25.537332+08:00",
+  "operations": [
+    "CUA corner drag [1438,898] to [1098,698]",
+    "select Providers",
+    "language menu three options; Escape",
+    "theme menu seven options Studio Indigo selected; Escape",
+    "toolbar restore 1440x900 logical prompt; close",
+    "open language menu; provider 1 and models 64 visible"
+  ],
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true,
+  "ax": "language-before.ax.txt"
+}

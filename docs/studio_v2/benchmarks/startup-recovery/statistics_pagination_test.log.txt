@@ -1,0 +1,22 @@
+PASS real requests sequential/back/direct 3->1->2 and invalid pages size 10
+PASS real provider sequential/back/direct 3->1->2 and invalid pages size 10
+PASS real model sequential/back/direct 3->1->2 and invalid pages size 10
+PASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 10
+PASS real requests sequential/back/direct 3->1->2 and invalid pages size 20
+PASS real provider sequential/back/direct 3->1->2 and invalid pages size 20
+PASS real model sequential/back/direct 3->1->2 and invalid pages size 20
+PASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 20
+PASS real requests sequential/back/direct 3->1->2 and invalid pages size 50
+PASS real provider sequential/back/direct 3->1->2 and invalid pages size 50
+PASS real model sequential/back/direct 3->1->2 and invalid pages size 50
+PASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 50
+PASS real requests sequential/back/direct 3->1->2 and invalid pages size 100
+PASS real provider sequential/back/direct 3->1->2 and invalid pages size 100
+PASS real model sequential/back/direct 3->1->2 and invalid pages size 100
+PASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 100
+PASS frozen snapshot, partial final page and filter expiry; real-core cursor API median 1.20 ms, max 1.27 ms on 323 synthetic rows
+PASS stats_filters provider all 321 options reachable
+PASS stats_filters model all 321 options reachable
+PASS stats_prices_list  all 321 options reachable
+PASS default currency affects only newly admitted zero-price snapshots
+PASS statistics list and settings contracts

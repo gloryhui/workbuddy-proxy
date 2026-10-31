@@ -1,0 +1,190 @@
+{
+  "primary_sequence": [
+    "previous2",
+    "current3",
+    "current4",
+    "previous3"
+  ],
+  "diagnostic_rounds": [
+    "previous1",
+    "current1",
+    "current2"
+  ],
+  "diagnostic_reason": "These three rounds are retained as pre-primary diagnostics. current1 had an extra language-menu close and reopen, and a second capture attempt failed with EEXIST; original JPEG and AX were preserved. previous1 and current2 are pre-primary diagnostics per measurement plan.",
+  "closure": "After Core stop request, UI PID disappeared; UI exit codes unavailable. previous1 attempted a native close after stop and CUA reported Computer Use is not active; PID already gone. Other rounds skipped close once PID gone; previous2 was briefly present on first stop check then gone on next.",
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true,
+  "rounds": [
+    {
+      "label": "previous1",
+      "ui_pid": 78271,
+      "ui_pid_gone_readonly_ps": true,
+      "ui_exit_code": "unavailable",
+      "screenshot": "matched-previous1/language-before.jpg",
+      "screenshot_sha256": "d7b81842a179128b5713c4518eacfd0a56d2803c5137470e4b75fce80df859d0",
+      "pixels": [
+        1440,
+        900
+      ],
+      "ax": "matched-previous1/language-before.ax.txt",
+      "ack": "matched-previous1/language-observed.json",
+      "observed_at": "2026-11-01T06:34:31.293628+08:00",
+      "operations": [
+        "CUA corner drag [1438,898] to [1098,698]",
+        "select Providers",
+        "language menu three options; Escape",
+        "theme menu seven options Studio Indigo selected; Escape",
+        "toolbar restore 1440x900 logical prompt; close",
+        "open language menu; provider 1 and models 64 visible"
+      ],
+      "classification": "diagnostic"
+    },
+    {
+      "label": "current1",
+      "ui_pid": 79250,
+      "ui_pid_gone_readonly_ps": true,
+      "ui_exit_code": "unavailable",
+      "screenshot": "matched-current1/language-before.jpg",
+      "screenshot_sha256": "c6c4ad505546fa235c42ac63d9e5737bb0cf7049dcbc9969b1e15a9f28abd03b",
+      "pixels": [
+        1440,
+        900
+      ],
+      "ax": "matched-current1/language-before.ax.txt",
+      "ack": "matched-current1/language-observed.json",
+      "observed_at": "2026-11-01T06:37:25.544596+08:00",
+      "operations": [
+        "CUA corner drag [1438,898] to [1098,698]",
+        "select Providers",
+        "language menu three options; Escape",
+        "theme menu seven options Studio Indigo selected; Escape",
+        "toolbar restore 1440x900 logical prompt; close",
+        "open language menu; provider 1 and models 64 visible",
+        "additional language menu close and reopen followed by second capture attempt; existing first screenshot retained"
+      ],
+      "classification": "diagnostic"
+    },
+    {
+      "label": "current2",
+      "ui_pid": 80471,
+      "ui_pid_gone_readonly_ps": true,
+      "ui_exit_code": "unavailable",
+      "screenshot": "matched-current2/language-before.jpg",
+      "screenshot_sha256": "aaef5a7252e0d7b3477fd9fb2bfeaa67ebd6c4189967864a5b7d396da9c47bc1",
+      "pixels": [
+        1440,
+        900
+      ],
+      "ax": "matched-current2/language-before.ax.txt",
+      "ack": "matched-current2/language-observed.json",
+      "observed_at": "2026-11-01T06:40:34.226550+08:00",
+      "operations": [
+        "CUA corner drag [1438,898] to [1098,698]",
+        "select Providers",
+        "language menu three options; Escape",
+        "theme menu seven options Studio Indigo selected; Escape",
+        "toolbar restore 1440x900 logical prompt; close",
+        "open language menu; provider 1 and models 64 visible"
+      ],
+      "classification": "diagnostic"
+    },
+    {
+      "label": "previous2",
+      "ui_pid": 80837,
+      "ui_pid_gone_readonly_ps": true,
+      "ui_exit_code": "unavailable",
+      "screenshot": "matched-previous2/language-before.jpg",
+      "screenshot_sha256": "6af5e0ecf404a48068175a9499a1a6e2ef06239e78483bf8d5689994fd55774b",
+      "pixels": [
+        1440,
+        900
+      ],
+      "ax": "matched-previous2/language-before.ax.txt",
+      "ack": "matched-previous2/language-observed.json",
+      "observed_at": "2026-11-01T06:41:47.216564+08:00",
+      "operations": [
+        "CUA corner drag [1438,898] to [1098,698]",
+        "select Providers",
+        "language menu three options; Escape",
+        "theme menu seven options Studio Indigo selected; Escape",
+        "toolbar restore 1440x900 logical prompt; close",
+        "open language menu; provider 1 and models 64 visible"
+      ],
+      "classification": "primary"
+    },
+    {
+      "label": "current3",
+      "ui_pid": 81394,
+      "ui_pid_gone_readonly_ps": true,
+      "ui_exit_code": "unavailable",
+      "screenshot": "matched-current3/language-before.jpg",
+      "screenshot_sha256": "65933ef4ce6649961a663c586a0cfd5dcf7401b44d2d6e2f1754bdf412710265",
+      "pixels": [
+        1440,
+        900
+      ],
+      "ax": "matched-current3/language-before.ax.txt",
+      "ack": "matched-current3/language-observed.json",
+      "observed_at": "2026-11-01T06:43:26.143441+08:00",
+      "operations": [
+        "CUA corner drag [1438,898] to [1098,698]",
+        "select Providers",
+        "language menu three options; Escape",
+        "theme menu seven options Studio Indigo selected; Escape",
+        "toolbar restore 1440x900 logical prompt; close",
+        "open language menu; provider 1 and models 64 visible"
+      ],
+      "classification": "primary"
+    },
+    {
+      "label": "current4",
+      "ui_pid": 81803,
+      "ui_pid_gone_readonly_ps": true,
+      "ui_exit_code": "unavailable",
+      "screenshot": "matched-current4/language-before.jpg",
+      "screenshot_sha256": "44cf8bda1fb1b0e1eb48241cebee9eb7db9725130f7ea70480c2ea6234979e47",
+      "pixels": [
+        1440,
+        900
+      ],
+      "ax": "matched-current4/language-before.ax.txt",
+      "ack": "matched-current4/language-observed.json",
+      "observed_at": "2026-11-01T06:44:41.005799+08:00",
+      "operations": [
+        "CUA corner drag [1438,898] to [1098,698]",
+        "select Providers",
+        "language menu three options; Escape",
+        "theme menu seven options Studio Indigo selected; Escape",
+        "toolbar restore 1440x900 logical prompt; close",
+        "open language menu; provider 1 and models 64 visible"
+      ],
+      "classification": "primary"
+    },
+    {
+      "label": "previous3",
+      "ui_pid": 82199,
+      "ui_pid_gone_readonly_ps": true,
+      "ui_exit_code": "unavailable",
+      "screenshot": "matched-previous3/language-before.jpg",
+      "screenshot_sha256": "9d7526e6c26a13b2b256ba02b8502858dc6131aff139b286d0fc69e19fbcaae1",
+      "pixels": [
+        1440,
+        900
+      ],
+      "ax": "matched-previous3/language-before.ax.txt",
+      "ack": "matched-previous3/language-observed.json",
+      "observed_at": "2026-11-01T06:45:59.322895+08:00",
+      "operations": [
+        "CUA corner drag [1438,898] to [1098,698]",
+        "select Providers",
+        "language menu three options; Escape",
+        "theme menu seven options Studio Indigo selected; Escape",
+        "toolbar restore 1440x900 logical prompt; close",
+        "open language menu; provider 1 and models 64 visible"
+      ],
+      "classification": "primary"
+    }
+  ],
+  "driver_results": "driver-results.json",
+  "extension_driver_results": "extension-driver-results.json"
+}

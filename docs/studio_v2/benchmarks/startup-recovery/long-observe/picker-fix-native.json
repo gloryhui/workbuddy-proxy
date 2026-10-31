@@ -1,0 +1,58 @@
+{
+  "ui_pid": 56820,
+  "ui_sha256": "6d93ab7345ec8fc4bd28ad0ac1fb0f32a03621f4960286864aa70e31683920e3",
+  "core_pid": 44667,
+  "guard_installed_same_pid": true,
+  "functional_regression": {
+    "mouse_checkbox": "candidate 0000 off→on→off, 0001 off→on; AX and visual checked state confirmed",
+    "keyboard": "Space 0001 off; Down then Space 0002 on; Space off; AX and visual on confirmed",
+    "search": "4095 one match; no-such-model-qa80 zero matches; clear restores 4096",
+    "scroll": "candidate 4095 and first candidate 0000 visible",
+    "esc_and_cancel": "each closed picker",
+    "theme": "blue-white then Studio Indigo restored; AX and screenshot",
+    "language": "English then 简体中文 restored; screenshot/AX; authorized preference saves",
+    "modal_theme_attempt": "background theme click left modal unchanged, no bypass",
+    "provider_model_add_save_delete": "none performed"
+  },
+  "evidence_files": [
+    "picker-fix-zero",
+    "picker-fix-select0",
+    "picker-fix-deselect0",
+    "picker-fix-select1",
+    "picker-fix-space",
+    "picker-fix-key-select",
+    "picker-fix-search",
+    "picker-fix-no-match",
+    "picker-fix-tail",
+    "picker-fix-theme-blue",
+    "picker-fix-theme-studio",
+    "picker-fix-english",
+    "picker-fix-chinese",
+    "picker-fix-reopened",
+    "picker-fix-final-tail",
+    "picker-fix-final-search",
+    "picker-fix-idle-start"
+  ],
+  "comparison_limit": "extra functional and preference operations differ from old process; not a strictly matched A/B",
+  "final_preidle_sequence": "reopen; tail→search 4095→clear→scroll to first→click empty search",
+  "focus_note": "clicked empty search; AX reports standard window as focused, so native focus is not independently confirmed",
+  "final_state": {
+    "dialog": "选择模型",
+    "matching_candidates": 4096,
+    "selected": 0,
+    "search": "",
+    "first_candidate": "long-discovery-0000",
+    "theme": "Studio Indigo",
+    "language": "简体中文"
+  },
+  "image": "picker-fix-idle-start.jpg",
+  "ax": "picker-fix-idle-start.ax.txt",
+  "image_sha256": "4541b7a2605ec0d53260ad6e6c9a2cc4c0a8ba59f255442a5d167e433cd96cbb",
+  "pixels": [
+    1440,
+    901
+  ],
+  "idle_start_conservative": "2026-11-01T05:31:10.860741+08:00",
+  "explicit_activate_or_raise": false,
+  "foreground_effect": "unmeasured"
+}

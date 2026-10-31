@@ -1,0 +1,28 @@
+from pathlib import Path
+import os,stat,json,hashlib,subprocess,datetime,shutil
+root=Path('SESSION_ROOT')
+repo=Path('/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy');out=repo/'docs/studio_v2/benchmarks/startup-recovery';proof=json.loads((root/'ownership.json').read_text());assert proof['root']==str(root) and proof['session']=='01a192ed-9fb7-77c3-b543-da7332068939' and proof['worktree']==str(repo) and proof['uid']==os.getuid()==501
+assert root.resolve(strict=True)==root and root.is_dir() and root!=Path(root.anchor) and root!=Path.home() and root!=repo
+parents=[]
+for path in reversed([root,*root.parents]):
+ st=path.lstat();assert not stat.S_ISLNK(st.st_mode);assert path.resolve(strict=True)==path;parents.append({'path':str(path),'uid':st.st_uid,'device':st.st_dev,'mount':os.path.ismount(path),'type':'directory'})
+assert not os.path.ismount(root)
+entries=[];dirs=0;size=0;dev=root.stat().st_dev
+for base,ds,fs in os.walk(root,followlinks=False):
+ for name in ds+fs:
+  path=Path(base)/name;st=path.lstat();assert st.st_uid==501 and not stat.S_ISLNK(st.st_mode) and st.st_dev==dev and root in path.resolve(strict=True).parents and not os.path.ismount(path)
+  if stat.S_ISDIR(st.st_mode):dirs+=1;continue
+  assert stat.S_ISREG(st.st_mode);size+=st.st_size;entries.append({'path':str(path.relative_to(root)),'bytes':st.st_size})
+assert all(json.loads((root/n).read_text()).get('active_child') is None for n in ['checks-terminal.json','picker-checks-terminal.json','projection-checks-terminal.json','long-observe/driver-terminal.json','performance-final/driver-terminal.json','performance-projection-final/driver-terminal.json','performance-projection-final/extension-driver-terminal.json'])
+lsof=subprocess.run(['/usr/sbin/lsof','-nP','+D',str(root)],capture_output=True,text=True);assert lsof.returncode==1 and not lsof.stdout.strip(),lsof.stdout[:2000]
+ancestors={os.getpid()};pid=os.getppid()
+while pid>1 and pid not in ancestors:
+ ancestors.add(pid);pid=int(subprocess.check_output(['ps','-p',str(pid),'-o','ppid='],text=True).strip())
+lines=subprocess.check_output(['ps','-axo','pid=,command='],text=True).splitlines();refs=[]
+for line in lines:
+ parts=line.strip().split(None,1)
+ if len(parts)==2 and str(root) in parts[1] and int(parts[0]) not in ancestors:refs.append({'pid':int(parts[0]),'command':parts[1]})
+assert not refs,refs
+inventory=json.dumps(entries,sort_keys=True,indent=2)+'\n';(out/'cleanup-inventory.json').write_text(inventory)
+report={'at':datetime.datetime.now().astimezone().isoformat(),'target':str(root),'type':'owned dedicated temporary directory','project':str(repo),'session':proof['session'],'uid':501,'realpath':str(root.resolve()),'parents':parents,'files':len(entries),'directories':dirs,'logical_bytes':size,'inventory_sha256':hashlib.sha256(inventory.encode()).hexdigest(),'all_entries_regular_or_directory_owned_no_symlink_or_nested_mount':True,'all_drivers_terminal':True,'open_handles':0,'process_references_excluding_preflight_ancestors':0,'regenerable':'This session created all testfixtures/syntheticDB/config/binarycopies/profilers/artifactZIPs; necessary raw reports/images/harnesssource archived underrepo, sharedCargo/baselinekit outside target.','delete_executed':False,'system_disk_free_before_bytes':shutil.disk_usage('/').free}
+(out/'cleanup-preflight.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:report[k] for k in ['target','files','directories','logical_bytes','open_handles','process_references_excluding_preflight_ancestors','system_disk_free_before_bytes']}),flush=True)

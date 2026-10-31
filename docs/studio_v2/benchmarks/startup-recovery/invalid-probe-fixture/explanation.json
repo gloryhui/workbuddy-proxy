@@ -1,0 +1,7 @@
+{
+  "classification": "Invalid testfixture, not product failure",
+  "reason": "Reader requires file stem == sessionId. Writtenrecovery.jsonl containedsessionId startup, so line was correctly skipped and0rows expected. Startup recoveringtoReady was proven; import assertion was invalid. Preserve failedprobe/source/report/log unchanged, then runonce withmatchingstartup.jsonl.",
+  "startup_recovered_to_ready": true,
+  "children_exited_zero": true,
+  "not_claimed": "No attribution of skippedrecord tostartupfix orrecoverylatency regression."
+}

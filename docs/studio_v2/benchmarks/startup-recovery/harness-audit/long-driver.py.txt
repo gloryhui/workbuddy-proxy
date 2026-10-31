@@ -1,0 +1,44 @@
+from pathlib import Path
+import sys,os,json,hashlib,subprocess,time,sqlite3,signal,concurrent.futures,urllib.request
+r=Path(__file__).resolve().parent;root=r.parent;w=Path.cwd();f=r/'fixture';perf=root/'performance-final';assert not f.exists()
+for n,h in [('candidate-core','1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e'),('candidate-ui','490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5')]:assert hashlib.sha256((perf/n).read_bytes()).hexdigest()==h
+env=dict(os.environ,PYTHONPATH=str(w/'scripts'),TMPDIR=str(root/'tmp'),TMP=str(root/'tmp'),TEMP=str(root/'tmp'));child=None
+
+def interrupted(signum,frame):raise KeyboardInterrupt(signum)
+signal.signal(signal.SIGTERM,interrupted);signal.signal(signal.SIGINT,interrupted)
+try:
+ with (r/'driver.log.txt').open('wb') as log:
+  child=subprocess.Popen([sys.executable,'-u',str(r/'fixture-long.py'),'--exe',str(perf/'candidate-core'),'--gpui',str(perf/'candidate-ui'),'--output',str(f),'--keep-core-after-ui-exit','--full-providers','--full-models'],env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+  (r/'driver-child.json').write_text(json.dumps({'pid':child.pid,'pgid':child.pid,'command':'Owned fixture-long.py'})+'\n')
+  for _ in range(2400):
+   if (f/'cua-launch-ready.json').exists():break
+   assert child.poll() is None;time.sleep(.05)
+  else:raise TimeoutError('long Corefixture readiness')
+  (f/'management-mode.json').write_text('{"update":"latest","delay":0,"language_failure":false}\n')
+  subprocess.run([sys.executable,str(r/'preflight-guard.py'),str(f)],env=env,check=True)
+  for _ in range(400):
+   with sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True) as db:count=db.execute('SELECT COUNT(*) FROM usage_requests').fetchone()[0]
+   if count==14:break
+   time.sleep(.025)
+  else:raise AssertionError('initial14relay rows did not settle')
+  cfgpath=f/'config/config.json';before=hashlib.sha256(cfgpath.read_bytes()).hexdigest();cfg=json.loads(cfgpath.read_text());ready=json.loads((f/'cua-launch-ready.json').read_text());alias=cfg['providers'][0]['models'][0]['alias']
+  def seed(i):
+   req=urllib.request.Request('http://127.0.0.1:%d/v1/chat/completions'%ready['port'],data=json.dumps({'model':alias,'messages':[{'role':'user','content':'Synthetic long-list observation seed'}]}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+cfg['local_key']})
+   with urllib.request.urlopen(req,timeout=10) as res:res.read();return res.status
+  start=time.monotonic()
+  with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:statuses=list(pool.map(seed,range(1000)))
+  assert statuses==[200]*1000
+  deadline=time.monotonic()+30
+  while True:
+   with sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True) as db:
+    db.row_factory=sqlite3.Row;history={t:{v['request_id']:dict(v) for v in db.execute('SELECT * FROM '+t)} for t in ['usage_requests','usage_costs']}
+   if all(len(rows)==1014 for rows in history.values()):break
+   assert time.monotonic()<deadline,{t:len(rows) for t,rows in history.items()};time.sleep(.05)
+  (f/'history-before-private.json').write_text(json.dumps(history,sort_keys=True)+'\n');os.chmod(f/'history-before-private.json',0o600);assert hashlib.sha256(cfgpath.read_bytes()).hexdigest()==before
+  (f/'long-seed-proof.json').write_text(json.dumps({'added_real_http_requests':1000,'concurrency':4,'http_200':1000,'seed_seconds':round(time.monotonic()-start,3),'counts':{t:len(rows) for t,rows in history.items()},'config_sha256':before,'providers':len(cfg['providers']),'models':sum(len(p['models']) for p in cfg['providers']),'discovery_candidates':4096,'scope':'Synthetic localupstream; same counts/route asQA78, newCore1146/sameUI4905, no claim matchedA/B across separateold processes.'},indent=2)+'\n')
+  (r/'pending-long.json').write_text(json.dumps({'folder':str(f),'ready_file':str(f/'cua-launch-ready.json'),'core_pid':ready['core_pid'],'core_sha256':'1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e','ui_sha256':'490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5','providers':64,'models':256,'requests':1014,'guard_preflight_passed':True})+'\n');print('longnative ready:64providers/256models/1014rows/4096candidates',flush=True)
+  code=child.wait();assert code==0,code
+  terminal=json.loads((f/'terminal-status.json').read_text());assert terminal['core_exit_after_cleanup']==0 and terminal['ui_pid_gone_after_cleanup'];print('longfixture complete0',flush=True)
+finally:
+ if child is not None and child.poll() is None:os.killpg(child.pid,signal.SIGTERM);child.wait(timeout=15)
+ (r/'driver-terminal.json').write_text(json.dumps({'active_child':None if child is None or child.poll() is not None else child.pid,'child_exit_code':None if child is None else child.returncode})+'\n')

@@ -1,0 +1,2 @@
+vmmap[80398]: vmmap cannot examine process 79250 (with name like '79250') because it no longer appears to be running.
+vmmap[80398]: [fatal] mach port for process 0 not valid

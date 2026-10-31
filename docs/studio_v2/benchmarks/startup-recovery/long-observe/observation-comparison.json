@@ -1,0 +1,82 @@
+{
+  "scope": "Sequential/differentprocess diagnostics, all use same Core1146 and synthetic64providers/256models/1014rows; native operation histories differ as raw records state. No FPS/inputlatency, strict statistical A/B, universal leakfree or proven source rootcause claim.",
+  "runs": [
+    {
+      "name": "discovery",
+      "completed": true,
+      "seconds": 900.01,
+      "ui": {
+        "first_minute_median_mib": 126.171875,
+        "last_minute_median_mib": 121.1875,
+        "median_delta_mib": -4.984375,
+        "rss_mib_min": 119.34375,
+        "rss_mib_max": 128.3125,
+        "linear_slope_mib_per_minute": -0.390850447422225,
+        "cpu_seconds_delta": 61.67999999999999,
+        "average_cpu_percent_one_core": 6.853257186031265
+      }
+    },
+    {
+      "name": "language",
+      "completed": true,
+      "seconds": 300.01,
+      "ui": {
+        "first_minute_median_mib": 122.0,
+        "last_minute_median_mib": 121.9375,
+        "median_delta_mib": -0.0625,
+        "rss_mib_min": 121.9375,
+        "rss_mib_max": 122.0,
+        "linear_slope_mib_per_minute": -0.01025256074726375,
+        "cpu_seconds_delta": 5.5,
+        "average_cpu_percent_one_core": 1.8332722242591915
+      }
+    },
+    {
+      "name": "picker-fixed",
+      "completed": true,
+      "seconds": 900.002,
+      "ui": {
+        "first_minute_median_mib": 125.515625,
+        "last_minute_median_mib": 129.203125,
+        "median_delta_mib": 3.6875,
+        "rss_mib_min": 125.0,
+        "rss_mib_max": 129.203125,
+        "linear_slope_mib_per_minute": 0.23173421400982838,
+        "cpu_seconds_delta": 58.629999999999995,
+        "average_cpu_percent_one_core": 6.514429967933405
+      }
+    },
+    {
+      "name": "projection",
+      "completed": true,
+      "seconds": 900.01,
+      "ui": {
+        "first_minute_median_mib": 125.578125,
+        "last_minute_median_mib": 126.828125,
+        "median_delta_mib": 1.25,
+        "rss_mib_min": 125.546875,
+        "rss_mib_max": 126.96875,
+        "linear_slope_mib_per_minute": 0.090736985733185,
+        "cpu_seconds_delta": 60.36000000000001,
+        "average_cpu_percent_one_core": 6.7065921489761235
+      }
+    },
+    {
+      "name": "projection-focus",
+      "completed": true,
+      "seconds": 300.01,
+      "ui": {
+        "first_minute_median_mib": 126.625,
+        "last_minute_median_mib": 126.5625,
+        "median_delta_mib": -0.0625,
+        "rss_mib_min": 126.5625,
+        "rss_mib_max": 126.625,
+        "linear_slope_mib_per_minute": -0.010811155966756204,
+        "cpu_seconds_delta": 5.0800000000000125,
+        "average_cpu_percent_one_core": 1.693276890770312
+      }
+    }
+  ],
+  "focus_control": "OneTab only, no checkedcount change; actual focus target not exposed by AX or clearfocusring. CPU6.7066%\u21921.6933% associatedwithaction/state, doesnotprove exactwidget/caretcausality.",
+  "source_leads": "gpui-base BlinkCursor500ms notifications while focused; stripped sample has ??? UI symbols so cannot map measured work to a sourcefunction. Final liveheap/fragmentation diagnostics retained separately."
+}
