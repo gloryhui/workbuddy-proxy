@@ -208,6 +208,17 @@ def installed_lifecycle(exe, directory, environment, policy, report):
                 host.terminate()
                 host.wait(timeout=5)
             if core:
+                if running(core['pid']):
+                    request = urllib.request.Request(
+                        f'http://127.0.0.1:{core["port"]}/_control/stop', data=b'',
+                        headers={'Authorization': 'Bearer ' + core['management_key']})
+                    try:
+                        with upgrade.OPENER.open(request, timeout=3) as response:
+                            response.read()
+                    except OSError:
+                        # A core already shutting down can close its HTTP listener.
+                        # The process wait below still must prove actual termination.
+                        pass
                 upgrade.wait_for(lambda: not running(core['pid']),
                                  'Installed Core remains after quit', 10)
             for pid in ui_pids:
@@ -404,6 +415,32 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
     upgrade.run(args, report, replace, None if local else installed_lifecycle)
     if local:
         report['installed_lifecycle'] = 'Not run locally: delegated computer use is separate'
+    # Removing a copied .app is the Mac uninstall operation. Verify that only
+    # this known package bundle is removed while its external profile survives.
+    config_before = (directory / 'config.json').read_bytes()
+    data_before = upgrade.snapshot(directory)
+    assert install.resolve().is_relative_to(root.resolve()) and not install.is_symlink()
+    assert not os.path.ismount(install) and tree_identity(install) == candidate_tree
+    for path in [install, *install.parents]:
+        if path == root:
+            break
+        assert not path.is_symlink() and path.resolve().is_relative_to(root.resolve())
+    for path in install.rglob('*'):
+        assert path.lstat().st_uid == os.getuid()
+        assert path.resolve().is_relative_to(install.resolve()) and not os.path.ismount(path)
+    handles = subprocess.run(['/usr/sbin/lsof', '-nP', '+D', str(install)],
+                             capture_output=True, text=True)
+    assert handles.returncode == 1 and not handles.stdout.strip(), 'Installed bundle is in use'
+    print('UNINSTALL_PLAN:', json.dumps({'target': str(install), 'type': 'owned copied app bundle',
+                                        'project': str(Path.cwd()),
+                                        'regenerable': 'Verified candidate DMG; profile is outside app'}), flush=True)
+    shutil.rmtree(install)
+    assert not install.exists() and (directory / 'config.json').read_bytes() == config_before
+    assert upgrade.snapshot(directory) == data_before
+    report['uninstall'] = {'method': 'Removed only the verified installed app bundle',
+                            'installed_path_absent': True,
+                            'external_config_bytes_and_all_business_fields_preserved': True,
+                            'Finder_Trash_interaction_not_performed': True}
 
 
 def cleanup_fixture(root, output, target):
