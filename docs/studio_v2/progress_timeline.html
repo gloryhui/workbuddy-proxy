@@ -196,10 +196,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 2,
-  "updated_at": "2026-10-31T22:29:05+08:00",
+  "updated_at": "2026-11-01T00:15:19+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "fe0a41b79a69df9a40c871fc97ccd88de9aa7c32",
+  "code_head": "30427fe793c22ab58db9bea793b016666a725c03",
   "phase": "界面终验记录齐备 · 总体验收待核对",
   "goal_status": "active",
   "counts": {
@@ -209,7 +209,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 72,
+  "recorded_tasks": 74,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -222,61 +222,62 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 72,
-    "title": "B05 同步、日志与生命周期整批签收",
-    "status": "recorded",
-    "description": "40/40界面已完成批次签收，剩余0；同步/端口/日志/复制/用户物理托盘及四轮原负载通过。下一批R01，R01–R04发布门禁仍待完成。"
+    "id": 75,
+    "title": "R01 剩余共享状态、输入与无障碍验收",
+    "status": "developing",
+    "description": "R01.5最新40参考/80原生图集中签收通过，剩余界面0；Issue3品牌绑定修复已完成macOS1x两尺寸前后验证，200%及Windows仍待补证。继续R01其余4项，R02–R04未通过。"
   },
   "latest_task": {
-    "id": 72,
-    "title": "B05同步、日志与生命周期整批签收",
+    "id": 74,
+    "title": "Issue3侧栏品牌白边与清晰度修复",
     "status": "recorded",
-    "summary": "本批2帧/5任务通过，累计40/40、剩余界面0；下一批R01。R01–R04仍未通过，Goal active，未公开发布。冻结UI 78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc、Core25f；两份最新完整官方设计和原始参考图、30种资源25字节一致/2全XML等价/3原生系统装饰，布局未重新设计。设计、资源、四图视觉。",
+    "summary": "读取本仓库全部开放Issue，当前仅#3。用户最新明确授权安排修复，保留青蓝吉祥物、圆角方形及既有撞色主题。根因是40×40索引色设计导出图自身带白边（外10%边缘278个亮中性像素），控件没有border/background/shadow；128×128现有App Icon边缘无同类亮像素。只把侧栏图片绑定改为已嵌入的brand.png，无图片编辑、裁切、新依赖、字体或间距改动。根因、交付摘要。",
     "highlights": [
-      "本批2帧/5任务通过，累计40/40、剩余界面0；下一批R01。R01–R04仍未通过，Goal active，未公开发布。冻结UI 78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc、Core25f；两份最新完整官方设计和原始参考图、30种资源25字节一致/2全XML等价/3原生系统装饰，布局未重新设计。设计、资源、四图视觉。",
-      "唯一产品改动是2份Rust日志呈现代码：旧d08在上滚阅读时每次新增都强制到底；新78仅在底部跟随，100条过期时用缓存可见中间锚点/UTF8偏移/真实viewport几何有限帧恢复。Input几何已包含滚动偏移，修正重复叠加；没有新增空闲轮询。宽窗142→143保持88–96，小窗137→140保持59与上下裁切；单条/idle/底部由原委派原生观察和真实HTTP证明补充，未伪造额外PNG。初始fe/8a/e98/2f失败和一次缺trait编译诊断保留。原sync/unsync方法逐字节保持，Core/native/scripts/配置schema/依赖不变；206pass/2既有ignore、fmt/strictClippy/Intel类型检查/arm64release全0，Intel不是硬件验收。源码、旧问题、最终日志、构建。",
-      "真实CUA完成两弹窗宽/小、Cancel/X/Esc/中性Return/遮罩/English→中文；正式4张PNG原始1440×901和1100×701，逻辑1440×900和1100×700、当前1x，1px窗口边缘不裁掉。Figma正文称当前供应商；现有行为保存当前草稿后安装全部已保存供应商，产品文案如实保留全部范围。首次A保存后遇预置手工ID冲突，Core正确拒绝覆盖；这是夹具原预期错误，未改Core。换非冲突测试名成功同步5条，原2手工条目和扩展字段保留；B未保存草稿不被移除操作提交。坏JSON的保存后失败/移除失败/修复重试、受控目标真实20s拒绝退出和真实OS重开失败/修复均完成。交互、集中证据、冲突诊断。"
+      "读取本仓库全部开放Issue，当前仅#3。用户最新明确授权安排修复，保留青蓝吉祥物、圆角方形及既有撞色主题。根因是40×40索引色设计导出图自身带白边（外10%边缘278个亮中性像素），控件没有border/background/shadow；128×128现有App Icon边缘无同类亮像素。只把侧栏图片绑定改为已嵌入的brand.png，无图片编辑、裁切、新依赖、字体或间距改动。根因、交付摘要。",
+      "2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。原生验证、前宽、后宽、前小、后小。",
+      "fmt、206pass/2既有ignore、strict Clippy、Intel类型检查和arm64 Release全部0；历史15条请求及成本完整保持。跨零点价格日更仅3规则revision1→2，配置/费率不变，严格保护只接受单独核实的精确转换digest，原先失败断言保留而未篡改。构建、业务保护、跨日转换。"
     ],
     "limits": [
-      "本批判断：ACCEPTED for B05 interface delivery and short workload correctness only. Four unchanged workloads and actual terminal checks passed. UI idle RSS +0.055MiB/combined -0.155MiB; sampled peak +3.33MiB remains explicit R03 diagnostic cost. Proxy p95 -0.0095ms and process-to-marker -130.1675ms. Not a regression-free, lo"
+      "2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。原生验证、前宽、后宽、前小、后小。",
+      "本项代码及当前可用macOS1x两尺寸验证完成。仅有1920×1080的1x显示环境，200% HiDPI与Windows实机尚未验证，Issue保持开放待补证；128源像素充足不等于已做2x运行。未修改代理核心/功能逻辑，未公开发布；R01其余4项与R02–R04继续，剩余界面0。"
     ],
     "evidence": [
       {
-        "label": "设计",
-        "href": "benchmarks/b05-design-audit.json"
+        "label": "根因",
+        "href": "benchmarks/issue3-root-cause.json"
       },
       {
-        "label": "资源",
-        "href": "benchmarks/b05-asset-audit.json"
+        "label": "交付摘要",
+        "href": "benchmarks/issue3-summary.json"
       },
       {
-        "label": "四图视觉",
-        "href": "benchmarks/b05-visual-review.json"
+        "label": "原生验证",
+        "href": "benchmarks/issue3-native-verification.json"
       },
       {
-        "label": "源码",
-        "href": "benchmarks/b05-source-scope.json"
+        "label": "前宽",
+        "href": "screenshots/issue3-before-wide.png"
       },
       {
-        "label": "旧问题",
-        "href": "benchmarks/b05-log-baseline-validation.json"
+        "label": "后宽",
+        "href": "screenshots/issue3-after-wide.png"
       },
       {
-        "label": "最终日志",
-        "href": "benchmarks/b05-log-final-validation.json"
+        "label": "前小",
+        "href": "screenshots/issue3-before-small.png"
+      },
+      {
+        "label": "后小",
+        "href": "screenshots/issue3-after-small.png"
       },
       {
         "label": "构建",
-        "href": "benchmarks/b05-build.json"
-      },
-      {
-        "label": "交互",
-        "href": "benchmarks/b05-native-sync-partial-summary.json"
+        "href": "benchmarks/issue3-build.json"
       }
     ],
-    "commit": "fe0a41b79a69df9a40c871fc97ccd88de9aa7c32",
-    "date": "2026-10-31T22:27:45+08:00",
-    "commit_subject": "fix(studio): retain log reading and accept B05 lifecycle batch",
+    "commit": "30427fe793c22ab58db9bea793b016666a725c03",
+    "date": "2026-11-01T00:15:18+08:00",
+    "commit_subject": "fix(studio): reuse sharp borderless sidebar brand icon",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -321,8 +322,18 @@
           "benchmarks/b03-performance-summary.json",
           "benchmarks/b03-performance-supplemental-summary.json",
           "benchmarks/b03-performance-resource-diagnostics.json",
-          "benchmarks/b03-artifacts.json"
-        ]
+          "benchmarks/b03-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-52-2-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Wide overview header/filter/4metric cards/trend+cost/recent-request roles align. Real1000/55万/USD/four supported series and extra capture/status/price metadata retained, not static design92/509万. Small uses vertical reflow/scroll, not all cards simultaneous; original image is top viewport.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -405,8 +416,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-54-2-wide.png",
-          "screenshots/b01-54-2-small.png"
-        ]
+          "screenshots/b01-54-2-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-54-2-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Provider header, connection2column form, runtime card, model catalog and log hierarchy align. Real2/5/14 and actual localhost ports/test diagnostics differ from static sample. Small model body below viewport requires existing vertical scroll; B01 additional small-bottom evidence covers reachability, no claim all4 rows visible in primary top view.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -450,8 +471,18 @@
           "benchmarks/b03-performance-summary.json",
           "benchmarks/b03-performance-supplemental-summary.json",
           "benchmarks/b03-performance-resource-diagnostics.json",
-          "benchmarks/b03-artifacts.json"
-        ]
+          "benchmarks/b03-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-56-8-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Wide8column request table/filters/fixedfooter coherent, retained source tags/credits/Jump and first/right navigation preserve real functionality. Small horizontal/vertical viewport clips later columns and lower rows with reachable footer/navigation; transient first-column Tooltip appears in archived image. Actual2ce rightmost-column/5th-model reachability separately observed.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -495,8 +526,18 @@
           "benchmarks/b03-performance-summary.json",
           "benchmarks/b03-performance-supplemental-summary.json",
           "benchmarks/b03-performance-resource-diagnostics.json",
-          "benchmarks/b03-artifacts.json"
-        ]
+          "benchmarks/b03-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-57-8-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Supplier summary six columns, provider/model switch and two lower metric cards align; actual2providers/1000requests/55万 and USD are dynamic. Small retains horizontal column navigation and wrapped footer; lower token cards need vertical scrolling, not data loss.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -540,8 +581,18 @@
           "benchmarks/b03-performance-summary.json",
           "benchmarks/b03-performance-supplemental-summary.json",
           "benchmarks/b03-performance-resource-diagnostics.json",
-          "benchmarks/b03-artifacts.json"
-        ]
+          "benchmarks/b03-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-58-8-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Pricing/collection/local usage cards match hierarchy. Real three model rules, synthetic mapping, paused import0 and current timestamps differ sample. Small preserves pricing actions with mapping ellipsis, lower cards below viewport require vertical scroll. Existing section tabs retained.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -582,8 +633,18 @@
           "benchmarks/b02-performance-summary.json",
           "benchmarks/b02-default-serialization-audit.json",
           "benchmarks/b02-provider-contracts.json",
-          "benchmarks/b02-artifacts.json"
-        ]
+          "benchmarks/b02-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-59-11-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Centered model picker, count/search/bulk actions/striped scroll list/sticky cancel+confirm match. Real38 candidate list and existing4 add candidacy semantics retained; long ID ellipsizes. Small shrinks body to retain both footer buttons and overlay above toolbar; no apparent clipping.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -624,8 +685,18 @@
           "benchmarks/b02-performance-summary.json",
           "benchmarks/b02-default-serialization-audit.json",
           "benchmarks/b02-provider-contracts.json",
-          "benchmarks/b02-artifacts.json"
-        ]
+          "benchmarks/b02-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-59-279-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Editor fields/capability notice/6checkboxes/5effort options/token limits align. Existing default-effort select and capability help preserved. Narrow viewport scrolls token limits behind fixed Cancel/Confirm; no footer clipping. Real detected capability text differs static metadata wording.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -667,8 +738,18 @@
           "benchmarks/b05-native-lifecycle-summary.json",
           "benchmarks/b05-clipboard-validation.json",
           "benchmarks/b05-performance-summary.json",
-          "benchmarks/b05-artifacts.json"
-        ]
+          "benchmarks/b05-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-60-27-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Sync centered modal/icon/info/three actions/full mask align both sizes. Product truth says all saved providers rather than misleading current-provider-only wording; actual143requests retained from lifecycle tests. Original1x PNG differs earlier2x captures only in native scale.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -712,8 +793,18 @@
           "benchmarks/b03-performance-summary.json",
           "benchmarks/b03-performance-supplemental-summary.json",
           "benchmarks/b03-performance-resource-diagnostics.json",
-          "benchmarks/b03-artifacts.json"
-        ]
+          "benchmarks/b03-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-60-249-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "New price dialog has supplier/model/method/currency/four price inputs, historical snapshot note and explicit Save. Native dialog a little taller due existing field spacing; small keeps all inputs and action footer visible. Placeholder values are actual current semantics.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -757,8 +848,18 @@
           "benchmarks/b03-performance-summary.json",
           "benchmarks/b03-performance-supplemental-summary.json",
           "benchmarks/b03-performance-resource-diagnostics.json",
-          "benchmarks/b03-artifacts.json"
-        ]
+          "benchmarks/b03-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-60-475-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Request detail identity/protocol/tokens/cache/cost/timing and note match; native retains More details. Real ID/model-b-1/60ms/80percent differ sample. Small scroll body hides cost/timing below currently visible cache row while note/Close stay visible, preserving reachability.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -799,8 +900,18 @@
           "benchmarks/b02-performance-summary.json",
           "benchmarks/b02-default-serialization-audit.json",
           "benchmarks/b02-provider-contracts.json",
-          "benchmarks/b02-artifacts.json"
-        ]
+          "benchmarks/b02-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-61-289-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Chat protocol tab/authentication/mode/6mapping rows and fixed Apply footer align. Narrow body vertically scrolls final rows; same footer stays available. Main backdrop under full toolbar mask.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -841,8 +952,18 @@
           "benchmarks/b02-performance-summary.json",
           "benchmarks/b02-default-serialization-audit.json",
           "benchmarks/b02-provider-contracts.json",
-          "benchmarks/b02-artifacts.json"
-        ]
+          "benchmarks/b02-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-61-561-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Responses tab/authentication/mode/7mapping rows and protocol-specific none/max guidance match. Small body scrolling necessary; footer remains visible. No new visible blocker.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -883,8 +1004,18 @@
           "benchmarks/b02-performance-summary.json",
           "benchmarks/b02-default-serialization-audit.json",
           "benchmarks/b02-provider-contracts.json",
-          "benchmarks/b02-artifacts.json"
-        ]
+          "benchmarks/b02-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-61-838-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Anthropic output4096/version/mode/6mapping layout aligns. Actual unconfigured mode is honest current fixture rather than design budget example. Small retains top fields/footer with scrollable mapping body.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -925,8 +1056,18 @@
           "benchmarks/b02-performance-summary.json",
           "benchmarks/b02-default-serialization-audit.json",
           "benchmarks/b02-provider-contracts.json",
-          "benchmarks/b02-artifacts.json"
-        ]
+          "benchmarks/b02-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-61-1111-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Gemini tab/mode/6mapping rows match; fixture unconfigured rather than design Thinking level reflects current data. Small retains heading/mode and fixed Apply with body scroll for final max rows.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -971,8 +1112,18 @@
           "benchmarks/b04-checking-sampling.json",
           "benchmarks/b04-performance-summary.json",
           "benchmarks/b04-resource-diagnostics.json",
-          "benchmarks/b04-artifacts.json"
-        ]
+          "benchmarks/b04-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-62-308-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Mono theme provider baseline matches dark sidebar/light body and black accents, with actual untested state/14or15rows rather than static green. Wide shows full model table; small top viewport requires lower content scroll.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1017,8 +1168,18 @@
           "benchmarks/b04-checking-sampling.json",
           "benchmarks/b04-performance-summary.json",
           "benchmarks/b04-resource-diagnostics.json",
-          "benchmarks/b04-artifacts.json"
-        ]
+          "benchmarks/b04-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-64-335-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Appearance menu right-anchored two-column6legacy skins plus retained seventh Studio item. All7 fully fit both sizes; actual Studio selection differs design Wisteria sample. No page reflow.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1061,8 +1222,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-66-320-wide.png",
-          "screenshots/b01-66-320-small.png"
-        ]
+          "screenshots/b01-66-320-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-66-320-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Four protocol choices/check/descriptions preserved, anchored select menu flips/clamps into small viewport and final Gemini row remains visible. Current connection/port and actual14records differ sample.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1098,8 +1269,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-66-538-wide.png",
-          "screenshots/b01-66-538-small.png"
-        ]
+          "screenshots/b01-66-538-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-66-538-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Searchable provider preset popover has filtered Bedrock rows with keyboard highlight; actual searchbedrock/secondrow differs design unfiltered partial view. Small search+7visible choices fit viewport; long catalog scrolls.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1135,8 +1316,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-66-760-wide.png",
-          "screenshots/b01-66-760-small.png"
-        ]
+          "screenshots/b01-66-760-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-66-760-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Shown key state uses clearly synthetic fixture-upstream-key, eye affordance and small hover label align. No fake prototype banner shipped; logs retain actual diagnostics. Lower small models via scroll.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1172,8 +1363,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-67-338-wide.png",
-          "screenshots/b01-67-338-small.png"
-        ]
+          "screenshots/b01-67-338-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-67-338-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Second provider selection/name/1model/empty-space help preserved. Fixture custom endpoint/model-b differs design preset public endpoint but actual independent fields truthful. Small top viewport retains runtime, model body via scroll.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1209,8 +1410,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-67-548-wide.png",
-          "screenshots/b01-67-548-small.png"
-        ]
+          "screenshots/b01-67-548-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-67-548-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Reasoning menu title6choices/currentcheck match. Small page scrolled to model footer with menu opening upward so whole menu plus Test/Save reachable.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1252,8 +1463,18 @@
           "benchmarks/b05-native-lifecycle-summary.json",
           "benchmarks/b05-clipboard-validation.json",
           "benchmarks/b05-performance-summary.json",
-          "benchmarks/b05-artifacts.json"
-        ]
+          "benchmarks/b05-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-68-350-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Unsync dialog matches layout and mask in both sizes; truthful removal/backed-up entries semantics retained. All3 actions fit and title not clipped.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1297,8 +1518,18 @@
           "benchmarks/b03-performance-summary.json",
           "benchmarks/b03-performance-supplemental-summary.json",
           "benchmarks/b03-performance-resource-diagnostics.json",
-          "benchmarks/b03-artifacts.json"
-        ]
+          "benchmarks/b03-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-69-359-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Edit price retains supplier/model identity disabled and USD2/10 with cache0, same two-column rate layout and fixed Save/Cancel footer in both sizes. Existing historical-snapshot notice intact.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1334,8 +1565,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-78-364-wide.png",
-          "screenshots/b01-78-364-small.png"
-        ]
+          "screenshots/b01-78-364-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-78-364-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "New provider draft0models/amberunsaved/cancel/emptycatalog match. Empty URL honest current placeholder versus design example; current untouched draft default Keep model settings preserved. Small redundant amber hint omitted to fit, status and Cancel remain.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1371,8 +1612,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-78-605-wide.png",
-          "screenshots/b01-78-605-small.png"
-        ]
+          "screenshots/b01-78-605-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-78-605-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Existing provider dirty name/amberunsaved/cancel restore hierarchy match; actualsub2apiB01 visible both heading/sidebar/field. Small preserves only one amber hint and actions.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1408,8 +1659,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-78-843-wide.png",
-          "screenshots/b01-78-843-small.png"
-        ]
+          "screenshots/b01-78-843-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-78-843-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Copy draft copyname/4inheritedmodels/amber/Cancel copy match. Untested connection correctly differs static green. Native fakeKey masked; small preserves draft actions.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1450,8 +1711,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-78-1080-wide.png",
-          "screenshots/b01-78-1080-small.png"
-        ]
+          "screenshots/b01-78-1080-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-78-1080-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Destructive confirm centered warning/removal count4/irreversible note/Cancel+redDelete match in both sizes; complete mask above seven toolbar icons.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1487,8 +1758,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-78-1325-wide.png",
-          "screenshots/b01-78-1325-small.png"
-        ]
+          "screenshots/b01-78-1325-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-78-1325-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Capacity64/64 and disabled Add/Copy correct, actual runtime64/5/0 replaces static2/5. Sidebar independently scrolls; small shows fewer rows without displacing bottom controls.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1524,8 +1805,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-78-1804-wide.png",
-          "screenshots/b01-78-1804-small.png"
-        ]
+          "screenshots/b01-78-1804-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-78-1804-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "After delete1/64 and remaining1model/recovery banner match. Actual existing14request history retained versus static0; no historical data loss required. Small lower model via scroll.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1561,8 +1852,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-79-400-wide.png",
-          "screenshots/b01-79-400-small.png"
-        ]
+          "screenshots/b01-79-400-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-79-400-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Filtered match1/64 with searchclear and row27 match. Current provider staysA despite off-filter selection, truthful preservedbehavior. Add/Copy disabled at64 and lower runtime correct.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1598,8 +1899,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-79-885-wide.png",
-          "screenshots/b01-79-885-small.png"
-        ]
+          "screenshots/b01-79-885-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-79-885-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Created saved provider3/64 with0models and savedbanner match. Actual untested connection differs static green, and original14history remains. Small has same clear selected name/status/cancel-to-edit affordance.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1635,8 +1946,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-79-1102-wide.png",
-          "screenshots/b01-79-1102-small.png"
-        ]
+          "screenshots/b01-79-1102-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-79-1102-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Saved copy3/9 count and inherited4rows match. Copy name and masked credential retained, connection not borrowed. Small one savedcopy status used to fit strip; lower rows scroll.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1672,8 +1993,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-80-418-wide.png",
-          "screenshots/b01-80-418-small.png"
-        ]
+          "screenshots/b01-80-418-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-80-418-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "OpenCode text filter1/2, clear affordance and matching B row match; currentA form remains intentionally until selection. Existing Add/Copy actions still enabled at2.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1709,8 +2040,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-80-646-wide.png",
-          "screenshots/b01-80-646-small.png"
-        ]
+          "screenshots/b01-80-646-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-80-646-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "B dirty rename1model withCancel/amber state correct. Long heading ellipsizes safely, field/sidebar full visible; native status correctly dirty rather than contradictory saved example.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1751,8 +2092,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-80-864-wide.png",
-          "screenshots/b01-80-864-small.png"
-        ]
+          "screenshots/b01-80-864-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-80-864-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Delete B confirmation accuratelynamesOpenCodeGo/1model, fullwarning/actionfooter/mask match; actual backdropB form unlike inconsistent designAfields. Both sizes fit.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1788,8 +2139,18 @@
           "benchmarks/b01-native-supplement-gui.json",
           "benchmarks/b01-performance-summary.json",
           "screenshots/b01-80-1114-wide.png",
-          "screenshots/b01-80-1114-small.png"
-        ]
+          "screenshots/b01-80-1114-small.png",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-80-1114-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "After deletingB remainingA1/64 and4models banner match; original14history preserved against static0. Small lower model body uses existing page scroll.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1834,8 +2195,18 @@
           "benchmarks/b04-checking-sampling.json",
           "benchmarks/b04-performance-summary.json",
           "benchmarks/b04-resource-diagnostics.json",
-          "benchmarks/b04-artifacts.json"
-        ]
+          "benchmarks/b04-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-104-1378-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Autostart enabled notice/power-active icon and close button fit both sizes; true isolated autostart state independently accepted in B04, screenshots alone not login-launch proof.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1880,8 +2251,18 @@
           "benchmarks/b04-checking-sampling.json",
           "benchmarks/b04-performance-summary.json",
           "benchmarks/b04-resource-diagnostics.json",
-          "benchmarks/b04-artifacts.json"
-        ]
+          "benchmarks/b04-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-104-1605-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Busy update notice/spinner/source+close match; actual GitHub Releases source replaces Figma placeholder. Toolbar tooltip coexists legitimately. Background disabled styling visible; event blocking handled separately.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1926,8 +2307,18 @@
           "benchmarks/b04-checking-sampling.json",
           "benchmarks/b04-performance-summary.json",
           "benchmarks/b04-resource-diagnostics.json",
-          "benchmarks/b04-artifacts.json"
-        ]
+          "benchmarks/b04-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-104-1823-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Language menu title/close/3choices match, actual Simplified selected rather than design Follow system. Menu stays right-inset and fully visible both sizes.",
+          "new_layout_blocker": false
+        }
       }
     },
     {
@@ -1972,8 +2363,18 @@
           "benchmarks/b04-checking-sampling.json",
           "benchmarks/b04-performance-summary.json",
           "benchmarks/b04-resource-diagnostics.json",
-          "benchmarks/b04-artifacts.json"
-        ]
+          "benchmarks/b04-artifacts.json",
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "screenshots/r01-figma-104-2046-reference.png"
+        ],
+        "r01_consolidated": {
+          "at": "2026-11-01T00:10:36.781592+08:00",
+          "scope": "Fresh design vs original accepted batch two-size native PNG, not a new full-suite capture of current R01 candidate.",
+          "assessment": "reviewed_with_runtime_and_responsive_differences",
+          "notes": "Restore notice1440x900 and Close fit right edge both sizes. Small captured after manual resize following restore, not claimed restore produced1100x700.",
+          "new_layout_blocker": false
+        }
       }
     }
   ],
@@ -2091,12 +2492,12 @@
   "release_plan": {
     "version": 2,
     "title": "Studio V2 正式版批次计划",
-    "as_of": "2026-10-31",
+    "as_of": "2026-11-01",
     "state": "active",
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 71,
+    "historical_tasks": 74,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3062,7 +3463,7 @@
         "id": "R01",
         "title": "全局状态、输入与无障碍",
         "kind": "release",
-        "status": "planned",
+        "status": "developing",
         "frames": [],
         "depends_on": [
           "B01",
@@ -3071,7 +3472,7 @@
           "B04",
           "B05"
         ],
-        "completed_summary": "已有分项键盘、真实拼音IME、Unicode冷载入、原生语义和七主题代表性检查；尚非全局通过。",
+        "completed_summary": "40帧/80原生主图对最新40份官方参考的集中签收完成；表格语义修复及真实键盘/busy补证推进中，R01其余4项未通过。",
         "delivery": "对共享组件统一验收，不让同一键盘/主题待办在40帧中重复执行。",
         "tasks": [
           {
@@ -3138,9 +3539,9 @@
           {
             "id": "R01.5",
             "title": "40帧界面集中签收",
-            "acceptance": "pending",
-            "completed": "B01–B04累计38/40帧按最新设计和两尺寸签收，剩B05两帧；最终40帧集中扫描仍待，不等于R01/正式版通过。",
-            "remaining": "完成B01–B05后一次扫40帧/80张两尺寸原图；修一个清晰的问题清单再集中复验。",
+            "acceptance": "passed",
+            "completed": "R01集中签收：官方51:2仍40界面，已逐一实际查看40份新参考图和80份原批次两尺寸PNG；格式/像素/hash/原候选来源全核，40帧无新增布局阻断。实际数据/窄窗滚动/原生AA差异逐帧记明；历史图未重标新R01候选。",
+            "remaining": "40帧界面集中签收已完成；共享状态、完整键盘/IME/真实辅助技术仍分别R01.1–R01.4，平台/性能/发行仍R02–R04。Issue3品牌收尾独立提交，不重设计页面。",
             "acceptance_check": "每帧布局/资产/文字角色/状态/交互有最新设计证据；原生AA差异记录但不设RGB/字体文件字节相同门禁；无缺图/旧候选冒用。",
             "history_tasks": [
               53,
@@ -3153,12 +3554,22 @@
               64,
               65,
               66,
-              67
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73
             ]
           }
         ],
         "accepted_frames": [],
-        "acceptance_evidence": [],
+        "acceptance_evidence": [
+          "benchmarks/r01-consolidated-visual-review.json",
+          "benchmarks/r01-original-eighty-audit.json",
+          "benchmarks/r01-latest-reference-manifest.json"
+        ],
         "frame_details": [],
         "reviewed_frames": 0
       },
@@ -3213,13 +3624,14 @@
             "id": "R02.4",
             "title": "缩放、双尺寸与平台回归",
             "acceptance": "pending",
-            "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。",
+            "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。 Issue3侧栏品牌改用现有128px资源，macOS1x前后两尺寸通过，200%与Windows运行未验。",
             "remaining": "Mac1×/2×、Windows100/125/150/200%覆盖代表性页面和长文本/弹窗，平台修复后回查共享控件。",
             "acceptance_check": "1100×700和1440×900逻辑尺寸下按钮/字段/尾部可达；系统额外截图行如实保留；平台改动不破坏Mac定位。",
             "history_tasks": [
               43,
               52,
-              57
+              57,
+              74
             ]
           }
         ],
@@ -3659,7 +4071,7 @@
       "release_batches": 4,
       "passed_batches": 5,
       "tasks": 50,
-      "passed_tasks": 31
+      "passed_tasks": 32
     },
     "goal_status": "active"
   },
@@ -7007,6 +7419,91 @@
       "date": "2026-10-31T22:27:45+08:00",
       "commit_subject": "fix(studio): retain log reading and accept B05 lifecycle batch",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 73,
+      "title": "R01 全部40帧集中签收",
+      "status": "recorded",
+      "summary": "40帧界面集中签收通过，剩余界面0。官方51:2仍为原40界面，另有71:364交付契约与18共享组件；本轮重新只读导出40份1024×640参考图，并逐一实际查看参考图和B01–B05的80张两尺寸原生主图。原图格式、尺寸、SHA与各自候选来源全部核对，未发现新增布局阻断。集中视觉复核、80原图来源、最新参考清单。",
+      "highlights": [
+        "40帧界面集中签收通过，剩余界面0。官方51:2仍为原40界面，另有71:364交付契约与18共享组件；本轮重新只读导出40份1024×640参考图，并逐一实际查看参考图和B01–B05的80张两尺寸原生主图。原图格式、尺寸、SHA与各自候选来源全部核对，未发现新增布局阻断。集中视觉复核、80原图来源、最新参考清单。",
+        "每帧记录真实数据与Figma示例数值、窄窗滚动/折行、省略、原生AA及OS附加像素行的差异。原B01–B05候选与DPI保持，不把历史80图冒充当前R01新编译版本的全套截图。新R01表格语义修复仍须单独完成受影响路径验证，Issue3品牌边缘优化按用户最新授权独立交付。",
+        "本次只签收R01.5。R01.1–R01.4共享状态、完整键盘、IME、真实辅助技术和七主题/三语言仍在推进；R02–R04平台/HiDPI、性能与安装发行尚未通过。Goal active，未宣称正式版可发布，未公开发布。"
+      ],
+      "limits": [
+        "本次只签收R01.5。R01.1–R01.4共享状态、完整键盘、IME、真实辅助技术和七主题/三语言仍在推进；R02–R04平台/HiDPI、性能与安装发行尚未通过。Goal active，未宣称正式版可发布，未公开发布。"
+      ],
+      "evidence": [
+        {
+          "label": "集中视觉复核",
+          "href": "benchmarks/r01-consolidated-visual-review.json"
+        },
+        {
+          "label": "80原图来源",
+          "href": "benchmarks/r01-original-eighty-audit.json"
+        },
+        {
+          "label": "最新参考清单",
+          "href": "benchmarks/r01-latest-reference-manifest.json"
+        }
+      ],
+      "commit": "db17519e1182c9018dcef017908139995bf940c2",
+      "date": "2026-11-01T00:11:39+08:00",
+      "commit_subject": "docs(studio): accept consolidated review of forty V2 frames",
+      "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 74,
+      "title": "Issue3侧栏品牌白边与清晰度修复",
+      "status": "recorded",
+      "summary": "读取本仓库全部开放Issue，当前仅#3。用户最新明确授权安排修复，保留青蓝吉祥物、圆角方形及既有撞色主题。根因是40×40索引色设计导出图自身带白边（外10%边缘278个亮中性像素），控件没有border/background/shadow；128×128现有App Icon边缘无同类亮像素。只把侧栏图片绑定改为已嵌入的brand.png，无图片编辑、裁切、新依赖、字体或间距改动。根因、交付摘要。",
+      "highlights": [
+        "读取本仓库全部开放Issue，当前仅#3。用户最新明确授权安排修复，保留青蓝吉祥物、圆角方形及既有撞色主题。根因是40×40索引色设计导出图自身带白边（外10%边缘278个亮中性像素），控件没有border/background/shadow；128×128现有App Icon边缘无同类亮像素。只把侧栏图片绑定改为已嵌入的brand.png，无图片编辑、裁切、新依赖、字体或间距改动。根因、交付摘要。",
+        "2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。原生验证、前宽、后宽、前小、后小。",
+        "fmt、206pass/2既有ignore、strict Clippy、Intel类型检查和arm64 Release全部0；历史15条请求及成本完整保持。跨零点价格日更仅3规则revision1→2，配置/费率不变，严格保护只接受单独核实的精确转换digest，原先失败断言保留而未篡改。构建、业务保护、跨日转换。"
+      ],
+      "limits": [
+        "2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。原生验证、前宽、后宽、前小、后小。",
+        "本项代码及当前可用macOS1x两尺寸验证完成。仅有1920×1080的1x显示环境，200% HiDPI与Windows实机尚未验证，Issue保持开放待补证；128源像素充足不等于已做2x运行。未修改代理核心/功能逻辑，未公开发布；R01其余4项与R02–R04继续，剩余界面0。"
+      ],
+      "evidence": [
+        {
+          "label": "根因",
+          "href": "benchmarks/issue3-root-cause.json"
+        },
+        {
+          "label": "交付摘要",
+          "href": "benchmarks/issue3-summary.json"
+        },
+        {
+          "label": "原生验证",
+          "href": "benchmarks/issue3-native-verification.json"
+        },
+        {
+          "label": "前宽",
+          "href": "screenshots/issue3-before-wide.png"
+        },
+        {
+          "label": "后宽",
+          "href": "screenshots/issue3-after-wide.png"
+        },
+        {
+          "label": "前小",
+          "href": "screenshots/issue3-before-small.png"
+        },
+        {
+          "label": "后小",
+          "href": "screenshots/issue3-after-small.png"
+        },
+        {
+          "label": "构建",
+          "href": "benchmarks/issue3-build.json"
+        }
+      ],
+      "commit": "30427fe793c22ab58db9bea793b016666a725c03",
+      "date": "2026-11-01T00:15:18+08:00",
+      "commit_subject": "fix(studio): reuse sharp borderless sidebar brand icon",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -8213,6 +8710,21 @@
     {
       "date": "2026-10-31T22:29:05+08:00",
       "note": "B05采样峰值+3.33MiB和B01/B03/B04既有成本继续留R03；40帧完成不代表正式版可发布。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T00:15:19+08:00",
+      "note": "完成40帧集中签收与Issue3品牌实现；保留完整输入、辅助技术、平台与发行门禁。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
