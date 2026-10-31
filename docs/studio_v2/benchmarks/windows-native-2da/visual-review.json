@@ -1,0 +1,94 @@
+{
+  "reviewed_at": "2026-11-01T03:12:06.451406+08:00",
+  "review_method": "Primary agent opened both unmodified local PNGs through view_image after artifact and per-image hashes were verified",
+  "artifact_id": 13054441131,
+  "run_id": 41231731650,
+  "head_sha": "2da670b23e1771caba186ae16274b9c36e7ad340",
+  "core_sha256": "9e0a2020f17349f8226ec03f55c006dccd6b4dff02cc5bb3f9edac35ac5f9ca0",
+  "ui_sha256": "01f3197d4655f2492fe935e4c6432c9f2ce9f77136ba62375a1915786721b788",
+  "surface": "Packaged default isolated English usage-records page,1provider/64models/0requests; no appearance file was forced by this fixture. Not40-frame Windows design signoff.",
+  "observed": {
+    "native_caption_minimize_maximize_close_visible_in_top_row": true,
+    "seven_application_toolbar_actions_visible_below_caption_row": true,
+    "visual_overlap_at_both_sizes": false,
+    "brand_logo_visible_without_white_square": true,
+    "request_empty_state_and_pagination_visible": true,
+    "no_fake_or_prior_images": true
+  },
+  "native_geometry": [
+    {
+      "client": [
+        1440.0,
+        900.0
+      ],
+      "dpi": 96,
+      "png": [
+        1442,
+        901
+      ],
+      "dwm": [
+        7,
+        0,
+        1449,
+        901
+      ],
+      "sha256": "7202b368936ebd8e767928effee44f200957dd93ab150134c099cc9fcb21887e"
+    },
+    {
+      "client": [
+        1100.0,
+        700.0
+      ],
+      "dpi": 96,
+      "png": [
+        1102,
+        701
+      ],
+      "dwm": [
+        7,
+        0,
+        1109,
+        701
+      ],
+      "sha256": "fa9fdd515c551e362c72f6649dc61b24dade960221e881f0d6078413a345dc72"
+    }
+  ],
+  "ci_display": {
+    "original_monitor": [
+      0,
+      0,
+      1024,
+      768
+    ],
+    "original_work_area": [
+      0,
+      0,
+      1024,
+      720
+    ],
+    "temporary_monitor": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "dpi_unchanged": true,
+    "original_mode_restored_and_verified": true
+  },
+  "not_exercised": [
+    "Physical click hit testing for minimize/maximize/close",
+    "Native titlebar drag or simultaneous hit-region dispatch",
+    "Ctrl keyboard and real Chinese IME",
+    "125/150/200% system scale",
+    "Allskins/languages/40frames onWindows",
+    "Installed WorkBuddy user profile interop",
+    "Old-version data upgrade"
+  ],
+  "acceptance": "Windows caption/application-toolbar visual separation at100% inbothlogical sizes passed. R02.1 andR02.4 remain pending for their remaining input/system/scale requirements.",
+  "lifecycle": "Held capture harness verified normal shutdown/draft reopen etc with skipped diagnostics accurately named; separate ordinary package tests and installer also passed.",
+  "cleanup_remote": {
+    "status": "removed",
+    "bytes": 53928018,
+    "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\workbuddy-ci-capture-sh9gvjx1"
+  }
+}

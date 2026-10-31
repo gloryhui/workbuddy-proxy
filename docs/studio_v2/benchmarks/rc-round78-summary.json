@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-11-01T03:03:36.998043+08:00",
+  "as_of": "2026-11-01T03:14:16.162111+08:00",
   "product_source_commit": "74b1e093d8b9c3e5f91443edb568087245edc58d",
   "capture_helper_commit": "2da670b23e1771caba186ae16274b9c36e7ad340",
   "mac_ui_sha256": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
@@ -22,7 +22,10 @@
     "desktop": {
       "id": 41231731650,
       "state": "in progress at snapshot; inspect actual current jobs before continuing",
-      "never_redispatch_just_for_observation_timeout": true
+      "never_redispatch_just_for_observation_timeout": true,
+      "windows": "success",
+      "macos_arm64": "in progress at last snapshot",
+      "macos_intel": "in progress at last snapshot"
     }
   },
   "long_observations": {
@@ -126,11 +129,12 @@
   "images": {
     "raw_jpeg_count": 29,
     "manifest": "rc-caption-fix/image-manifest.json",
-    "windows_current_captures": 0
+    "windows_current_captures": 2,
+    "windows_manifest": "windows-native-2da/artifact-provenance.json"
   },
   "state": "partial;40/40frames signed,0remaining;18release tasks pending;Goalactive;noVoiceOver/AT/input-sourcechanges;no publicrelease",
   "followups": [
-    "Inspect current2da Desktop41231731650 terminal and immutable artifacts without duplicate dispatch.",
+    "Inspect remaining Mac jobs in existing2daDesktop41231731650;Windows nativecapture+installer passed andPNGs reviewed. Do not duplicate dispatch.",
     "Explain intermittent Ubuntu requested full-scan completion failure; do not discard first attempt.",
     "Diagnose4096dialog RSS+2.266MiB/600s andCPU6.656%vs ordinarymenu1.605%, different processes/history so not matched A/B proof.",
     "Run final cumulativea6e/current P/C/C/P with preserved historicalB01/B03/B04 costs.",
@@ -153,5 +157,27 @@
     "agent_python_compile_cleanup_bytes": 43348,
     "shared_cargo_caches_and_unowned_preview_directories": "retained unchanged",
     "notes": "Necessary local baseline reference is separately disclosed; it is not counted as retained temporary files. Free-space delta includes concurrent system activity and is not an exclusive physical-block attribution."
-  }
+  },
+  "windows_native_2da": {
+    "artifact_id": 13054441131,
+    "visual_review": "windows-native-2da/visual-review.json",
+    "native_capture": "passed; actual1440x900/1100x700 clients,DPI96,raw1442x901/1102x701PNGs",
+    "original_ci_display": "1024x768,work1024x720",
+    "temporary_ci_display": "1920x1080,same96DPI/32bpp/orientation/64Hz",
+    "restore": "originalmodeandmonitor/workarea/DPI verified",
+    "installer": "passed",
+    "limits": "DefaultEnglish/emptyrequests representativepage only;captionbuttons hit-test/Ctrl/IME/other scales stillpending"
+  },
+  "additional_artifact_cleanup": {
+    "completed_at": "2026-11-01T03:13:28.836661+08:00",
+    "removed_target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-win-native._bhrl1tr",
+    "removed_files": 2,
+    "logical_bytes_removed": 60728071,
+    "session_temporary_retained_bytes": 0,
+    "system_free_after_bytes": 36446392320,
+    "no_local_executable_or_native_app_launched": true,
+    "remote_fixture_cleanup_bytes": 53928018,
+    "baseline_reference_retained_bytes": 42476412
+  },
+  "total_local_cleanup_logical_bytes": 509454614
 }

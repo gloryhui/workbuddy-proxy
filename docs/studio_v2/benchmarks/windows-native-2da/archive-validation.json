@@ -1,0 +1,12 @@
+{
+  "authored_whitespace": "passed",
+  "original_windows_crlf_reports_preserved": [
+    "docs/studio_v2/benchmarks/windows-native-2da/bench-results/core-windows-x64.json",
+    "docs/studio_v2/benchmarks/windows-native-2da/bench-results/gpui-windows-x64.json",
+    "docs/studio_v2/benchmarks/windows-native-2da/bench-results/windows-installer.json",
+    "docs/studio_v2/benchmarks/windows-native-2da/bench-results/windows-native/windows-ci-lifecycle.json",
+    "docs/studio_v2/benchmarks/windows-native-2da/bench-results/windows-native/windows-ci-screenshot.json",
+    "docs/studio_v2/benchmarks/windows-native-2da/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json"
+  ],
+  "pngs_and_report_bytes": "Verified against immutable artifact provenance SHA256; no normalization or editing"
+}

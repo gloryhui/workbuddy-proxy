@@ -205,12 +205,12 @@
         "80:1114"
       ],
       "acceptance_evidence": [
+        "benchmarks/b01-artifacts.json",
         "benchmarks/b01-design-audit.json",
         "benchmarks/b01-native-consolidated.json",
         "benchmarks/b01-native-supplement-gui.json",
         "benchmarks/b01-performance-summary.json",
-        "benchmarks/b01-provider-contracts.json",
-        "benchmarks/b01-artifacts.json"
+        "benchmarks/b01-provider-contracts.json"
       ]
     },
     {
@@ -335,14 +335,14 @@
         "61:1111"
       ],
       "acceptance_evidence": [
+        "benchmarks/b02-artifacts.json",
+        "benchmarks/b02-default-serialization-audit.json",
         "benchmarks/b02-design-audit.json",
-        "benchmarks/b02-native-consolidated.json",
         "benchmarks/b02-native-b02-summary.json",
         "benchmarks/b02-native-capture-summary.json",
+        "benchmarks/b02-native-consolidated.json",
         "benchmarks/b02-performance-summary.json",
-        "benchmarks/b02-default-serialization-audit.json",
-        "benchmarks/b02-provider-contracts.json",
-        "benchmarks/b02-artifacts.json"
+        "benchmarks/b02-provider-contracts.json"
       ]
     },
     {
@@ -477,17 +477,17 @@
         "69:359"
       ],
       "acceptance_evidence": [
+        "benchmarks/b03-artifacts.json",
         "benchmarks/b03-design-audit.json",
-        "benchmarks/b03-native-consolidated.json",
-        "benchmarks/b03-native-b03-summary.json",
-        "benchmarks/b03-traffic-snapshot-validation.json",
         "benchmarks/b03-import-final-validation.json",
-        "benchmarks/b03-unchanged-overview-regression.json",
+        "benchmarks/b03-native-b03-summary.json",
+        "benchmarks/b03-native-consolidated.json",
         "benchmarks/b03-native-limitations.json",
+        "benchmarks/b03-performance-resource-diagnostics.json",
         "benchmarks/b03-performance-summary.json",
         "benchmarks/b03-performance-supplemental-summary.json",
-        "benchmarks/b03-performance-resource-diagnostics.json",
-        "benchmarks/b03-artifacts.json"
+        "benchmarks/b03-traffic-snapshot-validation.json",
+        "benchmarks/b03-unchanged-overview-regression.json"
       ]
     },
     {
@@ -605,18 +605,18 @@
         "104:2046"
       ],
       "acceptance_evidence": [
-        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-artifacts.json",
         "benchmarks/b04-asset-audit.json",
-        "benchmarks/b04-source-scope.json",
-        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-design-audit.json",
         "benchmarks/b04-language-failure-baseline.json",
         "benchmarks/b04-native-b04-summary.json",
         "benchmarks/b04-native-consolidated.json",
-        "benchmarks/b04-visual-review.json",
-        "benchmarks/b04-checking-sampling.json",
         "benchmarks/b04-performance-summary.json",
         "benchmarks/b04-resource-diagnostics.json",
-        "benchmarks/b04-artifacts.json"
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-visual-review.json"
       ]
     },
     {
@@ -705,12 +705,12 @@
         "68:350"
       ],
       "acceptance_evidence": [
+        "benchmarks/b05-artifacts.json",
+        "benchmarks/b05-clipboard-validation.json",
         "benchmarks/b05-design-audit.json",
         "benchmarks/b05-native-consolidated.json",
         "benchmarks/b05-native-lifecycle-summary.json",
-        "benchmarks/b05-clipboard-validation.json",
-        "benchmarks/b05-performance-summary.json",
-        "benchmarks/b05-artifacts.json"
+        "benchmarks/b05-performance-summary.json"
       ]
     },
     {
@@ -831,9 +831,9 @@
       "accepted_frames": [],
       "acceptance_evidence": [
         "benchmarks/r01-consolidated-visual-review.json",
-        "benchmarks/r01-original-eighty-audit.json",
-        "benchmarks/r01-latest-reference-manifest.json",
         "benchmarks/r01-input-summary.json",
+        "benchmarks/r01-latest-reference-manifest.json",
+        "benchmarks/r01-original-eighty-audit.json",
         "benchmarks/r01-resume-summary.json",
         "benchmarks/r01-states-summary.json"
       ]
@@ -854,8 +854,8 @@
           "id": "R02.1",
           "title": "Windows原生窗口与输入",
           "acceptance": "pending",
-          "completed": "已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。 QA78确认Windows标题栏24px与工具栏top8的真实源码重叠，已改top32且增加几何回归。74b的Windows原生build/207test/集成与包生命周期通过，GDI因DPI96工作区放不下1440×900而失败、0截图，随后harness退出0并清理；2da改进临时CI显示准备，原生截图仍待新run，不冒称平台通过。",
-          "remaining": "等待新CI的两尺寸GDI原图并复核caption/工具栏；继续Windows Ctrl快捷键、中文IME、原生最小化/最大化/关闭、托盘和弹窗实测。数学投影不等于真实缩放。",
+          "completed": "已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。 QA78确认Windows标题栏24px与工具栏top8的真实源码重叠，已改top32且增加几何回归。74b的Windows原生build/207test/集成与包生命周期通过，GDI因DPI96工作区放不下1440×900而失败、0截图，随后harness退出0并清理；2da改进临时CI显示准备，原生截图仍待新run，不冒称平台通过。 QA78补充：2da Windows job已终态success，实际GDI两尺寸原PNG已逐图审查，caption顶行与业务工具栏下排无可见重叠；DPI96，实际client1440×900/1100×700，原生边框PNG1442×901/1102×701。仅默认英文空请求页，未点击caption窗控或验证Ctrl/IME。",
+          "remaining": "已取得Windows100%两尺寸GDI原图和视觉分离证明；继续原生caption最小化/最大化/关闭实际点击、标题拖动、Ctrl快捷键、中文IME、托盘及代表弹窗。",
           "acceptance_check": "原生Windows可操作；工具栏不挡最小化/最大化/关闭；优先GDI/ImageGrab按PID截图，不能用Mac图替代。",
           "history_tasks": [
             43,
@@ -892,7 +892,7 @@
           "id": "R02.4",
           "title": "缩放、双尺寸与平台回归",
           "acceptance": "pending",
-          "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。 Issue3侧栏品牌改用现有128px资源，macOS1x前后两尺寸通过，200%与Windows运行未验。 QA78Windows按钮几何按1100/1440和1/1.25/1.5/2逻辑投影回归；只是源代码矩形分离，非真实系统缩放矩阵。当前Mac仍1920×1080单1x显示器，Windows新原图待CI。",
+          "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。 Issue3侧栏品牌改用现有128px资源，macOS1x前后两尺寸通过，200%与Windows运行未验。 QA78Windows按钮几何按1100/1440和1/1.25/1.5/2逻辑投影回归；只是源代码矩形分离，非真实系统缩放矩阵。当前Mac仍1920×1080单1x显示器，Windows新原图待CI。 2da Windows100%默认英文代表页两尺寸原图已复核，品牌无可见白方块；其余页面/主题/长文本/弹窗与125/150/200%仍待，不签收完整矩阵。",
           "remaining": "Mac1×/2×、Windows100/125/150/200%覆盖代表性页面和长文本/弹窗，平台修复后回查共享控件。",
           "acceptance_check": "1100×700和1440×900逻辑尺寸下按钮/字段/尾部可达；系统额外截图行如实保留；平台改动不破坏Mac定位。",
           "history_tasks": [
@@ -1022,7 +1022,7 @@
           "id": "R04.1",
           "title": "最终提交CI全矩阵",
           "acceptance": "pending",
-          "completed": "Core/desktop工作流配置包含Windows/macOS arm64/Intel构建及集成/打包脚本。 QA78已实际触发b167 Core41227146468及Desktop41227149652，四job终态success；74b Core41230163774重试后success但首次fail保留，Desktop41230175334 Windows截图失败。2da最新Core41231726063/Desktop41231731650已触发，等待真实终态，不复用旧run冒称最终通过。",
+          "completed": "Core/desktop工作流配置包含Windows/macOS arm64/Intel构建及集成/打包脚本。 QA78已实际触发b167 Core41227146468及Desktop41227149652，四job终态success；74b Core41230163774重试后success但首次fail保留，Desktop41230175334 Windows截图失败。2da最新Core41231726063/Desktop41231731650已触发，等待真实终态，不复用旧run冒称最终通过。 2da最新Core与Windows终态success，截图后实际installer通过且末端native gate success；两Mac仍运行，整项pending。",
           "remaining": "核验最新2da的Core41231726063/Desktop41231731650终态、原始报告及artifact SHA；Windows截图若失败保留具体显示能力证据，独立安装器通过不抵消失败。最终候选全矩阵尚未签收。",
           "acceptance_check": "Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。",
           "history_tasks": [
@@ -1033,7 +1033,7 @@
           "id": "R04.2",
           "title": "DMG/ZIP/EXE安装升级卸载",
           "acceptance": "pending",
-          "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。",
+          "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。 2da Windows新候选截图/生命周期/EXE定制目录重装卸载也通过，artifact13054441131哈希与报告归档；真实旧版升级仍未做。",
           "remaining": "最终版本打包并实测首次安装、旧版本配置升级、覆盖安装、卸载/重装与路径含空格/Unicode。",
           "acceptance_check": "包内Core/UI架构/版本/资源一致；旧配置/Key/用量数据按既有约定保留；无残留在用进程。",
           "history_tasks": [
@@ -1055,7 +1055,7 @@
           "id": "R04.4",
           "title": "版本、说明、截图与回滚包",
           "acceptance": "pending",
-          "completed": "当前项目版本0.5.7和历史QA/截图/矩阵存在，不能据此推断新的正式版本号。 QA78以b167/74b/2da分别保留源码、原始截图、候选/包/报告哈希与失败来源；尚未指定新正式版本、替换公开README截图或公开发布，回滚与最终下载包审查仍待。",
+          "completed": "当前项目版本0.5.7和历史QA/截图/矩阵存在，不能据此推断新的正式版本号。 QA78以b167/74b/2da分别保留源码、原始截图、候选/包/报告哈希与失败来源；尚未指定新正式版本、替换公开README截图或公开发布，回滚与最终下载包审查仍待。 另保留2da两张原始WindowsPNG的隐私/内容/hash审查，均合成fixture，未自动替换公开README截图。",
           "remaining": "确定正式版本与变更说明，更新安装/已知限制文档；审查80帧证据和代表性公开截图，准备旧包/配置回滚步骤。",
           "acceptance_check": "版本一致、可下载包SHA完整；公开图为合成隔离数据且无Key；文档命令可移植，回滚路径可执行。",
           "history_tasks": [

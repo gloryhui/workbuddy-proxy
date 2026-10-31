@@ -1,0 +1,11 @@
+{
+  "completed_at": "2026-11-01T03:13:28.836661+08:00",
+  "removed_target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-win-native._bhrl1tr",
+  "removed_files": 2,
+  "logical_bytes_removed": 60728071,
+  "session_temporary_retained_bytes": 0,
+  "system_free_after_bytes": 36446392320,
+  "no_local_executable_or_native_app_launched": true,
+  "remote_fixture_cleanup_bytes": 53928018,
+  "baseline_reference_retained_bytes": 42476412
+}
