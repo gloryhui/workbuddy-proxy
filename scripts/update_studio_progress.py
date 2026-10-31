@@ -114,6 +114,112 @@ def tasks():
     return result
 
 
+
+def release_plan(frames, timeline):
+    """Validate the editable batch plan and attach only derived display fields."""
+    plan = json.loads((DOCS / "release_plan.json").read_text(encoding="utf-8"))
+    batches = plan["batches"]
+    batch_ids = [batch["id"] for batch in batches]
+    task_ids = [task["id"] for batch in batches for task in batch["tasks"]]
+    mapped = {frame["node"]: frame for frame in frames}
+    assigned = [node for batch in batches for node in batch["frames"]]
+    if len(batch_ids) != len(set(batch_ids)) or len(task_ids) != len(set(task_ids)):
+        raise ValueError("Duplicate release batch or task ID")
+    if len(assigned) != len(set(assigned)) or set(assigned) != set(mapped):
+        raise ValueError("Functional batches must own every mapped frame exactly once")
+    if plan["current_known_frames"] != len(frames):
+        raise ValueError("Release plan frame inventory is stale")
+    known = set(batch_ids) | {plan["prerequisite"]["id"]}
+    if plan["current_batch"] not in known or plan["prerequisite"]["status"] not in {"waiting", "passed"}:
+        raise ValueError("Unknown current batch or prerequisite status")
+    history = {task["id"] for task in timeline}
+    allowed = {"planned", "developing", "validating", "passed", "blocked"}
+    visited = set()
+    def visit(batch_id, stack):
+        if batch_id in stack:
+            raise ValueError("Cyclic release batch dependencies")
+        if batch_id in visited or batch_id == plan["prerequisite"]["id"]:
+            return
+        batch = next(item for item in batches if item["id"] == batch_id)
+        for dependency in batch["depends_on"]:
+            if dependency not in known:
+                raise ValueError("Unknown release batch dependency: " + dependency)
+            visit(dependency, stack | {batch_id})
+        visited.add(batch_id)
+    for batch in batches:
+        visit(batch["id"], set())
+        if batch["status"] not in allowed or batch["kind"] not in {"feature", "release"}:
+            raise ValueError("Unrecognized release batch status/kind")
+        accepted = batch["accepted_frames"]
+        if len(accepted) != len(set(accepted)) or not set(accepted) <= set(batch["frames"]):
+            raise ValueError("Accepted frames must be unique members of their batch")
+        verified = {node for node in batch["frames"] if mapped[node]["status"] == "verified"}
+        if set(accepted) != verified:
+            raise ValueError("Release plan and frame mapping disagree about accepted frames")
+        for task in batch["tasks"]:
+            if task["acceptance"] not in {"pending", "passed", "blocked"}:
+                raise ValueError("Unknown release task acceptance state")
+            if not set(task["history_tasks"]) <= history:
+                raise ValueError("Release task cites unknown historical QA IDs")
+        if batch["status"] == "passed" and (
+            any(task["acceptance"] != "passed" for task in batch["tasks"])
+            or not batch["acceptance_evidence"]
+            or set(accepted) != set(batch["frames"])
+        ):
+            raise ValueError("Passed batch requires all tasks, frames and current acceptance evidence")
+        if batch["status"] == "passed":
+            states = {item["id"]: item["status"] for item in batches}
+            states[plan["prerequisite"]["id"]] = plan["prerequisite"]["status"]
+            if any(states[dependency] != "passed" for dependency in batch["depends_on"]):
+                raise ValueError("Passed batch has an incomplete prerequisite")
+        for href in batch["acceptance_evidence"]:
+            if not re.fullmatch(r"(?:benchmarks|screenshots)/[A-Za-z0-9_.-]+", href) or not (DOCS / href).is_file():
+                raise ValueError("Missing or unsafe batch acceptance evidence")
+        batch["frame_details"] = [{"id": node, "title": mapped[node]["title"],
+                                    "status": mapped[node]["status"],
+                                    "review_status": mapped[node]["visual_review"]["review_status"]}
+                                   for node in batch["frames"]]
+        batch["reviewed_frames"] = sum(item["review_status"] != "not_reviewed" for item in batch["frame_details"])
+    protected = [line.split("|")[1].strip() for line in (DOCS / "feature_regression_matrix.md").read_text(encoding="utf-8").splitlines()
+                 if line.startswith("| ") and line.split("|")[1].strip() not in {"功能", "---"}]
+    coverage = plan["protection_coverage"]
+    if len(coverage) != len(protected) or {item["feature"] for item in coverage} != set(protected):
+        raise ValueError("Release plan must cover every protected feature exactly once")
+    if any(not item["tasks"] or not set(item["tasks"]) <= set(task_ids) for item in coverage):
+        raise ValueError("Protected feature points to unknown or empty acceptance tasks")
+    plan["metrics"] = {"functional_batches": sum(item["kind"] == "feature" for item in batches),
+                       "release_batches": sum(item["kind"] == "release" for item in batches),
+                       "passed_batches": sum(item["status"] == "passed" for item in batches),
+                       "tasks": len(task_ids),
+                       "passed_tasks": sum(task["acceptance"] == "passed" for item in batches for task in item["tasks"])}
+    return plan
+
+
+def plan_markdown(plan):
+    lines = ["# Studio V2 正式版批次计划", "", "本文件由 release_plan.json 生成；修改计划数据后运行 scripts/update_studio_progress.py。", "",
+             "当前批次：" + plan["current_batch"] + "；Goal：" + plan.get("goal_status", "unknown") + "。主体已有实现和分项证据，界面与正式版验收以实际签收为准。", "",
+             "## 口径与顺序", "", *["- " + value for value in plan["acceptance_model"].values()], "",
+             "执行顺序：P00 → B01 → B02 → B03 → B04 → B05 → R01 → R02 / R03 → R04。", "",
+             "## 批量推进规则", "", *["- " + rule for rule in plan["working_rules"]], "",
+             "## P00：" + plan["prerequisite"]["title"], "", plan["prerequisite"]["reason"], "",
+             *[str(index) + ". " + step for index, step in enumerate(plan["prerequisite"]["steps"], 1)], "",
+             "通过标准：" + plan["prerequisite"]["exit"], ""]
+    for batch in plan["batches"]:
+        lines += ["## " + batch["id"] + "：" + batch["title"], "",
+                  "覆盖画板：" + ("、".join(batch["frames"]) or "全局发布门禁，不新增画板计数") + "。", "",
+                  "已有成果：" + batch["completed_summary"], "", "本批交付：" + batch["delivery"], ""]
+        for task in batch["tasks"]:
+            lines += ["### " + task["id"] + " " + task["title"], "",
+                      "- 已完成/已有证据：" + task["completed"],
+                      "- 剩余工作：" + task["remaining"],
+                      "- 验收标准：" + task["acceptance_check"],
+                      "- 历史记录：" + ("、".join("UI-" + str(number) for number in task["history_tasks"]) or "按实际最终候选补证，不冒用历史通过") + "。", ""]
+    lines += ["## 完整功能保护项与验收任务映射", "", "| 现有功能保护项 | 对应任务 |", "| --- | --- |",
+              *["| " + item["feature"] + " | " + "、".join(item["tasks"]) + " |" for item in plan["protection_coverage"]], ""]
+    lines += ["## 排程说明", "", plan["schedule"]["type"] + "。", "", plan["schedule"]["target"], "", plan["schedule"]["estimate_policy"], ""]
+    return "\n".join(lines)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", type=int)
@@ -132,6 +238,8 @@ def main():
             current[key] = value
     frames, timeline = frame_rows(), tasks()
     review = visual_review(frames)
+    plan = release_plan(frames, timeline)
+    plan["goal_status"] = args.goal_status or previous.get("goal_status", "unknown")
     if current.get("status") == "recorded" and not any(
         task["id"] == current.get("id") and task["commit"] for task in timeline
     ):
@@ -147,30 +255,27 @@ def main():
         history.append({"date": now, "note": args.note or "同步当前任务与画板验收状态",
                         **counts, "remaining_final": len(frames) - counts["verified"],
                         "visual_review": review["counts"]})
-    report = {"version": 1, "updated_at": now, "project": "WorkBuddy Studio V2",
+    report = {"version": 2, "updated_at": now, "project": "WorkBuddy Studio V2",
               "branch": git("branch", "--show-current"), "code_head": git("log", "-1", "--format=%H", "--", "gpui/src", "gpui/assets"),
-              "phase": ("开发中 · 分项实机验收穿插" if counts["pending"]
+              "phase": ("正式版批次规划 · 等待Figma连接" if plan["goal_status"] == "paused" and plan["prerequisite"]["status"] == "waiting"
+                        else "开发中 · 批量施工与集中验收" if counts["pending"]
                         else "界面终验记录齐备 · 总体验收待核对" if counts["verified"] == len(frames)
                         else "专项验收与差异修复 · 全量逐帧终验未完成"),
               "goal_status": args.goal_status or previous.get("goal_status", "unknown"),
               "counts": counts, "total_frames": len(frames), "recorded_tasks": len(recorded),
               "remaining_final": len(frames) - counts["verified"], "visual_review": review,
               "current_task": current, "latest_task": latest, "frames": frames,
-              "functional_modules": [
-                  {"title": "工具栏与窗口菜单", "implemented": "七功能工具栏已落地；语言、皮肤、恢复窗口、开机启动反馈和更新等待/失败状态已有 macOS 专项证据。", "pending": "公网更新成功、实际系统登录、外链完整路径和跨平台仍待验。", "tasks": [1, 23, 34, 35, 36, 37, 41]},
-                  {"title": "供应商管理", "implemented": "搜索、0/1/2/20/64列表、新增/复制/编辑/删除、草稿恢复与保存主要路径已验；UI58补齐两尺寸主区域、256模型末行及Test200/SSE与503；UI59完成按供应商/配置绑定的连接徽章、复制继承及故障恢复；UI60补齐默认连接输入/菜单触发器样式；UI61完成输入焦点/选区/眼睛位置与受控busy实拍及恢复。", "pending": "完整视觉、全部busy/异常状态、无障碍和跨平台待验。", "tasks": [4, 25, 26, 27, 29, 33, 58, 59, 60, 61]},
-                  {"title": "模型管理与四协议", "implemented": "4096发现候选、256容量、多选/键盘、能力编辑和四协议真实字段/草稿确认/显式保存已实现并分项实测。", "pending": "部分长ID提示、完整IME/无障碍和跨平台待验。", "tasks": [20, 21, 24, 31, 40, 50, 51]},
-                  {"title": "统计与请求详情", "implemented": "概览、明细、汇总、筛选、分页、最近请求和详情已分项实测；共享布局与字体基础已完成两尺寸、六皮肤/万单位和原负载对照。", "pending": "其他画板字体角色、准确字体版本、输入/边框等精细视觉和完整键盘/IME/AX待续；共享标题1px已在UI58概览/明细修正。", "tasks": [9, 10, 11, 12, 13, 15, 19, 45, 55, 56, 57, 58]},
-                  {"title": "价格、采集与本地导入", "implemented": "价格规则增改删/四费率/修订快照、币种、保留策略、采集/导入暂停恢复及去重主要路径已验。", "pending": "完整异常/键盘/IME/无障碍与跨平台待验。", "tasks": [16, 17, 18]},
-                  {"title": "草稿与同步确认", "implemented": "草稿恢复、同步/取消同步原生确认、当前/全部范围及无隐式应用边界已有分项证据。", "pending": "真实WorkBuddy重启、生产回滚及完整失败状态待验。", "tasks": [22, 26, 27, 33]},
-                  {"title": "日志与进程生命周期", "implemented": "日志复制/清空/滚动、关闭UI保留核心/托盘、单实例与重开主要路径已实测。", "pending": "物理托盘菜单点击、完整重启/回滚与Windows/Intel硬件实机待验。", "tasks": [7, 42, 52]}],
+              "functional_modules": [{"title": batch["title"], "implemented": batch["completed_summary"],
+                                      "pending": batch["delivery"],
+                                      "tasks": sorted({number for task in batch["tasks"] for number in task["history_tasks"]})}
+                                     for batch in plan["batches"] if batch["kind"] == "feature"],
+              "release_plan": plan,
               "timeline": timeline, "history": history[-200:],
-              "verification": [
-                  {"title": "40 帧逐帧一比一终验", "detail": f"当前 {counts['verified']} 帧最终验收、{counts['partial']} 帧有阶段性证据、{counts['reused']} 帧复用待核对。专项任务数不等于已验收界面数；每帧仍需核对完整布局、资产、状态和交互，部分通过不等于整体验收。"},
-                  {"title": "键盘、IME 与无障碍", "detail": "已完成若干控件真实键盘路径；完整 Tab 顺序、中文输入法及辅助功能仍需统一复核。"},
-                  {"title": "平台与生命周期", "detail": "macOS arm64 实机持续验证；Intel 与 Windows 分别记录类型检查、发行版链接、译运行和实机证据，范围以任务记录与矩阵为准。译运行不替代实机，HiDPI 与完整托盘生命周期仍需核对。"},
-                  {"title": "性能与证据口径", "detail": "保留真实新旧版本对比、核心/UI/合计 RSS、启动记录和请求 p50/p95。UI 就绪记录不是首帧或可交互时间。"}],
-              "sources": [{"label": "40 帧映射", "href": "figma_node_map.md"},
+              "verification": [{"title": batch["title"], "detail": batch["delivery"]}
+                               for batch in plan["batches"] if batch["kind"] == "release"],
+              "sources": [{"label": "正式版批次计划", "href": "release_plan.md"},
+                          {"label": "可维护计划数据", "href": "release_plan.json"},
+                          {"label": "40 帧映射", "href": "figma_node_map.md"},
                           {"label": "实施与 QA 原文", "href": "baseline_and_qa.md"},
                           {"label": "逐帧视觉审查台账", "href": "visual_review.json"},
                           {"label": "功能保护矩阵", "href": "feature_regression_matrix.md"}]}
@@ -180,6 +285,7 @@ def main():
     html, replaced = re.subn(pattern, lambda m: m[1] + "\n" + payload + "\n" + m[2], html, count=1)
     if replaced != 1:
         raise ValueError("HTML data marker missing; no report files updated")
+    (DOCS / "release_plan.md").write_text(plan_markdown(plan), encoding="utf-8")
     DATA.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     PAGE.write_text(html, encoding="utf-8")
     print(json.dumps({"html": str(PAGE), "counts": counts, "recorded_tasks": len(recorded),

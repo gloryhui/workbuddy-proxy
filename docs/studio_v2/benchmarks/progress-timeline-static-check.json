@@ -1,18 +1,80 @@
 {
-  "checked_at": "2026-10-30T22:20:50.973077+08:00",
-  "functional_module_count": 7,
-  "functional_task_links_checked": 41,
-  "embedded_json_matches": true,
+  "version": 2,
+  "checked_at": "2026-10-31T12:02:49.865012+08:00",
+  "scope": "Batch planning report only; no product runtime, Figma reads, native UI interaction or release publication performed. Goal remains paused.",
+  "counts": {
+    "pending": 0,
+    "partial": 40,
+    "reused": 0,
+    "verified": 0
+  },
   "remaining_final": 40,
-  "frame_count": 40,
-  "recorded_tasks": 57,
-  "unique_html_ids": 42,
-  "local_references_checked": 462,
-  "base_style_exact_bytes": 17102,
-  "inline_javascript_syntax_passed": [
-    0,
-    2
+  "historical_committed_tasks": 67,
+  "review_counts": {
+    "not_reviewed": 19,
+    "reviewing": 0,
+    "reviewed_with_differences": 21,
+    "reviewed": 0
+  },
+  "plan_metrics": {
+    "functional_batches": 5,
+    "release_batches": 4,
+    "passed_batches": 0,
+    "tasks": 50,
+    "passed_tasks": 0
+  },
+  "functional_frame_ownership": {
+    "B01": 19,
+    "B02": 6,
+    "B03": 7,
+    "B04": 6,
+    "B05": 2
+  },
+  "frame_ownership_unique_and_complete": true,
+  "embedded_json_matches_file": true,
+  "plan_markdown_tasks": 50,
+  "local_evidence_links_checked": 523,
+  "missing_links": [],
+  "unique_static_ids": 49,
+  "aria_labelledby_targets_exist": true,
+  "python_parse": "passed",
+  "javascript_syntax": "passed",
+  "negative_plan_cases_rejected": [
+    "missing-frame",
+    "duplicate-frame",
+    "duplicate-task",
+    "cyclic-dependencies",
+    "unknown-history",
+    "false-green-batch",
+    "false-green-frame",
+    "incomplete-predecessor",
+    "missing-protected-feature",
+    "unknown-protected-task"
   ],
-  "invalid_recorded_task_rejected_without_writes": true,
-  "scope": "Static HTML/JSON/source/JavaScript checks only; no browser rendering claimed."
+  "javascript_source_logic": {
+    "method": "In-memory minimal DOM model; no browser/CSS/image rendering",
+    "rendered_data_nodes": [
+      9,
+      50,
+      40,
+      67
+    ],
+    "search_filter_expand_theme_and_hash_handlers": "passed",
+    "does_not_prove_browser_interaction": true
+  },
+  "browser_render": "not verified; previous explicit protocol-policy refusal remains in progress-timeline-browser-check.json. No alternate server/browser/renderer used.",
+  "product_sources_unchanged": true,
+  "temporary_files_created": 0,
+  "temporary_bytes_retained_this_round": 0,
+  "free_system_data_gib": 33.453,
+  "source_sha256": {
+    "docs/studio_v2/progress_timeline.html": "62b8f3508321c0af7bc471f6c5f7b5c63258ba0ec9b91e3662847dbe2116385d",
+    "docs/studio_v2/progress_timeline.json": "29e9be9e4b7cb5456eea4c90372ce2b1bbb029ba310587feb63a5be01ac167ed",
+    "docs/studio_v2/release_plan.json": "bde499472775ffc92c9d4d94efa72a11d29aa5fca0c2fbc8a704181fe40a424f",
+    "docs/studio_v2/release_plan.md": "0f49588911476dd38fda0c1e15b0524d0f541c7a92bd6b629972e04db2e99ff7",
+    "scripts/update_studio_progress.py": "8e06f92239338c999bdd3dad581439ff8afa417768d709ebe6d55ff428d60dea",
+    "docs/studio_v2/PROGRESS.md": "a5471f5ce76cd1cb47fdee1c9e4ad788e3b91e0795622669a1c11a3a408aca6c"
+  },
+  "protected_features_mapped": 40,
+  "task_anchor_and_url_allowlist": "passed"
 }

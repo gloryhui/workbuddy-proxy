@@ -2,6 +2,8 @@
 
 官方 Figma MCP 于 2026-10-28 读取文件 `zxDfIQ4lhNcTXrFT7qk8QZ`、页面 `51:2`（WorkBuddy Proxy · Studio V2 · Rust GPUI）。以下 40 张 1440×900 状态画板直接来自 page metadata；未验收表示尚未逐画板进行运行与视觉对照。Rust 落点均相对于 `gpui/src/`。
 
+批次计划v2起，下面“已验收”指该帧的最新设计、完整路径和两尺寸界面签收；全局输入、平台、性能与安装发行在 `release_plan.json` 的 R01–R04 独立记录。正式版须两者同时通过，不能把界面签收等同发布。此处现有40帧状态未因重排计划自动升级。
+
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
 | 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, trends.rs, recent.rs, layout.rs, usage_chart.rs | 部分：UI66主布局＋UI67最近28px标签/行位修复，同版自然0→22→23/12100/95.7%、筛选/币种/指标/详情、方向键/焦点和两尺寸通过；图表拖动真实点已验。匹配短测空闲合计+0.58MiB/峰值+12.63MiB保留；完整状态/无按键hover/IME/AX/六皮肤及平台终验仍待 |

@@ -45,7 +45,7 @@
 | 关闭 UI 释放、托盘/核心续存、单实例 | main.rs、原生托盘、backend.rs | UI42真实3→2→3、原生关窗后Core/Tray存活且loopback200、官方重复启动同PID与已有Tray生成新UI/草稿恢复、实际Settings CmdQ使Core/Tray/UI全退且唯一统计run正常关闭 Passed；正常冷启动及重启原脚本另验三角色/单实例/关闭重开/两run normal，冷路径全角色kernel保护。show/CLI不是物理菜单点击；指定托盘CUA绑定timeout、菜单点击仍待验，Windows/Intel实机待续 |
 | 外观/中英/HiDPI/无障碍 | theme.rs、ui_components.rs、model_table.rs、assets.rs | macOS既有七主题/中英分项证据保留；本轮Mono白/浅蓝交替行、三设计SVG实际加载、多选跨Blue→Mono及中英切换后草稿删除2→0/Core仍3、名称草稿/重开Mono持久、两尺寸与遮罩 Passed；完整初始Tab/HiDPI/IME/无障碍及Windows/Intel实机待专项 |
 
-此矩阵随每个小功能提交更新；不将核心未改动当作运行回归通过。
+后续按 `release_plan.json` 的完整功能批次更新此矩阵；共享组件与同类路径集中验证，不按单个间距反复拆轮。历史分项保留，不将核心未改动当作运行回归通过。
 
 模型选择 `59:11` / `59:216` 已提取原生 `ui/model_picker.rs`：Kit虚拟List与Checkbox支持4096候选，固定批量操作/底栏与小窗自适应，保留已有项、过滤批选、草稿确认后显式保存和跨供应商总256约束。两尺寸、键盘、错误/空态与取消已验；不改变模型表原有Shift/Cmd/Ctrl多选。完整IME/无障碍/跨平台仍待最终审计。
 
