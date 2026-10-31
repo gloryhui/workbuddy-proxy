@@ -1,0 +1,41 @@
+from pathlib import Path
+import hashlib, json, os, subprocess, sys, time
+
+r = Path(__file__).resolve().parent
+core = Path('/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core')
+ui = r / 'candidate-ui'
+build = json.loads((r / 'build.json').read_text())
+assert all(x['exit_code'] == 0 for x in build['commands'])
+assert hashlib.sha256(ui.read_bytes()).hexdigest() == build['release_sha256']
+assert hashlib.sha256(core.read_bytes()).hexdigest() == '25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5'
+env = dict(os.environ, PYTHONPATH=str(Path.cwd() / 'scripts'), TMPDIR=str(r / 'tmp'), TMP=str(r / 'tmp'), TEMP=str(r / 'tmp'))
+f = r / 'b03-yrd9bmj8-main-final'
+log = (r / 'native-main.log').open('wb')
+p = subprocess.Popen([sys.executable, '-u', str(r / 'fixture-background.py'), '--exe', str(core), '--gpui', str(ui),
+                      '--output', str(f), '--keep-core-after-ui-exit'], env=env, stdout=log, stderr=log)
+try:
+    for _ in range(2400):
+        if (f / 'cua-launch-ready.json').exists():
+            break
+        assert p.poll() is None
+        time.sleep(.1)
+    else:
+        raise TimeoutError('fixture ready')
+    subprocess.run([sys.executable, '-u', str(r / 'preflight-seed.py'), str(f)], env=env, check=True)
+    (r / 'pending-native.json').write_text(json.dumps({'label': 'main', 'folder': str(f),
+                                                    'ready_file': str(f / 'cua-launch-ready.json'),
+                                                    'ui_sha256': build['release_sha256'], 'providers': 2, 'models': 5,
+                                                    'requests': 1000, 'catalog_rules': 3, 'guard_passed': True}) + '\n')
+    print('ready main B03', flush=True)
+    code = p.wait()
+    assert code == 0
+    terminal = json.loads((f / 'terminal-status.json').read_text())
+    assert terminal['ui_pid_gone_after_cleanup'] and terminal['core_exit_after_cleanup'] == 0
+    (r / 'native-driver-results.json').write_text(json.dumps([{'label': 'main', 'fixture_pid': p.pid, 'exit_code': code,
+                                                           'folder': str(f), 'terminal': terminal}], indent=2) + '\n')
+    print('B03 native complete0', flush=True)
+finally:
+    if p.poll() is None:
+        p.terminate()
+        p.wait(timeout=10)
+    log.close()

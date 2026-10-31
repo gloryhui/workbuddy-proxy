@@ -1,0 +1,38 @@
+from pathlib import Path
+import datetime,hashlib,json
+r=Path(__file__).resolve().parent;repo=Path.cwd();reports=repo/'docs/studio_v2/benchmarks';shots=repo/'docs/studio_v2/screenshots'
+assert reports.resolve().is_relative_to(repo.resolve()) and shots.resolve().is_relative_to(repo.resolve())
+native=json.loads((r/'native-consolidated.json').read_text());perf=json.loads((r/'performance-summary.json').read_text())
+assert native['required_frame_size_pairs']==14 and not perf['assessment'].startswith('MEASURED:')
+entries=[]
+def save(source,destination,data=None):
+ original=source.read_bytes();output=original if data is None else data
+ if destination.exists():assert destination.read_bytes()==output,('refuse overwrite changed evidence',str(destination))
+ else:destination.write_bytes(output)
+ entries.append({'source':str(source.relative_to(r)),'destination':str(destination.relative_to(repo)),'bytes':len(output),'sha256':hashlib.sha256(output).hexdigest(),'source_sha256':hashlib.sha256(original).hexdigest(),'transform':'none' if data is None else 'text trailing whitespace normalization; raw UTF8 separately archived'})
+for name in ['build.json','build-initial-test-expectation.json','initial-test-diagnostic.json','runbook-diagnostics.json','fixture-import-repair.json','native-limitations.json','unchanged-overview-regression.json','headless-contracts.json','traffic-snapshot-validation.json','import-final-validation.json','source-scope.json','design-audit.json','asset-audit.json','visual-native-first-review.json','native-driver-results.json','native-b03-summary.json','native-consolidated.json','benchmark-preparation.json','benchmark-driver-results.json','benchmark-supplemental-results.json','performance-b03-cua.json','performance-b03-cua-supplemental.json','performance-resource-diagnostics.json','performance-supplemental-summary.json','performance-summary.json']:
+ save(r/name,reports/('b03-'+name))
+for name in ['native-b03-runbook.md','benchmark-native-runbook.md','fixture-background.py','fixture-action.py','preflight-guard.py','preflight-seed.py','observe-b03.py','native-driver.py','headless-validation.py','build-candidate.py','benchmark-b03.py','benchmark-driver-b03.py','benchmark-supplemental-driver.py','benchmark-mock.py','process-start.c','verify-traffic.py','verify-import-final.py','summarize-performance.py','summarize-supplemental.py','consolidate-native.py','record-batch.py','cleanup-preflight.py','write-qa.py','export-evidence.py']:
+ save(r/name,reports/('b03-'+name+'.txt'))
+f=r/'b03-yrd9bmj8-main-final'
+for name in ['fixture.json','pre-gui-proof.json','seed-complete.json','initial-prices.json','initial-settings.json','initial-import-status.json','native-gui.json','terminal-status.json','long-import-model-proof.json','page-reference-native-match.json']:
+ save(f/name,reports/('b03-main-'+name))
+for p in sorted((f/'stage-proofs').glob('*.json')):save(p,reports/('b03-main-proof-'+p.name))
+for p in sorted(f.glob('fixture-action-*.json')):save(p,reports/('b03-main-'+p.name))
+for p in sorted(f.glob('*.png')):
+ if not p.name.startswith('candidate-'):save(p,shots/('b03-'+p.name))
+for node in ['52-2','56-8','57-8','58-8','60-249','60-475','69-359']:
+ save(r/'figma'/(node+'-reference-1440.png'),shots/('b03-figma-'+node+'-reference.png'))
+for label in ['previous1','current1','current2','previous2','current3','previous3']:
+ save(r/('performance-'+label+'.json'),reports/('b03-performance-'+label+'.json'));f=r/('bench-b03-'+label)
+ for name in ['seed-proof.json','preui-models.json','models-ready.json','statistics-observed.json','matched-condition.json','resource-samples.json','terminal.json']:
+  save(f/name,reports/('b03-performance-'+label+'-'+name))
+ for p in sorted(f.glob('*.png')):
+  if not p.name.startswith('candidate-'):save(p,shots/('b03-performance-'+label+'-'+p.name))
+ for name in ['vmmap-before.txt','vmmap-after.txt']:
+  p=f/name;raw=p.read_text();save(p,reports/('b03-performance-'+label+'-'+name),('\n'.join(line.rstrip() for line in raw.splitlines())+'\n').encode())
+  q=r/('performance-'+label+'-'+name.replace('.txt','-raw.json'));q.write_text(json.dumps({'original_utf8':raw,'raw_sha256':hashlib.sha256(p.read_bytes()).hexdigest()},indent=2)+'\n');save(q,reports/('b03-'+q.name))
+for x in entries:
+ p=repo/x['destination'];assert hashlib.sha256(p.read_bytes()).hexdigest()==x['sha256']
+out={'at':datetime.datetime.now().astimezone().isoformat(),'candidate_sha256':native['candidate_sha256'],'count':len(entries),'total_bytes':sum(x['bytes'] for x in entries),'files':entries,'excluded':'Private config/keys, full SQL snapshots, signed Figma URLs/raw full context, app/executable copies, window discovery screenshots. Mono diagnostic images retained distinctly; only declared14Studio pairs accepted.'}
+(reports/'b03-artifacts.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'files':out['count'],'MiB':round(out['total_bytes']/2**20,3)}))

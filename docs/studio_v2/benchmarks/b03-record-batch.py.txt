@@ -1,0 +1,44 @@
+from pathlib import Path
+import datetime,json,re
+r=Path(__file__).resolve().parent;repo=Path.cwd();docs=repo/'docs/studio_v2'
+n=json.loads((r/'native-consolidated.json').read_text());perf=json.loads((r/'performance-summary.json').read_text());assert n['required_frame_size_pairs']==14 and perf['assessment'].startswith('ACCEPTED')
+assert json.loads((docs/'benchmarks/b03-artifacts.json').read_text())['count']>100
+p=docs/'release_plan.json';plan=json.loads(p.read_text());batch=next(x for x in plan['batches'] if x['id']=='B03');assert batch['status']=='developing'
+frames=batch['frames'];assert len(frames)==7
+batch.update(status='passed',accepted_frames=frames,acceptance_evidence=['benchmarks/b03-design-audit.json','benchmarks/b03-native-consolidated.json','benchmarks/b03-native-b03-summary.json','benchmarks/b03-traffic-snapshot-validation.json','benchmarks/b03-import-final-validation.json','benchmarks/b03-unchanged-overview-regression.json','benchmarks/b03-native-limitations.json','benchmarks/b03-performance-summary.json','benchmarks/b03-performance-supplemental-summary.json','benchmarks/b03-performance-resource-diagnostics.json','benchmarks/b03-artifacts.json'])
+completed=[
+ 'QA70：最新概览两尺寸与1000→1001自然刷新、503/缺失用量已验；overview/trends与UI67字节一致，币种选择复用旧实测，当前混合币种快照另核。',
+ 'QA70：1000真实HTTP记录、10/20/50/100、前后/合法及非法跳页/6.5s草稿、20条第2页首ID服务端对照、两尺寸独立内滚与首末列可达。',
+ 'QA70：2供应商/5模型与550000总量/500000输入/50000输出/400000缓存子集、范围浮层及小窗下卡已验；卡片比例/间距按最新稿。',
+ 'QA70：新建→CNY请求→USD修订/请求→删除/新请求→新ID恢复/请求、503目录更新失败/重试；原全部请求与成本不变。原菜单直接删除，无确认取消分支。',
+ 'QA70：成功/503/无usage/导入详情及More、真实价格快照/未知HTTP耗时、144字符模型、直接Esc及子层关闭等待1.2s后父层Esc通过。',
+ 'QA70：币种/保留180→90→180/采集OFF转发200且不增行/ON；合成JSONL实际5Builtin+1Custom、暂停→恢复、去重、权限读错→修复自然恢复至7Builtin+1Custom。',
+ 'QA70：最终4b同候选7帧14原生PNG、1014请求/1006成本全字段保护、Core配置字节不变及P/C/C/P原负载短测；输入/平台/长期性能仍R01–R04。']
+for task,done in zip(batch['tasks'],completed):
+ task.update(acceptance='passed',completed=done,remaining='本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。')
+plan.update(as_of='2026-10-31',current_batch='B04',historical_tasks=70,state='active')
+r01=next(x for x in plan['batches'] if x['id']=='R01')
+for task in r01['tasks']:
+ if task['id']=='R01.2':task['remaining']+=' QA70原生表头拖宽两端点无可见变化，CUA无连续多点按住API；仍须用支持的真实输入验证拖宽及刷新/resize保持，不能把布局单测冒充原生成功。详情立即连续Esc与动画/焦点时序也统一复查。'
+ if task['id']=='R01.5':task['completed']='B01/B02/B03已有32/40帧按最新设计和两尺寸界面签收；剩B04六帧、B05两帧。全40帧最终集中扫描仍待，不等于R01或发布通过。'
+r03=next(x for x in plan['batches'] if x['id']=='R03')
+for task in r03['tasks']:
+ if task['id']=='R03.2':task['remaining']+=' B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。'
+ if task['id']=='R03.1':task['remaining']+=' B03全部六轮/资源分项及current1空搜索聚焦偏差已归档，最终基线不能只挑补测好样本。'
+assert sum(len(x.get('accepted_frames',[])) for x in plan['batches'] if x['id'].startswith('B'))==32
+p.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+'\n')
+p=docs/'figma_node_map.md';s=p.read_text();lines=s.splitlines();out=[];changed=[]
+for line in lines:
+ m=re.match(r'\| ([0-9]+:[0-9]+) \|',line)
+ if m and m[1] in frames:
+  columns=line.split('|');columns[-2]=' 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 ';line='|'.join(columns);changed.append(m[1])
+ out.append(line)
+assert set(changed)==set(frames)
+s='\n'.join(out)+'\n';s=s.replace('B01按真实证据签收19帧，剩余21帧；不是因重排计划自动升级。','B01/B02/B03按真实证据累计签收32帧，剩余8帧（B04六帧、B05两帧）；原生输入与发行门禁独立。')
+p.write_text(s)
+p=docs/'visual_review.json';v=json.loads(p.read_text());v['figma']['inventory_source']+=' B03七份最新完整高保真上下文/原1440参考见b03-design-audit；合计32帧批次签收。';v['updated_at']=datetime.datetime.now().astimezone().isoformat()
+for frame in v['frames']:
+ if frame['id'] not in frames:continue
+ stem=frame['id'].replace(':','-');frame.update(review_status='reviewed',scope='QA70/B03冻结4b：当前原生交互、真实Core/完整历史、7×2原生PNG与四轮匹配短测；未核原生拖动/完整输入及发行门禁独立。',checks={'layout':'Studio中文明细1088总宽比例/可读floor；分析542:562卡片/16gap及价格标题/菜单/分页脚按最新稿；实际数据与附加操作保留。','typography':'标题/小标题/标签/数字与辅助文字按角色；不设字形/字体文件/RGB字节门禁。','assets':'29原资源：23字节一致、2仅clipID/ref空白等价、3 OS装饰、1动态样本图由真实数据图表渲染。','states':'1000真实记录到1014，2/5组、实际成功/失败/无usage、价格CRUD、采集/导入错误恢复；未知值保留—。','interaction':'分页/筛选/范围/价格与新旧快照/本地导入完整链；More关闭后1.2s第二Esc可关父层；拖动未证实独立记R01。','native_1440':'原生2880×1802 PNG，逻辑1440×900，保留OS额外一行；无裁剪/缩放/转码。','native_1100':'原生2200×1402 PNG，逻辑1100×700；内滚/首末列/下卡和表单底部原生到达。'},differences=['真实数据图表、计数/价格/未知语义及功能分页/诊断优先保留，不伪造Figma静态数值。','7张初始Mono原图单独保留，原因未证实；正式14张为Studio。合成JSONL sessionId错误修复及6条跳过原证据保留。','原生列拖动未证实/精确hover与完整键盘IME/AX仍R01；overview币种选择复用字节相同源码的UI67实测，未冒称当前重测。','四轮每版n2仅短负载证据，实际成本详见性能报告；不证明长期泄漏/FPS/输入延迟或R03发布通过。'],evidence=['screenshots/b03-'+stem+'-wide.png','screenshots/b03-'+stem+'-small.png','screenshots/b03-figma-'+stem+'-reference.png',*batch['acceptance_evidence']])
+p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+print('Recorded B03 passed32/40, remaining8; currentB04 and R01 input carryover explicit')

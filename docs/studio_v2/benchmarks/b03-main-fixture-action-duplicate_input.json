@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-31T17:31:50.398833+08:00",
+  "stage": "duplicate_input",
+  "action": "duplicate-import",
+  "scope": "Only this recorded synthetic fixture; no management-data writes. Requests use the real local proxy, other actions change mock/catalog/input files only.",
+  "source_file": "home/.workbuddy/projects/demo/builtin.jsonl",
+  "duplicate_existing_message": true
+}

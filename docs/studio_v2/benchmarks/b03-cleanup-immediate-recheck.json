@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-31T18:00:15.522295+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8",
+  "immediate_inventory_recheck": "exact",
+  "files": 479,
+  "logical_bytes": 459496091,
+  "free_system_bytes_before": 32325914624,
+  "lsof_no_open_references": true,
+  "subsequent_literal_rm_exit_code": 0
+}

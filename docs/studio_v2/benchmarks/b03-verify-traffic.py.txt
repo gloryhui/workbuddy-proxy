@@ -1,0 +1,27 @@
+from pathlib import Path
+import datetime,json
+r=Path(__file__).resolve().parent;f=r/'b03-yrd9bmj8-main-final'
+get=lambda n:json.loads((f/('fixture-action-'+n+'.json')).read_text())
+rules=lambda n:json.loads((f/'stage-proofs'/(n+'.json')).read_text())['prices']
+created=next(x for x in rules('price_new_saved') if x['upstream_model']=='claude-opus-4.7')
+edited=next(x for x in rules('price_edit_saved') if x['upstream_model']=='claude-opus-4.7')
+restored=next(x for x in rules('price_restored_saved') if x['upstream_model']=='claude-opus-4.7')
+assert restored['rule_id']!=created['rule_id'];assert edited['rule_id']==created['rule_id']
+checks=[]
+for name,rule,currency,rate,total in [('priced_cny',created,'CNY',2000000000,1400000),('priced_usd',edited,'USD',2500000000,1650000),('price_restored',restored,'CNY',2000000000,1400000)]:
+ d=get(name);q=d['request'];c=d['cost'];assert d['http_status']==200
+ assert [q[k] for k in ['input_tokens','output_tokens','total_tokens','cache_read_tokens']]==[500,50,550,400]
+ assert c['source_price_id']==rule['price_id'] and c['source_price_revision']==rule['revision']
+ assert c['currency']==currency and c['input_rate_nanos']==rate and c['output_rate_nanos']==8000000000
+ assert c['total_cost_nanos']==total and c['price_source']=='manual' and c['status']=='priced'
+ checks.append({'stage':name,'request_id':q['request_id'],'price_id':c['source_price_id'],'revision':c['source_price_revision'],'currency':currency,'input_rate_nanos':rate,'total_cost_nanos':total})
+d=get('after_price_delete');c=d['cost'];assert c['currency']=='CNY' and c['total_cost_nanos']==0 and c['source_price_id'] is None
+checks.append({'stage':'after_price_delete','cost':c})
+d=get('natural_failure');q=d['request'];assert d['http_status']==503 and q['http_status']==503 and q['outcome']=='failed'
+checks.append({'stage':'natural_failure','request':q,'cost':d['cost']})
+d=get('missing_usage');q=d['request'];assert d['http_status']==200 and q['outcome']=='completed' and q['usage_status']=='missing' and q['usage_reason']=='no_usage' and q['input_tokens'] is None and q['output_tokens'] is None and q['total_tokens'] is None
+checks.append({'stage':'missing_usage','request':q,'cost':d['cost']})
+d=get('capture_paused');assert d['http_status']==200 and d['no_collection_observed_seconds']>=1.5
+checks.append({'stage':'capture_paused','http_status':d['http_status'],'request_count_unchanged':d['request_count_unchanged']})
+out={'at':datetime.datetime.now().astimezone().isoformat(),'checks':checks,'scope':'Independent full raw request/cost numeric checks from actual loopback HTTP, coupled to read-back native-saved rules. UI text/interaction requires actor evidence; full prior-row immutability checked by observer.'}
+(r/'traffic-snapshot-validation.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print('7traffic branches independently verified')

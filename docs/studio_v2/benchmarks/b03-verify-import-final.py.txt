@@ -1,0 +1,26 @@
+from pathlib import Path
+import datetime,json,sqlite3
+r=Path(__file__).resolve().parent;f=r/'b03-yrd9bmj8-main-final'
+with sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True) as db:
+ db.row_factory=sqlite3.Row;db.execute('BEGIN')
+ totals=list(db.execute('SELECT COUNT(*),SUM(input_tokens),SUM(output_tokens),SUM(total_tokens),SUM(cache_read_tokens) FROM usage_requests').fetchone())
+ rows=[dict(x) for x in db.execute("SELECT * FROM usage_requests WHERE source='workbuddy_import'")]
+ ledger=[dict(x) for x in db.execute('SELECT requested_model,state,request_id FROM workbuddy_import_ledger')]
+assert totals==[1014,502900,50380,553280,401600],totals
+builtin=[x for x in rows if x['record_origin']=='workbuddy_builtin'];custom=[x for x in rows if x['record_origin']=='workbuddy_custom']
+assert len(rows)==8 and len(builtin)==7 and len(custom)==1
+for x in builtin:
+ assert [x[k] for k in ['input_tokens','output_tokens','total_tokens','workbuddy_credit_nanos']]==[100,20,120,1140000000]
+ assert x['http_status'] is None and x['duration_ms'] is None and x['ttfb_ms'] is None and x['first_content_ms'] is None
+assert sum(x['workbuddy_credit_nanos'] for x in builtin)==7980000000
+assert [custom[0][k] for k in ['input_tokens','output_tokens','total_tokens','workbuddy_credit_nanos']]==[200,40,240,None]
+long=json.loads((f/'long-import-model-proof.json').read_text())['long_upstream_model'];assert sum(x['upstream_model']==long for x in builtin)==1
+assert len(ledger)==8 and all(x['state']=='imported' for x in ledger)
+proofs={n:json.loads((f/'stage-proofs'/(n+'.json')).read_text()) for n in ['import_paused_stable','import_resumed_complete','import_deduplicated','import_error','import_recovered','final_readback']}
+assert proofs['import_paused_stable']['sql_totals'][0]==1012
+assert proofs['import_resumed_complete']['sql_totals'][0]==proofs['import_deduplicated']['sql_totals'][0]==1013
+assert proofs['import_error']['import']['last_error_code']=='stats_workbuddy_source_read_failed' and proofs['import_error']['import']['state']=='degraded'
+assert proofs['import_recovered']['import']['last_error_code'] is None and proofs['import_recovered']['import']['state']=='idle'
+assert (f/'home/.workbuddy/projects/demo/permission-retry.jsonl').stat().st_mode&0o777==0o600
+out={'at':datetime.datetime.now().astimezone().isoformat(),'sql_totals':totals,'imported':len(rows),'builtin':{'rows':7,'tokens':840,'credit_nanos':7980000000},'custom':{'rows':1,'tokens':240,'credits':None},'ledger':ledger,'long_model_exact':True,'http_and_timing_unknown_preserved':True,'duplicate_did_not_add_row':True,'paused_add_did_not_import_until_resume':True,'permission_error_then_recovered_idle':True,'owned_fixture_permission_restored_600':True,'scope':'Read-only real imported rows/ledger and stage proofs; does not claim pending-classification coverage or GUI input solely from SQL.'}
+(r/'import-final-validation.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print('Final1014rows,7builtin+1custom,credits/tokens/unknowns/dedupe/error recovery exact')

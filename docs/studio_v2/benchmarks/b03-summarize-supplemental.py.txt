@@ -1,0 +1,30 @@
+from pathlib import Path
+import datetime,hashlib,json,statistics
+r=Path(__file__).resolve().parent;labels=['previous1','current1','current2','previous2','current3','previous3']
+assert all(x['exit_code']==0 for x in json.loads((r/'benchmark-supplemental-results.json').read_text()))
+runs={x:json.loads((r/('performance-'+x+'.json')).read_text()) for x in labels}
+for label,x in runs.items():
+ assert (x['small_request_count'],x['large_requests'],x['large_concurrency'],x['large_request_size_mib'],x['configured_models'])==(1000,80,4,1,64)
+ assert x['benchmark_script_sha256']=='bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2'
+ assert x['core_sha256']=='25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5'
+ assert x['terminal']['ui_pid_gone'] and all(y['waited'] and y['exit_code']==(0 if y['kind']=='core' else -15) for y in x['terminal']['children'])
+ expected=hashlib.sha256((r/('baseline-ui' if label.startswith('previous') else 'candidate-ui')).read_bytes()).hexdigest();assert x['ui_sha256']==expected
+metrics={'combined_rss_mib':lambda x:x['idle_rss_mib'],'ui_rss_mib':lambda x:x['ui_idle_rss_mib'],'sampled_peak_mib':lambda x:x['sampled_peak_rss_mib'],'process_to_marker_ms':lambda x:x['native_ui_process_to_record_ms'],'proxy_p95_ms':lambda x:x['proxied_loopback_ms']['p95'],'large_seconds':lambda x:x['large_seconds']}
+out={'at':datetime.datetime.now().astimezone().isoformat(),'original_four_preserved':True,'extra_order':['current3','previous3'],'bounded_pair':{},'all_six_descriptive_n3_each':{},'limits':'All original samples retained. Supplement does not replace the first4; pooled3 medians are descriptive, not statistical equivalence or a formal release gate.'}
+for name,get in metrics.items():
+ out['bounded_pair'][name]={'previous3':get(runs['previous3']),'current3':get(runs['current3']),'delta':round(get(runs['current3'])-get(runs['previous3']),6)}
+ item={}
+ for group in ['previous','current']:
+  v=[get(runs[group+str(i)]) for i in [1,2,3]];item[group]={'values':v,'median':statistics.median(v),'range':[min(v),max(v)]}
+ item['delta']=round(item['current']['median']-item['previous']['median'],6);out['all_six_descriptive_n3_each'][name]=item
+vm=[]
+for label in ['current3','previous3']:
+ p=r/('bench-b03-'+label)/'vmmap-before.txt';lines=p.read_text().splitlines();vm.append({'label':label,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'physical_footprint':[v for v in lines if v.startswith('Physical footprint')],'heap_total':[v for v in lines if v.startswith('TOTAL')][-1]})
+out['supplemental_vmmap_raw_lines']=vm
+out['review']='Additional pair did not repeat initial RSS/marker/p95 deltas: current UI/combined RSS lower, proxy p95 +0.007ms and marker +21.795ms. Initial high samples and cost remain; version causality unresolved, not evidence of no regression. No code optimization or relaxed workload used.'
+(r/'performance-supplemental-summary.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+p=r/'performance-summary.json';d=json.loads(p.read_text());d['assessment']='ACCEPTED FOR B03 interface and successful short loopback workload scope only. Initial4 UI RSS+9.195MiB/combined+10.405MiB/peak+13.77MiB/marker+792.1355ms/proxy p95+0.3475ms retained. Bounded C3/P3 did not reproduce those deltas; full6 descriptive combined median+3.23MiB/UI+3.50MiB/peak+4.66MiB and p95+0.007ms. Source causality and long-term/controlled performance remain R03; no regression-free or release-performance claim.'
+d['supplemental_report']='b03-performance-supplemental-summary.json';d['resource_diagnostics']='b03-performance-resource-diagnostics.json';d['native_deviation']='current1 rejected stale row selector then reread, clicked empty price search but no input/save; same semantic workflow otherwise. Foreground unmeasured.';d['further_repeats']='No additional repeats planned for this batch; final controlled resource and lifetime checks remainR03.'
+p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+p=r/'performance-resource-diagnostics.json';d=json.loads(p.read_text());d['supplemental']=vm;d['status']='Reviewed alongside one bounded additional pair. Initial costs and all samples retained; no proven source leak/blocker, final controlled R03 remains pending.';p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'bounded_pair':out['bounded_pair'],'all_six':out['all_six_descriptive_n3_each']},ensure_ascii=False))

@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-31T17:35:02.688675+08:00",
+  "sql_totals": [
+    1014,
+    502900,
+    50380,
+    553280,
+    401600
+  ],
+  "imported": 8,
+  "builtin": {
+    "rows": 7,
+    "tokens": 840,
+    "credit_nanos": 7980000000
+  },
+  "custom": {
+    "rows": 1,
+    "tokens": 240,
+    "credits": null
+  },
+  "ledger": [
+    {
+      "requested_model": "hy3",
+      "state": "imported",
+      "request_id": "f01170673578ea86de06ca90c851fdfcb8c75b86d36893c95fd00644ec704c2a"
+    },
+    {
+      "requested_model": "hy3",
+      "state": "imported",
+      "request_id": "d5f67f557e2464cc4146a2226d715548f8d4ca54a9aad697a6bbbb769de0ef21"
+    },
+    {
+      "requested_model": "hy3",
+      "state": "imported",
+      "request_id": "764302d2cdef737135fa22d4cd11678c605026045162868cc78a7925f7c380e8"
+    },
+    {
+      "requested_model": "hy3",
+      "state": "imported",
+      "request_id": "36da7396c261cb34dcc8e51002e033d5f74a6355e6533994733db63be5e4e86f"
+    },
+    {
+      "requested_model": "hy3",
+      "state": "imported",
+      "request_id": "f5a7d727b56624708d8953e5c8313f63f4787e168d701998f1da49251e9fb13f"
+    },
+    {
+      "requested_model": "custom-local:b03/pending",
+      "state": "imported",
+      "request_id": "360fdddfad1f2124c8a888e25f3cff92a6a2c22b8709299ba9bd64ee8ab04f74"
+    },
+    {
+      "requested_model": "hy3",
+      "state": "imported",
+      "request_id": "4e38dc5f7674cb38c6aa0fff9923d45c9d2233360dfee442c4e684b47d9186e6"
+    },
+    {
+      "requested_model": "hy3",
+      "state": "imported",
+      "request_id": "6f1b9eb7c5e0a97272eff8152723ec59bb050e3456ebd5364423a2008267e3e8"
+    }
+  ],
+  "long_model_exact": true,
+  "http_and_timing_unknown_preserved": true,
+  "duplicate_did_not_add_row": true,
+  "paused_add_did_not_import_until_resume": true,
+  "permission_error_then_recovered_idle": true,
+  "owned_fixture_permission_restored_600": true,
+  "scope": "Read-only real imported rows/ledger and stage proofs; does not claim pending-classification coverage or GUI input solely from SQL."
+}

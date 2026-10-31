@@ -807,6 +807,12 @@ const FLEX_WEIGHTS: [f32; REQUEST_COLUMNS] = [0., 3., 4., 1., 0.5, 0.25, 0.1, 0.
 /// Preserve readable cells at the minimum window size; horizontal scrolling
 /// and explicit first/last-column buttons expose the remaining columns.
 const DRAG_FLOORS: [f32; REQUEST_COLUMNS] = [110., 110., 100., 140., 114., 96., 74., 144.];
+// The Chinese Studio design reserves the largest span for Token usage rather
+// than spending it on short cost/status values. Other skins and English keep
+// their existing readable widths; explicit user drags still take precedence.
+const STUDIO_WIDTHS: [f32; REQUEST_COLUMNS] = [138., 131., 188., 228., 145., 76., 82., 100.];
+const STUDIO_MAX_WIDTHS: [f32; REQUEST_COLUMNS] = [138., 240., 320., 228., 145., 100., 96., 144.];
+const STUDIO_FLOORS: [f32; REQUEST_COLUMNS] = [138., 110., 100., 140., 114., 76., 74., 100.];
 
 /// Fit automatic columns into the measured host. Explicit user widths win;
 /// when minimum readable widths cannot fit, keep horizontal scrolling.
@@ -814,10 +820,22 @@ fn fitted_widths(
     available: f32,
     custom: &[Option<f32>; REQUEST_COLUMNS],
 ) -> [f32; REQUEST_COLUMNS] {
-    let mut widths = PREFERRED_WIDTHS;
+    fitted_widths_for_design(available, custom, false)
+}
+
+fn fitted_widths_for_design(
+    available: f32,
+    custom: &[Option<f32>; REQUEST_COLUMNS],
+    studio: bool,
+) -> [f32; REQUEST_COLUMNS] {
+    let (mut widths, maximums, floors) = if studio {
+        (STUDIO_WIDTHS, STUDIO_MAX_WIDTHS, STUDIO_FLOORS)
+    } else {
+        (PREFERRED_WIDTHS, MAX_AUTO_WIDTHS, DRAG_FLOORS)
+    };
     for i in 1..REQUEST_COLUMNS {
         if let Some(width) = custom[i] {
-            widths[i] = width.max(DRAG_FLOORS[i]);
+            widths[i] = width.max(floors[i]);
         }
     }
     // Between the preferred sizes and the readable floors, shrink unlocked
@@ -826,13 +844,13 @@ fn fitted_widths(
     if deficit > 0. {
         let capacity: f32 = (1..REQUEST_COLUMNS)
             .filter(|&i| custom[i].is_none())
-            .map(|i| (widths[i] - DRAG_FLOORS[i]).max(0.))
+            .map(|i| (widths[i] - floors[i]).max(0.))
             .sum();
         if capacity > 0. {
             let shrink = deficit.min(capacity);
             for i in 1..REQUEST_COLUMNS {
                 if custom[i].is_none() {
-                    let room = (widths[i] - DRAG_FLOORS[i]).max(0.);
+                    let room = (widths[i] - floors[i]).max(0.);
                     widths[i] -= shrink * room / capacity;
                 }
             }
@@ -841,7 +859,7 @@ fn fitted_widths(
     let mut remaining = (available - widths.iter().sum::<f32>()).max(0.);
     for _ in 0..REQUEST_COLUMNS {
         let weight: f32 = (1..REQUEST_COLUMNS)
-            .filter(|&i| custom[i].is_none() && widths[i] < MAX_AUTO_WIDTHS[i])
+            .filter(|&i| custom[i].is_none() && widths[i] < maximums[i])
             .map(|i| FLEX_WEIGHTS[i])
             .sum();
         if remaining < 0.01 || weight == 0. {
@@ -849,8 +867,8 @@ fn fitted_widths(
         }
         let budget = remaining;
         for i in 1..REQUEST_COLUMNS {
-            if custom[i].is_none() && widths[i] < MAX_AUTO_WIDTHS[i] {
-                let extra = (budget * FLEX_WEIGHTS[i] / weight).min(MAX_AUTO_WIDTHS[i] - widths[i]);
+            if custom[i].is_none() && widths[i] < maximums[i] {
+                let extra = (budget * FLEX_WEIGHTS[i] / weight).min(maximums[i] - widths[i]);
                 widths[i] += extra;
                 remaining -= extra;
             }
@@ -884,8 +902,20 @@ pub struct UsageRows {
 }
 
 impl UsageRows {
+    fn studio_columns(&self) -> bool {
+        self.zh && crate::theme::current_skin() == crate::theme::Skin::StudioIndigo
+    }
+
+    fn fitted_columns(&self) -> [f32; REQUEST_COLUMNS] {
+        if self.studio_columns() {
+            fitted_widths_for_design(self.available_width, &self.custom_widths, true)
+        } else {
+            fitted_widths(self.available_width, &self.custom_widths)
+        }
+    }
+
     pub fn resize(&mut self, widths: &[Pixels]) {
-        let previous = fitted_widths(self.available_width, &self.custom_widths);
+        let previous = self.fitted_columns();
         for (i, width) in widths.iter().enumerate().take(REQUEST_COLUMNS).skip(1) {
             let width = f32::from(*width);
             if (width - previous[i]).abs() > 0.5 {
@@ -932,10 +962,14 @@ impl TableDelegate for UsageRows {
 
     fn column(&self, index: usize, _: &App) -> Column {
         let (id, title) = self.columns()[index];
-        let width = fitted_widths(self.available_width, &self.custom_widths)[index];
+        let width = self.fitted_columns()[index];
         Column::new(id, title)
             .width(px(width))
-            .min_width(px(DRAG_FLOORS[index]))
+            .min_width(px(if self.studio_columns() {
+                STUDIO_FLOORS[index]
+            } else {
+                DRAG_FLOORS[index]
+            }))
             .resizable(index != 0)
             .selectable(false)
     }
@@ -1071,9 +1105,8 @@ impl TableDelegate for UsageRows {
         // paint into the gutter or appear joined to the next column.
         let padding = gpui_kit::component::Size::Size(px(crate::theme::size::TABLE_ROW_HEIGHT))
             .table_cell_padding();
-        let inner_width = (fitted_widths(self.available_width, &self.custom_widths)[col]
-            - f32::from(padding.left + padding.right))
-        .max(0.);
+        let inner_width =
+            (self.fitted_columns()[col] - f32::from(padding.left + padding.right)).max(0.);
         div()
             .w(px(inner_width))
             .h_full()
@@ -1550,6 +1583,30 @@ mod tests {
         let widths = fitted_widths(800., &[None; super::REQUEST_COLUMNS]);
         assert_eq!(widths, super::DRAG_FLOORS);
         assert!(widths.iter().sum::<f32>() > 800.);
+        // Switching the Studio proportions must not lose manual widths or
+        // shrink readable cells to force all eight columns into a small host.
+        let mut custom = [None; super::REQUEST_COLUMNS];
+        custom[1] = Some(170.);
+        custom[2] = Some(210.);
+        for available in [748., 1088., 1600.] {
+            let widths = super::fitted_widths_for_design(available, &custom, true);
+            assert_eq!(widths[1], 170.);
+            assert_eq!(widths[2], 210.);
+            assert!(
+                widths
+                    .iter()
+                    .zip(super::STUDIO_FLOORS)
+                    .all(|(width, floor)| { width.is_finite() && *width >= floor })
+            );
+            if available == 748. {
+                assert!(widths.iter().sum::<f32>() > available);
+            } else {
+                assert!(widths.iter().sum::<f32>() <= available + 0.1);
+                if available == 1600. {
+                    assert!(widths.iter().sum::<f32>() < available);
+                }
+            }
+        }
     }
 
     #[test]

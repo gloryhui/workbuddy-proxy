@@ -1,0 +1,85 @@
+Process:         workbuddy-proxy-gpui [14479]
+Path:            /private/var/folders/*/WorkBuddy Proxy Statistics Bench current3.app/Contents/MacOS/workbuddy-proxy-gpui
+Load Address:    0x1005b8000
+Identifier:      com.workbuddy.proxy.codexreview.b03.yrd9bmj8.current3
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  launchd [1]
+Target Type:     live task
+
+Date/Time:       2026-10-31 17:55:11.065 +0800
+Launch Time:     2026-10-31 17:53:17.704 +0800
+OS Version:      macOS 15.8.1 (24H32)
+Report Version:  7
+Analysis Tool:   /usr/bin/vmmap
+
+Physical footprint:         179.1M
+Physical footprint (peak):  179.5M
+Idle exit:                  untracked
+----
+
+ReadOnly portion of Libraries: Total=1.7G resident=306.5M(18%) swapped_out_or_unallocated=1.4G(82%)
+Writable regions: Total=1.6G written=45.9M(3%) resident=161.7M(10%) swapped_out=10.8M(1%) unallocated=1.4G(90%)
+
+                                VIRTUAL RESIDENT    DIRTY  SWAPPED VOLATILE   NONVOL    EMPTY   REGION
+REGION TYPE                        SIZE     SIZE     SIZE     SIZE     SIZE     SIZE     SIZE    COUNT (non-coalesced)
+===========                     ======= ========    =====  ======= ========   ======    =====  =======
+Accelerate framework               128K     128K       0K     128K       0K     128K       0K        1
+Activity Tracing                   256K      32K      32K       0K       0K      32K       0K        1
+CG image                            96K       0K       0K      96K       0K       0K       0K        3
+ColorSync                          592K      16K      16K     576K       0K       0K       0K       27
+CoreAnimation                      400K     176K      48K     304K       0K     144K       0K       18
+CoreGraphics                        32K      16K      16K      16K       0K       0K       0K        2
+CoreUI image data                 1024K       0K       0K    1024K       0K       0K       0K        7
+Dispatch continuations            80.0M     384K     384K     144K       0K       0K       0K        1
+Foundation                          16K       0K       0K      16K       0K       0K       0K        1
+IOAccelerator                     4160K    4160K    4160K       0K       0K       0K       0K        3
+IOAccelerator (graphics)          82.1M    60.9M    60.2M     720K       0K    20.9M    40.1M       64
+IOKit                               96K      64K      64K       0K       0K      16K       0K        6
+IOSurface                         60.4M    60.4M    60.4M       0K       0K    60.4M       0K        5
+Kernel Alloc Once                   32K       0K       0K      16K       0K       0K       0K        1
+MALLOC guard page                  288K       0K       0K       0K       0K       0K       0K       18
+MALLOC metadata                    432K     208K     208K     224K       0K       0K       0K       18
+MALLOC_MEDIUM                    768.0M    7168K    6032K    1856K       0K       0K       0K        6         see MALLOC ZONE table below
+MALLOC_MEDIUM (empty)            512.0M    1104K     880K     256K       0K       0K       0K        4         see MALLOC ZONE table below
+MALLOC_SMALL                      88.0M    12.8M    12.8M    3424K       0K       0K       0K       11         see MALLOC ZONE table below
+MALLOC_TINY                       26.0M    13.4M    12.8M    2880K       0K       0K       0K       26         see MALLOC ZONE table below
+MALLOC_TINY (empty)               4096K       0K       0K     128K       0K       0K       0K        4         see MALLOC ZONE table below
+STACK GUARD                        144K       0K       0K       0K       0K       0K       0K        9
+Stack                             12.8M     512K     496K      48K       0K       0K       0K       10
+Stack (reserved)                   544K       0K       0K       0K       0K       0K       0K        1         reserved VM address space (unallocated)
+Stack Guard                       56.0M       0K       0K       0K       0K       0K       0K        2
+VM_ALLOCATE                        112K      16K      16K      32K       0K       0K       0K        7
+VM_ALLOCATE (reserved)             384K       0K       0K       0K       0K       0K       0K        3         reserved VM address space (unallocated)
+__AUTH                            5360K    1454K     171K     358K       0K       0K       0K      682
+__AUTH_CONST                      75.6M    26.0M      16K      80K       0K       0K       0K      922
+__CTF                               824      824       0K       0K       0K       0K       0K        1
+__DATA                            25.0M    6592K     502K    1043K       0K       0K       0K      904
+__DATA_CONST                      27.6M    16.0M      32K       0K       0K       0K       0K      932
+__DATA_DIRTY                      2762K    1228K     267K     407K       0K       0K       0K      335
+__FONT_DATA                        2352       0K       0K       0K       0K       0K       0K        1
+__INFO_FILTER                         8        8       0K       0K       0K       0K       0K        1
+__LINKEDIT                       620.8M    18.2M       0K       0K       0K       0K       0K        4
+__OBJC_RO                         61.4M    34.4M       0K       0K       0K       0K       0K        1
+__OBJC_RW                         2397K    1917K      13K      32K       0K       0K       0K        1
+__TEXT                             1.1G   288.3M       0K       0K       0K       0K       0K      952
+__TPRO_CONST                       128K      48K      48K      16K       0K       0K       0K        2
+mapped file                      257.0M    10.8M       0K       0K       0K       0K       0K       30
+owned unmapped memory             5248K       0K    4256K     992K       0K       0K       0K        1
+page table in kernel               769K     769K     769K       0K       0K       0K       0K        1
+shared memory                      992K     256K     256K     112K       0K       0K       0K       21
+unused but dirty shlib __DATA      327K     103K     103K     224K       0K       0K       0K      248
+===========                     ======= ========    =====  ======= ========   ======    =====  =======
+TOTAL                              3.8G   566.8M   164.5M    14.8M       0K    81.5M    40.1M     5298
+TOTAL, minus reserved VM space     3.8G   566.8M   164.5M    14.8M       0K    81.5M    40.1M     5298
+
+                                          VIRTUAL   RESIDENT      DIRTY    SWAPPED ALLOCATION      BYTES DIRTY+SWAP          REGION
+MALLOC ZONE                                  SIZE       SIZE       SIZE       SIZE      COUNT  ALLOCATED  FRAG SIZE  % FRAG   COUNT
+===========                               =======  =========  =========  =========  =========  =========  =========  ======  ======
+DefaultMallocZone_0x102e58000                1.3G      34.0M      32.1M      8304K      58812      22.0M      18.2M     46%      36
+QuartzCore_0x103140000                      18.0M       272K       272K       112K       1096        79K       305K     80%      11
+LSBindingEvaluator_0x1032f8000              4096K         0K         0K       128K          0         0K       128K    100%       4
+DefaultPurgeableMallocZone_0x10d9f8000         0K         0K         0K         0K          0         0K         0K      0%       0
+===========                               =======  =========  =========  =========  =========  =========  =========  ======  ======
+TOTAL                                        1.4G      34.3M      32.3M      8544K      59908      22.1M      18.6M     46%      51

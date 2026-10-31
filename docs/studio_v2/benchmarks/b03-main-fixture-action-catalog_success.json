@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-31T17:23:41.372106+08:00",
+  "stage": "catalog_success",
+  "action": "catalog-success",
+  "scope": "Only this recorded synthetic fixture; no management-data writes. Requests use the real local proxy, other actions change mock/catalog/input files only.",
+  "mock_failure": false
+}

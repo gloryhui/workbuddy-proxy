@@ -1,0 +1,2 @@
+vmmap[11970]: vmmap cannot examine process 10815 (workbuddy-proxy-) for unknown reasons, even though it appears to exist; try running with `sudo`.
+vmmap[11970]: [fatal] mach port for process 0 not valid

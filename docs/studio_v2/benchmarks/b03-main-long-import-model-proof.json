@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-31T17:08:41.803458+08:00",
+  "relative_source": "home/.workbuddy/projects/demo/builtin.jsonl",
+  "source_sha256_before": "5f6e00a1a317e7034db210bff361445928bc7d64afe97611bd4b99fc9da48d69",
+  "source_sha256_after": "39e21ca274f87772458e728ab05fe962adf638a79d19c48dff0523334b57b8e0",
+  "event_index": 4,
+  "long_upstream_model": "hy3-b03-response-model-with-a-long-identifier-for-native-tooltip-and-column-resize-verification-abcdef0123456789abcdef0123456789abcdef0123456789",
+  "length": 144,
+  "requestModelId_preserved": "hy3",
+  "imported_before": 0,
+  "scope": "Only own synthetic unimported JSONL response model changed; no API/SQL/config writes."
+}

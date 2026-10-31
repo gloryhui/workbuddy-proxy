@@ -1,0 +1,17 @@
+[
+  {
+    "label": "main",
+    "fixture_pid": 89984,
+    "exit_code": 0,
+    "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8/b03-yrd9bmj8-main-final",
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    }
+  }
+]

@@ -1,0 +1,140 @@
+# B03 complete native batch
+
+Frozen UI4b03ed5f, immutable Core25f. Only pending-native.json's unique fixture/PIDs.
+No activate/raise, real WorkBuddy, system permissions, external input APIs, Sync,
+Test connection, external URLs or real data. Only CUA operates the UI. Every
+accepted image uses ownPID/windowID native screencapture -x -o -l ID -t png;
+check magic/2880x1802 or2200x1402 immediately. Keep incorrect skin/format captures
+as diagnostics with different names, never silently overwrite them as evidence.
+
+Root provides read-only observer:
+`python3 ROOT/observe-b03.py FIXTURE STAGE`
+Initial is already initialized. Every ordinary stage requires exact config bytes,
+unchanged rules/settings and every protected historical request/cost field.
+Only the explicit *_saved stages below may change the stated settings/rules.
+After actual writes wait for the real UI/readback before invoking the observer.
+Failures are diagnostic, not permission to loosen assertions or bypass the UI.
+
+Fixture-only helper (does not save management data):
+`python3 ROOT/fixture-action.py FIXTURE ACTION --stage NAME [--model model-a-4] [--mode success|failure|missing_usage] [--expect-delta 0]`
+Catalog actions only change mock response; import actions only touch the recorded
+synthetic home/.workbuddy/projects/demo. No real profile paths are accessed.
+
+## 1. One concentrated look and default frames
+
+1. Verify2 providers/5 models,1000 real records,3 catalog rules,550000 total tokens,
+   cache80%, default CNY, retention180, captureON/importOFF. Root guard and original
+   SQL snapshots have already passed. Bind actual UI PID/window and capture PNGs.
+2. Collect7x2:52-2 overview,56-8 details,57-8 analysis,58-8 settings,
+   60-249 new price (Cancel),60-475 actual latest request (Close),69-359 edit
+   existinggpt-6 catalog price (Cancel). Source values/default-zero/unknown/mixed
+   currencies remain truthful, no static Figma samples forced into data.
+3. At1100 verify table body scroll to last row on page, fixed header/footer,
+   First/Rightmost column controls, lower analysis and settings cards. Small
+   price note/form scroll and full footer; detail lower rows/footer and More.
+   Capture only useful bottom/error supplements. Check overlay blocks toolbar.
+4. Root/actor produce one concrete issue list. Do not start persistence changes
+   until this look is reviewed. No AA/glyph/font-version/full-RGB micro gates.
+   Observer defaults_complete (no writes).
+
+## 2. Details, analysis, filters and natural update
+
+5. Details page sizes10/20/50/100, Next/Previous, valid page2 and invalid0/-1/text/
+   out-of-range jump. A typed valid page draft survives at least6seconds of auto
+   refresh before Enter. Page/row boundaries must come from server data.
+   Observer details_pages after restoring page1/10. Optional independent page
+   reference: append JSON argument '{"page":2,"size":20}' to observer; compare
+   first row's detail request ID to the returned server reference, not just text.
+6. One actual column drag: explicit model width remains after resize/refresh;
+   whole table can still reach first and last columns. Do not discard user width
+   merely to match the design. Restore defaults only via existing UI if possible,
+   otherwise record actual final width as this fixture's state (not new code).
+7. Modelgpt-6 should200 records and providerB200 vsA800 before new traffic;
+   sources Custom1000/Builtin0; date Today/7days, clear filters. Analysis provider2
+   /model5 groups; total550000, input500000/output50000/cache400000 are distinct.
+   Range/count popovers show current totals, close/Escape only current layer.
+   Currency switch CNY/USD uses real cost cohorts, never adds credits or converts
+   unknown currency amounts. Observer filters_analysis (no DB writes).
+8. Clear filters. Helper request --mode failure --stage natural_failure gives one
+   real503. Without clicking Refresh observe natural count1001 and lower success
+   rate; then manual Refresh separately. Open that actual failed record; tokens/
+   timing fields follow real API, no fake success. Observer failure_detail.
+9. Helper request --mode missing_usage --stage missing_usage gives one real200
+   without usage. Open actual record, missing tokens stay—. More→Escape closes
+   metadata first, another Escape closes detail. Observer missing_detail.
+
+## 3. One price CRUD/snapshot journey
+
+Only target a NEW manual rule for providerA/sub2api + claude-opus-4.7. Original3
+catalog rules remain exact except the later explicit catalog-wide update.
+
+10. New rule Cancel, reopen negative input price -1 rejected and dialog retained;
+    observer price_invalid. Correct input2/output8/cache-read0/cache-write0,
+    CNY, default Flat pricing, label 'B03 manual'. Save (one real click visible),
+    observer price_new_saved must see4 rules, new target only.
+11. Helper request --stage priced_cny (model-a-4). Inspect its real detail/More:
+    CNY, target price ID/revision1/rate2 snapshot. Observer priced_cny_readback.
+12. Search claude-opus-4.7, Edit. Provider/model identity locked. Change currencyUSD
+    and input2.5 only, output8/cache0 unchanged, label unchanged. Save,
+    observer price_edit_saved must see only target revision/rate/currency change.
+13. Helper request --stage priced_usd; inspect USD/new revision/rate2.5. Old CNY
+    and original1000 snapshots remain exact. Observer priced_usd_readback.
+14. Existing price-row menu deletes directly (source confirmed; no confirmation
+    dialog). Actual delete and observer price_deleted_saved:3 old rules, target
+    only removed. price_delete_cancel is N/A; do not invent a confirmation.
+    Helper request --stage after_price_delete: default-zero CNY snapshot, old
+    costs unchanged. Observer deleted_price_readback.
+15. Recreate same manual CNY2/8/0/0 rule/label. Observer price_restored_saved:
+    new rule ID is expected, not fabricated restoration of deleted identity.
+    Helper request --stage price_restored; inspect new snapshot. Clear search.
+16. Helper catalog-failure --stage catalog_failure. Use actual price update action,
+    error visible and rules unchanged; observer catalog_failed. Restore helper
+    catalog-success then actual retry/update action; observer catalog_success_saved.
+    If same-day cache means no update/revision change, report actual feedback.
+    Original request/cost snapshots and manual rule must remain unchanged.
+
+## 4. Capture/storage controls and native importer
+
+17. Default currency→USD (currency_usd_saved), thenCNY(currency_restored_saved).
+    Retention→90(retention90_saved), then180(retention_restored_saved). All original
+    records are current-day and must remain exact. No real user file or purge.
+18. CaptureOFF(capture_off_saved). Helper request --stage capture_paused
+    --expect-delta0 must still forward200 and add no stats. CaptureON
+    (capture_on_saved). The Core remains alive; controls/feedback reflect truth.
+19. Native Import checkboxON, accept its local-read consent for THIS synthetic
+    profile only; observer import_on_saved. Wait actual5 builtin imports, one
+    synthetic custom record is actually imported as workbuddy_custom; total6.
+    No pending-classification pass is claimed. Observer
+    import_initial_complete. SourceBuiltin shows actual5 rows/600tokens/credits;
+    imported detail must be Recorded with no fabricated HTTP200/timings. More/Esc
+    behaves by layer. Custom relay history remains intact.
+20. Native ImportOFF(import_paused_saved). Helper append-import --stage paused_input
+    adds one source event only; after at least6seconds no new imported request (total6).
+    Observer import_paused_stable. Native ImportON(import_resumed_saved) and wait
+    actual sixth builtin record (total7, including1custom). Observer import_resumed_complete.
+21. Helper duplicate-import --stage duplicate_input appends an exact original
+    event. Native incremental/full scan through existing UI; after settle no extra
+    usage row for that duplicate. Observer import_deduplicated; actual counters
+    retained without inventing their values.
+22. Helper import-fault --stage import_permission_fault creates ONLY its owned
+    synthetic permission-retry.jsonl with mode000 (not macOS privacy/settings).
+    Native scan: collect actual read-error/progress feedback; observer import_error.
+    Helper repair-import --stage import_permission_repaired restores600. Native
+    retry/full scan, wait actual seventh builtin record (total8, including1custom); observer import_recovered.
+    Do not loop the same rejected action or change system permissions. If the
+    importer intentionally suppresses this error, record actual behavior for Root.
+23. Pause import again via existing checkbox, observer import_final_paused_saved.
+    Keep the earlier import_paused_saved proof rather than overwriting it.
+    Preserve data and final settings in report.
+
+## 5. Batch boundary
+
+24. Final readback of settings/prices/details/overview, real matching API/SQL,
+    observer final_readback. All original and earlier added protected records stay
+    exact. No UI-only bypass/API price writes or SQL data seeding in Main.
+25. Write fixture/native-gui.json and Root/native-b03-summary.json: actual actions,
+    target identities, uncertainties, whole seven default frame pairs, raw PNG
+    metadata and any incorrect-skin evidence/replacements. Full keyboard/IME/AX,
+    exact resting hover and hardware/long-term perf remainR01-R04.
+26. Native Close, own UI PIDgone, observer closed. Root driver waits Core/host0.
+    Performance runs follow separately; do not start a second UI actor/fixture.

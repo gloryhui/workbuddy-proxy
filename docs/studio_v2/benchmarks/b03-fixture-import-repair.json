@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-31T17:27:47.583439+08:00",
+  "cause": "Fixture sessionId must equal JSONL filename stem; original6 rows correctly skipped as malformed session mismatch.",
+  "before_import": {
+    "enabled": true,
+    "effective_enabled": true,
+    "state": "idle",
+    "imported": 0,
+    "skipped": 6,
+    "conflict": 0,
+    "pending": 0,
+    "last_error_code": null,
+    "progress": {
+      "bytes_committed": 1767,
+      "bytes_remaining": 0,
+      "bytes_total": 1767,
+      "files_remaining": 0,
+      "files_total": 2,
+      "total_known": true
+    },
+    "runtime_metrics": {
+      "queue_depth": 0,
+      "queue_peak": 1,
+      "recent_batches": [
+        {
+          "candidates": 0,
+          "committed": true,
+          "elapsed_us": 66
+        },
+        {
+          "candidates": 0,
+          "committed": true,
+          "elapsed_us": 69
+        }
+      ],
+      "source_io_thread_checks": 17,
+      "source_io_thread_violations": 0,
+      "writer_batch_count": 2,
+      "writer_batch_failures": 0,
+      "writer_batch_max_us": 69,
+      "writer_batch_total_us": 135
+    }
+  },
+  "files": [
+    {
+      "relative": "home/.workbuddy/projects/demo/builtin.jsonl",
+      "sha256_before": "39e21ca274f87772458e728ab05fe962adf638a79d19c48dff0523334b57b8e0",
+      "sha256_after": "b73570babb9c1af41daed260aea0335297fea900618e96f74ab6e860af93167a",
+      "prior_session_ids": [
+        "b03-builtin"
+      ],
+      "new_session_id": "builtin",
+      "events": 5,
+      "only_sessionId_changed": true
+    },
+    {
+      "relative": "home/.workbuddy/projects/demo/pending.jsonl",
+      "sha256_before": "00fe25d6d18710dc82d7dc0587ddd2de24b7553d012fdbb5060351b586b56e5b",
+      "sha256_after": "7784d3fe904b7b9842d4528044b9b4a27b60f7e17337ce27424539a3eef7354f",
+      "prior_session_ids": [
+        "b03-pending"
+      ],
+      "new_session_id": "pending",
+      "events": 1,
+      "only_sessionId_changed": true
+    }
+  ],
+  "scope": "Owned synthetic source files only; Core source/config/database unchanged.",
+  "post_repair_observation": {
+    "builtin_rows": 5,
+    "builtin_tokens": 600,
+    "builtin_credit_nanos": 5700000000,
+    "custom_rows": 1,
+    "custom_tokens": 240,
+    "actual_total_imported": 6,
+    "custom_note": "The source named pending is actually imported by fixed Core as workbuddy_custom. No pending classification pass claimed; retain actual row and do not alter/delete it to fit plan. Later stages assert exact builtin/custom split, not merely loosen total."
+  }
+}

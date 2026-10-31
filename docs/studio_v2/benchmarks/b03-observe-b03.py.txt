@@ -1,0 +1,155 @@
+from pathlib import Path
+import datetime, hashlib, json, os, sqlite3, sys, urllib.request
+
+r = Path(__file__).resolve().parent
+f = Path(sys.argv[1]).resolve()
+stage = sys.argv[2]
+assert f.parent == r
+ready = json.loads((f / 'cua-launch-ready.json').read_text())
+key = json.loads((f / 'config/instance.json').read_text())['management_key']
+opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+def command(name, **fields):
+    q = urllib.request.Request('http://127.0.0.1:%d/_control/action' % ready['port'],
+                               data=json.dumps({'command': name, **fields}).encode(),
+                               headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key})
+    with opener.open(q, timeout=15) as response:
+        return json.loads(json.loads(response.read())['message'])
+
+health = command('stats_health')
+assert health['state'] == 'ready'
+cfg = f / 'config/config.json'
+cfg_sha = hashlib.sha256(cfg.read_bytes()).hexdigest()
+assert cfg_sha == json.loads((f / 'pre-gui-proof.json').read_text())['core_config_sha256_before']
+settings_raw = command('stats_settings_get')
+settings = {k: settings_raw[k] for k in ['enabled', 'retention_days', 'default_currency', 'revision']}
+prices_raw = command('stats_prices_list')
+prices = {x['rule_id']: {k: v for k, v in x.items() if k != 'referenced'} for x in prices_raw['items']}
+wb = command('stats_workbuddy_status')
+with sqlite3.connect('file:' + str(f / 'config/usage.sqlite3') + '?mode=ro', uri=True) as db:
+    db.row_factory = sqlite3.Row
+    db.execute('BEGIN')
+    current = {table: {row['request_id']: dict(row) for row in db.execute('SELECT * FROM ' + table)}
+               for table in ['usage_requests', 'usage_costs']}
+    counts = list(db.execute('SELECT COUNT(*),SUM(input_tokens),SUM(output_tokens),SUM(total_tokens),SUM(cache_read_tokens) FROM usage_requests').fetchone())
+baseline = f / 'history-protected-private.json'
+checkpoint = f / 'observer-checkpoint-private.json'
+if stage == 'initial':
+    assert not baseline.exists() and not checkpoint.exists()
+    assert counts == [1000, 500000, 50000, 550000, 400000]
+    baseline.write_text(json.dumps(current) + '\n')
+    checkpoint.write_text(json.dumps({'prices': prices, 'settings': settings, 'import_enabled': wb['enabled']}) + '\n')
+    os.chmod(baseline, 0o600)
+    os.chmod(checkpoint, 0o600)
+old_history = json.loads(baseline.read_text())
+for table, rows in old_history.items():
+    assert all(current[table].get(k) == v for k, v in rows.items()), ('historical row changed/deleted', table, stage)
+previous = json.loads(checkpoint.read_text())
+price_stages = {'price_new_saved', 'price_edit_saved', 'price_deleted_saved', 'price_restored_saved', 'catalog_success_saved'}
+settings_stages = {'capture_off_saved': ('enabled', False), 'capture_on_saved': ('enabled', True),
+                   'retention90_saved': ('retention_days', 90), 'retention_restored_saved': ('retention_days', 180),
+                   'currency_usd_saved': ('default_currency', 'USD'), 'currency_restored_saved': ('default_currency', 'CNY')}
+import_stages = {'import_on_saved': True, 'import_paused_saved': False, 'import_resumed_saved': True,
+                 'import_final_paused_saved': False}
+if stage in price_stages:
+    assert settings == previous['settings'] and wb['enabled'] == previous['import_enabled']
+    before = previous['prices']
+    if stage == 'price_new_saved':
+        added = set(prices) - set(before)
+        assert len(added) == 1 and len(prices) == len(before) + 1
+        row = prices[next(iter(added))]
+        assert row['provider_id'] == 'review-provider' and row['upstream_model'] == 'claude-opus-4.7'
+        assert row['currency'] == 'CNY' and row['input_rate_nanos'] == '2000000000' and row['output_rate_nanos'] == '8000000000'
+        assert row['cache_read_rate_nanos'] == '0' and row['cache_write_rate_nanos'] == '0'
+        assert all(prices[k] == v for k, v in before.items())
+    elif stage == 'price_edit_saved':
+        changed = [k for k, v in before.items() if prices.get(k) != v]
+        assert set(prices) == set(before) and len(changed) == 1
+        old, new = before[changed[0]], prices[changed[0]]
+        assert new['upstream_model'] == 'claude-opus-4.7' and new['currency'] == 'USD'
+        assert new['input_rate_nanos'] == '2500000000' and new['output_rate_nanos'] == '8000000000'
+        allowed = {'currency', 'input_rate_nanos', 'revision', 'updated_at_ms'}
+        assert all(new.get(k) == v for k, v in old.items() if k not in allowed)
+        assert new['revision'] > old['revision']
+    elif stage == 'price_deleted_saved':
+        deleted = set(before) - set(prices)
+        assert len(deleted) == 1 and len(prices) == len(before) - 1
+        assert before[next(iter(deleted))]['upstream_model'] == 'claude-opus-4.7'
+        assert all(before[k] == v for k, v in prices.items())
+    elif stage == 'price_restored_saved':
+        added = set(prices) - set(before)
+        assert len(added) == 1 and len(prices) == len(before) + 1
+        new = prices[next(iter(added))]
+        assert new['upstream_model'] == 'claude-opus-4.7' and new['currency'] == 'CNY' and new['input_rate_nanos'] == '2000000000'
+        assert all(prices[k] == v for k, v in before.items())
+    else:
+        assert set(prices) == set(before)
+        assert all(prices[k] == v for k, v in before.items() if v['upstream_model'] == 'claude-opus-4.7')
+elif stage in settings_stages:
+    field, expected = settings_stages[stage]
+    assert prices == previous['prices'] and wb['enabled'] == previous['import_enabled']
+    assert settings[field] == expected and settings['revision'] > previous['settings']['revision']
+    assert all(settings[k] == v for k, v in previous['settings'].items() if k not in [field, 'revision'])
+elif stage in import_stages:
+    assert prices == previous['prices'] and wb['enabled'] == import_stages[stage]
+    assert all(settings[k] == v for k, v in previous['settings'].items() if k != 'revision')
+    assert settings['revision'] > previous['settings']['revision']
+else:
+    assert not stage.endswith('_saved'), ('unknown saved stage', stage)
+    assert prices == previous['prices'] and settings == previous['settings'] and wb['enabled'] == previous['import_enabled'], ('unexpected persisted mutation', stage)
+if stage in price_stages or stage in settings_stages or stage in import_stages:
+    checkpoint.write_text(json.dumps({'prices': prices, 'settings': settings, 'import_enabled': wb['enabled']}) + '\n')
+    os.chmod(checkpoint, 0o600)
+# Protect every stored request and every existing cost independently. Imported
+# credit records intentionally have no usage_costs row; they still require
+# exact full request-field immutability. Reads use one SQLite snapshot.
+for table, rows in current.items():
+    for request_id, row in rows.items():
+        old_history[table].setdefault(request_id, row)
+baseline.write_text(json.dumps(old_history) + '\n')
+os.chmod(baseline, 0o600)
+protected = {table: {'rows': len(rows), 'all_fields_preserved': True,
+                     'sha256': hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(',', ':')).encode()).hexdigest()}
+             for table, rows in old_history.items()}
+expected_imports = {'import_initial_complete': 6, 'import_paused_stable': 6, 'import_resumed_complete': 7, 'import_deduplicated': 7, 'import_error': 7, 'import_recovered': 8}
+if stage in expected_imports:
+    assert wb['imported'] == expected_imports[stage], ('unexpected imported rows', stage, wb['imported'])
+    assert counts[0] == 1006 + expected_imports[stage], ('unexpected total rows', stage, counts[0])
+    imported_rows = [v for v in current['usage_requests'].values() if v['source'] == 'workbuddy_import']
+    assert len(imported_rows) == expected_imports[stage]
+    assert sum(v['record_origin'] == 'workbuddy_builtin' for v in imported_rows) == expected_imports[stage] - 1
+    assert sum(v['record_origin'] == 'workbuddy_custom' for v in imported_rows) == 1
+if stage == 'import_error':
+    assert wb['state'] == 'degraded' and wb['last_error_code'] == 'stats_workbuddy_source_read_failed'
+out = {'at': datetime.datetime.now().astimezone().isoformat(), 'stage': stage, 'core_health': health['state'],
+       'core_pid': ready['core_pid'], 'core_config_sha256_unchanged': cfg_sha, 'sql_totals': counts,
+       'prices': list(prices.values()), 'settings': settings,
+       'import': {k: wb[k] for k in ['enabled', 'effective_enabled', 'state', 'imported', 'skipped', 'conflict', 'pending', 'last_error_code', 'progress', 'runtime_metrics']},
+       'protected_history': protected,
+       'scope': 'Read-only live Core API and exact SQL row snapshots. Source stats envelopes/generated time and derived price referenced flag excluded from setting/rule comparisons. Only declared GUI save stages may change persisted settings/prices; config remains byte-exact.'}
+if len(sys.argv) > 3:
+    page = json.loads(sys.argv[3])
+    local_now = datetime.datetime.now().astimezone()
+    day_start = local_now.replace(hour=0, minute=0, second=0, microsecond=0)
+    filt = {'from_ms': int(day_start.timestamp() * 1000), 'to_ms': int(local_now.timestamp() * 1000) + 60000, 'timezone': 'Asia/Shanghai'}
+    first = command('stats_requests', filter=filt, page_size=page['size'])
+    if page['page'] == 1:
+        result = first
+    else:
+        assert first['next_cursor'] is not None, 'No second-page cursor'
+        result = command('stats_requests', filter=filt, page_size=page['size'], cursor=first['next_cursor'], page=page['page'])
+    out['page_reference'] = {'page': result.get('page'), 'size': page['size'], 'items': [{'request_id': v['request_id'], 'upstream_model': v.get('upstream_model')} for v in result['items']]}
+folder = f / 'stage-proofs'
+folder.mkdir(exist_ok=True)
+(folder / (stage + '.json')).write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps({'stage': stage, 'rows': counts[0], 'prices': len(prices), 'settings': settings,
+                  'import_enabled': wb['enabled'], 'protected_requests': len(old_history['usage_requests'])}, ensure_ascii=False))
+if stage == 'closed':
+    pid = json.loads((f / 'fixture.json').read_text())['ui_pid']
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        pass
+    else:
+        raise AssertionError('UI still live')
+    (f / 'native-acceptance-finished').write_text('B03 native journey finished\n')

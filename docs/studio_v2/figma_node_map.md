@@ -2,20 +2,20 @@
 
 官方 Figma MCP 于 2026-10-31 刷新40节点清单并完整读取B01的19份高保真上下文和原图，文件 `zxDfIQ4lhNcTXrFT7qk8QZ`、页面 `51:2`（WorkBuddy Proxy · Studio V2 · Rust GPUI）。以下 40 张 1440×900 状态画板直接来自 page metadata；未验收表示尚未逐画板进行运行与视觉对照。Rust 落点均相对于 `gpui/src/`。
 
-批次计划v2起，下面“已验收”指该帧的最新设计、完整路径和两尺寸界面签收；全局输入、平台、性能与安装发行在 `release_plan.json` 的 R01–R04 独立记录。正式版须两者同时通过，不能把界面签收等同发布。B01按真实证据签收19帧，剩余21帧；不是因重排计划自动升级。
+批次计划v2起，下面“已验收”指该帧的最新设计、完整路径和两尺寸界面签收；全局输入、平台、性能与安装发行在 `release_plan.json` 的 R01–R04 独立记录。正式版须两者同时通过，不能把界面签收等同发布。B01/B02/B03按真实证据累计签收32帧，剩余8帧（B04六帧、B05两帧）；原生输入与发行门禁独立。
 
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
-| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, trends.rs, recent.rs, layout.rs, usage_chart.rs | 部分：UI66主布局＋UI67最近28px标签/行位修复，同版自然0→22→23/12100/95.7%、筛选/币种/指标/详情、方向键/焦点和两尺寸通过；图表拖动真实点已验。匹配短测空闲合计+0.58MiB/峰值+12.63MiB保留；完整状态/无按键hover/IME/AX/六皮肤及平台终验仍待 |
+| 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, trends.rs, recent.rs, layout.rs, usage_chart.rs | 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 |
 | 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；默认A及真实连接200，2供应商5模型；四行小窗末行已独立补验。 全局R01–R04不在此签收内。 |
-| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 部分：八列/来源筛选/分页/详情/窄窗首末列已验；UI56/57最终候选两尺寸、14/22真实记录与原负载已验，a51表头top364/outer39；UI58共享标题墨迹修正。完整视觉/键盘/IME/AX/跨平台待终验 |
-| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：UI56/57最终两尺寸与原负载已验，汇总2供应商5模型/22条12100Token范围浮层、小窗右列下卡可滚；标题列/314px切换区与表头top363/38已实拍。UI58共享标题实现修正，本轮未重拍Summary，完整状态/视觉待终验 |
-| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs | 部分：UI65完成官方整帧首审与设置布局/48px价格表/保留期等宽、两尺寸及窄窗下方可达；搜索3→1→3、价格2→2.5→2/保留180→90→180及历史14行不变有独立证据；原分页/额外操作保留，精细视觉和全量状态待收口 |
+| 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 |
+| 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 |
+| 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs | 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 |
 | 59:11 | 06 / STUDIO V2 · 选择模型 | ui/model_picker.rs, ui.rs, ui/providers.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
 | 59:279 | 07 / STUDIO V2 · 编辑模型能力 | ui/model_editor.rs, model_options.rs, ui.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
 | 60:27 | 08 / STUDIO V2 · 同步 WorkBuddy | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
-| 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
-| 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
+| 60:249 | 09 / STUDIO V2 · 新建价格规则 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 |
+| 60:475 | 10 / STUDIO V2 · 请求详情 | statistics/detail_layout.rs, detail_metadata.rs, usage_table.rs | 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 |
 | 61:289 | 11 / STUDIO V2 · 协议选项 · OpenAI Chat | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
 | 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
 | 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
@@ -28,7 +28,7 @@
 | 67:338 | 20 / STUDIO V2 · OpenCode Go 供应商 | ui/providers.rs, ui.rs, ui/provider_feedback.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；B单模型与真实200，两尺寸及小窗下方帮助/底栏可达。 全局R01–R04不在此签收内。 |
 | 67:548 | 21 / STUDIO V2 · 思考强度菜单 | ui/provider_choices.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；思考菜单上方锚定，两尺寸完整；Low→Follow实际切换另有同候选证明。 全局R01–R04不在此签收内。 |
 | 68:350 | 22 / STUDIO V2 · 取消同步确认 | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：原生确认/两尺寸、取消/仅移除、保留providers与草稿/恢复原条目、守卫下移除后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
-| 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：UI65完整首审，最终e6abd两尺寸gpt-6 USD2/10检查/X取消；c2eb真实编辑保存/恢复revision3且旧14行全字段摘要不变；原身份锁定/缓存0保持，精细阴影/文字与全量状态待收口 |
+| 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 已验收：B03 / QA70，最新设计＋冻结4b03原生7×2与实际1000请求、分页/价格/导入链及数据保护；输入限制与R01–R04独立记录。 |
 | 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui/provider_new.rs, ui/providers.rs, provider_create.rs, draft_discovery.rs, state.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；新增草稿取消，非法URL拒绝，合法本地保存与后续删除。 全局R01–R04不在此签收内。 |
 | 78:605 | 25 / STUDIO V2 · 编辑供应商资料 | ui/provider_edit.rs, ui/providers.rs, ui.rs, state.rs, main.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；A编辑/取消，实际改名保存、切换读回与还原。 全局R01–R04不在此签收内。 |
 | 78:843 | 26 / STUDIO V2 · 复制供应商草稿 | ui/provider_new.rs, provider_create.rs, ui/sidebar.rs, ui/providers.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；复制独立草稿、取消、保存；原Key继承逻辑保持，不从遮罩推断为空。 全局R01–R04不在此签收内。 |

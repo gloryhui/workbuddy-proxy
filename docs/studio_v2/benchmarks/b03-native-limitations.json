@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-31T17:31:33.215441+08:00",
+  "column_drag": {
+    "actual_input": "CUA app.drag from[1521,770] to[1721,770]; before/after visible divider unchanged.",
+    "tool_limit": "Only from/to API; no documented held multi-point drag; no external input fallback authorized.",
+    "assessment": "No native drag-success claim. Original Kit resize and project event chain unchanged; custom width/floor invariants tested. Full native drag/resize/focus input remainsR01, independently from frame/layout acceptance."
+  },
+  "detail_escape": {
+    "initial_observation": "First Esc closed More, immediately following second Esc did not close parent.",
+    "final_minimal_diagnostic": "Fresh detail direct Esc closed; re-open→More→Esc→wait1.2s→Esc closed parent. Observed by mac_ui, standard window focus trees afterward.",
+    "assessment": "Final minimal sequence passed after asynchronous focus/animation settled. No reproducible product blocker or source change established. Full keyboard/IME/AX remainsR01."
+  }
+}

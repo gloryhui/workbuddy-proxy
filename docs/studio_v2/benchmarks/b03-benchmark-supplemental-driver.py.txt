@@ -1,0 +1,10 @@
+from pathlib import Path
+import json,subprocess,sys,time
+r=Path(__file__).resolve().parent;original=json.loads((r/'benchmark-driver-results.json').read_text());assert len(original)==4 and all(x['exit_code']==0 for x in original)
+results=[]
+for label in ['current3','previous3']:
+ print('starting bounded diagnostic '+label,flush=True);start=time.monotonic();p=subprocess.run([sys.executable,str(r/'benchmark-b03.py'),label],capture_output=True,text=True)
+ (r/('benchmark-'+label+'.log')).write_text(p.stdout+p.stderr);results.append({'label':label,'exit_code':p.returncode,'wall_seconds':round(time.monotonic()-start,3),'evidence':'performance-'+label+'.json'})
+ (r/'benchmark-supplemental-results.json').write_text(json.dumps(results,indent=2)+'\n');print('finished '+label+' '+str(p.returncode),flush=True)
+ if p.returncode:print((p.stdout+p.stderr)[-2200:],flush=True);raise SystemExit(p.returncode)
+print('Bounded diagnostic pair finished; original four results retained',flush=True)

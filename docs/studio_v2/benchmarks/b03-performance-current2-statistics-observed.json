@@ -1,0 +1,29 @@
+{
+  "label": "current2",
+  "ui_pid": 12071,
+  "window_id": 10576,
+  "statistics_visible": true,
+  "logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "statistics-before.png",
+  "screenshot_sha256": "101fa281116d7e2281277d90bca8cdfe108c16cb84b1a3bc3a7e6d7bbb7469ce",
+  "pixels": [
+    2880,
+    1802
+  ],
+  "operations": [
+    "resize 1100x700",
+    "overview 1000",
+    "details 100/page",
+    "scroll down/up",
+    "rightmost/first",
+    "detail More Escape Close",
+    "analysis",
+    "settings new price Cancel",
+    "details 1440x900"
+  ],
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true
+}

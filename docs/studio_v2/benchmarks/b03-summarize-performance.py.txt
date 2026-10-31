@@ -1,0 +1,62 @@
+from pathlib import Path
+import datetime, hashlib, json, statistics
+
+r = Path(__file__).resolve().parent
+sequence = ['previous1', 'current1', 'current2', 'previous2']
+driver = json.loads((r / 'benchmark-driver-results.json').read_text())
+assert [x['label'] for x in driver] == sequence
+assert all(x['exit_code'] == 0 for x in driver)
+build = json.loads((r / 'build.json').read_text())
+baseline = hashlib.sha256((r / 'baseline-ui').read_bytes()).hexdigest()
+runs, conditions = {}, []
+for label in sequence:
+    x = json.loads((r / ('performance-' + label + '.json')).read_text())
+    assert x['small_request_count'] == 1000
+    assert (x['large_request_size_mib'], x['large_concurrency'], x['large_requests']) == (1, 4, 80)
+    assert x['configured_models'] == 64
+    assert x['ui_sha256'] == (baseline if label.startswith('previous') else build['release_sha256'])
+    assert x['core_sha256'] == '25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5'
+    assert x['benchmark_script_sha256'] == 'bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2'
+    assert x['core_sandbox_proof']['enforced'] and x['terminal']['ui_pid_gone']
+    assert all(y['waited'] and y['exit_code'] == (0 if y['kind'] == 'core' else -15) for y in x['terminal']['children'])
+    runs[label] = x
+
+getters = {
+    'core_rss_mib': lambda x: x['core_idle_rss_mib'],
+    'ui_rss_mib': lambda x: x['ui_idle_rss_mib'],
+    'combined_rss_mib': lambda x: x['idle_rss_mib'],
+    'sampled_peak_mib': lambda x: x['sampled_peak_rss_mib'],
+    'core_ready_ms': lambda x: x['core_ready_ms'],
+    'process_to_marker_ms': lambda x: x['native_ui_process_to_record_ms'],
+    'direct_p50_ms': lambda x: x['direct_loopback_ms']['p50'],
+    'direct_p95_ms': lambda x: x['direct_loopback_ms']['p95'],
+    'proxy_p50_ms': lambda x: x['proxied_loopback_ms']['p50'],
+    'proxy_p95_ms': lambda x: x['proxied_loopback_ms']['p95'],
+    'large_seconds': lambda x: x['large_seconds'],
+}
+for name in ['core_rss_mib', 'ui_rss_mib', 'combined_rss_mib']:
+    getters['diagnostic_peak_' + name] = lambda x, name=name: x['separate_peak_rss_mib'][name]
+metrics = {}
+for metric, get in getters.items():
+    item = {}
+    for group in ['previous', 'current']:
+        values = [get(runs[group + str(i)]) for i in [1, 2]]
+        item[group] = {'samples': values, 'median': statistics.median(values), 'range': [min(values), max(values)]}
+    delta = item['current']['median'] - item['previous']['median']
+    item.update(delta=round(delta, 6), percent=round(delta / item['previous']['median'] * 100, 3) if item['previous']['median'] else None)
+    metrics[metric] = item
+out = {'at': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
+       'sequence': sequence, 'n_each': 2, 'candidate_ui_sha256': build['release_sha256'],
+       'baseline_ui_sha256': baseline, 'core_sha256': runs['current1']['core_sha256'],
+       'benchmark_script_sha256': runs['current1']['benchmark_script_sha256'],
+       'metrics': metrics,
+       'condition': 'Same arm64 machine/Studio/fixed Core;1000 actual preseed requests persisted behind20-request barriers, extra save64 before native launch and original save64 retained. Same native overview/details100/detailMoreCancel/analysis/settings/addPriceCancel/1100to1440 flow, raw PNG SHA and10s dwell. Original1000small+80x1MiB/concurrency4 unchanged.',
+       'limits': ['n2 each is short diagnostic evidence; no statistical equivalence, long-term leak, FPS or input-latency claim.',
+                  'RSS can double-count shared pages; sampled peaks can miss spikes. vmmap footprint/heap/IOSurface are different metrics.',
+                  'ui_record_ready_ms includes CUA waiting and is not compared; process-to-marker is not first paint or interactivity.',
+                  'Original benchmark stops UI before wrapper post-load vmmap; process-gone output is retained and is not valid post-load measurement.',
+                  'R03 remains pending and retains earlier B01/UI67 costs.'],
+       'raw_evidence': ['b03-performance-' + x + '.json' for x in sequence],
+       'assessment': 'MEASURED: reviewer must interpret costs and request correctness; this summary does not automatically grant acceptance.'}
+(r / 'performance-summary.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps(metrics, ensure_ascii=False))

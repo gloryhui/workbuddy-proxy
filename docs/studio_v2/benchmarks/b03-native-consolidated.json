@@ -1,0 +1,1288 @@
+{
+  "at": "2026-10-31T17:36:18.063293+08:00",
+  "candidate_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "frame_count": 7,
+  "required_frame_size_pairs": 14,
+  "images": [
+    {
+      "node": "52:2",
+      "name": "52-2-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 498519,
+      "sha256": "644e181352c90ebbf77fa6a6fff63d63fa51335f8d782d3b47c5833ff44b57d0",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "52:2",
+      "name": "52-2-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 311072,
+      "sha256": "65d15bd67f713c0d7a9ee7711e0542b141eee26d1094da0fd51d86ead06963b3",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "56:8",
+      "name": "56-8-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 574125,
+      "sha256": "eb673ad1d6c59b031d96569237642d63571e465e4b0eef9267978bba7dd9f08a",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "56:8",
+      "name": "56-8-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 389910,
+      "sha256": "084eaefe4e6d6085fa967977d42a6a3724b1fc056131c445a143b85ab54ee101",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "57:8",
+      "name": "57-8-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 471644,
+      "sha256": "395dc489a66654d594f11cf04303f2a20d52de2126e6f5f1848944e72226a297",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "57:8",
+      "name": "57-8-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 349401,
+      "sha256": "2a7cb1c899f3faf3e6e879c77f3a56776cb63d26150cb105bd80a279a6b8bc3c",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "58:8",
+      "name": "58-8-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 547122,
+      "sha256": "bd9400a7dae76dbcee82735fe8425a87719d4da8afa370f50c762833350b5d31",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "58:8",
+      "name": "58-8-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 387211,
+      "sha256": "8aa3568724e3a91f5e565a3a83fc1ad2ad050094eb9827f8e9a2c6cbb4e78a16",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "60:249",
+      "name": "60-249-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 529536,
+      "sha256": "20035eac476d1ffe651434909de188357caf86b45d550ab7961d47f4dd7105b6",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "60:249",
+      "name": "60-249-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 327790,
+      "sha256": "7d9e2934b9472096d54b88eef260d9f8efb87ed38864bcf78e454b07f53c4337",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "60:475",
+      "name": "60-475-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 613429,
+      "sha256": "35520817ab35c857e7e09c6fd1c7fe12c9911034a015f627d13a98b3fdf6fedd",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "60:475",
+      "name": "60-475-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 394068,
+      "sha256": "e64b117e17db35ccd6397a99a747776cb107bb2de9303d336e7c21fc05224f9e",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "69:359",
+      "name": "69-359-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 525531,
+      "sha256": "34406fe035dad3254b11a31ebad0c2267f06598d7691cf4a7e01f5fadaf59e70",
+      "accepted_native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "69:359",
+      "name": "69-359-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 324064,
+      "sha256": "484780275b2cb75ed7e3a1750544ec45d8615b8d3987d4fd6d2cb74f3c40fad2",
+      "accepted_native_png": true,
+      "unmodified": true
+    }
+  ],
+  "fixture": {
+    "metadata": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8/b03-yrd9bmj8-main-final",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8/b03-yrd9bmj8-main-final/WorkBuddy Proxy Review.app",
+      "core_pid": 89989,
+      "ui_pid": 91764,
+      "fixture_pid": 89984,
+      "port": 57180,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tb03-yrd9bmj8-main-final",
+      "runtime_ui_binary": "WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 91764,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 5,
+        "requests": 0
+      },
+      "copy_inheritance_fixture": false,
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    },
+    "core_config_byte_exact": true,
+    "stages": [
+      {
+        "stage": "capture_off_saved",
+        "file": "capture_off_saved.json",
+        "sha256": "5505dd6a9bc577656d9c7714e2d20878c836af4f12c59d6d02d30ad04f287609",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "capture_on_saved",
+        "file": "capture_on_saved.json",
+        "sha256": "bf0b7d11b87de5488199ac65366ae550e972d950330e3cd46848be0ed65a94a1",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "catalog_failed",
+        "file": "catalog_failed.json",
+        "sha256": "9413dfc945b86ce670e4b3b2fbcd3c0ee4ad38a8d1571def537db4be376fc255",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "catalog_success_saved",
+        "file": "catalog_success_saved.json",
+        "sha256": "8d405d65c2b6b29473c614c0de2201c3ddf0741a51aee933e17135a88ca749bb",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "closed",
+        "file": "closed.json",
+        "sha256": "3306cac030691ab0b78fd54ea3d09e3b83218d9d419cde783e24eb6dfdc33f9f",
+        "sql_totals": [
+          1014,
+          502900,
+          50380,
+          553280,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1014,
+            "all_fields_preserved": true,
+            "sha256": "dd16838aba8fd53692bc6e2394ca1bab933ef436b8a3e68f72b6bcd6d548187a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "currency_restored_saved",
+        "file": "currency_restored_saved.json",
+        "sha256": "525cba834f506885418e047cba55a7a0bae4e6c0ff045e8894777ce3fff53aea",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "currency_usd_saved",
+        "file": "currency_usd_saved.json",
+        "sha256": "80452dcc21e06a4b3b9663f09235152d9ca9039c6861be3a2084ce131b454629",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "defaults_captured",
+        "file": "defaults_captured.json",
+        "sha256": "45f70f0e829ecd066fd3dae45d4c62b8f1f6c51760f1b09734a1950487ee1931",
+        "sql_totals": [
+          1000,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "02de5e1d5f2ee7605989210556bd6c595c863ccb8da05a86325828002ca82ddb"
+          },
+          "usage_costs": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "319fc459a73b829ba527b6f9c30e1d7ff39eda53ffe3a6411e11352c0f472f7f"
+          }
+        }
+      },
+      {
+        "stage": "defaults_complete",
+        "file": "defaults_complete.json",
+        "sha256": "8e3a845448c65ed66f7c364a584e2fc1d407b6caadade311db855736a04a3b2e",
+        "sql_totals": [
+          1000,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "02de5e1d5f2ee7605989210556bd6c595c863ccb8da05a86325828002ca82ddb"
+          },
+          "usage_costs": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "319fc459a73b829ba527b6f9c30e1d7ff39eda53ffe3a6411e11352c0f472f7f"
+          }
+        }
+      },
+      {
+        "stage": "deleted_price_readback",
+        "file": "deleted_price_readback.json",
+        "sha256": "b5c84bef8d277296d1bf8cbbc16a2eb4feba6a13cdbc9e4775abfcdd33453824",
+        "sql_totals": [
+          1005,
+          501500,
+          50150,
+          551650,
+          401200
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1005,
+            "all_fields_preserved": true,
+            "sha256": "ecba309992332507af5f454d7feaf5292d05e110f6498a83dbf1bce87481a782"
+          },
+          "usage_costs": {
+            "rows": 1005,
+            "all_fields_preserved": true,
+            "sha256": "7174f26d663cb6c38c0d0a53861ca2be62161a36c9a3d63ce0a77627ec45ec27"
+          }
+        }
+      },
+      {
+        "stage": "details_pages",
+        "file": "details_pages.json",
+        "sha256": "8e1e5910cfa92c6d6d33bc3f1f01828fd057fdb0e0fc5924027251e640d13213",
+        "sql_totals": [
+          1000,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "02de5e1d5f2ee7605989210556bd6c595c863ccb8da05a86325828002ca82ddb"
+          },
+          "usage_costs": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "319fc459a73b829ba527b6f9c30e1d7ff39eda53ffe3a6411e11352c0f472f7f"
+          }
+        }
+      },
+      {
+        "stage": "failure_detail",
+        "file": "failure_detail.json",
+        "sha256": "3c27b431bad050a96286f4ec515e70bf3e634e62442c8760b3561b77db278803",
+        "sql_totals": [
+          1001,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1001,
+            "all_fields_preserved": true,
+            "sha256": "f34e65a0972dd39b2cdb08b7d3f27eb7fb08dd6e740f6b4448ec10cdc5fbb21c"
+          },
+          "usage_costs": {
+            "rows": 1001,
+            "all_fields_preserved": true,
+            "sha256": "3a3ed5d9bd7b732e51aec6b4b43408e0f89ac2250d886bc269f1ebea069818dc"
+          }
+        }
+      },
+      {
+        "stage": "filters_analysis",
+        "file": "filters_analysis.json",
+        "sha256": "8609572c07dbf589ce7468c935d12ba974fe42d7523d5a291381028507f2c300",
+        "sql_totals": [
+          1000,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "02de5e1d5f2ee7605989210556bd6c595c863ccb8da05a86325828002ca82ddb"
+          },
+          "usage_costs": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "319fc459a73b829ba527b6f9c30e1d7ff39eda53ffe3a6411e11352c0f472f7f"
+          }
+        }
+      },
+      {
+        "stage": "final_readback",
+        "file": "final_readback.json",
+        "sha256": "1bc624af5451499b9219579cbd2c8e758b8e079e640240c13c41c3525edb7a66",
+        "sql_totals": [
+          1014,
+          502900,
+          50380,
+          553280,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1014,
+            "all_fields_preserved": true,
+            "sha256": "dd16838aba8fd53692bc6e2394ca1bab933ef436b8a3e68f72b6bcd6d548187a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_corrected_source_stable",
+        "file": "import_corrected_source_stable.json",
+        "sha256": "86063daf1c486ceb822d3a54af1657ac38c194c9c022e24989d14bce65a5f2e8",
+        "sql_totals": [
+          1012,
+          502700,
+          50340,
+          553040,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1012,
+            "all_fields_preserved": true,
+            "sha256": "b038af89671e5d9698759ac3436d3dc0ff41270596d97bb31cc14cfba81c435a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_deduplicated",
+        "file": "import_deduplicated.json",
+        "sha256": "aca026c3e13192be0372aa023666350fdc181f121e57231bfe0af28c37d35730",
+        "sql_totals": [
+          1013,
+          502800,
+          50360,
+          553160,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1013,
+            "all_fields_preserved": true,
+            "sha256": "2d19b3e8fd358d30304c79500e27d7aa24ae989ce138df65240afc71af8ee922"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_error",
+        "file": "import_error.json",
+        "sha256": "13387058c1620e63df203cc2d2963a57e9fdc5b896d20f2bd0179f61d69565a3",
+        "sql_totals": [
+          1013,
+          502800,
+          50360,
+          553160,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1013,
+            "all_fields_preserved": true,
+            "sha256": "2d19b3e8fd358d30304c79500e27d7aa24ae989ce138df65240afc71af8ee922"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_final_paused_saved",
+        "file": "import_final_paused_saved.json",
+        "sha256": "dae97383c4019ce34749409ee1bb1e91917da41cab8c7d4549be6a509a10d664",
+        "sql_totals": [
+          1014,
+          502900,
+          50380,
+          553280,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1014,
+            "all_fields_preserved": true,
+            "sha256": "dd16838aba8fd53692bc6e2394ca1bab933ef436b8a3e68f72b6bcd6d548187a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_initial_complete",
+        "file": "import_initial_complete.json",
+        "sha256": "22a40935171cb6dbacda5c072b3ea934d17b62490c58820f494d48189f453f14",
+        "sql_totals": [
+          1012,
+          502700,
+          50340,
+          553040,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_initial_confirmed",
+        "file": "import_initial_confirmed.json",
+        "sha256": "3d09b45ace936a50d03f5088e80bcd0ec3f273872e376d7988967e3fcc2ce364",
+        "sql_totals": [
+          1012,
+          502700,
+          50340,
+          553040,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1012,
+            "all_fields_preserved": true,
+            "sha256": "b038af89671e5d9698759ac3436d3dc0ff41270596d97bb31cc14cfba81c435a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_initial_fixture_mismatch",
+        "file": "import_initial_fixture_mismatch.json",
+        "sha256": "de0aed4def77e675b6c29b279b4a2a47f6d864f143b03e498729bfe84782c866",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_on_saved",
+        "file": "import_on_saved.json",
+        "sha256": "eb130f49b5fbbfe4da4485b7d9264a4f95385a349194bbd7e491a1c3965b2644",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_paused_saved",
+        "file": "import_paused_saved.json",
+        "sha256": "cd2910b1415d6ef193d32249cdd5ea57fd63512145e9cbc696c3b1aeb197c23e",
+        "sql_totals": [
+          1012,
+          502700,
+          50340,
+          553040,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1012,
+            "all_fields_preserved": true,
+            "sha256": "b038af89671e5d9698759ac3436d3dc0ff41270596d97bb31cc14cfba81c435a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_paused_stable",
+        "file": "import_paused_stable.json",
+        "sha256": "31f30b89b904ec96cfb0575a5cea494cab4aa4304825257df0c84251a2808888",
+        "sql_totals": [
+          1012,
+          502700,
+          50340,
+          553040,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1012,
+            "all_fields_preserved": true,
+            "sha256": "b038af89671e5d9698759ac3436d3dc0ff41270596d97bb31cc14cfba81c435a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_recovered",
+        "file": "import_recovered.json",
+        "sha256": "37897dc166f797e05013fe175d86c87e98f9c1b22980abfa74cdbf0febe54f82",
+        "sql_totals": [
+          1014,
+          502900,
+          50380,
+          553280,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1014,
+            "all_fields_preserved": true,
+            "sha256": "dd16838aba8fd53692bc6e2394ca1bab933ef436b8a3e68f72b6bcd6d548187a"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_resumed_complete",
+        "file": "import_resumed_complete.json",
+        "sha256": "b1a5ca716cb73209f05a32ad67787fe36ff898231dd82a4f3827c500805ead68",
+        "sql_totals": [
+          1013,
+          502800,
+          50360,
+          553160,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1013,
+            "all_fields_preserved": true,
+            "sha256": "2d19b3e8fd358d30304c79500e27d7aa24ae989ce138df65240afc71af8ee922"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "import_resumed_saved",
+        "file": "import_resumed_saved.json",
+        "sha256": "af7aad85b80f4e525fdce06b87eb3a049d4f26f3dc5a2d4657729be6fe0fd9fe",
+        "sql_totals": [
+          1013,
+          502800,
+          50360,
+          553160,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1013,
+            "all_fields_preserved": true,
+            "sha256": "2d19b3e8fd358d30304c79500e27d7aa24ae989ce138df65240afc71af8ee922"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "initial",
+        "file": "initial.json",
+        "sha256": "71f5a0c541e8a17f507c6676e679846d22a9b5341b40092496584b8dcfc2fea9",
+        "sql_totals": [
+          1000,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "02de5e1d5f2ee7605989210556bd6c595c863ccb8da05a86325828002ca82ddb"
+          },
+          "usage_costs": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "319fc459a73b829ba527b6f9c30e1d7ff39eda53ffe3a6411e11352c0f472f7f"
+          }
+        }
+      },
+      {
+        "stage": "missing_detail",
+        "file": "missing_detail.json",
+        "sha256": "3384269a721df64b79741034c8fd11ded954455671c46590434758572c220603",
+        "sql_totals": [
+          1002,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1002,
+            "all_fields_preserved": true,
+            "sha256": "cef0bd7b5dc7bff8e09fc7afb2392c8eebb12453f4dcdc19b19dad6bec335fb4"
+          },
+          "usage_costs": {
+            "rows": 1002,
+            "all_fields_preserved": true,
+            "sha256": "25012fea60a3683b85f22323bacef380ded88052161ebc787100eb3aae7888dd"
+          }
+        }
+      },
+      {
+        "stage": "page_reference_toolcheck",
+        "file": "page_reference_toolcheck.json",
+        "sha256": "13c0d4d609f19bd51b289c04f4f97872d5089feb03e24f036c2f0759ec593d98",
+        "sql_totals": [
+          1000,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "02de5e1d5f2ee7605989210556bd6c595c863ccb8da05a86325828002ca82ddb"
+          },
+          "usage_costs": {
+            "rows": 1000,
+            "all_fields_preserved": true,
+            "sha256": "319fc459a73b829ba527b6f9c30e1d7ff39eda53ffe3a6411e11352c0f472f7f"
+          }
+        }
+      },
+      {
+        "stage": "price_deleted_saved",
+        "file": "price_deleted_saved.json",
+        "sha256": "e09998c1dc067bc4698fb34d23fc44a7d72cfdda5e96b0b877da903eece9690c",
+        "sql_totals": [
+          1004,
+          501000,
+          50100,
+          551100,
+          400800
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1004,
+            "all_fields_preserved": true,
+            "sha256": "214e077ef25896f84f98901c7cf966be3c986ab7624948f06085144cd0bb223b"
+          },
+          "usage_costs": {
+            "rows": 1004,
+            "all_fields_preserved": true,
+            "sha256": "63e50b976daf7e340ab750945d9c5d32a32557ed400a3f7ef8c3e54efda935bf"
+          }
+        }
+      },
+      {
+        "stage": "price_edit_saved",
+        "file": "price_edit_saved.json",
+        "sha256": "0f8894edd9b8f8db8aaa032e22968112876f80d446c29a8167496bd5eccceb2e",
+        "sql_totals": [
+          1003,
+          500500,
+          50050,
+          550550,
+          400400
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1003,
+            "all_fields_preserved": true,
+            "sha256": "f783dae9133c6fcedf7e1b9e33346e6c194ef5a2bec7bc471c6d634cc331bad5"
+          },
+          "usage_costs": {
+            "rows": 1003,
+            "all_fields_preserved": true,
+            "sha256": "75c611b4cb596d13f31ef92606572f19e9eaa76be6a0922c549eeff21169fbd4"
+          }
+        }
+      },
+      {
+        "stage": "price_invalid",
+        "file": "price_invalid.json",
+        "sha256": "2d4c975636a94c5f172ad9eac7be268338fd5ec06d476ec3bd15fadd51108142",
+        "sql_totals": [
+          1002,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1002,
+            "all_fields_preserved": true,
+            "sha256": "cef0bd7b5dc7bff8e09fc7afb2392c8eebb12453f4dcdc19b19dad6bec335fb4"
+          },
+          "usage_costs": {
+            "rows": 1002,
+            "all_fields_preserved": true,
+            "sha256": "25012fea60a3683b85f22323bacef380ded88052161ebc787100eb3aae7888dd"
+          }
+        }
+      },
+      {
+        "stage": "price_new_saved",
+        "file": "price_new_saved.json",
+        "sha256": "d4a54e68e208c4b5aa2ed3763fb39c6ecc9105fa86c5870f536e18f71415278a",
+        "sql_totals": [
+          1002,
+          500000,
+          50000,
+          550000,
+          400000
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1002,
+            "all_fields_preserved": true,
+            "sha256": "cef0bd7b5dc7bff8e09fc7afb2392c8eebb12453f4dcdc19b19dad6bec335fb4"
+          },
+          "usage_costs": {
+            "rows": 1002,
+            "all_fields_preserved": true,
+            "sha256": "25012fea60a3683b85f22323bacef380ded88052161ebc787100eb3aae7888dd"
+          }
+        }
+      },
+      {
+        "stage": "price_restored_saved",
+        "file": "price_restored_saved.json",
+        "sha256": "1c3af40645412a6f79c3cdc273bf822847686d233b034b0a2f0c007645d02a35",
+        "sql_totals": [
+          1005,
+          501500,
+          50150,
+          551650,
+          401200
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1005,
+            "all_fields_preserved": true,
+            "sha256": "ecba309992332507af5f454d7feaf5292d05e110f6498a83dbf1bce87481a782"
+          },
+          "usage_costs": {
+            "rows": 1005,
+            "all_fields_preserved": true,
+            "sha256": "7174f26d663cb6c38c0d0a53861ca2be62161a36c9a3d63ce0a77627ec45ec27"
+          }
+        }
+      },
+      {
+        "stage": "priced_cny_readback",
+        "file": "priced_cny_readback.json",
+        "sha256": "2aa26db1ea165d725dc5209f89139849c91ca8e7818a29d205bf29b1f8eed9db",
+        "sql_totals": [
+          1003,
+          500500,
+          50050,
+          550550,
+          400400
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1003,
+            "all_fields_preserved": true,
+            "sha256": "f783dae9133c6fcedf7e1b9e33346e6c194ef5a2bec7bc471c6d634cc331bad5"
+          },
+          "usage_costs": {
+            "rows": 1003,
+            "all_fields_preserved": true,
+            "sha256": "75c611b4cb596d13f31ef92606572f19e9eaa76be6a0922c549eeff21169fbd4"
+          }
+        }
+      },
+      {
+        "stage": "priced_usd_readback",
+        "file": "priced_usd_readback.json",
+        "sha256": "e70d66f3e02398623557bbf6157ad5a22d5daf83f1147d669e8a2ee96e00d5ea",
+        "sql_totals": [
+          1004,
+          501000,
+          50100,
+          551100,
+          400800
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1004,
+            "all_fields_preserved": true,
+            "sha256": "214e077ef25896f84f98901c7cf966be3c986ab7624948f06085144cd0bb223b"
+          },
+          "usage_costs": {
+            "rows": 1004,
+            "all_fields_preserved": true,
+            "sha256": "63e50b976daf7e340ab750945d9c5d32a32557ed400a3f7ef8c3e54efda935bf"
+          }
+        }
+      },
+      {
+        "stage": "retention90_saved",
+        "file": "retention90_saved.json",
+        "sha256": "6417339409eaeb735f71ea441780e70c05fa08e30044a9c33b34409da620f73e",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      },
+      {
+        "stage": "retention_restored_saved",
+        "file": "retention_restored_saved.json",
+        "sha256": "f5ac14e91ecc20a0b91fab9d917c34aec99ba88d47377d3aabb49000428aea59",
+        "sql_totals": [
+          1006,
+          502000,
+          50200,
+          552200,
+          401600
+        ],
+        "protected_history": {
+          "usage_requests": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "c41d044e6ada28636fe7848b542f6b1469f4d75263240af4a3b66e27be7a7fc5"
+          },
+          "usage_costs": {
+            "rows": 1006,
+            "all_fields_preserved": true,
+            "sha256": "d45ff4f374938128f2b8a96ecd9b837aa5818687b8afd8b333e846d885adeecb"
+          }
+        }
+      }
+    ],
+    "final_settings": {
+      "enabled": true,
+      "retention_days": 180,
+      "default_currency": "CNY",
+      "revision": 11
+    },
+    "final_import": {
+      "enabled": false,
+      "effective_enabled": false,
+      "state": "disabled",
+      "imported": 8,
+      "skipped": 6,
+      "conflict": 0,
+      "pending": 0,
+      "last_error_code": null,
+      "progress": {
+        "bytes_committed": 2554,
+        "bytes_remaining": 0,
+        "bytes_total": 2554,
+        "files_remaining": 0,
+        "files_total": 4,
+        "total_known": true
+      },
+      "runtime_metrics": {
+        "queue_depth": 0,
+        "queue_peak": 1,
+        "recent_batches": [
+          {
+            "candidates": 0,
+            "committed": true,
+            "elapsed_us": 66
+          },
+          {
+            "candidates": 0,
+            "committed": true,
+            "elapsed_us": 69
+          },
+          {
+            "candidates": 5,
+            "committed": true,
+            "elapsed_us": 3533
+          },
+          {
+            "candidates": 1,
+            "committed": true,
+            "elapsed_us": 548
+          },
+          {
+            "candidates": 1,
+            "committed": true,
+            "elapsed_us": 1818
+          },
+          {
+            "candidates": 1,
+            "committed": true,
+            "elapsed_us": 571
+          },
+          {
+            "candidates": 1,
+            "committed": true,
+            "elapsed_us": 2217
+          }
+        ],
+        "source_io_thread_checks": 259,
+        "source_io_thread_violations": 0,
+        "writer_batch_count": 7,
+        "writer_batch_failures": 0,
+        "writer_batch_max_us": 3533,
+        "writer_batch_total_us": 8822
+      }
+    },
+    "final_sql_totals": [
+      1014,
+      502900,
+      50380,
+      553280,
+      401600
+    ]
+  },
+  "scope": "Frozen native candidate, own synthetic profile, actual1000 HTTP baseline and declared native writes. Every previously completed request/cost full field snapshot preserved. API/SQL do not independently prove GUI input; actor report and native pictures are separate. R01-R04 remain pending."
+}

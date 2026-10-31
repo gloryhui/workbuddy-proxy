@@ -1,0 +1,28 @@
+{
+  "workload_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "baseline_ui_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "candidate_ui_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "same_preseed_real_http": 1000,
+  "preseed_barrier": 20,
+  "original_small_requests": 1000,
+  "original_large_requests": 80,
+  "original_large_mib": 1,
+  "original_large_concurrency": 4,
+  "sample_seconds": 0.1,
+  "native_dwell_seconds": 10,
+  "scope": "Preparation only; no benchmark measurement started; original benchmark.py byte unchanged.",
+  "bounded_supplemental": {
+    "order": [
+      "current3",
+      "previous3"
+    ],
+    "reason": "First4 showed RSS/marker/p95 changes; compare one further same-load pair and resource classes; retain all original slow samples, do not replace them.",
+    "limit": "Exactly two additional runs; no repeated-until-good loop."
+  }
+}

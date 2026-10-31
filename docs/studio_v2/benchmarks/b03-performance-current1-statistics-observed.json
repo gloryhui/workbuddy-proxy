@@ -1,0 +1,30 @@
+{
+  "label": "current1",
+  "ui_pid": 10815,
+  "window_id": 10490,
+  "statistics_visible": true,
+  "logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "statistics-before.png",
+  "screenshot_sha256": "ea098e4abf2e014065a0e22df4d69a1be606daa4f0bec7cb3ad4fe8cf05c835f",
+  "pixels": [
+    2880,
+    1802
+  ],
+  "operations": [
+    "resize 1100x700",
+    "overview 1000",
+    "details 100/page",
+    "scroll down/up",
+    "rightmost/first",
+    "detail More Escape Close",
+    "analysis",
+    "settings new price Cancel",
+    "details 1440x900"
+  ],
+  "deviations": "One stale row ID rejected and refreshed; clicked empty price search field before new price, no data entered.",
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true
+}

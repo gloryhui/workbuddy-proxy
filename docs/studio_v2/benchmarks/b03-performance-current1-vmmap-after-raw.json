@@ -1,0 +1,4 @@
+{
+  "original_utf8": "vmmap[11970]: vmmap cannot examine process 10815 (workbuddy-proxy-) for unknown reasons, even though it appears to exist; try running with `sudo`.\nvmmap[11970]: [fatal] mach port for process 0 not valid\n",
+  "raw_sha256": "736ef3ae9f7700608e60e073656c1eb176fad9d88f4f1b5ef632e7373135dcfa"
+}

@@ -336,6 +336,7 @@ impl Statistics {
                             .flex()
                             .flex_col()
                             .gap(px(5.))
+                            .when(studio, |column| column.pl(px(4.)))
                             .child(
                                 div()
                                     .flex()
@@ -344,22 +345,42 @@ impl Statistics {
                                     .child(
                                         Label::new(self.t("成本定价", "Cost pricing"))
                                             .text_size(px(17.))
-                                            .when(studio, |title| title.line_height(px(24.)))
+                                            .when(studio, |title| {
+                                                title.min_w(px(88.)).line_height(px(24.))
+                                            })
                                             .font_weight(FontWeight::BOLD)
                                             .text_color(rgb(INK)),
                                     )
-                                    .child(crate::ui_components::tag(
-                                        crate::ui_components::TagKind::Secondary,
-                                        if self.prices_loading {
-                                            self.t("读取中…", "Loading…").to_owned()
-                                        } else {
-                                            format!(
-                                                "{} {}",
-                                                self.prices.len(),
-                                                self.t("条 / 本页", "on this page")
-                                            )
-                                        },
-                                    )),
+                                    .child(
+                                        crate::ui_components::tag(
+                                            crate::ui_components::TagKind::Secondary,
+                                            if self.prices_loading {
+                                                self.t("读取中…", "Loading…").to_owned()
+                                            } else {
+                                                format!(
+                                                    "{} {}",
+                                                    self.prices.len(),
+                                                    self.t("条 / 本页", "on this page")
+                                                )
+                                            },
+                                        )
+                                        .when(
+                                            studio,
+                                            |tag| {
+                                                tag.h(px(26.))
+                                                    .min_w(px(86.))
+                                                    .text_size(px(11.))
+                                                    .line_height(px(16.))
+                                                    .font_weight(FontWeight::MEDIUM)
+                                                    .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
+                                                    .border_color(rgb(
+                                                        crate::theme::color::BG_TABLE_HEAD,
+                                                    ))
+                                                    .text_color(rgb(MUTED))
+                                            },
+                                        ),
+                                    )
+                                    .when(studio, |row| row.child(self.pricing_actions(cx))),
                             )
                             .child(
                                 Label::new(self.t(
@@ -381,6 +402,7 @@ impl Statistics {
                             .items_center()
                             .flex_wrap()
                             .gap(px(10.))
+                            .when(studio, |row| row.gap(px(11.)).pr(px(6.)))
                             .child(
                                 crate::ui_components::text_input(&self.price_search, false)
                                     .w(px(if studio && self.filters_width >= 1000. {
@@ -388,6 +410,9 @@ impl Statistics {
                                     } else {
                                         240.
                                     }))
+                                    .when(studio, |input| {
+                                        input.h(px(36.)).text_size(px(11.)).line_height(px(16.))
+                                    })
                                     .prefix(Icon::new(IconName::Search)),
                             )
                             .child(
@@ -403,7 +428,7 @@ impl Statistics {
                                         this.new_price(window, cx)
                                     })),
                             )
-                            .child(self.pricing_actions(cx)),
+                            .when(!studio, |row| row.child(self.pricing_actions(cx))),
                     ),
             )
             .child(table)
@@ -412,22 +437,59 @@ impl Statistics {
                     .flex()
                     .items_center()
                     .justify_between()
+                    .gap(px(12.))
                     .child(
-                        Label::new(if self.zh {
-                            format!(
-                                "第 {} 页 · {} 条",
-                                self.prices_cursors.page_number(),
-                                self.prices.len()
-                            )
-                        } else {
-                            format!(
-                                "Page {} · {} rows",
-                                self.prices_cursors.page_number(),
-                                self.prices.len()
-                            )
-                        })
-                        .text_size(px(crate::theme::font::LABEL))
-                        .text_color(rgb(MUTED)),
+                        div()
+                            .flex()
+                            .items_center()
+                            .gap(px(8.))
+                            .flex_1()
+                            .min_w_0()
+                            .when_some(sync_note.clone().filter(|_| studio), |left, note| {
+                                let hint = note.clone();
+                                left.child(
+                                    div()
+                                        .id("pricing-sync-note")
+                                        .flex_1()
+                                        .min_w_0()
+                                        .tooltip(move |window, cx| {
+                                            crate::ui_components::full_value_tooltip(
+                                                hint.clone(),
+                                                window,
+                                                cx,
+                                            )
+                                        })
+                                        .child(
+                                            Label::new(note)
+                                                .w_full()
+                                                .text_ellipsis()
+                                                .text_size(px(11.))
+                                                .line_height(px(16.))
+                                                .text_color(rgb(MUTED)),
+                                        ),
+                                )
+                            })
+                            .child(
+                                Label::new(if self.zh {
+                                    format!(
+                                        "第 {} 页 · {} 条",
+                                        self.prices_cursors.page_number(),
+                                        self.prices.len()
+                                    )
+                                } else {
+                                    format!(
+                                        "Page {} · {} rows",
+                                        self.prices_cursors.page_number(),
+                                        self.prices.len()
+                                    )
+                                })
+                                .text_size(px(crate::theme::font::LABEL))
+                                .text_color(rgb(MUTED))
+                                .flex_none()
+                                .when(studio, |label| {
+                                    label.text_size(px(11.)).line_height(px(16.))
+                                }),
+                            ),
                     )
                     .child(
                         div()
@@ -519,7 +581,7 @@ impl Statistics {
                         ),
                 )
             })
-            .when_some(sync_note, |card, note| {
+            .when_some(sync_note.filter(|_| !studio), |card, note| {
                 card.child(Label::new(note).text_size(px(11.)).text_color(rgb(MUTED)))
             })
             .into_any_element()

@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-31T17:33:02.843016+08:00",
+  "stage": "import_permission_repaired",
+  "action": "repair-import",
+  "scope": "Only this recorded synthetic fixture; no management-data writes. Requests use the real local proxy, other actions change mock/catalog/input files only.",
+  "source_file": "home/.workbuddy/projects/demo/permission-retry.jsonl",
+  "test_file_mode": "600",
+  "no_system_permission_changed": true
+}

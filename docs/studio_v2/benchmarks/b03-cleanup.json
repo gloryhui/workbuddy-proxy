@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T18:00:15.524665+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8",
+  "removed": true,
+  "files_removed": 479,
+  "logical_bytes_removed": 459496091,
+  "free_before_bytes": 32325914624,
+  "free_after_bytes": 32790687744,
+  "observed_apfs_free_delta_bytes": 464773120,
+  "current_round_retained_bytes": 0,
+  "shared_cargo_and_reused_core46_retained": true,
+  "older_denied_roots": "No deletion attempted or retried. Last recorded1,698.745MiB is historical, not a new scan.",
+  "note": "Exact owned root, literal nonforce rm-r after identical immediate full inventory and no lsof references. APFS change can include concurrent activity; logical bytes are not promised freed physical bytes."
+}

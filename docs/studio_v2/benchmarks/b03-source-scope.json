@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-31T16:53:18.280736+08:00",
+  "files": [
+    {
+      "file": "gpui/src/usage_table.rs",
+      "sha256": "da7f7e88bc8bacf854f2b77f3aee20b9f9c5233a9ca873d5867f925e16f08278",
+      "owner_listener_expressions_preserved": 0,
+      "nonrender_prefix_identical_until": "pub const REQUEST_COLUMNS"
+    },
+    {
+      "file": "gpui/src/statistics/analysis.rs",
+      "sha256": "70416b5402ed9aa87e677fb19eea826e4673c38dd36ed522091bad1b62b443e8",
+      "owner_listener_expressions_preserved": 1,
+      "nonrender_prefix_identical_until": "fn heading"
+    },
+    {
+      "file": "gpui/src/statistics/settings_layout.rs",
+      "sha256": "a0a9cf3f0a436e3ca75df77759a8b29a55d64e771b0755b8ad67e5b66ebce7f2",
+      "owner_listener_expressions_preserved": 6,
+      "nonrender_prefix_identical_until": "        let body = div()"
+    }
+  ],
+  "scope": "Presentation only: Chinese Studio preferred/readable column widths and shared fit arithmetic keep explicit drags; analysis cards/price header/footer. Existing DTO formatting, aggregation ratio helpers, rule persistence, import logic, handlers and Core unchanged. Expanded existing width invariant test preserves unused surplus when name columns are both locked."
+}

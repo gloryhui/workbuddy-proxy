@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-31T17:25:53.362039+08:00",
+  "stage": "capture_paused",
+  "action": "request",
+  "scope": "Only this recorded synthetic fixture; no management-data writes. Requests use the real local proxy, other actions change mock/catalog/input files only.",
+  "http_status": 200,
+  "no_collection_observed_seconds": 1.5,
+  "request_count_unchanged": 1006
+}

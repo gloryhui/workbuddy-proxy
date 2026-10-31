@@ -1,0 +1,216 @@
+{
+  "candidate_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "ui_pid": 91764,
+  "window_id": 9424,
+  "screenshots": [
+    {
+      "name": "52-2-small-mono-diagnostic.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "4b029ca01de4c3069ef1b171d4a5d7c9885953da837fddc3aa748317740b6d29",
+      "kind": "incorrect Mono diagnostic"
+    },
+    {
+      "name": "52-2-small.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "65d15bd67f713c0d7a9ee7711e0542b141eee26d1094da0fd51d86ead06963b3",
+      "kind": "native PNG"
+    },
+    {
+      "name": "52-2-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "644e181352c90ebbf77fa6a6fff63d63fa51335f8d782d3b47c5833ff44b57d0",
+      "kind": "native PNG"
+    },
+    {
+      "name": "56-8-small-mono-diagnostic.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "ac18bc98bb12e70de8d146dd23959e720aadf025d51b75ed3303a8feb2199428",
+      "kind": "incorrect Mono diagnostic"
+    },
+    {
+      "name": "56-8-small.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "084eaefe4e6d6085fa967977d42a6a3724b1fc056131c445a143b85ab54ee101",
+      "kind": "native PNG"
+    },
+    {
+      "name": "56-8-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "eb673ad1d6c59b031d96569237642d63571e465e4b0eef9267978bba7dd9f08a",
+      "kind": "native PNG"
+    },
+    {
+      "name": "57-8-small-mono-diagnostic.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "a9b68f7eee1dddb7349afb50ee677afb2b720f8864ce1d21ece75ce9add2b2e6",
+      "kind": "incorrect Mono diagnostic"
+    },
+    {
+      "name": "57-8-small.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "2a7cb1c899f3faf3e6e879c77f3a56776cb63d26150cb105bd80a279a6b8bc3c",
+      "kind": "native PNG"
+    },
+    {
+      "name": "57-8-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "395dc489a66654d594f11cf04303f2a20d52de2126e6f5f1848944e72226a297",
+      "kind": "native PNG"
+    },
+    {
+      "name": "58-8-small-mono-diagnostic.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "cb5df14007a5e21f5a98cf607c0a57209ff4be663d0abe1ad6c10226df711601",
+      "kind": "incorrect Mono diagnostic"
+    },
+    {
+      "name": "58-8-small.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "8aa3568724e3a91f5e565a3a83fc1ad2ad050094eb9827f8e9a2c6cbb4e78a16",
+      "kind": "native PNG"
+    },
+    {
+      "name": "58-8-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "bd9400a7dae76dbcee82735fe8425a87719d4da8afa370f50c762833350b5d31",
+      "kind": "native PNG"
+    },
+    {
+      "name": "60-249-small-mono-diagnostic.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "228f2ce8b632e39cef72b1c4982ca2c3858f444655f409d5dbbe93b0ac732a59",
+      "kind": "incorrect Mono diagnostic"
+    },
+    {
+      "name": "60-249-small.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "7d9e2934b9472096d54b88eef260d9f8efb87ed38864bcf78e454b07f53c4337",
+      "kind": "native PNG"
+    },
+    {
+      "name": "60-249-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "20035eac476d1ffe651434909de188357caf86b45d550ab7961d47f4dd7105b6",
+      "kind": "native PNG"
+    },
+    {
+      "name": "60-475-small-mono-diagnostic.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "1fc6e2768184a30634b51fc73ae502fc5c42f1b9f31ed8f04f4be392c4a6eeb9",
+      "kind": "incorrect Mono diagnostic"
+    },
+    {
+      "name": "60-475-small.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "e64b117e17db35ccd6397a99a747776cb107bb2de9303d336e7c21fc05224f9e",
+      "kind": "native PNG"
+    },
+    {
+      "name": "60-475-wide-mono-diagnostic.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "19304835bdfbd62c285762d3889fab8deb0dafb1964a27776bb3c46170c6bfbe",
+      "kind": "incorrect Mono diagnostic"
+    },
+    {
+      "name": "60-475-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "35520817ab35c857e7e09c6fd1c7fe12c9911034a015f627d13a98b3fdf6fedd",
+      "kind": "native PNG"
+    },
+    {
+      "name": "69-359-small.png",
+      "width": 2200,
+      "height": 1402,
+      "sha256": "484780275b2cb75ed7e3a1750544ec45d8615b8d3987d4fd6d2cb74f3c40fad2",
+      "kind": "native PNG"
+    },
+    {
+      "name": "69-359-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "34406fe035dad3254b11a31ebad0c2267f06598d7691cf4a7e01f5fadaf59e70",
+      "kind": "native PNG"
+    },
+    {
+      "name": "column-before.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "4527eabf3e96798d213f266d77578430bcc903f83eb04e6cc8fce042dedc3046",
+      "kind": "native PNG"
+    },
+    {
+      "name": "failure-detail-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "17ffda90eda4b14fcac3da0504fadf7a3cf60e61c5bf68e4cc325d2f335be047",
+      "kind": "native PNG"
+    },
+    {
+      "name": "imported-long-detail-wide.png",
+      "width": 2880,
+      "height": 1802,
+      "sha256": "d0307e96b3106ecd09cced4d29e8861a92cda3dc40830d0ab18f0b0d8f2245f8",
+      "kind": "native PNG"
+    }
+  ],
+  "capture": "own PID / onscreen layer 0; native screencapture -x -o -l ID -t png; no crop or resize",
+  "window_targets_logical": [
+    [
+      1440,
+      900
+    ],
+    [
+      1100,
+      700
+    ]
+  ],
+  "scope": "unique synthetic fixture; no explicit activate or raise; actual foreground not independently verified",
+  "default_frames": [
+    "52-2",
+    "56-8",
+    "57-8",
+    "58-8",
+    "60-249",
+    "60-475",
+    "69-359"
+  ],
+  "actions": {
+    "pagination": "10/20/50/100; next/previous; invalid 0,-1,abc,9999 did not advance; 2 after 6.5s then Return changed to page 2; page 2 first detail matched independent Core ID",
+    "filters": "gpt-6 200, OpenCode Go 200, sub2api 800, builtin 0, custom 1000, Today and 7d; cleared; analysis 2 providers / 5 models, 550000 total, input 500000 output 50000, cache 80%; range popup Escape",
+    "network": "natural 503 visible 1001 before manual refresh; detail 503/upstream refused/missing tokens/12ms; 200 missing usage detail dashes",
+    "price": "new rule sub2api/claude-opus-4.7 CNY 2/8/0/0 B03 manual; negative rejected; edited USD 2.5/8/0/0 revision 2; source snapshots displayed CNY revision 1 and USD revision 2; delete immediate with no confirmation; original 3 preserved, recreated CNY rule new ID; catalog 503 displayed retained rules; success retry",
+    "settings": "CNY→USD→CNY, retention 180→90→180, capture off request forwarded HTTP200 without extra row, capture on; import finally off",
+    "import": "first synthetic files had mismatched sessionId and were skipped, fixture owner corrected source; actual initial 5 builtin plus 1 custom, 600 builtin tokens / 5.70 credits; paused then appended, resumed seventh, duplicate maintained seven, owned file mode000 produced read error and retry; repair to mode600 auto recovered eighth. Imported detail Recorded, HTTP/time unknown, long model full in accessibility tree",
+    "final_observer": "1014 rows, 4 rules, CNY/180 days/capture on/import off; protected original and later historical rows unchanged"
+  },
+  "diagnostics": {
+    "escape": "Initially More→Escape closed child and immediately second Escape did not close parent. At end direct Escape closed detail; later More→Escape, wait 1.2 s, Escape closed parent. Focus observed standard window.",
+    "column_resize": "native drag from [1521,770] to [1721,770] did not visibly move model boundary. CUA only exposes from/to drag, intermediate continuous move unavailable; not verified.",
+    "hover": "precise resting hover unavailable through documented CUA; no external injection",
+    "currency_cohorts": "settings currency switching verified; overview currency cohort comparison not separately verified",
+    "small_bottom": "detail, price and summary lower content reached by scroll; no separate dedicated bottom image",
+    "unverified": "Full keyboard/IME, accessibility reader, exact tooltip hover and platform/hardware/long-term performance remain R01–R04.",
+    "skin": "seven early PNGs captured while Mono; cause unknown. Originals retained as mono-diagnostic; corrected Studio frames captured separately, no system setting changed.",
+    "delete_confirmation": "not applicable: existing menu deletes immediately; no cancel path, observer confirmed only synthetic target removed"
+  },
+  "close": "CUA native close button clicked; ps PID 91764 absent; observer closed passed; Core left to fixture driver"
+}

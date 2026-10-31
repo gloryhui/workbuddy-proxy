@@ -1,0 +1,20 @@
+{
+  "candidate_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "fixture": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8/b03-yrd9bmj8-main-final",
+  "native_gui": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8/b03-yrd9bmj8-main-final/native-gui.json",
+  "default_frames_2_sizes": 14,
+  "png_count_total": 24,
+  "status": "UI native closed; PID absent; observer closed passed; driver/Core final status independently checked by root",
+  "notes": [
+    "Observer stage import_initial_complete occurred before correction and showed zero imported; later import_initial_confirmed shows actual corrected six.",
+    "Original baseline 1000 protected; six actual subsequent relay records; eight imported; 1014 total.",
+    "Details Escape and column drag limitations in native-gui.json."
+  ],
+  "root_evidence_resolution": {
+    "initial_zero_import_proof": "stage-proofs/import_initial_fixture_mismatch.json",
+    "corrected_import_proof": "stage-proofs/import_initial_complete.json and import_initial_confirmed.json",
+    "read_only_validation": "native-consolidated.json + traffic-snapshot-validation.json + import-final-validation.json",
+    "native_input_limits": "native-limitations.json",
+    "currency_selector_reuse": "unchanged-overview-regression.json"
+  }
+}

@@ -3,10 +3,10 @@
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-10-31",
   "state": "active",
-  "current_batch": "B03",
+  "current_batch": "B04",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 69,
+  "historical_tasks": 70,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -349,7 +349,7 @@
       "id": "B03",
       "title": "统计、价格与本地用量",
       "kind": "feature",
-      "status": "planned",
+      "status": "passed",
       "frames": [
         "52:2",
         "56:8",
@@ -368,9 +368,9 @@
         {
           "id": "B03.1",
           "title": "概览最终差异与真实数据",
-          "acceptance": "pending",
-          "completed": "UI67同版0→22→23、12100Token、95.7%、筛选/币种/详情、两尺寸和图表拖动已验证。",
-          "remaining": "只核对新Figma改动及剩余完整状态；真实无按键hover待工具支持，不为AA反复重建。",
+          "acceptance": "passed",
+          "completed": "QA70：最新概览两尺寸与1000→1001自然刷新、503/缺失用量已验；overview/trends与UI67字节一致，币种选择复用旧实测，当前混合币种快照另核。",
+          "remaining": "本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。",
           "acceptance_check": "未知缓存/费用保持—；自然刷新与手动刷新分别记证据；设计结构/资产一致，保留真实数值。",
           "history_tasks": [
             10,
@@ -383,9 +383,9 @@
         {
           "id": "B03.2",
           "title": "用量明细、分页与长列表",
-          "acceptance": "pending",
-          "completed": "八列、固定表头/分页、来源、首末列访问及页码草稿已有实测。",
-          "remaining": "集中补每页10/20/50/100、合法/非法跳页、下一页/返回、千条数据和列宽/内边距。",
+          "acceptance": "passed",
+          "completed": "QA70：1000真实HTTP记录、10/20/50/100、前后/合法及非法跳页/6.5s草稿、20条第2页首ID服务端对照、两尺寸独立内滚与首末列可达。",
+          "remaining": "本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。",
           "acceptance_check": "至少1000条合成真实请求，服务端分页；表体独立滚动且表头/分页固定；两尺寸能看所有列；页码草稿不被tick抢走。",
           "history_tasks": [
             13,
@@ -398,9 +398,9 @@
         {
           "id": "B03.3",
           "title": "汇总分析与范围浮层",
-          "acceptance": "pending",
-          "completed": "供应商/模型汇总、真实2/5组、22条/12100Token、右侧列与下卡可达已有证据。",
-          "remaining": "同批核对表头/列宽/构成卡、分组/日期/范围浮层与空态/缺失数据。",
+          "acceptance": "passed",
+          "completed": "QA70：2供应商/5模型与550000总量/500000输入/50000输出/400000缓存子集、范围浮层及小窗下卡已验；卡片比例/间距按最新稿。",
+          "remaining": "本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。",
           "acceptance_check": "分组计数和范围总量与只读API/SQL相同；缓存比例不混加；小窗横向列与下卡均可达。",
           "history_tasks": [
             15,
@@ -411,9 +411,9 @@
         {
           "id": "B03.4",
           "title": "价格新增/编辑/删除与历史快照",
-          "acceptance": "pending",
-          "completed": "四费率、CNY/USD、非法负价拒绝、合法保存及原历史费用保持已实测。",
-          "remaining": "最终候选连做新增→编辑→删除→恢复，核对单位、备注内滚、未定价与目录更新反馈。",
+          "acceptance": "passed",
+          "completed": "QA70：新建→CNY请求→USD修订/请求→删除/新请求→新ID恢复/请求、503目录更新失败/重试；原全部请求与成本不变。原菜单直接删除，无确认取消分支。",
+          "remaining": "本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。",
           "acceptance_check": "规则revision/币种/费率只改目标；新请求用新价，历史全字段快照不变；取消/失败不写入。",
           "history_tasks": [
             16,
@@ -426,9 +426,9 @@
         {
           "id": "B03.5",
           "title": "请求详情与全部缺失语义",
-          "acceptance": "pending",
-          "completed": "真实Token/费用/价格revision、长提示、更多元数据/两层Esc、小窗底部已有证据。",
-          "remaining": "集中覆盖成功/失败/导入/字段缺失、耗时/首内容/TTFB/tok/s、长ID及键盘关闭。",
+          "acceptance": "passed",
+          "completed": "QA70：成功/503/无usage/导入详情及More、真实价格快照/未知HTTP耗时、144字符模型、直接Esc及子层关闭等待1.2s后父层Esc通过。",
+          "remaining": "本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。",
           "acceptance_check": "详情与原始记录逐字段一致；未知显示—，导入不伪装HTTP200；更多/Esc只关闭当前层。",
           "history_tasks": [
             19,
@@ -440,9 +440,9 @@
         {
           "id": "B03.6",
           "title": "采集、保留和本地导入",
-          "acceptance": "pending",
-          "completed": "采集/存储、保留天数、导入暂停恢复/去重主要路径及历史保持已实现并留证。",
-          "remaining": "在隔离Profile补最终GUI的开关、保留修改/还原、导入进度/取消/重试与错误反馈。",
+          "acceptance": "passed",
+          "completed": "QA70：币种/保留180→90→180/采集OFF转发200且不增行/ON；合成JSONL实际5Builtin+1Custom、暂停→恢复、去重、权限读错→修复自然恢复至7Builtin+1Custom。",
+          "remaining": "本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。",
           "acceptance_check": "仅访问合成JSONL；重复导入不增重复；保留策略不误删范围外数据；错误可恢复且不改真实用户文件。",
           "history_tasks": [
             17,
@@ -452,9 +452,9 @@
         {
           "id": "B03.7",
           "title": "统计整批验收与数据不变",
-          "acceptance": "pending",
-          "completed": "UI67原22请求/费用、设置/价格与Core配置SHA保持。",
-          "remaining": "一次验证7帧14张原图及筛选/范围/价格/详情全链路，统一修正表格和表单差异。",
+          "acceptance": "passed",
+          "completed": "QA70：最终4b同候选7帧14原生PNG、1014请求/1006成本全字段保护、Core配置字节不变及P/C/C/P原负载短测；输入/平台/长期性能仍R01–R04。",
+          "remaining": "本批界面范围已签收。原生列拖动未证实、精确hover/完整键盘IME/AX及平台长期性能按R01–R04独立继续；不冒称全部发布门禁通过。",
           "acceptance_check": "同一候选、两尺寸、字段摘要/数量/金额读回一致；新旧原负载对照；仍有全局待办单列，不反复清零页面结果。",
           "history_tasks": [
             55,
@@ -467,8 +467,28 @@
           ]
         }
       ],
-      "accepted_frames": [],
-      "acceptance_evidence": []
+      "accepted_frames": [
+        "52:2",
+        "56:8",
+        "57:8",
+        "58:8",
+        "60:249",
+        "60:475",
+        "69:359"
+      ],
+      "acceptance_evidence": [
+        "benchmarks/b03-design-audit.json",
+        "benchmarks/b03-native-consolidated.json",
+        "benchmarks/b03-native-b03-summary.json",
+        "benchmarks/b03-traffic-snapshot-validation.json",
+        "benchmarks/b03-import-final-validation.json",
+        "benchmarks/b03-unchanged-overview-regression.json",
+        "benchmarks/b03-native-limitations.json",
+        "benchmarks/b03-performance-summary.json",
+        "benchmarks/b03-performance-supplemental-summary.json",
+        "benchmarks/b03-performance-resource-diagnostics.json",
+        "benchmarks/b03-artifacts.json"
+      ]
     },
     {
       "id": "B04",
@@ -700,7 +720,7 @@
           "title": "完整键盘与焦点恢复",
           "acceptance": "pending",
           "completed": "工具栏、模型列表、协议tab、部分统计与关闭按钮已有实测。",
-          "remaining": "按完整路径测Tab/ShiftTab/方向/Enter/Space/Esc、快捷键、开关层焦点与虚拟列表首末。",
+          "remaining": "按完整路径测Tab/ShiftTab/方向/Enter/Space/Esc、快捷键、开关层焦点与虚拟列表首末。 QA70原生表头拖宽两端点无可见变化，CUA无连续多点按住API；仍须用支持的真实输入验证拖宽及刷新/resize保持，不能把布局单测冒充原生成功。详情立即连续Esc与动画/焦点时序也统一复查。",
           "acceptance_check": "无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。",
           "history_tasks": [
             40,
@@ -744,7 +764,7 @@
           "id": "R01.5",
           "title": "40帧界面集中签收",
           "acceptance": "pending",
-          "completed": "21帧已有整帧审查，19帧待首审，最终签收0。",
+          "completed": "B01/B02/B03已有32/40帧按最新设计和两尺寸界面签收；剩B04六帧、B05两帧。全40帧最终集中扫描仍待，不等于R01或发布通过。",
           "remaining": "完成B01–B05后一次扫40帧/80张两尺寸原图；修一个清晰的问题清单再集中复验。",
           "acceptance_check": "每帧布局/资产/文字角色/状态/交互有最新设计证据；原生AA差异记录但不设RGB/字体文件字节相同门禁；无缺图/旧候选冒用。",
           "history_tasks": [
@@ -846,7 +866,7 @@
           "title": "统一最终基线和测量条件",
           "acceptance": "pending",
           "completed": "现有benchmark参数、Core/UI独立RSS、process→marker与P/C/C/P已建立。",
-          "remaining": "保存改造前基线和最终候选的同机同模式/同数据/同窗口/同操作历史条件，核对脚本help/哈希。",
+          "remaining": "保存改造前基线和最终候选的同机同模式/同数据/同窗口/同操作历史条件，核对脚本help/哈希。 B03全部六轮/资源分项及current1空搜索聚焦偏差已归档，最终基线不能只挑补测好样本。",
           "acceptance_check": "记录Core/UI/合计RSS、二进制体积、启动、p50/p95及原负载；不混候选/架构，不丢慢样本。",
           "history_tasks": [
             2,
@@ -861,7 +881,7 @@
           "title": "峰值差异诊断与最终结论",
           "acceptance": "pending",
           "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。",
-          "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。",
+          "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。",
           "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
           "history_tasks": [
             67

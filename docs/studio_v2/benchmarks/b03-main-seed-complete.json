@@ -1,0 +1,16 @@
+{
+  "real_http_requests": 1000,
+  "all_statuses_200": true,
+  "streaming_requests": 50,
+  "bounded_concurrency": 4,
+  "persistence_barrier_every": 20,
+  "sql_totals": [
+    1000,
+    500000,
+    50000,
+    550000,
+    400000
+  ],
+  "catalog_rules": 3,
+  "scope": "Actual forwarded requests, no SQL inserts. All original rows will be protected before GUI actions."
+}

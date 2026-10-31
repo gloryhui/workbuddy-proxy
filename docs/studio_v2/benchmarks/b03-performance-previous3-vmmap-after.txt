@@ -1,0 +1,2 @@
+vmmap[15757]: vmmap cannot examine process 15202 (with name like '15202') because it no longer appears to be running.
+vmmap[15757]: [fatal] mach port for process 0 not valid

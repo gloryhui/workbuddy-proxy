@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T17:22:26.634156+08:00",
+  "price_delete": {
+    "actual": "Original row menu immediately invokes delete_price(rule_id,revision); no confirmation dialog. Native actual delete signed via price_deleted_saved; Cancel is N/A.",
+    "source_file": "gpui/src/statistics/settings_layout.rs",
+    "original_price_row_actions_suffix_byte_exact": true,
+    "source_sha256": "a0a9cf3f0a436e3ca75df77759a8b29a55d64e771b0755b8ad67e5b66ebce7f2",
+    "correction": "Removed erroneous test-only expectation of confirmation/Cancel; no product behavior changed or deletion repeated."
+  },
+  "pagination_helper": {
+    "initial_error": "Missing cursor for direct page; then range from_ms0 exceeded366days.",
+    "correction": "Read first.next_cursor and Today start; real native20/page2 first detail ID exact API match."
+  }
+}

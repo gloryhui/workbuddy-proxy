@@ -1,0 +1,13 @@
+{
+  "size": 20,
+  "page": 2,
+  "api_first_request_id": "ea2b20e703a064a736226a196df13542cef33131a1b7d89a",
+  "native_first_detail_id": "ea2b20e703a064a736226a196df13542cef33131a1b7d89a",
+  "exact_match": true,
+  "native_observer": "mac_ui message",
+  "helper_diagnostics": [
+    "initial missing cursor",
+    "range from_ms0 exceeds366days"
+  ],
+  "scope": "First native row identity matched read-only Core page; no inferred GUI pass from API alone."
+}

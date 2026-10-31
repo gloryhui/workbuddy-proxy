@@ -1,0 +1,4 @@
+{
+  "failure": "New Studio property expected all available width to be consumed when BOTH name columns are manually locked. Existing documented fitter intentionally leaves surplus after numeric columns reach caps.",
+  "resolution": "Keep production fitter behavior; preserve explicit widths/readable floors and assert surplus remains unused rather than stretching numeric cells. No acceptance threshold or request workload relaxed."
+}

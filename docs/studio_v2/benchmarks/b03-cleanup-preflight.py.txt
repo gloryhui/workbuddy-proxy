@@ -1,0 +1,37 @@
+from pathlib import Path
+import datetime,hashlib,json,os,shutil,stat,subprocess,sys
+r=Path(__file__).resolve().parent;repo=Path.cwd().resolve();expected=Path('/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b03.yrd9bmj8')
+assert r==expected and r.resolve()==r and r.is_dir() and r!=repo and r!=Path.home() and not r.is_mount()
+owned=json.loads((r/'ownership.json').read_text());assert owned['root']==str(r) and owned['repo']==str(repo) and owned['uid']==os.getuid() and 'this thread created' in owned['task']
+assert owned['created_at']=='2026-10-31T16:08:25.448699+08:00'
+parents=[]
+for p in [r,*r.parents]:
+ assert not p.is_symlink() and p.resolve()==p,(str(p),'symlink or noncanonical ancestor')
+ parents.append({'path':str(p),'mountpoint':p.is_mount()})
+for result in json.loads((r/'native-driver-results.json').read_text()):
+ assert result['exit_code']==0 and result['terminal']['ui_pid_gone_after_cleanup'] and result['terminal']['core_exit_after_cleanup']==0
+bench=json.loads((r/'benchmark-driver-results.json').read_text());assert [x['label'] for x in bench]==['previous1','current1','current2','previous2'] and all(x['exit_code']==0 for x in bench)
+supplemental=json.loads((r/'benchmark-supplemental-results.json').read_text());assert [x['label'] for x in supplemental]==['current3','previous3'] and all(x['exit_code']==0 for x in supplemental)
+for x in bench+supplemental:
+ d=json.loads((r/('performance-'+x['label']+'.json')).read_text());assert d['terminal']['ui_pid_gone'] and all(c['waited'] for c in d['terminal']['children'])
+assert json.loads((r/'headless-contracts.json').read_text())
+art=json.loads((repo/'docs/studio_v2/benchmarks/b03-artifacts.json').read_text())
+for x in art['files']:assert hashlib.sha256((repo/x['destination']).read_bytes()).hexdigest()==x['sha256']
+probe=subprocess.run(['lsof','-nP','+D',str(r)],capture_output=True,text=True)
+assert probe.returncode==1 and not probe.stdout.strip() and not probe.stderr.strip(),('open references or lsof failure',probe.returncode,probe.stdout[:800],probe.stderr[:800])
+items=[];total=0
+for p in sorted(r.rglob('*')):
+ info=p.lstat();assert info.st_uid==os.getuid() and not stat.S_ISLNK(info.st_mode) and p.resolve().is_relative_to(r)
+ assert not p.is_mount()
+ assert stat.S_ISDIR(info.st_mode) or stat.S_ISREG(info.st_mode),(str(p),'unsupported type')
+ item={'relative':str(p.relative_to(r)),'type':'directory' if stat.S_ISDIR(info.st_mode) else 'file','uid':info.st_uid,'mode':oct(stat.S_IMODE(info.st_mode)),'size':info.st_size,'mtime_ns':info.st_mtime_ns,'inode':info.st_ino,'device':info.st_dev}
+ if item['type']=='file':
+  assert info.st_nlink==1,(str(p),'unexpected hardlink')
+  item['sha256']=hashlib.sha256(p.read_bytes()).hexdigest();total+=info.st_size
+ items.append(item)
+out={'at':datetime.datetime.now().astimezone().isoformat(),'target':str(r),'type':'owned dedicated B03 temporary directory','repo':str(repo),'ownership':owned,'ancestor_checks':parents,'lsof':{'exit_code':probe.returncode,'stdout':probe.stdout,'stderr':probe.stderr},'files':sum(x['type']=='file' for x in items),'directories':sum(x['type']=='directory' for x in items),'logical_bytes':total,'free_system_bytes_before':shutil.disk_usage('/').free,'inventory':items,'reproducible':'Only own synthetic fixture profiles/SQLite/logs/app/executable copies and wrapper files; final reports/native evidence SHA-verified in repository. Shared Cargo and immutable Core46 outside this exact root remain. No deletion performed by this script.'}
+if len(sys.argv)>1:
+ prior=json.loads((repo/'docs/studio_v2/benchmarks/b03-cleanup-preflight.json').read_text());assert prior['target']==str(r) and prior['inventory']==items and prior['ownership']==owned
+ print(json.dumps({'immediate_inventory_recheck':'exact','target':str(r),'files':out['files'],'logical_bytes':total,'free_system_bytes_before':out['free_system_bytes_before']}))
+else:
+ (repo/'docs/studio_v2/benchmarks/b03-cleanup-preflight.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:out[k] for k in ['target','type','repo','files','logical_bytes','free_system_bytes_before']}))

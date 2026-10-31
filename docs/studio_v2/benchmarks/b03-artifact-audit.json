@@ -1,0 +1,138 @@
+{
+  "at": "2026-10-31T18:01:58.051468+08:00",
+  "manifest_original_preserved": true,
+  "manifest_count": 226,
+  "correction": "Exporter excluded startswith(candidate-) but actor used window-candidate-. Six selected own-PID window diagnostics were exported and stay in exact-hash inventory. Manifest exclusion sentence about window discovery is too broad; actual inventory authoritative. Private configs/keys/fullSQL/signedURLs excluded.",
+  "same_selected_window_diagnostics": [
+    {
+      "file": "docs/studio_v2/screenshots/b03-performance-previous1-window-candidate-10361.png",
+      "label": "previous1",
+      "own_ui_pid": 9281,
+      "own_selected_window_id": 10361,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "actual_format": "PNG",
+      "sha256": "d3b5002dd1055b0c3f1ee4d54ac417b2b244f0901e187fb91fe6e35758e78ff7",
+      "role": "Same selected synthetic app window diagnostic; not measured statistics-before or formal frame pair."
+    },
+    {
+      "file": "docs/studio_v2/screenshots/b03-performance-current1-window-candidate-10490.png",
+      "label": "current1",
+      "own_ui_pid": 10815,
+      "own_selected_window_id": 10490,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "actual_format": "PNG",
+      "sha256": "ea098e4abf2e014065a0e22df4d69a1be606daa4f0bec7cb3ad4fe8cf05c835f",
+      "role": "Same selected synthetic app window diagnostic; not measured statistics-before or formal frame pair."
+    },
+    {
+      "file": "docs/studio_v2/screenshots/b03-performance-current2-window-candidate-10576.png",
+      "label": "current2",
+      "own_ui_pid": 12071,
+      "own_selected_window_id": 10576,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "actual_format": "PNG",
+      "sha256": "101fa281116d7e2281277d90bca8cdfe108c16cb84b1a3bc3a7e6d7bbb7469ce",
+      "role": "Same selected synthetic app window diagnostic; not measured statistics-before or formal frame pair."
+    },
+    {
+      "file": "docs/studio_v2/screenshots/b03-performance-previous2-window-candidate-10645.png",
+      "label": "previous2",
+      "own_ui_pid": 12989,
+      "own_selected_window_id": 10645,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "actual_format": "PNG",
+      "sha256": "f29b1bb2ee84d962de8bf68687b67803c57504304736efd67535b94a0e1ee0c9",
+      "role": "Same selected synthetic app window diagnostic; not measured statistics-before or formal frame pair."
+    },
+    {
+      "file": "docs/studio_v2/screenshots/b03-performance-current3-window-candidate-10737.png",
+      "label": "current3",
+      "own_ui_pid": 14479,
+      "own_selected_window_id": 10737,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "actual_format": "PNG",
+      "sha256": "81a712d3a93614828fc096a13b708b6d1514c50e7080be85c8a3806502da8c0a",
+      "role": "Same selected synthetic app window diagnostic; not measured statistics-before or formal frame pair."
+    },
+    {
+      "file": "docs/studio_v2/screenshots/b03-performance-previous3-window-candidate-10800.png",
+      "label": "previous3",
+      "own_ui_pid": 15202,
+      "own_selected_window_id": 10800,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "actual_format": "PNG",
+      "sha256": "72827d745e2575595bba65d619c1ab73f40240ba27e14be178c38605541abaf5",
+      "role": "Same selected synthetic app window diagnostic; not measured statistics-before or formal frame pair."
+    }
+  ],
+  "root_visual_check": "previous1/previous3 diagnostic images reviewed: same synthetic1000-record/100page target app, no other app surface.",
+  "original_manifest_snapshot": "docs/studio_v2/benchmarks/b03-artifacts-before-text-normalization.json",
+  "derived_text_normalization": [
+    {
+      "file": "docs/studio_v2/benchmarks/b03-performance-previous1-vmmap-before.txt",
+      "sha256_before": "5519badde30023c287bf0139978113ec46f397c0c991e634198bc7fbb5534ea9",
+      "sha256_after": "d53be3b3d59f0347e77d254d0e40945ddb490296dab643090f9cf5a141ca7a8b",
+      "raw_utf8_evidence": "docs/studio_v2/benchmarks/b03-performance-previous1-vmmap-before-raw.json",
+      "raw_source_sha256": "b585dc78c2566417e88fee63e2b329462a56145e41ec9994d61f287f88184f56",
+      "change": "Derived readable text only: remove blank line at EOF; raw original text/hash untouched."
+    },
+    {
+      "file": "docs/studio_v2/benchmarks/b03-performance-current1-vmmap-before.txt",
+      "sha256_before": "4f55c82f77747e6d6adb99e12a07502aef85c707eeddc734a9d58fcc82f9aa21",
+      "sha256_after": "1975140cc05fcee588c64d2981f0650750f4318954d6f7769b82b571c68306e0",
+      "raw_utf8_evidence": "docs/studio_v2/benchmarks/b03-performance-current1-vmmap-before-raw.json",
+      "raw_source_sha256": "2beaaf48a5c9194bc3746786c21c1e48651be54dedbafc11e81f2172933748e6",
+      "change": "Derived readable text only: remove blank line at EOF; raw original text/hash untouched."
+    },
+    {
+      "file": "docs/studio_v2/benchmarks/b03-performance-current2-vmmap-before.txt",
+      "sha256_before": "bee8791af99a5606c776fecf2bb117f508438c51abba390f4d9aff714ee0598f",
+      "sha256_after": "db946a7d7fec920b2451f0ee39ae217194e88132fa728bbee77fd27fcb2ababc",
+      "raw_utf8_evidence": "docs/studio_v2/benchmarks/b03-performance-current2-vmmap-before-raw.json",
+      "raw_source_sha256": "2d383c9a331e1233c96877b26ba94179d27892647ba89677942b4a6df17d7b91",
+      "change": "Derived readable text only: remove blank line at EOF; raw original text/hash untouched."
+    },
+    {
+      "file": "docs/studio_v2/benchmarks/b03-performance-previous2-vmmap-before.txt",
+      "sha256_before": "2b6b59513628430705dab816d59a66c854c4a11d887a025353c5995858ebb5ac",
+      "sha256_after": "b63f15ac826b055354d9ef4946c24540c54ebbb6f47c4e510da418cb11917df5",
+      "raw_utf8_evidence": "docs/studio_v2/benchmarks/b03-performance-previous2-vmmap-before-raw.json",
+      "raw_source_sha256": "2d98c34c96d0c05dc00c9474175b0651f7ff173c8ee5a3c8dbbcc483456a77e8",
+      "change": "Derived readable text only: remove blank line at EOF; raw original text/hash untouched."
+    },
+    {
+      "file": "docs/studio_v2/benchmarks/b03-performance-current3-vmmap-before.txt",
+      "sha256_before": "5178ffa70694710ea14a7415b23106de1d3577447fa7611b004c98cc84b6a4aa",
+      "sha256_after": "3f40e9560160fc44a648e6fe6a9f7e4ac4dde3a8b2ddd20949437db4252fcdc8",
+      "raw_utf8_evidence": "docs/studio_v2/benchmarks/b03-performance-current3-vmmap-before-raw.json",
+      "raw_source_sha256": "e04e87d23785d9cb0f65466dddb253ce9fb5cc1a2f462ac8805b273f636e6212",
+      "change": "Derived readable text only: remove blank line at EOF; raw original text/hash untouched."
+    },
+    {
+      "file": "docs/studio_v2/benchmarks/b03-performance-previous3-vmmap-before.txt",
+      "sha256_before": "2f2b6e623e3e8bc75751858faaad5b31f6ba5006eace4731d7287e187bffeb03",
+      "sha256_after": "64eee3b0626cb1aa619cf9e72ca0e8f9b6498b66696d9658cc6671ca854b6b2c",
+      "raw_utf8_evidence": "docs/studio_v2/benchmarks/b03-performance-previous3-vmmap-before-raw.json",
+      "raw_source_sha256": "2d9ca01c38948794dd66245c794ca3e2fc2a0e9d88bdfe7d467a21f56a2371af",
+      "change": "Derived readable text only: remove blank line at EOF; raw original text/hash untouched."
+    }
+  ]
+}

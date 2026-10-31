@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-31T17:37:50.083943+08:00",
+  "reused_source": "docs/studio_v2/benchmarks/overview-closure-build.json",
+  "unchanged_files": [
+    {
+      "path": "gpui/src/statistics/overview.rs",
+      "sha256": "9d22628a803bbd5a44a14d7a7423010af7f8858ee4c91b40d432f3dd1df6b674",
+      "byte_exact_to_UI67": true
+    },
+    {
+      "path": "gpui/src/statistics/trends.rs",
+      "sha256": "1896ecf780a78b1b3f674583536fec8aa07001485db6c02dece5ca57dd5c721b",
+      "byte_exact_to_UI67": true
+    }
+  ],
+  "prior_native_gui": "docs/studio_v2/benchmarks/overview-closure-interaction-gui.json",
+  "prior_actual_currency_case": "USD unavailable → CNY ¥0 → USD unavailable",
+  "current_main": "Mixed CNY/USD rules and actual new request snapshots independently checked by native saved rules and traffic-snapshot-validation; main did not separately repeat overview cohort selector.",
+  "current_tests": "Compiled existing billing_keeps_missing_currency_distinct_from_a_recorded_zero test passed within204passed/2ignored.",
+  "scope": "Reuse prior real currency-selector regression only for byte-identical overview/trends; no claim of a new current-candidate cohort-selector journey. Recent source not byte-identical and not covered by this reuse; current native overview/details were separately exercised."
+}

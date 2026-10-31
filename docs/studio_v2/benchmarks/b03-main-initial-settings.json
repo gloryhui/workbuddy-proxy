@@ -1,0 +1,10 @@
+{
+  "api_version": 4,
+  "default_currency": "CNY",
+  "enabled": true,
+  "generated_at_ms": 1793436140833,
+  "generation": "35ec53a9e197b92103afaf71a6dfc11b4c157c9da5e05d37:1686",
+  "request_tag": "",
+  "retention_days": 180,
+  "revision": 1
+}

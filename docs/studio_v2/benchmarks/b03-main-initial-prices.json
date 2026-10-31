@@ -1,0 +1,65 @@
+{
+  "api_version": 4,
+  "catalog_sync": {
+    "catalog_count": 3,
+    "last_success_day": "2026-10-31",
+    "targets_key": "73c3b5190d3f929bb3709d5e41e0b323fd8c821eb8e98c240fb79933d6887c3c",
+    "unmatched_count": 2,
+    "updated_at_ms": 1793436135718,
+    "updated_count": 3
+  },
+  "generated_at_ms": 1793436135837,
+  "generation": "35ec53a9e197b92103afaf71a6dfc11b4c157c9da5e05d37:0",
+  "items": [
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "2000000000",
+      "label": "models.dev \u00b7 synthetic/gpt-6",
+      "output_rate_nanos": "10000000000",
+      "price_id": "0c71996d2e486dd03c631a68a0c8fb6b7f9ec5a352a7d987",
+      "provider_id": "review-provider",
+      "referenced": false,
+      "revision": 1,
+      "rule_id": "0c71996d2e486dd03c631a68a0c8fb6b7f9ec5a352a7d987",
+      "upstream_model": "gpt-6"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "10000000000",
+      "label": "models.dev \u00b7 synthetic/gpt-6.1",
+      "output_rate_nanos": "50000000000",
+      "price_id": "2c51b95ef57ddbf5e089a29d0c3f8399f2a515a5d1913410",
+      "provider_id": "review-provider",
+      "referenced": false,
+      "revision": 1,
+      "rule_id": "2c51b95ef57ddbf5e089a29d0c3f8399f2a515a5d1913410",
+      "upstream_model": "gpt-6.1"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "100000000",
+      "label": "models.dev \u00b7 synthetic/deepseek-v4.1-flash",
+      "output_rate_nanos": "500000000",
+      "price_id": "a504c9b5b00a61ec4506ce8cefe30072edafb3e96d900861",
+      "provider_id": "review-provider",
+      "referenced": false,
+      "revision": 1,
+      "rule_id": "a504c9b5b00a61ec4506ce8cefe30072edafb3e96d900861",
+      "upstream_model": "deepseek-v4.1-flash"
+    }
+  ],
+  "next_rule_id": null,
+  "request_tag": ""
+}

@@ -1,0 +1,283 @@
+{
+  "at": "2026-10-31T17:12:48.610380+08:00",
+  "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page": "51:2",
+  "frames": [
+    {
+      "node": "52:2",
+      "context_blocks": [
+        {
+          "name": "52-2-text-0.txt",
+          "bytes": 47453,
+          "sha256": "ac8d6b268149d00e4adc458b09c5d768c2916a9d1ba24234d08a5b7261a59e11"
+        },
+        {
+          "name": "52-2-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "52-2-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "52-2-text-3.txt",
+          "bytes": 782,
+          "sha256": "2e8f6429cb0f48be340715402c55de587fc59c29fc8504b76bc61157c2b8fee6"
+        },
+        {
+          "name": "52-2-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "reference_original": {
+        "file": "52-2-reference-1440.png",
+        "sha256": "850ab8cd2d81d0bde9c3e1d7a05a42961c8a7476d90e8c8ba0b35fc3e02e0a8a",
+        "pixels": [
+          1440,
+          900
+        ]
+      },
+      "context": "Full high fidelity official design context with default screenshot, plus official1440x900 export; signed download URLs are private and omitted."
+    },
+    {
+      "node": "56:8",
+      "context_blocks": [
+        {
+          "name": "56-8-text-0.txt",
+          "bytes": 55547,
+          "sha256": "68c8ffdbfb428ea8f493b6d7b48f307fa65adb2a62ba2e014de538080f9c7eb3"
+        },
+        {
+          "name": "56-8-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "56-8-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "56-8-text-3.txt",
+          "bytes": 782,
+          "sha256": "2e8f6429cb0f48be340715402c55de587fc59c29fc8504b76bc61157c2b8fee6"
+        },
+        {
+          "name": "56-8-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "reference_original": {
+        "file": "56-8-reference-1440.png",
+        "sha256": "9eff7dd98b50bfae5974cd2d7b8444ce64935c6de0e187fc0a878467236b8777",
+        "pixels": [
+          1440,
+          900
+        ]
+      },
+      "context": "Full high fidelity official design context with default screenshot, plus official1440x900 export; signed download URLs are private and omitted."
+    },
+    {
+      "node": "57:8",
+      "context_blocks": [
+        {
+          "name": "57-8-text-0.txt",
+          "bytes": 45554,
+          "sha256": "b466fe7bcfc287c2ab910e33b8fd8f27becdc55755a956d7a3f3dcc46e8818ed"
+        },
+        {
+          "name": "57-8-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "57-8-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "57-8-text-3.txt",
+          "bytes": 782,
+          "sha256": "2e8f6429cb0f48be340715402c55de587fc59c29fc8504b76bc61157c2b8fee6"
+        },
+        {
+          "name": "57-8-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "reference_original": {
+        "file": "57-8-reference-1440.png",
+        "sha256": "cd4d7435afc0a6059de56485724f45579ec6f87e9c51c5fe05e520316db0c7cc",
+        "pixels": [
+          1440,
+          900
+        ]
+      },
+      "context": "Full high fidelity official design context with default screenshot, plus official1440x900 export; signed download URLs are private and omitted."
+    },
+    {
+      "node": "58:8",
+      "context_blocks": [
+        {
+          "name": "58-8-text-0.txt",
+          "bytes": 49697,
+          "sha256": "c6a1d3499d2ce0298290c478c86fef6e834d8ab16682a78055f2286bf20ef165"
+        },
+        {
+          "name": "58-8-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "58-8-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "58-8-text-3.txt",
+          "bytes": 1275,
+          "sha256": "1802fb896b41cae0c082aa6d876882d5d56e083e646b7ff17db416ca94177226"
+        },
+        {
+          "name": "58-8-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "reference_original": {
+        "file": "58-8-reference-1440.png",
+        "sha256": "e5dedc12c47c57dcfcb02a94206f1b3aa05f973728f36d7a882bb7dbe199439d",
+        "pixels": [
+          1440,
+          900
+        ]
+      },
+      "context": "Full high fidelity official design context with default screenshot, plus official1440x900 export; signed download URLs are private and omitted."
+    },
+    {
+      "node": "60:249",
+      "context_blocks": [
+        {
+          "name": "60-249-text-0.txt",
+          "bytes": 59511,
+          "sha256": "9890279e282ed0895e181786fc65048f301bccd51bc02c3d007e2a91b9f57737"
+        },
+        {
+          "name": "60-249-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "60-249-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "60-249-text-3.txt",
+          "bytes": 1275,
+          "sha256": "1802fb896b41cae0c082aa6d876882d5d56e083e646b7ff17db416ca94177226"
+        },
+        {
+          "name": "60-249-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "reference_original": {
+        "file": "60-249-reference-1440.png",
+        "sha256": "c091a4331ba51af7cdc4a548c27260f08747cfe85e0abf9e1379dd150d04d051",
+        "pixels": [
+          1440,
+          900
+        ]
+      },
+      "context": "Full high fidelity official design context with default screenshot, plus official1440x900 export; signed download URLs are private and omitted."
+    },
+    {
+      "node": "60:475",
+      "context_blocks": [
+        {
+          "name": "60-475-text-0.txt",
+          "bytes": 66128,
+          "sha256": "13f8a1954fa1ee490ec12afa494f566d820fe1c4db08f78d77a23ce41f79ffad"
+        },
+        {
+          "name": "60-475-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "60-475-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "60-475-text-3.txt",
+          "bytes": 948,
+          "sha256": "33240661c309f96ac415ec109acfce4e92b94d5f59aefd7f0fa313b6c7ebbd69"
+        },
+        {
+          "name": "60-475-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "reference_original": {
+        "file": "60-475-reference-1440.png",
+        "sha256": "e5aaa2942ac5b3cb88f60a2ecf3e791bfca66d0ae165c28ac0b6edf8fc3b6646",
+        "pixels": [
+          1440,
+          900
+        ]
+      },
+      "context": "Full high fidelity official design context with default screenshot, plus official1440x900 export; signed download URLs are private and omitted."
+    },
+    {
+      "node": "69:359",
+      "context_blocks": [
+        {
+          "name": "69-359-text-0.txt",
+          "bytes": 59571,
+          "sha256": "0f750efaf0ba967fe4a2fe35501d16ee4d2f97f791348662783d80b3f6dfc657"
+        },
+        {
+          "name": "69-359-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "69-359-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "69-359-text-3.txt",
+          "bytes": 1275,
+          "sha256": "1802fb896b41cae0c082aa6d876882d5d56e083e646b7ff17db416ca94177226"
+        },
+        {
+          "name": "69-359-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "reference_original": {
+        "file": "69-359-reference-1440.png",
+        "sha256": "52116768654ea4d7d8c40d126f92bb2895754734b193337d87f997a76ff9c31d",
+        "pixels": [
+          1440,
+          900
+        ]
+      },
+      "context": "Full high fidelity official design context with default screenshot, plus official1440x900 export; signed download URLs are private and omitted."
+    }
+  ],
+  "asset_audit": "asset-audit.json",
+  "native_data_policy": "Actual metrics and functional pagination/diagnostics retained; sample chart is not embedded as fake data; OS decoration native.",
+  "one_retry": "69:359 screenshot request once timed out, then one sequential retry succeeded; connection working."
+}

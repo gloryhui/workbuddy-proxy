@@ -97,3 +97,11 @@ B01 / QA68完整批次：最新19份官方完整设计与同一2a12，38主图/9
 ## B02 / UI69 整批保护记录（2026-10-31）
 
 模型发现/选择/容量、范围与Cmd/F2目标、能力和四协议真实保存往返已按同87db验证；取消/Apply/Core边界与原14历史保持，旧配置的9条默认序列化补全单列。6×2正式原生PNG及2底部补图、四轮原负载与完整生命周期留证；原CUA JPEG不冒充PNG。全部Core/配置schema/依赖及原事件保持，未触及真实WorkBuddy/登录项/外链。完整IME/AX/hover与跨平台、长时性能仍归R01–R04。[同版证据](benchmarks/b02-native-consolidated.json)、[字段审计](benchmarks/b02-default-serialization-audit.json)、[性能](benchmarks/b02-performance-summary.json)。
+
+## B03 / UI70 整批保护记录（2026-10-31）
+
+- 冻结4b，仅3Rust呈现文件、7原owner监听保持，Core/配置格式/依赖/锁文件未改。
+- 隔离1000真实回环请求，分页/筛选/真实503与缺失用量；价格新建/编辑/删除/新ID恢复和后续请求快照逐字段核对。
+- 合成导入7Builtin+1Custom、暂停恢复/去重/文件读错自然恢复；最终1014请求/1006费用、Core配置字节不变、全部已保护历史保持。
+- 7帧14原生PNG和P/C/C/P原负载短测通过；初始Mono、夹具sessionId错误、原直接删除行为与未证实列拖动明确留档。原生输入R01、平台R02、长期性能R03和安装RC R04独立。
+- 详见[QA70](baseline_and_qa.md)及[b03-native-consolidated](benchmarks/b03-native-consolidated.json)、[独立导入](benchmarks/b03-import-final-validation.json)、[性能成本](benchmarks/b03-performance-summary.json)。

@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-31T17:31:06.370156+08:00",
+  "stage": "paused_input",
+  "action": "append-import",
+  "scope": "Only this recorded synthetic fixture; no management-data writes. Requests use the real local proxy, other actions change mock/catalog/input files only.",
+  "source_file": "home/.workbuddy/projects/demo/added-while-paused.jsonl",
+  "message_id": "b03-extra-6"
+}

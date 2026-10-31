@@ -1,0 +1,195 @@
+{
+  "at": "2026-10-31T17:09:20.130507+08:00",
+  "stage": "page_reference_toolcheck",
+  "core_health": "ready",
+  "core_pid": 89989,
+  "core_config_sha256_unchanged": "7a095c08ccde6b603e60f998865ecfa0f0f4f9ad666ef2eaa09d04989b1aea85",
+  "sql_totals": [
+    1000,
+    500000,
+    50000,
+    550000,
+    400000
+  ],
+  "prices": [
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "2000000000",
+      "label": "models.dev · synthetic/gpt-6",
+      "output_rate_nanos": "10000000000",
+      "price_id": "0c71996d2e486dd03c631a68a0c8fb6b7f9ec5a352a7d987",
+      "provider_id": "review-provider",
+      "revision": 1,
+      "rule_id": "0c71996d2e486dd03c631a68a0c8fb6b7f9ec5a352a7d987",
+      "upstream_model": "gpt-6"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "10000000000",
+      "label": "models.dev · synthetic/gpt-6.1",
+      "output_rate_nanos": "50000000000",
+      "price_id": "2c51b95ef57ddbf5e089a29d0c3f8399f2a515a5d1913410",
+      "provider_id": "review-provider",
+      "revision": 1,
+      "rule_id": "2c51b95ef57ddbf5e089a29d0c3f8399f2a515a5d1913410",
+      "upstream_model": "gpt-6.1"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "100000000",
+      "label": "models.dev · synthetic/deepseek-v4.1-flash",
+      "output_rate_nanos": "500000000",
+      "price_id": "a504c9b5b00a61ec4506ce8cefe30072edafb3e96d900861",
+      "provider_id": "review-provider",
+      "revision": 1,
+      "rule_id": "a504c9b5b00a61ec4506ce8cefe30072edafb3e96d900861",
+      "upstream_model": "deepseek-v4.1-flash"
+    }
+  ],
+  "settings": {
+    "enabled": true,
+    "retention_days": 180,
+    "default_currency": "CNY",
+    "revision": 1
+  },
+  "import": {
+    "enabled": false,
+    "effective_enabled": false,
+    "state": "disabled",
+    "imported": 0,
+    "skipped": 0,
+    "conflict": 0,
+    "pending": 0,
+    "last_error_code": null,
+    "progress": {
+      "bytes_committed": 0,
+      "bytes_remaining": 0,
+      "bytes_total": 0,
+      "files_remaining": 0,
+      "files_total": 0,
+      "total_known": false
+    },
+    "runtime_metrics": {
+      "queue_depth": 0,
+      "queue_peak": 0,
+      "recent_batches": [],
+      "source_io_thread_checks": 0,
+      "source_io_thread_violations": 0,
+      "writer_batch_count": 0,
+      "writer_batch_failures": 0,
+      "writer_batch_max_us": 0,
+      "writer_batch_total_us": 0
+    }
+  },
+  "protected_history": {
+    "usage_requests": {
+      "rows": 1000,
+      "all_fields_preserved": true,
+      "sha256": "02de5e1d5f2ee7605989210556bd6c595c863ccb8da05a86325828002ca82ddb"
+    },
+    "usage_costs": {
+      "rows": 1000,
+      "all_fields_preserved": true,
+      "sha256": "319fc459a73b829ba527b6f9c30e1d7ff39eda53ffe3a6411e11352c0f472f7f"
+    }
+  },
+  "scope": "Read-only live Core API and exact SQL row snapshots. Source stats envelopes/generated time and derived price referenced flag excluded from setting/rule comparisons. Only declared GUI save stages may change persisted settings/prices; config remains byte-exact.",
+  "page_reference": {
+    "page": 2,
+    "size": 20,
+    "items": [
+      {
+        "request_id": "ea2b20e703a064a736226a196df13542cef33131a1b7d89a",
+        "upstream_model": "model-b-1"
+      },
+      {
+        "request_id": "1813cff3d980cb1bd81c86513f684c30e66075f030353bc1",
+        "upstream_model": "claude-opus-4.7"
+      },
+      {
+        "request_id": "d08e8cac877ee79d06659353925051010c21b31f3197c9ce",
+        "upstream_model": "gpt-6.1"
+      },
+      {
+        "request_id": "2537cd5315a14c6f895bcb11e0656e6cb3b4d30cd073b1d1",
+        "upstream_model": "deepseek-v4.1-flash"
+      },
+      {
+        "request_id": "0e2c750a3b0bce7e62de4043fef90da9c7a9fbcc126be169",
+        "upstream_model": "gpt-6"
+      },
+      {
+        "request_id": "5082c52fc56ff8fcb5d527796d2cd99761286b28d6f84bad",
+        "upstream_model": "model-b-1"
+      },
+      {
+        "request_id": "61cd702dc0eae90578acac476b129f5c5da597cd0c217181",
+        "upstream_model": "claude-opus-4.7"
+      },
+      {
+        "request_id": "aa1740344a4b85255f7f050c48a252fceb03c464ad0b9501",
+        "upstream_model": "gpt-6.1"
+      },
+      {
+        "request_id": "20840a403f087b60a7d43d7f485b4939447b83ba12cf35e4",
+        "upstream_model": "gpt-6"
+      },
+      {
+        "request_id": "4b499bed6a60752b5450697454a517684c713c63e3ade344",
+        "upstream_model": "deepseek-v4.1-flash"
+      },
+      {
+        "request_id": "662542e187e1fd50fb53734092110ead817473b74ba3cf65",
+        "upstream_model": "model-b-1"
+      },
+      {
+        "request_id": "47ba002f3f6b4de2ba8a5afd16d5774809096996ed3d3037",
+        "upstream_model": "claude-opus-4.7"
+      },
+      {
+        "request_id": "52745e48a20bbe7eaaf6373d850b5fd6730b73d371b88c12",
+        "upstream_model": "gpt-6.1"
+      },
+      {
+        "request_id": "5c0e2e305a959ff392f409a490ab51a131675567384539d6",
+        "upstream_model": "gpt-6"
+      },
+      {
+        "request_id": "89f81593df6ed257dd030f65c0fa330b0880b0b13d9b6d11",
+        "upstream_model": "model-b-1"
+      },
+      {
+        "request_id": "33d7163e3d9dda168340478dfaacac59753ef50d3838cf10",
+        "upstream_model": "deepseek-v4.1-flash"
+      },
+      {
+        "request_id": "f42ddd928f657106fd270d883c278e07bc3e2aad143a96a1",
+        "upstream_model": "deepseek-v4.1-flash"
+      },
+      {
+        "request_id": "169f90995c1e1abe7f6c001943aa5099f32d78d56a9b9a0d",
+        "upstream_model": "claude-opus-4.7"
+      },
+      {
+        "request_id": "03824c1bb08e5693021d710ab49445a3c536afa23b07b864",
+        "upstream_model": "gpt-6.1"
+      },
+      {
+        "request_id": "acaf85de49d64a0d189743f503771b5790eb909d1acad8eb",
+        "upstream_model": "gpt-6"
+      }
+    ]
+  }
+}

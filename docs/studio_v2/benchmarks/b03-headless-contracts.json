@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-31T16:53:17.131045+08:00",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "scope": "Separate isolated existing Core contracts. Pagination contract includes SQL-generated fixtures; these are distinct from the1000 real HTTP requests in the native B03 fixture. Entire harness/descendants inherit protection for real WorkBuddy/installed app/LaunchAgents paths.",
+  "commands": [
+    {
+      "script": "statistics_test.py",
+      "pid": 94778,
+      "waited": true,
+      "exit_code": 0,
+      "seconds": 11.322,
+      "output": "  PASS control protocol is 12                         12\n  PASS usage is requested by default before settings are read \n  PASS streaming response is byte-identical           944633d542871c62\n  PASS non-streaming response is byte-identical       9a60de25ce11b33d\n  PASS upstream 429 status and body are preserved     \n  PASS observe mode forwards the original request bytes \n  PASS request mode merges include_usage and keeps unknown fields \n  PASS request mode never injects stream_options for stream=false \n  PASS non-object stream_options is forwarded unchanged \n  PASS connection test still reports success          \n  PASS all scenarios were recorded                    13 rows\n  PASS A01/A02 complete usage is counted once         {\"total\": 1100, \"cache_read\": 800}\n  PASS A03 missing usage stays null and the request still completes \n  PASS A08 conflicting usage is invalid and excluded  \n  PASS A09 usage after an oversized event is still parsed \n  PASS compressed responses never guess usage         \n  PASS A06 a truncated 200 stream is not a success    failed\n  PASS A04 client cancellation is recorded immediately \n  PASS A06 upstream 429 keeps status and marks failure \n  PASS non-streaming JSON usage is parsed             \n  PASS encoded SSE is not decoded implicitly          \n  PASS dashboard summary and buckets match the request list \n  PASS model filter is exact                          \n  PASS keyset pagination walks every row once and rejects stale cursors 37 rows in 2 pages\n  PASS request detail returns summary fields only     \n  PASS unknown request ids report stats_not_found     \n  PASS breakdown and filter options are served server-side \n  PASS grouping pagination walks every group once and rejects stale cursors \n  PASS grouping money obeys the frozen id watermark   \n  PASS connection tests are recorded but excluded by default \n  PASS the local API key cannot read statistics       \n  PASS the current price can be added, edited and listed without interval rules \n  PASS create is revision 0 only and delete takes the canonical price_id \n  PASS a request detail returns its own price snapshot \n  PASS an unconfigured model is an explicit zero amount \n  PASS deleting the current price leaves recorded history readable \n  PASS supplier rename/delete preserves SQLite and API name snapshots \n  PASS pausing collection only stops new requests     \n  PASS clear deletes exactly the previewed rows and no more preview=41 deleted=41 kept=0\n  PASS crash recovery interrupts in-flight rows and keeps the warning \n  PASS empty buckets distinguish a proven zero from unknown covered=empty paused=unknown\n  PASS normal quit clears the runtime warning without deleting crash history \nPASS: 42 statistics integration checks\n"
+    },
+    {
+      "script": "statistics_pagination_test.py",
+      "pid": 94837,
+      "waited": true,
+      "exit_code": 0,
+      "seconds": 1.724,
+      "output": "PASS real requests sequential/back/direct 3->1->2 and invalid pages size 10\nPASS real provider sequential/back/direct 3->1->2 and invalid pages size 10\nPASS real model sequential/back/direct 3->1->2 and invalid pages size 10\nPASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 10\nPASS real requests sequential/back/direct 3->1->2 and invalid pages size 20\nPASS real provider sequential/back/direct 3->1->2 and invalid pages size 20\nPASS real model sequential/back/direct 3->1->2 and invalid pages size 20\nPASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 20\nPASS real requests sequential/back/direct 3->1->2 and invalid pages size 50\nPASS real provider sequential/back/direct 3->1->2 and invalid pages size 50\nPASS real model sequential/back/direct 3->1->2 and invalid pages size 50\nPASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 50\nPASS real requests sequential/back/direct 3->1->2 and invalid pages size 100\nPASS real provider sequential/back/direct 3->1->2 and invalid pages size 100\nPASS real model sequential/back/direct 3->1->2 and invalid pages size 100\nPASS real prices fixed pages 1->2->3->2->1, final page and filter reset size 100\nPASS frozen snapshot, partial final page and filter expiry; real-core cursor API median 1.41 ms, max 2.42 ms on 323 synthetic rows\nPASS stats_filters provider all 321 options reachable\nPASS stats_filters model all 321 options reachable\nPASS stats_prices_list  all 321 options reachable\nPASS default currency affects only newly admitted zero-price snapshots\nPASS statistics list and settings contracts\n"
+    },
+    {
+      "script": "price_catalog_test.py",
+      "pid": 94853,
+      "waited": true,
+      "exit_code": 0,
+      "seconds": 1.539,
+      "output": "  PASS startup imports prices and persists the successful local day \n  PASS a real forwarded request freezes the imported USD price \n  PASS same-day restart preserves edits without another automatic update \n  PASS manual refresh silently overwrites manual prices and keeps historical costs \n  PASS the forwarding key cannot trigger price updates \n  PASS failed downloads keep prices and the successful-day marker unchanged \n  PASS a previous-day marker triggers one new startup update \nPASS: 7 price catalogue integration checks\n"
+    }
+  ]
+}

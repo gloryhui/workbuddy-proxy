@@ -1,0 +1,163 @@
+{
+  "at": "2026-10-31T17:11:32.924726+08:00",
+  "candidate_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "screenshots": [
+    {
+      "node": "52:2",
+      "size": "wide",
+      "file": "52-2-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "644e181352c90ebbf77fa6a6fff63d63fa51335f8d782d3b47c5833ff44b57d0",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "52:2",
+      "size": "small",
+      "file": "52-2-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "65d15bd67f713c0d7a9ee7711e0542b141eee26d1094da0fd51d86ead06963b3",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "56:8",
+      "size": "wide",
+      "file": "56-8-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "eb673ad1d6c59b031d96569237642d63571e465e4b0eef9267978bba7dd9f08a",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "56:8",
+      "size": "small",
+      "file": "56-8-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "084eaefe4e6d6085fa967977d42a6a3724b1fc056131c445a143b85ab54ee101",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "57:8",
+      "size": "wide",
+      "file": "57-8-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "395dc489a66654d594f11cf04303f2a20d52de2126e6f5f1848944e72226a297",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "57:8",
+      "size": "small",
+      "file": "57-8-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "2a7cb1c899f3faf3e6e879c77f3a56776cb63d26150cb105bd80a279a6b8bc3c",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "58:8",
+      "size": "wide",
+      "file": "58-8-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "bd9400a7dae76dbcee82735fe8425a87719d4da8afa370f50c762833350b5d31",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "58:8",
+      "size": "small",
+      "file": "58-8-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "8aa3568724e3a91f5e565a3a83fc1ad2ad050094eb9827f8e9a2c6cbb4e78a16",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "60:249",
+      "size": "wide",
+      "file": "60-249-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "20035eac476d1ffe651434909de188357caf86b45d550ab7961d47f4dd7105b6",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "60:249",
+      "size": "small",
+      "file": "60-249-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "7d9e2934b9472096d54b88eef260d9f8efb87ed38864bcf78e454b07f53c4337",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "60:475",
+      "size": "wide",
+      "file": "60-475-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "35520817ab35c857e7e09c6fd1c7fe12c9911034a015f627d13a98b3fdf6fedd",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "60:475",
+      "size": "small",
+      "file": "60-475-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "e64b117e17db35ccd6397a99a747776cb107bb2de9303d336e7c21fc05224f9e",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "69:359",
+      "size": "wide",
+      "file": "69-359-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "34406fe035dad3254b11a31ebad0c2267f06598d7691cf4a7e01f5fadaf59e70",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    },
+    {
+      "node": "69:359",
+      "size": "small",
+      "file": "69-359-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "484780275b2cb75ed7e3a1750544ec45d8615b8d3987d4fd6d2cb74f3c40fad2",
+      "review": "Root inspected actual original image; hierarchy/buttons/overlay/scroll access retained; no blocking layout issue seen."
+    }
+  ],
+  "native_extra_row": "OS native window capture adds1logical row; no image transformation.",
+  "diagnostics": "Mono images kept separately with diagnostic suffix; final14 above Studio. Initial skin interference cause unproven.",
+  "status": "Visual first review only; full interaction and performance not yet signed."
+}

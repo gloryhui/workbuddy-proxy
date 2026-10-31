@@ -1,0 +1,4 @@
+{
+  "original_utf8": "vmmap[13633]: vmmap cannot examine process 12989 (with name like '12989') because it no longer appears to be running.\nvmmap[13633]: [fatal] mach port for process 0 not valid\n",
+  "raw_sha256": "69daecf2ae17b0c0dccf255196a7eda220c6c7a7d1a47bec1caf216e29105ca1"
+}

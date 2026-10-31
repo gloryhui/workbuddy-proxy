@@ -1,0 +1,226 @@
+{
+  "at": "2026-10-31T17:58:39.587563+08:00",
+  "original_four_preserved": true,
+  "extra_order": [
+    "current3",
+    "previous3"
+  ],
+  "bounded_pair": {
+    "combined_rss_mib": {
+      "previous3": 124.94,
+      "current3": 115.28,
+      "delta": -9.66
+    },
+    "ui_rss_mib": {
+      "previous3": 106.55,
+      "current3": 98.77,
+      "delta": -7.78
+    },
+    "sampled_peak_mib": {
+      "previous3": 166.38,
+      "current3": 163.19,
+      "delta": -3.19
+    },
+    "process_to_marker_ms": {
+      "previous3": 838.497,
+      "current3": 860.292,
+      "delta": 21.795
+    },
+    "proxy_p95_ms": {
+      "previous3": 0.211,
+      "current3": 0.218,
+      "delta": 0.007
+    },
+    "large_seconds": {
+      "previous3": 0.098,
+      "current3": 0.099,
+      "delta": 0.001
+    }
+  },
+  "all_six_descriptive_n3_each": {
+    "combined_rss_mib": {
+      "previous": {
+        "values": [
+          72.91,
+          112.05,
+          124.94
+        ],
+        "median": 112.05,
+        "range": [
+          72.91,
+          124.94
+        ]
+      },
+      "current": {
+        "values": [
+          87.83,
+          117.94,
+          115.28
+        ],
+        "median": 115.28,
+        "range": [
+          87.83,
+          117.94
+        ]
+      },
+      "delta": 3.23
+    },
+    "ui_rss_mib": {
+      "previous": {
+        "values": [
+          59.09,
+          95.27,
+          106.55
+        ],
+        "median": 95.27,
+        "range": [
+          59.09,
+          106.55
+        ]
+      },
+      "current": {
+        "values": [
+          70.52,
+          102.23,
+          98.77
+        ],
+        "median": 98.77,
+        "range": [
+          70.52,
+          102.23
+        ]
+      },
+      "delta": 3.5
+    },
+    "sampled_peak_mib": {
+      "previous": {
+        "values": [
+          125.19,
+          158.53,
+          166.38
+        ],
+        "median": 158.53,
+        "range": [
+          125.19,
+          166.38
+        ]
+      },
+      "current": {
+        "values": [
+          136.95,
+          174.31,
+          163.19
+        ],
+        "median": 163.19,
+        "range": [
+          136.95,
+          174.31
+        ]
+      },
+      "delta": 4.66
+    },
+    "process_to_marker_ms": {
+      "previous": {
+        "values": [
+          1492.573,
+          944.214,
+          838.497
+        ],
+        "median": 944.214,
+        "range": [
+          838.497,
+          1492.573
+        ]
+      },
+      "current": {
+        "values": [
+          2118.304,
+          1902.754,
+          860.292
+        ],
+        "median": 1902.754,
+        "range": [
+          860.292,
+          2118.304
+        ]
+      },
+      "delta": 958.54
+    },
+    "proxy_p95_ms": {
+      "previous": {
+        "values": [
+          0.244,
+          0.199,
+          0.211
+        ],
+        "median": 0.211,
+        "range": [
+          0.199,
+          0.244
+        ]
+      },
+      "current": {
+        "values": [
+          0.196,
+          0.942,
+          0.218
+        ],
+        "median": 0.218,
+        "range": [
+          0.196,
+          0.942
+        ]
+      },
+      "delta": 0.007
+    },
+    "large_seconds": {
+      "previous": {
+        "values": [
+          0.123,
+          0.093,
+          0.098
+        ],
+        "median": 0.098,
+        "range": [
+          0.093,
+          0.123
+        ]
+      },
+      "current": {
+        "values": [
+          0.096,
+          0.128,
+          0.099
+        ],
+        "median": 0.099,
+        "range": [
+          0.096,
+          0.128
+        ]
+      },
+      "delta": 0.001
+    }
+  },
+  "limits": "All original samples retained. Supplement does not replace the first4; pooled3 medians are descriptive, not statistical equivalence or a formal release gate.",
+  "supplemental_vmmap_raw_lines": [
+    {
+      "label": "current3",
+      "sha256": "e04e87d23785d9cb0f65466dddb253ce9fb5cc1a2f462ac8805b273f636e6212",
+      "physical_footprint": [
+        "Physical footprint:         179.1M",
+        "Physical footprint (peak):  179.5M"
+      ],
+      "heap_total": "TOTAL                                        1.4G      34.3M      32.3M      8544K      59908      22.1M      18.6M     46%      51"
+    },
+    {
+      "label": "previous3",
+      "sha256": "2d9ca01c38948794dd66245c794ca3e2fc2a0e9d88bdfe7d467a21f56a2371af",
+      "physical_footprint": [
+        "Physical footprint:         178.9M",
+        "Physical footprint (peak):  179.8M"
+      ],
+      "heap_total": "TOTAL                                        1.4G      40.1M      37.9M      2720K      59969      22.1M      18.5M     46%      49"
+    }
+  ],
+  "review": "Additional pair did not repeat initial RSS/marker/p95 deltas: current UI/combined RSS lower, proxy p95 +0.007ms and marker +21.795ms. Initial high samples and cost remain; version causality unresolved, not evidence of no regression. No code optimization or relaxed workload used."
+}

@@ -1,0 +1,33 @@
+from pathlib import Path
+import datetime,hashlib,json,os,struct
+r=Path(__file__).resolve().parent;repo=Path.cwd();f=r/'b03-yrd9bmj8-main-final'
+results=json.loads((r/'native-driver-results.json').read_text());assert len(results)==1 and results[0]['exit_code']==0
+b=json.loads((r/'build.json').read_text());assert all(x['exit_code']==0 for x in b['commands'])
+for p,sha in b['source_sha256'].items():assert hashlib.sha256((repo/p).read_bytes()).hexdigest()==sha
+meta=json.loads((f/'fixture.json').read_text());assert meta['binary_sha256']['ui']==b['release_sha256']
+assert hashlib.sha256((f/'config/config.json').read_bytes()).hexdigest()==json.loads((f/'pre-gui-proof.json').read_text())['core_config_sha256_before']
+for role in ['ui_pid','core_pid','fixture_pid']:
+ try:os.kill(meta[role],0)
+ except ProcessLookupError:pass
+ else:raise AssertionError(('still running',role,meta[role]))
+required='initial defaults_complete details_pages filters_analysis failure_detail missing_detail price_invalid price_new_saved priced_cny_readback price_edit_saved priced_usd_readback price_deleted_saved deleted_price_readback price_restored_saved catalog_failed catalog_success_saved currency_usd_saved currency_restored_saved retention90_saved retention_restored_saved capture_off_saved capture_on_saved import_on_saved import_initial_complete import_paused_saved import_paused_stable import_resumed_saved import_resumed_complete import_deduplicated import_error import_recovered import_final_paused_saved final_readback closed'.split()
+paths={p.stem:p for p in (f/'stage-proofs').glob('*.json')};assert set(required)<=paths.keys(),set(required)-paths.keys()
+stages=[]
+for name,p in sorted(paths.items()):
+ x=json.loads(p.read_text());assert x['core_health']=='ready';assert x['core_config_sha256_unchanged']==json.loads((f/'pre-gui-proof.json').read_text())['core_config_sha256_before']
+ assert all(v['all_fields_preserved'] and v['rows']>=1000 for v in x['protected_history'].values())
+ stages.append({'stage':name,'file':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sql_totals':x['sql_totals'],'protected_history':x['protected_history']})
+final=json.loads(paths['closed'].read_text());assert final['sql_totals'][0]==1014,final['sql_totals'];assert len(final['prices'])==4
+assert final['settings']['enabled'] and final['settings']['retention_days']==180 and final['settings']['default_currency']=='CNY'
+assert not final['import']['enabled'] and final['import']['imported']==8
+frames=next(x['frames'] for x in json.loads((repo/'docs/studio_v2/release_plan.json').read_text())['batches'] if x['id']=='B03')
+images=[]
+for node in frames:
+ for size,pixels in [('wide',[2880,1802]),('small',[2200,1402])]:
+  p=f/(node.replace(':','-')+'-'+size+'.png');raw=p.read_bytes();assert raw[:8]==b'\x89PNG\r\n\x1a\n';assert list(struct.unpack('>II',raw[16:24]))==pixels
+  images.append({'node':node,'name':p.name,'pixels':pixels,'logical_size':[1440,900] if size=='wide' else [1100,700],'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'accepted_native_png':True,'unmodified':True})
+# Actor observations remain required, separate from API/SQL proof.
+assert (f/'native-gui.json').is_file() and (r/'native-b03-summary.json').is_file()
+assert json.loads((f/'page-reference-native-match.json').read_text())['exact_match']
+out={'at':datetime.datetime.now().astimezone().isoformat(),'candidate_sha256':b['release_sha256'],'frame_count':7,'required_frame_size_pairs':14,'images':images,'fixture':{'metadata':meta,'terminal':results[0]['terminal'],'core_config_byte_exact':True,'stages':stages,'final_settings':final['settings'],'final_import':final['import'],'final_sql_totals':final['sql_totals']},'scope':'Frozen native candidate, own synthetic profile, actual1000 HTTP baseline and declared native writes. Every previously completed request/cost full field snapshot preserved. API/SQL do not independently prove GUI input; actor report and native pictures are separate. R01-R04 remain pending.'}
+(r/'native-consolidated.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print('Consolidated7frames/14nativePNG and complete journey')

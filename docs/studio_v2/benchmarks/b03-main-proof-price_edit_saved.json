@@ -1,0 +1,124 @@
+{
+  "at": "2026-10-31T17:20:33.731143+08:00",
+  "stage": "price_edit_saved",
+  "core_health": "ready",
+  "core_pid": 89989,
+  "core_config_sha256_unchanged": "7a095c08ccde6b603e60f998865ecfa0f0f4f9ad666ef2eaa09d04989b1aea85",
+  "sql_totals": [
+    1003,
+    500500,
+    50050,
+    550550,
+    400400
+  ],
+  "prices": [
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "2000000000",
+      "label": "models.dev · synthetic/gpt-6",
+      "output_rate_nanos": "10000000000",
+      "price_id": "0c71996d2e486dd03c631a68a0c8fb6b7f9ec5a352a7d987",
+      "provider_id": "review-provider",
+      "revision": 1,
+      "rule_id": "0c71996d2e486dd03c631a68a0c8fb6b7f9ec5a352a7d987",
+      "upstream_model": "gpt-6"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "10000000000",
+      "label": "models.dev · synthetic/gpt-6.1",
+      "output_rate_nanos": "50000000000",
+      "price_id": "2c51b95ef57ddbf5e089a29d0c3f8399f2a515a5d1913410",
+      "provider_id": "review-provider",
+      "revision": 1,
+      "rule_id": "2c51b95ef57ddbf5e089a29d0c3f8399f2a515a5d1913410",
+      "upstream_model": "gpt-6.1"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793438204321,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "2500000000",
+      "label": "B03 manual",
+      "output_rate_nanos": "8000000000",
+      "price_id": "982449dd1cbc0f2a6d5cb73d",
+      "provider_id": "review-provider",
+      "revision": 2,
+      "rule_id": "982449dd1cbc0f2a6d5cb73d",
+      "upstream_model": "claude-opus-4.7"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793436135718,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "100000000",
+      "label": "models.dev · synthetic/deepseek-v4.1-flash",
+      "output_rate_nanos": "500000000",
+      "price_id": "a504c9b5b00a61ec4506ce8cefe30072edafb3e96d900861",
+      "provider_id": "review-provider",
+      "revision": 1,
+      "rule_id": "a504c9b5b00a61ec4506ce8cefe30072edafb3e96d900861",
+      "upstream_model": "deepseek-v4.1-flash"
+    }
+  ],
+  "settings": {
+    "enabled": true,
+    "retention_days": 180,
+    "default_currency": "CNY",
+    "revision": 1
+  },
+  "import": {
+    "enabled": false,
+    "effective_enabled": false,
+    "state": "disabled",
+    "imported": 0,
+    "skipped": 0,
+    "conflict": 0,
+    "pending": 0,
+    "last_error_code": null,
+    "progress": {
+      "bytes_committed": 0,
+      "bytes_remaining": 0,
+      "bytes_total": 0,
+      "files_remaining": 0,
+      "files_total": 0,
+      "total_known": false
+    },
+    "runtime_metrics": {
+      "queue_depth": 0,
+      "queue_peak": 0,
+      "recent_batches": [],
+      "source_io_thread_checks": 0,
+      "source_io_thread_violations": 0,
+      "writer_batch_count": 0,
+      "writer_batch_failures": 0,
+      "writer_batch_max_us": 0,
+      "writer_batch_total_us": 0
+    }
+  },
+  "protected_history": {
+    "usage_requests": {
+      "rows": 1003,
+      "all_fields_preserved": true,
+      "sha256": "f783dae9133c6fcedf7e1b9e33346e6c194ef5a2bec7bc471c6d634cc331bad5"
+    },
+    "usage_costs": {
+      "rows": 1003,
+      "all_fields_preserved": true,
+      "sha256": "75c611b4cb596d13f31ef92606572f19e9eaa76be6a0922c549eeff21169fbd4"
+    }
+  },
+  "scope": "Read-only live Core API and exact SQL row snapshots. Source stats envelopes/generated time and derived price referenced flag excluded from setting/rule comparisons. Only declared GUI save stages may change persisted settings/prices; config remains byte-exact."
+}

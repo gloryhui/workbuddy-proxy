@@ -1,0 +1,71 @@
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+import hashlib, json, os, sqlite3, subprocess, sys, time, urllib.request
+
+r = Path(__file__).resolve().parent
+f = Path(sys.argv[1]).resolve()
+assert f.parent == r
+guard = subprocess.run([sys.executable, str(r / 'preflight-guard.py'), str(f), 'skip'], capture_output=True, text=True)
+assert guard.returncode == 0, guard.stderr
+ready = json.loads((f / 'cua-launch-ready.json').read_text())
+cfg = json.loads((f / 'config/config.json').read_text())
+before = hashlib.sha256((f / 'config/config.json').read_bytes()).hexdigest()
+key = json.loads((f / 'config/instance.json').read_text())['management_key']
+opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+def command(name, **fields):
+    request = urllib.request.Request('http://127.0.0.1:%d/_control/action' % ready['port'],
+                                    data=json.dumps({'command': name, **fields}).encode(),
+                                    headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key})
+    with opener.open(request, timeout=15) as response:
+        return json.loads(json.loads(response.read())['message'])
+
+for _ in range(300):
+    prices = command('stats_prices_list')
+    if len(prices['items']) == 3:
+        break
+    time.sleep(.1)
+else:
+    raise AssertionError(('synthetic startup catalog not ready', len(prices['items'])))
+models = [m['alias'] for p in cfg['providers'] for m in p['models']]
+
+def forward(index):
+    request = urllib.request.Request('http://127.0.0.1:%d/v1/chat/completions' % ready['port'],
+                                    data=json.dumps({'model': models[index % len(models)], 'stream': index % 20 == 19,
+                                                     'messages': [{'role': 'user', 'content': 'synthetic B03 pagination fixture'}]}).encode(),
+                                    headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + cfg['local_key']})
+    local = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    with local.open(request, timeout=15) as response:
+        response.read()
+        assert response.status == 200
+        return response.status
+
+statuses = []
+with ThreadPoolExecutor(max_workers=4) as pool:
+    for start in range(0, 1000, 20):
+        statuses.extend(pool.map(forward, range(start, start + 20)))
+        for _ in range(400):
+            with sqlite3.connect('file:' + str(f / 'config/usage.sqlite3') + '?mode=ro', uri=True) as db:
+                count = db.execute('SELECT COUNT(*) FROM usage_requests').fetchone()[0]
+                costs = db.execute('SELECT COUNT(*) FROM usage_costs').fetchone()[0]
+            if count == costs == start + 20:
+                break
+            time.sleep(.025)
+        else:
+            raise AssertionError(('real request persistence count', start, count, costs))
+        if start % 200 == 180:
+            print('seeded ' + str(start + 20), flush=True)
+assert hashlib.sha256((f / 'config/config.json').read_bytes()).hexdigest() == before
+with sqlite3.connect('file:' + str(f / 'config/usage.sqlite3') + '?mode=ro', uri=True) as db:
+    totals = list(db.execute('SELECT COUNT(*),SUM(input_tokens),SUM(output_tokens),SUM(total_tokens),SUM(cache_read_tokens) FROM usage_requests').fetchone())
+assert totals == [1000, 500000, 50000, 550000, 400000], totals
+proof = json.loads((f / 'pre-gui-proof.json').read_text())
+proof['seed'] = {'real_http_requests': len(statuses), 'all_statuses_200': statuses == [200] * 1000,
+                 'streaming_requests': 50, 'bounded_concurrency': 4, 'persistence_barrier_every': 20,
+                 'sql_totals': totals, 'catalog_rules': len(prices['items']),
+                 'scope': 'Actual forwarded requests, no SQL inserts. All original rows will be protected before GUI actions.'}
+(f / 'pre-gui-proof.json').write_text(json.dumps(proof, indent=2) + '\n')
+(f / 'initial-prices.json').write_text(json.dumps(prices, indent=2) + '\n')
+(f / 'initial-settings.json').write_text(json.dumps(command('stats_settings_get'), indent=2) + '\n')
+(f / 'seed-complete.json').write_text(json.dumps(proof['seed'], indent=2) + '\n')
+print(json.dumps({'real_requests': 1000, 'totals': totals, 'config_unchanged': True, 'core_guard': True}), flush=True)

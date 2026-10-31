@@ -21,9 +21,19 @@ fn heading(value: &'static str) -> Label {
         .text_size(px(16.))
         .font_weight(FontWeight::BOLD)
         .text_color(rgb(INK))
+        .when(
+            crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+            |label| label.h(px(23.)).line_height(px(23.)),
+        )
 }
 fn caption(value: impl Into<SharedString>) -> Label {
-    Label::new(value).text_size(px(12.)).text_color(rgb(MUTED))
+    Label::new(value)
+        .text_size(px(12.))
+        .text_color(rgb(MUTED))
+        .when(
+            crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+            |label| label.line_height(px(17.)),
+        )
 }
 
 impl Statistics {
@@ -172,6 +182,7 @@ impl Statistics {
     }
 
     pub(super) fn analysis_cards(&self, cx: &App) -> AnyElement {
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let summary = self.dashboard.as_ref().map(|dashboard| &dashboard.summary);
         let input = summary.and_then(|summary| summary.input_tokens);
         let output = summary.and_then(|summary| summary.output_tokens);
@@ -192,14 +203,16 @@ impl Statistics {
             .flex_shrink_0()
             .min_w_0()
             .min_h(px(201.))
+            .when(studio && !compact, |card| card.flex_grow(542.))
             .when(compact, |card| card.flex_basis(Length::Auto))
             .p(px(20.))
             .gap(px(12.))
+            .when(studio, |card| card.pt(px(16.)).pr(px(24.)).gap_0())
             .child(heading(self.t("Token 构成", "Token composition")))
-            .child(caption(self.t(
-                "输入与输出分开计算",
-                "Input and output counted separately",
-            )))
+            .child(
+                caption(self.t("输入与输出分开计算", "Input and output counted separately"))
+                    .when(studio, |label| label.mt(px(7.)).h(px(20.))),
+            )
             .child(
                 div()
                     .id("analysis-token-total")
@@ -207,6 +220,7 @@ impl Statistics {
                     .items_end()
                     .flex_wrap()
                     .gap(px(16.))
+                    .when(studio, |row| row.mt(px(7.)).items_start())
                     .tooltip(move |window, cx| {
                         gpui_kit::component::tooltip::Tooltip::new(token_hint.clone())
                             .build(window, cx)
@@ -219,16 +233,19 @@ impl Statistics {
                         .text_size(px(32.))
                         .line_height(px(45.))
                         .font_weight(FontWeight::BOLD)
-                        .text_color(rgb(INK)),
+                        .text_color(rgb(INK))
+                        .when(studio, |value| value.min_w(px(157.))),
                     )
-                    .child(caption(
-                        self.t("当前范围已记录用量", "Recorded usage in this range"),
-                    )),
+                    .child(
+                        caption(self.t("当前范围已记录用量", "Recorded usage in this range"))
+                            .when(studio, |label| label.mt(px(17.)).h(px(20.))),
+                    ),
             )
             .child(
                 div()
                     .w_full()
                     .h(px(12.))
+                    .when(studio, |track| track.mt(px(13.)))
                     .rounded(px(6.))
                     .overflow_hidden()
                     .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
@@ -255,6 +272,7 @@ impl Statistics {
                     .items_center()
                     .flex_wrap()
                     .gap(px(24.))
+                    .when(studio, |legend| legend.mt(px(16.)).min_h(px(20.)).gap_0())
                     .children(
                         [
                             (
@@ -269,30 +287,44 @@ impl Statistics {
                             ),
                         ]
                         .into_iter()
-                        .map(|(label, value, color)| {
+                        .enumerate()
+                        .map(|(index, (label, value, color))| {
                             div()
                                 .flex()
                                 .items_center()
                                 .gap(px(8.))
+                                .when(studio && index == 0, |item| item.min_w(px(202.)))
                                 .child(div().size(px(8.)).rounded(px(3.)).bg(rgb(color)))
-                                .child(caption(format!(
-                                    "{label}  {}",
-                                    usage_table::compact(value, self.zh)
-                                )))
+                                .child(
+                                    caption(format!(
+                                        "{label}  {}",
+                                        usage_table::compact(value, self.zh)
+                                    ))
+                                    .when(studio, |label| {
+                                        label
+                                            .h(px(20.))
+                                            .text_color(rgb(crate::theme::color::TEXT_2))
+                                    }),
+                                )
                         }),
                     ),
             )
             .when(split.is_none(), |card| {
-                card.child(caption(
-                    if total == Some(0) && input == Some(0) && output == Some(0) {
-                        self.t("已记录总量为 0", "Recorded total is zero")
-                    } else {
-                        self.t(
-                            "分项缺失或与总量不一致，比例暂不可用",
-                            "Missing or inconsistent parts; proportions unavailable",
-                        )
-                    },
-                ))
+                card.child(
+                    caption(
+                        if total == Some(0) && input == Some(0) && output == Some(0) {
+                            self.t("已记录总量为 0", "Recorded total is zero")
+                        } else {
+                            self.t(
+                                "分项缺失或与总量不一致，比例暂不可用",
+                                "Missing or inconsistent parts; proportions unavailable",
+                            )
+                        },
+                    )
+                    .when(studio, |notice| {
+                        notice.mt(px(12.)).w_full().whitespace_normal()
+                    }),
+                )
             });
         let cache_hint = summary
             .map(|summary| {
@@ -325,25 +357,34 @@ impl Statistics {
             .flex_shrink_0()
             .min_w_0()
             .min_h(px(201.))
+            .when(studio && !compact, |card| card.flex_grow(562.))
             .when(compact, |card| card.flex_basis(Length::Auto))
             .p(px(20.))
             .gap(px(16.))
+            .when(studio, |card| {
+                card.pt(px(16.)).pr(px(22.)).pb(px(27.)).gap_0()
+            })
             .tooltip(move |window, cx| {
                 gpui_kit::component::tooltip::Tooltip::new(cache_hint.clone()).build(window, cx)
             })
             .child(heading(self.t("缓存与覆盖", "Cache & coverage")))
-            .child(caption(self.t("缓存读取命中率", "Cache read hit rate")))
+            .child(
+                caption(self.t("缓存读取命中率", "Cache read hit rate"))
+                    .when(studio, |label| label.mt(px(20.)).h(px(20.))),
+            )
             .child(
                 div()
                     .flex()
                     .items_center()
                     .gap(px(24.))
+                    .when(studio, |row| row.mt(px(1.)).pr(px(6.)).h(px(38.)))
                     .child(
                         crate::studio_fonts::latin(Label::new(usage_table::percent(cache)), cx)
                             .text_size(px(27.))
                             .line_height(px(38.))
                             .font_weight(FontWeight::BOLD)
-                            .text_color(rgb(INK)),
+                            .text_color(rgb(INK))
+                            .when(studio, |value| value.min_w(px(168.)).flex_none()),
                     )
                     .child(
                         div()
@@ -363,16 +404,24 @@ impl Statistics {
                             }),
                     ),
             )
-            .child(div().w_full().h(px(1.)).bg(rgb(BORDER)))
+            .child(
+                div()
+                    .w_full()
+                    .h(px(1.))
+                    .bg(rgb(BORDER))
+                    .when(studio, |line| line.mt(px(10.))),
+            )
             .child(
                 div()
                     .flex()
                     .items_center()
                     .justify_between()
                     .gap(px(12.))
-                    .child(caption(
-                        self.t("已记录用量完整性", "Recorded usage completeness"),
-                    ))
+                    .when(studio, |row| row.mt(px(17.)).min_h(px(26.)))
+                    .child(
+                        caption(self.t("已记录用量完整性", "Recorded usage completeness"))
+                            .when(studio, |label| label.h(px(20.))),
+                    )
                     .child(
                         crate::studio_fonts::latin(Label::new(usage_table::percent(coverage)), cx)
                             .text_size(px(18.))
@@ -384,7 +433,7 @@ impl Statistics {
         div()
             .flex()
             .w_full()
-            .gap(px(18.))
+            .gap(px(if studio { 16. } else { 18. }))
             .flex_shrink_0()
             .when(compact, |row| row.flex_col())
             .child(tokens)

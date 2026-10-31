@@ -1,0 +1,40 @@
+from pathlib import Path
+import datetime, hashlib, json, os, subprocess, sys, time
+
+repo = Path.cwd()
+r = Path(__file__).resolve().parent
+sys.path.insert(0, str(repo / 'scripts'))
+from workbuddy_import_test import real_user_home
+from workbuddy_import_ui_sandbox import profile_text, protected_locations
+
+core = Path('/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core')
+assert hashlib.sha256(core.read_bytes()).hexdigest() == '25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5'
+policy = r / 'headless-protection.sb'
+policy.write_text(profile_text([*protected_locations(real_user_home()).values(), Path(real_user_home()) / 'Library/LaunchAgents']))
+home = r / 'headless-home'
+home.mkdir(exist_ok=True)
+env = dict(os.environ, HOME=str(home), USERPROFILE=str(home), APPDATA=str(home / 'appdata'),
+           LOCALAPPDATA=str(home / 'localappdata'), XDG_CONFIG_HOME=str(home / 'xdg-config'),
+           XDG_DATA_HOME=str(home / 'xdg-data'), XDG_CACHE_HOME=str(home / 'xdg-cache'),
+           TMPDIR=str(r / 'tmp'), TMP=str(r / 'tmp'), TEMP=str(r / 'tmp'), PYTHONDONTWRITEBYTECODE='1')
+out = {'at': datetime.datetime.now().astimezone().isoformat(), 'core_sha256': hashlib.sha256(core.read_bytes()).hexdigest(),
+       'scope': 'Separate isolated existing Core contracts. Pagination contract includes SQL-generated fixtures; these are distinct from the1000 real HTTP requests in the native B03 fixture. Entire harness/descendants inherit protection for real WorkBuddy/installed app/LaunchAgents paths.', 'commands': []}
+for script in ['statistics_test.py', 'statistics_pagination_test.py', 'price_catalog_test.py']:
+    command = ['/usr/bin/sandbox-exec', '-f', str(policy), sys.executable, str(repo / 'scripts' / script), '--exe', str(core)]
+    started = time.monotonic()
+    process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    try:
+        output, _ = process.communicate()
+    finally:
+        if process.poll() is None:
+            process.terminate()
+            process.wait(timeout=10)
+    row = {'script': script, 'pid': process.pid, 'waited': True, 'exit_code': process.returncode,
+           'seconds': round(time.monotonic() - started, 3), 'output': output}
+    out['commands'].append(row)
+    (r / 'headless-contracts.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+    print(script + ' exit=' + str(process.returncode), flush=True)
+    if process.returncode:
+        print(output[-2500:], flush=True)
+        raise SystemExit(process.returncode)
+print('B03 headless contracts complete0', flush=True)
