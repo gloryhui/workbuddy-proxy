@@ -302,7 +302,8 @@ impl Proxy {
             .mx(px(8.))
             .gap(px(11.))
             .child(
-                img("studio/brand.png")
+                // Reuse the 128px app icon; the 40px design export bakes in a white rim.
+                img("brand.png")
                     .size(px(size::SIDEBAR_BRAND))
                     .rounded(px(11.))
                     .flex_shrink_0(),

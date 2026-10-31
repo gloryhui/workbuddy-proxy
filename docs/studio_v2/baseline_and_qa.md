@@ -1655,3 +1655,11 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 40帧界面集中签收通过，剩余界面0。官方51:2仍为原40界面，另有71:364交付契约与18共享组件；本轮重新只读导出40份1024×640参考图，并逐一实际查看参考图和B01–B05的80张两尺寸原生主图。原图格式、尺寸、SHA与各自候选来源全部核对，未发现新增布局阻断。[集中视觉复核](benchmarks/r01-consolidated-visual-review.json)、[80原图来源](benchmarks/r01-original-eighty-audit.json)、[最新参考清单](benchmarks/r01-latest-reference-manifest.json)。
 - 每帧记录真实数据与Figma示例数值、窄窗滚动/折行、省略、原生AA及OS附加像素行的差异。原B01–B05候选与DPI保持，不把历史80图冒充当前R01新编译版本的全套截图。新R01表格语义修复仍须单独完成受影响路径验证，Issue3品牌边缘优化按用户最新授权独立交付。
 - 本次只签收R01.5。R01.1–R01.4共享状态、完整键盘、IME、真实辅助技术和七主题/三语言仍在推进；R02–R04平台/HiDPI、性能与安装发行尚未通过。Goal active，未宣称正式版可发布，未公开发布。
+
+
+## 小功能 74：Issue3侧栏品牌白边与清晰度修复（2026-11-01）
+
+- 读取本仓库全部开放Issue，当前仅#3。用户最新明确授权安排修复，保留青蓝吉祥物、圆角方形及既有撞色主题。根因是40×40索引色设计导出图自身带白边（外10%边缘278个亮中性像素），控件没有border/background/shadow；128×128现有App Icon边缘无同类亮像素。只把侧栏图片绑定改为已嵌入的`brand.png`，无图片编辑、裁切、新依赖、字体或间距改动。[根因](benchmarks/issue3-root-cause.json)、[交付摘要](benchmarks/issue3-summary.json)。
+- 2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。[原生验证](benchmarks/issue3-native-verification.json)、[前宽](screenshots/issue3-before-wide.png)、[后宽](screenshots/issue3-after-wide.png)、[前小](screenshots/issue3-before-small.png)、[后小](screenshots/issue3-after-small.png)。
+- fmt、206pass/2既有ignore、strict Clippy、Intel类型检查和arm64 Release全部0；历史15条请求及成本完整保持。跨零点价格日更仅3规则revision1→2，配置/费率不变，严格保护只接受单独核实的精确转换digest，原先失败断言保留而未篡改。[构建](benchmarks/issue3-build.json)、[业务保护](benchmarks/issue3-business-protection.json)、[跨日转换](benchmarks/r01-exact-daily-price-transition.json)。
+- 本项代码及当前可用macOS1x两尺寸验证完成。仅有1920×1080的1x显示环境，200% HiDPI与Windows实机尚未验证，Issue保持开放待补证；128源像素充足不等于已做2x运行。未修改代理核心/功能逻辑，未公开发布；R01其余4项与R02–R04继续，剩余界面0。

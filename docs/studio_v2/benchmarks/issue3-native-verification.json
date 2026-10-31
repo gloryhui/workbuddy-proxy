@@ -1,0 +1,28 @@
+{
+  "candidate_sha256": "e1f092c8d2eb1b457d59c54ae4f6286221e7625081cc3fc34be8b5fe019d8e40",
+  "baseline_sha256": "2ce489ee8190cd5c65225aef85e90b32a2597c96e6035369083f814b945a8200",
+  "ui_pid": 49191,
+  "core_pid": 13895,
+  "guard": "guard_installed for 49191, nonce r01-deny-only-ci7zkz3s",
+  "gpui_metadata_pid": 49191,
+  "window_id": 13194,
+  "display_scale": "1x; no 2x/HiDPI physical verification",
+  "captures": {
+    "wide": {
+      "size": "1440x900",
+      "before": "issue3-before-wide.png",
+      "after": "issue3-after-wide.png",
+      "after_sha256": "7b9cfaa009ced47b4d5603278d44569fd3695c79f77750a94681db630c7cbd72"
+    },
+    "small": {
+      "size": "1100x700",
+      "before": "issue3-before-small.png",
+      "after": "issue3-after-small.png",
+      "after_sha256": "f8027f4b1142580b33fba0984e30aa33847cbc8b055ca41d9952d20a3ffc5eac"
+    }
+  },
+  "pixel_comparison": "Small diff 1367 pixels all within x24-61 y65-102 logo; wide same logo 1367 pixels plus provider row appearance 7982 pixels x20-235 y399-436; remaining pixels identical. The row difference is visual state, so do not claim full-frame identity. 38x38 icon bounding area, heading and spacing stable; candidate icon blue/cyan square with no white ring; no other apparent layout movement.",
+  "business_check": "state.py observe issue3_after_native passed ui_pid 49191 history_rows 15; strict exact daily-price transition as documented in daily-price-transition.json",
+  "final_state": "wide 1440x900 Providers A; window remains open",
+  "capture_method": "onscreen own PID layer 0 window, screencapture -x -o -l -t png; no crop or resize"
+}

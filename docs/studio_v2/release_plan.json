@@ -6,7 +6,7 @@
   "current_batch": "R01",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 73,
+  "historical_tasks": 74,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -876,13 +876,14 @@
           "id": "R02.4",
           "title": "缩放、双尺寸与平台回归",
           "acceptance": "pending",
-          "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。",
+          "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。 Issue3侧栏品牌改用现有128px资源，macOS1x前后两尺寸通过，200%与Windows运行未验。",
           "remaining": "Mac1×/2×、Windows100/125/150/200%覆盖代表性页面和长文本/弹窗，平台修复后回查共享控件。",
           "acceptance_check": "1100×700和1440×900逻辑尺寸下按钮/字段/尾部可达；系统额外截图行如实保留；平台改动不破坏Mac定位。",
           "history_tasks": [
             43,
             52,
-            57
+            57,
+            74
           ]
         }
       ],
