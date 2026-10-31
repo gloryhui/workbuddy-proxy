@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T06:52:24+08:00",
+  "updated_at": "2026-11-01T07:29:14+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "9570451e5006e25118cb2cafa6b3da69353836da",
@@ -13,7 +13,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 80,
+  "recorded_tasks": 81,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -26,34 +26,33 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 80,
-    "title": "启动锁恢复、发现列表缓存及最终运行时代码验收",
+    "id": 81,
+    "title": "真实已发布Core数据交接与旧数据两尺寸原生读回",
     "status": "recorded",
-    "description": "运行时代码已推送 13c4998（Core启动锁恢复）、b2d3bb4（条件列表通知）、9570451（发现投影缓存）。最终Core SHA256 1146f58a、UI 46585f86。SQLite仅对typed Busy/Locked在迁移态有界等待并响应关闭，永久错误保持拒绝；recover/start_run/interval同事务防止部分恢复与重试重复。三项回归修前红/修后绿；没有放宽期限或把ready等待挪后掩盖竞态。总结"
+    "description": "R01能力只读复核：CUA服务正常，但无公开无按键hover/move、路径/持续drag、mousedown/up、widget geometry或按住期间截图保证。不重复旧表头拖动/pressed尝试；没有开启旁白/AT/切输入源。按可用环境推进R04.2的数据兼容部分，未重定义安装升级门禁。总结。"
   },
   "latest_task": {
-    "id": 80,
-    "title": "启动锁恢复、发现列表缓存及最终运行时代码验收",
+    "id": 81,
+    "title": "真实已发布Core数据交接与旧数据两尺寸原生读回",
     "status": "recorded",
-    "summary": "运行时代码已推送 13c4998（Core启动锁恢复）、b2d3bb4（条件列表通知）、9570451（发现投影缓存）。最终Core SHA256 1146f58a、UI 46585f86。SQLite仅对typed Busy/Locked在迁移态有界等待并响应关闭，永久错误保持拒绝；recover/start_run/interval同事务防止部分恢复与重试重复。三项回归修前红/修后绿；没有放宽期限或把ready等待挪后掩盖竞态。总结",
+    "summary": "R01能力只读复核：CUA服务正常，但无公开无按键hover/move、路径/持续drag、mousedown/up、widget geometry或按住期间截图保证。不重复旧表头拖动/pressed尝试；没有开启旁白/AT/切输入源。按可用环境推进R04.2的数据兼容部分，未重定义安装升级门禁。总结。",
     "highlights": [
-      "运行时代码已推送 13c4998（Core启动锁恢复）、b2d3bb4（条件列表通知）、9570451（发现投影缓存）。最终Core SHA256 1146f58a、UI 46585f86。SQLite仅对typed Busy/Locked在迁移态有界等待并响应关闭，永久错误保持拒绝；recover/start_run/interval同事务防止部分恢复与重试重复。三项回归修前红/修后绿；没有放宽期限或把ready等待挪后掩盖竞态。总结。",
-      "本机Core580测试/27命令/91源码hash，GPUI213pass+2既有ignore/6项检查/77源码hash均通过；含158导入/15故障、19发现/10创建与真实Core下两ignored补验、fmt/strictClippy/Intelcheck/release。投影精确匹配ID、已存在成员、选择集合、规范化查询和filter，关闭时释放，五项失效/Unicode/重开测试通过；微测试180.079→5.236µs仅代表筛选计算，不代表真实UI延迟/FPS。Core、UI。",
-      "启动前持有EXCLUSIVE锁的真实Core验证：保持7秒后释放，同PID由migrating/busy恢复ready，导入1行/12tokens/.1credit、两run各1interval，两个Core退出0；真实源保护查询与元数据保持。首个文件名recovery/sessionId startup不匹配的无导入fixture错误原样另存，不冒充产品故障或删除失败。正确probe、首个fixture。"
+      "R01能力只读复核：CUA服务正常，但无公开无按键hover/move、路径/持续drag、mousedown/up、widget geometry或按住期间截图保证。不重复旧表头拖动/pressed尝试；没有开启旁白/AT/切输入源。按可用环境推进R04.2的数据兼容部分，未重定义安装升级门禁。总结。",
+      "新增 scripts/release_upgrade_test.py（源码SHA256 57d2d77c），让实际已发布Core通过HTTP/API写12条定价请求、中文/emoji/组合重音配置与价格、731天与OBSERVE，再停旧Core、同profile启动候选。全部旧业务列/值及配置字节比较；当前Core须新录第13条、关闭后再检查。没有SQL伪造旧schema，脚本明确不安装OS包/发送GUI输入/证明热升级，调用者保留并清理专用空fixture。",
+      "官方v0.5.6/v0.5.7 ARM DMG大小/digest，以及当前957 artifact13060775696 ZIP e912e020校验通过；只读mount/copy/strict codesign/detach均完成。旧Core实际ee82dfa1/085e7512，当前包Core d150bd32、原helper63d64ecd；与QA80本机1146/4658的构建来源不同，勿混字节。来源、包。"
     ],
     "limits": [
-      "本机Core580测试/27命令/91源码hash，GPUI213pass+2既有ignore/6项检查/77源码hash均通过；含158导入/15故障、19发现/10创建与真实Core下两ignored补验、fmt/strictClippy/Intelcheck/release。投影精确匹配ID、已存在成员、选择集合、规范化查询和filter，关闭时释放，五项失效/Unicode/重开测试通过；微测试180.079→5.236µs仅代表筛选计算，不代表真实UI延迟/FPS。Core、UI。",
-      "最终957 Core41246370582/Desktop41246381635四job实际success，4artifact ZIP大小/SHA验证、原JSON与Windows两张GDI原PNG逐图核对。外框实际1442×901/1102×701，caption/工具栏视觉分离；默认英文64模型/0请求，不代表真实窗控点击/IME/缩放。13c与b2也各四job成功，7bec Desktop全绿但其Core156/2首次失败继续保留。最终CI、产物。"
+      "9份原始JPEG和AX父代理逐图复核：宽1440×901、小1100×701，未裁剪/转换；小窗一次普通角拖，与无效表头列拖动不同。价格、731/OBSERVE、请求三行需滚动分别展示；一张过头中间图不作retention证据。宽页1仅7/10行可见，不称13行逐条视觉全验。供应商运行中心0是本轮Core内存calls，持久统计表13不代表历史丢失。显式StudioIndigo fixture不作升级默认主题证明。原图与限制。"
     ],
     "evidence": [
       {
         "label": "总结",
-        "href": "benchmarks/rc-round80-summary.json"
+        "href": "benchmarks/rc-round81-summary.json"
       }
     ],
-    "commit": "a9940c6c3464928691f13a7409aba9c25c4e515c",
-    "date": "2026-11-01T06:52:13+08:00",
-    "commit_subject": "docs(studio): record QA80 recovery and candidate acceptance",
+    "commit": "3e96b3a4628247e12992cb9f654a9c8cb8427ee2",
+    "date": "2026-11-01T07:28:47+08:00",
+    "commit_subject": "test(studio): verify released Core data across cold upgrades",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2273,7 +2272,7 @@
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 80,
+    "historical_tasks": 81,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3248,14 +3247,14 @@
           "B04",
           "B05"
         ],
-        "completed_summary": "40帧/80主图集中签收完成；此前表格语义、busy、21主题语言与真实Qingjian/Unicode冷读归档。QA76已恢复Goal，修复并补验外部save64活动表/modal延后/dirty草稿重基准及冷恢复、末页分页焦点；全状态slot/真实拖宽/当前逐引擎IME/真实AT仍缺，R01保持部分完成。 QA77补原生组件适用状态清单、下拉项具名语义、模型行完整身份/选择文字、弹层Dialog/modal元数据；原生选择/取消、空表及小窗滚动补验，仍不签收完整R01。",
+        "completed_summary": "40帧/80主图集中签收完成；此前表格语义、busy、21主题语言与真实Qingjian/Unicode冷读归档。QA76已恢复Goal，修复并补验外部save64活动表/modal延后/dirty草稿重基准及冷恢复、末页分页焦点；全状态slot/真实拖宽/当前逐引擎IME/真实AT仍缺，R01保持部分完成。 QA77补原生组件适用状态清单、下拉项具名语义、模型行完整身份/选择文字、弹层Dialog/modal元数据；原生选择/取消、空表及小窗滚动补验，仍不签收完整R01。 QA81补真实旧数据的自定义731天/OBSERVE/Unicode/价格与13条分页两尺寸读回；共享全状态/slot/列drag/当前逐引擎IME/真实AT仍待。",
         "delivery": "对共享组件统一验收，不让同一键盘/主题待办在40帧中重复执行。",
         "tasks": [
           {
             "id": "R01.1",
             "title": "共享状态与层级矩阵",
             "acceptance": "pending",
-            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。",
+            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。 QA81实际旧版数据读回补自定义731天（5个预设未误高亮）、OBSERVE、手工USD2/8、持久13条/第2页3条两尺寸与滚动状态。原图外框1440×901/1100×701，不裁剪重标为900/700；没有全slot/pressed/hover证明。",
             "remaining": "本轮真实Tooltip仍未观察成功；共享全适用状态/实际slot仍待，不能把筛选缓存、AX和编译当全矩阵签收。",
             "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
             "history_tasks": [
@@ -3268,7 +3267,8 @@
               75,
               76,
               77,
-              80
+              80,
+              81
             ]
           },
           {
@@ -3295,7 +3295,7 @@
             "id": "R01.3",
             "title": "中文IME、Unicode与编辑撤销",
             "acceptance": "pending",
-            "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。",
+            "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。 QA81官方v056/057真实Core产生中文/emoji/组合重音配置、价格和12历史，当前CI包冷交接保留原字段与配置字节，原生UI可读。没有新composition/输入源切换，不当逐引擎IME补验。",
             "remaining": "不同输入引擎的composition中Enter/Esc和切换/取消仍须逐引擎补齐；本轮真实composition在模型名称，其余字段paste/undo不冒称IME。Key为隔离合成值，安全AX不回传完整值，未声明AX精确读回。 恢复轮逐键n/i在名称/搜索只得到ASCII，当前输入源未确立；未切源、未补composition成功，不重标旧Qingjian证据。",
             "acceptance_check": "合成未提交时不误保存/关闭；字符串往返不损坏；原输入源恢复；CUA typeText不冒充IME。",
             "history_tasks": [
@@ -3303,7 +3303,8 @@
               50,
               51,
               75,
-              76
+              76,
+              81
             ]
           },
           {
@@ -3392,14 +3393,15 @@
             "id": "R02.2",
             "title": "macOS arm64系统行为",
             "acceptance": "pending",
-            "completed": "当前arm64原生两尺寸/部分窗口与生命周期已验。 QA78同4905原生UI观察全屏动作、zoom、角拖动和toolbar恢复1440；三次设置窗口原生关闭重开，Core同PID。最小化实际状态/Dock恢复、物理托盘/登录/多屏仍缺，快捷键退全屏未证实。",
+            "completed": "当前arm64原生两尺寸/部分窗口与生命周期已验。 QA78同4905原生UI观察全屏动作、zoom、角拖动和toolbar恢复1440；三次设置窗口原生关闭重开，Core同PID。最小化实际状态/Dock恢复、物理托盘/登录/多屏仍缺，快捷键退全屏未证实。 QA81同一signed测试wrapper冷重开后一次普通窗口角拖获得1100×701，数据设置和请求页可滚动阅读；不是表头列drag、minimize/Dock或真实发行签名补验。",
             "remaining": "补物理托盘、最小化/缩放/全屏/恢复、多屏拖动、系统登录开机启动和冷启动。 QA71只做普通窗口恢复和真实隔离plist；原全屏算法/浏览器URL处理器未改，未重做全屏Spaces、标题拖动、真实登录或浏览器启动，不冒称当前系统集成通过。 B05以原native算法操作可控Cocoa目标，真实已安装WorkBuddy的读取配置/现有会话互操作仍须在发行环境核对，不能由该目标测试替代。",
             "acceptance_check": "实际状态有原生证据；后台代理续存；不强制置顶；系统登录等未做的场景明确保留。",
             "history_tasks": [
               35,
               36,
               42,
-              78
+              78,
+              81
             ]
           },
           {
@@ -3505,7 +3507,7 @@
             "id": "R03.4",
             "title": "Core全套契约与数据不变",
             "acceptance": "passed",
-            "completed": "QA80 13c修复启动前SQLite Busy/Locked使stats永久disabled：迁移态250ms可中断重试，永久/schema-too-new仍拒绝；recover/start_run/interval同事务原子提交。三项确定性红绿回归及真实启动前EXCLUSIVE7秒→释放后同PID ready/import1/12tokens/.1credit/两run各1interval通过。Core580本机测试/27命令/91源码hash、158导入/15故障/19发现/10创建及两既有GPUIignore实际Core补验通过；957最终Core+三平台CI均首次通过。真实longfixture1014请求与成本逐字段一致；原配置所有字段保留，四次允许language写序列化仅补64protocol+64settings+256capsnull共384既有默认字段，配置字节/原始结构并不相等。74b/771/7bec原始失败、无诊断限制、invalid首个probefixture均保留；不声称唯一归因历史CI。",
+            "completed": "QA80 13c修复启动前SQLite Busy/Locked使stats永久disabled：迁移态250ms可中断重试，永久/schema-too-new仍拒绝；recover/start_run/interval同事务原子提交。三项确定性红绿回归及真实启动前EXCLUSIVE7秒→释放后同PID ready/import1/12tokens/.1credit/两run各1interval通过。Core580本机测试/27命令/91源码hash、158导入/15故障/19发现/10创建及两既有GPUIignore实际Core补验通过；957最终Core+三平台CI均首次通过。真实longfixture1014请求与成本逐字段一致；原配置所有字段保留，四次允许language写序列化仅补64protocol+64settings+256capsnull共384既有默认字段，配置字节/原始结构并不相等。74b/771/7bec原始失败、无诊断限制、invalid首个probefixture均保留；不声称唯一归因历史CI。 QA81补真实已发布v056/schema6与v057/schema11包的Core→当前957CI Core冷交接：实际旧Core生成12条有价历史、手工价、731天与OBSERVE，schema6→11及11→11逐旧字段/配置字节保持，当前Core各新录第13条。小窗前后全13逐字段一致，原12对照旧版备份跨两native仍一致。此为macOSarm64新增证据，运行时代码未改。",
             "remaining": "",
             "acceptance_check": "原配置和Key兼容，取消/失败/保存边界不回退，历史快照/导入去重不破坏；全部结果绑定最终提交。",
             "history_tasks": [
@@ -3520,7 +3522,8 @@
               67,
               78,
               79,
-              80
+              80,
+              81
             ]
           },
           {
@@ -3563,26 +3566,28 @@
             "id": "R04.1",
             "title": "最终提交CI全矩阵",
             "acceptance": "passed",
-            "completed": "QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。",
+            "completed": "QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。",
             "remaining": "",
             "acceptance_check": "Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。",
             "history_tasks": [
               78,
               79,
-              80
+              80,
+              81
             ]
           },
           {
             "id": "R04.2",
             "title": "DMG/ZIP/EXE安装升级卸载",
             "acceptance": "pending",
-            "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。 2da Windows新候选截图/生命周期/EXE定制目录重装卸载也通过，artifact13054441131哈希与报告归档；真实旧版升级仍未做。 QA79两Mac2da已终态success并核对artifact报告，旧candidate分开归档。 QA80当前957三平台包的Windows安装/生命周期及两Mac DMG runner报告均passed且digest绑定；真实旧版本升级/最终分发仍未验，不把新目录安装/同版本重装当旧版升级。",
-            "remaining": "最终版本打包并实测首次安装、旧版本配置升级、覆盖安装、卸载/重装与路径含空格/Unicode。 最终Core候选与实际旧版配置升级仍须按本任务完整验收。",
+            "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。 2da Windows新候选截图/生命周期/EXE定制目录重装卸载也通过，artifact13054441131哈希与报告归档；真实旧版升级仍未做。 QA79两Mac2da已终态success并核对artifact报告，旧candidate分开归档。 QA80当前957三平台包的Windows安装/生命周期及两Mac DMG runner报告均passed且digest绑定；真实旧版本升级/最终分发仍未验，不把新目录安装/同版本重装当旧版升级。 QA81官方v056/v057 ARM DMG的SHA/size与当前957artifact13060775696 ZIP digest核验，3个DMG只读挂载复制/strict验证/卸载完成。实际旧包Core生成schema6/11与数据，再由当前原包Core接管，同profile数据保持并继续记录；UI经隔离包装ad-hoc重签、23filebackedsections一致，9原始图/AX与源码hash归档。明确只是Core冷交接，未做OS安装器覆盖或同目录app替换，不冒称真实安装升级签收。",
+            "remaining": "macOS arm64真实已发布Core数据冷交接已验。仍需在旧版数据已存在时实际执行Windows旧setup→候选setup同目录覆盖，以及Mac同目录app bundle替换；验证注册/快捷方式/退出/卸载与数据保留，补Windows与Intel。当前脚本无installer切换步骤，下一步分离seed/verify或加明确安装交接钩子；此处要求实际安装/替换后的旧数据保留；回滚与最终分发仍按R04.4/.5另记，热升级不在本轮证据范围。",
             "acceptance_check": "包内Core/UI架构/版本/资源一致；旧配置/Key/用量数据按既有约定保留；无残留在用进程。",
             "history_tasks": [
               78,
               79,
-              80
+              80,
+              81
             ]
           },
           {
@@ -7463,6 +7468,30 @@
       "date": "2026-11-01T06:52:13+08:00",
       "commit_subject": "docs(studio): record QA80 recovery and candidate acceptance",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 81,
+      "title": "真实已发布Core数据交接与旧数据两尺寸原生读回",
+      "status": "recorded",
+      "summary": "R01能力只读复核：CUA服务正常，但无公开无按键hover/move、路径/持续drag、mousedown/up、widget geometry或按住期间截图保证。不重复旧表头拖动/pressed尝试；没有开启旁白/AT/切输入源。按可用环境推进R04.2的数据兼容部分，未重定义安装升级门禁。总结。",
+      "highlights": [
+        "R01能力只读复核：CUA服务正常，但无公开无按键hover/move、路径/持续drag、mousedown/up、widget geometry或按住期间截图保证。不重复旧表头拖动/pressed尝试；没有开启旁白/AT/切输入源。按可用环境推进R04.2的数据兼容部分，未重定义安装升级门禁。总结。",
+        "新增 scripts/release_upgrade_test.py（源码SHA256 57d2d77c），让实际已发布Core通过HTTP/API写12条定价请求、中文/emoji/组合重音配置与价格、731天与OBSERVE，再停旧Core、同profile启动候选。全部旧业务列/值及配置字节比较；当前Core须新录第13条、关闭后再检查。没有SQL伪造旧schema，脚本明确不安装OS包/发送GUI输入/证明热升级，调用者保留并清理专用空fixture。",
+        "官方v0.5.6/v0.5.7 ARM DMG大小/digest，以及当前957 artifact13060775696 ZIP e912e020校验通过；只读mount/copy/strict codesign/detach均完成。旧Core实际ee82dfa1/085e7512，当前包Core d150bd32、原helper63d64ecd；与QA80本机1146/4658的构建来源不同，勿混字节。来源、包。"
+      ],
+      "limits": [
+        "9份原始JPEG和AX父代理逐图复核：宽1440×901、小1100×701，未裁剪/转换；小窗一次普通角拖，与无效表头列拖动不同。价格、731/OBSERVE、请求三行需滚动分别展示；一张过头中间图不作retention证据。宽页1仅7/10行可见，不称13行逐条视觉全验。供应商运行中心0是本轮Core内存calls，持久统计表13不代表历史丢失。显式StudioIndigo fixture不作升级默认主题证明。原图与限制。"
+      ],
+      "evidence": [
+        {
+          "label": "总结",
+          "href": "benchmarks/rc-round81-summary.json"
+        }
+      ],
+      "commit": "3e96b3a4628247e12992cb9f654a9c8cb8427ee2",
+      "date": "2026-11-01T07:28:47+08:00",
+      "commit_subject": "test(studio): verify released Core data across cold upgrades",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -8789,6 +8818,21 @@
     {
       "date": "2026-11-01T06:52:24+08:00",
       "note": "QA80：启动锁事务恢复与发现投影缓存已验；最终同Core主P/C/C/P、Core契约和957四CI签收，保留污染轮/慢样本/CPU缺口；0/40剩余、15发布待验，禁止自动开启旁白。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T07:29:14+08:00",
+      "note": "QA81：真实v056/schema6与v057/schema11 Core冷交接、731/OBSERVE/有价历史及两尺寸原生读回通过；安装器覆盖/Windows/Intel待验，0/40剩余、15发布待验，禁止自动开启旁白。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
