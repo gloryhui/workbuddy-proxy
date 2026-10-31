@@ -1,0 +1,61 @@
+from pathlib import Path
+import collections, datetime, hashlib, json, re, subprocess
+
+r = Path(__file__).resolve().parent
+repo = Path.cwd()
+build = json.loads((r / 'build.json').read_text())
+
+def listeners(source):
+    result = []
+    for match in re.finditer(r'cx\.listener\(', source):
+        pos = match.end()
+        depth = 1
+        quote = False
+        escaped = False
+        while depth:
+            char = source[pos]
+            if quote:
+                if escaped:
+                    escaped = False
+                elif char == '\\':
+                    escaped = True
+                elif char == '"':
+                    quote = False
+            elif char == '"':
+                quote = True
+            elif char == '(':
+                depth += 1
+            elif char == ')':
+                depth -= 1
+            pos += 1
+        expression = re.sub(r'\s+', '', source[match.start():pos])
+        result.append(re.sub(r',\)', ')', expression))
+    return collections.Counter(result)
+
+files = []
+for name, expected in build['source_sha256'].items():
+    source = (repo / name).read_text()
+    assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == expected
+    old = subprocess.check_output(['git', 'show', build['base_head'] + ':' + name], text=True)
+    before, after = listeners(old), listeners(source)
+    assert before == after, name
+    files.append({'file': name, 'source_sha256': expected,
+                  'old_listener_expressions': sum(before.values()),
+                  'new_listener_expressions': sum(after.values()),
+                  'all_old_listener_expressions_preserved_ignoring_whitespace_and_optional_call_trailing_comma': True})
+name = 'gpui/src/protocol_options.rs'
+old = subprocess.check_output(['git', 'show', build['base_head'] + ':' + name], text=True)
+new = (repo / name).read_text()
+prefix = '    fn field_label('
+suffix = '\nfn parse('
+assert prefix in old and prefix in new
+assert old.split(prefix)[0] == new.split(prefix)[0]
+assert suffix in old and suffix in new
+assert old.split(suffix, 1)[1] == new.split(suffix, 1)[1]
+out = {'at': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
+       'files': files, 'protocol_editor_nonrender_prefix_byte_identical': True,
+       'protocol_parse_validate_suffix_byte_identical': True,
+       'auto_control': 'Native BaseCheckbox retains id, checked state, accessible label and unchanged owner bool listener. Studio changes visible badge/title composition only; adapter maps native Checked to bool and prevents default.',
+       'scope': 'Four Rust presentation files only. No Core, config schema, deps, locks or original benchmark edits. Native full journey is independently required.'}
+(r / 'source-scope.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps({'files': len(files), 'owner_listeners_preserved': sum(x['old_listener_expressions'] for x in files)}))

@@ -1,0 +1,24 @@
+{
+  "status": "executed_after_native_main_capacity_complete",
+  "benchmark_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "original_mock_source_sha256": "6a6eb662389245ecfbe08dbd58ed5caad62cf77d51f7f1affcf809f8b40bf7bb",
+  "load": {
+    "small_requests": 1000,
+    "models": 64,
+    "large_requests": 80,
+    "large_mib": 1,
+    "concurrency": 4
+  },
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "native_history": "provider64;1100tableTail→Head;1440;realGETpicker4096tail→head/cancel;editorAUTOmanualAUTO/cancel;fourprotocoltabs/cancel;provider64 rawPNG",
+  "scope": "Identical extra fixture models64 initialization before UI; original save64 retained. Observer hook after original save64 and before original RSS/load; mock class identical original POST, adds GET models only. No execution or pass claimed; waits native phase completion.",
+  "help": "usage: benchmark.py [-h] --exe EXE --output OUTPUT [--requests REQUESTS]\n                    [--models MODELS] [--gui]\n\noptions:\n  -h, --help           show this help message and exit\n  --exe EXE\n  --output OUTPUT\n  --requests REQUESTS\n  --models MODELS\n  --gui\n",
+  "initial_status": "prepared_not_executed",
+  "execution_results": "benchmark-driver-results.json",
+  "all_four_workloads_exit0": true
+}

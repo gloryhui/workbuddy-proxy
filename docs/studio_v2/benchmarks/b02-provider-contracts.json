@@ -1,0 +1,101 @@
+{
+  "mode": "real immutable core / UI discovery parity",
+  "cases": [
+    {
+      "case": "chat",
+      "passed": true
+    },
+    {
+      "case": "responses",
+      "passed": true
+    },
+    {
+      "case": "responses-map",
+      "passed": true
+    },
+    {
+      "case": "anthropic-pages",
+      "passed": true
+    },
+    {
+      "case": "anthropic-adaptive-evidence",
+      "passed": true
+    },
+    {
+      "case": "gemini-pages-filter",
+      "passed": true
+    },
+    {
+      "case": "gemini-level",
+      "passed": true
+    },
+    {
+      "case": "azure-openai_chat",
+      "passed": true
+    },
+    {
+      "case": "azure-openai_responses",
+      "passed": true
+    },
+    {
+      "case": "azure-no-fallback",
+      "passed": true
+    },
+    {
+      "case": "builtin-live-override",
+      "passed": true
+    },
+    {
+      "case": "encoded-rejected",
+      "passed": true
+    },
+    {
+      "case": "4097-rejected",
+      "passed": true
+    },
+    {
+      "case": "anthropic-loop",
+      "passed": true
+    },
+    {
+      "case": "anthropic-huge",
+      "passed": true
+    },
+    {
+      "case": "anthropic-missing",
+      "passed": true
+    },
+    {
+      "case": "anthropic-pages",
+      "passed": true
+    },
+    {
+      "case": "gemini-loop",
+      "passed": true
+    },
+    {
+      "case": "gemini-huge",
+      "passed": true
+    }
+  ],
+  "creation": {
+    "mode": "real core frontend draft transaction",
+    "invalid_before_create": true,
+    "refused_connection_retry": true,
+    "source_save_boundary_preserved": true,
+    "copy_capabilities_and_mixed_efforts_preserved": true,
+    "fresh_route_ids_and_aliases": true,
+    "partial_save_retries_bound_target_only": true,
+    "save_then_test_error_reports_commit": true,
+    "saved_automatic_metadata_uses_core_refresh_and_resolver": true,
+    "core_refresh_failure_keeps_saved_target_and_discards_ui_only_hints": true,
+    "ambiguous_identity_does_not_save_or_repeat_create": true
+  },
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "core_sandbox_enforced": true,
+  "config_sha256_unchanged_for_discovery": true,
+  "test_harness_exit_code": 0,
+  "core_exit_code": 0,
+  "all_owned_children_waited": true,
+  "mock_server_joined": true
+}

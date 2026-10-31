@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-31T15:33:20.767940+08:00",
+  "stage": "closed",
+  "core_pid": 55325,
+  "core_health": "ready",
+  "core_config_sha256": "2c484e4c584ce3122d29d1bffc4d68f1744b22cacb06aaf86e92143b9d1028d0",
+  "explicit_save": false,
+  "providers": 2,
+  "models": 6,
+  "target_model_name": "deepseek B02",
+  "protocol": "gemini_generate_content",
+  "protocol_settings": {
+    "authentication": "protocol_default",
+    "anthropic_version": "2023-06-01",
+    "default_max_output_tokens": 4096,
+    "reasoning_profile": {
+      "mode": "gemini_level",
+      "budgets": {},
+      "levels": {
+        "minimal": "high"
+      }
+    },
+    "responses_efforts": {}
+  },
+  "original_nonprovider_root_exact": true,
+  "all_unpermitted_old_config_fields_preserved": true,
+  "requests": [
+    14,
+    7000,
+    700,
+    7700
+  ],
+  "history": {
+    "usage_requests": {
+      "rows": 14,
+      "all_fields_preserved": true,
+      "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+    },
+    "usage_costs": {
+      "rows": 14,
+      "all_fields_preserved": true,
+      "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+    }
+  },
+  "scope": "Read-only live Core health, persisted config and exact SQL snapshots. Only declared native GUI Save stages may update checkpoints; no business-data writes by this observer."
+}

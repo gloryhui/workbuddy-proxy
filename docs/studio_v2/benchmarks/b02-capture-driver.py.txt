@@ -1,0 +1,30 @@
+from pathlib import Path
+import os,sys,subprocess,time,json,hashlib,sqlite3
+r=Path(__file__).resolve().parent;repo=Path.cwd();core=Path('/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core');ui=r/'candidate-ui'
+assert hashlib.sha256(core.read_bytes()).hexdigest()=='25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5'
+assert hashlib.sha256(ui.read_bytes()).hexdigest()==json.loads((r/'build.json').read_text())['release_sha256']
+env=dict(os.environ,PYTHONPATH=str(repo/'scripts'),TMPDIR=str(r/'tmp'),TMP=str(r/'tmp'),TEMP=str(r/'tmp'));results=[]
+for label,flags in [('captures',[])]:
+    f=r/('b02-j6dovgdr-'+label+'-final');log=(r/('native-'+label+'.log')).open('wb')
+    p=subprocess.Popen([sys.executable,'-u',str(r/'fixture-background.py'),'--exe',str(core),'--gpui',str(ui),'--output',str(f),'--keep-core-after-ui-exit',*flags],env=env,stdout=log,stderr=log)
+    try:
+        for _ in range(2400):
+            if (f/'cua-launch-ready.json').exists():break
+            assert p.poll() is None;time.sleep(.1)
+        else:raise TimeoutError('initial fixture readiness')
+        guard=subprocess.run([sys.executable,str(r/'preflight-seed.py'),str(f)],env=env,capture_output=True,text=True);assert guard.returncode==0,guard.stderr
+        for _ in range(200):
+            db=sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True);counts=[db.execute('SELECT COUNT(*) FROM '+table).fetchone()[0] for table in ['usage_requests','usage_costs']];db.close()
+            if counts==[14,14]:break
+            assert p.poll() is None;time.sleep(.05)
+        else:raise AssertionError(('seed persistence',counts))
+        initial=subprocess.run([sys.executable,str(r/'observe-b02.py'),str(f),'capacity_initial' if label=='capacity' else 'initial'],env=env,capture_output=True,text=True);assert initial.returncode==0,initial.stderr
+        if label=='capacity':subprocess.run([sys.executable,str(r/'set-b02-discovery.py'),str(f),'large'],check=True)
+        (r/'pending-capture.json').write_text(json.dumps({'label':label,'folder':str(f),'ready_file':str(f/'cua-launch-ready.json'),'ui_sha256':hashlib.sha256(ui.read_bytes()).hexdigest(),'guard_passed':True,'observer_initialized':True})+'\n');print('ready '+label,flush=True)
+        code=p.wait();assert code==0,(label,code)
+        terminal=json.loads((f/'terminal-status.json').read_text());assert terminal['ui_pid_gone_after_cleanup'] and terminal['core_exit_after_cleanup']==0
+        results.append({'label':label,'fixture_pid':p.pid,'exit_code':code,'folder':str(f),'terminal':terminal});(r/'capture-driver-results.json').write_text(json.dumps(results,indent=2)+'\n');print('finished '+label,flush=True)
+    finally:
+        if p.poll() is None:p.terminate();p.wait(timeout=10)
+        log.close()
+print('B02 capture-only phase complete0',flush=True)

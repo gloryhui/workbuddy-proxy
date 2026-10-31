@@ -1,0 +1,1972 @@
+{
+  "at": "2026-10-31T16:00:07.335394+08:00",
+  "candidate_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "frame_count": 6,
+  "required_frame_size_pairs": 12,
+  "frames": [
+    {
+      "node": "59:11",
+      "wide": "59-11-wide.png",
+      "small": "59-11-small.png"
+    },
+    {
+      "node": "59:279",
+      "wide": "59-279-wide.png",
+      "small": "59-279-small.png"
+    },
+    {
+      "node": "61:289",
+      "wide": "61-289-wide.png",
+      "small": "61-289-small.png"
+    },
+    {
+      "node": "61:561",
+      "wide": "61-561-wide.png",
+      "small": "61-561-small.png"
+    },
+    {
+      "node": "61:838",
+      "wide": "61-838-wide.png",
+      "small": "61-838-small.png"
+    },
+    {
+      "node": "61:1111",
+      "wide": "61-1111-wide.png",
+      "small": "61-1111-small.png"
+    }
+  ],
+  "fixtures": [
+    {
+      "label": "main",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6"
+      },
+      "processes": [
+        {
+          "role": "ui_pid",
+          "pid": 55537,
+          "gone": true
+        },
+        {
+          "role": "core_pid",
+          "pid": 55325,
+          "gone": true
+        },
+        {
+          "role": "fixture_pid",
+          "pid": 55322,
+          "gone": true
+        }
+      ],
+      "nonprovider_config_exactly_preserved": true,
+      "stages": [
+        {
+          "name": "anthropic_adaptive_apply.json",
+          "sha256": "1d4e948f69abaafbf0e3c9ccfa296afa32da5f6d43eae6feff9ae7d090d35743",
+          "providers": 2,
+          "models": 6,
+          "protocol": "anthropic_messages",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "anthropic_adaptive_saved.json",
+          "sha256": "a35fda1460f8ee7ce54743feacf9bb58408d135f9737584dd89af2d50c6de83f",
+          "providers": 2,
+          "models": 6,
+          "protocol": "anthropic_messages",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "anthropic_budget_apply.json",
+          "sha256": "99b4ea093e96bad24d66b65b2a171a39b402f23de4518a8c64f4b8ed154b8fad",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_responses",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "anthropic_budget_saved.json",
+          "sha256": "eee26ee4acb620290e9701569b12fd7c354714c057de299046e7c50c3e10f3b4",
+          "providers": 2,
+          "models": 6,
+          "protocol": "anthropic_messages",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "anthropic_invalid.json",
+          "sha256": "6a6b7fa2e22802cdd29bee53676f8c36efff41facbb0f1fa143675ed024d1af6",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_responses",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "auto_cancel.json",
+          "sha256": "51838305201364f79881f5eee74252597eae3105b5fdc20b65d3491034df95e2",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "chat_apply.json",
+          "sha256": "561d0f0066a23e42efad79babd1f90694bad9d12e9b5b94173f81fedb9c84e57",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "chat_invalid.json",
+          "sha256": "a69fa77d679008750e98d2ad878034f3bb2efc4b764a121d77a28ce1b52afdf4",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "chat_saved.json",
+          "sha256": "2bf101e4521ec96b6533e79292e049110e62c7a5fdea4c96793788e8fab01487",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "closed.json",
+          "sha256": "9529a290618d4436628fd8c11e57084cfba99ddf0927bd7dbc756b959205cf15",
+          "providers": 2,
+          "models": 6,
+          "protocol": "gemini_generate_content",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "default_serialization_check.json",
+          "sha256": "a8900cf1a02a25fb29f7074fae150750b78868e1bc39187e5e0d0cc14083a1f6",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "defaults_start.json",
+          "sha256": "7fb7700391f7f4f0a399d705778482f213035bba70762e81067aff007a1560c1",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "discovery_empty.json",
+          "sha256": "b3c60e0eca936e36f5c16d59c97b17cd06de5edfd9bd904d59733caf61fab878",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "discovery_failure.json",
+          "sha256": "b210250c853c6179eb24c6ba979dc53e89d977ebc4d9bf24746aa7da6b727f82",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "discovery_large.json",
+          "sha256": "45234c5da9d53c5a6f645a331ae073f2630837d26bbe9380a6284e4e3680688d",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "final_readback.json",
+          "sha256": "78820fc2006b00f60dabd6e0ba7b0e11ac102f5ed7b18b75739616c16526997f",
+          "providers": 2,
+          "models": 6,
+          "protocol": "gemini_generate_content",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "gemini_budget_apply.json",
+          "sha256": "1cb402e4746e0f035902ae9ef2d75edca84262d6a64d691961257b22a66f25c8",
+          "providers": 2,
+          "models": 6,
+          "protocol": "anthropic_messages",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "gemini_budget_saved.json",
+          "sha256": "0636a173440dbce7fc8e9c43d9c01df01a102612a1ab81789bbf9ee89761e324",
+          "providers": 2,
+          "models": 6,
+          "protocol": "gemini_generate_content",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "gemini_invalid.json",
+          "sha256": "78373edb033213af3c5cbc758ae80791c5fa98678deb73c83655a341c7203eee",
+          "providers": 2,
+          "models": 6,
+          "protocol": "anthropic_messages",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "gemini_level_apply.json",
+          "sha256": "4e2842a18ca9042b4c678a9587360192baeccf6e161c00dfe9f37206aa09dd41",
+          "providers": 2,
+          "models": 6,
+          "protocol": "gemini_generate_content",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "gemini_level_saved.json",
+          "sha256": "b3795838cedbaa2f659782eaeab8e334c54a1748c04536f5904a0bdb51ce235f",
+          "providers": 2,
+          "models": 6,
+          "protocol": "gemini_generate_content",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "initial.json",
+          "sha256": "aa902f4ddc2b36d48d849df7cfcd1b91ddcd472845c550ec438ec55536cf97a2",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "model_added_saved.json",
+          "sha256": "37e94d0f962db078a601829794e928c4150062f95dfaa04e38d6478c7569b133",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "model_apply.json",
+          "sha256": "c2b063885512d633a6bc43ede518bbf0939ef92764087ec79cf877079f4ff275",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "model_edited_saved.json",
+          "sha256": "34802c5e5a16793ca81f16bf672c7ad11fdcb0966d243678d043d4e59612ac77",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "model_invalid.json",
+          "sha256": "8af71566dd07a48d5ae41899e6b9e5c2c6f11bf9dcf3b512c1272475aee7b05f",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "model_readback.json",
+          "sha256": "f0787487ee214fce3ee550d582232833ae6dd9516f99de2621a90eaf1b5fba58",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "picker_apply.json",
+          "sha256": "0f445e811db259194e8b6344c2324bf2b431d002ef2581039892a6b7d7fe50cf",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "picker_cancel.json",
+          "sha256": "577f0c0128d5e8c92e5215b9588817eab2d4b954a642dd7a75cde1e2ef6993fa",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "picker_draft_cancel.json",
+          "sha256": "70379ca9df4301597823fd10bac8dc8a89faddd34c44cc362eb180fe04a77807",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "protocol_defaults.json",
+          "sha256": "ce1094d09159c2eafd1244564a0a7fbcc5f827e79810e352eb9ee3afa40a41f5",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "responses_apply.json",
+          "sha256": "b6361820c7e8f48b557dd7dd2b0a2bd5ca35f42dd14894e34582849658f4340b",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "responses_invalid.json",
+          "sha256": "a3797f38c2322cc642c00279ba52e3e556b9055b6413db36c76a474d4d7f77d2",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "responses_saved.json",
+          "sha256": "ecb2216b83445c84c3c481d73f87924ae5c7a4058033612b0f3e62abe86c0818",
+          "providers": 2,
+          "models": 6,
+          "protocol": "openai_responses",
+          "explicit_save": true,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        },
+        {
+          "name": "table_cancel.json",
+          "sha256": "5f81da479efba82676e8699bfee25313a8c471772f11613959d341b50acc34f3",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+            }
+          }
+        }
+      ],
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      }
+    },
+    {
+      "label": "capacity",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6"
+      },
+      "processes": [
+        {
+          "role": "ui_pid",
+          "pid": 64826,
+          "gone": true
+        },
+        {
+          "role": "core_pid",
+          "pid": 64702,
+          "gone": true
+        },
+        {
+          "role": "fixture_pid",
+          "pid": 64699,
+          "gone": true
+        }
+      ],
+      "nonprovider_config_exactly_preserved": true,
+      "stages": [
+        {
+          "name": "capacity_cancel.json",
+          "sha256": "570d593d959017142e4031350c0198c02cb6bb68806e6afff74580537c3fd317",
+          "providers": 2,
+          "models": 256,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "f5568dfe783ba51afe44d2ae3db69bdaa2aa44f656334e47dc289359cf2c5492"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "c88e598bf5c8d81a1b75fcff4eed4e65a5b96a65af6a101fa0f1f015e9c51c4c"
+            }
+          }
+        },
+        {
+          "name": "capacity_initial.json",
+          "sha256": "591a20a782d179f7efd0af13abd32d5acde9636952b523ec2a92d83988039aa9",
+          "providers": 2,
+          "models": 256,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "f5568dfe783ba51afe44d2ae3db69bdaa2aa44f656334e47dc289359cf2c5492"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "c88e598bf5c8d81a1b75fcff4eed4e65a5b96a65af6a101fa0f1f015e9c51c4c"
+            }
+          }
+        },
+        {
+          "name": "capacity_overflow.json",
+          "sha256": "3b447af32d043e64cfed9c45ef24883f60f9178a996862101fc02a5932e14a66",
+          "providers": 2,
+          "models": 256,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "f5568dfe783ba51afe44d2ae3db69bdaa2aa44f656334e47dc289359cf2c5492"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "c88e598bf5c8d81a1b75fcff4eed4e65a5b96a65af6a101fa0f1f015e9c51c4c"
+            }
+          }
+        },
+        {
+          "name": "capacity_table_cancel.json",
+          "sha256": "03882ee764715df7c1f99a59e28e3a12b8242a4251f644d7a4352e3c665c23b6",
+          "providers": 2,
+          "models": 256,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "f5568dfe783ba51afe44d2ae3db69bdaa2aa44f656334e47dc289359cf2c5492"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "c88e598bf5c8d81a1b75fcff4eed4e65a5b96a65af6a101fa0f1f015e9c51c4c"
+            }
+          }
+        },
+        {
+          "name": "closed.json",
+          "sha256": "75dd1e6fb4ede2e0ea3f2924581d03897c2e5ab61ea95bce56bf97b18fe24191",
+          "providers": 2,
+          "models": 256,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "f5568dfe783ba51afe44d2ae3db69bdaa2aa44f656334e47dc289359cf2c5492"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "c88e598bf5c8d81a1b75fcff4eed4e65a5b96a65af6a101fa0f1f015e9c51c4c"
+            }
+          }
+        }
+      ],
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      }
+    },
+    {
+      "label": "captures",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6"
+      },
+      "processes": [
+        {
+          "role": "ui_pid",
+          "pid": 70560,
+          "gone": true
+        },
+        {
+          "role": "core_pid",
+          "pid": 70434,
+          "gone": true
+        },
+        {
+          "role": "fixture_pid",
+          "pid": 70433,
+          "gone": true
+        }
+      ],
+      "nonprovider_config_exactly_preserved": true,
+      "stages": [
+        {
+          "name": "capture_defaults.json",
+          "sha256": "eb941964914849762ef5d0c5b9817c81bad478fc39d8624bdac2b887bc689cea",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "ea0cb6cff8e04c427cc308b814bf2ce23222739a983a67162059a3f1e6c9ba19"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "01ba4566234cfb4337edebb3baeac549bf6d04d1f6c97bcf50a449328f749e9e"
+            }
+          }
+        },
+        {
+          "name": "closed.json",
+          "sha256": "b2f216c1ded93c031893152de7377320517e73fc58e85b1a70358b531ed66a33",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "ea0cb6cff8e04c427cc308b814bf2ce23222739a983a67162059a3f1e6c9ba19"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "01ba4566234cfb4337edebb3baeac549bf6d04d1f6c97bcf50a449328f749e9e"
+            }
+          }
+        },
+        {
+          "name": "initial.json",
+          "sha256": "57edff19de36ff6203bdc7a9ace948d2ab531468d24e6ffeb147afacc4229f2e",
+          "providers": 2,
+          "models": 5,
+          "protocol": "openai_chat",
+          "explicit_save": false,
+          "requests": [
+            14,
+            7000,
+            700,
+            7700
+          ],
+          "history": {
+            "usage_requests": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "ea0cb6cff8e04c427cc308b814bf2ce23222739a983a67162059a3f1e6c9ba19"
+            },
+            "usage_costs": {
+              "rows": 14,
+              "all_fields_preserved": true,
+              "sha256": "01ba4566234cfb4337edebb3baeac549bf6d04d1f6c97bcf50a449328f749e9e"
+            }
+          }
+        }
+      ],
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      }
+    }
+  ],
+  "images": [
+    {
+      "fixture": "main",
+      "name": "59-11-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 273677,
+      "sha256": "942f356af8a2f081483582509a6364033a2d4dafbdf2c6c6299f6ea358131317",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/59-11-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "59-11-wide.png",
+      "pixels": [
+        3016,
+        1938
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": null,
+      "actual_format": "PNG",
+      "accepted_native_png": false,
+      "bytes": 883892,
+      "sha256": "3da6cbd83731b388ed544dc5622b1b540e459a2468e8ec99c38cc5d45c78f73d",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/59-11-wide.png"
+    },
+    {
+      "fixture": "main",
+      "name": "59-279-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 273715,
+      "sha256": "d1727f5703e32e6a43d1afa739077ad987fdb0c5de073e82c8c10d201766cfd6",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/59-279-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "59-279-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 430362,
+      "sha256": "0f851a6b0e916b94bc478a059768dd74a1667c5af676bc55c40b2f65832aba1a",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/59-279-wide.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-1111-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 262398,
+      "sha256": "d38e1118d5b9371eb30ffc8caea76470c93ee1e47067a78f761c921bd367d014",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-1111-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-1111-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 417460,
+      "sha256": "6a2dfbce6f3e617aaec7fd3990c814e5ab0c77b8336f85d83b9ab0313aa06afa",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-1111-wide.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-289-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 277361,
+      "sha256": "186bcc8bc5230092380ac3b483e755d8a0e478900dbf18500f1f92e75cd17929",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-289-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-289-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 430035,
+      "sha256": "6001ce3c5a2f07601e1b57d9bdb74893796b063b92d3deb6893ec3516691fbe0",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-289-wide.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-561-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 267632,
+      "sha256": "cfbf2a290c21ed54f226fbefa3f66696eeb64f470498b45061d9e0f24744aaf6",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-561-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-561-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 432172,
+      "sha256": "c172cf4329e898a2bcf80c82768af7067e0ee1ce99864f8e6458c2b90e35f5fb",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-561-wide.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-838-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 274488,
+      "sha256": "981c85e47888609d7fd074c1e382e35cc5d0f5dd3a3d80c30f42f7b6ba6277f7",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-838-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "61-838-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 432949,
+      "sha256": "69d3e11898568bfbc24644856eeee9c465d75897e73774e44d19ad1a961bd5db",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/61-838-wide.png"
+    },
+    {
+      "fixture": "main",
+      "name": "anthropic-invalid-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 276274,
+      "sha256": "c0b7085e10bb7e36d6195ce674f4b2c2413e32b348a7cceba136e86e22895cdf",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/anthropic-invalid-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "chat-invalid-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 282657,
+      "sha256": "48480bb82e6bc451a5a941c5f3b2cf5fba4833f4a1e475c37b68848b47891983",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/chat-invalid-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "discovery4096-tail-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 254029,
+      "sha256": "891e35e49e64c28bb007c1b97c383773bfc286c15067b19f7cb762612b57053e",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/discovery4096-tail-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "gemini-invalid-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 265228,
+      "sha256": "3f54e7675c1726526cd5a1a3cc97a5b53821dc7f48adc7b48abcb73566d40017",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/gemini-invalid-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "model-bottom-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 274378,
+      "sha256": "b82fb70b6248f7adae33ed9344b4b6911e82fd74d54ff30871776a812766d0d4",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/model-bottom-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "model-invalid-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 272887,
+      "sha256": "8ae7e6cb57110a3f74ea142a2c1045faca1682101efc1c36a029a83c9a313d2b",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/model-invalid-small.png"
+    },
+    {
+      "fixture": "main",
+      "name": "picker-existing-wide.png",
+      "pixels": [
+        3104,
+        2026
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": null,
+      "actual_format": "PNG",
+      "accepted_native_png": false,
+      "bytes": 975270,
+      "sha256": "1068440cdd6cb23cced3174e847749898ae93c5aec854148759fbe02f6084000",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/picker-existing-wide.png"
+    },
+    {
+      "fixture": "main",
+      "name": "responses-invalid-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 266259,
+      "sha256": "c2bfe5495401b735d2cb91edd36119d786a4ccf11c665bb7680578ec05904a02",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/responses-invalid-small.png"
+    },
+    {
+      "fixture": "capacity",
+      "name": "capacity-overflow-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 273804,
+      "sha256": "abd5cb9ca5caebc9453c1827dcaf95b0d77f44f8a33b5d5706ae8d801cc1b3b4",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-capacity-final/capacity-overflow-small.png"
+    },
+    {
+      "fixture": "capacity",
+      "name": "capacity256-tail-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 331471,
+      "sha256": "47cea9c4c7b665b906085dae3468d23712429810524003077464b9e7a41a2242",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-capacity-final/capacity256-tail-small.png"
+    },
+    {
+      "fixture": "capacity",
+      "name": "capacity4096-tail-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "JPEG",
+      "accepted_native_png": false,
+      "bytes": 258706,
+      "sha256": "67662677430c6b42218d0e6158094d209c6aac80f0efb9258adc015df79aca99",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-capacity-final/capacity4096-tail-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "59-11-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 346749,
+      "sha256": "d3301e2c5d4bd7804fff160212ef214dcc2248ca35d596899158e16b05abfe51",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-11-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "59-11-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 601418,
+      "sha256": "a86b155f42fbd35571b8fb21f767cb6a46728c74fe0dfd9a0bfb908a4fe09679",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-11-wide.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "59-279-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 367477,
+      "sha256": "02f79e5b7b055f4527fc1f19586e0b8878b35c451126ae997fb10c1f34c61581",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-279-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "59-279-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 626776,
+      "sha256": "7d0f9c561b0c0b452ac3953c291ebbba25a5bc2e36b4bcf50124642c9b35eb0e",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-279-wide.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-1111-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 366679,
+      "sha256": "bf2726d6b90afb2dabbd6a20d22a302ccfcf11107ceb41feb3a1eb5ae608ea2b",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-1111-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-1111-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 597718,
+      "sha256": "bc1792f953f781d4ab17476ebeda8e1ab05118a74a89e3303cf0fef8da610e48",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-1111-wide.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-289-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 377946,
+      "sha256": "62b0c29666211df5e319d4f131422fc568e030e2983f81613e4ac4b5068ea58e",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-289-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-289-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 611376,
+      "sha256": "6babe2da9896c74ce4d9bdf2e9bfa5fb88f9ec3c0cba3914f47b729b2e1fa602",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-289-wide.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-561-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 379038,
+      "sha256": "d74566e85c973b8dcf497c3e35b97be39b7d53714a3f236355931cd450f00744",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-561-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-561-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 614002,
+      "sha256": "03220e09ba8225a82344412e49cbe4253b7576711cd15dd978e7b3ba50491a8a",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-561-wide.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-838-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 385410,
+      "sha256": "5bf7a4b2799e63612bd00996a2ad94f18ce7a1e12412537c68c6457a5fa3629c",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-838-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "61-838-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 620645,
+      "sha256": "5f956d89115972a3de144cd509ecd969b4d828e399d1b78133c461f538f67110",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-838-wide.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "model-bottom-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 362754,
+      "sha256": "eeceefafcc160a3d55c6bfb8690735d80f9e65d23f815c9e1d2e55bb56716f0a",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/model-bottom-small.png"
+    },
+    {
+      "fixture": "captures",
+      "name": "protocol-bottom-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "scale": 2.0,
+      "actual_format": "PNG",
+      "accepted_native_png": true,
+      "bytes": 363242,
+      "sha256": "ca72a357f65246911f5e0f48f9c2771e3418e0a8c4027f42993a52347f9a7581",
+      "raw_unmodified": true,
+      "source": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/protocol-bottom-small.png"
+    }
+  ],
+  "scope": "Frozen native candidate: Main/Capacity real GUI plus independent persistence/history; separate capture-only fixture supplies six correct-format/size native PNG pairs. Original CUA JPEG and shadow PNGs are honest unmodified interaction evidence, not accepted PNG pairs. CUA owns GUI; disappearance only, no invented exit code. Does not certify R01-R04 or FPS/first paint."
+}

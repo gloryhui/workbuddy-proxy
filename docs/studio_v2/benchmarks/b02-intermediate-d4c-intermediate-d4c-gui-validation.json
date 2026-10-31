@@ -1,0 +1,153 @@
+{
+  "candidate_sha256": "d4c8b8edcc486dffb3c300e2d8acea642fd7fa63e569041ba57628a41d42634c",
+  "classification": "intermediate candidate; superseded for Picker clipping",
+  "ui_pid": 45621,
+  "core_pid": 45344,
+  "window_id": 7683,
+  "images": [
+    {
+      "file": "59-11-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "1e98dc839668aee0d31fd5912a127a1ea32fa1e325eea80a3106d79a8119aa83",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "59-11-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "a84265076ad5a4511e905313e55f1aa5d39bc03cfc24dd7b86479b5b63ea914b",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "59-279-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "7d8b4df58fac2b12c3031cbeb626a40c3604ae0a527724b91affd61e4bf54863",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "59-279-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "59008191977550ddf548bbcb905c61e7eb53d775882a373e2c925dec72cc1b57",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-289-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "ba66fd6efa73c5c19eb1c1842ac9d676dd5522f3bf6feeed1aa346f5c039932b",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-289-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "f2a0803878507e09165f0ed53f3637627b53e71c79783f271dcf83274752fead",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-561-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "c9eebbcd09668c8b168eb01be2ad9145f9b1df24d78ca5baa5f7c7501993f77e",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-561-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "711038891e165cc4c7824c4b8cca61f92138a3bd5841ed7096415b0fe5be436b",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-838-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "54101cd2a422e51477c27a7a352cbc7077d63b2a9d5930ea3758b664b33eccff",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-838-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "13c033f08dca5b4887bbb2112fb716c41469a13960effc4b98ce0b008b9061c1",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-1111-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "7993ce1befa59feb96eb9ceeb5acdd9b0c42a08b3ecf6e36b48f9602c4000ec3",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    },
+    {
+      "file": "61-1111-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "61042715f779e9871f0be18c4162555a9e1a3196b9c6708e845c43f0466c9dc6",
+      "capture": "native screencapture, owned onscreen layer-0 window 7683"
+    }
+  ],
+  "verified_actions": [
+    "default six frames captured at both sizes",
+    "four protocol tab selections followed by Return and Space left the modal open; focus was not independently established on each tab",
+    "small Gemini protocol scrolled to maximum field and fixed footer remained reachable",
+    "model AUTO pointer toggle followed by Space switched state; cancelled",
+    "table Shift selected first three rows, Backspace removed first after single selection, parent Cancel restored four",
+    "discovery 503 error and empty result each observed; local mock restored to success",
+    "picker select all, invert, clear, selected-only and search/no-match paths exercised; picker Cancel"
+  ],
+  "independent_observer_passed": [
+    "defaults_start",
+    "protocol_defaults",
+    "auto_cancel",
+    "table_cancel",
+    "discovery_failure",
+    "discovery_empty",
+    "picker_cancel",
+    "pause_closed"
+  ],
+  "visual_findings": [
+    "Picker first long model ID is hard-clipped at the list right edge without an ellipsis; precise hover/full-value tooltip was not verified.",
+    "No other definite blocking structural discrepancy was established from the six default frames. Dynamic values and unconfigured states reflect the fixture, not Figma sample data.",
+    "Small model editor lower fields were initially below the viewport; reachability was not established in this intermediate run."
+  ],
+  "limits": [
+    "No Apply or Save was performed.",
+    "Command-click multi-selection outcome was not reliably established.",
+    "Actual system foreground was not verified; no explicit activate or raise was requested.",
+    "Native screenshots were retained without cropping or scaling.",
+    "Busy, capacity, 4096 discovery and full model/protocol persistence journeys were not tested in this intermediate run."
+  ],
+  "closure": {
+    "action": "native CUA close after canceling provider edit",
+    "ui_pid_gone": true,
+    "pause_closed_observer": "passed; Core ready, 2 providers, 5 models, 14 historical rows retained; no closed handoff executed"
+  }
+}

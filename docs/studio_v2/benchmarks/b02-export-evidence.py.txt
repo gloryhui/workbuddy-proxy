@@ -1,0 +1,89 @@
+from pathlib import Path
+import datetime, hashlib, json
+
+r = Path(__file__).resolve().parent
+repo = Path.cwd()
+reports = repo / 'docs/studio_v2/benchmarks'
+shots = repo / 'docs/studio_v2/screenshots'
+assert reports.resolve().is_relative_to(repo.resolve())
+assert shots.resolve().is_relative_to(repo.resolve())
+native = json.loads((r / 'native-consolidated.json').read_text())
+perf = json.loads((r / 'performance-summary.json').read_text())
+assert native['required_frame_size_pairs'] == 12
+assert perf['assessment'] != 'MEASURED: reviewer must interpret costs and request correctness; this summary does not automatically grant acceptance.'
+entries = []
+
+def save(source, destination, transformed=None):
+    original = source.read_bytes()
+    data = original if transformed is None else transformed
+    if destination.exists():
+        assert destination.read_bytes() == data, ('refuse to overwrite different evidence', str(destination))
+    else:
+        destination.write_bytes(data)
+    entries.append({'source': str(source.relative_to(r)),
+                    'destination': str(destination.relative_to(repo)),
+                    'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                    'source_bytes': len(original), 'source_sha256': hashlib.sha256(original).hexdigest(),
+                    'transform': 'none' if transformed is None else 'readable text: strip trailing whitespace only; raw UTF8 separately retained'})
+
+for name in ['build.json', 'build-d4c.json', 'provider-contracts.json', 'source-scope.json',
+             'design-audit.json', 'asset-audit.json', 'consolidated-polish.json',
+             'default-serialization-audit.json', 'intermediate-d4c-stop.json',
+             'screenshot-format-audit.json', 'capture-driver-results.json', 'native-capture-summary.json',
+             'reviewer-native-look.json', 'native-driver-results.json', 'native-b02-summary.json',
+             'native-consolidated.json', 'benchmark-preparation.json',
+             'benchmark-driver-results.json', 'performance-b02-cua.json', 'performance-summary.json']:
+    save(r / name, reports / ('b02-' + name))
+for name in ['native-b02-runbook.md', 'performance-native-runbook.md', 'capture-native-runbook.md', 'fixture-background.py',
+             'preflight-seed.py', 'observe-b02.py', 'set-b02-discovery.py',
+             'native-driver.py', 'capture-driver.py', 'benchmark-b02.py', 'benchmark-driver-b02.py',
+             'benchmark-mock.py', 'verify-source-scope.py', 'consolidate-native.py',
+             'summarize-performance.py', 'export-evidence.py']:
+    save(r / name, reports / ('b02-' + name + '.txt'))
+for result in (json.loads((r / 'native-driver-results.json').read_text()) +
+               json.loads((r / 'capture-driver-results.json').read_text())):
+    label = result['label']
+    f = Path(result['folder'])
+    for name in ['fixture.json', 'pre-gui-proof.json', 'native-gui.json', 'terminal-status.json']:
+        save(f / name, reports / ('b02-' + label + '-' + name))
+    for p in sorted((f / 'stage-proofs').glob('*.json')):
+        save(p, reports / ('b02-' + label + '-proof-' + p.name))
+for entry in native['images']:
+    if entry['accepted_native_png']:
+        name = 'b02-' + entry['name']
+    else:
+        extension = '.jpg' if entry['actual_format'] == 'JPEG' else '.png'
+        name = 'b02-interaction-' + entry['fixture'] + '-' + Path(entry['name']).stem + extension
+    save(Path(entry['source']), shots / name)
+for frame in native['frames']:
+    stem = frame['node'].replace(':', '-')
+    save(r / 'figma' / (stem + '-reference-1440.png'), shots / ('b02-figma-' + stem + '-reference.png'))
+intermediate = r / 'b02-j6dovgdr-main-intermediate-d4c'
+for p in sorted(intermediate.glob('*.png')):
+    if not p.name.startswith('candidate-'):
+        save(p, shots / ('b02-intermediate-d4c-' + p.name))
+for p in sorted(intermediate.glob('*gui*.json')):
+    save(p, reports / ('b02-intermediate-d4c-' + p.name))
+for label in ['previous1', 'current1', 'current2', 'previous2']:
+    save(r / ('performance-' + label + '.json'), reports / ('b02-performance-' + label + '.json'))
+    f = r / ('bench-b02-' + label)
+    for name in ['seed-proof.json', 'preui-models.json', 'models-ready.json',
+                 'providers-observed.json', 'matched-condition.json', 'resource-samples.json', 'terminal.json']:
+        save(f / name, reports / ('b02-performance-' + label + '-' + name))
+    for p in sorted(f.glob('*.png')):
+        if not p.name.startswith('candidate-'):
+            save(p, shots / ('b02-performance-' + label + '-' + p.name))
+    for name in ['vmmap-before.txt', 'vmmap-after.txt']:
+        p = f / name
+        raw = p.read_text()
+        save(p, reports / ('b02-performance-' + label + '-' + name),
+             ('\n'.join(line.rstrip() for line in raw.splitlines()) + '\n').encode())
+        raw_json = r / ('performance-' + label + '-' + name.replace('.txt', '-raw.json'))
+        raw_json.write_text(json.dumps({'original_utf8': raw, 'raw_sha256': hashlib.sha256(p.read_bytes()).hexdigest()}, indent=2) + '\n')
+        save(raw_json, reports / ('b02-' + raw_json.name))
+out = {'at': datetime.datetime.now().astimezone().isoformat(),
+       'candidate_sha256': native['candidate_sha256'], 'count': len(entries),
+       'total_bytes': sum(x['bytes'] for x in entries), 'files': entries,
+       'excluded': 'Private Core configs, keys, SQL snapshots, signed Figma URLs, raw full-context text, app/executable copies and window-discovery diagnostics are not exported.'}
+(reports / 'b02-artifacts.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps({'files': out['count'], 'MiB': round(out['total_bytes'] / 2**20, 3)}))

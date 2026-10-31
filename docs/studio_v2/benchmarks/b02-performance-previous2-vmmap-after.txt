@@ -1,0 +1,2 @@
+vmmap[70281]: vmmap cannot examine process 69804 (with name like '69804') because it no longer appears to be running.
+vmmap[70281]: [fatal] mach port for process 0 not valid

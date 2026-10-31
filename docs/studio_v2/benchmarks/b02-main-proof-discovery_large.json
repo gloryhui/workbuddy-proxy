@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-31T15:21:28.486902+08:00",
+  "stage": "discovery_large",
+  "core_pid": 55325,
+  "core_health": "ready",
+  "core_config_sha256": "33cc36c8e80da35a575f43e8d15565f77ee6967c13e9287e529cbd7259aac6e5",
+  "explicit_save": false,
+  "providers": 2,
+  "models": 6,
+  "target_model_name": "deepseek-v4.1-flash",
+  "protocol": "openai_chat",
+  "protocol_settings": {
+    "authentication": "protocol_default",
+    "anthropic_version": "2023-06-01",
+    "default_max_output_tokens": 4096,
+    "reasoning_profile": {
+      "mode": "none",
+      "budgets": {},
+      "levels": {}
+    },
+    "responses_efforts": {}
+  },
+  "original_nonprovider_root_exact": true,
+  "all_unpermitted_old_config_fields_preserved": true,
+  "requests": [
+    14,
+    7000,
+    700,
+    7700
+  ],
+  "history": {
+    "usage_requests": {
+      "rows": 14,
+      "all_fields_preserved": true,
+      "sha256": "5d15aad3215ca189ad98f627e7833d9da2bef0d67786dc6dd63d73b0df090da8"
+    },
+    "usage_costs": {
+      "rows": 14,
+      "all_fields_preserved": true,
+      "sha256": "0352e96f0b90492ce7f5bd922d5b431004c4fe7b8cbedbc0db956b02ba52e433"
+    }
+  },
+  "scope": "Read-only live Core health, persisted config and exact SQL snapshots. Only declared native GUI Save stages may update checkpoints; no business-data writes by this observer."
+}

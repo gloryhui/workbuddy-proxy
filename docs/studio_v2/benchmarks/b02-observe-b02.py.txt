@@ -1,0 +1,96 @@
+from pathlib import Path
+import sys,json,hashlib,urllib.request,sqlite3,datetime,os,time
+r=Path(__file__).resolve().parent
+f=Path(sys.argv[1]).resolve();stage=sys.argv[2]
+assert f.parent==r and f.is_relative_to(r)
+ready=json.loads((f/'cua-launch-ready.json').read_text())
+instance=json.loads((f/'config/instance.json').read_text())
+opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+request=urllib.request.Request('http://127.0.0.1:%d/_control/action'%ready['port'],data=b'{"command":"stats_health"}',headers={'Content-Type':'application/json','Authorization':'Bearer '+instance['management_key']})
+with opener.open(request,timeout=10) as response:health=json.loads(json.loads(response.read())['message'])
+assert health['state']=='ready'
+folder=f/'stage-proofs';folder.mkdir(exist_ok=True)
+baseline=f/'observer-baseline-private.json';checkpoint=f/'observer-checkpoint-private.json'
+cfgpath=f/'config/config.json'
+cfg=json.loads(cfgpath.read_text());config_sha=hashlib.sha256(cfgpath.read_bytes()).hexdigest()
+if stage in ['initial','capacity_initial']:
+    assert not baseline.exists() and not checkpoint.exists()
+    original=json.loads((f/'config-before.json').read_text());assert cfg==original
+    baseline.write_text(json.dumps(cfg)+'\n');checkpoint.write_text(json.dumps({'config':cfg,'sha256':config_sha})+'\n')
+    os.chmod(baseline,0o600);os.chmod(checkpoint,0o600)
+original=json.loads(baseline.read_text());previous=json.loads(checkpoint.read_text())
+assert len(cfg['providers'])==len(original['providers'])==2
+assert [p['id'] for p in cfg['providers']]==[p['id'] for p in original['providers']]
+assert {k:v for k,v in cfg.items() if k!='providers'}=={k:v for k,v in original.items() if k!='providers'}
+saved=stage.endswith('_saved')
+protocols={'chat_saved':'openai_chat','responses_saved':'openai_responses','anthropic_budget_saved':'anthropic_messages','anthropic_adaptive_saved':'anthropic_messages','gemini_budget_saved':'gemini_generate_content','gemini_level_saved':'gemini_generate_content'}
+allowed=[]
+default_protocol_settings={'authentication':'protocol_default','anthropic_version':'2023-06-01','default_max_output_tokens':4096,'reasoning_profile':{'mode':'none','budgets':{},'levels':{}},'responses_efforts':{}}
+def declared_default_addition(path,value):
+    if len(path)==3 and path[0]=='providers' and isinstance(path[1],int):
+        if path[2]=='protocol':return value=='openai_chat'
+        if path[2]=='protocol_settings':return value==default_protocol_settings
+    return len(path)==5 and path[0]=='providers' and isinstance(path[1],int) and path[2]=='models' and isinstance(path[3],int) and path[4]=='capabilities' and value is None
+if stage=='model_added_saved':allowed=[('providers',0,'models')]
+elif stage=='model_edited_saved':allowed=[('providers',0,'models',0,'name'),('providers',0,'models',0,'capabilities')]
+elif stage in protocols:allowed=[('providers',0,'protocol'),('providers',0,'protocol_settings')]
+elif saved:raise AssertionError(('unknown save stage',stage))
+def differences(old,new,path=()):
+    if any(path==a for a in allowed):return []
+    if isinstance(old,dict):
+        if not isinstance(new,dict):return [path]
+        changed=sum((differences(v,new.get(k),path+(k,)) if k in new else [path+(k,)] for k,v in old.items()),[])
+        changed.extend(path+(k,) for k,v in new.items() if k not in old and not declared_default_addition(path+(k,),v))
+        return changed
+    if isinstance(old,list):
+        if not isinstance(new,list) or len(old)!=len(new):return [path]
+        return sum((differences(a,b,path+(i,)) for i,(a,b) in enumerate(zip(old,new))),[])
+    return [] if old==new else [path]
+assert not differences(previous['config'],cfg),('unexpected fields changed',stage,differences(previous['config'],cfg))
+if not saved:assert config_sha==previous['sha256'],('draft/cancel modified Core config bytes',stage)
+a,b=cfg['providers'];model_count=sum(len(p['models']) for p in cfg['providers'])
+if stage=='model_added_saved':
+    assert len(a['models'])==5 and model_count==6
+    assert a['models'][-1]['model']=='beam-free'
+    allowed=[];assert not differences(previous['config']['providers'][0]['models'],a['models'][:-1],('providers',0,'models'))
+if stage=='model_edited_saved':
+    m=a['models'][0];assert m['name']=='deepseek B02'
+    c=m['capabilities'];assert c['supportsImages'] is False and c['supportsToolCall'] is True and c['supportsReasoning'] is True
+    assert c['onlyReasoning'] is False and c['useCustomProtocol'] is False
+    assert c['reasoning']['canDisableThinking'] is True
+    assert set(c['reasoning']['supportedEfforts'])=={'low','high','max'}
+    assert c['reasoning']['defaultEffort']=='low'
+    assert c['maxInputTokens']==1000000 and c['maxOutputTokens']==8192
+    assert c['contextWindow']=={'defaultLength':300000,'supportedLengths':[128000,300000,1000000]}
+if stage in protocols:
+    assert a['protocol']==protocols[stage]
+    s=a['protocol_settings'];assert s['anthropic_version']=='2023-06-01'
+    if stage in ['chat_saved','responses_saved']:assert s['authentication']=='azure_api_key'
+    if stage=='responses_saved':assert s['responses_efforts'].get('max')=='high'
+    if stage=='anthropic_budget_saved':assert s['default_max_output_tokens']==8192 and s['reasoning_profile']['mode']=='anthropic_budget' and s['reasoning_profile']['budgets'].get('minimal')==1024
+    if stage=='anthropic_adaptive_saved':assert s['reasoning_profile']['mode']=='anthropic_adaptive' and s['reasoning_profile']['levels'].get('minimal')=='high'
+    if stage=='gemini_budget_saved':assert s['reasoning_profile']['mode']=='gemini_budget' and s['reasoning_profile']['budgets'].get('minimal')==256
+    if stage=='gemini_level_saved':assert s['reasoning_profile']['mode']=='gemini_level' and s['reasoning_profile']['levels'].get('minimal')=='high'
+if stage.startswith('capacity'):assert model_count==256 and len(a['models'])==255
+if saved:checkpoint.write_text(json.dumps({'config':cfg,'sha256':config_sha})+'\n');os.chmod(checkpoint,0o600)
+db=sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True)
+tables={}
+for table in ['usage_requests','usage_costs']:
+    rows=db.execute('SELECT * FROM '+table+' ORDER BY request_id').fetchall();tables[table]=rows
+counts=db.execute('SELECT COUNT(*),COALESCE(SUM(input_tokens),0),COALESCE(SUM(output_tokens),0),COALESCE(SUM(total_tokens),0) FROM usage_requests').fetchone();db.close()
+history=f/'observer-history-private.json'
+if stage in ['initial','capacity_initial']:history.write_text(json.dumps(tables)+'\n');os.chmod(history,0o600)
+old=json.loads(history.read_text());hist={}
+for table,rows in tables.items():
+    assert json.loads(json.dumps(rows))==old[table],('historical rows changed',stage,table)
+    hist[table]={'rows':len(rows),'all_fields_preserved':True,'sha256':hashlib.sha256(json.dumps(rows,separators=(',',':')).encode()).hexdigest()}
+assert counts[0]==14,('unexpected proxy/Test traffic',counts)
+out={'at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'stage':stage,'core_pid':ready['core_pid'],'core_health':'ready','core_config_sha256':config_sha,'explicit_save':saved,'providers':len(cfg['providers']),'models':model_count,'target_model_name':a['models'][0]['name'],'protocol':a.get('protocol','openai_chat'),'protocol_settings':a.get('protocol_settings'),'original_nonprovider_root_exact':True,'all_unpermitted_old_config_fields_preserved':True,'requests':list(counts),'history':hist,'scope':'Read-only live Core health, persisted config and exact SQL snapshots. Only declared native GUI Save stages may update checkpoints; no business-data writes by this observer.'}
+(folder/(stage+'.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'stage':stage,'providers':len(cfg['providers']),'models':model_count,'protocol':out['protocol'],'history_rows':counts[0]},ensure_ascii=False))
+if stage=='closed':
+    meta=json.loads((f/'fixture.json').read_text());pid=meta['ui_pid']
+    try:os.kill(pid,0)
+    except ProcessLookupError:pass
+    else:raise AssertionError(('UI still running',pid))
+    (f/'native-acceptance-finished').write_text('B02 native stage complete\n')

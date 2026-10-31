@@ -1,0 +1,33 @@
+# B02 final native PNG replacement, same frozen87db candidate
+
+After all four performance runs finish0 and old UI/Core PIDs are gone, Root starts
+capture-driver.py. Read pending-capture.json. Fresh guarded2 providers/5 models/14
+history, no Save/Apply/Test/Sync, source/binary unchanged. Only CUA operates UI.
+
+Use own live PID→onscreen layer0 windowID and native command for EVERY image:
+`/usr/sbin/screencapture -x -o -l WINDOW_ID -t png ABSOLUTE_FILE.png`
+Immediately read PNG signature and IHDR dimensions, require2880x1802 at logical
+1440x900,2200x1402 at1100x700 (the calibrated2x mode). Retain OS extra row. Do not
+crop/resize/transcode CUA JPEG. CUA getScreenshot is only a visual observation.
+
+1. Open fresh unique bundle. Capture Picker59-11 wide/small, Cancel.
+2. First model automatic editor59-279 wide/small, Cancel. Source/extra diagnostic
+   controls/actual model metadata remain truthful. In small mode also scroll to
+   all lower token/context fields and capture model-bottom-small.png natively.
+3. Protocol tabs61-289 Chat,61-561 Responses,61-838 Anthropic,61-1111 Gemini: four
+   wide shots, then four small shots. Default Anthropic/Gemini Unconfigured is
+   truthful; do not force static Figma values. Escape/close, no Apply.
+   After the Gemini small frame, scroll the form to actual max row and capture
+   protocol-bottom-small.png with the fixed footer visible; this confirms final
+   candidate lower-field reachability without relying on the intermediate build.
+4. Keep names NODE-with-dashes-wide.png/small.png. Write per-shot source ownPID,
+   windowID, exact native command and actual logical size/pixels/SHA/bytes to
+   ROOT/native-capture-summary.json and FIXTURE/native-gui.json. State these replace
+   incorrect-format final screenshots only; earlier actual GUI journeys remain
+   separately valid. Do not call this a rerun of all Main/Capacity interactions.
+5. Observe capture_defaults before closing (Core config bytes/history exact), native
+   Close, UI PIDgone, observer closed. Driver waits own Core/host0.
+
+The final four benchmark PNGs already use this calibrated native command. Original
+Main/Capacity raw JPEG and shadow PNG remain as honest interaction evidence with
+correct archival extensions and screenshot-format-audit.json; no byte conversion.

@@ -144,6 +144,16 @@ fn field(label: &'static str, control: impl IntoElement) -> Div {
 
 fn input(state: &Entity<InputState>, disabled: bool, label: &'static str) -> Input {
     Styled::h(crate::ui_components::text_input(state, disabled), px(41.))
+        .when(
+            crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+            |input| {
+                input.line_height(px(19.)).text_color(rgb(if disabled {
+                    MUTED
+                } else {
+                    crate::theme::color::TEXT_2
+                }))
+            },
+        )
         .bg(rgb(if disabled {
             SOFT
         } else {
@@ -152,6 +162,65 @@ fn input(state: &Entity<InputState>, disabled: bool, label: &'static str) -> Inp
         .border_color(rgb(BORDER))
         .rounded(px(10.))
         .aria_label(label)
+}
+
+// Keep the native checkbox engine and its existing change handler. In Studio,
+// the designed AUTO badge and title form its visible trigger instead of adding
+// a second indicator between the badge and title.
+fn auto_checkbox(
+    label: &'static str,
+    title: &'static str,
+    checked: bool,
+    on_change: impl Fn(&bool, &mut Window, &mut App) + 'static,
+) -> gpui_kit::base::Checkbox {
+    let primary = rgb(crate::theme::palette().primary);
+    gpui_kit::base::Checkbox::new("model-capabilities-auto")
+        .checked(checked)
+        .accessibility_label(label)
+        .flex()
+        .items_center()
+        .gap(px(13.))
+        .h(px(27.))
+        .rounded(px(5.))
+        .cursor_pointer()
+        .focus_visible(move |style| {
+            style.shadow(vec![
+                BoxShadow::new(px(0.), px(0.), primary.into())
+                    .blur_radius(px(0.))
+                    .spread_radius(px(1.)),
+            ])
+        })
+        .child(
+            div()
+                .w(px(80.))
+                .h(px(27.))
+                .flex_none()
+                .flex()
+                .items_center()
+                .justify_center()
+                .rounded(px(9.))
+                .bg(rgb(crate::theme::color::BG_BAR))
+                .text_color(rgb(crate::theme::palette().dark))
+                .text_size(px(11.))
+                .line_height(px(16.))
+                .font_weight(FontWeight::MEDIUM)
+                .child(if checked { "● AUTO" } else { "MANUAL" }),
+        )
+        .child(
+            Label::new(title)
+                .text_size(px(13.))
+                .line_height(px(19.))
+                .font_weight(FontWeight::BOLD)
+                .text_color(rgb(INK)),
+        )
+        .on_change(move |state, _, window, cx| {
+            window.prevent_default();
+            on_change(
+                &(state == gpui_kit::base::CheckboxState::Checked),
+                window,
+                cx,
+            );
+        })
 }
 
 #[derive(Clone, Copy)]
@@ -275,6 +344,38 @@ impl Proxy {
     fn model_notice(&self, cx: &mut Context<Self>) -> Div {
         let automatic = self.model_options.automatic;
         let unknown_image = automatic && !self.model_options.image_known;
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
+        let on_change = cx.listener(|this, enabled: &bool, window, cx| {
+            if *enabled {
+                let model = this.model_id_for_options(cx);
+                this.model_options
+                    .load(&Value::Null, &model, this.zh, window, cx);
+            } else {
+                this.model_options.automatic = false;
+            }
+            cx.notify();
+        });
+        let label = self.t(
+            "自动识别模型能力（取消后自定义）",
+            "Detect capabilities automatically",
+        );
+        let automatic_control = if studio {
+            auto_checkbox(
+                label,
+                self.t("自动识别模型能力", "Detect capabilities automatically"),
+                automatic,
+                on_change,
+            )
+        } else {
+            model_checkbox(
+                "model-capabilities-auto",
+                label,
+                automatic,
+                false,
+                false,
+                on_change,
+            )
+        };
         div()
             .flex()
             .flex_col()
@@ -293,60 +394,42 @@ impl Proxy {
                     .h(px(27.))
                     .gap(px(13.))
                     .flex_none()
-                    .child(
-                        Tag::custom(
-                            rgb(crate::theme::color::BG_BAR).into(),
-                            rgb(crate::theme::palette().dark).into(),
-                            rgb(crate::theme::color::BG_BAR).into(),
-                        )
-                        .small()
-                        .h(px(27.))
-                        .min_w(px(80.))
-                        .rounded(px(9.))
-                        .text_size(px(11.))
-                        .child(if automatic {
-                            "● AUTO"
-                        } else {
-                            "MANUAL"
-                        }),
-                    )
-                    .child(
-                        model_checkbox(
-                            "model-capabilities-auto",
-                            self.t(
-                                "自动识别模型能力（取消后自定义）",
-                                "Detect capabilities automatically",
-                            ),
-                            automatic,
-                            false,
-                            false,
-                            cx.listener(|this, enabled: &bool, window, cx| {
-                                if *enabled {
-                                    let model = this.model_id_for_options(cx);
-                                    this.model_options.load(
-                                        &Value::Null,
-                                        &model,
-                                        this.zh,
-                                        window,
-                                        cx,
-                                    );
-                                } else {
-                                    this.model_options.automatic = false;
-                                }
-                                cx.notify();
+                    .when(!studio, |row| {
+                        row.child(
+                            Tag::custom(
+                                rgb(crate::theme::color::BG_BAR).into(),
+                                rgb(crate::theme::palette().dark).into(),
+                                rgb(crate::theme::color::BG_BAR).into(),
+                            )
+                            .small()
+                            .h(px(27.))
+                            .min_w(px(80.))
+                            .rounded(px(9.))
+                            .text_size(px(11.))
+                            .child(if automatic {
+                                "● AUTO"
+                            } else {
+                                "MANUAL"
                             }),
                         )
-                        .text_size(px(13.))
-                        .font_weight(FontWeight::SEMIBOLD)
-                        .tooltip({
-                            let text = self.t(
+                    })
+                    .child(
+                        automatic_control
+                            .text_size(px(13.))
+                            .font_weight(FontWeight::SEMIBOLD)
+                            .tooltip({
+                                let text = self.t(
                                 "使用内置模型规则与 models.dev 元数据，取消勾选后手动覆盖",
                                 "Use built-in rules and models.dev metadata; uncheck to customize",
                             ).to_owned();
-                            move |window, cx| {
-                                crate::ui_components::full_value_tooltip(text.clone(), window, cx)
-                            }
-                        }),
+                                move |window, cx| {
+                                    crate::ui_components::full_value_tooltip(
+                                        text.clone(),
+                                        window,
+                                        cx,
+                                    )
+                                }
+                            }),
                     ),
             )
             .child(caption(self.model_source_note()).h(px(20.)).flex_none())
@@ -646,10 +729,26 @@ impl Proxy {
             div().flex().gap(px(11.)).pr(px(1.)).flex_none().children(
                 labels.into_iter().enumerate().map(|(offset, (cn, en))| {
                     let label = self.t(cn, en);
-                    field(
-                        label,
-                        input(&self.model_options.limits[start + offset], automatic, label),
-                    )
+                    let control =
+                        input(&self.model_options.limits[start + offset], automatic, label);
+                    if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
+                        div()
+                            .flex()
+                            .flex_col()
+                            .flex_1()
+                            .min_w_0()
+                            .flex_shrink_0()
+                            .gap(px(2.))
+                            .child(
+                                caption(label)
+                                    .text_size(px(11.))
+                                    .line_height(px(16.))
+                                    .h(px(20.)),
+                            )
+                            .child(control)
+                    } else {
+                        field(label, control)
+                    }
                 }),
             )
         };
@@ -787,6 +886,11 @@ impl Proxy {
                                     self.t("编辑模型", "Edit model")
                                 })
                                 .text_size(px(21.))
+                                .when(
+                                    crate::theme::current_skin()
+                                        == crate::theme::Skin::StudioIndigo,
+                                    |title| title.line_height(px(30.)),
+                                )
                                 .font_weight(FontWeight::BOLD)
                                 .text_color(rgb(INK)),
                             )

@@ -1,0 +1,31 @@
+{
+  "stats_ready_before_seed": true,
+  "inter_seed_delay_seconds": 0.025,
+  "real_http_seed_requests": 22,
+  "statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "sql_usage_rows_before_ui": 22,
+  "scope": "Identical pre-UI seed for previous/current, before unchanged original benchmark1000small+80large requests."
+}

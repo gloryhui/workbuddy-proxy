@@ -1,0 +1,314 @@
+{
+  "candidate_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "fixture": "b02-j6dovgdr-captures-final",
+  "ui_pid": 70560,
+  "window_id": 9050,
+  "ui_gone_after_native_close": true,
+  "screenshots": [
+    {
+      "name": "59-11-wide.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "a86b155f42fbd35571b8fb21f767cb6a46728c74fe0dfd9a0bfb908a4fe09679",
+      "bytes": 601418,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-11-wide.png"
+      ]
+    },
+    {
+      "name": "59-11-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "d3301e2c5d4bd7804fff160212ef214dcc2248ca35d596899158e16b05abfe51",
+      "bytes": 346749,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-11-small.png"
+      ]
+    },
+    {
+      "name": "59-279-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "02f79e5b7b055f4527fc1f19586e0b8878b35c451126ae997fb10c1f34c61581",
+      "bytes": 367477,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-279-small.png"
+      ]
+    },
+    {
+      "name": "model-bottom-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "eeceefafcc160a3d55c6bfb8690735d80f9e65d23f815c9e1d2e55bb56716f0a",
+      "bytes": 362754,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/model-bottom-small.png"
+      ]
+    },
+    {
+      "name": "59-279-wide.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "7d0f9c561b0c0b452ac3953c291ebbba25a5bc2e36b4bcf50124642c9b35eb0e",
+      "bytes": 626776,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/59-279-wide.png"
+      ]
+    },
+    {
+      "name": "61-289-wide.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "6babe2da9896c74ce4d9bdf2e9bfa5fb88f9ec3c0cba3914f47b729b2e1fa602",
+      "bytes": 611376,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-289-wide.png"
+      ]
+    },
+    {
+      "name": "61-561-wide.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "03220e09ba8225a82344412e49cbe4253b7576711cd15dd978e7b3ba50491a8a",
+      "bytes": 614002,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-561-wide.png"
+      ]
+    },
+    {
+      "name": "61-838-wide.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "5f956d89115972a3de144cd509ecd969b4d828e399d1b78133c461f538f67110",
+      "bytes": 620645,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-838-wide.png"
+      ]
+    },
+    {
+      "name": "61-1111-wide.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "bc1792f953f781d4ab17476ebeda8e1ab05118a74a89e3303cf0fef8da610e48",
+      "bytes": 597718,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-1111-wide.png"
+      ]
+    },
+    {
+      "name": "61-1111-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "bf2726d6b90afb2dabbd6a20d22a302ccfcf11107ceb41feb3a1eb5ae608ea2b",
+      "bytes": 366679,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-1111-small.png"
+      ]
+    },
+    {
+      "name": "protocol-bottom-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "ca72a357f65246911f5e0f48f9c2771e3418e0a8c4027f42993a52347f9a7581",
+      "bytes": 363242,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/protocol-bottom-small.png"
+      ]
+    },
+    {
+      "name": "61-838-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "5bf7a4b2799e63612bd00996a2ad94f18ce7a1e12412537c68c6457a5fa3629c",
+      "bytes": 385410,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-838-small.png"
+      ]
+    },
+    {
+      "name": "61-561-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "d74566e85c973b8dcf497c3e35b97be39b7d53714a3f236355931cd450f00744",
+      "bytes": 379038,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-561-small.png"
+      ]
+    },
+    {
+      "name": "61-289-small.png",
+      "pid": 70560,
+      "window_id": 9050,
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "62b0c29666211df5e319d4f131422fc568e030e2983f81613e4ac4b5068ea58e",
+      "bytes": 377946,
+      "command": [
+        "/usr/sbin/screencapture",
+        "-x",
+        "-o",
+        "-l",
+        "9050",
+        "-t",
+        "png",
+        "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-captures-final/61-289-small.png"
+      ]
+    }
+  ],
+  "scope": "12 default frames at two sizes and two lower-field images; this is not a repeat of Main and Capacity functional journeys.",
+  "capture_method": "native screencapture -x -o, own PID/onscreen/layer0 verified per image; PNG magic and exact pixels checked; no crop, scaling or transcoding.",
+  "observer": [
+    "capture_defaults passed: 2 providers/5 models/14 historical requests, Core bytes unchanged",
+    "closed passed"
+  ],
+  "additional_observation": "Search existing deepseek and click checked item: remained on, selected-to-add count stayed zero; then Cancel.",
+  "limits": [
+    "Tooltip precise hover not verified; no explicit activate/raise, actual foreground unverified.",
+    "Capture fixture did not Save, Apply, Test or Sync."
+  ]
+}

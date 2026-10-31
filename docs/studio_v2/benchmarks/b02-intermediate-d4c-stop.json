@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-31T15:02:55.867226+08:00",
+  "reason": "Actual long-ID clipping found during first concentrated native look; only presentation polish before final full journey. Not a timeout, not an application failure or passed full batch.",
+  "original_folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final",
+  "retained_folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-intermediate-d4c",
+  "candidate_sha256": "d4c8b8edcc486dffb3c300e2d8acea642fd7fa63e569041ba57628a41d42634c",
+  "driver_pid": 45339,
+  "driver_exit_code": 130,
+  "fixture_signal_requested": "SIGTERM by driver finally after original UIgone; host completed finally/Core0",
+  "terminal": {
+    "ui_exit_before_cleanup": null,
+    "ui_pid_gone_before_cleanup": true,
+    "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": null,
+    "ui_pid_gone_after_cleanup": true,
+    "core_exit_after_cleanup": 0
+  },
+  "all_recorded_pids_gone": true,
+  "partial_evidence": "12 native defaults + actual AUTO click/Space, table Return/cancel, discovery503/empty and Core14 preservation; no Apply/Save. Report has its actual limits."
+}

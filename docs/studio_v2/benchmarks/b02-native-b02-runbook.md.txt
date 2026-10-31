@@ -1,0 +1,69 @@
+# B02 frozen native runbook
+
+Candidate 87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6, unchanged fixed Core25f.
+Root is this document's parent. Only pending-native.json's guarded unique bundle/PIDs.
+CUA input only; no explicit activate/raise. Native raw own-PID window screenshots, no crop/resize.
+If locked, report the actual error and stop UI work; do not bypass or restart on an observation timeout.
+Frame images: 59-11,59-279,61-289,61-561,61-838,61-1111 each -wide.png / -small.png.
+Logical1440x900/1100x700; preserve native scale and OS extra row, record actual PNG pixels/SHA.
+Real fixture values override static Figma samples. Never invent38/4096, automatic metadata or success.
+No Test/Sync/lifecycle/real profiles/external links. Original14 requests/costs must stay exact.
+
+## Helpers
+
+Read-only independent observer: python3 ROOT/observe-b02.py FIXTURE STAGE.
+Mock discovery only: python3 ROOT/set-b02-discovery.py FIXTURE success|failure|empty|large.
+Run observer after every critical draft/cancel/save boundary; assertion failures are not acceptance.
+Save stages are explicitly named below; every other stage requires current Core bytes unchanged.
+On save allow natural asynchronous persistence then invoke the observer; do not issue business-data API writes.
+Keep stage proof JSONs and original screenshots. Final report ROOT/native-b02-summary.json and fixture/native-gui.json.
+
+## Main: default six frames first
+
+1. Verify sourceguard/pre-gui-proof, own live PID and binarySHA. Observer initial is already initialized by driver; use defaults_start, not initial again.
+2. ProviderA has4 models, B1,14 requests. GET models succeeds via localhost with38 candidates.
+3. Picker: verify long first-row text now shows ellipsis, not hard clipping; get a full-value tooltip screenshot if CUA can produce a real resting pointer, otherwise record that limitation. Also search the existing deepseek model and capture its checked/read-only badge before clearing. Picker: open Get models, verify38 actual candidates and existing read-only checks; capture59-11 wide/small. Cancel.
+4. First A model deepseek-v4.1-flash: open editor; capture59-279 wide/small automatic. Native AUTO badge+title is one checkbox with the unchanged accessible label/id. Check real source/unknown notices; do not fake settings.
+5. Test AUTO→manual→AUTO using native click and, when practical, Space; flags/limits enable/disable and source notice changes. Cancel editor, observe auto_cancel (Core exact).
+6. Open Protocol options. Capture Chat/Responses/Anthropic/Gemini in wide and small:61-289/561/838/1111. Prefer4 tabs wide then4 small to batch resizing. Default Anthropic/Gemini remain Unconfigured until explicitly selected; no forced screenshot values.
+7. Each tab pointer→Return/Space must stay in dialog rather than Apply. Check small max row via internal form scroll; errors/footer must stay reachable. Escape/close, observer protocol_defaults (Core exact).
+
+## Main: table and discovery journey
+
+8. Begin Edit provider to create a cancel snapshot. Table first/third Shift range; Cmd toggle middle. Verify selected target identities. Return opens model editor; cancel returns. Delete only the intended local selection, inspect survivors; parent Cancel edit restores original4. Observer table_cancel, Core exact.
+9. Set failure, Get models, inspect actual error and retry path; observer discovery_failure. Set empty, Get, inspect no-model result; observer discovery_empty. Restore success38.
+10. Begin Edit provider. Picker search beam-free, no-match, clear; select/invert filtered, clear picks, Selected-only, existing rows stay checked/read-only and are not duplicated. Select beam-free then Cancel: observer picker_cancel.
+11. Repeat select beam-free, Add selected: only parent draft gets fifth A model. Observer picker_apply (Core still2/5). Parent Cancel edit restoresA4, observer picker_draft_cancel.
+12. Repeat beam-free addition and explicitly Save configuration. Observer model_added_saved: Core2/6, A5, added model beam-free, originals unchanged. SwitchB/A and verify readback.
+13. Set large4096, Get; verify real4096. List Home/End or actual internal scroll to candidate-4095, capture discovery4096-tail-small.png; return first. Search long model (b02-long-model-...-end), no-match/clear; observe discovery_large. Cancel without modifying Core; restore success38.
+
+## Main: ability edit, validation and persistence
+
+14. Begin provider Edit, edit first A model. Click AUTO/title to manual, verify6 capability controls and5 effort toggles enabled; preserve original semantics (only-reasoning forbids off etc).
+15. Invalid maximum output -1 then Confirm: validation must retain editor and expose footer. Capture model-invalid-small.png; observer model_invalid, Core exact.
+16. Set display name `deepseek B02`, image input OFF, tools and reasoning ON; only-reasoning OFF, allow-off ON, custom protocol OFF. Set default effort Low (must be among supported efforts); do not clear selected Low/High/Max.
+17. Limits: input1000000, output8192, context300000, choices128000,300000,1000000. Confirm to parent draft; observer model_apply (Core exact).
+18. Explicit Save; observer model_edited_saved checks exact intended name/capabilities and all other fields. Reopen editor, read back manual/Low/limits; cancel. SwitchB/A; observe model_readback (Core exact).
+
+## Main: four protocol data round trips
+
+Every invalid Apply must retain dialog and leave Core exact. Every legal Apply still leaves Core exact. Only explicit Save commits. After each save, switchB/A or reopen to verify actual readback. Original providerB and all model fields must remain unchanged.
+
+19. Chat: nonempty minimal mapping (128) while Native effort must reject. Capture chat-invalid-small.png; observer chat_invalid. Clear mapping. Select Azure api-key authentication; Apply, observer chat_apply. Explicit Save, observer chat_saved.
+20. Responses: max=`not-a-level`; switchChat→Responses preserves local invalid value. Apply rejects; capture responses-invalid-small.png, observer responses_invalid. Cancel/reopen: rejected transient value must not enter saved settings. Set max=high, Azure authentication, Apply(observer responses_apply), Save(observer responses_saved).
+21. Anthropic: invalid output0 rejects, then8192. Choose Token budget; minimal128 rejects (minimum1024), capture anthropic-invalid-small.png; observer anthropic_invalid. Correct minimal1024, Apply(observer anthropic_budget_apply), Save(observer anthropic_budget_saved).
+22. Reopen Anthropic, Adaptive. Old numeric mapping is not a level; use minimal=xhigh to prove invalid, then high legal. Apply(observer anthropic_adaptive_apply), Save(observer anthropic_adaptive_saved). Version remains2023-06-01.
+23. Gemini: Token budget minimal=-1 rejects; capture gemini-invalid-small.png, observer gemini_invalid. Correct256, Apply(observer gemini_budget_apply), Save(observer gemini_budget_saved).
+24. Reopen Gemini, Thinking level: minimal=unknown rejects, then high legal. Apply(observer gemini_level_apply), Save(observer gemini_level_saved). Read back high/profile. No need to restore fixture to Chat; exact intended change is documented.
+25. Check at least one protocol modal overlay prevents toolbar language activation, and X/Escape return without saving. Observe final_readback. Native Close, verify own UI PID gone, observer closed. Driver must finish0 before capacity phase.
+
+## Capacity fixture (driver creates after main is closed)
+
+26. Guarded full-models fixture: A255+B1=global256, original14 history; mock4096 candidates. Verify table count/real last fill-250; small screenshot capacity256-tail-small.png. Return/F2 last-row editor identifies correct model, Cancel.
+27. Begin provider Edit, range/Cmd selection at boundaries; remove only local chosen models, parent Cancel restoresA255. Observe capacity_table_cancel; never Save or Test.
+28. Get models4096, existing entries remain read-only. End to candidate-4095, original screenshot capacity4096-tail-small.png. Select a new candidate at zero room; visible capacity error and Apply/Enter must not append or persist beyond256. Observer capacity_overflow, clear/cancel, observer capacity_cancel. Check Add model remains disabled and cannot create a draft.
+29. Native Close and observe closed (no Core changes). Driver stops/waits own Core and host, UI disappearance recorded without invented wait exit code.
+
+## Reporting
+
+Report actual actions and every failure/uncertainty. Full keyboard/IME/AX/theme/platform gates remainR01-R04; do not claim unexercised states. If a real blocker or visible in-scope defect occurs, collect one clear issue list for one consolidated polish pass, rather than looping tiny changes.

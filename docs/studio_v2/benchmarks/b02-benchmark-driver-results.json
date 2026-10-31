@@ -1,0 +1,26 @@
+[
+  {
+    "label": "previous1",
+    "exit_code": 0,
+    "wall_seconds": 232.25,
+    "evidence": "performance-previous1.json"
+  },
+  {
+    "label": "current1",
+    "exit_code": 0,
+    "wall_seconds": 175.245,
+    "evidence": "performance-current1.json"
+  },
+  {
+    "label": "current2",
+    "exit_code": 0,
+    "wall_seconds": 136.502,
+    "evidence": "performance-current2.json"
+  },
+  {
+    "label": "previous2",
+    "exit_code": 0,
+    "wall_seconds": 138.642,
+    "evidence": "performance-previous2.json"
+  }
+]

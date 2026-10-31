@@ -1,0 +1,22 @@
+{
+  "ui_pid": 69038,
+  "providers_visible": true,
+  "logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "performance-window.png",
+  "pixels": [
+    2880,
+    1802
+  ],
+  "screenshot_sha256": "37fa9d07c2c82a88d8796d8e27fe6b2deb531e0fabed188db3830064955248f8",
+  "window_id": 8882,
+  "history": [
+    "1 provider,64 models,22 requests",
+    "resize1100, model End bench-model-63, Home",
+    "resize1440, picker4096 End bench-model-9, Home, Cancel",
+    "model0 AUTO off/on Cancel",
+    "Chat Responses Anthropic Gemini Escape"
+  ]
+}

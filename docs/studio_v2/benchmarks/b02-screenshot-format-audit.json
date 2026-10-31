@@ -1,0 +1,439 @@
+{
+  "at": "2026-10-31T15:40:44.551500+08:00",
+  "issue": "CUA getScreenshot returned raw JPEG despite .png extension; native screencapture without -o includes OS shadow. The twelve required native PNG images were not complete. No image data was transcoded/cropped/repainted.",
+  "correction": "Retain original bytes with honest format metadata; correct-format file extension on archival copies. Same frozen candidate will receive a fresh capture-only fixture using own-PID native screencapture -x -o -l ID -t png, validate magic+dimensions immediately. Actual Main/Capacity GUI and persisted-data evidence remain separately valid.",
+  "images": [
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "59-11-small.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 347024,
+      "sha256": "a84265076ad5a4511e905313e55f1aa5d39bc03cfc24dd7b86479b5b63ea914b",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "59-11-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 598742,
+      "sha256": "1e98dc839668aee0d31fd5912a127a1ea32fa1e325eea80a3106d79a8119aa83",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "59-279-small.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 367606,
+      "sha256": "59008191977550ddf548bbcb905c61e7eb53d775882a373e2c925dec72cc1b57",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "59-279-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 624075,
+      "sha256": "7d8b4df58fac2b12c3031cbeb626a40c3604ae0a527724b91affd61e4bf54863",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-1111-small.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 366480,
+      "sha256": "61042715f779e9871f0be18c4162555a9e1a3196b9c6708e845c43f0466c9dc6",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-1111-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 594183,
+      "sha256": "7993ce1befa59feb96eb9ceeb5acdd9b0c42a08b3ecf6e36b48f9602c4000ec3",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-289-small.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 377667,
+      "sha256": "f2a0803878507e09165f0ed53f3637627b53e71c79783f271dcf83274752fead",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-289-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 607669,
+      "sha256": "ba66fd6efa73c5c19eb1c1842ac9d676dd5522f3bf6feeed1aa346f5c039932b",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-561-small.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 378748,
+      "sha256": "711038891e165cc4c7824c4b8cca61f92138a3bd5841ed7096415b0fe5be436b",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-561-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 610411,
+      "sha256": "c9eebbcd09668c8b168eb01be2ad9145f9b1df24d78ca5baa5f7c7501993f77e",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-838-small.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 385058,
+      "sha256": "13c033f08dca5b4887bbb2112fb716c41469a13960effc4b98ce0b008b9061c1",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-intermediate-d4c",
+      "file": "61-838-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 616940,
+      "sha256": "54101cd2a422e51477c27a7a352cbc7077d63b2a9d5930ea3758b664b33eccff",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "59-11-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 273677,
+      "sha256": "942f356af8a2f081483582509a6364033a2d4dafbdf2c6c6299f6ea358131317",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "59-11-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        3016,
+        1938
+      ],
+      "bytes": 883892,
+      "sha256": "3da6cbd83731b388ed544dc5622b1b540e459a2468e8ec99c38cc5d45c78f73d",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "59-279-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 273715,
+      "sha256": "d1727f5703e32e6a43d1afa739077ad987fdb0c5de073e82c8c10d201766cfd6",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "59-279-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 430362,
+      "sha256": "0f851a6b0e916b94bc478a059768dd74a1667c5af676bc55c40b2f65832aba1a",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-1111-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 262398,
+      "sha256": "d38e1118d5b9371eb30ffc8caea76470c93ee1e47067a78f761c921bd367d014",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-1111-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 417460,
+      "sha256": "6a2dfbce6f3e617aaec7fd3990c814e5ab0c77b8336f85d83b9ab0313aa06afa",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-289-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 277361,
+      "sha256": "186bcc8bc5230092380ac3b483e755d8a0e478900dbf18500f1f92e75cd17929",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-289-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 430035,
+      "sha256": "6001ce3c5a2f07601e1b57d9bdb74893796b063b92d3deb6893ec3516691fbe0",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-561-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 267632,
+      "sha256": "cfbf2a290c21ed54f226fbefa3f66696eeb64f470498b45061d9e0f24744aaf6",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-561-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 432172,
+      "sha256": "c172cf4329e898a2bcf80c82768af7067e0ee1ce99864f8e6458c2b90e35f5fb",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-838-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 274488,
+      "sha256": "981c85e47888609d7fd074c1e382e35cc5d0f5dd3a3d80c30f42f7b6ba6277f7",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "61-838-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "bytes": 432949,
+      "sha256": "69d3e11898568bfbc24644856eeee9c465d75897e73774e44d19ad1a961bd5db",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "anthropic-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 276274,
+      "sha256": "c0b7085e10bb7e36d6195ce674f4b2c2413e32b348a7cceba136e86e22895cdf",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "candidate-8128.png",
+      "actual_format": "PNG",
+      "pixels": [
+        3016,
+        1938
+      ],
+      "bytes": 883892,
+      "sha256": "3da6cbd83731b388ed544dc5622b1b540e459a2468e8ec99c38cc5d45c78f73d",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "chat-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 282657,
+      "sha256": "48480bb82e6bc451a5a941c5f3b2cf5fba4833f4a1e475c37b68848b47891983",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "discovery4096-tail-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 254029,
+      "sha256": "891e35e49e64c28bb007c1b97c383773bfc286c15067b19f7cb762612b57053e",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "gemini-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 265228,
+      "sha256": "3f54e7675c1726526cd5a1a3cc97a5b53821dc7f48adc7b48abcb73566d40017",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "model-bottom-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 274378,
+      "sha256": "b82fb70b6248f7adae33ed9344b4b6911e82fd74d54ff30871776a812766d0d4",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "model-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 272887,
+      "sha256": "8ae7e6cb57110a3f74ea142a2c1045faca1682101efc1c36a029a83c9a313d2b",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "picker-existing-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        3104,
+        2026
+      ],
+      "bytes": 975270,
+      "sha256": "1068440cdd6cb23cced3174e847749898ae93c5aec854148759fbe02f6084000",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "main-final",
+      "file": "responses-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 266259,
+      "sha256": "c2bfe5495401b735d2cb91edd36119d786a4ccf11c665bb7680578ec05904a02",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "capacity-final",
+      "file": "capacity-overflow-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 273804,
+      "sha256": "abd5cb9ca5caebc9453c1827dcaf95b0d77f44f8a33b5d5706ae8d801cc1b3b4",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "capacity-final",
+      "file": "capacity256-tail-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 331471,
+      "sha256": "47cea9c4c7b665b906085dae3468d23712429810524003077464b9e7a41a2242",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    },
+    {
+      "fixture": "capacity-final",
+      "file": "capacity4096-tail-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "bytes": 258706,
+      "sha256": "67662677430c6b42218d0e6158094d209c6aac80f0efb9258adc015df79aca99",
+      "status": "raw interaction/diagnostic evidence; not accepted final native PNG pair"
+    }
+  ]
+}

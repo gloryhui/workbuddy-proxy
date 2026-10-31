@@ -69,6 +69,7 @@ impl ListDelegate for Candidates {
         let label = Label::new(id.clone())
             .text_size(px(13.))
             .text_ellipsis()
+            .when(studio, |label| label.flex_1().min_w_0())
             .text_color(rgb(if existing { MUTED } else { INK }));
         let on_change = move |checked: bool, window: &mut Window, cx: &mut App| {
             cx.stop_propagation();
@@ -128,14 +129,18 @@ impl ListDelegate for Candidates {
                             )
                         }),
                 )
-                .child(label.line_height(px(19.)).font_weight(FontWeight::NORMAL))
+                .child(label.line_height(px(19.)).font_weight(if existing {
+                    FontWeight::MEDIUM
+                } else {
+                    FontWeight::NORMAL
+                }))
                 .on_change(move |state, _, window, cx| {
                     window.prevent_default();
                     on_change(state == gpui_kit::base::CheckboxState::Checked, window, cx);
                 })
                 .on_mouse_down(MouseButton::Left, |_, window, _| window.prevent_default())
                 .tooltip(move |window, cx| {
-                    gpui_kit::component::tooltip::Tooltip::new(tooltip.clone()).build(window, cx)
+                    crate::ui_components::full_value_tooltip(tooltip.clone(), window, cx)
                 })
                 .into_any_element()
         } else {
@@ -527,11 +532,18 @@ impl Proxy {
                                 .font_weight(FontWeight::NORMAL)
                         })
                         .aria_label(self.t("搜索模型 ID", "Search model IDs"))
-                        .prefix(
+                        .prefix(if studio {
+                            Label::new("⌕")
+                                .text_size(px(13.))
+                                .line_height(px(19.))
+                                .text_color(rgb(MUTED))
+                                .into_any_element()
+                        } else {
                             Icon::new(IconName::Search)
                                 .with_size(px(14.))
-                                .text_color(rgb(MUTED)),
-                        ),
+                                .text_color(rgb(MUTED))
+                                .into_any_element()
+                        }),
                     ),
             )
             .child(

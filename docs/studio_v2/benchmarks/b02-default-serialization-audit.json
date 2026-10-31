@@ -1,0 +1,77 @@
+{
+  "scope": "Initial save source-defined default serialization only; not a whole-file byte identity claim. Final consolidated checks require exact normalized B and original model fields outside explicit target edits.",
+  "source_files": {
+    "src/config.rs": "Provider/Model serde(default), derived Serialize; optional capabilities serializes null",
+    "src/protocol/config.rs": "UpstreamProtocol default OpenaiChat; ProtocolSettings/ReasoningProfile default"
+  },
+  "allowed_new_default_paths": [
+    [
+      "providers",
+      0,
+      "protocol"
+    ],
+    [
+      "providers",
+      0,
+      "protocol_settings"
+    ],
+    [
+      "providers",
+      0,
+      "models",
+      0,
+      "capabilities"
+    ],
+    [
+      "providers",
+      0,
+      "models",
+      1,
+      "capabilities"
+    ],
+    [
+      "providers",
+      0,
+      "models",
+      2,
+      "capabilities"
+    ],
+    [
+      "providers",
+      0,
+      "models",
+      3,
+      "capabilities"
+    ],
+    [
+      "providers",
+      1,
+      "protocol"
+    ],
+    [
+      "providers",
+      1,
+      "protocol_settings"
+    ],
+    [
+      "providers",
+      1,
+      "models",
+      0,
+      "capabilities"
+    ]
+  ],
+  "protocol_settings_default": {
+    "authentication": "protocol_default",
+    "anthropic_version": "2023-06-01",
+    "default_max_output_tokens": 4096,
+    "reasoning_profile": {
+      "mode": "none",
+      "budgets": {},
+      "levels": {}
+    },
+    "responses_efforts": {}
+  },
+  "original_provider_b_exact_after_defaults": true,
+  "original_four_models_exact_after_defaults": true
+}

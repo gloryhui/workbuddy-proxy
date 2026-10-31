@@ -92,3 +92,8 @@ UI67使用概览同版收口：仅recent原生margin/gap/28px模型标签，原�
 
 
 B01 / QA68完整批次：最新19份官方完整设计与同一2a12，38主图/9补图+四行定向补验、两尺寸CRUD/取消/保存读回/删除幸存/空态/64搜索与禁用通过；原14请求/费用全字段和非providers根配置保持。原状态/选择delegate/动作处理器保持，Core与配置逻辑不改；复制Key按原Draft继承，不新增清空行为。206常规测试204pass2ignore，另外真实Core发现/创建契约实际通过；四轮原负载均0，合计RSS+3.91MiB/峰+8.505MiB/marker+117.53ms成本留R03。忙态点击CUA失效、补验恢复后多一次Test如实记录，未冒称禁用拦截通过，R01统一复验。19/40界面签收、剩21；R01–R04未通过。详见b01-design-audit/native-consolidated/native-supplement-gui/performance-summary及artifacts。
+
+
+## B02 / UI69 整批保护记录（2026-10-31）
+
+模型发现/选择/容量、范围与Cmd/F2目标、能力和四协议真实保存往返已按同87db验证；取消/Apply/Core边界与原14历史保持，旧配置的9条默认序列化补全单列。6×2正式原生PNG及2底部补图、四轮原负载与完整生命周期留证；原CUA JPEG不冒充PNG。全部Core/配置schema/依赖及原事件保持，未触及真实WorkBuddy/登录项/外链。完整IME/AX/hover与跨平台、长时性能仍归R01–R04。[同版证据](benchmarks/b02-native-consolidated.json)、[字段审计](benchmarks/b02-default-serialization-audit.json)、[性能](benchmarks/b02-performance-summary.json)。

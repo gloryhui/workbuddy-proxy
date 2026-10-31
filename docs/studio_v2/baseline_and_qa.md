@@ -1555,3 +1555,24 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 接受本批有限短负载请求回归证据，但保留成本：空闲合计+3.91MiB、峰值+8.505MiB（5.31%）、进程到记录+117.53ms。分PID峰值中位Core+4.914/UI+3.594MiB，不直接归因于UI或宣称无回退。成功的负载前vmmap物理footprint中位69.6→70.15M、malloc allocated19.7→19.65M、IOSurface resident各15.2M；这些不是RSS，不能证明原因或泄漏排除。负载后vmmap实际已因原脚本停UI而返回process-gone，完整错误保留，不当作成功测量。原ui_record_ready含CUA等待不比较；process→记录也不是首帧/可交互。每版n2、150ms原采样/100ms补采样不证明统计等价、FPS、输入延迟、长时CPU/泄漏；R03仍保留本批与UI67成本。没有为求绿丢慢样本或放宽负载。
 - 原始参考/原生/性能图及报告共205份、13.915MiB已按SHA归档；37个相关PID消失、lsof无打开引用、归档SHA复核及即时路径/内容检查后，以非强制精确rm -r清理本任务Root的589文件/639.179MiB逻辑量；实测Data可用空间增加649.043MiB，余34.788GiB，APFS可能受其他应用影响。本轮临时文件保留0；先前被拒的Root55/56/57未重试，仍保留1698.745MiB。共享Cargo缓存和Goal复用的Root46 Core基线不动。[清理预检](benchmarks/b01-cleanup-preflight.json)、[实际结果](benchmarks/b01-cleanup.json)。[归档清单](benchmarks/b01-artifacts.json)。全部键盘IME/AX/七主题、Windows/Intel硬件/HiDPI、长时性能、CI与安装签名分发仍是独立R01–R04门禁；本批19界面签收不代表正式版发布。下一批B02集中核对模型与四协议6帧。
+
+
+## 小功能 69：B02模型管理与四种协议整批签收（2026-10-31）
+
+- 集中签收6帧/6任务，累计25/40，剩余15；下一批B03统计、价格与本地用量7帧。最终UI SHA 87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6，42,492,240bytes，固定Core25f。只改4份Rust呈现文件：AUTO采用同原生Checkbox与原事件的徽章/标题组合、字体/行距与限制caption；Picker长ID加flex约束/复用有界tooltip、已有项字重/原搜索符号；协议字段间距、1px右边距与页脚文字。20个原owner监听表达式保留，协议非呈现前缀及解析校验后缀字节一致；Core/配置schema/依赖/锁文件未改。[构建](benchmarks/b02-build.json)、[源码边界](benchmarks/b02-source-scope.json)、[最新设计/原资源](benchmarks/b02-design-audit.json)、[资源审计](benchmarks/b02-asset-audit.json)。
+- fmt、206测试中204pass/2既有ignore、strict all-targets Clippy、Intel all-targets类型检查、arm64 release五门禁均0。独立真实Core发现19用例和创建/重试/能力/新身份契约已实际执行，Core0、子进程等待结束；最终Picker两行呈现修正不改这些覆盖逻辑。Intel类型检查不等于硬件验证。最初d4c集中看图发现长ID硬截断，补flex1/minw0和有界tooltip后冻结87db，之后完整Main/Capacity及性能均用最终版。[真实Core契约](benchmarks/b02-provider-contracts.json)、[集中微调](benchmarks/b02-consolidated-polish.json)、[中间版退出](benchmarks/b02-intermediate-d4c-stop.json)。
+- Main实际38/4096发现、503/空结果、搜索无匹配/清空/全选反选/仅勾选、已有项只读；beam-free Cancel、Apply只改草稿、父Cancel、Save至2/6并读回。AUTO点击/Space、非法输出-1、手动deepseek B02及六能力/Low/四限制保存读回。四协议含Anthropic预算/Adaptive、Gemini预算/level均非法拒绝、Apply不落Core、显式Save与读回；原14请求和14费用全字段SHA保持。满载A255+B1：End到fill-250、F2身份正确，Shift范围249/250、Cmd取消249后只删250，父取消恢复255；4096真实排序尾文本是model-b-1（candidate-4095是行索引），容量点击拒绝追加。精准hover、主夹具Cmd视觉不确定、未聚焦标签初始Return关闭、容量Return实际只切候选勾选均按实记录；满载明确Cmd补足本批，完整焦点/输入仍R01。[完整GUI](benchmarks/b02-native-b02-summary.json)、[原生/数据整合](benchmarks/b02-native-consolidated.json)。
+- 首次Save会按既有Serde补出9个默认路径：两家protocol/openai_chat与默认protocol_settings、5原模型capabilities:null；所有原业务字段保持，不能说配置字节完全不变。独立源码默认审计后收紧未知新增/删除字段检查；最终按这些精确默认归一化，B及其他原模型字段完全保持，8次明确Save仅改声明目标。一次保存断言失败是小窗Save尚在折叠区外、点击未触发；滚到实际可见按钮再单击后保存通过，未放宽断言。[默认序列化](benchmarks/b02-default-serialization-audit.json)、[逐阶段数据](benchmarks/b02-main-proof-closed.json)。
+- 首轮实际图发现格式问题：11张主图和其余CUA补图虽用.png命名，字节为JPEG；最初原生PNG还含OS阴影。原始字节保留为诚实JPEG/阴影证据，不转换冒充。随后同87db全新2/5/14隔离实例用ownPID/windowID及screencapture原生无阴影选项重新拍齐6×2 PNG和2张小窗底部：2880×1802/2200×1402，对应1440×900/1100×700，保留OS额外一行，无后裁切/缩放。只补拍版式与既有项点击只读；不是重跑Main/Capacity全部交互。新实例全配置字节和历史不变，三夹具Core/host均0，CUA拥有GUI，只记录PID消失而不编造GUI退出码。[格式问题审计](benchmarks/b02-screenshot-format-audit.json)、[正式补拍](benchmarks/b02-native-capture-summary.json)、[小窗模型底部](screenshots/b02-model-bottom-small.png)、[小窗协议max](screenshots/b02-protocol-bottom-small.png)。
+- 原benchmark.py SHA bc7e0537…15f6c2保持；1000小请求/64模型/80×1MiB/并发4未变，固定Core、arm64、Studio、22真实seed、UI前相同save64和原save64均保留。P/C/C/P各n2，同64表尾→头/4096发现尾→头取消/AUTO切换取消/四协议标签取消、1100→1440、原生PNG和10s驻留，四轮均0。所有慢样本保留；原ui_record_ready含CUA等待不比较，process→记录不是首帧或可交互；负载后vmmap实际在原脚本停UI后，不当成功测量。两版空闲RSS均有低/高样本，明确留完整范围及成功的负载前vmmap行，不解释为版本因果或统计等价。[四轮性能与成本](benchmarks/b02-performance-summary.json)、[四轮真实操作](benchmarks/b02-performance-b02-cua.json)。
+
+| 短轮中位数，每版n=2 | 旧2a12 | 新87db |
+|---|---:|---:|
+| Core/UI/合计 RSS MiB | 9.920/81.860/91.780 | 9.645/83.995/93.640 |
+| 组合采样峰值 MiB | 143.835 | 142.415 |
+| Core ready ms | 59.750 | 48.085 |
+| UI进程→记录 ms | 1164.654 | 1092.002 |
+| 代理p50/p95 ms | 0.1625/0.2435 | 0.1680/0.2640 |
+| 80大请求 s | 0.1030 | 0.1125 |
+
+- 接受本批有限HTTP正确性/短负载回归证据，同时保留空闲合计+1.86MiB、UI+2.135MiB、代理p95+0.0205ms、大请求+9.5ms成本；峰值-1.42MiB不证明优化，n2不证明长期CPU/泄漏/FPS/输入延迟或正式版性能通过，R03仍含B01/UI67成本。200份证据23.790MiB归档并复核SHA，26个记录PID消失、lsof无打开引用及即时路径/全清单检查后，精确非强制清理本轮474文件510.650MiB；实测APFS可用增加512.168MiB、余33.179GiB（可能有其他应用并发影响），本轮临时保留0。此前被拒Root55/56/57未重试、仍1698.745MiB；共享Cargo及Core46基线保留。[归档](benchmarks/b02-artifacts.json)、[清理预检](benchmarks/b02-cleanup-preflight.json)、[清理结果](benchmarks/b02-cleanup.json)。全局R01–R04与公开发布授权独立，Goal active，下一批B03。

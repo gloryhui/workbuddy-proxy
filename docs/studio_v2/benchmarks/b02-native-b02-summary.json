@@ -1,0 +1,20 @@
+{
+  "candidate_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "main_report": "b02-j6dovgdr-main-final/native-gui.json",
+  "capacity_report": "b02-j6dovgdr-capacity-final/native-gui.json",
+  "status": "Main/Capacity actual GUI plus final same-candidate native PNG replacement complete; global R01-R04 remain separate",
+  "capture_problem": "CUA screenshots are JPEG bytes under .png names; one native PNG includes shadow. Original bytes retained, no conversion.",
+  "ui_pids_gone": [
+    55537,
+    64826
+  ],
+  "reported_boundaries": [
+    "long ID ellipsis observed; hover tooltip unverified",
+    "main Cmd middle selection visual result uncertain",
+    "capacity Return on focused Apply not verified",
+    "no claim of full IME, AX, hardware, theme, or platform acceptance"
+  ],
+  "original_status": "functional observations and observer stages recorded; native PNG screenshot acceptance remains pending recapture",
+  "capture_correction_report": "native-capture-summary.json",
+  "capture_driver_results": "capture-driver-results.json"
+}

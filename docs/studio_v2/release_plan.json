@@ -3,10 +3,10 @@
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-10-31",
   "state": "active",
-  "current_batch": "B02",
+  "current_batch": "B03",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 68,
+  "historical_tasks": 69,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -217,7 +217,7 @@
       "id": "B02",
       "title": "模型管理与四种协议",
       "kind": "feature",
-      "status": "planned",
+      "status": "passed",
       "frames": [
         "59:11",
         "59:279",
@@ -229,29 +229,30 @@
       "depends_on": [
         "B01"
       ],
-      "completed_summary": "模型发现/选择、256容量、多选、能力编辑和四协议真实Apply→显式Save已有分项证据。",
+      "completed_summary": "最终87db模型与四协议6帧签收：完整真实往返与容量、正确格式两尺寸原生PNG、四轮原负载及历史保护通过；原JPEG/阴影问题与补拍来源、默认序列化、性能小幅成本均单列。",
       "delivery": "集中完成6张弹窗和模型整条管理链，复用一套表单/模态组件，保留全部真实字段。",
       "tasks": [
         {
           "id": "B02.1",
           "title": "模型发现、选择与容量",
-          "acceptance": "pending",
-          "completed": "4096候选虚拟列表、已有项只读、搜索/批量选择及256总容量已实现。",
-          "remaining": "整合获取成功/失败、空结果、长ID、满载及小窗底栏的最终候选验证。",
+          "acceptance": "passed",
+          "completed": "真实38/4096发现、503/空结果、搜索/无匹配/清空/全选反选/仅看勾选、已有项点击仍只读；beam-free取消/应用草稿/父取消/显式保存读回，256满载点击拒绝超量。精准hover及聚焦Apply的Return留R01。",
+          "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
           "acceptance_check": "4096候选可滚到末尾；已有模型不可重复；选择取消不写Core；确认仅进草稿，显式保存才写入。",
           "history_tasks": [
             20,
             49,
             51,
-            63
+            63,
+            69
           ]
         },
         {
           "id": "B02.2",
           "title": "模型表多选与键盘",
-          "acceptance": "pending",
-          "completed": "Shift/Cmd多选、行键盘导航、列宽估算和完整值提示有实测。",
-          "remaining": "统一选择/默认/hover/focus/disabled；验证256末行、排序/搜索后目标身份和删除取消。",
+          "acceptance": "passed",
+          "completed": "同版实际范围选中、Return/F2打开原目标、局部删除及父取消恢复；主夹具Cmd视觉不确定，满载明确fill-249/250范围、Cmd取消249后仅删除250，取消恢复255。",
+          "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
           "acceptance_check": "首末行、Shift范围/Cmd切换、方向键/Return/Space、长值提示可读；删除只作用于原目标且可取消。",
           "history_tasks": [
             40,
@@ -260,55 +261,59 @@
             49,
             51,
             54,
-            58
+            58,
+            69
           ]
         },
         {
           "id": "B02.3",
           "title": "能力编辑与默认思考",
-          "acceptance": "pending",
-          "completed": "AUTO/手动六能力、真实元数据、五档能力/限制、草稿/取消已有证据。",
-          "remaining": "完整核对模型编辑页及长文本/错误/窄窗，保留设计未列出的必要限制与真实来源提示。",
+          "acceptance": "passed",
+          "completed": "AUTO点击→手动→Space恢复；六能力/五档与默认Low、非法输出-1、合法名称/能力/四限制应用与保存读回；小窗全部下方字段和固定页脚实见。",
+          "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
           "acceptance_check": "非法限制拒绝；合法确认回草稿；Save读回；取消不改；默认思考/手动覆盖和未知能力不被UI重绘覆盖。",
           "history_tasks": [
             21,
             44,
             50,
             51,
-            53
+            53,
+            69
           ]
         },
         {
           "id": "B02.4",
           "title": "四协议共享版式集中对齐",
-          "acceptance": "pending",
-          "completed": "四完整画板已首审；tab选中/标签/徽章、关闭/遮罩和两尺寸已有证据。",
-          "remaining": "一次修正Chat/Responses/Anthropic/Gemini共享表单、控件和标题差异，再整体拍照。",
+          "acceptance": "passed",
+          "completed": "六份最新完整设计一次对齐；最终87db的6×2真正原生PNG及两张小窗底部图通过，首次CUA JPEG/阴影PNG格式问题诚实保留并用全新同版夹具补拍，未转换冒充。",
+          "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
           "acceptance_check": "四张各两尺寸，字段/按钮/错误可达；遮罩阻挡背后工具栏；关闭返回原焦点；不删字段贴静态图。",
           "history_tasks": [
             24,
             62,
-            64
+            64,
+            69
           ]
         },
         {
           "id": "B02.5",
           "title": "四协议真实数据往返",
-          "acceptance": "pending",
-          "completed": "Responses非法草稿保留、Anthropic预算拒绝/合法、四协议Apply和CmdS分步已验证。",
-          "remaining": "在最终候选连续执行四协议合法/非法/取消/确认/保存和切换供应商。",
+          "acceptance": "passed",
+          "completed": "Chat/Responses及Anthropic预算/Adaptive、Gemini预算/level实际非法拒绝→合法Apply不落Core→显式Save→读回；目标之外原字段/历史保持，源码定义默认序列化补全单列。",
+          "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
           "acceptance_check": "各协议独有认证/输出/预算/映射按真实校验；Apply不直接写Core；显式保存只改目标并保留其他模型。",
           "history_tasks": [
             24,
-            62
+            62,
+            69
           ]
         },
         {
           "id": "B02.6",
           "title": "模型与协议整批回归",
-          "acceptance": "pending",
-          "completed": "已有原字段递归保持、取消/保存及模态键盘证据。",
-          "remaining": "把发现→选择→能力→协议→保存→重开串成一轮，并做本批性能对照。",
+          "acceptance": "passed",
+          "completed": "最终候选五编译门禁、Main/Capacity/单独原生补拍及所有生命周期通过；原1000小请求/64模型/80×1MiB并发4的四轮0，全部成本保留R03；200份证据归档及本轮专用目录安全清理。",
+          "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
           "acceptance_check": "同一候选全链路与6帧12张原图；原Core路由/能力/兼容字段无回退，性能结果不混用旧候选。",
           "history_tasks": [
             20,
@@ -316,12 +321,29 @@
             24,
             62,
             63,
-            64
+            64,
+            69
           ]
         }
       ],
-      "accepted_frames": [],
-      "acceptance_evidence": []
+      "accepted_frames": [
+        "59:11",
+        "59:279",
+        "61:289",
+        "61:561",
+        "61:838",
+        "61:1111"
+      ],
+      "acceptance_evidence": [
+        "benchmarks/b02-design-audit.json",
+        "benchmarks/b02-native-consolidated.json",
+        "benchmarks/b02-native-b02-summary.json",
+        "benchmarks/b02-native-capture-summary.json",
+        "benchmarks/b02-performance-summary.json",
+        "benchmarks/b02-default-serialization-audit.json",
+        "benchmarks/b02-provider-contracts.json",
+        "benchmarks/b02-artifacts.json"
+      ]
     },
     {
       "id": "B03",

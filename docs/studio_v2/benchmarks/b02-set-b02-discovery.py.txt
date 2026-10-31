@@ -1,0 +1,7 @@
+from pathlib import Path
+import json,sys
+r=Path(__file__).resolve().parent;f=Path(sys.argv[1]).resolve();assert f.parent==r
+mode=sys.argv[2];assert mode in ['success','failure','empty','large']
+p=f/'mock-mode.json';old=json.loads(p.read_text()) if p.exists() else {}
+old.update(discovery='success' if mode=='large' else mode,candidate_count=4096 if mode=='large' else 38)
+p.write_text(json.dumps(old)+'\n');print('Synthetic discovery='+mode)

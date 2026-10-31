@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T16:01:13.322545+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr",
+  "removed": true,
+  "files_removed": 474,
+  "logical_bytes_removed": 535455720,
+  "free_before_bytes": 35089068032,
+  "free_after_bytes": 35626115072,
+  "observed_apfs_free_delta_bytes": 537047040,
+  "current_round_retained_bytes": 0,
+  "older_denied_roots_retained_mib": 1698.745,
+  "shared_cargo_and_reused_core46_retained": true,
+  "note": "APFS free delta is an observed system-wide change and may include concurrent application activity; no retries of previously rejected historical cleanup."
+}

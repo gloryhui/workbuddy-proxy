@@ -1,0 +1,126 @@
+from pathlib import Path
+import copy, datetime, hashlib, json, os, re, struct, subprocess
+
+# Existing Serde defaults from src/config.rs and src/protocol/config.rs.
+# Old fixtures deliberately omit these keys; a normal Save serializes them.
+protocol_defaults = {'authentication': 'protocol_default', 'anthropic_version': '2023-06-01',
+                     'default_max_output_tokens': 4096,
+                     'reasoning_profile': {'mode': 'none', 'budgets': {}, 'levels': {}},
+                     'responses_efforts': {}}
+
+def normalized_provider(provider):
+    value = copy.deepcopy(provider)
+    value.setdefault('protocol', 'openai_chat')
+    value.setdefault('protocol_settings', copy.deepcopy(protocol_defaults))
+    for model in value['models']:
+        model.setdefault('capabilities', None)
+    return value
+
+r = Path(__file__).resolve().parent
+repo = Path.cwd()
+plan = json.loads((repo / 'docs/studio_v2/release_plan.json').read_text())
+frames = next(x['frames'] for x in plan['batches'] if x['id'] == 'B02')
+results = json.loads((r / 'native-driver-results.json').read_text())
+assert [x['label'] for x in results] == ['main', 'capacity']
+assert all(x['exit_code'] == 0 for x in results)
+captures = json.loads((r / 'capture-driver-results.json').read_text())
+assert [x['label'] for x in captures] == ['captures']
+assert all(x['exit_code'] == 0 for x in captures)
+build = json.loads((r / 'build.json').read_text())
+for name, sha in build['source_sha256'].items():
+    assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == sha
+required = {
+    'main': ['auto_cancel', 'table_cancel', 'discovery_failure', 'discovery_empty',
+             'picker_cancel', 'picker_apply', 'picker_draft_cancel', 'model_added_saved',
+             'discovery_large', 'model_invalid', 'model_apply', 'model_edited_saved',
+             'model_readback', 'chat_invalid', 'chat_apply', 'chat_saved',
+             'responses_invalid', 'responses_apply', 'responses_saved',
+             'anthropic_invalid', 'anthropic_budget_apply', 'anthropic_budget_saved',
+             'anthropic_adaptive_apply', 'anthropic_adaptive_saved',
+             'gemini_invalid', 'gemini_budget_apply', 'gemini_budget_saved',
+             'gemini_level_apply', 'gemini_level_saved', 'final_readback', 'closed'],
+    'capacity': ['capacity_initial', 'capacity_table_cancel', 'capacity_overflow', 'capacity_cancel', 'closed'],
+    'captures': ['initial', 'closed']}
+images, fixtures, seen = [], [], {}
+for result in results + captures:
+    f = Path(result['folder'])
+    meta = json.loads((f / 'fixture.json').read_text())
+    assert meta['binary_sha256']['ui'] == build['release_sha256']
+    original = json.loads((f / 'config-before.json').read_text())
+    final = json.loads((f / 'config/config.json').read_text())
+    assert {k: v for k, v in original.items() if k != 'providers'} == {k: v for k, v in final.items() if k != 'providers'}
+    assert normalized_provider(original['providers'][1]) == normalized_provider(final['providers'][1]), 'Provider B must remain exactly unchanged after declared Serde defaults'
+    if result['label'] in ['capacity', 'captures']:
+        assert original == final, 'Capacity/capture journey must never save'
+    else:
+        old_a, new_a = normalized_provider(original['providers'][0]), final['providers'][0]
+        mutable = {'models', 'protocol', 'protocol_settings'}
+        assert {k: v for k, v in old_a.items() if k not in mutable} == {k: v for k, v in new_a.items() if k not in mutable}
+        assert len(new_a['models']) == len(old_a['models']) + 1
+        assert old_a['models'][1:] == new_a['models'][1:-1]
+        mutable_model = {'name', 'capabilities'}
+        assert {k: v for k, v in old_a['models'][0].items() if k not in mutable_model} == {k: v for k, v in new_a['models'][0].items() if k not in mutable_model}
+    pids = []
+    for role in ['ui_pid', 'core_pid', 'fixture_pid']:
+        pid = meta[role]
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            pids.append({'role': role, 'pid': pid, 'gone': True})
+        else:
+            raise AssertionError(('native child still live', role, pid))
+    stages = []
+    paths = list((f / 'stage-proofs').glob('*.json'))
+    assert set(required[result['label']]).issubset({p.stem for p in paths})
+    for path in sorted(paths):
+        proof = json.loads(path.read_text())
+        assert proof['core_health'] == 'ready'
+        assert proof['requests'][0] == 14
+        assert all(x['all_fields_preserved'] for x in proof['history'].values())
+        stages.append({'name': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                       'providers': proof['providers'], 'models': proof['models'],
+                       'protocol': proof['protocol'], 'explicit_save': proof['explicit_save'],
+                       'requests': proof['requests'], 'history': proof['history']})
+    fixtures.append({'label': result['label'], 'binary_sha256': meta['binary_sha256'],
+                     'processes': pids, 'nonprovider_config_exactly_preserved': True,
+                     'stages': stages, 'terminal': result['terminal']})
+    for path in sorted(f.glob('*.png')):
+        if path.name.startswith('candidate-'):
+            continue  # Window-discovery diagnostics have no declared logical size.
+        raw = path.read_bytes()
+        native_png = result['label'] == 'captures'
+        if raw[:8] == b'\x89PNG\r\n\x1a\n':
+            image_format = 'PNG'
+            pixels = list(struct.unpack('>II', raw[16:24]))
+        else:
+            assert raw[:3] == b'\xff\xd8\xff'
+            image_format = 'JPEG'
+            info = subprocess.check_output(['/usr/bin/sips', '-g', 'pixelWidth', '-g', 'pixelHeight', str(path)], text=True)
+            pixels = [int(re.search(k + r': (\d+)', info)[1]) for k in ['pixelWidth', 'pixelHeight']]
+        logical = [1440, 900] if '-wide' in path.name else [1100, 700]
+        scale = pixels[0] / logical[0]
+        if native_png:
+            assert image_format == 'PNG'
+            assert scale in [1, 2] and pixels[1] == (logical[1] + 1) * scale, (path.name, pixels)
+        entry = {'fixture': result['label'], 'name': path.name, 'pixels': pixels,
+                 'logical_size': logical, 'scale': scale if scale in [1, 2] else None,
+                 'actual_format': image_format, 'accepted_native_png': native_png, 'bytes': len(raw),
+                 'sha256': hashlib.sha256(raw).hexdigest(), 'raw_unmodified': True,
+                 'source': str(path)}
+        images.append(entry)
+        if not native_png:
+            continue  # Original CUA JPEG/shadow evidence is not a final PNG pair.
+        for node in frames:
+            for size in ['wide', 'small']:
+                if path.name == node.replace(':', '-') + '-' + size + '.png':
+                    assert (node, size) not in seen
+                    seen[node, size] = entry
+assert len(seen) == len(frames) * 2
+out = {'at': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
+       'candidate_sha256': build['release_sha256'], 'frame_count': len(frames),
+       'required_frame_size_pairs': len(seen),
+       'frames': [{'node': node, 'wide': seen[node, 'wide']['name'], 'small': seen[node, 'small']['name']} for node in frames],
+       'fixtures': fixtures, 'images': images,
+       'scope': 'Frozen native candidate: Main/Capacity real GUI plus independent persistence/history; separate capture-only fixture supplies six correct-format/size native PNG pairs. Original CUA JPEG and shadow PNGs are honest unmodified interaction evidence, not accepted PNG pairs. CUA owns GUI; disappearance only, no invented exit code. Does not certify R01-R04 or FPS/first paint.'}
+(r / 'native-consolidated.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps({'frame_pairs': len(seen), 'images': len(images), 'fixtures': len(fixtures), 'source_hashes_match': True}))

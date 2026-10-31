@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-31T14:56:30.643586+08:00",
+  "intermediate_candidate": "d4c8b8edcc486dffb3c300e2d8acea642fd7fa63e569041ba57628a41d42634c",
+  "observed_issue": "59-11-wide actual native first long-ID row is clipped directly at right edge without ellipsis. Label lacked flex/min-width constraints; picker used generic unbounded tooltip.",
+  "evidence": "b02-j6dovgdr-main-intermediate-d4c/59-11-wide.png",
+  "change": "Studio Label flex1/minw0 and reuse existing bounded full_value_tooltip. All owner selection callbacks and protocol/model data logic unchanged.",
+  "verification": "Preserve intermediate12images/data proofs. Stop intermediate cleanly after UI closed; freeze final build, run fresh completeMain→Capacity and only then performance.",
+  "scope": "One consolidated post-look polish, no backend/logic changes; no intermediate frame acceptance claimed."
+}

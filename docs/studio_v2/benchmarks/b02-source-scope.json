@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-31T15:06:52.138575+08:00",
+  "files": [
+    {
+      "file": "gpui/src/ui/model_editor.rs",
+      "source_sha256": "479efbf72a0d3888ace561bc0732452f4df957c71e7b612e671e5906b840506e",
+      "old_listener_expressions": 5,
+      "new_listener_expressions": 5,
+      "all_old_listener_expressions_preserved_ignoring_whitespace_and_optional_call_trailing_comma": true
+    },
+    {
+      "file": "gpui/src/ui/model_picker.rs",
+      "source_sha256": "1a8fe8df67ba6a74819309a4cbe42bfe2c7736ebbe6836c5af979d94f4b992f1",
+      "old_listener_expressions": 12,
+      "new_listener_expressions": 12,
+      "all_old_listener_expressions_preserved_ignoring_whitespace_and_optional_call_trailing_comma": true
+    },
+    {
+      "file": "gpui/src/protocol_options.rs",
+      "source_sha256": "399a62008d2595fc7d72ccda85458651b0f99002fac5f313b2b11d3ba4d91d18",
+      "old_listener_expressions": 0,
+      "new_listener_expressions": 0,
+      "all_old_listener_expressions_preserved_ignoring_whitespace_and_optional_call_trailing_comma": true
+    },
+    {
+      "file": "gpui/src/ui/protocol_dialog.rs",
+      "source_sha256": "3fef13f1964030706428fce08ebee820e47fa393bd51228f4efbe4bbd4969865",
+      "old_listener_expressions": 3,
+      "new_listener_expressions": 3,
+      "all_old_listener_expressions_preserved_ignoring_whitespace_and_optional_call_trailing_comma": true
+    }
+  ],
+  "protocol_editor_nonrender_prefix_byte_identical": true,
+  "protocol_parse_validate_suffix_byte_identical": true,
+  "auto_control": "Native BaseCheckbox retains id, checked state, accessible label and unchanged owner bool listener. Studio changes visible badge/title composition only; adapter maps native Checked to bool and prevents default.",
+  "scope": "Four Rust presentation files only. No Core, config schema, deps, locks or original benchmark edits. Native full journey is independently required."
+}

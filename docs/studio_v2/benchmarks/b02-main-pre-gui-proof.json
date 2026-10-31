@@ -1,0 +1,143 @@
+{
+  "ready": {
+    "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b02.j6dovgdr/b02-j6dovgdr-main-final/WorkBuddy Proxy Review.app",
+    "bundle_id": "com.workbuddy.proxy.codexreview.tb02-j6dovgdr-main-final",
+    "core_pid": 55325,
+    "port": 53621
+  },
+  "core_proof": {
+    "enforced": true,
+    "pid": 55325,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "core_config_sha256_before": "0ff51b75e2cfb41fe262d8049f8c4308225c44d14d0ec72d57c0791b5fd76f14",
+  "seed": {
+    "real_http_requests": 14,
+    "statuses": [
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200
+    ],
+    "expected_input": 7000,
+    "expected_output": 700,
+    "expected_total": 7700
+  },
+  "ui_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+}

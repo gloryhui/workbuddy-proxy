@@ -1,0 +1,53 @@
+{
+  "candidate_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "ui_pid": 64826,
+  "ui_gone_after_native_close": true,
+  "images": [
+    {
+      "file": "capacity-overflow-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "abd5cb9ca5caebc9453c1827dcaf95b0d77f44f8a33b5d5706ae8d801cc1b3b4"
+    },
+    {
+      "file": "capacity256-tail-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "47cea9c4c7b665b906085dae3468d23712429810524003077464b9e7a41a2242"
+    },
+    {
+      "file": "capacity4096-tail-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "67662677430c6b42218d0e6158094d209c6aac80f0efb9258adc015df79aca99"
+    }
+  ],
+  "observer_stage_files": [
+    "capacity_cancel",
+    "capacity_initial",
+    "capacity_overflow",
+    "capacity_table_cancel",
+    "closed"
+  ],
+  "actual_foreground": "not verified; no explicit activate/raise",
+  "screenshot_limitation": "CUA getScreenshot returned JPEG bytes despite .png names. Original bytes retained, not converted. 59-11-wide is native PNG with OS shadow at 3016x1938. Requested no-shadow native PNG evidence remains pending.",
+  "common_limits": [
+    "No clipboard, system permissions, real WorkBuddy or external AX/CGEvent input used.",
+    "Full IME, accessibility and platform acceptance remain separate."
+  ],
+  "observations": [
+    "A255+B1=256, Add visually disabled and clicking displayed capacity notice without editor.",
+    "Small table End reached fill-250; F2 showed matching display name and upstream ID, Cancel.",
+    "Shift+Up selected visible fill-249 and fill-250; Cmd click fill-249 then Backspace left fill-249 and removed fill-250 in local draft, 254 shown; parent Cancel restored A255 and observer unchanged.",
+    "4096 real picker, sorted final candidate-4095 index showed model-b-1; selecting beam-free showed 256 limit and clicking Add kept dialog; Return toggled selection, not verified focused-Apply Return. Cancel and observer unchanged."
+  ]
+}

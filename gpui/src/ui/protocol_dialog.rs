@@ -223,7 +223,9 @@ impl Proxy {
             .child(self.protocol_tabs(window, cx))
             .child(form)
             .child(div().flex().flex_col().h(px(footer_height)).flex_none()
-                .border_t_1().border_color(rgb(crate::theme::color::BORDER)).pt(px(6.))
+                .border_t_1().border_color(rgb(crate::theme::color::BORDER))
+                .when(studio, |footer| footer.mr(px(1.)))
+                .pt(px(if studio { 5. } else { 6. }))
                 .when_some(self.protocol_error.clone(), |footer, error| {
                     footer.child(div().h(px(48.)).flex_none().child(Label::new(error)
                         .text_size(px(12.)).line_height(px(17.)).whitespace_normal().h_auto()
@@ -236,7 +238,12 @@ impl Proxy {
                         .text_size(px(11.)).line_height(px(16.)).text_color(rgb(MUTED)))
                     .child(crate::ui_components::action_button("protocol-apply").primary()
                         .h(px(38.)).min_w(px(123.)).rounded(px(10.))
-                        .label(self.t("应用到草稿", "Apply to draft"))
+                        .when(studio, |button| button
+                            .accessibility_label(self.t("应用到草稿", "Apply to draft"))
+                            .child(div().text_size(px(13.)).line_height(px(19.))
+                                .font_weight(FontWeight::BOLD)
+                                .child(self.t("应用到草稿", "Apply to draft"))))
+                        .when(!studio, |button| button.label(self.t("应用到草稿", "Apply to draft")))
                         .on_click(cx.listener(|this, _, window, cx| this.confirm_protocol(window, cx))))))
             .into_any_element()
     }

@@ -1,0 +1,250 @@
+{
+  "candidate_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "ui_pid": 55537,
+  "ui_gone_after_native_close": true,
+  "images": [
+    {
+      "file": "59-11-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "942f356af8a2f081483582509a6364033a2d4dafbdf2c6c6299f6ea358131317"
+    },
+    {
+      "file": "59-11-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        3016,
+        1938
+      ],
+      "sha256": "3da6cbd83731b388ed544dc5622b1b540e459a2468e8ec99c38cc5d45c78f73d"
+    },
+    {
+      "file": "59-279-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "d1727f5703e32e6a43d1afa739077ad987fdb0c5de073e82c8c10d201766cfd6"
+    },
+    {
+      "file": "59-279-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "0f851a6b0e916b94bc478a059768dd74a1667c5af676bc55c40b2f65832aba1a"
+    },
+    {
+      "file": "61-1111-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "d38e1118d5b9371eb30ffc8caea76470c93ee1e47067a78f761c921bd367d014"
+    },
+    {
+      "file": "61-1111-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "6a2dfbce6f3e617aaec7fd3990c814e5ab0c77b8336f85d83b9ab0313aa06afa"
+    },
+    {
+      "file": "61-289-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "186bcc8bc5230092380ac3b483e755d8a0e478900dbf18500f1f92e75cd17929"
+    },
+    {
+      "file": "61-289-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "6001ce3c5a2f07601e1b57d9bdb74893796b063b92d3deb6893ec3516691fbe0"
+    },
+    {
+      "file": "61-561-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "cfbf2a290c21ed54f226fbefa3f66696eeb64f470498b45061d9e0f24744aaf6"
+    },
+    {
+      "file": "61-561-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "c172cf4329e898a2bcf80c82768af7067e0ee1ce99864f8e6458c2b90e35f5fb"
+    },
+    {
+      "file": "61-838-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "981c85e47888609d7fd074c1e382e35cc5d0f5dd3a3d80c30f42f7b6ba6277f7"
+    },
+    {
+      "file": "61-838-wide.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "69d3e11898568bfbc24644856eeee9c465d75897e73774e44d19ad1a961bd5db"
+    },
+    {
+      "file": "anthropic-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "c0b7085e10bb7e36d6195ce674f4b2c2413e32b348a7cceba136e86e22895cdf"
+    },
+    {
+      "file": "candidate-8128.png",
+      "actual_format": "PNG",
+      "pixels": [
+        3016,
+        1938
+      ],
+      "sha256": "3da6cbd83731b388ed544dc5622b1b540e459a2468e8ec99c38cc5d45c78f73d"
+    },
+    {
+      "file": "chat-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "48480bb82e6bc451a5a941c5f3b2cf5fba4833f4a1e475c37b68848b47891983"
+    },
+    {
+      "file": "discovery4096-tail-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "891e35e49e64c28bb007c1b97c383773bfc286c15067b19f7cb762612b57053e"
+    },
+    {
+      "file": "gemini-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "3f54e7675c1726526cd5a1a3cc97a5b53821dc7f48adc7b48abcb73566d40017"
+    },
+    {
+      "file": "model-bottom-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "b82fb70b6248f7adae33ed9344b4b6911e82fd74d54ff30871776a812766d0d4"
+    },
+    {
+      "file": "model-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "8ae7e6cb57110a3f74ea142a2c1045faca1682101efc1c36a029a83c9a313d2b"
+    },
+    {
+      "file": "picker-existing-wide.png",
+      "actual_format": "PNG",
+      "pixels": [
+        3104,
+        2026
+      ],
+      "sha256": "1068440cdd6cb23cced3174e847749898ae93c5aec854148759fbe02f6084000"
+    },
+    {
+      "file": "responses-invalid-small.png",
+      "actual_format": "JPEG",
+      "pixels": [
+        72,
+        72
+      ],
+      "sha256": "c2bfe5495401b735d2cb91edd36119d786a4ccf11c665bb7680578ec05904a02"
+    }
+  ],
+  "observer_stage_files": [
+    "anthropic_adaptive_apply",
+    "anthropic_adaptive_saved",
+    "anthropic_budget_apply",
+    "anthropic_budget_saved",
+    "anthropic_invalid",
+    "auto_cancel",
+    "chat_apply",
+    "chat_invalid",
+    "chat_saved",
+    "closed",
+    "default_serialization_check",
+    "defaults_start",
+    "discovery_empty",
+    "discovery_failure",
+    "discovery_large",
+    "final_readback",
+    "gemini_budget_apply",
+    "gemini_budget_saved",
+    "gemini_invalid",
+    "gemini_level_apply",
+    "gemini_level_saved",
+    "initial",
+    "model_added_saved",
+    "model_apply",
+    "model_edited_saved",
+    "model_invalid",
+    "model_readback",
+    "picker_apply",
+    "picker_cancel",
+    "picker_draft_cancel",
+    "protocol_defaults",
+    "responses_apply",
+    "responses_invalid",
+    "responses_saved",
+    "table_cancel"
+  ],
+  "actual_foreground": "not verified; no explicit activate/raise",
+  "screenshot_limitation": "CUA getScreenshot returned JPEG bytes despite .png names. Original bytes retained, not converted. 59-11-wide is native PNG with OS shadow at 3016x1938. Requested no-shadow native PNG evidence remains pending.",
+  "common_limits": [
+    "No clipboard, system permissions, real WorkBuddy or external AX/CGEvent input used.",
+    "Full IME, accessibility and platform acceptance remain separate."
+  ],
+  "observations": [
+    "Six frames seen wide/small; picker first long ID has visible ellipsis, precise hover/full-value tooltip not verified.",
+    "AUTO click off then Space on; Cancel with observer unchanged. Small editor scroll reached all token fields and fixed footer.",
+    "Table Shift first through third showed range. Cmd toggle middle visual state not independently certain. First row Return opened correct editor; Backspace removed first, provider Cancel restored four.",
+    "Discovery failure and empty UI observed; beam-free selection cancel/apply/cancel and explicit save; 4096 found; End sorted last model-b-1.",
+    "Model invalid output -1 retained editor; manual deepseek B02, images off, Low default and 8192 output saved and read back.",
+    "Chat, Responses, Anthropic budget/adaptive and Gemini budget/level applied to draft then explicitly saved; observer stage results retained. Invalid values rejected; Anthropic output0 and budget128 rejected; Gemini unknown rejected.",
+    "Initial Return immediately after opening protocol without first clicking a tab closed it; subsequent click-tab Return and Space kept dialog open. Toolbar overlay click produced no menu.",
+    "First model_added_saved observer failed because Save was offscreen and click did not trigger; after scrolling to visible Save a single click and observer passed.",
+    "Before/after save original fields preserved; known default serialization additions audited separately by parent; not byte-identical JSON."
+  ]
+}

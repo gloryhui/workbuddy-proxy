@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-31T15:10:43.228948+08:00",
+  "candidate_sha256": "87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6",
+  "reviewed_images": [
+    {
+      "file": "59-11-wide.png",
+      "sha256": "3da6cbd83731b388ed544dc5622b1b540e459a2468e8ec99c38cc5d45c78f73d",
+      "finding": "Long first model ID visibly ends in ellipsis; native checkbox/list/search and footer remain visible. Raw screenshot only, not a hover or interaction proof.",
+      "actual_format": "PNG",
+      "pixels": [
+        3016,
+        1938
+      ],
+      "accepted_native_png": false,
+      "format_note": "Layout observation remains valid. Original CUA JPEG or native shadow PNG is not an accepted final native-size PNG; final replacement fixture reviewed separately."
+    },
+    {
+      "file": "model-bottom-small.png",
+      "sha256": "b82fb70b6248f7adae33ed9344b4b6911e82fd74d54ff30871776a812766d0d4",
+      "finding": "At1100x700 actual inner body scroll reveals both token-limit rows, context choices and full Cancel/Confirm footer; header remains visible. Does not independently prove manual save or keyboard traversal.",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "accepted_native_png": false,
+      "format_note": "Layout observation remains valid. Original CUA JPEG or native shadow PNG is not an accepted final native-size PNG; final replacement fixture reviewed separately."
+    },
+    {
+      "file": "61-561-wide.png",
+      "sha256": "c172cf4329e898a2bcf80c82768af7067e0ee1ce99864f8e6458c2b90e35f5fb",
+      "finding": "Responses wide dialog, four tabs, API authentication, native mode, mapping rows through max and Apply footer are visible; overlay dims toolbar.",
+      "actual_format": "JPEG",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "accepted_native_png": false,
+      "format_note": "Layout observation remains valid. Original CUA JPEG or native shadow PNG is not an accepted final native-size PNG; final replacement fixture reviewed separately."
+    },
+    {
+      "file": "61-1111-small.png",
+      "sha256": "d38e1118d5b9371eb30ffc8caea76470c93ee1e47067a78f761c921bd367d014",
+      "finding": "Gemini small dialog, four tabs, truthful Unconfigured state, mapping body and fixed Apply footer visible. Bottom fields require real inner scrolling and are verified separately by GUI actor; this single resting frame does not prove them.",
+      "actual_format": "JPEG",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "accepted_native_png": false,
+      "format_note": "Layout observation remains valid. Original CUA JPEG or native shadow PNG is not an accepted final native-size PNG; final replacement fixture reviewed separately."
+    }
+  ],
+  "status": "Corrected native PNG representative review passed; original compressed/shadow evidence retains honest format notes. Full six-frame GUI capture report is separate.",
+  "corrected_native_png_review": [
+    {
+      "file": "59-11-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "d3301e2c5d4bd7804fff160212ef214dcc2248ca35d596899158e16b05abfe51",
+      "finding": "True native small PNG: long ID has ellipsis, complete footer and actual4/38 readonly count, no shadow/cursor overlay."
+    },
+    {
+      "file": "61-1111-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "sha256": "bc1792f953f781d4ab17476ebeda8e1ab05118a74a89e3303cf0fef8da610e48",
+      "finding": "True native wide PNG: full six mapping rows through max and fixed Apply visible, truthful Unconfigured state."
+    },
+    {
+      "file": "protocol-bottom-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "sha256": "ca72a357f65246911f5e0f48f9c2771e3418e0a8c4027f42993a52347f9a7581",
+      "finding": "True native small PNG after form scroll: all six mapping rows including max fully reachable above fixed footer; tabs/header remain visible."
+    }
+  ]
+}

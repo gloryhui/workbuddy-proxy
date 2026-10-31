@@ -1,0 +1,39 @@
+# B02 matched native observation, four runs
+
+Only start after native Main and Capacity finish0 and their PIDs are gone.
+Driver sequence is previous1, current1, current2, previous2. Same fixed Core,
+original1000 small requests/64 models/80x1MiB/concurrency4, original benchmark
+script unchanged. No Save/Apply/Test/Sync. Only own unique bundle and PID.
+
+For EACH pending-benchmark.json:
+
+1. Read pending file; open its bundle in background with existing CUA workflow,
+   wait for matching UI PID in gpui.json and pending.models_ready=true. This is
+   after original benchmark save64, before idle RSS/load. Verify provider page
+   has1 provider/64 models/22 initial usage rows; do not continue stale64/1 UI.
+2. Resize1100x700, scroll native model table to bench-model-63, then return head.
+3. Resize1440x900. Click Get models: native picker must show4096 actual candidates.
+   Reach the REAL sorted last item (lexical sorting places bench-model-9 after
+   bench-candidate-4095; verify the actual ID), return first, Cancel. Do not
+   invent a tail identity from the mock insertion order. No draft/model changes.
+4. Open first model editor, native AUTO→manual→AUTO, Cancel.
+5. Open protocol modal, click Chat→Responses→Anthropic→Gemini, Cancel/X/Escape.
+6. Return Provider64 page at1440x900. Capture own-PID layer0 raw native window to
+   FOLDER/performance-window.png. Do not crop or resize. Compare actual raw pixels
+   for all four runs; retain OS extra row and DPI. Optional diagnostic shots only
+   if needed to establish tail reachability, not a screenshot per click.
+7. Write FOLDER/providers-observed.json only after actual completion:
+   {ui_pid, providers_visible:true, logical_size:[1440,900], screenshot:
+   "performance-window.png", pixels:[w,h], screenshot_sha256, window_id,
+   history:[actual ordered native actions and verified counts/identities]}.
+   If any step failed, report and do not fake acknowledgement.
+8. Wrapper validates config hash unchanged, PNG metadata/hash, same four-run DPI,
+   successful vmmap-before, and10s settle before ORIGINAL measured workload.
+   It then stops its Core/UI and waits. Await next pending label; never operate
+   previous PID/bundle again. UI exit owned by CUA; do not invent a wait exit code.
+
+Keep all four actual observations in ROOT/performance-b02-cua.json. No explicit
+activate/raise, external input APIs or permissions changes. Lock/failure is an
+actual limitation; stop UI and report. Post-load vmmap is attempted after the
+original script stops UI, so process-gone output is not a successful measurement.
+Marker is not first paint/interactivity. Final acceptance remains Root's review.

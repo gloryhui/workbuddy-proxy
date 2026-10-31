@@ -1,0 +1,1 @@
+{"stage": "after22 real seed rows, before nativeUI process launch", "providers": 1, "models": 64, "fixture_save64_calls": 1, "original_benchmark_save64_still_runs": true, "scope": "Identical extra fixture precondition for previous/current, outside measured load; original benchmark.py unchanged."}

@@ -301,7 +301,7 @@ impl Editor {
                 .flex()
                 .flex_col()
                 .flex_none()
-                .gap(px(3.))
+                .gap(px(if studio { 2. } else { 3. }))
                 .child(Self::field_label(label).when(studio, |label| {
                     label
                         .line_height(px(17.))
@@ -341,7 +341,8 @@ impl Editor {
         let limit_label = t("默认最大输出 Token", "Default maximum output tokens");
         let mode_label = t("思考模式", "Thinking mode");
         let rows = div().id("protocol-options-fields").flex().flex_col().w_full()
-            .when(needs_gutter, |rows| rows.pr(px(12.)))
+            .when(studio, |rows| rows.pr(px(if needs_gutter { 13. } else { 1. })))
+            .when(!studio && needs_gutter, |rows| rows.pr(px(12.)))
             .pb(px(12.))
             .children(openai.then(|| {
                 div().pt(px(18.)).pb(px(31.)).flex_none()
