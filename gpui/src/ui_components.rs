@@ -447,6 +447,18 @@ where
         .disabled(disabled)
 }
 
+/// Keep Kit's list/cursor/selection engine, but give each option's content an
+/// explicit accessible name. Raw SharedString content does not create a text
+/// node, leaving Kit's containing list item unnamed in the native tree.
+pub fn select_option_title(code: &str, title: SharedString) -> Stateful<Div> {
+    div()
+        .id(SharedString::from(format!("select-option-{code}")))
+        .role(Role::MenuListOption)
+        .aria_label(title.clone())
+        .min_w_0()
+        .child(title)
+}
+
 /// Checkbox wrapper. The caller keeps ownership of `on_change`.
 pub fn checkbox(
     id: impl Into<ElementId>,

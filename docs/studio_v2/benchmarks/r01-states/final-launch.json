@@ -1,0 +1,8 @@
+{
+  "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-states.jfke8w09/r01-states-main/WorkBuddy Proxy R01 States Final.app",
+  "bundle_id": "com.workbuddy.proxy.codexreview.tr01-states-main-final",
+  "binary_sha256": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
+  "core_pid": 79413,
+  "same_core_config_bytes_preserved": true,
+  "scope": "Same live protected fixture; new uniquely identified native bundle, no GUI activation."
+}

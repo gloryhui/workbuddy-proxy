@@ -1,0 +1,148 @@
+Window: "", App: WorkBuddy Proxy R01 States Final.
+0 standard window Secondary Actions: Raise
+	1 container
+		2 toggle button (settable, boolean) 数据统计, Value: on
+		3 toggle button (settable, boolean) 供应商管理, Value: off
+		4 toggle button (settable, boolean) 统计设置, Value: off
+		5 button 折叠或展开供应商列表
+		6 text field (settable) 搜索供应商
+		7 toggle button (settable, boolean) sub2api, Value: off
+		8 toggle button (settable, boolean) OpenCode Go, Value: on
+		9 button 新增供应商
+		10 button 复制供应商
+		11 button 删除供应商
+		12 button 复制代理地址
+		13 toggle button (settable, boolean) 概览, Value: off
+		14 toggle button (settable, boolean) 用量明细, Value: on
+		15 toggle button (settable, boolean) 汇总分析, Value: off
+		16 button 更多筛选
+		17 button 清除筛选
+		18 pop up button (settable) 模型筛选, Value: gpt-6.1
+		19 pop up button (settable) 供应商筛选, Value: 全部供应商
+		20 button 选择日期范围
+		21 button 统计页面自动刷新间隔
+		22 button 刷新统计
+		23 模型来源
+			24 radio button (selectable, settable, boolean) 全部模型
+			25 radio button (selectable, settable, boolean) 内置模型
+			26 radio button (selectable, settable, boolean) 自定义模型
+		27 button 查看当前范围汇总
+		28 table 当前页请求记录
+			29 row
+				30 cell 时间
+				31 cell 供应商
+				32 cell 模型
+				33 cell Token 使用量
+				34 cell 缓存命中
+				35 cell 费用 / 积分
+				36 cell 耗时
+				37 cell 状态
+			38 row 11-01 01:33:04 · sub2api · gpt-6.1, ID: usage-row-0
+				39 cell 11-01 01:33:04; 25a036d5c80a6cecb341cf680b8c8638ba97ee2c308e8749
+				40 cell sub2api
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				41 cell gpt-6.1; sub2api
+gpt-6.1
+请求模型 sub2api/gpt-6.1
+				42 cell 总 Token: 550
+输入: 500
+输出: 50
+				43 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				44 cell $0.0075 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				45 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				46 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			47 row 11-01 01:33:04 · sub2api · gpt-6.1, ID: usage-row-1
+				48 cell 11-01 01:33:04; 66c5c351f26e741c69f10e5d63fae6a24995ef010298ec3b
+				49 cell sub2api
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				50 cell gpt-6.1; sub2api
+gpt-6.1
+请求模型 sub2api/gpt-6.1
+				51 cell 总 Token: 550
+输入: 500
+输出: 50
+				52 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				53 cell $0.0075 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				54 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				55 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			56 row 11-01 01:33:04 · sub2api · gpt-6.1, ID: usage-row-2
+				57 cell 11-01 01:33:04; 5e89512fb545c35906cd8a994e9882f174ca285e8e2685ba
+				58 cell sub2api
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				59 cell gpt-6.1; sub2api
+gpt-6.1
+请求模型 sub2api/gpt-6.1
+				60 cell 总 Token: 550
+输入: 500
+输出: 50
+				61 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				62 cell $0.0075 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				63 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				64 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+		65 button 上一页
+		66 button 下一页
+		67 pop up button (settable) 10 条/页
+		68 text field (settable) 1
+		69 button 跳转
+		70 button 首列
+		71 button 右侧列
+		72 button 皮肤设置
+		73 toggle button (settable, boolean) 开机启动, Value: off
+		74 button 检查更新
+		75 button 界面语言
+		76 button 恢复默认窗口尺寸
+		77 button GitHub 项目主页
+		78 button 提交反馈
+		79 list
+			80 container (selectable) 全部模型, Secondary Actions: Pick
+			81 container (selectable) claude-opus-4.7, Secondary Actions: Pick
+			82 container (selectable) deepseek-v4.1-flash, Secondary Actions: Pick
+			83 container (selectable) gpt-6, Secondary Actions: Pick
+			84 container (selected) gpt-6.1, Secondary Actions: Pick
+			85 container (selectable) model-b-1, Secondary Actions: Pick
+	86 close button
+	87 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	88 minimize button
+89 menu bar
+	90 WorkBuddy Proxy R01 States Final
+
+The focused UI element is 0 standard window Secondary Actions: Raise

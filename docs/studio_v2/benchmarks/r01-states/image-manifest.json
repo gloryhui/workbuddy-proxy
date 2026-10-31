@@ -1,0 +1,401 @@
+{
+  "images": [
+    {
+      "file": "11da-delete-dialog.jpg",
+      "sha256": "11ddbf6073d8eed8465e2af68d3e1abaee86310f1ae51649a6b778bc84192078",
+      "pixels": [
+        1102,
+        702
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "11da-empty-model.jpg",
+      "sha256": "d647a370eba9084d1ebd8fa5814433b8a4f1df333678ee6e485e7a914abffb11",
+      "pixels": [
+        1102,
+        702
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "11da-modal-small-bottom.jpg",
+      "sha256": "aeaf1867dd1be3d0eb7281ebc296fd822c106e07fc8537af2ea80137e6992612",
+      "pixels": [
+        1102,
+        702
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "11da-modal-small-top.jpg",
+      "sha256": "1e66f406fb0cecf8bf08200d962dbb14ca1aba9a67c0b02128d19222a6975bcb",
+      "pixels": [
+        1102,
+        702
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "11da-model-dialog.jpg",
+      "sha256": "fd7446d1691032fdd22332a6cb482ec3b466c3b041f082a5172c5492ca0ac7c0",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "11da-model-picked.jpg",
+      "sha256": "1aee6fd9b58619112c132e9de85b1707e8be6bcc3eeccc5ce0067bd00d77bc7a",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "11da-model-select.jpg",
+      "sha256": "1d25ea86cc3db5fcfcf7290c4c16da14f1ba0c95126f354dac16bc6bbf21d5db",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "11da-protocol-dialog.jpg",
+      "sha256": "63c0cd2690e31e471058e86f76bb4e33f9414d7721ad47b3d97ed70067e57709",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "11da-row-multi.jpg",
+      "sha256": "b318e1ad92c7781b2aaab5f21657fc6a161a78fd88840248c3f6bbb64c79e627",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "11da31",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "4905-cancel-held-attempt.jpg",
+      "sha256": "3fd2f40149e3d3dbe694563c8e251b8e96c9b19c8d77f569eb0c9c91bbc42cc0",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "490530",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "4905-effort-menu.jpg",
+      "sha256": "20e815794ae4214914245c88f2d89e71225a427fd8dd6251eecb5e34be0c0f91",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "490530",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "4905-model-dialog.jpg",
+      "sha256": "733e7cc51cf683004245fdd95fc1a8b51e98b402c45b5af6c483d5d58a7acb5b",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "490530",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "4905-preset-menu.jpg",
+      "sha256": "cd77e0a014e35c8af122d79d0f6341ae8c41838bbc61b95b36151c2c8df35741",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "490530",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "4905-protocol-menu.jpg",
+      "sha256": "0076c9017bb505c34bdc27291757ae4000c195faedf11d8447d442a7448b3cb1",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "490530",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "4905-row-tooltip-waited.jpg",
+      "sha256": "5431e77447bdf06e4b2bd11913a2c360e6e43d2bbfad8223e0f0e547f58a1b9c",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "490530",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "4905-row-tooltip.jpg",
+      "sha256": "5431e77447bdf06e4b2bd11913a2c360e6e43d2bbfad8223e0f0e547f58a1b9c",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "490530",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "drag-model-after.jpg",
+      "sha256": "b2df8f42e1023824e597318931a3bff654ba5a22620b547324ad0cd71ee43c0c",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "drag-model-before.jpg",
+      "sha256": "b2df8f42e1023824e597318931a3bff654ba5a22620b547324ad0cd71ee43c0c",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "drag-provider-after.jpg",
+      "sha256": "8dcb0acdbb1d61b9f6890133f7887784ab0ef199d115578d82b852a8edc145e6",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "drag-provider-before.jpg",
+      "sha256": "b2df8f42e1023824e597318931a3bff654ba5a22620b547324ad0cd71ee43c0c",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "empty-local.jpg",
+      "sha256": "832df37dc46ce3c25855b5d84f9623d049625d2c08fe888a78b26019dc28e84d",
+      "pixels": [
+        1102,
+        702
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "empty-model-table.jpg",
+      "sha256": "706ec8f6605dffb8c8fa49adaaea3961f08753999d8b9e4d81b3db3dc5f7cdf1",
+      "pixels": [
+        1102,
+        702
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "input-focus.jpg",
+      "sha256": "50d9299d6bcbb63e942b6efade8bd61524f595680aa3734271721d181fe3f57e",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "modal-checkbox.jpg",
+      "sha256": "d36df47befbe40a0ea0e93f47361236090e91fef5854f8dea912a42a4425d77b",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "modal-manual.jpg",
+      "sha256": "e731cc34f2c97983a48af1dc68d1bcd9afa531dbc7d099b8c9cefd866267ae97",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "modal-small.jpg",
+      "sha256": "dd475924a76da7bcf7ff92dab3c5a1b4e7eb8554fe819efd31f8127e91e4d0c7",
+      "pixels": [
+        1102,
+        702
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": true
+    },
+    {
+      "file": "modal-wide.jpg",
+      "sha256": "394f1c5730c7079776f1804cd684b24abbbd5247f22ce4cbe6c6612df5a2bbde",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "model-selected.jpg",
+      "sha256": "10c0628f0100a8a57b975f5a6e6cd3ced3b786f789dce1b7c046ccd2197d7ee2",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "password-focus.jpg",
+      "sha256": "b402ae2402fdac151e6e86047332355879fb3ecf25dcdc4cf151791f2facb5dc",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "provider-idle.jpg",
+      "sha256": "af2d8195a3ca0b1ded5f79724484c66f3c1011db580b2e20c726ed46e8cb52a2",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "search-no-match.jpg",
+      "sha256": "c01dd330a2950a40b98a6d3a79073dbc555378629740cd7c7836fd918ad5feaf",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "select-open.jpg",
+      "sha256": "9aaa0dd3492ad79d3820381db889e81e2b97734e3cb54a3b7000f9d13580a0e4",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    },
+    {
+      "file": "select-picked.jpg",
+      "sha256": "94cb1af32faec74a2219c2fd891e74ad0b1851b2ab539df285bb94dc20372af5",
+      "pixels": [
+        1440,
+        901
+      ],
+      "format": "JPEG/JFIF original CUA export",
+      "image_modified": false,
+      "candidate": "631599",
+      "primary_agent_reviewed": false
+    }
+  ],
+  "note": "Full-window native original JPEGs, logical1440x900 and1100x700 with OS edge pixels; no control geometry inferred from image size."
+}

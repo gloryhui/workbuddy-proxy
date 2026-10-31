@@ -161,6 +161,9 @@ impl SelectItem for Choice {
     fn value(&self) -> &String {
         &self.code
     }
+    fn render(&self, _: &mut Window, _: &mut App) -> impl IntoElement {
+        crate::ui_components::select_option_title(&self.code, self.title())
+    }
     fn matches(&self, query: &str) -> bool {
         let query = query.trim().to_lowercase();
         self.title.to_lowercase().contains(&query) || self.code.to_lowercase().contains(&query)

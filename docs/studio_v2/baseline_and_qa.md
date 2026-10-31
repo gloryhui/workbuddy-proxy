@@ -1687,3 +1687,15 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 35wrapper/114限定调用点为源码slot索引，不能冒充原生全状态/实测尺寸矩阵。当前n/i在名称/搜索直接落ASCII，未证实composition；支持的两点原生拖动仍未见列宽变化。AX始终报window焦点，键盘落点依行为与原图；真实AT未验，旁白禁用不变。R01.1全状态、R01.2拖宽、R01.3逐引擎合成和R01.4真实辅助技术仍待，R02–R04亦未通过。
 - 本轮41张截图是CUA直接返回的原始JPEG/JFIF。归档魔数检查纠正了误用PNG后缀，仅改扩展名，不裁切/转换/重新编码，不宣称新增PNG或无损像素签收；旧40帧PNG验收不变。[格式纠正](benchmarks/r01-resume/capture-format-correction.json)、[全部图hash/尺寸](benchmarks/r01-resume/image-manifest.json)。
 - 本轮所有UI已原生关闭（包括明确冷重开实例），三个Core及宿主会话均退出0；guard仅安装无真实WorkBuddy动作。精确清理本会话129个临时文件约273MiB，临时保留0；共享Cargo缓存、旧基准Core与非本轮旧preview未动。[清理](benchmarks/r01-resume/cleanup.json)、[总结](benchmarks/r01-resume/summary.json)。
+
+
+## 小功能 77：R01组件状态审计与选项、模型行、弹层语义补齐（2026-11-01）
+
+- 核验2c21474分支干净后继续R01，未重做40帧或21主题组合。36wrapper/118限定调用点整理成10个适用状态族；源码slot、历史证据、本轮原生观察与未验证项逐格区分。普通供应商字段按原契约本来可编辑，灰底不等于readonly；终端日志单独readonly。[适用矩阵](benchmarks/r01-states/component-applicability.json)、[调用点](benchmarks/r01-states/component-call-sites.json)、[代表性观察](benchmarks/r01-states/coverage.json)。
+- 澄清旧拖宽测试x444是刻意固定的Time列右边界；本轮改试可拖provider/model边界x574/761，真实两点drag仍未见变化，不能区分工具投递与产品原因。未取得成功宽度，刷新/resize保持作为未验证，不能改成不适用。后续能力未变不重复等价测试。[源码审查](benchmarks/r01-states/source-accessibility-audit.json)。
+- 原生审计发现下拉项只有匿名container，模型行仅model-N、弹层缺可读标题。给四个SelectItem实现及应用自有MenuRow补具名option内容，保持现有Kit选择/搜索/回调和设计尺寸；给模型行补完整名称/ID和中英选择文字，保留Table/Row/Cell。原selected其实已设置，根因是AccessKit macOS adapter的item-like集合排除Row，不声称修复原生selected标志。应用ModalBody补Dialog名称与modal元数据，保留原focus trap/handler。[源码与最终构建](benchmarks/r01-states/build-final.json)。
+- 11da中间候选实测统计模型/供应商/页大小具名AX项，AX点击、Down/Return提交与Esc取消；模型单选/Cmd多选/取消的完整行名变化，三类具名Dialog，X/Tab/Esc正常，空本地草稿表仅表头无filler假数据，小窗滚到四个token/上下文字段且footer可达。11da尚未覆盖自有协议/思考菜单的命名，最终4905追加后实测协议/思考/预设三菜单具名，AX选择Responses只进草稿，Cancel恢复Chat，无Core Save；代表统计/行/模型弹层回归通过。[11da证据](benchmarks/r01-states/candidate-native.json)、[4905最终](benchmarks/r01-states/final-native.json)。
+- 不扩大结论：菜单原生selected随键盘cursor移动，Esc仍保持trigger旧值，CUA无checked元数据；Dialog close为body兄弟、CUA不报告modal标记，完整AT作用域和焦点路径未验。Tooltip试验文本未截断且未弹出，不能推断截断场景；1500ms长按中701ms请求截图，但click1809ms完成、截图2238ms才返回关闭后画面，pressed未验证且未重复。旁白/系统辅助功能/输入源均未改。
+- 最终4905源码/共享模块/构建输入hash绑定，fmt、207pass/2既有ignore、strict Clippy、Intel all-targets check、arm64 Release均0。Core配置字节、14请求和成本逐字段保持；save/add/delete/install/restore/port等写操作全0，真实用户数据与旧preview未动。没有初始settings/prices独立快照，故不宣称全DB一致或Core发布验收。[业务保护](benchmarks/r01-states/business-protection.json)。
+- 33张原始CUA JPEG/JFIF保留格式/字节/hash，逻辑两尺寸可有系统边缘1440×901、1102×702，截图尺寸不冒充控件精确geometry；旧631599、中间11da及最终4905分别归属。所有UI原生关闭，Core及驱动退出0；精确清理本轮58个可再生测试文件约253MiB，临时保留0，保留共享缓存及非本轮临时目录。[图片清单](benchmarks/r01-states/image-manifest.json)、[清理](benchmarks/r01-states/cleanup.json)。
+- R01仍部分完成：全适用状态/实际slot、真实拖宽、当前逐引擎IME、真实辅助技术及后续R02–R04未签收。剩余界面0/40，发布任务18项待验，Goal保持active；本轮是语义修复与定向补验，不是正式版通过或公开发布。

@@ -1,0 +1,9 @@
+{
+  "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-states.jfke8w09/r01-states-main/WorkBuddy Proxy R01 States Candidate.app",
+  "bundle_id": "com.workbuddy.proxy.codexreview.tr01-states-main-candidate",
+  "binary_sha256": "11da31bf89377e18f8c3e2111e65b0b52f1a0d8e7de6f3da50fc9d62532f6080",
+  "core_pid": 79413,
+  "same_core_config_bytes_preserved": true,
+  "same_history_cost14_all_fields_preserved": true,
+  "guard_mode": "deny-only; same unique fixture LSEnvironment"
+}

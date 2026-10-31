@@ -1,0 +1,289 @@
+{
+  "at": "2026-11-01T01:51:16.428171+08:00",
+  "candidate": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
+  "intent": "Required unique-family state/slot checklist, separating actual applicability from tool-limited unverified states; no requirement waived",
+  "families": {
+    "action_buttons": {
+      "wrappers": [
+        "action_button",
+        "button",
+        "icon_button",
+        "icon_button_sized",
+        "named_icon_button",
+        "named_icon_button_sized",
+        "pager_button"
+      ],
+      "applicable": [
+        "idle",
+        "hover",
+        "focus",
+        "pressed",
+        "disabled"
+      ],
+      "conditional": {
+        "busy": "Only asynchronous callers wiring loading/busy; no extra busy state invented for static Cancel",
+        "selected": "Only toggle/navigation callers, not ordinary action buttons"
+      },
+      "evidence": [
+        "coverage.json#families.buttons",
+        "../r01-input-handoff/final-busy-e1f-cua.json",
+        "../r01-resume/631599-next-focus.jpg"
+      ],
+      "remaining": [
+        "Broad variant hover",
+        "pressed capture tool serialized",
+        "actual dimensions/slot native proof at all relevant sizes"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "system_icons": {
+      "wrappers": [
+        "system_button",
+        "system_button_base",
+        "studio_dialog_close"
+      ],
+      "applicable": [
+        "idle",
+        "hover",
+        "focus",
+        "pressed",
+        "disabled"
+      ],
+      "conditional": {
+        "selected": "autostart toggle only",
+        "busy": "updater boundary already historical, not public end-to-end updater"
+      },
+      "evidence": [
+        "coverage.json",
+        "candidate-native.json#dialogs"
+      ],
+      "remaining": [
+        "All system icon state/slot combinations not accepted"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "inputs": {
+      "wrappers": [
+        "text_input",
+        "masked_input",
+        "provider_field",
+        "compact_input",
+        "sidebar_search"
+      ],
+      "applicable": [
+        "idle",
+        "focus",
+        "empty",
+        "disabled"
+      ],
+      "conditional": {
+        "masked_reveal": "masked_input only; no screenshot of a revealed credential",
+        "clear_suffix": "sidebar search and controls that actually render clear",
+        "validation_error": "numeric/URL/token inputs with validation, not every plain field",
+        "read_only": "Terminal logs only; provider name/URL/key remain editable until busy by existing contract",
+        "composition": "Separate R01.3 gate, not satisfied by paste or ASCII"
+      },
+      "evidence": [
+        "coverage.json#families.inputs",
+        "../r01-input-handoff/summary.json"
+      ],
+      "remaining": [
+        "Applicable hover/reveal/error/suffix measurements not all observed",
+        "Current composition not established"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "selects_and_choices": {
+      "wrappers": [
+        "select",
+        "select_option_title"
+      ],
+      "applicable": [
+        "closed",
+        "open",
+        "focus",
+        "cursor",
+        "committed_selection",
+        "disabled"
+      ],
+      "conditional": {
+        "search_empty_clear_no_match": "Only searchable lists such as provider presets/discovery, not every nonsrch select"
+      },
+      "evidence": [
+        "candidate-native.json#stats_selects",
+        "final-native.json#provider_menus"
+      ],
+      "remaining": [
+        "Native selected reflects cursor; CUA does not attest checked/committed metadata",
+        "Full no-match/clear slot matrix not accepted"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "tables_and_lists": {
+      "wrappers": [
+        "table",
+        "log_table"
+      ],
+      "applicable": [
+        "populated",
+        "empty",
+        "loading",
+        "scroll",
+        "focus"
+      ],
+      "conditional": {
+        "selection": "Model table is multi-select; request/group tables use read/detail actions",
+        "resize": "Usage provider/model/etc columns only; time column fixed; group columns explicitly nonresizable",
+        "tooltip": "Full values on actual truncated cells only"
+      },
+      "evidence": [
+        "coverage.json#families.model_table",
+        "candidate-native.json#model_rows",
+        "candidate-native.json#empty_table"
+      ],
+      "remaining": [
+        "Successful real eligible-column drag not observed",
+        "Refresh/resize persistence blocked by absent successful drag",
+        "Exact slot dimensions and all keyboard paths not accepted"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "modal_checkbox": {
+      "wrappers": [
+        "dialog_body",
+        "dialog_body_sized",
+        "dialog_title",
+        "dialog_footer",
+        "scrollable_form",
+        "checkbox"
+      ],
+      "applicable": [
+        "open",
+        "cancel",
+        "dismiss",
+        "focus",
+        "overflow"
+      ],
+      "conditional": {
+        "checked_disabled": "Actual checkbox instances include Base engine in model editor, not unused convenience wrapper",
+        "danger": "Explicit provider delete confirm; Enter must not implicitly execute",
+        "error": "Only dialogs with validation/operation errors"
+      },
+      "evidence": [
+        "coverage.json#families.modal_checkbox",
+        "candidate-native.json#dialogs",
+        "candidate-native.json#small_modal",
+        "final-native.json#representative_regression"
+      ],
+      "remaining": [
+        "Actual AT and full focus trap unverified",
+        "Close control is semantic sibling to application Dialog body; complete AT scope unverified"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "tooltip": {
+      "wrappers": [
+        "full_value_tooltip"
+      ],
+      "applicable": [
+        "hidden",
+        "visible",
+        "full_value",
+        "viewport_fit"
+      ],
+      "evidence": [
+        "coverage.json#families.tooltip",
+        "final-native.json#tooltip"
+      ],
+      "remaining": [
+        "A non-truncated model name did not yield tooltip; no inference for actual truncation",
+        "No all-tooltip positioning/AX relationship acceptance"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "calendar": {
+      "wrappers": [
+        "calendar"
+      ],
+      "applicable": [
+        "day",
+        "range_start",
+        "range_end",
+        "hover",
+        "focus",
+        "month_navigation"
+      ],
+      "conditional": {
+        "disabled": "Only real date constraints; not fabricated states"
+      },
+      "evidence": [
+        "../b03-native-consolidated.json"
+      ],
+      "remaining": [
+        "Historical date frame evidence does not close full calendar state matrix"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "terminal": {
+      "wrappers": [
+        "terminal_logs"
+      ],
+      "applicable": [
+        "read_only",
+        "empty",
+        "populated",
+        "selection",
+        "scroll_tail",
+        "scroll_retained"
+      ],
+      "evidence": [
+        "../b05-native-consolidated.json"
+      ],
+      "remaining": [
+        "Historical log function proof must be inspected per required state, no blanket sign-off"
+      ],
+      "acceptance": "partial; not release sign-off"
+    },
+    "noninteractive_composition": {
+      "wrappers": [
+        "sidebar_variant",
+        "action_icon",
+        "segmented_row",
+        "panel_card",
+        "content_card",
+        "pager_status",
+        "tag"
+      ],
+      "applicable": [
+        "layout",
+        "content",
+        "theme_projection"
+      ],
+      "not_applicable": [
+        "own click",
+        "own focus",
+        "own busy (owned by child/caller)"
+      ],
+      "evidence": [
+        "component-call-sites.json"
+      ],
+      "remaining": [
+        "These utility wrappers are not additional independent controls; actual children retain their own requirements"
+      ],
+      "acceptance": "partial; not release sign-off"
+    }
+  },
+  "measurements": "No native per-element bounds API. Source constants are not actual measurements; raw full-window JPEG sizes are not control dimensions.",
+  "unused_convenience_wrappers": [
+    "checkbox",
+    "segment_button",
+    "segmented_row",
+    "pager_status",
+    "dialog_body_sized",
+    "scrollable_form",
+    "icon_button",
+    "icon_button_sized",
+    "named_icon_button_sized"
+  ],
+  "unused_note": "No qualified production call sites in inventory; internal/direct Kit call sites still inspected separately before treating a wrapper as unused."
+}

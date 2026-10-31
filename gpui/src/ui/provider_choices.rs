@@ -558,6 +558,8 @@ impl Selectable for MenuRow {
 }
 impl RenderOnce for MenuRow {
     fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
+        let accessible_title = self.item.title.clone();
+        let accessible_id = SharedString::from(format!("provider-choice-{}", self.item.code));
         let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let studio_protocol = studio && self.kind == MenuKind::Protocol;
         let studio_preset = studio && self.kind == MenuKind::Preset;
@@ -665,6 +667,10 @@ impl RenderOnce for MenuRow {
                 )
             });
         div()
+            .id(accessible_id)
+            .role(Role::MenuListOption)
+            .aria_label(accessible_title)
+            .aria_selected(self.checked)
             .h(px(self.kind.row_height() + 2.))
             .pb(px(2.))
             .w_full()

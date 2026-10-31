@@ -20,6 +20,9 @@ impl SelectItem for EffortChoice {
     fn value(&self) -> &String {
         &self.code
     }
+    fn render(&self, _: &mut Window, _: &mut App) -> impl IntoElement {
+        crate::ui_components::select_option_title(&self.code, self.title())
+    }
 }
 fn choices(zh: bool) -> Vec<EffortChoice> {
     EFFORTS

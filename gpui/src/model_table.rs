@@ -129,9 +129,33 @@ impl TableDelegate for Models {
     ) -> Stateful<Div> {
         let owner = self.owner.clone();
         let selected = self.selection.rows.contains(&i);
+        // AccessKit's macOS adapter does not expose Row as an item-like role.
+        // Keep the native table/row/cell structure and selected property, and
+        // include the application selection in the readable full row name.
+        let state = match (selected, self.zh) {
+            (true, true) => "已选择",
+            (false, true) => "未选择",
+            (true, false) => "Selected",
+            (false, false) => "Not selected",
+        };
+        // Kit also calls render_tr for inert filler rows below real data.
+        let label = self.rows.get(i).map(|model| {
+            let id = model["model"].as_str().unwrap_or("");
+            let name = model["name"]
+                .as_str()
+                .filter(|s| !s.is_empty())
+                .unwrap_or(id);
+            let identity = if name == id {
+                name.to_owned()
+            } else {
+                format!("{name} · {id}")
+            };
+            format!("{identity} · {state}")
+        });
         let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         div()
             .id(("model", i))
+            .when_some(label, |row, label| row.aria_label(label))
             .aria_selected(selected)
             .accessibility_id(format!("model-{i}"))
             .when(self.selection.cursor == Some(i), |row| {

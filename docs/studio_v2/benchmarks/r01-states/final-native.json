@@ -1,0 +1,51 @@
+{
+  "candidate_sha256": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
+  "provenance": {
+    "current": "4905-* evidence is this candidate; CUA raw JPEG JFIF 1440x901.",
+    "intermediate": "candidate-native.json and 11da-* are 11da candidate only.",
+    "earlier": "coverage.json and unprefixed component/drag screenshots belong to 631599."
+  },
+  "provider_menus": {
+    "status": "observed-names",
+    "evidence": [
+      "4905-protocol-menu.ax.txt",
+      "4905-effort-menu.ax.txt",
+      "4905-preset-menu.ax.txt",
+      "4905-effort-cursor.ax.txt"
+    ],
+    "result": "Protocol, provider effort and preset list items now report names. AX click of current protocol retained Chat. In edit mode AX click of OpenAI Responses changed local draft and Cancel restored Chat; no Save.",
+    "semantics_limit": "CUA exposes selected/selectable, but no checked attribute. Down moves native selected from 跟随 WorkBuddy to 关闭思考 before confirmation, Escape leaves trigger at 跟随 WorkBuddy. Therefore native selected in this snapshot reflects menu cursor, not proven committed checked state."
+  },
+  "representative_regression": {
+    "status": "observed",
+    "evidence": [
+      "4905-stats-select.ax.txt",
+      "4905-provider.ax.txt",
+      "4905-row-tooltip.ax.txt",
+      "4905-model-dialog.ax.txt"
+    ],
+    "result": "Stats model options named; row selected text and model dialog 编辑模型 role/name exposed. Full prior 11da matrix not relabeled."
+  },
+  "tooltip": {
+    "status": "unverified",
+    "evidence": [
+      "4905-row-tooltip.jpg",
+      "4905-row-tooltip-waited.jpg"
+    ],
+    "result": "Actual click on model display name then pointer remained; no tooltip observed. Text was not visibly truncated at this size; does not establish behavior for truncated values."
+  },
+  "pressed": {
+    "status": "unverified",
+    "evidence": [
+      "4905-cancel-held-attempt.jpg",
+      "4905-cancel-after.ax.txt"
+    ],
+    "result": "One 1500ms click; read-only screenshot requested at 701ms, click completed at 1809ms, screenshot returned at 2238ms showing already-closed dialog. Cannot establish pressed state; no repeat."
+  },
+  "limits": [
+    "No actual assistive technology test, VoiceOver or system input changes.",
+    "MacOS AX selected flag for table row remains adapter-limited; row name text is readable supplement.",
+    "Modal close button remains AX sibling; native modal flag and complete focus trap unverified.",
+    "Actual column drag, tooltip on truncated value and pressed state remain open."
+  ]
+}

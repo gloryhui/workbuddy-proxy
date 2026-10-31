@@ -1,0 +1,76 @@
+{
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-states.jfke8w09",
+  "type": "session-created synthetic native fixture and copied executables",
+  "uid": 501,
+  "ownership_record": {
+    "created_at": "2026-11-01T01:32:58.802372+08:00",
+    "session": "01a192ed-9fb7-77c3-b543-da7332068939",
+    "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-states.jfke8w09",
+    "worktree": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+    "uid": 501,
+    "reused_core": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core",
+    "reused_ui": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+    "purpose": "R01 eligible-column native drag and unique component states; synthetic isolated config only"
+  },
+  "parent_components": [
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-states.jfke8w09",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    }
+  ],
+  "files": 58,
+  "logical_bytes": 265713657,
+  "core_and_wrapper_exit_zero": true,
+  "all_observed_ui_pids_gone": [
+    79480,
+    82733,
+    83893
+  ],
+  "no_open_references": true,
+  "regenerable": "Created this turn; synthetic DB/config/private drafts and copied hashed binaries/guard only. Required evidence archived; no real user profiles or shared caches within target.",
+  "system_free_before_bytes": 36202852352
+}

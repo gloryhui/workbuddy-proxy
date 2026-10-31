@@ -2,7 +2,15 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 本轮恢复进展（QA76）
+## 最新进展（QA77）
+
+- 最终候选SHA256 `490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5`；fmt、207pass/2既有ignore、strict Clippy、Intel all-targets check、arm64 Release通过。新增具名选择项、模型行完整身份/选择文字、Dialog名称与modal元数据。[总结](benchmarks/r01-states/summary.json)。
+- 36wrapper/118限定调用点、10适用状态族只形成明确矩阵，未签收全状态/实际slot。native selected对Row受macOS adapter限制；菜单selected是cursor而非committed checked证明，close为Dialog body兄弟，真实AT仍待。禁止旁白/系统辅助功能/切源。
+- 旧首边界drag实际Time列固定；本轮正确provider/model边界两点drag仍无变化。能力未变不重复；刷新/resize保持仍未验证。Tooltip实际文本未截断；长按期间截图被工具串行到释放后，均不标通过。
+- 本轮Core配置字节、14请求/成本逐字段保持，写命令0；三UI关闭，Core/驱动0。`studio-v2-r01-states.jfke8w09`58临时文件约253MiB已精确清理，临时保留0，不再启动已删除bundle；共享缓存/旧基准Core保留。
+- 下一步仍R01余项集中推进；0/40界面、18发布任务待验，Goal active，未公开发布。旧631599/11da证据不重标最终4905；33张为原始JPEG，控件精确geometry未测。
+
+## 上一轮恢复进展（QA76）
 
 - 本轮代码与证据提交 `0fa0933`；最终候选SHA256 `631599c2bc50295cb8164ed6be583974b7a3d01bfb7568739e0655d25133ccfd`；GPUI207pass/2既有ignore、fmt、strict Clippy、Intel类型检查、arm64release通过。源码绑定见[构建](benchmarks/r01-resume/build-final.json)。
 - 已修复并真实补验R01.1外部save64活动表刷新、modal延后、dirty草稿保留/重基准/原生冷重开，以及R01.2末页Next disabled后ShiftTab/Return焦点恢复。14请求/成本逐字段保持。[本轮总结](benchmarks/r01-resume/summary.json)。

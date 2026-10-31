@@ -108,6 +108,9 @@ impl SelectItem for Choice {
     fn value(&self) -> &String {
         &self.code
     }
+    fn render(&self, _: &mut Window, _: &mut App) -> impl IntoElement {
+        crate::ui_components::select_option_title(&self.code, self.title())
+    }
     fn matches(&self, query: &str) -> bool {
         let query = query.trim().to_lowercase();
         self.title.to_lowercase().contains(&query)
@@ -2669,6 +2672,35 @@ impl Proxy {
         };
         Some(content)
     }
+
+    fn modal_accessible_title(&self) -> &'static str {
+        if self.port_open {
+            self.t("修改本地端口", "Change local port")
+        } else if self.protocol_open {
+            self.t("协议选项", "Protocol options")
+        } else if self.picker.is_some() {
+            self.t("选择模型", "Select models")
+        } else if let Some(index) = self.editing {
+            if index < self.models.len() {
+                self.t("编辑模型", "Edit model")
+            } else {
+                self.t("添加模型", "Add model")
+            }
+        } else if self.pending_port.is_some() {
+            self.t(
+                "修改端口并重启 WorkBuddy？",
+                "Change port and restart WorkBuddy?",
+            )
+        } else if self.startup_sync_open {
+            self.t("WorkBuddy 连接地址不一致", "WorkBuddy endpoint mismatch")
+        } else if self.unsync_open {
+            self.t("取消同步 WorkBuddy", "Remove models from WorkBuddy")
+        } else if self.sync_open {
+            self.t("同步 WorkBuddy", "Sync WorkBuddy")
+        } else {
+            self.t("删除供应商？", "Delete provider?")
+        }
+    }
 }
 impl Render for Proxy {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
@@ -2843,6 +2875,9 @@ impl Render for ModalBody {
                 this.dialog_body(window, cx).map(|body| {
                     div()
                         .id("proxy-modal-body")
+                        .role(Role::Dialog)
+                        .aria_label(this.modal_accessible_title())
+                        .a11y_synthetic_children(|tree| tree.parent_node().set_modal())
                         .track_focus(&this.modal_focus)
                         .when(this.protocol_open || this.delete_open, |body| {
                             // The modal view lives in Kit's window layer, outside

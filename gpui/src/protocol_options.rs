@@ -26,6 +26,9 @@ impl SelectItem for Mode {
     fn value(&self) -> &String {
         &self.code
     }
+    fn render(&self, _: &mut Window, _: &mut App) -> impl IntoElement {
+        crate::ui_components::select_option_title(&self.code, self.title())
+    }
 }
 fn modes(protocol: UpstreamProtocol) -> Vec<Mode> {
     let entries: &[(&str, &str)] = match protocol {

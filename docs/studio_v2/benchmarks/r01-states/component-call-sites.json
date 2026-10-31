@@ -1,0 +1,805 @@
+{
+  "source_sha256": "8489e8a2a62f464ef2b9ff0699b3cca7ad2d0b456202da181f573bb9825c8665",
+  "wrappers": 36,
+  "qualified_call_sites": 118,
+  "items": [
+    {
+      "wrapper": "full_value_tooltip",
+      "line": 27,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/model_table.rs",
+          "line": 297,
+          "call": "crate::ui_components::full_value_tooltip(full.clone(), window, cx)"
+        },
+        {
+          "file": "gpui/src/statistics/detail_layout.rs",
+          "line": 29,
+          "call": "crate::ui_components::full_value_tooltip(hint.clone(), window, cx)"
+        },
+        {
+          "file": "gpui/src/statistics/settings_layout.rs",
+          "line": 456,
+          "call": "crate::ui_components::full_value_tooltip("
+        },
+        {
+          "file": "gpui/src/ui/model_editor.rs",
+          "line": 426,
+          "call": "crate::ui_components::full_value_tooltip("
+        },
+        {
+          "file": "gpui/src/ui/model_picker.rs",
+          "line": 143,
+          "call": "crate::ui_components::full_value_tooltip(tooltip.clone(), window, cx)"
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 659,
+          "call": "crate::ui_components::full_value_tooltip(explanation.clone(), window, cx)"
+        }
+      ]
+    },
+    {
+      "wrapper": "action_button",
+      "line": 53,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 69,
+          "call": "crate::ui_components::action_button(id).px(px(10.))"
+        },
+        {
+          "file": "gpui/src/ui/autostart_notice.rs",
+          "line": 296,
+          "call": "crate::ui_components::action_button(\"close-autostart-notice\")"
+        },
+        {
+          "file": "gpui/src/ui/language_menu.rs",
+          "line": 195,
+          "call": "crate::ui_components::action_button(\"close-language-menu\")"
+        },
+        {
+          "file": "gpui/src/ui/model_editor.rs",
+          "line": 455,
+          "call": "crate::ui_components::action_button(\"model-capability-help-button\")"
+        },
+        {
+          "file": "gpui/src/ui/model_editor.rs",
+          "line": 577,
+          "call": "crate::ui_components::action_button((\"model-supported-effort\", index))"
+        },
+        {
+          "file": "gpui/src/ui/model_editor.rs",
+          "line": 969,
+          "call": "crate::ui_components::action_button(\"edit-cancel\")"
+        },
+        {
+          "file": "gpui/src/ui/model_editor.rs",
+          "line": 982,
+          "call": "crate::ui_components::action_button(\"edit-confirm\")"
+        },
+        {
+          "file": "gpui/src/ui/model_picker.rs",
+          "line": 418,
+          "call": "crate::ui_components::action_button(id)"
+        },
+        {
+          "file": "gpui/src/ui/model_picker.rs",
+          "line": 685,
+          "call": "crate::ui_components::action_button(\"picker-cancel\")"
+        },
+        {
+          "file": "gpui/src/ui/model_picker.rs",
+          "line": 696,
+          "call": "crate::ui_components::action_button(\"picker-confirm\")"
+        },
+        {
+          "file": "gpui/src/ui/protocol_dialog.rs",
+          "line": 82,
+          "call": "let button = crate::ui_components::action_button((\"protocol-tab\", index))"
+        },
+        {
+          "file": "gpui/src/ui/protocol_dialog.rs",
+          "line": 239,
+          "call": ".child(crate::ui_components::action_button(\"protocol-apply\").primary()"
+        },
+        {
+          "file": "gpui/src/ui/provider_choices.rs",
+          "line": 352,
+          "call": "let trigger = crate::ui_components::action_button((\"provider-menu\", state.entity_id()))"
+        },
+        {
+          "file": "gpui/src/ui/provider_delete.rs",
+          "line": 205,
+          "call": "let button = crate::ui_components::action_button(id)"
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 376,
+          "call": "crate::ui_components::action_button(\"first-provider\")"
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 844,
+          "call": "crate::ui_components::action_button(\"model-add\")"
+        },
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 94,
+          "call": ".child(crate::ui_components::action_button(\"copy-relay-address\").ghost().size(px(27.)).p_0().mr(px(7.)).relative().top(px(-3.))"
+        },
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 106,
+          "call": ".child(crate::ui_components::action_button(\"port-settings\").ghost().size(px(24.)).p_0().absolute().right_0().top(px(-2.)).disabled(self.busy)"
+        },
+        {
+          "file": "gpui/src/ui/skin_controls.rs",
+          "line": 83,
+          "call": "crate::ui_components::action_button((\"skin-preset\", skin as usize))"
+        },
+        {
+          "file": "gpui/src/ui/skin_controls.rs",
+          "line": 170,
+          "call": "crate::ui_components::action_button((\"skin-preset\", skin as usize))"
+        },
+        {
+          "file": "gpui/src/ui/sync_dialog.rs",
+          "line": 97,
+          "call": ".child(crate::ui_components::action_button(if remove { \"unsync-cancel\" } else { \"sync-cancel\" })"
+        },
+        {
+          "file": "gpui/src/ui/sync_dialog.rs",
+          "line": 100,
+          "call": ".child(crate::ui_components::action_button(if remove { \"unsync-only\" } else { \"sync-only\" })"
+        },
+        {
+          "file": "gpui/src/ui/sync_dialog.rs",
+          "line": 106,
+          "call": ".child(crate::ui_components::action_button(if remove { \"unsync-restart\" } else { \"sync-restart\" })"
+        },
+        {
+          "file": "gpui/src/ui/update_notice.rs",
+          "line": 258,
+          "call": "crate::ui_components::action_button(\"close-check-update\")"
+        },
+        {
+          "file": "gpui/src/ui/window_restore.rs",
+          "line": 191,
+          "call": "crate::ui_components::action_button(\"close-window-restore\")"
+        }
+      ]
+    },
+    {
+      "wrapper": "sidebar_variant",
+      "line": 63,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/sidebar.rs",
+          "line": 16,
+          "call": ".custom(crate::ui_components::sidebar_variant(active, cx))"
+        },
+        {
+          "file": "gpui/src/ui/sidebar.rs",
+          "line": 222,
+          "call": ".custom(crate::ui_components::sidebar_variant(active, cx))"
+        },
+        {
+          "file": "gpui/src/ui/sidebar.rs",
+          "line": 401,
+          "call": ".custom(crate::ui_components::sidebar_variant(false, cx))"
+        }
+      ]
+    },
+    {
+      "wrapper": "action_icon",
+      "line": 80,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics/source_controls.rs",
+          "line": 379,
+          "call": ".child(crate::ui_components::action_icon("
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2528,
+          "call": ".child(crate::ui_components::action_icon("
+        },
+        {
+          "file": "gpui/src/ui/skin_controls.rs",
+          "line": 117,
+          "call": "crate::ui_components::action_icon(IconName::Check)"
+        }
+      ]
+    },
+    {
+      "wrapper": "button",
+      "line": 91,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics/settings_capture.rs",
+          "line": 62,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 829,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 953,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 964,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 120,
+          "call": ".child(crate::ui_components::button(\"sync\", crate::ui_components::ButtonKind::Primary, self.t(\"同步 WorkBuddy\", \"Sync WorkBuddy\"), self.busy, false)"
+        },
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 124,
+          "call": ".child(crate::ui_components::button(\"restore\", crate::ui_components::ButtonKind::Normal, self.t(\"取消同步\", \"Unsync\"), self.busy, false)"
+        },
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 322,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 332,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2584,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2594,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2641,
+          "call": "crate::ui_components::button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2653,
+          "call": "crate::ui_components::button("
+        }
+      ]
+    },
+    {
+      "wrapper": "icon_button",
+      "line": 115,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "icon_button_sized",
+      "line": 134,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "studio_dialog_close",
+      "line": 170,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics/detail_layout.rs",
+          "line": 216,
+          "call": ".child(crate::ui_components::studio_dialog_close("
+        },
+        {
+          "file": "gpui/src/statistics/price_layout.rs",
+          "line": 153,
+          "call": ".child(crate::ui_components::studio_dialog_close("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2215,
+          "call": "crate::ui_components::studio_dialog_close("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2241,
+          "call": "crate::ui_components::studio_dialog_close("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2272,
+          "call": "crate::ui_components::studio_dialog_close("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2302,
+          "call": "crate::ui_components::studio_dialog_close("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2330,
+          "call": "crate::ui_components::studio_dialog_close("
+        }
+      ]
+    },
+    {
+      "wrapper": "system_button",
+      "line": 223,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/language_menu.rs",
+          "line": 54,
+          "call": "crate::ui_components::system_button("
+        },
+        {
+          "file": "gpui/src/ui/skin_controls.rs",
+          "line": 32,
+          "call": ".trigger(crate::ui_components::system_button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 497,
+          "call": "crate::ui_components::system_button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 510,
+          "call": "crate::ui_components::system_button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 523,
+          "call": "crate::ui_components::system_button("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 533,
+          "call": "crate::ui_components::system_button("
+        }
+      ]
+    },
+    {
+      "wrapper": "system_button_base",
+      "line": 234,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/autostart_notice.rs",
+          "line": 44,
+          "call": "let mut button = crate::ui_components::system_button_base("
+        }
+      ]
+    },
+    {
+      "wrapper": "named_icon_button",
+      "line": 268,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 876,
+          "call": "crate::ui_components::named_icon_button("
+        }
+      ]
+    },
+    {
+      "wrapper": "named_icon_button_sized",
+      "line": 286,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "text_input",
+      "line": 307,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/protocol_options.rs",
+          "line": 317,
+          "call": "Styled::h(crate::ui_components::text_input(state, false), px(h))"
+        },
+        {
+          "file": "gpui/src/statistics/price_layout.rs",
+          "line": 56,
+          "call": "Styled::h(crate::ui_components::text_input(state, disabled), px(42.))"
+        },
+        {
+          "file": "gpui/src/statistics/settings_layout.rs",
+          "line": 407,
+          "call": "crate::ui_components::text_input(&self.price_search, false)"
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 3040,
+          "call": "crate::ui_components::text_input(&self.page_input, busy || total == 0)"
+        },
+        {
+          "file": "gpui/src/ui/model_editor.rs",
+          "line": 146,
+          "call": "Styled::h(crate::ui_components::text_input(state, disabled), px(41.))"
+        },
+        {
+          "file": "gpui/src/ui/model_picker.rs",
+          "line": 522,
+          "call": "crate::ui_components::text_input(&self.search, false),"
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 449,
+          "call": "crate::ui_components::text_input(&self.name, self.busy)"
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 491,
+          "call": "crate::ui_components::text_input(&self.url, self.busy)"
+        },
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 309,
+          "call": "crate::ui_components::text_input(&self.port, self.busy)"
+        }
+      ]
+    },
+    {
+      "wrapper": "masked_input",
+      "line": 316,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 458,
+          "call": "crate::ui_components::masked_input("
+        }
+      ]
+    },
+    {
+      "wrapper": "provider_field",
+      "line": 325,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 448,
+          "call": "crate::ui_components::provider_field("
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 457,
+          "call": "crate::ui_components::provider_field("
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 490,
+          "call": "crate::ui_components::provider_field("
+        }
+      ]
+    },
+    {
+      "wrapper": "compact_input",
+      "line": 347,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2250,
+          "call": "crate::ui_components::compact_input(&self.custom_from, false)"
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2255,
+          "call": "crate::ui_components::compact_input("
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2517,
+          "call": ".child(crate::ui_components::compact_input(input, false).w_full()),"
+        }
+      ]
+    },
+    {
+      "wrapper": "sidebar_search",
+      "line": 361,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/sidebar.rs",
+          "line": 455,
+          "call": "crate::ui_components::sidebar_search("
+        }
+      ]
+    },
+    {
+      "wrapper": "select",
+      "line": 439,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/protocol_options.rs",
+          "line": 330,
+          "call": "crate::ui_components::select(state, false)"
+        },
+        {
+          "file": "gpui/src/statistics/price_layout.rs",
+          "line": 234,
+          "call": "select_style(crate::ui_components::select(&self.price_provider, locked))"
+        },
+        {
+          "file": "gpui/src/statistics/price_layout.rs",
+          "line": 250,
+          "call": "select_style(crate::ui_components::select(&self.price_mode, false))"
+        },
+        {
+          "file": "gpui/src/statistics/price_layout.rs",
+          "line": 257,
+          "call": "select_style(crate::ui_components::select(&self.price_currency, false))"
+        },
+        {
+          "file": "gpui/src/statistics/source_controls.rs",
+          "line": 129,
+          "call": "crate::ui_components::select("
+        },
+        {
+          "file": "gpui/src/statistics/source_controls.rs",
+          "line": 314,
+          "call": "let control = crate::ui_components::select(state, false)"
+        },
+        {
+          "file": "gpui/src/statistics/trends.rs",
+          "line": 220,
+          "call": "crate::ui_components::select(&self.currency_select, false)"
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2635,
+          "call": ".child(crate::ui_components::select(&self.outcome_select, false).w_full()),"
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2650,
+          "call": "crate::ui_components::select(&self.usage_select, false)"
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 3033,
+          "call": "crate::ui_components::select(&self.page_size_select, busy)"
+        },
+        {
+          "file": "gpui/src/ui/model_editor.rs",
+          "line": 669,
+          "call": "crate::ui_components::select("
+        }
+      ]
+    },
+    {
+      "wrapper": "select_option_title",
+      "line": 453,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/model_options.rs",
+          "line": 24,
+          "call": "crate::ui_components::select_option_title(&self.code, self.title())"
+        },
+        {
+          "file": "gpui/src/protocol_options.rs",
+          "line": 30,
+          "call": "crate::ui_components::select_option_title(&self.code, self.title())"
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 165,
+          "call": "crate::ui_components::select_option_title(&self.code, self.title())"
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 112,
+          "call": "crate::ui_components::select_option_title(&self.code, self.title())"
+        }
+      ]
+    },
+    {
+      "wrapper": "checkbox",
+      "line": 463,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "segment_button",
+      "line": 479,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "segmented_row",
+      "line": 493,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "panel_card",
+      "line": 499,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 331,
+          "call": "crate::ui_components::panel_card(id)"
+        }
+      ]
+    },
+    {
+      "wrapper": "content_card",
+      "line": 516,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 223,
+          "call": "crate::ui_components::content_card(id).p(px(CARD_PAD))"
+        }
+      ]
+    },
+    {
+      "wrapper": "table",
+      "line": 532,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2799,
+          "call": "_ => crate::ui_components::table(&self.group_table)"
+        },
+        {
+          "file": "gpui/src/ui/providers.rs",
+          "line": 724,
+          "call": ".child(crate::ui_components::table(&self.model_table)"
+        }
+      ]
+    },
+    {
+      "wrapper": "log_table",
+      "line": 542,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2794,
+          "call": "Tab::Requests => crate::ui_components::log_table(&self.usage_table)"
+        }
+      ]
+    },
+    {
+      "wrapper": "dialog_body",
+      "line": 547,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 298,
+          "call": "crate::ui_components::dialog_body()"
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2563,
+          "call": "crate::ui_components::dialog_body()"
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2609,
+          "call": "crate::ui_components::dialog_body()"
+        }
+      ]
+    },
+    {
+      "wrapper": "dialog_body_sized",
+      "line": 553,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "scrollable_form",
+      "line": 564,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "dialog_title",
+      "line": 576,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 301,
+          "call": ".child(crate::ui_components::dialog_title("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2566,
+          "call": ".child(crate::ui_components::dialog_title(self.t("
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2612,
+          "call": ".child(crate::ui_components::dialog_title(self.t("
+        }
+      ]
+    },
+    {
+      "wrapper": "dialog_footer",
+      "line": 584,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 320,
+          "call": "crate::ui_components::dialog_footer()"
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2582,
+          "call": "crate::ui_components::dialog_footer()"
+        },
+        {
+          "file": "gpui/src/ui.rs",
+          "line": 2639,
+          "call": "crate::ui_components::dialog_footer()"
+        }
+      ]
+    },
+    {
+      "wrapper": "pager_button",
+      "line": 589,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 3008,
+          "call": "crate::ui_components::pager_button("
+        },
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 3020,
+          "call": "crate::ui_components::pager_button("
+        }
+      ]
+    },
+    {
+      "wrapper": "pager_status",
+      "line": 598,
+      "qualified_call_sites": []
+    },
+    {
+      "wrapper": "tag",
+      "line": 615,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics/settings_layout.rs",
+          "line": 261,
+          "call": "crate::ui_components::tag("
+        },
+        {
+          "file": "gpui/src/statistics/settings_layout.rs",
+          "line": 355,
+          "call": "crate::ui_components::tag("
+        },
+        {
+          "file": "gpui/src/usage_table.rs",
+          "line": 666,
+          "call": "crate::ui_components::tag("
+        },
+        {
+          "file": "gpui/src/usage_table.rs",
+          "line": 677,
+          "call": "crate::ui_components::tag("
+        }
+      ]
+    },
+    {
+      "wrapper": "calendar",
+      "line": 633,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/statistics.rs",
+          "line": 2323,
+          "call": ".child(crate::ui_components::calendar(&self.calendar, self.zh)),"
+        }
+      ]
+    },
+    {
+      "wrapper": "terminal_logs",
+      "line": 714,
+      "qualified_call_sites": [
+        {
+          "file": "gpui/src/ui/relay.rs",
+          "line": 234,
+          "call": ".child(crate::ui_components::terminal_logs("
+        }
+      ]
+    }
+  ],
+  "scope": "Source call-site inventory, not actual geometry. Direct Kit/native controls and internal wrapper calls listed separately in applicability; zero qualified calls does not prove unreachable by itself."
+}
