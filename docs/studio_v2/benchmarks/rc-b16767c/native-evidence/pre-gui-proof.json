@@ -1,0 +1,143 @@
+{
+  "ready": {
+    "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-check.s293t_2n/native-harness/r02-systems-r02-s293t_2n-main/WorkBuddy Proxy R02 System.app",
+    "bundle_id": "com.workbuddy.proxy.codexreview.tr02-systems-r02-s293t-2n-main",
+    "core_pid": 89536,
+    "port": 57803
+  },
+  "core_proof": {
+    "enforced": true,
+    "pid": 89536,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "core_config_sha256_before": "86c903c51e51f94732046527096c4b5b0ce3440aa7511f95e15d0ce5baf575e8",
+  "seed": {
+    "real_http_requests": 14,
+    "statuses": [
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200
+    ],
+    "expected_input": 7000,
+    "expected_output": 700,
+    "expected_total": 7700
+  },
+  "ui_sha256": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
+  "isolation": "Core kernel protected, GUI only unique bundle/LSEnvironment; synthetic real local requests."
+}

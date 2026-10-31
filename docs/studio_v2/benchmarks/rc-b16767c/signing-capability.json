@@ -1,0 +1,10 @@
+{
+  "read_only_query": "security find-identity -v -p codesigning",
+  "valid_identity_count": 1,
+  "Developer_ID_Application_count": 0,
+  "Apple_Development_count": 1,
+  "package_strategy": "Current scripts/package.py uses codesign --sign - (ad-hoc) for helper and outer app",
+  "credentials_accessed_or_exported": false,
+  "notarization_attempted": false,
+  "scope": "Identity kind counts only; no names/hashes/private key material archived. No Developer ID/notarization or Gatekeeper acceptance implied."
+}

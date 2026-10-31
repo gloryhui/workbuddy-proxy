@@ -1,0 +1,10 @@
+{
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-check.s293t_2n/native-harness",
+  "parent_session_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-check.s293t_2n",
+  "session": "01a192ed-9fb7-77c3-b543-da7332068939",
+  "reused_core": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core",
+  "reused_ui": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+  "worktree": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "purpose": "R02.2 isolated native window minimize/fullscreen/restore checks; no actual tray/login/multiscreen claims",
+  "created_at": "2026-11-01T02:04:46.516683+08:00"
+}

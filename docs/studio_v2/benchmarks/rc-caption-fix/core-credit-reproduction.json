@@ -1,0 +1,27 @@
+{
+  "unchanged_core_source": true,
+  "runs": [
+    {
+      "run": 1,
+      "pid": 757,
+      "exit_code": 0,
+      "seconds": 0.778,
+      "log": "core-credit-reproduction-1.log"
+    },
+    {
+      "run": 2,
+      "pid": 763,
+      "exit_code": 0,
+      "seconds": 0.438,
+      "log": "core-credit-reproduction-2.log"
+    },
+    {
+      "run": 3,
+      "pid": 770,
+      "exit_code": 0,
+      "seconds": 0.426,
+      "log": "core-credit-reproduction-3.log"
+    }
+  ],
+  "scope": "Three isolated current macOS repeats, not Linux proof or a waiver of failed CI"
+}

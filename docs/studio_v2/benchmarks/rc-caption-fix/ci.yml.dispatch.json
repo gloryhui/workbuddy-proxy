@@ -1,0 +1,14 @@
+{
+  "workflow": "ci.yml",
+  "candidate": "74b1e093d8b9c3e5f91443edb568087245edc58d",
+  "runs": [
+    {
+      "conclusion": "",
+      "createdAt": "2026-10-31T18:35:31Z",
+      "databaseId": 41230163774,
+      "headSha": "74b1e093d8b9c3e5f91443edb568087245edc58d",
+      "status": "queued",
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41230163774"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-check.s293t_2n/native-harness/r03-long-s293t_2n-long/WorkBuddy Proxy R03 Long Observe.app",
+  "discovery_end": {
+    "ax": "discovery-idle-end.ax.txt",
+    "screenshot": "discovery-idle-end.jpg",
+    "selected": 0,
+    "action": "native Cancel, no add or save"
+  },
+  "reopens": [
+    {
+      "closed_pid": 99847,
+      "closed_pid_absent": true,
+      "gpui_json_absent": true,
+      "core_pid_alive": 99563,
+      "reopened_pid": 4204,
+      "ax": "reopen-1.ax.txt",
+      "screenshot": "reopen-1.jpg"
+    },
+    {
+      "closed_pid": 4204,
+      "closed_pid_absent": true,
+      "gpui_json_absent": true,
+      "core_pid_alive": 99563,
+      "reopened_pid": 4314,
+      "ax": "reopen-2.ax.txt",
+      "screenshot": "reopen-2.jpg"
+    },
+    {
+      "closed_pid": 4314,
+      "closed_pid_absent": true,
+      "gpui_json_absent": true,
+      "core_pid_alive": 99563,
+      "reopened_pid": 4422,
+      "ax": "reopen-3.ax.txt",
+      "screenshot": "reopen-3.jpg"
+    }
+  ],
+  "language_idle": {
+    "conservative_start": "2026-11-01T02:50:57+08:00",
+    "pid": 4422,
+    "single_bundle_process_confirmed": true,
+    "core_pid_alive": 99563,
+    "page": "sub2api, 255 models",
+    "menu": "open; follow system, simplified Chinese (current), English",
+    "selection_changed": false,
+    "ax": "language-idle-start.ax.txt",
+    "screenshot": "language-idle-start.jpg"
+  },
+  "screenshot_format": "CUA original JPEG JFIF, 1440x901 pixels; no image modification",
+  "limits": "Process presence checks establish lifecycle only; database integrity and performance evaluated separately."
+}

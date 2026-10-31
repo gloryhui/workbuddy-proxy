@@ -1,0 +1,50 @@
+{
+  "candidate_commit": "b16767c6b957e39bdc559bbd4ac6d12b722ba411",
+  "product_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "product_mac_ui_sha256": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
+  "local_check_commands": 22,
+  "local_checks": "passed",
+  "core_tests": {
+    "passed": 573,
+    "failed": 0
+  },
+  "import_contract_checks": 158,
+  "import_fault_checks": 15,
+  "real_core_discovery_cases": 19,
+  "real_core_creation_conditions": 10,
+  "ci": {
+    "core": {
+      "run_id": 41227146468,
+      "conclusion": "success"
+    },
+    "desktop": {
+      "run_id": 41227149652,
+      "windows": "success",
+      "macos_arm64": "success",
+      "macos_intel": "success"
+    }
+  },
+  "artifacts": [
+    {
+      "platform": "windows",
+      "artifact_id": 13053021591,
+      "zip_sha256": "d37a39a6b2d55cce9fd37d0ae75f21b08c2ba37bb08df2a316197cd690fc05ab",
+      "provenance": "benchmarks/rc-b16767c/ci-reports/windows/artifact-provenance.json"
+    },
+    {
+      "platform": "macos-arm64",
+      "artifact_id": 13053341513,
+      "zip_sha256": "0527e05b6c4068036a107503ec8a3f1537359b7ed1d57275a013322fb45af6fb",
+      "provenance": "benchmarks/rc-b16767c/ci-reports/macos-arm64/artifact-provenance.json"
+    },
+    {
+      "platform": "macos-x64",
+      "artifact_id": 13053550835,
+      "zip_sha256": "175fde0cc6cbda97b0375c9869f7e2739525806e4d9c1d56ab40fe7df32fec44",
+      "provenance": "benchmarks/rc-b16767c/ci-reports/macos-x64/artifact-provenance.json"
+    }
+  ],
+  "native_scope": "R02 single Mac1x fullscreen/zoom/resize+restore observed, minimize/Dock unverified; raw images and original AX retained. Not final performance or full platform acceptance.",
+  "signature_policy": "README explicitly ad-hoc Mac without notarization and Windows without Authenticode; full download/quarantine behavior unverified.",
+  "not_final_candidate": "Superseded by74b Windows placement fix and2da capture helper; does not prove their complete finalCI."
+}

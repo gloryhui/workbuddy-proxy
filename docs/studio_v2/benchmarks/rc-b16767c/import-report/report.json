@@ -1,0 +1,943 @@
+{
+  "checks": [
+    {
+      "detail": "tmp:/workbuddy-import-leuyw5ej/home/.workbuddy",
+      "name": "source root is a test sandbox, not real WorkBuddy data",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real data roots",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: real profiles unchanged",
+      "ok": true
+    },
+    {
+      "detail": "sql=4 expected=4",
+      "name": "snapshot: facts matches the fixed expectation",
+      "ok": true
+    },
+    {
+      "detail": "sql=2 expected=2",
+      "name": "snapshot: proxy records matches the fixed expectation",
+      "ok": true
+    },
+    {
+      "detail": "sql=2 expected=2",
+      "name": "snapshot: imported records matches the fixed expectation",
+      "ok": true
+    },
+    {
+      "detail": "sql=0 expected=0",
+      "name": "snapshot: cost rows matches the fixed expectation",
+      "ok": true
+    },
+    {
+      "detail": "sql=1500000000 expected=1500000000",
+      "name": "snapshot: credit nanos matches the fixed expectation",
+      "ok": true
+    },
+    {
+      "detail": "sql=1 expected=1",
+      "name": "snapshot: credit records matches the fixed expectation",
+      "ok": true
+    },
+    {
+      "detail": "4 = 2 + 2",
+      "name": "snapshot: all = proxy + imported",
+      "ok": true
+    },
+    {
+      "detail": "0",
+      "name": "snapshot: an import never creates a cost row",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: real proxy, builtin and direct each have one nonempty fact",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: series all/all matches overview count and token totals",
+      "ok": true
+    },
+    {
+      "detail": "(3, 910, '3420000000')",
+      "name": "golden: dashboard all/all exact totals",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: request list all/all exact count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: series builtin/all matches overview count and token totals",
+      "ok": true
+    },
+    {
+      "detail": "(1, 120, '1140000000')",
+      "name": "golden: dashboard builtin/all exact totals",
+      "ok": true
+    },
+    {
+      "detail": "None",
+      "name": "golden: imported usage does not invent HTTP success",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: request list builtin/all exact count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: series supplier/all matches overview count and token totals",
+      "ok": true
+    },
+    {
+      "detail": "(2, 790, '2280000000')",
+      "name": "golden: dashboard supplier/all exact totals",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: request list supplier/all exact count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: series all/workbuddy matches overview count and token totals",
+      "ok": true
+    },
+    {
+      "detail": "(2, 360, '3420000000')",
+      "name": "golden: dashboard all/workbuddy exact totals",
+      "ok": true
+    },
+    {
+      "detail": "None",
+      "name": "golden: imported usage does not invent HTTP success",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: request list all/workbuddy exact count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: series all/proxy matches overview count and token totals",
+      "ok": true
+    },
+    {
+      "detail": "(1, 550, None)",
+      "name": "golden: dashboard all/proxy exact totals",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: request list all/proxy exact count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: imported detail has precise credit and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "golden: imported detail has precise credit and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "[(3, 910, 3420000000)]",
+      "name": "golden: full rescan preserves exact facts, token and credit totals",
+      "ok": true
+    },
+    {
+      "detail": "[('excluded_proxy', 1), ('imported', 2)]",
+      "name": "golden: actual proxy mirror excluded; all three ledger identities unique",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real data roots",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: real profiles unchanged",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: actual proxy response has frozen 340 tokens",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: seven automatic imports and one exactly correlated proxy exclusion",
+      "ok": true
+    },
+    {
+      "detail": "[('complete', 0, 0, 0, None, 0), ('complete', 50, 10, 60, 20, 990000000), ('complete', 80, 8, 88, None, None), ('complete', 100, 20, 120, 40, 1140000000), ('complete', 200, 30, 230, 0, None), ('invalid', None, None, None, None, None), ('partial', 7, None, None, None, None)]",
+      "name": "canonical: every imported SQL field, including explicit zero and invalid nulls",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: imported detail 0 preserves quality, zero and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: imported detail 1 preserves quality, zero and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: imported detail 2 preserves quality, zero and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: imported detail 3 preserves quality, zero and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: imported detail 4 preserves quality, zero and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: imported detail 5 preserves quality, zero and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: imported detail 6 preserves quality, zero and unknown transport",
+      "ok": true
+    },
+    {
+      "detail": "{'request_count': 8, 'input_tokens': 730, 'output_tokens': 108, 'total_tokens': 838}",
+      "name": "canonical: all overview matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: all series matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: all real request page count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: only proxy has CNY0.123; credits remain separate",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: partial/invalid imports never corrupt proxy pricing or status denominators",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: all API never discloses fixture canaries",
+      "ok": true
+    },
+    {
+      "detail": "{'request_count': 5, 'input_tokens': 150, 'output_tokens': 30, 'total_tokens': 180}",
+      "name": "canonical: builtin overview matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: builtin series matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: builtin real request page count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: builtin API never discloses fixture canaries",
+      "ok": true
+    },
+    {
+      "detail": "{'request_count': 3, 'input_tokens': 580, 'output_tokens': 78, 'total_tokens': 658}",
+      "name": "canonical: supplier overview matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: supplier series matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: supplier real request page count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: supplier API never discloses fixture canaries",
+      "ok": true
+    },
+    {
+      "detail": "{'request_count': 7, 'input_tokens': 430, 'output_tokens': 68, 'total_tokens': 498}",
+      "name": "canonical: workbuddy_only overview matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: workbuddy_only series matches frozen oracle",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: workbuddy_only real request page count",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: mixed quality, precise credits and imported unknown costs",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "canonical: workbuddy_only API never discloses fixture canaries",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "fields: real importer preserves cache write, reasoning, derived total and one nanocredit",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "fields: list API keeps all normalized usage fields",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "fields: detail API keeps all normalized usage fields",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "fields: real report keeps token subsets and exact nanocredit separate",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "fields: source canary never reaches DB, logs or API",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real data roots",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: real profiles unchanged",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real data roots",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: real profiles unchanged",
+      "ok": true
+    },
+    {
+      "detail": "port=57608",
+      "name": "faults: the core came up",
+      "ok": true
+    },
+    {
+      "detail": "base=0 imported=1",
+      "name": "faults: a fixed-seed record imports",
+      "ok": true
+    },
+    {
+      "detail": "imported=1 expected=1",
+      "name": "faults: a truncated-then-rewritten file is not double counted",
+      "ok": true
+    },
+    {
+      "detail": "imported=1 expected=1",
+      "name": "faults: a renamed file does not resurrect a counted record",
+      "ok": true
+    },
+    {
+      "detail": "imported=3 expected=3",
+      "name": "faults: an oversized line does not stop the neighbouring records",
+      "ok": true
+    },
+    {
+      "detail": "imported=3",
+      "name": "faults: an unreadable file is skipped and the core stays up",
+      "ok": true
+    },
+    {
+      "detail": "imported=4 expected=4",
+      "name": "faults: restoring source permissions imports the exact missing record",
+      "ok": true
+    },
+    {
+      "detail": "before=4 after=4",
+      "name": "faults: recovery after a kill is idempotent",
+      "ok": true
+    },
+    {
+      "detail": "lock held for 7s",
+      "name": "faults: the proxy answers while the database is locked",
+      "ok": true
+    },
+    {
+      "detail": "imported=5 expected=5",
+      "name": "faults: a new row blocked by the database lock imports after release",
+      "ok": true
+    },
+    {
+      "detail": "facts=5 ledger=5 expected=5",
+      "name": "faults: every fact row has an imported ledger row",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real data roots",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: real profiles unchanged",
+      "ok": true
+    },
+    {
+      "detail": "user_version=6",
+      "name": "upgrade: the fixture really is schema 6",
+      "ok": true
+    },
+    {
+      "detail": "runs=1",
+      "name": "upgrade: the fixture carries history",
+      "ok": true
+    },
+    {
+      "detail": "port=59281",
+      "name": "upgrade: the real binary starts on a schema-6 database",
+      "ok": true
+    },
+    {
+      "detail": "user_version=11",
+      "name": "upgrade: the database is now schema 11",
+      "ok": true
+    },
+    {
+      "detail": "before=(1, 'upgrade-run-1') after=(2, '13a39a5dd1a732b8e5af4b79ffacd207cb82bcd90282a168,upgrade-run-1')",
+      "name": "upgrade: the proxy history is unchanged",
+      "ok": true
+    },
+    {
+      "detail": "before=[('{\"upgrade\":true}:2026-01-01',)] after=[('{\"upgrade\":true}:2026-01-01',)]",
+      "name": "upgrade: prices are unchanged",
+      "ok": true
+    },
+    {
+      "detail": "before=(1, 90) after=(1, 90)",
+      "name": "upgrade: settings are unchanged",
+      "ok": true
+    },
+    {
+      "detail": "import tables",
+      "name": "upgrade: the import tables were added",
+      "ok": true
+    },
+    {
+      "detail": "tables=14 before=14",
+      "name": "rollback: a newer schema is refused rather than touched",
+      "ok": true
+    },
+    {
+      "detail": "user_version=99",
+      "name": "rollback: the refused database is left at its own version",
+      "ok": true
+    },
+    {
+      "detail": "restored=6",
+      "name": "rollback: the restored backup matches the original summary",
+      "ok": true
+    },
+    {
+      "detail": "sandbox only",
+      "name": "rollback: no real database or application was replaced",
+      "ok": true
+    },
+    {
+      "detail": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy",
+      "name": "core binary exists",
+      "ok": true
+    },
+    {
+      "detail": "tmp:/workbuddy-import-pczqf9ss/config",
+      "name": "core starts with the sandbox config dir",
+      "ok": true
+    },
+    {
+      "detail": "control_protocol=12",
+      "name": "core reports the baseline control protocol",
+      "ok": true
+    },
+    {
+      "detail": "missing='none'",
+      "name": "core runtime files are inside the sandbox config dir",
+      "ok": true
+    },
+    {
+      "detail": "kernel_enforced=False watched=4",
+      "name": "core never wrote a real profile",
+      "ok": true
+    },
+    {
+      "detail": "rc=0",
+      "name": "core exits cleanly after /_control/stop",
+      "ok": true
+    },
+    {
+      "detail": "hits='none'",
+      "name": "no synthetic canary reached logs, config or the database",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real data roots",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: real profiles unchanged",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox under system temp",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox is not real home",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: sandbox outside real data roots",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: profile vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: temp vars inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: config dir inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: source root inside sandbox",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: catalog url is local",
+      "ok": true
+    },
+    {
+      "detail": "True",
+      "name": "sandbox: real profiles unchanged",
+      "ok": true
+    }
+  ],
+  "error": "",
+  "exe": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy",
+  "failed": 0,
+  "isolation": {
+    "canonical_fixture": {
+      "core_binary_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+      "oracle_sha256": "5ed73c08f8ed3593ee2cb2fa11743e4f75ec6fd7835fc954cf3f15435ab5a8ae",
+      "scope": "unmodified frozen source; production HTTP/JSONL/management; SQLite assertions read-only",
+      "source_sha256": "0beff422cf6c86b45754c7e818b7199703bf82cf5656c7b826988bd3ae8e87c9"
+    },
+    "catalog_url_is_local": true,
+    "config_dir_inside_sandbox": true,
+    "kernel_source_protection": {
+      "enforced": false,
+      "method": "sandbox_check permission queries, no protected file I/O",
+      "pid": 89189,
+      "protected_permissions": {
+        "installed_app": {
+          "file-read-data": [
+            0,
+            1
+          ],
+          "file-write-create": [
+            0,
+            1
+          ],
+          "file-write-data": [
+            0,
+            1
+          ],
+          "file-write-unlink": [
+            0,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            0,
+            1
+          ],
+          "file-write-create": [
+            0,
+            1
+          ],
+          "file-write-data": [
+            0,
+            1
+          ],
+          "file-write-unlink": [
+            0,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "workbuddy": {
+          "file-read-data": [
+            0,
+            1
+          ],
+          "file-write-create": [
+            0,
+            1
+          ],
+          "file-write-data": [
+            0,
+            1
+          ],
+          "file-write-unlink": [
+            0,
+            1
+          ]
+        }
+      },
+      "protected_root_exists": {
+        "installed_app": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "workbuddy": true
+      },
+      "sandboxed": false,
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-create": 0,
+        "file-write-data": 0,
+        "file-write-unlink": 0
+      }
+    },
+    "profile_vars_inside_sandbox": true,
+    "real_profile_metadata": {
+      "after": {
+        "proxy_config_macos": {
+          "ino": 159425993,
+          "mtime_ns": 1793256309301602490,
+          "size": 640
+        },
+        "proxy_config_unix": null,
+        "proxy_config_windows": null,
+        "workbuddy_data": {
+          "ino": 121710119,
+          "mtime_ns": 1793259894792365041,
+          "size": 3648
+        }
+      },
+      "before": {
+        "proxy_config_macos": {
+          "ino": 159425993,
+          "mtime_ns": 1793256309301602490,
+          "size": 640
+        },
+        "proxy_config_unix": null,
+        "proxy_config_windows": null,
+        "workbuddy_data": {
+          "ino": 121710119,
+          "mtime_ns": 1793259894792365041,
+          "size": 3648
+        }
+      }
+    },
+    "real_profiles_unchanged": true,
+    "sandbox_is_not_real_home": true,
+    "sandbox_location": "tmp:/workbuddy-import-leuyw5ej",
+    "sandbox_outside_real_data_roots": true,
+    "sandbox_under_system_temp": true,
+    "source_root_inside_sandbox": true,
+    "temp_vars_inside_sandbox": true,
+    "usage_fields_fixture_sha256": "5092d80fcae71d2036f8adb794877c1f012176fb331857a6db8f6e4df416c6f8"
+  },
+  "passed": 158,
+  "result": "PASS",
+  "script": "workbuddy_import_test.py",
+  "started_at": 1793469819.99575,
+  "task": "S01.03"
+}

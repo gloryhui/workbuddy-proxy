@@ -2,7 +2,18 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA77）
+## 最新进展（QA78）
+
+- 已推送运行时代码 `74b1e09`（Windows工具栏top8→32，避开24px caption区域）、CI助手 `2da670b`（仅受限临时CI显示准备/恢复、GDI原图、最终失败门禁）。本轮证据/时间线在其后，读Git获取准确HEAD。Mac UI字节仍`490530dd`、Core仍`25f24ad6`；208pass/2既有ignore、fmt/strictClippy/Intelcheck/release均通过。[总结](benchmarks/rc-round78-summary.json)。
+- b167 Core41227146468/Desktop41227149652四job全部success，3平台artifact digest核对后JSON报告归档。74b Core41230163774首次积分升级full-scan15秒失败（571pass/1fail），同SHA一次重跑成功；首次失败及writer_batch_failure1保留，原因未定，R03.4仍pending，不自动重试到绿。74b两Mac success、Windows新增GDI因DPI96工作区容不下1440×900失败，0截图，harness正常退出并清理。
+- **当前2da Core41231726063已success；Desktop41231731650仍运行，下一轮读取原run终态/产物，不重新dispatch。** 此run将枚举支持模式并在测试通过后只临时调整CI分辨率，完成后恢复；不可用则如实失败。Windows输入/IME/真实缩放/托盘、旧版本升级与分发行为尚未验。安装器独立执行后仍会检查截图失败，不允许continue-on-error隐藏门禁。
+- 同4905/Core25f新隔离64供应商/256模型/1014真实请求/4096候选已实际滚动/搜索/分页末页。发现弹窗600秒RSS中位+2.266MiB、CPU6.656%单核；普通语言菜单另600秒-0.109MiB、CPU1.605%。不同进程/操作历史，不是匹配A/B，不签收无增长或最终性能。三次原生关闭重开，Core同PID；四UI最终均关闭、Core/driver退出0。配置字节及1014请求/成本逐字段保持。
+- 本机补fullscreen动作/zoom/角拖动和toolbar恢复；快捷键退全屏、真实minimize/Dock恢复仍未证实。29张本轮CUA原始JPEG保留，未转换/替代Windows图。R01全状态/实际slot、真实拖宽、当前逐引擎IME与真实AT仍缺；不要重复能力不变的拖动/长按试验。**严禁自动启动旁白、系统辅助功能或切输入源。**
+- a6e9618基线已重建`ba525f80`，同manifest/lock，尚无最终P/C/C/P。共享Cargo产物覆盖被hash检查拦截，4905已恢复；后续启动必验hash，不能信任cargo fresh即平面输出正确。保留本地必要参考 `/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/studio-v2-baselines/a6e9618-arm64-release-ba525f80d2a1/`（二进制+manifest约40.5MiB），不是新Cargo target/公开产物，先核验owner/hash再复用。性能原历史成本保留。
+- 本轮专用 `studio-v2-release-check.s293t_2n` 已删除（518文件约428MiB），临时保留0；不要重新启动里面的bundle。必要原图/报告/审核用脚本已归档，脚本中的SESSION_ROOT是历史占位，不能直接执行。共享缓存和非本轮旧目录未清。清理后系统盘约33.94GiB。
+- 下一步：先核验最新Desktop原run；R01只补有能力支持的真实缺口；诊断Ubuntu扫描失败并做最终累计匹配性能，之后继续平台/安装/分发门禁。仍剩0/40界面、18发布任务pending，Goal active，无公开发布授权；不把当前补证当正式版完成。
+
+## 上一轮进展（QA77）
 
 - 代码与证据提交 `5fae93d`；最终候选SHA256 `490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5`；fmt、207pass/2既有ignore、strict Clippy、Intel all-targets check、arm64 Release通过。新增具名选择项、模型行完整身份/选择文字、Dialog名称与modal元数据。[总结](benchmarks/r01-states/summary.json)。
 - 36wrapper/118限定调用点、10适用状态族只形成明确矩阵，未签收全状态/实际slot。native selected对Row受macOS adapter限制；菜单selected是cursor而非committed checked证明，close为Dialog body兄弟，真实AT仍待。禁止旁白/系统辅助功能/切源。

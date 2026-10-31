@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-11-01T03:02:32.517516+08:00",
+  "config_bytes_unchanged": true,
+  "config_sha256": "43129f4427d83da6ff32f5a7189be98663fb270370dd8e62065b4d979e2917c1",
+  "history_and_costs_all_fields_unchanged": true,
+  "counts": {
+    "usage_requests": 1014,
+    "usage_costs": 1014
+  },
+  "history_and_costs_sha256": "b78466035e8c747c57b11c40772f90f150522cef39a5ca9b2c21f5ae33ef7478",
+  "provider_count": 64,
+  "saved_models": 256,
+  "closed_ui_pids": [
+    99847,
+    4204,
+    4314,
+    4422
+  ],
+  "gpui_record_removed": true,
+  "core_pid": 99563,
+  "core_health_after_final_ui_close": 200,
+  "scope": "Exact saved config plus1014 usage/request and1014 cost rows. No claim of byte-identical entire SQLite file or independently snapshotted settings/prices."
+}

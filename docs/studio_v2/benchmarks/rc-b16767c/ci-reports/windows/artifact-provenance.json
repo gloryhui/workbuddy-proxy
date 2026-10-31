@@ -1,0 +1,42 @@
+{
+  "artifact_id": 13053021591,
+  "artifact_name": "workbuddy-proxy-windows-x64",
+  "run_id": 41227149652,
+  "head_sha": "b16767c6b957e39bdc559bbd4ac6d12b722ba411",
+  "zip_sha256": "d37a39a6b2d55cce9fd37d0ae75f21b08c2ba37bb08df2a316197cd690fc05ab",
+  "zip_bytes": 60573909,
+  "github_digest_matched": true,
+  "reports": [
+    {
+      "file": "dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "sha256": "fcfe7837404902f47017a9d6a4bd7db0f541e458ca022947c2586030510a85f4",
+      "bytes": 22304
+    },
+    {
+      "file": "bench-results/core-windows-x64.json",
+      "sha256": "9c6521e7779ccc70270a231a91a82c12edc682b7834862dad11947c4347afb16",
+      "bytes": 1263
+    },
+    {
+      "file": "bench-results/gpui-windows-x64.json",
+      "sha256": "9b2b531c12e0844fbe19eb58e7d7b5ee076d0668220131ba36b82a16359446ee",
+      "bytes": 1170
+    },
+    {
+      "file": "bench-results/windows-installer.json",
+      "sha256": "3b370f7f800a238689e83f48e22a0a412607248c5b7220316d380baefa4d4df6",
+      "bytes": 1752
+    }
+  ],
+  "archive_paths": [
+    "dist/workbuddy-proxy-0.5.7-windows-x64-setup.exe.sha256",
+    "dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+    "dist/workbuddy-proxy-0.5.7-windows-x64-setup.exe",
+    "dist/workbuddy-proxy-0.5.7-windows-x64.sha256",
+    "dist/workbuddy-proxy-0.5.7-windows-x64.zip",
+    "bench-results/core-windows-x64.json",
+    "bench-results/gpui-windows-x64.json",
+    "bench-results/windows-installer.json"
+  ],
+  "scope": "Only JSON benchmark/validation reports extracted; executables not run locally, no public Release"
+}

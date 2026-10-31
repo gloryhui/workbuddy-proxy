@@ -1,0 +1,37 @@
+{
+  "phase": "models-list",
+  "completed": true,
+  "elapsed_seconds": 600.023,
+  "sample_count": 121,
+  "processes": {
+    "core": {
+      "rss_mib_first": 27.078125,
+      "rss_mib_last": 26.203125,
+      "rss_mib_min": 26.203125,
+      "rss_mib_max": 27.078125,
+      "first_minute_median_mib": 26.203125,
+      "last_minute_median_mib": 26.203125,
+      "median_delta_mib": 0.0,
+      "linear_slope_mib_per_minute": -0.004249414788954404,
+      "cpu_seconds_delta": 0.9199999999999999,
+      "average_cpu_percent": 0.15332745578086174
+    },
+    "ui": {
+      "rss_mib_first": 117.046875,
+      "rss_mib_last": 117.0,
+      "rss_mib_min": 116.984375,
+      "rss_mib_max": 117.28125,
+      "first_minute_median_mib": 117.109375,
+      "last_minute_median_mib": 117.0,
+      "median_delta_mib": -0.109375,
+      "linear_slope_mib_per_minute": -0.021144418941856397,
+      "cpu_seconds_delta": 9.63,
+      "average_cpu_percent": 1.6049384773583681
+    }
+  },
+  "notes": [
+    "RSS is sampled and includes shared pages; no universal equality or leak conclusion from one observation.",
+    "CPU is cumulative process time delta divided by wall time; 100% equals one CPU core.",
+    "No UI interactions during this phase except independently recorded end-state screenshot."
+  ]
+}

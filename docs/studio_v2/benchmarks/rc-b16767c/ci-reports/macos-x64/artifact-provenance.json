@@ -1,0 +1,46 @@
+{
+  "artifact_id": 13053550835,
+  "artifact_name": "workbuddy-proxy-macos-x64",
+  "run_id": 41227149652,
+  "head_sha": "b16767c6b957e39bdc559bbd4ac6d12b722ba411",
+  "zip_sha256": "175fde0cc6cbda97b0375c9869f7e2739525806e4d9c1d56ab40fe7df32fec44",
+  "reports": [
+    {
+      "path": "dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 23231,
+      "sha256": "6075b340f2d69359f23e0201e4feabecd120ac7b0bf794cd48a37270bb9496e4"
+    },
+    {
+      "path": "bench-results/core-macos-x64.json",
+      "bytes": 1219,
+      "sha256": "3babcc9942d73e581a722f6102b4354f99e1ff6a6c300cd497939715e995caef"
+    },
+    {
+      "path": "bench-results/gpui-macos-x64.json",
+      "bytes": 1142,
+      "sha256": "6691d4403105a73c97d0be29214000f14965dcacea22938ff9784aa9f784d025"
+    }
+  ],
+  "archive_entries": [
+    {
+      "path": "dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 23231
+    },
+    {
+      "path": "dist/workbuddy-proxy-0.5.7-macos-x64.dmg.sha256",
+      "bytes": 102
+    },
+    {
+      "path": "dist/workbuddy-proxy-0.5.7-macos-x64.dmg",
+      "bytes": 39730110
+    },
+    {
+      "path": "bench-results/core-macos-x64.json",
+      "bytes": 1219
+    },
+    {
+      "path": "bench-results/gpui-macos-x64.json",
+      "bytes": 1142
+    }
+  ]
+}
