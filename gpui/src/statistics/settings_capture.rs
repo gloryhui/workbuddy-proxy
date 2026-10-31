@@ -198,6 +198,7 @@ impl Statistics {
     }
 
     fn capture_card(&self, cx: &mut Context<Self>) -> Stateful<Div> {
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let settings = self.settings.as_ref();
         let (enabled, retention, revision) =
             settings.map_or((false, 0, 0), |s| (s.enabled, s.retention_days, s.revision));
@@ -330,7 +331,7 @@ impl Statistics {
                     .gap(px(8.))
                     .child(
                         Label::new(self.t("默认货币", "Default currency"))
-                            .w(px(128.))
+                            .w(px(if studio && self.zh { 150. } else { 128. }))
                             .flex_shrink_0()
                             .text_size(px(12.))
                             .text_color(rgb(MUTED)),
@@ -344,7 +345,7 @@ impl Statistics {
                     .gap(px(8.))
                     .child(
                         Label::new(self.t("摘要采集", "Summary collection"))
-                            .w(px(128.))
+                            .w(px(if studio && self.zh { 150. } else { 128. }))
                             .flex_shrink_0()
                             .text_size(px(12.))
                             .text_color(rgb(MUTED)),
@@ -367,7 +368,7 @@ impl Statistics {
                     .gap(px(8.))
                     .child(
                         Label::new(self.t("数据保留", "Data retention"))
-                            .w(px(128.))
+                            .w(px(if studio && self.zh { 150. } else { 128. }))
                             .flex_shrink_0()
                             .text_size(px(12.))
                             .text_color(rgb(MUTED))
@@ -397,6 +398,7 @@ impl Statistics {
                                             format!("retention-{days}")
                                         })
                                         .h(px(34.))
+                                        .when(studio, |button| button.flex_1())
                                         .px(px(8.))
                                         .label(label)
                                         .disabled(settings.is_none())
@@ -405,6 +407,20 @@ impl Statistics {
                                         })
                                         .when(settings.is_none() || retention != days, |button| {
                                             button.ghost()
+                                        })
+                                        .when(studio, |button| {
+                                            button
+                                                .text_size(px(11.))
+                                                .bg(rgb(if retention == days {
+                                                    crate::theme::color::ACCENT_TINT
+                                                } else {
+                                                    0xf3f5fa
+                                                }))
+                                                .border_color(rgb(if retention == days {
+                                                    crate::theme::color::ACCENT_LINE
+                                                } else {
+                                                    0xf3f5fa
+                                                }))
                                         })
                                         .on_click(
                                             cx.listener(move |this, _, _, cx| {

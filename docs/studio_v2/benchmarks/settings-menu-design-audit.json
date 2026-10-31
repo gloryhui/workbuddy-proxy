@@ -1,0 +1,109 @@
+{
+  "at": "2026-10-31T08:04:44.079781+08:00",
+  "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page_id": "51:2",
+  "inventory_unique_frames": 40,
+  "frames": [
+    {
+      "node_id": "58:8",
+      "title": "成本与采集设置",
+      "context_characters": 51269,
+      "full_context_sha256": "ea0fb4a7602cafb68dabaa9785d6d85384fda8c526bb6465bebf3c1e94062a58",
+      "reference_png_sha256": "e5dedc12c47c57dcfcb02a94206f1b3aa05f973728f36d7a882bb7dbe199439d",
+      "reference_size": [
+        1440,
+        900
+      ],
+      "official_session_reused": true,
+      "context_source": "Figma official get_design_context with figma-design-to-code, rendered full high-fidelity context; not sparse.",
+      "reference_source": "Figma official get_screenshot maxDimension1440, instructed curl download",
+      "layout_review": "Real baseline wide and small captured; candidate validation in progress."
+    },
+    {
+      "node_id": "69:359",
+      "title": "编辑价格",
+      "context_characters": 60848,
+      "full_context_sha256": "cc04ff7ff8f682f5484802e9d829965d9582861f95147075620321c10d76ae7b",
+      "reference_png_sha256": "52116768654ea4d7d8c40d126f92bb2895754734b193337d87f997a76ff9c31d",
+      "reference_size": [
+        1440,
+        900
+      ],
+      "official_session_reused": true,
+      "context_source": "Figma official get_design_context with figma-design-to-code, rendered full high-fidelity context; not sparse.",
+      "reference_source": "Figma official get_screenshot maxDimension1440, instructed curl download",
+      "layout_review": "Real baseline wide and small captured; candidate validation in progress."
+    },
+    {
+      "node_id": "62:308",
+      "title": "黑白主题",
+      "context_characters": 54852,
+      "full_context_sha256": "b0d001600291841a2cde9d1baf84effc2af3a448d642988523cef1444eabadc8",
+      "reference_png_sha256": "d88949c550cc73635f244b8a81e327f84dba2f779fa75ba46018800a035b8f19",
+      "reference_size": [
+        1440,
+        900
+      ],
+      "official_session_reused": true,
+      "context_source": "Figma official get_design_context with figma-design-to-code, rendered full high-fidelity context; not sparse.",
+      "reference_source": "Figma official get_screenshot maxDimension1440, instructed curl download",
+      "layout_review": "Real baseline wide and small captured; candidate validation in progress."
+    },
+    {
+      "node_id": "64:335",
+      "title": "皮肤菜单",
+      "context_characters": 60887,
+      "full_context_sha256": "a9b5a12708f3ead9696e0f396eefb535845fa4e789c7302e1e9d3dafab62fdca",
+      "reference_png_sha256": "d0f02d85134ccb519c3dc0b04bc2c4a946083856236fbe4e3443ce4c0850dfae",
+      "reference_size": [
+        1440,
+        900
+      ],
+      "official_session_reused": true,
+      "context_source": "Figma official get_design_context with figma-design-to-code, rendered full high-fidelity context; not sparse.",
+      "reference_source": "Figma official get_screenshot maxDimension1440, instructed curl download",
+      "layout_review": "Real baseline wide and small captured; candidate validation in progress."
+    },
+    {
+      "node_id": "66:320",
+      "title": "协议菜单",
+      "context_characters": 57991,
+      "full_context_sha256": "f98baaa87d6a98f32bf89fdd667985db384abe0a4c33e61934df44b31874e19d",
+      "reference_png_sha256": "ee6e0f787bb7458e2cd0c677506ddc5b7f6d4154f592e981a5f83167276c4e27",
+      "reference_size": [
+        1440,
+        900
+      ],
+      "official_session_reused": true,
+      "context_source": "Figma official get_design_context with figma-design-to-code, rendered full high-fidelity context; not sparse.",
+      "reference_source": "Figma official get_screenshot maxDimension1440, instructed curl download",
+      "layout_review": "Real baseline wide and small captured; candidate validation in progress."
+    }
+  ],
+  "resource_summary": {
+    "unique": 36,
+    "instances": 140,
+    "exact_bytes": 31,
+    "local_id_only_equivalent": 2,
+    "native_OS_window_controls": 3
+  },
+  "planned_preservation": [
+    "Six legacy skin keys/palettes/fonts remain unchanged; Studio remains opt-in seventh option.",
+    "Three real manual USD rules and14 local synthetic requests replace prototype sample names and figures.",
+    "Keep price amount formatter, pagination and current update/reload/delete actions; input_mode remains in full-row tooltip and unchanged edit form.",
+    "Move the existing health and import notices after primary settings cards, preserving their text/actions; warning card and in-card attention/error states remain.",
+    "Legacy Mono follows existing font/palette contract; its differences from the Studio-font Figma example are explicit."
+  ],
+  "known_scope_limits": [
+    "This first review does not finalize a frame. Native glyph AA/shadow differences and retained controls may affect exact geometry.",
+    "1440x901/1100x701 are original native captures of1440x900/1100x700 logical windows; no image processing.",
+    "No screenshots of real credentials or production profiles.",
+    "Current macOS arm64 execution and Intel compiler gate do not prove Windows/Intel hardware, full accessibility/IME or long-run performance."
+  ],
+  "consolidated_layout_corrections": [
+    "Six original22px swatches shifted2px right and1px down after exact native opaque boxes were independently compared with reference; asset bytes remain original.",
+    "Studio protocol dropdown has44px gap per reference; original native positioner still clamps to viewport at1100x700. Legacy and other menu offsets remain6px.",
+    "Retention choices share available row width; new price rule uses native Button.icon before label.",
+    "New Studio colors reuse semantic theme constants; six legacy palettes/keys/default remain unchanged."
+  ]
+}

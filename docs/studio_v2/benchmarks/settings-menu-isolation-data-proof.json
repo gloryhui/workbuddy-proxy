@@ -1,0 +1,197 @@
+{
+  "fixtures": [
+    {
+      "fixture": "ui65-baseline",
+      "ui_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+      "core_pid": 93851,
+      "ui_pid": 94142,
+      "core_kernel_protection_verified": true,
+      "gui_kernel_guard": false,
+      "post_gui": {
+        "checked_at": "2026-10-31T07:59:39.781978+08:00",
+        "ui_pid": 94142,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 93851,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "e55ab5605f417cce0833d63c07fce6e9209671e4caab67d0601ca12e5c713b2d",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "core_wrapper_wait_exit_code": 0,
+      "wrapper_wait_evidence": "Root exec sessions32974/64965/9731/34936 each observed terminal exit0, not a launch-time intention."
+    },
+    {
+      "fixture": "ui65-final1",
+      "ui_sha256": "c301f547dcc78b24b16ec295613c94cd8811095f309b40c9f300a9c4c3b79244",
+      "core_pid": 97319,
+      "ui_pid": 97666,
+      "core_kernel_protection_verified": true,
+      "gui_kernel_guard": false,
+      "post_gui": {
+        "checked_at": "2026-10-31T08:06:35.902165+08:00",
+        "ui_pid": 97666,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 97319,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "c9c8f330a6f5861e9948f3b52ae54387150828f2ecd967c428d3222967177da2",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "core_wrapper_wait_exit_code": 0,
+      "wrapper_wait_evidence": "Root exec sessions32974/64965/9731/34936 each observed terminal exit0, not a launch-time intention."
+    },
+    {
+      "fixture": "ui65-final2",
+      "ui_sha256": "c2eb0f70c6ade534de8fbbe8400c4f4d9d284e9bfb3b1984929932e076482a39",
+      "core_pid": 99575,
+      "ui_pid": 99768,
+      "core_kernel_protection_verified": true,
+      "gui_kernel_guard": false,
+      "post_gui": {
+        "checked_at": "2026-10-31T08:21:47.890578+08:00",
+        "ui_pid": 99768,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 99575,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "fa2524a6358b016b60caf9514c8b8a5d7f280d542dc683f2f10993e2dabef06f",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "core_wrapper_wait_exit_code": 0,
+      "wrapper_wait_evidence": "Root exec sessions32974/64965/9731/34936 each observed terminal exit0, not a launch-time intention."
+    },
+    {
+      "fixture": "ui65-final3",
+      "ui_sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c",
+      "core_pid": 3655,
+      "ui_pid": 3946,
+      "core_kernel_protection_verified": true,
+      "gui_kernel_guard": false,
+      "post_gui": {
+        "checked_at": "2026-10-31T08:29:03.750019+08:00",
+        "ui_pid": 3946,
+        "ui_pid_gone": true,
+        "ui_exit_code": null,
+        "ui_ownership": "CUA service; exit code cannot be reaped by fixture",
+        "core_pid": 3655,
+        "core_after_ui_closed": {
+          "http_status": 200,
+          "stats_health": "ready",
+          "config_sha256_unchanged": true,
+          "config_sha256_after": "bb1d95d3bebc181dccf6e1b425a10dd252435285b2cac66fc4eec8d1ef781ab7",
+          "counts": [
+            14,
+            7000,
+            700,
+            7700,
+            200,
+            200
+          ],
+          "by_source": [
+            [
+              "relay",
+              14
+            ]
+          ]
+        }
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "core_wrapper_wait_exit_code": 0,
+      "wrapper_wait_evidence": "Root exec sessions32974/64965/9731/34936 each observed terminal exit0, not a launch-time intention."
+    }
+  ],
+  "credentials": "All private synthetic HOME/config/LSEnvironment, local mock only; real WorkBuddy profiles and API keys not used. Core has kernel source protection; GUI has unique profile/bundle environment, no GUI kernel sandbox.",
+  "data_results": [
+    "c2eb price/save and retention changes independently verified byAPI plus unchanged all-field SHA of14 historical rows.",
+    "e6abd presentation/cancel test independently verified all3 prices revision1/settings revision1 and14 historical rows unchanged."
+  ]
+}

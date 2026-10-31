@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-31T08:00:56.802159+08:00",
+  "base_head": "7cab54610f58e8f03147a13c7fd4f6f3515c31fc",
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.559,
+      "output": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked"
+      ],
+      "exit_code": 101,
+      "seconds": 3.623,
+      "output": "   Compiling workbuddy-proxy-gpui v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/gpui)\nerror[E0063]: missing field `inset` in initializer of `gpui::BoxShadow`\n   --> src/ui/skin_controls.rs:250:26\n    |\n250 |             .shadow(vec![BoxShadow {\n    |                          ^^^^^^^^^ missing `inset`\n\nFor more information about this error, try `rustc --explain E0063`.\nerror: could not compile `workbuddy-proxy-gpui` (bin \"workbuddy-proxy-gpui\" test) due to 1 previous error\n"
+    }
+  ]
+}

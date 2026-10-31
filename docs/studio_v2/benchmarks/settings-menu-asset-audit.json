@@ -1,0 +1,1393 @@
+{
+  "unique_assets": 36,
+  "asset_instances": 140,
+  "comparison": "Exact bytes or XML canonicalization that changes only definition IDs and matching url references. No path geometry is changed. Decorative traffic lights use actual macOS window controls.",
+  "assets": [
+    {
+      "file": "a7d16.svg",
+      "bytes": 1261,
+      "sha256": "45ddc49b81c15160db87e548a96e73335165725eae935564710c34444aabccae",
+      "local_exact": null,
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconSkin"
+        ],
+        [
+          "context-62-308",
+          "imgIconSkin"
+        ],
+        [
+          "context-64-335",
+          "imgIconSkin"
+        ],
+        [
+          "context-69-359",
+          "imgIconSkin"
+        ],
+        [
+          "context-66-320",
+          "imgIconSkin"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none",
+        "white"
+      ],
+      "canonical_local": [
+        "gpui/assets/studio/skin.svg"
+      ],
+      "status": "only_local_id_rename_equivalent"
+    },
+    {
+      "file": "af952.svg",
+      "bytes": 810,
+      "sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc",
+      "local_exact": [
+        "gpui/assets/studio/autostart.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconAutostart"
+        ],
+        [
+          "context-62-308",
+          "imgIconAutostart"
+        ],
+        [
+          "context-64-335",
+          "imgIconAutostart"
+        ],
+        [
+          "context-69-359",
+          "imgIconAutostart"
+        ],
+        [
+          "context-66-320",
+          "imgIconAutostart"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "e9321.svg",
+      "bytes": 847,
+      "sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd",
+      "local_exact": [
+        "gpui/assets/studio/updates.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconUpdates"
+        ],
+        [
+          "context-62-308",
+          "imgIconUpdates"
+        ],
+        [
+          "context-64-335",
+          "imgIconUpdates"
+        ],
+        [
+          "context-69-359",
+          "imgIconUpdates"
+        ],
+        [
+          "context-66-320",
+          "imgIconUpdates"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "def90.svg",
+      "bytes": 779,
+      "sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45",
+      "local_exact": [
+        "gpui/assets/studio/language.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconLanguage"
+        ],
+        [
+          "context-62-308",
+          "imgIconLanguage"
+        ],
+        [
+          "context-64-335",
+          "imgIconLanguage"
+        ],
+        [
+          "context-69-359",
+          "imgIconLanguage"
+        ],
+        [
+          "context-66-320",
+          "imgIconLanguage"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "0ac56.svg",
+      "bytes": 410,
+      "sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37",
+      "local_exact": [
+        "gpui/assets/studio/restore.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconRestore"
+        ],
+        [
+          "context-62-308",
+          "imgIconRestore"
+        ],
+        [
+          "context-64-335",
+          "imgIconRestore"
+        ],
+        [
+          "context-69-359",
+          "imgIconRestore"
+        ],
+        [
+          "context-66-320",
+          "imgIconRestore"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "7bc0b.svg",
+      "bytes": 926,
+      "sha256": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435",
+      "local_exact": [
+        "gpui/assets/studio/github.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconGithub"
+        ],
+        [
+          "context-62-308",
+          "imgIconGithub"
+        ],
+        [
+          "context-64-335",
+          "imgIconGithub"
+        ],
+        [
+          "context-69-359",
+          "imgIconGithub"
+        ],
+        [
+          "context-66-320",
+          "imgIconGithub"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "4a154.svg",
+      "bytes": 663,
+      "sha256": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9",
+      "local_exact": [
+        "gpui/assets/studio/feedback.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconFeedback"
+        ],
+        [
+          "context-62-308",
+          "imgIconFeedback"
+        ],
+        [
+          "context-64-335",
+          "imgIconFeedback"
+        ],
+        [
+          "context-69-359",
+          "imgIconFeedback"
+        ],
+        [
+          "context-66-320",
+          "imgIconFeedback"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "20",
+        "height": "20",
+        "viewBox": "0 0 20 20",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "91e75.png",
+      "bytes": 920,
+      "sha256": "fc9535b8221ea589bab32977aba991f67cbaca48ee0c16edf12e6cc42be97f9f",
+      "local_exact": [
+        "gpui/assets/studio/brand.png"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgAppLogo"
+        ],
+        [
+          "context-62-308",
+          "imgAppLogo"
+        ],
+        [
+          "context-64-335",
+          "imgAppLogo"
+        ],
+        [
+          "context-69-359",
+          "imgAppLogo"
+        ],
+        [
+          "context-66-320",
+          "imgAppLogo"
+        ]
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "1ccfc.svg",
+      "bytes": 244,
+      "sha256": "49f388449ca210fa8679950605fa5f711c3a87fd0584b689d738a80fdfae6778",
+      "local_exact": null,
+      "variables": [
+        [
+          "context-58-8",
+          "imgWindowControl"
+        ],
+        [
+          "context-62-308",
+          "imgWindowControl"
+        ],
+        [
+          "context-64-335",
+          "imgWindowControl"
+        ],
+        [
+          "context-69-359",
+          "imgWindowControl"
+        ],
+        [
+          "context-66-320",
+          "imgWindowControl"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "11",
+        "height": "11",
+        "viewBox": "0 0 11 11",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#FF605C",
+        "none"
+      ],
+      "status": "decorative_window_controls_replaced_by_actual_OS_controls"
+    },
+    {
+      "file": "7d50e.svg",
+      "bytes": 244,
+      "sha256": "3d58c570ed48c09340899d9d110b15c5206fb7902a148c04b2b860c40bd47c70",
+      "local_exact": null,
+      "variables": [
+        [
+          "context-58-8",
+          "imgWindowControl1"
+        ],
+        [
+          "context-62-308",
+          "imgWindowControl1"
+        ],
+        [
+          "context-64-335",
+          "imgWindowControl1"
+        ],
+        [
+          "context-69-359",
+          "imgWindowControl1"
+        ],
+        [
+          "context-66-320",
+          "imgWindowControl1"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "11",
+        "height": "11",
+        "viewBox": "0 0 11 11",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#FFBD44",
+        "none"
+      ],
+      "status": "decorative_window_controls_replaced_by_actual_OS_controls"
+    },
+    {
+      "file": "7f8ff.svg",
+      "bytes": 244,
+      "sha256": "ca87dadf8a172b0444c8def1db96f16f1f9401e51cb0fc82de0d4a853977db69",
+      "local_exact": null,
+      "variables": [
+        [
+          "context-58-8",
+          "imgWindowControl2"
+        ],
+        [
+          "context-62-308",
+          "imgWindowControl2"
+        ],
+        [
+          "context-64-335",
+          "imgWindowControl2"
+        ],
+        [
+          "context-69-359",
+          "imgWindowControl2"
+        ],
+        [
+          "context-66-320",
+          "imgWindowControl2"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "11",
+        "height": "11",
+        "viewBox": "0 0 11 11",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#00CA4E",
+        "none"
+      ],
+      "status": "decorative_window_controls_replaced_by_actual_OS_controls"
+    },
+    {
+      "file": "b6ecc.svg",
+      "bytes": 356,
+      "sha256": "16fac074729a091ed259de916c9b874913c150cf8de2e2c1e163adaf0c106bd3",
+      "local_exact": [
+        "gpui/assets/studio/nav-chart.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconChart"
+        ],
+        [
+          "context-62-308",
+          "imgIconChart"
+        ],
+        [
+          "context-64-335",
+          "imgIconChart"
+        ],
+        [
+          "context-69-359",
+          "imgIconChart"
+        ],
+        [
+          "context-66-320",
+          "imgIconChart"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "3ef59.svg",
+      "bytes": 906,
+      "sha256": "57726a6ba98a954b43238478e90a7a2251948a48274b66fa91a8687563c47ac8",
+      "local_exact": [
+        "gpui/assets/studio/nav-server.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconServer"
+        ],
+        [
+          "context-62-308",
+          "imgIconServer"
+        ],
+        [
+          "context-64-335",
+          "imgIconServer"
+        ],
+        [
+          "context-69-359",
+          "imgIconServer"
+        ],
+        [
+          "context-66-320",
+          "imgIconServer"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "794e6.svg",
+      "bytes": 733,
+      "sha256": "d6d3c4983820054a71088ac9f2ae3e46439abea28812e89b13bd3e17d6bb679f",
+      "local_exact": [
+        "gpui/assets/studio/nav-settings.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconSettings"
+        ],
+        [
+          "context-62-308",
+          "imgIconSettings"
+        ],
+        [
+          "context-64-335",
+          "imgIconSettings"
+        ],
+        [
+          "context-69-359",
+          "imgIconSettings"
+        ],
+        [
+          "context-66-320",
+          "imgIconSettings"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "d479d.svg",
+      "bytes": 353,
+      "sha256": "360b3500920256de8cc6df2397603a44d38d54b764eac5e6b00864c0d48dbce3",
+      "local_exact": [
+        "gpui/assets/studio/relay-activity.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconActivity"
+        ],
+        [
+          "context-62-308",
+          "imgIconActivity"
+        ],
+        [
+          "context-64-335",
+          "imgIconActivity"
+        ],
+        [
+          "context-69-359",
+          "imgIconActivity"
+        ],
+        [
+          "context-66-320",
+          "imgIconActivity"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "18",
+        "height": "18",
+        "viewBox": "0 0 18 18",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "2f5fe.svg",
+      "bytes": 1050,
+      "sha256": "58e1c3785e2646268894348c7294d00b4d19a853642e36aacf71659ad0590e9a",
+      "local_exact": null,
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconLink"
+        ],
+        [
+          "context-62-308",
+          "imgIconLink"
+        ],
+        [
+          "context-64-335",
+          "imgIconLink"
+        ],
+        [
+          "context-69-359",
+          "imgIconLink"
+        ],
+        [
+          "context-66-320",
+          "imgIconLink"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "15",
+        "height": "15",
+        "viewBox": "0 0 15 15",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none",
+        "white"
+      ],
+      "canonical_local": [
+        "gpui/assets/studio/relay-link.svg"
+      ],
+      "status": "only_local_id_rename_equivalent"
+    },
+    {
+      "file": "a1ba4.svg",
+      "bytes": 651,
+      "sha256": "a2fe39908e879d6081130f39199ec06284a9c5ca644d6c007d172a7bb698c2ac",
+      "local_exact": [
+        "gpui/assets/studio/provider-search.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconSearch"
+        ],
+        [
+          "context-62-308",
+          "imgIconSearch"
+        ],
+        [
+          "context-64-335",
+          "imgIconSearch"
+        ],
+        [
+          "context-69-359",
+          "imgIconSearch"
+        ],
+        [
+          "context-66-320",
+          "imgIconSearch"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "17",
+        "height": "17",
+        "viewBox": "0 0 17 17",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "ec1b5.svg",
+      "bytes": 241,
+      "sha256": "601186600a596199a79d947277464e1d52f95cdf8bf61de3c00c81d33be36092",
+      "local_exact": [
+        "gpui/assets/studio/supplier-selected.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgSupplierStatus"
+        ],
+        [
+          "context-62-308",
+          "imgSupplierStatus"
+        ],
+        [
+          "context-64-335",
+          "imgSupplierStatus"
+        ],
+        [
+          "context-69-359",
+          "imgSupplierStatus"
+        ],
+        [
+          "context-66-320",
+          "imgSupplierStatus"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "7",
+        "height": "7",
+        "viewBox": "0 0 7 7",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#11976F",
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "86243.svg",
+      "bytes": 241,
+      "sha256": "9c7463aedf7e2bc39fca2f67a77990ee1a10ed451c581a4eb4174f8390f53d28",
+      "local_exact": [
+        "gpui/assets/studio/supplier-default.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgSupplierStatus1"
+        ],
+        [
+          "context-62-308",
+          "imgSupplierStatus1"
+        ],
+        [
+          "context-64-335",
+          "imgSupplierStatus1"
+        ],
+        [
+          "context-69-359",
+          "imgSupplierStatus1"
+        ],
+        [
+          "context-66-320",
+          "imgSupplierStatus1"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "7",
+        "height": "7",
+        "viewBox": "0 0 7 7",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#929BB0",
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "06df8.svg",
+      "bytes": 327,
+      "sha256": "71793d1e70d185659da689d0483cc602dada3dcb7380b6e03396de1426a06e33",
+      "local_exact": [
+        "gpui/assets/studio/supplier-add.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconPlus"
+        ],
+        [
+          "context-62-308",
+          "imgIconPlus"
+        ],
+        [
+          "context-64-335",
+          "imgIconPlus"
+        ],
+        [
+          "context-69-359",
+          "imgIconPlus"
+        ],
+        [
+          "context-66-320",
+          "imgIconPlus"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "2791d.svg",
+      "bytes": 665,
+      "sha256": "61a78771901dbb70a3d80d7433d31de4072565e45183b59666c67ed3db632850",
+      "local_exact": [
+        "gpui/assets/studio/supplier-copy.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconCopy"
+        ],
+        [
+          "context-62-308",
+          "imgIconCopy"
+        ],
+        [
+          "context-64-335",
+          "imgIconCopy"
+        ],
+        [
+          "context-69-359",
+          "imgIconCopy"
+        ],
+        [
+          "context-66-320",
+          "imgIconCopy"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "8bc77.svg",
+      "bytes": 442,
+      "sha256": "f2cf12fef0f0ff859160a063fd817d1bcfa7ee63b40cebc301553984f211516d",
+      "local_exact": [
+        "gpui/assets/studio/supplier-delete.svg"
+      ],
+      "variables": [
+        [
+          "context-58-8",
+          "imgIconTrash"
+        ],
+        [
+          "context-62-308",
+          "imgIconTrash"
+        ],
+        [
+          "context-64-335",
+          "imgIconTrash"
+        ],
+        [
+          "context-69-359",
+          "imgIconTrash"
+        ],
+        [
+          "context-66-320",
+          "imgIconTrash"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "d4ab6.svg",
+      "bytes": 338,
+      "sha256": "ee4c74f7eabc72df6f675b78340f9f0750eb39d6e3361f7dc146ab61d0ab1e84",
+      "local_exact": [
+        "gpui/assets/studio/provider-chevron.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconChevron"
+        ],
+        [
+          "context-64-335",
+          "imgIconChevron"
+        ],
+        [
+          "context-66-320",
+          "imgIconChevron"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "3213b.svg",
+      "bytes": 728,
+      "sha256": "6d37ac30da43e20031b7dcf834ac5b09cded84e89b8d05c8f83c6ab5d58091a6",
+      "local_exact": [
+        "gpui/assets/studio/provider-key-eye.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconEye"
+        ],
+        [
+          "context-64-335",
+          "imgIconEye"
+        ],
+        [
+          "context-66-320",
+          "imgIconEye"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "17",
+        "height": "17",
+        "viewBox": "0 0 17 17",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "30aa3.svg",
+      "bytes": 360,
+      "sha256": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68",
+      "local_exact": [
+        "gpui/assets/studio/model-edit.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconEdit"
+        ],
+        [
+          "context-64-335",
+          "imgIconEdit"
+        ],
+        [
+          "context-66-320",
+          "imgIconEdit"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "15",
+        "height": "15",
+        "viewBox": "0 0 15 15",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "4523d.svg",
+      "bytes": 344,
+      "sha256": "9f29669d79d2b9d26d1fb66528ae86d4a8d9c7e984515ae8db628ca32fc79de2",
+      "local_exact": [
+        "gpui/assets/studio/provider-effort-chevron.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconChevron1"
+        ],
+        [
+          "context-64-335",
+          "imgIconChevron1"
+        ],
+        [
+          "context-66-320",
+          "imgIconChevron1"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "14",
+        "height": "14",
+        "viewBox": "0 0 14 14",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "aad6f.svg",
+      "bytes": 376,
+      "sha256": "8791792b3a96a13c77530a5be615005e8ce97a155960b74985d2a4f256f7f6a9",
+      "local_exact": [
+        "gpui/assets/studio/runtime-activity.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconActivity1"
+        ],
+        [
+          "context-64-335",
+          "imgIconActivity1"
+        ],
+        [
+          "context-66-320",
+          "imgIconActivity1"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "19",
+        "height": "19",
+        "viewBox": "0 0 19 19",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "a7779.svg",
+      "bytes": 665,
+      "sha256": "a804b500030bf837780376f1371c8d25ea573cafb67837f17a463fa742ae0c44",
+      "local_exact": [
+        "gpui/assets/studio/runtime-copy.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconCopy1"
+        ],
+        [
+          "context-64-335",
+          "imgIconCopy1"
+        ],
+        [
+          "context-66-320",
+          "imgIconCopy1"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "97d77.svg",
+      "bytes": 694,
+      "sha256": "01411a8f683675a7eb137690609ea402fb59f9623891be2d142e6f992628c2f8",
+      "local_exact": [
+        "gpui/assets/studio/log-terminal.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconTerminal"
+        ],
+        [
+          "context-64-335",
+          "imgIconTerminal"
+        ],
+        [
+          "context-66-320",
+          "imgIconTerminal"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "19",
+        "height": "19",
+        "viewBox": "0 0 19 19",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "b5dcb.svg",
+      "bytes": 380,
+      "sha256": "3b9654f03672b67eda821e02f59e487b94f95b1e8e0b7abe11e33c134890bc1b",
+      "local_exact": [
+        "gpui/assets/studio/profile-edit.svg"
+      ],
+      "variables": [
+        [
+          "context-62-308",
+          "imgIconEdit1"
+        ],
+        [
+          "context-64-335",
+          "imgIconEdit1"
+        ],
+        [
+          "context-66-320",
+          "imgIconEdit1"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "16",
+        "height": "16",
+        "viewBox": "0 0 16 16",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "7a7bb.svg",
+      "bytes": 234,
+      "sha256": "2bc40c512f56f0d96d72e3ed01201570060bc75900d59ca080effcc8ed9fc176",
+      "local_exact": [
+        "gpui/assets/studio/skin-mono.svg"
+      ],
+      "variables": [
+        [
+          "context-64-335",
+          "imgEllipse"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "22",
+        "height": "22",
+        "viewBox": "0 0 22 22",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#27272A",
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "e88d4.svg",
+      "bytes": 234,
+      "sha256": "25bebbd24eb2a701e3bf012ee20de21d04edff5d4188edc6b2b123eb6315d454",
+      "local_exact": [
+        "gpui/assets/studio/skin-blue.svg"
+      ],
+      "variables": [
+        [
+          "context-64-335",
+          "imgEllipse1"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "22",
+        "height": "22",
+        "viewBox": "0 0 22 22",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#2563EB",
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "af337.svg",
+      "bytes": 234,
+      "sha256": "92e320f6be289aa575bca137d4ab7baf200771ae6168f537a7eaae22c028ebbb",
+      "local_exact": [
+        "gpui/assets/studio/skin-violet.svg"
+      ],
+      "variables": [
+        [
+          "context-64-335",
+          "imgEllipse2"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "22",
+        "height": "22",
+        "viewBox": "0 0 22 22",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#7C3AED",
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "829e2.svg",
+      "bytes": 234,
+      "sha256": "161a34f0c0c82c49a43207a441fb296fd54fee36bf7bfd2462fc7cdbe110967d",
+      "local_exact": [
+        "gpui/assets/studio/skin-rose.svg"
+      ],
+      "variables": [
+        [
+          "context-64-335",
+          "imgEllipse3"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "22",
+        "height": "22",
+        "viewBox": "0 0 22 22",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#BE185D",
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "b7ec4.svg",
+      "bytes": 234,
+      "sha256": "0922d0ef6fee74829ba275f7b529a3ff99b00c3085f8e7bd22aa1b6b8a801c3c",
+      "local_exact": [
+        "gpui/assets/studio/skin-amber.svg"
+      ],
+      "variables": [
+        [
+          "context-64-335",
+          "imgEllipse4"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "22",
+        "height": "22",
+        "viewBox": "0 0 22 22",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#B45309",
+        "none"
+      ],
+      "status": "exact_bytes"
+    },
+    {
+      "file": "42f81.svg",
+      "bytes": 234,
+      "sha256": "81491c2d85f7da1c42d629aa9927e4482e7d222e0fa3989e8a79f586155ff212",
+      "local_exact": [
+        "gpui/assets/studio/skin-teal.svg"
+      ],
+      "variables": [
+        [
+          "context-64-335",
+          "imgEllipse5"
+        ]
+      ],
+      "root": {
+        "preserveAspectRatio": "none",
+        "overflow": "visible",
+        "style": "display: block;",
+        "width": "22",
+        "height": "22",
+        "viewBox": "0 0 22 22",
+        "fill": "none"
+      },
+      "fill_colors": [
+        "#0F766E",
+        "none"
+      ],
+      "status": "exact_bytes"
+    }
+  ],
+  "instance_definition": "Asset variable declarations across five complete contexts, not a count of repeated visible rendering slots."
+}

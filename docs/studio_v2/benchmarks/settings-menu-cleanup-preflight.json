@@ -1,0 +1,1638 @@
+{
+  "checked_at": "2026-10-31T08:37:17.500518+08:00",
+  "exact_target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u",
+  "kind": "directory",
+  "project": "WorkBuddy Studio V2 UI65 session-only OS temporary directory",
+  "uid": 501,
+  "canonical_absolute_path_verified": true,
+  "ancestry": [
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u",
+      "uid": 501,
+      "device": 16777233,
+      "is_mount": false
+    }
+  ],
+  "regular_files": 313,
+  "bytes": 495495288,
+  "mib": 472.54113006591797,
+  "all_regular_files_single_link": true,
+  "no_symlinks_or_child_mounts": true,
+  "all24_payload_pids_gone": true,
+  "lsof_exit": 1,
+  "lsof_stdout_empty": true,
+  "lsof_stderr": "",
+  "archived_files_sha256_verified": 65,
+  "regenerable_basis": "Created by this session: synthetic isolated fixtures, copied Core/UI executables, benchmark load artifacts, downloaded design resources, build scratch and derived reports. No shared Cargo target or real user profile lies in target. Original assets/source and65 byte-hashed exports are preserved in worktree; evidence commit will precede cleanup attempt.",
+  "deletion_status": "not_attempted; await evidence commit and immediate recheck",
+  "current_system_data_free_bytes": 39990558720,
+  "inventory": [
+    {
+      "path": "fixture-background.py",
+      "bytes": 14924,
+      "sha256": "b9417b3a93c5a57dc03c5c2ce19d0bf70290e2803936764aee62dc2658e6d21e"
+    },
+    {
+      "path": "process-start",
+      "bytes": 33664,
+      "sha256": "b73a2a8049177ac3dffc3201b0670a062fce28829550d0923c495f870a010ac7"
+    },
+    {
+      "path": "performance-current2.json",
+      "bytes": 4507,
+      "sha256": "ca2f0c97591f04b0df9803ad147b9f3bec46eda0042e9bfc29ffba023ad1e2ed"
+    },
+    {
+      "path": "preflight-seed.py",
+      "bytes": 2574,
+      "sha256": "8e0cb0abc7d793bac39c0773e5236f4fe63d8b82f0de4991b9d936a43f2c425a"
+    },
+    {
+      "path": "context-58-8.txt",
+      "bytes": 52082,
+      "sha256": "ea0fb4a7602cafb68dabaa9785d6d85384fda8c526bb6465bebf3c1e94062a58"
+    },
+    {
+      "path": "reference-64-335.png",
+      "bytes": 206472,
+      "sha256": "d0f02d85134ccb519c3dc0b04bc2c4a946083856236fbe4e3443ce4c0850dfae"
+    },
+    {
+      "path": "context-62-308.txt",
+      "bytes": 55764,
+      "sha256": "b0d001600291841a2cde9d1baf84effc2af3a448d642988523cef1444eabadc8"
+    },
+    {
+      "path": "run-gates.py",
+      "bytes": 2625,
+      "sha256": "0c1a228a460f67805abebbb7da8c087e5a08c898486a2e9b3df7679ad681c05a"
+    },
+    {
+      "path": "benchmark-current2.log",
+      "bytes": 2130,
+      "sha256": "e81f288519d8357d99914c977e5a4696a2be9bc4c07a9a2e3bbc5270b9a55d02"
+    },
+    {
+      "path": "swatch-pixels.swift",
+      "bytes": 1303,
+      "sha256": "ca28af9c8a8145429c96d742194a8a859aa2b6fb8b249f915cfea19fe6439d4b"
+    },
+    {
+      "path": "intermediate-c2eb-build.json",
+      "bytes": 23574,
+      "sha256": "41d4aee84e17d14d89268a1e3cfc2275cf9fcaa41d2f414fdf424128e05fd946"
+    },
+    {
+      "path": "benchmark-current1.log",
+      "bytes": 2132,
+      "sha256": "1cd84e488fcb855ee90cd89dd9e04c52582ace49ef0b143fc1b990d9a2dadfe8"
+    },
+    {
+      "path": "reference-58-8.png",
+      "bytes": 154310,
+      "sha256": "e5dedc12c47c57dcfcb02a94206f1b3aa05f973728f36d7a882bb7dbe199439d"
+    },
+    {
+      "path": "swatch-pixels-final.json",
+      "bytes": 5615,
+      "sha256": "1da3f8265ef56127b42976079ecabfe3df9127f53edd5b517c2ad68f63cf151f"
+    },
+    {
+      "path": "pending-benchmark.json",
+      "bytes": 407,
+      "sha256": "4096c82ddcaf2be0c1009d8a2c81a0d405a8c61b78d0ee9d33966ee78a73ff82"
+    },
+    {
+      "path": "lifecycle.json",
+      "bytes": 3998,
+      "sha256": "6219a8454ea7103b728db1db5ee6346686453824b07769e438a60e8a17b4e465"
+    },
+    {
+      "path": "idle-sample.py",
+      "bytes": 2449,
+      "sha256": "966c0e1110f527ea91658f2a65c00cdf603ea337339acc518a480be765d55844"
+    },
+    {
+      "path": "performance-previous2.json",
+      "bytes": 4508,
+      "sha256": "e2cf00258690b9800d70139936d5c0468ffb97a8136b20b03f024e7694473ff6"
+    },
+    {
+      "path": "isolation-data-proof.json",
+      "bytes": 6887,
+      "sha256": "4fef732e354b97245032d4c2e8ddb76bd5e3337b02d041ff541095ab353285b7"
+    },
+    {
+      "path": "reference-69-359.png",
+      "bytes": 227022,
+      "sha256": "52116768654ea4d7d8c40d126f92bb2895754734b193337d87f997a76ff9c31d"
+    },
+    {
+      "path": "baseline-ui",
+      "bytes": 42459200,
+      "sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77"
+    },
+    {
+      "path": "source-scope.json",
+      "bytes": 4226,
+      "sha256": "6af2fde225b000285d6c3bd906f26bbd41c2b01948db46f977f3c358ca36e329"
+    },
+    {
+      "path": "initial-compile-failure.json",
+      "bytes": 1081,
+      "sha256": "99af9ed082d5ccf02828d716c60cda66028e92d99d0731ada11f8923c054bd4d"
+    },
+    {
+      "path": "verify-after.py",
+      "bytes": 2992,
+      "sha256": "e44a64442ccf89d30f1b3e44318721de23c5eec1a4e5da0619f4a3729f81ff39"
+    },
+    {
+      "path": "asset-audit-complete.json",
+      "bytes": 31173,
+      "sha256": "96cd58f409325c941f2afe091885cf8be8b7acb079e0d34e935939e90c5bb312"
+    },
+    {
+      "path": "reference-66-320.png",
+      "bytes": 190176,
+      "sha256": "ee6e0f787bb7458e2cd0c677506ddc5b7f6d4154f592e981a5f83167276c4e27"
+    },
+    {
+      "path": "benchmark-driver.json",
+      "bytes": 617,
+      "sha256": "35cfc9f7892e126fcef012043f7358d648e969d4ace07029ec08228f2ab02929"
+    },
+    {
+      "path": "source-proof.py",
+      "bytes": 2886,
+      "sha256": "8b2e107060f49d5c39e67e77d207bb658087bc66867a1d96fb909a41cf733e42"
+    },
+    {
+      "path": "run-benchmarks.py",
+      "bytes": 1537,
+      "sha256": "52778d16264d0a8ec0234207442e38a9d255a947884f01b5f6d2d2f94fd55ad0"
+    },
+    {
+      "path": "swatch-pixels.json",
+      "bytes": 3716,
+      "sha256": "f68f1d10da280a76c453108ab690a47398ad7b028cf6e4522f132ec5412e1e41"
+    },
+    {
+      "path": "performance-previous1.json",
+      "bytes": 4508,
+      "sha256": "85be8a4410016045c7371f8a27edd10e41eaa2829acfdd867a87fa98265f6d9d"
+    },
+    {
+      "path": "candidate-ui",
+      "bytes": 42475728,
+      "sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c"
+    },
+    {
+      "path": "intermediate-c301-build.json",
+      "bytes": 23476,
+      "sha256": "249f1e310a980520560fe03fe675823a0fde7c43ab4ef56aa8f0658d8ab10042"
+    },
+    {
+      "path": "swatch-pixels-current.json",
+      "bytes": 3716,
+      "sha256": "1fa6249a062068161886ec3f13359e2121762cfcf77677a0d233d9498aa077eb"
+    },
+    {
+      "path": "benchmark-previous2.log",
+      "bytes": 2136,
+      "sha256": "07d641cf2a29fa7e1bdd2330fdcb2ed25806320856ea8735f9772bd28eb867f1"
+    },
+    {
+      "path": "performance-summary.json",
+      "bytes": 3000,
+      "sha256": "27023e8d7541dc8130eca40b7f69afb1b3f239fdb49f8208130fd92bffbcfa79"
+    },
+    {
+      "path": "benchmark-previous1.log",
+      "bytes": 2136,
+      "sha256": "f74b12336149b97b9f887f1f96fc4d235b9e754a19b0afdd955efc17b8e856cd"
+    },
+    {
+      "path": "reference-62-308.png",
+      "bytes": 155798,
+      "sha256": "d88949c550cc73635f244b8a81e327f84dba2f779fa75ba46018800a035b8f19"
+    },
+    {
+      "path": "seed-prices.py",
+      "bytes": 1657,
+      "sha256": "6aa24905b1cdd9defb9715f9a625b5d82de7423f6d7be4a34c3d30de97eae6ee"
+    },
+    {
+      "path": "context-64-335.txt",
+      "bytes": 61887,
+      "sha256": "a9b5a12708f3ead9696e0f396eefb535845fa4e789c7302e1e9d3dafab62fdca"
+    },
+    {
+      "path": "benchmark-cua-launches.json",
+      "bytes": 1490,
+      "sha256": "9bdd45491c396a3e5c7758b84f513438e8963db9458fdd08bbfffa498b96feb0"
+    },
+    {
+      "path": "inventory.json",
+      "bytes": 5272,
+      "sha256": "98c04b1d3104f411175f989b4857a13f6a0c26a94cd1e0cb14b3e09e05ec020f"
+    },
+    {
+      "path": "context-69-359.txt",
+      "bytes": 61956,
+      "sha256": "cc04ff7ff8f682f5484802e9d829965d9582861f95147075620321c10d76ae7b"
+    },
+    {
+      "path": "export-ui65.py",
+      "bytes": 3382,
+      "sha256": "4cc61be0897c597f82fd946260dd7f49fc4dff81abfc2fc0f0191855efc41085"
+    },
+    {
+      "path": "context-66-320.txt",
+      "bytes": 58885,
+      "sha256": "f98baaa87d6a98f32bf89fdd667985db384abe0a4c33e61934df44b31874e19d"
+    },
+    {
+      "path": "design-audit.json",
+      "bytes": 5781,
+      "sha256": "7f0f19ab0dfa63becb9585991b16b7dffd95c1fb43a9b2b53712a205d15edf67"
+    },
+    {
+      "path": "asset-audit.json",
+      "bytes": 26013,
+      "sha256": "5ff5039223989156ecace6fc090bc7a595270d0bf5bea0b8e5c24ee17974ff1b"
+    },
+    {
+      "path": "benchmark-background.py",
+      "bytes": 7628,
+      "sha256": "767802e75ec2bfe2d7f6d25886c8f77413dbcc6d387eb91d5888902e22beeb9f"
+    },
+    {
+      "path": "finish-fixture.py",
+      "bytes": 1871,
+      "sha256": "5e0072ce2f3af76bd2ee6dad086aab863d3d0d6d0bf82736c04ef85bbfe5572d"
+    },
+    {
+      "path": "build.json",
+      "bytes": 23668,
+      "sha256": "05af13c0110d5522010f071f898192829c662aba7195fafedea94a807f590fe0"
+    },
+    {
+      "path": "performance-current1.json",
+      "bytes": 4509,
+      "sha256": "7a6898ca06bc65140df3dec58305f6c535e6ac1bb866a9a36f233f243f212621"
+    },
+    {
+      "path": "ui65-baseline/fixture.json",
+      "bytes": 1266,
+      "sha256": "8e9f7c25e76cd8e3eeae15c84309add109938f240b731fa6ced1b64f314ccfb9"
+    },
+    {
+      "path": "ui65-baseline/protocol-menu-small.png",
+      "bytes": 159636,
+      "sha256": "140a6252e65930bee9b8fd9e2267971e4fb8961281f80d04416bfdf041b433a1"
+    },
+    {
+      "path": "ui65-baseline/edit-price-small.png",
+      "bytes": 129990,
+      "sha256": "60218828106345a0a016c8a49620b1df7525bc033baa8e78aca076471e6a479d"
+    },
+    {
+      "path": "ui65-baseline/native-acceptance-finished",
+      "bytes": 52,
+      "sha256": "f88478002ed8638cf064b1c05b19a97f6a79c4c86f74196a2fbeb16047d55bd4"
+    },
+    {
+      "path": "ui65-baseline/terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "path": "ui65-baseline/mono-wide.png",
+      "bytes": 226203,
+      "sha256": "491a0174dfc8a3cddfd204be10d550c7f77ba28c96c2c083504ad675ce141007"
+    },
+    {
+      "path": "ui65-baseline/candidate-4035.png",
+      "bytes": 208128,
+      "sha256": "128991eac9914ac628f871a0ee80027713a3c4917d942a3eb060308a673796e0"
+    },
+    {
+      "path": "ui65-baseline/core.log",
+      "bytes": 108,
+      "sha256": "e36cc321ba71baae11ddab4e6aa60855177bfca3ab4875be2b29a5de5d94be14"
+    },
+    {
+      "path": "ui65-baseline/mono-small.png",
+      "bytes": 155535,
+      "sha256": "5eec8a7b57ee578b9b1280e291aa83f327579387e575cb054d4547d2fe7a90c0"
+    },
+    {
+      "path": "ui65-baseline/settings-small.png",
+      "bytes": 155521,
+      "sha256": "e6d7b4e2d07164c2c6839579f87a413b0576df55cbc8f0f2a1805a4fc7c32a81"
+    },
+    {
+      "path": "ui65-baseline/source-protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "ui65-baseline/post-gui-proof.json",
+      "bytes": 590,
+      "sha256": "b686c8e9dabc08828837ba01060bca73bc3056c39e1777134d96b4f134540202"
+    },
+    {
+      "path": "ui65-baseline/protocol-menu-wide.png",
+      "bytes": 233149,
+      "sha256": "4820290bad8320d0f6da042f49a2780da3595722a679ca629339086095b4e701"
+    },
+    {
+      "path": "ui65-baseline/prices-before.json",
+      "bytes": 1514,
+      "sha256": "decf21b5490818028dcbe8cd6295746d3804327143e0c1dd512731734e99ebb3"
+    },
+    {
+      "path": "ui65-baseline/cua-launch-ready.json",
+      "bytes": 235,
+      "sha256": "095db74f5bbbf08cbb60e1aa3041c87eec98c71320c392abaa3664843d6ec167"
+    },
+    {
+      "path": "ui65-baseline/review-core",
+      "bytes": 8428096,
+      "sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+    },
+    {
+      "path": "ui65-baseline/edit-price-wide.png",
+      "bytes": 211988,
+      "sha256": "ad7c7253a76bfaca0817208737e3f9c49df01b2c4127a654125d2aa487fea83a"
+    },
+    {
+      "path": "ui65-baseline/mock-posts.jsonl",
+      "bytes": 1066,
+      "sha256": "0fc182b25ea5ffbcdf99b2381a9c0cd182bfa145b82f6425784bd6aa1cd396c6"
+    },
+    {
+      "path": "ui65-baseline/skin-menu-wide.png",
+      "bytes": 232929,
+      "sha256": "10db0c669feb562696f5a194da07a53861db7bf0183e2c948860f8f21a2e03b9"
+    },
+    {
+      "path": "ui65-baseline/pre-gui-proof.json",
+      "bytes": 2809,
+      "sha256": "35998f26517b045ceab5ac5d8816f4247a601b6ca1ab992a212a5f9774de703f"
+    },
+    {
+      "path": "ui65-baseline/config-before.json",
+      "bytes": 1507,
+      "sha256": "306a306c8bdc338e2f26b7afd65a445ac463ecbc01ae1fddf3e365172de600a9"
+    },
+    {
+      "path": "ui65-baseline/gpui.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-baseline/skin-menu-small.png",
+      "bytes": 163273,
+      "sha256": "ec1d4b75c21d51d63148da509978baacca058372d10adb7eaba05d69f141aae8"
+    },
+    {
+      "path": "ui65-baseline/settings-wide.png",
+      "bytes": 208128,
+      "sha256": "128991eac9914ac628f871a0ee80027713a3c4917d942a3eb060308a673796e0"
+    },
+    {
+      "path": "ui65-baseline/baseline-gui-validation.json",
+      "bytes": 2630,
+      "sha256": "ff2428b0441e781bca5ccc86a44001b11c0a871762a1833455e256ac67c4c0ee"
+    },
+    {
+      "path": "ui65-baseline/home/.workbuddy/models.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "ui65-baseline/config/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-baseline/config/config.json",
+      "bytes": 1052,
+      "sha256": "e55ab5605f417cce0833d63c07fce6e9209671e4caab67d0601ca12e5c713b2d"
+    },
+    {
+      "path": "ui65-baseline/config/startup.log",
+      "bytes": 49,
+      "sha256": "f51502373b5824b717445aad8c2d83c0aa9e15a325b6ca4b187ee36962963d26"
+    },
+    {
+      "path": "ui65-baseline/config/usage.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "ca93bc41bcb86944b7cdb7e218c3f5eab9d2d5e97b3e2c35e130d035fab2d4f2"
+    },
+    {
+      "path": "ui65-baseline/config/model-catalog.json",
+      "bytes": 304,
+      "sha256": "ed9e1a81211a49d05730b5883f570cf3a6af52382b97e444b26dce5a33a30629"
+    },
+    {
+      "path": "ui65-baseline/config/usage.sqlite3-wal",
+      "bytes": 1648032,
+      "sha256": "b1549cc844d035e7edbe192b8167106c8b4a4e0354c980c33cc4a32859dd0ca9"
+    },
+    {
+      "path": "ui65-baseline/config/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-baseline/config/statistics-view.json",
+      "bytes": 378,
+      "sha256": "392a26a4b4a908a4cc993addaf1fbc04ddcb96628456a2f82b1c2c2ede893ef9"
+    },
+    {
+      "path": "ui65-baseline/config/gpui-drafts.json",
+      "bytes": 2174,
+      "sha256": "a8c904dbad26fd7965f2d175999f879e99bf5d3f1621e80e27d4f63d98438b06"
+    },
+    {
+      "path": "ui65-baseline/config/appearance.json",
+      "bytes": 46,
+      "sha256": "f3b2739d938c58310267fa6424dc23c5fb0c73216d446bdf8cea6bc2471580cf"
+    },
+    {
+      "path": "ui65-baseline/config/usage.sqlite3",
+      "bytes": 237568,
+      "sha256": "41f31e706951af160923d34b7c476cb654aa797599e4e21d1b058e4667284b7c"
+    },
+    {
+      "path": "ui65-baseline/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2586,
+      "sha256": "ff9dd68cc8236254ee125de6b38f19da0b7ab9ea1a364058b9b83629480bec62"
+    },
+    {
+      "path": "ui65-baseline/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42459200,
+      "sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77"
+    },
+    {
+      "path": "bench-ui65-previous2/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-previous2/process.log",
+      "bytes": 108,
+      "sha256": "5581249db355307b70950a148ca6ef31b2f7a6c69bcf91ca87f1ee668a84469c"
+    },
+    {
+      "path": "bench-ui65-previous2/gpui-stop.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "bench-ui65-previous2/mock-start.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-previous2/mock-port",
+      "bytes": 5,
+      "sha256": "2da564dc70cb615c65003eb301ba249f713163f4d5dc7090879770d85aae32ef"
+    },
+    {
+      "path": "bench-ui65-previous2/config.json",
+      "bytes": 15822,
+      "sha256": "6cbffb107cd426e1288d18ea12e3ce56be0f8845325731038370452363d61fef"
+    },
+    {
+      "path": "bench-ui65-previous2/startup.log",
+      "bytes": 49,
+      "sha256": "781c3db26d40adaac0d539606548c8873a83884027d62b71bcdb620fa92de924"
+    },
+    {
+      "path": "bench-ui65-previous2/usage.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "05d8211a9060ff39c87aeb48f55b2e4d8935ead47f4b66695eb44a2cf210e9f1"
+    },
+    {
+      "path": "bench-ui65-previous2/usage.sqlite3-wal",
+      "bytes": 4433152,
+      "sha256": "02249a7bb2d0be50af09e2a6a3d36e7cca9b76196c520d87ab9beaf6449024ef"
+    },
+    {
+      "path": "bench-ui65-previous2/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-previous2/gpui-drafts.json",
+      "bytes": 868,
+      "sha256": "d5eb8ec78daafefb0cf39e39c72cef14622006fcc08ad6628b3be6262647bd47"
+    },
+    {
+      "path": "bench-ui65-previous2/terminal.json",
+      "bytes": 333,
+      "sha256": "c31d1e418dffe22df73a6d78d9a900bce139a52e1f1781fece643a63bc8c9b58"
+    },
+    {
+      "path": "bench-ui65-previous2/appearance.json",
+      "bytes": 39,
+      "sha256": "3bf3ae0e4aac3965c9b78900256dc43ae9f6c630299684b1e50c98c2b9157457"
+    },
+    {
+      "path": "bench-ui65-previous2/config.pre-v0.3-7e4b7a81659a80e913e9ebfebbfcceb7ac955154b6418226.bak",
+      "bytes": 170,
+      "sha256": "2e840d98fedb09737ebc629a35fd899297ed0def2e7a1d7a2934e20ac29e719e"
+    },
+    {
+      "path": "bench-ui65-previous2/protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "bench-ui65-previous2/usage.sqlite3",
+      "bytes": 1204224,
+      "sha256": "08cb1d05dea3c3c4e926c1367623bc9d99a6028feacfbad71e2ada6b859903ba"
+    },
+    {
+      "path": "bench-ui65-previous2/WorkBuddy Proxy Settings Menu Bench previous2.app/Contents/Info.plist",
+      "bytes": 2648,
+      "sha256": "50dea7abf67d7b77cdeb433c0524cca2c9aebcce1a19be311dca8d616ebd419b"
+    },
+    {
+      "path": "bench-ui65-previous2/WorkBuddy Proxy Settings Menu Bench previous2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42459200,
+      "sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77"
+    },
+    {
+      "path": "bench-ui65-current2/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-current2/config.pre-v0.3-4ee62578d9174b2114ccaf7f47a808958e33445fae97a8c7.bak",
+      "bytes": 170,
+      "sha256": "03d5f9b84f713479afd3d8104fa9b4db5f7fc5e0907d1d1de047537581bab32a"
+    },
+    {
+      "path": "bench-ui65-current2/process.log",
+      "bytes": 108,
+      "sha256": "968440a7d81a600fd046e110f7210345e07c7764e5d1d0ee3a6534dcb1d3f9bb"
+    },
+    {
+      "path": "bench-ui65-current2/gpui-stop.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "bench-ui65-current2/mock-start.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-current2/mock-port",
+      "bytes": 5,
+      "sha256": "5fc0ebc32e6a24a0a0c45017759848d71498d8949ba159efc46c8f3b4d71e3d1"
+    },
+    {
+      "path": "bench-ui65-current2/config.json",
+      "bytes": 15822,
+      "sha256": "f91fa822188dba1fe02a5c45fb1579b2f7c132929c6961716acf5510163e2345"
+    },
+    {
+      "path": "bench-ui65-current2/startup.log",
+      "bytes": 49,
+      "sha256": "3a0673aae0b70f846024349b7d4fa61e5f2296350fdad5f831f7e826c4ee145e"
+    },
+    {
+      "path": "bench-ui65-current2/usage.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "0f7869ccae80096b6a60512a96ef5215116c250dc4461bdf2caa1d1974d3ead7"
+    },
+    {
+      "path": "bench-ui65-current2/usage.sqlite3-wal",
+      "bytes": 4453752,
+      "sha256": "b6ad2297991baac378d6c8a91797dcbe6bb9df3207ea23396070b1e5ada07e40"
+    },
+    {
+      "path": "bench-ui65-current2/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-current2/gpui-drafts.json",
+      "bytes": 868,
+      "sha256": "be79c9db6fe9e7f5bb3e6caab5a7d07231d6b32efab132a93a53187217a68a5b"
+    },
+    {
+      "path": "bench-ui65-current2/terminal.json",
+      "bytes": 333,
+      "sha256": "7660b50882b6b4aaa8019b977cc6f5f6ca9d65e5dc3f76bb4e1433f8695493bd"
+    },
+    {
+      "path": "bench-ui65-current2/appearance.json",
+      "bytes": 39,
+      "sha256": "3bf3ae0e4aac3965c9b78900256dc43ae9f6c630299684b1e50c98c2b9157457"
+    },
+    {
+      "path": "bench-ui65-current2/protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "bench-ui65-current2/usage.sqlite3",
+      "bytes": 1200128,
+      "sha256": "8c6ee763174968a6342cb5256072d4fbc9a2db05736407caf91c4c3f5bd1dd07"
+    },
+    {
+      "path": "bench-ui65-current2/WorkBuddy Proxy Settings Menu Bench current2.app/Contents/Info.plist",
+      "bytes": 2633,
+      "sha256": "6021cd660ac520e10d8dc925b6d8f2f2a46703978f5cd746bcff23aeab8116ea"
+    },
+    {
+      "path": "bench-ui65-current2/WorkBuddy Proxy Settings Menu Bench current2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c"
+    },
+    {
+      "path": "ui65-final1/fixture.json",
+      "bytes": 1260,
+      "sha256": "aff710d0ec20f74740971d3d9dedd597cfbd73236f6eba46dde8324f20d3a740"
+    },
+    {
+      "path": "ui65-final1/native-acceptance-finished",
+      "bytes": 52,
+      "sha256": "f88478002ed8638cf064b1c05b19a97f6a79c4c86f74196a2fbeb16047d55bd4"
+    },
+    {
+      "path": "ui65-final1/terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "path": "ui65-final1/core.log",
+      "bytes": 108,
+      "sha256": "bf8f93780c3e4871215a8a8fe68ceffaa22d3cfaafd2ce3487c4a856fe385928"
+    },
+    {
+      "path": "ui65-final1/source-protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "ui65-final1/post-gui-proof.json",
+      "bytes": 590,
+      "sha256": "003171faa95fe58b641296a84ef71ce03568079c9ccdd3f517b63b0d450df69e"
+    },
+    {
+      "path": "ui65-final1/prices-before.json",
+      "bytes": 1514,
+      "sha256": "dc128cdc464b8ec3e0ea8dffbca826668839d1cd0e06436fde7cb1f0c7a87349"
+    },
+    {
+      "path": "ui65-final1/cua-launch-ready.json",
+      "bytes": 231,
+      "sha256": "9a9bfeadc7271df1e510ce6cffe2aeef07534143f2fb1b42c9098e70a13e5fdd"
+    },
+    {
+      "path": "ui65-final1/usage-before.json",
+      "bytes": 102,
+      "sha256": "75a19916836b048787dad0cb5beae3c4dee7a2041121b3093266ffa034d97e19"
+    },
+    {
+      "path": "ui65-final1/review-core",
+      "bytes": 8428096,
+      "sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+    },
+    {
+      "path": "ui65-final1/intermediate-gui-validation.json",
+      "bytes": 1072,
+      "sha256": "a5c3e3bbc21db112799f41ae7bd51cc1fae6e9fc08b0b6446f79fe9ef70a0ae1"
+    },
+    {
+      "path": "ui65-final1/mock-posts.jsonl",
+      "bytes": 1066,
+      "sha256": "0fc182b25ea5ffbcdf99b2381a9c0cd182bfa145b82f6425784bd6aa1cd396c6"
+    },
+    {
+      "path": "ui65-final1/candidate-4129.png",
+      "bytes": 204882,
+      "sha256": "8d38c0dd10baf09c99d63d445bb78e88f90160cb9ff29ffaa855a8bbc70ac388"
+    },
+    {
+      "path": "ui65-final1/skin-menu-wide.png",
+      "bytes": 248362,
+      "sha256": "204bcb74ad9745dbc040a3ba4fb53854fbd33befdea129ef8c9918ee7f9c6541"
+    },
+    {
+      "path": "ui65-final1/pre-gui-proof.json",
+      "bytes": 2805,
+      "sha256": "c73087743be59f9df56497406bcd90f86d992dab58bb3f9686093f80d35d60f8"
+    },
+    {
+      "path": "ui65-final1/config-before.json",
+      "bytes": 1507,
+      "sha256": "97f94da1a3a3449f9e6fc16c7e075692b7666e3dd9d3d0085be98951442baae5"
+    },
+    {
+      "path": "ui65-final1/gpui.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final1/settings-wide.png",
+      "bytes": 204882,
+      "sha256": "8d38c0dd10baf09c99d63d445bb78e88f90160cb9ff29ffaa855a8bbc70ac388"
+    },
+    {
+      "path": "ui65-final1/home/.workbuddy/models.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "ui65-final1/config/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final1/config/config.json",
+      "bytes": 1052,
+      "sha256": "c9c8f330a6f5861e9948f3b52ae54387150828f2ecd967c428d3222967177da2"
+    },
+    {
+      "path": "ui65-final1/config/startup.log",
+      "bytes": 49,
+      "sha256": "c5967798288181a424f95002fcbc8cf26005ebbb5b92754df409dd1342c5e4db"
+    },
+    {
+      "path": "ui65-final1/config/usage.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "7464943c49f625180ed839da0952133d2e0a80e41493000cf919008264b3353d"
+    },
+    {
+      "path": "ui65-final1/config/model-catalog.json",
+      "bytes": 304,
+      "sha256": "d5fe668c4bc57082a7841000c8c54b6586c04d674f61c55d3ed2f265b0e46b86"
+    },
+    {
+      "path": "ui65-final1/config/usage.sqlite3-wal",
+      "bytes": 1643912,
+      "sha256": "274a6d4b11821724bbff56d437d245c5692c2c16d3c8978d19b408ab1734aea0"
+    },
+    {
+      "path": "ui65-final1/config/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final1/config/statistics-view.json",
+      "bytes": 378,
+      "sha256": "392a26a4b4a908a4cc993addaf1fbc04ddcb96628456a2f82b1c2c2ede893ef9"
+    },
+    {
+      "path": "ui65-final1/config/gpui-drafts.json",
+      "bytes": 2174,
+      "sha256": "e0e1633d60931ba17ccafa5e25c245f4d9893ea584d3138e9f247b8f30b9ac93"
+    },
+    {
+      "path": "ui65-final1/config/appearance.json",
+      "bytes": 39,
+      "sha256": "3bf3ae0e4aac3965c9b78900256dc43ae9f6c630299684b1e50c98c2b9157457"
+    },
+    {
+      "path": "ui65-final1/config/usage.sqlite3",
+      "bytes": 237568,
+      "sha256": "29115a750528042f0a4b66349b37282e4afc7834bd79d2a479b334c7dbc452d2"
+    },
+    {
+      "path": "ui65-final1/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2560,
+      "sha256": "7679779b2a67ee2a646a523049a1362e11801aa03c1cdf301f30b00388f5e7f9"
+    },
+    {
+      "path": "ui65-final1/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "sha256": "c301f547dcc78b24b16ec295613c94cd8811095f309b40c9f300a9c4c3b79244"
+    },
+    {
+      "path": "review/ui-live-current.json",
+      "bytes": 1256,
+      "sha256": "4ad51956a190957214b7214a4cd5f38528f735a203c6db886681a9b8b65a16c8"
+    },
+    {
+      "path": "bench-ui65-current1/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-current1/process.log",
+      "bytes": 108,
+      "sha256": "7acc6cdcaef5887362028ba78ac63f7a78f0fb318e3e657821f2e900b7598879"
+    },
+    {
+      "path": "bench-ui65-current1/gpui-stop.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "bench-ui65-current1/mock-start.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-current1/mock-port",
+      "bytes": 5,
+      "sha256": "1b3932306f6433ad7febc9e0a225bd881732237a03b1cd8bc4ab6234c018a64e"
+    },
+    {
+      "path": "bench-ui65-current1/config.json",
+      "bytes": 15822,
+      "sha256": "9fca25d455fffea4bc63d0b1e1a61cbfe8c61b8f2e42b1515565aac29f806127"
+    },
+    {
+      "path": "bench-ui65-current1/startup.log",
+      "bytes": 49,
+      "sha256": "b4ec8e490a04d80a3b02da0f78052765492b6f5ae359d069bb8faa053ba7178a"
+    },
+    {
+      "path": "bench-ui65-current1/usage.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "a4d2f71452f57c208144fc17d09e5fe6cac2afd45e2df8917b95b013f59350c1"
+    },
+    {
+      "path": "bench-ui65-current1/usage.sqlite3-wal",
+      "bytes": 4317792,
+      "sha256": "960310e49831e30fd6e7c422116d2a8a55c584216aac001452e94dbbcfd45465"
+    },
+    {
+      "path": "bench-ui65-current1/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-current1/gpui-drafts.json",
+      "bytes": 868,
+      "sha256": "6fda6fa6adb95e4d8dcaf3b21bdc991bec90905ceaef328d1de276e40e4af50e"
+    },
+    {
+      "path": "bench-ui65-current1/terminal.json",
+      "bytes": 333,
+      "sha256": "1ae2a5086658a58d5fe40a4ec98da4f5282330fa4c0bf7a5231873e550340d1d"
+    },
+    {
+      "path": "bench-ui65-current1/config.pre-v0.3-5259606343b98702ad728d8cc411567d608a9be5160d746e.bak",
+      "bytes": 170,
+      "sha256": "64bf10baf62a2656ffb88d2d9da1e0e040168f27bbcd257ac6b836815be5ded2"
+    },
+    {
+      "path": "bench-ui65-current1/appearance.json",
+      "bytes": 39,
+      "sha256": "3bf3ae0e4aac3965c9b78900256dc43ae9f6c630299684b1e50c98c2b9157457"
+    },
+    {
+      "path": "bench-ui65-current1/protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "bench-ui65-current1/usage.sqlite3",
+      "bytes": 1212416,
+      "sha256": "4ad9ff6e442f065b7f7c23450c1f2e92956e417e854275846a025a4843406b98"
+    },
+    {
+      "path": "bench-ui65-current1/WorkBuddy Proxy Settings Menu Bench current1.app/Contents/Info.plist",
+      "bytes": 2633,
+      "sha256": "f9b1c699640fc9d376ac69ed23390ae6c347e64d53b44d11b3d555ff91a8b41b"
+    },
+    {
+      "path": "bench-ui65-current1/WorkBuddy Proxy Settings Menu Bench current1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c"
+    },
+    {
+      "path": "bench-ui65-previous1/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-previous1/process.log",
+      "bytes": 108,
+      "sha256": "7ef3131c3e612a230bac890198cc0978f808bcce3ea1874e3a8f693ab9b5e0a2"
+    },
+    {
+      "path": "bench-ui65-previous1/gpui-stop.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "bench-ui65-previous1/mock-start.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-previous1/mock-port",
+      "bytes": 5,
+      "sha256": "66179bd0211bcc99a64e839d5886e7338aedd77963a3e96c73a363829949a32d"
+    },
+    {
+      "path": "bench-ui65-previous1/config.json",
+      "bytes": 15822,
+      "sha256": "2ff775e56cac4b90997dd4e0a67c7ffdc47851a16f082bf6919a0950d3e9ea0a"
+    },
+    {
+      "path": "bench-ui65-previous1/startup.log",
+      "bytes": 49,
+      "sha256": "86cffbcd32dc44615ce3b01435cb41f650fe149a747b2c48c976a65f3d242f76"
+    },
+    {
+      "path": "bench-ui65-previous1/usage.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "3a8159e4f84b74c4460e9a9e04ad03627d8a914351c7b22547f365d757bc2136"
+    },
+    {
+      "path": "bench-ui65-previous1/usage.sqlite3-wal",
+      "bytes": 4470232,
+      "sha256": "7f15e80de2e4feb8839eeae64514027b61e4685f5d13e2aedd79e7d82c72113b"
+    },
+    {
+      "path": "bench-ui65-previous1/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bench-ui65-previous1/gpui-drafts.json",
+      "bytes": 868,
+      "sha256": "96f289373be1d84e5236a6dd08a89a258acd69bd223cdd1c93f42c170b45a923"
+    },
+    {
+      "path": "bench-ui65-previous1/terminal.json",
+      "bytes": 333,
+      "sha256": "0c4337261d3d9352d6df6d4f9df20427427f948b847b94bab00d64a9e6743f4c"
+    },
+    {
+      "path": "bench-ui65-previous1/config.pre-v0.3-e69e1f266e44e79be6d07d1e2a4a92e81b9c04fcc6e8672f.bak",
+      "bytes": 170,
+      "sha256": "4d6275a4e3e088d85fde3781b7d2ee50197b8115c72becd9460b2fe0662a39cd"
+    },
+    {
+      "path": "bench-ui65-previous1/appearance.json",
+      "bytes": 39,
+      "sha256": "3bf3ae0e4aac3965c9b78900256dc43ae9f6c630299684b1e50c98c2b9157457"
+    },
+    {
+      "path": "bench-ui65-previous1/protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "bench-ui65-previous1/usage.sqlite3",
+      "bytes": 1204224,
+      "sha256": "01180a906a90ac9ba964ec0b50b5c25074a691744ef28a143d845e42976f5f8b"
+    },
+    {
+      "path": "bench-ui65-previous1/WorkBuddy Proxy Settings Menu Bench previous1.app/Contents/Info.plist",
+      "bytes": 2648,
+      "sha256": "8b9fc41b7cf1bd18b8cde11348c9fb3cb6f7c126a2fff5c895d2c81d9d18642f"
+    },
+    {
+      "path": "bench-ui65-previous1/WorkBuddy Proxy Settings Menu Bench previous1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42459200,
+      "sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77"
+    },
+    {
+      "path": "assets/b7ec4.svg",
+      "bytes": 234,
+      "sha256": "0922d0ef6fee74829ba275f7b529a3ff99b00c3085f8e7bd22aa1b6b8a801c3c"
+    },
+    {
+      "path": "assets/4523d.svg",
+      "bytes": 344,
+      "sha256": "9f29669d79d2b9d26d1fb66528ae86d4a8d9c7e984515ae8db628ca32fc79de2"
+    },
+    {
+      "path": "assets/0ac56.svg",
+      "bytes": 410,
+      "sha256": "ee91c7b9ea08a02d8a99ecfa92c860f3d4a8a475dbb84136b1fe66458ec1fc37"
+    },
+    {
+      "path": "assets/7a7bb.svg",
+      "bytes": 234,
+      "sha256": "2bc40c512f56f0d96d72e3ed01201570060bc75900d59ca080effcc8ed9fc176"
+    },
+    {
+      "path": "assets/d4ab6.svg",
+      "bytes": 338,
+      "sha256": "ee4c74f7eabc72df6f675b78340f9f0750eb39d6e3361f7dc146ab61d0ab1e84"
+    },
+    {
+      "path": "assets/af337.svg",
+      "bytes": 234,
+      "sha256": "92e320f6be289aa575bca137d4ab7baf200771ae6168f537a7eaae22c028ebbb"
+    },
+    {
+      "path": "assets/30aa3.svg",
+      "bytes": 360,
+      "sha256": "d19ec85f50d87ac69c001a363f7355805e4e02b06ddb8372183ea032f6427c68"
+    },
+    {
+      "path": "assets/86243.svg",
+      "bytes": 241,
+      "sha256": "9c7463aedf7e2bc39fca2f67a77990ee1a10ed451c581a4eb4174f8390f53d28"
+    },
+    {
+      "path": "assets/42f81.svg",
+      "bytes": 234,
+      "sha256": "81491c2d85f7da1c42d629aa9927e4482e7d222e0fa3989e8a79f586155ff212"
+    },
+    {
+      "path": "assets/3213b.svg",
+      "bytes": 728,
+      "sha256": "6d37ac30da43e20031b7dcf834ac5b09cded84e89b8d05c8f83c6ab5d58091a6"
+    },
+    {
+      "path": "assets/8bc77.svg",
+      "bytes": 442,
+      "sha256": "f2cf12fef0f0ff859160a063fd817d1bcfa7ee63b40cebc301553984f211516d"
+    },
+    {
+      "path": "assets/e88d4.svg",
+      "bytes": 234,
+      "sha256": "25bebbd24eb2a701e3bf012ee20de21d04edff5d4188edc6b2b123eb6315d454"
+    },
+    {
+      "path": "assets/e9321.svg",
+      "bytes": 847,
+      "sha256": "75303a3d478937b1ed42224e97ee43ccfe926f13e04652281ff0fe8c5ba317cd"
+    },
+    {
+      "path": "assets/b5dcb.svg",
+      "bytes": 380,
+      "sha256": "3b9654f03672b67eda821e02f59e487b94f95b1e8e0b7abe11e33c134890bc1b"
+    },
+    {
+      "path": "assets/ec1b5.svg",
+      "bytes": 241,
+      "sha256": "601186600a596199a79d947277464e1d52f95cdf8bf61de3c00c81d33be36092"
+    },
+    {
+      "path": "assets/7d50e.svg",
+      "bytes": 244,
+      "sha256": "3d58c570ed48c09340899d9d110b15c5206fb7902a148c04b2b860c40bd47c70"
+    },
+    {
+      "path": "assets/794e6.svg",
+      "bytes": 733,
+      "sha256": "d6d3c4983820054a71088ac9f2ae3e46439abea28812e89b13bd3e17d6bb679f"
+    },
+    {
+      "path": "assets/4a154.svg",
+      "bytes": 663,
+      "sha256": "2cd9bc5a0fce0d19b69a5cee7f965de4d2c1e072efbaccfa4edb4d015e79c6a9"
+    },
+    {
+      "path": "assets/7bc0b.svg",
+      "bytes": 926,
+      "sha256": "651936b16fe510448daf2da8872aa9ab087f2ec1340bb37a4aed72d86321c435"
+    },
+    {
+      "path": "assets/2f5fe.svg",
+      "bytes": 1050,
+      "sha256": "58e1c3785e2646268894348c7294d00b4d19a853642e36aacf71659ad0590e9a"
+    },
+    {
+      "path": "assets/829e2.svg",
+      "bytes": 234,
+      "sha256": "161a34f0c0c82c49a43207a441fb296fd54fee36bf7bfd2462fc7cdbe110967d"
+    },
+    {
+      "path": "assets/1ccfc.svg",
+      "bytes": 244,
+      "sha256": "49f388449ca210fa8679950605fa5f711c3a87fd0584b689d738a80fdfae6778"
+    },
+    {
+      "path": "assets/b6ecc.svg",
+      "bytes": 356,
+      "sha256": "16fac074729a091ed259de916c9b874913c150cf8de2e2c1e163adaf0c106bd3"
+    },
+    {
+      "path": "assets/aad6f.svg",
+      "bytes": 376,
+      "sha256": "8791792b3a96a13c77530a5be615005e8ce97a155960b74985d2a4f256f7f6a9"
+    },
+    {
+      "path": "assets/af952.svg",
+      "bytes": 810,
+      "sha256": "eb9c36423b285d8dc57a5f8e384ab3622cf571ee6f2a16c8b1ad8faa25b35fcc"
+    },
+    {
+      "path": "assets/a7d16.svg",
+      "bytes": 1261,
+      "sha256": "45ddc49b81c15160db87e548a96e73335165725eae935564710c34444aabccae"
+    },
+    {
+      "path": "assets/d479d.svg",
+      "bytes": 353,
+      "sha256": "360b3500920256de8cc6df2397603a44d38d54b764eac5e6b00864c0d48dbce3"
+    },
+    {
+      "path": "assets/a1ba4.svg",
+      "bytes": 651,
+      "sha256": "a2fe39908e879d6081130f39199ec06284a9c5ca644d6c007d172a7bb698c2ac"
+    },
+    {
+      "path": "assets/91e75.png",
+      "bytes": 920,
+      "sha256": "fc9535b8221ea589bab32977aba991f67cbaca48ee0c16edf12e6cc42be97f9f"
+    },
+    {
+      "path": "assets/3ef59.svg",
+      "bytes": 906,
+      "sha256": "57726a6ba98a954b43238478e90a7a2251948a48274b66fa91a8687563c47ac8"
+    },
+    {
+      "path": "assets/7f8ff.svg",
+      "bytes": 244,
+      "sha256": "ca87dadf8a172b0444c8def1db96f16f1f9401e51cb0fc82de0d4a853977db69"
+    },
+    {
+      "path": "assets/2791d.svg",
+      "bytes": 665,
+      "sha256": "61a78771901dbb70a3d80d7433d31de4072565e45183b59666c67ed3db632850"
+    },
+    {
+      "path": "assets/97d77.svg",
+      "bytes": 694,
+      "sha256": "01411a8f683675a7eb137690609ea402fb59f9623891be2d142e6f992628c2f8"
+    },
+    {
+      "path": "assets/a7779.svg",
+      "bytes": 665,
+      "sha256": "a804b500030bf837780376f1371c8d25ea573cafb67837f17a463fa742ae0c44"
+    },
+    {
+      "path": "assets/06df8.svg",
+      "bytes": 327,
+      "sha256": "71793d1e70d185659da689d0483cc602dada3dcb7380b6e03396de1426a06e33"
+    },
+    {
+      "path": "assets/def90.svg",
+      "bytes": 779,
+      "sha256": "043a8c8324e4806c103dfd7337cbe0be0fbcbca1ff34222714d217c94a531d45"
+    },
+    {
+      "path": "ui65-final2/fixture.json",
+      "bytes": 1260,
+      "sha256": "9493a88899ffd58d3a72ccd13406567ef6ef212cf9a0511082a9e035c54725a1"
+    },
+    {
+      "path": "ui65-final2/protocol-menu-small.png",
+      "bytes": 161134,
+      "sha256": "6687ddd5507efdea517a066facdac4c0d7cba902502fa2794b6f78d425e3895f"
+    },
+    {
+      "path": "ui65-final2/edit-price-small.png",
+      "bytes": 128395,
+      "sha256": "a560381dcf193fff86ad90b88104b949a757ed1272144ba5305b6870c625ced5"
+    },
+    {
+      "path": "ui65-final2/native-acceptance-finished",
+      "bytes": 52,
+      "sha256": "f88478002ed8638cf064b1c05b19a97f6a79c4c86f74196a2fbeb16047d55bd4"
+    },
+    {
+      "path": "ui65-final2/terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "path": "ui65-final2/mono-wide.png",
+      "bytes": 229763,
+      "sha256": "25b8b37006528c70d4b6929e47f0b55720ddd0c2cfdedd310257ecd37df95838"
+    },
+    {
+      "path": "ui65-final2/core.log",
+      "bytes": 108,
+      "sha256": "4df2a1fbff5af7a6d3257f710ec792561caa9d50c778d39663ad8065ea118aec"
+    },
+    {
+      "path": "ui65-final2/mono-small.png",
+      "bytes": 156466,
+      "sha256": "2344f2a5b448679cbad8cab860bddbe654bd76427fd3a77c22d0f76e2df6c971"
+    },
+    {
+      "path": "ui65-final2/data-after-proof.json",
+      "bytes": 2545,
+      "sha256": "70b804be5ddbbba116f0b88c384e05c0a421b7fc1a87b343540d0933aac72c9f"
+    },
+    {
+      "path": "ui65-final2/settings-small.png",
+      "bytes": 146056,
+      "sha256": "392902ceb34a2c91157431e7d1de873b6bb559b75f48fbbd46f2ed367e244658"
+    },
+    {
+      "path": "ui65-final2/source-protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "ui65-final2/post-gui-proof.json",
+      "bytes": 590,
+      "sha256": "4af3454f9943c4e531faed460bdfe196e4f7fce4fb21c45a12d59a61ad53fdd5"
+    },
+    {
+      "path": "ui65-final2/protocol-menu-wide.png",
+      "bytes": 237213,
+      "sha256": "5babadc471244481c4f658e098c361caa06011c589a3477dc646f28c16cd889c"
+    },
+    {
+      "path": "ui65-final2/settings-before.json",
+      "bytes": 241,
+      "sha256": "2e28c846fe8923271d02e9ec2e85d2161c8fa071db225ac9b842808f87fa1ce8"
+    },
+    {
+      "path": "ui65-final2/prices-before.json",
+      "bytes": 1514,
+      "sha256": "f5abf1e7fd0d396b2e39f6d294587f1bb0f5ac69925152faedd9b5f963480578"
+    },
+    {
+      "path": "ui65-final2/cua-launch-ready.json",
+      "bytes": 231,
+      "sha256": "43abaff7fcd2e7bad2705dbee44a134ac6c0bb22f3ef924e76d9f359d33cd319"
+    },
+    {
+      "path": "ui65-final2/usage-before.json",
+      "bytes": 102,
+      "sha256": "c601cd700299f1315670040c8e736d657e2693e12f39675c6a55ac46567ba54b"
+    },
+    {
+      "path": "ui65-final2/review-core",
+      "bytes": 8428096,
+      "sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+    },
+    {
+      "path": "ui65-final2/settings-bottom-small.png",
+      "bytes": 125709,
+      "sha256": "e1b57924989a275481181cd2168a8804380d61144e7245066ccd31e60026b99e"
+    },
+    {
+      "path": "ui65-final2/edit-price-wide.png",
+      "bytes": 206463,
+      "sha256": "6b1de59cfe1bc7522e50727813d9bee39d53393c6bcd78d2ed7a90bf01f97314"
+    },
+    {
+      "path": "ui65-final2/intermediate-gui-validation.json",
+      "bytes": 3196,
+      "sha256": "a82c640aeeee0cdde76ca3873575354b6112ccbdd0cd0c131136a4377ae9a309"
+    },
+    {
+      "path": "ui65-final2/mock-posts.jsonl",
+      "bytes": 1066,
+      "sha256": "0fc182b25ea5ffbcdf99b2381a9c0cd182bfa145b82f6425784bd6aa1cd396c6"
+    },
+    {
+      "path": "ui65-final2/skin-menu-wide.png",
+      "bytes": 255637,
+      "sha256": "b7ff2d7be25ae636a874be27f6a2e9570ddc770a6a10c91e416611e2a2ac630a"
+    },
+    {
+      "path": "ui65-final2/pre-gui-proof.json",
+      "bytes": 2805,
+      "sha256": "635662982d752b82c0f54d9815416ef237c1bd1c2b5f09278c67d588309baf7a"
+    },
+    {
+      "path": "ui65-final2/config-before.json",
+      "bytes": 1507,
+      "sha256": "a1de70250d0d0326d13dd0164748045c24f52ac2d2b9a8e102d3766b7883b491"
+    },
+    {
+      "path": "ui65-final2/gpui.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final2/skin-menu-small.png",
+      "bytes": 184521,
+      "sha256": "d4dfb5adaf79c11064554b67fc167aeb76e6e4ac88c46753322d6d7b41b07165"
+    },
+    {
+      "path": "ui65-final2/settings-wide.png",
+      "bytes": 204712,
+      "sha256": "744e774b41b395cabb6232b3d24b2a0a87e0d70be938bb1eb56bc89c01caf749"
+    },
+    {
+      "path": "ui65-final2/home/.workbuddy/models.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "ui65-final2/config/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final2/config/config.json",
+      "bytes": 1052,
+      "sha256": "fa2524a6358b016b60caf9514c8b8a5d7f280d542dc683f2f10993e2dabef06f"
+    },
+    {
+      "path": "ui65-final2/config/startup.log",
+      "bytes": 49,
+      "sha256": "43c771f115de869ad70d1c962d9634473c9c3eb383a6b2421365ed562466df26"
+    },
+    {
+      "path": "ui65-final2/config/model-catalog.json",
+      "bytes": 304,
+      "sha256": "192919b07fa648d1f0e867f8f2cf4b2e1f72defea7878ea3eb819be0cc433fcb"
+    },
+    {
+      "path": "ui65-final2/config/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final2/config/statistics-view.json",
+      "bytes": 378,
+      "sha256": "392a26a4b4a908a4cc993addaf1fbc04ddcb96628456a2f82b1c2c2ede893ef9"
+    },
+    {
+      "path": "ui65-final2/config/gpui-drafts.json",
+      "bytes": 2174,
+      "sha256": "813d13fc62087796719e8523b15fc0ee9f409cbedfee4c20068a5555820b6956"
+    },
+    {
+      "path": "ui65-final2/config/appearance.json",
+      "bytes": 46,
+      "sha256": "f3b2739d938c58310267fa6424dc23c5fb0c73216d446bdf8cea6bc2471580cf"
+    },
+    {
+      "path": "ui65-final2/config/usage.sqlite3",
+      "bytes": 237568,
+      "sha256": "9dfe156c5b1c6f640dff7fbb780076d31a63047950c1164be20781fa80ea039b"
+    },
+    {
+      "path": "ui65-final2/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2560,
+      "sha256": "17e1b96a03b829bfc8dd81341ff8b0619348e8db3c6e551b53652271274397cd"
+    },
+    {
+      "path": "ui65-final2/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "sha256": "c2eb0f70c6ade534de8fbbe8400c4f4d9d284e9bfb3b1984929932e076482a39"
+    },
+    {
+      "path": "ui65-final3/fixture.json",
+      "bytes": 1256,
+      "sha256": "4ad51956a190957214b7214a4cd5f38528f735a203c6db886681a9b8b65a16c8"
+    },
+    {
+      "path": "ui65-final3/protocol-menu-small.png",
+      "bytes": 160137,
+      "sha256": "abb15c484a476b14232672c06246dfe5625adf2000fe238ed8559be8a7a8eb79"
+    },
+    {
+      "path": "ui65-final3/edit-price-small.png",
+      "bytes": 128186,
+      "sha256": "1f48ee985bf21863329a03ff5f928748015410737644bee265f125aa33713c60"
+    },
+    {
+      "path": "ui65-final3/final-gui-validation.json",
+      "bytes": 3459,
+      "sha256": "0322fb8e3e93e8adb6deba1e50c0e9c5eff4ae08c7088506fde0d71c83cafc57"
+    },
+    {
+      "path": "ui65-final3/native-acceptance-finished",
+      "bytes": 52,
+      "sha256": "f88478002ed8638cf064b1c05b19a97f6a79c4c86f74196a2fbeb16047d55bd4"
+    },
+    {
+      "path": "ui65-final3/terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "path": "ui65-final3/mono-wide.png",
+      "bytes": 226647,
+      "sha256": "37c5595e57c6e5f155d262c7ae929dbb75870e33e56b96f828937a9a795959eb"
+    },
+    {
+      "path": "ui65-final3/core.log",
+      "bytes": 108,
+      "sha256": "ea96a30cccb166d9892a4f0ba1426ced00ff41573df7fc7ca11d32b1ac125920"
+    },
+    {
+      "path": "ui65-final3/mono-small.png",
+      "bytes": 155401,
+      "sha256": "57707b57e1a23cdf0b7aa897796b4316d147ff8345abc705b409022490183ac9"
+    },
+    {
+      "path": "ui65-final3/data-after-proof.json",
+      "bytes": 2545,
+      "sha256": "4c561959f103ea6a28e9a5c5ca758c7e78394df790a4ade82b3b9dab6c31f300"
+    },
+    {
+      "path": "ui65-final3/settings-small.png",
+      "bytes": 145989,
+      "sha256": "5c3e7813c4570fd65b93b9fb3ffef0db77f09cb86dcdf6b90c66cff1f0f535d7"
+    },
+    {
+      "path": "ui65-final3/source-protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "path": "ui65-final3/post-gui-proof.json",
+      "bytes": 588,
+      "sha256": "a359a03c4febbc11845a6d24a1f46cf4df8d259ebc1c3b1f1d6321bd6db764e1"
+    },
+    {
+      "path": "ui65-final3/protocol-menu-wide.png",
+      "bytes": 232621,
+      "sha256": "de024276f75c375a20dbeef5710f8fb4d012e8ba99ddbc0e82cd26258296fbfd"
+    },
+    {
+      "path": "ui65-final3/settings-before.json",
+      "bytes": 241,
+      "sha256": "b63e036497872f230f49008860aa9241210ca797e7e58f3b05d0d03a5277594d"
+    },
+    {
+      "path": "ui65-final3/prices-before.json",
+      "bytes": 1514,
+      "sha256": "57cdfe204ef54a5978c3023d6738eeddf579d2e426e871f0851f83c39dccf9bb"
+    },
+    {
+      "path": "ui65-final3/cua-launch-ready.json",
+      "bytes": 230,
+      "sha256": "23bb4d7a9523363feb1bac90b204dd08b1c90168a563d8427af32c8f9bc1a814"
+    },
+    {
+      "path": "ui65-final3/usage-before.json",
+      "bytes": 102,
+      "sha256": "0b33b604c780da94fa047d3421e43dd8673462e6d860309fb4ac53c2b1aebd7f"
+    },
+    {
+      "path": "ui65-final3/review-core",
+      "bytes": 8428096,
+      "sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5"
+    },
+    {
+      "path": "ui65-final3/settings-bottom-small.png",
+      "bytes": 125503,
+      "sha256": "bba415a3a69cf13bc19130868cc8bfc4803c062b40c9c98ef74c5c0b5c74a53e"
+    },
+    {
+      "path": "ui65-final3/edit-price-wide.png",
+      "bytes": 206508,
+      "sha256": "63b0ed84f23ea823efaf48b97298b9fd282bebf0049a0d6a3ecc45a18aa40f97"
+    },
+    {
+      "path": "ui65-final3/mock-posts.jsonl",
+      "bytes": 1066,
+      "sha256": "0fc182b25ea5ffbcdf99b2381a9c0cd182bfa145b82f6425784bd6aa1cd396c6"
+    },
+    {
+      "path": "ui65-final3/skin-menu-wide.png",
+      "bytes": 253073,
+      "sha256": "b24696b6c7954db056835182e257a78a8a79c574adb7ae89110494d866ec1981"
+    },
+    {
+      "path": "ui65-final3/pre-gui-proof.json",
+      "bytes": 2803,
+      "sha256": "9210e82394b8267fb73e46dedb0c23fc283d16b3dc52ea76e4e126a88dabde0e"
+    },
+    {
+      "path": "ui65-final3/config-before.json",
+      "bytes": 1507,
+      "sha256": "8ce37b85f886d0b940a38bd945a2c5d3660c55d37d73c4721564bd3be2d1d01e"
+    },
+    {
+      "path": "ui65-final3/gpui.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final3/skin-menu-small.png",
+      "bytes": 183847,
+      "sha256": "fc2c6862ac44e849256330ad15f8b8d9ecfccdae63c6f61ccfe41004362bf5b0"
+    },
+    {
+      "path": "ui65-final3/settings-wide.png",
+      "bytes": 204910,
+      "sha256": "c518c264b96004eaacbafc56954ed21bc027c44b1c5576915821c6de8f6d396f"
+    },
+    {
+      "path": "ui65-final3/home/.workbuddy/models.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "ui65-final3/config/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final3/config/config.json",
+      "bytes": 1052,
+      "sha256": "bb1d95d3bebc181dccf6e1b425a10dd252435285b2cac66fc4eec8d1ef781ab7"
+    },
+    {
+      "path": "ui65-final3/config/startup.log",
+      "bytes": 49,
+      "sha256": "74e71423efa48c9e7dd0f00354f737807611fe780156e067ed5c8fd2afec45f1"
+    },
+    {
+      "path": "ui65-final3/config/usage.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "43c08d36b829b27cd46bedd6b0adb9e4a8fd570c562925aea6dce03f3678fb74"
+    },
+    {
+      "path": "ui65-final3/config/model-catalog.json",
+      "bytes": 304,
+      "sha256": "2f6d63f2d7dda1debebef514c0377dc148fab2ea77e258f0bddda2499d2dfa2d"
+    },
+    {
+      "path": "ui65-final3/config/usage.sqlite3-wal",
+      "bytes": 1635672,
+      "sha256": "c80fbe869a5c7e4ea059582bb2cff8c9ad6e156401f0fd075c8f5dc7d3d62789"
+    },
+    {
+      "path": "ui65-final3/config/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ui65-final3/config/statistics-view.json",
+      "bytes": 378,
+      "sha256": "392a26a4b4a908a4cc993addaf1fbc04ddcb96628456a2f82b1c2c2ede893ef9"
+    },
+    {
+      "path": "ui65-final3/config/gpui-drafts.json",
+      "bytes": 2174,
+      "sha256": "7aa472653eff60df0711686941510485b86023634a5617beda5717530c6ae63f"
+    },
+    {
+      "path": "ui65-final3/config/appearance.json",
+      "bytes": 46,
+      "sha256": "f3b2739d938c58310267fa6424dc23c5fb0c73216d446bdf8cea6bc2471580cf"
+    },
+    {
+      "path": "ui65-final3/config/usage.sqlite3",
+      "bytes": 237568,
+      "sha256": "f4b4607e90cc44fa63e3e442f8ed7017cef6d454620d72261c72a74b4a137aa5"
+    },
+    {
+      "path": "ui65-final3/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2560,
+      "sha256": "06a3d988b201fbb874092f9bc24e18f490c193fa9f1a7abada61514fd8b1475d"
+    },
+    {
+      "path": "ui65-final3/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c"
+    }
+  ]
+}

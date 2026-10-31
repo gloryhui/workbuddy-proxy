@@ -85,6 +85,9 @@ pub mod color {
     pub const BG_BAR: u32 = 0xffffff;
     pub const BG_TABLE_HEAD: u32 = 0xf3f5fa;
     pub const BG_NOTICE: u32 = 0xf4f6ff;
+    pub const ACCENT_TINT: u32 = 0xeeedff;
+    pub const ACCENT_LINE: u32 = 0xd5d1ff;
+    pub const POPOVER_SHADOW_RGBA: u32 = 0x121a3330;
     pub const SIDEBAR: u32 = 0x111525;
     pub const SIDEBAR_TEXT: u32 = 0xf0f3fe;
     pub const SIDEBAR_MUTED: u32 = 0x929bb0;

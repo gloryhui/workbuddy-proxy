@@ -418,7 +418,13 @@ pub(super) fn control(
     };
     Popover::new(("provider-menu-popup", state.entity_id()))
         .open(menu.open)
-        .offset(px(6.))
+        .offset(px(
+            if studio_field && menu.choices.kind == MenuKind::Protocol {
+                44.
+            } else {
+                6.
+            },
+        ))
         .track_focus(&focus)
         .trigger_style(StyleRefinement {
             size: gpui_kit::SizeRefinement {
@@ -535,6 +541,13 @@ impl Selectable for MenuRow {
 }
 impl RenderOnce for MenuRow {
     fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
+        let studio_protocol = self.kind == MenuKind::Protocol
+            && crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
+        let tint = if studio_protocol {
+            crate::theme::color::ACCENT_TINT
+        } else {
+            crate::theme::palette().tint
+        };
         let ink = if self.checked {
             crate::theme::palette().dark
         } else if self.kind == MenuKind::Effort {
@@ -562,6 +575,8 @@ impl RenderOnce for MenuRow {
                     }))
                     .font_weight(if self.checked {
                         FontWeight::BOLD
+                    } else if studio_protocol {
+                        FontWeight::MEDIUM
                     } else {
                         FontWeight::NORMAL
                     })
@@ -572,6 +587,7 @@ impl RenderOnce for MenuRow {
                     Label::new(self.hint)
                         .text_size(px(11.))
                         .line_height(px(16.))
+                        .font_weight(FontWeight::NORMAL)
                         .text_color(rgb(MUTED)),
                 )
             });
@@ -587,10 +603,8 @@ impl RenderOnce for MenuRow {
                 13.
             }))
             .rounded(px(9.))
-            .when(self.checked || self.cursor, |r| {
-                r.bg(rgb(crate::theme::palette().tint))
-            })
-            .hover(|r| r.bg(rgb(crate::theme::palette().tint)))
+            .when(self.checked || self.cursor, |r| r.bg(rgb(tint)))
+            .hover(|r| r.bg(rgb(tint)))
             .child(text)
             .when(self.checked, |r| {
                 r.child(
@@ -598,6 +612,7 @@ impl RenderOnce for MenuRow {
                         .w(px(20.))
                         .text_size(px(13.))
                         .line_height(px(20.))
+                        .when(studio_protocol, |check| check.font_weight(FontWeight::BOLD))
                         .text_color(rgb(crate::theme::palette().dark)),
                 )
             });

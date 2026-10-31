@@ -1,0 +1,94 @@
+{
+  "type": "baseline",
+  "ui_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+  "ui_pid": 94142,
+  "core_pid": 93851,
+  "window_id": 4035,
+  "images": [
+    {
+      "name": "settings-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "128991eac9914ac628f871a0ee80027713a3c4917d942a3eb060308a673796e0"
+    },
+    {
+      "name": "settings-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "e6d7b4e2d07164c2c6839579f87a413b0576df55cbc8f0f2a1805a4fc7c32a81"
+    },
+    {
+      "name": "edit-price-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "ad7c7253a76bfaca0817208737e3f9c49df01b2c4127a654125d2aa487fea83a"
+    },
+    {
+      "name": "edit-price-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "60218828106345a0a016c8a49620b1df7525bc033baa8e78aca076471e6a479d"
+    },
+    {
+      "name": "mono-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "491a0174dfc8a3cddfd204be10d550c7f77ba28c96c2c083504ad675ce141007"
+    },
+    {
+      "name": "mono-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "5eec8a7b57ee578b9b1280e291aa83f327579387e575cb054d4547d2fe7a90c0"
+    },
+    {
+      "name": "skin-menu-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "10db0c669feb562696f5a194da07a53861db7bf0183e2c948860f8f21a2e03b9"
+    },
+    {
+      "name": "skin-menu-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "ec1d4b75c21d51d63148da509978baacca058372d10adb7eaba05d69f141aae8"
+    },
+    {
+      "name": "protocol-menu-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "4820290bad8320d0f6da042f49a2780da3595722a679ca629339086095b4e701"
+    },
+    {
+      "name": "protocol-menu-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "140a6252e65930bee9b8fd9e2267971e4fb8961281f80d04416bfdf041b433a1"
+    }
+  ],
+  "actions": "Actual three manual USD rules / 14 requests, gpt-6 edit USD 2/10 closed without saving, Mono and restored Studio, protocol opened then Esc without choosing. CUA native resize; original screenshots via own PID/layer0 window; no external bounds.",
+  "cua_rebind": "once after Computer Use is not active error, same exact app path; no relaunch observed",
+  "window_close": "CUA native close clicked",
+  "ui_pid_present_after_close": false,
+  "scope": "No valid price save, delete, update, clear, import, sync, test, clipboard or external link. No explicit activate/raise; foreground not asserted."
+}

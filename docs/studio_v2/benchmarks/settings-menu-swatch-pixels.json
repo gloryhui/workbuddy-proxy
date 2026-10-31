@@ -1,0 +1,380 @@
+[
+  {
+    "color" : [
+      39,
+      39,
+      42
+    ],
+    "color_name" : "mono",
+    "file" : "reference-64-335.png",
+    "opaque_box" : [
+      1087,
+      175,
+      1108,
+      196
+    ],
+    "opaque_pixels" : 344,
+    "png_size" : [
+      1440,
+      900
+    ],
+    "version" : "reference"
+  },
+  {
+    "color" : [
+      37,
+      99,
+      235
+    ],
+    "color_name" : "blue",
+    "file" : "reference-64-335.png",
+    "opaque_box" : [
+      1247,
+      175,
+      1268,
+      196
+    ],
+    "opaque_pixels" : 344,
+    "png_size" : [
+      1440,
+      900
+    ],
+    "version" : "reference"
+  },
+  {
+    "color" : [
+      124,
+      58,
+      237
+    ],
+    "color_name" : "violet",
+    "file" : "reference-64-335.png",
+    "opaque_box" : [
+      1087,
+      251,
+      1108,
+      272
+    ],
+    "opaque_pixels" : 344,
+    "png_size" : [
+      1440,
+      900
+    ],
+    "version" : "reference"
+  },
+  {
+    "color" : [
+      190,
+      24,
+      93
+    ],
+    "color_name" : "rose",
+    "file" : "reference-64-335.png",
+    "opaque_box" : [
+      1247,
+      251,
+      1268,
+      272
+    ],
+    "opaque_pixels" : 344,
+    "png_size" : [
+      1440,
+      900
+    ],
+    "version" : "reference"
+  },
+  {
+    "color" : [
+      180,
+      83,
+      9
+    ],
+    "color_name" : "amber",
+    "file" : "reference-64-335.png",
+    "opaque_box" : [
+      1087,
+      327,
+      1108,
+      348
+    ],
+    "opaque_pixels" : 344,
+    "png_size" : [
+      1440,
+      900
+    ],
+    "version" : "reference"
+  },
+  {
+    "color" : [
+      15,
+      118,
+      110
+    ],
+    "color_name" : "teal",
+    "file" : "reference-64-335.png",
+    "opaque_box" : [
+      1247,
+      327,
+      1268,
+      348
+    ],
+    "opaque_pixels" : 344,
+    "png_size" : [
+      1440,
+      900
+    ],
+    "version" : "reference"
+  },
+  {
+    "color" : [
+      39,
+      39,
+      42
+    ],
+    "color_name" : "mono",
+    "file" : "ui65-final3\/skin-menu-wide.png",
+    "opaque_box" : [
+      1087,
+      175,
+      1108,
+      196
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1440,
+      901
+    ],
+    "version" : "current-wide"
+  },
+  {
+    "color" : [
+      37,
+      99,
+      235
+    ],
+    "color_name" : "blue",
+    "file" : "ui65-final3\/skin-menu-wide.png",
+    "opaque_box" : [
+      1247,
+      175,
+      1268,
+      196
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1440,
+      901
+    ],
+    "version" : "current-wide"
+  },
+  {
+    "color" : [
+      124,
+      58,
+      237
+    ],
+    "color_name" : "violet",
+    "file" : "ui65-final3\/skin-menu-wide.png",
+    "opaque_box" : [
+      1087,
+      251,
+      1108,
+      272
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1440,
+      901
+    ],
+    "version" : "current-wide"
+  },
+  {
+    "color" : [
+      190,
+      24,
+      93
+    ],
+    "color_name" : "rose",
+    "file" : "ui65-final3\/skin-menu-wide.png",
+    "opaque_box" : [
+      1247,
+      251,
+      1268,
+      272
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1440,
+      901
+    ],
+    "version" : "current-wide"
+  },
+  {
+    "color" : [
+      180,
+      83,
+      9
+    ],
+    "color_name" : "amber",
+    "file" : "ui65-final3\/skin-menu-wide.png",
+    "opaque_box" : [
+      1087,
+      327,
+      1108,
+      348
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1440,
+      901
+    ],
+    "version" : "current-wide"
+  },
+  {
+    "color" : [
+      15,
+      118,
+      110
+    ],
+    "color_name" : "teal",
+    "file" : "ui65-final3\/skin-menu-wide.png",
+    "opaque_box" : [
+      1247,
+      327,
+      1268,
+      348
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1440,
+      901
+    ],
+    "version" : "current-wide"
+  },
+  {
+    "color" : [
+      39,
+      39,
+      42
+    ],
+    "color_name" : "mono",
+    "file" : "ui65-final3\/skin-menu-small.png",
+    "opaque_box" : [
+      747,
+      175,
+      768,
+      196
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1100,
+      701
+    ],
+    "version" : "current-small"
+  },
+  {
+    "color" : [
+      37,
+      99,
+      235
+    ],
+    "color_name" : "blue",
+    "file" : "ui65-final3\/skin-menu-small.png",
+    "opaque_box" : [
+      907,
+      175,
+      928,
+      196
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1100,
+      701
+    ],
+    "version" : "current-small"
+  },
+  {
+    "color" : [
+      124,
+      58,
+      237
+    ],
+    "color_name" : "violet",
+    "file" : "ui65-final3\/skin-menu-small.png",
+    "opaque_box" : [
+      747,
+      251,
+      768,
+      272
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1100,
+      701
+    ],
+    "version" : "current-small"
+  },
+  {
+    "color" : [
+      190,
+      24,
+      93
+    ],
+    "color_name" : "rose",
+    "file" : "ui65-final3\/skin-menu-small.png",
+    "opaque_box" : [
+      907,
+      251,
+      928,
+      272
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1100,
+      701
+    ],
+    "version" : "current-small"
+  },
+  {
+    "color" : [
+      180,
+      83,
+      9
+    ],
+    "color_name" : "amber",
+    "file" : "ui65-final3\/skin-menu-small.png",
+    "opaque_box" : [
+      747,
+      327,
+      768,
+      348
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1100,
+      701
+    ],
+    "version" : "current-small"
+  },
+  {
+    "color" : [
+      15,
+      118,
+      110
+    ],
+    "color_name" : "teal",
+    "file" : "ui65-final3\/skin-menu-small.png",
+    "opaque_box" : [
+      907,
+      327,
+      928,
+      348
+    ],
+    "opaque_pixels" : 339,
+    "png_size" : [
+      1100,
+      701
+    ],
+    "version" : "current-small"
+  }
+]

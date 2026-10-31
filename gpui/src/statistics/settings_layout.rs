@@ -7,6 +7,7 @@ use gpui_kit::component::{
 
 impl Statistics {
     pub(super) fn pricing_section(&self, cx: &mut Context<Self>) -> AnyElement {
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let sync_note = self.price_sync.as_ref().and_then(|sync| {
             sync.last_success_day.as_ref().map(|day| {
                 format!(
@@ -29,22 +30,44 @@ impl Statistics {
             .px(px(12.))
             .gap(px(16.))
             .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
-            .border_b(px(1.))
-            .border_color(rgb(BORDER))
-            .text_size(px(crate::theme::font::LABEL))
+            .when(!studio, |header| {
+                header.border_b(px(1.)).border_color(rgb(BORDER))
+            })
+            .text_size(px(if studio {
+                11.
+            } else {
+                crate::theme::font::LABEL
+            }))
+            .when(studio, |header| {
+                header.line_height(px(16.)).font_weight(FontWeight::MEDIUM)
+            })
             .text_color(rgb(MUTED))
-            .child(div().flex_1().min_w_0().child(self.t("模型", "Model")))
             .child(
                 div()
                     .flex_1()
+                    .when(studio, |col| col.flex_grow(252.))
                     .min_w_0()
-                    .child(self.t("来源 / 映射", "Source / mapping")),
+                    .child(self.t("模型 / ID", "Model / ID")),
             )
-            .child(div().w(px(80.)).child(self.t("币种", "Currency")))
-            .child(div().flex_1().min_w_0().child(self.t(
-                "价格 / 百万 Token（输入 / 输出）",
-                "Price / million tokens (input / output)",
-            )))
+            .child(
+                div()
+                    .flex_1()
+                    .when(studio, |col| col.flex_grow(300.))
+                    .min_w_0()
+                    .child(self.t("来源 / 上游映射", "Source / upstream mapping")),
+            )
+            .child(
+                div()
+                    .w(px(if studio { 93. } else { 80. }))
+                    .child(self.t("币种", "Currency")),
+            )
+            .child(
+                div()
+                    .flex_1()
+                    .when(studio, |col| col.flex_grow(243.))
+                    .min_w_0()
+                    .child(self.t("输入 / 输出单价", "Input / output price")),
+            )
             .child(
                 div()
                     .w(px(110.))
@@ -57,15 +80,14 @@ impl Statistics {
             .flex_col()
             .w_full()
             .min_w_0()
-            .border_1()
-            .border_color(rgb(BORDER))
+            .when(!studio, |table| table.border_1().border_color(rgb(BORDER)))
             .rounded(px(8.))
             .overflow_hidden()
             .child(header);
         let row_height = if self.prices_loading || self.prices.is_empty() {
             48.
         } else {
-            self.prices.len().min(3) as f32 * 44.
+            self.prices.len().min(3) as f32 * if studio { 48. } else { 44. }
         };
         let mut rows = div()
             .id("pricing-rule-rows")
@@ -123,8 +145,8 @@ impl Statistics {
                         .id(("price-row", index))
                         .tooltip({
                             let hint = format!(
-                                "{}\n{}\n{}",
-                                rule.upstream_model, rule.rule_id, mapping_line
+                                "{}\n{}\n{}\n{}",
+                                rule.upstream_model, rule.rule_id, mapping_line, rule.input_mode
                             );
                             move |window, cx| {
                                 gpui_kit::component::tooltip::Tooltip::new(hint.clone())
@@ -135,16 +157,20 @@ impl Statistics {
                         .items_center()
                         .gap(px(16.))
                         .px(px(12.))
-                        .h(px(44.))
+                        .h(px(if studio { 48. } else { 44. }))
+                        .when(studio && index % 2 == 1, |row| {
+                            row.bg(rgb(crate::theme::color::BG_NOTICE))
+                        })
                         .flex_shrink_0()
                         .py(px(6.))
                         .border_b(px(1.))
-                        .border_color(rgb(0xeef2f7))
+                        .border_color(rgb(if studio { 0xe7eaf2 } else { 0xeef2f7 }))
                         .child(
                             div()
                                 .flex()
                                 .flex_col()
                                 .flex_1()
+                                .when(studio, |col| col.flex_grow(252.))
                                 .min_w_0()
                                 .gap(px(2.))
                                 .child(
@@ -152,11 +178,25 @@ impl Statistics {
                                         .w_full()
                                         .text_ellipsis()
                                         .text_size(px(13.))
+                                        .when(studio, |model| {
+                                            model
+                                                .line_height(px(18.))
+                                                .font_weight(FontWeight::MEDIUM)
+                                        })
                                         .text_color(rgb(INK)),
                                 )
                                 .child(
                                     Label::new(short_id)
-                                        .text_size(px(crate::theme::font::LABEL))
+                                        .text_size(px(if studio {
+                                            10.
+                                        } else {
+                                            crate::theme::font::LABEL
+                                        }))
+                                        .when(studio, |id| {
+                                            crate::studio_fonts::latin(id, cx)
+                                                .line_height(px(14.))
+                                                .font_weight(FontWeight::NORMAL)
+                                        })
                                         .text_color(rgb(MUTED)),
                                 ),
                         )
@@ -165,6 +205,7 @@ impl Statistics {
                                 .flex()
                                 .flex_col()
                                 .flex_1()
+                                .when(studio, |col| col.flex_grow(300.))
                                 .min_w_0()
                                 .gap(px(2.))
                                 .child(
@@ -172,27 +213,64 @@ impl Statistics {
                                         .w_full()
                                         .text_ellipsis()
                                         .text_size(px(crate::theme::font::LABEL))
-                                        .text_color(rgb(INK)),
+                                        .when(studio, |source| {
+                                            source
+                                                .line_height(px(17.))
+                                                .font_weight(FontWeight::MEDIUM)
+                                        })
+                                        .text_color(rgb(if studio {
+                                            crate::theme::color::TEXT_2
+                                        } else {
+                                            INK
+                                        })),
                                 )
                                 .child(
                                     Label::new(mapping_line)
                                         .w_full()
                                         .text_ellipsis()
-                                        .text_size(px(crate::theme::font::LABEL))
+                                        .text_size(px(if studio {
+                                            11.
+                                        } else {
+                                            crate::theme::font::LABEL
+                                        }))
+                                        .when(studio, |mapping| {
+                                            mapping
+                                                .line_height(px(16.))
+                                                .font_weight(FontWeight::NORMAL)
+                                        })
                                         .text_color(rgb(MUTED)),
                                 ),
                         )
-                        .child(div().w(px(80.)).flex().items_center().child(
-                            crate::ui_components::tag(
-                                crate::ui_components::TagKind::Secondary,
-                                rule.currency.as_str(),
-                            ),
-                        ))
+                        .child(
+                            div()
+                                .w(px(if studio { 93. } else { 80. }))
+                                .flex()
+                                .items_center()
+                                .child(if studio {
+                                    super::settings_capture::status_badge(
+                                        crate::ui_components::TagKind::Secondary,
+                                        rule.currency.as_str(),
+                                    )
+                                    .w(px(53.))
+                                    .flex()
+                                    .items_center()
+                                    .justify_center()
+                                    .text_color(rgb(crate::theme::color::TEXT_2))
+                                    .into_any_element()
+                                } else {
+                                    crate::ui_components::tag(
+                                        crate::ui_components::TagKind::Secondary,
+                                        rule.currency.as_str(),
+                                    )
+                                    .into_any_element()
+                                }),
+                        )
                         .child(
                             div()
                                 .flex()
                                 .flex_col()
                                 .flex_1()
+                                .when(studio, |col| col.flex_grow(243.))
                                 .min_w_0()
                                 .gap(px(2.))
                                 .child(
@@ -207,14 +285,21 @@ impl Statistics {
                                             Some(rule.currency)
                                         ),
                                     ))
-                                    .text_size(px(12.))
+                                    .text_size(px(if studio { 13. } else { 12. }))
+                                    .when(studio, |price| {
+                                        crate::studio_fonts::latin(price, cx)
+                                            .line_height(px(18.))
+                                            .font_weight(FontWeight::SEMIBOLD)
+                                    })
                                     .text_color(rgb(INK)),
                                 )
-                                .child(
-                                    Label::new(format!("{}", rule.input_mode))
-                                        .text_size(px(crate::theme::font::LABEL))
-                                        .text_color(rgb(MUTED)),
-                                ),
+                                .when(!studio, |column| {
+                                    column.child(
+                                        Label::new(format!("{}", rule.input_mode))
+                                            .text_size(px(crate::theme::font::LABEL))
+                                            .text_color(rgb(MUTED)),
+                                    )
+                                }),
                         )
                         .child(self.price_row_actions(index, rule, cx)),
                 );
@@ -250,7 +335,7 @@ impl Statistics {
                         div()
                             .flex()
                             .flex_col()
-                            .gap(px(6.))
+                            .gap(px(5.))
                             .child(
                                 div()
                                     .flex()
@@ -259,6 +344,7 @@ impl Statistics {
                                     .child(
                                         Label::new(self.t("成本定价", "Cost pricing"))
                                             .text_size(px(17.))
+                                            .when(studio, |title| title.line_height(px(24.)))
                                             .font_weight(FontWeight::BOLD)
                                             .text_color(rgb(INK)),
                                     )
@@ -281,6 +367,11 @@ impl Statistics {
                                     "Per million tokens · recorded price snapshots stay unchanged",
                                 ))
                                 .text_size(px(12.))
+                                .when(studio, |subtitle| {
+                                    subtitle
+                                        .line_height(px(17.))
+                                        .font_weight(FontWeight::NORMAL)
+                                })
                                 .text_color(rgb(MUTED)),
                             ),
                     )
@@ -292,16 +383,21 @@ impl Statistics {
                             .gap(px(10.))
                             .child(
                                 crate::ui_components::text_input(&self.price_search, false)
-                                    .w(px(240.))
+                                    .w(px(if studio && self.filters_width >= 1000. {
+                                        284.
+                                    } else {
+                                        240.
+                                    }))
                                     .prefix(Icon::new(IconName::Search)),
                             )
                             .child(
                                 stats_button("price-add-top")
                                     .primary()
                                     .h(px(36.))
-                                    .child(crate::ui_components::action_icon(
-                                        Icon::new(IconName::Plus).size(px(16.)),
-                                    ))
+                                    .when(studio && self.filters_width >= 1000., |button| {
+                                        button.w(px(211.))
+                                    })
+                                    .icon(Icon::new(IconName::Plus).size(px(16.)))
                                     .label(self.t("新建规则", "New rule"))
                                     .on_click(cx.listener(|this, _, window, cx| {
                                         this.new_price(window, cx)
@@ -340,6 +436,7 @@ impl Statistics {
                             .gap_2()
                             .child(
                                 stats_button("prices-prev")
+                                    .when(studio, |button| button.h(px(24.)).text_size(px(11.)))
                                     .ghost()
                                     .label(self.t("上一页", "Previous"))
                                     .disabled(
@@ -357,6 +454,7 @@ impl Statistics {
                             )
                             .child(
                                 stats_button("prices-page-size")
+                                    .when(studio, |button| button.h(px(24.)).text_size(px(11.)))
                                     .ghost()
                                     .label(format!(
                                         "{} {}",
@@ -375,6 +473,7 @@ impl Statistics {
                             )
                             .child(
                                 stats_button("prices-next")
+                                    .when(studio, |button| button.h(px(24.)).text_size(px(11.)))
                                     .ghost()
                                     .label(self.t("下一页", "Next"))
                                     .disabled(
@@ -432,6 +531,10 @@ impl Statistics {
         div()
             .flex()
             .items_center()
+            .when(
+                crate::theme::current_skin() == crate::theme::Skin::StudioIndigo,
+                |tabs| tabs.h(px(53.)).pt(px(7.)).pb(px(6.)),
+            )
             .gap(px(9.))
             .flex_shrink_0()
             .children(

@@ -407,11 +407,14 @@ impl Statistics {
                                 });
                             }
                         })
-                        .child(self.health_bar(cx))
                         .children(self.warnings())
-                        .children(self.import_notices(cx))
                         .child(self.pricing_section(cx))
                         .child(self.settings_capture_import(cx))
+                        // Keep diagnostics and their original actions in the
+                        // scrollable settings page without displacing its
+                        // primary pricing and collection panels.
+                        .child(self.health_bar(cx))
+                        .children(self.import_notices(cx))
                         .children(self.maintenance_panel(cx)),
                 )
                 .into_any_element(),

@@ -1,0 +1,35 @@
+{
+  "launches": [
+    {
+      "label": "previous1",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u/bench-ui65-previous1/WorkBuddy Proxy Settings Menu Bench previous1.app",
+      "getApp": "returned successfully",
+      "ui_pid_if_marker_retained": null,
+      "terminal_file_present": true
+    },
+    {
+      "label": "current1",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u/bench-ui65-current1/WorkBuddy Proxy Settings Menu Bench current1.app",
+      "getApp": "returned successfully",
+      "ui_pid_if_marker_retained": null,
+      "terminal_file_present": true
+    },
+    {
+      "label": "current2",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u/bench-ui65-current2/WorkBuddy Proxy Settings Menu Bench current2.app",
+      "getApp": "returned successfully",
+      "ui_pid_if_marker_retained": null,
+      "terminal_file_present": true
+    },
+    {
+      "label": "previous2",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u/bench-ui65-previous2/WorkBuddy Proxy Settings Menu Bench previous2.app",
+      "getApp": "returned successfully",
+      "ui_pid_if_marker_retained": null,
+      "terminal_file_present": true
+    }
+  ],
+  "explicit_activate_or_raise": false,
+  "actual_foreground": "not asserted",
+  "load_and_exit_verification": "parent wrapper verification"
+}

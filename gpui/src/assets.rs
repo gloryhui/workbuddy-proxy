@@ -61,6 +61,12 @@ impl AssetSource for Assets {
                 Some(include_bytes!("../assets/studio/provider-key-eye.svg"))
             }
             "studio/skin.svg" => Some(include_bytes!("../assets/studio/skin.svg")),
+            "studio/skin-mono.svg" => Some(include_bytes!("../assets/studio/skin-mono.svg")),
+            "studio/skin-blue.svg" => Some(include_bytes!("../assets/studio/skin-blue.svg")),
+            "studio/skin-violet.svg" => Some(include_bytes!("../assets/studio/skin-violet.svg")),
+            "studio/skin-rose.svg" => Some(include_bytes!("../assets/studio/skin-rose.svg")),
+            "studio/skin-amber.svg" => Some(include_bytes!("../assets/studio/skin-amber.svg")),
+            "studio/skin-teal.svg" => Some(include_bytes!("../assets/studio/skin-teal.svg")),
             "studio/autostart.svg" => Some(include_bytes!("../assets/studio/autostart.svg")),
             "studio/autostart-on.svg" => Some(include_bytes!("../assets/studio/autostart-on.svg")),
             "studio/updates.svg" => Some(include_bytes!("../assets/studio/updates.svg")),

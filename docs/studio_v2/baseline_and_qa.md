@@ -1459,3 +1459,27 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 首次24图后的30秒UI CPU两版均0.29s，但RSS110.969→133.344MiB历史不一致（新版另有错误和换肤），不能直接作为回退结论。因此补一对全新进程相同短序列：负价错误→×、Mono默认价格→×、恢复Studio→Chat，均14条/0规则/原配置未变。相同序列30秒UI RSS旧124.359、新123.578MiB，CPU0.28/0.27s，Core RSS13.031/13.547MiB；各n1，原始负载各n2，限定范围未见明显回退，不作统计等价、内存优化或“所有差异由缓存造成”结论；无FPS/输入延迟/长期CPU/泄漏证明。见[原负载](benchmarks/modal-chrome-performance-summary.json)、[匹配序列](benchmarks/modal-chrome-matched-performance-summary.json)。
 - 30个已记录测试载荷PID均退出：6手工夹具Core/host为0，4基准Core为0/mock预期TERM -15，UI由CUA拥有，只证明PID消失，不捏造退出码；其他脚本/构建/driver已等待0。77张原始PNG与36份报告共113文件逐字节校验归档，见[生命周期](benchmarks/modal-chrome-lifecycle.json)、[交付SHA清单](benchmarks/modal-chrome-artifacts.json)。本轮657.33MiB临时副本已完整预检、30进程退出且113交付SHA一致；逐字面绝对路径rm被自动审批拒绝（需要审批而AskForApproval=Never），未改用等价删除或父目录，释放0、保留657.33MiB，共享Cargo缓存未动，系统Data可用见[清理报告](benchmarks/modal-chrome-cleanup.json)及[预检](benchmarks/modal-chrome-cleanup-preflight.json)。
 - 完整目标继续：四协议Select文字/映射标题/footer光学差异，Picker空白填充、Sync文字箭头与原生vector、Kit阴影、字体/AA/逻辑坐标、其余24帧首审和全量状态尚待。仅Mono实测不代替六皮肤全部状态，Intel类型检查不代表硬件；完整键盘/IME/AX/HiDPI、Windows/Intel实机及长期性能仍未终验。Windows目标机复验至少运行`cargo test --manifest-path gpui/Cargo.toml --locked`、`cargo build --release --manifest-path gpui/Cargo.toml --locked`，再按`docs/WINDOWS-SCREENSHOTS.md`实拍两尺寸；本轮未在Windows实测。Goal保持完整40帧，不以本批专项通过缩减最终范围。
+
+
+## 小功能 65：统计设置、编辑价格与主题和协议菜单首审（2026-10-31）
+
+- 完成58:8、69:359、62:308、64:335、66:320五帧官方完整高保真上下文/1440原图、资源与两尺寸首审，集中收敛设置主卡片、价格表、保留期和菜单布局。最终e6abd的五状态×两尺寸及窄窗底部共11张全新原图已检查；这是本批专项通过，仍有明确整帧差异。优先证据：[最终GUI](benchmarks/settings-menu-final-gui-validation.json)、[1440设置](screenshots/settings-menu-final-settings-wide.png)、[1100设置](screenshots/settings-menu-final-settings-small.png)、[合法保存及历史保护](benchmarks/settings-menu-price-and-retention-data-proof.json)、[构建](benchmarks/settings-menu-build.json)、[性能](benchmarks/settings-menu-performance-summary.json)、[资源](benchmarks/settings-menu-asset-audit.json)、[源码范围](benchmarks/settings-menu-source-scope.json)。本批后19帧待首审、21帧已审有差异、0帧完整终验；最终仍剩40，不以65项专项替代界面完成率。
+- 仅7个Rust呈现/资源文件及6份原SVG：settings layout将原health/import提示放到主卡片后，保留warnings、卡内attention/error及提示动作；价格表48px双行、比例列、原生26px币种、Noto/Inter角色和隔行色收敛，原精确搜索、分页/页大小、更新/重载/删除与金额formatter保持，input_mode仍在原整行Tooltip及编辑表单。保留期等宽、新建规则使用NativeButton前置Icon；Studio协议仍是361×233/53px四行的原NativePopover/List，仅字重/选中色与44px偏移修正，1100由原positioner限制在窗内。新增颜色复用theme语义常量。原21个cx.listener表达式规范空白后均保留，另一路Studio皮肤菜单复用相同save/apply体；Core/配置schema/依赖/锁/工作流不改。
+- Studio皮肤菜单350px可见面、17/24标题与12/17副标题、154×66 tile、6/10px间隔及原说明；379px原生包装保留29px尾部留白，使面板右37/顶63对齐。六原22px色块逐字节下载并进入显式Assets路由，各用原palette颜色；宽窗六原色像素盒均与参考同坐标，小窗仅横移340px，尺寸均22px。原图339/参考344个不透明像素的边缘AA差异明确保留，不修改SVG路径。保留独立Studio第七行，不能为六项静态稿删入口或静默覆盖六旧键/默认值。官方51:2仍40唯一画板；36唯一/140上下文资源声明（并非重复可见槽位总数）中31字节一致、2仅局部clip ID/ref重命名等价、3装饰窗控使用真实OS。见[设计审查](benchmarks/settings-menu-design-audit.json)、[像素核对](benchmarks/settings-menu-swatch-pixels.json)、[40帧清单](benchmarks/settings-menu-figma-inventory.json)。
+- 失败与版本边界明确：初始编译漏BoxShadow.inset已修复并留证；c301虽编译通过，实拍发现六新资源漏Assets路由，判失败；c2eb补路由后真实交互通过，但像素盒/菜单位置仍待集中修正。最终e6abd重新完成全部五门禁与11图，未将中间图改名冒充最终。fmt、204tests通过/2既有忽略、strict all-targets Clippy、Intel all-targets类型检查、arm64 release均0；最终UI SHA e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c、42,475,728bytes，较旧5c63增加16,528bytes。源码冻结SHA与构建/验收后一致，固定Core仍25f24ad6。完整失败/中间/最终记录及39张原始参考/基线/中间/最终PNG见[交付清单](benchmarks/settings-menu-artifacts.json)。
+- c2eb真实执行搜索3→1→3、gpt-6 USD输入2→2.5保存/重开读2.5，再2保存/重开读2/10，保留期180→90→180。根代理API核同rule id revision3、其他2条revision1、settings revision3，原14条请求全字段SHA逐字节不变。协议Down/Return选Responses后B→A仍保留未保存草稿，属于原保护行为；随后明确选回Chat，没点供应商Save，Core配置SHA不变。最终e6abd没有重复合法写入：复验2/10编辑X取消、七色块/Mono→Studio、Esc/外点关闭、协议方向/Return选回Chat及窄窗下方卡片/health/import提示可取回；独立证明3规则均revision1/settings1/原14行不变。最终图为1440×901和1100×701原生1×，对应1440×900与1100×700逻辑窗口，多余系统行原样保留。Core有真实源路径内核保护，GUI仅独立bundle/HOME/config/LSEnvironment，不能称GUI内核沙盒；无真实Key、WorkBuddy Profile、Test、同步、导入、清除、外链或剪贴板。见[中间交互](benchmarks/settings-menu-intermediate-c2eb-gui-validation.json)、[最终独立数据](benchmarks/settings-menu-final-data-proof.json)、[隔离/关UI后Core](benchmarks/settings-menu-isolation-data-proof.json)。
+- 同机同release/Studio，原benchmark.py SHA bc7e0537及1000小请求/64模型/80×1MiB/4并发不变，先核--help，按旧5c63/新e6abd/新e6abd/旧5c63执行，各n2，四轮均0，原始样本全部保留。中位数如下；Core ready早于UI，原ui_record_ready包含CUA调度等待不比较；process→gpui标记不是首帧/可交互。UI增加0.485MiB、合计增加0.825MiB、p95增加0.002ms，在限定负载/样本中未见明显回退，不宣称优化或统计等价。RSS可能双计共享页、150ms可能漏峰、排除mock/client；默认Providers负载不证明弹窗FPS、输入延迟、长期CPU或泄漏。
+
+| 同负载指标 | 旧5c63中位 | 新e6abd中位 |
+|---|---:|---:|
+| Core RSS MiB | 12.280 | 12.620 |
+| UI RSS MiB | 83.945 | 84.430 |
+| 合计 RSS MiB | 96.225 | 97.050 |
+| 采样峰值 MiB | 141.390 | 142.540 |
+| Core ready ms | 65.142 | 48.509 |
+| UI进程→记录 ms | 839.427 | 818.327 |
+| 请求p50 / p95 ms | 0.168 / 0.191 | 0.171 / 0.193 |
+| 80个大请求 s | 0.0885 | 0.0895 |
+
+- 四手工夹具和四基准共24个载荷PID均独立确认退出；手工Core/host及基准Core为0，mock预期TERM -15，UI属CUA只证明PID消失，不编造退出码。关UI后Core health200/ready及14条7000输入/700输出/7700总Token均成立，再正常停止。所有wrapper已等待结束。原图/报告按SHA归档；本轮临时副本待提交证据后做精确清理，尚未宣称释放空间。见[生命周期](benchmarks/settings-menu-lifecycle.json)。归档orchestration.py.txt仅为本机历史复核材料，里面的本机路径不是共享配置/门禁；复跑应核对实际checkout/cache并使用仓库benchmark CLI。
+- 下一步按画板顺序逐个闭环，从52:2使用概览开始，不再穿插新共享微调专项。当前五帧的明确差异仍保留：价格原分页和额外操作使卡片高于静态稿、动态金额/来源及0导入不能伪造示例；保留第七皮肤入口增加一行，Mono旧字体/菜单与Figma示例不同；Native Kit阴影/描边、文字/AA、完整键盘/IME/AX/HiDPI和平台仍需统一终验。Intel类型检查不是硬件；本轮Windows/Intel实机未实际验证。目标机至少运行`cargo test --manifest-path gpui/Cargo.toml --locked`与`cargo build --release --manifest-path gpui/Cargo.toml --locked`，Windows按`docs/WINDOWS-SCREENSHOTS.md`实拍两尺寸。Goal保持完整目标，当前专项不代表完整终验。

@@ -1,0 +1,30 @@
+{
+  "candidate": "intermediate failure",
+  "ui_sha256": "c301f547dcc78b24b16ec295613c94cd8811095f309b40c9f300a9c4c3b79244",
+  "ui_pid": 97666,
+  "core_pid": 97319,
+  "window_id": 4129,
+  "images": [
+    {
+      "file": "settings-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "8d38c0dd10baf09c99d63d445bb78e88f90160cb9ff29ffaa855a8bbc70ac388"
+    },
+    {
+      "file": "skin-menu-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "204bcb74ad9745dbc040a3ba4fb53854fbd33befdea129ef8c9918ee7f9c6541"
+    }
+  ],
+  "finding": "Studio skin menu six legacy skin swatches absent while Studio swatch visible; parent diagnosed missing Assets routes. Candidate not accepted.",
+  "actions": "Statistics settings opened; skin menu opened; Escape and native window close. No configuration or business actions.",
+  "ui_pid_present_after_close": false,
+  "screenshot_method": "native screencapture own onscreen layer0 window; original unscaled",
+  "foreground": "no explicit activate or raise; actual foreground not asserted"
+}

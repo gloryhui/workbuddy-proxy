@@ -1,0 +1,112 @@
+{
+  "status": "intermediate layout; actual interaction evidence",
+  "sha256": "c2eb0f70c6ade534de8fbbe8400c4f4d9d284e9bfb3b1984929932e076482a39",
+  "ui_pid": 99768,
+  "core_pid": 99575,
+  "window_id": 4158,
+  "images": [
+    {
+      "file": "settings-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "744e774b41b395cabb6232b3d24b2a0a87e0d70be938bb1eb56bc89c01caf749"
+    },
+    {
+      "file": "settings-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "392902ceb34a2c91157431e7d1de873b6bb559b75f48fbbd46f2ed367e244658"
+    },
+    {
+      "file": "edit-price-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "6b1de59cfe1bc7522e50727813d9bee39d53393c6bcd78d2ed7a90bf01f97314"
+    },
+    {
+      "file": "edit-price-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "a560381dcf193fff86ad90b88104b949a757ed1272144ba5305b6870c625ced5"
+    },
+    {
+      "file": "mono-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "25b8b37006528c70d4b6929e47f0b55720ddd0c2cfdedd310257ecd37df95838"
+    },
+    {
+      "file": "mono-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "2344f2a5b448679cbad8cab860bddbe654bd76427fd3a77c22d0f76e2df6c971"
+    },
+    {
+      "file": "skin-menu-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "b7ff2d7be25ae636a874be27f6a2e9570ddc770a6a10c91e416611e2a2ac630a"
+    },
+    {
+      "file": "skin-menu-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "d4dfb5adaf79c11064554b67fc167aeb76e6e4ac88c46753322d6d7b41b07165"
+    },
+    {
+      "file": "protocol-menu-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "5babadc471244481c4f658e098c361caa06011c589a3477dc646f28c16cd889c"
+    },
+    {
+      "file": "protocol-menu-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "6687ddd5507efdea517a066facdac4c0d7cba902502fa2794b6f78d425e3895f"
+    },
+    {
+      "file": "settings-bottom-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "e1b57924989a275481181cd2168a8804380d61144e7245066ccd31e60026b99e"
+    }
+  ],
+  "cases": {
+    "skins": "all 7 swatches visible; Mono→Studio; Escape and outside click close",
+    "search": "gpt-6.1 yielded one; cleared restored three",
+    "price": "gpt-6 USD input 2→2.5 Save, reopened 2.5 / 10; restored 2 Save, reopened 2 / 10 then X",
+    "retention": "180→90→180 visible highlight",
+    "protocol": "Down + Return selected Responses draft; B→A retained Responses unsaved; Up + Return restored Chat without provider Save",
+    "small_scroll": "scrolled to local usage card, health status, import notice and settings import button; collection card seen above"
+  },
+  "limitations": [
+    "No provider Save, Test, Sync, import, clear, external link or clipboard actions.",
+    "No explicit activate/raise; actual foreground not asserted.",
+    "Parent identified swatch positioning and protocol placement as outstanding visual corrections."
+  ],
+  "ui_closed_native": true,
+  "ui_pid_present_after_close": false
+}

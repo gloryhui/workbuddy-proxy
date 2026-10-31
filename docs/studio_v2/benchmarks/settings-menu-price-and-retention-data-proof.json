@@ -1,0 +1,76 @@
+{
+  "checked_at": "2026-10-31T08:21:47.730450+08:00",
+  "ui_sha256": "c2eb0f70c6ade534de8fbbe8400c4f4d9d284e9bfb3b1984929932e076482a39",
+  "rules_after": [
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793405313818,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "2000000000",
+      "label": "UI65 manual fixture",
+      "output_rate_nanos": "10000000000",
+      "price_id": "3cda00d34d86021c4d095341",
+      "provider_id": "review-provider",
+      "referenced": false,
+      "revision": 3,
+      "rule_id": "3cda00d34d86021c4d095341",
+      "upstream_model": "gpt-6"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793405313819,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "100000000",
+      "label": "UI65 manual fixture",
+      "output_rate_nanos": "500000000",
+      "price_id": "44c3b466c41945a4129f05ef",
+      "provider_id": "review-provider",
+      "referenced": false,
+      "revision": 1,
+      "rule_id": "44c3b466c41945a4129f05ef",
+      "upstream_model": "deepseek-v4.1-flash"
+    },
+    {
+      "cache_read_rate_nanos": "0",
+      "cache_write_rate_nanos": "0",
+      "created_at_ms": 1793405313819,
+      "currency": "USD",
+      "input_mode": "flat",
+      "input_rate_nanos": "10000000000",
+      "label": "UI65 manual fixture",
+      "output_rate_nanos": "50000000000",
+      "price_id": "8edecaee44f8474b9b03ef96",
+      "provider_id": "review-provider",
+      "referenced": false,
+      "revision": 1,
+      "rule_id": "8edecaee44f8474b9b03ef96",
+      "upstream_model": "gpt-6.1"
+    }
+  ],
+  "settings_after": {
+    "api_version": 4,
+    "default_currency": "CNY",
+    "enabled": true,
+    "generated_at_ms": 1793406107727,
+    "generation": "3e2fe6a172b67b37a602f49e85c88008d1b2dd2336f3a152:28",
+    "request_tag": "",
+    "retention_days": 180,
+    "revision": 3
+  },
+  "usage": {
+    "rows": 14,
+    "all_fields_before_after_sha256": "746978c009953d41196bdb8b4986ed9e8182a56c67e56fc74979687948347681",
+    "unchanged": true
+  },
+  "core_config_sha256": "fa2524a6358b016b60caf9514c8b8a5d7f280d542dc683f2f10993e2dabef06f",
+  "core_config_unchanged": true,
+  "skin_after": {
+    "version": 1,
+    "skin": "studio_indigo"
+  },
+  "limits": "Only this synthetic private profile. Native interactions are attested separately; API and SQLite independently prove their resulting state, not visual fidelity or all possible state transitions."
+}

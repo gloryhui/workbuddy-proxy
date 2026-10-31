@@ -1,0 +1,181 @@
+{
+  "checked_at": "2026-10-31T08:33:06.336383+08:00",
+  "payload_process_count": 24,
+  "all_payload_pids_gone": true,
+  "processes": [
+    {
+      "scope": "ui65-baseline",
+      "kind": "gui",
+      "pid": 94142,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-baseline",
+      "kind": "core",
+      "pid": 93851,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-baseline",
+      "kind": "fixture",
+      "pid": 93836,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final1",
+      "kind": "gui",
+      "pid": 97666,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final1",
+      "kind": "core",
+      "pid": 97319,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final1",
+      "kind": "fixture",
+      "pid": 97318,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final2",
+      "kind": "gui",
+      "pid": 99768,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final2",
+      "kind": "core",
+      "pid": 99575,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final2",
+      "kind": "fixture",
+      "pid": 99574,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final3",
+      "kind": "gui",
+      "pid": 3946,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final3",
+      "kind": "core",
+      "pid": 3655,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "ui65-final3",
+      "kind": "fixture",
+      "pid": 3654,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "previous1",
+      "kind": "mock",
+      "pid": 6205,
+      "exit_code": -15,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "previous1",
+      "kind": "core",
+      "pid": 6206,
+      "exit_code": 0,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "previous1",
+      "kind": "gui",
+      "pid": 6406,
+      "exit_code": null,
+      "pid_gone": true,
+      "note": "CUA owns UI; exit code unavailable.",
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "current1",
+      "kind": "mock",
+      "pid": 6435,
+      "exit_code": -15,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "current1",
+      "kind": "core",
+      "pid": 6436,
+      "exit_code": 0,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "current1",
+      "kind": "gui",
+      "pid": 6600,
+      "exit_code": null,
+      "pid_gone": true,
+      "note": "CUA owns UI; exit code unavailable.",
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "current2",
+      "kind": "mock",
+      "pid": 6626,
+      "exit_code": -15,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "current2",
+      "kind": "core",
+      "pid": 6630,
+      "exit_code": 0,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "current2",
+      "kind": "gui",
+      "pid": 6737,
+      "exit_code": null,
+      "pid_gone": true,
+      "note": "CUA owns UI; exit code unavailable.",
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "previous2",
+      "kind": "mock",
+      "pid": 6761,
+      "exit_code": -15,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "previous2",
+      "kind": "core",
+      "pid": 6762,
+      "exit_code": 0,
+      "waited": true,
+      "independent_pid_gone": true
+    },
+    {
+      "scope": "previous2",
+      "kind": "gui",
+      "pid": 6910,
+      "exit_code": null,
+      "pid_gone": true,
+      "note": "CUA owns UI; exit code unavailable.",
+      "independent_pid_gone": true
+    }
+  ],
+  "benchmark_driver_wait_exit_code": 0,
+  "notes": "All4 manual wrapper sessions and4 benchmark wrappers were awaited. Native CUA UI exit codes are unavailable; only PID disappearance is proved. Mock TERM -15 is intentional; Core stop exits0."
+}

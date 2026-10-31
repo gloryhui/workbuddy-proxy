@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-31T08:33:06.332364+08:00",
+  "platform": "macOS-15.8.1-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "n_per_version": 2,
+  "medians": {
+    "previous": {
+      "core_idle_rss_mib": 12.28,
+      "ui_idle_rss_mib": 83.945,
+      "idle_rss_mib": 96.225,
+      "sampled_peak_rss_mib": 141.39,
+      "post_load_rss_mib": 141.39,
+      "core_ready_ms": 65.14150000000001,
+      "native_ui_process_to_record_ms": 839.4269999999999,
+      "large_seconds": 0.0885,
+      "proxy_p50_ms": 0.168,
+      "proxy_p95_ms": 0.191
+    },
+    "current": {
+      "core_idle_rss_mib": 12.620000000000001,
+      "ui_idle_rss_mib": 84.43,
+      "idle_rss_mib": 97.05,
+      "sampled_peak_rss_mib": 142.54000000000002,
+      "post_load_rss_mib": 142.54000000000002,
+      "core_ready_ms": 48.5085,
+      "native_ui_process_to_record_ms": 818.3265,
+      "large_seconds": 0.0895,
+      "proxy_p50_ms": 0.17099999999999999,
+      "proxy_p95_ms": 0.193
+    },
+    "delta_current_minus_previous": {
+      "core_idle_rss_mib": 0.34000000000000163,
+      "ui_idle_rss_mib": 0.48500000000001364,
+      "idle_rss_mib": 0.8250000000000028,
+      "sampled_peak_rss_mib": 1.150000000000034,
+      "post_load_rss_mib": 1.150000000000034,
+      "core_ready_ms": -16.63300000000001,
+      "native_ui_process_to_record_ms": -21.100499999999897,
+      "large_seconds": 0.0010000000000000009,
+      "proxy_p50_ms": 0.002999999999999975,
+      "proxy_p95_ms": 0.0020000000000000018
+    }
+  },
+  "load": {
+    "small_requests": 1000,
+    "models": 64,
+    "large_requests": 80,
+    "large_request_mib": 1,
+    "large_concurrency": 4
+  },
+  "baseline_ui_sha256": "5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77",
+  "current_ui_sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "assessment": "No obvious regression within this default native-UI loopback workload. Small samples do not establish equivalence or improvement. All raw runs, including first previous Core ready82.598ms, are retained.",
+  "limits": [
+    "Per-run metrics are summarized with arithmetic medians; combined RSS median is computed from per-run combined RSS, not assumed from separate medians.",
+    "RSS may double count shared pages;150ms sampling may miss peaks. Excludes mock and client processes.",
+    "Core ready precedes CUA UI launch. Original ui_record_ready_ms includes orchestration wait and is not compared. Native process-start to gpui.json marker is not first paint or interactivity.",
+    "DefaultProviders window workload is not a measurement of popup FPS, input latency, long-run CPU or leaks. Other desktop activity is uncontrolled. Intel typecheck does not establish Intel or Windows hardware behavior."
+  ]
+}

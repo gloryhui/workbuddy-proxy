@@ -1,0 +1,118 @@
+{
+  "at": "2026-10-31T08:35:28.745464+08:00",
+  "files": {
+    "gpui/src/assets.rs": {
+      "before_listeners": 0,
+      "after_listeners": 0,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "b2b90f73a8f673063097a8eaff4be1e711fd23984917a4a09d84dea1b21078f5"
+    },
+    "gpui/src/statistics/layout.rs": {
+      "before_listeners": 3,
+      "after_listeners": 3,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "c3624912527f7008cc915424280680690964e021f732ef1cc69d18445927654a"
+    },
+    "gpui/src/statistics/settings_capture.rs": {
+      "before_listeners": 7,
+      "after_listeners": 7,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "9226c4efa7d5c01d59a1fae03e05e308f0660832b2c954c4a5ee2b9757ef7bab"
+    },
+    "gpui/src/statistics/settings_layout.rs": {
+      "before_listeners": 6,
+      "after_listeners": 6,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "03a98de82495715b26167c82d8d93d410e7992ca11d490bd6b28a2ff4d676d82"
+    },
+    "gpui/src/theme.rs": {
+      "before_listeners": 0,
+      "after_listeners": 0,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "21ebb12563fcab71dd9b78c10f2106a657f10ef4a336ad69b3009d2f01e61131"
+    },
+    "gpui/src/ui/provider_choices.rs": {
+      "before_listeners": 4,
+      "after_listeners": 4,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "a6a10c622f8ed859174d4841a3fe6dd832b408f9070d0ef0c2ad33f368d6830f"
+    },
+    "gpui/src/ui/skin_controls.rs": {
+      "before_listeners": 1,
+      "after_listeners": 2,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "2de657359214e8774ed51df84408e366644b46d7c7d88cc8e38dfee0026a10c7"
+    }
+  },
+  "core_schema_dependencies_locks_workflows_diff": [],
+  "new_original_swatches": [
+    {
+      "asset": "gpui/assets/studio/skin-mono.svg",
+      "sha256": "2bc40c512f56f0d96d72e3ed01201570060bc75900d59ca080effcc8ed9fc176",
+      "source_route_present": true,
+      "menu_callsite_present": true,
+      "intrinsic_and_effective_size": [
+        22,
+        22
+      ],
+      "palette_swatch_color": "27272A"
+    },
+    {
+      "asset": "gpui/assets/studio/skin-blue.svg",
+      "sha256": "25bebbd24eb2a701e3bf012ee20de21d04edff5d4188edc6b2b123eb6315d454",
+      "source_route_present": true,
+      "menu_callsite_present": true,
+      "intrinsic_and_effective_size": [
+        22,
+        22
+      ],
+      "palette_swatch_color": "2563EB"
+    },
+    {
+      "asset": "gpui/assets/studio/skin-violet.svg",
+      "sha256": "92e320f6be289aa575bca137d4ab7baf200771ae6168f537a7eaae22c028ebbb",
+      "source_route_present": true,
+      "menu_callsite_present": true,
+      "intrinsic_and_effective_size": [
+        22,
+        22
+      ],
+      "palette_swatch_color": "7C3AED"
+    },
+    {
+      "asset": "gpui/assets/studio/skin-rose.svg",
+      "sha256": "161a34f0c0c82c49a43207a441fb296fd54fee36bf7bfd2462fc7cdbe110967d",
+      "source_route_present": true,
+      "menu_callsite_present": true,
+      "intrinsic_and_effective_size": [
+        22,
+        22
+      ],
+      "palette_swatch_color": "BE185D"
+    },
+    {
+      "asset": "gpui/assets/studio/skin-amber.svg",
+      "sha256": "0922d0ef6fee74829ba275f7b529a3ff99b00c3085f8e7bd22aa1b6b8a801c3c",
+      "source_route_present": true,
+      "menu_callsite_present": true,
+      "intrinsic_and_effective_size": [
+        22,
+        22
+      ],
+      "palette_swatch_color": "B45309"
+    },
+    {
+      "asset": "gpui/assets/studio/skin-teal.svg",
+      "sha256": "81491c2d85f7da1c42d629aa9927e4482e7d222e0fa3989e8a79f586155ff212",
+      "source_route_present": true,
+      "menu_callsite_present": true,
+      "intrinsic_and_effective_size": [
+        22,
+        22
+      ],
+      "palette_swatch_color": "0F766E"
+    }
+  ],
+  "candidate_ui_sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c",
+  "listener_comparison": "Whitespace-normalized balanced cx.listener expressions; original21 listeners remain, new Studio branch reuses original save/apply body. Source preservation only, not semantic equivalence or runtime proof. c2eb price-save/retention actual results are explicitly separate from e6abd presentation retest."
+}

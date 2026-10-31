@@ -24,7 +24,12 @@
       "60:475",
       "68:350",
       "78:1080",
-      "80:864"
+      "80:864",
+      "58:8",
+      "69:359",
+      "62:308",
+      "64:335",
+      "66:320"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -248,20 +253,32 @@
     {
       "id": "58:8",
       "name": "05 / STUDIO V2 · 统计设置",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+        "layout": "导航与价格卡连续排列；原健康/导入提示移到主卡片之后并可滚动取回，warnings与卡内错误/attention保留。48px双行价格表、比例列、26px币种及真实分页/操作保留；采集/导入窄窗堆叠，保留期等宽。",
+        "typography": "Studio表头11/16 Medium，模型13/18 Medium，ID Inter10/14 Regular，来源12/17 Medium/映射11/16 Regular，价格Inter13/18 Semibold。",
+        "colors": "价格隔行复用BG_NOTICE；保留期复用ACCENT_TINT/ACCENT_LINE，旧皮肤路径保留。",
+        "states": "最终3规则/14真实请求；来源为手工fixture，未伪造models.dev或145导入条目；真实0导入/暂停状态保留。",
+        "interaction": "c2eb实测搜索3→1→3、价格2→2.5→2保存回读、180→90→180；独立API核规则revision3/settings3、14历史全字段摘要不变。e6abd事件体保持，复验两尺寸/编辑取消和下方滚动，未重复合法写入。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "原生分页、页大小、更新/重载等额外操作继续保留，价格卡比仅有同步说明的静态稿更高；下方卡片因此后移。",
+        "真实数据、金额formatter和输入模式Tooltip保留；非静态示例的模型/费用/来源不视为伪造。",
+        "卡内精细间距/全部状态、完整键盘/IME/AX及跨平台继续终验。"
+      ],
+      "evidence": [
+        "benchmarks/settings-menu-design-audit.json",
+        "benchmarks/settings-menu-asset-audit.json",
+        "benchmarks/settings-menu-source-scope.json",
+        "benchmarks/settings-menu-final-gui-validation.json",
+        "benchmarks/settings-menu-price-and-retention-data-proof.json",
+        "benchmarks/settings-menu-final-data-proof.json",
+        "benchmarks/settings-menu-swatch-pixels.json"
+      ]
     },
     {
       "id": "59:11",
@@ -630,56 +647,89 @@
     {
       "id": "62:308",
       "name": "13 / STUDIO V2 · 黑白主题示例",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+        "layout": "最终e6abd在1440/1100真实切换Mono，供应商页双列/小窗内容可见；切回Studio正常。",
+        "typography": "现有Mono仍使用原字体路径，未默默改六旧皮肤字体；与Figma的Studio字体Mono示例有明显差异。",
+        "colors": "原Monochrome27272a、旧配置键/默认值及其他六种枚举映射未改。",
+        "states": "同一隔离配置2供应商5模型14请求，真实未测试连接状态/未导入状态保留。",
+        "interaction": "最终Mono→Studio即时生效和配置回读为studio_indigo；未重复六皮肤所有状态。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "Mono旧字体/表格/菜单路径与Figma示例仍不同，需按该画板后续完整收口；本轮只审查和兼容性抽查。",
+        "完整六皮肤状态、键盘/IME/AX/HiDPI和跨平台仍待。"
+      ],
+      "evidence": [
+        "benchmarks/settings-menu-design-audit.json",
+        "benchmarks/settings-menu-asset-audit.json",
+        "benchmarks/settings-menu-source-scope.json",
+        "benchmarks/settings-menu-final-gui-validation.json",
+        "benchmarks/settings-menu-price-and-retention-data-proof.json",
+        "benchmarks/settings-menu-final-data-proof.json",
+        "benchmarks/settings-menu-swatch-pixels.json"
+      ]
     },
     {
       "id": "64:335",
       "name": "14 / STUDIO V2 · 外观与主题",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+        "layout": "Studio可见菜单350px，NativePopover用379px包装保留29px尾部留白以定位至右37/顶63；六个154×66 tile/6px列距/10px行距，额外保留Studio跨两列第七行。",
+        "typography": "标题17/24 Bold，副标题12/17 Regular，tile13/19 Medium/选中Bold，说明11/16 Regular。",
+        "colors": "六原色22px SVG未经改写，显式Assets路由与各palette原色；共享颜色常量，不修改六旧palette。",
+        "states": "c301资源未路由导致六色块缺失，明确失败；c2eb补路由后可见但位置待修，最终e6abd六盒与参考同坐标，22px原色均可见。",
+        "interaction": "最终七项可见、Mono→Studio、Escape和点外关闭；原save/apply listener体保持，独立回读最终Studio。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "为保留独立Studio入口，菜单比六项353px静态稿高一行；不能删除第七入口或静默把Studio映射到Violet。",
+        "六旧主题选中后沿用现有菜单/字体路径，选中样式、全量焦点/状态与平台仍待逐项收口；不是全帧最终通过。"
+      ],
+      "evidence": [
+        "benchmarks/settings-menu-design-audit.json",
+        "benchmarks/settings-menu-asset-audit.json",
+        "benchmarks/settings-menu-source-scope.json",
+        "benchmarks/settings-menu-final-gui-validation.json",
+        "benchmarks/settings-menu-price-and-retention-data-proof.json",
+        "benchmarks/settings-menu-final-data-proof.json",
+        "benchmarks/settings-menu-swatch-pixels.json"
+      ]
     },
     {
       "id": "66:320",
       "name": "17 / STUDIO V2 · 上游协议下拉",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+        "layout": "原NativePopover361×233，四行53px+2px间隔保持；Studio协议偏移改44px匹配宽窗稿，小窗由同一native positioner限制在视口内。其他菜单与旧皮肤仍6px。",
+        "typography": "Studio协议未选项Medium、选中Bold13/19，hint11/16 Regular，勾13 Bold；原虚拟List与事件协议保留。",
+        "colors": "选中/游标/hover使用ACCENT_TINT；原palette.dark与hint MUTED保持。",
+        "states": "最终原Chat→Responses显示未保存→显式选回Chat，没有主配置Save；4原选项/说明保留。",
+        "interaction": "c2eb Down/Return选Responses，B→A保留未保存草稿，随后选回Chat，Core配置SHA不变；e6abd方向/Return选回路径、Esc和两尺寸复验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "原生Kit描边/阴影、glyph/AA及背景供应商全帧仍有既有差异；未对所有四协议/全部鼠标键盘状态作本版重复验收。",
+        "小窗浮层可覆盖页面/状态栏区域但保持窗内，完整键盘/IME/AX及跨平台仍待。"
+      ],
+      "evidence": [
+        "benchmarks/settings-menu-design-audit.json",
+        "benchmarks/settings-menu-asset-audit.json",
+        "benchmarks/settings-menu-source-scope.json",
+        "benchmarks/settings-menu-final-gui-validation.json",
+        "benchmarks/settings-menu-price-and-retention-data-proof.json",
+        "benchmarks/settings-menu-final-data-proof.json",
+        "benchmarks/settings-menu-swatch-pixels.json"
+      ]
     },
     {
       "id": "66:538",
@@ -785,20 +835,31 @@
     {
       "id": "69:359",
       "name": "23 / STUDIO V2 · 编辑模型价格",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed_with_differences",
+      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+        "layout": "复用UI64已实现的574×625价格布局、42px字段及固定底栏；实际gpt-6/USD2/10，两尺寸X取消。供应商/模型身份沿用现有锁定。",
+        "typography": "复用原Noto/Inter角色与UI64价格样式；不是对每个字形/AA的一比一证明。",
+        "colors": "Studio普通48%遮罩与原生字段/关闭引擎沿用；未为本轮改价格业务代码。",
+        "states": "最终已知缓存价0按实际值显示；不以稿内空白伪装未知。c2eb保存和恢复均真实回读，最终e6abd取消不写规则。",
+        "interaction": "c2eb输入2→2.5保存/重开，再2保存/重开；规则同id revision3，其余2条revision1，旧14行全字段摘要不变。e6abd重开检查2/10后取消，两尺寸底部按钮可见。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "身份锁定、已知缓存0和金额输入格式服从原业务语义；不改成静态可编辑示例。",
+        "Kit阴影、文字/光学余差与完整错误、键盘/IME/AX、跨平台仍待统一终验。"
+      ],
+      "evidence": [
+        "benchmarks/settings-menu-design-audit.json",
+        "benchmarks/settings-menu-asset-audit.json",
+        "benchmarks/settings-menu-source-scope.json",
+        "benchmarks/settings-menu-final-gui-validation.json",
+        "benchmarks/settings-menu-price-and-retention-data-proof.json",
+        "benchmarks/settings-menu-final-data-proof.json",
+        "benchmarks/settings-menu-swatch-pixels.json"
+      ]
     },
     {
       "id": "78:364",

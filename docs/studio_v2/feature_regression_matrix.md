@@ -80,3 +80,6 @@ Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重
 - 七类原生关闭外观覆盖12状态：四协议、Picker、模型编辑、同步/取消同步、两供应商删除、价格、详情；保留Base Cancel及原on_ok/on_close。实际发现0b焦点X的Enter被Confirm截走，修复为关闭控件专属Confirm→Cancel；5c63真实Return/Space通过。
 - 价格42px原生控件槽、字段分列/行距/页脚、备注滚动取消及两尺寸负价拒绝通过；详情行线/小窗More→Esc/X通过。两尺寸默认24图及3补图、配置逐字节不变、0规则/0安装/私有WorkBuddy文件仍空/14条7700Token见[GUI](benchmarks/modal-chrome-final-gui-validation.json)、[独立数据](benchmarks/modal-chrome-isolation-data-proof.json)。
 - 原始P/C/C/P负载与一对相同短操作历史的30秒对照未见明显回退；n2/n1不作等价/优化/泄漏结论，见[负载](benchmarks/modal-chrome-performance-summary.json)、[匹配序列](benchmarks/modal-chrome-matched-performance-summary.json)。源码保留六旧皮肤分支，本版只复测Mono回Studio；其余全量键盘/IME/AX/HiDPI和平台门禁继续保留。
+
+
+UI65设置与主题/协议菜单（最终e6abd）：7个Rust呈现/资源文件和6个原22px色块，原21个listener体保持，Core/schema/依赖/锁/工作流不改。五帧完整首审与两尺寸11张最终原图、宽窗色块原色盒对齐、7项/Mono恢复/Esc外点/协议草稿保留和显式回Chat、窄窗下方卡片与诊断可达已验证。c2eb另真实搜索3→1→3、价格2→2.5→2保存回读及180→90→180，API/SQLite证明同规则revision3/settings3和历史14行全字段摘要不变；e6abd仅呈现/取消复验，合法保存没有伪称重复，最终独立证明rev1和原数据不变。204通过2既有忽略/五门禁0、四轮原负载与24PID退出见[QA65](baseline_and_qa.md)、[最终GUI](benchmarks/settings-menu-final-gui-validation.json)、[保存数据](benchmarks/settings-menu-price-and-retention-data-proof.json)、[性能](benchmarks/settings-menu-performance-summary.json)。19待首审/21已审有差异，40完整终验继续；保留分页/额外动作、Studio第七入口与动态真值，不以删功能贴静态图。Mono字体/菜单及精细整帧、完整键盘/IME/AX/平台待收口，后续按画板顺序从52:2闭环。

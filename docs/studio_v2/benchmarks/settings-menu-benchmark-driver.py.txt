@@ -1,0 +1,21 @@
+from pathlib import Path
+import subprocess,sys,json,time,hashlib,datetime,os
+r=Path(__file__).resolve().parent
+assert hashlib.sha256(Path('scripts/benchmark.py').read_bytes()).hexdigest()=='bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2'
+build=json.loads((r/'build.json').read_text())
+for name,sha in [('baseline-ui','5c63cc59190fa726934d9f7fa9aed403f2a9efce29f21defa7efe2ae8cb2be77'),('candidate-ui',build['release_sha256'])]:assert hashlib.sha256((r/name).read_bytes()).hexdigest()==sha
+manifest=json.loads((r/'ui65-final3/fixture.json').read_text())
+for pid in [manifest['ui_pid'],manifest['core_pid'],manifest['fixture_pid']]:
+    try:os.kill(pid,0)
+    except ProcessLookupError:pass
+    else:raise AssertionError(('GUI fixture still live',pid))
+results=[]
+for label in ['previous1','current1','current2','previous2']:
+    print('starting',label,flush=True);started=time.monotonic()
+    p=subprocess.run([sys.executable,str(r/'benchmark-background.py'),label],capture_output=True,text=True)
+    (r/('benchmark-'+label+'.log')).write_text(p.stdout+p.stderr)
+    results.append({'label':label,'exit_code':p.returncode,'wall_seconds':round(time.monotonic()-started,3),'evidence':'performance-'+label+'.json'})
+    (r/'benchmark-driver.json').write_text(json.dumps({'sequence':results,'benchmark_script_unchanged':True},indent=2)+'\n')
+    print('finished',label,p.returncode,flush=True)
+    if p.returncode:print((p.stdout+p.stderr)[-2400:],flush=True);raise SystemExit(p.returncode)
+print('all4complete',flush=True)

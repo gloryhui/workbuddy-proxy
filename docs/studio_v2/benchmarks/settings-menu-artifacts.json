@@ -1,0 +1,397 @@
+{
+  "exported_at": "2026-10-31T08:33:06.886640+08:00",
+  "files": [
+    {
+      "source": "reference-58-8.png",
+      "export": "screenshots/settings-menu-reference-58-8.png",
+      "bytes": 154310,
+      "sha256": "e5dedc12c47c57dcfcb02a94206f1b3aa05f973728f36d7a882bb7dbe199439d"
+    },
+    {
+      "source": "reference-62-308.png",
+      "export": "screenshots/settings-menu-reference-62-308.png",
+      "bytes": 155798,
+      "sha256": "d88949c550cc73635f244b8a81e327f84dba2f779fa75ba46018800a035b8f19"
+    },
+    {
+      "source": "reference-64-335.png",
+      "export": "screenshots/settings-menu-reference-64-335.png",
+      "bytes": 206472,
+      "sha256": "d0f02d85134ccb519c3dc0b04bc2c4a946083856236fbe4e3443ce4c0850dfae"
+    },
+    {
+      "source": "reference-66-320.png",
+      "export": "screenshots/settings-menu-reference-66-320.png",
+      "bytes": 190176,
+      "sha256": "ee6e0f787bb7458e2cd0c677506ddc5b7f6d4154f592e981a5f83167276c4e27"
+    },
+    {
+      "source": "reference-69-359.png",
+      "export": "screenshots/settings-menu-reference-69-359.png",
+      "bytes": 227022,
+      "sha256": "52116768654ea4d7d8c40d126f92bb2895754734b193337d87f997a76ff9c31d"
+    },
+    {
+      "source": "ui65-baseline/edit-price-small.png",
+      "export": "screenshots/settings-menu-baseline-edit-price-small.png",
+      "bytes": 129990,
+      "sha256": "60218828106345a0a016c8a49620b1df7525bc033baa8e78aca076471e6a479d"
+    },
+    {
+      "source": "ui65-baseline/edit-price-wide.png",
+      "export": "screenshots/settings-menu-baseline-edit-price-wide.png",
+      "bytes": 211988,
+      "sha256": "ad7c7253a76bfaca0817208737e3f9c49df01b2c4127a654125d2aa487fea83a"
+    },
+    {
+      "source": "ui65-baseline/mono-small.png",
+      "export": "screenshots/settings-menu-baseline-mono-small.png",
+      "bytes": 155535,
+      "sha256": "5eec8a7b57ee578b9b1280e291aa83f327579387e575cb054d4547d2fe7a90c0"
+    },
+    {
+      "source": "ui65-baseline/mono-wide.png",
+      "export": "screenshots/settings-menu-baseline-mono-wide.png",
+      "bytes": 226203,
+      "sha256": "491a0174dfc8a3cddfd204be10d550c7f77ba28c96c2c083504ad675ce141007"
+    },
+    {
+      "source": "ui65-baseline/protocol-menu-small.png",
+      "export": "screenshots/settings-menu-baseline-protocol-menu-small.png",
+      "bytes": 159636,
+      "sha256": "140a6252e65930bee9b8fd9e2267971e4fb8961281f80d04416bfdf041b433a1"
+    },
+    {
+      "source": "ui65-baseline/protocol-menu-wide.png",
+      "export": "screenshots/settings-menu-baseline-protocol-menu-wide.png",
+      "bytes": 233149,
+      "sha256": "4820290bad8320d0f6da042f49a2780da3595722a679ca629339086095b4e701"
+    },
+    {
+      "source": "ui65-baseline/settings-small.png",
+      "export": "screenshots/settings-menu-baseline-settings-small.png",
+      "bytes": 155521,
+      "sha256": "e6d7b4e2d07164c2c6839579f87a413b0576df55cbc8f0f2a1805a4fc7c32a81"
+    },
+    {
+      "source": "ui65-baseline/settings-wide.png",
+      "export": "screenshots/settings-menu-baseline-settings-wide.png",
+      "bytes": 208128,
+      "sha256": "128991eac9914ac628f871a0ee80027713a3c4917d942a3eb060308a673796e0"
+    },
+    {
+      "source": "ui65-baseline/skin-menu-small.png",
+      "export": "screenshots/settings-menu-baseline-skin-menu-small.png",
+      "bytes": 163273,
+      "sha256": "ec1d4b75c21d51d63148da509978baacca058372d10adb7eaba05d69f141aae8"
+    },
+    {
+      "source": "ui65-baseline/skin-menu-wide.png",
+      "export": "screenshots/settings-menu-baseline-skin-menu-wide.png",
+      "bytes": 232929,
+      "sha256": "10db0c669feb562696f5a194da07a53861db7bf0183e2c948860f8f21a2e03b9"
+    },
+    {
+      "source": "ui65-final1/settings-wide.png",
+      "export": "screenshots/settings-menu-intermediate-c301-settings-wide.png",
+      "bytes": 204882,
+      "sha256": "8d38c0dd10baf09c99d63d445bb78e88f90160cb9ff29ffaa855a8bbc70ac388"
+    },
+    {
+      "source": "ui65-final1/skin-menu-wide.png",
+      "export": "screenshots/settings-menu-intermediate-c301-skin-menu-wide.png",
+      "bytes": 248362,
+      "sha256": "204bcb74ad9745dbc040a3ba4fb53854fbd33befdea129ef8c9918ee7f9c6541"
+    },
+    {
+      "source": "ui65-final2/edit-price-small.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-edit-price-small.png",
+      "bytes": 128395,
+      "sha256": "a560381dcf193fff86ad90b88104b949a757ed1272144ba5305b6870c625ced5"
+    },
+    {
+      "source": "ui65-final2/edit-price-wide.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-edit-price-wide.png",
+      "bytes": 206463,
+      "sha256": "6b1de59cfe1bc7522e50727813d9bee39d53393c6bcd78d2ed7a90bf01f97314"
+    },
+    {
+      "source": "ui65-final2/mono-small.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-mono-small.png",
+      "bytes": 156466,
+      "sha256": "2344f2a5b448679cbad8cab860bddbe654bd76427fd3a77c22d0f76e2df6c971"
+    },
+    {
+      "source": "ui65-final2/mono-wide.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-mono-wide.png",
+      "bytes": 229763,
+      "sha256": "25b8b37006528c70d4b6929e47f0b55720ddd0c2cfdedd310257ecd37df95838"
+    },
+    {
+      "source": "ui65-final2/protocol-menu-small.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-protocol-menu-small.png",
+      "bytes": 161134,
+      "sha256": "6687ddd5507efdea517a066facdac4c0d7cba902502fa2794b6f78d425e3895f"
+    },
+    {
+      "source": "ui65-final2/protocol-menu-wide.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-protocol-menu-wide.png",
+      "bytes": 237213,
+      "sha256": "5babadc471244481c4f658e098c361caa06011c589a3477dc646f28c16cd889c"
+    },
+    {
+      "source": "ui65-final2/settings-bottom-small.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-settings-bottom-small.png",
+      "bytes": 125709,
+      "sha256": "e1b57924989a275481181cd2168a8804380d61144e7245066ccd31e60026b99e"
+    },
+    {
+      "source": "ui65-final2/settings-small.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-settings-small.png",
+      "bytes": 146056,
+      "sha256": "392902ceb34a2c91157431e7d1de873b6bb559b75f48fbbd46f2ed367e244658"
+    },
+    {
+      "source": "ui65-final2/settings-wide.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-settings-wide.png",
+      "bytes": 204712,
+      "sha256": "744e774b41b395cabb6232b3d24b2a0a87e0d70be938bb1eb56bc89c01caf749"
+    },
+    {
+      "source": "ui65-final2/skin-menu-small.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-skin-menu-small.png",
+      "bytes": 184521,
+      "sha256": "d4dfb5adaf79c11064554b67fc167aeb76e6e4ac88c46753322d6d7b41b07165"
+    },
+    {
+      "source": "ui65-final2/skin-menu-wide.png",
+      "export": "screenshots/settings-menu-intermediate-c2eb-skin-menu-wide.png",
+      "bytes": 255637,
+      "sha256": "b7ff2d7be25ae636a874be27f6a2e9570ddc770a6a10c91e416611e2a2ac630a"
+    },
+    {
+      "source": "ui65-final3/edit-price-small.png",
+      "export": "screenshots/settings-menu-final-edit-price-small.png",
+      "bytes": 128186,
+      "sha256": "1f48ee985bf21863329a03ff5f928748015410737644bee265f125aa33713c60"
+    },
+    {
+      "source": "ui65-final3/edit-price-wide.png",
+      "export": "screenshots/settings-menu-final-edit-price-wide.png",
+      "bytes": 206508,
+      "sha256": "63b0ed84f23ea823efaf48b97298b9fd282bebf0049a0d6a3ecc45a18aa40f97"
+    },
+    {
+      "source": "ui65-final3/mono-small.png",
+      "export": "screenshots/settings-menu-final-mono-small.png",
+      "bytes": 155401,
+      "sha256": "57707b57e1a23cdf0b7aa897796b4316d147ff8345abc705b409022490183ac9"
+    },
+    {
+      "source": "ui65-final3/mono-wide.png",
+      "export": "screenshots/settings-menu-final-mono-wide.png",
+      "bytes": 226647,
+      "sha256": "37c5595e57c6e5f155d262c7ae929dbb75870e33e56b96f828937a9a795959eb"
+    },
+    {
+      "source": "ui65-final3/protocol-menu-small.png",
+      "export": "screenshots/settings-menu-final-protocol-menu-small.png",
+      "bytes": 160137,
+      "sha256": "abb15c484a476b14232672c06246dfe5625adf2000fe238ed8559be8a7a8eb79"
+    },
+    {
+      "source": "ui65-final3/protocol-menu-wide.png",
+      "export": "screenshots/settings-menu-final-protocol-menu-wide.png",
+      "bytes": 232621,
+      "sha256": "de024276f75c375a20dbeef5710f8fb4d012e8ba99ddbc0e82cd26258296fbfd"
+    },
+    {
+      "source": "ui65-final3/settings-bottom-small.png",
+      "export": "screenshots/settings-menu-final-settings-bottom-small.png",
+      "bytes": 125503,
+      "sha256": "bba415a3a69cf13bc19130868cc8bfc4803c062b40c9c98ef74c5c0b5c74a53e"
+    },
+    {
+      "source": "ui65-final3/settings-small.png",
+      "export": "screenshots/settings-menu-final-settings-small.png",
+      "bytes": 145989,
+      "sha256": "5c3e7813c4570fd65b93b9fb3ffef0db77f09cb86dcdf6b90c66cff1f0f535d7"
+    },
+    {
+      "source": "ui65-final3/settings-wide.png",
+      "export": "screenshots/settings-menu-final-settings-wide.png",
+      "bytes": 204910,
+      "sha256": "c518c264b96004eaacbafc56954ed21bc027c44b1c5576915821c6de8f6d396f"
+    },
+    {
+      "source": "ui65-final3/skin-menu-small.png",
+      "export": "screenshots/settings-menu-final-skin-menu-small.png",
+      "bytes": 183847,
+      "sha256": "fc2c6862ac44e849256330ad15f8b8d9ecfccdae63c6f61ccfe41004362bf5b0"
+    },
+    {
+      "source": "ui65-final3/skin-menu-wide.png",
+      "export": "screenshots/settings-menu-final-skin-menu-wide.png",
+      "bytes": 253073,
+      "sha256": "b24696b6c7954db056835182e257a78a8a79c574adb7ae89110494d866ec1981"
+    },
+    {
+      "source": "build.json",
+      "export": "benchmarks/settings-menu-build.json",
+      "bytes": 23668,
+      "sha256": "05af13c0110d5522010f071f898192829c662aba7195fafedea94a807f590fe0"
+    },
+    {
+      "source": "source-scope.json",
+      "export": "benchmarks/settings-menu-source-scope.json",
+      "bytes": 4226,
+      "sha256": "6af2fde225b000285d6c3bd906f26bbd41c2b01948db46f977f3c358ca36e329"
+    },
+    {
+      "source": "design-audit.json",
+      "export": "benchmarks/settings-menu-design-audit.json",
+      "bytes": 5781,
+      "sha256": "7f0f19ab0dfa63becb9585991b16b7dffd95c1fb43a9b2b53712a205d15edf67"
+    },
+    {
+      "source": "asset-audit-complete.json",
+      "export": "benchmarks/settings-menu-asset-audit.json",
+      "bytes": 31173,
+      "sha256": "96cd58f409325c941f2afe091885cf8be8b7acb079e0d34e935939e90c5bb312"
+    },
+    {
+      "source": "inventory.json",
+      "export": "benchmarks/settings-menu-figma-inventory.json",
+      "bytes": 5272,
+      "sha256": "98c04b1d3104f411175f989b4857a13f6a0c26a94cd1e0cb14b3e09e05ec020f"
+    },
+    {
+      "source": "swatch-pixels-final.json",
+      "export": "benchmarks/settings-menu-swatch-pixels.json",
+      "bytes": 5615,
+      "sha256": "1da3f8265ef56127b42976079ecabfe3df9127f53edd5b517c2ad68f63cf151f"
+    },
+    {
+      "source": "performance-summary.json",
+      "export": "benchmarks/settings-menu-performance-summary.json",
+      "bytes": 3000,
+      "sha256": "27023e8d7541dc8130eca40b7f69afb1b3f239fdb49f8208130fd92bffbcfa79"
+    },
+    {
+      "source": "lifecycle.json",
+      "export": "benchmarks/settings-menu-lifecycle.json",
+      "bytes": 3998,
+      "sha256": "6219a8454ea7103b728db1db5ee6346686453824b07769e438a60e8a17b4e465"
+    },
+    {
+      "source": "initial-compile-failure.json",
+      "export": "benchmarks/settings-menu-initial-compile-failure.json",
+      "bytes": 1081,
+      "sha256": "99af9ed082d5ccf02828d716c60cda66028e92d99d0731ada11f8923c054bd4d"
+    },
+    {
+      "source": "intermediate-c301-build.json",
+      "export": "benchmarks/settings-menu-intermediate-c301-build.json",
+      "bytes": 23476,
+      "sha256": "249f1e310a980520560fe03fe675823a0fde7c43ab4ef56aa8f0658d8ab10042"
+    },
+    {
+      "source": "intermediate-c2eb-build.json",
+      "export": "benchmarks/settings-menu-intermediate-c2eb-build.json",
+      "bytes": 23574,
+      "sha256": "41d4aee84e17d14d89268a1e3cfc2275cf9fcaa41d2f414fdf424128e05fd946"
+    },
+    {
+      "source": "ui65-baseline/baseline-gui-validation.json",
+      "export": "benchmarks/settings-menu-baseline-gui-validation.json",
+      "bytes": 2630,
+      "sha256": "ff2428b0441e781bca5ccc86a44001b11c0a871762a1833455e256ac67c4c0ee"
+    },
+    {
+      "source": "ui65-final1/intermediate-gui-validation.json",
+      "export": "benchmarks/settings-menu-intermediate-c301-gui-validation.json",
+      "bytes": 1072,
+      "sha256": "a5c3e3bbc21db112799f41ae7bd51cc1fae6e9fc08b0b6446f79fe9ef70a0ae1"
+    },
+    {
+      "source": "ui65-final2/intermediate-gui-validation.json",
+      "export": "benchmarks/settings-menu-intermediate-c2eb-gui-validation.json",
+      "bytes": 3196,
+      "sha256": "a82c640aeeee0cdde76ca3873575354b6112ccbdd0cd0c131136a4377ae9a309"
+    },
+    {
+      "source": "ui65-final2/data-after-proof.json",
+      "export": "benchmarks/settings-menu-price-and-retention-data-proof.json",
+      "bytes": 2545,
+      "sha256": "70b804be5ddbbba116f0b88c384e05c0a421b7fc1a87b343540d0933aac72c9f"
+    },
+    {
+      "source": "ui65-final3/final-gui-validation.json",
+      "export": "benchmarks/settings-menu-final-gui-validation.json",
+      "bytes": 3459,
+      "sha256": "0322fb8e3e93e8adb6deba1e50c0e9c5eff4ae08c7088506fde0d71c83cafc57"
+    },
+    {
+      "source": "ui65-final3/data-after-proof.json",
+      "export": "benchmarks/settings-menu-final-data-proof.json",
+      "bytes": 2545,
+      "sha256": "4c561959f103ea6a28e9a5c5ca758c7e78394df790a4ade82b3b9dab6c31f300"
+    },
+    {
+      "source": "isolation-data-proof.json",
+      "export": "benchmarks/settings-menu-isolation-data-proof.json",
+      "bytes": 6887,
+      "sha256": "4fef732e354b97245032d4c2e8ddb76bd5e3337b02d041ff541095ab353285b7"
+    },
+    {
+      "source": "benchmark-cua-launches.json",
+      "export": "benchmarks/settings-menu-benchmark-cua-launches.json",
+      "bytes": 1490,
+      "sha256": "9bdd45491c396a3e5c7758b84f513438e8963db9458fdd08bbfffa498b96feb0"
+    },
+    {
+      "source": "benchmark-background.py",
+      "export": "benchmarks/settings-menu-benchmark-orchestration.py.txt",
+      "bytes": 7628,
+      "sha256": "767802e75ec2bfe2d7f6d25886c8f77413dbcc6d387eb91d5888902e22beeb9f"
+    },
+    {
+      "source": "run-benchmarks.py",
+      "export": "benchmarks/settings-menu-benchmark-driver.py.txt",
+      "bytes": 1537,
+      "sha256": "52778d16264d0a8ec0234207442e38a9d255a947884f01b5f6d2d2f94fd55ad0"
+    },
+    {
+      "source": "fixture-background.py",
+      "export": "benchmarks/settings-menu-fixture-orchestration.py.txt",
+      "bytes": 14924,
+      "sha256": "b9417b3a93c5a57dc03c5c2ce19d0bf70290e2803936764aee62dc2658e6d21e"
+    },
+    {
+      "source": "performance-previous1.json",
+      "export": "benchmarks/settings-menu-performance-previous1.json",
+      "bytes": 4508,
+      "sha256": "85be8a4410016045c7371f8a27edd10e41eaa2829acfdd867a87fa98265f6d9d"
+    },
+    {
+      "source": "performance-current1.json",
+      "export": "benchmarks/settings-menu-performance-current1.json",
+      "bytes": 4509,
+      "sha256": "7a6898ca06bc65140df3dec58305f6c535e6ac1bb866a9a36f233f243f212621"
+    },
+    {
+      "source": "performance-current2.json",
+      "export": "benchmarks/settings-menu-performance-current2.json",
+      "bytes": 4507,
+      "sha256": "ca2f0c97591f04b0df9803ad147b9f3bec46eda0042e9bfc29ffba023ad1e2ed"
+    },
+    {
+      "source": "performance-previous2.json",
+      "export": "benchmarks/settings-menu-performance-previous2.json",
+      "bytes": 4508,
+      "sha256": "e2cf00258690b9800d70139936d5c0468ffb97a8136b20b03f024e7694473ff6"
+    }
+  ],
+  "final_ui_sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c",
+  "scope": "Byte-identical original reference/native PNGs and derived reports. c301/c2eb are explicitly intermediate. Full design contexts, temporary asset URLs, configs, credentials and raw application logs are not exported."
+}

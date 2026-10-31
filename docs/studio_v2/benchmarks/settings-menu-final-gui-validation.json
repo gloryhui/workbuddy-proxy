@@ -1,0 +1,113 @@
+{
+  "status": "final candidate actual GUI scope",
+  "sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c",
+  "ui_pid": 3946,
+  "core_pid": 3655,
+  "window_id": 4285,
+  "images": [
+    {
+      "file": "settings-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "c518c264b96004eaacbafc56954ed21bc027c44b1c5576915821c6de8f6d396f"
+    },
+    {
+      "file": "settings-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "5c3e7813c4570fd65b93b9fb3ffef0db77f09cb86dcdf6b90c66cff1f0f535d7"
+    },
+    {
+      "file": "edit-price-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "63b0ed84f23ea823efaf48b97298b9fd282bebf0049a0d6a3ecc45a18aa40f97"
+    },
+    {
+      "file": "edit-price-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "1f48ee985bf21863329a03ff5f928748015410737644bee265f125aa33713c60"
+    },
+    {
+      "file": "mono-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "37c5595e57c6e5f155d262c7ae929dbb75870e33e56b96f828937a9a795959eb"
+    },
+    {
+      "file": "mono-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "57707b57e1a23cdf0b7aa897796b4316d147ff8345abc705b409022490183ac9"
+    },
+    {
+      "file": "skin-menu-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "b24696b6c7954db056835182e257a78a8a79c574adb7ae89110494d866ec1981"
+    },
+    {
+      "file": "skin-menu-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "fc2c6862ac44e849256330ad15f8b8d9ecfccdae63c6f61ccfe41004362bf5b0"
+    },
+    {
+      "file": "protocol-menu-wide.png",
+      "size": [
+        1440,
+        901
+      ],
+      "sha256": "de024276f75c375a20dbeef5710f8fb4d012e8ba99ddbc0e82cd26258296fbfd"
+    },
+    {
+      "file": "protocol-menu-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "abb15c484a476b14232672c06246dfe5625adf2000fe238ed8559be8a7a8eb79"
+    },
+    {
+      "file": "settings-bottom-small.png",
+      "size": [
+        1100,
+        701
+      ],
+      "sha256": "bba415a3a69cf13bc19130868cc8bfc4803c062b40c9c98ef74c5c0b5c74a53e"
+    }
+  ],
+  "screenshot_method": "native screencapture own PID onscreen layer0 main window; raw unscaled, OS extra row",
+  "cases": {
+    "skins": "seven swatches shown; Mono→Studio; Escape and outside click close",
+    "price": "gpt-6 edit fields USD 2/10 checked wide and small, X cancelled; no price saves in this candidate",
+    "settings": "three real manually seeded rules; 14 real mock requests; retention equal-width and New Rule leading plus visible; small scroll reaches local usage, health and import prompt / settings import",
+    "protocol": "Down/Return chose Responses with unsaved draft; Up/Return returned Chat, no provider Save; wide and small menu captured",
+    "earlier_candidate": "c2eb separately exercised search, price saves 2→2.5→2 and retention 180→90→180; not represented as repeated on e6abd"
+  },
+  "limitations": [
+    "No valid price Save, retention change, Test, Sync, import, clear, external link or clipboard in final candidate.",
+    "No explicit activate/raise; actual foreground not asserted.",
+    "No claim of complete frame acceptance or full keyboard/AX/IME coverage."
+  ],
+  "ui_closed_native": true,
+  "ui_pid_present_after_close": false,
+  "core": "left for parent health and wait"
+}
