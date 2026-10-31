@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-31T13:54:56.446114+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc",
+  "delete_command_literal": "rm -r -- '/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc'",
+  "exit_code": 0,
+  "target_absent": true,
+  "regular_files_removed": 589,
+  "logical_bytes_removed": 670227900,
+  "free_data_bytes_before": 36672393216,
+  "free_data_bytes_after": 37352964096,
+  "observed_free_bytes_delta": 680570880,
+  "task_temporary_bytes_retained": 0,
+  "exported_files_post_delete_sha_verified": 205,
+  "historical_denied_targets_preserved": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round55.7lgswipl",
+      "exists": true,
+      "logical_bytes": 689258905,
+      "action": "read-only size check; prior rejected delete not retried"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u",
+      "exists": true,
+      "logical_bytes": 495495288,
+      "action": "read-only size check; prior rejected delete not retried"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn",
+      "exists": true,
+      "logical_bytes": 596509451,
+      "action": "read-only size check; prior rejected delete not retried"
+    }
+  ],
+  "historical_denied_logical_bytes": 1781263644,
+  "shared_cargo_cache_untouched": true,
+  "fixed_core_root46_retained_for_goal": true,
+  "scope": "Only the recorded B01 task directory removed after exact preflight and committed evidence. APFS free-space delta is observed, may include concurrent system/app changes; not logical-size recovery guarantee."
+}

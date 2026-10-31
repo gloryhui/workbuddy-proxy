@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-31T13:57:22.125213+08:00",
+  "html_data_matches_json": true,
+  "local_report_links_verified": 447,
+  "embedded_javascript_syntax_exits": [
+    0,
+    0
+  ],
+  "counts": {
+    "pending": 0,
+    "partial": 21,
+    "reused": 0,
+    "verified": 19
+  },
+  "remaining": 21,
+  "active_phase": "批次推进 · B02",
+  "task68_title_from_actual_QA": true,
+  "new_task_does_not_inherit_paused_title_or_description": true,
+  "unknown_task_default_planned": true,
+  "scope": "Source/data/JS syntax and actual generator current-selection AST execution. Existing browser file-policy block remains; no browser rendering, pixel, theme or responsive acceptance claimed."
+}

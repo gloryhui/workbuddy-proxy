@@ -1,0 +1,3817 @@
+{
+  "at": "2026-10-31T13:53:32.298531+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc",
+  "type": "task-owned directory",
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "ownership": {
+    "created_at": "2026-10-31T12:09:49.215876+08:00",
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc",
+    "creator_pid": 97316,
+    "owner": 501,
+    "creation_method": "tempfile.mkdtemp(prefix=studio-v2-b01.) in active B01 goal turn",
+    "scope": "B01 isolated synthetic supplier fixtures, archived official design context and test binaries; no shared Cargo cache deletion and no retry of previously denied directories.",
+    "base_commit": "24bd2d7e92381e0de224717b80b91e707ffc5e61",
+    "baseline_ui_sha256": "e25a27455acaecab3762a7791e9e33a5caf11fcc8656aa2bf2600b37c0fbe67c",
+    "fixed_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+    "shared_cargo_target": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target",
+    "free_data_bytes": 36833312768
+  },
+  "canonical_components": [
+    {
+      "path": "/",
+      "type": "directory",
+      "uid": 0,
+      "device": 16777233,
+      "mountpoint": true
+    },
+    {
+      "path": "/private",
+      "type": "directory",
+      "uid": 0,
+      "device": 16777233,
+      "mountpoint": false
+    },
+    {
+      "path": "/private/var",
+      "type": "directory",
+      "uid": 0,
+      "device": 16777233,
+      "mountpoint": false
+    },
+    {
+      "path": "/private/var/folders",
+      "type": "directory",
+      "uid": 0,
+      "device": 16777233,
+      "mountpoint": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "type": "directory",
+      "uid": 0,
+      "device": 16777233,
+      "mountpoint": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "type": "directory",
+      "uid": 501,
+      "device": 16777233,
+      "mountpoint": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "type": "directory",
+      "uid": 501,
+      "device": 16777233,
+      "mountpoint": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc",
+      "type": "directory",
+      "uid": 501,
+      "device": 16777233,
+      "mountpoint": false
+    }
+  ],
+  "regular_files": 589,
+  "directories": 177,
+  "logical_bytes": 670227900,
+  "contents": [
+    {
+      "path": "fixture-background.py",
+      "bytes": 15315,
+      "mtime_ns": 1793422419241813380,
+      "uid": 501
+    },
+    {
+      "path": "asset-binding-audit.json",
+      "bytes": 34479,
+      "mtime_ns": 1793421992018610882,
+      "uid": 501
+    },
+    {
+      "path": "process-start",
+      "bytes": 33664,
+      "mtime_ns": 1793385667812450834,
+      "uid": 501
+    },
+    {
+      "path": "performance-current2.json",
+      "bytes": 4814,
+      "mtime_ns": 1793425101807587357,
+      "uid": 501
+    },
+    {
+      "path": "preflight-seed.py",
+      "bytes": 2574,
+      "mtime_ns": 1793404307550845717,
+      "uid": 501
+    },
+    {
+      "path": "native-consolidated.json",
+      "bytes": 48240,
+      "mtime_ns": 1793424084642560740,
+      "uid": 501
+    },
+    {
+      "path": "run-gates.py",
+      "bytes": 2674,
+      "mtime_ns": 1793420663609110438,
+      "uid": 501
+    },
+    {
+      "path": "ownership.json",
+      "bytes": 823,
+      "mtime_ns": 1793419789243023063,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-initial-previous1.log",
+      "bytes": 1360,
+      "mtime_ns": 1793424405093070816,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-b01-observer-hook-only.py",
+      "bytes": 13700,
+      "mtime_ns": 1793424431350702660,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-current2.log",
+      "bytes": 2149,
+      "mtime_ns": 1793425101822030644,
+      "uid": 501
+    },
+    {
+      "path": "preserve-proof.py",
+      "bytes": 2482,
+      "mtime_ns": 1793411151804830427,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-current1.log",
+      "bytes": 2150,
+      "mtime_ns": 1793424937069193459,
+      "uid": 501
+    },
+    {
+      "path": "native-b01-runbook.md",
+      "bytes": 6572,
+      "mtime_ns": 1793425746266505586,
+      "uid": 501
+    },
+    {
+      "path": "p00-design-baseline.json",
+      "bytes": 5251,
+      "mtime_ns": 1793419991734631715,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-driver-initial2-results.json",
+      "bytes": 131,
+      "mtime_ns": 1793424583769535419,
+      "uid": 501
+    },
+    {
+      "path": "native-main.log",
+      "bytes": 1536,
+      "mtime_ns": 1793422444820574967,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-precondition-failure2.json",
+      "bytes": 1237,
+      "mtime_ns": 1793424606441285311,
+      "uid": 501
+    },
+    {
+      "path": "native-driver-results.json",
+      "bytes": 1702,
+      "mtime_ns": 1793424059963593414,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-b01-initial.py",
+      "bytes": 13144,
+      "mtime_ns": 1793424226294482851,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-driver-initial-results.json",
+      "bytes": 132,
+      "mtime_ns": 1793424405093272358,
+      "uid": 501
+    },
+    {
+      "path": "pending-benchmark.json",
+      "bytes": 416,
+      "mtime_ns": 1793425155586204518,
+      "uid": 501
+    },
+    {
+      "path": "native-supplement.log",
+      "bytes": 1521,
+      "mtime_ns": 1793425442574522704,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-driver-results.json",
+      "bytes": 515,
+      "mtime_ns": 1793425261498526212,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-preparation.json",
+      "bytes": 1753,
+      "mtime_ns": 1793424606441564186,
+      "uid": 501
+    },
+    {
+      "path": "summarize-performance.py",
+      "bytes": 4719,
+      "mtime_ns": 1793425163211686975,
+      "uid": 501
+    },
+    {
+      "path": "native-capacity.log",
+      "bytes": 1557,
+      "mtime_ns": 1793423728716560889,
+      "uid": 501
+    },
+    {
+      "path": "performance-previous2.json",
+      "bytes": 4814,
+      "mtime_ns": 1793425261484632557,
+      "uid": 501
+    },
+    {
+      "path": "provider-contracts.json",
+      "bytes": 2240,
+      "mtime_ns": 1793421897652581859,
+      "uid": 501
+    },
+    {
+      "path": "baseline-ui",
+      "bytes": 42475728,
+      "mtime_ns": 1793413701620975866,
+      "uid": 501
+    },
+    {
+      "path": "set-b01-mock.py",
+      "bytes": 402,
+      "mtime_ns": 1793421079802359354,
+      "uid": 501
+    },
+    {
+      "path": "source-scope.json",
+      "bytes": 1088,
+      "mtime_ns": 1793421992018805546,
+      "uid": 501
+    },
+    {
+      "path": "consolidate-native.py",
+      "bytes": 3937,
+      "mtime_ns": 1793423588865441298,
+      "uid": 501
+    },
+    {
+      "path": "observe-b01.py",
+      "bytes": 6644,
+      "mtime_ns": 1793421079801983572,
+      "uid": 501
+    },
+    {
+      "path": "native-supplement-gui.json",
+      "bytes": 2121,
+      "mtime_ns": 1793425693264987905,
+      "uid": 501
+    },
+    {
+      "path": "asset-download-audit.json",
+      "bytes": 19291,
+      "mtime_ns": 1793420409490123680,
+      "uid": 501
+    },
+    {
+      "path": "commit-message.txt",
+      "bytes": 311,
+      "mtime_ns": 1793425950585719762,
+      "uid": 501
+    },
+    {
+      "path": "archive-b01.py",
+      "bytes": 5687,
+      "mtime_ns": 1793425759450688740,
+      "uid": 501
+    },
+    {
+      "path": "performance-previous1.json",
+      "bytes": 4814,
+      "mtime_ns": 1793424770619946128,
+      "uid": 501
+    },
+    {
+      "path": "candidate-ui",
+      "bytes": 42492240,
+      "mtime_ns": 1793421796898216683,
+      "uid": 501
+    },
+    {
+      "path": "native-delete-b.log",
+      "bytes": 1556,
+      "mtime_ns": 1793423521162314882,
+      "uid": 501
+    },
+    {
+      "path": "performance-b01-cua.json",
+      "bytes": 5119,
+      "mtime_ns": 1793425306568194324,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-previous2.log",
+      "bytes": 2154,
+      "mtime_ns": 1793425261498092469,
+      "uid": 501
+    },
+    {
+      "path": "performance-summary.json",
+      "bytes": 10279,
+      "mtime_ns": 1793425444224936747,
+      "uid": 501
+    },
+    {
+      "path": "overview-seed.py",
+      "bytes": 2333,
+      "mtime_ns": 1793410612313393434,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-previous1.log",
+      "bytes": 2154,
+      "mtime_ns": 1793424770633031457,
+      "uid": 501
+    },
+    {
+      "path": "native-supplement-result.json",
+      "bytes": 392,
+      "mtime_ns": 1793425677915516172,
+      "uid": 501
+    },
+    {
+      "path": "pending-supplement.json",
+      "bytes": 358,
+      "mtime_ns": 1793425409858759559,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-initial2-previous1.log",
+      "bytes": 1329,
+      "mtime_ns": 1793424583769364377,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-b01.py",
+      "bytes": 14765,
+      "mtime_ns": 1793424606440840936,
+      "uid": 501
+    },
+    {
+      "path": "design-audit.json",
+      "bytes": 10045,
+      "mtime_ns": 1793425732428374672,
+      "uid": 501
+    },
+    {
+      "path": "native-driver.py",
+      "bytes": 2501,
+      "mtime_ns": 1793421745857729936,
+      "uid": 501
+    },
+    {
+      "path": "pending-native.json",
+      "bytes": 393,
+      "mtime_ns": 1793423691578236166,
+      "uid": 501
+    },
+    {
+      "path": "finish-fixture.py",
+      "bytes": 1871,
+      "mtime_ns": 1793404307550951133,
+      "uid": 501
+    },
+    {
+      "path": "build-246d-initial.json",
+      "bytes": 23346,
+      "mtime_ns": 1793420738500500726,
+      "uid": 501
+    },
+    {
+      "path": "overview-failure.py",
+      "bytes": 1940,
+      "mtime_ns": 1793410180496086651,
+      "uid": 501
+    },
+    {
+      "path": "performance-window-pixels.json",
+      "bytes": 12,
+      "mtime_ns": 1793424756847264553,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-driver-b01.py",
+      "bytes": 1689,
+      "mtime_ns": 1793422315942064442,
+      "uid": 501
+    },
+    {
+      "path": "build.json",
+      "bytes": 23347,
+      "mtime_ns": 1793421797079441042,
+      "uid": 501
+    },
+    {
+      "path": "benchmark-precondition-failure.json",
+      "bytes": 1415,
+      "mtime_ns": 1793424431351168785,
+      "uid": 501
+    },
+    {
+      "path": "b01-offline-review.json",
+      "bytes": 4790,
+      "mtime_ns": 1793422161766732399,
+      "uid": 501
+    },
+    {
+      "path": "performance-current1.json",
+      "bytes": 4813,
+      "mtime_ns": 1793424937055078421,
+      "uid": 501
+    },
+    {
+      "path": "native-b01-summary.json",
+      "bytes": 2988,
+      "mtime_ns": 1793424136771491215,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/fixture.json",
+      "bytes": 1300,
+      "mtime_ns": 1793423521161881549,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/80-1114-wide.png",
+      "bytes": 225964,
+      "mtime_ns": 1793423666534930400,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/native-acceptance-finished",
+      "bytes": 26,
+      "mtime_ns": 1793423690544467218,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793423690880366736,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/candidate-6965.png",
+      "bytes": 240190,
+      "mtime_ns": 1793423572324311719,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793423495951717284,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/80-864-wide.png",
+      "bytes": 240190,
+      "mtime_ns": 1793423591678506418,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793423495320060377,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/80-1114-small.png",
+      "bytes": 152616,
+      "mtime_ns": 1793423650534701295,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/cua-launch-ready.json",
+      "bytes": 259,
+      "mtime_ns": 1793423495924279681,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/native-gui.json",
+      "bytes": 2888,
+      "mtime_ns": 1793424136769597300,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/historical-rows-private.json",
+      "bytes": 8965,
+      "mtime_ns": 1793423529271729855,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/mock-posts.jsonl",
+      "bytes": 1066,
+      "mtime_ns": 1793423496029503387,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/native-test-inputs.json",
+      "bytes": 184,
+      "mtime_ns": 1793423496111529071,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/pre-gui-proof.json",
+      "bytes": 2833,
+      "mtime_ns": 1793423496052360702,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793423496052475077,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793423495924119139,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/80-864-small.png",
+      "bytes": 162134,
+      "mtime_ns": 1793423608465478467,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793423495311531426,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793423520597942384,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/config.json",
+      "bytes": 1603,
+      "mtime_ns": 1793423642280014324,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793423495848490742,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793423495850214532,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793423495787372333,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/gpui-drafts.json",
+      "bytes": 1441,
+      "mtime_ns": 1793423681834743994,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793423495311320134,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/config/usage.sqlite3",
+      "bytes": 237568,
+      "mtime_ns": 1793423690647214092,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/stage-proofs/after_delete_b.json",
+      "bytes": 1145,
+      "mtime_ns": 1793423650466028143,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/stage-proofs/closed.json",
+      "bytes": 1137,
+      "mtime_ns": 1793423690543648760,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/stage-proofs/initial.json",
+      "bytes": 1142,
+      "mtime_ns": 1793423529272224104,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2720,
+      "mtime_ns": 1793423495924064806,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-delete-b-final/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42492240,
+      "mtime_ns": 1793421796898216683,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/fixture.json",
+      "bytes": 1279,
+      "mtime_ns": 1793425442574222084,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/supplement-four-row-small.png",
+      "bytes": 166208,
+      "mtime_ns": 1793425516132739141,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/native-acceptance-finished",
+      "bytes": 26,
+      "mtime_ns": 1793425677588924724,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793425677887530164,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793425409738132710,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793425409203630527,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/cua-launch-ready.json",
+      "bytes": 245,
+      "mtime_ns": 1793425409671711238,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/historical-rows-private.json",
+      "bytes": 8965,
+      "mtime_ns": 1793425453735303317,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/mock-posts.jsonl",
+      "bytes": 1232,
+      "mtime_ns": 1793425610244844280,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/mock-mode.json",
+      "bytes": 40,
+      "mtime_ns": 1793425656800257641,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/pre-gui-proof.json",
+      "bytes": 2819,
+      "mtime_ns": 1793425409814934515,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793425409815033680,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793425409671553657,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793425409195587824,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793425442083971730,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/config.json",
+      "bytes": 2369,
+      "mtime_ns": 1793425602234187847,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793425409634621919,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793425409637613662,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793425409583075624,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/gpui-drafts.json",
+      "bytes": 2174,
+      "mtime_ns": 1793425667021520387,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793425409195399410,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/config/usage.sqlite3",
+      "bytes": 237568,
+      "mtime_ns": 1793425677673759816,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/stage-proofs/closed.json",
+      "bytes": 1141,
+      "mtime_ns": 1793425677588053030,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/stage-proofs/supplemental_done.json",
+      "bytes": 1152,
+      "mtime_ns": 1793425656858900779,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/stage-proofs/initial.json",
+      "bytes": 1142,
+      "mtime_ns": 1793425453735856017,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2629,
+      "mtime_ns": 1793425409671498075,
+      "uid": 501
+    },
+    {
+      "path": "b01-supplement-final/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42492240,
+      "mtime_ns": 1793421796898216683,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/seed-proof.json",
+      "bytes": 481,
+      "mtime_ns": 1793425102794365722,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793425155054027181,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/config.pre-v0.3-3826afb085cf5ba77fba66b0703efad3ba5ad87b37ae36f1.bak",
+      "bytes": 170,
+      "mtime_ns": 1793425102023275541,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793425102173841162,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793425261438325664,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793425101912690242,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793425101974835723,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793425155580990436,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/matched-condition.json",
+      "bytes": 963,
+      "mtime_ns": 1793425259192788809,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/resource-samples.json",
+      "bytes": 13821,
+      "mtime_ns": 1793425261423574272,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793425102071435610,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/providers-observed.json",
+      "bytes": 593,
+      "mtime_ns": 1793425248361797406,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/models-ready.json",
+      "bytes": 151,
+      "mtime_ns": 1793425155586051684,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/vmmap-before.txt",
+      "bytes": 7675,
+      "mtime_ns": 1793425249186814626,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793425102034088454,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/performance-model-tail-small.png",
+      "bytes": 170756,
+      "mtime_ns": 1793425221180486644,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/gpui-drafts.json",
+      "bytes": 13329,
+      "mtime_ns": 1793425261384754719,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793425261438596785,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/preui-models.json",
+      "bytes": 298,
+      "mtime_ns": 1793425102815006007,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793425101912316575,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/performance-window.png",
+      "bytes": 233595,
+      "mtime_ns": 1793425247976759399,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793425101912226325,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/vmmap-after.txt",
+      "bytes": 174,
+      "mtime_ns": 1793425261438112501,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/usage.sqlite3",
+      "bytes": 1228800,
+      "mtime_ns": 1793425261227861367,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/WorkBuddy Proxy Supplier Bench previous2.app/Contents/Info.plist",
+      "bytes": 2580,
+      "mtime_ns": 1793425102838287875,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous2/WorkBuddy Proxy Supplier Bench previous2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "mtime_ns": 1793413701620975866,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/seed-proof.json",
+      "bytes": 481,
+      "mtime_ns": 1793424445559835051,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424482785046787,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793424444989076020,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793424583758042214,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793424444721217855,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793424444782285678,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793424483078155743,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/resource-samples.json",
+      "bytes": 3,
+      "mtime_ns": 1793424583752803132,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/config.pre-v0.3-40769e6e6839e980ffb61de52b2f7b2dc7b75ad1107afbdd.bak",
+      "bytes": 170,
+      "mtime_ns": 1793424444833322795,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793424444886442871,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/failure.txt",
+      "bytes": 566,
+      "mtime_ns": 1793424583758260839,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/models-ready.json",
+      "bytes": 151,
+      "mtime_ns": 1793424483083662533,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424444844897169,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/gpui-drafts.json",
+      "bytes": 868,
+      "mtime_ns": 1793424583661274285,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793424583758177839,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793424444720869188,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793424444720787271,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/vmmap-after.txt",
+      "bytes": 174,
+      "mtime_ns": 1793424583757968506,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/usage.sqlite3",
+      "bytes": 237568,
+      "mtime_ns": 1793424583725211349,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/WorkBuddy Proxy Supplier Bench previous1.app/Contents/Info.plist",
+      "bytes": 2580,
+      "mtime_ns": 1793424445600822544,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure2-previous1/WorkBuddy Proxy Supplier Bench previous1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "mtime_ns": 1793413701620975866,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/seed-proof.json",
+      "bytes": 481,
+      "mtime_ns": 1793424938055106490,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424992319902335,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793424937419663102,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793425101764827745,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793424937160082473,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793424937220366704,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793424992829604513,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/config.pre-v0.3-2d243739097f103c4b60f8128616f4c7e1c13ea907ca2779.bak",
+      "bytes": 170,
+      "mtime_ns": 1793424937269610981,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/matched-condition.json",
+      "bytes": 963,
+      "mtime_ns": 1793425099534225428,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/resource-samples.json",
+      "bytes": 13815,
+      "mtime_ns": 1793425101749111250,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793424937316696800,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/providers-observed.json",
+      "bytes": 593,
+      "mtime_ns": 1793425088589127071,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/models-ready.json",
+      "bytes": 151,
+      "mtime_ns": 1793424992835335511,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/vmmap-before.txt",
+      "bytes": 7675,
+      "mtime_ns": 1793425089528407658,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424937280462686,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/performance-model-tail-small.png",
+      "bytes": 170754,
+      "mtime_ns": 1793425058582695257,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/gpui-drafts.json",
+      "bytes": 13329,
+      "mtime_ns": 1793425101715987135,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793425101765134328,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/preui-models.json",
+      "bytes": 298,
+      "mtime_ns": 1793424938082117065,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793424937159721514,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/performance-window.png",
+      "bytes": 233280,
+      "mtime_ns": 1793425088559661038,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793424937159638181,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/vmmap-after.txt",
+      "bytes": 174,
+      "mtime_ns": 1793425101764632287,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/usage.sqlite3",
+      "bytes": 1236992,
+      "mtime_ns": 1793425101557812850,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/WorkBuddy Proxy Supplier Bench current2.app/Contents/Info.plist",
+      "bytes": 2565,
+      "mtime_ns": 1793424938101816476,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current2/WorkBuddy Proxy Supplier Bench current2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42492240,
+      "mtime_ns": 1793421796898216683,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/fixture.json",
+      "bytes": 1288,
+      "mtime_ns": 1793422444820393386,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/new-invalid-small.png",
+      "bytes": 164700,
+      "mtime_ns": 1793423065170036563,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/79-885-small.png",
+      "bytes": 162207,
+      "mtime_ns": 1793423094612736586,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/54-2-small.png",
+      "bytes": 157756,
+      "mtime_ns": 1793422539464860719,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/native-acceptance-finished",
+      "bytes": 26,
+      "mtime_ns": 1793423494755079501,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793423495221487290,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/67-338-wide.png",
+      "bytes": 222764,
+      "mtime_ns": 1793422730402544993,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-605-small.png",
+      "bytes": 160118,
+      "mtime_ns": 1793422880525309702,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/core.log",
+      "bytes": 175,
+      "mtime_ns": 1793423320058223924,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/67-338-small.png",
+      "bytes": 159516,
+      "mtime_ns": 1793422748217256659,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793422419358683204,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/test-busy-wide.png",
+      "bytes": 217286,
+      "mtime_ns": 1793423276060660107,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/candidate-6655.png",
+      "bytes": 227345,
+      "mtime_ns": 1793422509129607636,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/67-548-small.png",
+      "bytes": 162455,
+      "mtime_ns": 1793422671691929460,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-843-small.png",
+      "bytes": 157397,
+      "mtime_ns": 1793423161806453521,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-1804-wide.png",
+      "bytes": 224616,
+      "mtime_ns": 1793423442470057021,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/cua-launch-ready.json",
+      "bytes": 251,
+      "mtime_ns": 1793422419938985037,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-1080-wide.png",
+      "bytes": 245577,
+      "mtime_ns": 1793423375959206405,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/79-1102-wide.png",
+      "bytes": 239670,
+      "mtime_ns": 1793423224934094773,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/67-338-small-bottom.png",
+      "bytes": 165445,
+      "mtime_ns": 1793422763635663740,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-364-small.png",
+      "bytes": 164204,
+      "mtime_ns": 1793422981282558121,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/empty-wide.png",
+      "bytes": 186979,
+      "mtime_ns": 1793423465153263124,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/test-failure-wide.png",
+      "bytes": 227988,
+      "mtime_ns": 1793423261913360231,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/80-418-wide.png",
+      "bytes": 225138,
+      "mtime_ns": 1793422794794567932,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/native-gui.json",
+      "bytes": 12938,
+      "mtime_ns": 1793424136767959176,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/67-548-wide.png",
+      "bytes": 230657,
+      "mtime_ns": 1793422646638683327,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/79-1102-small-bottom.png",
+      "bytes": 168644,
+      "mtime_ns": 1793423193836252016,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/historical-rows-private.json",
+      "bytes": 8965,
+      "mtime_ns": 1793422451837884748,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/mock-posts.jsonl",
+      "bytes": 1388,
+      "mtime_ns": 1793423276820033404,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/native-test-inputs.json",
+      "bytes": 184,
+      "mtime_ns": 1793422420144859788,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-1804-small.png",
+      "bytes": 155085,
+      "mtime_ns": 1793423424982130847,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/79-1102-small.png",
+      "bytes": 161719,
+      "mtime_ns": 1793423208390234227,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/mock-mode.json",
+      "bytes": 40,
+      "mtime_ns": 1793423298357204793,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/79-885-wide.png",
+      "bytes": 228289,
+      "mtime_ns": 1793423109041594024,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/80-646-small.png",
+      "bytes": 161361,
+      "mtime_ns": 1793422850809377582,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/pre-gui-proof.json",
+      "bytes": 2825,
+      "mtime_ns": 1793422420087617008,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/79-885-small-bottom.png",
+      "bytes": 165337,
+      "mtime_ns": 1793423079362602193,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/66-320-wide.png",
+      "bytes": 232179,
+      "mtime_ns": 1793422571462157860,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793422420087715257,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-843-wide.png",
+      "bytes": 239765,
+      "mtime_ns": 1793423146785243399,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-605-wide.png",
+      "bytes": 230361,
+      "mtime_ns": 1793422893751801863,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/54-2-small-bottom.png",
+      "bytes": 165124,
+      "mtime_ns": 1793422552291297774,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/80-418-small.png",
+      "bytes": 156503,
+      "mtime_ns": 1793422780882044580,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/66-538-small.png",
+      "bytes": 157363,
+      "mtime_ns": 1793422607118989129,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793422419938869580,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/66-760-small.png",
+      "bytes": 163419,
+      "mtime_ns": 1793422686783482848,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/66-760-wide.png",
+      "bytes": 229382,
+      "mtime_ns": 1793422701534045099,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-1080-small.png",
+      "bytes": 160433,
+      "mtime_ns": 1793423391152912927,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/66-538-wide.png",
+      "bytes": 228772,
+      "mtime_ns": 1793422630318416359,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/80-646-wide.png",
+      "bytes": 226333,
+      "mtime_ns": 1793422837219464969,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/54-2-wide.png",
+      "bytes": 227345,
+      "mtime_ns": 1793422524877031124,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/66-320-small.png",
+      "bytes": 160596,
+      "mtime_ns": 1793422586691167219,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/78-364-wide.png",
+      "bytes": 228528,
+      "mtime_ns": 1793422966918761130,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793422419349150310,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793422444207881870,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/config.json",
+      "bytes": 136,
+      "mtime_ns": 1793423457719636407,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793422419867239585,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793422419869375270,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793422419819323994,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/gpui-drafts.json",
+      "bytes": 118,
+      "mtime_ns": 1793423486347742390,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793422419348961312,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/config/usage.sqlite3",
+      "bytes": 237568,
+      "mtime_ns": 1793423494834469895,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/empty.json",
+      "bytes": 1160,
+      "mtime_ns": 1793423465071388436,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/copy_cancel.json",
+      "bytes": 1146,
+      "mtime_ns": 1793423176422340431,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/test_recovered.json",
+      "bytes": 1181,
+      "mtime_ns": 1793423298409842584,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/edit_cancel.json",
+      "bytes": 1146,
+      "mtime_ns": 1793422911478237440,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/edit_saved.json",
+      "bytes": 1145,
+      "mtime_ns": 1793422927324443930,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/new_invalid.json",
+      "bytes": 1146,
+      "mtime_ns": 1793423065241374171,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/closed.json",
+      "bytes": 1161,
+      "mtime_ns": 1793423494754256793,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/new_cancel.json",
+      "bytes": 1145,
+      "mtime_ns": 1793422993589466081,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/test_failure.json",
+      "bytes": 1179,
+      "mtime_ns": 1793423261973992141,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/test_success.json",
+      "bytes": 1147,
+      "mtime_ns": 1793422509050833326,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/copy_saved.json",
+      "bytes": 1169,
+      "mtime_ns": 1793423193764773492,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/new_saved.json",
+      "bytes": 1172,
+      "mtime_ns": 1793423079284357382,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/new_deleted.json",
+      "bytes": 1146,
+      "mtime_ns": 1793423132968848963,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/menus.json",
+      "bytes": 1140,
+      "mtime_ns": 1793422814695801562,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/initial.json",
+      "bytes": 1142,
+      "mtime_ns": 1793422451838310868,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/copy_deleted.json",
+      "bytes": 1147,
+      "mtime_ns": 1793423246884140575,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/after_delete_a.json",
+      "bytes": 1177,
+      "mtime_ns": 1793423424915071931,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/stage-proofs/edit_restored.json",
+      "bytes": 1148,
+      "mtime_ns": 1793422945160293214,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2668,
+      "mtime_ns": 1793422419938832872,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main-final/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42492240,
+      "mtime_ns": 1793421796898216683,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-885-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419971349577096,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-760-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419879080673241,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-1114-reference.png",
+      "bytes": 105330,
+      "mtime_ns": 1793419971357372613,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1804-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419933756402296,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-1102-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419971350794211,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-1114-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419971357072866,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-548-text-0.txt",
+      "bytes": 56870,
+      "mtime_ns": 1793419879081647400,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-548-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419879081703732,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-1114-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419971357147949,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-1102-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419971350729545,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-646-reference.png",
+      "bytes": 105695,
+      "mtime_ns": 1793419971353354606,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1804-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419933756464629,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-885-text-0.txt",
+      "bytes": 49321,
+      "mtime_ns": 1793419971349458014,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-885-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419971349658762,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1804-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419933756318838,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1325-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419933755779343,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-1102-text-0.txt",
+      "bytes": 54838,
+      "mtime_ns": 1793419971350550338,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-605-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419933754412021,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-1114-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419971356970533,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-548-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419879081807357,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-548-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419879081754857,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-1114-text-0.txt",
+      "bytes": 52669,
+      "mtime_ns": 1793419971356570495,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-1102-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419971350653087,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-364-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419933753380863,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1804-text-0.txt",
+      "bytes": 48520,
+      "mtime_ns": 1793419933756242839,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-885-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419971349728761,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1804-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419933756524336,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-760-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419879080572409,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-364-text-0.txt",
+      "bytes": 48339,
+      "mtime_ns": 1793419933752898492,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1325-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419933755593553,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-1102-reference.png",
+      "bytes": 109151,
+      "mtime_ns": 1793419971350994917,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-1114-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419971357228698,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-605-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419933754168523,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-605-text-0.txt",
+      "bytes": 53828,
+      "mtime_ns": 1793419933754015649,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-1102-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419971350856043,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1325-text-0.txt",
+      "bytes": 119355,
+      "mtime_ns": 1793419933755530428,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-364-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419933753111074,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-760-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419879080623242,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-885-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419971349804969,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-760-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419879080519909,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-364-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419933753313114,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1325-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419933755660844,
+      "uid": 501
+    },
+    {
+      "path": "figma/writer-pid.json",
+      "bytes": 14,
+      "mtime_ns": 1793419860021527442,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-885-reference.png",
+      "bytes": 104774,
+      "mtime_ns": 1793419971350002009,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-605-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419933754266106,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-548-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419879081857981,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-605-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419933754353397,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1325-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419933755717677,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-364-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419933753227406,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-760-text-0.txt",
+      "bytes": 53354,
+      "mtime_ns": 1793419879080461285,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-646-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419971353123816,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-320-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419879079242420,
+      "uid": 501
+    },
+    {
+      "path": "figma/54-2-text-0.txt",
+      "bytes": 53035,
+      "mtime_ns": 1793419869721335997,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-418-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419971351326373,
+      "uid": 501
+    },
+    {
+      "path": "figma/54-2-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419869721408413,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1325-reference.png",
+      "bytes": 112253,
+      "mtime_ns": 1793419933756116465,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-646-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419971353187357,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-320-reference.png",
+      "bytes": 125041,
+      "mtime_ns": 1793419879079619875,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-646-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419971351590871,
+      "uid": 501
+    },
+    {
+      "path": "figma/54-2-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419869721544454,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-364-reference.png",
+      "bytes": 104216,
+      "mtime_ns": 1793419933753495445,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-864-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419971354136682,
+      "uid": 501
+    },
+    {
+      "path": "figma/54-2-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419869721476413,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1804-reference.png",
+      "bytes": 103714,
+      "mtime_ns": 1793419933756652919,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-646-text-0.txt",
+      "bytes": 49691,
+      "mtime_ns": 1793419971351533204,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-646-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419971353245106,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-320-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419879079127546,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-605-reference.png",
+      "bytes": 107582,
+      "mtime_ns": 1793419933754530687,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-864-text-0.txt",
+      "bytes": 57287,
+      "mtime_ns": 1793419971353914934,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-418-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419971351270248,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-418-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419971351209957,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-864-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419971353971475,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-400-reference.png",
+      "bytes": 105144,
+      "mtime_ns": 1793419971349124600,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-320-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419879079186712,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-320-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419879079053380,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-864-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419971354081183,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-418-text-0.txt",
+      "bytes": 51989,
+      "mtime_ns": 1793419971351092417,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-418-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419971351150999,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-864-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419971354026642,
+      "uid": 501
+    },
+    {
+      "path": "figma/54-2-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419869721604120,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-320-text-0.txt",
+      "bytes": 56663,
+      "mtime_ns": 1793419879078926839,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1080-reference.png",
+      "bytes": 145589,
+      "mtime_ns": 1793419933755401804,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-760-reference.png",
+      "bytes": 109037,
+      "mtime_ns": 1793419879080772657,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1080-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419933755297805,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-538-reference.png",
+      "bytes": 127245,
+      "mtime_ns": 1793419879080185995,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-843-reference.png",
+      "bytes": 108324,
+      "mtime_ns": 1793419933754965600,
+      "uid": 501
+    },
+    {
+      "path": "figma/asset-sources-private.json",
+      "bytes": 27576,
+      "mtime_ns": 1793419991734801214,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1080-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419933755195098,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1080-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419933755248014,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1080-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419933755138348,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-548-reference.png",
+      "bytes": 121296,
+      "mtime_ns": 1793419879081973980,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-1080-text-0.txt",
+      "bytes": 57362,
+      "mtime_ns": 1793419933755069432,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-400-text-0.txt",
+      "bytes": 51977,
+      "mtime_ns": 1793419971348681062,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-338-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419879080983364,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-538-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419879079873915,
+      "uid": 501
+    },
+    {
+      "path": "figma/inventory.json",
+      "bytes": 3317,
+      "mtime_ns": 1793419869721211957,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-843-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419933754671227,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-843-text-0.txt",
+      "bytes": 53670,
+      "mtime_ns": 1793419933754609728,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-538-text-0.txt",
+      "bytes": 57711,
+      "mtime_ns": 1793419879079799665,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-338-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419879081036696,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-400-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419971348812186,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-400-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419971348939226,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-338-text-1.txt",
+      "bytes": 551,
+      "mtime_ns": 1793419879080929739,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-538-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419879079947497,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-418-reference.png",
+      "bytes": 104975,
+      "mtime_ns": 1793419971351444497,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-843-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419933754731518,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-843-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419933754797893,
+      "uid": 501
+    },
+    {
+      "path": "figma/80-864-reference.png",
+      "bytes": 146512,
+      "mtime_ns": 1793419971354244306,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-538-text-3.txt",
+      "bytes": 1112,
+      "mtime_ns": 1793419879080004580,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-338-text-0.txt",
+      "bytes": 49014,
+      "mtime_ns": 1793419879080866823,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-400-text-2.txt",
+      "bytes": 83,
+      "mtime_ns": 1793419971348875144,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-338-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419879081217945,
+      "uid": 501
+    },
+    {
+      "path": "figma/page-51-2.xml",
+      "bytes": 812854,
+      "mtime_ns": 1793419869720235465,
+      "uid": 501
+    },
+    {
+      "path": "figma/54-2-reference.png",
+      "bytes": 105953,
+      "mtime_ns": 1793419869721742869,
+      "uid": 501
+    },
+    {
+      "path": "figma/67-338-reference.png",
+      "bytes": 104495,
+      "mtime_ns": 1793419879081353277,
+      "uid": 501
+    },
+    {
+      "path": "figma/66-538-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419879080057413,
+      "uid": 501
+    },
+    {
+      "path": "figma/78-843-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419933754858976,
+      "uid": 501
+    },
+    {
+      "path": "figma/79-400-text-4.txt",
+      "bytes": 472,
+      "mtime_ns": 1793419971348998101,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/4523d.svg",
+      "bytes": 344,
+      "mtime_ns": 1793420081131349571,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/0ac56.svg",
+      "bytes": 410,
+      "mtime_ns": 1793420077352226850,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/d4ab6.svg",
+      "bytes": 338,
+      "mtime_ns": 1793420080242385678,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/30aa3.svg",
+      "bytes": 360,
+      "mtime_ns": 1793420081130621118,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/86243.svg",
+      "bytes": 241,
+      "mtime_ns": 1793420080212414432,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/3213b.svg",
+      "bytes": 728,
+      "mtime_ns": 1793420080564535827,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/8bc77.svg",
+      "bytes": 442,
+      "mtime_ns": 1793420080255167237,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/e9321.svg",
+      "bytes": 847,
+      "mtime_ns": 1793420077345180035,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/b5dcb.svg",
+      "bytes": 380,
+      "mtime_ns": 1793420081513325546,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/ec1b5.svg",
+      "bytes": 241,
+      "mtime_ns": 1793420079600812650,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/7d50e.svg",
+      "bytes": 244,
+      "mtime_ns": 1793420078302105851,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/794e6.svg",
+      "bytes": 733,
+      "mtime_ns": 1793420079243271135,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/4a154.svg",
+      "bytes": 663,
+      "mtime_ns": 1793420078281384568,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/7bc0b.svg",
+      "bytes": 926,
+      "mtime_ns": 1793420077337454100,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/2f5fe.svg",
+      "bytes": 1050,
+      "mtime_ns": 1793420079270326406,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/1ccfc.svg",
+      "bytes": 244,
+      "mtime_ns": 1793420078316828768,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/b6ecc.svg",
+      "bytes": 356,
+      "mtime_ns": 1793420078349719740,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/aad6f.svg",
+      "bytes": 376,
+      "mtime_ns": 1793420081351245543,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/af952.svg",
+      "bytes": 810,
+      "mtime_ns": 1793420077348402341,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/00c8d.svg",
+      "bytes": 329,
+      "mtime_ns": 1793420082350130129,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/a7d16.svg",
+      "bytes": 1261,
+      "mtime_ns": 1793420077357854636,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/d479d.svg",
+      "bytes": 353,
+      "mtime_ns": 1793420079268308131,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/a1ba4.svg",
+      "bytes": 651,
+      "mtime_ns": 1793420079302489384,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/91e75.png",
+      "bytes": 920,
+      "mtime_ns": 1793420078652110972,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/3ef59.svg",
+      "bytes": 906,
+      "mtime_ns": 1793420079207844310,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/7f8ff.svg",
+      "bytes": 244,
+      "mtime_ns": 1793420078300400157,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/2791d.svg",
+      "bytes": 665,
+      "mtime_ns": 1793420080284642779,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/97d77.svg",
+      "bytes": 694,
+      "mtime_ns": 1793420081252900375,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/a7779.svg",
+      "bytes": 665,
+      "mtime_ns": 1793420081197861341,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/06df8.svg",
+      "bytes": 327,
+      "mtime_ns": 1793420080186911773,
+      "uid": 501
+    },
+    {
+      "path": "figma/assets/def90.svg",
+      "bytes": 779,
+      "mtime_ns": 1793420077365162241,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/fixture.json",
+      "bytes": 1255,
+      "mtime_ns": 1793420025883202836,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/native-acceptance-finished",
+      "bytes": 18,
+      "mtime_ns": 1793420409468955401,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793420409659857702,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/candidate-6578.png",
+      "bytes": 205098,
+      "mtime_ns": 1793420061161993223,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793419925353182805,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/baseline-main-wide.png",
+      "bytes": 205098,
+      "mtime_ns": 1793420078845097714,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793419924199305698,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/post-gui-proof.json",
+      "bytes": 246,
+      "mtime_ns": 1793420409468851110,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/baseline-effort-wide.png",
+      "bytes": 210310,
+      "mtime_ns": 1793420125569341807,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/baseline-main-small.png",
+      "bytes": 158355,
+      "mtime_ns": 1793420137130573782,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/baseline-protocol-wide.png",
+      "bytes": 210025,
+      "mtime_ns": 1793420089432456265,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/cua-launch-ready.json",
+      "bytes": 229,
+      "mtime_ns": 1793419925314923170,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/baseline-preset-small.png",
+      "bytes": 157855,
+      "mtime_ns": 1793420152874050440,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/baseline-preset-wide.png",
+      "bytes": 207513,
+      "mtime_ns": 1793420109719221426,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/pre-gui-proof.json",
+      "bytes": 2636,
+      "mtime_ns": 1793419991662931905,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793419991663022988,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793419925314817713,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/candidate-6589.png",
+      "bytes": 205098,
+      "mtime_ns": 1793420061231804883,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/baseline-gui.json",
+      "bytes": 3731,
+      "mtime_ns": 1793420208114285617,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793419924178414000,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793420025399332973,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/config.json",
+      "bytes": 1052,
+      "mtime_ns": 1793419924178327626,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793419925250415300,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793419925252547573,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793419925195776762,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/gpui-drafts.json",
+      "bytes": 2174,
+      "mtime_ns": 1793420183330877184,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793419924178250585,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/config/usage.sqlite3",
+      "bytes": 233472,
+      "mtime_ns": 1793420409578715014,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2525,
+      "mtime_ns": 1793419925314782797,
+      "uid": 501
+    },
+    {
+      "path": "b01-baseline/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "mtime_ns": 1793413701620975866,
+      "uid": 501
+    },
+    {
+      "path": "review/ui-live-current.json",
+      "bytes": 1279,
+      "mtime_ns": 1793425442574462955,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/seed-proof.json",
+      "bytes": 481,
+      "mtime_ns": 1793424244875919401,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424270487686132,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793424244287282298,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793424405081129506,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793424244016444477,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793424244081903340,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/config.json",
+      "bytes": 901,
+      "mtime_ns": 1793424244145095539,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/resource-samples.json",
+      "bytes": 3,
+      "mtime_ns": 1793424405068197485,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793424244185313506,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/failure.txt",
+      "bytes": 597,
+      "mtime_ns": 1793424405081364839,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424244140472168,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/gpui-drafts.json",
+      "bytes": 868,
+      "mtime_ns": 1793424405010717313,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793424405081278756,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793424244016086853,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/config.pre-v0.3-1c695954636ef275af6b2e274542cac2e727bac600f2ec9d.bak",
+      "bytes": 170,
+      "mtime_ns": 1793424244126598054,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793424244015994644,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/vmmap-after.txt",
+      "bytes": 174,
+      "mtime_ns": 1793424405081062630,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/usage.sqlite3",
+      "bytes": 237568,
+      "mtime_ns": 1793424405046336702,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/WorkBuddy Proxy Supplier Bench previous1.app/Contents/Info.plist",
+      "bytes": 2580,
+      "mtime_ns": 1793424244892474263,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-precondition-failure-previous1/WorkBuddy Proxy Supplier Bench previous1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "mtime_ns": 1793413701620975866,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/seed-proof.json",
+      "bytes": 481,
+      "mtime_ns": 1793424607527282770,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424632280378442,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793424606905564294,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793424770572886184,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793424606652320663,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793424606747953717,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793424632544094069,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/matched-condition.json",
+      "bytes": 963,
+      "mtime_ns": 1793424768366670526,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/resource-samples.json",
+      "bytes": 13740,
+      "mtime_ns": 1793424770560167563,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793424606802563950,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/providers-observed.json",
+      "bytes": 593,
+      "mtime_ns": 1793424756813063147,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/models-ready.json",
+      "bytes": 151,
+      "mtime_ns": 1793424632548616235,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/vmmap-before.txt",
+      "bytes": 7677,
+      "mtime_ns": 1793424758360096715,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424606769494961,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/performance-model-tail-small.png",
+      "bytes": 170317,
+      "mtime_ns": 1793424686342208348,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/gpui-drafts.json",
+      "bytes": 13329,
+      "mtime_ns": 1793424770532507405,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793424770573519475,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/preui-models.json",
+      "bytes": 298,
+      "mtime_ns": 1793424607548619305,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793424606651771997,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/performance-window.png",
+      "bytes": 232646,
+      "mtime_ns": 1793424756787127822,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793424606651022330,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/config.pre-v0.3-efbb4410bc2378183401de512cb359d51480039479f63a42.bak",
+      "bytes": 170,
+      "mtime_ns": 1793424606759759214,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/vmmap-after.txt",
+      "bytes": 174,
+      "mtime_ns": 1793424770572671101,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/usage.sqlite3",
+      "bytes": 1245184,
+      "mtime_ns": 1793424770447872306,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/WorkBuddy Proxy Supplier Bench previous1.app/Contents/Info.plist",
+      "bytes": 2580,
+      "mtime_ns": 1793424607571801382,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-previous1/WorkBuddy Proxy Supplier Bench previous1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42475728,
+      "mtime_ns": 1793413701620975866,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/fixture.json",
+      "bytes": 1301,
+      "mtime_ns": 1793423728716146306,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/native-acceptance-finished",
+      "bytes": 26,
+      "mtime_ns": 1793424059422568230,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/78-1325-small.png",
+      "bytes": 160538,
+      "mtime_ns": 1793423813908332508,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/terminal-status.json",
+      "bytes": 316,
+      "mtime_ns": 1793424059944209472,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793423691382839576,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/78-1325-wide.png",
+      "bytes": 215643,
+      "mtime_ns": 1793423779610061759,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793423690979712655,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/79-400-wide.png",
+      "bytes": 204978,
+      "mtime_ns": 1793423964155462447,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/candidate-7016.png",
+      "bytes": 215643,
+      "mtime_ns": 1793423762062569710,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/cua-launch-ready.json",
+      "bytes": 259,
+      "mtime_ns": 1793423691334498615,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/capacity-tail-small.png",
+      "bytes": 165114,
+      "mtime_ns": 1793424033398671627,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/native-gui.json",
+      "bytes": 3174,
+      "mtime_ns": 1793424136771389340,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/historical-rows-private.json",
+      "bytes": 30,
+      "mtime_ns": 1793423738004842974,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/native-test-inputs.json",
+      "bytes": 184,
+      "mtime_ns": 1793423691560821264,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/pre-gui-proof.json",
+      "bytes": 2666,
+      "mtime_ns": 1793423691502790019,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config-before.json",
+      "bytes": 14217,
+      "mtime_ns": 1793423691502972353,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793423691334376407,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/79-400-small.png",
+      "bytes": 158105,
+      "mtime_ns": 1793423948054496790,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793423690971733953,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793423728222690709,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/config.json",
+      "bytes": 11282,
+      "mtime_ns": 1793423690971649578,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793423691279969285,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793423691281700741,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793423691242357565,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/gpui-drafts.json",
+      "bytes": 36215,
+      "mtime_ns": 1793424048424820244,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793423690971510370,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/config/usage.sqlite3",
+      "bytes": 233472,
+      "mtime_ns": 1793424059512517323,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/stage-proofs/closed.json",
+      "bytes": 3079,
+      "mtime_ns": 1793424059421315148,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/stage-proofs/capacity.json",
+      "bytes": 3081,
+      "mtime_ns": 1793423738005126307,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/stage-proofs/capacity_search.json",
+      "bytes": 3088,
+      "mtime_ns": 1793423964214724273,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/stage-proofs/capacity_disabled.json",
+      "bytes": 3090,
+      "mtime_ns": 1793423796278632065,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/stage-proofs/capacity_clear.json",
+      "bytes": 3087,
+      "mtime_ns": 1793424033470639484,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2720,
+      "mtime_ns": 1793423691334326490,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-capacity-final/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42492240,
+      "mtime_ns": 1793421796898216683,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/seed-proof.json",
+      "bytes": 481,
+      "mtime_ns": 1793424771546628636,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/gpui.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424821060458518,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/process.log",
+      "bytes": 108,
+      "mtime_ns": 1793424770924090910,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/gpui-stop.json",
+      "bytes": 2,
+      "mtime_ns": 1793424937017679141,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/mock-start.log",
+      "bytes": 0,
+      "mtime_ns": 1793424770721450847,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/mock-port",
+      "bytes": 5,
+      "mtime_ns": 1793424770764990209,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/config.json",
+      "bytes": 15822,
+      "mtime_ns": 1793424821560680990,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/matched-condition.json",
+      "bytes": 963,
+      "mtime_ns": 1793424934770779913,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/resource-samples.json",
+      "bytes": 13687,
+      "mtime_ns": 1793424937003426187,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793424770820679066,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/providers-observed.json",
+      "bytes": 593,
+      "mtime_ns": 1793424923883896912,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/models-ready.json",
+      "bytes": 151,
+      "mtime_ns": 1793424821565663780,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/vmmap-before.txt",
+      "bytes": 7673,
+      "mtime_ns": 1793424924767787392,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793424770787497077,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/performance-model-tail-small.png",
+      "bytes": 170048,
+      "mtime_ns": 1793424886667765973,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/gpui-drafts.json",
+      "bytes": 13329,
+      "mtime_ns": 1793424936976332987,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/terminal.json",
+      "bytes": 336,
+      "mtime_ns": 1793424937017887766,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/preui-models.json",
+      "bytes": 298,
+      "mtime_ns": 1793424771571042837,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793424770721099972,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/performance-window.png",
+      "bytes": 232584,
+      "mtime_ns": 1793424923851361131,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/config.pre-v0.3-18f2386f5ed6b9160607d525b19329d696ecbd6d806d87c3.bak",
+      "bytes": 170,
+      "mtime_ns": 1793424770778107871,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793424770721004014,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/vmmap-after.txt",
+      "bytes": 174,
+      "mtime_ns": 1793424937017560141,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/usage.sqlite3",
+      "bytes": 1228800,
+      "mtime_ns": 1793424936780375547,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/WorkBuddy Proxy Supplier Bench current1.app/Contents/Info.plist",
+      "bytes": 2565,
+      "mtime_ns": 1793424771600697036,
+      "uid": 501
+    },
+    {
+      "path": "bench-b01-current1/WorkBuddy Proxy Supplier Bench current1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42492240,
+      "mtime_ns": 1793421796898216683,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/core.log",
+      "bytes": 108,
+      "mtime_ns": 1793421080897126419,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/source-protection.sb",
+      "bytes": 327,
+      "mtime_ns": 1793421080283444521,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/cua-launch-ready.json",
+      "bytes": 238,
+      "mtime_ns": 1793421080842247348,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/review-core",
+      "bytes": 8428096,
+      "mtime_ns": 1793196093796414001,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/gui-lock-failure.json",
+      "bytes": 945,
+      "mtime_ns": 1793421992019090376,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/historical-rows-private.json",
+      "bytes": 8965,
+      "mtime_ns": 1793421467887794406,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/mock-posts.jsonl",
+      "bytes": 1066,
+      "mtime_ns": 1793421080961859948,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/native-test-inputs.json",
+      "bytes": 184,
+      "mtime_ns": 1793421081034437988,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/pre-gui-proof.json",
+      "bytes": 2811,
+      "mtime_ns": 1793421080978748105,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/config-before.json",
+      "bytes": 1507,
+      "mtime_ns": 1793421080978995223,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/gpui.log",
+      "bytes": 0,
+      "mtime_ns": 1793421080842131684,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/home/.workbuddy/models.json",
+      "bytes": 2,
+      "mtime_ns": 1793421080272679960,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/config/config.json",
+      "bytes": 1052,
+      "mtime_ns": 1793421080272588546,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/config/startup.log",
+      "bytes": 49,
+      "mtime_ns": 1793421080793290253,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/config/model-catalog.json",
+      "bytes": 304,
+      "mtime_ns": 1793421080796530004,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/config/instance.lock",
+      "bytes": 0,
+      "mtime_ns": 1793421080740371591,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/config/appearance.json",
+      "bytes": 39,
+      "mtime_ns": 1793421080272495298,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/config/usage.sqlite3",
+      "bytes": 237568,
+      "mtime_ns": 1793421651401838038,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/stage-proofs/initial.json",
+      "bytes": 1141,
+      "mtime_ns": 1793421467888530095,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "bytes": 2590,
+      "mtime_ns": 1793421080842090810,
+      "uid": 501
+    },
+    {
+      "path": "b01-eb6ifznc-main/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 42492240,
+      "mtime_ns": 1793420738321965281,
+      "uid": 501
+    }
+  ],
+  "pid_checks": [
+    {
+      "pid": 16318,
+      "role": "fixture_pid",
+      "gone": true
+    },
+    {
+      "pid": 16319,
+      "role": "core_pid",
+      "gone": true
+    },
+    {
+      "pid": 16457,
+      "role": "ui_pid",
+      "gone": true
+    },
+    {
+      "pid": 25717,
+      "role": "fixture_pid",
+      "gone": true
+    },
+    {
+      "pid": 25718,
+      "role": "core_pid",
+      "gone": true
+    },
+    {
+      "pid": 25947,
+      "role": "ui_pid",
+      "gone": true
+    },
+    {
+      "pid": 11021,
+      "role": "fixture_pid",
+      "gone": true
+    },
+    {
+      "pid": 11022,
+      "role": "core_pid",
+      "gone": true
+    },
+    {
+      "pid": 11246,
+      "role": "ui_pid",
+      "gone": true
+    },
+    {
+      "pid": 97998,
+      "role": "fixture_pid",
+      "gone": true
+    },
+    {
+      "pid": 97999,
+      "role": "core_pid",
+      "gone": true
+    },
+    {
+      "pid": 98596,
+      "role": "ui_pid",
+      "gone": true
+    },
+    {
+      "pid": 17311,
+      "role": "fixture_pid",
+      "gone": true
+    },
+    {
+      "pid": 17314,
+      "role": "core_pid",
+      "gone": true
+    },
+    {
+      "pid": 17494,
+      "role": "ui_pid",
+      "gone": true
+    },
+    {
+      "pid": 24217,
+      "role": "mock",
+      "gone": true
+    },
+    {
+      "pid": 24219,
+      "role": "core",
+      "gone": true
+    },
+    {
+      "pid": 24480,
+      "role": "ui",
+      "gone": true
+    },
+    {
+      "pid": 20990,
+      "role": "mock",
+      "gone": true
+    },
+    {
+      "pid": 20991,
+      "role": "core",
+      "gone": true
+    },
+    {
+      "pid": 21182,
+      "role": "ui",
+      "gone": true
+    },
+    {
+      "pid": 23387,
+      "role": "mock",
+      "gone": true
+    },
+    {
+      "pid": 23389,
+      "role": "core",
+      "gone": true
+    },
+    {
+      "pid": 23653,
+      "role": "ui",
+      "gone": true
+    },
+    {
+      "pid": 19951,
+      "role": "mock",
+      "gone": true
+    },
+    {
+      "pid": 19952,
+      "role": "core",
+      "gone": true
+    },
+    {
+      "pid": 20180,
+      "role": "ui",
+      "gone": true
+    },
+    {
+      "pid": 21796,
+      "role": "mock",
+      "gone": true
+    },
+    {
+      "pid": 21797,
+      "role": "core",
+      "gone": true
+    },
+    {
+      "pid": 21904,
+      "role": "ui",
+      "gone": true
+    },
+    {
+      "pid": 22567,
+      "role": "mock",
+      "gone": true
+    },
+    {
+      "pid": 22568,
+      "role": "core",
+      "gone": true
+    },
+    {
+      "pid": 22819,
+      "role": "ui",
+      "gone": true
+    },
+    {
+      "pid": 4327,
+      "role": "locked_fixture",
+      "gone": true
+    },
+    {
+      "pid": 4333,
+      "role": "locked_core",
+      "gone": true
+    },
+    {
+      "pid": 97542,
+      "role": "initial_design_writer",
+      "gone": true
+    },
+    {
+      "pid": 97652,
+      "role": "design_writer_record",
+      "gone": true
+    }
+  ],
+  "lsof_exit": 1,
+  "lsof_stdout": "",
+  "lsof_stderr": "",
+  "evidence_entries_sha_verified": 205,
+  "source_evidence_commit": "f9a8f5d23fb8818ca4819b03cb48223959d74301",
+  "scope": "Only this recorded B01 task tree: synthetic DB/config/mock assets/copy binaries and scratch contexts. Regenerate from committed source/gates and fixtures; exported originals and SHA manifest are committed. Shared Cargo and fixedCoreRoot46 outside target; earlier rejectedRoot55/56/57 untouched.",
+  "free_data_bytes_before": 36672393216,
+  "additional_writer_record": {
+    "path": "figma/writer-pid.json",
+    "pid": 97652,
+    "gone": true
+  },
+  "immediate_recheck_passed": true,
+  "immediate_recheck_at": "2026-10-31T13:54:26.926905+08:00"
+}

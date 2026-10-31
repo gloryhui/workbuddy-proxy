@@ -231,12 +231,18 @@ def main():
                         help="Last observed Goal panel state; records it without controlling Goal")
     args = parser.parse_args()
     previous = json.loads(DATA.read_text(encoding="utf-8")) if DATA.exists() else {}
+    frames, timeline = frame_rows(), tasks()
     current = dict(previous.get("current_task", {}))
+    if args.task is not None and args.task != current.get("id"):
+        selected = next((task for task in timeline if task["id"] == args.task), None)
+        current = {"id": args.task,
+                   "title": selected["title"] if selected else f"任务 {args.task}",
+                   "status": selected["status"] if selected else "planned",
+                   "description": selected["summary"] if selected else ""}
     for key, value in {"id": args.task, "title": args.title, "status": args.status,
                        "description": args.description}.items():
         if value is not None:
             current[key] = value
-    frames, timeline = frame_rows(), tasks()
     review = visual_review(frames)
     plan = release_plan(frames, timeline)
     plan["goal_status"] = args.goal_status or previous.get("goal_status", "unknown")
@@ -258,8 +264,8 @@ def main():
     report = {"version": 2, "updated_at": now, "project": "WorkBuddy Studio V2",
               "branch": git("branch", "--show-current"), "code_head": git("log", "-1", "--format=%H", "--", "gpui/src", "gpui/assets"),
               "phase": ("正式版批次规划 · 等待Figma连接" if plan["goal_status"] == "paused" and plan["prerequisite"]["status"] == "waiting"
-                        else "开发中 · 批量施工与集中验收" if counts["pending"]
                         else "界面终验记录齐备 · 总体验收待核对" if counts["verified"] == len(frames)
+                        else "批次推进 · " + plan["current_batch"] if plan["goal_status"] == "active"
                         else "专项验收与差异修复 · 全量逐帧终验未完成"),
               "goal_status": args.goal_status or previous.get("goal_status", "unknown"),
               "counts": counts, "total_frames": len(frames), "recorded_tasks": len(recorded),
