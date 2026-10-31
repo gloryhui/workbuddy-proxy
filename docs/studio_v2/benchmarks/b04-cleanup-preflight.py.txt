@@ -1,0 +1,41 @@
+from pathlib import Path
+import datetime,hashlib,json,os,stat,subprocess
+r=Path(__file__).resolve().parent;repo=Path.cwd().resolve();owner=json.loads((r/'ownership.json').read_text())
+assert str(r)==owner['root'] and str(repo)==owner['repo'] and owner['uid']==os.getuid()==r.stat().st_uid
+assert r.name=='studio-v2-b04.r_9n9fkx' and r.parent.name=='T' and not r.is_symlink()
+parents=[]
+for p in [r,*r.parents]:
+ s=p.lstat();assert not stat.S_ISLNK(s.st_mode)
+ parents.append({'path':str(p),'uid':s.st_uid,'device':s.st_dev,'inode':s.st_ino,'mount':os.path.ismount(p)})
+assert not os.path.ismount(r)
+known=[]
+for phase in ['look','main']:
+ f=r/('b04-r-9n9fkx-'+phase);m=json.loads((f/'fixture.json').read_text());d=json.loads((r/('native-'+phase+'-driver-results.json')).read_text());assert d['exit_code']==0 and d['terminal']['core_exit_after_cleanup']==0 and d['terminal']['ui_pid_gone_after_cleanup']
+ known.extend(m[k] for k in ['core_pid','ui_pid','fixture_pid'])
+for label in ['previous1','current1','current2','previous2']:
+ t=json.loads((r/('performance-'+label+'.json')).read_text())['terminal'];assert t['ui_pid_gone'];known.append(t['ui_pid'])
+ for x in t['children']:assert x['waited'] and x['exit_code']==(0 if x['kind']=='core' else -15);known.append(x['pid'])
+for pid in known:
+ try:os.kill(pid,0)
+ except ProcessLookupError:pass
+ else:raise AssertionError(('recorded PID still exists',pid))
+ancestors={os.getpid()};pid=os.getpid()
+for _ in range(12):
+ p=subprocess.run(['ps','-p',str(pid),'-o','ppid='],capture_output=True,text=True)
+ if p.returncode or not p.stdout.strip():break
+ pid=int(p.stdout.strip());ancestors.add(pid)
+ if pid<=1:break
+ps=subprocess.check_output(['ps','-axo','pid=,command='],text=True);refs=[]
+for line in ps.splitlines():
+ bits=line.strip().split(None,1)
+ if len(bits)==2 and str(r) in bits[1] and int(bits[0]) not in ancestors:refs.append({'pid':int(bits[0]),'command':bits[1]})
+assert not refs,refs
+opened=subprocess.run(['lsof','-nP','+D',str(r)],capture_output=True,text=True);assert opened.returncode==1 and not opened.stdout.strip() and not opened.stderr.strip(),('open references',opened.stdout)
+entries=[]
+for p in sorted([r,*r.rglob('*')]):
+ s=p.lstat();assert s.st_uid==owner['uid'];assert not stat.S_ISLNK(s.st_mode) and (stat.S_ISREG(s.st_mode) or stat.S_ISDIR(s.st_mode))
+ assert p.resolve().is_relative_to(r) and (p==r or not os.path.ismount(p))
+ if stat.S_ISREG(s.st_mode):assert s.st_nlink==1
+ entries.append({'path':str(p),'type':'file' if p.is_file() else 'directory','uid':s.st_uid,'mode':stat.S_IMODE(s.st_mode),'inode':s.st_ino,'device':s.st_dev,'size':s.st_size if p.is_file() else 0,'mtime_ns':s.st_mtime_ns})
+free=os.statvfs(r);out={'at':datetime.datetime.now().astimezone().isoformat(),'target':str(r),'repo':str(repo),'type':'owned dedicated test temporary directory','provenance':owner,'regenerable':'Synthetic isolated configs/SQL/PNG samples/app/binary copies and reviewed build/test helpers created in this round. Final evidence archived separately; sharedCargo and fixedCore outside target.','parents':parents,'process_pids_confirmed_gone':sorted(set(known)),'other_process_refs':refs,'lsof':{'exit_code':opened.returncode,'stdout':opened.stdout,'stderr':opened.stderr},'entries':entries,'entries_sha256':hashlib.sha256(json.dumps(entries,sort_keys=True).encode()).hexdigest(),'files':sum(x['type']=='file' for x in entries),'logical_bytes':sum(x['size'] for x in entries),'free_before_bytes':free.f_bavail*free.f_frsize}
+print(json.dumps(out,ensure_ascii=False,indent=2))

@@ -1,0 +1,19 @@
+{
+  "children": [
+    {
+      "kind": "mock",
+      "pid": 45983,
+      "exit_code": -15,
+      "waited": true
+    },
+    {
+      "kind": "core",
+      "pid": 45984,
+      "exit_code": 0,
+      "waited": true
+    }
+  ],
+  "ui_pid": 46076,
+  "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+  "ui_pid_gone": true
+}

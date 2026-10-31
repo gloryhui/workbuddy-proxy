@@ -1,0 +1,13 @@
+{
+  "created_at": "2026-10-31T18:09:22.991013+08:00",
+  "created_by_pid": 20221,
+  "uid": 501,
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx",
+  "repo": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "task": "B04 toolbar/window/language/appearance; this thread created dedicated temporary root",
+  "source_head": "c6d49dd49bc33020bdcca8d1394a2ca42d4a1fa1",
+  "baseline_ui_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "shared_cargo_cache": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target",
+  "reused_core": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core",
+  "free_at_creation_bytes": 32762990592
+}

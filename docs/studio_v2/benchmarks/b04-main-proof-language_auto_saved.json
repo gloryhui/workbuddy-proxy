@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-31T18:50:51.543595+08:00",
+  "stage": "language_auto_saved",
+  "core_pid": 32084,
+  "core_health": "ready",
+  "config_sha256": "dcdc41065ede378b19d671f23f6a39aee85b38d23d90ec0b7d0bef9e2128a7b8",
+  "language": "auto",
+  "autostart": false,
+  "skin": "studio_indigo",
+  "appearance_fault": false,
+  "isolated_launchagent_present": false,
+  "requests": 14,
+  "costs": 14,
+  "history": {
+    "usage_requests": {
+      "rows": 14,
+      "all_fields_preserved": true,
+      "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+    },
+    "usage_costs": {
+      "rows": 14,
+      "all_fields_preserved": true,
+      "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+    }
+  },
+  "stats_settings_unchanged": {
+    "enabled": true,
+    "retention_days": 180,
+    "default_currency": "CNY",
+    "revision": 1
+  },
+  "prices_unchanged": 3,
+  "wire_counts": {
+    "language": 3,
+    "autostart": 0,
+    "check_update": 0
+  },
+  "scope": "Read-only real Core/SQL and own files. Only declared native language/autostart/skin saves accepted; original business config retained after existing9Serde defaults. Update bridge cases separately declared, not public GitHub E2E."
+}

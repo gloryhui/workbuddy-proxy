@@ -1,0 +1,37 @@
+{
+  "observed": {
+    "label": "current1",
+    "ui_pid": 44770,
+    "window_id": 11356,
+    "toolbar_visible": true,
+    "language_menu_visible": true,
+    "logical_size": [
+      1440,
+      900
+    ],
+    "screenshot": "language-before.png",
+    "screenshot_sha256": "68a6834a4d6289b1c439c0bbb9aed354ea35b5fe412d9cf82e920ab200b8e544",
+    "pixels": [
+      2880,
+      1800
+    ],
+    "operations": [
+      "providers 1/64",
+      "resize 1100x700",
+      "language menu Escape",
+      "skin menu Escape",
+      "restore default and close notice",
+      "language menu"
+    ],
+    "no_explicit_activate_or_raise": true,
+    "foreground_effect_unmeasured": true
+  },
+  "pixels": [
+    2880,
+    1800
+  ],
+  "dwell_seconds": 10,
+  "vmmap_exit": 0,
+  "sampling_seconds": 0.1,
+  "scope": "Actual native observer acknowledgement/rawPNG and same operation history; RSS diagnostic adds per-PID samples without changing original request workload. vmmap footprint is not RSS."
+}

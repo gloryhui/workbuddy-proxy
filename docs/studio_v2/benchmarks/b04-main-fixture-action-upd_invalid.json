@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-31T19:01:03.862496+08:00",
+  "action": "set-mode",
+  "stage": "upd_invalid",
+  "scope": "Only recorded synthetic fixture modes/input faults or actual loopback request; no management settings writes.",
+  "mode": {
+    "update": "invalid",
+    "delay": 1.0,
+    "language_failure": false
+  }
+}

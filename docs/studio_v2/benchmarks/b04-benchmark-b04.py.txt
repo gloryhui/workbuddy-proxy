@@ -1,0 +1,192 @@
+import sys,os,json,time,shutil,subprocess,plistlib,hashlib,traceback,tempfile
+from pathlib import Path
+REPO=Path.cwd()
+ROOT=Path(__file__).resolve().parent
+sys.path.insert(0,str(REPO/'scripts'))
+import benchmark,smoke
+from workbuddy_import_test import real_user_home
+from workbuddy_import_ui_sandbox import write_profile,profile_text,protected_locations,kernel_protection
+label=sys.argv[1]
+assert label in ['previous1','current1','current2','previous2','current3','previous3']
+folder=ROOT/('bench-b04-'+label);assert not folder.exists();folder.mkdir()
+ui_source=ROOT/'baseline-ui' if label.startswith('previous') else ROOT/'candidate-ui'
+core_source=Path('/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core')
+output=ROOT/('performance-'+label+'.json');assert not output.exists()
+class RetainedDirectory:
+    def __init__(self,*a,**kw):self.name=str(folder)
+    def __enter__(self):return self.name
+    def __exit__(self,*a):pass
+    def cleanup(self):pass
+benchmark.tempfile.TemporaryDirectory=RetainedDirectory
+base_env=dict(os.environ)
+paths={'HOME':folder/'home','USERPROFILE':folder/'home','APPDATA':folder/'appdata','LOCALAPPDATA':folder/'localappdata','XDG_CONFIG_HOME':folder/'xdg-config','XDG_DATA_HOME':folder/'xdg-data','XDG_CACHE_HOME':folder/'xdg-cache','XDG_STATE_HOME':folder/'xdg-state','TMPDIR':folder/'tmp','TMP':folder/'tmp','TEMP':folder/'tmp'}
+for p in paths.values():p.mkdir(exist_ok=True,parents=True)
+env=dict(base_env,**{k:str(v) for k,v in paths.items()},WORKBUDDY_PROXY_CONFIG_DIR=str(folder),WORKBUDDY_PROXY_CATALOG_TEST_URL='http://127.0.0.1:1/catalog')
+policy=write_profile(folder/'protection.sb',real_user_home());policy.write_text(profile_text([*protected_locations(real_user_home()).values(),Path(real_user_home())/'Library/LaunchAgents']))
+(folder/'appearance.json').write_text(json.dumps({'version':1,'skin':'studio_indigo'}))
+samples=[];sample_stop=None;sample_thread=None
+original_popen=subprocess.Popen;children=[];core=None;ui_pid=None;proof=None;startup_ms=None;ui_env_keys=[*paths,'WORKBUDDY_PROXY_CONFIG_DIR','WORKBUDDY_PROXY_CATALOG_TEST_URL']
+def protected_popen(cmd,*a,**kw):
+    global core
+    is_core=isinstance(cmd,(list,tuple)) and str(Path(cmd[0]).resolve())==str(core_source.resolve())
+    if is_core:cmd=['/usr/bin/sandbox-exec','-f',str(policy),*cmd];kw['env']=env
+    if isinstance(cmd,(list,tuple)) and '--mock-server' in cmd:
+        cmd=[sys.executable,str(ROOT/'benchmark-mock.py'),'--mock-server',cmd[-1]]
+    child=original_popen(cmd,*a,**kw)
+    if is_core:core=child;children.append(('core',child))
+    elif isinstance(cmd,(list,tuple)) and '--mock-server' in cmd:children.append(('mock',child))
+    return child
+subprocess.Popen=protected_popen
+benchmark.start=lambda exe,directory,upstream,gui:smoke.start(exe,directory,upstream,False)
+def await_cua(directory,timeout=10):
+    global ui_pid,proof,startup_ms
+    proof=kernel_protection(real_user_home(),folder,core.pid);assert proof['enforced']
+    import ctypes
+    lib=ctypes.CDLL('/usr/lib/libsandbox.1.dylib');check=lib.sandbox_check
+    check.argtypes=[ctypes.c_int,ctypes.c_char_p,ctypes.c_int];check.restype=ctypes.c_int
+    flag=1|ctypes.c_int.in_dll(lib,'SANDBOX_CHECK_NO_REPORT').value
+    launchagents=Path(real_user_home())/'Library/LaunchAgents'
+    permission={op:[check(core.pid,op.encode(),flag,ctypes.c_char_p(os.fsencode(v))) for v in [launchagents,launchagents/'.qa-permission-query-only']] for op in ['file-read-data','file-write-data','file-write-create','file-write-unlink']}
+    assert all(v>0 for values in permission.values() for v in values)
+    proof['launchagents_permissions']=permission
+    config=json.loads((folder/'config.json').read_text())
+    instance=json.loads((folder/'instance.json').read_text())
+    import urllib.request
+    opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    stats_ready=False
+    for _ in range(200):
+        assert core.poll() is None
+        request=urllib.request.Request('http://127.0.0.1:%d/_control/action'%config['port'],data=json.dumps({'command':'stats_health'}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+instance['management_key']})
+        try:
+            with opener.open(request,timeout=5) as response:health=json.loads(json.loads(response.read())['message'])
+            if health['state']=='ready':stats_ready=True;break
+        except (OSError,ValueError,KeyError):pass
+        time.sleep(.05)
+    assert stats_ready
+    alias=config['providers'][0]['models'][0]['alias'] if config.get('providers') else config['model']
+    seed_statuses=[]
+    for index in range(1000):
+        conn,response=smoke.request(config['port'],json.dumps({'model':alias,'stream':True,'messages':[{'role':'user','content':'Synthetic supplier batch benchmark seed'}]}).encode())
+        seed_statuses.append(response.status);response.read();conn.close()
+        if (index+1)%20==0:
+            import sqlite3
+            for barrier in range(400):
+                with sqlite3.connect('file:'+str(folder/'usage.sqlite3')+'?mode=ro',uri=True) as db:
+                    count=db.execute('SELECT COUNT(*) FROM usage_requests').fetchone()[0]
+                if count==index+1:break
+                time.sleep(.025)
+            else:raise AssertionError(('seed persistence barrier',index,count))
+    assert seed_statuses==[200]*1000
+    import sqlite3
+    seed_count=None
+    for _ in range(100):
+        assert core.poll() is None
+        try:
+            db=sqlite3.connect('file:'+str(folder/'usage.sqlite3')+'?mode=ro',uri=True)
+            seed_count=db.execute('SELECT COUNT(*) FROM usage_requests').fetchone()[0];db.close()
+            if seed_count==1000:break
+        except sqlite3.OperationalError:pass
+        time.sleep(.05)
+    assert seed_count==1000,seed_count
+    (folder/'seed-proof.json').write_text(json.dumps({'stats_ready_before_seed':True,'persistence_barrier_every_requests':20,'real_http_seed_requests':1000,'statuses':seed_statuses,'sql_usage_rows_before_ui':seed_count,'scope':'Identical pre-UI seed for previous/current, before unchanged original benchmark1000small+80large requests.'},indent=2)+'\n')
+    # Identical fixture preconditioning for both versions. Initial native load
+    # must already contain64 rows; do not rely on external refresh of a1-row draft.
+    precondition=urllib.request.Request('http://127.0.0.1:%d/_control/action'%config['port'],data=json.dumps({'command':'save','models':'\n'.join('bench-model-%d'%i for i in range(64))}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+instance['management_key']})
+    with opener.open(precondition,timeout=5) as response:
+        assert response.status==200;response.read()
+    prepared=json.loads((folder/'config.json').read_text())
+    assert len(prepared['providers'])==1 and len(prepared['providers'][0]['models'])==64
+    (folder/'preui-models.json').write_text(json.dumps({'stage':'after1000 real seed rows, before nativeUI process launch','providers':1,'models':64,'fixture_save64_calls':1,'original_benchmark_save64_still_runs':True,'scope':'Identical extra fixture precondition for previous/current, outside measured load; original benchmark.py unchanged.'})+'\n')
+    bundle=folder/('WorkBuddy Proxy Toolbar Bench '+label+'.app');bin_dir=bundle/'Contents/MacOS';bin_dir.mkdir(parents=True);shutil.copy2(ui_source,bin_dir/'workbuddy-proxy-gpui')
+    info={'CFBundleExecutable':'workbuddy-proxy-gpui','CFBundleIdentifier':'com.workbuddy.proxy.codexreview.b04.r-9n9fkx.'+label,'CFBundleName':'WorkBuddy Proxy Toolbar Bench '+label,'CFBundleDisplayName':'WorkBuddy Proxy Toolbar Bench '+label,'CFBundlePackageType':'APPL','NSHighResolutionCapable':True,'LSEnvironment':{k:env[k] for k in ui_env_keys}}
+    (bundle/'Contents/Info.plist').write_bytes(plistlib.dumps(info))
+    pending={'label':label,'bundle':str(bundle),'core_pid':core.pid,'folder':str(folder),'ui_sha256':hashlib.sha256(ui_source.read_bytes()).hexdigest()};(ROOT/'pending-benchmark.json').write_text(json.dumps(pending));print(json.dumps({'await_cua':pending}),flush=True)
+    until=time.monotonic()+600
+    while time.monotonic()<until:
+        assert core.poll() is None
+        if (folder/'gpui.json').exists():
+            candidate=json.loads((folder/'gpui.json').read_text())['pid']
+            cmd=subprocess.check_output(['ps','-p',str(candidate),'-o','command='],text=True)
+            assert str(bundle) in cmd
+            ui_pid=candidate
+            start_us=int(subprocess.check_output([str(ROOT/'process-start'),str(ui_pid)],text=True))
+            startup_ms=round(((folder/'gpui.json').stat().st_mtime_ns/1000-start_us)/1000,3)
+            assert 0<=startup_ms<60000
+            print(json.dumps({'ui_bound':ui_pid,'native_process_to_record_ms':startup_ms,'await_cua_toolbar':True}),flush=True)
+            return ui_pid
+        time.sleep(.05)
+    raise TimeoutError('CUA background UI launch timeout')
+original_measured_pids=benchmark.measured_pids
+def await_native_observation(core_pid,native_ui_pid):
+    assert core.pid==core_pid and ui_pid==native_ui_pid
+    config=json.loads((folder/'config.json').read_text())
+    assert len(config['providers'])==1 and len(config['providers'][0]['models'])==64
+    (folder/'models-ready.json').write_text(json.dumps({'stage':'after original benchmark save64, before measured_pids/idle RSS/workload','providers':1,'models':64,'core_pid':core_pid,'ui_pid':native_ui_pid})+'\n')
+    pending=json.loads((ROOT/'pending-benchmark.json').read_text());pending['models_ready']=True;(ROOT/'pending-benchmark.json').write_text(json.dumps(pending)+'\n')
+    # Select the affected native page before the unchanged benchmark
+    # takes idle RSS and sends the original fixed request workload.
+    config_before_native=hashlib.sha256((folder/'config.json').read_bytes()).hexdigest()
+    deadline=time.monotonic()+600
+    while time.monotonic()<deadline:
+        assert core.poll() is None
+        if (folder/'toolbar-observed.json').exists():
+            selected=json.loads((folder/'toolbar-observed.json').read_text())
+            assert selected['ui_pid']==ui_pid and selected['language_menu_visible'] is True and selected['toolbar_visible'] is True
+            assert hashlib.sha256((folder/'config.json').read_bytes()).hexdigest()==config_before_native, 'Native benchmark setup unexpectedly saved business configuration'
+            import struct,threading
+            screenshot=folder/selected['screenshot'];raw=screenshot.read_bytes();assert raw[:8]==b'\x89PNG\r\n\x1a\n'
+            pixels=list(struct.unpack('>II',raw[16:24]));assert pixels==selected['pixels'];assert hashlib.sha256(raw).hexdigest()==selected['screenshot_sha256'];assert selected['logical_size']==[1440,900]
+            common=ROOT/'performance-window-pixels.json'
+            if common.exists():assert json.loads(common.read_text())==pixels,'Different rendered size/DPI across benchmark versions'
+            else:common.write_text(json.dumps(pixels)+'\n')
+            vm=subprocess.run(['vmmap','-summary',str(ui_pid)],capture_output=True,text=True);(folder/'vmmap-before.txt').write_text(vm.stdout+vm.stderr);assert vm.returncode==0
+            global sample_stop,sample_thread
+            sample_stop=threading.Event()
+            def sample_resources():
+                started=time.monotonic()
+                while not sample_stop.is_set() and core.poll() is None:
+                    try:
+                        c=benchmark.rss_kib(core.pid);u=benchmark.rss_kib(ui_pid)
+                        if c is not None and u is not None:samples.append({'seconds':round(time.monotonic()-started,3),'core_rss_mib':round(c/1024,3),'ui_rss_mib':round(u/1024,3),'combined_rss_mib':round((c+u)/1024,3)})
+                    except OSError:pass
+                    sample_stop.wait(.1)
+            sample_thread=threading.Thread(target=sample_resources,daemon=True);sample_thread.start();time.sleep(10)
+            (folder/'matched-condition.json').write_text(json.dumps({'observed':selected,'pixels':pixels,'dwell_seconds':10,'vmmap_exit':vm.returncode,'sampling_seconds':.1,'scope':'Actual native observer acknowledgement/rawPNG and same operation history; RSS diagnostic adds per-PID samples without changing original request workload. vmmap footprint is not RSS.'},indent=2)+'\n')
+            return original_measured_pids(core_pid,native_ui_pid)
+        time.sleep(.05)
+    raise TimeoutError('CUA toolbar page acknowledgement timed out')
+benchmark.measured_pids=await_native_observation
+benchmark.settings_pid=await_cua
+sys.argv=['benchmark.py','--exe',str(core_source),'--output',str(output),'--gui','--requests','1000','--models','64']
+failure=None
+try:benchmark.main()
+except BaseException:
+    failure=traceback.format_exc()
+finally:
+    if sample_stop is not None:sample_stop.set()
+    if sample_thread is not None:sample_thread.join(timeout=5);assert not sample_thread.is_alive()
+    (folder/'resource-samples.json').write_text(json.dumps(samples,indent=2)+'\n')
+    if ui_pid:
+        vm=subprocess.run(['vmmap','-summary',str(ui_pid)],capture_output=True,text=True);(folder/'vmmap-after.txt').write_text(vm.stdout+vm.stderr)
+    if ui_pid:
+        (folder/'gpui-stop.json').write_text('{}')
+        until=time.monotonic()+8
+        while time.monotonic()<until:
+            try:os.kill(ui_pid,0)
+            except ProcessLookupError:break
+            time.sleep(.05)
+    for kind,child in children:
+        if child.poll() is None:
+            child.terminate()
+        child.wait(timeout=8)
+    terminal={'children':[{'kind':kind,'pid':child.pid,'exit_code':child.returncode,'waited':True} for kind,child in children],'ui_pid':ui_pid,'ui_child_owned_by':'CUA service, not fixture; exit code unavailable'}
+    if ui_pid:
+        try:os.kill(ui_pid,0);terminal['ui_pid_gone']=False
+        except ProcessLookupError:terminal['ui_pid_gone']=True
+    (folder/'terminal.json').write_text(json.dumps(terminal,indent=2))
+    if output.exists():
+        d=json.loads(output.read_text());d.update(label=label,core_sha256=hashlib.sha256(core_source.read_bytes()).hexdigest(),ui_sha256=hashlib.sha256(ui_source.read_bytes()).hexdigest(),benchmark_script_sha256=hashlib.sha256((REPO/'scripts/benchmark.py').read_bytes()).hexdigest(),wrapper_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),separate_peak_rss_mib={name:max([row[name] for row in samples],default=None) for name in ['core_rss_mib','ui_rss_mib','combined_rss_mib']},core_sandbox_proof=proof,appearance_after=json.loads((folder/'appearance.json').read_text()),native_ui_process_to_record_ms=startup_ms,terminal=terminal,orchestration_note='Core ready preserves original timing. Original ui_record_ready_ms includes CUA orchestration wait; not a startup comparison. native_ui_process_to_record_ms measures native proc_bsdinfo start to gpui.json mtime, excludes pre-process LaunchServices/tool wait; marker is not first paint/interactivity.',ui_launch_method='CUA getApp background launch, no activate/raise command',ui_page='Provider64 with actual language menu visible; matched resize1100/languageEsc/skinEsc/restore1440Close/languageOpen;1000 real seed and unchanged save64+1000small+80large workload',temporary_fixture_retained=True);output.write_text(json.dumps(d,indent=2)+'\n')
+    if failure:(folder/'failure.txt').write_text(failure)
+if failure:raise RuntimeError(failure)
+assert terminal.get('ui_pid_gone') and all(x['exit_code']==0 if x['kind']=='core' else x['exit_code']==-15 for x in terminal['children'])
+print(json.dumps({'completed':label,'evidence':str(output),'terminal':terminal}),flush=True)

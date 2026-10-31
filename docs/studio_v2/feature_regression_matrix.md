@@ -105,3 +105,10 @@ B01 / QA68完整批次：最新19份官方完整设计与同一2a12，38主图/9
 - 合成导入7Builtin+1Custom、暂停恢复/去重/文件读错自然恢复；最终1014请求/1006费用、Core配置字节不变、全部已保护历史保持。
 - 7帧14原生PNG和P/C/C/P原负载短测通过；初始Mono、夹具sessionId错误、原直接删除行为与未证实列拖动明确留档。原生输入R01、平台R02、长期性能R03和安装RC R04独立。
 - 详见[QA70](baseline_and_qa.md)及[b03-native-consolidated](benchmarks/b03-native-consolidated.json)、[独立导入](benchmarks/b03-import-final-validation.json)、[性能成本](benchmarks/b03-performance-summary.json)。
+
+## B04 / UI71 整批保护记录（2026-10-31）
+
+- 同d08候选，只修语言失败后的视图回滚；原七事件、Core、配置格式、主题键与代理业务逻辑保持。
+- 三语言/七主题、隔离开机真实失败重试、更新受控状态和独立一次真实公网检查、普通窗口恢复及模态遮罩；12张实际两尺寸PNG。
+- 原14请求/14成本全字段保护至15/15，业务配置除声明语言/开机保存及既有Serde默认外保持，统计设置与价格不变；Core/夹具退出0、UI PIDgone。
+- P/C/C/P原负载各n2；全部性能成本和R01输入/R02系统/R03长期性能/R04安装发行边界详见[QA71](baseline_and_qa.md)、[交互与数据](benchmarks/b04-native-consolidated.json)、[性能](benchmarks/b04-performance-summary.json)。

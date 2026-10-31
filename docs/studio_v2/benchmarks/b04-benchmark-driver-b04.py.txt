@@ -1,0 +1,11 @@
+from pathlib import Path
+import os,sys,json,hashlib,subprocess,time
+r=Path(__file__).resolve().parent
+assert hashlib.sha256(Path('scripts/benchmark.py').read_bytes()).hexdigest()=='bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2'
+results=json.loads((r/'native-main-driver-results.json').read_text());assert results['exit_code']==0
+build=json.loads((r/'build.json').read_text());assert hashlib.sha256((r/'candidate-ui').read_bytes()).hexdigest()==build['release_sha256'];assert hashlib.sha256((r/'baseline-ui').read_bytes()).hexdigest()=='4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5'
+sequence=[]
+for label in ['previous1','current1','current2','previous2']:
+ print('starting '+label,flush=True);started=time.monotonic();p=subprocess.run([sys.executable,str(r/'benchmark-b04.py'),label],capture_output=True,text=True);(r/('benchmark-'+label+'.log')).write_text(p.stdout+p.stderr);sequence.append({'label':label,'exit_code':p.returncode,'wall_seconds':round(time.monotonic()-started,3),'evidence':'performance-'+label+'.json'});(r/'benchmark-driver-results.json').write_text(json.dumps(sequence,indent=2)+'\n');print('finished '+label+' '+str(p.returncode),flush=True)
+ if p.returncode:print((p.stdout+p.stderr)[-2000:],flush=True);raise SystemExit(p.returncode)
+print('B04 four benchmark runs complete',flush=True)

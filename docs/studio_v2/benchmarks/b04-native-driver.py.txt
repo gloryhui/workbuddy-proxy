@@ -1,0 +1,28 @@
+from pathlib import Path
+import hashlib,json,os,sqlite3,subprocess,sys,time
+r=Path(__file__).resolve().parent;phase=sys.argv[1];assert phase in ['look','main'];f=r/('b04-r-9n9fkx-'+phase);ui=r/('baseline-ui' if phase=='look' else 'candidate-ui');core=Path(json.loads((r/'ownership.json').read_text())['reused_core'])
+assert hashlib.sha256(core.read_bytes()).hexdigest()=='25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5'
+assert not f.exists();env=dict(os.environ,PYTHONPATH=str(Path.cwd()/'scripts'),TMPDIR=str(r/'tmp'),TMP=str(r/'tmp'),TEMP=str(r/'tmp'))
+log=(r/('native-'+phase+'.log')).open('wb');p=subprocess.Popen([sys.executable,'-u',str(r/'fixture-background.py'),'--exe',str(core),'--gpui',str(ui),'--output',str(f),'--keep-core-after-ui-exit'],env=env,stdout=log,stderr=log)
+try:
+ for _ in range(2400):
+  if (f/'cua-launch-ready.json').exists():break
+  assert p.poll() is None;time.sleep(.05)
+ else:raise TimeoutError('Core fixture readiness')
+ (f/'management-mode.json').write_text(json.dumps({'update':'latest','delay':2,'language_failure':phase=='look'})+'\n')
+ subprocess.run([sys.executable,str(r/'preflight-guard.py'),str(f)],env=env,check=True)
+ for _ in range(400):
+  with sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True) as db:
+   db.row_factory=sqlite3.Row;history={t:{v['request_id']:dict(v) for v in db.execute('SELECT * FROM '+t)} for t in ['usage_requests','usage_costs']}
+  if all(len(v)==14 for v in history.values()):break
+  time.sleep(.025)
+ else:raise AssertionError('14 actual relay records did not settle')
+ (f/'history-before-private.json').write_text(json.dumps(history)+'\n');os.chmod(f/'history-before-private.json',0o600)
+ pending={'phase':phase,'folder':str(f),'ready_file':str(f/'cua-launch-ready.json'),'ui_sha256':hashlib.sha256(ui.read_bytes()).hexdigest(),'core_guard_passed':True,'requests':14,'controlled_update_scope':'Loopback management bridge only. Core/routing/config unchanged; simulated updater results are not public GitHub/Core-updater E2E.','language_fault':phase=='look'}
+ (r/'pending-native.json').write_text(json.dumps(pending)+'\n');print(json.dumps({'native_ready':pending}),flush=True)
+ code=p.wait();assert code==0
+ terminal=json.loads((f/'terminal-status.json').read_text());assert terminal['core_exit_after_cleanup']==0 and terminal['ui_pid_gone_after_cleanup']
+ (r/('native-'+phase+'-driver-results.json')).write_text(json.dumps({'phase':phase,'folder':str(f),'fixture_pid':p.pid,'exit_code':code,'terminal':terminal},indent=2)+'\n');print('B04 '+phase+' complete0',flush=True)
+finally:
+ if p.poll() is None:p.terminate();p.wait(timeout=12)
+ log.close()

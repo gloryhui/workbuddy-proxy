@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-31T18:57:34.220318+08:00",
+  "action": "block-autostart",
+  "stage": "autostart_fault",
+  "scope": "Only recorded synthetic fixture modes/input faults or actual loopback request; no management settings writes.",
+  "blocker": "home/Library/LaunchAgents",
+  "backed_up_empty_directory": "home/Library/LaunchAgents-before-fault"
+}

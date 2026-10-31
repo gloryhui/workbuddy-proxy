@@ -1,0 +1,15 @@
+{
+  "phase": "look",
+  "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look",
+  "fixture_pid": 26481,
+  "exit_code": 0,
+  "terminal": {
+    "ui_exit_before_cleanup": null,
+    "ui_pid_gone_before_cleanup": true,
+    "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": null,
+    "ui_pid_gone_after_cleanup": true,
+    "core_exit_after_cleanup": 0
+  }
+}

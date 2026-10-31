@@ -1,0 +1,257 @@
+# -*- coding: utf-8 -*-
+"""Isolated GUI fixture. No real profiles, credentials or upstream endpoints."""
+import argparse, atexit, hashlib, json, os, pathlib, plistlib, shutil, signal, socket, sqlite3, subprocess, tempfile, threading, time, urllib.request
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from workbuddy_import_test import real_user_home
+from workbuddy_import_macho import verify_code_identity
+from workbuddy_import_ui_sandbox import bootstrap_environment, command as sandbox_command, write_profile
+args=argparse.ArgumentParser(description=__doc__)
+args.add_argument('--copy-inheritance',action='store_true',help='Synthetic mixed legacy effort and explicit source capability for copy tests')
+args.add_argument('--full-providers',action='store_true',help='B01 original2 plus62 empty synthetic providers')
+args.add_argument('--full-models',action='store_true',help='255 A plus1 B, total256 synthetic models')
+args.add_argument('--guard-gui',action='store_true',help='Diagnostic native sandbox bootstrap; current CUA cannot bind that sandboxed AppKit process')
+args.add_argument('--sign-bundle',action='store_true',help='Ad-hoc sign the complete unique QA bundle and prove stripped code matches the input')
+args.add_argument('--output',type=pathlib.Path,help='Evidence/fixture folder; defaults to configured TMPDIR')
+args.add_argument('--exe',type=pathlib.Path,help='Explicit core under test')
+args.add_argument('--gpui',type=pathlib.Path,help='Explicit GPUI under test')
+args.add_argument('--keep-core-after-ui-exit',action='store_true',help='Keep the isolated core for close/reopen checks until native-acceptance-finished is created')
+options=args.parse_args()
+ROOT=pathlib.Path.cwd()
+review=pathlib.Path(__file__).resolve().parent/'review';review.mkdir(exist_ok=True)
+folder=options.output.resolve() if options.output else pathlib.Path(tempfile.gettempdir())/('ui-release-'+str(time.time_ns()))
+config=folder/'config'; home=folder/'home'; project=home/'.workbuddy/projects/demo'
+config.mkdir(parents=True); project.mkdir(parents=True)
+class Mock(BaseHTTPRequestHandler):
+    def log_message(self,*args): pass
+    def do_GET(self):
+        if self.path.split('?')[0]=='/catalog':
+            mode=json.loads((folder/'mock-catalog-mode.json').read_text()) if (folder/'mock-catalog-mode.json').exists() else {}
+            status=503 if mode.get('failure') else 200
+            models={'deepseek-v4.1-flash':{'cost':{'input':.1,'output':.5}},'gpt-6':{'cost':{'input':2,'output':10}},'gpt-6.1':{'cost':{'input':10,'output':50}}}
+            payload={'error':'Synthetic catalog failure'} if status!=200 else {'synthetic':{'api':'http://127.0.0.1:%d/v1'%self.server.server_port,'models':models}}
+        elif self.path.split('?')[0].endswith('/models'):
+            payload={'data':[{'id':m['model']} for p in cfg['providers'] for m in p['models']]};status=200
+        else:
+            self.send_error(404);return
+        data=json.dumps(payload).encode()
+        with (folder/'mock-gets.jsonl').open('a') as audit:audit.write(json.dumps({'path':self.path.split('?')[0],'status':status})+'\n')
+        self.send_response(status);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
+    def do_POST(self):
+        body=json.loads(self.rfile.read(int(self.headers.get('Content-Length',0))) or b'{}')
+        mode=json.loads((folder/'mock-mode.json').read_text()).get('mode','success') if (folder/'mock-mode.json').exists() else 'success'
+        usage={'prompt_tokens':500,'completion_tokens':50,'total_tokens':550,'prompt_tokens_details':{'cached_tokens':400}}
+        if mode=='failure':
+            data=b'{"error":{"message":"Synthetic upstream failure"}}';status=503;kind='application/json'
+        elif body.get('stream'):
+            frames=[{'id':'synthetic-b04','object':'chat.completion.chunk','model':body.get('model'),'choices':[{'index':0,'delta':{'role':'assistant','content':'synthetic'},'finish_reason':None}]},{'id':'synthetic-b04','object':'chat.completion.chunk','model':body.get('model'),'choices':[{'index':0,'delta':{},'finish_reason':'stop'}],'usage':usage}]
+            data=(''.join('data: '+json.dumps(v)+'\n\n' for v in frames)+'data: [DONE]\n\n').encode();status=200;kind='text/event-stream'
+        else:
+            payload={'id':'synthetic-b04','object':'chat.completion','model':body.get('model'),'choices':[{'index':0,'message':{'role':'assistant','content':'synthetic'},'finish_reason':'stop'}]}
+            if mode!='missing_usage':payload['usage']=usage
+            data=json.dumps(payload).encode();status=200;kind='application/json'
+        with (folder/'mock-posts.jsonl').open('a') as audit:audit.write(json.dumps({'model':body.get('model'),'stream':bool(body.get('stream')),'status':status,'mode':mode})+'\n')
+        self.send_response(status);self.send_header('Content-Type',kind);self.send_header('Content-Length',str(len(data)));self.end_headers()
+        if body.get('stream') and status==200:
+            split=data.index(b'data: ',6);time.sleep(.02);self.wfile.write(data[:split]);self.wfile.flush();time.sleep(.02);self.wfile.write(data[split:])
+        else:self.wfile.write(data)
+server=ThreadingHTTPServer(('127.0.0.1',0),Mock)
+threading.Thread(target=server.serve_forever,daemon=True).start()
+with socket.socket() as socket_: socket_.bind(('127.0.0.1',0)); port=socket_.getsockname()[1]
+cfg={'local_key':'fixture-local-key','language':'zh','port':port,'autostart':False,'providers':[{'id':'review-provider','name':'Review','upstream':'http://127.0.0.1:%d/v1'%server.server_port,
+    'api_key':'fixture-upstream-key','models':[{'id':'proxy-route','alias':'Review/mock-model','name':'mock-model','model':'mock-model','reasoning_effort':'default'}]}],'installed':[]}
+cfg['providers'][0].update(id='review-provider',name='sub2api')
+cfg['providers'][0]['models']=[{'id':i,'alias':'sub2api/'+n,'name':n,'model':n,'reasoning_effort':'default'} for i,n in [('proxy-route','deepseek-v4.1-flash'),('model-a-2','gpt-6'),('model-a-3','gpt-6.1'),('model-a-4','claude-opus-4.7')]]
+cfg['providers'].append({'id':'review-provider-b','name':'OpenCode Go','upstream':'http://127.0.0.1:%d/v1'%server.server_port,'api_key':'fixture-upstream-key','models':[{'id':'model-b-1','alias':'OpenCode Go/model-b-1','name':'model-b','model':'model-b-1','reasoning_effort':'default'}]})
+if options.copy_inheritance:
+    for model,effort in zip(cfg['providers'][0]['models'],['high','low','default','max']):model['reasoning_effort']=effort
+    cfg['providers'][0]['models'][0]['capabilities']={'maxOutputTokens':8192}
+if options.full_models:
+    cfg['providers'][0]['models'].extend({'id':f'fill-{i:03d}','alias':f'sub2api/fill-{i:03d}','name':f'fill-{i:03d}','model':f'fill-{i:03d}','reasoning_effort':'default'} for i in range(251))
+if options.full_providers:
+    cfg['providers'].extend({'id':f'review-provider-{i:02d}','name':f'演示供应商 {i:02d}','upstream':f'http://127.0.0.1:{server.server_port}/v1','api_key':'fixture-upstream-key','models':[]} for i in range(3,65))
+(config/'appearance.json').write_text(json.dumps({'version':1,'skin':'studio_indigo'}))
+(config/'config.json').write_text(json.dumps(cfg));os.chmod(config/'config.json',0o600)
+(home/'.workbuddy/models.json').write_text('[]')
+at=int(time.time()*1000)
+# Synthetic WorkBuddy profile, initially paused by the Core's default setting.
+logs=[]
+for index in range(5):
+    logs.append({'type':'function_call','sessionId':'builtin','timestamp':at+index,'providerData':{'messageId':'b03-builtin-%d'%index,'requestModelId':'hy3','model':'hy3','rawUsage':{'prompt_tokens':100,'completion_tokens':20,'total_tokens':120,'credit':1.14}}})
+(project/'builtin.jsonl').write_text(''.join(json.dumps(v)+'\n' for v in logs))
+(project/'pending.jsonl').write_text(json.dumps({'type':'function_call','sessionId':'pending','timestamp':at,'providerData':{'messageId':'b03-pending','requestModelId':'custom-local:b03/pending','model':'mock-pending','rawUsage':{'prompt_tokens':200,'completion_tokens':40,'total_tokens':240}}})+'\n')
+(folder/'synthetic-import-inputs.json').write_text(json.dumps({'project':str(project),'initial_builtin_events':5,'pending_custom_events':1,'input_files':['builtin.jsonl','pending.jsonl']})+'\n')
+
+profile_paths={'HOME':home,'USERPROFILE':home,'APPDATA':folder/'appdata',
+    'LOCALAPPDATA':folder/'localappdata','XDG_CONFIG_HOME':folder/'xdg-config',
+    'XDG_DATA_HOME':folder/'xdg-data','XDG_CACHE_HOME':folder/'xdg-cache',
+    'XDG_STATE_HOME':folder/'xdg-state','TMPDIR':folder/'tmp','TMP':folder/'tmp','TEMP':folder/'tmp'}
+for path in profile_paths.values():path.mkdir(parents=True,exist_ok=True)
+env=dict(os.environ,**{name:str(path) for name,path in profile_paths.items()},
+    WORKBUDDY_PROXY_CONFIG_DIR=str(config),WORKBUDDY_PROXY_UI_EVENT_METRICS='1',WORKBUDDY_PROXY_CATALOG_TEST_URL='http://127.0.0.1:%d/catalog'%server.server_port)
+# Native app lookup may launch a duplicate without CLI arguments. Keep that
+# LaunchServices path inside this same fixture instead of the default profile.
+launch_environment={name:env[name] for name in [*profile_paths,
+    'WORKBUDDY_PROXY_CONFIG_DIR','WORKBUDDY_PROXY_CATALOG_TEST_URL','WORKBUDDY_PROXY_UI_EVENT_METRICS']}
+log=(folder/'core.log').open('wb')
+shutil.copy2(options.exe or ROOT/'target/release/workbuddy-proxy', folder/'review-core')
+policy=write_profile(folder/'source-protection.sb',real_user_home())
+from workbuddy_import_ui_sandbox import profile_text,protected_locations
+policy.write_text(profile_text([*protected_locations(real_user_home()).values(),pathlib.Path(real_user_home())/'Library/LaunchAgents']))
+core=subprocess.Popen(sandbox_command(policy,folder/'review-core',['--headless','--config-dir',str(config),'--port',str(port)]),env=env,stdout=log,stderr=log)
+ui=None
+def cleanup():
+    if ui is not None and ui.poll() is None:
+        ui.terminate()
+        try: ui.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            ui.kill(); ui.wait(timeout=5)
+    if core.poll() is None:
+        try:
+            if not globals().get('key'):
+                raise RuntimeError('core key not ready')
+            request=urllib.request.Request('http://127.0.0.1:%d/_control/stop'%port,
+                data=b'{}',headers={'Content-Type':'application/json','Authorization':'Bearer '+key})
+            opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+            with opener.open(request,timeout=3) as response:response.read()
+            core.wait(timeout=5)
+        except (OSError,RuntimeError,subprocess.TimeoutExpired):
+            core.terminate()
+            try: core.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                core.kill(); core.wait(timeout=5)
+def stop_fixture(signum, frame):
+    raise SystemExit(128+signum)
+atexit.register(cleanup)
+signal.signal(signal.SIGTERM,stop_fixture)
+key=None
+for _ in range(1200):
+    if core.poll() is not None: raise RuntimeError('isolated core exited; inspect scoped core.log')
+    try: key=json.loads((config/'instance.json').read_text())['management_key'];break
+    except (OSError,KeyError,ValueError): time.sleep(.05)
+
+if not key:
+    core.terminate()
+    raise AssertionError('isolated core readiness timed out')
+
+def command(payload):
+    request=urllib.request.Request('http://127.0.0.1:%d/_control/action'%port,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+key})
+    with urllib.request.urlopen(request,timeout=10) as response: result=json.loads(response.read())
+    return json.loads(result['message'])
+for _ in range(1200):
+    try:
+        if command({'command':'stats_health'})['state']=='ready':break
+    except (OSError,ValueError,KeyError):pass
+    time.sleep(.05)
+# Test-only management boundary bridge. Core data, routing and updater code
+# remain the actual immutable binary. Controlled updater replies are UI-boundary
+# tests only; mode real forwards to the original public GitHub Core check.
+import http.client, hmac
+bridge_audit_lock=threading.Lock()
+class ManagementBridge(BaseHTTPRequestHandler):
+    def log_message(self,*args):pass
+    def do_POST(self):
+        if self.path not in ['/_control/action','/_control/stop']:
+            self.send_error(404);return
+        if not hmac.compare_digest(self.headers.get('Authorization',''),'Bearer '+key):
+            self.send_error(401);return
+        length=int(self.headers.get('Content-Length','0'))
+        if length<0 or length>1024*1024:self.send_error(413);return
+        body=self.rfile.read(length);payload=json.loads(body or b'{}');name=payload.get('command','stop')
+        mode=json.loads((folder/'management-mode.json').read_text()) if (folder/'management-mode.json').exists() else {}
+        update_mode=mode.get('update','real');status=200;controlled=False
+        if name=='language' and mode.get('language_failure'):
+            status=503;data=json.dumps({'message':'Synthetic language persistence failure'}).encode();controlled=True
+        elif name=='check_update' and update_mode!='real':
+            assert payload.get('force') is True
+            delay=min(max(float(mode.get('delay',1)),0),6);time.sleep(delay);controlled=True
+            if update_mode=='error':status=403;message='Update check HTTP 403'
+            elif update_mode=='invalid':message='{}'
+            else:
+                assert update_mode in ['latest','available']
+                tag='v0.5.7' if update_mode=='latest' else 'v0.5.8'
+                message=json.dumps({'tag':tag,'current':'0.5.7','available':update_mode=='available','url':'https://github.com/gloryhui/workbuddy-proxy/releases/tag/'+tag,'cached':False})
+            data=json.dumps({'message':message}).encode()
+        else:
+            conn=http.client.HTTPConnection('127.0.0.1',port,timeout=15)
+            try:
+                conn.request('POST',self.path,body,{'Content-Type':'application/json','Authorization':'Bearer '+key});response=conn.getresponse();status=response.status;data=response.read()
+            except (OSError,TimeoutError):status=503;data=b'{"message":"Fixture core unavailable"}'
+            finally:conn.close()
+        with bridge_audit_lock:
+            with (folder/'management-audit.jsonl').open('a') as audit:
+                audit.write(json.dumps({'at_ms':int(time.time()*1000),'command':name,'status':status,'controlled':controlled,'mode':update_mode if name=='check_update' else None,'language':payload.get('language') if name=='language' else None,'enabled':payload.get('enabled') if name=='autostart' else None,'force':payload.get('force') if name=='check_update' else None})+'\n')
+        try:
+            self.send_response(status);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
+        except (BrokenPipeError,ConnectionResetError):pass
+bridge_server=ThreadingHTTPServer(('127.0.0.1',0),ManagementBridge)
+threading.Thread(target=bridge_server.serve_forever,daemon=True).start()
+original_instance=json.loads((config/'instance.json').read_text());(folder/'instance-before-bridge-private.json').write_text(json.dumps(original_instance)+'\n');os.chmod(folder/'instance-before-bridge-private.json',0o600)
+bridged_instance=dict(original_instance,port=bridge_server.server_port)
+(config/'instance.json').write_text(json.dumps(bridged_instance)+'\n');os.chmod(config/'instance.json',0o600)
+(folder/'management-bridge.json').write_text(json.dumps({'pid':os.getpid(),'host':'127.0.0.1','core_port':port,'bridge_port':bridge_server.server_port,'core_pid':core.pid,'scope':'Only own synthetic instance.json endpoint redirected. Config port and Core unchanged; bridge forwards all real commands except explicitly controlled update/language fault cases. Controlled results are not GitHub/Core updater E2E.'},indent=2)+'\n')
+bundle=folder/'WorkBuddy Proxy B04 Review.app'; macos=bundle/'Contents/MacOS';macos.mkdir(parents=True)
+shutil.copy2(options.gpui or ROOT/'gpui/target/release/workbuddy-proxy-gpui',macos/'workbuddy-proxy-gpui')
+ui_env=bootstrap_environment(folder,policy,env) if options.guard_gui else env
+if options.guard_gui:
+    launch_environment.update({name:ui_env[name] for name in [
+        'DYLD_INSERT_LIBRARIES','WORKBUDDY_PROXY_QA_POLICY','WORKBUDDY_PROXY_QA_PROOF_DIR']})
+with (bundle/'Contents/Info.plist').open('wb') as file:
+    plistlib.dump({'CFBundleExecutable':'workbuddy-proxy-gpui','CFBundleIdentifier':'com.workbuddy.proxy.codexreview.t'+folder.name.removeprefix('ui-release-').replace('_','-'),'CFBundleName':'WorkBuddy Proxy B04 Review','CFBundleDisplayName':'WorkBuddy Proxy B04 Review','CFBundlePackageType':'APPL','NSHighResolutionCapable':True,'LSEnvironment':launch_environment},file)
+ui_code=macos/'workbuddy-proxy-gpui'
+signature_identity=None
+if options.sign_bundle:
+    subprocess.run(['codesign','--force','--sign','-',str(bundle)],check=True)
+    subprocess.run(['codesign','--verify','--strict',str(bundle)],check=True)
+    signature_identity=verify_code_identity(options.gpui or ROOT/'gpui/target/release/workbuddy-proxy-gpui',ui_code)
+    (folder/'signature-identity.json').write_text(json.dumps(signature_identity,indent=2)+'\n')
+ui_log=(folder/'gpui.log').open('wb')
+# Launch is delegated to CUA getApp, documented to start macOS apps in the background.
+# This fixture owns the Core child; CUA owns the UI child, so UI exit code cannot
+# be reaped here. Never report the missing PID sentinel as an actual exit code.
+(folder/'cua-launch-ready.json').write_text(json.dumps({'bundle':str(bundle),'bundle_id':'com.workbuddy.proxy.codexreview.t'+folder.name.removeprefix('ui-release-').replace('_','-'),'core_pid':core.pid,'port':port}))
+print(json.dumps({'cua_launch_ready':str(folder/'cua-launch-ready.json'),'core_pid':core.pid,'bundle':str(bundle)}),flush=True)
+for _ in range(6000):
+    if core.poll() is not None:raise RuntimeError('Core exited before CUA launch')
+    if (config/'gpui.json').exists():break
+    time.sleep(.1)
+else:raise RuntimeError('CUA launch timeout')
+class CuaOwnedUI:
+    def __init__(self,pid):self.pid=pid
+    def poll(self):
+        try:os.kill(self.pid,0);return None
+        except ProcessLookupError:return -10000
+    def wait(self,timeout=5):
+        deadline=time.monotonic()+timeout
+        while self.poll() is None:
+            if time.monotonic()>deadline:raise subprocess.TimeoutExpired('CUA-owned UI',timeout)
+            time.sleep(.05)
+        return -10000
+    def terminate(self):
+        if self.poll() is None:os.kill(self.pid,signal.SIGTERM)
+    def kill(self):
+        if self.poll() is None:os.kill(self.pid,signal.SIGKILL)
+ui=CuaOwnedUI(json.loads((config/'gpui.json').read_text())['pid'])
+proof=folder/'source-guard-proofs'/('%d.enforced'%ui.pid)
+for _ in range(1200):
+    if ui.poll() is not None:raise RuntimeError('protected GUI exited before readiness')
+    if (not options.guard_gui or proof.exists()) and (config/'gpui.json').exists():break
+    time.sleep(.05)
+else:raise RuntimeError('native GUI source protection was not verified')
+manifest={'folder':str(folder),'bundle':str(bundle),'core_pid':core.pid,'ui_pid':ui.pid,'fixture_pid':os.getpid(),'port':port,'bundle_id':'com.workbuddy.proxy.codexreview.t'+folder.name.removeprefix('ui-release-').replace('_','-'),'runtime_ui_binary':str(ui_code.relative_to(folder)),'sandbox_policy_sha256':hashlib.sha256(policy.read_bytes()).hexdigest(),'source_guard_library_sha256':hashlib.sha256((folder/'source-guard.dylib').read_bytes()).hexdigest() if options.guard_gui else None,'sandbox_ui_pid':ui.pid,'gui_kernel_guard':options.guard_gui,'native_binding_rule':'Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.','binary_sha256':{'core':hashlib.sha256((folder/'review-core').read_bytes()).hexdigest(),'ui':hashlib.sha256(ui_code.read_bytes()).hexdigest()},'synthetic_initial':{'providers':64 if options.full_providers else 2,'models':256 if options.full_models else 5,'requests':0}}
+manifest.update(copy_inheritance_fixture=options.copy_inheritance,complete_bundle_signed=options.sign_bundle,signature_identity=signature_identity)
+(folder/'fixture.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+(review/'ui-live-current.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+print(json.dumps(manifest,ensure_ascii=False),flush=True)
+try:
+    while core.poll() is None:
+        if (folder/'native-acceptance-finished').exists():break
+        if ui.poll() is not None and not options.keep_core_after_ui_exit:break
+        time.sleep(.1)
+finally:
+    terminal={'ui_exit_before_cleanup':None,'ui_pid_gone_before_cleanup':ui.poll() is not None,'ui_exit_code_note':'CUA owns UI; fixture can observe PID disappearance but cannot reap exit code','core_exit_before_cleanup':core.poll()}
+    cleanup()
+    bridge_server.shutdown()
+    bridge_server.server_close()
+    server.shutdown()
+    terminal.update(ui_exit_after_cleanup=None,ui_pid_gone_after_cleanup=ui.poll() is not None,core_exit_after_cleanup=core.poll())
+    (folder/'terminal-status.json').write_text(json.dumps(terminal,indent=2)+'\n')

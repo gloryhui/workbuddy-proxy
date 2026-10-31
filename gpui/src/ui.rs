@@ -349,6 +349,34 @@ impl Proxy {
             return;
         }
         self.capture(cx);
+        self.apply_language_view(code, window, cx);
+        self.send(
+            "language",
+            vec![json!({"command":"language", "language":code})],
+            cx,
+        );
+        if !self.busy {
+            self.restore_saved_language(None, window, cx);
+        }
+    }
+
+    fn restore_saved_language(
+        &mut self,
+        persisted: Option<&Config>,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
+        // A rejected save must not leave translated controls disagreeing with
+        // the checked choice. Prefer the backend's disk read after a reply;
+        // queue rejection has no write and keeps the last confirmed choice.
+        let saved = persisted
+            .map(|cfg| cfg.language.clone())
+            .unwrap_or_else(|| self.cfg.language.clone());
+        self.cfg.language = saved.clone();
+        self.apply_language_view(&saved, window, cx);
+    }
+
+    fn apply_language_view(&mut self, code: &str, window: &mut Window, cx: &mut Context<Self>) {
         self.zh = code == "zh"
             || (code == "auto" && sys_locale::get_locale().is_some_and(|s| s.starts_with("zh")));
         let zh = self.zh;
@@ -417,11 +445,6 @@ impl Proxy {
             state.update(cx, |s, cx| s.set_placeholder(hint.to_owned(), window, cx));
         }
         self.refresh_choices(window, cx);
-        self.send(
-            "language",
-            vec![json!({"command":"language", "language":code})],
-            cx,
-        );
     }
     fn refresh_choices(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         self.effort_select.update(cx, |s, cx| {
@@ -1557,6 +1580,9 @@ impl Proxy {
             cx.activate(true);
         }
         while let Ok(mut reply) = self.backend.replies.try_recv() {
+            if reply.tag == "language" && reply.result.is_err() {
+                self.restore_saved_language(reply.config.as_ref(), window, cx);
+            }
             let autostart_result = (reply.tag == "autostart").then(|| reply.result.is_ok());
             let update_result = (reply.tag == "check_update").then(|| reply.result.clone());
             if reply.tag == "workbuddy_check" {

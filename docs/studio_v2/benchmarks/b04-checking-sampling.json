@@ -1,0 +1,401 @@
+{
+  "groups": {
+    "wide": {
+      "selected_source": "checking-wide-sample-17.png",
+      "accepted_image": "104-1605-wide.png",
+      "selected_bytes_exact": true,
+      "samples": [
+        {
+          "file": "checking-wide-sample-00.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444802721384831,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-01.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444803325826466,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-02.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444803946013764,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-03.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444804587932673,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-04.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444805232101428,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-05.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444805866089133,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-06.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444806514932414,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-07.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444807166496084,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-08.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444807813627317,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-09.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444808429616309,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-10.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444809069428464,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-11.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444809721584724,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-12.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444810365912779,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-13.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444811009694290,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-14.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444811650749038,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-15.png",
+          "bytes": 570871,
+          "mtime_ns": 1793444812296480394,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "b0bcf962737746e113c5b8180e74c167c4a226643ac17d465bd5f37c62848d6e"
+        },
+        {
+          "file": "checking-wide-sample-16.png",
+          "bytes": 607153,
+          "mtime_ns": 1793444812921561938,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "140d3e6721245a780f85ecdd4b3d8630b4832531f0a27aa003db856160f6b777"
+        },
+        {
+          "file": "checking-wide-sample-17.png",
+          "bytes": 615854,
+          "mtime_ns": 1793444813569965309,
+          "pixels": [
+            2880,
+            1800
+          ],
+          "sha256": "4db9729f0aa75c539751bfc92b948f8d852cd0a0e0d74dac551da732b98d6abd"
+        }
+      ]
+    },
+    "small": {
+      "selected_source": "checking-small-sample-17.png",
+      "accepted_image": "104-1605-small.png",
+      "selected_bytes_exact": true,
+      "samples": [
+        {
+          "file": "checking-small-sample-00.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444983058137306,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-01.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444983680510143,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-02.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444984276083509,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-03.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444984887586291,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-04.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444985506857404,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-05.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444986099964051,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-06.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444986722150971,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-07.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444987324472080,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-08.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444987948970887,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-09.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444988575761080,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-10.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444989176446806,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-11.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444989787093875,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-12.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444990422255652,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-13.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444991040676635,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-14.png",
+          "bytes": 393683,
+          "mtime_ns": 1793444991639376227,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "ee7c633e49f806c6dc8296487dca11bb64ad5a4a662ec133725ba9b666e4660d"
+        },
+        {
+          "file": "checking-small-sample-15.png",
+          "bytes": 427652,
+          "mtime_ns": 1793444992248133119,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "5380cb0626c45176fb4c432e9c8eb463a3ffe6988937670b6a641ba8674ecec2"
+        },
+        {
+          "file": "checking-small-sample-16.png",
+          "bytes": 436662,
+          "mtime_ns": 1793444992850656855,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "1c10c5d409499adc15721ba8a2df0ba1f03c629a906a7c94538930d9467b8f28"
+        },
+        {
+          "file": "checking-small-sample-17.png",
+          "bytes": 436662,
+          "mtime_ns": 1793444993474012156,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "1c10c5d409499adc15721ba8a2df0ba1f03c629a906a7c94538930d9467b8f28"
+        },
+        {
+          "file": "checking-small-sample-18.png",
+          "bytes": 436662,
+          "mtime_ns": 1793444994078238525,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "1c10c5d409499adc15721ba8a2df0ba1f03c629a906a7c94538930d9467b8f28"
+        },
+        {
+          "file": "checking-small-sample-19.png",
+          "bytes": 436662,
+          "mtime_ns": 1793444994710030827,
+          "pixels": [
+            2200,
+            1400
+          ],
+          "sha256": "1c10c5d409499adc15721ba8a2df0ba1f03c629a906a7c94538930d9467b8f28"
+        }
+      ]
+    }
+  },
+  "method": "Prearmed own-window native screencapture sampling; normal CUA click; controlled bridge6s delay; no pause/redraw/transform. Root visually confirmed both selected images show actual Checking.",
+  "additional_controlled_latest_checks": 2,
+  "archive": "Selected original bytes retained as formal PNG, result-state diagnostics retained separately. Non-selected samples inventoried here and removed with owned temp root after terminal checks."
+}

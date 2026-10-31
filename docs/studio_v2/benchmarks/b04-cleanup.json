@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-31T19:26:52.385121+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx",
+  "removed": true,
+  "command": "rm -r -- exact literal canonical target",
+  "exit_code": 0,
+  "files_removed": 440,
+  "logical_bytes_removed": 403539340,
+  "free_before_bytes": 33220464640,
+  "free_after_bytes": 33626402816,
+  "observed_apfs_free_delta_bytes": 405938176,
+  "current_round_retained_bytes": 0,
+  "retained": "SharedCargo and immutable Core46 retained for Goal; older explicitly rejected roots not retried. Only this round owned target removed.",
+  "scope": "Observed APFS free delta can include concurrent activity; not equated with logical file sizes."
+}

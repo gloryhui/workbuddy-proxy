@@ -1,0 +1,56 @@
+from pathlib import Path
+import copy,datetime,hashlib,json,os,plistlib,sqlite3,sys,urllib.request
+r=Path(__file__).resolve().parent;f=Path(sys.argv[1]).resolve();stage=sys.argv[2];assert f.parent==r
+ready=json.loads((f/'cua-launch-ready.json').read_text());key=json.loads((f/'config/instance.json').read_text())['management_key'];cfg=json.loads((f/'config/config.json').read_text());raw=(f/'config/config.json').read_bytes();opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+def call(name):
+ q=urllib.request.Request('http://127.0.0.1:%d/_control/action'%ready['port'],data=json.dumps({'command':name}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+key})
+ with opener.open(q,timeout=12) as z:return json.loads(json.loads(z.read())['message'])
+def normalize(v):
+ v=copy.deepcopy(v)
+ for p in v['providers']:
+  p.setdefault('protocol','openai_chat');p.setdefault('protocol_settings',{'authentication':'protocol_default','anthropic_version':'2023-06-01','default_max_output_tokens':4096,'reasoning_profile':{'mode':'none','budgets':{},'levels':{}},'responses_efforts':{}})
+  for m in p['models']:m.setdefault('capabilities',None)
+ return v
+initial=json.loads((f/'config-before.json').read_text());old=normalize(initial);current=normalize(cfg)
+assert {k:v for k,v in old.items() if k not in ['language','autostart']}=={k:v for k,v in current.items() if k not in ['language','autostart']},'Business config changed outside language/autostart'
+checkpoint=f/'b04-checkpoint-private.json';original=f/'history-before-private.json';history=json.loads(original.read_text());health=call('stats_health');assert health['state']=='ready'
+settings=call('stats_settings_get');settings={k:settings[k] for k in ['enabled','retention_days','default_currency','revision']};prices={v['rule_id']:{k:x for k,x in v.items() if k!='referenced'} for v in call('stats_prices_list')['items']}
+with sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True) as db:
+ db.row_factory=sqlite3.Row;db.execute('BEGIN');actual={t:{v['request_id']:dict(v) for v in db.execute('SELECT * FROM '+t)} for t in history}
+for table,rows in history.items():assert all(actual[table].get(k)==v for k,v in rows.items()),('history changed',table,stage)
+assert len(actual['usage_requests'])==len(actual['usage_costs']) and len(actual['usage_requests']) in [14,15]
+for table,rows in actual.items():
+ for k,v in rows.items():history[table].setdefault(k,v)
+original.write_text(json.dumps(history)+'\n');os.chmod(original,0o600)
+appearance=f/'config/appearance.json'
+if appearance.is_file():skin=json.loads(appearance.read_text())['skin'];appearance_fault=False
+else:
+ assert appearance.is_dir() and (f/'appearance-fault.json').exists();skin=json.loads((f/'config/appearance-before-fault.json').read_text())['skin'];appearance_fault=True
+agent=f/'home/Library/LaunchAgents/io.github.gloryhui.workbuddy-proxy.autostart.plist'
+if cfg['autostart']:
+ assert agent.is_file();plist=plistlib.loads(agent.read_bytes());assert plist['ProgramArguments']==[str(f/'review-core'),'--autostart','--config-dir',str(f/'config')];assert plist['RunAtLoad'] and not plist.get('KeepAlive',False)
+else:assert not agent.exists()
+if stage=='initial':
+ assert not checkpoint.exists();assert cfg['language']=='zh' and not cfg['autostart'] and skin=='studio_indigo';assert len(prices)==3
+ checkpoint.write_text(json.dumps({'language':cfg['language'],'autostart':cfg['autostart'],'skin':skin,'settings':settings,'prices':prices,'raw_sha256':hashlib.sha256(raw).hexdigest()})+'\n');os.chmod(checkpoint,0o600)
+prev=json.loads(checkpoint.read_text());lang={'language_en_saved':'en','language_auto_saved':'auto','language_zh_saved':'zh','language_final_zh_saved':'zh'};auto={'autostart_on_saved':True,'autostart_off_saved':False,'autostart_retry_on_saved':True,'autostart_final_off_saved':False};skins={'skin_'+v+'_saved':v for v in ['monochrome','blue','violet','rose','amber','teal','studio_indigo']}
+skins.update({'capture_62_mono_saved':'monochrome','capture_62_studio_restored_saved':'studio_indigo'})
+assert settings==prev['settings'] and prices==prev['prices'],'Stats settings/prices changed'
+assert cfg['language']==lang.get(stage,prev['language']) and cfg['autostart']==auto.get(stage,prev['autostart']) and skin==skins.get(stage,prev['skin']),('undeclared persisted mutation',stage,cfg['language'],cfg['autostart'],skin)
+if stage not in lang and stage not in auto:assert hashlib.sha256(raw).hexdigest()==prev['raw_sha256'],'Unexpected config rewrite'
+if stage in lang or stage in auto or stage in skins:
+ checkpoint.write_text(json.dumps({'language':cfg['language'],'autostart':cfg['autostart'],'skin':skin,'settings':settings,'prices':prices,'raw_sha256':hashlib.sha256(raw).hexdigest()})+'\n')
+wire=[json.loads(v) for v in (f/'management-audit.jsonl').read_text().splitlines()] if (f/'management-audit.jsonl').exists() else []
+if stage=='language_failed':
+ lang_wire=[v for v in wire if v['command']=='language'];assert lang_wire and lang_wire[-1]['status']==503 and lang_wire[-1]['controlled'] and cfg['language']=='zh'
+if stage=='language_selected_noop':
+ prior=json.loads((f/'stage-proofs/language_zh_saved.json').read_text());assert sum(v['command']=='language' for v in wire)==prior['wire_counts']['language']
+if stage=='proxy_liveness':assert len(actual['usage_requests'])==15
+out={'at':datetime.datetime.now().astimezone().isoformat(),'stage':stage,'core_pid':ready['core_pid'],'core_health':health['state'],'config_sha256':hashlib.sha256(raw).hexdigest(),'language':cfg['language'],'autostart':cfg['autostart'],'skin':skin,'appearance_fault':appearance_fault,'isolated_launchagent_present':agent.exists(),'requests':len(actual['usage_requests']),'costs':len(actual['usage_costs']),'history':{t:{'rows':len(v),'all_fields_preserved':True,'sha256':hashlib.sha256(json.dumps(v,sort_keys=True).encode()).hexdigest()} for t,v in history.items()},'stats_settings_unchanged':settings,'prices_unchanged':len(prices),'wire_counts':{n:sum(v['command']==n for v in wire) for n in ['language','autostart','check_update']},'scope':'Read-only real Core/SQL and own files. Only declared native language/autostart/skin saves accepted; original business config retained after existing9Serde defaults. Update bridge cases separately declared, not public GitHub E2E.'}
+(f/'stage-proofs').mkdir(exist_ok=True);(f/'stage-proofs'/(stage+'.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:out[k] for k in ['stage','language','autostart','skin','requests','costs','wire_counts']},ensure_ascii=False))
+if stage=='closed':
+ pid=json.loads((f/'fixture.json').read_text())['ui_pid']
+ try:os.kill(pid,0)
+ except ProcessLookupError:pass
+ else:raise AssertionError('Own UI still live')
+ (f/'native-acceptance-finished').write_text('B04 native complete\n')

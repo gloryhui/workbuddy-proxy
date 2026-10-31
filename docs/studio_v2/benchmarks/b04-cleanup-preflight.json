@@ -1,0 +1,5400 @@
+{
+  "at": "2026-10-31T19:26:15.831296+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx",
+  "repo": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "type": "owned dedicated test temporary directory",
+  "provenance": {
+    "created_at": "2026-10-31T18:09:22.991013+08:00",
+    "created_by_pid": 20221,
+    "uid": 501,
+    "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx",
+    "repo": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+    "task": "B04 toolbar/window/language/appearance; this thread created dedicated temporary root",
+    "source_head": "c6d49dd49bc33020bdcca8d1394a2ca42d4a1fa1",
+    "baseline_ui_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+    "shared_cargo_cache": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target",
+    "reused_core": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core",
+    "free_at_creation_bytes": 32762990592
+  },
+  "regenerable": "Synthetic isolated configs/SQL/PNG samples/app/binary copies and reviewed build/test helpers created in this round. Final evidence archived separately; sharedCargo and fixedCore outside target.",
+  "parents": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx",
+      "uid": 501,
+      "device": 16777233,
+      "inode": 165200968,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "inode": 264519,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "inode": 264516,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "inode": 264515,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "inode": 152812723,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "inode": 152811959,
+      "mount": false
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "inode": 152811539,
+      "mount": false
+    },
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "inode": 2,
+      "mount": true
+    }
+  ],
+  "process_pids_confirmed_gone": [
+    26481,
+    26482,
+    26948,
+    32083,
+    32084,
+    32859,
+    43711,
+    43712,
+    43929,
+    44665,
+    44670,
+    44770,
+    45983,
+    45984,
+    46076,
+    46525,
+    46526,
+    46621
+  ],
+  "other_process_refs": [],
+  "lsof": {
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "entries": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx",
+      "type": "directory",
+      "uid": 501,
+      "mode": 448,
+      "inode": 165200968,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445963840711795
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/asset-audit-initial.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165206938,
+      "device": 16777233,
+      "size": 11105,
+      "mtime_ns": 1793442433405110649
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/asset-audit.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211522,
+      "device": 16777233,
+      "size": 11275,
+      "mtime_ns": 1793442939439386307
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205457,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442527425659967
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/WorkBuddy Proxy B04 Review.app",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205491,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442352009075701
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/WorkBuddy Proxy B04 Review.app/Contents",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205492,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442352035863005
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/WorkBuddy Proxy B04 Review.app/Contents/Info.plist",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205497,
+      "device": 16777233,
+      "size": 2602,
+      "mtime_ns": 1793442352036035799
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/WorkBuddy Proxy B04 Review.app/Contents/MacOS",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205493,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442352009223744
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/WorkBuddy Proxy B04 Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205494,
+      "device": 16777233,
+      "size": 42508752,
+      "mtime_ns": 1793435413259788602
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/appdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205469,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351498125839
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 448,
+      "inode": 165205458,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442526827220380
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/appearance.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205463,
+      "device": 16777233,
+      "size": 39,
+      "mtime_ns": 1793442351497647999
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/config.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205464,
+      "device": 16777233,
+      "size": 1052,
+      "mtime_ns": 1793442351497749542
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/gpui-drafts.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165207461,
+      "device": 16777233,
+      "size": 2174,
+      "mtime_ns": 1793442512034239639
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/gpui.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205947,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442422096383764
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/instance.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205479,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351920234288
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/model-catalog.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205488,
+      "device": 16777233,
+      "size": 661,
+      "mtime_ns": 1793442351977733538
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/startup.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205485,
+      "device": 16777233,
+      "size": 49,
+      "mtime_ns": 1793442351970008801
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/usage.sqlite3",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205481,
+      "device": 16777233,
+      "size": 237568,
+      "mtime_ns": 1793442526817742201
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/usage.sqlite3-shm",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205484,
+      "device": 16777233,
+      "size": 32768,
+      "mtime_ns": 1793442565041603499
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config/usage.sqlite3-wal",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205483,
+      "device": 16777233,
+      "size": 1615072,
+      "mtime_ns": 1793442526815319791
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/config-before.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205504,
+      "device": 16777233,
+      "size": 1507,
+      "mtime_ns": 1793442352132176192
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/core.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205476,
+      "device": 16777233,
+      "size": 41,
+      "mtime_ns": 1793442351970034676
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/cua-launch-ready.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205499,
+      "device": 16777233,
+      "size": 243,
+      "mtime_ns": 1793442352036223510
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/fixture.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205982,
+      "device": 16777233,
+      "size": 1278,
+      "mtime_ns": 1793442422738799280
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/gpui.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205498,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442352036077758
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/history-before-private.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205505,
+      "device": 16777233,
+      "size": 25564,
+      "mtime_ns": 1793442352161565535
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/home",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205459,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351491530869
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/home/.workbuddy",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205460,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351497806835
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/home/.workbuddy/models.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205465,
+      "device": 16777233,
+      "size": 2,
+      "mtime_ns": 1793442351497838543
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/home/.workbuddy/projects",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205461,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351491602286
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/home/.workbuddy/projects/demo",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205462,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351497968254
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/home/.workbuddy/projects/demo/builtin.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205466,
+      "device": 16777233,
+      "size": 1325,
+      "mtime_ns": 1793442351497930170
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/home/.workbuddy/projects/demo/pending.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205467,
+      "device": 16777233,
+      "size": 277,
+      "mtime_ns": 1793442351498001171
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/instance-before-bridge-private.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165205489,
+      "device": 16777233,
+      "size": 100,
+      "mtime_ns": 1793442352008748987
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/language-failure-menu.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165207153,
+      "device": 16777233,
+      "size": 642023,
+      "mtime_ns": 1793442470398938748
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/localappdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205470,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351498164173
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/look-summary.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165207594,
+      "device": 16777233,
+      "size": 1296,
+      "mtime_ns": 1793442526733935778
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/management-audit.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205981,
+      "device": 16777233,
+      "size": 22986,
+      "mtime_ns": 1793442510784931663
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/management-bridge.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205490,
+      "device": 16777233,
+      "size": 353,
+      "mtime_ns": 1793442352008968990
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/management-mode.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205500,
+      "device": 16777233,
+      "size": 59,
+      "mtime_ns": 1793442352055580874
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/mock-gets.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205486,
+      "device": 16777233,
+      "size": 110,
+      "mtime_ns": 1793442352073147129
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/mock-posts.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205502,
+      "device": 16777233,
+      "size": 1066,
+      "mtime_ns": 1793442352111647520
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/native-acceptance-finished",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165207596,
+      "device": 16777233,
+      "size": 5,
+      "mtime_ns": 1793442526734111823
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/pre-gui-proof.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205503,
+      "device": 16777233,
+      "size": 2817,
+      "mtime_ns": 1793442352132073816
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/review-core",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205477,
+      "device": 16777233,
+      "size": 8428096,
+      "mtime_ns": 1793196093796414001
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/source-protection.sb",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205478,
+      "device": 16777233,
+      "size": 327,
+      "mtime_ns": 1793442351504628225
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/synthetic-import-inputs.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205468,
+      "device": 16777233,
+      "size": 251,
+      "mtime_ns": 1793442351498071964
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/terminal-status.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165207599,
+      "device": 16777233,
+      "size": 316,
+      "mtime_ns": 1793442527426152016
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/tmp",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205475,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351498357259
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/xdg-cache",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205473,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351498280758
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/xdg-config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205471,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351498204465
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/xdg-data",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205472,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351498242466
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-look/xdg-state",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205474,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442351498317467
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211592,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445171104498634
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-1378-small.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221525,
+      "device": 16777233,
+      "size": 430611,
+      "mtime_ns": 1793444202699730822
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-1378-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221734,
+      "device": 16777233,
+      "size": 610637,
+      "mtime_ns": 1793444227248149902
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-1605-small.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224872,
+      "device": 16777233,
+      "size": 436662,
+      "mtime_ns": 1793445018321483227
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-1605-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224099,
+      "device": 16777233,
+      "size": 615854,
+      "mtime_ns": 1793444857015699246
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-1823-small.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165218889,
+      "device": 16777233,
+      "size": 428581,
+      "mtime_ns": 1793443945345474133
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-1823-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165218772,
+      "device": 16777233,
+      "size": 620432,
+      "mtime_ns": 1793443919164566637
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-2046-small.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224983,
+      "device": 16777233,
+      "size": 438873,
+      "mtime_ns": 1793445056625545682
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/104-2046-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223063,
+      "device": 16777233,
+      "size": 614869,
+      "mtime_ns": 1793444590361171081
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/62-308-small-menu-diagnostic.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223343,
+      "device": 16777233,
+      "size": 410507,
+      "mtime_ns": 1793444661723600808
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/62-308-small.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224500,
+      "device": 16777233,
+      "size": 395326,
+      "mtime_ns": 1793444948316285746
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/62-308-wide-menu-diagnostic.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223342,
+      "device": 16777233,
+      "size": 591881,
+      "mtime_ns": 1793444661722715396
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/62-308-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223423,
+      "device": 16777233,
+      "size": 571991,
+      "mtime_ns": 1793444696453950113
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/64-335-small.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220771,
+      "device": 16777233,
+      "size": 463719,
+      "mtime_ns": 1793444129613484229
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/64-335-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220699,
+      "device": 16777233,
+      "size": 638071,
+      "mtime_ns": 1793444108123208590
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/WorkBuddy Proxy B04 Review.app",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211628,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442953180055505
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/WorkBuddy Proxy B04 Review.app/Contents",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211629,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442953208788171
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/WorkBuddy Proxy B04 Review.app/Contents/Info.plist",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211632,
+      "device": 16777233,
+      "size": 2602,
+      "mtime_ns": 1793442953208922465
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/WorkBuddy Proxy B04 Review.app/Contents/MacOS",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211630,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442953180198840
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/WorkBuddy Proxy B04 Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211631,
+      "device": 16777233,
+      "size": 42508768,
+      "mtime_ns": 1793442642234884771
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/appdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211604,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727436947
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/appearance-fault.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220877,
+      "device": 16777233,
+      "size": 455,
+      "mtime_ns": 1793444143339887581
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/b04-checkpoint-private.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165213367,
+      "device": 16777233,
+      "size": 1805,
+      "mtime_ns": 1793444747018344194
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-00.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224640,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444983058137306
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-01.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224645,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444983680510143
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-02.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224651,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444984276083509
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-03.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224656,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444984887586291
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-04.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224662,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444985506857404
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-05.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224669,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444986099964051
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-06.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224674,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444986722150971
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-07.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224679,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444987324472080
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-08.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224685,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444987948970887
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-09.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224692,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444988575761080
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-10.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224700,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444989176446806
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-11.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224709,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444989787093875
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-12.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224717,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444990422255652
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-13.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224722,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444991040676635
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-14.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224727,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444991639376227
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-15.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224733,
+      "device": 16777233,
+      "size": 427652,
+      "mtime_ns": 1793444992248133119
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-16.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224749,
+      "device": 16777233,
+      "size": 436662,
+      "mtime_ns": 1793444992850656855
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-17.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224755,
+      "device": 16777233,
+      "size": 436662,
+      "mtime_ns": 1793444993474012156
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-18.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224762,
+      "device": 16777233,
+      "size": 436662,
+      "mtime_ns": 1793444994078238525
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-small-sample-19.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224768,
+      "device": 16777233,
+      "size": 436662,
+      "mtime_ns": 1793444994710030827
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-00.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223672,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444802721384831
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-01.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223684,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444803325826466
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-02.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223689,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444803946013764
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-03.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223697,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444804587932673
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-04.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223702,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444805232101428
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-05.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223713,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444805866089133
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-06.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223722,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444806514932414
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-07.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223728,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444807166496084
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-08.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223734,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444807813627317
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-09.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223743,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444808429616309
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-10.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223755,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444809069428464
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-11.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223761,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444809721584724
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-12.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223769,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444810365912779
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-13.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223775,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444811009694290
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-14.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223780,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444811650749038
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-15.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223787,
+      "device": 16777233,
+      "size": 570871,
+      "mtime_ns": 1793444812296480394
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-16.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223800,
+      "device": 16777233,
+      "size": 607153,
+      "mtime_ns": 1793444812921561938
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/checking-wide-sample-17.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223809,
+      "device": 16777233,
+      "size": 615854,
+      "mtime_ns": 1793444813569965309
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 448,
+      "inode": 165211593,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445170403464021
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/appearance-blocker-retained",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165220876,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793444143339738412
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/appearance.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165224552,
+      "device": 16777233,
+      "size": 46,
+      "mtime_ns": 1793444964190563652
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/config.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165221941,
+      "device": 16777233,
+      "size": 2369,
+      "mtime_ns": 1793444294601958193
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/gpui-drafts.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165225365,
+      "device": 16777233,
+      "size": 2174,
+      "mtime_ns": 1793445151093569032
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/gpui.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165212482,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793443075929028573
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/instance.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211614,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442953095324985
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/model-catalog.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165211625,
+      "device": 16777233,
+      "size": 661,
+      "mtime_ns": 1793442953150431617
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/startup.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211622,
+      "device": 16777233,
+      "size": 49,
+      "mtime_ns": 1793442953142136205
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/statistics-view.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165218385,
+      "device": 16777233,
+      "size": 377,
+      "mtime_ns": 1793443899716448164
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/update-cache.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165222881,
+      "device": 16777233,
+      "size": 50,
+      "mtime_ns": 1793444547592708015
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/usage.sqlite3",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165211618,
+      "device": 16777233,
+      "size": 237568,
+      "mtime_ns": 1793445170394447100
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/usage.sqlite3-shm",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165211621,
+      "device": 16777233,
+      "size": 32768,
+      "mtime_ns": 1793442953136304871
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/usage.sqlite3-wal",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165211620,
+      "device": 16777233,
+      "size": 1693352,
+      "mtime_ns": 1793445170392349964
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config-before.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165211639,
+      "device": 16777233,
+      "size": 1507,
+      "mtime_ns": 1793442953314141281
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/core.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211611,
+      "device": 16777233,
+      "size": 41,
+      "mtime_ns": 1793442953142153664
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/cua-launch-ready.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211634,
+      "device": 16777233,
+      "size": 243,
+      "mtime_ns": 1793442953209080134
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-appearance_fault.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220878,
+      "device": 16777233,
+      "size": 572,
+      "mtime_ns": 1793444143340033957
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-appearance_repair.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221144,
+      "device": 16777233,
+      "size": 282,
+      "mtime_ns": 1793444163143537312
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-autostart_fault.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221851,
+      "device": 16777233,
+      "size": 347,
+      "mtime_ns": 1793444254220782302
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-autostart_repair.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221894,
+      "device": 16777233,
+      "size": 270,
+      "mtime_ns": 1793444273133973228
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-checking_capture_small.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224598,
+      "device": 16777233,
+      "size": 321,
+      "mtime_ns": 1793444973678661735
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-checking_capture_wide.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223623,
+      "device": 16777233,
+      "size": 320,
+      "mtime_ns": 1793444795188235211
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-final_proxy.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223533,
+      "device": 16777233,
+      "size": 242,
+      "mtime_ns": 1793444762359531483
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-language_fault.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217181,
+      "device": 16777233,
+      "size": 310,
+      "mtime_ns": 1793443681764176894
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-language_ok.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217434,
+      "device": 16777233,
+      "size": 308,
+      "mtime_ns": 1793443749023166548
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-upd_available.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222260,
+      "device": 16777233,
+      "size": 315,
+      "mtime_ns": 1793444385341548136
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-upd_error.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222332,
+      "device": 16777233,
+      "size": 307,
+      "mtime_ns": 1793444428478381592
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-upd_invalid.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222403,
+      "device": 16777233,
+      "size": 311,
+      "mtime_ns": 1793444463862767870
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-upd_late.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222587,
+      "device": 16777233,
+      "size": 307,
+      "mtime_ns": 1793444504427388451
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-upd_latest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221995,
+      "device": 16777233,
+      "size": 309,
+      "mtime_ns": 1793444316796791926
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture-action-upd_real.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222856,
+      "device": 16777233,
+      "size": 305,
+      "mtime_ns": 1793444536249749007
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/fixture.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165212552,
+      "device": 16777233,
+      "size": 1278,
+      "mtime_ns": 1793443076773727853
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/gpui.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211633,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442953208965132
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/history-before-private.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165211640,
+      "device": 16777233,
+      "size": 27437,
+      "mtime_ns": 1793445170267124535
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211594,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793444188664413405
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/.workbuddy",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211595,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727098776
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/.workbuddy/models.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211600,
+      "device": 16777233,
+      "size": 2,
+      "mtime_ns": 1793442952727128526
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/.workbuddy/projects",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211596,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952703830313
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/.workbuddy/projects/demo",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211597,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727264361
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/.workbuddy/projects/demo/builtin.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211601,
+      "device": 16777233,
+      "size": 1325,
+      "mtime_ns": 1793442952727221319
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/.workbuddy/projects/demo/pending.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211602,
+      "device": 16777233,
+      "size": 277,
+      "mtime_ns": 1793442952727292445
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/Library",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165221353,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793444273133795601
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/Library/LaunchAgents",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165221354,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793444294607196369
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/home/Library/LaunchAgents-blocker-retained",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221850,
+      "device": 16777233,
+      "size": 31,
+      "mtime_ns": 1793444254220618759
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/instance-before-bridge-private.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165211626,
+      "device": 16777233,
+      "size": 100,
+      "mtime_ns": 1793442953179759417
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/language-failed-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217386,
+      "device": 16777233,
+      "size": 615862,
+      "mtime_ns": 1793443720987924218
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/localappdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211605,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727478239
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/management-audit.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165212551,
+      "device": 16777233,
+      "size": 233670,
+      "mtime_ns": 1793445150787250972
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/management-bridge.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211627,
+      "device": 16777233,
+      "size": 353,
+      "mtime_ns": 1793442953179947045
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/management-mode.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211635,
+      "device": 16777233,
+      "size": 62,
+      "mtime_ns": 1793444973678503859
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/mock-gets.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211623,
+      "device": 16777233,
+      "size": 110,
+      "mtime_ns": 1793442953244976320
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/mock-posts.jsonl",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211637,
+      "device": 16777233,
+      "size": 1150,
+      "mtime_ns": 1793444762358690021
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/native-acceptance-finished",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225528,
+      "device": 16777233,
+      "size": 20,
+      "mtime_ns": 1793445170271166639
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/native-gui.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225322,
+      "device": 16777233,
+      "size": 5927,
+      "mtime_ns": 1793445179750556844
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/pre-gui-proof.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211638,
+      "device": 16777233,
+      "size": 2817,
+      "mtime_ns": 1793442953314027529
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/resize-small-probe.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224344,
+      "device": 16777233,
+      "size": 393683,
+      "mtime_ns": 1793444906538241595
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/review-core",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211612,
+      "device": 16777233,
+      "size": 8428096,
+      "mtime_ns": 1793196093796414001
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/source-protection.sb",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211613,
+      "device": 16777233,
+      "size": 327,
+      "mtime_ns": 1793442952732196933
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165213368,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445170270375093
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/autostart_failed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221884,
+      "device": 16777233,
+      "size": 1223,
+      "mtime_ns": 1793444267026865643
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/autostart_final_off_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221951,
+      "device": 16777233,
+      "size": 1232,
+      "mtime_ns": 1793444301780738041
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/autostart_off_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221773,
+      "device": 16777233,
+      "size": 1226,
+      "mtime_ns": 1793444241475507464
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/autostart_on_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221457,
+      "device": 16777233,
+      "size": 1223,
+      "mtime_ns": 1793444196022403941
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/autostart_retry_on_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221929,
+      "device": 16777233,
+      "size": 1229,
+      "mtime_ns": 1793444287739629068
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/capture_62_mono_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223406,
+      "device": 16777233,
+      "size": 1225,
+      "mtime_ns": 1793444688756795107
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/capture_62_studio_restored_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223513,
+      "device": 16777233,
+      "size": 1239,
+      "mtime_ns": 1793444747020252326
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/closed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225527,
+      "device": 16777233,
+      "size": 1213,
+      "mtime_ns": 1793445170270908179
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/final_readback.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223526,
+      "device": 16777233,
+      "size": 1221,
+      "mtime_ns": 1793445101754957907
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/initial.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165213369,
+      "device": 16777233,
+      "size": 1214,
+      "mtime_ns": 1793443081296055998
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/language_auto_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217987,
+      "device": 16777233,
+      "size": 1228,
+      "mtime_ns": 1793443851543926559
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/language_complete.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165219086,
+      "device": 16777233,
+      "size": 1224,
+      "mtime_ns": 1793443968375073435
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/language_en_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217801,
+      "device": 16777233,
+      "size": 1224,
+      "mtime_ns": 1793443816061105564
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/language_failed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217413,
+      "device": 16777233,
+      "size": 1222,
+      "mtime_ns": 1793443742292070972
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/language_selected_noop.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165218270,
+      "device": 16777233,
+      "size": 1229,
+      "mtime_ns": 1793443887654526214
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/language_zh_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165218107,
+      "device": 16777233,
+      "size": 1224,
+      "mtime_ns": 1793443869852863037
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/proxy_liveness.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223581,
+      "device": 16777233,
+      "size": 1221,
+      "mtime_ns": 1793444771417444783
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_amber_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220592,
+      "device": 16777233,
+      "size": 1215,
+      "mtime_ns": 1793444076206512292
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_blue_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165219982,
+      "device": 16777233,
+      "size": 1213,
+      "mtime_ns": 1793444036782438515
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_monochrome_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165219171,
+      "device": 16777233,
+      "size": 1225,
+      "mtime_ns": 1793443993352963155
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_repaired.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221188,
+      "device": 16777233,
+      "size": 1220,
+      "mtime_ns": 1793444169751329230
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_rose_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220476,
+      "device": 16777233,
+      "size": 1213,
+      "mtime_ns": 1793444063467892310
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_save_failed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221072,
+      "device": 16777233,
+      "size": 1222,
+      "mtime_ns": 1793444157032625565
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_studio_indigo_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220662,
+      "device": 16777233,
+      "size": 1231,
+      "mtime_ns": 1793444102030457352
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_teal_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220631,
+      "device": 16777233,
+      "size": 1213,
+      "mtime_ns": 1793444089271228588
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/skin_violet_saved.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165220340,
+      "device": 16777233,
+      "size": 1217,
+      "mtime_ns": 1793444051082938076
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/toolbar_window_complete.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223313,
+      "device": 16777233,
+      "size": 1230,
+      "mtime_ns": 1793444653799704464
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/update_available.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222315,
+      "device": 16777233,
+      "size": 1223,
+      "mtime_ns": 1793444415656200053
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/update_closed_late.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222754,
+      "device": 16777233,
+      "size": 1225,
+      "mtime_ns": 1793444520654417903
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/update_error.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222365,
+      "device": 16777233,
+      "size": 1219,
+      "mtime_ns": 1793444442016098872
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/update_invalid.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222433,
+      "device": 16777233,
+      "size": 1221,
+      "mtime_ns": 1793444479557673268
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/update_latest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222122,
+      "device": 16777233,
+      "size": 1220,
+      "mtime_ns": 1793444352109894016
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/stage-proofs/update_real.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222896,
+      "device": 16777233,
+      "size": 1218,
+      "mtime_ns": 1793444551410558082
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/synthetic-import-inputs.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211603,
+      "device": 16777233,
+      "size": 251,
+      "mtime_ns": 1793442952727371946
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/terminal-status.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225541,
+      "device": 16777233,
+      "size": 316,
+      "mtime_ns": 1793445171104575509
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/tmp",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211610,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727660242
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/update-available-small-observed.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222289,
+      "device": 16777233,
+      "size": 442558,
+      "mtime_ns": 1793444400379798695
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/update-latest-wide.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165222025,
+      "device": 16777233,
+      "size": 616876,
+      "mtime_ns": 1793444330227734384
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/xdg-cache",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211608,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727588408
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/xdg-config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211606,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727517698
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/xdg-data",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211607,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727552990
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/xdg-state",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165211609,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442952727622700
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/baseline-ui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165200971,
+      "device": 16777233,
+      "size": 42508752,
+      "mtime_ns": 1793435413259788602
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1",
+      "type": "directory",
+      "uid": 501,
+      "mode": 448,
+      "inode": 165226946,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633470595292
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/WorkBuddy Proxy Toolbar Bench current1.app",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226977,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445377090389733
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/WorkBuddy Proxy Toolbar Bench current1.app/Contents",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226978,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445377123961362
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/WorkBuddy Proxy Toolbar Bench current1.app/Contents/Info.plist",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226981,
+      "device": 16777233,
+      "size": 2563,
+      "mtime_ns": 1793445377124038988
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/WorkBuddy Proxy Toolbar Bench current1.app/Contents/MacOS",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226979,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445377090530650
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/WorkBuddy Proxy Toolbar Bench current1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226980,
+      "device": 16777233,
+      "size": 42508768,
+      "mtime_ns": 1793442642234884771
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/appdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226948,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376092798860
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/appearance.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226956,
+      "device": 16777233,
+      "size": 39,
+      "mtime_ns": 1793445376095344206
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/config.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165227129,
+      "device": 16777233,
+      "size": 15822,
+      "mtime_ns": 1793445392354916401
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/config.pre-v0.3-a65a196615a2349103c6d0b6f37d7c99a48e2d6c087998b6.bak",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165226963,
+      "device": 16777233,
+      "size": 170,
+      "mtime_ns": 1793445376208238156
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/gpui-drafts.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165228547,
+      "device": 16777233,
+      "size": 13329,
+      "mtime_ns": 1793445633419987208
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/gpui-stop.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228546,
+      "device": 16777233,
+      "size": 2,
+      "mtime_ns": 1793445633470470709
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/gpui.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165227086,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445391849326951
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/home",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226947,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376092677109
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/instance.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226962,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376220870513
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/language-before.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228424,
+      "device": 16777233,
+      "size": 639355,
+      "mtime_ns": 1793445599173173343
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/localappdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226949,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376092853444
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/matched-condition.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228544,
+      "device": 16777233,
+      "size": 972,
+      "mtime_ns": 1793445631200135488
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/mock-port",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226959,
+      "device": 16777233,
+      "size": 5,
+      "mtime_ns": 1793445376171292010
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/mock-start.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226957,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376095918751
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/model-catalog.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165226971,
+      "device": 16777233,
+      "size": 147231,
+      "mtime_ns": 1793445376314364989
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/models-ready.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165227130,
+      "device": 16777233,
+      "size": 151,
+      "mtime_ns": 1793445392359459549
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/preui-models.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226976,
+      "device": 16777233,
+      "size": 300,
+      "mtime_ns": 1793445377090282857
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/process.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226961,
+      "device": 16777233,
+      "size": 108,
+      "mtime_ns": 1793445376366324628
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/protection.sb",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226955,
+      "device": 16777233,
+      "size": 327,
+      "mtime_ns": 1793445376095129872
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/resource-samples.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228548,
+      "device": 16777233,
+      "size": 13513,
+      "mtime_ns": 1793445633462564575
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/seed-proof.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226974,
+      "device": 16777233,
+      "size": 9294,
+      "mtime_ns": 1793445377076549954
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/startup.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226970,
+      "device": 16777233,
+      "size": 49,
+      "mtime_ns": 1793445376262972602
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/terminal.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228551,
+      "device": 16777233,
+      "size": 336,
+      "mtime_ns": 1793445633470636750
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/tmp",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226954,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376093065695
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/toolbar-observed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228518,
+      "device": 16777233,
+      "size": 599,
+      "mtime_ns": 1793445620206149964
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/usage.sqlite3",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165226966,
+      "device": 16777233,
+      "size": 2138112,
+      "mtime_ns": 1793445633241075151
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/vmmap-after.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228550,
+      "device": 16777233,
+      "size": 174,
+      "mtime_ns": 1793445633470244585
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/vmmap-before.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228520,
+      "device": 16777233,
+      "size": 7676,
+      "mtime_ns": 1793445621194027198
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/xdg-cache",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226952,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376092984319
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/xdg-config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226950,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376092900277
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/xdg-data",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226951,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376092942778
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current1/xdg-state",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165226953,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445376093026778
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2",
+      "type": "directory",
+      "uid": 501,
+      "mode": 448,
+      "inode": 165228555,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740064849155
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/WorkBuddy Proxy Toolbar Bench current2.app",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228586,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445634562492850
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/WorkBuddy Proxy Toolbar Bench current2.app/Contents",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228587,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445634573703221
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/WorkBuddy Proxy Toolbar Bench current2.app/Contents/Info.plist",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228590,
+      "device": 16777233,
+      "size": 2563,
+      "mtime_ns": 1793445634573777304
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/WorkBuddy Proxy Toolbar Bench current2.app/Contents/MacOS",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228588,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445634562640016
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/WorkBuddy Proxy Toolbar Bench current2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228589,
+      "device": 16777233,
+      "size": 42508768,
+      "mtime_ns": 1793442642234884771
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/appdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228557,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604669241
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/appearance.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228565,
+      "device": 16777233,
+      "size": 39,
+      "mtime_ns": 1793445633606484234
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/config.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165228728,
+      "device": 16777233,
+      "size": 15822,
+      "mtime_ns": 1793445652204127301
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/config.pre-v0.3-6cdb55ea52b8520634fb1c0fbfcf89c550ff0f8d9a878d66.bak",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165228571,
+      "device": 16777233,
+      "size": 170,
+      "mtime_ns": 1793445633715116038
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/gpui-drafts.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165229346,
+      "device": 16777233,
+      "size": 13329,
+      "mtime_ns": 1793445740023473533
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/gpui-stop.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229345,
+      "device": 16777233,
+      "size": 2,
+      "mtime_ns": 1793445740064696947
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/gpui.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228669,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445651651695861
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/home",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228556,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604613241
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/instance.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228570,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633726206450
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/language-before.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229258,
+      "device": 16777233,
+      "size": 643061,
+      "mtime_ns": 1793445704398123048
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/localappdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228558,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604707449
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/matched-condition.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229343,
+      "device": 16777233,
+      "size": 972,
+      "mtime_ns": 1793445737790941737
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/mock-port",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228567,
+      "device": 16777233,
+      "size": 5,
+      "mtime_ns": 1793445633665078493
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/mock-start.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228566,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633606875482
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/model-catalog.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165228579,
+      "device": 16777233,
+      "size": 147231,
+      "mtime_ns": 1793445633806485454
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/models-ready.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228729,
+      "device": 16777233,
+      "size": 151,
+      "mtime_ns": 1793445652208824491
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/preui-models.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228585,
+      "device": 16777233,
+      "size": 300,
+      "mtime_ns": 1793445634562367184
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/process.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228569,
+      "device": 16777233,
+      "size": 108,
+      "mtime_ns": 1793445633863968052
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/protection.sb",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228564,
+      "device": 16777233,
+      "size": 327,
+      "mtime_ns": 1793445633606332776
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/resource-samples.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229347,
+      "device": 16777233,
+      "size": 13769,
+      "mtime_ns": 1793445740048823762
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/seed-proof.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228583,
+      "device": 16777233,
+      "size": 9294,
+      "mtime_ns": 1793445634550559566
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/startup.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228578,
+      "device": 16777233,
+      "size": 49,
+      "mtime_ns": 1793445633762061553
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/terminal.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229350,
+      "device": 16777233,
+      "size": 336,
+      "mtime_ns": 1793445740064895946
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/tmp",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228563,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604895115
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/toolbar-observed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229312,
+      "device": 16777233,
+      "size": 599,
+      "mtime_ns": 1793445726929966816
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/usage.sqlite3",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165228574,
+      "device": 16777233,
+      "size": 2117632,
+      "mtime_ns": 1793445739829896576
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/vmmap-after.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229349,
+      "device": 16777233,
+      "size": 174,
+      "mtime_ns": 1793445740064598364
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/vmmap-before.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229313,
+      "device": 16777233,
+      "size": 7676,
+      "mtime_ns": 1793445727784475018
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/xdg-cache",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228561,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604818241
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/xdg-config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228559,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604745116
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/xdg-data",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228560,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604782741
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-current2/xdg-state",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165228562,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445633604859782
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1",
+      "type": "directory",
+      "uid": 501,
+      "mode": 448,
+      "inode": 165225864,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445375937409319
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/WorkBuddy Proxy Toolbar Bench previous1.app",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225893,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445197759260165
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/WorkBuddy Proxy Toolbar Bench previous1.app/Contents",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225894,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445197783986707
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/WorkBuddy Proxy Toolbar Bench previous1.app/Contents/Info.plist",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225897,
+      "device": 16777233,
+      "size": 2578,
+      "mtime_ns": 1793445197784060291
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/WorkBuddy Proxy Toolbar Bench previous1.app/Contents/MacOS",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225895,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445197759383999
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/WorkBuddy Proxy Toolbar Bench previous1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225896,
+      "device": 16777233,
+      "size": 42508752,
+      "mtime_ns": 1793435413259788602
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/appdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225866,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196774930817
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/appearance.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225874,
+      "device": 16777233,
+      "size": 39,
+      "mtime_ns": 1793445196777328496
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/config.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165226198,
+      "device": 16777233,
+      "size": 15822,
+      "mtime_ns": 1793445231184387552
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/config.pre-v0.3-2e68c71a51af00fc7899796fa1f571edcd0831906ab1f638.bak",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165225880,
+      "device": 16777233,
+      "size": 170,
+      "mtime_ns": 1793445196889472609
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/gpui-drafts.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165226938,
+      "device": 16777233,
+      "size": 13329,
+      "mtime_ns": 1793445375870908814
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/gpui-stop.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226937,
+      "device": 16777233,
+      "size": 2,
+      "mtime_ns": 1793445375937303694
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/gpui.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226127,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445230100733199
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/home",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225865,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196774885691
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/instance.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225879,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196903732931
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/language-before.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226841,
+      "device": 16777233,
+      "size": 639806,
+      "mtime_ns": 1793445342198912136
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/localappdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225867,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196774965234
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/matched-condition.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226932,
+      "device": 16777233,
+      "size": 973,
+      "mtime_ns": 1793445373838281919
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/mock-port",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225876,
+      "device": 16777233,
+      "size": 5,
+      "mtime_ns": 1793445196843119372
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/mock-start.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225875,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196777683872
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/model-catalog.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165225888,
+      "device": 16777233,
+      "size": 147231,
+      "mtime_ns": 1793445196993913557
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/models-ready.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226199,
+      "device": 16777233,
+      "size": 151,
+      "mtime_ns": 1793445231190053872
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/preui-models.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225892,
+      "device": 16777233,
+      "size": 300,
+      "mtime_ns": 1793445197759155956
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/process.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225878,
+      "device": 16777233,
+      "size": 108,
+      "mtime_ns": 1793445197052526189
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/protection.sb",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225873,
+      "device": 16777233,
+      "size": 327,
+      "mtime_ns": 1793445196777248912
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/resource-samples.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226940,
+      "device": 16777233,
+      "size": 13584,
+      "mtime_ns": 1793445375930612243
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/seed-proof.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225890,
+      "device": 16777233,
+      "size": 9294,
+      "mtime_ns": 1793445197748755778
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/startup.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225887,
+      "device": 16777233,
+      "size": 49,
+      "mtime_ns": 1793445196949970125
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/terminal.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226942,
+      "device": 16777233,
+      "size": 336,
+      "mtime_ns": 1793445375937446444
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/tmp",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225872,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196775151734
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/toolbar-observed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226893,
+      "device": 16777233,
+      "size": 600,
+      "mtime_ns": 1793445362115618875
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/usage.sqlite3",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165225883,
+      "device": 16777233,
+      "size": 2117632,
+      "mtime_ns": 1793445375914233410
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/vmmap-after.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226941,
+      "device": 16777233,
+      "size": 174,
+      "mtime_ns": 1793445375937216277
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/vmmap-before.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226895,
+      "device": 16777233,
+      "size": 7677,
+      "mtime_ns": 1793445363836723934
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/xdg-cache",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225870,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196775074776
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/xdg-config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225868,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196775005151
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/xdg-data",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225869,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196775039901
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous1/xdg-state",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165225871,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445196775113859
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2",
+      "type": "directory",
+      "uid": 501,
+      "mode": 448,
+      "inode": 165229354,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445846990966323
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/WorkBuddy Proxy Toolbar Bench previous2.app",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229383,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445741180836616
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/WorkBuddy Proxy Toolbar Bench previous2.app/Contents",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229384,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445741208383795
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/WorkBuddy Proxy Toolbar Bench previous2.app/Contents/Info.plist",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229387,
+      "device": 16777233,
+      "size": 2578,
+      "mtime_ns": 1793445741208451003
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/WorkBuddy Proxy Toolbar Bench previous2.app/Contents/MacOS",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229385,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445741181006782
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/WorkBuddy Proxy Toolbar Bench previous2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229386,
+      "device": 16777233,
+      "size": 42508752,
+      "mtime_ns": 1793435413259788602
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/appdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229356,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740206765280
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/appearance.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229364,
+      "device": 16777233,
+      "size": 39,
+      "mtime_ns": 1793445740209028479
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/config.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165229490,
+      "device": 16777233,
+      "size": 15822,
+      "mtime_ns": 1793445758836566982
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/config.pre-v0.3-c0df78d6bb9705d40b37df780d5f97ad35e13d91e3688ae9.bak",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165229370,
+      "device": 16777233,
+      "size": 170,
+      "mtime_ns": 1793445740316616163
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/gpui-drafts.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165229960,
+      "device": 16777233,
+      "size": 13329,
+      "mtime_ns": 1793445846928515787
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/gpui-stop.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229959,
+      "device": 16777233,
+      "size": 2,
+      "mtime_ns": 1793445846990786407
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/gpui.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229440,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445758329508188
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/home",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229355,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740206713156
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/instance.lock",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229369,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740326084707
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/language-before.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229887,
+      "device": 16777233,
+      "size": 636868,
+      "mtime_ns": 1793445813417030960
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/localappdata",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229357,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740206803864
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/matched-condition.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229950,
+      "device": 16777233,
+      "size": 973,
+      "mtime_ns": 1793445844930963860
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/mock-port",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229366,
+      "device": 16777233,
+      "size": 5,
+      "mtime_ns": 1793445740272560802
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/mock-start.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229365,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740209444936
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/model-catalog.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165229378,
+      "device": 16777233,
+      "size": 147231,
+      "mtime_ns": 1793445740404628427
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/models-ready.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229491,
+      "device": 16777233,
+      "size": 151,
+      "mtime_ns": 1793445758840649840
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/preui-models.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229382,
+      "device": 16777233,
+      "size": 300,
+      "mtime_ns": 1793445741180711242
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/process.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229368,
+      "device": 16777233,
+      "size": 108,
+      "mtime_ns": 1793445740461443652
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/protection.sb",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229363,
+      "device": 16777233,
+      "size": 327,
+      "mtime_ns": 1793445740208943355
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/resource-samples.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229962,
+      "device": 16777233,
+      "size": 13694,
+      "mtime_ns": 1793445846984253392
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/seed-proof.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229380,
+      "device": 16777233,
+      "size": 9294,
+      "mtime_ns": 1793445741168257376
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/startup.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229377,
+      "device": 16777233,
+      "size": 49,
+      "mtime_ns": 1793445740359168197
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/terminal.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229964,
+      "device": 16777233,
+      "size": 336,
+      "mtime_ns": 1793445846991035989
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/tmp",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229362,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740207037446
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/toolbar-observed.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229925,
+      "device": 16777233,
+      "size": 600,
+      "mtime_ns": 1793445833965724451
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/usage.sqlite3",
+      "type": "file",
+      "uid": 501,
+      "mode": 384,
+      "inode": 165229373,
+      "device": 16777233,
+      "size": 2125824,
+      "mtime_ns": 1793445846965943384
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/vmmap-after.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229963,
+      "device": 16777233,
+      "size": 174,
+      "mtime_ns": 1793445846990659241
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/vmmap-before.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229928,
+      "device": 16777233,
+      "size": 7678,
+      "mtime_ns": 1793445834925503011
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/xdg-cache",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229360,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740206949321
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/xdg-config",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229358,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740206844863
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/xdg-data",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229359,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740206885321
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/bench-b04-previous2/xdg-state",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165229361,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793445740206995238
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-b04.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217683,
+      "device": 16777233,
+      "size": 15669,
+      "mtime_ns": 1793443786946895865
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-current1.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228552,
+      "device": 16777233,
+      "size": 2146,
+      "mtime_ns": 1793445633525532858
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-current2.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229351,
+      "device": 16777233,
+      "size": 2145,
+      "mtime_ns": 1793445740115987320
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-driver-b04.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217684,
+      "device": 16777233,
+      "size": 1351,
+      "mtime_ns": 1793443786948249014
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-driver-results.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226944,
+      "device": 16777233,
+      "size": 515,
+      "mtime_ns": 1793445847043732856
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-mock.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217685,
+      "device": 16777233,
+      "size": 745,
+      "mtime_ns": 1793443786950883775
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-native-runbook.md",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165219115,
+      "device": 16777233,
+      "size": 2149,
+      "mtime_ns": 1793445066626640046
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-preparation.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217690,
+      "device": 16777233,
+      "size": 720,
+      "mtime_ns": 1793443787392034415
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-previous1.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226943,
+      "device": 16777233,
+      "size": 2148,
+      "mtime_ns": 1793445375991613136
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/benchmark-previous2.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229965,
+      "device": 16777233,
+      "size": 2151,
+      "mtime_ns": 1793445847043496857
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/build-candidate.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165208593,
+      "device": 16777233,
+      "size": 2355,
+      "mtime_ns": 1793442583611617796
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/build.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165208598,
+      "device": 16777233,
+      "size": 23142,
+      "mtime_ns": 1793442642412960059
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/candidate-ui",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165208860,
+      "device": 16777233,
+      "size": 42508768,
+      "mtime_ns": 1793442642234884771
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/checking-sampling.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226533,
+      "device": 16777233,
+      "size": 12151,
+      "mtime_ns": 1793445270534971862
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/cleanup-preflight.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229930,
+      "device": 16777233,
+      "size": 3546,
+      "mtime_ns": 1793445963711955032
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/consolidate-native.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224561,
+      "device": 16777233,
+      "size": 4102,
+      "mtime_ns": 1793444964858832182
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/design-audit.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165221273,
+      "device": 16777233,
+      "size": 8134,
+      "mtime_ns": 1793444176030553268
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/design-writer.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201018,
+      "device": 16777233,
+      "size": 1850,
+      "mtime_ns": 1793441391296127036
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/export-evidence.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226867,
+      "device": 16777233,
+      "size": 4583,
+      "mtime_ns": 1793445950496985108
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165200970,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442073371986389
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-context-manifest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201162,
+      "device": 16777233,
+      "size": 990,
+      "mtime_ns": 1793441425913547751
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201161,
+      "device": 16777233,
+      "size": 118571,
+      "mtime_ns": 1793441425912981198
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-text-0.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201156,
+      "device": 16777233,
+      "size": 55462,
+      "mtime_ns": 1793441425908184022
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-text-1.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201157,
+      "device": 16777233,
+      "size": 551,
+      "mtime_ns": 1793441425909720552
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-text-2.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201158,
+      "device": 16777233,
+      "size": 83,
+      "mtime_ns": 1793441425910600360
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-text-3.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201159,
+      "device": 16777233,
+      "size": 1112,
+      "mtime_ns": 1793441425911353083
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-text-4.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201160,
+      "device": 16777233,
+      "size": 472,
+      "mtime_ns": 1793441425912078889
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-tool-reference-metadata.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165203991,
+      "device": 16777233,
+      "size": 311,
+      "mtime_ns": 1793442070312364247
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1378-tool-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165203990,
+      "device": 16777233,
+      "size": 118571,
+      "mtime_ns": 1793442070307918432
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-context-manifest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201169,
+      "device": 16777233,
+      "size": 990,
+      "mtime_ns": 1793441430894415683
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201168,
+      "device": 16777233,
+      "size": 118742,
+      "mtime_ns": 1793441430893970174
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-text-0.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201163,
+      "device": 16777233,
+      "size": 55189,
+      "mtime_ns": 1793441430890345063
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-text-1.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201164,
+      "device": 16777233,
+      "size": 551,
+      "mtime_ns": 1793441430891762465
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-text-2.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201165,
+      "device": 16777233,
+      "size": 83,
+      "mtime_ns": 1793441430892388519
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-text-3.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201166,
+      "device": 16777233,
+      "size": 1112,
+      "mtime_ns": 1793441430892945196
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-text-4.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201167,
+      "device": 16777233,
+      "size": 472,
+      "mtime_ns": 1793441430893362579
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-tool-reference-metadata.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165204001,
+      "device": 16777233,
+      "size": 311,
+      "mtime_ns": 1793442071692270855
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1605-tool-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165204000,
+      "device": 16777233,
+      "size": 118742,
+      "mtime_ns": 1793442071687719039
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-context-manifest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201197,
+      "device": 16777233,
+      "size": 990,
+      "mtime_ns": 1793441435883120017
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201196,
+      "device": 16777233,
+      "size": 118841,
+      "mtime_ns": 1793441435881048893
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-text-0.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201191,
+      "device": 16777233,
+      "size": 56287,
+      "mtime_ns": 1793441435877543242
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-text-1.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201192,
+      "device": 16777233,
+      "size": 551,
+      "mtime_ns": 1793441435878748890
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-text-2.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201193,
+      "device": 16777233,
+      "size": 83,
+      "mtime_ns": 1793441435879243192
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-text-3.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201194,
+      "device": 16777233,
+      "size": 1112,
+      "mtime_ns": 1793441435879617282
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-text-4.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201195,
+      "device": 16777233,
+      "size": 472,
+      "mtime_ns": 1793441435879958872
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-tool-reference-metadata.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165204009,
+      "device": 16777233,
+      "size": 311,
+      "mtime_ns": 1793442073372204976
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-1823-tool-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165204005,
+      "device": 16777233,
+      "size": 118841,
+      "mtime_ns": 1793442073367203945
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-2046-context-manifest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201216,
+      "device": 16777233,
+      "size": 990,
+      "mtime_ns": 1793441440869513097
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-2046-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201215,
+      "device": 16777233,
+      "size": 119057,
+      "mtime_ns": 1793441440868530912
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-2046-text-0.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201210,
+      "device": 16777233,
+      "size": 55214,
+      "mtime_ns": 1793441440863478564
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-2046-text-1.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201211,
+      "device": 16777233,
+      "size": 551,
+      "mtime_ns": 1793441440865411226
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-2046-text-2.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201212,
+      "device": 16777233,
+      "size": 83,
+      "mtime_ns": 1793441440866361870
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-2046-text-3.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201213,
+      "device": 16777233,
+      "size": 1112,
+      "mtime_ns": 1793441440867021549
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/104-2046-text-4.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201214,
+      "device": 16777233,
+      "size": 472,
+      "mtime_ns": 1793441440867560726
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-context-manifest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201084,
+      "device": 16777233,
+      "size": 978,
+      "mtime_ns": 1793441415240915593
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201083,
+      "device": 16777233,
+      "size": 105647,
+      "mtime_ns": 1793441415240385625
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-text-0.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201078,
+      "device": 16777233,
+      "size": 53542,
+      "mtime_ns": 1793441415237139354
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-text-1.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201079,
+      "device": 16777233,
+      "size": 551,
+      "mtime_ns": 1793441415238988765
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-text-2.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201080,
+      "device": 16777233,
+      "size": 83,
+      "mtime_ns": 1793441415239330188
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-text-3.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201081,
+      "device": 16777233,
+      "size": 1112,
+      "mtime_ns": 1793441415239598193
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-text-4.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201082,
+      "device": 16777233,
+      "size": 472,
+      "mtime_ns": 1793441415239862740
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-tool-reference-metadata.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165203958,
+      "device": 16777233,
+      "size": 309,
+      "mtime_ns": 1793442067051646488
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/62-308-tool-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165203956,
+      "device": 16777233,
+      "size": 105647,
+      "mtime_ns": 1793442067046714292
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-context-manifest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201145,
+      "device": 16777233,
+      "size": 978,
+      "mtime_ns": 1793441420932224643
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201144,
+      "device": 16777233,
+      "size": 134397,
+      "mtime_ns": 1793441420931660007
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-text-0.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201139,
+      "device": 16777233,
+      "size": 59665,
+      "mtime_ns": 1793441420929421922
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-text-1.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201140,
+      "device": 16777233,
+      "size": 551,
+      "mtime_ns": 1793441420930326440
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-text-2.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201141,
+      "device": 16777233,
+      "size": 83,
+      "mtime_ns": 1793441420930651238
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-text-3.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201142,
+      "device": 16777233,
+      "size": 1112,
+      "mtime_ns": 1793441420930868159
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-text-4.txt",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201143,
+      "device": 16777233,
+      "size": 472,
+      "mtime_ns": 1793441420931052954
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-tool-reference-metadata.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165203978,
+      "device": 16777233,
+      "size": 309,
+      "mtime_ns": 1793442068811206841
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/64-335-tool-reference.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165203977,
+      "device": 16777233,
+      "size": 134397,
+      "mtime_ns": 1793442068806997406
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/asset-download-manifest.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201904,
+      "device": 16777233,
+      "size": 4963,
+      "mtime_ns": 1793441664164741303
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/asset-sources-private.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201661,
+      "device": 16777233,
+      "size": 3740,
+      "mtime_ns": 1793441615364375111
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165201660,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793441664160358426
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/06df8.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201798,
+      "device": 16777233,
+      "size": 327,
+      "mtime_ns": 1793441642983512369
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/0ac56.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201743,
+      "device": 16777233,
+      "size": 410,
+      "mtime_ns": 1793441622420028136
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/1ccfc.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201768,
+      "device": 16777233,
+      "size": 244,
+      "mtime_ns": 1793441627836958170
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/2791d.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201806,
+      "device": 16777233,
+      "size": 665,
+      "mtime_ns": 1793441644076313925
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/2f5fe.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201790,
+      "device": 16777233,
+      "size": 1050,
+      "mtime_ns": 1793441637760764342
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/30aa3.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201817,
+      "device": 16777233,
+      "size": 360,
+      "mtime_ns": 1793441649265861185
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/3213b.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201810,
+      "device": 16777233,
+      "size": 728,
+      "mtime_ns": 1793441647207718540
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/3ef59.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201776,
+      "device": 16777233,
+      "size": 906,
+      "mtime_ns": 1793441633219241658
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/42f81.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201900,
+      "device": 16777233,
+      "size": 234,
+      "mtime_ns": 1793441663140504949
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/4523d.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201833,
+      "device": 16777233,
+      "size": 344,
+      "mtime_ns": 1793441650283502912
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/4a154.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201764,
+      "device": 16777233,
+      "size": 663,
+      "mtime_ns": 1793441625698200840
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/794e6.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201777,
+      "device": 16777233,
+      "size": 733,
+      "mtime_ns": 1793441635116945075
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/7a7bb.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201871,
+      "device": 16777233,
+      "size": 234,
+      "mtime_ns": 1793441656544369354
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/7bc0b.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201753,
+      "device": 16777233,
+      "size": 926,
+      "mtime_ns": 1793441624146353613
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/7d50e.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201770,
+      "device": 16777233,
+      "size": 244,
+      "mtime_ns": 1793441628953643896
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/7f8ff.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201773,
+      "device": 16777233,
+      "size": 244,
+      "mtime_ns": 1793441630165001286
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/829e2.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201895,
+      "device": 16777233,
+      "size": 234,
+      "mtime_ns": 1793441660779645697
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/86243.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201797,
+      "device": 16777233,
+      "size": 241,
+      "mtime_ns": 1793441641651983404
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/8bc77.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201808,
+      "device": 16777233,
+      "size": 442,
+      "mtime_ns": 1793441645148178784
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/91e75.png",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201766,
+      "device": 16777233,
+      "size": 920,
+      "mtime_ns": 1793441626734625680
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/97d77.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201866,
+      "device": 16777233,
+      "size": 694,
+      "mtime_ns": 1793441654102939503
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/a1ba4.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201795,
+      "device": 16777233,
+      "size": 651,
+      "mtime_ns": 1793441639517844789
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/a7779.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201847,
+      "device": 16777233,
+      "size": 665,
+      "mtime_ns": 1793441652681959224
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/a7d16.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201680,
+      "device": 16777233,
+      "size": 1261,
+      "mtime_ns": 1793441616649974688
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/a873d.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201903,
+      "device": 16777233,
+      "size": 759,
+      "mtime_ns": 1793441664160526971
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/aad6f.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201846,
+      "device": 16777233,
+      "size": 376,
+      "mtime_ns": 1793441651253477175
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/af337.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201893,
+      "device": 16777233,
+      "size": 234,
+      "mtime_ns": 1793441659673418632
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/af952.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201700,
+      "device": 16777233,
+      "size": 810,
+      "mtime_ns": 1793441617811286194
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/b5dcb.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201870,
+      "device": 16777233,
+      "size": 380,
+      "mtime_ns": 1793441655311734677
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/b6ecc.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201774,
+      "device": 16777233,
+      "size": 356,
+      "mtime_ns": 1793441631229148079
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/b7ec4.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201896,
+      "device": 16777233,
+      "size": 234,
+      "mtime_ns": 1793441661906292241
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/d479d.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201779,
+      "device": 16777233,
+      "size": 353,
+      "mtime_ns": 1793441636177507674
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/d4ab6.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201809,
+      "device": 16777233,
+      "size": 338,
+      "mtime_ns": 1793441646169301870
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/def90.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201739,
+      "device": 16777233,
+      "size": 779,
+      "mtime_ns": 1793441620112796297
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/e88d4.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201874,
+      "device": 16777233,
+      "size": 234,
+      "mtime_ns": 1793441658158414201
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/e9321.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201711,
+      "device": 16777233,
+      "size": 847,
+      "mtime_ns": 1793441618934297000
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/assets/ec1b5.svg",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201796,
+      "device": 16777233,
+      "size": 241,
+      "mtime_ns": 1793441640584194499
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/figma/writer-pid.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165201020,
+      "device": 16777233,
+      "size": 72,
+      "mtime_ns": 1793441391344308885
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/fixture-action.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165215484,
+      "device": 16777233,
+      "size": 4145,
+      "mtime_ns": 1793443428899701179
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/fixture-background.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205328,
+      "device": 16777233,
+      "size": 21317,
+      "mtime_ns": 1793442310680996014
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/language-failure-baseline.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165207782,
+      "device": 16777233,
+      "size": 628,
+      "mtime_ns": 1793442565044741961
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-b04-runbook.md",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165216993,
+      "device": 16777233,
+      "size": 8257,
+      "mtime_ns": 1793443655459816833
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-b04-summary.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225323,
+      "device": 16777233,
+      "size": 5927,
+      "mtime_ns": 1793445179750059092
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-consolidated.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225860,
+      "device": 16777233,
+      "size": 34216,
+      "mtime_ns": 1793445193717167573
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-driver.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205451,
+      "device": 16777233,
+      "size": 2660,
+      "mtime_ns": 1793442351317372846
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-look-driver-results.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165207600,
+      "device": 16777233,
+      "size": 524,
+      "mtime_ns": 1793442527457165965
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-look-summary.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165207595,
+      "device": 16777233,
+      "size": 1296,
+      "mtime_ns": 1793442526734038280
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-look.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205454,
+      "device": 16777233,
+      "size": 1518,
+      "mtime_ns": 1793442422739010241
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-main-driver-results.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225542,
+      "device": 16777233,
+      "size": 524,
+      "mtime_ns": 1793445171114508352
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/native-main.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211590,
+      "device": 16777233,
+      "size": 1518,
+      "mtime_ns": 1793443076774265652
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/observe-b04.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165213360,
+      "device": 16777233,
+      "size": 6864,
+      "mtime_ns": 1793444229679091954
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/ownership.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165200972,
+      "device": 16777233,
+      "size": 754,
+      "mtime_ns": 1793441363042150372
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/pending-benchmark.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165225898,
+      "device": 16777233,
+      "size": 415,
+      "mtime_ns": 1793445758840811381
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/pending-native.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205506,
+      "device": 16777233,
+      "size": 575,
+      "mtime_ns": 1793442953358120751
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-b04-cua.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229947,
+      "device": 16777233,
+      "size": 3250,
+      "mtime_ns": 1793445844547982141
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-current1-vmmap-after-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230610,
+      "device": 16777233,
+      "size": 286,
+      "mtime_ns": 1793445963830866002
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-current1-vmmap-before-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230609,
+      "device": 16777233,
+      "size": 7872,
+      "mtime_ns": 1793445963830385296
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-current1.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228545,
+      "device": 16777233,
+      "size": 4829,
+      "mtime_ns": 1793445633514387903
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-current2-vmmap-after-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230612,
+      "device": 16777233,
+      "size": 286,
+      "mtime_ns": 1793445963836302189
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-current2-vmmap-before-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230611,
+      "device": 16777233,
+      "size": 7872,
+      "mtime_ns": 1793445963835752274
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-current2.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229344,
+      "device": 16777233,
+      "size": 4829,
+      "mtime_ns": 1793445740105997194
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-previous1-vmmap-after-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230608,
+      "device": 16777233,
+      "size": 286,
+      "mtime_ns": 1793445963825352317
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-previous1-vmmap-before-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230607,
+      "device": 16777233,
+      "size": 7873,
+      "mtime_ns": 1793445963824847277
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-previous1.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226936,
+      "device": 16777233,
+      "size": 4824,
+      "mtime_ns": 1793445375980239746
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-previous2-vmmap-after-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230614,
+      "device": 16777233,
+      "size": 286,
+      "mtime_ns": 1793445963840742962
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-previous2-vmmap-before-raw.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230613,
+      "device": 16777233,
+      "size": 7874,
+      "mtime_ns": 1793445963840322881
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-previous2.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229958,
+      "device": 16777233,
+      "size": 4829,
+      "mtime_ns": 1793445847033494565
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-summary.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230004,
+      "device": 16777233,
+      "size": 8524,
+      "mtime_ns": 1793445950496708359
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-summary.log",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230003,
+      "device": 16777233,
+      "size": 3258,
+      "mtime_ns": 1793445865525289122
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/performance-window-pixels.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226894,
+      "device": 16777233,
+      "size": 13,
+      "mtime_ns": 1793445362117994637
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/preflight-guard.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205329,
+      "device": 16777233,
+      "size": 2574,
+      "mtime_ns": 1793442310681304727
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/prepare-fixture.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205326,
+      "device": 16777233,
+      "size": 5054,
+      "mtime_ns": 1793442310641095270
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/process-start",
+      "type": "file",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165217689,
+      "device": 16777233,
+      "size": 33712,
+      "mtime_ns": 1793443787319528322
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/process-start.c",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165217686,
+      "device": 16777233,
+      "size": 313,
+      "mtime_ns": 1793443786952720945
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/record-batch.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165228526,
+      "device": 16777233,
+      "size": 6917,
+      "mtime_ns": 1793445963711126661
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/resource-diagnostics.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165230493,
+      "device": 16777233,
+      "size": 2692,
+      "mtime_ns": 1793445950496439985
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/review",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165205456,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442422738861280
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/review/ui-live-current.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165205983,
+      "device": 16777233,
+      "size": 1278,
+      "mtime_ns": 1793443076774102066
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/source-scope.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165211523,
+      "device": 16777233,
+      "size": 557,
+      "mtime_ns": 1793442939496297339
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/summarize-performance.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165223362,
+      "device": 16777233,
+      "size": 4415,
+      "mtime_ns": 1793444669833202282
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/tmp",
+      "type": "directory",
+      "uid": 501,
+      "mode": 493,
+      "inode": 165200969,
+      "device": 16777233,
+      "size": 0,
+      "mtime_ns": 1793442953279685907
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/toolbar-source-contract.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165224096,
+      "device": 16777233,
+      "size": 1832,
+      "mtime_ns": 1793444856383314984
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/visual-review.json",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165226256,
+      "device": 16777233,
+      "size": 6748,
+      "mtime_ns": 1793445236465647327
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/write-qa.py",
+      "type": "file",
+      "uid": 501,
+      "mode": 420,
+      "inode": 165229336,
+      "device": 16777233,
+      "size": 7567,
+      "mtime_ns": 1793445963711574201
+    }
+  ],
+  "entries_sha256": "4f262c5b5e95b3531f05b439ec0decd34cfd10b19ade597b05cfb61e411a6a9e",
+  "files": 440,
+  "logical_bytes": 403539340,
+  "free_before_bytes": 33212305408
+}

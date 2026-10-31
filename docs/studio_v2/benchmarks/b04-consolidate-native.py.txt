@@ -1,0 +1,32 @@
+from pathlib import Path
+import datetime,hashlib,json,os,struct
+r=Path(__file__).resolve().parent;repo=Path.cwd();f=r/'b04-r-9n9fkx-main'
+result=json.loads((r/'native-main-driver-results.json').read_text());assert result['exit_code']==0
+b=json.loads((r/'build.json').read_text());assert all(x['exit_code']==0 for x in b['commands'])
+for p,sha in b['source_sha256'].items():assert hashlib.sha256((repo/p).read_bytes()).hexdigest()==sha
+meta=json.loads((f/'fixture.json').read_text());assert meta['binary_sha256']['ui']==b['release_sha256']
+for role in ['ui_pid','core_pid','fixture_pid']:
+ try:os.kill(meta[role],0)
+ except ProcessLookupError:pass
+ else:raise AssertionError(('still running',role,meta[role]))
+required='initial language_failed language_en_saved language_auto_saved language_zh_saved language_selected_noop language_complete skin_monochrome_saved skin_blue_saved skin_violet_saved skin_rose_saved skin_amber_saved skin_teal_saved skin_studio_indigo_saved skin_save_failed skin_repaired autostart_on_saved autostart_off_saved autostart_failed autostart_retry_on_saved autostart_final_off_saved update_latest update_available update_error update_invalid update_closed_late update_real toolbar_window_complete final_readback proxy_liveness closed'.split()
+paths={p.stem:p for p in (f/'stage-proofs').glob('*.json')};assert set(required)<=paths.keys(),set(required)-paths.keys()
+stages=[]
+for name,p in sorted(paths.items()):
+ x=json.loads(p.read_text());assert x['core_health']=='ready'
+ assert x['requests']==x['costs'] and x['requests'] in [14,15]
+ assert all(v['all_fields_preserved'] and v['rows']>=14 for v in x['history'].values())
+ stages.append({'stage':name,'file':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'requests':x['requests'],'costs':x['costs'],'language':x['language'],'autostart':x['autostart'],'skin':x['skin'],'history':x['history']})
+final=json.loads(paths['closed'].read_text());assert final['requests']==15 and final['costs']==15
+assert final['language']=='zh' and not final['autostart'] and final['skin']=='studio_indigo';assert final['prices_unchanged']==3
+frames=next(x['frames'] for x in json.loads((repo/'docs/studio_v2/release_plan.json').read_text())['batches'] if x['id']=='B04')
+images=[]
+for node in frames:
+ for size,width,height,logical in [('wide',2880,1800,[1440,900]),('small',2200,1400,[1100,700])]:
+  p=f/(node.replace(':','-')+'-'+size+'.png');raw=p.read_bytes();assert raw[:8]==b'\x89PNG\r\n\x1a\n';pixels=list(struct.unpack('>II',raw[16:24]));assert pixels[0]==width and pixels[1] in [height,height+2],(p.name,pixels)
+  images.append({'node':node,'name':p.name,'pixels':pixels,'logical_size':logical,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'native_png':True,'unmodified':True})
+assert (f/'native-gui.json').is_file() and (r/'native-b04-summary.json').is_file()
+wire=[json.loads(v) for v in (f/'management-audit.jsonl').read_text().splitlines()];updates=[v for v in wire if v['command']=='check_update'];assert updates and all(v['force'] is True for v in updates)
+assert {v['mode'] for v in updates}>={'latest','available','error','invalid','real'}
+out={'at':datetime.datetime.now().astimezone().isoformat(),'candidate_sha256':b['release_sha256'],'frame_count':6,'required_frame_size_pairs':12,'images':images,'fixture':{'metadata':meta,'terminal':result['terminal'],'stages':stages,'final':final,'update_wire_audit':updates},'scope':'Native candidate and synthetic profile;14 actual HTTP baseline plus1 final liveness. Original business values preserved after existing9Serde defaults; language/autostart are declared actual Core writes, skin writes own appearance. Controlled update cases and503 language rejection are loopback UI-boundary fixtures, not Core/GitHub E2E. One real public Core update check is separate. Actor observations/native images separately required. R01-R04 remain pending.'}
+(r/'native-consolidated.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print('Consolidated6 frames/12 native PNG, complete data proofs and terminal status; visual acceptance remains explicit.')

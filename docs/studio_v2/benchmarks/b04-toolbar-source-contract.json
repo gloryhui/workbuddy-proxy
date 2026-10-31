@@ -1,0 +1,45 @@
+{
+  "base_head": "c6d49dd49bc33020bdcca8d1394a2ca42d4a1fa1",
+  "source_contracts": {
+    "app_controls": {
+      "unchanged_from_head": true,
+      "sha256": "0d659b649253aee10140979959d1fba1d480139660a4430d652223576f840903"
+    },
+    "gpui/src/ui/window_restore.rs": {
+      "unchanged_from_head": true,
+      "sha256": "04972b46ccffa2143a4a546a246de1df7cc2177be68542f308aacc8fc96e6f35"
+    },
+    "gpui/src/ui/language_menu.rs": {
+      "unchanged_from_head": true,
+      "sha256": "2d4f0a7bfe461942a440c86b9218d3f4197cf25a76e8f9427c4874cca8487177"
+    },
+    "gpui/src/ui/skin_controls.rs": {
+      "unchanged_from_head": true,
+      "sha256": "2de657359214e8774ed51df84408e366644b46d7c7d88cc8e38dfee0026a10c7"
+    },
+    "gpui/src/ui/autostart_notice.rs": {
+      "unchanged_from_head": true,
+      "sha256": "2dee0a1d6b622415a5b36a9a3461434923bb5dfa5cbfe2b37cd5c5a600628327"
+    },
+    "gpui/src/ui/update_notice.rs": {
+      "unchanged_from_head": true,
+      "sha256": "80cbf1d3becc1012dfa6cd96f228a3b3c949a90411d9638b9dc4d1cce1903206"
+    },
+    "gpui/src/ui_components.rs": {
+      "unchanged_from_head": true,
+      "sha256": "f4c4669f5757750071edb7f376a9e20be04d75bf5799e066a01fe7d895ca7aaa"
+    },
+    "gpui/src/theme.rs": {
+      "unchanged_from_head": true,
+      "sha256": "21ebb12563fcab71dd9b78c10f2106a657f10ef4a336ad69b3009d2f01e61131"
+    }
+  },
+  "external_links": {
+    "GitHub": "https://github.com/gloryhui/workbuddy-proxy",
+    "feedback": "https://github.com/gloryhui/workbuddy-proxy/issues/new",
+    "handler": "original cx.open_url preserved",
+    "actual_browser_launch_this_batch": false
+  },
+  "native_fullscreen_this_batch": false,
+  "scope": "Read-only source identity. Does not prove native input, browser launch, fullscreen or platform pass; actual native results and R01/R02 remain separate."
+}

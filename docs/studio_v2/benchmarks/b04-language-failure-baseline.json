@@ -1,0 +1,19 @@
+{
+  "actual_http": [
+    {
+      "at_ms": 1793442451214,
+      "command": "language",
+      "status": 503,
+      "controlled": true,
+      "mode": null,
+      "language": "en",
+      "enabled": null,
+      "force": null
+    }
+  ],
+  "core_config_byte_exact": true,
+  "requests_and_costs_14_all_fields_preserved": true,
+  "native_report": "native-look-summary.json",
+  "ui_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "assessment": "Confirmed UI optimism/persisted selection mismatch after actual loopbackHTTP503. Simulated persistence error at UI boundary, Core language write not executed."
+}

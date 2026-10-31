@@ -1,0 +1,1088 @@
+{
+  "at": "2026-10-31T19:13:13.716822+08:00",
+  "candidate_sha256": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f",
+  "frame_count": 6,
+  "required_frame_size_pairs": 12,
+  "images": [
+    {
+      "node": "62:308",
+      "name": "62-308-wide.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 571991,
+      "sha256": "202ba80b019537ee33a44e6bfc06fac4b8728d8e56eb4241b0a39e10c52feff5",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "62:308",
+      "name": "62-308-small.png",
+      "pixels": [
+        2200,
+        1400
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 395326,
+      "sha256": "51dd7170c369c69d520955dfd548a65ffe36d2c9b220d48dbfb15c79dc0327ea",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "64:335",
+      "name": "64-335-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 638071,
+      "sha256": "edbf32895c6aae5a596da4b91c5e9aa6cbfad5bd1eaa1753cea79ce39af246c0",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "64:335",
+      "name": "64-335-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 463719,
+      "sha256": "233cede72cbe4eb3d06d2a284acf32c1f29fef277ace9c834f74e48b5c7c9ceb",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1378",
+      "name": "104-1378-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 610637,
+      "sha256": "3f45f84ec96d111e4310727d3c1e9fd54aceb5f2ae240dc6168b716833ef9243",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1378",
+      "name": "104-1378-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 430611,
+      "sha256": "a18cd3bcfc870293dfa18a727f97da4a4f1fa69951ee7657bc4f88bd6eb6db9e",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1605",
+      "name": "104-1605-wide.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 615854,
+      "sha256": "4db9729f0aa75c539751bfc92b948f8d852cd0a0e0d74dac551da732b98d6abd",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1605",
+      "name": "104-1605-small.png",
+      "pixels": [
+        2200,
+        1400
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 436662,
+      "sha256": "1c10c5d409499adc15721ba8a2df0ba1f03c629a906a7c94538930d9467b8f28",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1823",
+      "name": "104-1823-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 620432,
+      "sha256": "9cbb873a22b350582831aac56436a141b4d4d1dd61458ee8ac09f17790f53788",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1823",
+      "name": "104-1823-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 428581,
+      "sha256": "1c257d68883839aaf6b21afab061ae531801ce2758de016a4fcb25adfc282bd2",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:2046",
+      "name": "104-2046-wide.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 614869,
+      "sha256": "e42c548c784457a4b4bc2c596ad07d51d55f198efc302af265c0ac5249c54dc3",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:2046",
+      "name": "104-2046-small.png",
+      "pixels": [
+        2200,
+        1400
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 438873,
+      "sha256": "e60804455aab6e1ae3d918c197a5f2211ef4f6a2b7b50d223269e65167eff1dc",
+      "native_png": true,
+      "unmodified": true
+    }
+  ],
+  "fixture": {
+    "metadata": {
+      "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main",
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/WorkBuddy Proxy B04 Review.app",
+      "core_pid": 32084,
+      "ui_pid": 32859,
+      "fixture_pid": 32083,
+      "port": 62263,
+      "bundle_id": "com.workbuddy.proxy.codexreview.tb04-r-9n9fkx-main",
+      "runtime_ui_binary": "WorkBuddy Proxy B04 Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+      "source_guard_library_sha256": null,
+      "sandbox_ui_pid": 32859,
+      "gui_kernel_guard": false,
+      "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+      "binary_sha256": {
+        "core": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+        "ui": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f"
+      },
+      "synthetic_initial": {
+        "providers": 2,
+        "models": 5,
+        "requests": 0
+      },
+      "copy_inheritance_fixture": false,
+      "complete_bundle_signed": false,
+      "signature_identity": null
+    },
+    "terminal": {
+      "ui_exit_before_cleanup": null,
+      "ui_pid_gone_before_cleanup": true,
+      "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+      "core_exit_before_cleanup": null,
+      "ui_exit_after_cleanup": null,
+      "ui_pid_gone_after_cleanup": true,
+      "core_exit_after_cleanup": 0
+    },
+    "stages": [
+      {
+        "stage": "autostart_failed",
+        "file": "autostart_failed.json",
+        "sha256": "233353edbc799c499a096222329fedee50c7bbb9c4aa04244ab342e87a29e75a",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "autostart_final_off_saved",
+        "file": "autostart_final_off_saved.json",
+        "sha256": "5d570261d57803cd58824fe670512c6fba08525251691d860251f02e2d475bcc",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "autostart_off_saved",
+        "file": "autostart_off_saved.json",
+        "sha256": "85d3fdac26c832c257acff9a59c625f206706b6251ec0c7c2e2ec8d165f2a08b",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "autostart_on_saved",
+        "file": "autostart_on_saved.json",
+        "sha256": "79fa5bdb2230dd898b0da4dd2dcac3a72b2c41ddff05e207a84d2052093151e0",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": true,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "autostart_retry_on_saved",
+        "file": "autostart_retry_on_saved.json",
+        "sha256": "a142e21e6ccfac6cb3968c2f5ac484dc5d533b8968e6430e6672420dae3fc562",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": true,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "capture_62_mono_saved",
+        "file": "capture_62_mono_saved.json",
+        "sha256": "f595748dd2b5d47d55a5b9881da7cfe5fd713f0a52e001c13977c0e79ccb59cd",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "monochrome",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "capture_62_studio_restored_saved",
+        "file": "capture_62_studio_restored_saved.json",
+        "sha256": "8365e4d7b3dc872356806a15249a010ea271e347876937dff1d7df66077300de",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "closed",
+        "file": "closed.json",
+        "sha256": "63c2a5579a8528937feab62e1a1b29b7caf63066d6ea5e2d741a98cbca77c180",
+        "requests": 15,
+        "costs": 15,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 15,
+            "all_fields_preserved": true,
+            "sha256": "9a812ad3c10326b21622bee54b251b7d11d48252759c3380af20c74e5ac88130"
+          },
+          "usage_costs": {
+            "rows": 15,
+            "all_fields_preserved": true,
+            "sha256": "a39eb2869a06712fe07cda4e463e5e8ef604e80ac7bd46d8dd224a2023141810"
+          }
+        }
+      },
+      {
+        "stage": "final_readback",
+        "file": "final_readback.json",
+        "sha256": "5e762d8d717b93b10488643ee56874cb2eeb67a949a44ad3f852765d5a7366c7",
+        "requests": 15,
+        "costs": 15,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 15,
+            "all_fields_preserved": true,
+            "sha256": "9a812ad3c10326b21622bee54b251b7d11d48252759c3380af20c74e5ac88130"
+          },
+          "usage_costs": {
+            "rows": 15,
+            "all_fields_preserved": true,
+            "sha256": "a39eb2869a06712fe07cda4e463e5e8ef604e80ac7bd46d8dd224a2023141810"
+          }
+        }
+      },
+      {
+        "stage": "initial",
+        "file": "initial.json",
+        "sha256": "c0179b8a03c259d7f57c4cbe6ec70eeb80ca2bacc22708e4eed9ef1d76ad0b87",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "language_auto_saved",
+        "file": "language_auto_saved.json",
+        "sha256": "d290f15388fdb700aaa44230c0b8c1876076189fab8c7d8692f3236088849496",
+        "requests": 14,
+        "costs": 14,
+        "language": "auto",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "language_complete",
+        "file": "language_complete.json",
+        "sha256": "ed7e6d104fcd81274a86ce820ee05264f616a0f05b05285f9642ba0ef2ee4bf2",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "language_en_saved",
+        "file": "language_en_saved.json",
+        "sha256": "8abe0fd2f48f862965d7706ceeed72e768c71c444fa0a3b9aeeff267606725bd",
+        "requests": 14,
+        "costs": 14,
+        "language": "en",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "language_failed",
+        "file": "language_failed.json",
+        "sha256": "1913076abe57e464e968b666217e0c87bdc695406d97ef862f410d929ea5f3fa",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "language_selected_noop",
+        "file": "language_selected_noop.json",
+        "sha256": "e08790dfacf9f8458ed50b428d0e024f415c11fc67ea4b964c66898d51441b8b",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "language_zh_saved",
+        "file": "language_zh_saved.json",
+        "sha256": "c5bbaa4cd488ee86ca6eac904bbb4aa80f6e17bd20ccafeffff3955724bd7299",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "proxy_liveness",
+        "file": "proxy_liveness.json",
+        "sha256": "76256a9aa3cb41b674060bb051880fcf7ffa384f8860ce07b93367da61313381",
+        "requests": 15,
+        "costs": 15,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 15,
+            "all_fields_preserved": true,
+            "sha256": "9a812ad3c10326b21622bee54b251b7d11d48252759c3380af20c74e5ac88130"
+          },
+          "usage_costs": {
+            "rows": 15,
+            "all_fields_preserved": true,
+            "sha256": "a39eb2869a06712fe07cda4e463e5e8ef604e80ac7bd46d8dd224a2023141810"
+          }
+        }
+      },
+      {
+        "stage": "skin_amber_saved",
+        "file": "skin_amber_saved.json",
+        "sha256": "6bb5a088cac23a42f0ea8173a4a4f8d7343bb31116efb5f4d4d788f73b61e1c3",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "amber",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_blue_saved",
+        "file": "skin_blue_saved.json",
+        "sha256": "049489f090e93ee42afadad943df438ac3404381aa3ab35f5c87090fbe1014e2",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "blue",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_monochrome_saved",
+        "file": "skin_monochrome_saved.json",
+        "sha256": "3d3a9f579f446940aea52d54edc28d56e770fc7dc61b43382ebbe02ab70ef7d7",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "monochrome",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_repaired",
+        "file": "skin_repaired.json",
+        "sha256": "66274bd16236faa49f27faaf21a88af25f4a6dd7380d73f26f4c0dd658395621",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_rose_saved",
+        "file": "skin_rose_saved.json",
+        "sha256": "ac8c1a0a1d0afb5a0e484ad51c7570901cd48b25358d330701343aa676c17160",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "rose",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_save_failed",
+        "file": "skin_save_failed.json",
+        "sha256": "f735af5a9ba80fc26d0b4dadea88c357523e0afdbc5515fa290be011b991098c",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_studio_indigo_saved",
+        "file": "skin_studio_indigo_saved.json",
+        "sha256": "b3bfa4966c2e4ea6b4bf8cecdbd021bda66b90bd0c6c3a34caa6e95ef03b9fc9",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_teal_saved",
+        "file": "skin_teal_saved.json",
+        "sha256": "cfe473ecb15ed862de553576ce6b85b365ca0ddd2452bbd1f284bcc9caa01222",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "teal",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "skin_violet_saved",
+        "file": "skin_violet_saved.json",
+        "sha256": "b123062a0af01bf08102b38f3f10edfc159709058f96cb060160c7bc1349666a",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "violet",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "toolbar_window_complete",
+        "file": "toolbar_window_complete.json",
+        "sha256": "5fb7dfd9aab827ef954f58de5a6808dab89432ab1fa354b985c572a383d9ac83",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "update_available",
+        "file": "update_available.json",
+        "sha256": "d3e77731e4c09725181a6b56fb50f7d7b4206281b27ef880251d83c64075e140",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "update_closed_late",
+        "file": "update_closed_late.json",
+        "sha256": "e923b3e9cc11358dad401133cc8413bc2f9cd622734c5838d016e2e5866212d0",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "update_error",
+        "file": "update_error.json",
+        "sha256": "978aab16c6e862ec909f309f39d2e83d5cc98e539f53c345b3f10920a0fb6cb5",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "update_invalid",
+        "file": "update_invalid.json",
+        "sha256": "ec491dc3f55edbb0a7a0fddcdc4d21dfafc126ed9b100087dc512a73c3035b8e",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "update_latest",
+        "file": "update_latest.json",
+        "sha256": "d0d32a549ec1251246c9bdb7af4ce8c63b5037536b80816f67a40054b15851e1",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      },
+      {
+        "stage": "update_real",
+        "file": "update_real.json",
+        "sha256": "01a26225f32547484e11612d454317c279a21a516ded119d1b7123658493de37",
+        "requests": 14,
+        "costs": 14,
+        "language": "zh",
+        "autostart": false,
+        "skin": "studio_indigo",
+        "history": {
+          "usage_requests": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "167454e571e4f25b49a62b3ad3a7ec245752e332fc363910b373b36a7cc0ef80"
+          },
+          "usage_costs": {
+            "rows": 14,
+            "all_fields_preserved": true,
+            "sha256": "76d8e1d5713041b3a4bb97b7c7267da22638da9bc982531bfae346cd3d2dd41d"
+          }
+        }
+      }
+    ],
+    "final": {
+      "at": "2026-10-31T19:12:50.269982+08:00",
+      "stage": "closed",
+      "core_pid": 32084,
+      "core_health": "ready",
+      "config_sha256": "c2c709d3289729a49dd75004d38d47dd420702e4d436c7786e0b1f29f2e61693",
+      "language": "zh",
+      "autostart": false,
+      "skin": "studio_indigo",
+      "appearance_fault": false,
+      "isolated_launchagent_present": false,
+      "requests": 15,
+      "costs": 15,
+      "history": {
+        "usage_requests": {
+          "rows": 15,
+          "all_fields_preserved": true,
+          "sha256": "9a812ad3c10326b21622bee54b251b7d11d48252759c3380af20c74e5ac88130"
+        },
+        "usage_costs": {
+          "rows": 15,
+          "all_fields_preserved": true,
+          "sha256": "a39eb2869a06712fe07cda4e463e5e8ef604e80ac7bd46d8dd224a2023141810"
+        }
+      },
+      "stats_settings_unchanged": {
+        "enabled": true,
+        "retention_days": 180,
+        "default_currency": "CNY",
+        "revision": 1
+      },
+      "prices_unchanged": 3,
+      "wire_counts": {
+        "language": 4,
+        "autostart": 5,
+        "check_update": 8
+      },
+      "scope": "Read-only real Core/SQL and own files. Only declared native language/autostart/skin saves accepted; original business config retained after existing9Serde defaults. Update bridge cases separately declared, not public GitHub E2E."
+    },
+    "update_wire_audit": [
+      {
+        "at_ms": 1793444329724,
+        "command": "check_update",
+        "status": 200,
+        "controlled": true,
+        "mode": "latest",
+        "language": null,
+        "enabled": null,
+        "force": true
+      },
+      {
+        "at_ms": 1793444398792,
+        "command": "check_update",
+        "status": 200,
+        "controlled": true,
+        "mode": "available",
+        "language": null,
+        "enabled": null,
+        "force": true
+      },
+      {
+        "at_ms": 1793444435714,
+        "command": "check_update",
+        "status": 403,
+        "controlled": true,
+        "mode": "error",
+        "language": null,
+        "enabled": null,
+        "force": true
+      },
+      {
+        "at_ms": 1793444472649,
+        "command": "check_update",
+        "status": 200,
+        "controlled": true,
+        "mode": "invalid",
+        "language": null,
+        "enabled": null,
+        "force": true
+      },
+      {
+        "at_ms": 1793444517844,
+        "command": "check_update",
+        "status": 200,
+        "controlled": true,
+        "mode": "latest",
+        "language": null,
+        "enabled": null,
+        "force": true
+      },
+      {
+        "at_ms": 1793444547599,
+        "command": "check_update",
+        "status": 200,
+        "controlled": false,
+        "mode": "real",
+        "language": null,
+        "enabled": null,
+        "force": true
+      },
+      {
+        "at_ms": 1793444818473,
+        "command": "check_update",
+        "status": 200,
+        "controlled": true,
+        "mode": "latest",
+        "language": null,
+        "enabled": null,
+        "force": true
+      },
+      {
+        "at_ms": 1793444998009,
+        "command": "check_update",
+        "status": 200,
+        "controlled": true,
+        "mode": "latest",
+        "language": null,
+        "enabled": null,
+        "force": true
+      }
+    ]
+  },
+  "scope": "Native candidate and synthetic profile;14 actual HTTP baseline plus1 final liveness. Original business values preserved after existing9Serde defaults; language/autostart are declared actual Core writes, skin writes own appearance. Controlled update cases and503 language rejection are loopback UI-boundary fixtures, not Core/GitHub E2E. One real public Core update check is separate. Actor observations/native images separately required. R01-R04 remain pending."
+}

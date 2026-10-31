@@ -1,0 +1,11 @@
+{
+  "changed_runtime_files": [
+    "gpui/src/ui.rs"
+  ],
+  "original_translation_effect_body_byte_exact": true,
+  "original_language_send_payload_exact_preserved": true,
+  "normal_language_guard_capture_and_persistence_owner_preserved": true,
+  "new_scope": "UI restores all translated view state from backend disk config on language failure, or last confirmed config on queue rejection. No compensating save; no Core/format changes.",
+  "core_and_other_runtime_diff": [],
+  "ui_sha256": "f6833569027d3909659a1d3e96e6bd06f2ce983b274f3f40443b62c57dd85164"
+}

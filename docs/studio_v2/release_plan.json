@@ -3,10 +3,10 @@
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-10-31",
   "state": "active",
-  "current_batch": "B04",
+  "current_batch": "B05",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 70,
+  "historical_tasks": 71,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -494,7 +494,7 @@
       "id": "B04",
       "title": "工具栏、窗口、语言与外观",
       "kind": "feature",
-      "status": "planned",
+      "status": "passed",
       "frames": [
         "62:308",
         "64:335",
@@ -506,15 +506,15 @@
       "depends_on": [
         "B03"
       ],
-      "completed_summary": "七功能独立工具栏、语言/皮肤/恢复窗口/开机启动/更新等待失败、部分键盘与七主题已有证据。",
+      "completed_summary": "QA71：六帧12原生图、语言失败回滚修复、三语言/七皮肤、真实隔离开机启动失败重试、更新状态/迟到关闭、恢复窗口与遮罩及四轮匹配短测签收。",
       "delivery": "六张画板与全部工具按钮一次连续验收；窗口与菜单共享问题集中修。",
       "tasks": [
         {
           "id": "B04.1",
           "title": "七功能布局、拖动与遮罩",
-          "acceptance": "pending",
-          "completed": "top8/right32、300宽、36按钮/20图标/8间距和七事件保留，焦点/遮罩分项已验。",
-          "remaining": "最终候选同时验证拖动区域、按钮点击、弹层遮罩与系统窗口按钮。",
+          "acceptance": "passed",
+          "completed": "QA71：原top8/right32、300宽、7×36/20图标/8间距和全部七事件字节保持；两尺寸图及模态遮罩下点击语言不打开菜单。",
+          "remaining": "B04界面范围已签收；完整忙态拦截/键盘IME/辅助功能/主题矩阵由R01集中验证，系统登录/标题拖动/全屏/外链实际启动及其他平台由R02验证，长期性能和发行仍R03/R04。",
           "acceptance_check": "两尺寸位置一致、标题不动；七按钮均可达；拖动不吞点击；遮罩高于工具栏；Windows冲突交R02闭环。",
           "history_tasks": [
             1,
@@ -526,9 +526,9 @@
         {
           "id": "B04.2",
           "title": "语言菜单与持久化",
-          "acceptance": "pending",
-          "completed": "系统/中文/English、保存/重开、草稿筛选保持、键盘/Esc已有专项。",
-          "remaining": "完整首审104:1823，三模式连续切换/重开与长英文布局统一核对。",
+          "acceptance": "passed",
+          "completed": "QA71：旧版503后翻译/勾选不一致已原生复现，新版失败恢复已保存语言；English→系统实际中文→中文落盘，已选不重复写、筛选/Low草稿保持，英文价格对话框取消。",
+          "remaining": "B04界面范围已签收；完整忙态拦截/键盘IME/辅助功能/主题矩阵由R01集中验证，系统登录/标题拖动/全屏/外链实际启动及其他平台由R02验证，长期性能和发行仍R03/R04。",
           "acceptance_check": "所有页面/每页条数/错误/弹窗即时翻译；选中不重复写；草稿/筛选不丢；Tab/方向/Return/Space/Esc正常。",
           "history_tasks": [
             14,
@@ -539,9 +539,9 @@
         {
           "id": "B04.3",
           "title": "六旧皮肤与Studio入口",
-          "acceptance": "pending",
-          "completed": "原键/默认Mono、六旧皮肤和Studio第七入口、菜单关闭/保存失败不切换已有证据。",
-          "remaining": "统一核对主题菜单/黑白示例及七主题代表性控件，完整主题矩阵放R01一次做。",
+          "acceptance": "passed",
+          "completed": "QA71：Mono/Blue/Violet/Rose/Amber/Teal/Studio逐个真实选择读回；外观落盘失败保留Studio，修复后字节恢复。Mono无菜单和Studio七入口两尺寸完成。",
+          "remaining": "B04界面范围已签收；完整忙态拦截/键盘IME/辅助功能/主题矩阵由R01集中验证，系统登录/标题拖动/全屏/外链实际启动及其他平台由R02验证，长期性能和发行仍R03/R04。",
           "acceptance_check": "原皮肤键与默认不变；选择落盘/重开一致；失败保留原皮肤；页面和草稿不因换肤丢失。",
           "history_tasks": [
             8,
@@ -554,9 +554,9 @@
         {
           "id": "B04.4",
           "title": "开机启动与恢复窗口",
-          "acceptance": "pending",
-          "completed": "隔离LaunchAgent开关/回滚、原恢复算法和普通/zoom/全屏分项证据已有。",
-          "remaining": "首审104:1378/2046，核对等待/失败/成功、取消/重复动作和真实尺寸；系统登录场景单列平台验证。",
+          "acceptance": "passed",
+          "completed": "QA71：真实隔离plist ON→OFF→失败回滚OFF→修复ON→OFF；实际1100恢复1440、再缩1100仍保留目标提示，两尺寸完成。",
+          "remaining": "B04界面范围已签收；完整忙态拦截/键盘IME/辅助功能/主题矩阵由R01集中验证，系统登录/标题拖动/全屏/外链实际启动及其他平台由R02验证，长期性能和发行仍R03/R04。",
           "acceptance_check": "隔离plist与UI真值一致；失败不假成功；恢复1440×900并退出全屏；不改真实LaunchAgents或打断用户会话。",
           "history_tasks": [
             35,
@@ -567,9 +567,9 @@
         {
           "id": "B04.5",
           "title": "检查更新与外链",
-          "acceptance": "pending",
-          "completed": "原force/network/cache不改；等待/403失败/重试/关闭不复开已有证据；外链处理器保留。",
-          "remaining": "首审104:1605，补受控成功/最新/有更新/错误及GitHub/反馈目标链核对。",
+          "acceptance": "passed",
+          "completed": "QA71：受控latest/available0.5.8/403/无效/等待关闭迟到响应，额外两次受控latest原生预采样拍到Checking；独立真实Core公网检查返回当前最新0.5.7；force和两个原外链处理器保持。",
+          "remaining": "B04界面范围已签收；完整忙态拦截/键盘IME/辅助功能/主题矩阵由R01集中验证，系统登录/标题拖动/全屏/外链实际启动及其他平台由R02验证，长期性能和发行仍R03/R04。",
           "acceptance_check": "状态对应真实响应；busy不重复提交；关闭后不被迟到反馈重开；外链只打开预期仓库/Issue地址。",
           "history_tasks": [
             1,
@@ -580,9 +580,9 @@
         {
           "id": "B04.6",
           "title": "工具与窗口整批验收",
-          "acceptance": "pending",
-          "completed": "原工具栏原生焦点、菜单CPU短测与两尺寸已有记录。",
-          "remaining": "六画板12张原图，连续切语言/皮肤/窗口/更新；输入状态和焦点问题统一修正。",
+          "acceptance": "passed",
+          "completed": "QA71：同d08候选6×2原生图、14→15真实回环请求/费用全字段保护、仅声明语言/开机/皮肤写入；P/C/C/P原负载四轮同条件短测。",
+          "remaining": "B04界面范围已签收；完整忙态拦截/键盘IME/辅助功能/主题矩阵由R01集中验证，系统登录/标题拖动/全屏/外链实际启动及其他平台由R02验证，长期性能和发行仍R03/R04。",
           "acceptance_check": "一次完整工具巡检且所有状态有证据；不显式强制置顶，记录实际验证边界；原代理配置不变。",
           "history_tasks": [
             23,
@@ -596,8 +596,28 @@
           ]
         }
       ],
-      "accepted_frames": [],
-      "acceptance_evidence": []
+      "accepted_frames": [
+        "62:308",
+        "64:335",
+        "104:1378",
+        "104:1605",
+        "104:1823",
+        "104:2046"
+      ],
+      "acceptance_evidence": [
+        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-asset-audit.json",
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-language-failure-baseline.json",
+        "benchmarks/b04-native-b04-summary.json",
+        "benchmarks/b04-native-consolidated.json",
+        "benchmarks/b04-visual-review.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-performance-summary.json",
+        "benchmarks/b04-resource-diagnostics.json",
+        "benchmarks/b04-artifacts.json"
+      ]
     },
     {
       "id": "B05",
@@ -704,7 +724,7 @@
           "title": "共享状态与层级矩阵",
           "acceptance": "pending",
           "completed": "部分输入/按钮的default/hover/focus/disabled/busy/error/success已有实拍。",
-          "remaining": "按唯一组件一次测全状态，并抽查各布局实例；消除穿透、不可读与误导状态。 B01 busy视觉有原图，但CUA -10005后坐标点击已在恢复期并触发第二次隔离Test；最终候选的忙态点击矩阵仍须真实复验。旧版benchmark外部save64后活动表保留1行的刷新/草稿边界也需核清，不能只读运行卡计数。",
+          "remaining": "按唯一组件一次测全状态，并抽查各布局实例；消除穿透、不可读与误导状态。 B01 busy视觉有原图，但CUA -10005后坐标点击已在恢复期并触发第二次隔离Test；最终候选的忙态点击矩阵仍须真实复验。旧版benchmark外部save64后活动表保留1行的刷新/草稿边界也需核清，不能只读运行卡计数。 QA71 Checking两尺寸原图显示禁用外观，未实测busy期间点击拦截/服务端精确去重；两个额外latest是拍图请求，不能作为重复提交缺陷或拦截成功。",
           "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
           "history_tasks": [
             41,
@@ -764,7 +784,7 @@
           "id": "R01.5",
           "title": "40帧界面集中签收",
           "acceptance": "pending",
-          "completed": "B01/B02/B03已有32/40帧按最新设计和两尺寸界面签收；剩B04六帧、B05两帧。全40帧最终集中扫描仍待，不等于R01或发布通过。",
+          "completed": "B01–B04累计38/40帧按最新设计和两尺寸签收，剩B05两帧；最终40帧集中扫描仍待，不等于R01/正式版通过。",
           "remaining": "完成B01–B05后一次扫40帧/80张两尺寸原图；修一个清晰的问题清单再集中复验。",
           "acceptance_check": "每帧布局/资产/文字角色/状态/交互有最新设计证据；原生AA差异记录但不设RGB/字体文件字节相同门禁；无缺图/旧候选冒用。",
           "history_tasks": [
@@ -813,7 +833,7 @@
           "title": "macOS arm64系统行为",
           "acceptance": "pending",
           "completed": "当前arm64原生两尺寸/部分窗口与生命周期已验。",
-          "remaining": "补物理托盘、最小化/缩放/全屏/恢复、多屏拖动、系统登录开机启动和冷启动。",
+          "remaining": "补物理托盘、最小化/缩放/全屏/恢复、多屏拖动、系统登录开机启动和冷启动。 QA71只做普通窗口恢复和真实隔离plist；原全屏算法/浏览器URL处理器未改，未重做全屏Spaces、标题拖动、真实登录或浏览器启动，不冒称当前系统集成通过。",
           "acceptance_check": "实际状态有原生证据；后台代理续存；不强制置顶；系统登录等未做的场景明确保留。",
           "history_tasks": [
             35,
@@ -866,7 +886,7 @@
           "title": "统一最终基线和测量条件",
           "acceptance": "pending",
           "completed": "现有benchmark参数、Core/UI独立RSS、process→marker与P/C/C/P已建立。",
-          "remaining": "保存改造前基线和最终候选的同机同模式/同数据/同窗口/同操作历史条件，核对脚本help/哈希。 B03全部六轮/资源分项及current1空搜索聚焦偏差已归档，最终基线不能只挑补测好样本。",
+          "remaining": "保存改造前基线和最终候选的同机同模式/同数据/同窗口/同操作历史条件，核对脚本help/哈希。 B03全部六轮/资源分项及current1空搜索聚焦偏差已归档，最终基线不能只挑补测好样本。 QA71固定Core25f、旧4b/新d08四轮匹配工具菜单负载见b04-performance-summary；所有原样本保留，不替代B03既有成本。",
           "acceptance_check": "记录Core/UI/合计RSS、二进制体积、启动、p50/p95及原负载；不混候选/架构，不丢慢样本。",
           "history_tasks": [
             2,
@@ -881,7 +901,7 @@
           "title": "峰值差异诊断与最终结论",
           "acceptance": "pending",
           "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。",
-          "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。",
+          "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。 QA71原四轮UI RSS+11.005MiB/组合+12.56MiB/峰值+16.565MiB；preload footprint旧120.3M/新119.35M，malloc allocated旧21.0M/新21.1M，并不排除RSS回退。原样本和资源原行见b04-resource-diagnostics；不以短测功能签收冒称R03通过。",
           "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
           "history_tasks": [
             67

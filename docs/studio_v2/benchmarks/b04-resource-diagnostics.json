@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-31T19:25:50.496302+08:00",
+  "valid_measurement": "vmmap before load; wrapper after-load capture occurred after UI stop and is invalid as a live measurement.",
+  "runs": {
+    "previous1": {
+      "physical_footprint_M": 119.0,
+      "malloc_allocated_M": 20.9,
+      "malloc_total_row": "TOTAL                                        1.4G      10.2M       9.9M      26.7M      56734      20.9M      15.7M     43%      50",
+      "IOSurface_row": "IOSurface                         60.6M    60.4M      16K    60.4M       0K    60.4M       0K       16",
+      "raw_sha256": "f40a027226309dd585072ceaa4b71020f1ce129e4b70a4dfa76215da7f93e2e3"
+    },
+    "current1": {
+      "physical_footprint_M": 119.0,
+      "malloc_allocated_M": 20.9,
+      "malloc_total_row": "TOTAL                                        1.4G      27.0M      26.5M      10.0M      56716      20.9M      15.6M     43%      48",
+      "IOSurface_row": "IOSurface                         60.5M    60.4M    23.9M    36.4M       0K    60.4M       0K        8",
+      "raw_sha256": "a606fa3e1f4bdeccf2b8632c24c9c042caa42c0e0b25300a0c5ced9ca8572d68"
+    },
+    "current2": {
+      "physical_footprint_M": 119.7,
+      "malloc_allocated_M": 21.3,
+      "malloc_total_row": "TOTAL                                        1.4G      34.9M      34.2M      3216K      56924      21.3M      16.1M     44%      51",
+      "IOSurface_row": "IOSurface                         60.4M    60.4M    60.4M       0K       0K    60.4M       0K        7",
+      "raw_sha256": "ee06e2b1436d4239e8274f790ba2d5aefc019d88da045fb70c20c37e51690a91"
+    },
+    "previous2": {
+      "physical_footprint_M": 121.6,
+      "malloc_allocated_M": 21.1,
+      "malloc_total_row": "TOTAL                                        1.4G      33.0M      32.5M      4672K      56871      21.1M      16.0M     44%      49",
+      "IOSurface_row": "IOSurface                         60.4M    60.4M      32K    60.3M       0K    60.4M       0K        4",
+      "raw_sha256": "b8caa3adc659088d83e2d6c004b78f6c246fbb4da32a57c34ee297f58c123d6c"
+    }
+  },
+  "median": {
+    "previous": {
+      "physical_footprint_M": 120.3,
+      "malloc_allocated_M": 21.0
+    },
+    "current": {
+      "physical_footprint_M": 119.35,
+      "malloc_allocated_M": 21.1
+    }
+  },
+  "assessment": "RSS medians rose UI11.005MiB/combined12.56MiB/peak16.565MiB. Valid pre-load footprint and malloc allocations do not show corresponding growth. Residency varies across ordered runs; this is an observation/inference, not a causal proof or exclusion of regression. All four samples retained, no extra selection/replacement. Carry exact costs and earlier B03 costs to final R03."
+}

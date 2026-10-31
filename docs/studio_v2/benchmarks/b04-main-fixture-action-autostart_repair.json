@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-31T18:57:53.133484+08:00",
+  "action": "repair-autostart",
+  "stage": "autostart_repair",
+  "scope": "Only recorded synthetic fixture modes/input faults or actual loopback request; no management settings writes.",
+  "owned_directory_restored": true
+}

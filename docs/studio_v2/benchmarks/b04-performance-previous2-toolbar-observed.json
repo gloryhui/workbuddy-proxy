@@ -1,0 +1,27 @@
+{
+  "label": "previous2",
+  "ui_pid": 46621,
+  "window_id": 11459,
+  "toolbar_visible": true,
+  "language_menu_visible": true,
+  "logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "language-before.png",
+  "screenshot_sha256": "79c2810dc611959f4b9290d9f869087a8e0a408bffdb294ad007af1ab5c04331",
+  "pixels": [
+    2880,
+    1800
+  ],
+  "operations": [
+    "providers 1/64",
+    "resize 1100x700",
+    "language menu Escape",
+    "skin menu Escape",
+    "restore default and close notice",
+    "language menu"
+  ],
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true
+}

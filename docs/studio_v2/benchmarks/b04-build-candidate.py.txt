@@ -1,0 +1,32 @@
+from pathlib import Path
+import datetime, hashlib, json, os, shutil, subprocess, time
+
+r = Path(__file__).resolve().parent
+repo = Path.cwd()
+cache = Path('/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target')
+env = dict(os.environ, CARGO_TARGET_DIR=str(cache), TMPDIR=str(r / 'tmp'), TMP=str(r / 'tmp'), TEMP=str(r / 'tmp'))
+commands = [
+    ['cargo', 'fmt', '--manifest-path', 'gpui/Cargo.toml', '--', '--check'],
+    ['cargo', 'test', '--manifest-path', 'gpui/Cargo.toml', '--locked'],
+    ['cargo', 'clippy', '--manifest-path', 'gpui/Cargo.toml', '--locked', '--all-targets', '--', '-D', 'warnings'],
+    ['cargo', 'check', '--manifest-path', 'gpui/Cargo.toml', '--locked', '--target', 'x86_64-apple-darwin', '--all-targets'],
+    ['cargo', 'build', '--release', '--manifest-path', 'gpui/Cargo.toml', '--locked'],
+]
+out = {'at': datetime.datetime.now().astimezone().isoformat(), 'base_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+       'toolchain': {x: subprocess.check_output([x, '--version'], text=True).strip() for x in ['cargo', 'rustc']}, 'commands': []}
+for command in commands:
+    started = time.monotonic()
+    result = subprocess.run(command, env=env, capture_output=True, text=True)
+    out['commands'].append({'command': command, 'exit_code': result.returncode, 'seconds': round(time.monotonic() - started, 3), 'output': result.stdout + result.stderr})
+    (r / 'build.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+    print(command[1] + ' exit=' + str(result.returncode), flush=True)
+    if result.returncode:
+        print((result.stdout + result.stderr)[-2500:], flush=True)
+        raise SystemExit(result.returncode)
+binary = cache / 'release/workbuddy-proxy-gpui'
+shutil.copy2(binary, r / 'candidate-ui')
+out.update(release_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(), release_bytes=binary.stat().st_size,
+           source_sha256={name: hashlib.sha256((repo / name).read_bytes()).hexdigest() for name in ['gpui/src/ui.rs']},
+           scope='B04 first complete candidate; UI-only language failure restoration, original save/Core unchanged; native journey, actual PNG pairs and matched performance still required.')
+(r / 'build.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n')
+print('candidate ' + out['release_sha256'], flush=True)

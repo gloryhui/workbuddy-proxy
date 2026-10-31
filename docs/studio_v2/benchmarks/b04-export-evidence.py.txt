@@ -1,0 +1,38 @@
+from pathlib import Path
+import datetime,hashlib,json
+r=Path(__file__).resolve().parent;repo=Path.cwd();reports=repo/'docs/studio_v2/benchmarks';shots=repo/'docs/studio_v2/screenshots'
+n=json.loads((r/'native-consolidated.json').read_text());p=json.loads((r/'performance-summary.json').read_text())
+assert n['required_frame_size_pairs']==12 and p['assessment'].startswith('ACCEPTED')
+entries=[]
+def save(source,destination,data=None):
+ raw=source.read_bytes();out=raw if data is None else data
+ assert destination.resolve().is_relative_to(repo.resolve()) and source.resolve().is_relative_to(r)
+ if destination.exists():assert destination.read_bytes()==out,('refuse overwrite',str(destination))
+ else:destination.write_bytes(out)
+ entries.append({'source':str(source.relative_to(r)),'destination':str(destination.relative_to(repo)),'bytes':len(out),'sha256':hashlib.sha256(out).hexdigest(),'source_sha256':hashlib.sha256(raw).hexdigest(),'transform':'none' if data is None else 'derived text trims trailing whitespace; exact original UTF8 separately retained'})
+for name in ['build.json','ownership.json','source-scope.json','toolbar-source-contract.json','design-audit.json','asset-audit.json','language-failure-baseline.json','native-look-driver-results.json','native-look-summary.json','native-main-driver-results.json','native-b04-summary.json','native-consolidated.json','checking-sampling.json','visual-review.json','benchmark-preparation.json','benchmark-driver-results.json','performance-b04-cua.json','performance-summary.json','resource-diagnostics.json']:
+ save(r/name,reports/('b04-'+name))
+for name in ['fixture-background.py','fixture-action.py','preflight-guard.py','prepare-fixture.py','observe-b04.py','native-driver.py','build-candidate.py','native-b04-runbook.md','benchmark-native-runbook.md','benchmark-b04.py','benchmark-driver-b04.py','benchmark-mock.py','process-start.c','summarize-performance.py','consolidate-native.py','export-evidence.py','record-batch.py','write-qa.py','cleanup-preflight.py']:
+ save(r/name,reports/('b04-'+name+'.txt'))
+f=r/'b04-r-9n9fkx-main'
+for name in ['fixture.json','pre-gui-proof.json','native-gui.json','terminal-status.json','management-audit.jsonl']:
+ save(f/name,reports/('b04-main-'+name))
+for v in sorted((f/'stage-proofs').glob('*.json')):save(v,reports/('b04-main-proof-'+v.name))
+for v in sorted(f.glob('fixture-action-*.json')):save(v,reports/('b04-main-'+v.name))
+for x in n['images']:save(f/x['name'],shots/('b04-'+x['name']))
+for name in ['62-308-wide-menu-diagnostic.png','62-308-small-menu-diagnostic.png','language-failed-wide.png','update-latest-wide.png','update-available-small-observed.png']:
+ save(f/name,shots/('b04-'+name))
+save(r/'b04-r-9n9fkx-look/language-failure-menu.png',shots/'b04-baseline-language-failure-menu.png')
+for node in ['62-308','64-335','104-1378','104-1605','104-1823','104-2046']:
+ save(r/'figma'/(node+'-reference.png'),shots/('b04-figma-'+node+'-reference.png'))
+for label in ['previous1','current1','current2','previous2']:
+ save(r/('performance-'+label+'.json'),reports/('b04-performance-'+label+'.json'));f=r/('bench-b04-'+label)
+ for name in ['seed-proof.json','preui-models.json','models-ready.json','toolbar-observed.json','matched-condition.json','resource-samples.json','terminal.json']:
+  save(f/name,reports/('b04-performance-'+label+'-'+name))
+ save(f/'language-before.png',shots/('b04-performance-'+label+'-language-before.png'))
+ for name in ['vmmap-before.txt','vmmap-after.txt']:
+  v=f/name;raw=v.read_text();save(v,reports/('b04-performance-'+label+'-'+name),('\n'.join(line.rstrip() for line in raw.splitlines())+'\n').encode())
+  q=r/('performance-'+label+'-'+name.replace('.txt','-raw.json'));q.write_text(json.dumps({'original_utf8':raw,'raw_sha256':hashlib.sha256(v.read_bytes()).hexdigest()},indent=2)+'\n');save(q,reports/('b04-'+q.name))
+for x in entries:assert hashlib.sha256((repo/x['destination']).read_bytes()).hexdigest()==x['sha256']
+out={'at':datetime.datetime.now().astimezone().isoformat(),'candidate_sha256':n['candidate_sha256'],'count':len(entries),'total_bytes':sum(x['bytes'] for x in entries),'files':entries,'excluded':'Private configs/keys/SQL snapshots; signed Figma links and raw full contexts; binaries/app copies; window-discovery images and non-selected timing samples. Explicit diagnostic files only; formal12 native PNG plus6 actual1024x640 Figma references.'}
+(reports/'b04-artifacts.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'files':len(entries),'MiB':round(out['total_bytes']/2**20,3)}))

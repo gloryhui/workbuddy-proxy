@@ -1,0 +1,262 @@
+{
+  "at": "2026-10-31T18:56:16.030297+08:00",
+  "file": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page": "51:2",
+  "frames": [
+    {
+      "node": "62:308",
+      "full_context_blocks": [
+        {
+          "name": "62-308-text-0.txt",
+          "bytes": 53542,
+          "sha256": "7bdab8438a48a84cbd3ef445fa71d237b6d4790ee68ea493f2bf0bff4fa7fe86"
+        },
+        {
+          "name": "62-308-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "62-308-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "62-308-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8"
+        },
+        {
+          "name": "62-308-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "default_reference": {
+        "name": "62-308-reference.png",
+        "sha256": "04245b150fd0e7aa335fbb3883d25eb81290c46058ca6117209da3f665912e4c"
+      },
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ]
+    },
+    {
+      "node": "64:335",
+      "full_context_blocks": [
+        {
+          "name": "64-335-text-0.txt",
+          "bytes": 59665,
+          "sha256": "891848ab051f88355b02179b1f7cc70396ac8e2bb701da028072b9e8f87028f1"
+        },
+        {
+          "name": "64-335-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "64-335-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "64-335-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8"
+        },
+        {
+          "name": "64-335-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "default_reference": {
+        "name": "64-335-reference.png",
+        "sha256": "07e0f5e352ff9bf92b129b1b70897fd4114f362e8d1c899da61a6351c55e53ad"
+      },
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ]
+    },
+    {
+      "node": "104:1378",
+      "full_context_blocks": [
+        {
+          "name": "104-1378-text-0.txt",
+          "bytes": 55462,
+          "sha256": "458f05874af66cbb7e64af7654e14ad284095862aa3306387bd6bf2270e39f79"
+        },
+        {
+          "name": "104-1378-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "104-1378-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "104-1378-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8"
+        },
+        {
+          "name": "104-1378-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "default_reference": {
+        "name": "104-1378-reference.png",
+        "sha256": "504f20baf5d4f0f1ce38e43733ebf6e367735916533009feca93d7783822bf0e"
+      },
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ]
+    },
+    {
+      "node": "104:1605",
+      "full_context_blocks": [
+        {
+          "name": "104-1605-text-0.txt",
+          "bytes": 55189,
+          "sha256": "e12ec980389976cf7e2439618b7657b3f8bf3bb592f4dace5ed24bc2ae72d5da"
+        },
+        {
+          "name": "104-1605-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "104-1605-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "104-1605-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8"
+        },
+        {
+          "name": "104-1605-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "default_reference": {
+        "name": "104-1605-reference.png",
+        "sha256": "5766f8e7b742214a2eafc409a3208b48eb0a1af31e4f528a6485d0cf2916e903"
+      },
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ]
+    },
+    {
+      "node": "104:1823",
+      "full_context_blocks": [
+        {
+          "name": "104-1823-text-0.txt",
+          "bytes": 56287,
+          "sha256": "4432187f8ed40b0454bca790524d3dcf0433675553aa9cd9e49f7cc13a31287b"
+        },
+        {
+          "name": "104-1823-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "104-1823-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "104-1823-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8"
+        },
+        {
+          "name": "104-1823-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "default_reference": {
+        "name": "104-1823-reference.png",
+        "sha256": "b6d273974aa2303c3d74d2b75cd7fcea0fa29e2f8daa8cd3f900afbabc9061c5"
+      },
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ]
+    },
+    {
+      "node": "104:2046",
+      "full_context_blocks": [
+        {
+          "name": "104-2046-text-0.txt",
+          "bytes": 55214,
+          "sha256": "08817c5eccd0a98694c0923b69c2149e8c15f56a87c874e4cfa0c89a0ca72551"
+        },
+        {
+          "name": "104-2046-text-1.txt",
+          "bytes": 551,
+          "sha256": "b58dc338a3f51f25262569e60a0f5a2aa5df3164f8516284804c099561f00454"
+        },
+        {
+          "name": "104-2046-text-2.txt",
+          "bytes": 83,
+          "sha256": "383e85e9752ba1176645532cb7d43bff03794e7de3b09ec708c0e4cbd58381ac"
+        },
+        {
+          "name": "104-2046-text-3.txt",
+          "bytes": 1112,
+          "sha256": "6facaa25d09fa71fc3ae493dff5734f328eebb1cfa19f33a21a7ae401c4458f8"
+        },
+        {
+          "name": "104-2046-text-4.txt",
+          "bytes": 472,
+          "sha256": "e074b6ef039e5dd684a83e025e8ebdc35684a778eb072d2841d6e268faac3215"
+        }
+      ],
+      "default_reference": {
+        "name": "104-2046-reference.png",
+        "sha256": "3a215ac7b9577103ace4a51e346e00bac9fe45f44f24e2d4c7d7d0e5d7ff1305"
+      },
+      "design_canvas": [
+        1440,
+        900
+      ],
+      "reference_pixels": [
+        1024,
+        640
+      ]
+    }
+  ],
+  "resources": "37 assets:32 byte exact repo matches,2 clipID/ref equivalents,3 native OS decorations.",
+  "extra_export": "Five additional official1024 tool exports succeeded.104:2046 extra export request timed out; its complete context/default screenshot already saved and used. No additional render retry needed.",
+  "interpretation": "Popup offsets in code are relative to content origin256,24: effective language right32/top115 and notices right32/top117. No false relocation from treating nested positions as window coordinates. Existing7thStudio skin is preserved beyond six static sample tiles; real data/mode/locale state remains truthful."
+}

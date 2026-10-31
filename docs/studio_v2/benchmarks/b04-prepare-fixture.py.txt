@@ -1,0 +1,58 @@
+from pathlib import Path
+r=Path(__file__).resolve().parent
+s=Path('docs/studio_v2/benchmarks/b03-fixture-background.py.txt').read_text().replace('synthetic-b03','synthetic-b04').replace('WorkBuddy Proxy Review','WorkBuddy Proxy B04 Review').replace("folder.name.removeprefix('ui-release-')","folder.name.removeprefix('ui-release-').replace('_','-')")
+marker="bundle=folder/'WorkBuddy Proxy B04 Review.app'";assert marker in s
+bridge='''# Test-only management boundary bridge. Core data, routing and updater code
+# remain the actual immutable binary. Controlled updater replies are UI-boundary
+# tests only; mode real forwards to the original public GitHub Core check.
+import http.client, hmac
+bridge_audit_lock=threading.Lock()
+class ManagementBridge(BaseHTTPRequestHandler):
+    def log_message(self,*args):pass
+    def do_POST(self):
+        if self.path not in ['/_control/action','/_control/stop']:
+            self.send_error(404);return
+        if not hmac.compare_digest(self.headers.get('Authorization',''),'Bearer '+key):
+            self.send_error(401);return
+        length=int(self.headers.get('Content-Length','0'))
+        if length<0 or length>1024*1024:self.send_error(413);return
+        body=self.rfile.read(length);payload=json.loads(body or b'{}');name=payload.get('command','stop')
+        mode=json.loads((folder/'management-mode.json').read_text()) if (folder/'management-mode.json').exists() else {}
+        update_mode=mode.get('update','real');status=200;controlled=False
+        if name=='language' and mode.get('language_failure'):
+            status=503;data=json.dumps({'message':'Synthetic language persistence failure'}).encode();controlled=True
+        elif name=='check_update' and update_mode!='real':
+            assert payload.get('force') is True
+            delay=min(max(float(mode.get('delay',1)),0),6);time.sleep(delay);controlled=True
+            if update_mode=='error':status=403;message='Update check HTTP 403'
+            elif update_mode=='invalid':message='{}'
+            else:
+                assert update_mode in ['latest','available']
+                tag='v0.5.7' if update_mode=='latest' else 'v0.5.8'
+                message=json.dumps({'tag':tag,'current':'0.5.7','available':update_mode=='available','url':'https://github.com/gloryhui/workbuddy-proxy/releases/tag/'+tag,'cached':False})
+            data=json.dumps({'message':message}).encode()
+        else:
+            conn=http.client.HTTPConnection('127.0.0.1',port,timeout=15)
+            try:
+                conn.request('POST',self.path,body,{'Content-Type':'application/json','Authorization':'Bearer '+key});response=conn.getresponse();status=response.status;data=response.read()
+            except (OSError,TimeoutError):status=503;data=b'{"message":"Fixture core unavailable"}'
+            finally:conn.close()
+        with bridge_audit_lock:
+            with (folder/'management-audit.jsonl').open('a') as audit:
+                audit.write(json.dumps({'at_ms':int(time.time()*1000),'command':name,'status':status,'controlled':controlled,'mode':update_mode if name=='check_update' else None,'language':payload.get('language') if name=='language' else None,'enabled':payload.get('enabled') if name=='autostart' else None,'force':payload.get('force') if name=='check_update' else None})+'\\n')
+        try:
+            self.send_response(status);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
+        except (BrokenPipeError,ConnectionResetError):pass
+bridge_server=ThreadingHTTPServer(('127.0.0.1',0),ManagementBridge)
+threading.Thread(target=bridge_server.serve_forever,daemon=True).start()
+original_instance=json.loads((config/'instance.json').read_text());(folder/'instance-before-bridge-private.json').write_text(json.dumps(original_instance)+'\\n');os.chmod(folder/'instance-before-bridge-private.json',0o600)
+bridged_instance=dict(original_instance,port=bridge_server.server_port)
+(config/'instance.json').write_text(json.dumps(bridged_instance)+'\\n');os.chmod(config/'instance.json',0o600)
+(folder/'management-bridge.json').write_text(json.dumps({'pid':os.getpid(),'host':'127.0.0.1','core_port':port,'bridge_port':bridge_server.server_port,'core_pid':core.pid,'scope':'Only own synthetic instance.json endpoint redirected. Config port and Core unchanged; bridge forwards all real commands except explicitly controlled update/language fault cases. Controlled results are not GitHub/Core updater E2E.'},indent=2)+'\\n')
+'''
+s=s.replace(marker,bridge+marker)
+s=s.replace('    server.shutdown()\n','    bridge_server.shutdown()\n    bridge_server.server_close()\n    server.shutdown()\n')
+(r/'fixture-background.py').write_text(s)
+# Guard retains independent OS/kernel proof and does not seed duplicate history.
+(r/'preflight-guard.py').write_text(Path('docs/studio_v2/benchmarks/b03-preflight-guard.py.txt').read_text())
+print('Fixture bridge prepared; actual Core/config/routing untouched, updater simulations explicitly scoped')

@@ -1,0 +1,227 @@
+{
+  "at": "2026-10-31T19:13:56.465291+08:00",
+  "candidate_sha256": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f",
+  "reviewer": "Root inspected all12 final native screenshots; CU actor report separately retained. Latest six full Figma contexts/default PNG references inspected.",
+  "visual_acceptance": "6 frames, both sizes accepted in B04 interface scope; performance and release gates separate.",
+  "source_geometry": {
+    "SYSTEM_TOOLBAR_TOP": 8,
+    "PAGE_X": 32,
+    "SYSTEM_TOOLBAR_WIDTH": 300,
+    "TOP_ICON_ROW_HEIGHT": 36,
+    "SYSTEM_BUTTON": 36,
+    "SYSTEM_ICON": 20,
+    "SYSTEM_GAP": 8
+  },
+  "images": [
+    {
+      "node": "62:308",
+      "name": "62-308-wide.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 571991,
+      "sha256": "202ba80b019537ee33a44e6bfc06fac4b8728d8e56eb4241b0a39e10c52feff5",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "62:308",
+      "name": "62-308-small.png",
+      "pixels": [
+        2200,
+        1400
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 395326,
+      "sha256": "51dd7170c369c69d520955dfd548a65ffe36d2c9b220d48dbfb15c79dc0327ea",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "64:335",
+      "name": "64-335-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 638071,
+      "sha256": "edbf32895c6aae5a596da4b91c5e9aa6cbfad5bd1eaa1753cea79ce39af246c0",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "64:335",
+      "name": "64-335-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 463719,
+      "sha256": "233cede72cbe4eb3d06d2a284acf32c1f29fef277ace9c834f74e48b5c7c9ceb",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1378",
+      "name": "104-1378-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 610637,
+      "sha256": "3f45f84ec96d111e4310727d3c1e9fd54aceb5f2ae240dc6168b716833ef9243",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1378",
+      "name": "104-1378-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 430611,
+      "sha256": "a18cd3bcfc870293dfa18a727f97da4a4f1fa69951ee7657bc4f88bd6eb6db9e",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1605",
+      "name": "104-1605-wide.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 615854,
+      "sha256": "4db9729f0aa75c539751bfc92b948f8d852cd0a0e0d74dac551da732b98d6abd",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1605",
+      "name": "104-1605-small.png",
+      "pixels": [
+        2200,
+        1400
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 436662,
+      "sha256": "1c10c5d409499adc15721ba8a2df0ba1f03c629a906a7c94538930d9467b8f28",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1823",
+      "name": "104-1823-wide.png",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 620432,
+      "sha256": "9cbb873a22b350582831aac56436a141b4d4d1dd61458ee8ac09f17790f53788",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:1823",
+      "name": "104-1823-small.png",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 428581,
+      "sha256": "1c257d68883839aaf6b21afab061ae531801ce2758de016a4fcb25adfc282bd2",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:2046",
+      "name": "104-2046-wide.png",
+      "pixels": [
+        2880,
+        1800
+      ],
+      "logical_size": [
+        1440,
+        900
+      ],
+      "bytes": 614869,
+      "sha256": "e42c548c784457a4b4bc2c596ad07d51d55f198efc302af265c0ac5249c54dc3",
+      "native_png": true,
+      "unmodified": true
+    },
+    {
+      "node": "104:2046",
+      "name": "104-2046-small.png",
+      "pixels": [
+        2200,
+        1400
+      ],
+      "logical_size": [
+        1100,
+        700
+      ],
+      "bytes": 438873,
+      "sha256": "e60804455aab6e1ae3d918c197a5f2211ef4f6a2b7b50d223269e65167eff1dc",
+      "native_png": true,
+      "unmodified": true
+    }
+  ],
+  "findings": [
+    "Toolbar stays at window top8/right32 in wide/small views; seven36 targets/20 icons with8 gaps have300 total width by actual Rust layout. Title/subtitle/content positions retained.",
+    "Language and notices align to whole toolbar right; Figma child coordinates are relative to content origin, not absolute window coordinates. No spurious shift applied.",
+    "62:308 final Mono pictures have no popup; old menu-open pictures remain separately named diagnostic. 64:335 preserves original six themes plus actual selectable seventh Studio entry, with taller native chooser.",
+    "104:1378 pictures show actual isolated enabled state;104:1605 pictures show actual waiting, selected from raw native timed captures. Completed-state pictures are not substituted for Checking.",
+    "104:2046 small remains visible after native resizing and states restore TARGET1440x900, not current small size. Both native1800/1400 and OS extra2pixel edge captures remain unprocessed.",
+    "Modal language click did not open underlying toolbar menu per native actor. Source occlude/propagation controls and lower placement preserved.",
+    "No new visual blocker requiring another runtime candidate; hover/focus and actual synthetic counts preserved. No font-file/RGB/AA gate."
+  ],
+  "boundaries": [
+    "No explicit activate/raise; actual foreground effects not measured.",
+    "Fullscreen/Spaces, browser launching, feedback submission, real OS login integration and title drag not tested; R02.",
+    "Complete keyboard/accessibility/IME and actual disabled-click interception not tested; R01.",
+    "Checking samples show disabled appearance, not proof of disabled click interception.",
+    "Bridge simulated update results do not prove public GitHub/Core updater end-to-end.",
+    "Geometry not fully measured; no full-frame visual sign-off inferred."
+  ],
+  "references": "design-audit.json,asset-audit.json,toolbar-source-contract.json,native-b04-summary.json"
+}

@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-31T18:48:01.763679+08:00",
+  "action": "set-mode",
+  "stage": "language_fault",
+  "scope": "Only recorded synthetic fixture modes/input faults or actual loopback request; no management settings writes.",
+  "mode": {
+    "update": "latest",
+    "delay": 2,
+    "language_failure": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-31T18:56:03.142680+08:00",
+  "action": "repair-appearance",
+  "stage": "appearance_repair",
+  "scope": "Only recorded synthetic fixture modes/input faults or actual loopback request; no management settings writes.",
+  "original_preference_restored_exact": true
+}

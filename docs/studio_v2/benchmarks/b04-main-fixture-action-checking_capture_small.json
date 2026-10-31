@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-31T19:09:33.678282+08:00",
+  "action": "set-mode",
+  "stage": "checking_capture_small",
+  "scope": "Only recorded synthetic fixture modes/input faults or actual loopback request; no management settings writes.",
+  "mode": {
+    "update": "latest",
+    "delay": 6.0,
+    "language_failure": false
+  }
+}

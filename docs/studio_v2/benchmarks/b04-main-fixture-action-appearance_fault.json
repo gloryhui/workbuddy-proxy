@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-31T18:55:43.339415+08:00",
+  "action": "block-appearance",
+  "stage": "appearance_fault",
+  "scope": "Owned appearance file preserved; empty directory blocks existing atomic save.",
+  "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/appearance.json",
+  "backup": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b04.r_9n9fkx/b04-r-9n9fkx-main/config/appearance-before-fault.json",
+  "sha256_before": "f3b2739d938c58310267fa6424dc23c5fb0c73216d446bdf8cea6bc2471580cf"
+}

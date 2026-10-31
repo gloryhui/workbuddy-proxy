@@ -1,0 +1,39 @@
+from pathlib import Path
+import datetime,json,re
+r=Path(__file__).resolve().parent;docs=Path.cwd()/'docs/studio_v2'
+n=json.loads((r/'native-consolidated.json').read_text());perf=json.loads((r/'performance-summary.json').read_text())
+assert len(n['images'])==12 and perf['assessment'].startswith('ACCEPTED')
+assert (docs/'benchmarks/b04-artifacts.json').exists()
+p=docs/'release_plan.json';plan=json.loads(p.read_text());b=next(x for x in plan['batches'] if x['id']=='B04');assert b['status']=='developing';frames=b['frames'];assert len(frames)==6
+proofs=['design-audit','asset-audit','source-scope','toolbar-source-contract','language-failure-baseline','native-b04-summary','native-consolidated','visual-review','checking-sampling','performance-summary','resource-diagnostics','artifacts']
+b.update(status='passed',accepted_frames=frames,acceptance_evidence=['benchmarks/b04-'+x+'.json' for x in proofs],completed_summary='QA71：六帧12原生图、语言失败回滚修复、三语言/七皮肤、真实隔离开机启动失败重试、更新状态/迟到关闭、恢复窗口与遮罩及四轮匹配短测签收。')
+done=[
+ 'QA71：原top8/right32、300宽、7×36/20图标/8间距和全部七事件字节保持；两尺寸图及模态遮罩下点击语言不打开菜单。',
+ 'QA71：旧版503后翻译/勾选不一致已原生复现，新版失败恢复已保存语言；English→系统实际中文→中文落盘，已选不重复写、筛选/Low草稿保持，英文价格对话框取消。',
+ 'QA71：Mono/Blue/Violet/Rose/Amber/Teal/Studio逐个真实选择读回；外观落盘失败保留Studio，修复后字节恢复。Mono无菜单和Studio七入口两尺寸完成。',
+ 'QA71：真实隔离plist ON→OFF→失败回滚OFF→修复ON→OFF；实际1100恢复1440、再缩1100仍保留目标提示，两尺寸完成。',
+ 'QA71：受控latest/available0.5.8/403/无效/等待关闭迟到响应，额外两次受控latest原生预采样拍到Checking；独立真实Core公网检查返回当前最新0.5.7；force和两个原外链处理器保持。',
+ 'QA71：同d08候选6×2原生图、14→15真实回环请求/费用全字段保护、仅声明语言/开机/皮肤写入；P/C/C/P原负载四轮同条件短测。']
+for task,text in zip(b['tasks'],done):task.update(acceptance='passed',completed=text,remaining='B04界面范围已签收；完整忙态拦截/键盘IME/辅助功能/主题矩阵由R01集中验证，系统登录/标题拖动/全屏/外链实际启动及其他平台由R02验证，长期性能和发行仍R03/R04。')
+plan.update(as_of=datetime.datetime.now().strftime('%Y-%m-%d'),current_batch='B05',historical_tasks=71,state='active')
+for gate in plan['batches']:
+ for task in gate['tasks']:
+  if task['id']=='R01.1':task['remaining']+=' QA71 Checking两尺寸原图显示禁用外观，未实测busy期间点击拦截/服务端精确去重；两个额外latest是拍图请求，不能作为重复提交缺陷或拦截成功。'
+  if task['id']=='R01.5':task['completed']='B01–B04累计38/40帧按最新设计和两尺寸签收，剩B05两帧；最终40帧集中扫描仍待，不等于R01/正式版通过。'
+  if task['id']=='R02.2':task['remaining']+=' QA71只做普通窗口恢复和真实隔离plist；原全屏算法/浏览器URL处理器未改，未重做全屏Spaces、标题拖动、真实登录或浏览器启动，不冒称当前系统集成通过。'
+  if task['id']=='R03.2':task['remaining']+=' QA71原四轮UI RSS+11.005MiB/组合+12.56MiB/峰值+16.565MiB；preload footprint旧120.3M/新119.35M，malloc allocated旧21.0M/新21.1M，并不排除RSS回退。原样本和资源原行见b04-resource-diagnostics；不以短测功能签收冒称R03通过。'
+  if task['id']=='R03.1':task['remaining']+=' QA71固定Core25f、旧4b/新d08四轮匹配工具菜单负载见b04-performance-summary；所有原样本保留，不替代B03既有成本。'
+assert sum(len(x.get('accepted_frames',[])) for x in plan['batches'] if x['id'].startswith('B'))==38
+p.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+'\n')
+p=docs/'figma_node_map.md';lines=p.read_text().splitlines();out=[];changed=[]
+for line in lines:
+ m=re.match(r'\| ([0-9]+:[0-9]+) \|',line)
+ if m and m[1] in frames:
+  cols=line.split('|');cols[-2]=' 已验收：B04 / QA71，最新六帧＋同d08原生6×2、语言失败回滚/皮肤/隔离开机/更新/窗口/遮罩及数据保护，完整输入/平台/发行门禁独立。 ';line='|'.join(cols);changed.append(m[1])
+ out.append(line)
+assert set(changed)==set(frames);text='\n'.join(out)+'\n';text=text.replace('B01/B02/B03按真实证据累计签收32帧，剩余8帧（B04六帧、B05两帧）','B01–B04按真实证据累计签收38帧，剩余2帧（B05）');p.write_text(text)
+p=docs/'visual_review.json';v=json.loads(p.read_text());v['updated_at']=datetime.datetime.now().astimezone().isoformat();v['figma']['inventory_source']+=' B04六份完整上下文/1024导出参考和12原生图见b04-design-audit/visual-review；累计38帧。'
+for x in v['frames']:
+ if x['id'] not in frames:continue
+ stem=x['id'].replace(':','-');x.update(review_status='reviewed',scope='QA71/B04冻结d08六帧界面签收；真实交互/原生双尺寸/短测独立证据，R01–R04未通过。',checks={'layout':'top8/right32、宽300、7×36/20图标/8间距；标题副标题内容原位，菜单/提示全工具栏右对齐。','typography':'按原设计角色核对，未设置字形/字体文件/RGB字节门禁。','assets':'37项原资源：32字节一致、2全XML仅clipID/ref/空白等价、3为原生OS装饰。','states':'语言503恢复中文/三选项，七主题/外观保存失败；隔离plist成功失败重试；更新受控状态与单独真实公网结果。','interaction':'草稿/筛选保持、已选语言不重复写、关闭后迟到不重开、普通窗口恢复和缩窗保留提示、遮罩阻止语言菜单。','native_1440':'未加工原生PNG2880×1800或1802，逻辑1440×900；OS边框形态按实际记录。','native_1100':'未加工原生PNG2200×1400或1402，逻辑1100×700；小窗弹层和目标说明完整可读。'},differences=['保留六旧主题和真正Studio第七入口、原皮肤键与默认；不伪造样本计数或静态主题勾选。','早期Mono误带菜单和更新结果态图单独留诊断；Checking从真实原生预采样选取，哈希逐一核对，无裁图/重绘。','完整busy拦截/键盘IME/辅助功能仍R01，标题拖动/全屏/登录/真实浏览器集成仍R02。','P/C/C/P每版n2仅短测；旧成本和完整性能门禁仍R03，CI安装签名升级回滚仍R04。'],evidence=['screenshots/b04-'+stem+'-wide.png','screenshots/b04-'+stem+'-small.png','screenshots/b04-figma-'+stem+'-reference.png',*b['acceptance_evidence']])
+p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n');print('B04 accepted38/40, remaining2, currentB05; separate release gates retained.')

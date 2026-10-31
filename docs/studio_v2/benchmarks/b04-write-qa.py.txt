@@ -1,0 +1,29 @@
+from pathlib import Path
+import json
+repo=Path.cwd();d=repo/'docs/studio_v2';r=d/'benchmarks'
+n=json.loads((r/'b04-native-consolidated.json').read_text());p=json.loads((r/'b04-performance-summary.json').read_text());c=json.loads((r/'b04-cleanup.json').read_text());a=json.loads((r/'b04-artifacts.json').read_text())
+assert p['assessment'].startswith('ACCEPTED') and c['removed'] and c['current_round_retained_bytes']==0
+assert sum(len(x.get('accepted_frames',[])) for x in json.loads((d/'release_plan.json').read_text())['batches'] if x['id'].startswith('B'))==38
+rows=[]
+for label,key in [('Core RSS MiB','core_rss_mib'),('UI RSS MiB','ui_rss_mib'),('合计 RSS MiB','combined_rss_mib'),('采样峰值 MiB','sampled_peak_mib'),('进程→记录 ms','process_to_marker_ms'),('代理p50 ms','proxy_p50_ms'),('代理p95 ms','proxy_p95_ms'),('80大请求 s','large_seconds')]:
+ x=p['metrics'][key];rows.append(f'| {label} | {x["previous"]["median"]:.4f} | {x["current"]["median"]:.4f} | {x["delta"]:+.4f} |')
+text=f'''
+## 小功能 71：B04工具栏、语言与窗口整批签收（2026-10-31）
+
+- 六帧/六任务界面签收，累计38/40、剩余2（B05同步/生命周期）；Goal active，R01–R04独立。冻结d08候选 `{n['candidate_sha256']}`，Core固定25f。最新六份完整Figma上下文和原1024×640导出图已读，设计画布1440×900；37项资源32字节一致、2全XML仅clipID/ref/空白等价、3使用原生系统装饰，无路径提取/重绘。[设计](benchmarks/b04-design-audit.json)、[资源](benchmarks/b04-asset-audit.json)。
+- 只改Rust `ui.rs` 的语言失败恢复。旧4b实际管理HTTP503后，页面英文/已存中文/菜单勾选中文不一致且再选中文无效；新d08恢复后端读回语言（未入队则用最后已确认值），原翻译效果体和正常语言payload逐字节保持，无补偿保存。Core/配置格式/依赖/锁文件、原七处理器/全屏恢复算法/主题键未改。[旧版复现](benchmarks/b04-language-failure-baseline.json)、[源码范围](benchmarks/b04-source-scope.json)、[原处理器](benchmarks/b04-toolbar-source-contract.json)。fmt、204pass/2既有ignore、strict all-targets Clippy、Intel all-targets check、arm64 release全0；Intel非硬件验收。[构建](benchmarks/b04-build.json)。
+- 真实CUA在隔离Profile完成失败503回滚与English→系统实际中文→中文、已选不重复请求，gpt-6筛选3/14和未保存Low草稿保持，英文价格弹窗取消。七皮肤逐个读回、外观文件保存失败保留Studio后修复；开机启动为实际Core隔离plist ON→OFF→失败回滚OFF→修复ON→OFF，没有改真实LaunchAgents或登录会话。更新latest/available0.5.8/403/无效/关闭后迟到响应使用显式loopback UI边界夹具；单独一次原Core真实公网检查显示当前最新0.5.7，未下载/安装，不能把受控结果称Core公网E2E。所有更新保留force:true。[原生交互/边界](benchmarks/b04-native-b04-summary.json)、[逐阶段与终态](benchmarks/b04-native-consolidated.json)、[实际命令](benchmarks/b04-main-management-audit.jsonl)。
+- 12张正式原生PNG按ownPID/onscreen layer0窗口ID，用screencapture -x -o -l -t png采集，无裁剪/缩放/转码。手动窗口2880×1802/2200×1402，恢复原生目标后2880×1800/2200×1400，两种OS边缘形态逐图记录。Mono初图误带菜单已另存诊断并重拍关闭态；首轮更新图是完成态，未当Checking使用，预采样后选取两张真实等待帧（各自原图字节相等），额外2次受控latest明确计数。恢复后旧drag起点y1800越出高1800图像，内移角点一次成功；缩窗仍保留目标1440×900提示。模态遮罩下点语言未打开后层菜单，编辑弹窗取消。[12图视觉复核](benchmarks/b04-visual-review.json)、[等待态采样](benchmarks/b04-checking-sampling.json)。
+- 工具top8/right32、300宽、7×36/20图标/8间距保持；标题副标题及页面位置未动。Main原14个实际HTTP200请求和14份成本全字段保护，加最后1个真实回环请求到15/15；仅允许语言/开机状态和外观保存，原业务配置按既有9项Serde默认补齐后等价，统计设置和3价格规则保持。原生close后UI PIDgone，夹具/Core实际wait0，不编造CUA所属UI退出码。[完整数据和进程证明](benchmarks/b04-native-consolidated.json)。
+- P/C/C/P各版n2，固定Core/arm64/Studio/1000真实预置请求（每20持久化屏障）/64模型，同语言Esc→主题Esc→1100恢复1440→最终语言菜单；四张匹配原生PNG同2880×1800、10s驻留和每PID0.1s采样。原benchmark.py SHA bc7e0537…15f6c2不变，1000小请求/80×1MiB/并发4原负载不变，四轮均0。UI进程→记录不是首帧，CUA等待不比较；负载后vmmap在原benchmark停止UI后执行，无有效postload测量。[性能](benchmarks/b04-performance-summary.json)、[四轮原生条件](benchmarks/b04-performance-b04-cua.json)。
+
+| 短轮中位数，每版n=2 | 旧4b03 | 新d08f | 差值 |
+|---|---:|---:|---:|
+{chr(10).join(rows)}
+
+- 本批判断：{p['assessment']} 有效负载前footprint中位数旧120.3M/新119.35M、malloc allocated旧21.0M/新21.1M，不能排除RSS回退；[资源原行](benchmarks/b04-resource-diagnostics.json)。全部慢样本与成本保留；n2不证明统计等价、长期泄漏、FPS/输入延迟或R03发布通过，B03等此前成本继续留在R03。完整busy点击拦截/精确去重、键盘/IME/AX与全主题矩阵仍R01；本批不显式activate/raise但实际前台效果未计量，标题拖动、全屏Spaces、真实登录、外链浏览器启动和其他平台仍R02。GitHub/反馈保留原目标与cx.open_url，不冒称当前已实际打开或提交反馈。
+- 归档{a['count']}项/{a['total_bytes']/2**20:.3f}MiB，逐份SHA核验。所有子进程退出、完整目录/父链/所有者/引用清单预检后，仅非强制删除本轮确切临时目录：{c['logical_bytes_removed']/2**20:.3f}MiB/{c['files_removed']}文件，本轮临时保留0；实测APFS可用变化{c['observed_apfs_free_delta_bytes']/2**20:+.3f}MiB、系统盘余{c['free_after_bytes']/2**30:.3f}GiB，并发应用可能影响差值。共享Cargo、固定Core46和此前拒删目录保留。[归档](benchmarks/b04-artifacts.json)、[清理预检](benchmarks/b04-cleanup-preflight.json)、[结果](benchmarks/b04-cleanup.json)。下一批B05；正式版门禁未通过，未公开发布。
+'''
+p=d/'baseline_and_qa.md';s=p.read_text();assert '## 小功能 71：' not in s;p.write_text(s+text)
+p=d/'feature_regression_matrix.md';s=p.read_text();assert '## B04 / UI71' not in s;p.write_text(s+'''\n## B04 / UI71 整批保护记录（2026-10-31）\n\n- 同d08候选，只修语言失败后的视图回滚；原七事件、Core、配置格式、主题键与代理业务逻辑保持。\n- 三语言/七主题、隔离开机真实失败重试、更新受控状态和独立一次真实公网检查、普通窗口恢复及模态遮罩；12张实际两尺寸PNG。\n- 原14请求/14成本全字段保护至15/15，业务配置除声明语言/开机保存及既有Serde默认外保持，统计设置与价格不变；Core/夹具退出0、UI PIDgone。\n- P/C/C/P原负载各n2；全部性能成本和R01输入/R02系统/R03长期性能/R04安装发行边界详见[QA71](baseline_and_qa.md)、[交互与数据](benchmarks/b04-native-consolidated.json)、[性能](benchmarks/b04-performance-summary.json)。\n''')
+print('QA71 and regression protection recorded from archived evidence only.')

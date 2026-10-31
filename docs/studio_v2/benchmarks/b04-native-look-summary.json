@@ -1,0 +1,35 @@
+{
+  "phase": "look",
+  "ui_sha256": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "ui_pid": 26948,
+  "window_id": 10991,
+  "core_pid": 26482,
+  "fault_injection": "management bridge language update returns HTTP 503, as configured by fixture",
+  "initial_config_language": "zh",
+  "actions": [
+    "opened interface language menu",
+    "selected English",
+    "reopened language menu",
+    "selected checked Simplified Chinese",
+    "closed UI using native close button"
+  ],
+  "observations": [
+    "UI changed to English after selecting English",
+    "language menu still showed Simplified Chinese checked while UI was English",
+    "selecting checked Simplified Chinese closed menu but UI remained English"
+  ],
+  "config_language_after": "zh",
+  "error_ui": "No error message observed in captured state; 503 is the fixture configuration, not an independently inspected network response.",
+  "screenshot": {
+    "filename": "language-failure-menu.png",
+    "pixels": [
+      2880,
+      1802
+    ],
+    "sha256": "7f14f312d2739d5e91455f5ad843e15dad7ed3c7673307d4a68001b4223927c0",
+    "method": "screencapture -x -o; own PID onscreen layer 0 window"
+  },
+  "ui_pid_gone_confirmed": true,
+  "no_explicit_activate_or_raise": true,
+  "foreground_effect_unmeasured": true
+}

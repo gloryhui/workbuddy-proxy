@@ -2,7 +2,7 @@
 
 官方 Figma MCP 于 2026-10-31 刷新40节点清单并完整读取B01的19份高保真上下文和原图，文件 `zxDfIQ4lhNcTXrFT7qk8QZ`、页面 `51:2`（WorkBuddy Proxy · Studio V2 · Rust GPUI）。以下 40 张 1440×900 状态画板直接来自 page metadata；未验收表示尚未逐画板进行运行与视觉对照。Rust 落点均相对于 `gpui/src/`。
 
-批次计划v2起，下面“已验收”指该帧的最新设计、完整路径和两尺寸界面签收；全局输入、平台、性能与安装发行在 `release_plan.json` 的 R01–R04 独立记录。正式版须两者同时通过，不能把界面签收等同发布。B01/B02/B03按真实证据累计签收32帧，剩余8帧（B04六帧、B05两帧）；原生输入与发行门禁独立。
+批次计划v2起，下面“已验收”指该帧的最新设计、完整路径和两尺寸界面签收；全局输入、平台、性能与安装发行在 `release_plan.json` 的 R01–R04 独立记录。正式版须两者同时通过，不能把界面签收等同发布。B01–B04按真实证据累计签收38帧，剩余2帧（B05）；原生输入与发行门禁独立。
 
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
@@ -20,8 +20,8 @@
 | 61:561 | 11 / STUDIO V2 · 协议选项 · OpenAI Responses | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
 | 61:838 | 11 / STUDIO V2 · 协议选项 · Anthropic | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
 | 61:1111 | 11 / STUDIO V2 · 协议选项 · Gemini | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。 |
-| 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs | 部分：UI65完整首审及Mono两尺寸/恢复Studio；旧27272a与键/默认/字体分支保留，和Figma字体示例差异明确列出；六皮肤全量状态及精细视觉待收口 |
-| 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 部分：UI65完整首审，Studio350px菜单/六个原22pxSVG显式路由与原色像素盒对齐，保留Studio第七入口；两尺寸/换肤落盘/Esc与外点关闭通过，旧主题分支/选中样式与全量状态待收口 |
+| 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs | 已验收：B04 / QA71，最新六帧＋同d08原生6×2、语言失败回滚/皮肤/隔离开机/更新/窗口/遮罩及数据保护，完整输入/平台/发行门禁独立。 |
+| 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 已验收：B04 / QA71，最新六帧＋同d08原生6×2、语言失败回滚/皮肤/隔离开机/更新/窗口/遮罩及数据保护，完整输入/平台/发行门禁独立。 |
 | 66:320 | 17 / STUDIO V2 · 上游协议下拉 | ui/provider_choices.rs, ui/providers.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；四协议下拉，两尺寸打开/Esc；未改原选择处理器。 全局R01–R04不在此签收内。 |
 | 66:538 | 18 / STUDIO V2 · 供应商预设搜索 | ui/provider_choices.rs, ui.rs, presets.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；预设Bedrock搜索、方向高亮及关闭重开；原项确认另有同候选实测。 全局R01–R04不在此签收内。 |
 | 66:760 | 19 / STUDIO V2 · API Key 显示演示 | ui/providers.rs, ui_components.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；仅合成Key两尺寸显隐，随后恢复遮罩。 全局R01–R04不在此签收内。 |
@@ -42,10 +42,10 @@
 | 80:646 | 34 / STUDIO V2 · 编辑 OpenCode Go | ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, model_table.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；B编辑改名与取消恢复，完整值可从字段/侧栏读取。 全局R01–R04不在此签收内。 |
 | 80:864 | 35 / STUDIO V2 · 删除 OpenCode Go 确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；删除B确认，Esc/默认Return/Cancel与显式确认分别留证。 全局R01–R04不在此签收内。 |
 | 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；删除B后A及4模型原字段保持。 全局R01–R04不在此签收内。 |
-| 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs | 部分：原生提示/实际开关与隔离plist、分候选失败回滚/重试和Pending关闭、动态Tooltip实时刷新、遮罩/两尺寸与四轮性能已验；初始Tab/完整键盘/IME/无障碍及跨平台待续 |
-| 104:1605 | 38 / STUDIO V2 · 检查更新交互（原型） | ui/update_notice.rs, ui.rs | 部分：299×113原生等待/实际HTTP403与重试、关闭不回包重开、Esc/X/外部/缩窗、草稿筛选/遮罩/两尺寸与六轮性能已验；公网成功/完整键盘/IME/无障碍及跨平台待续 |
-| 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui/language_menu.rs, ui.rs | 部分：原241×184/三模式保存与重复不写/取消/草稿筛选/重开等证据保留；最终0892 Studio工具焦点/Enter与Space打开/Esc返回/复开及Tab接续已验，菜单30s CPU样本已留；长期CPU/完整IME/读屏/原生AX及跨平台待续 |
-| 104:2046 | 40 / STUDIO V2 · 恢复默认窗口尺寸（原型） | ui/window_restore.rs, ui.rs | 部分：原生提示/两尺寸、普通/zoom/全屏恢复、缩窗Esc/X、真实Enter/Space、草稿筛选/遮罩与四轮性能已验；超时失败、完整IME/无障碍/跨平台待续 |
+| 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs | 已验收：B04 / QA71，最新六帧＋同d08原生6×2、语言失败回滚/皮肤/隔离开机/更新/窗口/遮罩及数据保护，完整输入/平台/发行门禁独立。 |
+| 104:1605 | 38 / STUDIO V2 · 检查更新交互（原型） | ui/update_notice.rs, ui.rs | 已验收：B04 / QA71，最新六帧＋同d08原生6×2、语言失败回滚/皮肤/隔离开机/更新/窗口/遮罩及数据保护，完整输入/平台/发行门禁独立。 |
+| 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui/language_menu.rs, ui.rs | 已验收：B04 / QA71，最新六帧＋同d08原生6×2、语言失败回滚/皮肤/隔离开机/更新/窗口/遮罩及数据保护，完整输入/平台/发行门禁独立。 |
+| 104:2046 | 40 / STUDIO V2 · 恢复默认窗口尺寸（原型） | ui/window_restore.rs, ui.rs | 已验收：B04 / QA71，最新六帧＋同d08原生6×2、语言失败回滚/皮肤/隔离开机/更新/窗口/遮罩及数据保护，完整输入/平台/发行门禁独立。 |
 
 共享组件：`103:442` 七项工具栏 → `ui.rs::app_controls`、`ui_components.rs`；最新 `54:2` / `90:442` 已将其独立置于窗口top8/right32、300×36，七项事件保持原样。最终049版1440×900与恢复界面操作后补拍的1100×700实拍已检查；最终小窗Skin/Language上缘点击、模态遮罩及Restore已验，快捷键与菜单Esc的完整范围见实施记录。`83:454` 供应商行、`83:455` 固定操作栏 → `ui.rs::sidebar`；`71:364` 原生实施契约 → `theme.rs`、本目录记录。
 

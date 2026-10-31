@@ -3,7 +3,7 @@
   "figma": {
     "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
     "page_id": "51:2",
-    "inventory_source": "Official Figma MCP51:2 refreshed2026-10-31; same40 nodes; all19 B01 full contexts and default references frozen in b01-design-audit. B02六份完整非稀疏上下文及原1440参考另见b02-design-audit；本批按冻结基线推进。 B03七份最新完整高保真上下文/原1440参考见b03-design-audit；合计32帧批次签收。",
+    "inventory_source": "Official Figma MCP51:2 refreshed2026-10-31; same40 nodes; all19 B01 full contexts and default references frozen in b01-design-audit. B02六份完整非稀疏上下文及原1440参考另见b02-design-audit；本批按冻结基线推进。 B03七份最新完整高保真上下文/原1440参考见b03-design-audit；合计32帧批次签收。 B04六份完整上下文/1024导出参考和12原生图见b04-design-audit/visual-review；累计38帧。",
     "high_fidelity_context_read": [
       "59:484",
       "59:279",
@@ -593,59 +593,77 @@
     {
       "id": "62:308",
       "name": "13 / STUDIO V2 · 黑白主题示例",
-      "review_status": "reviewed_with_differences",
-      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
+      "review_status": "reviewed",
+      "scope": "QA71/B04冻结d08六帧界面签收；真实交互/原生双尺寸/短测独立证据，R01–R04未通过。",
       "checks": {
-        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
-        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
-        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
-        "layout": "最终e6abd在1440/1100真实切换Mono，供应商页双列/小窗内容可见；切回Studio正常。",
-        "typography": "现有Mono仍使用原字体路径，未默默改六旧皮肤字体；与Figma的Studio字体Mono示例有明显差异。",
-        "colors": "原Monochrome27272a、旧配置键/默认值及其他六种枚举映射未改。",
-        "states": "同一隔离配置2供应商5模型14请求，真实未测试连接状态/未导入状态保留。",
-        "interaction": "最终Mono→Studio即时生效和配置回读为studio_indigo；未重复六皮肤所有状态。"
+        "layout": "top8/right32、宽300、7×36/20图标/8间距；标题副标题内容原位，菜单/提示全工具栏右对齐。",
+        "typography": "按原设计角色核对，未设置字形/字体文件/RGB字节门禁。",
+        "assets": "37项原资源：32字节一致、2全XML仅clipID/ref/空白等价、3为原生OS装饰。",
+        "states": "语言503恢复中文/三选项，七主题/外观保存失败；隔离plist成功失败重试；更新受控状态与单独真实公网结果。",
+        "interaction": "草稿/筛选保持、已选语言不重复写、关闭后迟到不重开、普通窗口恢复和缩窗保留提示、遮罩阻止语言菜单。",
+        "native_1440": "未加工原生PNG2880×1800或1802，逻辑1440×900；OS边框形态按实际记录。",
+        "native_1100": "未加工原生PNG2200×1400或1402，逻辑1100×700；小窗弹层和目标说明完整可读。"
       },
       "differences": [
-        "Mono旧字体/表格/菜单路径与Figma示例仍不同，需按该画板后续完整收口；本轮只审查和兼容性抽查。",
-        "完整六皮肤状态、键盘/IME/AX/HiDPI和跨平台仍待。"
+        "保留六旧主题和真正Studio第七入口、原皮肤键与默认；不伪造样本计数或静态主题勾选。",
+        "早期Mono误带菜单和更新结果态图单独留诊断；Checking从真实原生预采样选取，哈希逐一核对，无裁图/重绘。",
+        "完整busy拦截/键盘IME/辅助功能仍R01，标题拖动/全屏/登录/真实浏览器集成仍R02。",
+        "P/C/C/P每版n2仅短测；旧成本和完整性能门禁仍R03，CI安装签名升级回滚仍R04。"
       ],
       "evidence": [
-        "benchmarks/settings-menu-design-audit.json",
-        "benchmarks/settings-menu-asset-audit.json",
-        "benchmarks/settings-menu-source-scope.json",
-        "benchmarks/settings-menu-final-gui-validation.json",
-        "benchmarks/settings-menu-price-and-retention-data-proof.json",
-        "benchmarks/settings-menu-final-data-proof.json",
-        "benchmarks/settings-menu-swatch-pixels.json"
+        "screenshots/b04-62-308-wide.png",
+        "screenshots/b04-62-308-small.png",
+        "screenshots/b04-figma-62-308-reference.png",
+        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-asset-audit.json",
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-language-failure-baseline.json",
+        "benchmarks/b04-native-b04-summary.json",
+        "benchmarks/b04-native-consolidated.json",
+        "benchmarks/b04-visual-review.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-performance-summary.json",
+        "benchmarks/b04-resource-diagnostics.json",
+        "benchmarks/b04-artifacts.json"
       ]
     },
     {
       "id": "64:335",
       "name": "14 / STUDIO V2 · 外观与主题",
-      "review_status": "reviewed_with_differences",
-      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
+      "review_status": "reviewed",
+      "scope": "QA71/B04冻结d08六帧界面签收；真实交互/原生双尺寸/短测独立证据，R01–R04未通过。",
       "checks": {
-        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
-        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
-        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
-        "layout": "Studio可见菜单350px，NativePopover用379px包装保留29px尾部留白以定位至右37/顶63；六个154×66 tile/6px列距/10px行距，额外保留Studio跨两列第七行。",
-        "typography": "标题17/24 Bold，副标题12/17 Regular，tile13/19 Medium/选中Bold，说明11/16 Regular。",
-        "colors": "六原色22px SVG未经改写，显式Assets路由与各palette原色；共享颜色常量，不修改六旧palette。",
-        "states": "c301资源未路由导致六色块缺失，明确失败；c2eb补路由后可见但位置待修，最终e6abd六盒与参考同坐标，22px原色均可见。",
-        "interaction": "最终七项可见、Mono→Studio、Escape和点外关闭；原save/apply listener体保持，独立回读最终Studio。"
+        "layout": "top8/right32、宽300、7×36/20图标/8间距；标题副标题内容原位，菜单/提示全工具栏右对齐。",
+        "typography": "按原设计角色核对，未设置字形/字体文件/RGB字节门禁。",
+        "assets": "37项原资源：32字节一致、2全XML仅clipID/ref/空白等价、3为原生OS装饰。",
+        "states": "语言503恢复中文/三选项，七主题/外观保存失败；隔离plist成功失败重试；更新受控状态与单独真实公网结果。",
+        "interaction": "草稿/筛选保持、已选语言不重复写、关闭后迟到不重开、普通窗口恢复和缩窗保留提示、遮罩阻止语言菜单。",
+        "native_1440": "未加工原生PNG2880×1800或1802，逻辑1440×900；OS边框形态按实际记录。",
+        "native_1100": "未加工原生PNG2200×1400或1402，逻辑1100×700；小窗弹层和目标说明完整可读。"
       },
       "differences": [
-        "为保留独立Studio入口，菜单比六项353px静态稿高一行；不能删除第七入口或静默把Studio映射到Violet。",
-        "六旧主题选中后沿用现有菜单/字体路径，选中样式、全量焦点/状态与平台仍待逐项收口；不是全帧最终通过。"
+        "保留六旧主题和真正Studio第七入口、原皮肤键与默认；不伪造样本计数或静态主题勾选。",
+        "早期Mono误带菜单和更新结果态图单独留诊断；Checking从真实原生预采样选取，哈希逐一核对，无裁图/重绘。",
+        "完整busy拦截/键盘IME/辅助功能仍R01，标题拖动/全屏/登录/真实浏览器集成仍R02。",
+        "P/C/C/P每版n2仅短测；旧成本和完整性能门禁仍R03，CI安装签名升级回滚仍R04。"
       ],
       "evidence": [
-        "benchmarks/settings-menu-design-audit.json",
-        "benchmarks/settings-menu-asset-audit.json",
-        "benchmarks/settings-menu-source-scope.json",
-        "benchmarks/settings-menu-final-gui-validation.json",
-        "benchmarks/settings-menu-price-and-retention-data-proof.json",
-        "benchmarks/settings-menu-final-data-proof.json",
-        "benchmarks/settings-menu-swatch-pixels.json"
+        "screenshots/b04-64-335-wide.png",
+        "screenshots/b04-64-335-small.png",
+        "screenshots/b04-figma-64-335-reference.png",
+        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-asset-audit.json",
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-language-failure-baseline.json",
+        "benchmarks/b04-native-b04-summary.json",
+        "benchmarks/b04-native-consolidated.json",
+        "benchmarks/b04-visual-review.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-performance-summary.json",
+        "benchmarks/b04-resource-diagnostics.json",
+        "benchmarks/b04-artifacts.json"
       ]
     },
     {
@@ -1256,75 +1274,155 @@
     {
       "id": "104:1378",
       "name": "37 / STUDIO V2 · 开机启动已开启（原型）",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "QA71/B04冻结d08六帧界面签收；真实交互/原生双尺寸/短测独立证据，R01–R04未通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "top8/right32、宽300、7×36/20图标/8间距；标题副标题内容原位，菜单/提示全工具栏右对齐。",
+        "typography": "按原设计角色核对，未设置字形/字体文件/RGB字节门禁。",
+        "assets": "37项原资源：32字节一致、2全XML仅clipID/ref/空白等价、3为原生OS装饰。",
+        "states": "语言503恢复中文/三选项，七主题/外观保存失败；隔离plist成功失败重试；更新受控状态与单独真实公网结果。",
+        "interaction": "草稿/筛选保持、已选语言不重复写、关闭后迟到不重开、普通窗口恢复和缩窗保留提示、遮罩阻止语言菜单。",
+        "native_1440": "未加工原生PNG2880×1800或1802，逻辑1440×900；OS边框形态按实际记录。",
+        "native_1100": "未加工原生PNG2200×1400或1402，逻辑1100×700；小窗弹层和目标说明完整可读。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "保留六旧主题和真正Studio第七入口、原皮肤键与默认；不伪造样本计数或静态主题勾选。",
+        "早期Mono误带菜单和更新结果态图单独留诊断；Checking从真实原生预采样选取，哈希逐一核对，无裁图/重绘。",
+        "完整busy拦截/键盘IME/辅助功能仍R01，标题拖动/全屏/登录/真实浏览器集成仍R02。",
+        "P/C/C/P每版n2仅短测；旧成本和完整性能门禁仍R03，CI安装签名升级回滚仍R04。"
+      ],
+      "evidence": [
+        "screenshots/b04-104-1378-wide.png",
+        "screenshots/b04-104-1378-small.png",
+        "screenshots/b04-figma-104-1378-reference.png",
+        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-asset-audit.json",
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-language-failure-baseline.json",
+        "benchmarks/b04-native-b04-summary.json",
+        "benchmarks/b04-native-consolidated.json",
+        "benchmarks/b04-visual-review.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-performance-summary.json",
+        "benchmarks/b04-resource-diagnostics.json",
+        "benchmarks/b04-artifacts.json"
+      ]
     },
     {
       "id": "104:1605",
       "name": "38 / STUDIO V2 · 检查更新交互（原型）",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "QA71/B04冻结d08六帧界面签收；真实交互/原生双尺寸/短测独立证据，R01–R04未通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "top8/right32、宽300、7×36/20图标/8间距；标题副标题内容原位，菜单/提示全工具栏右对齐。",
+        "typography": "按原设计角色核对，未设置字形/字体文件/RGB字节门禁。",
+        "assets": "37项原资源：32字节一致、2全XML仅clipID/ref/空白等价、3为原生OS装饰。",
+        "states": "语言503恢复中文/三选项，七主题/外观保存失败；隔离plist成功失败重试；更新受控状态与单独真实公网结果。",
+        "interaction": "草稿/筛选保持、已选语言不重复写、关闭后迟到不重开、普通窗口恢复和缩窗保留提示、遮罩阻止语言菜单。",
+        "native_1440": "未加工原生PNG2880×1800或1802，逻辑1440×900；OS边框形态按实际记录。",
+        "native_1100": "未加工原生PNG2200×1400或1402，逻辑1100×700；小窗弹层和目标说明完整可读。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "保留六旧主题和真正Studio第七入口、原皮肤键与默认；不伪造样本计数或静态主题勾选。",
+        "早期Mono误带菜单和更新结果态图单独留诊断；Checking从真实原生预采样选取，哈希逐一核对，无裁图/重绘。",
+        "完整busy拦截/键盘IME/辅助功能仍R01，标题拖动/全屏/登录/真实浏览器集成仍R02。",
+        "P/C/C/P每版n2仅短测；旧成本和完整性能门禁仍R03，CI安装签名升级回滚仍R04。"
+      ],
+      "evidence": [
+        "screenshots/b04-104-1605-wide.png",
+        "screenshots/b04-104-1605-small.png",
+        "screenshots/b04-figma-104-1605-reference.png",
+        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-asset-audit.json",
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-language-failure-baseline.json",
+        "benchmarks/b04-native-b04-summary.json",
+        "benchmarks/b04-native-consolidated.json",
+        "benchmarks/b04-visual-review.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-performance-summary.json",
+        "benchmarks/b04-resource-diagnostics.json",
+        "benchmarks/b04-artifacts.json"
+      ]
     },
     {
       "id": "104:1823",
       "name": "39 / STUDIO V2 · 语言切换菜单",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "QA71/B04冻结d08六帧界面签收；真实交互/原生双尺寸/短测独立证据，R01–R04未通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "top8/right32、宽300、7×36/20图标/8间距；标题副标题内容原位，菜单/提示全工具栏右对齐。",
+        "typography": "按原设计角色核对，未设置字形/字体文件/RGB字节门禁。",
+        "assets": "37项原资源：32字节一致、2全XML仅clipID/ref/空白等价、3为原生OS装饰。",
+        "states": "语言503恢复中文/三选项，七主题/外观保存失败；隔离plist成功失败重试；更新受控状态与单独真实公网结果。",
+        "interaction": "草稿/筛选保持、已选语言不重复写、关闭后迟到不重开、普通窗口恢复和缩窗保留提示、遮罩阻止语言菜单。",
+        "native_1440": "未加工原生PNG2880×1800或1802，逻辑1440×900；OS边框形态按实际记录。",
+        "native_1100": "未加工原生PNG2200×1400或1402，逻辑1100×700；小窗弹层和目标说明完整可读。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "保留六旧主题和真正Studio第七入口、原皮肤键与默认；不伪造样本计数或静态主题勾选。",
+        "早期Mono误带菜单和更新结果态图单独留诊断；Checking从真实原生预采样选取，哈希逐一核对，无裁图/重绘。",
+        "完整busy拦截/键盘IME/辅助功能仍R01，标题拖动/全屏/登录/真实浏览器集成仍R02。",
+        "P/C/C/P每版n2仅短测；旧成本和完整性能门禁仍R03，CI安装签名升级回滚仍R04。"
+      ],
+      "evidence": [
+        "screenshots/b04-104-1823-wide.png",
+        "screenshots/b04-104-1823-small.png",
+        "screenshots/b04-figma-104-1823-reference.png",
+        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-asset-audit.json",
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-language-failure-baseline.json",
+        "benchmarks/b04-native-b04-summary.json",
+        "benchmarks/b04-native-consolidated.json",
+        "benchmarks/b04-visual-review.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-performance-summary.json",
+        "benchmarks/b04-resource-diagnostics.json",
+        "benchmarks/b04-artifacts.json"
+      ]
     },
     {
       "id": "104:2046",
       "name": "40 / STUDIO V2 · 恢复默认窗口尺寸（原型）",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "QA71/B04冻结d08六帧界面签收；真实交互/原生双尺寸/短测独立证据，R01–R04未通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "top8/right32、宽300、7×36/20图标/8间距；标题副标题内容原位，菜单/提示全工具栏右对齐。",
+        "typography": "按原设计角色核对，未设置字形/字体文件/RGB字节门禁。",
+        "assets": "37项原资源：32字节一致、2全XML仅clipID/ref/空白等价、3为原生OS装饰。",
+        "states": "语言503恢复中文/三选项，七主题/外观保存失败；隔离plist成功失败重试；更新受控状态与单独真实公网结果。",
+        "interaction": "草稿/筛选保持、已选语言不重复写、关闭后迟到不重开、普通窗口恢复和缩窗保留提示、遮罩阻止语言菜单。",
+        "native_1440": "未加工原生PNG2880×1800或1802，逻辑1440×900；OS边框形态按实际记录。",
+        "native_1100": "未加工原生PNG2200×1400或1402，逻辑1100×700；小窗弹层和目标说明完整可读。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "保留六旧主题和真正Studio第七入口、原皮肤键与默认；不伪造样本计数或静态主题勾选。",
+        "早期Mono误带菜单和更新结果态图单独留诊断；Checking从真实原生预采样选取，哈希逐一核对，无裁图/重绘。",
+        "完整busy拦截/键盘IME/辅助功能仍R01，标题拖动/全屏/登录/真实浏览器集成仍R02。",
+        "P/C/C/P每版n2仅短测；旧成本和完整性能门禁仍R03，CI安装签名升级回滚仍R04。"
+      ],
+      "evidence": [
+        "screenshots/b04-104-2046-wide.png",
+        "screenshots/b04-104-2046-small.png",
+        "screenshots/b04-figma-104-2046-reference.png",
+        "benchmarks/b04-design-audit.json",
+        "benchmarks/b04-asset-audit.json",
+        "benchmarks/b04-source-scope.json",
+        "benchmarks/b04-toolbar-source-contract.json",
+        "benchmarks/b04-language-failure-baseline.json",
+        "benchmarks/b04-native-b04-summary.json",
+        "benchmarks/b04-native-consolidated.json",
+        "benchmarks/b04-visual-review.json",
+        "benchmarks/b04-checking-sampling.json",
+        "benchmarks/b04-performance-summary.json",
+        "benchmarks/b04-resource-diagnostics.json",
+        "benchmarks/b04-artifacts.json"
+      ]
     }
   ],
-  "updated_at": "2026-10-31T17:59:26.074497+08:00"
+  "updated_at": "2026-10-31T19:26:03.873681+08:00"
 }

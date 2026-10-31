@@ -1602,3 +1602,26 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 初始四组差异触发一次有界补充C3/P3，不替换原样本：补充UI/组合RSS分别-7.78/-9.66MiB、p95+0.007ms、marker+21.795ms。全部6轮描述性中位数UI+3.50MiB/组合+3.23MiB/峰值+4.66MiB/p95+0.007ms，**marker仍+958.54ms**；原四组与全六组各自完整保留。负载前footprint旧179.5/159.3M、新160.9/161.6M，分配堆旧20.8/21.9M、新22.0/22.0M，不能拿其替代RSS或证明因果；current1额外空搜索聚焦与旧行选择器拒绝偏差也记录。以上成本明确继续R03，不声称回退已排除。[有界补充](benchmarks/b03-performance-supplemental-summary.json)、[资源原行](benchmarks/b03-performance-resource-diagnostics.json)。
 - 本批短负载判断：ACCEPTED FOR B03 interface and successful short loopback workload scope only. Initial4 UI RSS+9.195MiB/combined+10.405MiB/peak+13.77MiB/marker+792.1355ms/proxy p95+0.3475ms retained. Bounded C3/P3 did not reproduce those deltas; full6 descriptive combined median+3.23MiB/UI+3.50MiB/peak+4.66MiB and p95+0.007ms; full6 marker median remains+958.54ms (not first paint). Source causality and long-term/controlled performance remain R03; no regression-free or release-performance claim. n2不证明统计等价、长期泄漏/CPU/FPS/输入延迟或R03发行通过，既有B01/UI67成本继续保留。
 - 226份证据共18.209MiB已归档复核SHA。其中6张同一已选测试窗口的window-candidate原生诊断也在清单，未作为正式/测量图；导出器排除说明措辞错误已[另行审计](benchmarks/b03-artifact-audit.json)，原清单快照/原UTF8与SHA保留；6份可读vmmap文本仅去掉EOF空行并更新派生清单。停止并等待本轮全部子进程、核对精确路径/所有者/父目录/类型/全清单与lsof无引用后，非强制删除唯一专用目录；移除479文件/438.210MiB，实测系统盘可用变化+443.242MiB、余30.539GiB（可能有其他应用并发影响），本轮临时保留0。共享Cargo、Core46和此前拒删目录未动。[归档](benchmarks/b03-artifacts.json)、[清理预检](benchmarks/b03-cleanup-preflight.json)、[清理结果](benchmarks/b03-cleanup.json)。下一批B04，不代表公开发布或Goal完成。
+
+## 小功能 71：B04工具栏、语言与窗口整批签收（2026-10-31）
+
+- 六帧/六任务界面签收，累计38/40、剩余2（B05同步/生命周期）；Goal active，R01–R04独立。冻结d08候选 `d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f`，Core固定25f。最新六份完整Figma上下文和原1024×640导出图已读，设计画布1440×900；37项资源32字节一致、2全XML仅clipID/ref/空白等价、3使用原生系统装饰，无路径提取/重绘。[设计](benchmarks/b04-design-audit.json)、[资源](benchmarks/b04-asset-audit.json)。
+- 只改Rust `ui.rs` 的语言失败恢复。旧4b实际管理HTTP503后，页面英文/已存中文/菜单勾选中文不一致且再选中文无效；新d08恢复后端读回语言（未入队则用最后已确认值），原翻译效果体和正常语言payload逐字节保持，无补偿保存。Core/配置格式/依赖/锁文件、原七处理器/全屏恢复算法/主题键未改。[旧版复现](benchmarks/b04-language-failure-baseline.json)、[源码范围](benchmarks/b04-source-scope.json)、[原处理器](benchmarks/b04-toolbar-source-contract.json)。fmt、204pass/2既有ignore、strict all-targets Clippy、Intel all-targets check、arm64 release全0；Intel非硬件验收。[构建](benchmarks/b04-build.json)。
+- 真实CUA在隔离Profile完成失败503回滚与English→系统实际中文→中文、已选不重复请求，gpt-6筛选3/14和未保存Low草稿保持，英文价格弹窗取消。七皮肤逐个读回、外观文件保存失败保留Studio后修复；开机启动为实际Core隔离plist ON→OFF→失败回滚OFF→修复ON→OFF，没有改真实LaunchAgents或登录会话。更新latest/available0.5.8/403/无效/关闭后迟到响应使用显式loopback UI边界夹具；单独一次原Core真实公网检查显示当前最新0.5.7，未下载/安装，不能把受控结果称Core公网E2E。所有更新保留force:true。[原生交互/边界](benchmarks/b04-native-b04-summary.json)、[逐阶段与终态](benchmarks/b04-native-consolidated.json)、[实际命令](benchmarks/b04-main-management-audit.jsonl)。
+- 12张正式原生PNG按ownPID/onscreen layer0窗口ID，用screencapture -x -o -l -t png采集，无裁剪/缩放/转码。手动窗口2880×1802/2200×1402，恢复原生目标后2880×1800/2200×1400，两种OS边缘形态逐图记录。Mono初图误带菜单已另存诊断并重拍关闭态；首轮更新图是完成态，未当Checking使用，预采样后选取两张真实等待帧（各自原图字节相等），额外2次受控latest明确计数。恢复后旧drag起点y1800越出高1800图像，内移角点一次成功；缩窗仍保留目标1440×900提示。模态遮罩下点语言未打开后层菜单，编辑弹窗取消。[12图视觉复核](benchmarks/b04-visual-review.json)、[等待态采样](benchmarks/b04-checking-sampling.json)。
+- 工具top8/right32、300宽、7×36/20图标/8间距保持；标题副标题及页面位置未动。Main原14个实际HTTP200请求和14份成本全字段保护，加最后1个真实回环请求到15/15；仅允许语言/开机状态和外观保存，原业务配置按既有9项Serde默认补齐后等价，统计设置和3价格规则保持。原生close后UI PIDgone，夹具/Core实际wait0，不编造CUA所属UI退出码。[完整数据和进程证明](benchmarks/b04-native-consolidated.json)。
+- P/C/C/P各版n2，固定Core/arm64/Studio/1000真实预置请求（每20持久化屏障）/64模型，同语言Esc→主题Esc→1100恢复1440→最终语言菜单；四张匹配原生PNG同2880×1800、10s驻留和每PID0.1s采样。原benchmark.py SHA bc7e0537…15f6c2不变，1000小请求/80×1MiB/并发4原负载不变，四轮均0。UI进程→记录不是首帧，CUA等待不比较；负载后vmmap在原benchmark停止UI后执行，无有效postload测量。[性能](benchmarks/b04-performance-summary.json)、[四轮原生条件](benchmarks/b04-performance-b04-cua.json)。
+
+| 短轮中位数，每版n=2 | 旧4b03 | 新d08f | 差值 |
+|---|---:|---:|---:|
+| Core RSS MiB | 12.3200 | 13.8750 | +1.5550 |
+| UI RSS MiB | 85.7200 | 96.7250 | +11.0050 |
+| 合计 RSS MiB | 98.0400 | 110.6000 | +12.5600 |
+| 采样峰值 MiB | 147.2750 | 163.8400 | +16.5650 |
+| 进程→记录 ms | 1058.6820 | 949.1885 | -109.4935 |
+| 代理p50 ms | 0.1745 | 0.1720 | -0.0025 |
+| 代理p95 ms | 0.2205 | 0.2095 | -0.0110 |
+| 80大请求 s | 0.0920 | 0.0930 | +0.0010 |
+
+- 本批判断：ACCEPTED for B04 interface delivery and short workload correctness only: four unchanged workloads/terminal checks passed; proxy p95 -0.011ms and process-to-marker -109.4935ms. Recorded UI RSS +11.005MiB, combined +12.56MiB, peak +16.565MiB remain explicit R03 work. Preload footprint/allocated heap are similar; no regression-free or release-performance claim. 有效负载前footprint中位数旧120.3M/新119.35M、malloc allocated旧21.0M/新21.1M，不能排除RSS回退；[资源原行](benchmarks/b04-resource-diagnostics.json)。全部慢样本与成本保留；n2不证明统计等价、长期泄漏、FPS/输入延迟或R03发布通过，B03等此前成本继续留在R03。完整busy点击拦截/精确去重、键盘/IME/AX与全主题矩阵仍R01；本批不显式activate/raise但实际前台效果未计量，标题拖动、全屏Spaces、真实登录、外链浏览器启动和其他平台仍R02。GitHub/反馈保留原目标与cx.open_url，不冒称当前已实际打开或提交反馈。
+- 归档167项/12.933MiB，逐份SHA核验。所有子进程退出、完整目录/父链/所有者/引用清单预检后，仅非强制删除本轮确切临时目录：384.845MiB/440文件，本轮临时保留0；实测APFS可用变化+387.133MiB、系统盘余31.317GiB，并发应用可能影响差值。共享Cargo、固定Core46和此前拒删目录保留。[归档](benchmarks/b04-artifacts.json)、[清理预检](benchmarks/b04-cleanup-preflight.json)、[结果](benchmarks/b04-cleanup.json)。下一批B05；正式版门禁未通过，未公开发布。

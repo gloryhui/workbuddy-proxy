@@ -1,0 +1,29 @@
+from pathlib import Path
+import argparse,datetime,hashlib,json,os,re,urllib.request
+p=argparse.ArgumentParser();p.add_argument('fixture',type=Path);p.add_argument('action',choices=['set-mode','block-appearance','repair-appearance','block-autostart','repair-autostart','request']);p.add_argument('--stage',required=True);p.add_argument('--update',choices=['real','latest','available','error','invalid']);p.add_argument('--language-failure',choices=['on','off']);p.add_argument('--delay',type=float);a=p.parse_args();r=Path(__file__).resolve().parent;f=a.fixture.resolve();assert f.parent==r and f.name=='b04-r-9n9fkx-main';assert re.fullmatch('[a-zA-Z0-9_-]+',a.stage)
+config=f/'config/config.json';before=hashlib.sha256(config.read_bytes()).hexdigest();cfg=json.loads(config.read_text());out={'at':datetime.datetime.now().astimezone().isoformat(),'action':a.action,'stage':a.stage,'scope':'Only recorded synthetic fixture modes/input faults or actual loopback request; no management settings writes.'}
+def owned(path):
+ assert path.resolve().is_relative_to(f) and not path.is_symlink() and path.stat().st_uid==os.getuid()
+ for parent in path.parents:
+  assert not parent.is_symlink()
+  if parent==f:break
+if a.action=='set-mode':
+ path=f/'management-mode.json';v=json.loads(path.read_text())
+ if a.update is not None:v['update']=a.update
+ if a.language_failure is not None:v['language_failure']=a.language_failure=='on'
+ if a.delay is not None:assert 0<=a.delay<=6;v['delay']=a.delay
+ path.write_text(json.dumps(v)+'\n');out['mode']=v
+elif a.action=='block-appearance':
+ path=f/'config/appearance.json';backup=f/'config/appearance-before-fault.json';owned(path);assert path.is_file() and not backup.exists();raw=path.read_bytes();path.rename(backup);path.mkdir();proof={'path':str(path),'backup':str(backup),'sha256_before':hashlib.sha256(raw).hexdigest(),'scope':'Owned appearance file preserved; empty directory blocks existing atomic save.'};(f/'appearance-fault.json').write_text(json.dumps(proof)+'\n');out.update(proof)
+elif a.action=='repair-appearance':
+ path=f/'config/appearance.json';backup=f/'config/appearance-before-fault.json';retained=f/'config/appearance-blocker-retained';owned(path);owned(backup);assert path.is_dir() and not list(path.iterdir()) and backup.is_file() and not retained.exists();path.rename(retained);backup.rename(path);assert hashlib.sha256(path.read_bytes()).hexdigest()==json.loads((f/'appearance-fault.json').read_text())['sha256_before'];out['original_preference_restored_exact']=True
+elif a.action=='block-autostart':
+ assert not cfg['autostart'];path=f/'home/Library/LaunchAgents';backup=path.parent/'LaunchAgents-before-fault';owned(path);assert path.is_dir() and not list(path.iterdir()) and not backup.exists();path.rename(backup);path.write_text('B04 owned registration blocker\n');out.update(blocker=str(path.relative_to(f)),backed_up_empty_directory=str(backup.relative_to(f)))
+elif a.action=='repair-autostart':
+ path=f/'home/Library/LaunchAgents';backup=path.parent/'LaunchAgents-before-fault';retained=path.parent/'LaunchAgents-blocker-retained';owned(path);owned(backup);assert path.is_file() and path.read_text()=='B04 owned registration blocker\n' and backup.is_dir() and not retained.exists();path.rename(retained);backup.rename(path);out['owned_directory_restored']=True
+else:
+ ready=json.loads((f/'cua-launch-ready.json').read_text());model=cfg['providers'][0]['models'][0]['alias'];q=urllib.request.Request('http://127.0.0.1:%d/v1/chat/completions'%ready['port'],data=json.dumps({'model':model,'messages':[{'role':'user','content':'Synthetic B04 post-preference liveness'}]}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+cfg['local_key']})
+ with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(q,timeout=12) as z:out['http_status']=z.status;z.read()
+ assert out['http_status']==200
+assert hashlib.sha256(config.read_bytes()).hexdigest()==before,'Fixture action changed business configuration'
+(f/('fixture-action-'+a.stage+'.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps(out,ensure_ascii=False))

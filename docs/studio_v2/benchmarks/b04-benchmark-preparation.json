@@ -1,0 +1,19 @@
+{
+  "order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "baseline_ui": "4b03ed5fc3d629604c453b0214d1ccd33b0ace9ef912db84fc156fb55837ded5",
+  "candidate_ui": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f",
+  "original_benchmark_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "seed_actual_http": 1000,
+  "seed_barrier_every": 20,
+  "original_small_requests": 1000,
+  "original_large_requests": 80,
+  "large_mib": 1,
+  "concurrency": 4,
+  "native_scene": "Provider64 + language menu open. Same1100 languageEsc/themeEsc/restore1440Close/final languageOpen. No language/theme/config save; actual Core remains separate.",
+  "started": false
+}
