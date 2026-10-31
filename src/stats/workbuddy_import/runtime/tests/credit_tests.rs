@@ -99,6 +99,104 @@ fn credit(stage: &str, at: i64) -> String {
     .to_string()
 }
 
+#[tokio::test]
+async fn a_full_scan_retries_a_stale_writer_snapshot_but_reports_a_storage_failure() {
+    for (code, expected_state) in [
+        ("stats_workbuddy_stale_batch", "completed"),
+        ("stats_workbuddy_scan_busy", "completed"),
+        ("stats_unavailable", "failed"),
+    ] {
+        let folder = tempfile::tempdir().unwrap();
+        let config = folder.path().join("config");
+        let root = folder.path().join("workbuddy");
+        let project = root.join("projects/retry");
+        std::fs::create_dir_all(&project).unwrap();
+        std::fs::write(
+            project.join("retry.jsonl"),
+            line("retry", "hy3", now_ms()) + "\n",
+        )
+        .unwrap();
+        let running = start(&config, &root, 0).await;
+        wait_number(&config, "SELECT COUNT(*) FROM usage_requests", 1).await;
+        full_scan(&running).await;
+        let before = command(&running.0, json!({"command":"stats_workbuddy_status"})).await;
+        *running
+            .0
+            .inner
+            .import_runtime
+            .test_batch_failure
+            .lock()
+            .unwrap() = Some(code);
+        let scan = command(
+            &running.0,
+            json!({"command":"stats_workbuddy_scan","mode":"full"}),
+        )
+        .await;
+        let deadline = Instant::now() + Duration::from_secs(5);
+        let status = loop {
+            let status = command(&running.0, json!({"command":"stats_workbuddy_status"})).await;
+            assert_eq!(
+                status["scan_id"], scan["scan_id"],
+                "accepted scan identity changed: {status}"
+            );
+            if matches!(status["scan_state"].as_str(), Some("completed" | "failed")) {
+                break status;
+            }
+            assert!(
+                Instant::now() < deadline,
+                "injected {code}: requested={scan}, status={status}"
+            );
+            tokio::time::sleep(Duration::from_millis(10)).await;
+        };
+        assert_eq!(
+            status["scan_state"], expected_state,
+            "injected {code}: {status}"
+        );
+        assert_eq!(
+            status["runtime_metrics"]["writer_batch_failures"]
+                .as_u64()
+                .unwrap(),
+            before["runtime_metrics"]["writer_batch_failures"]
+                .as_u64()
+                .unwrap()
+                + 1
+        );
+        if expected_state == "completed" {
+            assert!(status["last_error_code"].is_null());
+        } else {
+            assert_eq!(
+                status["last_error_code"],
+                "stats_workbuddy_source_read_failed"
+            );
+        }
+        assert_eq!(number(&config, "SELECT COUNT(*) FROM usage_requests"), 1);
+        assert_eq!(
+            number(&config, "SELECT SUM(total_tokens) FROM usage_requests"),
+            120
+        );
+        assert_eq!(
+            number(
+                &config,
+                "SELECT SUM(workbuddy_credit_nanos) FROM usage_requests"
+            ),
+            1_140_000_000
+        );
+        assert_eq!(
+            number(
+                &config,
+                "SELECT COUNT(*) FROM workbuddy_import_ledger WHERE state='conflict'"
+            ),
+            0
+        );
+        eprintln!(
+            "injected {code}: scan={}, state={}, writer_failures={}",
+            scan["scan_id"],
+            status["scan_state"],
+            status["runtime_metrics"]["writer_batch_failures"]
+        );
+    }
+}
+
 async fn full_scan(running: &Running) {
     let scan = command(
         &running.0,
@@ -109,6 +207,10 @@ async fn full_scan(running: &Running) {
     loop {
         let status = command(&running.0, json!({"command":"stats_workbuddy_status"})).await;
         if status["scan_id"] == scan["scan_id"] && status["scan_state"] == "completed" {
+            assert!(
+                status["last_error_code"].is_null(),
+                "completed scan retained an error: requested={scan}, status={status}"
+            );
             return;
         }
         assert!(

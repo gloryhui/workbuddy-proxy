@@ -133,9 +133,34 @@ fn apply_batch(
         &items,
         now,
     )
-    .map_err(|_| "stats_workbuddy_stale_batch")?;
+    .map_err(batch_write_error)?;
     store_checkpoint_details(tx, &batch, &checkpoint, now)?;
     Ok(report.conflicted > 0)
+}
+
+fn batch_write_error(error: store::StoreError) -> &'static str {
+    use types::BatchRejectReason;
+    match error {
+        store::StoreError::SettingsStale
+        | store::StoreError::BatchRejected(
+            BatchRejectReason::StaleBatch
+            | BatchRejectReason::MappingConflict
+            | BatchRejectReason::SourceChanged,
+        ) => "stats_workbuddy_stale_batch",
+        store::StoreError::BatchRejected(BatchRejectReason::ImportDisabled) => {
+            "stats_workbuddy_import_disabled"
+        }
+        store::StoreError::Sqlite(rusqlite::Error::SqliteFailure(error, _))
+            if matches!(
+                error.code,
+                rusqlite::ErrorCode::DatabaseBusy | rusqlite::ErrorCode::DatabaseLocked
+            ) =>
+        {
+            "stats_workbuddy_scan_busy"
+        }
+        // Storage and invalid-data errors must still make the scan fail.
+        _ => "stats_unavailable",
+    }
 }
 
 fn prepare_checkpoint(
@@ -248,4 +273,40 @@ fn store_checkpoint_details(
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod failure_tests {
+    use super::*;
+
+    #[test]
+    fn storage_failures_are_not_misreported_as_retryable_stale_batches() {
+        assert_eq!(
+            batch_write_error(store::StoreError::SettingsStale),
+            "stats_workbuddy_stale_batch"
+        );
+        assert_eq!(
+            batch_write_error(store::StoreError::BatchRejected(
+                types::BatchRejectReason::StaleBatch
+            )),
+            "stats_workbuddy_stale_batch"
+        );
+        assert_eq!(
+            batch_write_error(store::StoreError::Sqlite(rusqlite::Error::InvalidQuery)),
+            "stats_unavailable"
+        );
+        for code in [rusqlite::ffi::SQLITE_BUSY, rusqlite::ffi::SQLITE_LOCKED] {
+            assert_eq!(
+                batch_write_error(store::StoreError::Sqlite(rusqlite::Error::SqliteFailure(
+                    rusqlite::ffi::Error::new(code),
+                    None
+                ))),
+                "stats_workbuddy_scan_busy"
+            );
+        }
+        assert_eq!(
+            batch_write_error(store::StoreError::InvalidOffset),
+            "stats_unavailable"
+        );
+    }
 }

@@ -23,6 +23,8 @@ const SLICE_TIME: Duration = Duration::from_millis(50);
 pub(in crate::stats) struct Shared {
     #[cfg(test)]
     idle_snapshot_reads: AtomicU64,
+    #[cfg(test)]
+    test_batch_failure: Mutex<Option<&'static str>>,
     clock: OnceLock<metrics::Clock>,
     telemetry: Mutex<telemetry::Telemetry>,
     enabled: AtomicBool,
@@ -418,9 +420,22 @@ impl Runtime {
         {
             Err("stats_workbuddy_scan_busy")
         } else {
-            apply_work(&mut writer.conn, envelope.work)
+            // The injection exists only in unit-test builds and traverses the
+            // real writer ACK and reader retry path without changing SQLite.
+            #[cfg(test)]
+            let injected =
+                candidates.and_then(|_| self.shared.test_batch_failure.lock().unwrap().take());
+            #[cfg(not(test))]
+            let injected: Option<&'static str> = None;
+            match injected {
+                Some(code) => Err(code),
+                None => apply_work(&mut writer.conn, envelope.work),
+            }
         };
         if let Some(candidates) = candidates {
+            if let Err(code) = result.as_ref() {
+                eprintln!("workbuddy import batch rejected: {code}");
+            }
             telemetry::batch_finished(&self.shared, before.elapsed(), candidates, result.is_ok());
         }
         if let Err(code) = result {

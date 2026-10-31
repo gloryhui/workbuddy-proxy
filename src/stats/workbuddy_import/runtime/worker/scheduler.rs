@@ -366,6 +366,8 @@ impl<'a> Worker<'a> {
             let mut state = self.shared.progress.lock().unwrap();
             if let Err(code) = result {
                 state.last_error_code = Some(code);
+            } else {
+                state.last_error_code = None;
             }
             if let Some(task) = state.scan.as_mut() {
                 task.state = if result.is_ok() {
@@ -442,7 +444,16 @@ impl<'a> Worker<'a> {
     fn submission_failed(&mut self, code: &'static str) {
         if self.shared.active() {
             self.shared.error(code);
-            self.pass_failed = true;
+            if matches!(
+                code,
+                "stats_workbuddy_stale_batch" | "stats_workbuddy_scan_busy"
+            ) {
+                // A superseded snapshot asks for a retry, not a source failure
+                // after the retry succeeds. Reread the durable cursor.
+                self.full_cursor = None;
+            } else {
+                self.pass_failed = true;
+            }
             let guard = self.shared.progress.lock().unwrap();
             let _ = self.shared.wake.wait_timeout(guard, self.backoff);
             self.backoff = (self.backoff * 2).min(Duration::from_secs(30));
@@ -536,6 +547,51 @@ impl<'a> Worker<'a> {
 #[cfg(test)]
 mod recovery_tests {
     use super::*;
+
+    #[test]
+    fn retryable_writer_rejections_do_not_turn_a_clean_full_scan_into_a_source_failure() {
+        for (code, retryable) in [
+            ("stats_workbuddy_stale_batch", true),
+            ("stats_workbuddy_scan_busy", true),
+            ("stats_unavailable", false),
+            ("stats_workbuddy_source_read_failed", false),
+        ] {
+            let folder = tempfile::tempdir().unwrap();
+            let db = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+            db.execute_batch(
+                "CREATE TABLE workbuddy_import_files(scan_generation INTEGER, generation INTEGER);
+                 INSERT INTO workbuddy_import_files VALUES(0,1);
+                 CREATE TABLE stats_settings(singleton INTEGER, workbuddy_last_full_scan_ms INTEGER);
+                 INSERT INTO stats_settings VALUES(1,1);",
+            ).unwrap();
+            drop(db);
+            let (inner, _control) = crate::stats::StatsHandle::initialize(folder.path().into());
+            let shared = &inner.import_runtime;
+            shared.configure(true);
+            let root = reader::ReaderRoot::new(folder.path().join("synthetic-source"));
+            let (sender, _receiver) = mpsc::sync_channel(1);
+            let mut worker = Worker::new(&inner, &root, &sender, shared).unwrap();
+            worker.backoff = Duration::ZERO;
+            worker.full_cursor = Some(FullCursor {
+                relative_path: "projects/test.jsonl".into(),
+                offset: Some(128),
+                discarding: false,
+                generation: 1,
+            });
+            worker.submission_failed(code);
+            assert_eq!(worker.pass_failed, !retryable, "{code}");
+            if retryable {
+                assert!(
+                    worker.full_cursor.is_none(),
+                    "retry must reread durable progress"
+                );
+            }
+            // An earlier genuine source error must survive a later stale retry.
+            worker.pass_failed = true;
+            worker.submission_failed(code);
+            assert!(worker.pass_failed);
+        }
+    }
 
     #[test]
     fn resuming_a_full_scan_keeps_the_accepted_request_identity() {
