@@ -248,6 +248,7 @@ pub struct Proxy {
     protocol_options: crate::protocol_options::Editor,
     focus: FocusHandle,
     picker: Option<Vec<String>>,
+    picker_projection: crate::picker_projection::ProjectionCache,
     picked: BTreeSet<usize>,
     only_picked: bool,
     picker_list: Entity<gpui_kit::component::list::ListState<model_picker::Candidates>>,
@@ -882,6 +883,7 @@ impl Proxy {
             protocol_options,
             focus,
             picker: None,
+            picker_projection: crate::picker_projection::ProjectionCache::default(),
             picked: BTreeSet::new(),
             only_picked: false,
             picker_list,
@@ -2065,6 +2067,7 @@ impl Proxy {
     }
     fn dismiss(&mut self, _: &Dismiss, window: &mut Window, cx: &mut Context<Self>) {
         self.picker = None;
+        self.picker_projection.clear();
         self.editing = None;
         self.model_edit_error = None;
         self.delete_open = false;

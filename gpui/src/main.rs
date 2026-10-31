@@ -22,6 +22,7 @@ mod draft_discovery;
 mod i18n;
 mod model_options;
 mod model_table;
+mod picker_projection;
 mod presets;
 mod protocol_options;
 mod provider_connection;

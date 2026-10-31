@@ -317,6 +317,7 @@ impl Proxy {
             self.models.push(json!({"model":id,"name":id}));
         }
         self.picker = None;
+        self.picker_projection.clear();
         self.capture(cx);
         self.status = self
             .t("模型已添加，保存后生效", "Models added; save to apply")
@@ -379,21 +380,21 @@ impl Proxy {
         cx: &mut Context<Self>,
     ) -> AnyElement {
         let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
-        let filtered = self.filtered(cx);
+        let query = self.search.read(cx).value().to_lowercase();
+        self.picker_projection.update(
+            self.picker.as_deref().unwrap_or_default(),
+            self.models
+                .iter()
+                .filter_map(|model| model["model"].as_str()),
+            &self.picked,
+            &query,
+            self.only_picked,
+        );
+        let filtered = self.picker_projection.indices();
         let count = filtered.len();
         let total = self.picker.as_ref().map_or(0, Vec::len);
         let chosen = self.picked.len();
-        let existing = self
-            .models
-            .iter()
-            .filter_map(|model| model["model"].as_str())
-            .collect::<BTreeSet<_>>();
-        let checked = self.picker.as_ref().map_or(0, |ids| {
-            ids.iter()
-                .enumerate()
-                .filter(|(index, id)| existing.contains(id.as_str()) || self.picked.contains(index))
-                .count()
-        });
+        let checked = self.picker_projection.checked();
         self.picker_list.update(cx, |list, cx| {
             let filtered_changed = list.delegate().indices != filtered;
             let language_changed = list.delegate().zh != self.zh;
@@ -405,7 +406,7 @@ impl Proxy {
                 let selected = previous
                     .and_then(|index| filtered.iter().position(|candidate| *candidate == index))
                     .or(if filtered.is_empty() { None } else { Some(0) });
-                list.delegate_mut().indices = filtered;
+                list.delegate_mut().indices = filtered.to_vec();
                 list.set_selected_index(selected.map(IndexPath::new), window, cx);
                 list.scroll_to_selected_item(window, cx);
             }
