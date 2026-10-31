@@ -657,4 +657,3 @@ let white=(715*s..<835*s).filter{rgb(1000*s,$0)==[255,255,255]}
 var ys:[Int]=[]
 for y in (780*s)..<(815*s) {for x in (309*s)..<(455*s) {let c=rgb(x,y);if c[0]<200 && c[1]<200 && c[2]<220 {ys.append(y)}}}
 print(String(data:try! JSONSerialization.data(withJSONObject:["white_interior_min_y":Double(white.min()!)/Double(s),"white_interior_max_y":Double(white.max()!)/Double(s),"white_interior_height":Double(white.count)/Double(s),"timestamp_ink_min_y":Double(ys.min()!)/Double(s),"timestamp_ink_max_y":Double(ys.max()!)/Double(s)],options:.sortedKeys),encoding:.utf8)!)
-

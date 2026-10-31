@@ -499,9 +499,10 @@
     {
       "source": "generated historical orchestration archive",
       "artifact": "benchmarks/overview-closure-orchestration.py.txt",
-      "bytes": 55891,
-      "sha256": "2e893692f6625fc428bdbedf79fe850aec77b128d120b9b3c7ddcc87d5b4894f"
+      "bytes": 55890,
+      "sha256": "afaf5257a1081a09557858940e3ae320ec4a560dfba3c61b69c873af0d0c39d3"
     }
   ],
-  "limits": "Original PNGs copied byte-for-byte, no crop/scale/relabel across binaries. Baseline small is explicitly post-interruption and not healthy-Core proof. 36be/f979 are intermediate. 1bfd full functional matrix and475f final two-size limited regression have distinct evidence. v1 failed seed precondition was excluded from v2 P/C/C/P comparison."
+  "limits": "Original PNGs copied byte-for-byte, no crop/scale/relabel across binaries. Baseline small is explicitly post-interruption and not healthy-Core proof. 36be/f979 are intermediate. 1bfd full functional matrix and475f final two-size limited regression have distinct evidence. v1 failed seed precondition was excluded from v2 P/C/C/P comparison.",
+  "archive_format_correction": "Removed one surplus final blank line from generated historical orchestration archive; individual source scripts/product/runtime evidence unchanged."
 }

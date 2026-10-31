@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-31T10:15:58.435537+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn",
+  "preflight": "overview-closure-cleanup-preflight.json",
+  "user_authorized": true,
+  "attempted_literal_command": "rm -rf -- '/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn'",
+  "tool_result": "Rejected: rm -f style commands are not permitted. Use a safer approach",
+  "process_created": false,
+  "deleted_files": 0,
+  "freed_by_this_deletion_bytes": 0,
+  "retained_files": 356,
+  "retained_bytes": 596509451,
+  "retained_mib": 568.876,
+  "free_data_before_bytes": 35700432896,
+  "free_data_after_bytes": 35688292352,
+  "observed_data_free_delta_bytes": -12140544,
+  "free_data_after_gib": 33.237,
+  "space_interpretation": "No delete process was created, so deletion freed0. Concurrent APFS free-space movement is observed only and is not attributed to cleanup.",
+  "safety": "No alternative command/language/child or parent target was tried after rejection. No permissions or policies changed. Shared Cargo target and earlier retained Root46/55/56 were untouched. User need not reauthorize.",
+  "archived_artifacts": 68,
+  "tracked_pids_gone": 29
+}

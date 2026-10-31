@@ -1,0 +1,3589 @@
+{
+  "at": "2026-10-31T10:14:49.294516+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn",
+  "target_type": "directory",
+  "owner": 501,
+  "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn",
+  "creation_evidence": "Explicit tempfile.mkdtemp creation event recorded in this active UI66 thread before baseline setup; not inferred from prefix/time. Contains only task-created helper scripts, copies of verified UI/Core binaries, isolated synthetic configs/databases, original downloaded references and build/test outputs.",
+  "allowed_boundary": "This explicitly created and recorded task-specific temporary directory; no workspace/source root/cache/real profile removal.",
+  "components": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn",
+      "type": "directory",
+      "owner": 501,
+      "mount": false,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "type": "directory",
+      "owner": 501,
+      "mount": false,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T"
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "type": "directory",
+      "owner": 501,
+      "mount": false,
+      "realpath": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn"
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "type": "directory",
+      "owner": 0,
+      "mount": false,
+      "realpath": "/private/var/folders/zg"
+    },
+    {
+      "path": "/private/var/folders",
+      "type": "directory",
+      "owner": 0,
+      "mount": false,
+      "realpath": "/private/var/folders"
+    },
+    {
+      "path": "/private/var",
+      "type": "directory",
+      "owner": 0,
+      "mount": false,
+      "realpath": "/private/var"
+    },
+    {
+      "path": "/private",
+      "type": "directory",
+      "owner": 0,
+      "mount": false,
+      "realpath": "/private"
+    },
+    {
+      "path": "/",
+      "type": "directory",
+      "owner": 0,
+      "mount": true,
+      "realpath": "/"
+    }
+  ],
+  "entries": [
+    {
+      "path": "asset-audit-initial.json",
+      "kind": "file",
+      "bytes": 13927,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 31
+    },
+    {
+      "path": "assets/06df8.svg",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/0ac56.svg",
+      "kind": "file",
+      "bytes": 410,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/1ccfc.svg",
+      "kind": "file",
+      "bytes": 244,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/2791d.svg",
+      "kind": "file",
+      "bytes": 665,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/2f5fe.svg",
+      "kind": "file",
+      "bytes": 1050,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/35b6b.svg",
+      "kind": "file",
+      "bytes": 709,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/3ef59.svg",
+      "kind": "file",
+      "bytes": 906,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/49089.svg",
+      "kind": "file",
+      "bytes": 338,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/4a154.svg",
+      "kind": "file",
+      "bytes": 663,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/794e6.svg",
+      "kind": "file",
+      "bytes": 733,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/7bc0b.svg",
+      "kind": "file",
+      "bytes": 926,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/7d50e.svg",
+      "kind": "file",
+      "bytes": 244,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/7f8ff.svg",
+      "kind": "file",
+      "bytes": 244,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/86243.svg",
+      "kind": "file",
+      "bytes": 241,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/8bc77.svg",
+      "kind": "file",
+      "bytes": 442,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/91e75.png",
+      "kind": "file",
+      "bytes": 920,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/94da8.svg",
+      "kind": "file",
+      "bytes": 1299,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/a1ba4.svg",
+      "kind": "file",
+      "bytes": 651,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/a7d16.svg",
+      "kind": "file",
+      "bytes": 1261,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/af952.svg",
+      "kind": "file",
+      "bytes": 810,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/b6ecc.svg",
+      "kind": "file",
+      "bytes": 356,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/c68b6.svg",
+      "kind": "file",
+      "bytes": 580,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/cec73.svg",
+      "kind": "file",
+      "bytes": 2139,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/d479d.svg",
+      "kind": "file",
+      "bytes": 353,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/d940c.svg",
+      "kind": "file",
+      "bytes": 353,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/def90.svg",
+      "kind": "file",
+      "bytes": 779,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/e015a.svg",
+      "kind": "file",
+      "bytes": 523,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/e9321.svg",
+      "kind": "file",
+      "bytes": 847,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "assets/ec1b5.svg",
+      "kind": "file",
+      "bytes": 241,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "baseline-interruption.json",
+      "kind": "file",
+      "bytes": 751,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "baseline-ui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 25
+    },
+    {
+      "path": "bench-ui66-previous1/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-previous1/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/config.json",
+      "kind": "file",
+      "bytes": 901,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/config.pre-v0.3-1ed8da5baf798c33c3974cf91384b24b22cfe34c855500ad.bak",
+      "kind": "file",
+      "bytes": 170,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/failure.txt",
+      "kind": "file",
+      "bytes": 641,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/gpui-stop.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-previous1/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-previous1/mock-port",
+      "kind": "file",
+      "bytes": 5,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/mock-start.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/process.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/terminal.json",
+      "kind": "file",
+      "bytes": 312,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-previous1/usage.sqlite3",
+      "kind": "file",
+      "bytes": 233472,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-previous1/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-previous1/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-previous1/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-previous1/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 30
+    },
+    {
+      "path": "bench-ui66-v2-current1/WorkBuddy Proxy Overview Bench current1.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-current1/WorkBuddy Proxy Overview Bench current1.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "bench-ui66-v2-current1/WorkBuddy Proxy Overview Bench current1.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2662,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/WorkBuddy Proxy Overview Bench current1.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-current1/WorkBuddy Proxy Overview Bench current1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/config.json",
+      "kind": "file",
+      "bytes": 15822,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/config.pre-v0.3-a28854cc32c2704c87c36df1ae910d4498960f15f3f3c30a.bak",
+      "kind": "file",
+      "bytes": 170,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 868,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/gpui-stop.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1/mock-port",
+      "kind": "file",
+      "bytes": 5,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/mock-start.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/overview-ready.json",
+      "kind": "file",
+      "bytes": 59,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/overview-seed-benchmark.json",
+      "kind": "file",
+      "bytes": 481,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/process.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/statistics-view.json",
+      "kind": "file",
+      "bytes": 378,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/terminal.json",
+      "kind": "file",
+      "bytes": 336,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1/usage.sqlite3",
+      "kind": "file",
+      "bytes": 1241088,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 4330152,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current1/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current1/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 30
+    },
+    {
+      "path": "bench-ui66-v2-current2/WorkBuddy Proxy Overview Bench current2.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-current2/WorkBuddy Proxy Overview Bench current2.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "bench-ui66-v2-current2/WorkBuddy Proxy Overview Bench current2.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2662,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/WorkBuddy Proxy Overview Bench current2.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-current2/WorkBuddy Proxy Overview Bench current2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/config.json",
+      "kind": "file",
+      "bytes": 15822,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/config.pre-v0.3-e61cdeba5d230e7e2fbbc542a9167f369da921cbfa910c8a.bak",
+      "kind": "file",
+      "bytes": 170,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 868,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/gpui-stop.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2/mock-port",
+      "kind": "file",
+      "bytes": 5,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/mock-start.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/overview-ready.json",
+      "kind": "file",
+      "bytes": 59,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/overview-seed-benchmark.json",
+      "kind": "file",
+      "bytes": 481,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/process.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/statistics-view.json",
+      "kind": "file",
+      "bytes": 378,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/terminal.json",
+      "kind": "file",
+      "bytes": 336,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2/usage.sqlite3",
+      "kind": "file",
+      "bytes": 1228800,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 4375472,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-current2/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-current2/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 30
+    },
+    {
+      "path": "bench-ui66-v2-previous1/WorkBuddy Proxy Overview Bench previous1.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-previous1/WorkBuddy Proxy Overview Bench previous1.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "bench-ui66-v2-previous1/WorkBuddy Proxy Overview Bench previous1.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2677,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/WorkBuddy Proxy Overview Bench previous1.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-previous1/WorkBuddy Proxy Overview Bench previous1.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/config.json",
+      "kind": "file",
+      "bytes": 15822,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/config.pre-v0.3-dc85056945cb917985a961596c2416afa7f4a709c642f76a.bak",
+      "kind": "file",
+      "bytes": 170,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 868,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/gpui-stop.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1/mock-port",
+      "kind": "file",
+      "bytes": 5,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/mock-start.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/overview-ready.json",
+      "kind": "file",
+      "bytes": 59,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/overview-seed-benchmark.json",
+      "kind": "file",
+      "bytes": 481,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/process.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/statistics-view.json",
+      "kind": "file",
+      "bytes": 378,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/terminal.json",
+      "kind": "file",
+      "bytes": 336,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1/usage.sqlite3",
+      "kind": "file",
+      "bytes": 1232896,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 4321912,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous1/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous1/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 30
+    },
+    {
+      "path": "bench-ui66-v2-previous2/WorkBuddy Proxy Overview Bench previous2.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-previous2/WorkBuddy Proxy Overview Bench previous2.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "bench-ui66-v2-previous2/WorkBuddy Proxy Overview Bench previous2.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2677,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/WorkBuddy Proxy Overview Bench previous2.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "bench-ui66-v2-previous2/WorkBuddy Proxy Overview Bench previous2.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/config.json",
+      "kind": "file",
+      "bytes": 15822,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/config.pre-v0.3-29fd5148698c5aba145b696dfab66d49cf783cb251ae4afd.bak",
+      "kind": "file",
+      "bytes": 170,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 868,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/gpui-stop.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2/mock-port",
+      "kind": "file",
+      "bytes": 5,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/mock-start.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/overview-ready.json",
+      "kind": "file",
+      "bytes": 59,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/overview-seed-benchmark.json",
+      "kind": "file",
+      "bytes": 481,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/process.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/statistics-view.json",
+      "kind": "file",
+      "bytes": 378,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/terminal.json",
+      "kind": "file",
+      "bytes": 336,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2/usage.sqlite3",
+      "kind": "file",
+      "bytes": 1249280,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 4433152,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "bench-ui66-v2-previous2/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "bench-ui66-v2-previous2/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "benchmark-background-v1-failed.py.txt",
+      "kind": "file",
+      "bytes": 9764,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-background.py",
+      "kind": "file",
+      "bytes": 10567,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-driver-v2.json",
+      "kind": "file",
+      "bytes": 631,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-driver.json",
+      "kind": "file",
+      "bytes": 200,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-previous1.log",
+      "kind": "file",
+      "bytes": 917,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-v2-current1.log",
+      "kind": "file",
+      "bytes": 2169,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-v2-current2.log",
+      "kind": "file",
+      "bytes": 2170,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-v2-previous1.log",
+      "kind": "file",
+      "bytes": 2174,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "benchmark-v2-previous2.log",
+      "kind": "file",
+      "bytes": 2175,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "build.json",
+      "kind": "file",
+      "bytes": 23244,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "candidate-freeze.json",
+      "kind": "file",
+      "bytes": 369,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "candidate-ui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "commit-message.txt",
+      "kind": "file",
+      "bytes": 429,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "context-52-2.txt",
+      "kind": "file",
+      "bytes": 49349,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "design-asset-audit.json",
+      "kind": "file",
+      "bytes": 9467,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "export-overview.py",
+      "kind": "file",
+      "bytes": 4810,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "finish-fixture.py",
+      "kind": "file",
+      "bytes": 1871,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "fixture-background.py",
+      "kind": "file",
+      "bytes": 14924,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "geometry-samples.json",
+      "kind": "file",
+      "bytes": 6186,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "interaction-1bfd-build.json",
+      "kind": "file",
+      "bytes": 23244,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "interaction-1bfd-source.json",
+      "kind": "file",
+      "bytes": 1160,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "interaction-image-integrity.json",
+      "kind": "file",
+      "bytes": 1821,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "interaction-ui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "intermediate-36be-gui.json",
+      "kind": "file",
+      "bytes": 899,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "intermediate-f979-build.json",
+      "kind": "file",
+      "bytes": 23243,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "intermediate-f979-source.json",
+      "kind": "file",
+      "bytes": 1160,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "lifecycle.json",
+      "kind": "file",
+      "bytes": 5970,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "overview-failure.py",
+      "kind": "file",
+      "bytes": 1940,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "overview-seed.py",
+      "kind": "file",
+      "bytes": 2333,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "paint-delta-proof.json",
+      "kind": "file",
+      "bytes": 937,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "pending-benchmark.json",
+      "kind": "file",
+      "bytes": 409,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "performance-cua-validation.json",
+      "kind": "file",
+      "bytes": 2401,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "performance-summary.json",
+      "kind": "file",
+      "bytes": 4894,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "performance-v2-current1.json",
+      "kind": "file",
+      "bytes": 4710,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "performance-v2-current2.json",
+      "kind": "file",
+      "bytes": 4711,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "performance-v2-previous1.json",
+      "kind": "file",
+      "bytes": 4710,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "performance-v2-previous2.json",
+      "kind": "file",
+      "bytes": 4711,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "pixels.swift",
+      "kind": "file",
+      "bytes": 1090,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "preflight-seed.py",
+      "kind": "file",
+      "bytes": 2574,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "preserve-proof.py",
+      "kind": "file",
+      "bytes": 2482,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "process-start",
+      "kind": "file",
+      "bytes": 33664,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "recent-geometry.json",
+      "kind": "file",
+      "bytes": 375,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "recent-geometry.swift",
+      "kind": "file",
+      "bytes": 851,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "recent-tag-height.json",
+      "kind": "file",
+      "bytes": 387,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "reference-52-2.png",
+      "kind": "file",
+      "bytes": 130857,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "review",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "review/ui-live-current.json",
+      "kind": "file",
+      "bytes": 1260,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "run-benchmarks-v1-failed.py.txt",
+      "kind": "file",
+      "bytes": 1537,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "run-benchmarks.py",
+      "kind": "file",
+      "bytes": 1546,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "run-gates.py",
+      "kind": "file",
+      "bytes": 2616,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "source-proof.py",
+      "kind": "file",
+      "bytes": 2076,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "source-scope-36be.json",
+      "kind": "file",
+      "bytes": 1160,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "source-scope.json",
+      "kind": "file",
+      "bytes": 1160,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "tag-height.swift",
+      "kind": "file",
+      "bytes": 641,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 27
+    },
+    {
+      "path": "ui66-baseline/WorkBuddy Proxy Review.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-baseline/WorkBuddy Proxy Review.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-baseline/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2586,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/WorkBuddy Proxy Review.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-baseline/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline/baseline-gui-validation.json",
+      "kind": "file",
+      "bytes": 1655,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 14
+    },
+    {
+      "path": "ui66-baseline/config/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/config.json",
+      "kind": "file",
+      "bytes": 1052,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 2174,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/instance.json",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/model-catalog.json",
+      "kind": "file",
+      "bytes": 304,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/statistics-view.json",
+      "kind": "file",
+      "bytes": 378,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/usage.sqlite3",
+      "kind": "file",
+      "bytes": 4096,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 2150672,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/config-before.json",
+      "kind": "file",
+      "bytes": 1507,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/core.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/cua-launch-ready.json",
+      "kind": "file",
+      "bytes": 235,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/empty-small.png",
+      "kind": "file",
+      "bytes": 281421,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/empty-wide.png",
+      "kind": "file",
+      "bytes": 422199,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/fixture.json",
+      "kind": "file",
+      "bytes": 1266,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/gpui.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-baseline/home/.workbuddy",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-baseline/home/.workbuddy/models.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/home/.workbuddy/projects",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-baseline/home/.workbuddy/projects/demo",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline/mock-posts.jsonl",
+      "kind": "file",
+      "bytes": 1678,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/overview-seed-proof.json",
+      "kind": "file",
+      "bytes": 688,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/populated-small.png",
+      "kind": "file",
+      "bytes": 308602,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/populated-wide.png",
+      "kind": "file",
+      "bytes": 471612,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/pre-gui-proof.json",
+      "kind": "file",
+      "bytes": 2642,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/review-core",
+      "kind": "file",
+      "bytes": 8428096,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/source-protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-baseline/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-baseline/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 26
+    },
+    {
+      "path": "ui66-final/WorkBuddy Proxy Review.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final/WorkBuddy Proxy Review.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2547,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/WorkBuddy Proxy Review.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final/config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 13
+    },
+    {
+      "path": "ui66-final/config/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/config.json",
+      "kind": "file",
+      "bytes": 1052,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 2174,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/model-catalog.json",
+      "kind": "file",
+      "bytes": 304,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/statistics-view.json",
+      "kind": "file",
+      "bytes": 402,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/usage.sqlite3",
+      "kind": "file",
+      "bytes": 237568,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 2183632,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/config-before.json",
+      "kind": "file",
+      "bytes": 1507,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/core.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/cua-launch-ready.json",
+      "kind": "file",
+      "bytes": 229,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/final-empty-wide.png",
+      "kind": "file",
+      "bytes": 423474,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/fixture.json",
+      "kind": "file",
+      "bytes": 1257,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/gpui.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final/home/.workbuddy",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final/home/.workbuddy/models.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/home/.workbuddy/projects",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final/home/.workbuddy/projects/demo",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final/mock-posts.jsonl",
+      "kind": "file",
+      "bytes": 1678,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/native-acceptance-finished",
+      "kind": "file",
+      "bytes": 52,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/overview-seed-proof.json",
+      "kind": "file",
+      "bytes": 822,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/post-gui-proof.json",
+      "kind": "file",
+      "bytes": 593,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/pre-gui-proof.json",
+      "kind": "file",
+      "bytes": 2636,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/review-core",
+      "kind": "file",
+      "bytes": 8428096,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/source-protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/terminal-status.json",
+      "kind": "file",
+      "bytes": 316,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 27
+    },
+    {
+      "path": "ui66-final2/WorkBuddy Proxy Review.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final2/WorkBuddy Proxy Review.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final2/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2560,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/WorkBuddy Proxy Review.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final2/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2/candidate-4844.png",
+      "kind": "file",
+      "bytes": 424214,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/candidate-4859.png",
+      "kind": "file",
+      "bytes": 424214,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 13
+    },
+    {
+      "path": "ui66-final2/config/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/config.json",
+      "kind": "file",
+      "bytes": 1052,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 2174,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/model-catalog.json",
+      "kind": "file",
+      "bytes": 304,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/statistics-view.json",
+      "kind": "file",
+      "bytes": 378,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/usage.sqlite3",
+      "kind": "file",
+      "bytes": 233472,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 593312,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/config-before.json",
+      "kind": "file",
+      "bytes": 1507,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/core.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/cua-launch-ready.json",
+      "kind": "file",
+      "bytes": 231,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/final-empty-small.png",
+      "kind": "file",
+      "bytes": 286742,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/final-empty-wide.png",
+      "kind": "file",
+      "bytes": 424214,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/fixture.json",
+      "kind": "file",
+      "bytes": 1260,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/gpui.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final2/home/.workbuddy",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final2/home/.workbuddy/models.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/home/.workbuddy/projects",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final2/home/.workbuddy/projects/demo",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2/native-acceptance-finished",
+      "kind": "file",
+      "bytes": 52,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/post-gui-proof.json",
+      "kind": "file",
+      "bytes": 543,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/pre-gui-proof.json",
+      "kind": "file",
+      "bytes": 2638,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/review-core",
+      "kind": "file",
+      "bytes": 8428096,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/source-protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/terminal-status.json",
+      "kind": "file",
+      "bytes": 316,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final2/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final2/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 42
+    },
+    {
+      "path": "ui66-final3/WorkBuddy Proxy Review.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final3/WorkBuddy Proxy Review.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final3/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2560,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/WorkBuddy Proxy Review.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final3/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3/candidate-4891.png",
+      "kind": "file",
+      "bytes": 422730,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/candidate-4899.png",
+      "kind": "file",
+      "bytes": 422730,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 13
+    },
+    {
+      "path": "ui66-final3/config/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/config.json",
+      "kind": "file",
+      "bytes": 1052,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 2174,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/model-catalog.json",
+      "kind": "file",
+      "bytes": 304,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/statistics-view.json",
+      "kind": "file",
+      "bytes": 401,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/usage.sqlite3",
+      "kind": "file",
+      "bytes": 237568,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 2249552,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/config-before.json",
+      "kind": "file",
+      "bytes": 1507,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/core.log",
+      "kind": "file",
+      "bytes": 108,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/cua-launch-ready.json",
+      "kind": "file",
+      "bytes": 231,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/data-preservation-proof.json",
+      "kind": "file",
+      "bytes": 1475,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/failed-bottom-small.png",
+      "kind": "file",
+      "bytes": 313200,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/failed-top-small.png",
+      "kind": "file",
+      "bytes": 297868,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/failed-wide.png",
+      "kind": "file",
+      "bytes": 477482,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/final-empty-small.png",
+      "kind": "file",
+      "bytes": 286254,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/final-empty-wide.png",
+      "kind": "file",
+      "bytes": 422730,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/final-gui-validation.json",
+      "kind": "file",
+      "bytes": 4523,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/fixture.json",
+      "kind": "file",
+      "bytes": 1260,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/gpui.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final3/home/.workbuddy",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final3/home/.workbuddy/models.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/home/.workbuddy/projects",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final3/home/.workbuddy/projects/demo",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3/metrics-bottom-small.png",
+      "kind": "file",
+      "bytes": 392775,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/mock-mode.json",
+      "kind": "file",
+      "bytes": 19,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/mock-posts.jsonl",
+      "kind": "file",
+      "bytes": 1752,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/native-acceptance-finished",
+      "kind": "file",
+      "bytes": 52,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/non_usage_before.json",
+      "kind": "file",
+      "bytes": 353,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/overview-failure-proof.json",
+      "kind": "file",
+      "bytes": 405,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/overview-seed-proof.json",
+      "kind": "file",
+      "bytes": 822,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/populated-bottom-small.png",
+      "kind": "file",
+      "bytes": 310638,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/populated-small.png",
+      "kind": "file",
+      "bytes": 297991,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/populated-wide.png",
+      "kind": "file",
+      "bytes": 474301,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/post-gui-proof.json",
+      "kind": "file",
+      "bytes": 593,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/pre-gui-proof.json",
+      "kind": "file",
+      "bytes": 2638,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/review-core",
+      "kind": "file",
+      "bytes": 8428096,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/seed-rows-private.json",
+      "kind": "file",
+      "bytes": 1251,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/source-protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/terminal-status.json",
+      "kind": "file",
+      "bytes": 316,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final3/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final3/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 39
+    },
+    {
+      "path": "ui66-final4/WorkBuddy Proxy Review.app",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final4/WorkBuddy Proxy Review.app/Contents",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final4/WorkBuddy Proxy Review.app/Contents/Info.plist",
+      "kind": "file",
+      "bytes": 2560,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/WorkBuddy Proxy Review.app/Contents/MacOS",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final4/WorkBuddy Proxy Review.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "kind": "file",
+      "bytes": 42475728,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/appdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4/candidate-5066.png",
+      "kind": "file",
+      "bytes": 473468,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/candidate-5075.png",
+      "kind": "file",
+      "bytes": 473468,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 13
+    },
+    {
+      "path": "ui66-final4/config/appearance.json",
+      "kind": "file",
+      "bytes": 39,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/config.json",
+      "kind": "file",
+      "bytes": 1052,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/gpui-drafts.json",
+      "kind": "file",
+      "bytes": 2174,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/gpui.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/instance.lock",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/model-catalog.json",
+      "kind": "file",
+      "bytes": 304,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/startup.log",
+      "kind": "file",
+      "bytes": 49,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/statistics-view.json",
+      "kind": "file",
+      "bytes": 378,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/usage.sqlite3",
+      "kind": "file",
+      "bytes": 237568,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/usage.sqlite3-shm",
+      "kind": "file",
+      "bytes": 32768,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config/usage.sqlite3-wal",
+      "kind": "file",
+      "bytes": 2241312,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/config-before.json",
+      "kind": "file",
+      "bytes": 1507,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/core.log",
+      "kind": "file",
+      "bytes": 175,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/cua-launch-ready.json",
+      "kind": "file",
+      "bytes": 231,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/data-preservation-proof.json",
+      "kind": "file",
+      "bytes": 1624,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/failed-bottom-small.png",
+      "kind": "file",
+      "bytes": 296117,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/failed-top-small.png",
+      "kind": "file",
+      "bytes": 298368,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/failed-wide.png",
+      "kind": "file",
+      "bytes": 477337,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/final-gui-validation.json",
+      "kind": "file",
+      "bytes": 3142,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/fixture.json",
+      "kind": "file",
+      "bytes": 1260,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/gpui.log",
+      "kind": "file",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/home",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final4/home/.workbuddy",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 4
+    },
+    {
+      "path": "ui66-final4/home/.workbuddy/models.json",
+      "kind": "file",
+      "bytes": 2,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/home/.workbuddy/projects",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 3
+    },
+    {
+      "path": "ui66-final4/home/.workbuddy/projects/demo",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4/localappdata",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4/mock-mode.json",
+      "kind": "file",
+      "bytes": 19,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/mock-posts.jsonl",
+      "kind": "file",
+      "bytes": 1752,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/native-acceptance-finished",
+      "kind": "file",
+      "bytes": 52,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/non_usage_before.json",
+      "kind": "file",
+      "bytes": 502,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/overview-failure-proof.json",
+      "kind": "file",
+      "bytes": 405,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/overview-seed-proof.json",
+      "kind": "file",
+      "bytes": 822,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/populated-bottom-small.png",
+      "kind": "file",
+      "bytes": 310982,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/populated-small.png",
+      "kind": "file",
+      "bytes": 298476,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/populated-wide.png",
+      "kind": "file",
+      "bytes": 473468,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/post-gui-proof.json",
+      "kind": "file",
+      "bytes": 593,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/pre-gui-proof.json",
+      "kind": "file",
+      "bytes": 2638,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/review-core",
+      "kind": "file",
+      "bytes": 8428096,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/seed-rows-private.json",
+      "kind": "file",
+      "bytes": 1251,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/source-protection.sb",
+      "kind": "file",
+      "bytes": 327,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/terminal-status.json",
+      "kind": "file",
+      "bytes": 316,
+      "owner": 501,
+      "nlink": 1
+    },
+    {
+      "path": "ui66-final4/tmp",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4/xdg-cache",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4/xdg-config",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4/xdg-data",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    },
+    {
+      "path": "ui66-final4/xdg-state",
+      "kind": "directory",
+      "bytes": 0,
+      "owner": 501,
+      "nlink": 2
+    }
+  ],
+  "file_count": 356,
+  "directory_count": 140,
+  "logical_bytes": 596509451,
+  "logical_mib": 568.876,
+  "sockets": [],
+  "nested_mounts": [],
+  "symlinks": 0,
+  "tracked_pids_gone": [
+    13828,
+    13829,
+    14188,
+    27929,
+    27930,
+    28362,
+    30603,
+    30604,
+    30862,
+    32133,
+    32136,
+    32348,
+    33485,
+    33489,
+    39138,
+    44152,
+    44153,
+    45246,
+    45247,
+    45493,
+    45781,
+    45786,
+    46183,
+    46328,
+    46329,
+    46764,
+    47370,
+    47451,
+    49983
+  ],
+  "other_process_references": [],
+  "lsof": {
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "archived_artifacts_sha_verified": 68,
+  "reproducible": "All private inputs are synthetic and all binaries are copied/rebuildable. Final screenshots, reports and orchestration remain in committed/workspace docs; shared Cargo target and Root46/55/56 are excluded.",
+  "free_data_before_bytes": 35700432896,
+  "authorization": "User explicitly authorized removal of clearly scoped test copies/build outputs; this task-specific temp directory fits current AGENTS exception. A real tool denial will not be bypassed."
+}

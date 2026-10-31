@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-31T10:19:35.573954+08:00",
+  "embedded_html_matches_json": true,
+  "recorded_tasks": 66,
+  "remaining_final": 40,
+  "visual_review_counts": {
+    "not_reviewed": 19,
+    "reviewing": 0,
+    "reviewed_with_differences": 21,
+    "reviewed": 0
+  },
+  "qa66_links_checked": 21,
+  "artifacts_sha_checked": 68,
+  "pngs_checked": 23,
+  "final_product_source_matches_compiler_frozen_sha": true,
+  "diff_check_exit": 0,
+  "runtime_browser": "Not rerun; static report validation does not assert browser rendering. Product native runtime uses separate CUA evidence.",
+  "cleanup": "Exact authorized delete command rejected; no equivalent retry,568.876MiB retained and0freed."
+}
