@@ -105,12 +105,14 @@ jobs:
           python scripts/gpui_package_test.py --exe "$packagedExe" --output 'bench-results/gpui-windows-x64.json'
           if ($LASTEXITCODE -ne 0) { throw 'Packaged GPUI lifecycle checks failed' }
       - name: Capture packaged Windows caption and toolbar layout using GDI
+        id: windows_native_capture
         if: runner.os == 'Windows'
+        continue-on-error: true
         shell: pwsh
         run: |
           $packageRoot = Join-Path $env:RUNNER_TEMP 'workbuddy-gpui-package'
           $packagedExe = (Get-ChildItem -Path $packageRoot -Filter 'workbuddy-proxy.exe' -Recurse).FullName
-          python scripts/windows_ci_screenshot.py --exe "$packagedExe" --output-dir 'bench-results/windows-native'
+          python scripts/windows_ci_screenshot.py --exe "$packagedExe" --output-dir 'bench-results/windows-native' --ci-display-size 1920x1080
           if ($LASTEXITCODE -ne 0) { throw 'Windows native capture or lifecycle checks failed; inspect windows-native report' }
       - name: Build Windows EXE installer
         if: runner.os == 'Windows'
@@ -130,6 +132,15 @@ jobs:
       - name: Test Windows installer custom path, shortcuts, reinstall and uninstall
         if: runner.os == 'Windows'
         run: python scripts/windows_installer_test.py --setup 'dist/workbuddy-proxy-0.5.7-windows-x64-setup.exe' --zip 'dist/workbuddy-proxy-0.5.7-windows-x64.zip' --output 'bench-results/windows-installer.json'
+      - name: Require Windows native capture and lifecycle evidence
+        if: always() && runner.os == 'Windows'
+        shell: pwsh
+        env:
+          CAPTURE_OUTCOME: ${{ steps.windows_native_capture.outcome }}
+        run: |
+          if ($env:CAPTURE_OUTCOME -ne 'success') {
+            throw 'Native capture did not pass; independent installer checks do not waive this failure'
+          }
       - name: Test copied Mac DMG application and measure open/closed memory
         if: runner.os == 'macOS'
         run: python scripts/gpui_macos_package.py --dmg "dist/workbuddy-proxy-0.5.7-${{ matrix.platform }}.dmg" --output "bench-results/gpui-${{ matrix.platform }}.json"

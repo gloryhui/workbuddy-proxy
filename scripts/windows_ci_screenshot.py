@@ -26,6 +26,201 @@ CAPTURE = ROOT / 'scripts' / 'windows_screenshot.py'
 REPARSE = 0x400
 
 
+# Fixed-width types and offsets follow the public Windows DEVMODEW layout:
+# https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-devmodew
+# https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-enumdisplaysettingsexw
+# https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-changedisplaysettingsexw
+class DEVMODEW(ctypes.Structure):
+    _fields_ = [('device_name', ctypes.c_uint16 * 32), ('spec_version', ctypes.c_uint16),
+                ('driver_version', ctypes.c_uint16), ('size', ctypes.c_uint16),
+                ('driver_extra', ctypes.c_uint16), ('fields', ctypes.c_uint32),
+                ('position_x', ctypes.c_int32), ('position_y', ctypes.c_int32),
+                ('orientation', ctypes.c_uint32), ('fixed_output', ctypes.c_uint32),
+                ('color', ctypes.c_int16), ('duplex', ctypes.c_int16),
+                ('y_resolution', ctypes.c_int16), ('tt_option', ctypes.c_int16),
+                ('collate', ctypes.c_int16), ('form_name', ctypes.c_uint16 * 32),
+                ('log_pixels', ctypes.c_uint16), ('bpp', ctypes.c_uint32),
+                ('width', ctypes.c_uint32), ('height', ctypes.c_uint32),
+                ('display_flags', ctypes.c_uint32), ('frequency', ctypes.c_uint32),
+                ('icm_method', ctypes.c_uint32), ('icm_intent', ctypes.c_uint32),
+                ('media_type', ctypes.c_uint32), ('dither_type', ctypes.c_uint32),
+                ('reserved1', ctypes.c_uint32), ('reserved2', ctypes.c_uint32),
+                ('panning_width', ctypes.c_uint32), ('panning_height', ctypes.c_uint32)]
+
+
+def validate_devmode_layout():
+    expected = {'size': 68, 'driver_extra': 70, 'fields': 72, 'position_x': 76,
+                'orientation': 84, 'log_pixels': 166, 'bpp': 168, 'width': 172,
+                'height': 176, 'display_flags': 180, 'frequency': 184}
+    if ctypes.sizeof(DEVMODEW) != 220 or any(
+            getattr(DEVMODEW, name).offset != offset for name, offset in expected.items()):
+        raise RuntimeError('Unexpected DEVMODEW ABI layout; refusing display changes')
+
+
+def mode_summary(mode):
+    return {'width': mode.width, 'height': mode.height, 'bpp': mode.bpp,
+            'orientation': mode.orientation if mode.fields & 0x80 else None, 'frequency': mode.frequency,
+            'position': [mode.position_x, mode.position_y], 'fields': mode.fields,
+            'display_flags': mode.display_flags, 'driver_extra': mode.driver_extra,
+            'public_devmode_hex': bytes(mode).hex()}
+
+
+def same_mode(a, b):
+    required = 0x5c0080  # bpp, width, height, frequency, orientation
+    return (a.fields & required == required and b.fields & required == required and
+            all(getattr(a, k) == getattr(b, k) for k in
+               ('width', 'height', 'bpp', 'orientation', 'frequency'))
+            )
+
+
+def display_environment(user):
+    """Return the sole monitor and its device name, geometry and effective DPI."""
+    class MONITORINFOEXW(ctypes.Structure):
+        _fields_ = [('size', W.DWORD), ('monitor', W.RECT), ('work', W.RECT),
+                    ('flags', W.DWORD), ('device', W.WCHAR * 32)]
+    callback = ctypes.WINFUNCTYPE(W.BOOL, W.HANDLE, W.HANDLE, ctypes.POINTER(W.RECT), W.LPARAM)
+    monitors = []
+    @callback
+    def visit(handle, _dc, _rect, _data):
+        monitors.append(handle)
+        return True
+    user.EnumDisplayMonitors.argtypes = [W.HANDLE, ctypes.c_void_p, callback, W.LPARAM]
+    user.EnumDisplayMonitors.restype = W.BOOL
+    if not user.EnumDisplayMonitors(None, None, visit, 0):
+        raise ctypes.WinError(ctypes.get_last_error())
+    if len(monitors) != 1:
+        raise RuntimeError(f'CI display mode changes require one monitor, found {len(monitors)}')
+    info = MONITORINFOEXW(); info.size = ctypes.sizeof(info)
+    if not user.GetMonitorInfoW(monitors[0], ctypes.byref(info)):
+        raise ctypes.WinError(ctypes.get_last_error())
+    shcore = ctypes.WinDLL('shcore', use_last_error=True)
+    shcore.GetDpiForMonitor.argtypes = [W.HANDLE, ctypes.c_int, ctypes.POINTER(W.UINT), ctypes.POINTER(W.UINT)]
+    shcore.GetDpiForMonitor.restype = ctypes.c_long
+    x = W.UINT(); y = W.UINT()
+    result = shcore.GetDpiForMonitor(monitors[0], 0, ctypes.byref(x), ctypes.byref(y))
+    if result != 0 or x.value < 96 or x.value > 384 or x.value != y.value:
+        raise RuntimeError(f'Unexpected monitor DPI or GetDpiForMonitor failure: {result}, {x.value}x{y.value}')
+    return {'device': info.device, 'monitor': rect_tuple(info.monitor),
+            'work_area': rect_tuple(info.work), 'dpi': [x.value, y.value]}
+
+
+def get_mode(user, device, index):
+    mode = DEVMODEW(); mode.size = ctypes.sizeof(mode); mode.driver_extra = 0
+    # No RAWMODE or ROTATEDMODE: only monitor-compatible, same-orientation modes.
+    if not user.EnumDisplaySettingsExW(device, index, ctypes.byref(mode), 0):
+        return None
+    if mode.size != ctypes.sizeof(mode) or mode.driver_extra != 0:
+        raise RuntimeError('Display mode has unsupported size or private driver data')
+    return mode
+
+
+def display_init(user, report):
+    validate_devmode_layout()
+    user.EnumDisplaySettingsExW.argtypes = [W.LPCWSTR, W.DWORD, ctypes.POINTER(DEVMODEW), W.DWORD]
+    user.EnumDisplaySettingsExW.restype = W.BOOL
+    user.ChangeDisplaySettingsExW.argtypes = [W.LPCWSTR, ctypes.POINTER(DEVMODEW), W.HWND, W.DWORD, ctypes.c_void_p]
+    user.ChangeDisplaySettingsExW.restype = W.LONG
+    env = display_environment(user)
+    report['original_environment'] = env
+    original = get_mode(user, env['device'], 0xffffffff)  # ENUM_CURRENT_SETTINGS
+    if original is None:
+        raise RuntimeError('Cannot query current display mode')
+    report.update({'original_mode': mode_summary(original), 'available_modes': [],
+                   'available_matching_modes': [], 'test': 'not-run', 'apply': 'not-run',
+                   'restore': 'not-needed'})
+    modes = []
+    for index in range(10000):
+        mode = get_mode(user, env['device'], index)
+        if mode is None:
+            break
+        modes.append(mode)
+        report['available_modes'].append({'index': index, 'width': mode.width,
+                                          'height': mode.height, 'bpp': mode.bpp,
+                                          'orientation': mode.orientation if mode.fields & 0x80 else None,
+                                          'frequency': mode.frequency, 'fields': mode.fields})
+    else:
+        raise RuntimeError('Display mode enumeration did not terminate within 10000 modes')
+    # A missing orientation field cannot be safely assumed to be the default.
+    if original.fields & 0x5c0080 != 0x5c0080 or original.bpp < 32 or original.width <= 0 or original.height <= 0:
+        raise RuntimeError('Current display mode lacks explicit bpp, dimensions, frequency or orientation')
+    bounds = env['monitor']
+    if (bounds[2]-bounds[0], bounds[3]-bounds[1]) != (original.width, original.height):
+        raise RuntimeError('Current display mode dimensions do not match the sole monitor bounds')
+    return env, original, modes
+
+
+def display_prepare(user, hwnd, env, original, modes, report):
+    """Switch only when measured window and requested client cannot fit work area."""
+    check_input_desktop(user)
+    current_env = display_environment(user)
+    current_mode = get_mode(user, env['device'], 0xffffffff)
+    if current_env != env or current_mode is None or not same_mode(current_mode, original):
+        raise RuntimeError('Display environment changed since the original observation')
+    dpi = user.GetDpiForWindow(hwnd)
+    client = W.RECT(); outer = W.RECT()
+    if dpi != env['dpi'][0] or not user.GetClientRect(hwnd, ctypes.byref(client)) or not user.GetWindowRect(hwnd, ctypes.byref(outer)):
+        raise RuntimeError('Cannot establish matching window DPI and current geometry')
+    inset = [outer.right-outer.left-client.right+client.left, outer.bottom-outer.top-client.bottom+client.top]
+    if any(n < 0 or n > 128*dpi/96 for n in inset):
+        raise RuntimeError(f'Unexpected measured nonclient dimensions: {inset}')
+    requested = [round(1440*dpi/96)+inset[0], round(900*dpi/96)+inset[1]]
+    work = env['work_area']
+    report['prechange_required_outer_physical'] = requested
+    if requested[0] <= work[2]-work[0] and requested[1] <= work[3]-work[1]:
+        report['apply'] = 'not-needed: measured window fits work area'
+        return False
+    candidates = [mode for mode in modes
+                  if mode.fields & 0x5c0000 == 0x5c0000
+                  and (mode.width, mode.height, mode.bpp) == (1920, 1080, original.bpp)
+                  and (not mode.fields & 0x80 or mode.orientation == original.orientation)]
+    report['available_matching_modes'] = [mode_summary(m) for m in candidates]
+    if not candidates:
+        raise RuntimeError('Exact 1920x1080 mode with original bpp and orientation unavailable')
+    candidates.sort(key=lambda mode: mode.frequency != original.frequency)
+    selected = candidates[0]
+    report['selected_mode'] = mode_summary(selected)
+    report['selected_orientation_basis'] = ('explicit DEVMODE field' if selected.fields & 0x80
+                                            else 'EnumDisplaySettingsExW flags=0 filters to current orientation')
+    result = user.ChangeDisplaySettingsExW(env['device'], ctypes.byref(selected), None, 0x2, None)  # CDS_TEST
+    report['test'] = result
+    if result != 0:
+        raise RuntimeError(f'CDS_TEST did not return DISP_CHANGE_SUCCESS: {result}')
+    check_input_desktop(user)
+    pre_apply = get_mode(user, env['device'], 0xffffffff)
+    if display_environment(user) != env or pre_apply is None or not same_mode(pre_apply, original):
+        raise RuntimeError('Display environment changed after CDS_TEST')
+    # Set before invoking the API: even an exception or failure must attempt restoration.
+    report['restore'] = 'required'
+    result = user.ChangeDisplaySettingsExW(env['device'], ctypes.byref(selected), None, 0x4, None)  # CDS_FULLSCREEN
+    report['apply'] = result
+    if result != 0:
+        raise RuntimeError(f'CDS_FULLSCREEN did not return DISP_CHANGE_SUCCESS: {result}')
+    actual = get_mode(user, env['device'], 0xffffffff)
+    current_env = display_environment(user)
+    report['actual_mode'] = mode_summary(actual) if actual else None
+    report['actual_environment'] = current_env
+    if (actual is None or actual.fields & 0x5c0080 != 0x5c0080 or
+            (actual.width, actual.height, actual.bpp, actual.orientation, actual.frequency) !=
+            (selected.width, selected.height, selected.bpp, original.orientation, selected.frequency) or
+            current_env['device'] != env['device'] or current_env['dpi'] != env['dpi']):
+        raise RuntimeError('Applied display mode, device or DPI differs from requested values')
+    return True
+
+
+def display_restore(user, env, original, report):
+    result = user.ChangeDisplaySettingsExW(env['device'], ctypes.byref(original), None, 0x4, None)
+    report['restore'] = {'return_code': result}
+    actual = get_mode(user, env['device'], 0xffffffff)
+    report['restore']['actual_mode'] = mode_summary(actual) if actual else None
+    report['restore']['environment'] = display_environment(user)
+    if result != 0 or actual is None or not same_mode(original, actual):
+        raise RuntimeError('Original display mode restoration failed or did not verify')
+    restored_env = report['restore']['environment']
+    if restored_env['device'] != env['device'] or restored_env['dpi'] != env['dpi'] or restored_env['monitor'] != env['monitor'] or restored_env['work_area'] != env['work_area']:
+        raise RuntimeError('Original display environment did not restore exactly')
+    report['restore']['verified'] = True
+
+
 def sha(path):
     h = hashlib.sha256()
     with path.open('rb') as stream:
@@ -192,13 +387,7 @@ def package_processes(package):
     return matches
 
 
-def windows_api():
-    user = ctypes.WinDLL('user32', use_last_error=True)
-    dwm = ctypes.WinDLL('dwmapi', use_last_error=True)
-    user.SetProcessDpiAwarenessContext.argtypes = [ctypes.c_void_p]
-    user.SetProcessDpiAwarenessContext.restype = W.BOOL
-    if not user.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4)):
-        raise RuntimeError('Cannot establish per-monitor-v2 DPI awareness in fresh process')
+def check_input_desktop(user):
     user.OpenInputDesktop.argtypes = [W.DWORD, W.BOOL, W.DWORD]
     user.OpenInputDesktop.restype = W.HANDLE
     user.CloseDesktop.argtypes = [W.HANDLE]
@@ -215,6 +404,16 @@ def windows_api():
             raise RuntimeError(f'Input desktop is not Default: {name.value!r}')
     finally:
         user.CloseDesktop(desktop)
+
+
+def windows_api():
+    user = ctypes.WinDLL('user32', use_last_error=True)
+    dwm = ctypes.WinDLL('dwmapi', use_last_error=True)
+    user.SetProcessDpiAwarenessContext.argtypes = [ctypes.c_void_p]
+    user.SetProcessDpiAwarenessContext.restype = W.BOOL
+    if not user.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4)):
+        raise RuntimeError('Cannot establish per-monitor-v2 DPI awareness in fresh process')
+    check_input_desktop(user)
     user.GetWindowThreadProcessId.argtypes = [W.HWND, ctypes.POINTER(W.DWORD)]
     user.IsWindowVisible.argtypes = [W.HWND]; user.IsIconic.argtypes = [W.HWND]
     user.GetWindowRect.argtypes = [W.HWND, ctypes.POINTER(W.RECT)]
@@ -290,15 +489,17 @@ def assert_unobscured(user, dwm, target, frame):
             raise RuntimeError(f'Visible window {hwnd} overlaps the target; capture blocked')
 
 
-def configure_window(user, dwm, hwnd, logical):
+def configure_window(user, dwm, hwnd, logical, attempt):
     class MONITORINFO(ctypes.Structure):
         _fields_ = [('cbSize', W.DWORD), ('rcMonitor', W.RECT), ('rcWork', W.RECT), ('dwFlags', W.DWORD)]
     user.ShowWindow(hwnd, 9)  # restore only the unique owned test window
     time.sleep(.2)
     dpi = user.GetDpiForWindow(hwnd)
+    attempt['dpi'] = dpi
     if dpi < 96 or dpi > 384:
         raise RuntimeError(f'Unexpected window DPI {dpi}')
     target = [round(n * dpi / 96) for n in logical]
+    attempt['requested_physical_client'] = target
     before_client = W.RECT(); before_window = W.RECT()
     if (not user.GetClientRect(hwnd, ctypes.byref(before_client)) or
             not user.GetWindowRect(hwnd, ctypes.byref(before_window))):
@@ -315,6 +516,9 @@ def configure_window(user, dwm, hwnd, logical):
     if not user.GetMonitorInfoW(user.MonitorFromWindow(hwnd, 2), ctypes.byref(mon)):
         raise ctypes.WinError(ctypes.get_last_error())
     work = mon.rcWork
+    attempt.update({'monitor': rect_tuple(mon.rcMonitor), 'monitor_work_area': rect_tuple(work),
+                    'measured_nonclient_physical': insets,
+                    'requested_outer_physical': [width, height]})
     if width > work.right - work.left or height > work.bottom - work.top:
         raise RuntimeError(f'{logical} logical client at DPI {dpi} cannot fit the monitor work area')
     if not user.SetWindowPos(hwnd, None, work.left, work.top, width, height, 0x0014):
@@ -353,6 +557,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--exe', type=Path, required=True, help='Extracted package workbuddy-proxy.exe')
     parser.add_argument('--output-dir', type=Path, required=True, help='Dedicated output directory for new evidence')
+    parser.add_argument('--ci-display-size', choices=['1920x1080'],
+                        help='Allow a temporary 1920x1080 mode only on a single-monitor GitHub Actions Windows runner')
     args = parser.parse_args()
     output = no_links(args.output_dir)
     output.mkdir(parents=True, exist_ok=True)
@@ -363,15 +569,20 @@ def main():
     if any(p.exists() for p in targets):
         parser.error('Evidence files must be new; use a dedicated empty output directory')
     report = {'result': 'failed', 'capture_backend': 'Windows GDI via existing windows_screenshot.py',
-              'captures': [], 'helper_attempts': [],
+              'captures': [], 'helper_attempts': [], 'window_attempts': [],
+              'display': {'requested': args.ci_display_size, 'change_policy': 'disabled by default'},
               'hold_mode_limit': 'Hold skips harness non-hold log-clear and selected-model diagnostic branch.',
               'cleanup': {'status': 'not-started'}}
     session = None; harness = None; known = []; marker = uuid.uuid4().hex
-    failure = None
+    failure = None; display_env = None; original_mode = None; display_modes = None; user = None
     try:
         if sys.platform != 'win32':
             raise RuntimeError('blocked: this helper requires an interactive Windows desktop')
         user, dwm = windows_api()
+        if args.ci_display_size:
+            if os.environ.get('GITHUB_ACTIONS', '').lower() != 'true' or os.environ.get('RUNNER_OS') != 'Windows':
+                raise RuntimeError('Display mode changes are restricted to GitHub Actions Windows runners')
+            display_env, original_mode, display_modes = display_init(user, report['display'])
         exe = no_links(args.exe)
         if exe.name.lower() != 'workbuddy-proxy.exe' or not exe.is_file():
             raise RuntimeError('--exe must name the extracted package workbuddy-proxy.exe')
@@ -431,7 +642,14 @@ def main():
                        'hold_marker': 'READY plus qa-info.json verified'})
         for logical, target in [((1440, 900), targets[1]), ((1100, 700), targets[2])]:
             hwnd = visible_window(user, known[2])
-            geometry = configure_window(user, dwm, hwnd, logical)
+            window_attempt = {'requested_logical_client': list(logical)}
+            report['window_attempts'].append(window_attempt)
+            if logical == (1440, 900) and original_mode is not None:
+                window_attempt.update({'dpi': display_env['dpi'][0],
+                                       'monitor': display_env['monitor'],
+                                       'monitor_work_area': display_env['work_area']})
+                display_prepare(user, hwnd, display_env, original_mode, display_modes, report['display'])
+            geometry = configure_window(user, dwm, hwnd, logical, window_attempt)
             # The existing helper establishes DPI awareness in a fresh process.
             helper = subprocess.Popen([sys.executable, str(CAPTURE), '--pid', str(known[2]),
                                        '--output', str(target)], cwd=ROOT,
@@ -490,6 +708,12 @@ def main():
                     failure = failure or 'Package harness lifecycle report is missing'
             except Exception as error:
                 failure = failure or f'Harness release/wait failed: {error}'
+        if original_mode is not None and report['display'].get('restore') == 'required':
+            try:
+                display_restore(user, display_env, original_mode, report['display'])
+            except Exception as error:
+                report['display']['restore_error'] = f'{type(error).__name__}: {error}'
+                failure = (f'{failure}; ' if failure else '') + f'Display restore failed: {error}'
         if session:
             try:
                 no_links(session)

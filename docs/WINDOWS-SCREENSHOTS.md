@@ -15,6 +15,8 @@ python scripts/windows_ci_screenshot.py --exe '<extracted-package>/workbuddy-pro
 
 桌面锁定、窗口被遮挡、屏幕放不下请求尺寸或前台权限不足均记录失败，不切换截图通道、不改系统缩放或输入源。截图后解除 harness hold，继续单实例、关闭/重开、草稿与正常退出检查；hold 跳过的日志清理和模型诊断不计为执行。确认进程退出、目录归属/链接/边界后才清理本次复制包和合成数据，图片与报告保留。截图成功仍需人工查看实际内容，不能替代 Windows 键盘、IME、缩放切换或安装验收。
 
+CI 工作流另显式传入 `--ci-display-size 1920x1080`：只允许 GitHub Actions 的单显示器 Windows runner 查询已支持模式，在 `CDS_TEST` 通过后临时切换分辨率，结束时恢复并校验原模式。该开关不更改 DPI、输入源或注册表中的永久设置；默认截图命令不改变显示模式。显示器不支持请求模式、桌面锁定或恢复失败仍使截图验收失败。接口语义以 [Microsoft ChangeDisplaySettingsExW 文档](https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-changedisplaysettingsexw)为准。工作流会完成独立安装器检查后统一检查截图结果，截图失败仍导致整个 Windows job 失败。
+
 ## 选择这个方式的依据
 
 同一台 Windows 10 22H2（19045）机器上，Windows Graphics Capture 截图多次出现 `FrameArrived timed out: timed out waiting on channel` 和 `window capture timed out: timed out waiting on channel`。重新绑定窗口、重建工具连接，以及用户切换为仅主屏后均未解决。GDI 随后成功取得实际界面像素。

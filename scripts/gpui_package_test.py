@@ -170,7 +170,8 @@ def main():
         metrics['checks'] += ['exactly one statistics run owned by the core','opening settings never recovers a live core','normal quit flushes the run and stops the core','reopening after normal quit has no unclean-exit warning']
         if args.wait_for_cmd_q:metrics['checks'].append('actual settings Cmd+Q stops the tray and core cleanly')
         metrics['result']='passed';output.write_text(json.dumps(metrics,ensure_ascii=False,indent=2)+'\n')
-        print('PASS: packaged GPUI lifecycle, management API, log clear, selected-model diagnostic, draft persistence and resident-process measurements',flush=True)
+        detail='held capture; log-clear and selected-model diagnostics skipped' if args.hold else 'log clear and selected-model diagnostic'
+        print('PASS: packaged GPUI lifecycle, management API, draft persistence and resident-process measurements; '+detail,flush=True)
     finally:
         (directory/'gpui-exit-host').write_text('true')
         try:host.wait(timeout=8)
