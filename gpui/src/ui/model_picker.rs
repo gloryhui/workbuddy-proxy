@@ -395,7 +395,9 @@ impl Proxy {
                 .count()
         });
         self.picker_list.update(cx, |list, cx| {
-            if list.delegate().indices != filtered {
+            let filtered_changed = list.delegate().indices != filtered;
+            let language_changed = list.delegate().zh != self.zh;
+            if filtered_changed {
                 let previous = list
                     .selected_index()
                     .and_then(|ix| list.delegate().indices.get(ix.row))
@@ -408,7 +410,12 @@ impl Proxy {
                 list.scroll_to_selected_item(window, cx);
             }
             list.delegate_mut().zh = self.zh;
-            cx.notify();
+            // Notifying an unchanged child while painting schedules another
+            // frame. Owner notifications cover checkbox/membership changes;
+            // only a changed projection or language needs render-time sync.
+            if filtered_changed || language_changed {
+                cx.notify();
+            }
         });
         let over_limit = chosen > self.picker_room();
         let footer_height = if over_limit { 105. } else { 81. };

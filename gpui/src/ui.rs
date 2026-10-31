@@ -774,8 +774,12 @@ impl Proxy {
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle().tab_stop(true);
         let modal_focus = cx.focus_handle();
-        let owner = cx.entity().downgrade();
+        let picker_owner = cx.entity();
+        let owner = picker_owner.downgrade();
         let picker_list = cx.new(|cx| {
+            // Candidate rows read selection, membership and appearance from
+            // the owner. Refresh on actual owner changes, not every paint.
+            cx.observe(&picker_owner, |_, _, cx| cx.notify()).detach();
             gpui_kit::component::list::ListState::new(
                 model_picker::Candidates::new(owner.clone(), zh),
                 window,
