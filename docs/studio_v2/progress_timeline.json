@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T01:05:24+08:00",
+  "updated_at": "2026-11-01T01:30:57+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "1f9ecaee1a00f7b19b923e7ab7cb70eb09f548db",
+  "code_head": "0fa0933505aca4a49502ec0d29b01ca57294299e",
   "phase": "界面终验记录齐备 · 总体验收待核对",
-  "goal_status": "paused",
+  "goal_status": "active",
   "counts": {
     "pending": 0,
     "partial": 0,
@@ -13,7 +13,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 75,
+  "recorded_tasks": 76,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -26,26 +26,28 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 75,
-    "title": "R01输入冷读与表格语义收口，暂停交接",
+    "id": 76,
+    "title": "R01外部保存刷新、草稿持久化与分页焦点恢复",
     "status": "recorded",
-    "description": "已归档真实输入、Unicode独立冷读、21主题语言组合、忙态去重及表格语义修复。其余发布门禁待新会话继续，不声明R01整批通过。"
+    "description": "按交接恢复Goal为active，核验专用worktree、分支与远端；未重做40帧或21主题语言组合，未开启旁白、系统辅助功能或切输入源。Issue3最新仍open，HiDPI/Windows待补证。剩余界面0/40，发布任务仍18项待验，本轮不作整项发布签收。"
   },
   "latest_task": {
-    "id": 75,
-    "title": "R01表格语义修复、输入冷读与暂停交接",
+    "id": 76,
+    "title": "R01外部保存刷新、草稿持久化与分页焦点恢复",
     "status": "recorded",
-    "summary": "请求/汇总表补原生Table/Row/ColumnHeader/Cell角色、全值名称及行列索引；不改视觉、事件、计算、DTO或Core。横向虚拟化不能靠当前可见列顺序推断索引。b29角色/名称及两尺寸6张主图、2ce键盘和e1f最终构建分开记，未用旧截图冒充最终候选。源码与构建、原生表格、索引原因。",
+    "summary": "按交接恢复Goal为active，核验专用worktree、分支与远端；未重做40帧或21主题语言组合，未开启旁白、系统辅助功能或切输入源。Issue3最新仍open，HiDPI/Windows待补证。剩余界面0/40，发布任务仍18项待验，本轮不作整项发布签收。",
     "highlights": [
-      "请求/汇总表补原生Table/Row/ColumnHeader/Cell角色、全值名称及行列索引；不改视觉、事件、计算、DTO或Core。横向虚拟化不能靠当前可见列顺序推断索引。b29角色/名称及两尺寸6张主图、2ce键盘和e1f最终构建分开记，未用旧截图冒充最终候选。源码与构建、原生表格、索引原因。",
-      "e1f真实held Test重复点击只到达1次，save/test各1；controlled update亦1次，完成后未重开已隐藏提示。皮肤菜单实际可打开，未宣称所有入口禁用；关闭×未独立实测，受控更新非公开端到端更新。忙态记录。",
-      "7主题×zh/en/auto实际21组合有各自业务不变证明，7张1100×700代表原图已逐张查看；英文协议选项固定中英别名如实保留，auto随本机显示中文，不声称全部状态或真实AT通过。主题语言。"
+      "按交接恢复Goal为active，核验专用worktree、分支与远端；未重做40帧或21主题语言组合，未开启旁白、系统辅助功能或切输入源。Issue3最新仍open，HiDPI/Windows待补证。剩余界面0/40，发布任务仍18项待验，本轮不作整项发布签收。",
+      "旧e1f真实复现：Core外部save64后总数65，但活动供应商仍4行/已保存；键盘Next到末页后ShiftTab/Return仍留末页。现poll只读已存在且有效的有界配置，核对Core身份/计数/端口后刷新干净视图，保留dirty/provider编辑草稿，modal期间延后；不发送补偿保存。键盘分页若原按钮禁用且焦点仍在其上，落到页大小控件；保留鼠标与已移开的焦点。旧缺陷、原生验证。",
+      "中间ee6784的live草稿内容虽保留，但外部rename后private draft base落后磁盘hash；异常退出后可能被当过期草稿丢弃。该问题由只读hash检查发现，不声称普通close后实测丢失。最终631599补变化后的持久化重基准，live base精确匹配；明确原生close/重开后R01 local draft、64模型与未保存标记保持。修正前base、最终base、冷读保护。"
     ],
-    "limits": [],
+    "limits": [
+      "35wrapper/114限定调用点为源码slot索引，不能冒充原生全状态/实测尺寸矩阵。当前n/i在名称/搜索直接落ASCII，未证实composition；支持的两点原生拖动仍未见列宽变化。AX始终报window焦点，键盘落点依行为与原图；真实AT未验，旁白禁用不变。R01.1全状态、R01.2拖宽、R01.3逐引擎合成和R01.4真实辅助技术仍待，R02–R04亦未通过。"
+    ],
     "evidence": [],
-    "commit": "1f9ecaee1a00f7b19b923e7ab7cb70eb09f548db",
-    "date": "2026-11-01T01:04:54+08:00",
-    "commit_subject": "fix(studio): expose usage table semantics and archive input validation",
+    "commit": "0fa0933505aca4a49502ec0d29b01ca57294299e",
+    "date": "2026-11-01T01:30:00+08:00",
+    "commit_subject": "fix(studio): reconcile external saves and recover pager focus",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2261,11 +2263,11 @@
     "version": 2,
     "title": "Studio V2 正式版批次计划",
     "as_of": "2026-11-01",
-    "state": "paused",
+    "state": "active",
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 75,
+    "historical_tasks": 76,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3240,15 +3242,15 @@
           "B04",
           "B05"
         ],
-        "completed_summary": "40帧/80主图集中签收完成；表格语义修复、键盘/busy、21主题语言组合、真实Qingjian IME及Unicode独立Core/UI冷读已归档。用户要求本轮收口后暂停；R01其余4项仅部分完成，不签收整项。",
+        "completed_summary": "40帧/80主图集中签收完成；此前表格语义、busy、21主题语言与真实Qingjian/Unicode冷读归档。QA76已恢复Goal，修复并补验外部save64活动表/modal延后/dirty草稿重基准及冷恢复、末页分页焦点；全状态slot/真实拖宽/当前逐引擎IME/真实AT仍缺，R01保持部分完成。",
         "delivery": "对共享组件统一验收，不让同一键盘/主题待办在40帧中重复执行。",
         "tasks": [
           {
             "id": "R01.1",
             "title": "共享状态与层级矩阵",
             "acceptance": "pending",
-            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。",
-            "remaining": "补唯一组件全状态/slot矩阵及外部save64后活动表刷新和草稿边界。Test busy去重已实测；皮肤菜单可打开，不能宣称所有入口禁用。检查更新是受控UI边界，单独关闭×及公开更新端到端未验。",
+            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。",
+            "remaining": "35个共享包装函数/114个限定调用点已建立源码slot索引，但唯一组件全部适用状态及实际双尺寸slot仍待原生集中验收。外部save64/草稿边界本轮已补；Test busy去重沿用既有证据，不重复。公开更新端到端等既有限制保留。",
             "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
             "history_tasks": [
               41,
@@ -3257,15 +3259,16 @@
               60,
               61,
               64,
-              75
+              75,
+              76
             ]
           },
           {
             "id": "R01.2",
             "title": "完整键盘与焦点恢复",
             "acceptance": "pending",
-            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。",
-            "remaining": "复验下一页按钮变disabled后的反向焦点恢复；用受支持真实输入补表头拖宽及刷新/resize保持，既有两端点CUA拖动无可见变化，不能声明成功。完整路径焦点回归仍待收口。",
+            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。",
+            "remaining": "真实表头拖宽及刷新/resize保持仍待：本轮支持的两点CUA拖动仍无可见宽度变化，未冒称成功。其余完整路径焦点回归仍按缺口集中收口。",
             "acceptance_check": "无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。",
             "history_tasks": [
               40,
@@ -3275,7 +3278,8 @@
               62,
               64,
               67,
-              75
+              75,
+              76
             ]
           },
           {
@@ -3283,13 +3287,14 @@
             "title": "中文IME、Unicode与编辑撤销",
             "acceptance": "pending",
             "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。",
-            "remaining": "不同输入引擎的composition中Enter/Esc和切换/取消仍须逐引擎补齐；本轮真实composition在模型名称，其余字段paste/undo不冒称IME。Key为隔离合成值，安全AX不回传完整值，未声明AX精确读回。",
+            "remaining": "不同输入引擎的composition中Enter/Esc和切换/取消仍须逐引擎补齐；本轮真实composition在模型名称，其余字段paste/undo不冒称IME。Key为隔离合成值，安全AX不回传完整值，未声明AX精确读回。 恢复轮逐键n/i在名称/搜索只得到ASCII，当前输入源未确立；未切源、未补composition成功，不重标旧Qingjian证据。",
             "acceptance_check": "合成未提交时不误保存/关闭；字符串往返不损坏；原输入源恢复；CUA typeText不冒充IME。",
             "history_tasks": [
               46,
               50,
               51,
-              75
+              75,
+              76
             ]
           },
           {
@@ -3341,7 +3346,8 @@
           "benchmarks/r01-consolidated-visual-review.json",
           "benchmarks/r01-original-eighty-audit.json",
           "benchmarks/r01-latest-reference-manifest.json",
-          "benchmarks/r01-input-summary.json"
+          "benchmarks/r01-input-summary.json",
+          "benchmarks/r01-resume-summary.json"
         ],
         "frame_details": [],
         "reviewed_frames": 0
@@ -3846,7 +3852,7 @@
       "tasks": 50,
       "passed_tasks": 32
     },
-    "goal_status": "paused"
+    "goal_status": "active"
   },
   "timeline": [
     {
@@ -7294,6 +7300,25 @@
       "date": "2026-11-01T01:04:54+08:00",
       "commit_subject": "fix(studio): expose usage table semantics and archive input validation",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 76,
+      "title": "R01外部保存刷新、草稿持久化与分页焦点恢复",
+      "status": "recorded",
+      "summary": "按交接恢复Goal为active，核验专用worktree、分支与远端；未重做40帧或21主题语言组合，未开启旁白、系统辅助功能或切输入源。Issue3最新仍open，HiDPI/Windows待补证。剩余界面0/40，发布任务仍18项待验，本轮不作整项发布签收。",
+      "highlights": [
+        "按交接恢复Goal为active，核验专用worktree、分支与远端；未重做40帧或21主题语言组合，未开启旁白、系统辅助功能或切输入源。Issue3最新仍open，HiDPI/Windows待补证。剩余界面0/40，发布任务仍18项待验，本轮不作整项发布签收。",
+        "旧e1f真实复现：Core外部save64后总数65，但活动供应商仍4行/已保存；键盘Next到末页后ShiftTab/Return仍留末页。现poll只读已存在且有效的有界配置，核对Core身份/计数/端口后刷新干净视图，保留dirty/provider编辑草稿，modal期间延后；不发送补偿保存。键盘分页若原按钮禁用且焦点仍在其上，落到页大小控件；保留鼠标与已移开的焦点。旧缺陷、原生验证。",
+        "中间ee6784的live草稿内容虽保留，但外部rename后private draft base落后磁盘hash；异常退出后可能被当过期草稿丢弃。该问题由只读hash检查发现，不声称普通close后实测丢失。最终631599补变化后的持久化重基准，live base精确匹配；明确原生close/重开后R01 local draft、64模型与未保存标记保持。修正前base、最终base、冷读保护。"
+      ],
+      "limits": [
+        "35wrapper/114限定调用点为源码slot索引，不能冒充原生全状态/实测尺寸矩阵。当前n/i在名称/搜索直接落ASCII，未证实composition；支持的两点原生拖动仍未见列宽变化。AX始终报window焦点，键盘落点依行为与原图；真实AT未验，旁白禁用不变。R01.1全状态、R01.2拖宽、R01.3逐引擎合成和R01.4真实辅助技术仍待，R02–R04亦未通过。"
+      ],
+      "evidence": [],
+      "commit": "0fa0933505aca4a49502ec0d29b01ca57294299e",
+      "date": "2026-11-01T01:30:00+08:00",
+      "commit_subject": "fix(studio): reconcile external saves and recover pager focus",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -8530,6 +8555,21 @@
     {
       "date": "2026-11-01T01:05:24+08:00",
       "note": "用户要求完成当前任务后暂停Goal；交接见docs/studio_v2/SESSION_HANDOFF.md。剩余界面0/40，18项发布任务待验，禁止自动开启旁白。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T01:30:57+08:00",
+      "note": "QA76修复外部保存刷新/草稿持久化及分页焦点；真实定向复验通过，剩余界面0/40、18项发布任务仍待验；禁止自动开启旁白。",
       "pending": 0,
       "partial": 0,
       "reused": 0,

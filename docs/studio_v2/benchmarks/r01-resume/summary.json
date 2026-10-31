@@ -43,5 +43,6 @@
     "41 original CUA JPEG exports initially had PNG suffixes; corrected names preserve bytes, no new PNG/lossless-pixel acceptance",
     "No final matched performance/Core suite/Windows/Intelhardware/HiDPI/install/signing/notarization/CI sign-off; no public release"
   ],
-  "original_JPEG_images": 41
+  "original_JPEG_images": 41,
+  "code_commit": "0fa0933505aca4a49502ec0d29b01ca57294299e"
 }
