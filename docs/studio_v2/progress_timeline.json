@@ -1,87 +1,84 @@
 {
   "version": 2,
-  "updated_at": "2026-10-31T13:56:08+08:00",
+  "updated_at": "2026-10-31T16:04:16+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "f9a8f5d23fb8818ca4819b03cb48223959d74301",
-  "phase": "批次推进 · B02",
+  "code_head": "6fa1470137b30684a98c477a4449b2920e476833",
+  "phase": "批次推进 · B03",
   "goal_status": "active",
   "counts": {
     "pending": 0,
-    "partial": 21,
+    "partial": 15,
     "reused": 0,
-    "verified": 19
+    "verified": 25
   },
   "total_frames": 40,
-  "recorded_tasks": 68,
-  "remaining_final": 21,
+  "recorded_tasks": 69,
+  "remaining_final": 15,
   "visual_review": {
     "counts": {
       "not_reviewed": 4,
       "reviewing": 0,
-      "reviewed_with_differences": 17,
-      "reviewed": 19
+      "reviewed_with_differences": 11,
+      "reviewed": 25
     },
     "source": "visual_review.json",
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 68,
-    "title": "B01供应商完整批次签收",
-    "description": "按新批次计划集中完成B01的19个状态、7项任务；最新官方51:2仍为同组40节点，19份完整高保真上下文/默认参考及31唯一资源已冻结。界面签收19/40，剩余21；视觉台账19 reviewed、17 reviewed_with_differences、4 not_reviewed。全局R01–R04仍未通过，不等于正式版可发布。设计审查、同版原图和独立数据、定向补验、四轮性能、真实Core契约、构建、源码边界、205份交付清单。",
-    "status": "recorded"
+    "id": 69,
+    "title": "B02模型管理与四种协议整批签收",
+    "status": "recorded",
+    "description": "集中签收6帧/6任务，累计25/40，剩余15；下一批B03统计、价格与本地用量7帧。最终UI SHA 87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6，42,492,240bytes，固定Core25f。只改4份Rust呈现文件：AUTO采用同原生Checkbox与原事件的徽章/标题组合、字体/行距与限制caption；Picker长ID加flex约束/复"
   },
   "latest_task": {
-    "id": 68,
-    "title": "B01供应商完整批次签收",
+    "id": 69,
+    "title": "B02模型管理与四种协议整批签收",
     "status": "recorded",
-    "summary": "按新批次计划集中完成B01的19个状态、7项任务；最新官方51:2仍为同组40节点，19份完整高保真上下文/默认参考及31唯一资源已冻结。界面签收19/40，剩余21；视觉台账19 reviewed、17 reviewed_with_differences、4 not_reviewed。全局R01–R04仍未通过，不等于正式版可发布。设计审查、同版原图和独立数据、定向补验、四轮性能、真实Core契约、构建、源码边界、205份交付清单。",
+    "summary": "集中签收6帧/6任务，累计25/40，剩余15；下一批B03统计、价格与本地用量7帧。最终UI SHA 87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6，42,492,240bytes，固定Core25f。只改4份Rust呈现文件：AUTO采用同原生Checkbox与原事件的徽章/标题组合、字体/行距与限制caption；Picker长ID加flex约束/复",
     "highlights": [
-      "按新批次计划集中完成B01的19个状态、7项任务；最新官方51:2仍为同组40节点，19份完整高保真上下文/默认参考及31唯一资源已冻结。界面签收19/40，剩余21；视觉台账19 reviewed、17 reviewed_with_differences、4 not_reviewed。全局R01–R04仍未通过，不等于正式版可发布。设计审查、同版原图和独立数据、定向补验、四轮性能、真实Core契约、构建、源码边界、205份交付清单。",
-      "只改3个Rust呈现/资源文件及1份原SVG：Studio预设offset6→42、13/19搜索/Medium标题、原生hover继承和8px行圆角；思考菜单采用BottomLeft/-30上方锚定，修正旧版下方钳位和状态栏覆盖；64家时新增用原16px muted SVG及0.48组透明度。原MenuState状态/查询/选择delegate/打开关闭回调与侧栏动作处理器保持，旧皮肤分支保留；Core/配置schema/依赖/锁文件/工作流未改。资源26份字节一致、2份仅clip ID/ref等价、3份装饰窗控使用真实OS；不改SVG路径，不为了静态稿伪造数据或成功徽章。复制沿用原source Draft的Key继承语义，空仍为空；没有新增“清空复制Key”功能，遮罩截图也不证明为空。资源下载、绑定声明。",
-      "冻结UI SHA 2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d /42,492,240bytes（较e25a增16,512bytes），固定Core25f。fmt、206测试中204pass/2既有ignore、strict all-targets Clippy、Intel all-targets类型检查、arm64 release均0；另外在真实隔离Core实际执行两项通常忽略的发现/创建契约，19发现用例及创建/重试/混合能力/effort/独立ID等断言均通过，Core0且子进程等待结束。类型检查不是Intel硬件验收。所有最终原生/补验/性能均为同一2a12，之后未修改产品源码。246d仅中间编译候选，锁屏前未完成原生绑定，不冒充最终图。中间构建、锁屏记录。"
+      "集中签收6帧/6任务，累计25/40，剩余15；下一批B03统计、价格与本地用量7帧。最终UI SHA 87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6，42,492,240bytes，固定Core25f。只改4份Rust呈现文件：AUTO采用同原生Checkbox与原事件的徽章/标题组合、字体/行距与限制caption；Picker长ID加flex约束/复用有界tooltip、已有项字重/原搜索符号；协议字段间距、1px右边距与页脚文字。20个原owner监听表达式保留，协议非呈现前缀及解析校验后缀字节一致；Core/配置schema/依赖/锁文件未改。构建、源码边界、最新设计/原资源、资源审计。",
+      "fmt、206测试中204pass/2既有ignore、strict all-targets Clippy、Intel all-targets类型检查、arm64 release五门禁均0。独立真实Core发现19用例和创建/重试/能力/新身份契约已实际执行，Core0、子进程等待结束；最终Picker两行呈现修正不改这些覆盖逻辑。Intel类型检查不等于硬件验证。最初d4c集中看图发现长ID硬截断，补flex1/minw0和有界tooltip后冻结87db，之后完整Main/Capacity及性能均用最终版。真实Core契约、集中微调、中间版退出。",
+      "Main实际38/4096发现、503/空结果、搜索无匹配/清空/全选反选/仅勾选、已有项只读；beam-free Cancel、Apply只改草稿、父Cancel、Save至2/6并读回。AUTO点击/Space、非法输出-1、手动deepseek B02及六能力/Low/四限制保存读回。四协议含Anthropic预算/Adaptive、Gemini预算/level均非法拒绝、Apply不落Core、显式Save与读回；原14请求和14费用全字段SHA保持。满载A255+B1：End到fill-250、F2身份正确，Shift范围249/250、Cmd取消249后只删250，父取消恢复255；4096真实排序尾文本是model-b-1（candidate-4095是行索引），容量点击拒绝追加。精准hover、主夹具Cmd视觉不确定、未聚焦标签初始Return关闭、容量Return实际只切"
     ],
-    "limits": [
-      "冻结UI SHA 2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d /42,492,240bytes（较e25a增16,512bytes），固定Core25f。fmt、206测试中204pass/2既有ignore、strict all-targets Clippy、Intel all-targets类型检查、arm64 release均0；另外在真实隔离Core实际执行两项通常忽略的发现/创建契约，19发现用例及创建/重试/混合能力/effort/独立ID等断言均通过，Core0且子进程等待结束。类型检查不是Intel硬件验收。所有最终原生/补验/性能",
-      "原始参考/原生/性能图及报告共205份、13.915MiB已按SHA归档；37个相关PID消失、lsof无打开引用、归档SHA复核及即时路径/内容检查后，以非强制精确rm -r清理本任务Root的589文件/639.179MiB逻辑量；实测Data可用空间增加649.043MiB，余34.788GiB，APFS可能受其他应用影响。本轮临时文件保留0；先前被拒的Root55/56/57未重试，仍保留1698.745MiB。共享Cargo缓存和Goal复用的Root46 Core基线不动。清理预检、实际结果。归档清单。全部键盘IME/AX/七主题、Windows/Intel硬件/HiDPI、长时性能、CI与安装签名分发仍是独立R01–R"
-    ],
+    "limits": [],
     "evidence": [
       {
-        "label": "设计审查",
-        "href": "benchmarks/b01-design-audit.json"
-      },
-      {
-        "label": "同版原图和独立数据",
-        "href": "benchmarks/b01-native-consolidated.json"
-      },
-      {
-        "label": "定向补验",
-        "href": "benchmarks/b01-native-supplement-gui.json"
-      },
-      {
-        "label": "四轮性能",
-        "href": "benchmarks/b01-performance-summary.json"
-      },
-      {
-        "label": "真实Core契约",
-        "href": "benchmarks/b01-provider-contracts.json"
-      },
-      {
         "label": "构建",
-        "href": "benchmarks/b01-build.json"
+        "href": "benchmarks/b02-build.json"
       },
       {
         "label": "源码边界",
-        "href": "benchmarks/b01-source-scope.json"
+        "href": "benchmarks/b02-source-scope.json"
       },
       {
-        "label": "205份交付清单",
-        "href": "benchmarks/b01-artifacts.json"
+        "label": "最新设计/原资源",
+        "href": "benchmarks/b02-design-audit.json"
+      },
+      {
+        "label": "资源审计",
+        "href": "benchmarks/b02-asset-audit.json"
+      },
+      {
+        "label": "真实Core契约",
+        "href": "benchmarks/b02-provider-contracts.json"
+      },
+      {
+        "label": "集中微调",
+        "href": "benchmarks/b02-consolidated-polish.json"
+      },
+      {
+        "label": "中间版退出",
+        "href": "benchmarks/b02-intermediate-d4c-stop.json"
+      },
+      {
+        "label": "完整GUI",
+        "href": "benchmarks/b02-native-b02-summary.json"
       }
     ],
-    "commit": "f9a8f5d23fb8818ca4819b03cb48223959d74301",
-    "date": "2026-10-31T13:52:35+08:00",
-    "commit_subject": "fix(gpui): align supplier menus and accept B01 UI batch",
+    "commit": "6fa1470137b30684a98c477a4449b2920e476833",
+    "date": "2026-10-31T16:04:08+08:00",
+    "commit_subject": "fix(gpui): align model dialogs and accept B02 UI batch",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -380,46 +377,41 @@
       "node": "59:11",
       "title": "06 / STUDIO V2 · 选择模型",
       "source": "ui/model_picker.rs, ui.rs, ui/providers.rs",
-      "detail": "部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-11",
       "visual_review": {
         "id": "59:11",
         "name": "06 / STUDIO V2 · 选择模型",
-        "review_status": "reviewed_with_differences",
-        "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "review_status": "reviewed",
+        "scope": "UI69/B02完整批次：最终87db同候选实际交互和独立Core数据、6×2真正原生PNG及小窗底部、匹配四轮原负载通过；全局R01–R04独立。",
         "checks": {
-          "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
-          "states": "已有灰勾不变、可选model-b-1鼠标与Space、全选/反选/清空/仅选、命中/无匹配和Cancel通过；再次Add仅草稿/Core5，显式CmdS后Core6。新Base引擎保留原筛选/容量/草稿方法，完整Tab/全部容量/IME/AX未重验。",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-picker-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-picker-small.png"
+          "layout": "Picker726×672、Editor728×800及四协议620×724按最新设计对齐；小窗原有内滚与固定页脚保持，长ID显示省略号。",
+          "colors": "Studio正文/禁用/标签/选中角色与原资源保持；原生ICC/AA差异明确记录，无全RGB字节相等门禁。",
+          "typography": "标题21/30、Picker已有项Medium13/19、Editor限制caption11/16、协议字段12/17和Apply Bold13/19按角色设置。",
+          "assets": "31唯一原资源：26字节一致、2仅clip ID/ref与空白等价、3装饰窗控使用真实OS；未重绘SVG。",
+          "states": "真实2/5→2/6和满载2/256；保留自动元数据/Unconfigured等实际值，不伪造静态稿模式或成功。",
+          "interaction": "真实38/4096发现、503/空结果、搜索/无匹配/清空/全选反选/仅看勾选、已有项点击仍只读；beam-free取消/应用草稿/父取消/显式保存读回，256满载点击拒绝超量。精准hover及聚焦Apply的Return留R01。",
+          "native_1440": "同87db新隔离补拍：真正2880×1802 PNG，对应1440×900逻辑窗口，保留OS额外一行；无阴影/后裁切/转换。",
+          "native_1100": "真正2200×1402 PNG，对应1100×700；模型全部限制/协议max另以内滚底部原图核验。"
         },
         "differences": [
-          "普通遮罩/原生关闭呈现已修；原生阴影、×墨迹和部分AA仍与参考不同。",
-          "真实5候选/4既有时列表下方空白仍白色，稿件满38行/soft填充不能冒充真实数据。",
-          "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+          "首次CUA JPEG与带阴影PNG并非最终规定PNG，原始字节按真实格式归档；最终另用同候选新实例原生补拍，没有转换冒充。",
+          "精确hover、完整键盘/IME/AX/主题与Windows/Intel实机仍为R01–R04；未聚焦标签的默认Return和聚焦Apply的容量Return不作通过声明。",
+          "短轮空闲合计+1.86MiB、代理p95+0.0205ms、大请求总耗时+9.5ms等成本及双峰样本保留R03，不宣称统计等价或优化。"
         ],
         "evidence": [
-          "benchmarks/dialogs-layout-design-audit.json",
-          "benchmarks/dialogs-layout-asset-audit.json",
-          "benchmarks/dialogs-layout-build.json",
-          "benchmarks/dialogs-layout-source-scope.json",
-          "benchmarks/dialogs-layout-final-gui-validation.json",
-          "benchmarks/dialogs-layout-interaction-core-proofs.json",
-          "benchmarks/dialogs-layout-original-fields-proof.json",
-          "benchmarks/dialogs-layout-process-lifecycle.json",
-          "benchmarks/dialogs-layout-performance-summary.json",
-          "screenshots/dialogs-layout-final-picker-wide.png",
-          "screenshots/dialogs-layout-final-picker-small.png",
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b02-59-11-wide.png",
+          "screenshots/b02-59-11-small.png",
+          "screenshots/b02-figma-59-11-reference.png",
+          "benchmarks/b02-design-audit.json",
+          "benchmarks/b02-native-consolidated.json",
+          "benchmarks/b02-native-b02-summary.json",
+          "benchmarks/b02-native-capture-summary.json",
+          "benchmarks/b02-performance-summary.json",
+          "benchmarks/b02-default-serialization-audit.json",
+          "benchmarks/b02-provider-contracts.json",
+          "benchmarks/b02-artifacts.json"
         ]
       }
     },
@@ -427,53 +419,41 @@
       "node": "59:279",
       "title": "07 / STUDIO V2 · 编辑模型能力",
       "source": "ui/model_editor.rs, model_options.rs, ui.rs",
-      "detail": "部分：原生728×800/两尺寸、自动/手动/真实来源、六能力/五档与默认Select、四限制校验/草稿保存、取消与Popover、Tab/焦点及resize/错误后恢复已验；UI53首轮全帧审查/16px原生checkbox+12px原资源/颜色列对齐与两尺寸实拍已记录；仍有1.5px纵向、档位宽度、字体/阴影/共享资产余差，完整键盘IME/无障碍/跨平台待续，未整帧通过；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=59-279",
       "visual_review": {
         "id": "59:279",
         "name": "07 / STUDIO V2 · 编辑模型能力",
-        "review_status": "reviewed_with_differences",
-        "scope": "UI53首轮整帧审查后，UI54补布局余差修复；当前bc7候选两尺寸、取消/确认草稿、遮罩和局部键盘已验，整帧保留差异。 UI57 a51另有字体全局影响两尺寸抽查，供应商/模型可见文字未见缺字；模型小窗下方字段未滚动，完整布局仍待。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "review_status": "reviewed",
+        "scope": "UI69/B02完整批次：最终87db同候选实际交互和独立Core数据、6×2真正原生PNG及小窗底部、匹配四轮原负载通过；全局R01–R04独立。",
         "checks": {
-          "layout": "复选框相对稿从低1.5px收敛至低0.5px；wide档位横向124px已对齐，小窗内部滚动/固定动作可达",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "UI54两份共享SVG替换为官方精确导出；模型帧28份本地精确匹配，3个装饰traffic lights仍使用真实系统控件；非全slot验收",
-          "states": "当前bc7 AUTO只读、manual图片/medium更改、取消复原及确认后草稿重开通过；Core配置未写",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-editor-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-editor-small.png"
+          "layout": "Picker726×672、Editor728×800及四协议620×724按最新设计对齐；小窗原有内滚与固定页脚保持，长ID显示省略号。",
+          "colors": "Studio正文/禁用/标签/选中角色与原资源保持；原生ICC/AA差异明确记录，无全RGB字节相等门禁。",
+          "typography": "标题21/30、Picker已有项Medium13/19、Editor限制caption11/16、协议字段12/17和Apply Bold13/19按角色设置。",
+          "assets": "31唯一原资源：26字节一致、2仅clip ID/ref与空白等价、3装饰窗控使用真实OS；未重绘SVG。",
+          "states": "真实2/5→2/6和满载2/256；保留自动元数据/Unconfigured等实际值，不伪造静态稿模式或成功。",
+          "interaction": "AUTO点击→手动→Space恢复；六能力/五档与默认Low、非法输出-1、合法名称/能力/四限制应用与保存读回；小窗全部下方字段和固定页脚实见。",
+          "native_1440": "同87db新隔离补拍：真正2880×1802 PNG，对应1440×900逻辑窗口，保留OS额外一行；无阴影/后裁切/转换。",
+          "native_1100": "真正2200×1402 PNG，对应1100×700；模型全部限制/协议max另以内滚底部原图核验。"
         },
         "differences": [
-          "UI54原生2×测得复选框两行从低1.5px收敛至低0.5px，notice/确认约0.5px差；UI57原生1×字体抽查未逐像素重测这些槽位。",
-          "wide档位外宽124px与稿横向对齐；small弹窗需内部滚动，完整响应式视觉仍待终验。",
-          "原生Kit双层黑色弹窗阴影与稿0/18/42 rgba(20,31,59,.22)不同，Kit在调用方样式后覆盖。",
-          "UI57 Studio已接入原Noto Sans SC，原系统fallback差异的源码原因已处理；模型全部文字角色/权重/基线与精细颜色仍待逐项审查。UI54取消白底保持。",
-          "共享背景/动态日志与状态保持真实；完整静态asset slot/effective geometry仍待全量验收。",
-          "Help/默认档位Select/自动模式开关保留原业务；完整键盘/IME/无障碍和跨平台未最终通过。",
-          "UI64遮罩和×已改，取消/Enter/Space共用引擎实测；旧阴影/细字体/亚像素差异继续保留。"
+          "首次CUA JPEG与带阴影PNG并非最终规定PNG，原始字节按真实格式归档；最终另用同候选新实例原生补拍，没有转换冒充。",
+          "精确hover、完整键盘/IME/AX/主题与Windows/Intel实机仍为R01–R04；未聚焦标签的默认Return和聚焦Apply的容量Return不作通过声明。",
+          "短轮空闲合计+1.86MiB、代理p95+0.0205ms、大请求总耗时+9.5ms等成本及双峰样本保留R03，不宣称统计等价或优化。"
         ],
         "evidence": [
-          "benchmarks/model-frame-build.json",
-          "benchmarks/model-frame-gui-validation.json",
-          "benchmarks/model-frame-assets.json",
-          "benchmarks/model-frame-geometry.json",
-          "benchmarks/model-frame-performance-summary.json",
-          "screenshots/model-frame-auto-1440x900-native-2x.png",
-          "screenshots/model-frame-auto-1100x700-native-2x.png",
-          "benchmarks/model-alignment-gui-validation.json",
-          "benchmarks/model-alignment-geometry.json",
-          "screenshots/model-alignment-manual-1440x900-native-2x.png",
-          "screenshots/model-alignment-limits-1100x700-native-2x.png",
-          "screenshots/studio-fonts-model-1440x900-native-1x.png",
-          "screenshots/studio-fonts-model-1100x700-native-1x.png",
-          "benchmarks/studio-fonts-gui-validation.json",
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b02-59-279-wide.png",
+          "screenshots/b02-59-279-small.png",
+          "screenshots/b02-figma-59-279-reference.png",
+          "benchmarks/b02-design-audit.json",
+          "benchmarks/b02-native-consolidated.json",
+          "benchmarks/b02-native-b02-summary.json",
+          "benchmarks/b02-native-capture-summary.json",
+          "benchmarks/b02-performance-summary.json",
+          "benchmarks/b02-default-serialization-audit.json",
+          "benchmarks/b02-provider-contracts.json",
+          "benchmarks/b02-artifacts.json"
         ]
       }
     },
@@ -624,47 +604,41 @@
       "node": "61:289",
       "title": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
-      "detail": "部分：UI62完整四画板首审；db899标签几何/原生白色选中态、徽章/映射Inter/字段色已改，四协议两尺寸原图、八tab键与九Core快照、非法映射/预算校验、四Apply→显式Save及原负载四轮留证；保留Select/标题光学、X/scrim、完整键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-289",
       "visual_review": {
         "id": "61:289",
         "name": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
-        "review_status": "reviewed_with_differences",
-        "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "review_status": "reviewed",
+        "scope": "UI69/B02完整批次：最终87db同候选实际交互和独立Core数据、6×2真正原生PNG及小窗底部、匹配四轮原负载通过；全局R01–R04独立。",
         "checks": {
-          "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
-          "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-chat-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-chat-small.png"
+          "layout": "Picker726×672、Editor728×800及四协议620×724按最新设计对齐；小窗原有内滚与固定页脚保持，长ID显示省略号。",
+          "colors": "Studio正文/禁用/标签/选中角色与原资源保持；原生ICC/AA差异明确记录，无全RGB字节相等门禁。",
+          "typography": "标题21/30、Picker已有项Medium13/19、Editor限制caption11/16、协议字段12/17和Apply Bold13/19按角色设置。",
+          "assets": "31唯一原资源：26字节一致、2仅clip ID/ref与空白等价、3装饰窗控使用真实OS；未重绘SVG。",
+          "states": "真实2/5→2/6和满载2/256；保留自动元数据/Unconfigured等实际值，不伪造静态稿模式或成功。",
+          "interaction": "Chat/Responses及Anthropic预算/Adaptive、Gemini预算/level实际非法拒绝→合法Apply不落Core→显式Save→读回；目标之外原字段/历史保持，源码定义默认序列化补全单列。",
+          "native_1440": "同87db新隔离补拍：真正2880×1802 PNG，对应1440×900逻辑窗口，保留OS额外一行；无阴影/后裁切/转换。",
+          "native_1100": "真正2200×1402 PNG，对应1100×700；模型全部限制/协议max另以内滚底部原图核验。"
         },
         "differences": [
-          "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
-          "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
-          "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
-          "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
+          "首次CUA JPEG与带阴影PNG并非最终规定PNG，原始字节按真实格式归档；最终另用同候选新实例原生补拍，没有转换冒充。",
+          "精确hover、完整键盘/IME/AX/主题与Windows/Intel实机仍为R01–R04；未聚焦标签的默认Return和聚焦Apply的容量Return不作通过声明。",
+          "短轮空闲合计+1.86MiB、代理p95+0.0205ms、大请求总耗时+9.5ms等成本及双峰样本保留R03，不宣称统计等价或优化。"
         ],
         "evidence": [
-          "benchmarks/protocol-layout-design-audit.json",
-          "benchmarks/protocol-layout-assets.json",
-          "benchmarks/protocol-layout-source-scope.json",
-          "benchmarks/protocol-layout-build.json",
-          "benchmarks/protocol-layout-final-gui-validation.json",
-          "benchmarks/protocol-layout-stage-core-proofs.json",
-          "benchmarks/protocol-layout-original-fields-proof.json",
-          "benchmarks/protocol-layout-post-gui-proof.json",
-          "benchmarks/protocol-layout-performance-summary.json",
-          "screenshots/protocol-layout-final-chat-wide.png",
-          "screenshots/protocol-layout-final-chat-small.png",
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b02-61-289-wide.png",
+          "screenshots/b02-61-289-small.png",
+          "screenshots/b02-figma-61-289-reference.png",
+          "benchmarks/b02-design-audit.json",
+          "benchmarks/b02-native-consolidated.json",
+          "benchmarks/b02-native-b02-summary.json",
+          "benchmarks/b02-native-capture-summary.json",
+          "benchmarks/b02-performance-summary.json",
+          "benchmarks/b02-default-serialization-audit.json",
+          "benchmarks/b02-provider-contracts.json",
+          "benchmarks/b02-artifacts.json"
         ]
       }
     },
@@ -672,47 +646,41 @@
       "node": "61:561",
       "title": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
-      "detail": "部分：UI62完整四画板首审；db899标签几何/原生白色选中态、徽章/映射Inter/字段色已改，四协议两尺寸原图、八tab键与九Core快照、非法映射/预算校验、四Apply→显式Save及原负载四轮留证；保留Select/标题光学、X/scrim、完整键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-561",
       "visual_review": {
         "id": "61:561",
         "name": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
-        "review_status": "reviewed_with_differences",
-        "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "review_status": "reviewed",
+        "scope": "UI69/B02完整批次：最终87db同候选实际交互和独立Core数据、6×2真正原生PNG及小窗底部、匹配四轮原负载通过；全局R01–R04独立。",
         "checks": {
-          "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
-          "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-responses-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-responses-small.png"
+          "layout": "Picker726×672、Editor728×800及四协议620×724按最新设计对齐；小窗原有内滚与固定页脚保持，长ID显示省略号。",
+          "colors": "Studio正文/禁用/标签/选中角色与原资源保持；原生ICC/AA差异明确记录，无全RGB字节相等门禁。",
+          "typography": "标题21/30、Picker已有项Medium13/19、Editor限制caption11/16、协议字段12/17和Apply Bold13/19按角色设置。",
+          "assets": "31唯一原资源：26字节一致、2仅clip ID/ref与空白等价、3装饰窗控使用真实OS；未重绘SVG。",
+          "states": "真实2/5→2/6和满载2/256；保留自动元数据/Unconfigured等实际值，不伪造静态稿模式或成功。",
+          "interaction": "Chat/Responses及Anthropic预算/Adaptive、Gemini预算/level实际非法拒绝→合法Apply不落Core→显式Save→读回；目标之外原字段/历史保持，源码定义默认序列化补全单列。",
+          "native_1440": "同87db新隔离补拍：真正2880×1802 PNG，对应1440×900逻辑窗口，保留OS额外一行；无阴影/后裁切/转换。",
+          "native_1100": "真正2200×1402 PNG，对应1100×700；模型全部限制/协议max另以内滚底部原图核验。"
         },
         "differences": [
-          "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
-          "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
-          "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
-          "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
+          "首次CUA JPEG与带阴影PNG并非最终规定PNG，原始字节按真实格式归档；最终另用同候选新实例原生补拍，没有转换冒充。",
+          "精确hover、完整键盘/IME/AX/主题与Windows/Intel实机仍为R01–R04；未聚焦标签的默认Return和聚焦Apply的容量Return不作通过声明。",
+          "短轮空闲合计+1.86MiB、代理p95+0.0205ms、大请求总耗时+9.5ms等成本及双峰样本保留R03，不宣称统计等价或优化。"
         ],
         "evidence": [
-          "benchmarks/protocol-layout-design-audit.json",
-          "benchmarks/protocol-layout-assets.json",
-          "benchmarks/protocol-layout-source-scope.json",
-          "benchmarks/protocol-layout-build.json",
-          "benchmarks/protocol-layout-final-gui-validation.json",
-          "benchmarks/protocol-layout-stage-core-proofs.json",
-          "benchmarks/protocol-layout-original-fields-proof.json",
-          "benchmarks/protocol-layout-post-gui-proof.json",
-          "benchmarks/protocol-layout-performance-summary.json",
-          "screenshots/protocol-layout-final-responses-wide.png",
-          "screenshots/protocol-layout-final-responses-small.png",
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b02-61-561-wide.png",
+          "screenshots/b02-61-561-small.png",
+          "screenshots/b02-figma-61-561-reference.png",
+          "benchmarks/b02-design-audit.json",
+          "benchmarks/b02-native-consolidated.json",
+          "benchmarks/b02-native-b02-summary.json",
+          "benchmarks/b02-native-capture-summary.json",
+          "benchmarks/b02-performance-summary.json",
+          "benchmarks/b02-default-serialization-audit.json",
+          "benchmarks/b02-provider-contracts.json",
+          "benchmarks/b02-artifacts.json"
         ]
       }
     },
@@ -720,47 +688,41 @@
       "node": "61:838",
       "title": "11 / STUDIO V2 · 协议选项 · Anthropic",
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
-      "detail": "部分：UI62完整四画板首审；db899标签几何/原生白色选中态、徽章/映射Inter/字段色已改，四协议两尺寸原图、八tab键与九Core快照、非法映射/预算校验、四Apply→显式Save及原负载四轮留证；保留Select/标题光学、X/scrim、完整键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-838",
       "visual_review": {
         "id": "61:838",
         "name": "11 / STUDIO V2 · 协议选项 · Anthropic",
-        "review_status": "reviewed_with_differences",
-        "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "review_status": "reviewed",
+        "scope": "UI69/B02完整批次：最终87db同候选实际交互和独立Core数据、6×2真正原生PNG及小窗底部、匹配四轮原负载通过；全局R01–R04独立。",
         "checks": {
-          "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
-          "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-anthropic-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-anthropic-small.png"
+          "layout": "Picker726×672、Editor728×800及四协议620×724按最新设计对齐；小窗原有内滚与固定页脚保持，长ID显示省略号。",
+          "colors": "Studio正文/禁用/标签/选中角色与原资源保持；原生ICC/AA差异明确记录，无全RGB字节相等门禁。",
+          "typography": "标题21/30、Picker已有项Medium13/19、Editor限制caption11/16、协议字段12/17和Apply Bold13/19按角色设置。",
+          "assets": "31唯一原资源：26字节一致、2仅clip ID/ref与空白等价、3装饰窗控使用真实OS；未重绘SVG。",
+          "states": "真实2/5→2/6和满载2/256；保留自动元数据/Unconfigured等实际值，不伪造静态稿模式或成功。",
+          "interaction": "Chat/Responses及Anthropic预算/Adaptive、Gemini预算/level实际非法拒绝→合法Apply不落Core→显式Save→读回；目标之外原字段/历史保持，源码定义默认序列化补全单列。",
+          "native_1440": "同87db新隔离补拍：真正2880×1802 PNG，对应1440×900逻辑窗口，保留OS额外一行；无阴影/后裁切/转换。",
+          "native_1100": "真正2200×1402 PNG，对应1100×700；模型全部限制/协议max另以内滚底部原图核验。"
         },
         "differences": [
-          "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
-          "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
-          "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
-          "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
+          "首次CUA JPEG与带阴影PNG并非最终规定PNG，原始字节按真实格式归档；最终另用同候选新实例原生补拍，没有转换冒充。",
+          "精确hover、完整键盘/IME/AX/主题与Windows/Intel实机仍为R01–R04；未聚焦标签的默认Return和聚焦Apply的容量Return不作通过声明。",
+          "短轮空闲合计+1.86MiB、代理p95+0.0205ms、大请求总耗时+9.5ms等成本及双峰样本保留R03，不宣称统计等价或优化。"
         ],
         "evidence": [
-          "benchmarks/protocol-layout-design-audit.json",
-          "benchmarks/protocol-layout-assets.json",
-          "benchmarks/protocol-layout-source-scope.json",
-          "benchmarks/protocol-layout-build.json",
-          "benchmarks/protocol-layout-final-gui-validation.json",
-          "benchmarks/protocol-layout-stage-core-proofs.json",
-          "benchmarks/protocol-layout-original-fields-proof.json",
-          "benchmarks/protocol-layout-post-gui-proof.json",
-          "benchmarks/protocol-layout-performance-summary.json",
-          "screenshots/protocol-layout-final-anthropic-wide.png",
-          "screenshots/protocol-layout-final-anthropic-small.png",
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b02-61-838-wide.png",
+          "screenshots/b02-61-838-small.png",
+          "screenshots/b02-figma-61-838-reference.png",
+          "benchmarks/b02-design-audit.json",
+          "benchmarks/b02-native-consolidated.json",
+          "benchmarks/b02-native-b02-summary.json",
+          "benchmarks/b02-native-capture-summary.json",
+          "benchmarks/b02-performance-summary.json",
+          "benchmarks/b02-default-serialization-audit.json",
+          "benchmarks/b02-provider-contracts.json",
+          "benchmarks/b02-artifacts.json"
         ]
       }
     },
@@ -768,47 +730,41 @@
       "node": "61:1111",
       "title": "11 / STUDIO V2 · 协议选项 · Gemini",
       "source": "ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs",
-      "detail": "部分：UI62完整四画板首审；db899标签几何/原生白色选中态、徽章/映射Inter/字段色已改，四协议两尺寸原图、八tab键与九Core快照、非法映射/预算校验、四Apply→显式Save及原负载四轮留证；保留Select/标题光学、X/scrim、完整键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：UI69/B02最终87db；最新完整设计/原资产、真实模型及四协议往返、256/4096边界、6×2正确原生PNG与四轮原负载通过；默认序列化和截图格式补拍诚实单列，完整输入/无障碍/跨平台/长时性能仍属R01–R04。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=61-1111",
       "visual_review": {
         "id": "61:1111",
         "name": "11 / STUDIO V2 · 协议选项 · Gemini",
-        "review_status": "reviewed_with_differences",
-        "scope": "UI62重新读取四协议完整官方高保真上下文与截图；候选db899两尺寸逐图首审、真实输入/错误/四Apply与显式Save及原负载性能留证。保留差异，不作整帧最终验收。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "review_status": "reviewed",
+        "scope": "UI69/B02完整批次：最终87db同候选实际交互和独立Core数据、6×2真正原生PNG及小窗底部、匹配四轮原负载通过；全局R01–R04独立。",
         "checks": {
-          "layout": "620×724宽窗/小窗636高原生壳及固定底栏保持；Studio标签宽123/124/124/137、left4/142/282/422、label左15、选中白底接入。四完整宽图/四小图已查，Gemini内滚取回max与固定Apply；未泛化其余完整滚动/焦点状态。",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "本次30共享资源重新下载核对：25字节相同、2仅局部clip ID/ref一致重命名后完整XML相同、3装饰窗口控件保留真实OS控件；协议caret/X为原生控件，未造Unicode/SVG近似。",
-          "states": "真实默认保留；非法Responses max跨tab保留并被Apply拒绝，Esc重开为空。Anthropic预算128被原规则正确拒绝，再1024合法；Chat Azure、Responses maxhigh、Anthropic8192/budget1024、Gemini budget256各自真实应用/保存。九独立Core快照全true，2供应商5模型0请求；未验全模式/空值/全部错误组合。",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-gemini-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-gemini-small.png"
+          "layout": "Picker726×672、Editor728×800及四协议620×724按最新设计对齐；小窗原有内滚与固定页脚保持，长ID显示省略号。",
+          "colors": "Studio正文/禁用/标签/选中角色与原资源保持；原生ICC/AA差异明确记录，无全RGB字节相等门禁。",
+          "typography": "标题21/30、Picker已有项Medium13/19、Editor限制caption11/16、协议字段12/17和Apply Bold13/19按角色设置。",
+          "assets": "31唯一原资源：26字节一致、2仅clip ID/ref与空白等价、3装饰窗控使用真实OS；未重绘SVG。",
+          "states": "真实2/5→2/6和满载2/256；保留自动元数据/Unconfigured等实际值，不伪造静态稿模式或成功。",
+          "interaction": "Chat/Responses及Anthropic预算/Adaptive、Gemini预算/level实际非法拒绝→合法Apply不落Core→显式Save→读回；目标之外原字段/历史保持，源码定义默认序列化补全单列。",
+          "native_1440": "同87db新隔离补拍：真正2880×1802 PNG，对应1440×900逻辑窗口，保留OS额外一行；无阴影/后裁切/转换。",
+          "native_1100": "真正2200×1402 PNG，对应1100×700；模型全部限制/协议max另以内滚底部原图核验。"
         },
         "differences": [
-          "UI64普通遮罩已更正，Close改原生Base文字×及专属Enter→Cancel；剩余原生阴影/×墨迹1-2px差异保留。",
-          "Chat实测Select文本在扣除OS额外行后约低3px、映射标题约低2px，底栏Apply水平位置仍有约2px差；其余协议精确光学偏移和全部边框AA待续，不泛化为已完全对齐。",
-          "Anthropic/Gemini真实默认Unconfigured与静态Budget/Level样例不同；保留真实配置、实际端口/模型/日志及原生OS控件，不伪造业务状态。",
-          "当前默认/焦点/错误与四次保存为专项覆盖；完整状态、键盘/IME/无障碍、六皮肤全协议状态及跨平台/HiDPI仍待终验。Figma次级色在白底的计算对比度3.914，未宣称全局AA。"
+          "首次CUA JPEG与带阴影PNG并非最终规定PNG，原始字节按真实格式归档；最终另用同候选新实例原生补拍，没有转换冒充。",
+          "精确hover、完整键盘/IME/AX/主题与Windows/Intel实机仍为R01–R04；未聚焦标签的默认Return和聚焦Apply的容量Return不作通过声明。",
+          "短轮空闲合计+1.86MiB、代理p95+0.0205ms、大请求总耗时+9.5ms等成本及双峰样本保留R03，不宣称统计等价或优化。"
         ],
         "evidence": [
-          "benchmarks/protocol-layout-design-audit.json",
-          "benchmarks/protocol-layout-assets.json",
-          "benchmarks/protocol-layout-source-scope.json",
-          "benchmarks/protocol-layout-build.json",
-          "benchmarks/protocol-layout-final-gui-validation.json",
-          "benchmarks/protocol-layout-stage-core-proofs.json",
-          "benchmarks/protocol-layout-original-fields-proof.json",
-          "benchmarks/protocol-layout-post-gui-proof.json",
-          "benchmarks/protocol-layout-performance-summary.json",
-          "screenshots/protocol-layout-final-gemini-wide.png",
-          "screenshots/protocol-layout-final-gemini-small.png",
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b02-61-1111-wide.png",
+          "screenshots/b02-61-1111-small.png",
+          "screenshots/b02-figma-61-1111-reference.png",
+          "benchmarks/b02-design-audit.json",
+          "benchmarks/b02-native-consolidated.json",
+          "benchmarks/b02-native-b02-summary.json",
+          "benchmarks/b02-native-capture-summary.json",
+          "benchmarks/b02-performance-summary.json",
+          "benchmarks/b02-default-serialization-audit.json",
+          "benchmarks/b02-provider-contracts.json",
+          "benchmarks/b02-artifacts.json"
         ]
       }
     },
@@ -1778,7 +1734,7 @@
     },
     {
       "title": "模型管理与四种协议",
-      "implemented": "模型发现/选择、256容量、多选、能力编辑和四协议真实Apply→显式Save已有分项证据。",
+      "implemented": "最终87db模型与四协议6帧签收：完整真实往返与容量、正确格式两尺寸原生PNG、四轮原负载及历史保护通过；原JPEG/阴影问题与补拍来源、默认序列化、性能小幅成本均单列。",
       "pending": "集中完成6张弹窗和模型整条管理链，复用一套表单/模态组件，保留全部真实字段。",
       "tasks": [
         20,
@@ -1795,7 +1751,8 @@
         58,
         62,
         63,
-        64
+        64,
+        69
       ]
     },
     {
@@ -1863,10 +1820,10 @@
     "title": "Studio V2 正式版批次计划",
     "as_of": "2026-10-31",
     "state": "active",
-    "current_batch": "B02",
+    "current_batch": "B03",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 68,
+    "historical_tasks": 69,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -2194,7 +2151,7 @@
         "id": "B02",
         "title": "模型管理与四种协议",
         "kind": "feature",
-        "status": "planned",
+        "status": "passed",
         "frames": [
           "59:11",
           "59:279",
@@ -2206,29 +2163,30 @@
         "depends_on": [
           "B01"
         ],
-        "completed_summary": "模型发现/选择、256容量、多选、能力编辑和四协议真实Apply→显式Save已有分项证据。",
+        "completed_summary": "最终87db模型与四协议6帧签收：完整真实往返与容量、正确格式两尺寸原生PNG、四轮原负载及历史保护通过；原JPEG/阴影问题与补拍来源、默认序列化、性能小幅成本均单列。",
         "delivery": "集中完成6张弹窗和模型整条管理链，复用一套表单/模态组件，保留全部真实字段。",
         "tasks": [
           {
             "id": "B02.1",
             "title": "模型发现、选择与容量",
-            "acceptance": "pending",
-            "completed": "4096候选虚拟列表、已有项只读、搜索/批量选择及256总容量已实现。",
-            "remaining": "整合获取成功/失败、空结果、长ID、满载及小窗底栏的最终候选验证。",
+            "acceptance": "passed",
+            "completed": "真实38/4096发现、503/空结果、搜索/无匹配/清空/全选反选/仅看勾选、已有项点击仍只读；beam-free取消/应用草稿/父取消/显式保存读回，256满载点击拒绝超量。精准hover及聚焦Apply的Return留R01。",
+            "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
             "acceptance_check": "4096候选可滚到末尾；已有模型不可重复；选择取消不写Core；确认仅进草稿，显式保存才写入。",
             "history_tasks": [
               20,
               49,
               51,
-              63
+              63,
+              69
             ]
           },
           {
             "id": "B02.2",
             "title": "模型表多选与键盘",
-            "acceptance": "pending",
-            "completed": "Shift/Cmd多选、行键盘导航、列宽估算和完整值提示有实测。",
-            "remaining": "统一选择/默认/hover/focus/disabled；验证256末行、排序/搜索后目标身份和删除取消。",
+            "acceptance": "passed",
+            "completed": "同版实际范围选中、Return/F2打开原目标、局部删除及父取消恢复；主夹具Cmd视觉不确定，满载明确fill-249/250范围、Cmd取消249后仅删除250，取消恢复255。",
+            "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
             "acceptance_check": "首末行、Shift范围/Cmd切换、方向键/Return/Space、长值提示可读；删除只作用于原目标且可取消。",
             "history_tasks": [
               40,
@@ -2237,55 +2195,59 @@
               49,
               51,
               54,
-              58
+              58,
+              69
             ]
           },
           {
             "id": "B02.3",
             "title": "能力编辑与默认思考",
-            "acceptance": "pending",
-            "completed": "AUTO/手动六能力、真实元数据、五档能力/限制、草稿/取消已有证据。",
-            "remaining": "完整核对模型编辑页及长文本/错误/窄窗，保留设计未列出的必要限制与真实来源提示。",
+            "acceptance": "passed",
+            "completed": "AUTO点击→手动→Space恢复；六能力/五档与默认Low、非法输出-1、合法名称/能力/四限制应用与保存读回；小窗全部下方字段和固定页脚实见。",
+            "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
             "acceptance_check": "非法限制拒绝；合法确认回草稿；Save读回；取消不改；默认思考/手动覆盖和未知能力不被UI重绘覆盖。",
             "history_tasks": [
               21,
               44,
               50,
               51,
-              53
+              53,
+              69
             ]
           },
           {
             "id": "B02.4",
             "title": "四协议共享版式集中对齐",
-            "acceptance": "pending",
-            "completed": "四完整画板已首审；tab选中/标签/徽章、关闭/遮罩和两尺寸已有证据。",
-            "remaining": "一次修正Chat/Responses/Anthropic/Gemini共享表单、控件和标题差异，再整体拍照。",
+            "acceptance": "passed",
+            "completed": "六份最新完整设计一次对齐；最终87db的6×2真正原生PNG及两张小窗底部图通过，首次CUA JPEG/阴影PNG格式问题诚实保留并用全新同版夹具补拍，未转换冒充。",
+            "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
             "acceptance_check": "四张各两尺寸，字段/按钮/错误可达；遮罩阻挡背后工具栏；关闭返回原焦点；不删字段贴静态图。",
             "history_tasks": [
               24,
               62,
-              64
+              64,
+              69
             ]
           },
           {
             "id": "B02.5",
             "title": "四协议真实数据往返",
-            "acceptance": "pending",
-            "completed": "Responses非法草稿保留、Anthropic预算拒绝/合法、四协议Apply和CmdS分步已验证。",
-            "remaining": "在最终候选连续执行四协议合法/非法/取消/确认/保存和切换供应商。",
+            "acceptance": "passed",
+            "completed": "Chat/Responses及Anthropic预算/Adaptive、Gemini预算/level实际非法拒绝→合法Apply不落Core→显式Save→读回；目标之外原字段/历史保持，源码定义默认序列化补全单列。",
+            "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
             "acceptance_check": "各协议独有认证/输出/预算/映射按真实校验；Apply不直接写Core；显式保存只改目标并保留其他模型。",
             "history_tasks": [
               24,
-              62
+              62,
+              69
             ]
           },
           {
             "id": "B02.6",
             "title": "模型与协议整批回归",
-            "acceptance": "pending",
-            "completed": "已有原字段递归保持、取消/保存及模态键盘证据。",
-            "remaining": "把发现→选择→能力→协议→保存→重开串成一轮，并做本批性能对照。",
+            "acceptance": "passed",
+            "completed": "最终候选五编译门禁、Main/Capacity/单独原生补拍及所有生命周期通过；原1000小请求/64模型/80×1MiB并发4的四轮0，全部成本保留R03；200份证据归档及本轮专用目录安全清理。",
+            "remaining": "本功能批次收口；完整焦点/IME/AX/精确悬浮、主题/平台及长时性能/安装发布仍按R01–R04独立验收。",
             "acceptance_check": "同一候选全链路与6帧12张原图；原Core路由/能力/兼容字段无回退，性能结果不混用旧候选。",
             "history_tasks": [
               20,
@@ -2293,48 +2255,65 @@
               24,
               62,
               63,
-              64
+              64,
+              69
             ]
           }
         ],
-        "accepted_frames": [],
-        "acceptance_evidence": [],
+        "accepted_frames": [
+          "59:11",
+          "59:279",
+          "61:289",
+          "61:561",
+          "61:838",
+          "61:1111"
+        ],
+        "acceptance_evidence": [
+          "benchmarks/b02-design-audit.json",
+          "benchmarks/b02-native-consolidated.json",
+          "benchmarks/b02-native-b02-summary.json",
+          "benchmarks/b02-native-capture-summary.json",
+          "benchmarks/b02-performance-summary.json",
+          "benchmarks/b02-default-serialization-audit.json",
+          "benchmarks/b02-provider-contracts.json",
+          "benchmarks/b02-artifacts.json"
+        ],
         "frame_details": [
           {
             "id": "59:11",
             "title": "06 / STUDIO V2 · 选择模型",
-            "status": "partial",
-            "review_status": "reviewed_with_differences"
+            "status": "verified",
+            "review_status": "reviewed"
           },
           {
             "id": "59:279",
             "title": "07 / STUDIO V2 · 编辑模型能力",
-            "status": "partial",
-            "review_status": "reviewed_with_differences"
+            "status": "verified",
+            "review_status": "reviewed"
           },
           {
             "id": "61:289",
             "title": "11 / STUDIO V2 · 协议选项 · OpenAI Chat",
-            "status": "partial",
-            "review_status": "reviewed_with_differences"
+            "status": "verified",
+            "review_status": "reviewed"
           },
           {
             "id": "61:561",
             "title": "11 / STUDIO V2 · 协议选项 · OpenAI Responses",
-            "status": "partial",
-            "review_status": "reviewed_with_differences"
+            "status": "verified",
+            "review_status": "reviewed"
           },
           {
             "id": "61:838",
             "title": "11 / STUDIO V2 · 协议选项 · Anthropic",
-            "status": "partial",
-            "review_status": "reviewed_with_differences"
+            "status": "verified",
+            "review_status": "reviewed"
           },
           {
             "id": "61:1111",
             "title": "11 / STUDIO V2 · 协议选项 · Gemini",
-            "status": "partial",
-            "review_status": "reviewed_with_differences"
+            "status": "verified",
+            "review_status": "reviewed"
           }
         ],
         "reviewed_frames": 6
@@ -3355,9 +3334,9 @@
     "metrics": {
       "functional_batches": 5,
       "release_batches": 4,
-      "passed_batches": 1,
+      "passed_batches": 2,
       "tasks": 50,
-      "passed_tasks": 7
+      "passed_tasks": 13
     },
     "goal_status": "active"
   },
@@ -6501,6 +6480,56 @@
       "date": "2026-10-31T13:52:35+08:00",
       "commit_subject": "fix(gpui): align supplier menus and accept B01 UI batch",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 69,
+      "title": "B02模型管理与四种协议整批签收",
+      "status": "recorded",
+      "summary": "集中签收6帧/6任务，累计25/40，剩余15；下一批B03统计、价格与本地用量7帧。最终UI SHA 87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6，42,492,240bytes，固定Core25f。只改4份Rust呈现文件：AUTO采用同原生Checkbox与原事件的徽章/标题组合、字体/行距与限制caption；Picker长ID加flex约束/复",
+      "highlights": [
+        "集中签收6帧/6任务，累计25/40，剩余15；下一批B03统计、价格与本地用量7帧。最终UI SHA 87dbef9e06cdb54232a7f07da549115211e8a191b7e9c0b3f01bbb5769a2b5f6，42,492,240bytes，固定Core25f。只改4份Rust呈现文件：AUTO采用同原生Checkbox与原事件的徽章/标题组合、字体/行距与限制caption；Picker长ID加flex约束/复用有界tooltip、已有项字重/原搜索符号；协议字段间距、1px右边距与页脚文字。20个原owner监听表达式保留，协议非呈现前缀及解析校验后缀字节一致；Core/配置schema/依赖/锁文件未改。构建、源码边界、最新设计/原资源、资源审计。",
+        "fmt、206测试中204pass/2既有ignore、strict all-targets Clippy、Intel all-targets类型检查、arm64 release五门禁均0。独立真实Core发现19用例和创建/重试/能力/新身份契约已实际执行，Core0、子进程等待结束；最终Picker两行呈现修正不改这些覆盖逻辑。Intel类型检查不等于硬件验证。最初d4c集中看图发现长ID硬截断，补flex1/minw0和有界tooltip后冻结87db，之后完整Main/Capacity及性能均用最终版。真实Core契约、集中微调、中间版退出。",
+        "Main实际38/4096发现、503/空结果、搜索无匹配/清空/全选反选/仅勾选、已有项只读；beam-free Cancel、Apply只改草稿、父Cancel、Save至2/6并读回。AUTO点击/Space、非法输出-1、手动deepseek B02及六能力/Low/四限制保存读回。四协议含Anthropic预算/Adaptive、Gemini预算/level均非法拒绝、Apply不落Core、显式Save与读回；原14请求和14费用全字段SHA保持。满载A255+B1：End到fill-250、F2身份正确，Shift范围249/250、Cmd取消249后只删250，父取消恢复255；4096真实排序尾文本是model-b-1（candidate-4095是行索引），容量点击拒绝追加。精准hover、主夹具Cmd视觉不确定、未聚焦标签初始Return关闭、容量Return实际只切"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "构建",
+          "href": "benchmarks/b02-build.json"
+        },
+        {
+          "label": "源码边界",
+          "href": "benchmarks/b02-source-scope.json"
+        },
+        {
+          "label": "最新设计/原资源",
+          "href": "benchmarks/b02-design-audit.json"
+        },
+        {
+          "label": "资源审计",
+          "href": "benchmarks/b02-asset-audit.json"
+        },
+        {
+          "label": "真实Core契约",
+          "href": "benchmarks/b02-provider-contracts.json"
+        },
+        {
+          "label": "集中微调",
+          "href": "benchmarks/b02-consolidated-polish.json"
+        },
+        {
+          "label": "中间版退出",
+          "href": "benchmarks/b02-intermediate-d4c-stop.json"
+        },
+        {
+          "label": "完整GUI",
+          "href": "benchmarks/b02-native-b02-summary.json"
+        }
+      ],
+      "commit": "6fa1470137b30684a98c477a4449b2920e476833",
+      "date": "2026-10-31T16:04:08+08:00",
+      "commit_subject": "fix(gpui): align model dialogs and accept B02 UI batch",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -7657,6 +7686,21 @@
         "reviewing": 0,
         "reviewed_with_differences": 17,
         "reviewed": 19
+      }
+    },
+    {
+      "date": "2026-10-31T16:04:16+08:00",
+      "note": "B02模型与四协议6帧整批签收：真实交互、同版原生PNG与四轮原负载已验；累计25/40、剩余15，下一批B03。",
+      "pending": 0,
+      "partial": 15,
+      "reused": 0,
+      "verified": 25,
+      "remaining_final": 15,
+      "visual_review": {
+        "not_reviewed": 4,
+        "reviewing": 0,
+        "reviewed_with_differences": 11,
+        "reviewed": 25
       }
     }
   ],

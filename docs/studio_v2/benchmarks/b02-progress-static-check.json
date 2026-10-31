@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-31T16:05:01.819289+08:00",
+  "html_data_matches_json": true,
+  "local_report_links_verified": 584,
+  "embedded_javascript_syntax_exits": [
+    0,
+    0
+  ],
+  "counts": {
+    "pending": 0,
+    "partial": 15,
+    "reused": 0,
+    "verified": 25
+  },
+  "remaining": 15,
+  "next_batch": "B03",
+  "task69_title_from_actual_QA": true,
+  "source_commit": "6fa1470137b30684a98c477a4449b2920e476833",
+  "archive_hashes": 200,
+  "scope": "Offline source/data/local links and JS syntax only. Existing browser file-policy block respected; no browser render/pixel/responsive or theme execution claim."
+}
