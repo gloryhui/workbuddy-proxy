@@ -1,0 +1,44 @@
+[
+  {
+    "name": "retry-after",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "stats::workbuddy_import::runtime::worker::scheduler::recovery_tests",
+      "--",
+      "--nocapture"
+    ],
+    "pid": 26525,
+    "exit_code": 0,
+    "seconds": 3.947
+  },
+  {
+    "name": "write-error-after",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "stats::workbuddy_import::runtime::writer::failure_tests",
+      "--",
+      "--nocapture"
+    ],
+    "pid": 26562,
+    "exit_code": 0,
+    "seconds": 0.096
+  },
+  {
+    "name": "credit-after",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "stats::workbuddy_import::runtime::tests::credit_tests",
+      "--",
+      "--nocapture"
+    ],
+    "pid": 26564,
+    "exit_code": 0,
+    "seconds": 1.733
+  }
+]

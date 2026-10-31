@@ -1,0 +1,35 @@
+from pathlib import Path
+import datetime,hashlib,json,os,signal,subprocess,sys,time
+r=Path(__file__).resolve().parent;owner=json.loads((r/'ownership.json').read_text());assert owner['session']=='01a192ed-9fb7-77c3-b543-da7332068939';w=Path(owner['worktree']);out=w/'docs/studio_v2/benchmarks/scan-recovery';exe=Path('/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy')
+env=dict(os.environ,HOME=str(r/'home'),USERPROFILE=str(r/'home'),WORKBUDDY_PROXY_CONFIG_DIR=str(r/'config'),TMPDIR=str(r/'tmp'),TMP=str(r/'tmp'),TEMP=str(r/'tmp'),CARGO_HOME='/Users/glory/.cargo',RUSTUP_HOME='/Users/glory/.rustup',CARGO_TARGET_DIR='/Volumes/1TB/Downloads/git/workbuddy-proxy/target',RUST_TEST_THREADS='1',WORKBUDDY_PROXY_CATALOG_TEST_URL='http://127.0.0.1:1/catalog')
+for key in ['APPDATA','LOCALAPPDATA','XDG_CONFIG_HOME','XDG_DATA_HOME','XDG_CACHE_HOME','XDG_STATE_HOME']:
+ p=r/key.lower();p.mkdir();env[key]=str(p)
+commands=[('identity-after',['cargo','test','--locked','stats::workbuddy_import::runtime::worker::scheduler::recovery_tests::resuming_a_full_scan_keeps_the_accepted_request_identity','--','--exact']),('core-fmt',['cargo','fmt','--check']),('core-clippy',['cargo','clippy','--locked','--all-targets','--','-D','warnings']),('core-tests',['cargo','test','--locked']),('core-release',['cargo','build','--release','--locked'])]
+for name in ['smoke','multi_routing','multimodal_test','model_discovery','model_capabilities_test','connection_test','port_change','native_protocol_test','native_discovery_test','api_key_providers_test','native_resource_test','statistics_test','statistics_pagination_test','price_catalog_test','workbuddy_endpoint_check_test']:
+ commands.append((name,[sys.executable,str(w/'scripts'/(name+'.py')),'--exe',str(exe)]))
+commands.extend([('workbuddy-import',[sys.executable,str(w/'scripts/workbuddy_import_test.py'),'--exe',str(exe),'--output',str(out/'import-report')]),('workbuddy-import-faults',[sys.executable,str(w/'scripts/workbuddy_import_faults.py'),'--exe',str(exe),'--output',str(out/'import-faults-report')]),('studio-draft-real-core',[sys.executable,str(w/'scripts/studio_provider_draft_test.py'),'--core-exe',str(exe),'--output',str(out/'studio-draft-contracts.json')])])
+rows=[];child=None;started=datetime.datetime.now().astimezone().isoformat();interrupted=False
+sources={str(p.relative_to(w)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (w/'src').rglob('*') if p.is_file()}
+def write(state):
+ (out/'core-checks.json').write_text(json.dumps({'state':state,'started':started,'updated':datetime.datetime.now().astimezone().isoformat(),'base_commit':'99e994630c6f0194491bfde8c2aa3b97d7aee21b','source_sha256':sources,'commands':rows,'core_sha256':hashlib.sha256(exe.read_bytes()).hexdigest(),'original_core_sha256':owner['original_core_sha256'],'scope':'Scan recovery identity fix and exact currentCore regressions; no claim of whole release,GUI or original Ubuntu failure root-cause proof'},indent=2)+'\n')
+def interrupt(signum,frame):
+ global interrupted
+ interrupted=True;raise KeyboardInterrupt(signum)
+signal.signal(signal.SIGTERM,interrupt);signal.signal(signal.SIGINT,interrupt)
+try:
+ for name,cmd in commands:
+  command_env=dict(env)
+  if name=='studio-draft-real-core':command_env['CARGO_TARGET_DIR']='/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target'
+  start=time.monotonic();log=out/(name+'.log.txt')
+  with log.open('wb') as stream:
+   child=subprocess.Popen(cmd,cwd=w,env=command_env,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True);row={'name':name,'command':cmd,'log':log.name,'pid':child.pid,'pgid':child.pid,'state':'running'};rows.append(row);write('running');print({'running':name,'pid':child.pid},flush=True);code=child.wait();child=None
+  row.update(exit_code=code,seconds=round(time.monotonic()-start,3),state='passed' if code==0 else 'failed');write(row['state']);print({k:row[k] for k in ['name','state','seconds']},flush=True)
+  if code:print(log.read_text(errors='replace')[-2500:],flush=True);raise SystemExit(code)
+ write('passed')
+finally:
+ if child is not None and child.poll() is None:
+  assert os.getpgid(child.pid)==child.pid;os.killpg(child.pid,signal.SIGTERM)
+  try:child.wait(timeout=10)
+  except subprocess.TimeoutExpired:os.killpg(child.pid,signal.SIGKILL);child.wait(timeout=5)
+ if interrupted:write('interrupted')
+ (r/'checks-terminal.json').write_text(json.dumps({'at':datetime.datetime.now().astimezone().isoformat(),'active_child':None if child is None or child.poll() is not None else child.pid,'interrupted':interrupted})+'\n')

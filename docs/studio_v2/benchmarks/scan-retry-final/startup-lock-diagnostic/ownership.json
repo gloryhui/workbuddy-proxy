@@ -1,0 +1,8 @@
+{
+  "session": "01a192ed-9fb7-77c3-b543-da7332068939",
+  "uid": 501,
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-lock.in3wv8el",
+  "worktree": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "purpose": "Single deterministic startup SQLite lock diagnostic after7bec CIintegration failure; no GUI or production data",
+  "at": "2026-11-01T04:23:29.123698+08:00"
+}

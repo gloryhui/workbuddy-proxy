@@ -1,0 +1,7 @@
+{
+  "ui_pid": 21062,
+  "core_pid": 21050,
+  "ui_alive_before_vmmap": true,
+  "vmmap_exit": 0,
+  "scope": "After original measured latency/peak/settled results were finalized, before original UI shutdown. Extra sampler stopped before vmmap; no change to timed requests."
+}

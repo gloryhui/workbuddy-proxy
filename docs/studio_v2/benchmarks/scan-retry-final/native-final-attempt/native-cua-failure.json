@@ -1,0 +1,18 @@
+{
+  "label": "previous1",
+  "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-scan-recovery.7kp2lrar/performance-final/matched-previous1/WorkBuddy Proxy RC Final Matched previous1.app",
+  "attempt": "single CUA getApp on exact bundle path",
+  "error": "Computer Use server error -10005: timeoutReached",
+  "read_only_check_immediately_after_error": {
+    "gpui_json_present": false,
+    "exact_bundle_ui_process_match": false,
+    "driver_results_state": "running",
+    "driver_pid": 31257,
+    "pending_core_pid": 31259
+  },
+  "ui_launched_by_this_round": false,
+  "ack_written": false,
+  "retried": false,
+  "ui_actions_or_screenshots": false,
+  "note": "No UI process or gpui.json was found in the immediate read-only check. Driver cleanup was handled by the parent."
+}

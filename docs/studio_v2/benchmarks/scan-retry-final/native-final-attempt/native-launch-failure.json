@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-01T04:15:03.515989+08:00",
+  "label": "previous1",
+  "method": "Dedicated CUA getApp exact app bundle, no activate/raise",
+  "error": "Computer Use server error -10005: timeoutReached",
+  "gpui_record_exists": false,
+  "exact_bundle_ui_process_found": false,
+  "sample_started": false,
+  "ack_written": false,
+  "retry_attempted": false,
+  "cleanup": "Terminate exact owned Core31259 after command/isolated config validation, allowing wrapper to fail and finally wait Core+mock. No measurements reused."
+}

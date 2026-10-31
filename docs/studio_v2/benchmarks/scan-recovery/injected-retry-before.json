@@ -1,0 +1,14 @@
+{
+  "exit_code": 101,
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "stats::workbuddy_import::runtime::tests::credit_tests::a_full_scan_retries_a_stale_writer_snapshot_but_reports_a_storage_failure",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "purpose": "Fault-injected actualAPI/writerACK/reader path using oldunconditionalpass_failed handling. Current source restored in finally.",
+  "source_restored_sha256": "335edae6a6b04b21ff59e1a0efeff876ab8cb8c4e9c97c63e33097bc63f1810d"
+}

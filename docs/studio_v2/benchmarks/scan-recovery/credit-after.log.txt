@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/main.rs (/Volumes/1TB/Downloads/git/workbuddy-proxy/target/debug/deps/workbuddy_proxy-4822dc3a02dc7397)
+
+running 4 tests
+test stats::workbuddy_import::runtime::tests::credit_tests::a_v8_eof_checkpoint_backfills_3049_without_changing_model_tokens_or_replaying_charges ... ok
+test stats::workbuddy_import::runtime::tests::credit_tests::upgrading_fills_only_unknown_normalized_credit_without_overwriting_known_usage ... ok
+test stats::workbuddy_import::runtime::tests::credit_tests::upgrading_v10_receipts_repairs_tokens_without_logs_and_replays_without_conflicts ... ok
+test stats::workbuddy_import::runtime::tests::credit_tests::upgrading_v9_fills_tool_name_without_recounting_or_changing_the_bill ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 572 filtered out; finished in 1.65s
+

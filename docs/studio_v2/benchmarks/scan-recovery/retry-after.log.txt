@@ -1,0 +1,10 @@
+   Compiling workbuddy-proxy v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.46s
+     Running unittests src/main.rs (/Volumes/1TB/Downloads/git/workbuddy-proxy/target/debug/deps/workbuddy_proxy-4822dc3a02dc7397)
+
+running 2 tests
+test stats::workbuddy_import::runtime::worker::scheduler::recovery_tests::resuming_a_full_scan_keeps_the_accepted_request_identity ... ok
+test stats::workbuddy_import::runtime::worker::scheduler::recovery_tests::retryable_writer_rejections_do_not_turn_a_clean_full_scan_into_a_source_failure ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 574 filtered out; finished in 0.02s
+

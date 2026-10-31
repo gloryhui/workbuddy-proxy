@@ -1,0 +1,16 @@
+[
+  {
+    "workflow": "ci.yml",
+    "at": "2026-11-01T04:13:16.789222+08:00",
+    "exit_code": 0,
+    "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41237875609\n",
+    "stderr": ""
+  },
+  {
+    "workflow": "desktop.yml",
+    "at": "2026-11-01T04:13:23.595489+08:00",
+    "exit_code": 0,
+    "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41237884989\n",
+    "stderr": ""
+  }
+]

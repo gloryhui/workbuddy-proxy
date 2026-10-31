@@ -1,0 +1,9 @@
+{
+  "run": 41237875609,
+  "job": 124645363739,
+  "artifact": 13056448354,
+  "zip_sha256": "c31f04a158d2e60c41ad1a4883be7efbea0c9badbb595fb5d253738612a0e52b",
+  "zip_bytes": 3327,
+  "member": "workbuddy_import_test.json/report.json",
+  "report_sha256": "be5ec0c7653e0142deeebdd6b48185f327e35fd84aab565a0f7c0b5a63da94d6"
+}

@@ -1,0 +1,205 @@
+{
+  "purpose": "Bounded25 local attempts to capture the rejection code before changing retry behavior; stops on firstfailure and retains allsamples, not retry-until-green",
+  "rows": [
+    {
+      "run": 1,
+      "pid": 25828,
+      "exit_code": 0,
+      "seconds": 0.465,
+      "rejections": [],
+      "log": "credit-diagnostic-1.log.txt"
+    },
+    {
+      "run": 2,
+      "pid": 25833,
+      "exit_code": 0,
+      "seconds": 0.465,
+      "rejections": [],
+      "log": "credit-diagnostic-2.log.txt"
+    },
+    {
+      "run": 3,
+      "pid": 25837,
+      "exit_code": 0,
+      "seconds": 0.47,
+      "rejections": [],
+      "log": "credit-diagnostic-3.log.txt"
+    },
+    {
+      "run": 4,
+      "pid": 25842,
+      "exit_code": 0,
+      "seconds": 0.475,
+      "rejections": [],
+      "log": "credit-diagnostic-4.log.txt"
+    },
+    {
+      "run": 5,
+      "pid": 25844,
+      "exit_code": 0,
+      "seconds": 0.472,
+      "rejections": [],
+      "log": "credit-diagnostic-5.log.txt"
+    },
+    {
+      "run": 6,
+      "pid": 25849,
+      "exit_code": 0,
+      "seconds": 0.462,
+      "rejections": [],
+      "log": "credit-diagnostic-6.log.txt"
+    },
+    {
+      "run": 7,
+      "pid": 25852,
+      "exit_code": 0,
+      "seconds": 0.481,
+      "rejections": [],
+      "log": "credit-diagnostic-7.log.txt"
+    },
+    {
+      "run": 8,
+      "pid": 25857,
+      "exit_code": 0,
+      "seconds": 0.476,
+      "rejections": [],
+      "log": "credit-diagnostic-8.log.txt"
+    },
+    {
+      "run": 9,
+      "pid": 25859,
+      "exit_code": 0,
+      "seconds": 0.465,
+      "rejections": [],
+      "log": "credit-diagnostic-9.log.txt"
+    },
+    {
+      "run": 10,
+      "pid": 25861,
+      "exit_code": 0,
+      "seconds": 0.468,
+      "rejections": [],
+      "log": "credit-diagnostic-10.log.txt"
+    },
+    {
+      "run": 11,
+      "pid": 25866,
+      "exit_code": 0,
+      "seconds": 0.482,
+      "rejections": [],
+      "log": "credit-diagnostic-11.log.txt"
+    },
+    {
+      "run": 12,
+      "pid": 25868,
+      "exit_code": 0,
+      "seconds": 0.485,
+      "rejections": [],
+      "log": "credit-diagnostic-12.log.txt"
+    },
+    {
+      "run": 13,
+      "pid": 25873,
+      "exit_code": 0,
+      "seconds": 0.475,
+      "rejections": [],
+      "log": "credit-diagnostic-13.log.txt"
+    },
+    {
+      "run": 14,
+      "pid": 25877,
+      "exit_code": 0,
+      "seconds": 0.478,
+      "rejections": [],
+      "log": "credit-diagnostic-14.log.txt"
+    },
+    {
+      "run": 15,
+      "pid": 25882,
+      "exit_code": 0,
+      "seconds": 0.482,
+      "rejections": [],
+      "log": "credit-diagnostic-15.log.txt"
+    },
+    {
+      "run": 16,
+      "pid": 25884,
+      "exit_code": 0,
+      "seconds": 0.478,
+      "rejections": [],
+      "log": "credit-diagnostic-16.log.txt"
+    },
+    {
+      "run": 17,
+      "pid": 25895,
+      "exit_code": 0,
+      "seconds": 0.47,
+      "rejections": [],
+      "log": "credit-diagnostic-17.log.txt"
+    },
+    {
+      "run": 18,
+      "pid": 25897,
+      "exit_code": 0,
+      "seconds": 0.464,
+      "rejections": [],
+      "log": "credit-diagnostic-18.log.txt"
+    },
+    {
+      "run": 19,
+      "pid": 25902,
+      "exit_code": 0,
+      "seconds": 0.474,
+      "rejections": [],
+      "log": "credit-diagnostic-19.log.txt"
+    },
+    {
+      "run": 20,
+      "pid": 25904,
+      "exit_code": 0,
+      "seconds": 0.465,
+      "rejections": [],
+      "log": "credit-diagnostic-20.log.txt"
+    },
+    {
+      "run": 21,
+      "pid": 25909,
+      "exit_code": 0,
+      "seconds": 0.474,
+      "rejections": [],
+      "log": "credit-diagnostic-21.log.txt"
+    },
+    {
+      "run": 22,
+      "pid": 25911,
+      "exit_code": 0,
+      "seconds": 0.458,
+      "rejections": [],
+      "log": "credit-diagnostic-22.log.txt"
+    },
+    {
+      "run": 23,
+      "pid": 25916,
+      "exit_code": 0,
+      "seconds": 0.472,
+      "rejections": [],
+      "log": "credit-diagnostic-23.log.txt"
+    },
+    {
+      "run": 24,
+      "pid": 25918,
+      "exit_code": 0,
+      "seconds": 0.463,
+      "rejections": [],
+      "log": "credit-diagnostic-24.log.txt"
+    },
+    {
+      "run": 25,
+      "pid": 25922,
+      "exit_code": 0,
+      "seconds": 0.48,
+      "rejections": [],
+      "log": "credit-diagnostic-25.log.txt"
+    }
+  ]
+}

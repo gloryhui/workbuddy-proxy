@@ -1,0 +1,22 @@
+{"await_cua": {"label": "previous1", "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-scan-recovery.7kp2lrar/performance-final/matched-previous1/WorkBuddy Proxy RC Final Matched previous1.app", "core_pid": 31259, "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-scan-recovery.7kp2lrar/performance-final/matched-previous1", "ui_sha256": "ba525f80d2a135be3ae1b7628f5271b1fa467f7594d4dcb66e50f9bdc6c8c74c"}}
+Traceback (most recent call last):
+  File "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-scan-recovery.7kp2lrar/performance-final/benchmark-matched.py", line 227, in <module>
+    if failure:raise RuntimeError(failure)
+RuntimeError: Traceback (most recent call last):
+  File "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/scripts/benchmark.py", line 118, in main
+    ui_pid=settings_pid(folder) if args.gui else None
+  File "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-scan-recovery.7kp2lrar/performance-final/benchmark-matched.py", line 114, in await_cua
+    assert core.poll() is None
+AssertionError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-scan-recovery.7kp2lrar/performance-final/benchmark-matched.py", line 201, in <module>
+    try:benchmark.main()
+  File "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/scripts/benchmark.py", line 176, in main
+    stop(process,port,folder,log)
+  File "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/scripts/smoke.py", line 121, in stop
+    else:raise AssertionError('Core did not release its instance record')
+AssertionError: Core did not release its instance record
+

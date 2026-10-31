@@ -1,0 +1,181 @@
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit",
+  "architecture": "arm64",
+  "mode": "native GUI",
+  "configured_providers": 1,
+  "configured_models": 64,
+  "alias_rewrite": true,
+  "binary_bytes": 8428096,
+  "idle_rss_mib": 122.5,
+  "core_idle_rss_mib": 16.11,
+  "measured_process_count": 2,
+  "ui_idle_rss_mib": 106.39,
+  "tray_idle_rss_mib": null,
+  "core_ready_ms": 48.955,
+  "ui_record_ready_ms": 4014.11,
+  "sampled_peak_rss_mib": 168.86,
+  "post_load_rss_mib": 168.86,
+  "small_request_count": 1000,
+  "direct_loopback_ms": {
+    "p50": 0.178,
+    "p95": 0.229
+  },
+  "proxied_loopback_ms": {
+    "p50": 0.17,
+    "p95": 0.203
+  },
+  "median_proxy_overhead_ms": -0.008,
+  "large_request_size_mib": 1,
+  "large_concurrency": 4,
+  "large_requests": 80,
+  "large_seconds": 0.092,
+  "notes": "RSS sums instance.json core and gpui.json settings PIDs (shared pages can be counted twice); tray RSS is separate, headless has one PID. UI readiness is the gpui.json marker, not first paint or interactivity. Excludes mock/client processes. Loopback HTTP mock in a separate process, no shared client/server GIL; no TLS or Internet/model latency. Client opens new connections; upstream is pooled. No cross-platform ranking implied.",
+  "label": "current2",
+  "core_sha256": "f8075ed082f3d5fd140238e197faf71d411f04856d5d346c99d5cc64f3ba8c6b",
+  "ui_sha256": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "wrapper_sha256": "2082aa384a859f3ea4bf205a60f2fd72eb5954b93411968aed5114e1d1329b6d",
+  "separate_peak_rss_mib": {
+    "core_rss_mib": 62.469,
+    "ui_rss_mib": 106.891,
+    "combined_rss_mib": 168.859
+  },
+  "core_sandbox_proof": {
+    "enforced": true,
+    "pid": 21050,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O",
+    "launchagents_permissions": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "appearance_after": {
+    "version": 1,
+    "skin": "studio_indigo"
+  },
+  "native_ui_process_to_record_ms": 764.096,
+  "terminal": {
+    "children": [
+      {
+        "kind": "mock",
+        "pid": 21049,
+        "exit_code": -15,
+        "waited": true
+      },
+      {
+        "kind": "core",
+        "pid": 21050,
+        "exit_code": 0,
+        "waited": true
+      }
+    ],
+    "ui_pid": 21062,
+    "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+    "ui_pid_gone": true
+  },
+  "orchestration_note": "Core ready preserves original timing. Original ui_record_ready_ms includes CUA orchestration wait; not a startup comparison. native_ui_process_to_record_ms measures native proc_bsdinfo start to gpui.json mtime, excludes pre-process LaunchServices/tool wait; marker is not first paint/interactivity.",
+  "ui_launch_method": "CUA getApp background launch, no activate/raise command",
+  "ui_page": "Providers64 and language menu after identical resize1100/languageEsc/themeEsc/restore1440Close/languageOpen;1000real seed and unchanged save64+1000small+80large workload",
+  "temporary_fixture_retained": true
+}

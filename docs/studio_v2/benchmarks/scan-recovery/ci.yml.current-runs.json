@@ -1,0 +1,27 @@
+{
+  "workflow": "ci.yml",
+  "matches": [],
+  "runs": [
+    {
+      "conclusion": "success",
+      "databaseId": 41231726063,
+      "headSha": "2da670b23e1771caba186ae16274b9c36e7ad340",
+      "status": "completed",
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41231726063"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41230163774,
+      "headSha": "74b1e093d8b9c3e5f91443edb568087245edc58d",
+      "status": "completed",
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41230163774"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41227146468,
+      "headSha": "b16767c6b957e39bdc559bbd4ac6d12b722ba411",
+      "status": "completed",
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41227146468"
+    }
+  ]
+}

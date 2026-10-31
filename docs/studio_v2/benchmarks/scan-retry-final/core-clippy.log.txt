@@ -1,0 +1,2 @@
+    Checking workbuddy-proxy v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.03s

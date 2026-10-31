@@ -1,0 +1,4 @@
+WorkBuddy Proxy 0.5.7 · 127.0.0.1:49814
+WorkBuddy Proxy 0.5.7 · 127.0.0.1:49814
+statistics disabled: database is locked
+Price catalogue update: stats_unavailable: stats_storage_unavailable

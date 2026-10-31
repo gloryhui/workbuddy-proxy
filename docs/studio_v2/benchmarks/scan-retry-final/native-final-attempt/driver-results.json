@@ -1,0 +1,10 @@
+[
+  {
+    "label": "previous1",
+    "pid": 31257,
+    "pgid": 31257,
+    "state": "failed",
+    "exit_code": 1,
+    "seconds": 86.704
+  }
+]

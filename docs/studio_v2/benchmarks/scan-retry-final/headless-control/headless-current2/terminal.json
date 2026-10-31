@@ -1,0 +1,16 @@
+{
+  "children": [
+    {
+      "kind": "mock",
+      "pid": 32064,
+      "exit_code": -15,
+      "waited": true
+    },
+    {
+      "kind": "core",
+      "pid": 32065,
+      "exit_code": 0,
+      "waited": true
+    }
+  ]
+}

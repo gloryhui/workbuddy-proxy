@@ -1,0 +1,18 @@
+[
+  {
+    "label": "current3",
+    "pid": 23290,
+    "pgid": 23290,
+    "state": "passed",
+    "exit_code": 0,
+    "seconds": 86.25
+  },
+  {
+    "label": "previous3",
+    "pid": 23820,
+    "pgid": 23820,
+    "state": "passed",
+    "exit_code": 0,
+    "seconds": 78.023
+  }
+]

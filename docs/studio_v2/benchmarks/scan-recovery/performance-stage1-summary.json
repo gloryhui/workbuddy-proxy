@@ -1,0 +1,125 @@
+{
+  "scope": "Frozen771a7a7 stage1 complete baseline(a6eUI/25fCore) versus candidate4905UI/f807Core. NOT final retry-fix candidate performance.",
+  "order": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "n_each": 2,
+  "baseline_ui_sha256": "ba525f80d2a135be3ae1b7628f5271b1fa467f7594d4dcb66e50f9bdc6c8c74c",
+  "candidate_ui_sha256": "490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5",
+  "baseline_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "candidate_core_sha256": "f8075ed082f3d5fd140238e197faf71d411f04856d5d346c99d5cc64f3ba8c6b",
+  "metrics": {
+    "core_idle_rss_mib": {
+      "previous_samples": [
+        16.22,
+        16.41
+      ],
+      "current_samples": [
+        16.09,
+        16.11
+      ],
+      "previous_median": 16.314999999999998,
+      "current_median": 16.1,
+      "delta": -0.2149999999999963
+    },
+    "ui_idle_rss_mib": {
+      "previous_samples": [
+        105.91,
+        105.61
+      ],
+      "current_samples": [
+        105.41,
+        106.39
+      ],
+      "previous_median": 105.75999999999999,
+      "current_median": 105.9,
+      "delta": 0.14000000000001478
+    },
+    "idle_rss_mib": {
+      "previous_samples": [
+        122.12,
+        122.02
+      ],
+      "current_samples": [
+        121.5,
+        122.5
+      ],
+      "previous_median": 122.07,
+      "current_median": 122.0,
+      "delta": -0.06999999999999318
+    },
+    "sampled_peak_rss_mib": {
+      "previous_samples": [
+        165.88,
+        167.05
+      ],
+      "current_samples": [
+        167.7,
+        168.86
+      ],
+      "previous_median": 166.465,
+      "current_median": 168.28,
+      "delta": 1.8149999999999977
+    },
+    "native_ui_process_to_record_ms": {
+      "previous_samples": [
+        1072.141,
+        777.372
+      ],
+      "current_samples": [
+        761.091,
+        764.096
+      ],
+      "previous_median": 924.7565,
+      "current_median": 762.5935,
+      "delta": -162.163
+    },
+    "large_seconds": {
+      "previous_samples": [
+        0.088,
+        0.087
+      ],
+      "current_samples": [
+        0.087,
+        0.092
+      ],
+      "previous_median": 0.0875,
+      "current_median": 0.0895,
+      "delta": 0.0020000000000000018
+    },
+    "proxy_p50": {
+      "previous_samples": [
+        0.191,
+        0.191
+      ],
+      "current_samples": [
+        0.189,
+        0.17
+      ],
+      "delta": -0.01150000000000001
+    },
+    "proxy_p95": {
+      "previous_samples": [
+        0.228,
+        0.218
+      ],
+      "current_samples": [
+        0.217,
+        0.203
+      ],
+      "delta": -0.012999999999999984
+    }
+  },
+  "conditions": "All4 rawCUAJPEG1440x900,1provider64models,1000realpreseedwith20rowbarrier,original1000small+80x1MiB@4concurrency,matchedlanguage/theme/resize/restore operations,10sdwell.",
+  "unexpected_sample": "current1 livepostload footprint120.9M, IOAccelerator graphics58.3M including40Mvolatile; privateheapallocated19.8M,IOSurface15.2M nearotherrounds.",
+  "supplement": "C3→P3 sameoriginaltimedload, extra15/30s livevmmap afterresults final. C3 immediatefootprint125.6M/IOAccelgraphics62.6M returned70.8M/10.1M at15and30s; P3 remained69.9→70.1M.",
+  "limits": [
+    "Alloriginalsamplesretained; no equivalence/optimization or firstpaint/FPS claim",
+    "Stage1Coref807 is superseded by ongoing retry handling fix; do not relabel these as finalnewCore results.",
+    "OriginalB01/B03/B04 costs remain, not canceled by these different data/history/source conditions.",
+    "QA78 discovery4096 RSS+2.266MiB/600s remains an independent long-idle observation, not explained solely by short graphics decay."
+  ]
+}

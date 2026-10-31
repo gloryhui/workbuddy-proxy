@@ -1,0 +1,69 @@
+from pathlib import Path
+import sys,os,json,hashlib,subprocess,time,sqlite3,signal
+REPO=Path.cwd();ROOT=Path(__file__).resolve().parent/'performance-final';sys.path.insert(0,str(REPO/'scripts'))
+import benchmark
+from workbuddy_import_test import real_user_home
+from workbuddy_import_ui_sandbox import profile_text,protected_locations,kernel_protection
+label=sys.argv[1];assert label in ['previous1','current1','current2','previous2'];freeze=json.loads((ROOT/'freeze.json').read_text());name='baseline-core' if label.startswith('previous') else 'candidate-core';exe=ROOT/name;assert hashlib.sha256(exe.read_bytes()).hexdigest()==freeze['binaries'][name]['sha256'];assert hashlib.sha256((REPO/'scripts/benchmark.py').read_bytes()).hexdigest()==freeze['benchmark_sha256']
+folder=ROOT/('headless-'+label);folder.mkdir();output=ROOT/('headless-'+label+'.json')
+class Retained:
+ def __init__(self,*a,**kw):self.name=str(folder)
+ def __enter__(self):return self.name
+ def __exit__(self,*a):pass
+ def cleanup(self):pass
+benchmark.tempfile.TemporaryDirectory=Retained
+paths={k:folder/k.lower() for k in ['HOME','USERPROFILE','APPDATA','LOCALAPPDATA','XDG_CONFIG_HOME','XDG_DATA_HOME','XDG_CACHE_HOME','XDG_STATE_HOME','TMPDIR','TMP','TEMP']}
+for p in paths.values():p.mkdir(exist_ok=True)
+env=dict(os.environ,**{k:str(p) for k,p in paths.items()},WORKBUDDY_PROXY_CONFIG_DIR=str(folder),WORKBUDDY_PROXY_CATALOG_TEST_URL='http://127.0.0.1:1/catalog')
+policy=folder/'protection.sb';policy.write_text(profile_text([*protected_locations(real_user_home()).values(),Path(real_user_home())/'Library/LaunchAgents']))
+original=subprocess.Popen;children=[];core=None;proof=None
+
+def launch(cmd,*args,**kwargs):
+ global core
+ is_core=isinstance(cmd,(list,tuple)) and str(Path(cmd[0]).resolve())==str(exe.resolve())
+ is_mock=isinstance(cmd,(list,tuple)) and '--mock-server' in cmd
+ if is_core:cmd=['/usr/bin/sandbox-exec','-f',str(policy),*cmd];kwargs['env']=env
+ elif is_mock:kwargs['env']=env
+ p=original(cmd,*args,**kwargs)
+ if is_core:core=p;children.append(('core',p))
+ elif is_mock:children.append(('mock',p))
+ return p
+subprocess.Popen=launch
+original_pids=benchmark.measured_pids
+
+def precondition(core_pid,ui_pid):
+ global proof
+ assert core_pid==core.pid and ui_pid is None
+ proof=kernel_protection(real_user_home(),folder,core.pid);assert proof['enforced']
+ cfg=json.loads((folder/'config.json').read_text());instance=json.loads((folder/'instance.json').read_text())
+ import urllib.request
+ for _ in range(200):
+  request=urllib.request.Request('http://127.0.0.1:%d/_control/action'%cfg['port'],data=b'{"command":"stats_health"}',headers={'Content-Type':'application/json','Authorization':'Bearer '+instance['management_key']})
+  with urllib.request.urlopen(request,timeout=5) as res:health=json.loads(json.load(res)['message'])
+  if health['state']=='ready':break
+  time.sleep(.05)
+ else:raise AssertionError('stats not ready before headless preseed')
+ alias=cfg['providers'][0]['models'][-1]['alias']
+ payload=json.dumps({'model':alias,'stream':True,'messages':[{'role':'user','content':'Synthetic supplier batch benchmark seed'}]}).encode()
+ for i in range(1000):
+  conn,res=benchmark.request(cfg['port'],payload);assert res.status==200;res.read();conn.close()
+  if (i+1)%20==0:
+   for _ in range(400):
+    with sqlite3.connect('file:'+str(folder/'usage.sqlite3')+'?mode=ro',uri=True) as db:count=db.execute('SELECT COUNT(*) FROM usage_requests').fetchone()[0]
+    if count==i+1:break
+    time.sleep(.025)
+   else:raise AssertionError(('headless seed barrier',i,count))
+ (folder/'seed-proof.json').write_text(json.dumps({'real_http_seed':1000,'barrier_every':20,'rows':count,'stage':'After originalsave64, before timedidle/HTTP workload. Nativepreseed was beforeUI/save64; controls are separately matched within headless, not subtracted as exactcausal contribution.'})+'\n')
+ return original_pids(core_pid,ui_pid)
+benchmark.measured_pids=precondition
+sys.argv=['benchmark.py','--exe',str(exe),'--output',str(output),'--requests','1000','--models','64']
+try:benchmark.main()
+finally:
+ for kind,p in children:
+  if p.poll() is None:p.terminate()
+  p.wait(timeout=10)
+ terminal={'children':[{'kind':kind,'pid':p.pid,'exit_code':p.returncode,'waited':True} for kind,p in children]};(folder/'terminal.json').write_text(json.dumps(terminal,indent=2)+'\n')
+ if output.exists():
+  d=json.loads(output.read_text());d.update(label=label,core_sha256=hashlib.sha256(exe.read_bytes()).hexdigest(),benchmark_sha256=freeze['benchmark_sha256'],wrapper_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),terminal=terminal,kernel_protection=proof,scope='Separate old/new headlessCore control. Original1000small/80large@4/64models unchanged, extra1000preseed before measurement; not UIperformance,FPS or exact subtraction from native.')
+  output.write_text(json.dumps(d,indent=2)+'\n')
+assert all(p.returncode==0 if kind=='core' else p.returncode==-15 for kind,p in children)

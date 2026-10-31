@@ -1,0 +1,21 @@
+   Compiling workbuddy-proxy v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.71s
+     Running unittests src/main.rs (/Volumes/1TB/Downloads/git/workbuddy-proxy/target/debug/deps/workbuddy_proxy-4822dc3a02dc7397)
+
+running 1 test
+test stats::workbuddy_import::runtime::worker::scheduler::recovery_tests::resuming_a_full_scan_keeps_the_accepted_request_identity ... 
+thread 'stats::workbuddy_import::runtime::worker::scheduler::recovery_tests::resuming_a_full_scan_keeps_the_accepted_request_identity' (3889884) panicked at src/stats/workbuddy_import/runtime/worker/scheduler.rs:41:13:
+assertion `left == right` failed
+  left: "95dd30a287e766b2c86d832d8d5e26799a5459f0aa0fa72c"
+ right: "425ba51452e9a1e01a98a3d3d4f8f842e500e557dea58daa"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    stats::workbuddy_import::runtime::worker::scheduler::recovery_tests::resuming_a_full_scan_keeps_the_accepted_request_identity
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 573 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--bin workbuddy-proxy`

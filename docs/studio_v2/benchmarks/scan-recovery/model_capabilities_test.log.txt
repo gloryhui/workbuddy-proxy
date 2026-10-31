@@ -1,0 +1,1 @@
+PASS: automatic background metadata, provider/plan isolation, canonical fallback, live precedence, manual override/reset, rename, WorkBuddy sync, offline cache, failure backoff, corrupt-cache recovery, compatible discovery and credential-free public requests/cache

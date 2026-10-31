@@ -1,0 +1,34 @@
+[
+  {
+    "label": "previous1",
+    "pid": 20244,
+    "pgid": 20244,
+    "state": "passed",
+    "exit_code": 0,
+    "seconds": 90.623
+  },
+  {
+    "label": "current1",
+    "pid": 20795,
+    "pgid": 20795,
+    "state": "passed",
+    "exit_code": 0,
+    "seconds": 49.838
+  },
+  {
+    "label": "current2",
+    "pid": 21045,
+    "pgid": 21045,
+    "state": "passed",
+    "exit_code": 0,
+    "seconds": 42.853
+  },
+  {
+    "label": "previous2",
+    "pid": 21275,
+    "pgid": 21275,
+    "state": "passed",
+    "exit_code": 0,
+    "seconds": 44.531
+  }
+]

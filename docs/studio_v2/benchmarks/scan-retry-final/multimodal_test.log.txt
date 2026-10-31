@@ -1,0 +1,1 @@
+PASS: image URL/base64, audio/video JSON and tool media; byte-preserving model rewrite; thinking overrides; SSE/JSON response bytes; per-model capability defaults/overrides/persistence/validation; custom-protocol endpoint; sync/unsync isolation

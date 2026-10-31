@@ -1,0 +1,25 @@
+{
+  "scope": "Audit-only source text; exact owned temp root replaced withSESSION_ROOT, not portable runnable commands. No executable, config, management key, DB, guardnonce or privateenv retained.",
+  "files": [
+    {
+      "path": "run_core_checks.py.txt",
+      "source_sha256": "d1f9d3abe951350dca62c23f8c269421b84cd4a95b06354cdb7bcab30dd12bbc",
+      "archive_sha256": "d1f9d3abe951350dca62c23f8c269421b84cd4a95b06354cdb7bcab30dd12bbc"
+    },
+    {
+      "path": "run_retry_checks.py.txt",
+      "source_sha256": "a973011e8a74c5e4f2ea8f906c995546c6cabac6b5a3b0047a21cb16c0959e62",
+      "archive_sha256": "a973011e8a74c5e4f2ea8f906c995546c6cabac6b5a3b0047a21cb16c0959e62"
+    },
+    {
+      "path": "performance-final-benchmark-matched.py.txt",
+      "source_sha256": "58de176f015b33ee1b390520f230614b1f8039faae6860f4234bc48201e96853",
+      "archive_sha256": "58de176f015b33ee1b390520f230614b1f8039faae6860f4234bc48201e96853"
+    },
+    {
+      "path": "performance-final-benchmark-driver.py.txt",
+      "source_sha256": "02b5f47f394a9e772ff4c61f75163ec30d266e7fc66348b37b225a725ad01b69",
+      "archive_sha256": "02b5f47f394a9e772ff4c61f75163ec30d266e7fc66348b37b225a725ad01b69"
+    }
+  ]
+}

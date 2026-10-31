@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "stats::workbuddy_import::runtime::worker::scheduler::recovery_tests::retryable_writer_rejections_do_not_turn_a_clean_full_scan_into_a_source_failure",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "exit_code": 101,
+  "seconds": 5.29,
+  "only_diagnostic_logging_added_to_runtime_before_this_test": true
+}

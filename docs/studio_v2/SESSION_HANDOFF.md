@@ -2,7 +2,19 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA78）
+## 最新进展（QA79）
+
+- 运行时代码已推送：`771a7a7`（读取线程恢复保留已接受的scan_id与状态）、`7bec6cc`（过期/繁忙批次重试成功不再误标失败，永久存储错误仍失败）。当前Core SHA256 `7fa463c3788be3c91b3ec2b929544a23ad24c648fa342cf57d68085a71ad8b34`，UI仍`490530dd`；源码87文件hash/24命令全部本地通过，Core577pass，真实158导入/15故障/19发现/10创建及两既有GPUIignore补验通过。[本轮总结](benchmarks/rc-round79-summary.json)。
+- 首次失败均保留，没有放宽期限/ignore/重跑到绿。771的Core41235308376与Desktop内Windows/arm64success，**失败job124637734315实际是macos-15-intel**（依据job.name，不能按ID顺序猜）；同scan_id failed/已提交全字节/无pending、writerfailure1。真实writerACK注入已红绿复现这一失败类，但旧日志没拒绝code，不能断言历史根因唯一确定。
+- **最新7bec Core41237875609单元577pass，但导入集成156pass/2fail：7秒DB锁释放后30秒新增行仍4/5。Desktop41237884989仍运行，下一轮只读原run终态/产物，不再dispatch同SHA。** 原始失败报告artifact13056448354/digest已核对，未重跑，R03.4/R04.1继续pending。
+- 新独立确定性诊断：启动前持有SQLite EXCLUSIVE锁，代理healthready而stats进入disabled/error_code=stats_storage_unavailable；释放后5秒仍disabled。源码`stats::writer_thread`对Writer::open一次失败即drain_control_without_writer永久停统计，可复现一个待修故障类。原CI未带Corelog/status，尚不能确定它就是远端首次失败原因。[报告/原日志](benchmarks/scan-retry-final/startup-lock-diagnostic/report.json)。**下一步优先修启动锁恢复，保留永久schema拒绝；重试必须避免recover/start_run后半途失败造成重复collection interval或丢失Recovery报告，先审查事务边界/补确定性回归，再跑全套新SHA CI。** 给集成锁失败报告补固定安全的health/status与日志错误码诊断，不能只把ready等待挪后掩盖产品故障。
+- 2da原Core41231726063/Desktop41231731650现在**四job全部success**；两Mac原生runner artifact13054881268（arm64）/13054867223（Intel）digest与3份原始JSON各已核对归档。它们是旧Core25f，不能冒充当前7bec全绿。Windows2da两尺寸原图证据保持QA78范围。
+- 中间771/f807Core+4905UI与完整旧a6e/25f基线已做原生P/C/C/P：空闲合计差-0.07MiB、UI+0.14MiB、峰值+1.815MiB；全6份原样本/实际1440×900 JPEG/AX/过程/资源保持。另C3/P3发现current3图形驻留125.6M/graphics62.6M在15/30秒降70.8M/10.1M，只解释该短负载观测，不能解释QA78另4096弹窗600秒+2.266MiB。[阶段报告](benchmarks/scan-recovery/performance-stage1-summary.json)。不得将f807阶段重标为最终7faCore。
+- 最终7bec完整原生P/C/C/P的首轮后台getApp被CUA `-10005: timeoutReached`阻断，未发现UI/gpui.json、没有ACK或测量，未重试。精确终止自有Core后wrapper/core/mock已等待，Core/mock为-15、driver1，正常故障记录保留；没有称正常退出0。另最终Core独立headless四轮P/C/C/P通过（Core0/mock-15），空闲+0.13MiB、峰值+1.785MiB；候选就绪468.278/52.452ms对基线52.308/51.623ms，慢样本原因未定且全部保留。它不是最终GUI对照/首帧/FPS或精确因果相减。[无界面控制](benchmarks/scan-retry-final/headless-control/summary.json)、[原生失败](benchmarks/scan-retry-final/native-final-attempt/native-cua-failure.json)。
+- 本轮所有本地Core/UI/mock/driver已退出；两精确专用根`studio-v2-scan-recovery.7kp2lrar`（1657文件655,827,336B）和`studio-v2-startup-lock.in3wv8el`（11文件284,230B）经全预检、无引用及即时复核后已非强制删除，合计约625.72MiB，临时保留0。**不要重启这些已删除bundle。** 必要基线参考现包含UIba525+Core25f+manifest，50,905,007B（约48.55MiB），共享缓存/非本轮preview保留；清理后系统盘约33.90GiB。[清理](benchmarks/scan-retry-final/cleanup.json)。
+- 40帧仍已签收，剩余0/40；18项发布任务pending，Goal active。R01真实全状态/slot、拖宽、逐引擎IME、真实AT缺口不变，不重复能力未变的拖动/长按/21主题。**禁止自动启动旁白/系统辅助功能/切输入源。** 未公开发布。
+
+## 上一轮进展（QA78）
 
 - 已推送运行时代码 `74b1e09`（Windows工具栏top8→32，避开24px caption区域）、CI助手 `2da670b`（仅受限临时CI显示准备/恢复、GDI原图、最终失败门禁）。本轮证据/时间线在其后，读Git获取准确HEAD。Mac UI字节仍`490530dd`、Core仍`25f24ad6`；208pass/2既有ignore、fmt/strictClippy/Intelcheck/release均通过。[总结](benchmarks/rc-round78-summary.json)。
 - b167 Core41227146468/Desktop41227149652四job全部success，3平台artifact digest核对后JSON报告归档。74b Core41230163774首次积分升级full-scan15秒失败（571pass/1fail），同SHA一次重跑成功；首次失败及writer_batch_failure1保留，原因未定，R03.4仍pending，不自动重试到绿。74b两Mac success、Windows新增GDI因DPI96工作区容不下1440×900失败，0截图，harness正常退出并清理。

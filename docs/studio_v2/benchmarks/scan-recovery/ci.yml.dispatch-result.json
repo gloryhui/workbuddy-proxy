@@ -1,0 +1,9 @@
+{
+  "workflow": "ci.yml",
+  "candidate": "771a7a7",
+  "checked_at": "2026-11-01T03:40:18.792935+08:00",
+  "exit_code": 0,
+  "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41235308376\n",
+  "stderr": "",
+  "prior_absence_verified": "run list had no771a7a7 runs after first failed dispatch; this is a single diagnostic retry, not restart of a live job"
+}
