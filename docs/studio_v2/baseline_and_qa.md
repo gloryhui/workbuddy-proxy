@@ -1648,3 +1648,10 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 本批判断：ACCEPTED for B05 interface delivery and short workload correctness only. Four unchanged workloads and actual terminal checks passed. UI idle RSS +0.055MiB/combined -0.155MiB; sampled peak +3.33MiB remains explicit R03 diagnostic cost. Proxy p95 -0.0095ms and process-to-marker -130.1675ms. Not a regression-free, long-term or release-performance claim. B01/B03/B04的既有RSS/marker等成本仍留R03，未被本批小幅结果抵消；完整输入/IME/辅助技术/平台/实际客户端/长期性能与安装发行仍待R01–R04。
 - 归档262项/6.156MiB并逐份SHA核对；私有配置/Key/SQL/剪贴板正文/Figma签名URL与程序副本不进归档。全部进程退出、确切目录/父链/所有者/文件范围/lsof预检及临执行复核后，非强制删除唯一专用临时根：553文件/590.118MiB；实际APFS可用变化+597.645MiB、余34.354GiB，本轮临时保留0。共享Cargo/Core46保留；并发应用可能影响空间差值。[归档](benchmarks/b05-artifacts.json)、[清理预检](benchmarks/b05-cleanup-preflight.json)、[结果](benchmarks/b05-cleanup.json)。
+
+
+## 小功能 73：R01 全部40帧集中签收（2026-11-01）
+
+- 40帧界面集中签收通过，剩余界面0。官方51:2仍为原40界面，另有71:364交付契约与18共享组件；本轮重新只读导出40份1024×640参考图，并逐一实际查看参考图和B01–B05的80张两尺寸原生主图。原图格式、尺寸、SHA与各自候选来源全部核对，未发现新增布局阻断。[集中视觉复核](benchmarks/r01-consolidated-visual-review.json)、[80原图来源](benchmarks/r01-original-eighty-audit.json)、[最新参考清单](benchmarks/r01-latest-reference-manifest.json)。
+- 每帧记录真实数据与Figma示例数值、窄窗滚动/折行、省略、原生AA及OS附加像素行的差异。原B01–B05候选与DPI保持，不把历史80图冒充当前R01新编译版本的全套截图。新R01表格语义修复仍须单独完成受影响路径验证，Issue3品牌边缘优化按用户最新授权独立交付。
+- 本次只签收R01.5。R01.1–R01.4共享状态、完整键盘、IME、真实辅助技术和七主题/三语言仍在推进；R02–R04平台/HiDPI、性能与安装发行尚未通过。Goal active，未宣称正式版可发布，未公开发布。

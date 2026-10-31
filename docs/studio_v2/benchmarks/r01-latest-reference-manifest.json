@@ -1,0 +1,406 @@
+{
+  "count": 40,
+  "images": [
+    {
+      "node": "52:2",
+      "file": "screenshots/r01-figma-52-2-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 92339,
+      "sha256": "7a75450f48cf97d633f37ad07b03269e2006e906abd9be714eff8719c16c9738"
+    },
+    {
+      "node": "54:2",
+      "file": "screenshots/r01-figma-54-2-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 105679,
+      "sha256": "77f791b372eb9138da6cac1872047336b15b2adc6fe8a6598d8e172db9e9fb62"
+    },
+    {
+      "node": "56:8",
+      "file": "screenshots/r01-figma-56-8-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 100902,
+      "sha256": "b0dd85bb86dc6ae30a6923635c8157d0f6f7d5d72bcad846ad88a7992b693454"
+    },
+    {
+      "node": "57:8",
+      "file": "screenshots/r01-figma-57-8-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 89180,
+      "sha256": "663dfe79db9c036b64a0909f0c3188681c7ecba8bf69157bf8a6c5f208431c02"
+    },
+    {
+      "node": "58:8",
+      "file": "screenshots/r01-figma-58-8-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 104110,
+      "sha256": "9538d199b5884f0c7c373b8b76b4f765103bc3ff0ecdc4f50f7ba67a28525720"
+    },
+    {
+      "node": "59:11",
+      "file": "screenshots/r01-figma-59-11-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 157149,
+      "sha256": "17ba24952d1e82232ce9fb34b9c78be520972f456af661d0548839a046932a0b"
+    },
+    {
+      "node": "59:279",
+      "file": "screenshots/r01-figma-59-279-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 169685,
+      "sha256": "11b9a61cdc4e93a56cebdbc0416f6cf56eb59c2aeac2c78b71b788749271bb79"
+    },
+    {
+      "node": "60:27",
+      "file": "screenshots/r01-figma-60-27-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 148345,
+      "sha256": "806f938f3f2a82b76885b1a1135941f0647a1a65c4c5fdd5ec5b47ff7584e2d4"
+    },
+    {
+      "node": "60:249",
+      "file": "screenshots/r01-figma-60-249-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 143131,
+      "sha256": "bbba955e0d6472996d012f9a38deb77f8398e14ed4420547f08f99e31e13240d"
+    },
+    {
+      "node": "60:475",
+      "file": "screenshots/r01-figma-60-475-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 156253,
+      "sha256": "223d21b824d40ebcfd9a9d29b274e461e3229758131d579bfae509df8a1bb2e6"
+    },
+    {
+      "node": "61:289",
+      "file": "screenshots/r01-figma-61-289-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 112398,
+      "sha256": "59161ae8cc2af65cfa70eb1a41dbc97d9f90beac13d3a725b05ac8014a84ef53"
+    },
+    {
+      "node": "61:561",
+      "file": "screenshots/r01-figma-61-561-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 112875,
+      "sha256": "e0692bd55aecff1603698407d70ae10c40aff394cf04e3fe1994d7f241077da6"
+    },
+    {
+      "node": "61:838",
+      "file": "screenshots/r01-figma-61-838-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 113635,
+      "sha256": "8911cee0e0c9ea2dfd49f45ec78134831ed198863920dcdd042e557c939936e8"
+    },
+    {
+      "node": "61:1111",
+      "file": "screenshots/r01-figma-61-1111-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 109166,
+      "sha256": "1aeca3d4d3ca0b370dea81e75518553e4c81aa8341798146caa7336f5d8fc221"
+    },
+    {
+      "node": "62:308",
+      "file": "screenshots/r01-figma-62-308-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 105290,
+      "sha256": "62828b0ef2a2e9d357e58322c4bcbb0479650e84fd3b6e17c1ab9c4f1f4bcdc7"
+    },
+    {
+      "node": "64:335",
+      "file": "screenshots/r01-figma-64-335-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 133400,
+      "sha256": "828bc2f55dddba6480487f39d1e02c8334aa3b2729fbc3243a77e1160272b699"
+    },
+    {
+      "node": "66:320",
+      "file": "screenshots/r01-figma-66-320-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 124151,
+      "sha256": "fc9df62bd4d7a05c6e729f36a090e7f1db0bc8eda067dbc4aa10ed982c1119a1"
+    },
+    {
+      "node": "66:538",
+      "file": "screenshots/r01-figma-66-538-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 126348,
+      "sha256": "a66e8d7a972cdf0cdc8bce61a1cfe62d4a652e44f93a7ae600685b42a15d8f5d"
+    },
+    {
+      "node": "66:760",
+      "file": "screenshots/r01-figma-66-760-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 108704,
+      "sha256": "9462e913c51d3764ffbab8f0c579fc9cf6aea27cca99b556356edde26822eb25"
+    },
+    {
+      "node": "67:338",
+      "file": "screenshots/r01-figma-67-338-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 104250,
+      "sha256": "cee9c4784eed8979b77a40414cfa5fea42b694c0de6eaabd847329909e98eaac"
+    },
+    {
+      "node": "67:548",
+      "file": "screenshots/r01-figma-67-548-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 120819,
+      "sha256": "26e77e114a7982187d9108df01e2c73c97320ba8fa4436f6abb09271afc381aa"
+    },
+    {
+      "node": "68:350",
+      "file": "screenshots/r01-figma-68-350-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 150486,
+      "sha256": "bb415d9a27bd6bdfd02e5b4ee8bf2f418a7a11589a3e8751a3b799357409f1da"
+    },
+    {
+      "node": "69:359",
+      "file": "screenshots/r01-figma-69-359-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 142794,
+      "sha256": "3af29662ecde9d0d7ffabe380234aaf7bbb277390c992311407bf356a4a2b277"
+    },
+    {
+      "node": "78:364",
+      "file": "screenshots/r01-figma-78-364-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 103951,
+      "sha256": "dbe9c5ad43b9a805b81f3b4de1baac23787a6e66d79b9e80795bc25fbe18ae6b"
+    },
+    {
+      "node": "78:605",
+      "file": "screenshots/r01-figma-78-605-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 107263,
+      "sha256": "fa5e4c462e5fcdfba5c7b04c5b3d268679b07ecb89538ed4a6d8b1700f8cf0c4"
+    },
+    {
+      "node": "78:843",
+      "file": "screenshots/r01-figma-78-843-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 107969,
+      "sha256": "d9b3daf8e1e2d7c0b83a15066740538ca380a4bd547b27db356a9dfb7d006988"
+    },
+    {
+      "node": "78:1080",
+      "file": "screenshots/r01-figma-78-1080-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 145768,
+      "sha256": "acb53bc376fd017b672574744b9a8b32350f978f9a21dfb78aeb7a048e33d703"
+    },
+    {
+      "node": "78:1325",
+      "file": "screenshots/r01-figma-78-1325-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 111919,
+      "sha256": "6bd7ec515f5740f4d899bf3c9ca5561806b56fe90d8909c77f97fa97adcc846a"
+    },
+    {
+      "node": "78:1804",
+      "file": "screenshots/r01-figma-78-1804-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 103519,
+      "sha256": "7b774842f1eeeafdd17ae563017798d58df80367073c5a0b299283bd2fb7561f"
+    },
+    {
+      "node": "79:400",
+      "file": "screenshots/r01-figma-79-400-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 104919,
+      "sha256": "d1038d8a22c40c029c82f1e91f5d15b7e8c09deecb6291de3f8c8c14badb50d7"
+    },
+    {
+      "node": "79:885",
+      "file": "screenshots/r01-figma-79-885-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 104493,
+      "sha256": "1c1a586ba8a289bc4134f1e5f61ebb01581f7bca787af2f275f4874fa58a7a5a"
+    },
+    {
+      "node": "79:1102",
+      "file": "screenshots/r01-figma-79-1102-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 108863,
+      "sha256": "ae2ec536bae50afdf7b00f3669321a30a9f35594db89cdd0d2424a808cf250a2"
+    },
+    {
+      "node": "80:418",
+      "file": "screenshots/r01-figma-80-418-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 104739,
+      "sha256": "b06d43d7e4f9707fabb37ce28fabd8bcbacc60ddda3d15425fbe68627fcaad95"
+    },
+    {
+      "node": "80:646",
+      "file": "screenshots/r01-figma-80-646-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 105406,
+      "sha256": "7f8a8a7c3093df908ff2d5455620231b738aa534455c96aad7de96aa9ef04a63"
+    },
+    {
+      "node": "80:864",
+      "file": "screenshots/r01-figma-80-864-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 146705,
+      "sha256": "f200e3d51f04c1187bfa721c07fbea70654ecdeb5be6ff1bdea0b6d347422445"
+    },
+    {
+      "node": "80:1114",
+      "file": "screenshots/r01-figma-80-1114-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 105074,
+      "sha256": "fbb3099baf9cd2d237cfc1faf01211cebda60b8085b0f2c472f47739186b1e1a"
+    },
+    {
+      "node": "104:1378",
+      "file": "screenshots/r01-figma-104-1378-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 117917,
+      "sha256": "13bbc8cb838781be7f99188be2cace1ded63318ec23e01d49c7a9418828e4f5b"
+    },
+    {
+      "node": "104:1605",
+      "file": "screenshots/r01-figma-104-1605-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 118148,
+      "sha256": "b2cadd9c7986dc1dfecadc0241469fa36b055067538ed50668fdcc6c30437af5"
+    },
+    {
+      "node": "104:1823",
+      "file": "screenshots/r01-figma-104-1823-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 118138,
+      "sha256": "0f464ce385956e15cfaf71daeed6d08585957da585fd92ead98faef9a3dddafb"
+    },
+    {
+      "node": "104:2046",
+      "file": "screenshots/r01-figma-104-2046-reference.png",
+      "pixels": [
+        1024,
+        640
+      ],
+      "bytes": 118443,
+      "sha256": "6dc2bfc68deba29d3b4b3c09cf3ebfef90017f0256bf0dfbd26e2703cad218b5"
+    }
+  ],
+  "scope": "Fresh official Figma PNG exports (1024x640 reference presentation), read-only. Original design canvas unchanged; these are not native app screenshots."
+}

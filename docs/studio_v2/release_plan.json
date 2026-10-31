@@ -1,12 +1,12 @@
 {
   "version": 2,
   "title": "Studio V2 正式版批次计划",
-  "as_of": "2026-10-31",
+  "as_of": "2026-11-01",
   "state": "active",
   "current_batch": "R01",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 71,
+  "historical_tasks": 73,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -717,7 +717,7 @@
       "id": "R01",
       "title": "全局状态、输入与无障碍",
       "kind": "release",
-      "status": "planned",
+      "status": "developing",
       "frames": [],
       "depends_on": [
         "B01",
@@ -726,7 +726,7 @@
         "B04",
         "B05"
       ],
-      "completed_summary": "已有分项键盘、真实拼音IME、Unicode冷载入、原生语义和七主题代表性检查；尚非全局通过。",
+      "completed_summary": "40帧/80原生主图对最新40份官方参考的集中签收完成；表格语义修复及真实键盘/busy补证推进中，R01其余4项未通过。",
       "delivery": "对共享组件统一验收，不让同一键盘/主题待办在40帧中重复执行。",
       "tasks": [
         {
@@ -793,9 +793,9 @@
         {
           "id": "R01.5",
           "title": "40帧界面集中签收",
-          "acceptance": "pending",
-          "completed": "B01–B04累计38/40帧按最新设计和两尺寸签收，剩B05两帧；最终40帧集中扫描仍待，不等于R01/正式版通过。",
-          "remaining": "完成B01–B05后一次扫40帧/80张两尺寸原图；修一个清晰的问题清单再集中复验。",
+          "acceptance": "passed",
+          "completed": "R01集中签收：官方51:2仍40界面，已逐一实际查看40份新参考图和80份原批次两尺寸PNG；格式/像素/hash/原候选来源全核，40帧无新增布局阻断。实际数据/窄窗滚动/原生AA差异逐帧记明；历史图未重标新R01候选。",
+          "remaining": "40帧界面集中签收已完成；共享状态、完整键盘/IME/真实辅助技术仍分别R01.1–R01.4，平台/性能/发行仍R02–R04。Issue3品牌收尾独立提交，不重设计页面。",
           "acceptance_check": "每帧布局/资产/文字角色/状态/交互有最新设计证据；原生AA差异记录但不设RGB/字体文件字节相同门禁；无缺图/旧候选冒用。",
           "history_tasks": [
             53,
@@ -808,12 +808,22 @@
             64,
             65,
             66,
-            67
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73
           ]
         }
       ],
       "accepted_frames": [],
-      "acceptance_evidence": []
+      "acceptance_evidence": [
+        "benchmarks/r01-consolidated-visual-review.json",
+        "benchmarks/r01-original-eighty-audit.json",
+        "benchmarks/r01-latest-reference-manifest.json"
+      ]
     },
     {
       "id": "R02",

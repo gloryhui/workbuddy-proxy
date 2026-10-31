@@ -1,0 +1,464 @@
+{
+  "scope": "Actual parent review of40 fresh official Figma reference images and80 original accepted native PNG. Previous batch candidates/DPI preserved; current R01 ARIA changes require separate final representative native verification.",
+  "frames": [
+    {
+      "node": "52:2",
+      "fresh_reference": "screenshots/r01-figma-52-2-reference.png",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Wide overview header/filter/4metric cards/trend+cost/recent-request roles align. Real1000/55万/USD/four supported series and extra capture/status/price metadata retained, not static design92/509万. Small uses vertical reflow/scroll, not all cards simultaneous; original image is top viewport.",
+      "new_layout_blocker": false
+    },
+    {
+      "node": "54:2",
+      "fresh_reference": "screenshots/r01-figma-54-2-reference.png",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Provider header, connection2column form, runtime card, model catalog and log hierarchy align. Real2/5/14 and actual localhost ports/test diagnostics differ from static sample. Small model body below viewport requires existing vertical scroll; B01 additional small-bottom evidence covers reachability, no claim all4 rows visible in primary top view.",
+      "new_layout_blocker": false
+    },
+    {
+      "node": "56:8",
+      "fresh_reference": "screenshots/r01-figma-56-8-reference.png",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Wide8column request table/filters/fixedfooter coherent, retained source tags/credits/Jump and first/right navigation preserve real functionality. Small horizontal/vertical viewport clips later columns and lower rows with reachable footer/navigation; transient first-column Tooltip appears in archived image. Actual2ce rightmost-column/5th-model reachability separately observed.",
+      "new_layout_blocker": false
+    },
+    {
+      "node": "57:8",
+      "fresh_reference": "screenshots/r01-figma-57-8-reference.png",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Supplier summary six columns, provider/model switch and two lower metric cards align; actual2providers/1000requests/55万 and USD are dynamic. Small retains horizontal column navigation and wrapped footer; lower token cards need vertical scrolling, not data loss.",
+      "new_layout_blocker": false
+    },
+    {
+      "node": "58:8",
+      "fresh_reference": "screenshots/r01-figma-58-8-reference.png",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Pricing/collection/local usage cards match hierarchy. Real three model rules, synthetic mapping, paused import0 and current timestamps differ sample. Small preserves pricing actions with mapping ellipsis, lower cards below viewport require vertical scroll. Existing section tabs retained.",
+      "new_layout_blocker": false
+    },
+    {
+      "node": "59:11",
+      "fresh_reference": "screenshots/r01-figma-59-11-reference.png",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Centered model picker, count/search/bulk actions/striped scroll list/sticky cancel+confirm match. Real38 candidate list and existing4 add candidacy semantics retained; long ID ellipsizes. Small shrinks body to retain both footer buttons and overlay above toolbar; no apparent clipping.",
+      "new_layout_blocker": false
+    },
+    {
+      "node": "59:279",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Editor fields/capability notice/6checkboxes/5effort options/token limits align. Existing default-effort select and capability help preserved. Narrow viewport scrolls token limits behind fixed Cancel/Confirm; no footer clipping. Real detected capability text differs static metadata wording.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-59-279-reference.png"
+    },
+    {
+      "node": "61:289",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Chat protocol tab/authentication/mode/6mapping rows and fixed Apply footer align. Narrow body vertically scrolls final rows; same footer stays available. Main backdrop under full toolbar mask.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-61-289-reference.png"
+    },
+    {
+      "node": "61:561",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Responses tab/authentication/mode/7mapping rows and protocol-specific none/max guidance match. Small body scrolling necessary; footer remains visible. No new visible blocker.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-61-561-reference.png"
+    },
+    {
+      "node": "61:838",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Anthropic output4096/version/mode/6mapping layout aligns. Actual unconfigured mode is honest current fixture rather than design budget example. Small retains top fields/footer with scrollable mapping body.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-61-838-reference.png"
+    },
+    {
+      "node": "61:1111",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Gemini tab/mode/6mapping rows match; fixture unconfigured rather than design Thinking level reflects current data. Small retains heading/mode and fixed Apply with body scroll for final max rows.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-61-1111-reference.png"
+    },
+    {
+      "node": "60:249",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "New price dialog has supplier/model/method/currency/four price inputs, historical snapshot note and explicit Save. Native dialog a little taller due existing field spacing; small keeps all inputs and action footer visible. Placeholder values are actual current semantics.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-60-249-reference.png"
+    },
+    {
+      "node": "60:475",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Request detail identity/protocol/tokens/cache/cost/timing and note match; native retains More details. Real ID/model-b-1/60ms/80percent differ sample. Small scroll body hides cost/timing below currently visible cache row while note/Close stay visible, preserving reachability.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-60-475-reference.png"
+    },
+    {
+      "node": "69:359",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Edit price retains supplier/model identity disabled and USD2/10 with cache0, same two-column rate layout and fixed Save/Cancel footer in both sizes. Existing historical-snapshot notice intact.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-69-359-reference.png"
+    },
+    {
+      "node": "62:308",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Mono theme provider baseline matches dark sidebar/light body and black accents, with actual untested state/14or15rows rather than static green. Wide shows full model table; small top viewport requires lower content scroll.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-62-308-reference.png"
+    },
+    {
+      "node": "64:335",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Appearance menu right-anchored two-column6legacy skins plus retained seventh Studio item. All7 fully fit both sizes; actual Studio selection differs design Wisteria sample. No page reflow.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-64-335-reference.png"
+    },
+    {
+      "node": "104:1378",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Autostart enabled notice/power-active icon and close button fit both sizes; true isolated autostart state independently accepted in B04, screenshots alone not login-launch proof.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-104-1378-reference.png"
+    },
+    {
+      "node": "104:1605",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Busy update notice/spinner/source+close match; actual GitHub Releases source replaces Figma placeholder. Toolbar tooltip coexists legitimately. Background disabled styling visible; event blocking handled separately.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-104-1605-reference.png"
+    },
+    {
+      "node": "104:1823",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Language menu title/close/3choices match, actual Simplified selected rather than design Follow system. Menu stays right-inset and fully visible both sizes.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-104-1823-reference.png"
+    },
+    {
+      "node": "104:2046",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Restore notice1440x900 and Close fit right edge both sizes. Small captured after manual resize following restore, not claimed restore produced1100x700.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-104-2046-reference.png"
+    },
+    {
+      "node": "60:27",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Sync centered modal/icon/info/three actions/full mask align both sizes. Product truth says all saved providers rather than misleading current-provider-only wording; actual143requests retained from lifecycle tests. Original1x PNG differs earlier2x captures only in native scale.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-60-27-reference.png"
+    },
+    {
+      "node": "68:350",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Unsync dialog matches layout and mask in both sizes; truthful removal/backed-up entries semantics retained. All3 actions fit and title not clipped.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-68-350-reference.png"
+    },
+    {
+      "node": "66:320",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Four protocol choices/check/descriptions preserved, anchored select menu flips/clamps into small viewport and final Gemini row remains visible. Current connection/port and actual14records differ sample.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-66-320-reference.png"
+    },
+    {
+      "node": "66:538",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Searchable provider preset popover has filtered Bedrock rows with keyboard highlight; actual searchbedrock/secondrow differs design unfiltered partial view. Small search+7visible choices fit viewport; long catalog scrolls.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-66-538-reference.png"
+    },
+    {
+      "node": "66:760",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Shown key state uses clearly synthetic fixture-upstream-key, eye affordance and small hover label align. No fake prototype banner shipped; logs retain actual diagnostics. Lower small models via scroll.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-66-760-reference.png"
+    },
+    {
+      "node": "67:338",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Second provider selection/name/1model/empty-space help preserved. Fixture custom endpoint/model-b differs design preset public endpoint but actual independent fields truthful. Small top viewport retains runtime, model body via scroll.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-67-338-reference.png"
+    },
+    {
+      "node": "67:548",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Reasoning menu title6choices/currentcheck match. Small page scrolled to model footer with menu opening upward so whole menu plus Test/Save reachable.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-67-548-reference.png"
+    },
+    {
+      "node": "78:364",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "New provider draft0models/amberunsaved/cancel/emptycatalog match. Empty URL honest current placeholder versus design example; current untouched draft default Keep model settings preserved. Small redundant amber hint omitted to fit, status and Cancel remain.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-78-364-reference.png"
+    },
+    {
+      "node": "78:605",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Existing provider dirty name/amberunsaved/cancel restore hierarchy match; actualsub2apiB01 visible both heading/sidebar/field. Small preserves only one amber hint and actions.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-78-605-reference.png"
+    },
+    {
+      "node": "78:843",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Copy draft copyname/4inheritedmodels/amber/Cancel copy match. Untested connection correctly differs static green. Native fakeKey masked; small preserves draft actions.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-78-843-reference.png"
+    },
+    {
+      "node": "78:1080",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Destructive confirm centered warning/removal count4/irreversible note/Cancel+redDelete match in both sizes; complete mask above seven toolbar icons.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-78-1080-reference.png"
+    },
+    {
+      "node": "78:1325",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Capacity64/64 and disabled Add/Copy correct, actual runtime64/5/0 replaces static2/5. Sidebar independently scrolls; small shows fewer rows without displacing bottom controls.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-78-1325-reference.png"
+    },
+    {
+      "node": "78:1804",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "After delete1/64 and remaining1model/recovery banner match. Actual existing14request history retained versus static0; no historical data loss required. Small lower model via scroll.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-78-1804-reference.png"
+    },
+    {
+      "node": "79:400",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Filtered match1/64 with searchclear and row27 match. Current provider staysA despite off-filter selection, truthful preservedbehavior. Add/Copy disabled at64 and lower runtime correct.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-79-400-reference.png"
+    },
+    {
+      "node": "79:885",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Created saved provider3/64 with0models and savedbanner match. Actual untested connection differs static green, and original14history remains. Small has same clear selected name/status/cancel-to-edit affordance.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-79-885-reference.png"
+    },
+    {
+      "node": "79:1102",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Saved copy3/9 count and inherited4rows match. Copy name and masked credential retained, connection not borrowed. Small one savedcopy status used to fit strip; lower rows scroll.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-79-1102-reference.png"
+    },
+    {
+      "node": "80:418",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "OpenCode text filter1/2, clear affordance and matching B row match; currentA form remains intentionally until selection. Existing Add/Copy actions still enabled at2.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-80-418-reference.png"
+    },
+    {
+      "node": "80:646",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "B dirty rename1model withCancel/amber state correct. Long heading ellipsizes safely, field/sidebar full visible; native status correctly dirty rather than contradictory saved example.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-80-646-reference.png"
+    },
+    {
+      "node": "80:864",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "Delete B confirmation accuratelynamesOpenCodeGo/1model, fullwarning/actionfooter/mask match; actual backdropB form unlike inconsistent designAfields. Both sizes fit.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-80-864-reference.png"
+    },
+    {
+      "node": "80:1114",
+      "native_sizes_reviewed": [
+        "wide",
+        "small"
+      ],
+      "assessment": "reviewed_with_runtime_and_responsive_differences",
+      "notes": "After deletingB remainingA1/64 and4models banner match; original14history preserved against static0. Small lower model body uses existing page scroll.",
+      "new_layout_blocker": false,
+      "fresh_reference": "screenshots/r01-figma-80-1114-reference.png"
+    }
+  ],
+  "result": {
+    "frames_reviewed": 40,
+    "native_primary_images_reviewed": 80,
+    "fresh_reference_images_reviewed": 40,
+    "new_layout_blockers": 0,
+    "remaining_interfaces": 0,
+    "not_claimed": [
+      "All80 images built from current candidate",
+      "Allsmallwindow content simultaneously visible",
+      "R01 input/assistive/state gates fully passed",
+      "R02-R04 release readiness"
+    ]
+  },
+  "at": "2026-11-01T00:10:36.781592+08:00",
+  "shared_followup": {
+    "issue": 3,
+    "url": "https://github.com/gloryhui/workbuddy-proxy/issues/3",
+    "state": "Independent authorized brand refinement in progress; original Figma white-rim design asset is not mislabeled as a newly found unimplemented frame."
+  }
+}
