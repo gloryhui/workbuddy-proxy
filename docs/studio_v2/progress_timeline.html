@@ -204,10 +204,10 @@
 <script id="progress-data" type="application/json">
 {
   "version": 1,
-  "updated_at": "2026-10-31T07:46:36+08:00",
+  "updated_at": "2026-10-31T08:39:02+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "88c2e3c760339b2c9446e5cdb318efe2cf52a946",
+  "code_head": "d779e18a262074826e98c2414f021846a813c293",
   "phase": "专项验收与差异修复 · 全量逐帧终验未完成",
   "goal_status": "active",
   "counts": {
@@ -217,75 +217,75 @@
     "verified": 0
   },
   "total_frames": 40,
-  "recorded_tasks": 64,
+  "recorded_tasks": 65,
   "remaining_final": 40,
   "visual_review": {
     "counts": {
-      "not_reviewed": 24,
+      "not_reviewed": 19,
       "reviewing": 0,
-      "reviewed_with_differences": 16,
+      "reviewed_with_differences": 21,
       "reviewed": 0
     },
     "source": "visual_review.json",
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 65,
-    "title": "统计设置、编辑价格与主题/协议菜单整帧首审",
+    "id": 66,
+    "title": "按画板顺序收口：使用概览 52:2",
     "status": "planned",
-    "description": "下一批读取58:8、69:359、62:308、64:335、66:320完整设计，核对统计设置/编辑价格、黑白主题与皮肤、协议下拉的真实状态和两尺寸，按差异继续Rust布局修正。UI64共用关闭/遮罩、价格/详情专项已验并提交；剩余24帧首审及16帧保留差异全部继续，最终仍剩40，不以专项通过代替整帧终验。"
+    "description": "UI65设置与菜单专项已提交d779e18并完成真实交互、两尺寸和四轮原负载；五帧首审完成但不计完整终验。接下来按画板顺序先完成52:2使用概览：核对已列布局/状态差异，集中修复后一次做完整两尺寸回归，再进入下一个界面，不另起穿插共享微调专项。当前19帧待首审、21帧已审有差异，最终仍剩40。Root56临时清理因自动审批要求而Never被拒，保留472.54MiB，不影响继续开发。"
   },
   "latest_task": {
-    "id": 64,
-    "title": "共用弹窗关闭与遮罩、价格和详情几何",
+    "id": 65,
+    "title": "统计设置、编辑价格与主题和协议菜单首审",
     "status": "recorded",
-    "summary": "Studio关闭按钮现复用原生Cancel，聚焦×按Return/Space均可关闭；普通/删除遮罩分开，价格控件/行距/页脚及详情行线已收敛。最终5c63的12状态两尺寸、草稿取消和受控校验通过，限定性能范围未见明显回退；这是专项成果，40帧最终终验仍未完成。优先证据：真实GUI、1440价格、1100价格、源码、构建、原负载、相同序列、清理限制。",
+    "summary": "完成58:8、69:359、62:308、64:335、66:320五帧官方完整高保真上下文/1440原图、资源与两尺寸首审，集中收敛设置主卡片、价格表、保留期和菜单布局。最终e6abd的五状态×两尺寸及窄窗底部共11张全新原图已检查；这是本批专项通过，仍有明确整帧差异。优先证据：最终GUI、1440设置、1100设置、合法保存及历史保护、构建、性能、资源、源码范围。本批后19帧待首审、21帧已审有差异、0帧完整终验；最终仍剩40，不以",
     "highlights": [
-      "Studio关闭按钮现复用原生Cancel，聚焦×按Return/Space均可关闭；普通/删除遮罩分开，价格控件/行距/页脚及详情行线已收敛。最终5c63的12状态两尺寸、草稿取消和受控校验通过，限定性能范围未见明显回退；这是专项成果，40帧最终终验仍未完成。优先证据：真实GUI、1440价格、1100价格、源码、构建、原负载、相同序列、清理限制。",
-      "官方 MCP 重新读取 51:2，仍为40个唯一画板；本批读取四协议、Picker、模型编辑、同步/取消同步、两供应商删除、价格、详情12个完整高保真上下文及1440×900原图。首批33个唯一资源按指定curl下载（28字节一致、2仅一致clip ID/ref重命名等价、3装饰窗口控件保留真实OS）；新补4画板121个资源实例另逐一下载核对（103字节一致、6上述等价、12 OS装饰）。未导出临时资源URL或配置密钥。取消同步68:350、删除78:1080/80:864完成整帧首审但保留差异：台账现24未首审、16已审有差异、0最终通过，最终仍剩40帧。见设计审查、资源、新增实例、40帧清单。",
-      "仅修改5个Rust呈现文件：ui_components.rs复用公开BaseDialogClose及其原生Button/Cancel引擎，按Figma文字节点×的Noto Regular18/19/20、行高与槽位提供32px点击区/hover/键盘边框/中英名称；挂在Kit裁剪区内，不新增代理业务回调。普通Studio遮罩改rgba(19,23,46,.48)，删除仍用原rgba(18,23,43,.49)，关闭后恢复普通值，六旧皮肤维持原值和Kit关闭分支。ui.rs和两统计弹窗接入同一控件，原确认/保存/取消/焦点回调保留。价格增加原生控件42px外框，避免Select百分比根高度压缩标签；520宽字段、258/22/240模式币种、253/13/253价格对、逐行间隔及固定页脚按稿收敛，原备注留在可滚动区并保留Tab滚动。详情保持36px行高，以独立分隔线消除border导致的行内"
+      "完成58:8、69:359、62:308、64:335、66:320五帧官方完整高保真上下文/1440原图、资源与两尺寸首审，集中收敛设置主卡片、价格表、保留期和菜单布局。最终e6abd的五状态×两尺寸及窄窗底部共11张全新原图已检查；这是本批专项通过，仍有明确整帧差异。优先证据：最终GUI、1440设置、1100设置、合法保存及历史保护、构建、性能、资源、源码范围。本批后19帧待首审、21帧已审有差异、0帧完整终验；最终仍剩40，不以65项专项替代界面完成率。",
+      "仅7个Rust呈现/资源文件及6份原SVG：settings layout将原health/import提示放到主卡片后，保留warnings、卡内attention/error及提示动作；价格表48px双行、比例列、原生26px币种、Noto/Inter角色和隔行色收敛，原精确搜索、分页/页大小、更新/重载/删除与金额formatter保持，input_mode仍在原整行Tooltip及编辑表单。保留期等宽、新建规则使用NativeButton前置Icon；Studio协议仍是361×233/53px四行的原NativePopover/List，仅字重/选中色与44px偏移修正，1100由原positioner限制在窗内。新增颜色复用theme语义常量。原21个cx.listener表达式规范空白后均保留，另一路Studio皮肤菜单复用相同save/apply体；Core/配置schem",
+      "Studio皮肤菜单350px可见面、17/24标题与12/17副标题、154×66 tile、6/10px间隔及原说明；379px原生包装保留29px尾部留白，使面板右37/顶63对齐。六原22px色块逐字节下载并进入显式Assets路由，各用原palette颜色；宽窗六原色像素盒均与参考同坐标，小窗仅横移340px，尺寸均22px。原图339/参考344个不透明像素的边缘AA差异明确保留，不修改SVG路径。保留独立Studio第七行，不能为六项静态稿删入口或静默覆盖六旧键/默认值。官方51:2仍40唯一画板；36唯一/140上下文资源声明（并非重复可见槽位总数）中31字节一致、2仅局部clip ID/ref重命名等价、3装饰窗控使用真实OS。见设计审查、像素核对、40帧清单。"
     ],
     "limits": [
-      "Studio关闭按钮现复用原生Cancel，聚焦×按Return/Space均可关闭；普通/删除遮罩分开，价格控件/行距/页脚及详情行线已收敛。最终5c63的12状态两尺寸、草稿取消和受控校验通过，限定性能范围未见明显回退；这是专项成果，40帧最终终验仍未完成。优先证据：真实GUI、1440价格、1100价格、源码、构建、原负载、相同序列、清理限制。",
-      "完整目标继续：四协议Select文字/映射标题/footer光学差异，Picker空白填充、Sync文字箭头与原生vector、Kit阴影、字体/AA/逻辑坐标、其余24帧首审和全量状态尚待。仅Mono实测不代替六皮肤全部状态，Intel类型检查不代表硬件；完整键盘/IME/AX/HiDPI、Windows/Intel实机及长期性能仍未终验。Windows目标机复验至少运行cargo test --manifest-path gpui/Cargo.toml --locked、cargo build --release --manifest-path gpui/Cargo.toml --locked，再按docs/WINDOWS-SC"
+      "失败与版本边界明确：初始编译漏BoxShadow.inset已修复并留证；c301虽编译通过，实拍发现六新资源漏Assets路由，判失败；c2eb补路由后真实交互通过，但像素盒/菜单位置仍待集中修正。最终e6abd重新完成全部五门禁与11图，未将中间图改名冒充最终。fmt、204tests通过/2既有忽略、strict all-targets Clippy、Intel all-targets类型检查、arm64 release均0；最终UI SHA e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c、42,475,728bytes，较旧5c63增加16,5",
+      "下一步按画板顺序逐个闭环，从52:2使用概览开始，不再穿插新共享微调专项。当前五帧的明确差异仍保留：价格原分页和额外操作使卡片高于静态稿、动态金额/来源及0导入不能伪造示例；保留第七皮肤入口增加一行，Mono旧字体/菜单与Figma示例不同；Native Kit阴影/描边、文字/AA、完整键盘/IME/AX/HiDPI和平台仍需统一终验。Intel类型检查不是硬件；本轮Windows/Intel实机未实际验证。目标机至少运行cargo test --manifest-path gpui/Cargo.toml --locked与cargo build --release --manifest-path gpui/Cargo.toml "
     ],
     "evidence": [
       {
-        "label": "真实GUI",
-        "href": "benchmarks/modal-chrome-final-gui-validation.json"
+        "label": "最终GUI",
+        "href": "benchmarks/settings-menu-final-gui-validation.json"
       },
       {
-        "label": "1440价格",
-        "href": "screenshots/modal-chrome-final-modal-price-wide.png"
+        "label": "1440设置",
+        "href": "screenshots/settings-menu-final-settings-wide.png"
       },
       {
-        "label": "1100价格",
-        "href": "screenshots/modal-chrome-final-modal-price-small.png"
+        "label": "1100设置",
+        "href": "screenshots/settings-menu-final-settings-small.png"
       },
       {
-        "label": "源码",
-        "href": "benchmarks/modal-chrome-source-scope.json"
+        "label": "合法保存及历史保护",
+        "href": "benchmarks/settings-menu-price-and-retention-data-proof.json"
       },
       {
         "label": "构建",
-        "href": "benchmarks/modal-chrome-build.json"
+        "href": "benchmarks/settings-menu-build.json"
       },
       {
-        "label": "原负载",
-        "href": "benchmarks/modal-chrome-performance-summary.json"
+        "label": "性能",
+        "href": "benchmarks/settings-menu-performance-summary.json"
       },
       {
-        "label": "相同序列",
-        "href": "benchmarks/modal-chrome-matched-performance-summary.json"
+        "label": "资源",
+        "href": "benchmarks/settings-menu-asset-audit.json"
       },
       {
-        "label": "清理限制",
-        "href": "benchmarks/modal-chrome-cleanup.json"
+        "label": "源码范围",
+        "href": "benchmarks/settings-menu-source-scope.json"
       }
     ],
-    "commit": "88c2e3c760339b2c9446e5cdb318efe2cf52a946",
-    "date": "2026-10-31T07:44:58+08:00",
-    "commit_subject": "fix(gpui): align Studio modal chrome and price form",
+    "commit": "d779e18a262074826e98c2414f021846a813c293",
+    "date": "2026-10-31T08:38:01+08:00",
+    "commit_subject": "fix(gpui): align Studio settings and native menus",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -541,26 +541,38 @@
       "node": "58:8",
       "title": "05 / STUDIO V2 · 统计设置",
       "source": "statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs",
-      "detail": "部分：分区导航/价格卡CRUD与游标/快照/失败提示、采集/导入双卡及主要业务已验；整帧视觉、完整键盘/IME/无障碍待续",
+      "detail": "部分：UI65完成官方整帧首审与设置布局/48px价格表/保留期等宽、两尺寸及窄窗下方可达；搜索3→1→3、价格2→2.5→2/保留180→90→180及历史14行不变有独立证据；原分页/额外操作保留，精细视觉和全量状态待收口",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=58-8",
       "visual_review": {
         "id": "58:8",
         "name": "05 / STUDIO V2 · 统计设置",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+          "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+          "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+          "layout": "导航与价格卡连续排列；原健康/导入提示移到主卡片之后并可滚动取回，warnings与卡内错误/attention保留。48px双行价格表、比例列、26px币种及真实分页/操作保留；采集/导入窄窗堆叠，保留期等宽。",
+          "typography": "Studio表头11/16 Medium，模型13/18 Medium，ID Inter10/14 Regular，来源12/17 Medium/映射11/16 Regular，价格Inter13/18 Semibold。",
+          "colors": "价格隔行复用BG_NOTICE；保留期复用ACCENT_TINT/ACCENT_LINE，旧皮肤路径保留。",
+          "states": "最终3规则/14真实请求；来源为手工fixture，未伪造models.dev或145导入条目；真实0导入/暂停状态保留。",
+          "interaction": "c2eb实测搜索3→1→3、价格2→2.5→2保存回读、180→90→180；独立API核规则revision3/settings3、14历史全字段摘要不变。e6abd事件体保持，复验两尺寸/编辑取消和下方滚动，未重复合法写入。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "原生分页、页大小、更新/重载等额外操作继续保留，价格卡比仅有同步说明的静态稿更高；下方卡片因此后移。",
+          "真实数据、金额formatter和输入模式Tooltip保留；非静态示例的模型/费用/来源不视为伪造。",
+          "卡内精细间距/全部状态、完整键盘/IME/AX及跨平台继续终验。"
+        ],
+        "evidence": [
+          "benchmarks/settings-menu-design-audit.json",
+          "benchmarks/settings-menu-asset-audit.json",
+          "benchmarks/settings-menu-source-scope.json",
+          "benchmarks/settings-menu-final-gui-validation.json",
+          "benchmarks/settings-menu-price-and-retention-data-proof.json",
+          "benchmarks/settings-menu-final-data-proof.json",
+          "benchmarks/settings-menu-swatch-pixels.json"
+        ]
       }
     },
     {
@@ -1003,78 +1015,111 @@
       "node": "62:308",
       "title": "13 / STUDIO V2 · 黑白主题示例",
       "source": "ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs",
-      "detail": "部分：Mono交替行/真实SVG路由、多选跨皮肤与语言/草稿保留、两尺寸和四轮性能已验；完整精细视觉/IME/无障碍及跨平台仍待专项",
+      "detail": "部分：UI65完整首审及Mono两尺寸/恢复Studio；旧27272a与键/默认/字体分支保留，和Figma字体示例差异明确列出；六皮肤全量状态及精细视觉待收口",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=62-308",
       "visual_review": {
         "id": "62:308",
         "name": "13 / STUDIO V2 · 黑白主题示例",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+          "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+          "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+          "layout": "最终e6abd在1440/1100真实切换Mono，供应商页双列/小窗内容可见；切回Studio正常。",
+          "typography": "现有Mono仍使用原字体路径，未默默改六旧皮肤字体；与Figma的Studio字体Mono示例有明显差异。",
+          "colors": "原Monochrome27272a、旧配置键/默认值及其他六种枚举映射未改。",
+          "states": "同一隔离配置2供应商5模型14请求，真实未测试连接状态/未导入状态保留。",
+          "interaction": "最终Mono→Studio即时生效和配置回读为studio_indigo；未重复六皮肤所有状态。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "Mono旧字体/表格/菜单路径与Figma示例仍不同，需按该画板后续完整收口；本轮只审查和兼容性抽查。",
+          "完整六皮肤状态、键盘/IME/AX/HiDPI和跨平台仍待。"
+        ],
+        "evidence": [
+          "benchmarks/settings-menu-design-audit.json",
+          "benchmarks/settings-menu-asset-audit.json",
+          "benchmarks/settings-menu-source-scope.json",
+          "benchmarks/settings-menu-final-gui-validation.json",
+          "benchmarks/settings-menu-price-and-retention-data-proof.json",
+          "benchmarks/settings-menu-final-data-proof.json",
+          "benchmarks/settings-menu-swatch-pixels.json"
+        ]
       }
     },
     {
       "node": "64:335",
       "title": "14 / STUDIO V2 · 外观与主题",
       "source": "ui/skin_controls.rs, theme/skin.rs, ui_components.rs",
-      "detail": "部分：原七项配置保留；最终0892菜单内Blue→Studio落盘/草稿、Esc与正反Tab离开关闭、Studio七工具按钮清晰焦点/两尺寸与菜单CPU/八轮短测已验；其他控件焦点/完整视觉/IME/读屏/原生AX及跨平台待续",
+      "detail": "部分：UI65完整首审，Studio350px菜单/六个原22pxSVG显式路由与原色像素盒对齐，保留Studio第七入口；两尺寸/换肤落盘/Esc与外点关闭通过，旧主题分支/选中样式与全量状态待收口",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=64-335",
       "visual_review": {
         "id": "64:335",
         "name": "14 / STUDIO V2 · 外观与主题",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+          "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+          "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+          "layout": "Studio可见菜单350px，NativePopover用379px包装保留29px尾部留白以定位至右37/顶63；六个154×66 tile/6px列距/10px行距，额外保留Studio跨两列第七行。",
+          "typography": "标题17/24 Bold，副标题12/17 Regular，tile13/19 Medium/选中Bold，说明11/16 Regular。",
+          "colors": "六原色22px SVG未经改写，显式Assets路由与各palette原色；共享颜色常量，不修改六旧palette。",
+          "states": "c301资源未路由导致六色块缺失，明确失败；c2eb补路由后可见但位置待修，最终e6abd六盒与参考同坐标，22px原色均可见。",
+          "interaction": "最终七项可见、Mono→Studio、Escape和点外关闭；原save/apply listener体保持，独立回读最终Studio。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "为保留独立Studio入口，菜单比六项353px静态稿高一行；不能删除第七入口或静默把Studio映射到Violet。",
+          "六旧主题选中后沿用现有菜单/字体路径，选中样式、全量焦点/状态与平台仍待逐项收口；不是全帧最终通过。"
+        ],
+        "evidence": [
+          "benchmarks/settings-menu-design-audit.json",
+          "benchmarks/settings-menu-asset-audit.json",
+          "benchmarks/settings-menu-source-scope.json",
+          "benchmarks/settings-menu-final-gui-validation.json",
+          "benchmarks/settings-menu-price-and-retention-data-proof.json",
+          "benchmarks/settings-menu-final-data-proof.json",
+          "benchmarks/settings-menu-swatch-pixels.json"
+        ]
       }
     },
     {
       "node": "66:320",
       "title": "17 / STUDIO V2 · 上游协议下拉",
       "source": "ui/provider_choices.rs, ui/providers.rs, ui.rs",
-      "detail": "部分：原生361×233/53px行与2px间隔、四项说明/选中标记、鼠标/方向Enter/Esc/外部取消、仅草稿/显式保存与两尺寸已验；完整IME/无障碍/跨平台及精细整帧待续",
+      "detail": "部分：UI65完整首审，原361×233/53px四行及事件保持，Studio44px偏移匹配宽窗/小窗原生限制；Responses草稿跨供应商保留、显式回Chat/Core不变及两尺寸通过；原生阴影/字形和全量状态待收口",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=66-320",
       "visual_review": {
         "id": "66:320",
         "name": "17 / STUDIO V2 · 上游协议下拉",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+          "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+          "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+          "layout": "原NativePopover361×233，四行53px+2px间隔保持；Studio协议偏移改44px匹配宽窗稿，小窗由同一native positioner限制在视口内。其他菜单与旧皮肤仍6px。",
+          "typography": "Studio协议未选项Medium、选中Bold13/19，hint11/16 Regular，勾13 Bold；原虚拟List与事件协议保留。",
+          "colors": "选中/游标/hover使用ACCENT_TINT；原palette.dark与hint MUTED保持。",
+          "states": "最终原Chat→Responses显示未保存→显式选回Chat，没有主配置Save；4原选项/说明保留。",
+          "interaction": "c2eb Down/Return选Responses，B→A保留未保存草稿，随后选回Chat，Core配置SHA不变；e6abd方向/Return选回路径、Esc和两尺寸复验。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "原生Kit描边/阴影、glyph/AA及背景供应商全帧仍有既有差异；未对所有四协议/全部鼠标键盘状态作本版重复验收。",
+          "小窗浮层可覆盖页面/状态栏区域但保持窗内，完整键盘/IME/AX及跨平台仍待。"
+        ],
+        "evidence": [
+          "benchmarks/settings-menu-design-audit.json",
+          "benchmarks/settings-menu-asset-audit.json",
+          "benchmarks/settings-menu-source-scope.json",
+          "benchmarks/settings-menu-final-gui-validation.json",
+          "benchmarks/settings-menu-price-and-retention-data-proof.json",
+          "benchmarks/settings-menu-final-data-proof.json",
+          "benchmarks/settings-menu-swatch-pixels.json"
+        ]
       }
     },
     {
@@ -1222,26 +1267,37 @@
       "node": "69:359",
       "title": "23 / STUDIO V2 · 编辑模型价格",
       "source": "statistics/price_layout.rs, stats_controller.rs, stats_backend.rs",
-      "detail": "部分：原生编辑布局/身份锁定/取消恢复/版本冲突及手动刷新重开/旧快照金额保护已验；完整IME/无障碍/跨平台与精细视觉待续",
+      "detail": "部分：UI65完整首审，最终e6abd两尺寸gpt-6 USD2/10检查/X取消；c2eb真实编辑保存/恢复revision3且旧14行全字段摘要不变；原身份锁定/缓存0保持，精细阴影/文字与全量状态待收口",
       "status": "partial",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=69-359",
       "visual_review": {
         "id": "69:359",
         "name": "23 / STUDIO V2 · 编辑模型价格",
-        "review_status": "not_reviewed",
-        "scope": "Pending full-frame review",
+        "review_status": "reviewed_with_differences",
+        "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
         "checks": {
-          "layout": "not_checked",
-          "colors": "not_checked",
-          "typography": "not_checked",
-          "assets": "not_checked",
-          "states": "not_checked",
-          "interaction": "not_checked",
-          "native_1440": "not_checked",
-          "native_1100": "not_checked"
+          "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
+          "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
+          "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
+          "layout": "复用UI64已实现的574×625价格布局、42px字段及固定底栏；实际gpt-6/USD2/10，两尺寸X取消。供应商/模型身份沿用现有锁定。",
+          "typography": "复用原Noto/Inter角色与UI64价格样式；不是对每个字形/AA的一比一证明。",
+          "colors": "Studio普通48%遮罩与原生字段/关闭引擎沿用；未为本轮改价格业务代码。",
+          "states": "最终已知缓存价0按实际值显示；不以稿内空白伪装未知。c2eb保存和恢复均真实回读，最终e6abd取消不写规则。",
+          "interaction": "c2eb输入2→2.5保存/重开，再2保存/重开；规则同id revision3，其余2条revision1，旧14行全字段摘要不变。e6abd重开检查2/10后取消，两尺寸底部按钮可见。"
         },
-        "differences": [],
-        "evidence": []
+        "differences": [
+          "身份锁定、已知缓存0和金额输入格式服从原业务语义；不改成静态可编辑示例。",
+          "Kit阴影、文字/光学余差与完整错误、键盘/IME/AX、跨平台仍待统一终验。"
+        ],
+        "evidence": [
+          "benchmarks/settings-menu-design-audit.json",
+          "benchmarks/settings-menu-asset-audit.json",
+          "benchmarks/settings-menu-source-scope.json",
+          "benchmarks/settings-menu-final-gui-validation.json",
+          "benchmarks/settings-menu-price-and-retention-data-proof.json",
+          "benchmarks/settings-menu-final-data-proof.json",
+          "benchmarks/settings-menu-swatch-pixels.json"
+        ]
       }
     },
     {
@@ -4735,6 +4791,59 @@
       "date": "2026-10-31T07:44:58+08:00",
       "commit_subject": "fix(gpui): align Studio modal chrome and price form",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 65,
+      "title": "统计设置、编辑价格与主题和协议菜单首审",
+      "status": "recorded",
+      "summary": "完成58:8、69:359、62:308、64:335、66:320五帧官方完整高保真上下文/1440原图、资源与两尺寸首审，集中收敛设置主卡片、价格表、保留期和菜单布局。最终e6abd的五状态×两尺寸及窄窗底部共11张全新原图已检查；这是本批专项通过，仍有明确整帧差异。优先证据：最终GUI、1440设置、1100设置、合法保存及历史保护、构建、性能、资源、源码范围。本批后19帧待首审、21帧已审有差异、0帧完整终验；最终仍剩40，不以",
+      "highlights": [
+        "完成58:8、69:359、62:308、64:335、66:320五帧官方完整高保真上下文/1440原图、资源与两尺寸首审，集中收敛设置主卡片、价格表、保留期和菜单布局。最终e6abd的五状态×两尺寸及窄窗底部共11张全新原图已检查；这是本批专项通过，仍有明确整帧差异。优先证据：最终GUI、1440设置、1100设置、合法保存及历史保护、构建、性能、资源、源码范围。本批后19帧待首审、21帧已审有差异、0帧完整终验；最终仍剩40，不以65项专项替代界面完成率。",
+        "仅7个Rust呈现/资源文件及6份原SVG：settings layout将原health/import提示放到主卡片后，保留warnings、卡内attention/error及提示动作；价格表48px双行、比例列、原生26px币种、Noto/Inter角色和隔行色收敛，原精确搜索、分页/页大小、更新/重载/删除与金额formatter保持，input_mode仍在原整行Tooltip及编辑表单。保留期等宽、新建规则使用NativeButton前置Icon；Studio协议仍是361×233/53px四行的原NativePopover/List，仅字重/选中色与44px偏移修正，1100由原positioner限制在窗内。新增颜色复用theme语义常量。原21个cx.listener表达式规范空白后均保留，另一路Studio皮肤菜单复用相同save/apply体；Core/配置schem",
+        "Studio皮肤菜单350px可见面、17/24标题与12/17副标题、154×66 tile、6/10px间隔及原说明；379px原生包装保留29px尾部留白，使面板右37/顶63对齐。六原22px色块逐字节下载并进入显式Assets路由，各用原palette颜色；宽窗六原色像素盒均与参考同坐标，小窗仅横移340px，尺寸均22px。原图339/参考344个不透明像素的边缘AA差异明确保留，不修改SVG路径。保留独立Studio第七行，不能为六项静态稿删入口或静默覆盖六旧键/默认值。官方51:2仍40唯一画板；36唯一/140上下文资源声明（并非重复可见槽位总数）中31字节一致、2仅局部clip ID/ref重命名等价、3装饰窗控使用真实OS。见设计审查、像素核对、40帧清单。"
+      ],
+      "limits": [
+        "失败与版本边界明确：初始编译漏BoxShadow.inset已修复并留证；c301虽编译通过，实拍发现六新资源漏Assets路由，判失败；c2eb补路由后真实交互通过，但像素盒/菜单位置仍待集中修正。最终e6abd重新完成全部五门禁与11图，未将中间图改名冒充最终。fmt、204tests通过/2既有忽略、strict all-targets Clippy、Intel all-targets类型检查、arm64 release均0；最终UI SHA e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c、42,475,728bytes，较旧5c63增加16,5",
+        "下一步按画板顺序逐个闭环，从52:2使用概览开始，不再穿插新共享微调专项。当前五帧的明确差异仍保留：价格原分页和额外操作使卡片高于静态稿、动态金额/来源及0导入不能伪造示例；保留第七皮肤入口增加一行，Mono旧字体/菜单与Figma示例不同；Native Kit阴影/描边、文字/AA、完整键盘/IME/AX/HiDPI和平台仍需统一终验。Intel类型检查不是硬件；本轮Windows/Intel实机未实际验证。目标机至少运行cargo test --manifest-path gpui/Cargo.toml --locked与cargo build --release --manifest-path gpui/Cargo.toml "
+      ],
+      "evidence": [
+        {
+          "label": "最终GUI",
+          "href": "benchmarks/settings-menu-final-gui-validation.json"
+        },
+        {
+          "label": "1440设置",
+          "href": "screenshots/settings-menu-final-settings-wide.png"
+        },
+        {
+          "label": "1100设置",
+          "href": "screenshots/settings-menu-final-settings-small.png"
+        },
+        {
+          "label": "合法保存及历史保护",
+          "href": "benchmarks/settings-menu-price-and-retention-data-proof.json"
+        },
+        {
+          "label": "构建",
+          "href": "benchmarks/settings-menu-build.json"
+        },
+        {
+          "label": "性能",
+          "href": "benchmarks/settings-menu-performance-summary.json"
+        },
+        {
+          "label": "资源",
+          "href": "benchmarks/settings-menu-asset-audit.json"
+        },
+        {
+          "label": "源码范围",
+          "href": "benchmarks/settings-menu-source-scope.json"
+        }
+      ],
+      "commit": "d779e18a262074826e98c2414f021846a813c293",
+      "date": "2026-10-31T08:38:01+08:00",
+      "commit_subject": "fix(gpui): align Studio settings and native menus",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -5755,6 +5864,81 @@
         "not_reviewed": 24,
         "reviewing": 0,
         "reviewed_with_differences": 16,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T07:57:02+08:00",
+      "note": "UI65正在进行五帧设计比对和两尺寸基线采集；更新当前任务状态，不增加最终通过数量。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 24,
+        "reviewing": 0,
+        "reviewed_with_differences": 16,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T08:03:51+08:00",
+      "note": "UI65 Rust布局与六个原始色块资源已实现，第一候选进入真实GUI验证。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 24,
+        "reviewing": 0,
+        "reviewed_with_differences": 16,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T08:07:11+08:00",
+      "note": "按用户质询核对16小时产出与执行偏差：共享修复和像素细调穿插导致整帧未收口；调整为按界面顺序闭环。UI65 c301实机缺色块失败，补资源路由中。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 24,
+        "reviewing": 0,
+        "reviewed_with_differences": 16,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T08:22:24+08:00",
+      "note": "UI65合法编辑与保留期已实机+独立数据验证；e6abd集中修正后进入最终原图复验，不把中间候选当最终。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 24,
+        "reviewing": 0,
+        "reviewed_with_differences": 16,
+        "reviewed": 0
+      }
+    },
+    {
+      "date": "2026-10-31T08:39:02+08:00",
+      "note": "UI65代码/证据d779e18已完成；19待首审/21已审有差异，完整终验仍40。后续改为按画板顺序逐个闭环；本轮精确清理被自动审批拒绝，未重试。",
+      "pending": 0,
+      "partial": 40,
+      "reused": 0,
+      "verified": 0,
+      "remaining_final": 40,
+      "visual_review": {
+        "not_reviewed": 19,
+        "reviewing": 0,
+        "reviewed_with_differences": 21,
         "reviewed": 0
       }
     }

@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-10-31T08:39:01.629510+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u",
+  "project": "WorkBuddy Studio V2 UI65 session-only scratch",
+  "attempt": "rm -rf -- '/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u'",
+  "result": "rejected_by_automatic_approval_review_before_execution",
+  "reason": "approval required by policy, but AskForApproval is set to Never",
+  "user_authorization": "User standing authorization for clear, reasonable session temporary/build directories; no repeat user confirmation requested. Authorization does not bypass active tool policy.",
+  "evidence_commit": "d779e18a262074826e98c2414f021846a813c293",
+  "preflight_report": "settings-menu-cleanup-preflight.json",
+  "immediate_recheck": "313 files matched full SHA inventory;24 payload PIDs gone;lsof stdout/stderr empty;65 archived file SHA matched;canonical/owner/symlink/mount checks passed immediately before attempt",
+  "bytes_freed": 0,
+  "retained_bytes": 495495288,
+  "retained_mib": 472.54113006591797,
+  "target_still_exists": true,
+  "current_system_data_free_bytes": 39987814400,
+  "current_system_data_free_gib": 37.241554260253906,
+  "retry": "No alternative command, child/parent target or permission/policy change attempted. Root55/older rejected targets also untouched.",
+  "shared_cargo_cache": "Preserved; reused original gpui/target, no cargo clean."
+}
