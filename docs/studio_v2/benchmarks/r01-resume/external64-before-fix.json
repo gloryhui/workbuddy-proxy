@@ -1,0 +1,16 @@
+{
+  "candidate": "e1f",
+  "before_active_models": 4,
+  "external_Core_saved_models": 64,
+  "external_Core_total_models": 65,
+  "old_active_table_stayed_at": 4,
+  "native_evidence": "r01-1-provider-after-external.ax.txt",
+  "other_provider_semantics_preserved": true,
+  "original_four_models_preserved": true,
+  "existing_Core_default_serialization": "protocol/protocol_settings/capabilities null made explicit; initial raw-equality assertion failed, not business-field drift",
+  "history_all_fields_unchanged": {
+    "usage_requests": 14,
+    "usage_costs": 14
+  },
+  "ui_closed_before_fixture_finish": true
+}

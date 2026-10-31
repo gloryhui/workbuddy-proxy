@@ -1,0 +1,89 @@
+Window: "", App: WorkBuddy Proxy R01 Resume.
+0 standard window Secondary Actions: Raise
+	1 container
+		2 toggle button (settable, boolean) 数据统计, Value: off
+		3 toggle button (settable, boolean) 供应商管理, Value: on
+		4 toggle button (settable, boolean) 统计设置, Value: off
+		5 button 折叠或展开供应商列表
+		6 text field (settable) 搜索供应商
+		7 toggle button (settable, boolean) sub2api, Value: on
+		8 toggle button (settable, boolean) OpenCode Go, Value: off
+		9 button 新增供应商
+		10 button 复制供应商
+		11 button 删除供应商
+		12 button 复制代理地址
+		13 button 编辑供应商资料
+		14 container 未测试 · 此配置尚无本窗口的有效测试记录，请点击测试连接。
+		15 button 供应商预设: 自定义地址
+		16 text field (settable) 供应商名称, Value: sub2api, Placeholder: 填写供应商名称
+		17 secure text field API Key, Placeholder: 填写 API Key
+			18 button 显示 API Key
+		19 button 上游协议: OpenAI Chat Completions
+		20 text field (settable) API 地址, Value: http://127.0.0.1:51602/v1, Placeholder: 填写供应商提供的 API 基础地址
+		21 button 协议选项
+		22 button 获取模型
+		23 button 添加模型
+		24 table 模型目录 · Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑, ID: provider-model-table
+			25 row
+				26 cell 显示名称
+				27 cell 上游模型 ID
+				28 cell 操作
+			29 row model-0
+				30 cell deepseek-v4.1-flash
+				31 cell deepseek-v4.1-flash
+				32 cell
+					33 button 编辑模型: deepseek-v4.1-flash
+			34 row model-1
+				35 cell gpt-6
+				36 cell gpt-6
+				37 cell
+					38 button 编辑模型: gpt-6
+			39 row model-2
+				40 cell gpt-6.1
+				41 cell gpt-6.1
+				42 cell
+					43 button 编辑模型: gpt-6.1
+			44 row model-3
+				45 cell claude-opus-4.7
+				46 cell claude-opus-4.7
+				47 cell
+					48 button 编辑模型: claude-opus-4.7
+		49 button 思考强度: 跟随 WorkBuddy
+		50 button 测试连接
+		51 button 保存配置
+		52 button 复制代理地址
+		53 button 端口设置
+		54 button 同步 WorkBuddy
+		55 button 取消同步
+		56 button 清空日志
+		57 button 复制日志
+		58 text entry area (settable) 活动日志, Value: 01:21:55：本地服务已启动：http://127.0.0.1:51603/v1
+01:21:55：HTTP 200 · 1 requests
+01:21:55：HTTP 200 · 2 requests
+01:21:55：HTTP 200 · 3 requests
+01:21:55：HTTP 200 · 4 requests
+01:21:55：HTTP 200 · 5 requests
+01:21:55：HTTP 200 · 6 requests
+01:21:55：HTTP 200 · 7 requests
+01:21:55：HTTP 200 · 8 requests
+01:21:55：HTTP 200 · 9 requests
+01:21:55：HTTP 200 · 10 requests
+01:21:55：HTTP 200 · 11 requests
+01:21:55：HTTP 200 · 12 requests
+01:21:55：HTTP 200 · 13 requests
+01:21:55：HTTP 200 · 14 requests
+01:22:47：已保存供应商和模型
+		59 button 皮肤设置
+		60 toggle button (settable, boolean) 开机启动, Value: off
+		61 button 检查更新
+		62 button 界面语言
+		63 button 恢复默认窗口尺寸
+		64 button GitHub 项目主页
+		65 button 提交反馈
+	66 close button
+	67 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	68 minimize button
+69 menu bar
+	70 WorkBuddy Proxy R01 Resume
+
+The focused UI element is 0 standard window Secondary Actions: Raise

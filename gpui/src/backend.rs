@@ -240,8 +240,10 @@ impl Backend {
                             .and_then(|s| serde_json::from_str(&s).ok())
                     };
                     let config =
-                        if !matches!(job.tag.as_str(), "poll" | "metadata" | "workbuddy_check") {
-                            if job.tag == "delete" && result.is_err() {
+                        if !matches!(job.tag.as_str(), "metadata" | "workbuddy_check") {
+                            if job.tag == "poll" || (job.tag == "delete" && result.is_err()) {
+                                // Polls only read an existing, bounded, migrated
+                                // configuration. Never initialize or rewrite it.
                                 crate::config_refresh::existing_config(&dir)
                             } else {
                                 Config::load(&dir).ok()

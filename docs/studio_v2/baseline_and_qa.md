@@ -1675,3 +1675,15 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 最终语义源码hash与已过fmt、GPUI206pass/2既有ignore、strict Clippy、Intel类型检查及arm64 Release记录一致；Core573测试与19真实发现/创建契约通过。混合交互资源采样不等于最终匹配性能、长时间/CPU/FPS门禁。[Core验证](benchmarks/r01-input-handoff/core-verification-summary.json)。
 - 本轮隔离UI均已关闭，两Core通过自身stop退出0、宿主会话退出0。112份证据约3.56MiB归档，私有配置/数据库/凭据不提交。精确清理本会话303文件约273MiB，APFS实测可用空间增加279.66MiB至34.05GiB，本轮保留临时文件0；共享缓存与旧基准Core未动。[清理](benchmarks/r01-input-handoff/cleanup.json)。
 - 用户要求当前任务完成后暂停并转新会话：本轮完成代码及已做验证的归档提交，不把部分R01冒称整批通过。剩余界面0/40，仍18个发布任务待验，Goal将暂停；下一步见[新会话交接](SESSION_HANDOFF.md)。
+
+
+## 小功能 76：R01外部保存刷新、草稿持久化与分页焦点恢复（2026-11-01）
+
+- 按交接恢复Goal为active，核验专用worktree、分支与远端；未重做40帧或21主题语言组合，未开启旁白、系统辅助功能或切输入源。Issue3最新仍open，HiDPI/Windows待补证。剩余界面0/40，发布任务仍18项待验，本轮不作整项发布签收。
+- 旧e1f真实复现：Core外部save64后总数65，但活动供应商仍4行/已保存；键盘Next到末页后ShiftTab/Return仍留末页。现poll只读已存在且有效的有界配置，核对Core身份/计数/端口后刷新干净视图，保留dirty/provider编辑草稿，modal期间延后；不发送补偿保存。键盘分页若原按钮禁用且焦点仍在其上，落到页大小控件；保留鼠标与已移开的焦点。[旧缺陷](benchmarks/r01-resume/external64-before-fix.json)、[原生验证](benchmarks/r01-resume/native-verification.json)。
+- 中间ee6784的live草稿内容虽保留，但外部rename后private draft base落后磁盘hash；异常退出后可能被当过期草稿丢弃。该问题由只读hash检查发现，不声称普通close后实测丢失。最终631599补变化后的持久化重基准，live base精确匹配；明确原生close/重开后R01 local draft、64模型与未保存标记保持。[修正前base](benchmarks/r01-resume/draft-fingerprint-before-fix.json)、[最终base](benchmarks/r01-resume/draft-fingerprint-final.json)、[冷读保护](benchmarks/r01-resume/final-cold-verified.json)。
+- 最终候选首模型弹窗在外部save64期间保持原字段和打开状态，背景仍4；Cancel后下一poll更新64/总65，未点UI Save。两尺寸可达末行；小窗先滚外层再滚表内。早先命名为end-small的图实际上是页首，未作为末行证据，另存实际末行原图。[正确小窗末行](benchmarks/r01-resume/631599-64-small-end-corrected.jpg)。
+- fmt、GPUI207pass/2既有ignore、strict Clippy、Intel all-targets类型检查及arm64 Release均0；源码/共享Rust模块/构建输入hash与最终二进制631599绑定。三套隔离fixture各14条真实合成请求和成本全部字段保持，未修改Core源码或真实用户配置。首次原值比较因既有Core补protocol/default/null序列化而失败，已单独说明，没有重发保存。[构建](benchmarks/r01-resume/build-final.json)、[业务保护](benchmarks/r01-resume/final-business-protection.json)。
+- 35wrapper/114限定调用点为源码slot索引，不能冒充原生全状态/实测尺寸矩阵。当前n/i在名称/搜索直接落ASCII，未证实composition；支持的两点原生拖动仍未见列宽变化。AX始终报window焦点，键盘落点依行为与原图；真实AT未验，旁白禁用不变。R01.1全状态、R01.2拖宽、R01.3逐引擎合成和R01.4真实辅助技术仍待，R02–R04亦未通过。
+- 本轮41张截图是CUA直接返回的原始JPEG/JFIF。归档魔数检查纠正了误用PNG后缀，仅改扩展名，不裁切/转换/重新编码，不宣称新增PNG或无损像素签收；旧40帧PNG验收不变。[格式纠正](benchmarks/r01-resume/capture-format-correction.json)、[全部图hash/尺寸](benchmarks/r01-resume/image-manifest.json)。
+- 本轮所有UI已原生关闭（包括明确冷重开实例），三个Core及宿主会话均退出0；guard仅安装无真实WorkBuddy动作。精确清理本会话129个临时文件约273MiB，临时保留0；共享Cargo缓存、旧基准Core与非本轮旧preview未动。[清理](benchmarks/r01-resume/cleanup.json)、[总结](benchmarks/r01-resume/summary.json)。

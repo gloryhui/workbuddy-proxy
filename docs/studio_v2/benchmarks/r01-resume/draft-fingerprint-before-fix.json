@@ -1,0 +1,8 @@
+{
+  "candidate": "ee6784",
+  "stage": "after external rename while local provider draft stays unchanged",
+  "disk_config_sha256": "5bef39aef379984d4d66849c3a9350fc5b0d8aeff0b00fd8137cbd0b050b43c2",
+  "private_draft_base": "94c0391e07c312f1f5dd8390ef5ff53a6124c23b17c64828dc331da6c5934132",
+  "base_matches": false,
+  "scope": "Read-only own fixture. A false result predicts cold Drafts::load rejection; no cold success inferred."
+}

@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-01T01:24:56.803211+08:00",
+  "stage": "final-cold-verified",
+  "action": "observe",
+  "core_pid": 75570,
+  "ui_sha256": "631599c2bc50295cb8164ed6be583974b7a3d01bfb7568739e0655d25133ccfd",
+  "saved_providers": [
+    {
+      "id": "review-provider",
+      "name": "sub2api external saved",
+      "models": 64
+    },
+    {
+      "id": "review-provider-b",
+      "name": "OpenCode Go",
+      "models": 1
+    }
+  ],
+  "drafts": [
+    {
+      "id": "review-provider",
+      "name": "R01 local draft",
+      "models": 64
+    },
+    {
+      "id": "review-provider-b",
+      "name": "OpenCode Go",
+      "models": 1
+    }
+  ],
+  "counts": {
+    "providers": 2,
+    "models": 65,
+    "requests": 14
+  },
+  "history_all_fields_preserved": {
+    "usage_requests": 14,
+    "usage_costs": 14
+  },
+  "config_sha256": "57a46d5242840b09298c91b98997bbcb7ab97e3d320d211573d38916383f7023",
+  "scope": "Only real isolated Core management save/read and private fixture files. Native interaction/focus/visible state requires separately archived CUA evidence."
+}

@@ -1,0 +1,23 @@
+{
+  "historical_harness": "../r01-input-handoff/historical-harness",
+  "historical_sha256": {
+    "fixture-background.py": "9c4dd96182bac53f61f5765ab413e0ae05e2fd912deaf1bfa5c72d05964450e5",
+    "state-cold.py": "5ff842963bd8d239b8a98a87ecbd75c9b24ba261a6e28a2995885857694416cc",
+    "restart-identity-guard.m": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1",
+    "preflight-guard.py": "8e0cb0abc7d793bac39c0773e5236f4fe63d8b82f0de4991b9d936a43f2c425a",
+    "prepare-fixture.py": "19e1eb3699a77d6ed8eed8d9adf9b81fed411829cd767181e6e38909f19f86d0",
+    "fixture-cold.py": "5bce0845d2a8ce61fcb02e4db03a4720cb7e6a535299e13f01ac0455a829437a",
+    "native-driver.py": "06fb82f565bfd55a971f90410936abf93378a0fbc521132107b2acd739486e0e",
+    "state.py": "57208d1b783e362ff3695d225d2afbe1b171d6e581605114adc855173b2a344b"
+  },
+  "adaptations": [
+    "new recorded owned session root, one new unique bundle ID per phase",
+    "fixed/final candidate selection bound to new binary hash",
+    "same immutable baseline Core hash verified before each launch",
+    "unchanged Core kernel protection and LaunchAgents denial, deny-only native WorkBuddy guard",
+    "fresh fixture datasets per phase, 14 real relay history rows each",
+    "explicit external save verifier, never direct-edit active Core config",
+    "normal native UI close before own Core stop; no old preview PID terminated"
+  ],
+  "limitations": "Controlled updates inherited in harness are not exercised in this round and are not public updater proof. AX snapshots do not identify precise focused control; real keyboard behavior and images used. R01.4 real AT not run."
+}

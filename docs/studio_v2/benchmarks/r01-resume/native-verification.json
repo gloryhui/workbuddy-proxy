@@ -1,0 +1,85 @@
+{
+  "candidate_sha256": "631599c2bc50295cb8164ed6be583974b7a3d01bfb7568739e0655d25133ccfd",
+  "earlier_candidates": {
+    "baseline": "e1f092c8d2eb1b457d59c54ae4f6286221e7625081cc3fc34be8b5fe019d8e40",
+    "intermediate": "ee6784b80ec411b8ecd76cb5d66e9adb33853c29f848870105013cbff79b70c7"
+  },
+  "pagination": {
+    "final": "Keyboard Next then Return entered page 2; Shift+Tab and Return returned page 1; Tab then visibly focused page number input.",
+    "evidence": [
+      "631599-next-focus.jpg",
+      "631599-next-disabled.jpg",
+      "631599-return-first.jpg",
+      "631599-prev-tab.jpg"
+    ],
+    "ax_limitation": "AX consistently reports window as focused, so control focus is supported by visuals and behavior rather than AX."
+  },
+  "external_model_update": {
+    "final": "With clean 4-model provider, model editor remained open on deepseek during external save64; background AX still exposed four rows. After Cancel and a later poll, provider displayed 64 and total 65, without UI save. Table scrolled to model-63, Resume external 64.",
+    "evidence": [
+      "631599-modal-before64.jpg",
+      "631599-modal-during64.jpg",
+      "631599-modal-during64.ax.txt",
+      "631599-cancel-after64.jpg",
+      "631599-64-end.ax.txt",
+      "631599-64-end-wide.jpg",
+      "631599-64-small-end-corrected.jpg",
+      "631599-64-small-end-corrected.ax.txt"
+    ],
+    "small_image_correction": "631599-64-end-small.jpg shows top of page, not the end of table; corrected image is a distinct later original after scrolling outer container and table."
+  },
+  "dirty_draft": {
+    "final": "External rename did not overwrite local R01 local draft; model count 64 and unsaved label remained. Native close followed by a read-only full-path process check confirmed no UI process; explicit getApp reopened same isolated fixture, restoring draft, 64 models and unsaved label.",
+    "evidence": [
+      "631599-draft-after.ax.txt",
+      "631599-draft-after.jpg",
+      "631599-cold-draft.ax.txt",
+      "631599-cold-draft.jpg",
+      "draft-fingerprint-final.json"
+    ]
+  },
+  "baseline_e1f": {
+    "pagination": "Focused Next via keyboard, Return reached last page; Shift+Tab then Return stayed on last page.",
+    "external": "Core save64 produced total65 while selected provider table and label remained4 after multiple polls.",
+    "drag": "CUA native drag from [444,383] to [504,383] did not visibly change column width; no conclusion about real drag success or resize persistence.",
+    "evidence": [
+      "r01-2-next-focused.jpg",
+      "r01-2-keyboard-next-disabled.jpg",
+      "r01-2-keyboard-shifttab.jpg",
+      "r01-2-shifttab-return.jpg",
+      "r01-2-drag-before.jpg",
+      "r01-2-drag-after.jpg",
+      "r01-1-provider-after-external.jpg"
+    ]
+  },
+  "intermediate_ee6784": {
+    "note": "Separate binary; pagination, clean external64, dirty live and provider switch tested; draft fingerprint later found stale. Not relabeled as final.",
+    "evidence": [
+      "ee6784-back-first.jpg",
+      "ee6784-clean-64-scrolled.jpg",
+      "ee6784-draft-after-switch.jpg",
+      "draft-fingerprint-before-fix.json"
+    ]
+  },
+  "ime": {
+    "final": "Current input source was not established; physical n then i in provider name and sidebar search immediately produced ASCII ni with no candidate or marked text. No system source was changed. Provider name restored to synthetic R01 local draft; search cleared; no UI Save. Masked key was not tested after inability to establish composition. The file named 631599-ime-name-marked.jpg is a historical filename only and depicts ASCII, not marked composition.",
+    "evidence": [
+      "631599-ime-name-marked.jpg",
+      "631599-ime-name-marked.ax.txt",
+      "631599-ime-name-restored.jpg",
+      "631599-ime-search-probe.jpg",
+      "631599-ime-search-probe.ax.txt"
+    ],
+    "limitations": [
+      "No composition Enter/Esc or switching/cancellation proven in this round.",
+      "Historic Qingjian evidence is separate and not relabeled."
+    ]
+  },
+  "remaining": [
+    "Native table drag and persistence not established.",
+    "Actual assistive technology/VoiceOver not run or enabled.",
+    "Component state and slot inventory is not full state coverage.",
+    "AX role and names do not prove screen-reader behavior."
+  ],
+  "capture_format": "CUA original JPEG/JFIF exports saved without image manipulation; mistaken PNG suffix corrected to JPG after magic-byte validation, original bytes preserved."
+}

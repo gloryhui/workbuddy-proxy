@@ -1,0 +1,213 @@
+{
+  "at": "2026-11-01T01:27:26.944658+08:00",
+  "scope": "Only this session-created R01 resume screenshots",
+  "reason": "CUA getScreenshot({emit:false}) returns original JPEG/JFIF bytes. Native operator mistakenly gave PNG filename suffix; magic-byte check caught all41 before commit.",
+  "operation": "Correct filename suffix only; no image transformation, crop, resize or re-encoding; bytes/hash preserved",
+  "renames": [
+    {
+      "old": "631599-64-end-small.png",
+      "new": "631599-64-end-small.jpg",
+      "sha256": "25b6af9c68224d78fda185d11b0879579911a3f0d5c732d83a1fc708d5b51335"
+    },
+    {
+      "old": "631599-64-end-wide.png",
+      "new": "631599-64-end-wide.jpg",
+      "sha256": "4e726d23ca636e84eee885d7a1d996df9a61746848af2a4753581321b6891dd0"
+    },
+    {
+      "old": "631599-64-small-end-corrected.png",
+      "new": "631599-64-small-end-corrected.jpg",
+      "sha256": "376b9171a21843e00600761a76c4da12a4250aec4423241c72c85d005da35f9a"
+    },
+    {
+      "old": "631599-64-small.png",
+      "new": "631599-64-small.jpg",
+      "sha256": "3f37aa3d1f01b4a47f0d435e361ee352d9f58ebf7753fa74fea4bbfb2afc3eab"
+    },
+    {
+      "old": "631599-cancel-after64.png",
+      "new": "631599-cancel-after64.jpg",
+      "sha256": "d66f7d57af0dcf560ce429e33bd4cfb57968df21f19067f06b1c437e17a33f4b"
+    },
+    {
+      "old": "631599-cold-draft.png",
+      "new": "631599-cold-draft.jpg",
+      "sha256": "a202f6ff2313369fdb4393c88f155583e7b6cae39709245df5a9aa586ff6f62f"
+    },
+    {
+      "old": "631599-draft-after.png",
+      "new": "631599-draft-after.jpg",
+      "sha256": "a71b4824537789e3f826e4da640c6f99e946cee2b49a314e4f71689dac95d9e9"
+    },
+    {
+      "old": "631599-draft-before.png",
+      "new": "631599-draft-before.jpg",
+      "sha256": "b9e6bd0b8bd2fb969de1b70c3e44673ecdda47c889d896c62c5e4f783102612f"
+    },
+    {
+      "old": "631599-ime-name-marked.png",
+      "new": "631599-ime-name-marked.jpg",
+      "sha256": "614dae4216fd2ddd96a69d48ad16f3eb9949647565bbffb34bd7539dd049ecf9"
+    },
+    {
+      "old": "631599-ime-name-restored.png",
+      "new": "631599-ime-name-restored.jpg",
+      "sha256": "98470314b0552a720a51cfdf234b4974fca8f38d4ae399255dfc84e605b11865"
+    },
+    {
+      "old": "631599-ime-search-probe.png",
+      "new": "631599-ime-search-probe.jpg",
+      "sha256": "06079854127208cfb599b61092bce0dbb31884008415e728adf0681d69646e29"
+    },
+    {
+      "old": "631599-modal-before64.png",
+      "new": "631599-modal-before64.jpg",
+      "sha256": "e458342b3506212f2e920d8b4fb41dec2784ab0a26ee1bfeb5465ee85388f2e2"
+    },
+    {
+      "old": "631599-modal-during64.png",
+      "new": "631599-modal-during64.jpg",
+      "sha256": "c3e606f99ec5c16695c2763b0f9915a19f5e123f2d72350083d629d476b9e57f"
+    },
+    {
+      "old": "631599-next-disabled.png",
+      "new": "631599-next-disabled.jpg",
+      "sha256": "b8ac157799febebaef3a70d44a27e58b8a0a719832d37fd89716d7993d0b1640"
+    },
+    {
+      "old": "631599-next-focus.png",
+      "new": "631599-next-focus.jpg",
+      "sha256": "aa1d8f78f19fef152df4d611bcc015b7a52bbadf59f823682e740eb12e2c050f"
+    },
+    {
+      "old": "631599-prev-tab.png",
+      "new": "631599-prev-tab.jpg",
+      "sha256": "4c01809c65ab4a0892a16d15b91144de10a400ec299921d5a9e7ce07d5ec674e"
+    },
+    {
+      "old": "631599-return-first.png",
+      "new": "631599-return-first.jpg",
+      "sha256": "bfc635d2ec10f2284dfb37b629a150db86b97fe4ba7381667830e29712f1f774"
+    },
+    {
+      "old": "ee6784-back-first.png",
+      "new": "ee6784-back-first.jpg",
+      "sha256": "ec75fad306bbbf9453ab7abd76b2991be53227283bbf5081a2faedab9a4cbdad"
+    },
+    {
+      "old": "ee6784-clean-64-scrolled.png",
+      "new": "ee6784-clean-64-scrolled.jpg",
+      "sha256": "eb845f1a3016c9dc42bce7ec14ebc81e99bc8a59b284b12a6fe6fbe854e90fbf"
+    },
+    {
+      "old": "ee6784-clean-after64.png",
+      "new": "ee6784-clean-after64.jpg",
+      "sha256": "8b322fb2d91ac2095e934e73cac8cb962e6ee4f5379193dc36735af2145df304"
+    },
+    {
+      "old": "ee6784-clean-before.png",
+      "new": "ee6784-clean-before.jpg",
+      "sha256": "f21189b7585cf140164fd478c3c4cf1950a94961970510bba4b9c4df889cf4d4"
+    },
+    {
+      "old": "ee6784-draft-after-external.png",
+      "new": "ee6784-draft-after-external.jpg",
+      "sha256": "e9f3644185cba635799e0214162c8ed85f7fec24cecda1ce50619f0f9e728664"
+    },
+    {
+      "old": "ee6784-draft-after-switch.png",
+      "new": "ee6784-draft-after-switch.jpg",
+      "sha256": "de33575458e6241f7d5d55fe3f99cbd850703ea5f581de2d70b3b3dd4d4356a0"
+    },
+    {
+      "old": "ee6784-draft-before-external.png",
+      "new": "ee6784-draft-before-external.jpg",
+      "sha256": "c2a01223d9afac7b3a4ca2e62ee3596a3219e03c92b4928fe52ff6165b6e9634"
+    },
+    {
+      "old": "ee6784-model-modal-before.png",
+      "new": "ee6784-model-modal-before.jpg",
+      "sha256": "5c66c254e35e281c379e727395e110f4da1876de0ba066e8d55fdfd86eca6e8b"
+    },
+    {
+      "old": "ee6784-mouse-next.png",
+      "new": "ee6784-mouse-next.jpg",
+      "sha256": "b7242ac1afb40d9526c139bed14c1a41cd59aa3bbbea1fc0c15240284984434a"
+    },
+    {
+      "old": "ee6784-next-disabled.png",
+      "new": "ee6784-next-disabled.jpg",
+      "sha256": "fd390d2f5058784c4e4f3be65a4124fb98f84f5d13c7a16825eee97f3a154a4c"
+    },
+    {
+      "old": "ee6784-next-focused.png",
+      "new": "ee6784-next-focused.jpg",
+      "sha256": "73c93fe0d8872fed9959d1880b326fef06435f60730d860ad0e615406d588513"
+    },
+    {
+      "old": "ee6784-next-shifttab.png",
+      "new": "ee6784-next-shifttab.jpg",
+      "sha256": "8a8f8f866085745f3acb4ab6a2434a2180fe746176675f82f666826261d43478"
+    },
+    {
+      "old": "ee6784-prev-disabled-tab.png",
+      "new": "ee6784-prev-disabled-tab.jpg",
+      "sha256": "3dc7ec496c29f83c8bfba97fc05700e77d85aa0cf2a783a4b210c437bdc11a3a"
+    },
+    {
+      "old": "r01-1-provider-after-external.png",
+      "new": "r01-1-provider-after-external.jpg",
+      "sha256": "bfb3472c76997ac609c055aaef685d0ba1c4884baadbd9524bc8f462a36342d5"
+    },
+    {
+      "old": "r01-1-provider-before-external.png",
+      "new": "r01-1-provider-before-external.jpg",
+      "sha256": "666472ddea08da93405d5b4f49f872a358b5912f23a43447b384ba3a5dc7fcdf"
+    },
+    {
+      "old": "r01-2-before-pagination.png",
+      "new": "r01-2-before-pagination.jpg",
+      "sha256": "123345b1d766cd91b7324f55ab79e6425466bc1002ca02c12e86696bcb74e96b"
+    },
+    {
+      "old": "r01-2-drag-after.png",
+      "new": "r01-2-drag-after.jpg",
+      "sha256": "178b2b15db6d574f843b413227474db8e831c646097bf2b603858fa40a830b50"
+    },
+    {
+      "old": "r01-2-drag-before.png",
+      "new": "r01-2-drag-before.jpg",
+      "sha256": "de9a7f51e74ec8942473ca3bc49e0c3548cf0db19820b1eb54e8b15b30236b34"
+    },
+    {
+      "old": "r01-2-keyboard-next-disabled.png",
+      "new": "r01-2-keyboard-next-disabled.jpg",
+      "sha256": "8d8e7e237457491657f12ea15070563b25c2f841abb0f9a8f3df83951d4a9e4b"
+    },
+    {
+      "old": "r01-2-keyboard-shifttab.png",
+      "new": "r01-2-keyboard-shifttab.jpg",
+      "sha256": "949ad3d385f4dcdf900445535ef7499ea86664f7567c81e701b14790fa9723a2"
+    },
+    {
+      "old": "r01-2-next-disabled.png",
+      "new": "r01-2-next-disabled.jpg",
+      "sha256": "d24385990f6832e8c7a1f629a8cc51efee667ce34ee9593f2fbb09dcd9304491"
+    },
+    {
+      "old": "r01-2-next-focused.png",
+      "new": "r01-2-next-focused.jpg",
+      "sha256": "8db7b740f9bceddf7dd398cabb5dcd066378d783edf05b2afc94453d00c4078a"
+    },
+    {
+      "old": "r01-2-shifttab-after-disabled.png",
+      "new": "r01-2-shifttab-after-disabled.jpg",
+      "sha256": "d6f4ecfb950fe5e09c82a1e5c6b81ee6673ecd7f1a5e6474bef9755e5c1ba942"
+    },
+    {
+      "old": "r01-2-shifttab-return.png",
+      "new": "r01-2-shifttab-return.jpg",
+      "sha256": "373ab84db18ad50089f3d6001b8b00fbd83a23312766fceebe100fd611ebfe50"
+    }
+  ]
+}

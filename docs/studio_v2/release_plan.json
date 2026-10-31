@@ -2,11 +2,11 @@
   "version": 2,
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-11-01",
-  "state": "paused",
+  "state": "active",
   "current_batch": "R01",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 75,
+  "historical_tasks": 76,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -726,15 +726,15 @@
         "B04",
         "B05"
       ],
-      "completed_summary": "40帧/80主图集中签收完成；表格语义修复、键盘/busy、21主题语言组合、真实Qingjian IME及Unicode独立Core/UI冷读已归档。用户要求本轮收口后暂停；R01其余4项仅部分完成，不签收整项。",
+      "completed_summary": "40帧/80主图集中签收完成；此前表格语义、busy、21主题语言与真实Qingjian/Unicode冷读归档。QA76已恢复Goal，修复并补验外部save64活动表/modal延后/dirty草稿重基准及冷恢复、末页分页焦点；全状态slot/真实拖宽/当前逐引擎IME/真实AT仍缺，R01保持部分完成。",
       "delivery": "对共享组件统一验收，不让同一键盘/主题待办在40帧中重复执行。",
       "tasks": [
         {
           "id": "R01.1",
           "title": "共享状态与层级矩阵",
           "acceptance": "pending",
-          "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。",
-          "remaining": "补唯一组件全状态/slot矩阵及外部save64后活动表刷新和草稿边界。Test busy去重已实测；皮肤菜单可打开，不能宣称所有入口禁用。检查更新是受控UI边界，单独关闭×及公开更新端到端未验。",
+          "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。",
+          "remaining": "35个共享包装函数/114个限定调用点已建立源码slot索引，但唯一组件全部适用状态及实际双尺寸slot仍待原生集中验收。外部save64/草稿边界本轮已补；Test busy去重沿用既有证据，不重复。公开更新端到端等既有限制保留。",
           "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
           "history_tasks": [
             41,
@@ -743,15 +743,16 @@
             60,
             61,
             64,
-            75
+            75,
+            76
           ]
         },
         {
           "id": "R01.2",
           "title": "完整键盘与焦点恢复",
           "acceptance": "pending",
-          "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。",
-          "remaining": "复验下一页按钮变disabled后的反向焦点恢复；用受支持真实输入补表头拖宽及刷新/resize保持，既有两端点CUA拖动无可见变化，不能声明成功。完整路径焦点回归仍待收口。",
+          "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。",
+          "remaining": "真实表头拖宽及刷新/resize保持仍待：本轮支持的两点CUA拖动仍无可见宽度变化，未冒称成功。其余完整路径焦点回归仍按缺口集中收口。",
           "acceptance_check": "无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。",
           "history_tasks": [
             40,
@@ -761,7 +762,8 @@
             62,
             64,
             67,
-            75
+            75,
+            76
           ]
         },
         {
@@ -769,13 +771,14 @@
           "title": "中文IME、Unicode与编辑撤销",
           "acceptance": "pending",
           "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。",
-          "remaining": "不同输入引擎的composition中Enter/Esc和切换/取消仍须逐引擎补齐；本轮真实composition在模型名称，其余字段paste/undo不冒称IME。Key为隔离合成值，安全AX不回传完整值，未声明AX精确读回。",
+          "remaining": "不同输入引擎的composition中Enter/Esc和切换/取消仍须逐引擎补齐；本轮真实composition在模型名称，其余字段paste/undo不冒称IME。Key为隔离合成值，安全AX不回传完整值，未声明AX精确读回。 恢复轮逐键n/i在名称/搜索只得到ASCII，当前输入源未确立；未切源、未补composition成功，不重标旧Qingjian证据。",
           "acceptance_check": "合成未提交时不误保存/关闭；字符串往返不损坏；原输入源恢复；CUA typeText不冒充IME。",
           "history_tasks": [
             46,
             50,
             51,
-            75
+            75,
+            76
           ]
         },
         {
@@ -827,7 +830,10 @@
         "benchmarks/r01-consolidated-visual-review.json",
         "benchmarks/r01-original-eighty-audit.json",
         "benchmarks/r01-latest-reference-manifest.json",
-        "benchmarks/r01-input-summary.json"
+        "benchmarks/r01-input-summary.json",
+        "benchmarks/r01-resume/summary.json",
+        "benchmarks/r01-resume/native-verification.json",
+        "benchmarks/r01-resume/component-slot-inventory.json"
       ]
     },
     {

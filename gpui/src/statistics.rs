@@ -319,6 +319,9 @@ pub struct Statistics {
     page_size: i64,
     page_size_select: Entity<ChoiceState>,
     page_input: Entity<InputState>,
+    /// Keyboard pager origin and direction, retained across the loading frame.
+    /// If the control becomes disabled, move to a nearby enabled pager control.
+    pager_focus: Option<(FocusHandle, bool)>,
     /// The window captured when the query was (re)started. Pagination is bound
     /// to the exact filter it began with, so `now` is never recomputed while
     /// walking pages.
@@ -691,6 +694,7 @@ impl Statistics {
             page_size: 10,
             page_size_select,
             page_input,
+            pager_focus: None,
             frozen_range: None,
             custom_range: (local_midnight_days_ago(0), now_ms()),
             rows_cursors: pagination::Pager::default(),
@@ -1746,6 +1750,9 @@ impl Statistics {
                 self.loading_rows = false;
             }
             Ok(value) => self.apply_reply(kind, &tag, value, window, cx),
+        }
+        if rows_reply && !self.loading_rows {
+            self.restore_pager_focus(window, cx);
         }
         cx.notify();
     }
@@ -3001,11 +3008,10 @@ impl Statistics {
                     busy || !previous,
                 )
                 .when(compact, |button| button.h(px(32.)))
-                .on_click(
-                    cx.listener(move |this, _, _, cx| {
-                        this.navigate_page(page.saturating_sub(1), cx)
-                    }),
-                ),
+                .on_click(cx.listener(move |this, event, window, cx| {
+                    this.remember_pager_focus(event, true, window, cx);
+                    this.navigate_page(page.saturating_sub(1), cx)
+                })),
             )
             .child(
                 crate::ui_components::pager_button(
@@ -3014,7 +3020,10 @@ impl Statistics {
                     busy || !next,
                 )
                 .when(compact, |button| button.h(px(32.)))
-                .on_click(cx.listener(move |this, _, _, cx| this.navigate_page(page + 1, cx))),
+                .on_click(cx.listener(move |this, event, window, cx| {
+                    this.remember_pager_focus(event, false, window, cx);
+                    this.navigate_page(page + 1, cx)
+                })),
             )
             .child(
                 div().w(px(125.)).child(

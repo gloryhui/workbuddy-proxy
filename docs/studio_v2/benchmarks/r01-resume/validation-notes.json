@@ -1,0 +1,17 @@
+{
+  "initial_unit_test_failure": {
+    "result": "206pass/1failed/2ignored",
+    "test": "external_save64_refreshes_clean_selection_without_replacing_another_dirty_draft",
+    "cause": "New synthetic model fixture inherited duplicate default aliases, causing Config::validate to reject it. Explicit per-model alias/name corrected; production validation was retained.",
+    "final_result": "207pass/0failed/2existing ignored"
+  },
+  "initial_external_core_assertion": {
+    "result": "Real save succeeded; raw equality of other provider rejected existing Core explicit default serialization.",
+    "resolution": "Did not retry save; inspected protocol/protocol_settings/capabilities-null defaults and proved normalized business fields plus14 history/cost rows unchanged."
+  },
+  "capture_assertion": {
+    "result": "All41 PNG-named captures were originalJPEG bytes.",
+    "resolution": "Corrected suffixes and record references only; preserved original SHA and source, no reencoding."
+  },
+  "close_readback_note": "gpui.json is removed by normal UI exit. Final stopped-state verification used recorded guard PIDs and read-only process checks, without reopening the app."
+}

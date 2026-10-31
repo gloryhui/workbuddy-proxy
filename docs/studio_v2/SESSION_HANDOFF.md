@@ -1,8 +1,17 @@
-# Studio V2 新会话交接（2026-11-01）
+# Studio V2 会话交接与恢复状态（2026-11-01）
 
-用户明确要求：完成当前输入/冷读证据收口后暂停 Goal，换新会话继续。本文件是交接记录，不会自动恢复 Goal。新会话需先核对当前 Git / Goal / 工具 / 设备状态。
+此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 当前位置
+## 本轮恢复进展（QA76）
+
+- 最终候选SHA256 `631599c2bc50295cb8164ed6be583974b7a3d01bfb7568739e0655d25133ccfd`；GPUI207pass/2既有ignore、fmt、strict Clippy、Intel类型检查、arm64release通过。源码绑定见[构建](benchmarks/r01-resume/build-final.json)。
+- 已修复并真实补验R01.1外部save64活动表刷新、modal延后、dirty草稿保留/重基准/原生冷重开，以及R01.2末页Next disabled后ShiftTab/Return焦点恢复。14请求/成本逐字段保持。[本轮总结](benchmarks/r01-resume/summary.json)。
+- 35wrapper/114调用点只是源码slot索引；R01.1全适用状态/实际尺寸仍待。R01.2拖宽仍无真实成功证据。R01.3本轮n/i只落ASCII，当前输入源未确立，未切源；旧Qingjian成功证据单列。R01.4真实AT未做，严禁自动开启旁白/辅助功能。剩余界面0/40、仍18项发布任务待验。
+- 本轮41份CUA原始截图为JPEG，误用PNG后缀已只改扩展名并记录hash。小窗旧end图实际上是页首，正确末行图另存，见native-verification与image-manifest。
+- 本轮UI全部关闭，三Core及驱动退出0；专用`studio-v2-r01-resume.y1i2hhhb`已按完整预检精确清理，129测试文件约273MiB，本轮临时保留0。不要再启动已删除bundle；旧preview/共享缓存/旧基准Core未动。
+- 下一步仍按R01余项整批推进，不重做40帧/主题组合，不将本轮两处修复当整项R01签收；再按R02→R03→R04。当前无公开发布授权。
+
+## 当前位置（此前交接基线）
 
 - 工作区：`/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy`；分支 `feat/studio_v2_gpui`。勿误用另一 checkout，先 `git worktree list --porcelain`、`git status`、核对远端。
 - 最新设计：Figma `zxDfIQ4lhNcTXrFT7qk8QZ`，页 `51:2`。B01–B05、40帧/80张两尺寸原生主图及R01.5集中签收已完成。**剩余界面0/40；18项发布任务未通过。** 未获公开发布授权。
@@ -19,8 +28,8 @@
 
 ## 恢复后的顺序
 
-1. 先处理R01余项，整批集中补验、修正、验收，不要从40帧逐项重做或反复微调。R01.1还缺唯一组件全状态/slot及外部Save64后活动表刷新/草稿边界；忙态去重已有证据，避免重跑同一测试。
-2. R01.2重点复现“下一页”变disabled后的ShiftTab焦点恢复。表头真实拖宽此前两端点CUA拖动无变化，不能把单测冒称物理拖动成功；只用工具支持的真实输入。其余键盘路径已归档，按缺口补。
+1. 先处理R01余项，整批集中补验、修正、验收，不要从40帧逐项重做或反复微调。R01.1仍缺唯一组件全状态/实际slot；外部Save64活动表/草稿边界已由QA76补验，忙态去重亦有既有证据，避免重复。
+2. R01.2“下一页”disabled后的ShiftTab焦点恢复已由QA76修复补验。表头真实拖宽此前两端点CUA拖动无变化，不能把单测冒称物理拖动成功；只用工具支持的真实输入。其余键盘路径已归档，按缺口补。
 3. R01.3按不同输入引擎补composition中Enter/Esc和切换/取消。真实Qingjian已经成功，不需要切系统拼音，也不要把CUA typeText当IME。Key只用合成值，安全AX不读出不能编造精确值。
 4. R01.4真实辅助技术仍缺。**用户反对自动开启旁白：禁止再次自动启动VoiceOver、系统辅助功能或更改输入源。** 现旁白已关。七主题三语言已完成，勿重复做21轮。
 5. 再按R02→R03→R04。真实Windows/Intel硬件、2x屏幕、安装/签名/公证及CI待有相应环境/凭据时验收；当前只有1920×1080的macOS arm64 1x虚拟显示器。Intel cargo check不等于Intel硬件运行。

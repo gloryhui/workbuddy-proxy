@@ -1,0 +1,68 @@
+{
+  "at": "2026-11-01T01:29:00.749728+08:00",
+  "removed_exact_target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-resume.y1i2hhhb",
+  "removed_files": 129,
+  "removed_logical_bytes": 286526608,
+  "system_free_before_bytes": 36171800576,
+  "system_free_after_bytes": 36496646144,
+  "observed_free_delta_bytes": 324845568,
+  "this_session_temporary_files_retained": 0,
+  "this_session_temporary_bytes_retained": 0,
+  "other_sessions_preserved": [
+    {
+      "name": "wbp-v2-preview-ef9cmzhf",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round57.1f9nnpvn",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round51.9euy2zwt",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round54.v9t50wwf",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round46.wyah2h0f",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round55.7lgswipl",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round47.l5v17qlr",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round53.6h7war54",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round52.mwra9zi3",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round56.cz87i80u",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round49.8gkpr6s8",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round50.cg_5__81",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    },
+    {
+      "name": "studio-v2-round48.g8914rm5",
+      "retained_reason": "Not created by this session; ownership/content not inferred from prefix."
+    }
+  ],
+  "shared_cargo_caches_preserved": true,
+  "old_baseline_Core_preserved": true,
+  "ui_and_cores_confirmed_exited_before_cleanup": true
+}

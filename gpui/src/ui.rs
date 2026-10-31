@@ -1476,7 +1476,7 @@ impl Proxy {
             }
         }
     }
-    fn reconcile_failed_delete(
+    fn reconcile_live_config(
         &mut self,
         cfg: Config,
         snapshot: &Value,
@@ -1504,6 +1504,10 @@ impl Proxy {
         if reload {
             self.load_form(window, cx);
         }
+        // An external save changes the on-disk fingerprint even if the local
+        // dirty draft is unchanged. Rebase its private persistence now, or a
+        // later cold launch would discard the preserved draft as stale.
+        let _ = self.drafts.persist(&self.dir);
         // Keep the original error. A refreshed persisted view is not a success
         // receipt and must not send any save/delete/sync operation.
         cx.notify();
@@ -1685,6 +1689,27 @@ impl Proxy {
             }
             if reply.tag == "poll" {
                 self.polling = false;
+                // External management saves update the active clean form too.
+                // Defer while a modal owns a snapshot; the next poll retries.
+                // In-place provider edits and other dirty drafts are retained
+                // by refresh_drafts, without issuing a compensating Core save.
+                if !self.busy
+                    && !self.dialog_open
+                    && self.editing.is_none()
+                    && self.picker.is_none()
+                    && !self.protocol_open
+                    && !self.delete_open
+                    && !self.sync_open
+                    && !self.unsync_open
+                    && !self.startup_sync_open
+                    && !self.port_open
+                    && self.pending_port.is_none()
+                    && let (Some(cfg), Some(snapshot)) =
+                        (reply.config.take(), reply.snapshot.as_ref())
+                    && serde_json::to_value(&cfg).ok() != serde_json::to_value(&self.cfg).ok()
+                {
+                    self.reconcile_live_config(cfg, snapshot, window, cx);
+                }
                 // D13: the skeleton reads the relay state from this very poll
                 // reply, so a core that stops answering can never keep showing
                 // as healthy. A poll only carries a snapshot when the core
@@ -1800,7 +1825,7 @@ impl Proxy {
                     && let (Some(cfg), Some(snapshot)) =
                         (reply.config.take(), reply.snapshot.as_ref())
                 {
-                    self.reconcile_failed_delete(cfg, snapshot, window, cx);
+                    self.reconcile_live_config(cfg, snapshot, window, cx);
                 }
                 if reply.synced || (reply.tag == "port" && reply.result.is_ok()) {
                     self.startup_report = None;

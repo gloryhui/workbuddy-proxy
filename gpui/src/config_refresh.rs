@@ -1,4 +1,5 @@
-//! Read-only recovery after a rejected delete. Never initialize a configuration.
+//! Read-only reconciliation of live external changes and rejected deletes.
+//! Never initialize a configuration or overwrite an unsaved draft.
 use crate::{
     config::Config,
     state::{Draft, Drafts},
@@ -218,6 +219,33 @@ mod tests {
         let original = editing.providers["prov-b"].clone();
         assert!(!refresh_drafts(&mut editing, &before, &after, |id| id == "prov-b"));
         assert!(editing.providers["prov-b"] == original);
+    }
+
+    #[test]
+    fn external_save64_refreshes_clean_selection_without_replacing_another_dirty_draft() {
+        let dir = tempfile::tempdir().unwrap();
+        let before = config(&["prov-a", "prov-b"]);
+        let mut after = before.clone();
+        after.providers[0].models.extend((1..64).map(|i| Model {
+            id: format!("route-{i}"),
+            alias: format!("prov-a/model-{i}"),
+            name: format!("model-{i}"),
+            model: format!("model-{i}"),
+            ..Default::default()
+        }));
+        let mut drafts = Drafts::from_config(dir.path(), &before);
+        drafts.selected = "prov-a".into();
+        drafts.providers.get_mut("prov-b").unwrap().name = "Unsaved local name".into();
+        let dirty = drafts.providers["prov-b"].clone();
+        assert!(matches_core(&before, &after, &snapshot(&after)));
+        assert!(refresh_drafts(&mut drafts, &before, &after, |_| false));
+        assert_eq!(drafts.selected, "prov-a");
+        assert_eq!(drafts.providers["prov-a"].models.len(), 64);
+        assert!(drafts.providers["prov-b"] == dirty);
+        // Repeated live polls must leave the local draft intact, and the
+        // already-refreshed form must not be reloaded on every idle poll.
+        assert!(!refresh_drafts(&mut drafts, &after, &after, |_| false));
+        assert!(drafts.providers["prov-b"] == dirty);
     }
 
     #[test]

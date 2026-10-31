@@ -1,0 +1,78 @@
+{
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-resume.y1i2hhhb",
+  "type": "session-owned temporary directory",
+  "uid": 501,
+  "worktree": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "ownership": {
+    "created_at": "2026-11-01T01:08:31.918447+08:00",
+    "session": "01a192ed-9fb7-77c3-b543-da7332068939",
+    "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-resume.y1i2hhhb",
+    "worktree": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+    "uid": 501,
+    "reused_core": "/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core",
+    "reused_ui": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+    "purpose": "R01 remaining native focus, drag, external config refresh; isolated synthetic config only"
+  },
+  "parent_component_checks": [
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "is_mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-r01-resume.y1i2hhhb",
+      "uid": 501,
+      "device": 16777233,
+      "is_mount": false
+    }
+  ],
+  "files": 129,
+  "logical_bytes": 286526608,
+  "all_three_fixture_cores_exited_zero": true,
+  "all_observed_ui_pids_gone": [
+    71393,
+    73623,
+    75626,
+    76211
+  ],
+  "lsof_no_open_references": true,
+  "regenerable": "This session created scripts/synthetic configs/DBs, copied hashed Core/UI and deny-only guard; evidence archived. No real profile/shared cache inside target.",
+  "system_free_before_bytes": 36171800576
+}

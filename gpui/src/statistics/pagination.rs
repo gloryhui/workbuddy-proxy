@@ -110,6 +110,47 @@ impl<C: Clone> Pager<C> {
 }
 
 impl super::Statistics {
+    pub(super) fn remember_pager_focus(
+        &mut self,
+        event: &gpui_kit::ClickEvent,
+        previous: bool,
+        window: &gpui_kit::Window,
+        cx: &gpui_kit::App,
+    ) {
+        self.pager_focus = matches!(event, gpui_kit::ClickEvent::Keyboard(_))
+            .then(|| window.focused(cx).map(|focus| (focus, previous)))
+            .flatten();
+    }
+
+    pub(super) fn restore_pager_focus(
+        &mut self,
+        window: &mut gpui_kit::Window,
+        cx: &mut gpui_kit::Context<Self>,
+    ) {
+        use gpui_kit::Focusable;
+        let Some((origin, previous)) = self.pager_focus.take() else {
+            return;
+        };
+        let (back, next) = match self.tab {
+            super::Tab::Requests => (
+                self.rows_cursors.can_go_back(),
+                self.rows_cursors.can_go_next(),
+            ),
+            _ => (
+                self.group_pages.can_go_back(),
+                self.group_pages.can_go_next(),
+            ),
+        };
+        // Do not steal focus if the user moved elsewhere during the request.
+        // Keep it on the original button when that button is still enabled.
+        if !(if previous { back } else { next }) && origin.is_focused(window) {
+            self.page_size_select
+                .read(cx)
+                .focus_handle(cx)
+                .focus(window, cx);
+        }
+    }
+
     pub(super) fn request_listing(&mut self, cx: &mut gpui_kit::Context<Self>) {
         match self.tab {
             super::Tab::Requests => self.request_rows(cx),
