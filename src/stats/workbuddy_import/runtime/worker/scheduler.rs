@@ -46,11 +46,22 @@ impl<'a> Worker<'a> {
              AND EXISTS(SELECT 1 FROM stats_settings WHERE singleton=1 AND workbuddy_last_full_scan_ms IS NOT NULL)",
             [], |row|row.get(0)).map_err(|_|"stats_unavailable")?;
         if full_active {
-            shared.progress.lock().unwrap().scan = Some(ScanTask {
-                id: crate::config::token(),
-                mode: ScanMode::Full,
-                state: ScanState::Running,
-            });
+            let mut progress = shared.progress.lock().unwrap();
+            match progress.scan.as_mut() {
+                // A reader can restart after a transient database error, or
+                // start after a request was already accepted. Its caller must
+                // still be able to observe completion using that same ID.
+                Some(task) if matches!(task.state, ScanState::Queued | ScanState::Running) => {
+                    task.mode = ScanMode::Full;
+                }
+                _ => {
+                    progress.scan = Some(ScanTask {
+                        id: crate::config::token(),
+                        mode: ScanMode::Full,
+                        state: ScanState::Running,
+                    });
+                }
+            }
         }
         Ok(Self {
             inner,
@@ -518,6 +529,78 @@ impl<'a> Worker<'a> {
                 .wait_timeout(guard, remaining.min(Duration::from_millis(100)))
                 .unwrap();
             guard = next;
+        }
+    }
+}
+
+#[cfg(test)]
+mod recovery_tests {
+    use super::*;
+
+    #[test]
+    fn resuming_a_full_scan_keeps_the_accepted_request_identity() {
+        for (mode, state) in [
+            (ScanMode::Full, ScanState::Queued),
+            (ScanMode::Full, ScanState::Running),
+            (ScanMode::Incremental, ScanState::Queued),
+            (ScanMode::Incremental, ScanState::Running),
+            (ScanMode::Full, ScanState::Completed),
+            (ScanMode::Full, ScanState::Failed),
+        ] {
+            let folder = tempfile::tempdir().unwrap();
+            let db = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+            db.execute_batch(
+                "CREATE TABLE workbuddy_import_files(scan_generation INTEGER, generation INTEGER);
+                 INSERT INTO workbuddy_import_files VALUES(0,1);
+                 CREATE TABLE stats_settings(singleton INTEGER, workbuddy_last_full_scan_ms INTEGER);
+                 INSERT INTO stats_settings VALUES(1,1);",
+            )
+            .unwrap();
+            drop(db);
+            let (inner, _control) = crate::stats::StatsHandle::initialize(folder.path().into());
+            let shared = &inner.import_runtime;
+            shared.configure(true);
+            let requested_mode = if mode == ScanMode::Full {
+                "full"
+            } else {
+                "incremental"
+            };
+            let accepted: serde_json::Value =
+                serde_json::from_str(&shared.request_scan(requested_mode).unwrap()).unwrap();
+            shared.progress.lock().unwrap().scan.as_mut().unwrap().state = state;
+            let root = reader::ReaderRoot::new(folder.path().join("synthetic-source"));
+            let (sender, _receiver) = mpsc::sync_channel(1);
+            let worker = Worker::new(&inner, &root, &sender, shared).unwrap();
+            assert!(worker.full_active);
+            let progress = shared.progress.lock().unwrap();
+            let resumed = progress.scan.as_ref().unwrap();
+            let active = matches!(state, ScanState::Queued | ScanState::Running);
+            if active {
+                assert_eq!(resumed.id, accepted["scan_id"].as_str().unwrap());
+                assert!(resumed.state == state);
+            } else {
+                assert_ne!(resumed.id, accepted["scan_id"].as_str().unwrap());
+                assert!(resumed.state == ScanState::Running);
+            }
+            assert!(resumed.mode == ScanMode::Full);
+            let resumed_id = resumed.id.clone();
+            drop(progress);
+            drop(worker);
+            // A second reader restart must coalesce with the same active job.
+            let worker = Worker::new(&inner, &root, &sender, shared).unwrap();
+            assert!(worker.full_active);
+            let repeated: serde_json::Value =
+                serde_json::from_str(&shared.request_scan("full").unwrap()).unwrap();
+            assert_eq!(repeated["scan_id"], resumed_id);
+            let checkpoint: (i64, i64) = worker
+                .conn
+                .query_row(
+                    "SELECT scan_generation,generation FROM workbuddy_import_files",
+                    [],
+                    |row| Ok((row.get(0)?, row.get(1)?)),
+                )
+                .unwrap();
+            assert_eq!(checkpoint, (0, 1));
         }
     }
 }

@@ -112,8 +112,12 @@ async fn full_scan(running: &Running) {
             return;
         }
         assert!(
+            status["scan_id"] != scan["scan_id"] || status["scan_state"] != "failed",
+            "full credit rescan failed: requested={scan}, status={status}"
+        );
+        assert!(
             Instant::now() < deadline,
-            "full credit rescan did not complete: {status}"
+            "full credit rescan did not complete: requested={scan}, status={status}"
         );
         tokio::time::sleep(Duration::from_millis(25)).await;
     }
