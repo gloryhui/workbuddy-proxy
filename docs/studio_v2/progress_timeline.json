@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T03:15:14+08:00",
+  "updated_at": "2026-11-01T04:27:29+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "74b1e093d8b9c3e5f91443edb568087245edc58d",
@@ -13,7 +13,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 78,
+  "recorded_tasks": 79,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -26,34 +26,33 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 78,
-    "title": "Windows窗控避让、原生长列表静置与RC候选CI证据",
+    "id": 79,
+    "title": "扫描身份与重试修复、原生对照及新增启动锁故障",
     "status": "recorded",
-    "description": "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。"
+    "description": "已推送771a7a7与7bec6cc两处Core修复，UI字节仍490530dd；Core最终7fa463c3。读取线程重建保留已接受Queued/Running扫描ID，终态另建恢复任务；过期/SQLiteBusy/Locked批次重新读取持久游标，成功完成不再保留瞬时错误，已有真实source/storage失败不清除。原广泛stale映射改按类型区分，永久错误仍失败；日志只记录固定错误码，注入仅cfg(test)，无schema/"
   },
   "latest_task": {
-    "id": 78,
-    "title": "Windows窗控避让、原生长列表静置与RC候选CI证据",
+    "id": 79,
+    "title": "扫描身份与重试修复、原生对照及新增启动锁故障",
     "status": "recorded",
-    "summary": "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。",
+    "summary": "已推送771a7a7与7bec6cc两处Core修复，UI字节仍490530dd；Core最终7fa463c3。读取线程重建保留已接受Queued/Running扫描ID，终态另建恢复任务；过期/SQLiteBusy/Locked批次重新读取持久游标，成功完成不再保留瞬时错误，已有真实source/storage失败不清除。原广泛stale映射改按类型区分，永久错误仍失败；日志只记录固定错误码，注入仅cfg(test)，无schema/",
     "highlights": [
-      "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。",
-      "Windows源码确认Kit右侧三caption控件各34px宽、实际标题栏24px高；旧应用工具栏top8/right32/width300，横向重叠70px且纵向相交16px。运行时代码74b1e09将Windows工具栏下移至32px，Mac仍8px；增加1100/1440与1/1.25/1.5/2几何投影回归，保持事件/业务处理器。此为数学/源码证据，不是假定Windows系统缩放已验。fmt、208pass/2既有ignore、strictClippy、Intel all-targets check、arm64Release通过，Mac产物仍490530dd/Core25f24ad6。构建、来源。",
-      "b167原候选Core41227146468与Desktop41227149652四个job实际终态success；Windows/macOS arm64/原生Intel runner三个artifact均通过连接器下载并核对GitHub digest，解出原始JSON报告。Windows ZIP、Core兼容/登录项脚本和包生命周期、Unicode/空格定制路径/同路径重装/快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过。它们不是74b/2da的最终通过，不包含实际旧版本升级、全键盘/IME/缩放与托盘矩阵。旧候选总结。"
+      "已推送771a7a7与7bec6cc两处Core修复，UI字节仍490530dd；Core最终7fa463c3。读取线程重建保留已接受Queued/Running扫描ID，终态另建恢复任务；过期/SQLiteBusy/Locked批次重新读取持久游标，成功完成不再保留瞬时错误，已有真实source/storage失败不清除。原广泛stale映射改按类型区分，永久错误仍失败；日志只记录固定错误码，注入仅cfg(test)，无schema/费率/配置格式修改。6状态identity回归、真实API→writerACK→reader注入、永久错误对照均保留修前红与修后绿。总结、调查。",
+      "最终源码87文件hash核对，Core577pass、fmt/strictClippy/release及24组命令全部本地通过，158导入/15故障、19真实发现/10创建及两既有GPUIignored实际Core条件补验通过。第一次identity红因fixture缺singleton而失败，原样保留但不作产品复现；修正fixture后的红才证明ID覆盖。25次有界本地credit诊断未自然复现远端拒绝，只作描述，未以重跑通过豁免。最终检查。",
+      "771 Core41235308376成功，Desktop41235312592 Windows/arm64成功、原生Intel124637734315的credit测试失败（573pass1fail）。原始请求与状态ID相同、终态failed/无pending/全字节已提交且writer_failure1；此时旧拒绝code未记，不能从95us推断唯一根因。真实注入旧无条件pass_failed复现这一故障类，stale/busy新策略均clean completed，而永久storage仍failed，既有历史/credit精确保持。失败job平台由job.name核验，不按ID顺序推断；未重跑失败job。"
     ],
     "limits": [
-      "a6e9618完整一致manifest/lock重建出ba525f80基线，保留可追溯本地参考产物约40.5MiB，尚未执行最终P/C/C/P。共享Cargo平面输出被baseline构建覆盖，current cargo判fresh未替换；哈希断言及时拦截并从确证备份恢复4905，期间未错误运行基线冒充候选。碰撞与恢复原样保留，后续启动一律核验hash；历史B01/B03/B04成本不撤销。基线准备。README现行分发明确Mac ad-hoc未公证/Windows无Authenticode；本机只读DeveloperIDApplication0，未读取私钥/尝试签名上传，真实下载隔离/Gatekeeper/SmartScreen仍",
-      "此补证仅默认英文/1供应商64模型/0请求的代表页，fixture未强制皮肤，不声称Windows40帧/所有主题通过；caption实际点击命中、Ctrl/中文IME、125/150/200%仍待。held harness退出0、单实例/草稿/正常退出报告与独立普通package诊断/installer报告分别保留。Windows远端清理53,928,018字节；本地另精确清理2文件60,728,071字节下载目录，仅保留原图/JSON，未在Mac执行Windows二进制。两专属目录合计清理约486MiB，本轮临时0，必要基线仍约40.5MiB，系统盘约34GiB。最新2da两Mac仍in_progress，不能把Windows单"
+      "最新7bec Core41237875609单元577pass，却在导入集成DB锁恢复156pass2fail：7秒锁期间代理可答复，释放后既定30秒仍4条而预期5条；原报告artifact13056448354 ZIP digest c31f04a1已核对，不放宽期限、不重跑到绿。Desktop41237884989原run还在运行，下一轮只读原终态。旧2da Core41231726063/Desktop41231731650四job已全部success，两Mac artifact13054881268/13054867223 digest及原JSON归档；旧全绿不代表当前通过。当前首次失败、旧2da。"
     ],
     "evidence": [
       {
-        "label": "本轮总结",
-        "href": "benchmarks/rc-round78-summary.json"
+        "label": "总结",
+        "href": "benchmarks/rc-round79-summary.json"
       }
     ],
-    "commit": "e06ce69f895f54d84897537ed98b9d203d3cbbe5",
-    "date": "2026-11-01T03:08:28+08:00",
-    "commit_subject": "docs(studio): record RC checks and native long-list observations",
+    "commit": "decfb54c173321a8d70b7c72017780bec72f4b77",
+    "date": "2026-11-01T04:27:16+08:00",
+    "commit_subject": "test(studio): record scan recovery regressions and QA79 evidence",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2273,7 +2272,7 @@
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 78,
+    "historical_tasks": 79,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3404,12 +3403,13 @@
             "id": "R02.3",
             "title": "Intel原生发行包与硬件",
             "acceptance": "pending",
-            "completed": "x86_64编译/链接、thin测试及Rosetta真实运行已完成。 QA78 b167在macos-15-intel原生x86_64 runner实际构建并完成DMG包启动/关闭/重开/正常退出，包报告和artifact digest均保留；尚缺原生截图/完整主流程、托盘及匹配性能，不以Rosetta或PID记录签收整项。",
-            "remaining": "使用Intel硬件或可验证原生执行环境跑安装/启动/主流程/窗口/托盘/性能；缺环境则阻塞本门禁。",
+            "completed": "x86_64编译/链接、thin测试及Rosetta真实运行已完成。 QA78 b167在macos-15-intel原生x86_64 runner实际构建并完成DMG包启动/关闭/重开/正常退出，包报告和artifact digest均保留；尚缺原生截图/完整主流程、托盘及匹配性能，不以Rosetta或PID记录签收整项。 QA79核对2da Intel原run124627179928最终success及artifact13054867223 digest，仍只是包/现有harness证据。771 Intel Corecredit测试失败保留，7bec原run继续核验。",
+            "remaining": "使用Intel硬件或可验证原生执行环境跑安装/启动/主流程/窗口/托盘/性能；缺环境则阻塞本门禁。 原生Intel完整GUI/托盘/匹配性能仍缺；不能凭CI构建或生命周期报告签收。",
             "acceptance_check": "产物架构正确，原生GPU/窗口运行通过；Rosetta证据单列，不冒称Intel实机。",
             "history_tasks": [
               52,
-              78
+              78,
+              79
             ]
           },
           {
@@ -3451,8 +3451,8 @@
             "id": "R03.1",
             "title": "统一最终基线和测量条件",
             "acceptance": "pending",
-            "completed": "现有benchmark参数、Core/UI独立RSS、process→marker与P/C/C/P已建立。 QA78已从a6e9618和相同manifest/lock重建ba525f80基线，并保留本地可追溯参考产物；最终同条件P/C/C/P尚未执行。共享Cargo平面产物覆盖被哈希断言拦截并恢复4905，未误跑旧产物。",
-            "remaining": "已重建并保留a6e基线；下一轮同机同Core/数据/窗口/操作历史P/C/C/P四轮，保留全部原样本、体积/启动/RSS/延迟口径与脚本哈希。",
+            "completed": "现有benchmark参数、Core/UI独立RSS、process→marker与P/C/C/P已建立。 QA78已从a6e9618和相同manifest/lock重建ba525f80基线，并保留本地可追溯参考产物；最终同条件P/C/C/P尚未执行。共享Cargo平面产物覆盖被哈希断言拦截并恢复4905，未误跑旧产物。 QA79中间771/f807与基线a6e/25f已完成完整原生P/C/C/P，额外C3/P3诊断；全6份原样本/原始JPEG/AX/资源证据保留。最终7bec/7fa Core的原生首轮CUA-10005超时，未启动UI或采样；另有最终Core独立headless四轮，不能冒充最终完整UI对照。",
+            "remaining": "已重建并保留a6e基线；下一轮同机同Core/数据/窗口/操作历史P/C/C/P四轮，保留全部原样本、体积/启动/RSS/延迟口径与脚本哈希。 最终7bec原生匹配P/C/C/P仍待可用CUA环境；同Core UI成本与完整旧基线需分开，头部Core控制不作精确因果相减。",
             "acceptance_check": "记录Core/UI/合计RSS、二进制体积、启动、p50/p95及原负载；不混候选/架构，不丢慢样本。",
             "history_tasks": [
               2,
@@ -3460,27 +3460,29 @@
               57,
               66,
               67,
-              78
+              78,
+              79
             ]
           },
           {
             "id": "R03.2",
             "title": "峰值差异诊断与最终结论",
             "acceptance": "pending",
-            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。",
-            "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。 QA71原四轮UI RSS+11.005MiB/组合+12.56MiB/峰值+16.565MiB；preload footprint旧120.3M/新119.35M，malloc allocated旧21.0M/新21.1M，并不排除RSS回退。原样本和资源原行见b04-resource-diagnostics；不以短测功能签收冒称R03通过。 QA72同Core旧d08/新78原四轮：UI RSS+0.055MiB/合计-0.155MiB/采样峰值+3.33MiB，process→marker-130.1675ms、proxy p95-0.0095ms；有效负载后live vmmap和全部原样本保留，不抵消B01/B03/B04历史成本。",
+            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。 QA79中间完整基线四轮合计空闲-0.07MiB/UI+0.14MiB/峰值+1.815MiB；f807并非最终Core，历史成本不撤销。livevmmap发现current1图形驻留；另C3立即125.6M/graphics62.6M降至15/30秒70.8M/10.1M，保留全部样本，不解释QA78长时增长。最终Coreheadless就绪468/52ms对基线52/52ms，慢样本原因未定。",
+            "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。 QA71原四轮UI RSS+11.005MiB/组合+12.56MiB/峰值+16.565MiB；preload footprint旧120.3M/新119.35M，malloc allocated旧21.0M/新21.1M，并不排除RSS回退。原样本和资源原行见b04-resource-diagnostics；不以短测功能签收冒称R03通过。 QA72同Core旧d08/新78原四轮：UI RSS+0.055MiB/合计-0.155MiB/采样峰值+3.33MiB，process→marker-130.1675ms、proxy p95-0.0095ms；有效负载后live vmmap和全部原样本保留，不抵消B01/B03/B04历史成本。 最终Core原生测量未开始；继续解释独立启动慢样本与4096长静置增长，RSS/footprint口径保持分离。",
             "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
             "history_tasks": [
               67,
-              78
+              78,
+              79
             ]
           },
           {
             "id": "R03.3",
             "title": "长列表、重开与静置观察",
             "acceptance": "pending",
-            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。",
-            "remaining": "已补64/256/4096、1014请求分页和三次原生重开，弹窗/菜单各10分钟记录分开；需解释发现弹窗RSS增长和CPU差异，再判断无持续增长/空闲异常，不能仅凭短时可操作签收。",
+            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。 QA79短负载图形驻留追加15/30秒观察已归档；仍不能代替QA78发现弹窗600秒+2.266MiB的持续增长判断。",
+            "remaining": "已补64/256/4096、1014请求分页和三次原生重开，弹窗/菜单各10分钟记录分开；需解释发现弹窗RSS增长和CPU差异，再判断无持续增长/空闲异常，不能仅凭短时可操作签收。 4096发现弹窗长时分配/图形驻留/CPU仍需最终候选诊断；本轮未因短图形回落签收。",
             "acceptance_check": "无可复现持续内存增长、无空闲异常高CPU、交互无明显阻塞；请求延迟不冒充FPS或输入时延。",
             "history_tasks": [
               20,
@@ -3489,15 +3491,16 @@
               41,
               51,
               58,
-              78
+              78,
+              79
             ]
           },
           {
             "id": "R03.4",
             "title": "Core全套契约与数据不变",
             "acceptance": "pending",
-            "completed": "原Core逻辑/配置格式保留，路由/协议/统计/导入等已有脚本和历史证据。 QA78当前Core25f本地573测试及22组命令全通过，含158导入/15故障、19发现/10创建契约；b167四CIjob通过。但74b Ubuntu首次571pass/1fail：积分升级full_scan15秒未观测到请求ID完成，最终status completed且batch_failure1，原因未定；Mac同测试3次pass，同SHA远端重跑成功，首次失败保留且不豁免本门禁。",
-            "remaining": "保留74b Ubuntu积分升级扫描首次失败，进一步记录请求scan_id/最终状态和writer失败原因并验证可靠性；同SHA重跑成功不抹除偶发失败。后续若改Core或UI业务路径需重跑相关契约并绑定最终源码/产物。",
+            "completed": "原Core逻辑/配置格式保留，路由/协议/统计/导入等已有脚本和历史证据。 QA78当前Core25f本地573测试及22组命令全通过，含158导入/15故障、19发现/10创建契约；b167四CIjob通过。但74b Ubuntu首次571pass/1fail：积分升级full_scan15秒未观测到请求ID完成，最终status completed且batch_failure1，原因未定；Mac同测试3次pass，同SHA远端重跑成功，首次失败保留且不豁免本门禁。 QA79修复读取线程恢复覆盖已接受scan_id（771）与重试成功仍标失败（7bec），增加真实writerACK故障注入及永久存储错误区分；当前577test/24命令/158导入/15故障/19发现/10创建本地通过。771原生Intel再现同IDfailed/写入已完成/batchfailure1，原始拒绝代码未知；无条件pass_failed故障类已红绿复现。7bec最新Ubuntu577test通过但集成锁恢复156pass2fail，另确定性复现启动DB锁使stats永久disabled，尚未修。",
+            "remaining": "保留74b Ubuntu积分升级扫描首次失败，进一步记录请求scan_id/最终状态和writer失败原因并验证可靠性；同SHA重跑成功不抹除偶发失败。后续若改Core或UI业务路径需重跑相关契约并绑定最终源码/产物。 保持所有首次失败、不重跑到绿。优先修SQLite启动锁恢复并保持recovery/runinterval事务幂等，保留schema-too-new等永久拒绝。原CI缺Corelog/status，增强失败诊断；绑定新源码重跑最终契约。",
             "acceptance_check": "原配置和Key兼容，取消/失败/保存边界不回退，历史快照/导入去重不破坏；全部结果绑定最终提交。",
             "history_tasks": [
               22,
@@ -3509,20 +3512,22 @@
               63,
               65,
               67,
-              78
+              78,
+              79
             ]
           },
           {
             "id": "R03.5",
             "title": "最终构建和性能报告",
             "acceptance": "pending",
-            "completed": "GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。 QA78 GPUI208pass/2既有ignore、fmt/strictClippy/Intelcheck/arm64release通过，Mac UI仍4905/Core25f；Win项目平台差异207pass/2ignore。原始fixture两ignored通过单列；同源码最终CI/平台/性能均按实际候选分别绑定，未虚假全绿。",
-            "remaining": "共享Cargo缓存一次完成最终Core+GPUI门禁，汇总分平台性能、局限和产物SHA。",
+            "completed": "GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。 QA78 GPUI208pass/2既有ignore、fmt/strictClippy/Intelcheck/arm64release通过，Mac UI仍4905/Core25f；Win项目平台差异207pass/2ignore。原始fixture两ignored通过单列；同源码最终CI/平台/性能均按实际候选分别绑定，未虚假全绿。 QA79最终Core7fa463/当前UI4905已冻结；24项本地检查通过、Core577pass，两个GPUI既有ignored在真实Core条件补验通过。新CoreCI集成锁恢复未过，最终native性能无样本，不能签收最终报告。",
+            "remaining": "共享Cargo缓存一次完成最终Core+GPUI门禁，汇总分平台性能、局限和产物SHA。 继续最终Core锁恢复修复及其全套/原生对照；旧f807阶段报告明确单列。",
             "acceptance_check": "既有忽略说明/所需真实Core fixture补跑单列；测试/链接/硬件/GUI证据范围分明，无虚假全绿。",
             "history_tasks": [
               52,
               67,
-              78
+              78,
+              79
             ]
           }
         ],
@@ -3550,22 +3555,24 @@
             "id": "R04.1",
             "title": "最终提交CI全矩阵",
             "acceptance": "pending",
-            "completed": "Core/desktop工作流配置包含Windows/macOS arm64/Intel构建及集成/打包脚本。 QA78已实际触发b167 Core41227146468及Desktop41227149652，四job终态success；74b Core41230163774重试后success但首次fail保留，Desktop41230175334 Windows截图失败。2da最新Core41231726063/Desktop41231731650已触发，等待真实终态，不复用旧run冒称最终通过。 2da最新Core与Windows终态success，截图后实际installer通过且末端native gate success；两Mac仍运行，整项pending。",
-            "remaining": "核验最新2da的Core41231726063/Desktop41231731650终态、原始报告及artifact SHA；Windows截图若失败保留具体显示能力证据，独立安装器通过不抵消失败。最终候选全矩阵尚未签收。",
+            "completed": "Core/desktop工作流配置包含Windows/macOS arm64/Intel构建及集成/打包脚本。 QA78已实际触发b167 Core41227146468及Desktop41227149652，四job终态success；74b Core41230163774重试后success但首次fail保留，Desktop41230175334 Windows截图失败。2da最新Core41231726063/Desktop41231731650已触发，等待真实终态，不复用旧run冒称最终通过。 2da最新Core与Windows终态success，截图后实际installer通过且末端native gate success；两Mac仍运行，整项pending。 QA79核实2da全四job最终success并核对两Mac ZIP digest/原JSON；771 Ubuntu/Windows/arm64success、Intelcredit失败保留。7bec新Core41237875609集成锁恢复失败；Desktop41237884989仍live，不重dispatch。",
+            "remaining": "核验最新2da的Core41231726063/Desktop41231731650终态、原始报告及artifact SHA；Windows截图若失败保留具体显示能力证据，独立安装器通过不抵消失败。最终候选全矩阵尚未签收。 只核验7bec Desktop原run终态及artifact，保留Core首次156pass2fail；下一源码修复后再触发新SHA矩阵，不能以旧2da全绿代替当前通过。",
             "acceptance_check": "Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。",
             "history_tasks": [
-              78
+              78,
+              79
             ]
           },
           {
             "id": "R04.2",
             "title": "DMG/ZIP/EXE安装升级卸载",
             "acceptance": "pending",
-            "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。 2da Windows新候选截图/生命周期/EXE定制目录重装卸载也通过，artifact13054441131哈希与报告归档；真实旧版升级仍未做。",
-            "remaining": "最终版本打包并实测首次安装、旧版本配置升级、覆盖安装、卸载/重装与路径含空格/Unicode。",
+            "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。 2da Windows新候选截图/生命周期/EXE定制目录重装卸载也通过，artifact13054441131哈希与报告归档；真实旧版升级仍未做。 QA79两Mac2da已终态success并核对artifact报告，旧candidate分开归档。",
+            "remaining": "最终版本打包并实测首次安装、旧版本配置升级、覆盖安装、卸载/重装与路径含空格/Unicode。 最终Core候选与实际旧版配置升级仍须按本任务完整验收。",
             "acceptance_check": "包内Core/UI架构/版本/资源一致；旧配置/Key/用量数据按既有约定保留；无残留在用进程。",
             "history_tasks": [
-              78
+              78,
+              79
             ]
           },
           {
@@ -7397,6 +7404,30 @@
       "date": "2026-11-01T03:08:28+08:00",
       "commit_subject": "docs(studio): record RC checks and native long-list observations",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 79,
+      "title": "扫描身份与重试修复、原生对照及新增启动锁故障",
+      "status": "recorded",
+      "summary": "已推送771a7a7与7bec6cc两处Core修复，UI字节仍490530dd；Core最终7fa463c3。读取线程重建保留已接受Queued/Running扫描ID，终态另建恢复任务；过期/SQLiteBusy/Locked批次重新读取持久游标，成功完成不再保留瞬时错误，已有真实source/storage失败不清除。原广泛stale映射改按类型区分，永久错误仍失败；日志只记录固定错误码，注入仅cfg(test)，无schema/",
+      "highlights": [
+        "已推送771a7a7与7bec6cc两处Core修复，UI字节仍490530dd；Core最终7fa463c3。读取线程重建保留已接受Queued/Running扫描ID，终态另建恢复任务；过期/SQLiteBusy/Locked批次重新读取持久游标，成功完成不再保留瞬时错误，已有真实source/storage失败不清除。原广泛stale映射改按类型区分，永久错误仍失败；日志只记录固定错误码，注入仅cfg(test)，无schema/费率/配置格式修改。6状态identity回归、真实API→writerACK→reader注入、永久错误对照均保留修前红与修后绿。总结、调查。",
+        "最终源码87文件hash核对，Core577pass、fmt/strictClippy/release及24组命令全部本地通过，158导入/15故障、19真实发现/10创建及两既有GPUIignored实际Core条件补验通过。第一次identity红因fixture缺singleton而失败，原样保留但不作产品复现；修正fixture后的红才证明ID覆盖。25次有界本地credit诊断未自然复现远端拒绝，只作描述，未以重跑通过豁免。最终检查。",
+        "771 Core41235308376成功，Desktop41235312592 Windows/arm64成功、原生Intel124637734315的credit测试失败（573pass1fail）。原始请求与状态ID相同、终态failed/无pending/全字节已提交且writer_failure1；此时旧拒绝code未记，不能从95us推断唯一根因。真实注入旧无条件pass_failed复现这一故障类，stale/busy新策略均clean completed，而永久storage仍failed，既有历史/credit精确保持。失败job平台由job.name核验，不按ID顺序推断；未重跑失败job。"
+      ],
+      "limits": [
+        "最新7bec Core41237875609单元577pass，却在导入集成DB锁恢复156pass2fail：7秒锁期间代理可答复，释放后既定30秒仍4条而预期5条；原报告artifact13056448354 ZIP digest c31f04a1已核对，不放宽期限、不重跑到绿。Desktop41237884989原run还在运行，下一轮只读原终态。旧2da Core41231726063/Desktop41231731650四job已全部success，两Mac artifact13054881268/13054867223 digest及原JSON归档；旧全绿不代表当前通过。当前首次失败、旧2da。"
+      ],
+      "evidence": [
+        {
+          "label": "总结",
+          "href": "benchmarks/rc-round79-summary.json"
+        }
+      ],
+      "commit": "decfb54c173321a8d70b7c72017780bec72f4b77",
+      "date": "2026-11-01T04:27:16+08:00",
+      "commit_subject": "test(studio): record scan recovery regressions and QA79 evidence",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -8693,6 +8724,21 @@
     {
       "date": "2026-11-01T03:15:14+08:00",
       "note": "QA78补齐真实Windows100%两尺寸GDI窗控避让与installer；保留首次失败，当前Core/Windows成功、两Mac待终态，0帧/18发布任务待验",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T04:27:29+08:00",
+      "note": "QA79已记录：扫描ID及重试修复已推送，本地577测试/24命令通过；最新CI锁恢复失败及启动锁disabled复现保留。最终原生性能因CUA超时未采样；0/40界面剩余、18发布任务待验，旁白/辅助功能/输入源不变。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
