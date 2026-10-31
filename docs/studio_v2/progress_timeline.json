@@ -1,9 +1,9 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T01:55:01+08:00",
+  "updated_at": "2026-11-01T03:08:42+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "5fae93d52e3c802a76693f5e298e3abcfe3bc61d",
+  "code_head": "74b1e093d8b9c3e5f91443edb568087245edc58d",
   "phase": "界面终验记录齐备 · 总体验收待核对",
   "goal_status": "active",
   "counts": {
@@ -13,7 +13,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 77,
+  "recorded_tasks": 78,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -26,29 +26,34 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 77,
-    "title": "R01组件状态审计与选项、模型行、弹层语义补齐",
+    "id": 78,
+    "title": "Windows窗控避让、原生长列表静置与RC候选CI证据",
     "status": "recorded",
-    "description": "核验2c21474分支干净后继续R01，未重做40帧或21主题组合。36wrapper/118限定调用点整理成10个适用状态族；源码slot、历史证据、本轮原生观察与未验证项逐格区分。普通供应商字段按原契约本来可编辑，灰底不等于readonly；终端日志单独readonly。适用矩阵、调用点、代表性观察。"
+    "description": "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。"
   },
   "latest_task": {
-    "id": 77,
-    "title": "R01组件状态审计与选项、模型行、弹层语义补齐",
+    "id": 78,
+    "title": "Windows窗控避让、原生长列表静置与RC候选CI证据",
     "status": "recorded",
-    "summary": "核验2c21474分支干净后继续R01，未重做40帧或21主题组合。36wrapper/118限定调用点整理成10个适用状态族；源码slot、历史证据、本轮原生观察与未验证项逐格区分。普通供应商字段按原契约本来可编辑，灰底不等于readonly；终端日志单独readonly。适用矩阵、调用点、代表性观察。",
+    "summary": "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。",
     "highlights": [
-      "核验2c21474分支干净后继续R01，未重做40帧或21主题组合。36wrapper/118限定调用点整理成10个适用状态族；源码slot、历史证据、本轮原生观察与未验证项逐格区分。普通供应商字段按原契约本来可编辑，灰底不等于readonly；终端日志单独readonly。适用矩阵、调用点、代表性观察。",
-      "澄清旧拖宽测试x444是刻意固定的Time列右边界；本轮改试可拖provider/model边界x574/761，真实两点drag仍未见变化，不能区分工具投递与产品原因。未取得成功宽度，刷新/resize保持作为未验证，不能改成不适用。后续能力未变不重复等价测试。源码审查。",
-      "原生审计发现下拉项只有匿名container，模型行仅model-N、弹层缺可读标题。给四个SelectItem实现及应用自有MenuRow补具名option内容，保持现有Kit选择/搜索/回调和设计尺寸；给模型行补完整名称/ID和中英选择文字，保留Table/Row/Cell。原selected其实已设置，根因是AccessKit macOS adapter的item-like集合排除Row，不声称修复原生selected标志。应用ModalBody补Dialog名称与modal元数据，保留原focus trap/handler。源码与最终构建。"
+      "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。",
+      "Windows源码确认Kit右侧三caption控件各34px宽、实际标题栏24px高；旧应用工具栏top8/right32/width300，横向重叠70px且纵向相交16px。运行时代码74b1e09将Windows工具栏下移至32px，Mac仍8px；增加1100/1440与1/1.25/1.5/2几何投影回归，保持事件/业务处理器。此为数学/源码证据，不是假定Windows系统缩放已验。fmt、208pass/2既有ignore、strictClippy、Intel all-targets check、arm64Release通过，Mac产物仍490530dd/Core25f24ad6。构建、来源。",
+      "b167原候选Core41227146468与Desktop41227149652四个job实际终态success；Windows/macOS arm64/原生Intel runner三个artifact均通过连接器下载并核对GitHub digest，解出原始JSON报告。Windows ZIP、Core兼容/登录项脚本和包生命周期、Unicode/空格定制路径/同路径重装/快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过。它们不是74b/2da的最终通过，不包含实际旧版本升级、全键盘/IME/缩放与托盘矩阵。旧候选总结。"
     ],
     "limits": [
-      "11da中间候选实测统计模型/供应商/页大小具名AX项，AX点击、Down/Return提交与Esc取消；模型单选/Cmd多选/取消的完整行名变化，三类具名Dialog，X/Tab/Esc正常，空本地草稿表仅表头无filler假数据，小窗滚到四个token/上下文字段且footer可达。11da尚未覆盖自有协议/思考菜单的命名，最终4905追加后实测协议/思考/预设三菜单具名，AX选择Responses只进草稿，Cancel恢复Chat，无Core Save；代表统计/行/模型弹层回归通过。11da证据、4905最终。",
-      "不扩大结论：菜单原生selected随键盘cursor移动，Esc仍保持trigger旧值，CUA无checked元数据；Dialog close为body兄弟、CUA不报告modal标记，完整AT作用域和焦点路径未验。Tooltip试验文本未截断且未弹出，不能推断截断场景；1500ms长按中701ms请求截图，但click1809ms完成、截图2238ms才返回关闭后画面，pressed未验证且未重复。旁白/系统辅助功能/输入源均未改。"
+      "当前Core本地573pass、22组命令全通过，含158导入/15故障、19真实发现/10创建条件；真实Core fixture单列补跑两既有ignore。74b Ubuntu attempt1却有571pass/1fail：积分升级full_scan15秒未见请求ID完成，最终status completed且writer_batch_failures1；原始输出缺请求scan_id，不能据此确定根因。Mac同测试3次pass，同SHA远端attempt2成功，首次失败及完整快照保留，不放宽期限、不ignore、不改Core运行时代码。R03.4仍待解释此偶发失败。调查、本地全套。",
+      "a6e9618完整一致manifest/lock重建出ba525f80基线，保留可追溯本地参考产物约40.5MiB，尚未执行最终P/C/C/P。共享Cargo平面输出被baseline构建覆盖，current cargo判fresh未替换；哈希断言及时拦截并从确证备份恢复4905，期间未错误运行基线冒充候选。碰撞与恢复原样保留，后续启动一律核验hash；历史B01/B03/B04成本不撤销。基线准备。README现行分发明确Mac ad-hoc未公证/Windows无Authenticode；本机只读DeveloperIDApplication0，未读取私钥/尝试签名上传，真实下载隔离/Gatekeeper/SmartScreen仍"
     ],
-    "evidence": [],
-    "commit": "5fae93d52e3c802a76693f5e298e3abcfe3bc61d",
-    "date": "2026-11-01T01:54:46+08:00",
-    "commit_subject": "fix(studio): name choices and modal accessibility context",
+    "evidence": [
+      {
+        "label": "本轮总结",
+        "href": "benchmarks/rc-round78-summary.json"
+      }
+    ],
+    "commit": "e06ce69f895f54d84897537ed98b9d203d3cbbe5",
+    "date": "2026-11-01T03:08:28+08:00",
+    "commit_subject": "docs(studio): record RC checks and native long-list observations",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2268,7 +2273,7 @@
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 77,
+    "historical_tasks": 78,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3361,66 +3366,72 @@
         "id": "R02",
         "title": "Windows、macOS与HiDPI",
         "kind": "release",
-        "status": "planned",
+        "status": "developing",
         "frames": [],
         "depends_on": [
           "R01"
         ],
-        "completed_summary": "macOS arm64有大量实测，x86_64 release链接及Rosetta实跑已有；Windows仅部分静态审计。",
+        "completed_summary": "QA78补同机原生窗口/重开、Windows标题栏避让和三平台CI包证据；Windows GDI首次受CI屏幕范围阻塞，完整输入/缩放/系统行为仍待。",
         "delivery": "完成发行平台真实运行；类型检查和Rosetta不替代原生平台验收。",
         "tasks": [
           {
             "id": "R02.1",
             "title": "Windows原生窗口与输入",
             "acceptance": "pending",
-            "completed": "已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。",
-            "remaining": "Windows本机构建并修正窗口按钮/拖动区域冲突，跑Ctrl快捷键/中文IME/托盘/弹窗两尺寸。",
+            "completed": "已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。 QA78确认Windows标题栏24px与工具栏top8的真实源码重叠，已改top32且增加几何回归。74b的Windows原生build/207test/集成与包生命周期通过，GDI因DPI96工作区放不下1440×900而失败、0截图，随后harness退出0并清理；2da改进临时CI显示准备，原生截图仍待新run，不冒称平台通过。",
+            "remaining": "等待新CI的两尺寸GDI原图并复核caption/工具栏；继续Windows Ctrl快捷键、中文IME、原生最小化/最大化/关闭、托盘和弹窗实测。数学投影不等于真实缩放。",
             "acceptance_check": "原生Windows可操作；工具栏不挡最小化/最大化/关闭；优先GDI/ImageGrab按PID截图，不能用Mac图替代。",
             "history_tasks": [
-              43
+              43,
+              78
             ]
           },
           {
             "id": "R02.2",
             "title": "macOS arm64系统行为",
             "acceptance": "pending",
-            "completed": "当前arm64原生两尺寸/部分窗口与生命周期已验。",
+            "completed": "当前arm64原生两尺寸/部分窗口与生命周期已验。 QA78同4905原生UI观察全屏动作、zoom、角拖动和toolbar恢复1440；三次设置窗口原生关闭重开，Core同PID。最小化实际状态/Dock恢复、物理托盘/登录/多屏仍缺，快捷键退全屏未证实。",
             "remaining": "补物理托盘、最小化/缩放/全屏/恢复、多屏拖动、系统登录开机启动和冷启动。 QA71只做普通窗口恢复和真实隔离plist；原全屏算法/浏览器URL处理器未改，未重做全屏Spaces、标题拖动、真实登录或浏览器启动，不冒称当前系统集成通过。 B05以原native算法操作可控Cocoa目标，真实已安装WorkBuddy的读取配置/现有会话互操作仍须在发行环境核对，不能由该目标测试替代。",
             "acceptance_check": "实际状态有原生证据；后台代理续存；不强制置顶；系统登录等未做的场景明确保留。",
             "history_tasks": [
               35,
               36,
-              42
+              42,
+              78
             ]
           },
           {
             "id": "R02.3",
             "title": "Intel原生发行包与硬件",
             "acceptance": "pending",
-            "completed": "x86_64编译/链接、thin测试及Rosetta真实运行已完成。",
+            "completed": "x86_64编译/链接、thin测试及Rosetta真实运行已完成。 QA78 b167在macos-15-intel原生x86_64 runner实际构建并完成DMG包启动/关闭/重开/正常退出，包报告和artifact digest均保留；尚缺原生截图/完整主流程、托盘及匹配性能，不以Rosetta或PID记录签收整项。",
             "remaining": "使用Intel硬件或可验证原生执行环境跑安装/启动/主流程/窗口/托盘/性能；缺环境则阻塞本门禁。",
             "acceptance_check": "产物架构正确，原生GPU/窗口运行通过；Rosetta证据单列，不冒称Intel实机。",
             "history_tasks": [
-              52
+              52,
+              78
             ]
           },
           {
             "id": "R02.4",
             "title": "缩放、双尺寸与平台回归",
             "acceptance": "pending",
-            "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。 Issue3侧栏品牌改用现有128px资源，macOS1x前后两尺寸通过，200%与Windows运行未验。",
+            "completed": "macOS已有1×/2×不同轮证据；并非最终全平台缩放矩阵。 Issue3侧栏品牌改用现有128px资源，macOS1x前后两尺寸通过，200%与Windows运行未验。 QA78Windows按钮几何按1100/1440和1/1.25/1.5/2逻辑投影回归；只是源代码矩形分离，非真实系统缩放矩阵。当前Mac仍1920×1080单1x显示器，Windows新原图待CI。",
             "remaining": "Mac1×/2×、Windows100/125/150/200%覆盖代表性页面和长文本/弹窗，平台修复后回查共享控件。",
             "acceptance_check": "1100×700和1440×900逻辑尺寸下按钮/字段/尾部可达；系统额外截图行如实保留；平台改动不破坏Mac定位。",
             "history_tasks": [
               43,
               52,
               57,
-              74
+              74,
+              78
             ]
           }
         ],
         "accepted_frames": [],
-        "acceptance_evidence": [],
+        "acceptance_evidence": [
+          "benchmarks/rc-round78-summary.json"
+        ],
         "frame_details": [],
         "reviewed_frames": 0
       },
@@ -3428,46 +3439,48 @@
         "id": "R03",
         "title": "最终性能与Core兼容回归",
         "kind": "release",
-        "status": "planned",
+        "status": "developing",
         "frames": [],
         "depends_on": [
           "R01"
         ],
-        "completed_summary": "同机原benchmark多轮和Core契约脚本已有；UI67仍记录组合采样峰值+12.63MiB成本。",
+        "completed_summary": "QA78本地Core573与22组契约、GPUI208通过；长列表10分钟采样与基线重建有证据；Ubuntu首次扫描契约失败即使重试成功仍保留，最终性能与兼容结论未签收。",
         "delivery": "同一最终候选完成累计基线对照与核心全套契约，不用一次请求benchmark代替UI性能。",
         "tasks": [
           {
             "id": "R03.1",
             "title": "统一最终基线和测量条件",
             "acceptance": "pending",
-            "completed": "现有benchmark参数、Core/UI独立RSS、process→marker与P/C/C/P已建立。",
-            "remaining": "保存改造前基线和最终候选的同机同模式/同数据/同窗口/同操作历史条件，核对脚本help/哈希。 B03全部六轮/资源分项及current1空搜索聚焦偏差已归档，最终基线不能只挑补测好样本。 QA71固定Core25f、旧4b/新d08四轮匹配工具菜单负载见b04-performance-summary；所有原样本保留，不替代B03既有成本。",
+            "completed": "现有benchmark参数、Core/UI独立RSS、process→marker与P/C/C/P已建立。 QA78已从a6e9618和相同manifest/lock重建ba525f80基线，并保留本地可追溯参考产物；最终同条件P/C/C/P尚未执行。共享Cargo平面产物覆盖被哈希断言拦截并恢复4905，未误跑旧产物。",
+            "remaining": "已重建并保留a6e基线；下一轮同机同Core/数据/窗口/操作历史P/C/C/P四轮，保留全部原样本、体积/启动/RSS/延迟口径与脚本哈希。",
             "acceptance_check": "记录Core/UI/合计RSS、二进制体积、启动、p50/p95及原负载；不混候选/架构，不丢慢样本。",
             "history_tasks": [
               2,
               52,
               57,
               66,
-              67
+              67,
+              78
             ]
           },
           {
             "id": "R03.2",
             "title": "峰值差异诊断与最终结论",
             "acceptance": "pending",
-            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。",
+            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。",
             "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。 QA71原四轮UI RSS+11.005MiB/组合+12.56MiB/峰值+16.565MiB；preload footprint旧120.3M/新119.35M，malloc allocated旧21.0M/新21.1M，并不排除RSS回退。原样本和资源原行见b04-resource-diagnostics；不以短测功能签收冒称R03通过。 QA72同Core旧d08/新78原四轮：UI RSS+0.055MiB/合计-0.155MiB/采样峰值+3.33MiB，process→marker-130.1675ms、proxy p95-0.0095ms；有效负载后live vmmap和全部原样本保留，不抵消B01/B03/B04历史成本。",
             "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
             "history_tasks": [
-              67
+              67,
+              78
             ]
           },
           {
             "id": "R03.3",
             "title": "长列表、重开与静置观察",
             "acceptance": "pending",
-            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。",
-            "remaining": "最终候选统一观察千条分页、64/256/4096列表、菜单/弹窗静置10–15分钟及反复开关。",
+            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。",
+            "remaining": "已补64/256/4096、1014请求分页和三次原生重开，弹窗/菜单各10分钟记录分开；需解释发现弹窗RSS增长和CPU差异，再判断无持续增长/空闲异常，不能仅凭短时可操作签收。",
             "acceptance_check": "无可复现持续内存增长、无空闲异常高CPU、交互无明显阻塞；请求延迟不冒充FPS或输入时延。",
             "history_tasks": [
               20,
@@ -3475,15 +3488,16 @@
               37,
               41,
               51,
-              58
+              58,
+              78
             ]
           },
           {
             "id": "R03.4",
             "title": "Core全套契约与数据不变",
             "acceptance": "pending",
-            "completed": "原Core逻辑/配置格式保留，路由/协议/统计/导入等已有脚本和历史证据。",
-            "remaining": "对最终Core/UI提交统一跑现有Core测试和路由/流式取消/能力/协议/价格快照/分页/导入故障脚本。",
+            "completed": "原Core逻辑/配置格式保留，路由/协议/统计/导入等已有脚本和历史证据。 QA78当前Core25f本地573测试及22组命令全通过，含158导入/15故障、19发现/10创建契约；b167四CIjob通过。但74b Ubuntu首次571pass/1fail：积分升级full_scan15秒未观测到请求ID完成，最终status completed且batch_failure1，原因未定；Mac同测试3次pass，同SHA远端重跑成功，首次失败保留且不豁免本门禁。",
+            "remaining": "保留74b Ubuntu积分升级扫描首次失败，进一步记录请求scan_id/最终状态和writer失败原因并验证可靠性；同SHA重跑成功不抹除偶发失败。后续若改Core或UI业务路径需重跑相关契约并绑定最终源码/产物。",
             "acceptance_check": "原配置和Key兼容，取消/失败/保存边界不回退，历史快照/导入去重不破坏；全部结果绑定最终提交。",
             "history_tasks": [
               22,
@@ -3494,24 +3508,28 @@
               62,
               63,
               65,
-              67
+              67,
+              78
             ]
           },
           {
             "id": "R03.5",
             "title": "最终构建和性能报告",
             "acceptance": "pending",
-            "completed": "GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。",
+            "completed": "GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。 QA78 GPUI208pass/2既有ignore、fmt/strictClippy/Intelcheck/arm64release通过，Mac UI仍4905/Core25f；Win项目平台差异207pass/2ignore。原始fixture两ignored通过单列；同源码最终CI/平台/性能均按实际候选分别绑定，未虚假全绿。",
             "remaining": "共享Cargo缓存一次完成最终Core+GPUI门禁，汇总分平台性能、局限和产物SHA。",
             "acceptance_check": "既有忽略说明/所需真实Core fixture补跑单列；测试/链接/硬件/GUI证据范围分明，无虚假全绿。",
             "history_tasks": [
               52,
-              67
+              67,
+              78
             ]
           }
         ],
         "accepted_frames": [],
-        "acceptance_evidence": [],
+        "acceptance_evidence": [
+          "benchmarks/rc-round78-summary.json"
+        ],
         "frame_details": [],
         "reviewed_frames": 0
       },
@@ -3519,50 +3537,58 @@
         "id": "R04",
         "title": "RC安装包到正式发布准备",
         "kind": "release",
-        "status": "planned",
+        "status": "developing",
         "frames": [],
         "depends_on": [
           "R02",
           "R03"
         ],
-        "completed_summary": "三平台打包/安装/升级相关脚本和CI工作流已存在；当前最终候选整套发行验收未完成。",
+        "completed_summary": "QA78 b167四job实际成功并校验三平台包artifact；74b新增原生截图门禁失败，2da新CI待终态；安装升级/分发/最终版本和公开发布仍未完成。",
         "delivery": "产出可审查RC与完整发布记录；所有门禁通过后才具备正式发布条件。",
         "tasks": [
           {
             "id": "R04.1",
             "title": "最终提交CI全矩阵",
             "acceptance": "pending",
-            "completed": "Core/desktop工作流配置包含Windows/macOS arm64/Intel构建及集成/打包脚本。",
-            "remaining": "当前feat分支push不匹配main/codex/gpui-preview触发器；按实际配置让Core checks在PR或手动触发运行，Desktop packages用workflow_dispatch选目标分支/SHA运行，核验三平台终态。",
+            "completed": "Core/desktop工作流配置包含Windows/macOS arm64/Intel构建及集成/打包脚本。 QA78已实际触发b167 Core41227146468及Desktop41227149652，四job终态success；74b Core41230163774重试后success但首次fail保留，Desktop41230175334 Windows截图失败。2da最新Core41231726063/Desktop41231731650已触发，等待真实终态，不复用旧run冒称最终通过。",
+            "remaining": "核验最新2da的Core41231726063/Desktop41231731650终态、原始报告及artifact SHA；Windows截图若失败保留具体显示能力证据，独立安装器通过不抵消失败。最终候选全矩阵尚未签收。",
             "acceptance_check": "Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。",
-            "history_tasks": []
+            "history_tasks": [
+              78
+            ]
           },
           {
             "id": "R04.2",
             "title": "DMG/ZIP/EXE安装升级卸载",
             "acceptance": "pending",
-            "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。",
+            "completed": "macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。",
             "remaining": "最终版本打包并实测首次安装、旧版本配置升级、覆盖安装、卸载/重装与路径含空格/Unicode。",
             "acceptance_check": "包内Core/UI架构/版本/资源一致；旧配置/Key/用量数据按既有约定保留；无残留在用进程。",
-            "history_tasks": []
+            "history_tasks": [
+              78
+            ]
           },
           {
             "id": "R04.3",
             "title": "签名、公证与可运行性",
             "acceptance": "pending",
-            "completed": "目前不能把本地ad-hoc测试签名视为正式发行签名/公证通过。",
+            "completed": "目前不能把本地ad-hoc测试签名视为正式发行签名/公证通过。 QA78核对README现行分发为Mac ad-hoc未公证/Windows无Authenticode，源脚本与声明一致。本机只读查到Developer ID Application0；未读取/导出私钥或尝试签名上传。实际下载隔离属性/Gatekeeper/SmartScreen完整行为仍未验，不能凭包进程记录签收。",
             "remaining": "按项目正式分发方案核对macOS签名/公证/Gatekeeper、Windows签名/SmartScreen与可用凭据；缺条件显式标记。",
             "acceptance_check": "从真实下载/挂载或解压的候选包启动；签名链/公证或项目明确采用的分发方式有可审查记录；不在日志暴露密钥。",
-            "history_tasks": []
+            "history_tasks": [
+              78
+            ]
           },
           {
             "id": "R04.4",
             "title": "版本、说明、截图与回滚包",
             "acceptance": "pending",
-            "completed": "当前项目版本0.5.7和历史QA/截图/矩阵存在，不能据此推断新的正式版本号。",
+            "completed": "当前项目版本0.5.7和历史QA/截图/矩阵存在，不能据此推断新的正式版本号。 QA78以b167/74b/2da分别保留源码、原始截图、候选/包/报告哈希与失败来源；尚未指定新正式版本、替换公开README截图或公开发布，回滚与最终下载包审查仍待。",
             "remaining": "确定正式版本与变更说明，更新安装/已知限制文档；审查80帧证据和代表性公开截图，准备旧包/配置回滚步骤。",
             "acceptance_check": "版本一致、可下载包SHA完整；公开图为合成隔离数据且无Key；文档命令可移植，回滚路径可执行。",
-            "history_tasks": []
+            "history_tasks": [
+              78
+            ]
           },
           {
             "id": "R04.5",
@@ -3575,7 +3601,9 @@
           }
         ],
         "accepted_frames": [],
-        "acceptance_evidence": [],
+        "acceptance_evidence": [
+          "benchmarks/rc-round78-summary.json"
+        ],
         "frame_details": [],
         "reviewed_frames": 0
       }
@@ -7344,6 +7372,31 @@
       "date": "2026-11-01T01:54:46+08:00",
       "commit_subject": "fix(studio): name choices and modal accessibility context",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 78,
+      "title": "Windows窗控避让、原生长列表静置与RC候选CI证据",
+      "status": "recorded",
+      "summary": "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。",
+      "highlights": [
+        "延续R01余项的已知能力边界，未重做40帧/21主题，也未重复等价的两点拖宽/长按截图。旁白、系统辅助功能、输入源始终未改。按独立可用条件推进平台/Core/长列表验证，全部候选来源见本轮总结；界面剩余0/40，18项发布任务仍pending，Goal active，无公开发布。",
+        "Windows源码确认Kit右侧三caption控件各34px宽、实际标题栏24px高；旧应用工具栏top8/right32/width300，横向重叠70px且纵向相交16px。运行时代码74b1e09将Windows工具栏下移至32px，Mac仍8px；增加1100/1440与1/1.25/1.5/2几何投影回归，保持事件/业务处理器。此为数学/源码证据，不是假定Windows系统缩放已验。fmt、208pass/2既有ignore、strictClippy、Intel all-targets check、arm64Release通过，Mac产物仍490530dd/Core25f24ad6。构建、来源。",
+        "b167原候选Core41227146468与Desktop41227149652四个job实际终态success；Windows/macOS arm64/原生Intel runner三个artifact均通过连接器下载并核对GitHub digest，解出原始JSON报告。Windows ZIP、Core兼容/登录项脚本和包生命周期、Unicode/空格定制路径/同路径重装/快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过。它们不是74b/2da的最终通过，不包含实际旧版本升级、全键盘/IME/缩放与托盘矩阵。旧候选总结。"
+      ],
+      "limits": [
+        "当前Core本地573pass、22组命令全通过，含158导入/15故障、19真实发现/10创建条件；真实Core fixture单列补跑两既有ignore。74b Ubuntu attempt1却有571pass/1fail：积分升级full_scan15秒未见请求ID完成，最终status completed且writer_batch_failures1；原始输出缺请求scan_id，不能据此确定根因。Mac同测试3次pass，同SHA远端attempt2成功，首次失败及完整快照保留，不放宽期限、不ignore、不改Core运行时代码。R03.4仍待解释此偶发失败。调查、本地全套。",
+        "a6e9618完整一致manifest/lock重建出ba525f80基线，保留可追溯本地参考产物约40.5MiB，尚未执行最终P/C/C/P。共享Cargo平面输出被baseline构建覆盖，current cargo判fresh未替换；哈希断言及时拦截并从确证备份恢复4905，期间未错误运行基线冒充候选。碰撞与恢复原样保留，后续启动一律核验hash；历史B01/B03/B04成本不撤销。基线准备。README现行分发明确Mac ad-hoc未公证/Windows无Authenticode；本机只读DeveloperIDApplication0，未读取私钥/尝试签名上传，真实下载隔离/Gatekeeper/SmartScreen仍"
+      ],
+      "evidence": [
+        {
+          "label": "本轮总结",
+          "href": "benchmarks/rc-round78-summary.json"
+        }
+      ],
+      "commit": "e06ce69f895f54d84897537ed98b9d203d3cbbe5",
+      "date": "2026-11-01T03:08:28+08:00",
+      "commit_subject": "docs(studio): record RC checks and native long-list observations",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -8610,6 +8663,21 @@
     {
       "date": "2026-11-01T01:55:01+08:00",
       "note": "QA77补具名选择项、模型行身份/选择文字、Dialog语义及组件状态审计；0/40界面、18发布任务待验，旁白禁用约束保持。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T03:08:42+08:00",
+      "note": "QA78：Windows窗控避让、候选CI/包证据与长列表两段600秒观察；保留失败与增长，剩余0帧/18发布任务，最新Desktop原run待终态",
       "pending": 0,
       "partial": 0,
       "reused": 0,
