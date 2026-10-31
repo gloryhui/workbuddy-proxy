@@ -2857,6 +2857,24 @@ impl Statistics {
             .child(
                 div()
                     .id("stats-table-host")
+                    .role(accesskit::Role::Table)
+                    .aria_label(if self.tab == Tab::Requests {
+                        self.t("当前页请求记录", "Request records on this page")
+                    } else {
+                        self.t("当前页汇总分析", "Summary on this page")
+                    })
+                    .a11y_synthetic_children({
+                        let (rows, columns) = if self.tab == Tab::Requests {
+                            (self.rows.len() + 1, usage_table::REQUEST_COLUMNS)
+                        } else {
+                            (self.groups.len() + 1, 6)
+                        };
+                        move |tree| {
+                            let table = tree.parent_node();
+                            table.set_row_count(rows);
+                            table.set_column_count(columns);
+                        }
+                    })
                     .w_full()
                     .flex_1()
                     .min_h_0()

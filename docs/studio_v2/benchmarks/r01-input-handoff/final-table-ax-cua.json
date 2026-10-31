@@ -1,0 +1,63 @@
+{
+  "ui_sha256": "b29b4d8e3a389c603936b50dc2dd48588d0ad6000f9f46eca7b234e0dbc7afc0",
+  "ui_pid": 20067,
+  "core_pid": 13895,
+  "guard": "guard_installed r01-deny-only-ci7zkz3s",
+  "AX": "CUA reports table, row and cell names/content on requests, provider and model summaries; headers formatted as cell. Baseline had bare rows. This is not VoiceOver acceptance.",
+  "ax_files": "final-requests-ax.txt, final-provider-ax.txt, final-model-ax.txt are explicitly labeled excerpts of actual CUA output, full tool results in chat transcript; no fabricated tree",
+  "model_virtualization": "At top AX had first four of five; after actual table scroll the fifth model-b-1 row appeared visually and in AX.",
+  "layout": "Six own-PID native captures at observed logical 1440x900 / 1100x700; wide screenshots show all initial columns; small requires right-column navigation, long names truncate in cells. Do not claim all columns simultaneously visible in small width.",
+  "screenshots": [
+    {
+      "file": "final-model-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "78b9727b7227f80a9e7e62861c79a28417c4e305437adad052e2aa236d4c6b03"
+    },
+    {
+      "file": "final-model-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "05acd0e1ab47e5b370dfd5893e7e5182ed7234622bc246498b122f8ddd5aafe7"
+    },
+    {
+      "file": "final-provider-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "2c6b6d535f083b0b125d1f83b1157088bf6fe158c9cdc1dc9e749d0dfd1d1483"
+    },
+    {
+      "file": "final-provider-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "9e3ed4728be7af55facbbee04e1fbae4c70d272c806a3619f45768f28946fd4c"
+    },
+    {
+      "file": "final-requests-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "04dd8a8bb34d34fe9d8b833713fc4fb89a04711c8a0da889e9d61b9d62902bb7"
+    },
+    {
+      "file": "final-requests-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "0e71c2933b6e7a9bf2327f504256e06b75ca283933cbb93b316abdcf3709e4cb"
+    }
+  ],
+  "observe_final_ax_layout": "passed, UI 20067, 15 history rows, config validation not weakened",
+  "no_explicit_activate_or_raise": true,
+  "screen_reader_tested": false
+}

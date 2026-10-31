@@ -1,0 +1,203 @@
+{
+  "candidate_sha256": "e1f092c8d2eb1b457d59c54ae4f6286221e7625081cc3fc34be8b5fe019d8e40",
+  "ui_pid": 49191,
+  "core_pid": 13895,
+  "matrix": [
+    {
+      "language": "zh",
+      "skin": "monochrome",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/zh_monochrome.json",
+      "history_rows": 15
+    },
+    {
+      "language": "zh",
+      "skin": "blue",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/zh_blue.json",
+      "history_rows": 15
+    },
+    {
+      "language": "zh",
+      "skin": "violet",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/zh_violet.json",
+      "history_rows": 15
+    },
+    {
+      "language": "zh",
+      "skin": "rose",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/zh_rose.json",
+      "history_rows": 15
+    },
+    {
+      "language": "zh",
+      "skin": "amber",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/zh_amber.json",
+      "history_rows": 15
+    },
+    {
+      "language": "zh",
+      "skin": "teal",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/zh_teal.json",
+      "history_rows": 15
+    },
+    {
+      "language": "zh",
+      "skin": "studio_indigo",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/zh_studio_indigo.json",
+      "history_rows": 15
+    },
+    {
+      "language": "en",
+      "skin": "monochrome",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/en_monochrome.json",
+      "history_rows": 15
+    },
+    {
+      "language": "en",
+      "skin": "blue",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/en_blue.json",
+      "history_rows": 15
+    },
+    {
+      "language": "en",
+      "skin": "violet",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/en_violet.json",
+      "history_rows": 15
+    },
+    {
+      "language": "en",
+      "skin": "rose",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/en_rose.json",
+      "history_rows": 15
+    },
+    {
+      "language": "en",
+      "skin": "amber",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/en_amber.json",
+      "history_rows": 15
+    },
+    {
+      "language": "en",
+      "skin": "teal",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/en_teal.json",
+      "history_rows": 15
+    },
+    {
+      "language": "en",
+      "skin": "studio_indigo",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/en_studio_indigo.json",
+      "history_rows": 15
+    },
+    {
+      "language": "auto",
+      "skin": "monochrome",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/auto_monochrome.json",
+      "history_rows": 15
+    },
+    {
+      "language": "auto",
+      "skin": "blue",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/auto_blue.json",
+      "history_rows": 15
+    },
+    {
+      "language": "auto",
+      "skin": "violet",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/auto_violet.json",
+      "history_rows": 15
+    },
+    {
+      "language": "auto",
+      "skin": "rose",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/auto_rose.json",
+      "history_rows": 15
+    },
+    {
+      "language": "auto",
+      "skin": "amber",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/auto_amber.json",
+      "history_rows": 15
+    },
+    {
+      "language": "auto",
+      "skin": "teal",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/auto_teal.json",
+      "history_rows": 15
+    },
+    {
+      "language": "auto",
+      "skin": "studio_indigo",
+      "passed": true,
+      "proof": "<SESSION_ROOT>/r01-ci7zkz3s-main/stage-proofs/auto_studio_indigo.json",
+      "history_rows": 15
+    }
+  ],
+  "observed": "Each theme selected through CUA with Providers and model editor, actual selection/disabled states visible. Name field clicked; CUA AX reported window focus, so actual accessible focus is not claimed. Auto language displayed Chinese on this system. Each language sampled statistics, protocol, and provider deletion confirmation, canceled; no destructive confirmation or apply.",
+  "protocol_english": "Selected choices display fixed bilingual names 协议默认 / Protocol default and 原生 effort / Native effort, both visible without clipping; not a claim that English contains no Chinese.",
+  "native_captures": [
+    {
+      "skin": "monochrome",
+      "path": "<SESSION_ROOT>/theme-zh-monochrome.png",
+      "sha256": "ca2158d139f2e340c6a04136a930da0e325029991ccf736407b741e4e2d1e839",
+      "pixel_size": "1100x700"
+    },
+    {
+      "skin": "blue",
+      "path": "<SESSION_ROOT>/theme-zh-blue.png",
+      "sha256": "2357ddd08780e5405277fb562ba345117a8a6d6eaa88b651d439fd497edb6619",
+      "pixel_size": "1100x700"
+    },
+    {
+      "skin": "violet",
+      "path": "<SESSION_ROOT>/theme-zh-violet.png",
+      "sha256": "3688f7f29648e35d6aa10ad33e4ff8bbfa35097cafd0c7ec9d86c441186a330b",
+      "pixel_size": "1100x700"
+    },
+    {
+      "skin": "rose",
+      "path": "<SESSION_ROOT>/theme-zh-rose.png",
+      "sha256": "1a06aeb8b43a8e9c0deb1f3e761e4e41705637c9d31e1540071ed16bb982f2eb",
+      "pixel_size": "1100x700"
+    },
+    {
+      "skin": "amber",
+      "path": "<SESSION_ROOT>/theme-zh-amber.png",
+      "sha256": "8c36f611bd94d37f56e568db999a44623ecc9597b7ea93589bb01552355b5f80",
+      "pixel_size": "1100x700"
+    },
+    {
+      "skin": "teal",
+      "path": "<SESSION_ROOT>/theme-zh-teal.png",
+      "sha256": "a966dfdb0d139b9b913ca947e8feeec4565681824d1b9ded2854208805fa0d74",
+      "pixel_size": "1100x700"
+    },
+    {
+      "skin": "studio_indigo",
+      "path": "<SESSION_ROOT>/theme-zh-studio_indigo.png",
+      "sha256": "d70137242637af5899e44750a9f35906e67353fd336461fe3435f2905955ca0f",
+      "pixel_size": "1100x700"
+    }
+  ],
+  "capture_method": "1x on-screen layer0 own PID, unmodified screencapture -x -o -l; 7 representatives are Chinese Providers, not 21 screenshots",
+  "restore": "zh + studio_indigo 1440x900; theme_restored_canonical passed then theme_restored_strict and theme_final_strict passed; initial theme_restored failed because language auto-save changed bytes versus previous checkpoint. Original failure retained here.",
+  "limits": "No 2x screen; no full all-state/AT certification from this matrix; startup VoiceOver test separately recorded."
+}

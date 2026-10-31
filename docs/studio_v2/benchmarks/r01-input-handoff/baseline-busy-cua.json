@@ -1,0 +1,53 @@
+{
+  "candidate_ui_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
+  "ui_pid": 14394,
+  "core_pid": 13895,
+  "test": {
+    "nonce": "test1",
+    "one_real_command_arrived": true,
+    "busy_ax": "测试中… · 正在执行现有保存与连接测试，请稍候。",
+    "attempted_cua": [
+      "repeat Test",
+      "Save",
+      "model Add",
+      "provider B",
+      "provider Add",
+      "provider Copy",
+      "provider Delete"
+    ],
+    "result": "Busy retained, no visible dialog or selection change; held and completed arrival count 1; canonical-save observe passed; actual HTTP 200 after release",
+    "keyboard": "F2/Enter not attempted: model table was not focused",
+    "history": "14 at held, 15 at completion from actual connection test",
+    "native_png": {
+      "path": "test-busy-baseline.png",
+      "window_id": 12401,
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "885aa7311336133163679d0f85263d36f5ad5f378468217c1b84499c26d25e77"
+    }
+  },
+  "update": {
+    "nonce": "update1",
+    "scope": "Loopback controlled UI boundary, not public GitHub or Core updater end-to-end",
+    "one_real_command_arrived": true,
+    "busy_ax": "dialog 检查软件更新; visual checking and provider controls dim",
+    "attempted_cua": [
+      "repeat toolbar click while notice shown",
+      "Return",
+      "Escape",
+      "toolbar click while request still held"
+    ],
+    "notice": "After repeated toolbar click and Return as a batch AX showed dialog already closed; Escape then had no observable change. Cannot attribute close to either batched action or claim Escape closed it. Subsequent click did not reopen while held. Closed state persisted after release.",
+    "result": "held and completed arrival count 1; canonical-save observe passed"
+  },
+  "gate": "Both released and disarmed; no observed timeout",
+  "limits": [
+    "AX disabled state not reported explicitly",
+    "No screen-reader execution",
+    "No actual WorkBuddy integration or public update E2E",
+    "No explicit activate or raise"
+  ],
+  "status": "baseline audit only, not R01 acceptance"
+}

@@ -1,0 +1,12 @@
+{
+  "config_differences": [],
+  "models_sha_equal": true,
+  "settings_differences": [],
+  "price_differences": [
+    "/cf85752e328c4a6629b4a1dd50a814c64c9c65c49c7b3815/revision:value",
+    "/9304ed58ec0f7ad71313f911352664a5fc355fe32c0d01fa/revision:value",
+    "/0d26b5953fbe9ec03defdddc1e0c9f11df42439cbd177575/revision:value"
+  ],
+  "cfg_sha_equal_checkpoint": true,
+  "scope": "Read-only paths of differences; no restoration or field values exposed."
+}

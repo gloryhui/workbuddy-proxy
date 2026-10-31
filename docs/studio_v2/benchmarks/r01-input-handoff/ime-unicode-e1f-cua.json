@@ -1,0 +1,43 @@
+{
+  "candidate_sha256": "e1f092c8d2eb1b457d59c54ae4f6286221e7625081cc3fc34be8b5fe019d8e40",
+  "ui_pid": 49191,
+  "core_pid": 13895,
+  "input_source": "app.qingjian.inputmethod.Hans, confirmed read-only; no source switch or settings change",
+  "composition": "In model display name, separate CUA physical pressKey n,i,h,a,o produced underlined ni'hao; Space committed 你好. End and same individual keys appended underlined ni'hao; first Escape canceled only composition and AX returned exactly 你好 with editor open, second Escape closed/discarded.",
+  "return": "Separate marked ni'hao followed by Return committed ASCII nihao (not Chinese) and kept model editor open; Escape discarded.",
+  "captures": [
+    {
+      "path": "<SESSION_ROOT>/ime-e1f-marked.png",
+      "sha256": "d898cd5ceffdafede94fd172566dbad378d0606fbdbf91652706db4426246655"
+    },
+    {
+      "path": "<SESSION_ROOT>/ime-e1f-committed.png",
+      "sha256": "12905fbfedac7f60162de9115831430865eb1f46670093a8163e29f3a110f8ee"
+    },
+    {
+      "path": "<SESSION_ROOT>/ime-e1f-return.png",
+      "sha256": "83b611b23115faddc43474e6c910055e786536925321f7faf640a9f977dde99e"
+    }
+  ],
+  "undo_redo": {
+    "model_upstream_id": "AX exact Unicode paste / undo gpt-6 / redo exact; Escape",
+    "provider_name": "AX exact Unicode / undo sub2api / redo / final undo",
+    "api_url": "AX exact Unicode / undo original loopback / redo / final undo",
+    "provider_search": "AX exact Unicode / undo empty / redo / final undo",
+    "api_key": "Confirmed synthetic fixture-only key through private bool. Show eye, visual screenshot observed Unicode / Undo synthetic original / Redo Unicode / Undo original; secure AX intentionally has no Value even while shown. Re-masked; no real secret.",
+    "protocol_max_output": "AX Unicode / undo 4096 / redo; Apply rejected with visible positive integer error; Escape",
+    "model_max_input": "automatic capabilities disabled in draft, AX Unicode; Confirm rejected with visible positive integer error; Escape",
+    "price_note": "Scrolled price editor to actual visible note; AX Unicode / undo original / redo; Escape"
+  },
+  "state_proofs": [
+    "ime_e1f_cancelled",
+    "unicode_provider_cancelled",
+    "ime_return_cancelled",
+    "unicode_price_protocol_cancelled",
+    "unicode_negative_cancelled",
+    "unicode_draft_before_save",
+    "unicode_saved"
+  ],
+  "persistence": "Explicitly authorized one provider A gpt-6 display name change: paste R01你好🧪 é, name contains e U+0065 + U+0301, confirm model draft; unflagged state proof confirms Core unchanged before one main Save. unicode_saved --unicode-model-name --canonical-save passed with 16 history; no sync/restart. Cold-read remains pending.",
+  "limitations": "IME test actual Qingjian composition in model name only; ordinary paste tests are not IME; no VoiceOver claim."
+}

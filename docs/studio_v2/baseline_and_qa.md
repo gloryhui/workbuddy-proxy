@@ -1663,3 +1663,15 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 2ce→e1f候选中仅品牌绑定不同，两者同含尚未提交的R01表格ARIA修复，不能把此次截图冒称最终发布包。实际CUA关闭旧自有UI，Core13895保持；新UI49191身份与deny-only保护通过。两个尺寸同1x前后四张原生PNG均已实际审阅：白边消失、吉祥物更清晰，38×38逻辑图标、11圆角/间距、标题/副标题与周围布局稳定。small差异仅品牌区域；wide另有供应商行焦点外观差异，未声称整图像素一致。[原生验证](benchmarks/issue3-native-verification.json)、[前宽](screenshots/issue3-before-wide.png)、[后宽](screenshots/issue3-after-wide.png)、[前小](screenshots/issue3-before-small.png)、[后小](screenshots/issue3-after-small.png)。
 - fmt、206pass/2既有ignore、strict Clippy、Intel类型检查和arm64 Release全部0；历史15条请求及成本完整保持。跨零点价格日更仅3规则revision1→2，配置/费率不变，严格保护只接受单独核实的精确转换digest，原先失败断言保留而未篡改。[构建](benchmarks/issue3-build.json)、[业务保护](benchmarks/issue3-business-protection.json)、[跨日转换](benchmarks/r01-exact-daily-price-transition.json)。
 - 本项代码及当前可用macOS1x两尺寸验证完成。仅有1920×1080的1x显示环境，200% HiDPI与Windows实机尚未验证，Issue保持开放待补证；128源像素充足不等于已做2x运行。未修改代理核心/功能逻辑，未公开发布；R01其余4项与R02–R04继续，剩余界面0。
+
+
+## 小功能 75：R01表格语义修复、输入冷读与暂停交接（2026-11-01）
+
+- 请求/汇总表补原生Table/Row/ColumnHeader/Cell角色、全值名称及行列索引；不改视觉、事件、计算、DTO或Core。横向虚拟化不能靠当前可见列顺序推断索引。b29角色/名称及两尺寸6张主图、2ce键盘和e1f最终构建分开记，未用旧截图冒充最终候选。[源码与构建](benchmarks/r01-input-handoff/build-issue3.json)、[原生表格](benchmarks/r01-input-handoff/final-table-ax-cua.json)、[索引原因](benchmarks/r01-input-handoff/column-index-audit.json)。
+- e1f真实held Test重复点击只到达1次，save/test各1；controlled update亦1次，完成后未重开已隐藏提示。皮肤菜单实际可打开，未宣称所有入口禁用；关闭×未独立实测，受控更新非公开端到端更新。[忙态记录](benchmarks/r01-input-handoff/final-busy-e1f-cua.json)。
+- 7主题×zh/en/auto实际21组合有各自业务不变证明，7张1100×700代表原图已逐张查看；英文协议选项固定中英别名如实保留，auto随本机显示中文，不声称全部状态或真实AT通过。[主题语言](benchmarks/r01-input-handoff/theme-language-matrix-cua.json)。
+- 当前Qingjian真实逐键产生marked ni'hao，Space落字你好，Esc先取消合成再关闭编辑器；Return落ASCII nihao且未确认。其他名称/URL/模型/Key/搜索/价格备注的Unicode粘贴、撤销/重做、非法数字拒绝按实际记录，粘贴不冒称IME。模型名R01你好🧪 é（末尾e U+0065 + U+0301）经主Save一次、独立Core62175/UI63054冷读逐码点一致，Cold恢复gpt-6保存后16条请求/成本完整；Main保留测试名至本会话临时目录清理，未声称Main恢复原名。[输入](benchmarks/r01-input-handoff/ime-unicode-e1f-cua.json)、[冷读](benchmarks/r01-input-handoff/unicode-cold-cua.json)、[两尺寸原图](benchmarks/r01-input-handoff/summary.json)。
+- 本轮18张原生1x PNG均已实际查看，SHA/尺寸/候选来源归档；宽图有1440×901的系统边缘，未裁图冒充1440×900。跨零点原价格日更3条revision1→2精确转换单独核实，早先失败断言保留。VoiceOver曾临时开启，用户反馈干扰后已关闭，后续禁止自动开启；没有真实读屏成功结论。
+- 最终语义源码hash与已过fmt、GPUI206pass/2既有ignore、strict Clippy、Intel类型检查及arm64 Release记录一致；Core573测试与19真实发现/创建契约通过。混合交互资源采样不等于最终匹配性能、长时间/CPU/FPS门禁。[Core验证](benchmarks/r01-input-handoff/core-verification-summary.json)。
+- 本轮隔离UI均已关闭，两Core通过自身stop退出0、宿主会话退出0。112份证据约3.56MiB归档，私有配置/数据库/凭据不提交。精确清理本会话303文件约273MiB，APFS实测可用空间增加279.66MiB至34.05GiB，本轮保留临时文件0；共享缓存与旧基准Core未动。[清理](benchmarks/r01-input-handoff/cleanup.json)。
+- 用户要求当前任务完成后暂停并转新会话：本轮完成代码及已做验证的归档提交，不把部分R01冒称整批通过。剩余界面0/40，仍18个发布任务待验，Goal将暂停；下一步见[新会话交接](SESSION_HANDOFF.md)。

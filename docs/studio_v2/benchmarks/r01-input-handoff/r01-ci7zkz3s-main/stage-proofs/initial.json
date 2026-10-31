@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-31T22:49:09.517947+08:00",
+  "stage": "initial",
+  "passed": true,
+  "core_pid": 13895,
+  "ui_pid": 14394,
+  "cfg_sha256": "d423539bbb78d056357dca64cbc61fcce3d0a5c1a631f4362e81b5ff912103e7",
+  "cfg_semantics_models_prices_settings_preserved": true,
+  "history": {
+    "usage_requests": {
+      "rows": 14,
+      "original_all_fields_preserved": true
+    },
+    "usage_costs": {
+      "rows": 14,
+      "original_all_fields_preserved": true
+    }
+  },
+  "counts": {
+    "providers": 2,
+    "models": 5,
+    "requests": 14,
+    "url": "http://127.0.0.1:58881/v1"
+  },
+  "guard_events": [
+    "guard_installed"
+  ],
+  "canonical_save_declared": false,
+  "scope": "Read-only original Core via loopback management bridge. Baseline business semantics/models/prices/settings preserved; only declared format/default serialization from existing Save/Test path allowed. No native GUI action or screenreader result inferred."
+}

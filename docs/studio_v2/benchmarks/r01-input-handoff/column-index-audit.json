@@ -1,0 +1,6 @@
+{
+  "finding": "Horizontal virtualization can expose a subset of columns; explicit per-cell column indices are required so AX associates right-hand cells with the correct headers.",
+  "correction": "Use render_td current col for ordinary cells, fixed slots for4 specialized usage cells and2 charge fallbacks. No value calculation or visible layout change.",
+  "first_candidate": "b29b4d8e3a389c603936b50dc2dd48588d0ad6000f9f46eca7b234e0dbc7afc0",
+  "native_b29_role_labels_passed_but_full_R01_pending": true
+}

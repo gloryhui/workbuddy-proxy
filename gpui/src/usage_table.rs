@@ -8,6 +8,7 @@ use crate::{
         BreakdownItemDto, CostStatus, Currency, Outcome, RequestRowDto, Source, UsageStatus,
     },
 };
+use accesskit::Role;
 use chrono::{Local, TimeZone as _};
 use gpui_kit::component::{
     Sizable,
@@ -423,8 +424,12 @@ fn table_label(text: impl Into<SharedString>, role: CellFont, color: u32, cx: &A
     }
 }
 
-fn header_cell(title: SharedString, cx: &App) -> Div {
+fn header_cell(title: SharedString, column: usize, cx: &App) -> Stateful<Div> {
     div()
+        .id(("usage-header-cell", column))
+        .role(Role::ColumnHeader)
+        .aria_label(title.clone())
+        .a11y_synthetic_children(move |tree| tree.parent_node().set_column_index(column))
         .size_full()
         .min_w_0()
         .overflow_hidden()
@@ -443,14 +448,22 @@ fn cell(
     hint: Option<String>,
     color: u32,
     id: (&'static str, usize),
+    column: usize,
     font: CellFont,
     cx: &App,
 ) -> AnyElement {
+    let accessible = hint
+        .as_ref()
+        .map(|hint| format!("{primary}; {hint}"))
+        .unwrap_or_else(|| primary.clone());
     let text = table_label(primary, font, color, cx)
         .w_full()
         .text_ellipsis();
     div()
         .id(id)
+        .role(Role::Cell)
+        .aria_label(accessible)
+        .a11y_synthetic_children(move |tree| tree.parent_node().set_column_index(column))
         .w_full()
         .h_full()
         .flex()
@@ -481,6 +494,7 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElemen
             ),
             crate::theme::color::TEXT_3,
             ("usage-tokens", row),
+            3,
             CellFont::Body,
             cx,
         );
@@ -496,6 +510,9 @@ fn token_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElemen
     );
     div()
         .id(("usage-tokens", row))
+        .role(Role::Cell)
+        .a11y_synthetic_children(|tree| tree.parent_node().set_column_index(3))
+        .aria_label(hint.clone())
         .w_full()
         .h_full()
         .min_w_0()
@@ -542,6 +559,7 @@ fn cache_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElemen
             None,
             crate::theme::color::TEXT_3,
             ("usage-cache", row),
+            4,
             CellFont::Body,
             cx,
         );
@@ -568,6 +586,9 @@ fn cache_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElemen
     );
     div()
         .id(("usage-cache", row))
+        .role(Role::Cell)
+        .a11y_synthetic_children(|tree| tree.parent_node().set_column_index(4))
+        .aria_label(format!("{}; {hint}", percent(hit)))
         .w_full()
         .h_full()
         .min_w_0()
@@ -616,6 +637,9 @@ fn provider_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyEle
     );
     div()
         .id(("usage-provider", row))
+        .role(Role::Cell)
+        .a11y_synthetic_children(|tree| tree.parent_node().set_column_index(1))
+        .aria_label(hint.clone())
         .w_full()
         .min_w_0()
         .h_full()
@@ -756,6 +780,8 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElement
     );
     div()
         .id(("usage-cost", row))
+        .role(Role::Cell)
+        .a11y_synthetic_children(|tree| tree.parent_node().set_column_index(5))
         .w_full()
         .min_w_0()
         .h_full()
@@ -765,7 +791,7 @@ fn cost_cell(item: &RequestRowDto, row: usize, zh: bool, cx: &App) -> AnyElement
         .justify_center()
         .gap(px(2.))
         .whitespace_nowrap()
-        .aria_label(format!("{amount_text} · {credit}"))
+        .aria_label(format!("{amount_text} · {credit}; {hint}"))
         .tooltip(move |window, cx| {
             gpui_kit::component::tooltip::Tooltip::new(hint.clone()).build(window, cx)
         })
@@ -952,6 +978,17 @@ impl UsageRows {
 }
 
 impl TableDelegate for UsageRows {
+    fn render_header(
+        &mut self,
+        _: &mut Window,
+        _: &mut Context<TableState<Self>>,
+    ) -> Stateful<Div> {
+        div()
+            .id("usage-header")
+            .role(Role::Row)
+            .a11y_synthetic_children(|tree| tree.parent_node().set_row_index(0))
+    }
+
     fn columns_count(&self, _: &App) -> usize {
         self.columns().len()
     }
@@ -980,8 +1017,8 @@ impl TableDelegate for UsageRows {
         _: &mut Window,
         cx: &mut Context<TableState<Self>>,
     ) -> impl IntoElement {
-        // Kit still owns header clicks, sorting, resizing and accessibility.
-        header_cell(self.column(index, cx).name, cx)
+        // Kit still owns header clicks, sorting and resizing.
+        header_cell(self.column(index, cx).name, index, cx)
     }
 
     fn render_tr(
@@ -991,9 +1028,17 @@ impl TableDelegate for UsageRows {
         _cx: &mut Context<TableState<Self>>,
     ) -> Stateful<Div> {
         let owner = self.owner.clone();
+        let item = &self.rows[row];
         div()
             .id(("usage-row", row))
             .accessibility_id(format!("usage-row-{row}"))
+            .aria_label(format!(
+                "{} · {} · {}",
+                timestamp(item.started_at_ms, self.zh),
+                item.provider_name,
+                model_text(item, self.zh)
+            ))
+            .a11y_synthetic_children(move |tree| tree.parent_node().set_row_index(row + 1))
             .bg(rgb(if row.is_multiple_of(2) {
                 0xffffff
             } else {
@@ -1032,6 +1077,7 @@ impl TableDelegate for UsageRows {
                 )),
                 crate::theme::color::TEXT_2,
                 ("usage-time", row),
+                col,
                 CellFont::Timestamp,
                 cx,
             ),
@@ -1053,6 +1099,7 @@ impl TableDelegate for UsageRows {
                 )),
                 crate::theme::color::TEXT_2,
                 ("usage-model", row),
+                col,
                 CellFont::Body,
                 cx,
             ),
@@ -1074,6 +1121,7 @@ impl TableDelegate for UsageRows {
                 )),
                 crate::theme::color::TEXT_2,
                 ("usage-latency", row),
+                col,
                 CellFont::Latency,
                 cx,
             ),
@@ -1095,6 +1143,7 @@ impl TableDelegate for UsageRows {
                         _ => 0xa4424a,
                     },
                     ("usage-status", row),
+                    col,
                     CellFont::Body,
                     cx,
                 )
@@ -1168,6 +1217,17 @@ pub struct GroupRows {
 }
 
 impl TableDelegate for GroupRows {
+    fn render_header(
+        &mut self,
+        _: &mut Window,
+        _: &mut Context<TableState<Self>>,
+    ) -> Stateful<Div> {
+        div()
+            .id("group-header")
+            .role(Role::Row)
+            .a11y_synthetic_children(|tree| tree.parent_node().set_row_index(0))
+    }
+
     fn columns_count(&self, _: &App) -> usize {
         6
     }
@@ -1233,7 +1293,7 @@ impl TableDelegate for GroupRows {
         _: &mut Window,
         cx: &mut Context<TableState<Self>>,
     ) -> impl IntoElement {
-        header_cell(self.column(index, cx).name, cx)
+        header_cell(self.column(index, cx).name, index, cx)
     }
 
     fn render_tr(
@@ -1242,8 +1302,16 @@ impl TableDelegate for GroupRows {
         _: &mut Window,
         _: &mut Context<TableState<Self>>,
     ) -> Stateful<Div> {
+        let item = &self.rows[row];
         div()
             .id(("group-row", row))
+            .aria_label(format!(
+                "{} · {} {}",
+                model_label(&item.label, self.zh),
+                if self.zh { "请求" } else { "Requests" },
+                item.summary.request_count
+            ))
+            .a11y_synthetic_children(move |tree| tree.parent_node().set_row_index(row + 1))
             .bg(rgb(if row.is_multiple_of(2) {
                 0xffffff
             } else {
@@ -1271,6 +1339,7 @@ impl TableDelegate for GroupRows {
                 )),
                 crate::theme::color::TEXT_1,
                 ("group-key", row),
+                col,
                 CellFont::GroupName,
                 cx,
             ),
@@ -1287,6 +1356,7 @@ impl TableDelegate for GroupRows {
                 )),
                 crate::theme::color::TEXT_2,
                 ("group-requests", row),
+                col,
                 CellFont::GroupCount,
                 cx,
             ),
@@ -1306,6 +1376,7 @@ impl TableDelegate for GroupRows {
                 )),
                 crate::theme::color::TEXT_2,
                 ("group-tokens", row),
+                col,
                 CellFont::Body,
                 cx,
             ),
@@ -1323,6 +1394,7 @@ impl TableDelegate for GroupRows {
                 )),
                 crate::theme::palette().dark,
                 ("group-cache", row),
+                col,
                 CellFont::Ratio,
                 cx,
             ),
@@ -1345,6 +1417,7 @@ impl TableDelegate for GroupRows {
                         ),
                         crate::theme::color::TEXT_2,
                         ("group-cost", row),
+                        col,
                         CellFont::Body,
                         cx,
                     );
@@ -1386,6 +1459,7 @@ impl TableDelegate for GroupRows {
                         crate::theme::color::TEXT_2
                     },
                     ("group-cost", row),
+                    col,
                     CellFont::Body,
                     cx,
                 )
@@ -1402,6 +1476,7 @@ impl TableDelegate for GroupRows {
                     crate::theme::color::TEXT_3
                 },
                 ("group-coverage", row),
+                col,
                 CellFont::Ratio,
                 cx,
             ),

@@ -1,0 +1,36 @@
+{
+  "candidate": "2ce489ee8190cd5c65225aef85e90b32a2597c96e6035369083f814b945a8200",
+  "ui_pid": 24443,
+  "core_pid": 13895,
+  "source_before": "app.qingjian.inputmethod.Hans",
+  "source_sequence": [
+    "app.qingjian.inputmethod.Hans",
+    "com.apple.keylayout.ABC",
+    "app.qingjian.inputmethod.Hans"
+  ],
+  "method": "CUA ctrl+alt+space twice, read-only TIS helper after each. First cycle returned to original; no further cycling.",
+  "source_restored": true,
+  "pinyin_composition": "not tested: system Pinyin not reached; no typeText treated as composition",
+  "unicode": "typeText of 模型🧪 é yielded only space+e; cannot attribute to product vs CUA/input-source. CUA paste produced exact text in AX; Cmd+Z restored preceding space, Cmd+Shift+Z restored text; Escape canceled editor; no Save.",
+  "issue3_before_images": [
+    {
+      "file": "issue3-before-wide.png",
+      "pixels": [
+        1440,
+        900
+      ],
+      "sha256": "925c990d421a6f330fbeb2368f3ac654b1e0aa40bc3925d944bf1f25e23634b7"
+    },
+    {
+      "file": "issue3-before-small.png",
+      "pixels": [
+        1100,
+        700
+      ],
+      "sha256": "97512b8eb9a9f1764b6df0dac6bfdba89b759f9a31337ea8b55e8b76b4b3bcaf"
+    }
+  ],
+  "display_scale": "1x",
+  "observe_ime_unicode_cancelled": "FAILED: AssertionError Unexpected business/config/models/price/settings change; not diagnosed; stopped, retained UI/Core, no retry or reset",
+  "claim": "IME and persisted business-data protection remain unresolved pending diagnosis"
+}
