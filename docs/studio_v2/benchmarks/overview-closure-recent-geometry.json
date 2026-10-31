@@ -1,0 +1,16 @@
+{
+  "official": {
+    "timestamp_ink_max_y": 798,
+    "timestamp_ink_min_y": 790,
+    "white_interior_height": 89,
+    "white_interior_max_y": 821,
+    "white_interior_min_y": 733
+  },
+  "actual475f": {
+    "timestamp_ink_max_y": 794,
+    "timestamp_ink_min_y": 785.5,
+    "white_interior_height": 89,
+    "white_interior_max_y": 820.5,
+    "white_interior_min_y": 732
+  }
+}

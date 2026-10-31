@@ -1,0 +1,175 @@
+{
+  "at": "2026-10-31T10:03:43.232093+08:00",
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "n_per_binary": 2,
+  "baseline_ui_sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c",
+  "current_ui_sha256": "475f07cf10665b5dc503736740657e0c55456989e008c6118122706df7d732fc",
+  "same_core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "workload": {
+    "original_small_requests": 1000,
+    "models": 64,
+    "large_requests": 80,
+    "large_mib_each": 1,
+    "large_concurrency": 4,
+    "pre_ui_seed_real_http_requests": 22,
+    "seed_delay_seconds": 0.025,
+    "stats_health_ready_before_seed": true,
+    "ui_page": "Native statistics overview22 rows with actual missing Token; background auto-refresh gate retained"
+  },
+  "metrics": {
+    "core_rss_mib": {
+      "previous_samples": [
+        9.17,
+        9.78
+      ],
+      "current_samples": [
+        9.91,
+        9.61
+      ],
+      "previous_median": 9.475,
+      "current_median": 9.76,
+      "delta": 0.285,
+      "delta_percent": 3.01
+    },
+    "ui_rss_mib": {
+      "previous_samples": [
+        69.64,
+        77.83
+      ],
+      "current_samples": [
+        79.14,
+        72.28
+      ],
+      "previous_median": 73.735,
+      "current_median": 75.71,
+      "delta": 1.975,
+      "delta_percent": 2.68
+    },
+    "combined_rss_mib": {
+      "previous_samples": [
+        78.81,
+        87.61
+      ],
+      "current_samples": [
+        89.05,
+        81.89
+      ],
+      "previous_median": 83.21,
+      "current_median": 85.47,
+      "delta": 2.26,
+      "delta_percent": 2.72
+    },
+    "sampled_peak_rss_mib": {
+      "previous_samples": [
+        134.84,
+        147.58
+      ],
+      "current_samples": [
+        143.36,
+        133.66
+      ],
+      "previous_median": 141.21,
+      "current_median": 138.51,
+      "delta": -2.7,
+      "delta_percent": -1.91
+    },
+    "post_load_rss_mib": {
+      "previous_samples": [
+        134.84,
+        147.09
+      ],
+      "current_samples": [
+        143.36,
+        133.67
+      ],
+      "previous_median": 140.965,
+      "current_median": 138.515,
+      "delta": -2.45,
+      "delta_percent": -1.74
+    },
+    "core_ready_ms": {
+      "previous_samples": [
+        85.743,
+        52.701
+      ],
+      "current_samples": [
+        44.837,
+        46.856
+      ],
+      "previous_median": 69.222,
+      "current_median": 45.8465,
+      "delta": -23.3755,
+      "delta_percent": -33.77
+    },
+    "native_process_to_record_ms": {
+      "previous_samples": [
+        1406.733,
+        1241.031
+      ],
+      "current_samples": [
+        1559.796,
+        1120.135
+      ],
+      "previous_median": 1323.882,
+      "current_median": 1339.9655,
+      "delta": 16.0835,
+      "delta_percent": 1.21
+    },
+    "p50_ms": {
+      "previous_samples": [
+        0.161,
+        0.184
+      ],
+      "current_samples": [
+        0.185,
+        0.147
+      ],
+      "previous_median": 0.1725,
+      "current_median": 0.166,
+      "delta": -0.0065,
+      "delta_percent": -3.77
+    },
+    "p95_ms": {
+      "previous_samples": [
+        0.268,
+        0.391
+      ],
+      "current_samples": [
+        0.292,
+        0.204
+      ],
+      "previous_median": 0.3295,
+      "current_median": 0.248,
+      "delta": -0.0815,
+      "delta_percent": -24.73
+    },
+    "large_seconds": {
+      "previous_samples": [
+        0.128,
+        0.266
+      ],
+      "current_samples": [
+        0.11,
+        0.107
+      ],
+      "previous_median": 0.197,
+      "current_median": 0.1085,
+      "delta": -0.0885,
+      "delta_percent": -44.92
+    }
+  },
+  "terminal": "All4 wrappers exit0; all12 payload PIDs independently gone; Core0/mock-15 waited; CUA UI exit codes unavailable. Failed v1 seed setup excluded, never relaunched.",
+  "limits": [
+    "Same-machine native arm64 release short samples; ranges and ordering variation included. Not a statistical equivalence, optimization, leakage, frame-rate or long-duration claim.",
+    "UI process-to-record measures native process start to gpui.json marker, not first paint or interactivity; original ui_record_ready_ms includes CUA selection orchestration and is excluded from startup comparison.",
+    "RSS shares may be double-counted. Desktop activity/compression and different pre-ack launch exposure can affect RSS; no cross-platform ranking.",
+    "Only seeded22-row overview and original1000/64/80 workload; missing-token mock is not full-field dataset or all dialog states."
+  ],
+  "assessment": "No stable obvious sustained regression observed within these short, overlapping ranges. Combined idle median+2.26MiB(+2.72%), while sampled peak and latency directions vary. This is not proof of equivalence or optimization; no threshold was relaxed."
+}

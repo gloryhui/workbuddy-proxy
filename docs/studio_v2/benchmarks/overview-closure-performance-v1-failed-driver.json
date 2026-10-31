@@ -1,0 +1,11 @@
+{
+  "sequence": [
+    {
+      "label": "previous1",
+      "exit_code": 1,
+      "wall_seconds": 5.835,
+      "evidence": "performance-previous1.json"
+    }
+  ],
+  "benchmark_script_unchanged": true
+}

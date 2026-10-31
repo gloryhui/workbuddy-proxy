@@ -83,3 +83,6 @@ Studio字体与六旧皮肤（UI57）：七原始静态face/SHA/原族名/权重
 
 
 UI65设置与主题/协议菜单（最终e6abd）：7个Rust呈现/资源文件和6个原22px色块，原21个listener体保持，Core/schema/依赖/锁/工作流不改。五帧完整首审与两尺寸11张最终原图、宽窗色块原色盒对齐、7项/Mono恢复/Esc外点/协议草稿保留和显式回Chat、窄窗下方卡片与诊断可达已验证。c2eb另真实搜索3→1→3、价格2→2.5→2保存回读及180→90→180，API/SQLite证明同规则revision3/settings3和历史14行全字段摘要不变；e6abd仅呈现/取消复验，合法保存没有伪称重复，最终独立证明rev1和原数据不变。204通过2既有忽略/五门禁0、四轮原负载与24PID退出见[QA65](baseline_and_qa.md)、[最终GUI](benchmarks/settings-menu-final-gui-validation.json)、[保存数据](benchmarks/settings-menu-price-and-retention-data-proof.json)、[性能](benchmarks/settings-menu-performance-summary.json)。19待首审/21已审有差异，40完整终验继续；保留分页/额外动作、Studio第七入口与动态真值，不以删功能贴静态图。Mono字体/菜单及精细整帧、完整键盘/IME/AX/平台待收口，后续按画板顺序从52:2闭环。
+
+
+UI66使用概览：仅overview/trends/recent原生布局，保留原2处理器、Core/统计计算/配置/依赖不变。1bfd完整真实0→22→23自然更新、模型5/供应商2/来源0与22/日期、四图例与币种、七指标内滚末项/费用趋势/Esc、最近200详情550及503失败已通过；475f只补两处clock/标题paint后另验两尺寸/下方滚动/详情/失败，版本边界明确。原22请求与22费用快照、设置/价格与Core配置逐字段SHA保持；204pass2ignore/五门禁0与P/C/C/P各n2留证，合计RSS83.21→85.47MiB且范围重叠，不作优化或等价结论。见[QA66](baseline_and_qa.md)、[最终GUI](benchmarks/overview-closure-final-gui.json)、[历史保护](benchmarks/overview-closure-final-data-preservation-proof.json)、[性能](benchmarks/overview-closure-performance-summary.json)。实际标签26/28和最近行光学差异、图表hover/完整键盘IME/AX/平台待终验；仍在52:2同帧收口，剩余最终验收40。

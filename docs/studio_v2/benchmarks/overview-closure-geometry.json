@@ -1,0 +1,360 @@
+{
+  "reference": {
+    "color_space": "sRGB IEC61966-2.1",
+    "dimensions": [
+      1440,
+      900
+    ],
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/reference-52-2.png",
+    "samples": {
+      "canvas": [
+        247,
+        248,
+        252
+      ],
+      "card": [
+        255,
+        255,
+        255
+      ],
+      "hero": [
+        23,
+        28,
+        44
+      ],
+      "sidebar": [
+        17,
+        21,
+        37
+      ]
+    },
+    "scale": 1,
+    "white_horizontal_runs_physical": {
+      "300": [
+        [
+          759,
+          960
+        ],
+        [
+          979,
+          1180
+        ],
+        [
+          1199,
+          1406
+        ]
+      ],
+      "480": [
+        [
+          290,
+          979
+        ],
+        [
+          1000,
+          1405
+        ]
+      ],
+      "740": [
+        [
+          291,
+          1404
+        ]
+      ]
+    }
+  },
+  "baseline": {
+    "color_space": "L272U",
+    "dimensions": [
+      2880,
+      1802
+    ],
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-baseline/populated-wide.png",
+    "samples": {
+      "canvas": [
+        246,
+        247,
+        252
+      ],
+      "card": [
+        255,
+        255,
+        255
+      ],
+      "hero": [
+        23,
+        26,
+        39
+      ],
+      "sidebar": [
+        18,
+        21,
+        33
+      ]
+    },
+    "scale": 2,
+    "white_horizontal_runs_physical": {
+      "300": [
+        [
+          1516,
+          1924
+        ],
+        [
+          1961,
+          2369
+        ],
+        [
+          2406,
+          2814
+        ]
+      ],
+      "480": [
+        [
+          579,
+          1938
+        ],
+        [
+          1977,
+          2812
+        ]
+      ],
+      "740": []
+    }
+  },
+  "final_empty": {
+    "color_space": "L272U",
+    "dimensions": [
+      2880,
+      1802
+    ],
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final2/final-empty-wide.png",
+    "samples": {
+      "canvas": [
+        246,
+        247,
+        252
+      ],
+      "card": [
+        255,
+        255,
+        255
+      ],
+      "hero": [
+        23,
+        26,
+        39
+      ],
+      "sidebar": [
+        18,
+        21,
+        33
+      ]
+    },
+    "scale": 2,
+    "white_horizontal_runs_physical": {
+      "300": [
+        [
+          1518,
+          1921
+        ],
+        [
+          1958,
+          2361
+        ],
+        [
+          2398,
+          2813
+        ]
+      ],
+      "480": [
+        [
+          579,
+          1960
+        ],
+        [
+          1999,
+          2812
+        ]
+      ],
+      "740": [
+        [
+          594,
+          2797
+        ]
+      ]
+    }
+  },
+  "scope": "Read-only raw bitmap sampling, no transformed or resized screenshots. White horizontal run positions substantiate card widths and restored recent-card row. Different ICC profiles and dynamic values prevent full-image raw RGB equivalence claims.",
+  "interaction_1bfd_empty": {
+    "color_space": "L272U",
+    "dimensions": [
+      2880,
+      1802
+    ],
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/final-empty-wide.png",
+    "samples": {
+      "canvas": [
+        246,
+        247,
+        252
+      ],
+      "card": [
+        255,
+        255,
+        255
+      ],
+      "hero": [
+        23,
+        26,
+        39
+      ],
+      "sidebar": [
+        18,
+        21,
+        33
+      ]
+    },
+    "scale": 2,
+    "white_horizontal_runs_physical": {
+      "300": [
+        [
+          1518,
+          1921
+        ],
+        [
+          1958,
+          2361
+        ],
+        [
+          2398,
+          2813
+        ]
+      ],
+      "480": [
+        [
+          579,
+          1960
+        ],
+        [
+          1999,
+          2812
+        ]
+      ],
+      "740": [
+        [
+          580,
+          2811
+        ]
+      ]
+    }
+  },
+  "intermediate_f979_failure": "Inherited content_card gap6 caused253px billing and recent row shifted; rejected. Explicit gap0 restores246 before interaction1bfd. This is preserved, not relabelled final.",
+  "final_475f_populated": {
+    "color_space": "L272U",
+    "dimensions": [
+      2880,
+      1802
+    ],
+    "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final4/populated-wide.png",
+    "samples": {
+      "canvas": [
+        246,
+        247,
+        252
+      ],
+      "card": [
+        255,
+        255,
+        255
+      ],
+      "hero": [
+        23,
+        26,
+        39
+      ],
+      "sidebar": [
+        18,
+        21,
+        33
+      ]
+    },
+    "scale": 2,
+    "white_horizontal_runs_physical": {
+      "300": [
+        [
+          1518,
+          1921
+        ],
+        [
+          1958,
+          2361
+        ],
+        [
+          2398,
+          2813
+        ]
+      ],
+      "480": [
+        [
+          579,
+          1960
+        ],
+        [
+          1999,
+          2812
+        ]
+      ],
+      "740": [
+        [
+          580,
+          2811
+        ]
+      ]
+    }
+  },
+  "final_expected_logical_card_bounds": {
+    "hero": [
+      288,
+      283,
+      454,
+      168
+    ],
+    "records": [
+      758,
+      283,
+      204,
+      168
+    ],
+    "success": [
+      978,
+      283,
+      204,
+      168
+    ],
+    "cache": [
+      1198,
+      283,
+      210,
+      168
+    ],
+    "trend": [
+      288,
+      468,
+      694,
+      246
+    ],
+    "billing": [
+      998,
+      468,
+      410,
+      246
+    ],
+    "recent": [
+      288,
+      732,
+      1120,
+      91
+    ]
+  },
+  "expected_bounds_provenance": "Official52:2 dimensions implemented in native layout, supported by original screenshot inspection and white-run samples; not an assertion of identical every-pixel rendering.",
+  "color_scope": "Raw bitmap channel samples in each embedded ICC profile only. Runtime L272U and official sRGB profiles differ; no cross-profile raw RGB equality or uncertain NSColor conversion is used as color-acceptance evidence. Rust semantic token values are separately checked against official context."
+}

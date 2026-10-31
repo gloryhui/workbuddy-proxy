@@ -1,0 +1,29 @@
+{
+  "sequence": [
+    {
+      "label": "previous1",
+      "exit_code": 0,
+      "wall_seconds": 97.409,
+      "evidence": "performance-v2-previous1.json"
+    },
+    {
+      "label": "current1",
+      "exit_code": 0,
+      "wall_seconds": 110.347,
+      "evidence": "performance-v2-current1.json"
+    },
+    {
+      "label": "current2",
+      "exit_code": 0,
+      "wall_seconds": 100.256,
+      "evidence": "performance-v2-current2.json"
+    },
+    {
+      "label": "previous2",
+      "exit_code": 0,
+      "wall_seconds": 99.853,
+      "evidence": "performance-v2-previous2.json"
+    }
+  ],
+  "benchmark_script_unchanged": true
+}

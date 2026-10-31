@@ -1,0 +1,230 @@
+{
+  "checked_at": "2026-10-31T10:11:17.791290+08:00",
+  "tracked_unique_pids": 29,
+  "all_tracked_pids_gone": true,
+  "pids": [
+    13828,
+    13829,
+    14188,
+    27929,
+    27930,
+    28362,
+    30603,
+    30604,
+    30862,
+    32133,
+    32136,
+    32348,
+    33485,
+    33489,
+    39138,
+    44152,
+    44153,
+    45246,
+    45247,
+    45493,
+    45781,
+    45786,
+    46183,
+    46328,
+    46329,
+    46764,
+    47370,
+    47451,
+    49983
+  ],
+  "fixtures": [
+    {
+      "fixture": "ui66-baseline",
+      "pids": {
+        "fixture_pid": 13828,
+        "core_pid": 13829,
+        "ui_pid": 14188
+      },
+      "terminal": null,
+      "baseline_interrupted_exit_codes_unavailable": true
+    },
+    {
+      "fixture": "ui66-final",
+      "pids": {
+        "fixture_pid": 27929,
+        "core_pid": 27930,
+        "ui_pid": 28362
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "baseline_interrupted_exit_codes_unavailable": false
+    },
+    {
+      "fixture": "ui66-final2",
+      "pids": {
+        "fixture_pid": 30603,
+        "core_pid": 30604,
+        "ui_pid": 30862
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "baseline_interrupted_exit_codes_unavailable": false
+    },
+    {
+      "fixture": "ui66-final3",
+      "pids": {
+        "fixture_pid": 32133,
+        "core_pid": 32136,
+        "ui_pid": 32348
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "baseline_interrupted_exit_codes_unavailable": false
+    },
+    {
+      "fixture": "ui66-final4",
+      "pids": {
+        "fixture_pid": 33485,
+        "core_pid": 33489,
+        "ui_pid": 39138
+      },
+      "terminal": {
+        "ui_exit_before_cleanup": null,
+        "ui_pid_gone_before_cleanup": true,
+        "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+        "core_exit_before_cleanup": null,
+        "ui_exit_after_cleanup": null,
+        "ui_pid_gone_after_cleanup": true,
+        "core_exit_after_cleanup": 0
+      },
+      "baseline_interrupted_exit_codes_unavailable": false
+    },
+    {
+      "fixture": "bench-ui66-previous1",
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 44152,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 44153,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": null,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable"
+      }
+    },
+    {
+      "fixture": "bench-ui66-v2-previous1",
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 45246,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 45247,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 45493,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "fixture": "bench-ui66-v2-current1",
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 45781,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 45786,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 46183,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "fixture": "bench-ui66-v2-current2",
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 46328,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 46329,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 46764,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    },
+    {
+      "fixture": "bench-ui66-v2-previous2",
+      "terminal": {
+        "children": [
+          {
+            "kind": "mock",
+            "pid": 47370,
+            "exit_code": -15,
+            "waited": true
+          },
+          {
+            "kind": "core",
+            "pid": 47451,
+            "exit_code": 0,
+            "waited": true
+          }
+        ],
+        "ui_pid": 49983,
+        "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+        "ui_pid_gone": true
+      }
+    }
+  ],
+  "wrapper_observation": "Native manual4 wrappers observed exit0; baseline handle30396 missing after interruption so exit code unknown. v1 failed benchmark wrapper/driver1, clean Core0/mock-15. v2 driver49703 and4 per-case wrappers0; Core0/mock-15 waited. CUA owns UI process; PID disappearance only, no invented exit codes."
+}

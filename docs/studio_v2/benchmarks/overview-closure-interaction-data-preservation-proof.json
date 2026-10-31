@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-31T09:47:12.706931+08:00",
+  "config_sha256_unchanged": true,
+  "seeded22_all_request_fields_sha256_before": "c9b8725c2c104cef4808833a90069caa857d3e978cf885f4c26c37a2e22cd8be",
+  "seeded22_all_request_fields_sha256_after": "c9b8725c2c104cef4808833a90069caa857d3e978cf885f4c26c37a2e22cd8be",
+  "seeded22_rows_unchanged": true,
+  "settings_and_prices_before": {
+    "stats_settings": {
+      "rows": 1,
+      "all_fields_sha256": "d60ba54d4d5525816390fecf5e6aa84e53b03d72be0e45f21d438a57817642ac"
+    },
+    "stats_model_prices": {
+      "rows": 0,
+      "all_fields_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "settings_and_prices_after": {
+    "stats_settings": {
+      "rows": 1,
+      "all_fields_sha256": "d60ba54d4d5525816390fecf5e6aa84e53b03d72be0e45f21d438a57817642ac"
+    },
+    "stats_model_prices": {
+      "rows": 0,
+      "all_fields_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "seeded22_usage_costs": {
+      "rows": 22,
+      "all_fields_sha256": "34b59abdee1b7717d148b001756bd555b029f9b846138324237fda7ceecef451"
+    }
+  },
+  "counts": [
+    23,
+    11000,
+    1100,
+    12100
+  ],
+  "by_status": [
+    [
+      200,
+      22
+    ],
+    [
+      503,
+      1
+    ]
+  ],
+  "scope": "Independent read-only SQL after native GUI interaction. 23rd row is explicitly injected real503; no direct DB writes. UI preferences are separate and not business config."
+}

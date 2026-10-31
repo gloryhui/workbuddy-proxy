@@ -13,8 +13,16 @@
   "retained_bytes": 495495288,
   "retained_mib": 472.54113006591797,
   "target_still_exists": true,
-  "current_system_data_free_bytes": 39987814400,
-  "current_system_data_free_gib": 37.241554260253906,
-  "retry": "No alternative command, child/parent target or permission/policy change attempted. Root55/older rejected targets also untouched.",
-  "shared_cargo_cache": "Preserved; reused original gpui/target, no cargo clean."
+  "current_system_data_free_bytes": 39984939008,
+  "current_system_data_free_gib": 37.23887634277344,
+  "retry": "One repeat of the identical command only after fresh user authorization; again rejected. No equivalent command, child/parent target or permission/policy change attempted.",
+  "shared_cargo_cache": "Preserved; reused original gpui/target, no cargo clean.",
+  "renewed_authorization_attempt": {
+    "at": "2026-10-31T08:41:38.746533+08:00",
+    "user_instruction": "我授权你可以移除测试副本和构建产物，只要路径明确即可",
+    "immediate_preflight": "Same313 files and SHA inventory, canonical/owner/no symlink/no mount checks,24 payload PIDs gone,lsof no refs,65 archived SHA verified.",
+    "command": "rm -rf -- '/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round56.cz87i80u'",
+    "result": "same original exact command rejected before execution; approval required by policy, but AskForApproval is set to Never",
+    "bytes_freed": 0
+  }
 }

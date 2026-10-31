@@ -38,44 +38,38 @@
       "id": "52:2",
       "name": "01 / STUDIO V2 · 使用概览",
       "review_status": "reviewed_with_differences",
-      "scope": "UI56完整官方设计/资产审查，UI57最终a51字体与统计两尺寸可见交互、六旧皮肤及原负载性能对照完成；保留差异，未整帧最终验收。 UI58最终ec7e共享统计标题修正，概览/明细新图的墨迹框已对齐参考；本轮未重拍Summary全部状态。",
+      "scope": "UI66完整官方52:2上下文/原图与29资产复核；1bfd完整主流程与475f两尺寸正常/失败及有限回归、P/C/C/P通过。保持已审有差异，不以专项替代整帧终验。",
       "checks": {
-        "layout": "b313宽窗KPI top283、趋势top468、最近请求top748；17px段间距保留。真实单点缺失说明让趋势高263而稿246，小窗KPI重排，完整概览滚动/状态终验待续。",
+        "layout": "主KPI454/204/204/210，趋势/计费694/410及246高，小窗重排并可滚到最近请求；保留单点/缺失语义。最近卡实际白色内缘仍较稿上移1px，标签26/28及时间墨迹差异有原图测量，待同帧收口。",
         "colors": "四caret按原SVG#8C96AA绘制，旧#778196 glyph槽位色像素为0；全帧所有文字/hover/focus/disabled颜色未终验。",
-        "typography": "UI57最终a51接入原始Noto Sans SC/Inter及已审查的共享侧栏/统计文字角色，真实两尺寸与六皮肤/万单位检查完成。实际每字形PostScript来源、准确Figma字体版本、其余全部角色/状态仍未终验；不是全帧排版一致。 UI58共享统计标题向上1px，概览/明细墨迹框均[290,63,394,88]；其他文字与完整状态仍待。",
-        "assets": "概览29资源：23字节一致、2仅局部clipID不同、3装饰窗口控件使用真实OS控件、1静态样例折线保留真实数据绘制；明细/汇总24共用资源，四chevron为同一16px原SVG；不是全部状态槽位终验。",
-        "states": "UI57真实22条/输入11000/输出1100/总12100/全200；model gpt-6=3再All22、供应商2/模型5、未知缓存保持—，中文万可读，亿UI未覆盖。",
-        "interaction": "b313四箭头区域实际点击、模型键盘筛选3/供应商12后恢复14、日期/刷新菜单、Jump2/2四条和Prev1/2通过；5s设置下等待7.5s页码2保留，未独立证实自动响应发生。条数浮层鼠标可用；本版完整键盘焦点未可靠观察，不继承中间40a键盘结论。 UI57另测模型方向/Return3→All22、Summary2/5与范围22/1.21万/右侧列/下方卡。完整键盘、真实auto tick和所有协议状态未重验。",
-        "native_1440": "UI57 a51原始1440×901/native1×，目标逻辑1440×900，保留系统额外1行；22条真实Mock请求/12100Token，不冒充设计样例数据。",
-        "native_1100": "UI57 a51原始1100×701/native1×已查；长供应商/模型名省略，Summary右侧列/下方卡可滚动取回；不等于全部状态/完整键盘或概览下方全量终验。"
+        "typography": "UI66英雄Inter11/16与47/67、Noto21/30，主指标12/17 Regular提示，费用Inter31/44、最近13/19 Medium已调整；不宣称所有字形AA或光学位置一致。",
+        "assets": "29资源：23原字节、2局部clip ID等价、3原生OS控件、1真实数据图。原clock18px保留并使用primary色，无重绘/静态示例数据。",
+        "states": "真实22×200：11000输入/1100输出/12100总/成功100%；新增1×503后23/95.7%且总不变。缺失缓存/USD保持—，CNY实际零价0，原22请求与成本快照/设置/价格及Core配置不变。",
+        "interaction": "1bfd自然0→22→23、手动刷新、模型5/供应商2/来源0/22/日期恢复、四图例/币种、七指标内滚末项/Esc、费用趋势/Esc、最近200详情关闭通过；475f仅两处paint差异后独立复验两尺寸/详情/失败。hover因CUA无API未实测，完整keyboard/IME/AX仍未完成。",
+        "native_1440": "最终475f正常/503原图2880×1802（目标逻辑1440×900，2×+OS一逻辑行）已逐图检查；与1bfd完整矩阵分开留证。",
+        "native_1100": "最终475f正常/503原图2200×1402（目标逻辑1100×700），顶部和内部滚到底分别取证，不冒充同时全景。"
       },
       "differences": [
-        "单日只有单点，保留缺失说明/真实走势图，趋势为263px，较静态稿246px高17px；不能为贴稿隐藏真实语义。",
-        "保留实际USD偏好、未知缓存/费用与当前真实22/12100，静态稿示例数值不作为验收目标。",
-        "小窗概览lower内容在可视区以下，完整滚动/焦点/IME/无障碍/皮肤及跨平台仍待终验。",
-        "UI57共享字体与角色已接入，UI58概览/明细原图已修正标题低1px；副标题上缘AA、准确字体版本、全帧文字/列宽/内边距及完整键盘/IME/AX/平台门禁继续保留。Summary共享同一标题实现，本轮未重拍其全部状态。"
+        "最近请求标签原生26px与稿28px、最近卡内缘上移约1px/时间墨迹上移约4.5px的已知差异待同帧收口；不因主布局通过而自动抹去。",
+        "真实22/23条、未知缓存/USD费用、原生四图例/指标/详情与额外诊断入口保留；不能伪造509万/92或删除功能贴静态稿。",
+        "图表点hover缺CUA操作方法，完整键盘/IME/AX、六皮肤全量状态与Windows/Intel硬件未终验。ICC/AA和精细文字不作全像素一致声明。"
       ],
       "evidence": [
-        "benchmarks/shared-controls-design-manifests.json",
-        "benchmarks/shared-controls-design-audit.json",
-        "benchmarks/shared-controls-intermediate-40a-build.json",
-        "benchmarks/shared-controls-intermediate-40a-gui.json",
-        "benchmarks/shared-controls-intermediate-40a-geometry.json",
-        "benchmarks/shared-controls-build.json",
-        "benchmarks/shared-controls-gui-validation.json",
-        "benchmarks/shared-controls-geometry.json",
-        "benchmarks/shared-controls-performance-summary.json",
-        "screenshots/shared-controls-overview-1440x900-native-1x.png",
-        "screenshots/shared-controls-overview-1100x700-native-1x.png",
-        "benchmarks/studio-fonts-build.json",
-        "benchmarks/studio-fonts-gui-validation.json",
-        "benchmarks/studio-fonts-geometry.json",
-        "benchmarks/studio-fonts-performance-summary.json",
-        "screenshots/studio-fonts-overview-1440x900-native-1x.png",
-        "screenshots/studio-fonts-overview-1100x700-native-1x.png",
-        "benchmarks/provider-layout-build.json",
-        "benchmarks/provider-layout-geometry.json",
-        "screenshots/provider-layout-overview-wide.png"
+        "benchmarks/overview-closure-design-assets.json",
+        "benchmarks/overview-closure-build.json",
+        "benchmarks/overview-closure-source-scope.json",
+        "benchmarks/overview-closure-paint-delta.json",
+        "benchmarks/overview-closure-interaction-gui.json",
+        "benchmarks/overview-closure-final-gui.json",
+        "benchmarks/overview-closure-final-data-preservation-proof.json",
+        "benchmarks/overview-closure-geometry.json",
+        "benchmarks/overview-closure-recent-tag-height.json",
+        "benchmarks/overview-closure-recent-geometry.json",
+        "benchmarks/overview-closure-performance-summary.json",
+        "screenshots/overview-closure-final-populated-wide.png",
+        "screenshots/overview-closure-final-populated-small.png",
+        "screenshots/overview-closure-final-failed-wide.png",
+        "screenshots/overview-closure-final-failed-bottom-small.png"
       ]
     },
     {
@@ -1187,5 +1181,6 @@
       "differences": [],
       "evidence": []
     }
-  ]
+  ],
+  "updated_at": "2026-10-31T10:10:05.624809+08:00"
 }

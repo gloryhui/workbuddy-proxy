@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-31T09:23:50.572299+08:00",
+  "pids": {
+    "ui_pid": 14188,
+    "core_pid": 13829,
+    "fixture_pid": 13828
+  },
+  "states": {
+    "ui_pid": "live",
+    "core_pid": "gone",
+    "fixture_pid": "gone"
+  },
+  "fixture_tool_handle": "30396 absent; not restarted",
+  "exit_codes": null,
+  "config_sha256_unchanged": true,
+  "data": [
+    22,
+    12100
+  ],
+  "scope": "Recovered after deliberate interruption. Core already gone; no new health or terminal exit code claim. Earlier real request injection/auto observation evidence remains separately timestamped.",
+  "after_native_close_at": "2026-10-31T09:24:55.204295+08:00",
+  "after_native_close_states": {
+    "ui_pid": "gone",
+    "core_pid": "gone",
+    "fixture_pid": "gone"
+  }
+}

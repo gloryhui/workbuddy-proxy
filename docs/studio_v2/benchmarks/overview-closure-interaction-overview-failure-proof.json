@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-31T09:43:07.858849+08:00",
+  "real_http_status": 503,
+  "counts": [
+    23,
+    11000,
+    1100,
+    12100
+  ],
+  "by_status": [
+    [
+      200,
+      22
+    ],
+    [
+      503,
+      1
+    ]
+  ],
+  "latest": [
+    503,
+    "failed",
+    null
+  ],
+  "expected_success_rate": "95.7%",
+  "config_sha256_unchanged": true,
+  "mock_restored_success": true,
+  "no_direct_sql_writes": true
+}

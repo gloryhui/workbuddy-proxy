@@ -83,19 +83,24 @@ impl Statistics {
 
     pub(super) fn recent_card(&self, cx: &mut Context<Self>) -> AnyElement {
         let row = self.recent.value.as_ref();
+        let wide = self.filters_width >= CHART_SIDE_BY_SIDE_WIDTH;
         stats_card("stats-recent-request")
             .flex_shrink_0()
             .min_h(px(91.))
-            .p(px(18.))
+            .rounded(px(14.))
+            .px(px(20.))
+            .py(px(12.))
             .gap(px(12.))
             .child(
                 div()
+                    .h(px(21.))
                     .flex()
                     .items_center()
                     .justify_between()
                     .gap(px(12.))
                     .child(
                         div()
+                            .ml(px(-4.))
                             .flex()
                             .items_center()
                             .gap(px(9.))
@@ -103,11 +108,12 @@ impl Statistics {
                                 Icon::default()
                                     .path("studio/recent-clock.svg")
                                     .with_size(px(18.))
-                                    .text_color(rgb(MUTED)),
+                                    .text_color(rgb(crate::theme::palette().primary)),
                             )
                             .child(
                                 Label::new(self.t("最近请求", "Latest request"))
                                     .text_size(px(15.))
+                                    .line_height(px(21.))
                                     .font_weight(FontWeight::BOLD),
                             ),
                     )
@@ -156,12 +162,14 @@ impl Statistics {
                         .items_center()
                         .justify_between()
                         .flex_wrap()
-                        .gap(px(14.))
+                        .gap_x(px(if wide { 0. } else { 14. }))
+                        .gap_y(px(10.))
                         .child(
                             crate::studio_fonts::latin(
                                 Label::new(usage_table::timestamp(row.started_at_ms, self.zh)),
                                 cx,
                             )
+                            .when(wide, |label| label.w(px(150.)))
                             .text_size(px(12.))
                             .line_height(px(17.))
                             .font_weight(FontWeight::NORMAL)
@@ -174,12 +182,15 @@ impl Statistics {
                                 row.provider_name.clone()
                             })
                             .text_size(px(13.))
-                            .w(px(140.))
+                            .line_height(px(19.))
+                            .font_weight(FontWeight::MEDIUM)
+                            .w(px(150.))
                             .text_ellipsis(),
                         )
                         .child(
                             div()
-                                .w(px(200.))
+                                .w(px(196.))
+                                .when(wide, |tag| tag.mr(px(64.)))
                                 .px(px(12.))
                                 .py(px(5.))
                                 .rounded(px(14.))
@@ -189,6 +200,8 @@ impl Statistics {
                                         .w_full()
                                         .text_ellipsis()
                                         .text_size(px(11.))
+                                        .line_height(px(16.))
+                                        .font_weight(FontWeight::MEDIUM)
                                         .text_color(rgb(crate::theme::color::TEXT_2)),
                                 ),
                         )
@@ -197,10 +210,20 @@ impl Statistics {
                                 "{} Token",
                                 usage_table::compact(row.total_tokens, self.zh)
                             ))
+                            .when(wide, |label| label.flex_1())
                             .text_size(px(12.))
+                            .line_height(px(17.))
+                            .font_weight(FontWeight::MEDIUM)
                             .text_color(rgb(crate::theme::color::TEXT_2)),
                         )
-                        .child(Label::new(status).text_size(px(12.)).text_color(rgb(ink))),
+                        .child(
+                            Label::new(status)
+                                .when(wide, |label| label.w(px(171.)))
+                                .text_size(px(12.))
+                                .line_height(px(17.))
+                                .font_weight(FontWeight::MEDIUM)
+                                .text_color(rgb(ink)),
+                        ),
                 )
             })
             .when(row.is_none(), |card| {

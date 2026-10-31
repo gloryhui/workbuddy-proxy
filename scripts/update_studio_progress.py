@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Refresh the standalone Studio V2 timeline from QA, frame mapping and Git.
 
-Run after each completed task, then commit the refreshed HTML and JSON.
+Run after a complete feature or substantial milestone, then commit HTML and JSON.
+Do not refresh for individual spacing edits, compiler runs, or intermediate builds.
 The current task can be set with --task/--title/--status/--description.
 """
 import argparse

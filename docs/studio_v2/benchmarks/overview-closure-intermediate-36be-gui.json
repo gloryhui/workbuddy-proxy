@@ -1,0 +1,20 @@
+{
+  "recorded_at": "2026-10-31T09:32:56.774022+08:00",
+  "scope": "Intermediate 36be candidate only; not final f979 presentation acceptance",
+  "ui_sha256": "36be913b4336abf8a7c78409e920665271ae7c9e4ba2ea0238d3870b5ec8f036",
+  "ui_pid": 28362,
+  "core_pid": 27930,
+  "provenance": "Dedicated mac_ui CUA agent report, independently supplemented by post-gui-proof and terminal-status",
+  "observations": [
+    "Manual refresh displayed22 records/12100tokens",
+    "Model gpt-6 returned5",
+    "Provider OpenCode Go returned2",
+    "Built-in source0/custom22 then All restored",
+    "Date Today applied",
+    "Native close completed; no force-front command"
+  ],
+  "not_proven": [
+    "5s active-window automatic tick; background window retained0 until manual refresh"
+  ],
+  "remaining_moved_to_final": "Metric/cost/detail popovers, legend/currency, both final dimensions, controlled failure state"
+}

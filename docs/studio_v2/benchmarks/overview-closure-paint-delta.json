@@ -1,0 +1,15 @@
+{
+  "interaction_ui_sha256": "1bfd24a7ecef5003369c31465db70575a2b9f54a8a5eca51549ca1aff703a4a9",
+  "final_ui_sha256": "475f07cf10665b5dc503736740657e0c55456989e008c6118122706df7d732fc",
+  "exact_changes": [
+    "Recent heading group margin-left -4 logical pixels",
+    "Original18px recent-clock mask tinted existing primary palette instead of muted"
+  ],
+  "all_sources_identical_after_reversing_those_two_presentation_changes": {
+    "gpui/src/statistics/overview.rs": true,
+    "gpui/src/statistics/recent.rs": true,
+    "gpui/src/statistics/trends.rs": true
+  },
+  "limits": "Source equality is not a claim of rerunning every interaction on475f. Final475f two-size normal/failure, scroll and detail hit path were independently retested;1bfd full matrix remains separately labelled. Graph hover and exhaustive AX/keyboard remain outside proven runtime coverage.",
+  "final_runtime_evidence": "ui66-final4/final-gui-validation.json"
+}

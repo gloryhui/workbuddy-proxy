@@ -209,16 +209,22 @@ fn cards(summary: &SummaryDto, zh: bool) -> Vec<Card> {
 
 /// Primary V2 layout: 454px hero plus three readable metrics at 1120px;
 /// compact workspaces stack the hero above the three-card row.
-fn kpi_widths(width: f32) -> (f32, f32, bool) {
+fn kpi_widths(width: f32) -> (f32, [f32; 3], bool) {
     let width = width.max(0.);
     let wide = width >= 1000.;
-    let hero = if wide { (width * 0.405).floor() } else { width };
-    let metric = if wide {
-        (width - hero - 3. * METRIC_GAP as f32) / 3.
+    let hero = if wide { width * 454. / 1120. } else { width };
+    let available = if wide {
+        width - hero - 3. * METRIC_GAP as f32
     } else {
-        (width - 2. * METRIC_GAP as f32).max(0.) / 3.
+        (width - 2. * METRIC_GAP as f32).max(0.)
     };
-    (hero, metric, wide)
+    let metrics = if wide {
+        let first = available * 204. / 618.;
+        [first, first, available - 2. * first]
+    } else {
+        [available / 3.; 3]
+    };
+    (hero, metrics, wide)
 }
 
 /// One bar per existing time bucket, without converting unknown usage to zero.
@@ -260,7 +266,6 @@ impl Statistics {
             .flex_shrink_0()
             .flex()
             .flex_col()
-            .justify_between()
             .p(px(16.))
             .rounded(px(16.))
             .border_1()
@@ -292,16 +297,19 @@ impl Statistics {
             )
             .child(
                 crate::studio_fonts::latin(Label::new(value), cx)
+                    .mt(px(20.))
                     .text_size(px(font_size))
                     .line_height(px(line_height))
                     .font_weight(FontWeight::BOLD)
                     .text_color(rgb(INK)),
             )
+            .child(div().flex_1())
             .child(
                 Label::new(hint)
-                    .text_size(px(11.))
-                    .line_height(px(16.))
-                    .font_weight(FontWeight::MEDIUM)
+                    .mb(px(7.))
+                    .text_size(px(12.))
+                    .line_height(px(17.))
+                    .font_weight(FontWeight::NORMAL)
                     .text_color(rgb(MUTED)),
             )
             .into_any_element()
@@ -395,7 +403,7 @@ impl Statistics {
         let summary = &dashboard.summary;
         // filters_width is the existing chart's padded content width; the V2
         // cards themselves fill its whole parent without another outer card.
-        let (hero_width, metric_width, wide) = kpi_widths(self.filters_width + CARD_PAD * 2. + 2.);
+        let (hero_width, metric_widths, wide) = kpi_widths(self.filters_width + CARD_PAD * 2. + 2.);
         let compact_total = usage_table::compact(summary.total_tokens, self.zh);
         let (amount, unit) = ["万", "亿", "k", "M", "B"]
             .into_iter()
@@ -419,8 +427,9 @@ impl Statistics {
             .flex_shrink_0()
             .flex()
             .flex_col()
-            .justify_between()
-            .p(px(24.))
+            .px(px(25.))
+            .pt(px(21.))
+            .pb(px(25.))
             .rounded(px(16.))
             .bg(rgb(crate::theme::color::TERMINAL))
             .role(Role::Group)
@@ -440,7 +449,8 @@ impl Statistics {
             .child(
                 div()
                     .flex()
-                    .items_end()
+                    .items_start()
+                    .mt(px(14.))
                     .gap(px(14.))
                     .child(
                         crate::studio_fonts::latin(Label::new(amount.to_string()), cx)
@@ -451,8 +461,9 @@ impl Statistics {
                     )
                     .child(
                         Label::new(unit)
+                            .mt(px(21.))
                             .text_size(px(21.))
-                            .line_height(px(35.))
+                            .line_height(px(30.))
                             .font_weight(FontWeight::BOLD)
                             .text_color(rgb(crate::theme::color::WHITE)),
                     ),
@@ -461,6 +472,7 @@ impl Statistics {
                 div()
                     .flex()
                     .flex_col()
+                    .mt(px(-1.))
                     .gap(px(7.))
                     .child(
                         div()
@@ -473,7 +485,9 @@ impl Statistics {
                             "当前筛选范围内的 Token 用量",
                             "Token usage in the current filter range",
                         ))
+                        .ml(px(1.))
                         .text_size(px(12.))
+                        .line_height(px(17.))
                         .text_color(rgb(crate::theme::color::TERMINAL_TEXT)),
                     ),
             );
@@ -536,7 +550,7 @@ impl Statistics {
                     font_size: 34.,
                     line_height: 49.,
                 },
-                metric_width,
+                metric_widths[0],
                 cx,
             ),
             self.primary_metric(
@@ -549,7 +563,7 @@ impl Statistics {
                     font_size: 27.,
                     line_height: 39.,
                 },
-                metric_width,
+                metric_widths[1],
                 cx,
             ),
             self.primary_metric(
@@ -566,7 +580,7 @@ impl Statistics {
                     font_size: 34.,
                     line_height: 49.,
                 },
-                metric_width,
+                metric_widths[2],
                 cx,
             ),
         ]);
@@ -628,19 +642,22 @@ mod tests {
     #[test]
     fn actual_kpi_layout_fits_both_supported_workspace_widths() {
         for width in [780., 1000., 1120., 1280.] {
-            let (hero, metric, wide) = kpi_widths(width);
+            let (hero, metrics, wide) = kpi_widths(width);
             assert!(
-                metric >= super::super::METRIC_MIN_WIDTH as f32,
+                metrics
+                    .iter()
+                    .all(|metric| *metric >= super::super::METRIC_MIN_WIDTH as f32),
                 "readable metric width at {width}"
             );
             let row = if wide {
-                hero + 3. * metric + 48.
+                hero + metrics.iter().sum::<f32>() + 48.
             } else {
-                3. * metric + 32.
+                metrics.iter().sum::<f32>() + 32.
             };
             assert!((row - width).abs() < 0.01);
             assert!(hero <= width);
         }
+        assert_eq!(kpi_widths(1120.), (454., [204., 204., 210.], true));
         assert!(!kpi_widths(780.).2);
         assert!(kpi_widths(1120.).2);
     }

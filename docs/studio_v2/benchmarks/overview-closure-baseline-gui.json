@@ -1,0 +1,47 @@
+{
+  "scope": "baseline UI66",
+  "ui_sha256": "e6abd633d49c55454aa83fa43424496b47fa2d758b545d583b19d3b026b6214c",
+  "ui_pid": 14188,
+  "core_pid": 13829,
+  "window_id": 4468,
+  "images": [
+    {
+      "file": "empty-wide.png",
+      "size": [
+        2880,
+        1802
+      ],
+      "sha256": "c89943452b27081a78d3a3e0c59fc01c223eacfff5cf72bf46b181fc5b0226c8"
+    },
+    {
+      "file": "empty-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "b882835decba238bc17f7e7cb06435286ddf4585c0e4a21bf2c088d0fac180c2"
+    },
+    {
+      "file": "populated-wide.png",
+      "size": [
+        2880,
+        1802
+      ],
+      "sha256": "dfa53fd8154c41f39600c45116a239247979c23cbee5575a735da92a0c34b54e"
+    },
+    {
+      "file": "populated-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "92559e61c074779e3269105c0b5737fe9dc44c6e0bb43bf1358a0d93a2d325f4"
+    }
+  ],
+  "refresh": "With existing 5s auto setting and no manual refresh, 0 became 22 records / 12100 tokens / 100% / cache unknown; USD cost shown —. This observation and populated-wide were before interruption while Core alive.",
+  "interruption": "Parent reports fixture handle lost and Core exited after interruption. populated-small was captured afterward from retained UI state and visibly shows Core is not responding; not evidence of healthy Core.",
+  "close": "CUA native close clicked",
+  "ui_pid_present_after_close": false,
+  "foreground": "getApp background launch per CUA; no explicit activate or raise; foreground not asserted",
+  "capture": "native screencapture, own PID onscreen layer0; raw 2x including OS extra row"
+}

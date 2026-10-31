@@ -76,14 +76,17 @@ impl Statistics {
             "Cache read/write are input subsets; toggle them, never sum them",
         );
         let usage = stats_card("stats-trends")
-            .flex_grow(1.69)
+            .flex_grow(652. / 368.)
             .flex_basis(px(0.))
             .flex_shrink_0()
             .when(self.filters_width < CHART_SIDE_BY_SIDE_WIDTH, |card| {
                 card.flex_basis(Length::Auto)
             })
             .min_w_0()
-            .p(px(20.))
+            .h(px(246.))
+            .px(px(20.))
+            .pt(px(16.))
+            .pb(px(24.))
             .gap(px(6.))
             .child(
                 div()
@@ -95,6 +98,7 @@ impl Statistics {
                     .child(
                         Label::new(self.t("使用趋势", "Usage trend"))
                             .text_size(px(16.))
+                            .line_height(px(23.))
                             .font_weight(FontWeight::BOLD),
                     )
                     .child(legend)
@@ -151,7 +155,7 @@ impl Statistics {
                 div()
                     .id("token-chart-host")
                     .w_full()
-                    .h(px(145.))
+                    .flex_1()
                     .min_h_0()
                     .aria_label(summary)
                     .child(chart),
@@ -188,17 +192,21 @@ impl Statistics {
             })
             .min_w_0()
             .min_h(px(246.))
-            .p(px(20.))
-            .gap(px(8.))
+            .px(px(20.))
+            .py(px(16.))
+            .gap_0()
             .child(
                 div()
+                    .h(px(30.))
+                    .mb(px(10.))
                     .flex()
-                    .items_center()
+                    .items_start()
                     .justify_between()
                     .gap(px(8.))
                     .child(
                         Label::new(self.t("费用与计费", "Costs & billing"))
                             .text_size(px(16.))
+                            .line_height(px(23.))
                             .font_weight(FontWeight::BOLD),
                     )
                     .child(
@@ -208,7 +216,7 @@ impl Statistics {
                             .gap(px(6.))
                             .child(self.cost_history_control(cx))
                             .child(
-                                div().w(px(78.)).child(
+                                div().w(px(62.)).child(
                                     crate::ui_components::select(&self.currency_select, false)
                                         .small()
                                         .h(px(30.))
@@ -228,12 +236,15 @@ impl Statistics {
             )
             .child(
                 Label::new(self.t("代理估算费用", "Proxy estimated cost"))
+                    .mt(px(-1.))
                     .text_size(px(12.))
+                    .line_height(px(17.))
                     .text_color(rgb(MUTED)),
             )
-            .child(div().h(px(1.)).mt(px(8.)).mb(px(4.)).bg(rgb(BORDER)))
+            .child(div().h(px(1.)).mt(px(14.)).mb(px(12.)).bg(rgb(BORDER)))
             .child(
                 div()
+                    .h(px(26.))
                     .flex()
                     .items_center()
                     .justify_between()
@@ -246,11 +257,14 @@ impl Statistics {
                     .child(
                         Label::new(credit)
                             .text_size(px(18.))
-                            .font_weight(FontWeight::SEMIBOLD),
+                            .line_height(px(26.))
+                            .font_weight(FontWeight::BOLD),
                     ),
             )
             .child(
                 div()
+                    .h(px(29.))
+                    .mt(px(7.))
                     .flex()
                     .items_center()
                     .justify_between()
@@ -262,8 +276,10 @@ impl Statistics {
                     )
                     .child(
                         div()
+                            .h(px(29.))
                             .px(px(12.))
-                            .py(px(5.))
+                            .flex()
+                            .items_center()
                             .rounded(px(15.))
                             .bg(rgb(0xfff3e4))
                             .child(
@@ -275,6 +291,7 @@ impl Statistics {
                                         .unwrap_or_else(|| "—".into()),
                                 )
                                 .text_size(px(11.))
+                                .line_height(px(16.))
                                 .text_color(rgb(0xb57a35)),
                             ),
                     ),
@@ -288,7 +305,9 @@ impl Statistics {
                             summary.default_zero_request_count,
                             self.t("条使用默认零价", "records use the default zero price")
                         ))
+                        .mt(px(6.))
                         .text_size(px(11.))
+                        .line_height(px(16.))
                         .text_color(rgb(MUTED)),
                     )
                 },

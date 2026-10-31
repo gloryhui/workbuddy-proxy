@@ -1,0 +1,78 @@
+{
+  "ui_sha256": "1bfd24a7ecef5003369c31465db70575a2b9f54a8a5eca51549ca1aff703a4a9",
+  "checked_images": [
+    {
+      "file": "final-empty-wide.png",
+      "size": [
+        2880,
+        1802
+      ],
+      "sha256": "7a9712ac8d6bdac2715df0ee6153d5aaf71bb7c1296fd8296cc7513d9c4d4958"
+    },
+    {
+      "file": "final-empty-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "9949e4969473782a5f3208b2f00c5d171afdc6eba1c88bf5484a5129fe26b702"
+    },
+    {
+      "file": "populated-wide.png",
+      "size": [
+        2880,
+        1802
+      ],
+      "sha256": "723391d681c16935384d27b72bbc2a960a3caf18d5e8f75f54b91bfcd9244f26"
+    },
+    {
+      "file": "populated-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "ced5c6ad39c6502c18c1f64a4ba23457839ca79207d7850750616db45104f3b2"
+    },
+    {
+      "file": "populated-bottom-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "cfa26fe0c9afe55a28e9092d54deb6a9251ef3a542b1cc9e715799784500b264"
+    },
+    {
+      "file": "failed-wide.png",
+      "size": [
+        2880,
+        1802
+      ],
+      "sha256": "7d9dc4da10efb1f2e8f03c8836248763e3b8792aa2bf0c9b9062ab4c60023b07"
+    },
+    {
+      "file": "failed-top-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "7566e46d4b381711d1f0c65a4a027a1ca560a66b61338c74a2006f851ac045e3"
+    },
+    {
+      "file": "failed-bottom-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "c385303a9c384e18dad003cb9020663e4c4d423a6eb324a03e4de5cbe332781d"
+    },
+    {
+      "file": "metrics-bottom-small.png",
+      "size": [
+        2200,
+        1402
+      ],
+      "sha256": "d643cdd3b2b5f8e384a91d68d5e8f6cfb39e7902e8dc3eb69fef36214221b4f8"
+    }
+  ],
+  "raw_png_unchanged": true
+}

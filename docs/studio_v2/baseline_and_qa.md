@@ -1483,3 +1483,28 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 
 - 四手工夹具和四基准共24个载荷PID均独立确认退出；手工Core/host及基准Core为0，mock预期TERM -15，UI属CUA只证明PID消失，不编造退出码。关UI后Core health200/ready及14条7000输入/700输出/7700总Token均成立，再正常停止。所有wrapper已等待结束。原图/报告按SHA归档；本轮313文件/472.54MiB临时副本在证据提交后完成即时SHA/路径/进程/lsof复核，但精确目录rm被自动审批拒绝（要求审批而AskForApproval=Never）。释放0，保留472.54MiB，未换命令、子/父目标或改权限重试；共享Cargo缓存未动，系统Data剩余空间见[清理报告](benchmarks/settings-menu-cleanup.json)，完整范围见[预检](benchmarks/settings-menu-cleanup-preflight.json)。见[生命周期](benchmarks/settings-menu-lifecycle.json)。归档orchestration.py.txt仅为本机历史复核材料，里面的本机路径不是共享配置/门禁；复跑应核对实际checkout/cache并使用仓库benchmark CLI。
 - 下一步按画板顺序逐个闭环，从52:2使用概览开始，不再穿插新共享微调专项。当前五帧的明确差异仍保留：价格原分页和额外操作使卡片高于静态稿、动态金额/来源及0导入不能伪造示例；保留第七皮肤入口增加一行，Mono旧字体/菜单与Figma示例不同；Native Kit阴影/描边、文字/AA、完整键盘/IME/AX/HiDPI和平台仍需统一终验。Intel类型检查不是硬件；本轮Windows/Intel实机未实际验证。目标机至少运行`cargo test --manifest-path gpui/Cargo.toml --locked`与`cargo build --release --manifest-path gpui/Cargo.toml --locked`，Windows按`docs/WINDOWS-SCREENSHOTS.md`实拍两尺寸。Goal保持完整目标，当前专项不代表完整终验。
+
+## 小功能 66：使用概览主布局与正常、失败数据回归（2026-10-31）
+
+- 集中推进52:2使用概览，完成主卡片、趋势/计费卡和最近请求行的原生布局调整及正常/失败主流程回归；仍保留整帧差异，不记整帧最终通过。完整交互在1bfd验证，最终475f只再改最近请求标题组左移4px及原时钟SVG的primary色，逆还这两处后3个源码SHA逐一等于1bfd。475f已另做两尺寸、下方滚动、详情与503呈现复验，不能把1bfd全矩阵改名为最终二进制全量重跑。优先证据：[最终GUI](benchmarks/overview-closure-final-gui.json)、[1440正常原图](screenshots/overview-closure-final-populated-wide.png)、[1100正常原图](screenshots/overview-closure-final-populated-small.png)、[完整交互](benchmarks/overview-closure-interaction-gui.json)、[历史保护](benchmarks/overview-closure-final-data-preservation-proof.json)、[构建](benchmarks/overview-closure-build.json)、[性能](benchmarks/overview-closure-performance-summary.json)、[设计与原资产](benchmarks/overview-closure-design-assets.json)。剩余最终验收40张，19待首审/21已审有差异。
+- 仅改statistics/overview.rs、trends.rs、recent.rs：1120px内容宽下KPI为454/204/204/210，保留3个16px间距；小窗英雄卡与三指标分行。指标值统一54px起始组、12/17 Regular提示；英雄卡采用原Inter11/16、47/67及Noto21/30文字组。趋势/计费按694/410分配原生flex内容，趋势246px内让真实图表弹性占高，单点/缺失说明和四图例均保留。计费原币种选择与费用趋势入口、默认零价说明保留；最近请求91px最小高、14px圆角、原模型标签与详情处理保持。原2个cx.listener体不变；统计计算、Core、配置schema、依赖/锁/工作流均未改，无新timer、动画或热路径IO。[源码范围](benchmarks/overview-closure-source-scope.json)、[最终与交互版差异](benchmarks/overview-closure-paint-delta.json)。
+- 官方52:2完整非稀疏上下文与1440原图已读取，29资源中23字节一致、2仅局部clip ID及引用重命名等价、3装饰窗控使用真实OS、1静态示例折线继续由真实UsagePlot绘制。没有把509万/92/86.3%写入运行数据。原图与源文件的语义颜色一致性和截图几何分开记录；截图带L272U、官方图带sRGB，不能据未转换原RGB宣称全像素相同。[几何样本](benchmarks/overview-closure-geometry.json)。
+- 1bfd隔离实例：空态0，经真实本地HTTP注入22个200后，未点刷新自然更新为22/输入11000/输出1100/总12100/成功100%，缓存与USD未知保持—；模型gpt-6=5、供应商B=2、内置0/自定义22、Today→7天及手动刷新恢复通过。四图例恢复on/on/on/off，CNY真实零价¥0→USD—；七指标/Esc、费用趋势/Esc、200请求详情500/50/550及关闭通过。1100内部滚动可到计费/最近请求；指标浮层初始不能同时显示全部，但实际内部滚动可见第7项，不判不可达。再发1个真实503，自然更新23/95.7%/总12100，最近503失败/Token—。475f另用全新实例真实22+1请求复验最终六图与详情；两实例Core配置、设置、价格规则和原22请求全部字段摘要不变，最终475f原22成本快照全部字段也不变。[交互数据](benchmarks/overview-closure-interaction-data-preservation-proof.json)、[最终数据](benchmarks/overview-closure-final-data-preservation-proof.json)。
+- 原始PNG共23张，最终475f六张、1bfd交互九张、基线四张、两中间版本三张、官方参考一张；目标逻辑1440×900/1100×700，本机当前2×原图2880×1802/2200×1402，保留系统额外一逻辑行，不裁切或重绘。基线populated-small是在中断导致Core退出后拍的断链画面，不能当健康Core证据。36be仅部分功能通过；f979因继承content_card默认6px间距使计费卡变253px而失败，补gap0后重建1bfd才通过，不把中间图冒充最终图。[基线中断](benchmarks/overview-closure-baseline-interruption.json)、[归档SHA](benchmarks/overview-closure-artifacts.json)。
+- 最终475f五门禁均0：fmt、204 tests通过/2既有忽略、strict all-targets Clippy、x86_64-apple-darwin all-targets类型检查、arm64 release；UI SHA475f07cf10665b5dc503736740657e0c55456989e008c6118122706df7d732fc，42,475,728bytes，与e6abd基线同尺寸。类型检查不是Intel硬件验收。
+- 原benchmark.py SHA bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2未改，CLI help已核；同Core25f、相同机器arm64 release按P/C/C/P各n2执行1000小请求/64模型/80个1MiB并发4。各轮先确认stats_health ready、间隔25ms真实预种22，再由CUA切概览确认22后启动原负载，Token缺失是该标准Mock真实语义。首次v1在UI启动前22种子只有8行，严格前提失败并完整退出，不纳入比较；未测当时stats ready，不能据此直接确定产品原因。v2四轮全部通过，以下仅短轮中位数，不作优化或等价结论。
+
+| 指标 | e6abd旧版 | 475f当前 |
+|---|---:|---:|
+| Core RSS MiB | 9.475 | 9.760 |
+| UI RSS MiB | 73.735 | 75.710 |
+| 合计RSS MiB | 83.210 | 85.470 |
+| 采样峰值MiB | 141.210 | 138.510 |
+| Core ready ms | 69.222 | 45.847 |
+| UI进程→记录 ms | 1323.882 | 1339.966 |
+| 请求p50 / p95 ms | 0.1725 / 0.3295 | 0.166 / 0.248 |
+| 80个大请求s | 0.197 | 0.1085 |
+
+- 合计空闲RSS+2.26MiB(+2.72%)，旧78.81–87.61/新81.89–89.05的范围重叠；UI单轮方向不一致，峰值/请求延迟也有较大波动，未见稳定明显持续回退。Core本身完全相同，不能把ready/请求耗时下降归因于UI优化。UI记录标记不是首帧/可交互时间，CUA选页等待不纳入启动比较；短轮不代表泄漏、长期、全字段大数据或FPS。无显式activate/raise，实际前台状态未测。[四轮原数据](benchmarks/overview-closure-performance-driver.json)、[CUA选页边界](benchmarks/overview-closure-performance-cua.json)。
+- 关UI后均独立确认Core仍health200/ready再停止；4个正常手工wrapper和Core退出0，v2四轮wrapper/Core0、mock预期-15并wait，CUA UI只证明PID消失，不编造退出码。基线中断丢失host句柄，退出码未知；v1失败为1且Core0/mock-15已收尾。归档orchestration仅是本机历史复核材料，内含的本机路径不能作为共享入口或配置。临时目录清理与空间结果待本项证据提交后记录，不动共享Cargo缓存。
+- 尚未整帧终验：实际最近请求模型标签高26px、稿28px；最近卡白色内缘与时间墨迹仍分别约上移1px/4.5px，已单独测量，后续留在52:2同一批收口，不转入其他共享微调专项。[标签实测](benchmarks/overview-closure-recent-tag-height.json)、[最近卡实测](benchmarks/overview-closure-recent-geometry.json)。图表数据点hover因CUA无方法未实测，没有擅用外部CGEvent/AX；完整键盘/IME/读屏及跨平台仍未完成。本轮两尺寸与主流程通过不等于整帧或全Goal完成。目标机继续执行`cargo test --manifest-path gpui/Cargo.toml --locked`与`cargo build --release --manifest-path gpui/Cargo.toml --locked`，Windows按`docs/WINDOWS-SCREENSHOTS.md`实拍；Windows/Intel硬件本轮未实际验证。按用户新要求，时间线只在较大的完整功能/阶段回归后更新，不随单次编译或间距修正刷新。

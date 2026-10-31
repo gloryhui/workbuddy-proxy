@@ -1,0 +1,507 @@
+{
+  "archived_at": "2026-10-31T10:11:17.893120+08:00",
+  "prefix": "overview-closure-",
+  "files": [
+    {
+      "source": "lifecycle.json",
+      "artifact": "benchmarks/overview-closure-lifecycle.json",
+      "bytes": 5970,
+      "sha256": "060e70ea1128c3f5e6098344b8ef05d9fa16e9b1149d3b94253bfb0c28be39d7"
+    },
+    {
+      "source": "build.json",
+      "artifact": "benchmarks/overview-closure-build.json",
+      "bytes": 23244,
+      "sha256": "ef08890bf0ad4a4c740024a268fa729d89793fc48e50804627cb33275c837db1"
+    },
+    {
+      "source": "source-scope.json",
+      "artifact": "benchmarks/overview-closure-source-scope.json",
+      "bytes": 1160,
+      "sha256": "f4aea3b5bc7cc3e902a211b6bc9a399b770c0b692ca5a10e856036ed9dae1201"
+    },
+    {
+      "source": "design-asset-audit.json",
+      "artifact": "benchmarks/overview-closure-design-assets.json",
+      "bytes": 9467,
+      "sha256": "728b34c4d5b4e04d934109e7eed9944c10741e25b65b1efa7f83a9c379185885"
+    },
+    {
+      "source": "geometry-samples.json",
+      "artifact": "benchmarks/overview-closure-geometry.json",
+      "bytes": 6186,
+      "sha256": "4d2e5cb53098ededfac44b494d45981bb1233fb2976cf6af557ec43a12cdd2d4"
+    },
+    {
+      "source": "recent-tag-height.json",
+      "artifact": "benchmarks/overview-closure-recent-tag-height.json",
+      "bytes": 387,
+      "sha256": "d4344ebba6d3cb51dc5c3e00b92ba7c02ca0bc4683761412796092dcafdec8c0"
+    },
+    {
+      "source": "recent-geometry.json",
+      "artifact": "benchmarks/overview-closure-recent-geometry.json",
+      "bytes": 375,
+      "sha256": "5eac2ee45b0d909ff1c0907830d30377788a01ea67f5af8d0e9f6422d44bf5e7"
+    },
+    {
+      "source": "paint-delta-proof.json",
+      "artifact": "benchmarks/overview-closure-paint-delta.json",
+      "bytes": 937,
+      "sha256": "dede9fa9484bbd287f387c96d4887678f9cc91299d5fa6c995a9f9b16e0fe87d"
+    },
+    {
+      "source": "baseline-interruption.json",
+      "artifact": "benchmarks/overview-closure-baseline-interruption.json",
+      "bytes": 751,
+      "sha256": "f6be033109292468c38c10edb6e978e6850c052b32bfcefdd96199f33fb30509"
+    },
+    {
+      "source": "intermediate-36be-gui.json",
+      "artifact": "benchmarks/overview-closure-intermediate-36be-gui.json",
+      "bytes": 899,
+      "sha256": "22c8a6e77f49d6659d290d37b7ed67cc2ebc4230f8d32df9d07ae91f105655eb"
+    },
+    {
+      "source": "intermediate-f979-build.json",
+      "artifact": "benchmarks/overview-closure-intermediate-f979-build.json",
+      "bytes": 23243,
+      "sha256": "441aeefbfd0a05be02175ca17a28cc3681837d223cef14923c752642611eeb09"
+    },
+    {
+      "source": "interaction-1bfd-build.json",
+      "artifact": "benchmarks/overview-closure-interaction-build.json",
+      "bytes": 23244,
+      "sha256": "4816aab8b08e5644d078218dc09b856467f61dccc1d7729d457f604aa3100456"
+    },
+    {
+      "source": "interaction-image-integrity.json",
+      "artifact": "benchmarks/overview-closure-interaction-image-integrity.json",
+      "bytes": 1821,
+      "sha256": "400acfe941134bc990a0af4da8752ee91930eecd5358cad4cac3c8209caef2cc"
+    },
+    {
+      "source": "benchmark-driver.json",
+      "artifact": "benchmarks/overview-closure-performance-v1-failed-driver.json",
+      "bytes": 200,
+      "sha256": "92e7737ae5e4343388e8ce1653f5a3378ea4a3477ca9f96bf3ab6809f9e96457"
+    },
+    {
+      "source": "benchmark-driver-v2.json",
+      "artifact": "benchmarks/overview-closure-performance-driver.json",
+      "bytes": 631,
+      "sha256": "8181bf019cd14d026ca202cdf7206ce3f67c60eb977c50e8a05cb0a3747120fb"
+    },
+    {
+      "source": "performance-summary.json",
+      "artifact": "benchmarks/overview-closure-performance-summary.json",
+      "bytes": 4894,
+      "sha256": "66f378ae4a1fd0e8154248af9297a2cacc6a1d67a65ac23a4eacb78649f3a4f2"
+    },
+    {
+      "source": "performance-cua-validation.json",
+      "artifact": "benchmarks/overview-closure-performance-cua.json",
+      "bytes": 2401,
+      "sha256": "7b2313e6ac242e9b64008f939b2a4e4d871a010069f6a0bd5d4fb0ba004dab71"
+    },
+    {
+      "source": "ui66-baseline/baseline-gui-validation.json",
+      "artifact": "benchmarks/overview-closure-baseline-gui.json",
+      "bytes": 1655,
+      "sha256": "7c83ce8134ce6cf70bac2a1017fdb47f5abcfca68b279ff7570b2bc6fe549c05"
+    },
+    {
+      "source": "ui66-final3/final-gui-validation.json",
+      "artifact": "benchmarks/overview-closure-interaction-gui.json",
+      "bytes": 4523,
+      "sha256": "2248560ef565ffb0472227d1fea8011851342df5bc7ff0db023710de0806e886"
+    },
+    {
+      "source": "ui66-final3/overview-seed-proof.json",
+      "artifact": "benchmarks/overview-closure-interaction-overview-seed-proof.json",
+      "bytes": 822,
+      "sha256": "f5223d76e020fca989f94cb025a197851617b2ce96d4ef4c23d008711c13ff1e"
+    },
+    {
+      "source": "ui66-final3/overview-failure-proof.json",
+      "artifact": "benchmarks/overview-closure-interaction-overview-failure-proof.json",
+      "bytes": 405,
+      "sha256": "68937fa7e66fac27bf2dfc6b43bf365badfb7eee2e01e085580d192725855b31"
+    },
+    {
+      "source": "ui66-final3/data-preservation-proof.json",
+      "artifact": "benchmarks/overview-closure-interaction-data-preservation-proof.json",
+      "bytes": 1475,
+      "sha256": "6022dc2c882f1507049f9d8033cfe1aed6d2fc32acef8c36031fc47a03e662c8"
+    },
+    {
+      "source": "ui66-final3/post-gui-proof.json",
+      "artifact": "benchmarks/overview-closure-interaction-post-gui-proof.json",
+      "bytes": 593,
+      "sha256": "d0fab30d02e7febe95d4f752084e9b0dff8fd01879efba5bb4d6536bda227d32"
+    },
+    {
+      "source": "ui66-final3/terminal-status.json",
+      "artifact": "benchmarks/overview-closure-interaction-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "ui66-final4/final-gui-validation.json",
+      "artifact": "benchmarks/overview-closure-final-gui.json",
+      "bytes": 3142,
+      "sha256": "52159f34d57cef5f41939befbf6b88c82267e92e10ebef9b03191408a7b36d59"
+    },
+    {
+      "source": "ui66-final4/overview-seed-proof.json",
+      "artifact": "benchmarks/overview-closure-final-overview-seed-proof.json",
+      "bytes": 822,
+      "sha256": "a56bd9e4cffeebc0bec65485726c278b06cb6d636701b545cfd0c4e5c7c196d0"
+    },
+    {
+      "source": "ui66-final4/overview-failure-proof.json",
+      "artifact": "benchmarks/overview-closure-final-overview-failure-proof.json",
+      "bytes": 405,
+      "sha256": "6846d50a2b9a8b2cc0d67b35dccf5fd00839f6fee51d48f9dd66e6198a2b73e5"
+    },
+    {
+      "source": "ui66-final4/data-preservation-proof.json",
+      "artifact": "benchmarks/overview-closure-final-data-preservation-proof.json",
+      "bytes": 1624,
+      "sha256": "7c214c449e74a8b3040e13b43579d5d1f7b0f6db4ae8e6e19f6590b8e12ba9dd"
+    },
+    {
+      "source": "ui66-final4/post-gui-proof.json",
+      "artifact": "benchmarks/overview-closure-final-post-gui-proof.json",
+      "bytes": 593,
+      "sha256": "7b12e297d0e5e79839c887871b72c083a63e78e800e71026c464c23a4a01bbd4"
+    },
+    {
+      "source": "ui66-final4/terminal-status.json",
+      "artifact": "benchmarks/overview-closure-final-terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "source": "performance-v2-previous1.json",
+      "artifact": "benchmarks/overview-closure-performance-previous1.json",
+      "bytes": 4710,
+      "sha256": "a44e0af8bd5928281f54f983fba53b62efef3c2e2259abcc1e39dc2d57e20f41"
+    },
+    {
+      "source": "bench-ui66-v2-previous1/overview-ready.json",
+      "artifact": "benchmarks/overview-closure-performance-previous1-overview-ready.json",
+      "bytes": 59,
+      "sha256": "9f2f7e310fee02e15a6ae4d3d087d9ab7c331151e87305b1e432bce7d7a1f3e5"
+    },
+    {
+      "source": "bench-ui66-v2-previous1/overview-seed-benchmark.json",
+      "artifact": "benchmarks/overview-closure-performance-previous1-seed.json",
+      "bytes": 481,
+      "sha256": "c137ed1e2d3a8c69bf5eb2612fa9946486a6b899d4d08eba68d3a59500426ef5"
+    },
+    {
+      "source": "performance-v2-current1.json",
+      "artifact": "benchmarks/overview-closure-performance-current1.json",
+      "bytes": 4710,
+      "sha256": "97351df519b2df16cd4a8e09fa9f4fdf7c7cf29eb2fa1cd1af1a2b06d954d3e4"
+    },
+    {
+      "source": "bench-ui66-v2-current1/overview-ready.json",
+      "artifact": "benchmarks/overview-closure-performance-current1-overview-ready.json",
+      "bytes": 59,
+      "sha256": "b69a1bd6d0b6459911aa9ae4646484401070e6648294cdfc2ced31bf3590696d"
+    },
+    {
+      "source": "bench-ui66-v2-current1/overview-seed-benchmark.json",
+      "artifact": "benchmarks/overview-closure-performance-current1-seed.json",
+      "bytes": 481,
+      "sha256": "c137ed1e2d3a8c69bf5eb2612fa9946486a6b899d4d08eba68d3a59500426ef5"
+    },
+    {
+      "source": "performance-v2-current2.json",
+      "artifact": "benchmarks/overview-closure-performance-current2.json",
+      "bytes": 4711,
+      "sha256": "be867c5d514ee341a8483bf573d9eedb311f2ea2c08fabbde3aa218b2a323a79"
+    },
+    {
+      "source": "bench-ui66-v2-current2/overview-ready.json",
+      "artifact": "benchmarks/overview-closure-performance-current2-overview-ready.json",
+      "bytes": 59,
+      "sha256": "b0b271650234e6f617343f9cf99073932c3d2c12c29ac37c68f4324fd5f7f66c"
+    },
+    {
+      "source": "bench-ui66-v2-current2/overview-seed-benchmark.json",
+      "artifact": "benchmarks/overview-closure-performance-current2-seed.json",
+      "bytes": 481,
+      "sha256": "c137ed1e2d3a8c69bf5eb2612fa9946486a6b899d4d08eba68d3a59500426ef5"
+    },
+    {
+      "source": "performance-v2-previous2.json",
+      "artifact": "benchmarks/overview-closure-performance-previous2.json",
+      "bytes": 4711,
+      "sha256": "fe413abc592c1cccf316a64c34953683de1d75513d223e049b05a82ca2fb93fe"
+    },
+    {
+      "source": "bench-ui66-v2-previous2/overview-ready.json",
+      "artifact": "benchmarks/overview-closure-performance-previous2-overview-ready.json",
+      "bytes": 59,
+      "sha256": "3affd250a3e1fdbb8a199aef314681decb70cbd40646ab80664ef0144d39ded5"
+    },
+    {
+      "source": "bench-ui66-v2-previous2/overview-seed-benchmark.json",
+      "artifact": "benchmarks/overview-closure-performance-previous2-seed.json",
+      "bytes": 481,
+      "sha256": "c137ed1e2d3a8c69bf5eb2612fa9946486a6b899d4d08eba68d3a59500426ef5"
+    },
+    {
+      "source": "bench-ui66-previous1/terminal.json",
+      "artifact": "benchmarks/overview-closure-performance-v1-failed-terminal.json",
+      "bytes": 312,
+      "sha256": "81b9c2036ab7151859fb3e1d5e6e39fa8aa831137c3bca1da76cc394c31ce28f"
+    },
+    {
+      "source": "bench-ui66-previous1/failure.txt",
+      "artifact": "benchmarks/overview-closure-performance-v1-failure.txt",
+      "bytes": 641,
+      "sha256": "64e65598424a0e64efce518546de9e16f490d4ad2ffa77eafcd9fbb4cbf88021"
+    },
+    {
+      "source": "reference-52-2.png",
+      "artifact": "screenshots/overview-closure-reference-52-2.png",
+      "bytes": 130857,
+      "sha256": "850ab8cd2d81d0bde9c3e1d7a05a42961c8a7476d90e8c8ba0b35fc3e02e0a8a",
+      "pixels": [
+        1440,
+        900
+      ]
+    },
+    {
+      "source": "ui66-baseline/empty-wide.png",
+      "artifact": "screenshots/overview-closure-baseline-empty-wide.png",
+      "bytes": 422199,
+      "sha256": "c89943452b27081a78d3a3e0c59fc01c223eacfff5cf72bf46b181fc5b0226c8",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-baseline/empty-small.png",
+      "artifact": "screenshots/overview-closure-baseline-empty-small.png",
+      "bytes": 281421,
+      "sha256": "b882835decba238bc17f7e7cb06435286ddf4585c0e4a21bf2c088d0fac180c2",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-baseline/populated-wide.png",
+      "artifact": "screenshots/overview-closure-baseline-populated-wide.png",
+      "bytes": 471612,
+      "sha256": "dfa53fd8154c41f39600c45116a239247979c23cbee5575a735da92a0c34b54e",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-baseline/populated-small.png",
+      "artifact": "screenshots/overview-closure-baseline-populated-small.png",
+      "bytes": 308602,
+      "sha256": "92559e61c074779e3269105c0b5737fe9dc44c6e0bb43bf1358a0d93a2d325f4",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final/final-empty-wide.png",
+      "artifact": "screenshots/overview-closure-intermediate-36be-empty-wide.png",
+      "bytes": 423474,
+      "sha256": "7c8322ad47cf2c96cb3190d72e17fa0932ad584f21bb0e7189f9e1b4569dc481",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-final2/final-empty-wide.png",
+      "artifact": "screenshots/overview-closure-intermediate-f979-final-empty-wide.png",
+      "bytes": 424214,
+      "sha256": "f318f71cb4a6b3008a0af0753d8cec0aabcbd51d60ed0bdc054b7b5f18b4f6c6",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-final2/final-empty-small.png",
+      "artifact": "screenshots/overview-closure-intermediate-f979-final-empty-small.png",
+      "bytes": 286742,
+      "sha256": "f77790043cec362eca597fd6f690457a3bd3537e92c5a160ac74a58bbbe52cd3",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final3/final-empty-wide.png",
+      "artifact": "screenshots/overview-closure-interaction-final-empty-wide.png",
+      "bytes": 422730,
+      "sha256": "7a9712ac8d6bdac2715df0ee6153d5aaf71bb7c1296fd8296cc7513d9c4d4958",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-final3/final-empty-small.png",
+      "artifact": "screenshots/overview-closure-interaction-final-empty-small.png",
+      "bytes": 286254,
+      "sha256": "9949e4969473782a5f3208b2f00c5d171afdc6eba1c88bf5484a5129fe26b702",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final3/populated-wide.png",
+      "artifact": "screenshots/overview-closure-interaction-populated-wide.png",
+      "bytes": 474301,
+      "sha256": "723391d681c16935384d27b72bbc2a960a3caf18d5e8f75f54b91bfcd9244f26",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-final3/populated-small.png",
+      "artifact": "screenshots/overview-closure-interaction-populated-small.png",
+      "bytes": 297991,
+      "sha256": "ced5c6ad39c6502c18c1f64a4ba23457839ca79207d7850750616db45104f3b2",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final3/populated-bottom-small.png",
+      "artifact": "screenshots/overview-closure-interaction-populated-bottom-small.png",
+      "bytes": 310638,
+      "sha256": "cfa26fe0c9afe55a28e9092d54deb6a9251ef3a542b1cc9e715799784500b264",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final3/failed-wide.png",
+      "artifact": "screenshots/overview-closure-interaction-failed-wide.png",
+      "bytes": 477482,
+      "sha256": "7d9dc4da10efb1f2e8f03c8836248763e3b8792aa2bf0c9b9062ab4c60023b07",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-final3/failed-top-small.png",
+      "artifact": "screenshots/overview-closure-interaction-failed-top-small.png",
+      "bytes": 297868,
+      "sha256": "7566e46d4b381711d1f0c65a4a027a1ca560a66b61338c74a2006f851ac045e3",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final3/failed-bottom-small.png",
+      "artifact": "screenshots/overview-closure-interaction-failed-bottom-small.png",
+      "bytes": 313200,
+      "sha256": "c385303a9c384e18dad003cb9020663e4c4d423a6eb324a03e4de5cbe332781d",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final3/metrics-bottom-small.png",
+      "artifact": "screenshots/overview-closure-interaction-metrics-bottom-small.png",
+      "bytes": 392775,
+      "sha256": "d643cdd3b2b5f8e384a91d68d5e8f6cfb39e7902e8dc3eb69fef36214221b4f8",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final4/populated-wide.png",
+      "artifact": "screenshots/overview-closure-final-populated-wide.png",
+      "bytes": 473468,
+      "sha256": "9ae414dde38f8c67b571454c076dcd48336196f0f2d70f1de485e8b0fe98b3eb",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-final4/populated-small.png",
+      "artifact": "screenshots/overview-closure-final-populated-small.png",
+      "bytes": 298476,
+      "sha256": "69d2ac8aff6ed4cefb73055b045bd495d73944fd24b8d24e0b7d17ffbbe9575f",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final4/populated-bottom-small.png",
+      "artifact": "screenshots/overview-closure-final-populated-bottom-small.png",
+      "bytes": 310982,
+      "sha256": "8ab32536d5e854f85f49243b0aed1a9c15df2f0c44debbb66e384e5c162d5a95",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final4/failed-wide.png",
+      "artifact": "screenshots/overview-closure-final-failed-wide.png",
+      "bytes": 477337,
+      "sha256": "6081784749890d820e94812f2451be4e7ea2036a6b77e4f6bcb90e82d8f78177",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    {
+      "source": "ui66-final4/failed-top-small.png",
+      "artifact": "screenshots/overview-closure-final-failed-top-small.png",
+      "bytes": 298368,
+      "sha256": "1f339718710232dd2edd6da184dabfb92920a7c51dc524d0972b50b607e02bac",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "ui66-final4/failed-bottom-small.png",
+      "artifact": "screenshots/overview-closure-final-failed-bottom-small.png",
+      "bytes": 296117,
+      "sha256": "3a36c99ece976cde523111593cb1d6a5112ee10eb049549d714ecf0e6ef94023",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    {
+      "source": "generated historical orchestration archive",
+      "artifact": "benchmarks/overview-closure-orchestration.py.txt",
+      "bytes": 55891,
+      "sha256": "2e893692f6625fc428bdbedf79fe850aec77b128d120b9b3c7ddcc87d5b4894f"
+    }
+  ],
+  "limits": "Original PNGs copied byte-for-byte, no crop/scale/relabel across binaries. Baseline small is explicitly post-interruption and not healthy-Core proof. 36be/f979 are intermediate. 1bfd full functional matrix and475f final two-size limited regression have distinct evidence. v1 failed seed precondition was excluded from v2 P/C/C/P comparison."
+}

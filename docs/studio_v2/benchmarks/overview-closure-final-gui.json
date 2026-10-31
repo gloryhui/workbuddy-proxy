@@ -1,0 +1,71 @@
+{
+  "ui_sha256": "475f07cf10665b5dc503736740657e0c55456989e008c6118122706df7d732fc",
+  "ui_pid": 39138,
+  "core_pid": 33489,
+  "window_number": 5066,
+  "launch": "CUA background getApp, no explicit activate/raise; actual foreground not asserted",
+  "capture": "own PID onscreen layer0 window; native screencapture PNG unscaled/uncropped",
+  "images": {
+    "populated-wide.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final4/populated-wide.png",
+      "sha256": "9ae414dde38f8c67b571454c076dcd48336196f0f2d70f1de485e8b0fe98b3eb",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    "populated-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final4/populated-small.png",
+      "sha256": "69d2ac8aff6ed4cefb73055b045bd495d73944fd24b8d24e0b7d17ffbbe9575f",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "populated-bottom-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final4/populated-bottom-small.png",
+      "sha256": "8ab32536d5e854f85f49243b0aed1a9c15df2f0c44debbb66e384e5c162d5a95",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "failed-wide.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final4/failed-wide.png",
+      "sha256": "6081784749890d820e94812f2451be4e7ea2036a6b77e4f6bcb90e82d8f78177",
+      "pixels": [
+        2880,
+        1802
+      ]
+    },
+    "failed-top-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final4/failed-top-small.png",
+      "sha256": "1f339718710232dd2edd6da184dabfb92920a7c51dc524d0972b50b607e02bac",
+      "pixels": [
+        2200,
+        1402
+      ]
+    },
+    "failed-bottom-small.png": {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final4/failed-bottom-small.png",
+      "sha256": "3a36c99ece976cde523111593cb1d6a5112ee10eb049549d714ecf0e6ef94023",
+      "pixels": [
+        2200,
+        1402
+      ]
+    }
+  },
+  "cases": {
+    "normal": "22 records, Token12100, success100%, cache and USD —",
+    "recent_detail": "Opened and closed actual latest 200 OpenCode Go/model-b-1 500 input/50 output/550 total",
+    "small_bottom": "Internal scroll reaches billing and recent request; not all contents simultaneously visible",
+    "failure": "Natural update after actual 503 to 23 records, 95.7% and Token12100; latest 503 failed with Token —"
+  },
+  "scope": "This version covers normal two sizes, bottom scroll, latest detail and failure presentation. Full filter/legend/popover functional matrix was executed separately against 1bfd; not claimed as repeated on this binary.",
+  "limitations": [
+    "No native CUA hover API; graph data-point tooltip untested",
+    "No external AX or window bounds; no CGEvent input",
+    "No explicit activate/raise; actual foreground unknown",
+    "No screen reader or full keyboard accessibility claim"
+  ]
+}

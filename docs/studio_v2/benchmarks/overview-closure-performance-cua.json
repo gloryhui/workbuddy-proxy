@@ -1,0 +1,42 @@
+{
+  "rounds": [
+    {
+      "label": "previous1",
+      "core_pid": 45247,
+      "ui_pid": 45493,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-previous1/WorkBuddy Proxy Overview Bench previous1.app",
+      "observed": "Overview selected, 22 records, 100.0% success, Token —",
+      "window_number": "not queried",
+      "marker": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-previous1/overview-ready.json"
+    },
+    {
+      "label": "current1",
+      "core_pid": 45786,
+      "ui_pid": 46183,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-current1/WorkBuddy Proxy Overview Bench current1.app",
+      "observed": "Overview selected, 22 records, 100.0% success, Token —",
+      "window_number": "not queried",
+      "marker": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-current1/overview-ready.json"
+    },
+    {
+      "label": "current2",
+      "core_pid": 46329,
+      "ui_pid": 46764,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-current2/WorkBuddy Proxy Overview Bench current2.app",
+      "observed": "Overview selected, 22 records, 100.0% success, Token —",
+      "window_number": "not queried",
+      "marker": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-current2/overview-ready.json"
+    },
+    {
+      "label": "previous2",
+      "core_pid": 47451,
+      "ui_pid": 49983,
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-previous2/WorkBuddy Proxy Overview Bench previous2.app",
+      "observed": "Overview selected, 22 records, 100.0% success, Token —",
+      "window_number": "not queried",
+      "marker": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/bench-ui66-v2-previous2/overview-ready.json"
+    }
+  ],
+  "procedure": "CUA background getApp then click Overview; no explicit activate or raise. Actual foreground not asserted.",
+  "boundary": "These records prove UI launch and observed page state only; performance, process exit and wait require wrapper evidence. No UI operations during workload."
+}

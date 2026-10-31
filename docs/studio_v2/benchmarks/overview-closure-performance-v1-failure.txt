@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/benchmark-background.py", line 101, in <module>
+    try:benchmark.main()
+        ~~~~~~~~~~~~~~^^
+  File "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/scripts/benchmark.py", line 118, in main
+    ui_pid=settings_pid(folder) if args.gui else None
+           ~~~~~~~~~~~~^^^^^^^^
+  File "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/benchmark-background.py", line 67, in await_cua
+    assert seed_count==22,seed_count
+           ^^^^^^^^^^^^^^
+AssertionError: 8

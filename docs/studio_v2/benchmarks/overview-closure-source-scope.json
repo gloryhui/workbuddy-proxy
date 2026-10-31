@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-31T09:38:55.874649+08:00",
+  "files": {
+    "gpui/src/statistics/overview.rs": {
+      "before_listeners": 0,
+      "after_listeners": 0,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "9d22628a803bbd5a44a14d7a7423010af7f8858ee4c91b40d432f3dd1df6b674"
+    },
+    "gpui/src/statistics/recent.rs": {
+      "before_listeners": 1,
+      "after_listeners": 1,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "a066bb201c8e2713baa132f44c42b465fc4afbaca2d2d1b1478913d5de7c0387"
+    },
+    "gpui/src/statistics/trends.rs": {
+      "before_listeners": 1,
+      "after_listeners": 1,
+      "missing_original_listener_body_sha256": [],
+      "sha256": "1896ecf780a78b1b3f674583536fec8aa07001485db6c02dece5ca57dd5c721b"
+    }
+  },
+  "core_schema_dependencies_locks_workflows_diff": [],
+  "candidate_ui_sha256": "475f07cf10665b5dc503736740657e0c55456989e008c6118122706df7d732fc",
+  "listener_comparison": "Whitespace-normalized balanced cx.listener expressions; all existing local handlers retained. Only overview/trends/recent native layout changes. Source evidence supplements actual native interaction checks."
+}

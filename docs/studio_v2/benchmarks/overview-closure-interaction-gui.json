@@ -1,0 +1,101 @@
+{
+  "ui_sha256": "1bfd24a7ecef5003369c31465db70575a2b9f54a8a5eca51549ca1aff703a4a9",
+  "ui_pid": 32348,
+  "core_pid": 32136,
+  "window_number": 4891,
+  "launch": "CUA getApp background; no explicit activate or raise; actual foreground not asserted",
+  "screenshots": "Native screencapture own PID onscreen layer 0 window; original PNG without cropping or scaling",
+  "images": {
+    "final-empty-wide.png": {
+      "sha256": "7a9712ac8d6bdac2715df0ee6153d5aaf71bb7c1296fd8296cc7513d9c4d4958",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/final-empty-wide.png"
+    },
+    "final-empty-small.png": {
+      "sha256": "9949e4969473782a5f3208b2f00c5d171afdc6eba1c88bf5484a5129fe26b702",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/final-empty-small.png"
+    },
+    "populated-wide.png": {
+      "sha256": "723391d681c16935384d27b72bbc2a960a3caf18d5e8f75f54b91bfcd9244f26",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/populated-wide.png"
+    },
+    "populated-small.png": {
+      "sha256": "ced5c6ad39c6502c18c1f64a4ba23457839ca79207d7850750616db45104f3b2",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/populated-small.png"
+    },
+    "populated-bottom-small.png": {
+      "sha256": "cfa26fe0c9afe55a28e9092d54deb6a9251ef3a542b1cc9e715799784500b264",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/populated-bottom-small.png"
+    },
+    "failed-wide.png": {
+      "sha256": "7d9dc4da10efb1f2e8f03c8836248763e3b8792aa2bf0c9b9062ab4c60023b07",
+      "pixels": [
+        2880,
+        1802
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/failed-wide.png"
+    },
+    "failed-top-small.png": {
+      "sha256": "7566e46d4b381711d1f0c65a4a027a1ca560a66b61338c74a2006f851ac045e3",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/failed-top-small.png"
+    },
+    "failed-bottom-small.png": {
+      "sha256": "c385303a9c384e18dad003cb9020663e4c4d423a6eb324a03e4de5cbe332781d",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/failed-bottom-small.png"
+    },
+    "metrics-bottom-small.png": {
+      "sha256": "d643cdd3b2b5f8e384a91d68d5e8f6cfb39e7902e8dc3eb69fef36214221b4f8",
+      "pixels": [
+        2200,
+        1402
+      ],
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round57.1f9nnpvn/ui66-final3/metrics-bottom-small.png"
+    }
+  },
+  "cases": {
+    "empty": "0 records, total/success/cache unavailable; 7 days and 5 seconds",
+    "natural_refresh": "After seed 0→22/12100/100% without manual refresh; after 503 22→23/95.7%/12100 without manual refresh. Window active state not measured.",
+    "manual_refresh": "Clicked once and retained 22",
+    "filters": "gpt-6 5/2750, OpenCode Go 2/1100, built-in 0, custom 22; restored All; Today then 7 days",
+    "metric_popover": "Opened, Escape closed; small window scroll inside reveals last WorkBuddy points item",
+    "legend": "all four toggled and restored on/on/on/off",
+    "currency": "USD unavailable → CNY ¥0 → USD unavailable",
+    "cost_trend": "opened USD no-data popover, Escape closed",
+    "recent_detail": "opened latest 200, 500 input/50 output/550 total and closed",
+    "small_scroll": "lower billing and recent request reachable via internal scrolling, not simultaneously with top",
+    "failed": "23 records, 95.7% success, Token 12100, latest HTTP 503 failed, missing Token shown —"
+  },
+  "limitations": [
+    "No external AX/window bounds or CGEvent input",
+    "No explicit activate or raise; actual foreground state not asserted",
+    "No screen reader or exhaustive keyboard accessibility claim",
+    "This is intermediate 1bfd; 475f paint-only candidate requires own capture and limited regression"
+  ]
+}
