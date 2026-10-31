@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-31T19:29:06.785763+08:00",
+  "embedded_json_exact": true,
+  "counts": {
+    "pending": 0,
+    "partial": 2,
+    "reused": 0,
+    "verified": 38
+  },
+  "remaining": 2,
+  "recorded_tasks": 71,
+  "next_batch": "B05",
+  "source_code_head": "e92c7a9b0030187838db30358a96bc04392b280a",
+  "release_plan_source_exact_after_removing_only_derived_fields": true,
+  "local_href_count": 5,
+  "inline_js": [
+    {
+      "syntax_exit": 0,
+      "bytes": 229
+    },
+    {
+      "syntax_exit": 0,
+      "bytes": 11163
+    }
+  ],
+  "scope": "Offline JSON/links/JavaScript syntax checks only. No browser rendering claim or bypass of earlier file-page browser denial. R01–R04 and recorded RSS costs remain open."
+}
