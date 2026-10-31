@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-31T22:29:56.890345+08:00",
+  "passed": true,
+  "counts": {
+    "pending": 0,
+    "partial": 0,
+    "reused": 0,
+    "verified": 40
+  },
+  "remaining_interfaces": 0,
+  "recorded_QA": 72,
+  "feature_batches_passed": 5,
+  "release_batches_pending": 4,
+  "release_tasks_pending": 19,
+  "current_batch": "R01",
+  "embedded_JSON_exact": true,
+  "source_plan_preserved_with_only_derived_display_fields": true,
+  "all_frame_evidence_exists": true,
+  "local_links": [
+    "PROGRESS.md",
+    "feature_regression_matrix.md",
+    "progress_timeline.json",
+    "release_plan.json",
+    "release_plan.md"
+  ],
+  "inline_JS_syntax_exit_codes": [
+    0,
+    0
+  ],
+  "verification_scope": "Offline HTML/data/JS/link checks only. No browser rendering or local file-page access claimed."
+}

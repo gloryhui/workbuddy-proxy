@@ -3,7 +3,7 @@
   "figma": {
     "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
     "page_id": "51:2",
-    "inventory_source": "Official Figma MCP51:2 refreshed2026-10-31; same40 nodes; all19 B01 full contexts and default references frozen in b01-design-audit. B02六份完整非稀疏上下文及原1440参考另见b02-design-audit；本批按冻结基线推进。 B03七份最新完整高保真上下文/原1440参考见b03-design-audit；合计32帧批次签收。 B04六份完整上下文/1024导出参考和12原生图见b04-design-audit/visual-review；累计38帧。",
+    "inventory_source": "Official Figma MCP51:2 refreshed2026-10-31; same40 nodes; all19 B01 full contexts and default references frozen in b01-design-audit. B02六份完整非稀疏上下文及原1440参考另见b02-design-audit；本批按冻结基线推进。 B03七份最新完整高保真上下文/原1440参考见b03-design-audit；合计32帧批次签收。 B04六份完整上下文/1024导出参考和12原生图见b04-design-audit/visual-review；累计38帧。 B05两份最新完整上下文、1024×640原导出/1440×900画布和4张1x原生图见b05-design-audit/visual-review；累计40帧功能批次签收，R01仍需集中全局复核。",
     "high_fidelity_context_read": [
       "59:484",
       "59:279",
@@ -345,39 +345,35 @@
       "id": "60:27",
       "name": "08 / STUDIO V2 · 同步 WorkBuddy",
       "review_status": "reviewed_with_differences",
-      "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+      "scope": "B05/QA72：完整最新设计、同78两尺寸原生截图和集中真实功能链已签收；原生AA/系统装饰和准确业务文案差异明记，R01–R04仍独立。",
       "checks": {
-        "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
-        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-        "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
-        "states": "确认Cancel不写；仅同步一次，将6模型写入隔离HOME/models.json，config.installed为6个模型安装条目、ID集合相同。Core真实HOME kernel保护已预检；未点击Restart/Unsync，不将隔离同步当真实WorkBuddy重启验收。",
-        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-sync-wide.png",
-        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-sync-small.png"
+        "layout": "526×318壳，宽窗居中457,274；小窗287,174，全部标题/说明/提示与三按钮完整可见。",
+        "colors": "原Studio普通遮罩层覆盖工具栏；未作全RGB字节一致门禁。",
+        "typography": "按设计文字角色/层级复核，原生AA和OS边缘形态记录；不比较字体文件字节。",
+        "assets": "30种原资源25字节一致、2全XML clipID/ref/空白等价、3原生系统装饰，不重画或提取路径。",
+        "states": "A草稿先保存后安装全部5项；手工冲突拒绝覆盖/坏JSON/受控20s/OSopen失败与恢复/端口提交后部分失败均实测，B草稿保持。",
+        "interaction": "Cancel/X/Esc/neutralReturn/遮罩与英文；原生复制/清空日志；正常冷启/关窗，用户物理托盘Settings/Quit、CUA观察和进程/SQL证明分开记录。",
+        "native_1440": "本轮原生PNG1440×901，逻辑1440×900，当前1x，未裁剪缩放。",
+        "native_1100": "本轮原生PNG1100×701，逻辑1100×700，当前1x，未裁剪缩放。"
       },
       "differences": [
-        "普通遮罩/原生关闭呈现已修；原生阴影、×墨迹和部分AA仍与参考不同。",
-        "原生RefreshCw/Info与稿中文字循环箭头/提示符形状不同；所有已保存供应商文案保留真实业务语义。",
-        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+        "Figma同步文案称当前供应商；现有真实行为保存当前草稿后同步全部已保存供应商，保留准确业务范围和原处理器。",
+        "3个OS装饰和原生Refresh/Info/AA/1px窗口边缘保留，不宣称逐像素相同。",
+        "原native重启真实作用于唯一QA Cocoa目标，不冒称实际已安装WorkBuddy客户端互操作通过。",
+        "首次Main被用户暂停中断，不能计为自然退出；恢复后完整冷启/用户物理菜单链另行实证。",
+        "完整busy/键盘/IME/辅助技术、平台/真实客户端、长期性能和安装发行仍R01–R04。"
       ],
       "evidence": [
-        "benchmarks/dialogs-layout-design-audit.json",
-        "benchmarks/dialogs-layout-asset-audit.json",
-        "benchmarks/dialogs-layout-build.json",
-        "benchmarks/dialogs-layout-source-scope.json",
-        "benchmarks/dialogs-layout-final-gui-validation.json",
-        "benchmarks/dialogs-layout-interaction-core-proofs.json",
-        "benchmarks/dialogs-layout-original-fields-proof.json",
-        "benchmarks/dialogs-layout-process-lifecycle.json",
-        "benchmarks/dialogs-layout-performance-summary.json",
-        "screenshots/dialogs-layout-final-sync-wide.png",
-        "screenshots/dialogs-layout-final-sync-small.png",
-        "benchmarks/modal-chrome-design-audit.json",
-        "benchmarks/modal-chrome-final-gui-validation.json",
-        "benchmarks/modal-chrome-artifacts.json",
-        "benchmarks/modal-chrome-shell-pixels.json",
-        "benchmarks/modal-chrome-isolation-data-proof.json"
+        "screenshots/b05-60-27-wide.png",
+        "screenshots/b05-60-27-small.png",
+        "screenshots/b05-figma-60-27.png",
+        "benchmarks/b05-design-audit.json",
+        "benchmarks/b05-visual-review.json",
+        "benchmarks/b05-native-consolidated.json",
+        "benchmarks/b05-native-lifecycle-summary.json",
+        "benchmarks/b05-clipboard-validation.json",
+        "benchmarks/b05-performance-summary.json",
+        "benchmarks/b05-artifacts.json"
       ]
     },
     {
@@ -822,29 +818,35 @@
       "id": "68:350",
       "name": "22 / STUDIO V2 · 取消同步确认",
       "review_status": "reviewed_with_differences",
-      "scope": "UI64 official full high-fidelity context/reference and baseline two-size native captures read. Shared close/scrim candidate compiled; final native interaction and full-frame comparison still underway. No final acceptance. UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+      "scope": "B05/QA72：完整最新设计、同78两尺寸原生截图和集中真实功能链已签收；原生AA/系统装饰和准确业务文案差异明记，R01–R04仍独立。",
       "checks": {
-        "layout": "完整画板壳/层级与54:2共用背景核对；526×318取消同步及532×322删除壳白色填充框实拍与参考相同，最小窗按钮可见；静态样例数据不写死。",
-        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-        "assets": "本帧30个资源全部按官方curl下载，原生槽位沿用已审54:2；逐字节或仅一致clipID/ref重命名等价，3窗口装饰保留真实OS控件。完整有效几何仍随全量终验。",
-        "states": "隔离真实Mock两供应商/5模型（A4/B1）/14请求7700Token；取消不删除、不移除、不重启。动态日志/未测试连接状态保真。",
-        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-unsync-wide.png",
-        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-unsync-small.png"
+        "layout": "526×318壳，宽窗居中457,274；小窗287,174，全部标题/说明/提示与三按钮完整可见。",
+        "colors": "原Studio普通遮罩层覆盖工具栏；未作全RGB字节一致门禁。",
+        "typography": "按设计文字角色/层级复核，原生AA和OS边缘形态记录；不比较字体文件字节。",
+        "assets": "30种原资源25字节一致、2全XML clipID/ref/空白等价、3原生系统装饰，不重画或提取路径。",
+        "states": "A草稿先保存后安装全部5项；手工冲突拒绝覆盖/坏JSON/受控20s/OSopen失败与恢复/端口提交后部分失败均实测，B草稿保持。",
+        "interaction": "Cancel/X/Esc/neutralReturn/遮罩与英文；原生复制/清空日志；正常冷启/关窗，用户物理托盘Settings/Quit、CUA观察和进程/SQL证明分开记录。",
+        "native_1440": "本轮原生PNG1440×901，逻辑1440×900，当前1x，未裁剪缩放。",
+        "native_1100": "本轮原生PNG1100×701，逻辑1100×700，当前1x，未裁剪缩放。"
       },
       "differences": [
-        "共用背景/真实端口、14条日志和连接未测试状态与静态稿不同，保持真实语义。",
-        "×墨迹1-2px、原生阴影及警告背景约1通道颜色差异仍保留；不能以声明RGBA相同当作全像素相同。",
-        "原生RefreshCw/Info与稿中文字箭头/提示符不同；保留原功能与已有文案。",
-        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+        "Figma同步文案称当前供应商；现有真实行为保存当前草稿后同步全部已保存供应商，保留准确业务范围和原处理器。",
+        "3个OS装饰和原生Refresh/Info/AA/1px窗口边缘保留，不宣称逐像素相同。",
+        "原native重启真实作用于唯一QA Cocoa目标，不冒称实际已安装WorkBuddy客户端互操作通过。",
+        "首次Main被用户暂停中断，不能计为自然退出；恢复后完整冷启/用户物理菜单链另行实证。",
+        "完整busy/键盘/IME/辅助技术、平台/真实客户端、长期性能和安装发行仍R01–R04。"
       ],
       "evidence": [
-        "benchmarks/modal-chrome-design-audit.json",
-        "benchmarks/modal-chrome-final-gui-validation.json",
-        "benchmarks/modal-chrome-artifacts.json",
-        "benchmarks/modal-chrome-shell-pixels.json",
-        "benchmarks/modal-chrome-isolation-data-proof.json"
+        "screenshots/b05-68-350-wide.png",
+        "screenshots/b05-68-350-small.png",
+        "screenshots/b05-figma-68-350.png",
+        "benchmarks/b05-design-audit.json",
+        "benchmarks/b05-visual-review.json",
+        "benchmarks/b05-native-consolidated.json",
+        "benchmarks/b05-native-lifecycle-summary.json",
+        "benchmarks/b05-clipboard-validation.json",
+        "benchmarks/b05-performance-summary.json",
+        "benchmarks/b05-artifacts.json"
       ]
     },
     {
@@ -1424,5 +1426,5 @@
       ]
     }
   ],
-  "updated_at": "2026-10-31T19:26:03.873681+08:00"
+  "updated_at": "2026-10-31T22:29:05.163201+08:00"
 }

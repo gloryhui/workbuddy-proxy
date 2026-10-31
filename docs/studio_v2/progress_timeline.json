@@ -1,20 +1,20 @@
 {
   "version": 2,
-  "updated_at": "2026-10-31T19:28:31+08:00",
+  "updated_at": "2026-10-31T22:29:05+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
-  "code_head": "e92c7a9b0030187838db30358a96bc04392b280a",
-  "phase": "批次推进 · B05",
+  "code_head": "fe0a41b79a69df9a40c871fc97ccd88de9aa7c32",
+  "phase": "界面终验记录齐备 · 总体验收待核对",
   "goal_status": "active",
   "counts": {
     "pending": 0,
-    "partial": 2,
+    "partial": 0,
     "reused": 0,
-    "verified": 38
+    "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 71,
-  "remaining_final": 2,
+  "recorded_tasks": 72,
+  "remaining_final": 0,
   "visual_review": {
     "counts": {
       "not_reviewed": 0,
@@ -26,59 +26,61 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 71,
-    "title": "B04 工具栏、语言与窗口整批签收",
+    "id": 72,
+    "title": "B05 同步、日志与生命周期整批签收",
     "status": "recorded",
-    "description": "B04 六帧12原生图和语言失败回滚修复已签收，累计38/40、剩余B05两帧；四轮短负载完成，RSS差异保留R03，R01–R04仍待。"
+    "description": "40/40界面已完成批次签收，剩余0；同步/端口/日志/复制/用户物理托盘及四轮原负载通过。下一批R01，R01–R04发布门禁仍待完成。"
   },
   "latest_task": {
-    "id": 71,
-    "title": "B04工具栏、语言与窗口整批签收",
+    "id": 72,
+    "title": "B05同步、日志与生命周期整批签收",
     "status": "recorded",
-    "summary": "六帧/六任务界面签收，累计38/40、剩余2（B05同步/生命周期）；Goal active，R01–R04独立。冻结d08候选 d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f，Core固定25f。最新六份完整Figma上下文和原1024×640导出图已读，设计画布1440×900；37项资源32字节一致、2全XML仅clipID/ref/空白等价、3使用",
+    "summary": "本批2帧/5任务通过，累计40/40、剩余界面0；下一批R01。R01–R04仍未通过，Goal active，未公开发布。冻结UI 78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc、Core25f；两份最新完整官方设计和原始参考图、30种资源25字节一致/2全XML等价/3原生系统装饰，布局未重新设计。设计、资源、四图视觉。",
     "highlights": [
-      "六帧/六任务界面签收，累计38/40、剩余2（B05同步/生命周期）；Goal active，R01–R04独立。冻结d08候选 d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f，Core固定25f。最新六份完整Figma上下文和原1024×640导出图已读，设计画布1440×900；37项资源32字节一致、2全XML仅clipID/ref/空白等价、3使用原生系统装饰，无路径提取/重绘。设计、资源。",
-      "只改Rust ui.rs 的语言失败恢复。旧4b实际管理HTTP503后，页面英文/已存中文/菜单勾选中文不一致且再选中文无效；新d08恢复后端读回语言（未入队则用最后已确认值），原翻译效果体和正常语言payload逐字节保持，无补偿保存。Core/配置格式/依赖/锁文件、原七处理器/全屏恢复算法/主题键未改。旧版复现、源码范围、原处理器。fmt、204pass/2既有ignore、strict all-targets Clippy、Intel all-targets check、arm64 release全0；Intel非硬件验收。构建。",
-      "真实CUA在隔离Profile完成失败503回滚与English→系统实际中文→中文、已选不重复请求，gpt-6筛选3/14和未保存Low草稿保持，英文价格弹窗取消。七皮肤逐个读回、外观文件保存失败保留Studio后修复；开机启动为实际Core隔离plist ON→OFF→失败回滚OFF→修复ON→OFF，没有改真实LaunchAgents或登录会话。更新latest/available0.5.8/403/无效/关闭后迟到响应使用显式loopback UI边界夹具；单独一次原Core真实公网检查显示当前最新0.5.7，未下载/安装，不能把受控结果称Core公网E2E。所有更新保留force:true。原生交互/边界、逐阶段与终态、实际命令。"
+      "本批2帧/5任务通过，累计40/40、剩余界面0；下一批R01。R01–R04仍未通过，Goal active，未公开发布。冻结UI 78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc、Core25f；两份最新完整官方设计和原始参考图、30种资源25字节一致/2全XML等价/3原生系统装饰，布局未重新设计。设计、资源、四图视觉。",
+      "唯一产品改动是2份Rust日志呈现代码：旧d08在上滚阅读时每次新增都强制到底；新78仅在底部跟随，100条过期时用缓存可见中间锚点/UTF8偏移/真实viewport几何有限帧恢复。Input几何已包含滚动偏移，修正重复叠加；没有新增空闲轮询。宽窗142→143保持88–96，小窗137→140保持59与上下裁切；单条/idle/底部由原委派原生观察和真实HTTP证明补充，未伪造额外PNG。初始fe/8a/e98/2f失败和一次缺trait编译诊断保留。原sync/unsync方法逐字节保持，Core/native/scripts/配置schema/依赖不变；206pass/2既有ignore、fmt/strictClippy/Intel类型检查/arm64release全0，Intel不是硬件验收。源码、旧问题、最终日志、构建。",
+      "真实CUA完成两弹窗宽/小、Cancel/X/Esc/中性Return/遮罩/English→中文；正式4张PNG原始1440×901和1100×701，逻辑1440×900和1100×700、当前1x，1px窗口边缘不裁掉。Figma正文称当前供应商；现有行为保存当前草稿后安装全部已保存供应商，产品文案如实保留全部范围。首次A保存后遇预置手工ID冲突，Core正确拒绝覆盖；这是夹具原预期错误，未改Core。换非冲突测试名成功同步5条，原2手工条目和扩展字段保留；B未保存草稿不被移除操作提交。坏JSON的保存后失败/移除失败/修复重试、受控目标真实20s拒绝退出和真实OS重开失败/修复均完成。交互、集中证据、冲突诊断。"
     ],
-    "limits": [],
+    "limits": [
+      "本批判断：ACCEPTED for B05 interface delivery and short workload correctness only. Four unchanged workloads and actual terminal checks passed. UI idle RSS +0.055MiB/combined -0.155MiB; sampled peak +3.33MiB remains explicit R03 diagnostic cost. Proxy p95 -0.0095ms and process-to-marker -130.1675ms. Not a regression-free, lo"
+    ],
     "evidence": [
       {
         "label": "设计",
-        "href": "benchmarks/b04-design-audit.json"
+        "href": "benchmarks/b05-design-audit.json"
       },
       {
         "label": "资源",
-        "href": "benchmarks/b04-asset-audit.json"
+        "href": "benchmarks/b05-asset-audit.json"
       },
       {
-        "label": "旧版复现",
-        "href": "benchmarks/b04-language-failure-baseline.json"
+        "label": "四图视觉",
+        "href": "benchmarks/b05-visual-review.json"
       },
       {
-        "label": "源码范围",
-        "href": "benchmarks/b04-source-scope.json"
+        "label": "源码",
+        "href": "benchmarks/b05-source-scope.json"
       },
       {
-        "label": "原处理器",
-        "href": "benchmarks/b04-toolbar-source-contract.json"
+        "label": "旧问题",
+        "href": "benchmarks/b05-log-baseline-validation.json"
+      },
+      {
+        "label": "最终日志",
+        "href": "benchmarks/b05-log-final-validation.json"
       },
       {
         "label": "构建",
-        "href": "benchmarks/b04-build.json"
+        "href": "benchmarks/b05-build.json"
       },
       {
-        "label": "原生交互/边界",
-        "href": "benchmarks/b04-native-b04-summary.json"
-      },
-      {
-        "label": "逐阶段与终态",
-        "href": "benchmarks/b04-native-consolidated.json"
+        "label": "交互",
+        "href": "benchmarks/b05-native-sync-partial-summary.json"
       }
     ],
-    "commit": "e92c7a9b0030187838db30358a96bc04392b280a",
-    "date": "2026-10-31T19:28:17+08:00",
-    "commit_subject": "fix(studio): restore saved language after toolbar failures",
+    "commit": "fe0a41b79a69df9a40c871fc97ccd88de9aa7c32",
+    "date": "2026-10-31T22:27:45+08:00",
+    "commit_subject": "fix(studio): retain log reading and accept B05 lifecycle batch",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -434,46 +436,42 @@
       "node": "60:27",
       "title": "08 / STUDIO V2 · 同步 WorkBuddy",
       "source": "ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs",
-      "detail": "部分：UI63完整画板首审；769原生勾选资产/徽章/标题与字段文字修正，四类两尺寸及九Core快照、模型5→6/隔离同步6/价格拒绝修正与新请求快照/详情内滚、Mono抽查及原负载四轮留证；保留scrim/X、正文/价格几何、全量键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：B05 / QA72，最新两帧/冻结78原生2×2；同步/移除、草稿与文件保护、受控真实重启/端口部分成功、日志复制清空和正常冷启/用户物理托盘通过；R01–R04全局发布门禁独立。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=60-27",
       "visual_review": {
         "id": "60:27",
         "name": "08 / STUDIO V2 · 同步 WorkBuddy",
         "review_status": "reviewed_with_differences",
-        "scope": "UI63最新四完整画板首审及769最终候选专项验证；4Rust视图/原生Base控件，8默认两尺寸、5交互原图、9独立Core阶段及P/C/C/P性能留证。保留差异，未整帧终验。 UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "scope": "B05/QA72：完整最新设计、同78两尺寸原生截图和集中真实功能链已签收；原生AA/系统装饰和准确业务文案差异明记，R01–R04仍独立。",
         "checks": {
-          "layout": "核对726×672/526×318/574×625/650×770四壳与正文/固定操作区；小窗分别收缩或内滚。已有备注字段保留在价格body末尾且可实际滚动输入。价格shell/gutter/列宽、若干正文与分隔线位置仍不同。",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "四帧33资源本轮curl重新下载，30与本地字节相同、3装饰窗口控件采用真实OS。Picker原12×12model-check放15px原生Base指示器，不改SVG；Sync使用25px原生RefreshCw替代错误缩放20px工具栏资源。原生Close/Info/Refresh与文字glyph仍有外观差异。",
-          "states": "确认Cancel不写；仅同步一次，将6模型写入隔离HOME/models.json，config.installed为6个模型安装条目、ID集合相同。Core真实HOME kernel保护已预检；未点击Restart/Unsync，不将隔离同步当真实WorkBuddy重启验收。",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-sync-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-sync-small.png"
+          "layout": "526×318壳，宽窗居中457,274；小窗287,174，全部标题/说明/提示与三按钮完整可见。",
+          "colors": "原Studio普通遮罩层覆盖工具栏；未作全RGB字节一致门禁。",
+          "typography": "按设计文字角色/层级复核，原生AA和OS边缘形态记录；不比较字体文件字节。",
+          "assets": "30种原资源25字节一致、2全XML clipID/ref/空白等价、3原生系统装饰，不重画或提取路径。",
+          "states": "A草稿先保存后安装全部5项；手工冲突拒绝覆盖/坏JSON/受控20s/OSopen失败与恢复/端口提交后部分失败均实测，B草稿保持。",
+          "interaction": "Cancel/X/Esc/neutralReturn/遮罩与英文；原生复制/清空日志；正常冷启/关窗，用户物理托盘Settings/Quit、CUA观察和进程/SQL证明分开记录。",
+          "native_1440": "本轮原生PNG1440×901，逻辑1440×900，当前1x，未裁剪缩放。",
+          "native_1100": "本轮原生PNG1100×701，逻辑1100×700，当前1x，未裁剪缩放。"
         },
         "differences": [
-          "普通遮罩/原生关闭呈现已修；原生阴影、×墨迹和部分AA仍与参考不同。",
-          "原生RefreshCw/Info与稿中文字循环箭头/提示符形状不同；所有已保存供应商文案保留真实业务语义。",
-          "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+          "Figma同步文案称当前供应商；现有真实行为保存当前草稿后同步全部已保存供应商，保留准确业务范围和原处理器。",
+          "3个OS装饰和原生Refresh/Info/AA/1px窗口边缘保留，不宣称逐像素相同。",
+          "原native重启真实作用于唯一QA Cocoa目标，不冒称实际已安装WorkBuddy客户端互操作通过。",
+          "首次Main被用户暂停中断，不能计为自然退出；恢复后完整冷启/用户物理菜单链另行实证。",
+          "完整busy/键盘/IME/辅助技术、平台/真实客户端、长期性能和安装发行仍R01–R04。"
         ],
         "evidence": [
-          "benchmarks/dialogs-layout-design-audit.json",
-          "benchmarks/dialogs-layout-asset-audit.json",
-          "benchmarks/dialogs-layout-build.json",
-          "benchmarks/dialogs-layout-source-scope.json",
-          "benchmarks/dialogs-layout-final-gui-validation.json",
-          "benchmarks/dialogs-layout-interaction-core-proofs.json",
-          "benchmarks/dialogs-layout-original-fields-proof.json",
-          "benchmarks/dialogs-layout-process-lifecycle.json",
-          "benchmarks/dialogs-layout-performance-summary.json",
-          "screenshots/dialogs-layout-final-sync-wide.png",
-          "screenshots/dialogs-layout-final-sync-small.png",
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b05-60-27-wide.png",
+          "screenshots/b05-60-27-small.png",
+          "screenshots/b05-figma-60-27.png",
+          "benchmarks/b05-design-audit.json",
+          "benchmarks/b05-visual-review.json",
+          "benchmarks/b05-native-consolidated.json",
+          "benchmarks/b05-native-lifecycle-summary.json",
+          "benchmarks/b05-clipboard-validation.json",
+          "benchmarks/b05-performance-summary.json",
+          "benchmarks/b05-artifacts.json"
         ]
       }
     },
@@ -1023,36 +1021,42 @@
       "node": "68:350",
       "title": "22 / STUDIO V2 · 取消同步确认",
       "source": "ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs",
-      "detail": "部分：原生确认/两尺寸、取消/仅移除、保留providers与草稿/恢复原条目、守卫下移除后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验",
-      "status": "partial",
+      "detail": "已验收：B05 / QA72，最新两帧/冻结78原生2×2；同步/移除、草稿与文件保护、受控真实重启/端口部分成功、日志复制清空和正常冷启/用户物理托盘通过；R01–R04全局发布门禁独立。",
+      "status": "verified",
       "url": "https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ?node-id=68-350",
       "visual_review": {
         "id": "68:350",
         "name": "22 / STUDIO V2 · 取消同步确认",
         "review_status": "reviewed_with_differences",
-        "scope": "UI64 official full high-fidelity context/reference and baseline two-size native captures read. Shared close/scrim candidate compiled; final native interaction and full-frame comparison still underway. No final acceptance. UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+        "scope": "B05/QA72：完整最新设计、同78两尺寸原生截图和集中真实功能链已签收；原生AA/系统装饰和准确业务文案差异明记，R01–R04仍独立。",
         "checks": {
-          "layout": "完整画板壳/层级与54:2共用背景核对；526×318取消同步及532×322删除壳白色填充框实拍与参考相同，最小窗按钮可见；静态样例数据不写死。",
-          "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-          "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-          "assets": "本帧30个资源全部按官方curl下载，原生槽位沿用已审54:2；逐字节或仅一致clipID/ref重命名等价，3窗口装饰保留真实OS控件。完整有效几何仍随全量终验。",
-          "states": "隔离真实Mock两供应商/5模型（A4/B1）/14请求7700Token；取消不删除、不移除、不重启。动态日志/未测试连接状态保真。",
-          "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-          "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-modal-unsync-wide.png",
-          "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-modal-unsync-small.png"
+          "layout": "526×318壳，宽窗居中457,274；小窗287,174，全部标题/说明/提示与三按钮完整可见。",
+          "colors": "原Studio普通遮罩层覆盖工具栏；未作全RGB字节一致门禁。",
+          "typography": "按设计文字角色/层级复核，原生AA和OS边缘形态记录；不比较字体文件字节。",
+          "assets": "30种原资源25字节一致、2全XML clipID/ref/空白等价、3原生系统装饰，不重画或提取路径。",
+          "states": "A草稿先保存后安装全部5项；手工冲突拒绝覆盖/坏JSON/受控20s/OSopen失败与恢复/端口提交后部分失败均实测，B草稿保持。",
+          "interaction": "Cancel/X/Esc/neutralReturn/遮罩与英文；原生复制/清空日志；正常冷启/关窗，用户物理托盘Settings/Quit、CUA观察和进程/SQL证明分开记录。",
+          "native_1440": "本轮原生PNG1440×901，逻辑1440×900，当前1x，未裁剪缩放。",
+          "native_1100": "本轮原生PNG1100×701，逻辑1100×700，当前1x，未裁剪缩放。"
         },
         "differences": [
-          "共用背景/真实端口、14条日志和连接未测试状态与静态稿不同，保持真实语义。",
-          "×墨迹1-2px、原生阴影及警告背景约1通道颜色差异仍保留；不能以声明RGBA相同当作全像素相同。",
-          "原生RefreshCw/Info与稿中文字箭头/提示符不同；保留原功能与已有文案。",
-          "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+          "Figma同步文案称当前供应商；现有真实行为保存当前草稿后同步全部已保存供应商，保留准确业务范围和原处理器。",
+          "3个OS装饰和原生Refresh/Info/AA/1px窗口边缘保留，不宣称逐像素相同。",
+          "原native重启真实作用于唯一QA Cocoa目标，不冒称实际已安装WorkBuddy客户端互操作通过。",
+          "首次Main被用户暂停中断，不能计为自然退出；恢复后完整冷启/用户物理菜单链另行实证。",
+          "完整busy/键盘/IME/辅助技术、平台/真实客户端、长期性能和安装发行仍R01–R04。"
         ],
         "evidence": [
-          "benchmarks/modal-chrome-design-audit.json",
-          "benchmarks/modal-chrome-final-gui-validation.json",
-          "benchmarks/modal-chrome-artifacts.json",
-          "benchmarks/modal-chrome-shell-pixels.json",
-          "benchmarks/modal-chrome-isolation-data-proof.json"
+          "screenshots/b05-68-350-wide.png",
+          "screenshots/b05-68-350-small.png",
+          "screenshots/b05-figma-68-350.png",
+          "benchmarks/b05-design-audit.json",
+          "benchmarks/b05-visual-review.json",
+          "benchmarks/b05-native-consolidated.json",
+          "benchmarks/b05-native-lifecycle-summary.json",
+          "benchmarks/b05-clipboard-validation.json",
+          "benchmarks/b05-performance-summary.json",
+          "benchmarks/b05-artifacts.json"
         ]
       }
     },
@@ -1876,7 +1880,7 @@
     },
     {
       "title": "同步、日志与进程生命周期",
-      "implemented": "同步/取消同步原生确认、隔离文件写入、日志和Core/Tray/UI主要生命周期已有专项。",
+      "implemented": "冻结78：两份最新设计/4张两尺寸原生PNG；草稿同步/移除、冲突和损坏文件保护、受控真实重启/端口部分成功、日志阅读修复/复制清空、正常冷启动及用户物理托盘验收通过。四轮原负载0，峰值+3.33MiB留R03。",
       "pending": "完成对外集成边界与设置窗口关闭/重开整条链，真实业务数据保持。",
       "tasks": [
         7,
@@ -1893,7 +1897,7 @@
     "title": "Studio V2 正式版批次计划",
     "as_of": "2026-10-31",
     "state": "active",
-    "current_batch": "B05",
+    "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
     "historical_tasks": 71,
@@ -2753,7 +2757,7 @@
         "id": "B05",
         "title": "同步、日志与进程生命周期",
         "kind": "feature",
-        "status": "planned",
+        "status": "passed",
         "frames": [
           "60:27",
           "68:350"
@@ -2761,15 +2765,15 @@
         "depends_on": [
           "B04"
         ],
-        "completed_summary": "同步/取消同步原生确认、隔离文件写入、日志和Core/Tray/UI主要生命周期已有专项。",
+        "completed_summary": "冻结78：两份最新设计/4张两尺寸原生PNG；草稿同步/移除、冲突和损坏文件保护、受控真实重启/端口部分成功、日志阅读修复/复制清空、正常冷启动及用户物理托盘验收通过。四轮原负载0，峰值+3.33MiB留R03。",
         "delivery": "完成对外集成边界与设置窗口关闭/重开整条链，真实业务数据保持。",
         "tasks": [
           {
             "id": "B05.1",
             "title": "同步/取消同步确认与范围",
-            "acceptance": "pending",
-            "completed": "两类弹窗、当前/全部、仅同步/同步重启、取消和文件ID读回已有隔离证据。",
-            "remaining": "两画板两尺寸，覆盖草稿未保存/目标变动/取消及同步失败；保留原save/install/restore顺序。",
+            "acceptance": "passed",
+            "completed": "2帧4原图、Cancel/X/Esc/neutralReturn/遮罩/英文检查；当前A草稿保存后同步全部5模型，B草稿不提交；手工同ID冲突正确拒绝覆盖，移除恢复原2条手工配置。",
+            "remaining": "本功能批次已收口；最终输入/无障碍、实际系统/客户端、长期性能和安装发布按R01–R04独立验收。",
             "acceptance_check": "仅在显式确认后写隔离WorkBuddy；取消不写；安装条目与文件ID一致；无隐式应用。",
             "history_tasks": [
               22,
@@ -2780,9 +2784,9 @@
           {
             "id": "B05.2",
             "title": "WorkBuddy/端口重启与失败回滚",
-            "acceptance": "pending",
-            "completed": "受保护的denial-only产品重启分支及独立基础脚本已有证据，不等同完整真实WorkBuddy重启。",
-            "remaining": "在可控测试副本验证完整重启/超时/部分成功/恢复；若缺可用环境明确阻塞。 同批补端口合法变更确认、Core重启与失败回滚。",
+            "acceptance": "passed",
+            "completed": "原native FFI在唯一受控Cocoa目标上真实重启、20s拒绝退出、OS重开失败/修复；端口0/65536/取消/占用拒绝，64645→50428→50695同Core监听迁移及重启失败部分成功通过。不是实际已安装WorkBuddy互操作。",
+            "remaining": "本功能批次已收口；最终输入/无障碍、实际系统/客户端、长期性能和安装发布按R01–R04独立验收。",
             "acceptance_check": "原用户会话不被随意结束；每阶段结果可判定；失败报告准确、配置可恢复，不把脚本成功当产品路径通过。 端口0/65536拒绝，取消不重启；合法变更后真实端点一致，失败回滚或部分成功提示符合原语义。",
             "history_tasks": [
               22,
@@ -2792,9 +2796,9 @@
           {
             "id": "B05.3",
             "title": "日志阅读、清空与复制",
-            "acceptance": "pending",
-            "completed": "100条上限、顺序、自动跟随/阅读位置、清空/复制已有分项。",
-            "remaining": "在最终UI连续注入正常/失败请求，核对有新日志/无新日志/手动上滚/清空。",
+            "acceptance": "passed",
+            "completed": "仅修Rust日志视图：100条过期后保留可见锚点，宽/小窗单条与3条批量、idle及底部跟随；原生复制100行与手工选区一致，200/503/200、清空ring0/新请求恢复，SQL历史保留。",
+            "remaining": "本功能批次已收口；最终输入/无障碍、实际系统/客户端、长期性能和安装发布按R01–R04独立验收。",
             "acceptance_check": "日志从旧到新、仅跟随底部；无新日志不抢位置；复制与显示一致；不含Key，保留上限。",
             "history_tasks": [
               7
@@ -2803,9 +2807,9 @@
           {
             "id": "B05.4",
             "title": "真实代理卡、端口、托盘与单实例",
-            "acceptance": "pending",
-            "completed": "真实地址/端口/供应商模型请求计数、暂停恢复、端点复制及非法端口取消已有分项；3→2→3、关UI后Core/Tray及HTTP200、重复启动同PID和草稿恢复已有实测。",
-            "remaining": "在最终候选统一核对代理卡真实状态、完整端点复制/端口弹窗，再补物理托盘菜单打开设置/退出、正常冷启动和关闭重开；不以CLI show代替菜单点击。",
+            "acceptance": "passed",
+            "completed": "地址原生复制/运行卡真实2/5/请求/端口；正常冷启Core+Tray+UI、关窗转发、用户手动物理Settings重开唯一UI并恢复B草稿、用户物理Quit三角色全退出。CUA仅操作窗口与观察，非CUA托盘自动化。",
+            "remaining": "本功能批次已收口；最终输入/无障碍、实际系统/客户端、长期性能和安装发布按R01–R04独立验收。",
             "acceptance_check": "关设置释放UI，代理继续转发；重开唯一UI且草稿正确；退出关闭三角色，无僵尸/重复实例。 状态/计数/端口来自真实Core，不复制假地址、不重复显示三份运行信息。",
             "history_tasks": [
               7,
@@ -2816,9 +2820,9 @@
           {
             "id": "B05.5",
             "title": "同步与生命周期整批验证",
-            "acceptance": "pending",
-            "completed": "真实隔离Core字段与退出状态证明方法已建立。",
-            "remaining": "在一份冻结候选上串联同步→取消同步→关窗→托盘重开→退出，采集2帧4图及日志/文件/进程证据。",
+            "acceptance": "passed",
+            "completed": "同冻结78完成同步→移除→关窗/重开/退出和4张正式图；原14请求/成本全字段保护至156。206通过/2既有忽略及其他构建门禁0；P/C/C/P原负载0且各2090条持久化，专用临时根已精确清理。",
+            "remaining": "本功能批次已收口；最终输入/无障碍、实际系统/客户端、长期性能和安装发布按R01–R04独立验收。",
             "acceptance_check": "配置/历史无无关改动；每个子进程退出或继续运行符合动作；共享缓存保留，专用临时目录准确清理。",
             "history_tasks": [
               7,
@@ -2830,19 +2834,29 @@
             ]
           }
         ],
-        "accepted_frames": [],
-        "acceptance_evidence": [],
+        "accepted_frames": [
+          "60:27",
+          "68:350"
+        ],
+        "acceptance_evidence": [
+          "benchmarks/b05-design-audit.json",
+          "benchmarks/b05-native-consolidated.json",
+          "benchmarks/b05-native-lifecycle-summary.json",
+          "benchmarks/b05-clipboard-validation.json",
+          "benchmarks/b05-performance-summary.json",
+          "benchmarks/b05-artifacts.json"
+        ],
         "frame_details": [
           {
             "id": "60:27",
             "title": "08 / STUDIO V2 · 同步 WorkBuddy",
-            "status": "partial",
+            "status": "verified",
             "review_status": "reviewed_with_differences"
           },
           {
             "id": "68:350",
             "title": "22 / STUDIO V2 · 取消同步确认",
-            "status": "partial",
+            "status": "verified",
             "review_status": "reviewed_with_differences"
           }
         ],
@@ -2980,7 +2994,7 @@
             "title": "macOS arm64系统行为",
             "acceptance": "pending",
             "completed": "当前arm64原生两尺寸/部分窗口与生命周期已验。",
-            "remaining": "补物理托盘、最小化/缩放/全屏/恢复、多屏拖动、系统登录开机启动和冷启动。 QA71只做普通窗口恢复和真实隔离plist；原全屏算法/浏览器URL处理器未改，未重做全屏Spaces、标题拖动、真实登录或浏览器启动，不冒称当前系统集成通过。",
+            "remaining": "补物理托盘、最小化/缩放/全屏/恢复、多屏拖动、系统登录开机启动和冷启动。 QA71只做普通窗口恢复和真实隔离plist；原全屏算法/浏览器URL处理器未改，未重做全屏Spaces、标题拖动、真实登录或浏览器启动，不冒称当前系统集成通过。 B05以原native算法操作可控Cocoa目标，真实已安装WorkBuddy的读取配置/现有会话互操作仍须在发行环境核对，不能由该目标测试替代。",
             "acceptance_check": "实际状态有原生证据；后台代理续存；不强制置顶；系统登录等未做的场景明确保留。",
             "history_tasks": [
               35,
@@ -3050,7 +3064,7 @@
             "title": "峰值差异诊断与最终结论",
             "acceptance": "pending",
             "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。",
-            "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。 QA71原四轮UI RSS+11.005MiB/组合+12.56MiB/峰值+16.565MiB；preload footprint旧120.3M/新119.35M，malloc allocated旧21.0M/新21.1M，并不排除RSS回退。原样本和资源原行见b04-resource-diagnostics；不以短测功能签收冒称R03通过。",
+            "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。 B03保留原四轮RSS/峰值/marker/p95成本，另加一次C/P配对未稳定复现；全部6轮描述性中位数组合+3.23MiB/UI+3.50MiB/峰值+4.66MiB/marker+958.54ms/p95+0.007ms。启动marker尤其仍待解释，不等于无回退或发行性能通过。 QA71原四轮UI RSS+11.005MiB/组合+12.56MiB/峰值+16.565MiB；preload footprint旧120.3M/新119.35M，malloc allocated旧21.0M/新21.1M，并不排除RSS回退。原样本和资源原行见b04-resource-diagnostics；不以短测功能签收冒称R03通过。 QA72同Core旧d08/新78原四轮：UI RSS+0.055MiB/合计-0.155MiB/采样峰值+3.33MiB，process→marker-130.1675ms、proxy p95-0.0095ms；有效负载后live vmmap和全部原样本保留，不抵消B01/B03/B04历史成本。",
             "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
             "history_tasks": [
               67
@@ -3095,7 +3109,7 @@
             "id": "R03.5",
             "title": "最终构建和性能报告",
             "acceptance": "pending",
-            "completed": "GPUI当前204通过/2既有忽略，fmt/strictClippy/Intel类型检查/arm64release已有。",
+            "completed": "GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。",
             "remaining": "共享Cargo缓存一次完成最终Core+GPUI门禁，汇总分平台性能、局限和产物SHA。",
             "acceptance_check": "既有忽略说明/所需真实Core fixture补跑单列；测试/链接/硬件/GUI证据范围分明，无虚假全绿。",
             "history_tasks": [
@@ -3162,7 +3176,7 @@
             "id": "R04.5",
             "title": "正式版出厂核对与发布",
             "acceptance": "pending",
-            "completed": "当前Goal暂停，未制作新的正式Release，不把分支push当公开发布。",
+            "completed": "当前Goal active，未制作新的正式Release；分支push不等于公开发布。",
             "remaining": "逐条核对P00、B01–B05、R01–R04；形成具体RC清单和最终结论，再执行明确授权的tag/Release发布动作。",
             "acceptance_check": "40帧界面签收＋所有发布门禁通过，无P0/P1、无未解释明显性能回退；安装/升级/回滚和证据齐备，才标可发布。",
             "history_tasks": []
@@ -3447,9 +3461,9 @@
     "metrics": {
       "functional_batches": 5,
       "release_batches": 4,
-      "passed_batches": 4,
+      "passed_batches": 5,
       "tasks": 50,
-      "passed_tasks": 26
+      "passed_tasks": 31
     },
     "goal_status": "active"
   },
@@ -6745,6 +6759,58 @@
       "date": "2026-10-31T19:28:17+08:00",
       "commit_subject": "fix(studio): restore saved language after toolbar failures",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 72,
+      "title": "B05同步、日志与生命周期整批签收",
+      "status": "recorded",
+      "summary": "本批2帧/5任务通过，累计40/40、剩余界面0；下一批R01。R01–R04仍未通过，Goal active，未公开发布。冻结UI 78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc、Core25f；两份最新完整官方设计和原始参考图、30种资源25字节一致/2全XML等价/3原生系统装饰，布局未重新设计。设计、资源、四图视觉。",
+      "highlights": [
+        "本批2帧/5任务通过，累计40/40、剩余界面0；下一批R01。R01–R04仍未通过，Goal active，未公开发布。冻结UI 78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc、Core25f；两份最新完整官方设计和原始参考图、30种资源25字节一致/2全XML等价/3原生系统装饰，布局未重新设计。设计、资源、四图视觉。",
+        "唯一产品改动是2份Rust日志呈现代码：旧d08在上滚阅读时每次新增都强制到底；新78仅在底部跟随，100条过期时用缓存可见中间锚点/UTF8偏移/真实viewport几何有限帧恢复。Input几何已包含滚动偏移，修正重复叠加；没有新增空闲轮询。宽窗142→143保持88–96，小窗137→140保持59与上下裁切；单条/idle/底部由原委派原生观察和真实HTTP证明补充，未伪造额外PNG。初始fe/8a/e98/2f失败和一次缺trait编译诊断保留。原sync/unsync方法逐字节保持，Core/native/scripts/配置schema/依赖不变；206pass/2既有ignore、fmt/strictClippy/Intel类型检查/arm64release全0，Intel不是硬件验收。源码、旧问题、最终日志、构建。",
+        "真实CUA完成两弹窗宽/小、Cancel/X/Esc/中性Return/遮罩/English→中文；正式4张PNG原始1440×901和1100×701，逻辑1440×900和1100×700、当前1x，1px窗口边缘不裁掉。Figma正文称当前供应商；现有行为保存当前草稿后安装全部已保存供应商，产品文案如实保留全部范围。首次A保存后遇预置手工ID冲突，Core正确拒绝覆盖；这是夹具原预期错误，未改Core。换非冲突测试名成功同步5条，原2手工条目和扩展字段保留；B未保存草稿不被移除操作提交。坏JSON的保存后失败/移除失败/修复重试、受控目标真实20s拒绝退出和真实OS重开失败/修复均完成。交互、集中证据、冲突诊断。"
+      ],
+      "limits": [
+        "本批判断：ACCEPTED for B05 interface delivery and short workload correctness only. Four unchanged workloads and actual terminal checks passed. UI idle RSS +0.055MiB/combined -0.155MiB; sampled peak +3.33MiB remains explicit R03 diagnostic cost. Proxy p95 -0.0095ms and process-to-marker -130.1675ms. Not a regression-free, lo"
+      ],
+      "evidence": [
+        {
+          "label": "设计",
+          "href": "benchmarks/b05-design-audit.json"
+        },
+        {
+          "label": "资源",
+          "href": "benchmarks/b05-asset-audit.json"
+        },
+        {
+          "label": "四图视觉",
+          "href": "benchmarks/b05-visual-review.json"
+        },
+        {
+          "label": "源码",
+          "href": "benchmarks/b05-source-scope.json"
+        },
+        {
+          "label": "旧问题",
+          "href": "benchmarks/b05-log-baseline-validation.json"
+        },
+        {
+          "label": "最终日志",
+          "href": "benchmarks/b05-log-final-validation.json"
+        },
+        {
+          "label": "构建",
+          "href": "benchmarks/b05-build.json"
+        },
+        {
+          "label": "交互",
+          "href": "benchmarks/b05-native-sync-partial-summary.json"
+        }
+      ],
+      "commit": "fe0a41b79a69df9a40c871fc97ccd88de9aa7c32",
+      "date": "2026-10-31T22:27:45+08:00",
+      "commit_subject": "fix(studio): retain log reading and accept B05 lifecycle batch",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -7941,6 +8007,21 @@
       "reused": 0,
       "verified": 38,
       "remaining_final": 2,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-10-31T22:29:05+08:00",
+      "note": "B05采样峰值+3.33MiB和B01/B03/B04既有成本继续留R03；40帧完成不代表正式版可发布。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
       "visual_review": {
         "not_reviewed": 0,
         "reviewing": 0,
