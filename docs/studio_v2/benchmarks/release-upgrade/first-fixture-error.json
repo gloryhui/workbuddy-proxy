@@ -1,0 +1,4 @@
+{
+  "source_sha256": "b1981f4c9d9994289cdbca3a52bb06bdefed2b57e282607996136c8ab424ddd2",
+  "classification": "Harness snapshot referenced removedschema1 stats_price_rules; realreleasedschema6 usesv2pricing tables. No candidate waslaunched, no productmigration failureproved. ReleasedCoreexit0 waited. Keep originalFAILevidence; fix tableinventory beforefreshcase."
+}

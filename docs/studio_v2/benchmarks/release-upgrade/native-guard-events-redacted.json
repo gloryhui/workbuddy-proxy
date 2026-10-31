@@ -1,0 +1,27 @@
+{
+  "original_sha256": "e8d8c79ed63172ed2e99c7a1a58709566e47a2e564ee6b90c3793d986b759432",
+  "redacted_field": "nonce",
+  "events": [
+    {
+      "process_pid": 89928,
+      "target_id": "com.workbuddy.codexreview.b05target.qa81.7bc9f5e71378d0d8",
+      "target_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/Denied WorkBuddy.app",
+      "event": "guard_installed",
+      "target_pid": 0
+    },
+    {
+      "process_pid": 91119,
+      "target_id": "com.workbuddy.codexreview.b05target.qa81.7bc9f5e71378d0d8",
+      "target_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/Denied WorkBuddy.app",
+      "event": "guard_installed",
+      "target_pid": 0
+    },
+    {
+      "process_pid": 92533,
+      "target_id": "com.workbuddy.codexreview.b05target.qa81.7bc9f5e71378d0d8",
+      "target_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/Denied WorkBuddy.app",
+      "event": "guard_installed",
+      "target_pid": 0
+    }
+  ]
+}

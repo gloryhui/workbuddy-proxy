@@ -1,0 +1,103 @@
+{
+  "classification": "Own fixture changedInfo.plist withoutresigning copiedsignedhelper; originalhelperstrictverify0/wrapperinvalidInfoverify1. LaunchServices-54 observed; notprovenexacthistoricalOSpath butinvalidsignaturecertain.",
+  "first_native_attempt": "CUA -10005 / NSCocoaErrorDomain256 / NSOSStatusErrorDomain-54 permErr onfileopen; noUI/noinputs/noACK. Driver interrupted130,ownedCoreexit0/waited.",
+  "repair": "Adhoc signonlyowneduniqueUIwrapper; no systempermission/quarantine/settings changes. OriginalCIpackagedhelper unmodified andstillvalid. Notformaldistribution signing.",
+  "original_UI_sha256": "63d64ecd770ee5909f0452d47743a3debe41f785071e502a48205940522e0f92",
+  "signed_wrapper_UI_sha256": "2e6a70db388ecd8383e173895f0a6792e8cb005f3f3c38995f54777f4baefdd5",
+  "all_filebacked_MachO_sections_unchanged": true,
+  "sections": {
+    "__TEXT,__text": {
+      "bytes": 10433560,
+      "sha256": "947c4b5fdd9379276c97326254f6c913cb31491b5927301ed480f1e1b46db36b"
+    },
+    "__TEXT,__text_startup": {
+      "bytes": 4280,
+      "sha256": "45a5d10fe8ec31a6d8d4a3c26b9d47e786dd49b550e9a8da3a78d10ad8182e3f"
+    },
+    "__TEXT,__stubs": {
+      "bytes": 4332,
+      "sha256": "b81f5aca746d31ffa44aff4c45d4407e11ee599d79d7a2a3e3e28c66536c8977"
+    },
+    "__TEXT,__objc_stubs": {
+      "bytes": 544,
+      "sha256": "100755bca677da928ba89a8477f25d2567e6f49542d1d04d77d4455fb0eecd8b"
+    },
+    "__TEXT,__init_offsets": {
+      "bytes": 452,
+      "sha256": "216f7ee3066f55ab4b63bf54a5b55e791458ee5707f83b0c2de34cbe5a6c4374"
+    },
+    "__TEXT,__cstring": {
+      "bytes": 160985,
+      "sha256": "c562e1c39bafe337abdc3bdf38f3102b65e64a08920dc0335881e041d5ed9794"
+    },
+    "__TEXT,__const": {
+      "bytes": 28346680,
+      "sha256": "92599e37d97a4825693729c99e7e431a8bd5bd019808c77a3b800e61b7bb091f"
+    },
+    "__TEXT,__gcc_except_tab": {
+      "bytes": 9456,
+      "sha256": "a710b4365ab9bf6c41344b7921017f58306ac54fa886dfead2564c8d6a384cf1"
+    },
+    "__TEXT,__objc_methname": {
+      "bytes": 337,
+      "sha256": "f99b00ba931f01048b477b938fab9c0e86127818403d31fe536eedbcb61bcd54"
+    },
+    "__TEXT,__unwind_info": {
+      "bytes": 73344,
+      "sha256": "a4ba1c38ee943a3776e2304cf558dd822ccf175f7f25b91574121cda5a431323"
+    },
+    "__TEXT,__eh_frame": {
+      "bytes": 55240,
+      "sha256": "5eac71f2c635627a7dd28c9a5a0984ecee4a58b2a59f8f9e26d536561d497c58"
+    },
+    "__DATA_CONST,__got": {
+      "bytes": 3784,
+      "sha256": "7d4ee9177f91e340b804c02051d5f206724575c5bc5a98582730592dee4a41a3"
+    },
+    "__DATA_CONST,__const": {
+      "bytes": 977336,
+      "sha256": "e1f6478e399e9b35f5ddef6ce4307e278ecb03622de444da2e71ddf5dfd6d068"
+    },
+    "__DATA_CONST,__cfstring": {
+      "bytes": 32,
+      "sha256": "19ce5df44b4a8f722731dd08c5c7a4452ac7d3b90508ad8b7cdd92e132111e3d"
+    },
+    "__DATA_CONST,__objc_imageinfo": {
+      "bytes": 8,
+      "sha256": "94039884329d3732c577860f40d0dfdf883ff89dac332f87216e692c08892fa2"
+    },
+    "__DATA,__objc_selrefs": {
+      "bytes": 136,
+      "sha256": "b592196a2c1bef873b1ed8252250ec19b4daeba420c17424006c849730cc7b16"
+    },
+    "__DATA,__objc_classrefs": {
+      "bytes": 40,
+      "sha256": "9b510cef871662cc3e02796c757caf5bfab50e3ea5cc5f93e548fca5e9df18f1"
+    },
+    "__DATA,__data": {
+      "bytes": 138840,
+      "sha256": "c507dd01a9d3154384e55264a1580c7a89d02523def93b85b053da9417389665"
+    },
+    "__DATA,_CTR0GR_ISIZE_FN": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "__DATA,__ctor_force": {
+      "bytes": 16,
+      "sha256": "6dc77702ab775877c39976240c42d68182580fad12aa433077aa39d2cfecfcca"
+    },
+    "__DATA,_CTOR0_ISIZE_FN": {
+      "bytes": 32,
+      "sha256": "06f392167e7342b57ec3bd191dc0fc99425341c72e579ea79a5ae12fa30ff07d"
+    },
+    "__DATA,__thread_vars": {
+      "bytes": 720,
+      "sha256": "3f45b375f35d799d8276802975145cf37048cb9a76a01115ffb3d7b2dd2ad5c2"
+    },
+    "__DATA,__thread_data": {
+      "bytes": 201,
+      "sha256": "12d26d46542a39ae8fcec560a6176b9363e3fc3daea50ba83283224155948a93"
+    }
+  },
+  "strict_signature_verify_after": true
+}

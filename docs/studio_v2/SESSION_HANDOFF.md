@@ -2,7 +2,18 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA80）
+## 最新进展（QA81）
+
+- 新增真实发布版数据验证脚本 `scripts/release_upgrade_test.py`，只新增测试/证据，运行时代码仍957。官方ARM v056/Coreee82/schema6与v057/Core085e/schema11→当前957CI/Core d150，两例实际PASS：旧12请求/成本/手工价/731天/OBSERVE/Unicode配置逐字段与字节保持，当前可新录第13条；所有Core0/等待。原版DMG与当前CI ZIP digest/size、只读挂载复制/签名/detach已核验。[QA81](benchmarks/rc-round81-summary.json)。
+- 原生UI来自957 CI原helper63d64ecd，以唯一wrapper隔离重签为2e6a70db（23个文件section保持）。宽1440×901/小1100×701九张原始JPEG/AX已逐图查看：价格USD2/8、当前731天（预设未误选）、OBSERVE、Unicode、13总数/末页3条/可见USD.0028可读，小窗需滚动。不是整页13行逐条视觉校验、精确slot或默认主题/正式签名证明。
+- 原有12对照真实released-backup，在迁移与宽/小两native后逐旧字段仍一致；小窗前后全13字段、配置字节一致。所有UI/Core/driver已退出；UI由CUA持有，退出码未知。[数据证明](benchmarks/release-upgrade/native-small-readback-data-proof.json)。
+- 三类自有fixture错误均保留并纠正：首快照引用废弃价格表（未启候选）；新Info未重签导致wrapperinvalidInfo/-54（原包valid，未改系统权限）；宽窗收尾读已被UI正常删除的gpui.json（driver1/Core0，不标parentPASS）。后者由livePID捕获与前快照修正，小窗driver0/完整数据证明。未把它们称产品迁移/服务故障。
+- R01只读能力复核无新hover/dragpath/pressed/geometry方法，不重复旧试验。**禁止自动开启旁白、系统辅助功能或切输入源。** 全状态/slot、真实列拖宽、当前逐引擎IME、真实AT仍缺；QA80 R03慢marker/CPU/长驻留结论不变。
+- **R04.2仍pending。** 目前仅macOS ARM真实Core冷数据交接，未做OS installer覆盖/同目录app替换、热升级/回滚或Windows/Intel验证。下一步在旧数据已存在时运行实际旧setup→候选setup或app同目录替换；为当前脚本分离seed/verify或加明确安装交接钩子，再补真实runner。不要把原synthetic sameversion Core stub测试或本轮冷交接替代此项。
+- 本轮`studio-v2-release-upgrade.1ldx41h9`经完整预检/即时复核已精确清理389文件、268,242,426B约255.82MiB，临时0，系统盘约34.00GiB；共享缓存/约48.55MiB基线/非本轮preview保留。**不要重开已删除bundle。** 新fixture若改原签名helper Info，CUA前必须strict签名预检；若需ad-hoc重签记录原/新SHA及代码section一致，不能称正式分发签名。[清理](benchmarks/release-upgrade/cleanup.json)。
+- **剩余界面0/40，15项发布任务pending，Goal active。** 没有新增门禁整项签收、没有新全矩阵CI或公开发布；QA80已通过的957运行时代码CI仍按原来源保留。
+
+## 上一轮进展（QA80）
 
 - 最新运行时代码 `9570451`，Core `13c4998`（SHA256 `1146f58a`）、UI `46585f86`；代码已推送，证据/时间线为其后docs提交，以Git核对最终HEAD。[QA80总结](benchmarks/rc-round80-summary.json)。
 - 已修复SQLite启动Busy/Locked导致stats永久停用；可关闭的250ms迁移重试，永久/schema-too-new仍拒绝，recovery/run/interval同事务。三项确定性红绿回归、真实启动前7秒锁释放同PID恢复通过。Core580/27命令/91源码hash，GPUI213pass+2既有ignore/6检查/77源码hash、158导入/15故障/19发现/10创建和真实Core ignored补验全部通过。首个probe文件名不匹配是fixture错误，原件保留。

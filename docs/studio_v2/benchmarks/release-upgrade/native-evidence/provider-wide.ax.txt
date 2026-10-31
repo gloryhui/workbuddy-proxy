@@ -1,0 +1,58 @@
+Window: "", App: WorkBuddy Proxy QA81 Upgrade.
+0 standard window Secondary Actions: Raise
+	1 container
+		2 toggle button (settable, boolean) 数据统计, Value: off
+		3 toggle button (settable, boolean) 供应商管理, Value: on
+		4 toggle button (settable, boolean) 统计设置, Value: off
+		5 button 折叠或展开供应商列表
+		6 text field (settable) 搜索供应商
+		7 toggle button (settable, boolean) 旧版供应商🙂 é, Value: on
+		8 button 新增供应商
+		9 button 复制供应商
+		10 button 删除供应商
+		11 button 复制代理地址
+		12 button 编辑供应商资料
+		13 container 未测试 · 此配置尚无本窗口的有效测试记录，请点击测试连接。
+		14 button 供应商预设: 自定义地址
+		15 text field (settable) 供应商名称, Value: 旧版供应商🙂 é, Placeholder: 填写供应商名称
+		16 secure text field API Key, Placeholder: 填写 API Key
+			17 button 显示 API Key
+		18 button 上游协议: OpenAI Chat Completions
+		19 text field (settable) API 地址, Value: http://127.0.0.1:57045/v1, Placeholder: 填写供应商提供的 API 基础地址
+		20 button 协议选项
+		21 button 获取模型
+		22 button 添加模型
+		23 table 模型目录 · Shift 连续多选 · Ctrl / ⌘ 多选 · 删除键移除 · 双击编辑, ID: provider-model-table
+			24 row
+				25 cell 显示名称
+				26 cell 上游模型 ID
+				27 cell 操作
+			28 row 旧版模型🙂 é · release-upgrade-model · 未选择, ID: model-0
+				29 cell 旧版模型🙂 é
+				30 cell release-upgrade-model
+				31 cell
+					32 button 编辑模型: 旧版模型🙂 é
+		33 button 思考强度: 跟随 WorkBuddy
+		34 button 测试连接
+		35 button 保存配置
+		36 button 复制代理地址
+		37 button 端口设置
+		38 button 同步 WorkBuddy
+		39 button 取消同步
+		40 button 清空日志
+		41 button 复制日志
+		42 text entry area (settable) 活动日志, Value: 07:08:56：本地服务已启动：http://127.0.0.1:57046/v1
+		43 button 皮肤设置
+		44 toggle button (settable, boolean) 开机启动, Value: off
+		45 button 检查更新
+		46 button 界面语言
+		47 button 恢复默认窗口尺寸
+		48 button GitHub 项目主页
+		49 button 提交反馈
+	50 close button
+	51 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	52 minimize button
+53 menu bar
+	54 WorkBuddy Proxy QA81 Upgrade
+
+The focused UI element is 0 standard window Secondary Actions: Raise

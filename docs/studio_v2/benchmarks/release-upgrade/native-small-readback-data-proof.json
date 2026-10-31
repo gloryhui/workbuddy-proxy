@@ -1,0 +1,125 @@
+{
+  "scope": "Current957CIpackagedUI read-only legacyv056realdata afterschema6to11,13pricedrows/custom731dayretention/Unicodeprovider-model-price. GUIkernelguardfalse, uniqueLSEnvironment+deny-onlyNSWorkspaceguard; Corekernelprotected.",
+  "health": {
+    "native-small-readback": {
+      "app": "workbuddy-proxy",
+      "control_protocol": 12,
+      "ready": true,
+      "version": "0.5.7"
+    }
+  },
+  "kernel_protection": {
+    "native-small-readback": {
+      "enforced": true,
+      "pid": 92363,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    }
+  },
+  "legacy12_all_fields_equal_to_original_released_backup_after_both_native_sessions": true,
+  "ui_pid": 92533,
+  "ui_pid_gone": true,
+  "ui_exit_code": "unavailable/CUAowned",
+  "config_byte_equal": true,
+  "business_all_fields_equal": true,
+  "request_and_cost_rows": 13,
+  "config_sha256": "4f50773bd68002d4bb23c49751ff04e54aa8b7849377a2a11b087a648c5d80b9",
+  "before_business_sha256": "f941ac968c96fec6da7ca94b2a85e531459e511ffb9edad6dc2d09cab2aad0c9",
+  "core_health_after_ui_close": 200,
+  "children": [
+    {
+      "label": "native-small-readback",
+      "pid": 92363,
+      "exit_code": 0,
+      "waited": true,
+      "shutdown_error": null
+    }
+  ],
+  "result": "PASS"
+}

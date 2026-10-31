@@ -1,0 +1,122 @@
+{
+  "result": "FAIL",
+  "platform": "macOS-15.8.1-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "old_version": "0.5.6",
+  "candidate_version": "0.5.7",
+  "old_exe_sha256": "ee82dfa1f837c2cd3ec5bdb882d0ffca1ee19ef492bb7fa9c8cb6df3abedf0e5",
+  "candidate_exe_sha256": "d150bd325cfa85acfc9bda40015172e8c02ce234b4649290a1acaf53937e674a",
+  "fixture": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/profile-v056",
+  "health": {
+    "released": {
+      "app": "workbuddy-proxy",
+      "control_protocol": 10,
+      "ready": true,
+      "version": "0.5.6"
+    }
+  },
+  "kernel_protection": {
+    "released": {
+      "enforced": true,
+      "pid": 88760,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    }
+  },
+  "children": [
+    {
+      "label": "released",
+      "pid": 88760,
+      "exit_code": 0,
+      "waited": true,
+      "shutdown_error": null
+    }
+  ],
+  "error": "OperationalError: no such table: stats_price_rules"
+}

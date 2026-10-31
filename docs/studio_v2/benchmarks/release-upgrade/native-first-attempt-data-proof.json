@@ -1,0 +1,116 @@
+{
+  "scope": "Current957CIpackagedUI read-only legacyv056realdata afterschema6to11,13pricedrows/custom731dayretention/Unicodeprovider-model-price. GUIkernelguardfalse, uniqueLSEnvironment+deny-onlyNSWorkspaceguard; Corekernelprotected.",
+  "health": {
+    "native-readback": {
+      "app": "workbuddy-proxy",
+      "control_protocol": 12,
+      "ready": true,
+      "version": "0.5.7"
+    }
+  },
+  "kernel_protection": {
+    "native-readback": {
+      "enforced": true,
+      "pid": 90169,
+      "sandboxed": true,
+      "protected_permissions": {
+        "workbuddy": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_macos": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "proxy_unix": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        },
+        "installed_app": {
+          "file-read-data": [
+            1,
+            1
+          ],
+          "file-write-data": [
+            1,
+            1
+          ],
+          "file-write-create": [
+            1,
+            1
+          ],
+          "file-write-unlink": [
+            1,
+            1
+          ]
+        }
+      },
+      "synthetic_permissions": {
+        "file-read-data": 0,
+        "file-write-data": 0,
+        "file-write-create": 0,
+        "file-write-unlink": 0
+      },
+      "protected_root_exists": {
+        "workbuddy": true,
+        "proxy_macos": true,
+        "proxy_unix": false,
+        "installed_app": true
+      },
+      "method": "sandbox_check permission queries, no protected file I/O"
+    }
+  },
+  "children": [
+    {
+      "label": "native-readback",
+      "pid": 90169,
+      "exit_code": 0,
+      "waited": true,
+      "shutdown_error": null
+    }
+  ],
+  "error": "KeyboardInterrupt: 15",
+  "result": "FAIL"
+}

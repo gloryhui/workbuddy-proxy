@@ -1,0 +1,30 @@
+{
+  "executable": false,
+  "scope": "Historicalaudits withSESSION_ROOT placeholder; notrunnable. Firstwideparentharness removedgpui.json bug retained, smallPIDcapturedlive.",
+  "sources": [
+    {
+      "path": "native-driver.py.txt",
+      "source_sha256": "3635c89911320c3d90de068d2ded636ac976f3058402b6eed1fc4cab1493282a",
+      "archive_sha256": "3635c89911320c3d90de068d2ded636ac976f3058402b6eed1fc4cab1493282a",
+      "path_substitution_only": true
+    },
+    {
+      "path": "native-small-driver.py.txt",
+      "source_sha256": "a1c392e5a20aeab3f4f892f569f2766b11886ec2f31c40d43c6801183ce85b34",
+      "archive_sha256": "a1c392e5a20aeab3f4f892f569f2766b11886ec2f31c40d43c6801183ce85b34",
+      "path_substitution_only": true
+    },
+    {
+      "path": "cleanup-preflight.py.txt",
+      "source_sha256": "722289a074af27b31b20947dcb76026807dc71f3c62fae82960ee255890cb69d",
+      "archive_sha256": "722289a074af27b31b20947dcb76026807dc71f3c62fae82960ee255890cb69d",
+      "path_substitution_only": true
+    },
+    {
+      "path": "native-guard.m.txt",
+      "source_sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1",
+      "archive_sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1",
+      "path_substitution_only": true
+    }
+  ]
+}

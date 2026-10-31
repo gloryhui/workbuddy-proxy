@@ -1,0 +1,62 @@
+[
+  {
+    "label": "v056",
+    "source_dmg": "workbuddy-proxy-0.5.6-macos-arm64.dmg",
+    "app": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/v056.app",
+    "core": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/v056.app/Contents/MacOS/workbuddy-proxy",
+    "bundle_version": "0.5.6",
+    "bundle_id": "io.github.gloryhui.workbuddy-proxy",
+    "core_sha256": "ee82dfa1f837c2cd3ec5bdb882d0ffca1ee19ef492bb7fa9c8cb6df3abedf0e5",
+    "core_bytes": 7755936,
+    "signature_strict_verified": true,
+    "mount_readonly": true,
+    "layout_entries": [
+      ".DS_Store",
+      ".VolumeIcon.icns",
+      ".background.tiff",
+      "Applications",
+      "WorkBuddy Proxy.app"
+    ],
+    "mount_detached": true
+  },
+  {
+    "label": "v057",
+    "source_dmg": "workbuddy-proxy-0.5.7-macos-arm64.dmg",
+    "app": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/v057.app",
+    "core": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/v057.app/Contents/MacOS/workbuddy-proxy",
+    "bundle_version": "0.5.7",
+    "bundle_id": "io.github.gloryhui.workbuddy-proxy",
+    "core_sha256": "085e75127bfda7f2fc7a4f4ce7f8d3450e67f1eb4af558ecb2d3b9d358ad440e",
+    "core_bytes": 8365008,
+    "signature_strict_verified": true,
+    "mount_readonly": true,
+    "layout_entries": [
+      ".DS_Store",
+      ".VolumeIcon.icns",
+      ".background.tiff",
+      "Applications",
+      "WorkBuddy Proxy.app"
+    ],
+    "mount_detached": true
+  },
+  {
+    "label": "current957",
+    "source_dmg": "current957.dmg",
+    "app": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/current957.app",
+    "core": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9/current957.app/Contents/MacOS/workbuddy-proxy",
+    "bundle_version": "0.5.7",
+    "bundle_id": "io.github.gloryhui.workbuddy-proxy",
+    "core_sha256": "d150bd325cfa85acfc9bda40015172e8c02ce234b4649290a1acaf53937e674a",
+    "core_bytes": 8381440,
+    "signature_strict_verified": true,
+    "mount_readonly": true,
+    "layout_entries": [
+      ".DS_Store",
+      ".VolumeIcon.icns",
+      ".background.tiff",
+      "Applications",
+      "WorkBuddy Proxy.app"
+    ],
+    "mount_detached": true
+  }
+]

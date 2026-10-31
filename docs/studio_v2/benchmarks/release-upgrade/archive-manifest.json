@@ -1,0 +1,346 @@
+{
+  "files": [
+    {
+      "path": "cleanup-inventory.json",
+      "bytes": 46024,
+      "sha256": "497ebf9627e64fa69255386a7b8ae3ddb9730d345472e388fa16b42c2b22004e"
+    },
+    {
+      "path": "cleanup-preflight.json",
+      "bytes": 1998,
+      "sha256": "c7847bc209a3ffd12ca3a22a353d86c4d2ca42ce5565ac9bd68593fd3faa20b5"
+    },
+    {
+      "path": "cleanup.json",
+      "bytes": 2298,
+      "sha256": "d8b3237fe2e8775aeb9202d8f25e2e1f19b3ca6b3cc47ca51f53c79e006951c8"
+    },
+    {
+      "path": "current-dmg-provenance.json",
+      "bytes": 258,
+      "sha256": "34d944e0c9bd9adbe0f378feb6edccc0df7baaf162ce9dac166f464c32a63043"
+    },
+    {
+      "path": "download-results.json",
+      "bytes": 748,
+      "sha256": "7da387be12f45d078e85ba05e275ecd683fbcdf0890496eb777f838d71adbd2c"
+    },
+    {
+      "path": "driver-terminal.json",
+      "bytes": 241,
+      "sha256": "f19543629bcf42ae3493a0d2e696dd60d6f0191ccc775f98df4cc7b522d0c497"
+    },
+    {
+      "path": "first-fixture-error-source.py.txt",
+      "bytes": 15729,
+      "sha256": "b1981f4c9d9994289cdbca3a52bb06bdefed2b57e282607996136c8ab424ddd2"
+    },
+    {
+      "path": "first-fixture-error.json",
+      "bytes": 367,
+      "sha256": "f743a111ee2dea9500f06c7d53935e5413997ab29a8bfefec12bf2eb98c8abf0"
+    },
+    {
+      "path": "harness-audit/cleanup-preflight.py.txt",
+      "bytes": 3362,
+      "sha256": "722289a074af27b31b20947dcb76026807dc71f3c62fae82960ee255890cb69d"
+    },
+    {
+      "path": "harness-audit/manifest.json",
+      "bytes": 1287,
+      "sha256": "189c66df446ca7abb1741047459403c8a1bdbe8194a35427289efd721abbb094"
+    },
+    {
+      "path": "harness-audit/native-driver.py.txt",
+      "bytes": 2798,
+      "sha256": "3635c89911320c3d90de068d2ded636ac976f3058402b6eed1fc4cab1493282a"
+    },
+    {
+      "path": "harness-audit/native-guard.m.txt",
+      "bytes": 6090,
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1"
+    },
+    {
+      "path": "harness-audit/native-small-driver.py.txt",
+      "bytes": 3904,
+      "sha256": "a1c392e5a20aeab3f4f892f569f2766b11886ec2f31c40d43c6801183ce85b34"
+    },
+    {
+      "path": "logs/final-profile-v056-candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "68944ab74906866f05e5edd9a41dcc3ccbff84f1fad3dc067c662bced45234cd"
+    },
+    {
+      "path": "logs/final-profile-v056-native-readback.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "68944ab74906866f05e5edd9a41dcc3ccbff84f1fad3dc067c662bced45234cd"
+    },
+    {
+      "path": "logs/final-profile-v056-native-small-readback.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "68944ab74906866f05e5edd9a41dcc3ccbff84f1fad3dc067c662bced45234cd"
+    },
+    {
+      "path": "logs/final-profile-v056-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "32b2f25272fbee4f3e98fd14501e5cef9fb2020fe6ef7629507df6d5b760b1fa"
+    },
+    {
+      "path": "logs/final-profile-v057-candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "851cdee78bb68c72b7b995a6b1fbcb2a0bd54dd9aa98b851387687ac01a3783e"
+    },
+    {
+      "path": "logs/final-profile-v057-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "0d013c0f66da8d02cecf866d01b5db8171fa6097295fef1215a1bca089e7d565"
+    },
+    {
+      "path": "logs/profile-v056-corrected-candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "bfd2433a7f88fdd5e278336cce6d96d916e2a4697ce644665b1e8a9a109d3319"
+    },
+    {
+      "path": "logs/profile-v056-corrected-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "a23d021746d92bc65f4682fe1567909f082e20310233ff656e8e7218f48c666d"
+    },
+    {
+      "path": "logs/profile-v056-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "f993f3485ff5cf98d49f3490a571dce76fa90300d34d226a12dede0a25e5e8eb"
+    },
+    {
+      "path": "logs/v056-corrected-driver.log.txt",
+      "bytes": 81,
+      "sha256": "69f81a0523799315e454116eeb7dffb701fd116319d118c9e08d14d62542f35f"
+    },
+    {
+      "path": "logs/v056-driver.log.txt",
+      "bytes": 1476,
+      "sha256": "037cf15c8dbd3b7fa8b0c6adcec3b17d5465190a523e8f9ac6a04842924a4fc6"
+    },
+    {
+      "path": "logs/v056-final-driver.log.txt",
+      "bytes": 81,
+      "sha256": "69f81a0523799315e454116eeb7dffb701fd116319d118c9e08d14d62542f35f"
+    },
+    {
+      "path": "logs/v057-final-driver.log.txt",
+      "bytes": 81,
+      "sha256": "69f81a0523799315e454116eeb7dffb701fd116319d118c9e08d14d62542f35f"
+    },
+    {
+      "path": "native-driver-terminal.json",
+      "bytes": 385,
+      "sha256": "32e0d901a8f551d56797ae13488f307009e95a3cdebb31d07762bece940ab6b0"
+    },
+    {
+      "path": "native-evidence/native-result.json",
+      "bytes": 3385,
+      "sha256": "be4a1e33e5c10a80cb0ccf538fe1a47cee8e4d83fff3f46930686b15033f3ab8"
+    },
+    {
+      "path": "native-evidence/provider-wide.ax.txt",
+      "bytes": 2483,
+      "sha256": "76ec677ccee0b00cc07053790d1896cf8406d3306f4b9426e9be7ccec44c5a61"
+    },
+    {
+      "path": "native-evidence/provider-wide.jpg",
+      "bytes": 162709,
+      "sha256": "ab7e3c44087eb8f3ce8a80fa46f0c849d1a674d03b6d7fe4c32612510fffa7e4"
+    },
+    {
+      "path": "native-evidence/settings-wide.ax.txt",
+      "bytes": 2148,
+      "sha256": "d4cc43c50d36ab39d3e1a4e25796e193c99d0e5bd52074ca24e3e22701644804"
+    },
+    {
+      "path": "native-evidence/settings-wide.jpg",
+      "bytes": 144691,
+      "sha256": "3c97526f4f3b06dd6908a70701c4beaca78bd904fc45004550b62660b313150f"
+    },
+    {
+      "path": "native-evidence/usage-page2.ax.txt",
+      "bytes": 5224,
+      "sha256": "87284a72d1f76752ee5ad611db2ab07f44be971b98f347666911f9328a9a92c4"
+    },
+    {
+      "path": "native-evidence/usage-page2.jpg",
+      "bytes": 134112,
+      "sha256": "a181a6d4e435dca18b00ee11aac6ed80dba9744eff573f99d67c838b561f722e"
+    },
+    {
+      "path": "native-evidence/usage-wide.ax.txt",
+      "bytes": 9242,
+      "sha256": "2bb33600377873fba9898053c5ba0dec730390fffc12191281c344e0085a2180"
+    },
+    {
+      "path": "native-evidence/usage-wide.jpg",
+      "bytes": 167048,
+      "sha256": "c8fb89885d8742db36fd5ee0cf764433c0d97839650e6f03936b80f4908efdce"
+    },
+    {
+      "path": "native-evidence-small/native-small-result.json",
+      "bytes": 3514,
+      "sha256": "f74f2f5d0f5ec1a6b2a6c8026b9aed159f8ecc03217ea283808f9ca758c88227"
+    },
+    {
+      "path": "native-evidence-small/retention-observe-small.ax.txt",
+      "bytes": 2148,
+      "sha256": "d4cc43c50d36ab39d3e1a4e25796e193c99d0e5bd52074ca24e3e22701644804"
+    },
+    {
+      "path": "native-evidence-small/retention-observe-small.jpg",
+      "bytes": 84999,
+      "sha256": "cc156076093da928a23cf5d25053179a5415395b65da2862954d54a007f38176"
+    },
+    {
+      "path": "native-evidence-small/settings-retention-small.ax.txt",
+      "bytes": 2148,
+      "sha256": "d4cc43c50d36ab39d3e1a4e25796e193c99d0e5bd52074ca24e3e22701644804"
+    },
+    {
+      "path": "native-evidence-small/settings-retention-small.jpg",
+      "bytes": 89816,
+      "sha256": "084789abf5319b2d068c0f8b02a9a73fda671e6a7f7a70063c32cefb655f3cfd"
+    },
+    {
+      "path": "native-evidence-small/settings-small.ax.txt",
+      "bytes": 2148,
+      "sha256": "d4cc43c50d36ab39d3e1a4e25796e193c99d0e5bd52074ca24e3e22701644804"
+    },
+    {
+      "path": "native-evidence-small/settings-small.jpg",
+      "bytes": 97189,
+      "sha256": "1614b22fef3029d9a6f5998d9b6001c3cb6b1fecc00e3a85c3038c40d43237b1"
+    },
+    {
+      "path": "native-evidence-small/usage-page2-small.ax.txt",
+      "bytes": 4222,
+      "sha256": "7740e30e99b5efd98c7ef518390c933b66375bccb66450971dc09f56c132ab4d"
+    },
+    {
+      "path": "native-evidence-small/usage-page2-small.jpg",
+      "bytes": 103462,
+      "sha256": "f775faea33e7b2b2abfc04b97391f9557b391d75845dcecd1b1fde528a4b0dcc"
+    },
+    {
+      "path": "native-evidence-small/usage-tail-small.ax.txt",
+      "bytes": 4222,
+      "sha256": "a2840eed37d824c30e69b42ed6634f1bda2e604ab35fcc7e5ac031f2a45d9acc"
+    },
+    {
+      "path": "native-evidence-small/usage-tail-small.jpg",
+      "bytes": 103626,
+      "sha256": "55374104162bcea8341268471eed74069cf69357f9cbb82042e694413f5eb442"
+    },
+    {
+      "path": "native-first-attempt-data-proof.json",
+      "bytes": 2498,
+      "sha256": "c4aed6ed5f9efe423a2e3ee841fc20ac20c9b3323f32a9e22d2a5983a50cea89"
+    },
+    {
+      "path": "native-first-attempt-terminal.json",
+      "bytes": 228,
+      "sha256": "b284da63a49831dd1d44f0d195b951a5102521a72d1cebbcac3f018d1963696e"
+    },
+    {
+      "path": "native-fixture-signing.json",
+      "bytes": 4126,
+      "sha256": "b9da8f3dbbc32c513f755abb17cff677d8acb9ff30d31a621f0d838e9d8be529"
+    },
+    {
+      "path": "native-guard-events-redacted.json",
+      "bytes": 1081,
+      "sha256": "656e3c25c15bcdaf3c5bd0764fe2fdc94519637f38f4eeb3244258b4b9238045"
+    },
+    {
+      "path": "native-readback-data-proof.json",
+      "bytes": 2655,
+      "sha256": "17d0992d7eccc0b12041e9845b5d0b9005f2d2ac748d696466ef37d9ec0f8600"
+    },
+    {
+      "path": "native-small-driver-terminal.json",
+      "bytes": 215,
+      "sha256": "9f3b2746508ed2084bb23e5101a14879d760aa7f5d453a1f67235be672f75d41"
+    },
+    {
+      "path": "native-small-readback-data-proof.json",
+      "bytes": 2973,
+      "sha256": "c85eb4cf9388a9968dcdeec8edc9809375ba0d617654ea6a3d9d993e3b05f84d"
+    },
+    {
+      "path": "native-wide-harness-failure-data-proof.json",
+      "bytes": 2655,
+      "sha256": "17d0992d7eccc0b12041e9845b5d0b9005f2d2ac748d696466ef37d9ec0f8600"
+    },
+    {
+      "path": "official-release-sources.json",
+      "bytes": 3056,
+      "sha256": "47c2988bf8d246442ed2e20fc3d037617f94fe9944cc9b390de3ddb600321670"
+    },
+    {
+      "path": "raw-manifest.json",
+      "bytes": 9692,
+      "sha256": "8398fd3d2d15b86b14a088c4db4fec59829faf741346f60ba3fc2d55d98affe1"
+    },
+    {
+      "path": "session-ownership.json",
+      "bytes": 501,
+      "sha256": "a5c3b4257b6a71f4410727a58f99bcc3937b1f1f085543090bb56246d36f39b6"
+    },
+    {
+      "path": "staged-packages.json",
+      "bytes": 2389,
+      "sha256": "834f951e39cb2d817d796398591f6cd94f7a2cf72fddf9fa13173caa1f0bd22a"
+    },
+    {
+      "path": "synthetic-after-native-business.json",
+      "bytes": 35546,
+      "sha256": "90540fe1cec46aba56e32c1a57412c1b5032626347c2367ac116b4cefaf5ce4a"
+    },
+    {
+      "path": "synthetic-before-small-business.json",
+      "bytes": 26196,
+      "sha256": "692d17cc1135b8ab1407723c38bd353a9e43d58dfbfaa67e023d61ea80c39028"
+    },
+    {
+      "path": "synthetic-original-v056-business.json",
+      "bytes": 30797,
+      "sha256": "7b08183c49c4289cd0925fe25668ed8bac935569f16ff12ccc26762b51204f53"
+    },
+    {
+      "path": "v056-core-upgrade-corrected.json",
+      "bytes": 6020,
+      "sha256": "10d46a9b4e1980cf4f7d462598af7302c12ccfdb24d299c9211d55b3d24233b9"
+    },
+    {
+      "path": "v056-core-upgrade.json",
+      "bytes": 2711,
+      "sha256": "6e35f30dc767a40890963090fcb5bf7a4893888cd84e2cb5a2a5e1ea09fe40eb"
+    },
+    {
+      "path": "v056-final-core-upgrade.json",
+      "bytes": 6103,
+      "sha256": "8ff7cd489a1e3d68b98384ab553e1c3845b6e6a8a54e4483f3ca723a17973bcf"
+    },
+    {
+      "path": "v057-final-core-upgrade.json",
+      "bytes": 5852,
+      "sha256": "696053559b8401e425d4d96edc05db4b115c8cf4e2e1b28e787be4e7f9d19e95"
+    },
+    {
+      "path": "visual-review.json",
+      "bytes": 1071,
+      "sha256": "00e5a3d79e500eafe44ffde39ba403c4bad180420105643b71d21e90678ec03e"
+    },
+    {
+      "path": "raw-whitespace-exceptions.json",
+      "bytes": 18,
+      "sha256": "6ac91cab38eae269a4e6457275b3b956f615a7df03de4b1ce88f44b8110efc30"
+    }
+  ],
+  "total_bytes": 1362898,
+  "scope": "NoDB/config/privateenv/authkeys/downloadURLsecrets/binaries. Syntheticbusinesssnapshot outputs andraw9JPEG/AX kept; firstharness/signature/errors retained. Rawexceptions explicit."
+}
