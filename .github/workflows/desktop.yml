@@ -3,10 +3,16 @@ on:
   push:
     branches: [main, codex/gpui-preview]
   workflow_dispatch:
+    inputs:
+      upgrade_only:
+        description: Validate real released package replacement against frozen CI packages
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   desktop:
+    if: ${{ github.event_name != 'workflow_dispatch' || !inputs.upgrade_only }}
     strategy:
       fail-fast: false
       matrix:
@@ -151,3 +157,9 @@ jobs:
           path: |
             dist/
             bench-results/
+  released-upgrades:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.upgrade_only }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/release-upgrade.yml

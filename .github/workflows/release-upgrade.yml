@@ -1,0 +1,36 @@
+name: Released package upgrades
+on:
+  workflow_call:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  upgrade:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows-x64
+          - os: macos-latest
+            platform: macos-arm64
+          - os: macos-15-intel
+            platform: macos-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Replace real released packages after old data exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/installed_upgrade_test.py --platform "${{ matrix.platform }}" --directory "${{ runner.temp }}/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade"
+      - name: Clean only the verified finished fixture
+        if: always()
+        run: python scripts/installed_upgrade_test.py --platform "${{ matrix.platform }}" --directory "${{ runner.temp }}/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade" --cleanup-only
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: installed-upgrade-${{ matrix.platform }}
+          path: bench-results/installed-upgrade/

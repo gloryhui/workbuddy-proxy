@@ -192,7 +192,7 @@ def lifecycle(exe, directory, environment, policy, label, report):
             report.setdefault('children', []).append(core.terminal)
 
 
-def run(args, report):
+def run(args, report, replace_installation=None, inspect_installed=None):
     directory = args.directory.resolve()
     assert directory.is_dir() and not any(directory.iterdir()), 'Use an existing empty owned fixture'
     paths = {name: directory / name.lower() for name in (
@@ -204,6 +204,9 @@ def run(args, report):
                        WORKBUDDY_PROXY_CONFIG_DIR=str(directory),
                        WORKBUDDY_PROXY_CATALOG_TEST_URL='http://127.0.0.1:1/catalog',
                        NO_PROXY='127.0.0.1,localhost', no_proxy='127.0.0.1,localhost')
+    for name in ('GH_TOKEN', 'GITHUB_TOKEN', 'ACTIONS_RUNTIME_TOKEN',
+                 'ACTIONS_ID_TOKEN_REQUEST_TOKEN'):
+        environment.pop(name, None)
     policy = None
     if sys.platform == 'darwin':
         from workbuddy_import_test import real_user_home
@@ -261,6 +264,16 @@ def run(args, report):
         with sqlite3.connect(directory / 'usage.sqlite3') as source:
             with sqlite3.connect(directory / 'released-backup.sqlite3') as backup:
                 source.backup(backup)
+        if replace_installation is not None:
+            # The real old writer is stopped and its data already exists before
+            # the caller runs an installer or replaces the installed app bundle.
+            replace_installation(directory, report)
+            unchanged = snapshot(directory)
+            assert unchanged['schema'] == before['schema'], 'Installer ran a writer unexpectedly'
+            assert_preserved(before, unchanged)
+            assert (directory / 'config.json').read_bytes() == original_config
+            report['installation_preserved_legacy_data_before_candidate_start'] = True
+        report['candidate_exe_sha256'] = digest(args.candidate_exe.read_bytes())
         with lifecycle(args.candidate_exe, directory, environment, policy, 'candidate', report) as core:
             assert report['health']['candidate']['version'] == args.candidate_version
             after = snapshot(directory)
@@ -279,6 +292,16 @@ def run(args, report):
             wait_for(lambda: len(snapshot(directory)['tables']['usage_costs']['rows']) == 13,
                      'Candidate could not continue recording')
         final = snapshot(directory)
+        assert len(final['tables']['usage_requests']['rows']) == 13
+        assert len(final['tables']['usage_costs']['rows']) == 13
+        assert all(row['total_cost_nanos'] == 2800000 and row['status'] == 'priced'
+                   for row in final['tables']['usage_costs']['rows'])
+        report['candidate_new_request_priced'] = True
+        if inspect_installed is not None:
+            inspect_installed(args.candidate_exe, directory, environment, policy, report)
+            assert_preserved(final, snapshot(directory))
+            assert (directory / 'config.json').read_bytes() == original_config
+            report['all_13_rows_equal_after_installed_lifecycle'] = True
         for name in ('usage_requests', 'usage_costs'):
             keep = {row['request_id'] for row in before['tables'][name]['rows']}
             final['tables'][name]['rows'] = [row for row in final['tables'][name]['rows']
@@ -314,7 +337,6 @@ def main():
               'script_sha256': digest(Path(__file__).read_bytes()),
               'old_version': args.old_version, 'candidate_version': args.candidate_version,
               'old_exe_sha256': digest(args.old_exe.read_bytes()),
-              'candidate_exe_sha256': digest(args.candidate_exe.read_bytes()),
               'fixture': str(args.directory.resolve())}
     try:
         run(args, report)
