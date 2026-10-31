@@ -84,6 +84,9 @@ jobs:
       - name: Install DMG build-only tools
         if: runner.os == 'macOS'
         run: python -m pip install -r scripts/dmg-requirements.txt
+      - name: Install Windows GDI screenshot tools
+        if: runner.os == 'Windows'
+        run: python -m pip install -r scripts/windows-screenshot-requirements.txt
       - name: Package both executables without publishing a Release
         run: python scripts/package.py --exe "${{ matrix.core }}" --gpui "${{ matrix.ui }}" --version 0.5.7 --platform "${{ matrix.platform }}"
       - name: WorkBuddy JSONL import integration checks
@@ -100,6 +103,15 @@ jobs:
           python scripts/autostart_test.py --exe "$packagedExe"
           if ($LASTEXITCODE -ne 0) { throw 'Login startup checks failed' }
           python scripts/gpui_package_test.py --exe "$packagedExe" --output 'bench-results/gpui-windows-x64.json'
+          if ($LASTEXITCODE -ne 0) { throw 'Packaged GPUI lifecycle checks failed' }
+      - name: Capture packaged Windows caption and toolbar layout using GDI
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $packageRoot = Join-Path $env:RUNNER_TEMP 'workbuddy-gpui-package'
+          $packagedExe = (Get-ChildItem -Path $packageRoot -Filter 'workbuddy-proxy.exe' -Recurse).FullName
+          python scripts/windows_ci_screenshot.py --exe "$packagedExe" --output-dir 'bench-results/windows-native'
+          if ($LASTEXITCODE -ne 0) { throw 'Windows native capture or lifecycle checks failed; inspect windows-native report' }
       - name: Build Windows EXE installer
         if: runner.os == 'Windows'
         shell: pwsh

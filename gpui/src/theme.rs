@@ -158,7 +158,17 @@ pub mod line_height {
 /// Shared spacing values. These are visual gaps/padding, not business values.
 pub mod space {
     pub const PAGE_TOP: f32 = 32.;
-    pub const SYSTEM_TOOLBAR_TOP: f32 = 8.;
+    // Windows caption controls have native hit regions at the top right.
+    // macOS traffic lights are on the left, so its existing spacing stays.
+    pub const SYSTEM_TOOLBAR_TOP: f32 = system_toolbar_top(cfg!(target_os = "windows"));
+
+    pub(super) const fn system_toolbar_top(windows: bool) -> f32 {
+        if windows {
+            super::size::NATIVE_TITLEBAR + 8.
+        } else {
+            8.
+        }
+    }
     pub const PAGE_X: f32 = 32.;
     pub const PAGE_BOTTOM: f32 = 16.;
     pub const SIDEBAR_X: f32 = 18.;
@@ -500,7 +510,28 @@ pub fn tabular_figures() -> FontFeatures {
 
 #[cfg(test)]
 mod focus_tests {
-    use super::{Skin, color, focus_color};
+    use super::{Skin, color, focus_color, size, space};
+
+    #[test]
+    fn toolbar_clears_windows_caption_hit_regions_at_supported_scales() {
+        // Kit allocates three TITLE_BAR_HEIGHT-wide Windows caption controls;
+        // our TitleBar overrides their height. Test the overlap-prone layouts.
+        let caption_width = 3. * f32::from(gpui_kit::component::TITLE_BAR_HEIGHT);
+        for width in [1100., 1440.] {
+            for scale in [1., 1.25, 1.5, 2.] {
+                let toolbar_left = (width - space::PAGE_X - size::SYSTEM_TOOLBAR_WIDTH) * scale;
+                let toolbar_right = (width - space::PAGE_X) * scale;
+                let caption_left = (width - caption_width) * scale;
+                assert!(toolbar_right > caption_left && toolbar_left < width * scale);
+                assert!(space::system_toolbar_top(true) * scale >= size::NATIVE_TITLEBAR * scale);
+            }
+        }
+        assert_eq!(space::system_toolbar_top(false), 8.);
+        assert_eq!(
+            space::SYSTEM_TOOLBAR_TOP,
+            space::system_toolbar_top(cfg!(target_os = "windows"))
+        );
+    }
 
     fn luminance(color: u32) -> f64 {
         [16, 8, 0]

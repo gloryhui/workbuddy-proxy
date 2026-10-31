@@ -2,6 +2,19 @@
 
 Windows 截图优先使用 GDI：Python Pillow 的 `ImageGrab.grab(bbox=..., all_screens=True)`，配合目标进程 PID 和 DWM 原生窗口边界。2026-10-21 已用该方式完成 README 的五张 Windows 10 实拍，见[图片及来源说明](screenshots/README.md)。
 
+## 隔离 CI 包截图
+
+Desktop packages 工作流会在 Windows 安装固定版本的截图依赖，并运行：
+
+```powershell
+python -m pip install -r scripts/windows-screenshot-requirements.txt
+python scripts/windows_ci_screenshot.py --exe '<extracted-package>/workbuddy-proxy.exe' --output-dir 'bench-results/windows-native'
+```
+
+脚本复制并校验当前包，在专用临时目录使用合成配置启动现有 package harness，按其明确发布的 UI PID 选择唯一窗口。仅将这个 CI 测试窗口置于前台，分别请求 1440×900、1100×700 逻辑客户区，再用新 Python 进程调用既有 GDI 助手，保留未经重绘的 PNG。报告记录实际 DPI、客户区、DWM 边界、包/程序/图片哈希和退出结果；请求尺寸不一定等于含原生边框的 PNG 尺寸。
+
+桌面锁定、窗口被遮挡、屏幕放不下请求尺寸或前台权限不足均记录失败，不切换截图通道、不改系统缩放或输入源。截图后解除 harness hold，继续单实例、关闭/重开、草稿与正常退出检查；hold 跳过的日志清理和模型诊断不计为执行。确认进程退出、目录归属/链接/边界后才清理本次复制包和合成数据，图片与报告保留。截图成功仍需人工查看实际内容，不能替代 Windows 键盘、IME、缩放切换或安装验收。
+
 ## 选择这个方式的依据
 
 同一台 Windows 10 22H2（19045）机器上，Windows Graphics Capture 截图多次出现 `FrameArrived timed out: timed out waiting on channel` 和 `window capture timed out: timed out waiting on channel`。重新绑定窗口、重建工具连接，以及用户切换为仅主屏后均未解决。GDI 随后成功取得实际界面像素。

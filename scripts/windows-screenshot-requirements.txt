@@ -1,0 +1,2 @@
+# CI-only raw GDI/Pillow screenshots; Python 3.12 Windows amd64 wheel available.
+Pillow==13.0.0

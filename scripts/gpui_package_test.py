@@ -163,7 +163,10 @@ def main():
         wait(lambda:read('frontend.json')['pid']==host.pid,'Restarted tray did not become ready')
         assert_clean_start(2)
         stop_and_check_normal()
-        metrics['checks']=['separate lightweight core/tray/GPUI processes','repeated launch reuses the existing application instance','real loopback streaming diagnostic with selected model','ordered core log clear','closing settings releases GPUI without stopping the core','tray reopens settings using the same core','private unsaved drafts survive reopening without changing config.json']
+        metrics['checks']=['separate lightweight core/tray/GPUI processes','repeated launch reuses the existing application instance','closing settings releases GPUI without stopping the core','tray reopens settings using the same core','private unsaved drafts survive reopening without changing config.json']
+        if not args.hold:
+            metrics['checks'] += ['real loopback streaming diagnostic with selected model','ordered core log clear']
+        metrics['hold_mode']=args.hold
         metrics['checks'] += ['exactly one statistics run owned by the core','opening settings never recovers a live core','normal quit flushes the run and stops the core','reopening after normal quit has no unclean-exit warning']
         if args.wait_for_cmd_q:metrics['checks'].append('actual settings Cmd+Q stops the tray and core cleanly')
         metrics['result']='passed';output.write_text(json.dumps(metrics,ensure_ascii=False,indent=2)+'\n')
