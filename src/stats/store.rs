@@ -260,8 +260,7 @@ fn backup(conn: &Connection, dir: &Path) -> Result<(), DbError> {
 }
 
 /// Marks previous runs as unclean and closes orphaned in-flight rows.
-pub fn recover(conn: &mut Connection, run_id: &str, now_ms: i64) -> Result<Recovery, DbError> {
-    let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
+fn recover(tx: &rusqlite::Transaction<'_>, run_id: &str, now_ms: i64) -> Result<Recovery, DbError> {
     let unclean_runs = tx.execute(
         "UPDATE stats_runs SET stopped_at_ms=:now, stop_reason='unclean'
          WHERE run_id<>:run AND stopped_at_ms IS NULL AND started_at_ms<=:now",
@@ -281,7 +280,6 @@ pub fn recover(conn: &mut Connection, run_id: &str, now_ms: i64) -> Result<Recov
         |row| row.get(0),
     )?;
     let costs_settled = 0i64;
-    tx.commit()?;
     Ok(Recovery {
         unclean_runs,
         interrupted_requests: 0,
@@ -292,13 +290,12 @@ pub fn recover(conn: &mut Connection, run_id: &str, now_ms: i64) -> Result<Recov
 }
 
 /// Starts a fresh run and opens its collection interval.
-pub fn start_run(
-    conn: &mut Connection,
+fn start_run(
+    tx: &rusqlite::Transaction<'_>,
     run_id: &str,
     now_ms: i64,
     enabled: bool,
 ) -> Result<(), DbError> {
-    let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
     tx.execute(
         "INSERT INTO stats_runs(run_id, started_at_ms, last_persisted_at_ms)
          VALUES(:run, :now, :now) ON CONFLICT(run_id) DO NOTHING",
@@ -314,7 +311,6 @@ pub fn start_run(
             ":reason": if enabled { None::<&str> } else { Some("user_disabled") },
         },
     )?;
-    tx.commit()?;
     Ok(())
 }
 
@@ -484,14 +480,11 @@ impl Writer {
         crate::stats::restrict_permissions(&path);
         migrate(&mut conn, dir)?;
         let settings = load_settings(&conn)?;
-        let now_ms = crate::stats::now_ms();
-        let recovery = recover(&mut conn, run_id, now_ms)?;
-        start_run(&mut conn, run_id, now_ms, settings.enabled)?;
         let provider_modes = load_provider_modes(&conn)?;
         let mut writer = Self {
             conn,
             prices: PublishedPrices::default(),
-            scan: Some(RecoveryScan::new(recovery.as_of_id)),
+            scan: None,
             run_id: run_id.to_owned(),
             settings,
             maintenance: None,
@@ -503,6 +496,17 @@ impl Writer {
         // the published copy.
         writer.prices = load_price_cache(&writer.conn)?;
         writer.refresh_db_stats()?;
+        // A failed open must leave recovery and this run's interval untouched:
+        // startup lock retries can otherwise consume the prior crash report or
+        // create duplicate intervals. No fallible setup remains after commit.
+        let now_ms = crate::stats::now_ms();
+        let tx = writer
+            .conn
+            .transaction_with_behavior(TransactionBehavior::Immediate)?;
+        let recovery = recover(&tx, run_id, now_ms)?;
+        start_run(&tx, run_id, now_ms, settings.enabled)?;
+        tx.commit()?;
+        writer.scan = Some(RecoveryScan::new(recovery.as_of_id));
         Ok((writer, recovery))
     }
 
@@ -2380,6 +2384,42 @@ fn write_cost_maybe_correcting(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn failed_startup_rolls_back_recovery_and_run_bookkeeping_together() {
+        let folder = tempfile::tempdir().unwrap();
+        let counters = std::sync::Arc::new(crate::stats::event::Counters::default());
+        let (old, _) = Writer::open(folder.path(), "prior-unclean", counters.clone()).unwrap();
+        drop(old);
+        let db = Connection::open(folder.path().join("usage.sqlite3")).unwrap();
+        db.execute_batch("CREATE TRIGGER refuse_new_interval BEFORE INSERT ON stats_collection_intervals WHEN NEW.run_id='new-run' BEGIN SELECT RAISE(ABORT,'synthetic startup rejection'); END;").unwrap();
+        assert!(Writer::open(folder.path(), "new-run", counters.clone()).is_err());
+        assert_eq!(db.query_row("SELECT COUNT(*) FROM stats_runs WHERE run_id='prior-unclean' AND stopped_at_ms IS NULL", [], |r| r.get::<_, i64>(0)).unwrap(), 1, "failed open consumed crash recovery");
+        assert_eq!(db.query_row("SELECT COUNT(*) FROM stats_collection_intervals WHERE run_id='prior-unclean' AND ended_at_ms IS NULL", [], |r| r.get::<_, i64>(0)).unwrap(), 1);
+        assert_eq!(
+            db.query_row(
+                "SELECT COUNT(*) FROM stats_runs WHERE run_id='new-run'",
+                [],
+                |r| r.get::<_, i64>(0)
+            )
+            .unwrap(),
+            0
+        );
+        db.execute_batch("DROP TRIGGER refuse_new_interval")
+            .unwrap();
+        let (_writer, recovery) = Writer::open(folder.path(), "new-run", counters).unwrap();
+        assert_eq!(recovery.unclean_runs, 1);
+        assert!(recovery.unclean_detected);
+        assert_eq!(
+            db.query_row(
+                "SELECT COUNT(*) FROM stats_collection_intervals WHERE run_id='new-run'",
+                [],
+                |r| r.get::<_, i64>(0)
+            )
+            .unwrap(),
+            1
+        );
+    }
 
     #[test]
     fn bounded_report_page_cache_keeps_wal_snapshots_fresh_and_reader_read_only() {
@@ -4427,7 +4467,11 @@ mod tests {
         apply_step(&mut conn, 2, MIGRATION_0002).unwrap();
         conn.pragma_update(None, "foreign_keys", "ON").unwrap();
         apply_step(&mut conn, 3, MIGRATION_0003).unwrap();
-        start_run(&mut conn, "run-v3", 1000, true).unwrap();
+        let tx = conn
+            .transaction_with_behavior(TransactionBehavior::Immediate)
+            .unwrap();
+        start_run(&tx, "run-v3", 1000, true).unwrap();
+        tx.commit().unwrap();
         conn.execute_batch("INSERT INTO usage_requests(request_id,run_id,source,provider_id,provider_name,route_id,route_name,requested_model,upstream_model,started_at_ms,ended_at_ms,duration_ms,stream,upstream_started,outcome,usage_status,usage_source,input_tokens,output_tokens,total_tokens,created_at_ms,updated_at_ms)
             VALUES('historical-v3','run-v3','relay','provider','Provider','route','Route','alias','actual-model',1000,1001,1,0,1,'completed','complete','upstream',10,5,15,1000,1001);
             INSERT INTO usage_costs(request_id,source_price_id,source_price_revision,price_source,price_snapshot_at_ms,currency,input_mode,input_rate_nanos,output_rate_nanos,cache_read_rate_nanos,cache_write_rate_nanos,status,input_cost_nanos,output_cost_nanos,cache_read_cost_nanos,cache_write_cost_nanos,total_cost_nanos,pricing_version,calculated_at_ms)

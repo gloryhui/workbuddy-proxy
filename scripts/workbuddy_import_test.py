@@ -956,6 +956,31 @@ def probe_fault_matrix(sandbox: 'Sandbox', exe: Path, report: 'Report') -> None:
             blocker.rollback()
             blocker.close()
         recovered = wait_for(before_kill + 1)
+        # Observe only after the existing recovery deadline/result. A control
+        # call before taking the lock could accidentally wait for SQLite startup
+        # and hide the very startup/readiness race this case must still cover.
+        diagnostics = {}
+        allowed = {
+            'state', 'error_code', 'enabled', 'record_count', 'queue_depth',
+            'last_error_code', 'complete', 'files_pending', 'scan_id',
+            'scan_mode', 'scan_state', 'effective_enabled',
+        }
+        for command in ('stats_health', 'stats_workbuddy_status'):
+            try:
+                response = control(port, control_key(sandbox), {'command': command}, timeout=2)
+                value = json.loads(response['message'])
+                diagnostics[command] = {name: value[name] for name in allowed if name in value}
+                metrics = value.get('runtime_metrics')
+                if isinstance(metrics, dict):
+                    diagnostics[command]['runtime_metrics'] = {
+                        name: number for name, number in metrics.items()
+                        if isinstance(number, (int, float, bool))
+                    }
+            except (OSError, ValueError, KeyError, TypeError) as failure:
+                diagnostics[command] = {'unavailable': type(failure).__name__}
+        diagnostics['startup_database_locked_logged'] = (
+            'statistics disabled: database is locked' in log.read_text(errors='replace'))
+        report.facts['fault_db_lock_after_recovery_deadline'] = diagnostics
         report.check('faults: a new row blocked by the database lock imports after release',
                      recovered == before_kill + 1,
                      'imported=%d expected=%d' % (recovered, before_kill + 1))

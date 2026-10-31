@@ -1548,9 +1548,49 @@ fn writer_thread(
     control: Receiver<ControlMessage>,
     import_root: Option<workbuddy_import::reader::ReaderRoot>,
 ) {
-    let (mut writer, recovery) =
+    let (mut writer, recovery) = loop {
+        if inner.queue.is_closed() || inner.counters.closing.load(Ordering::Relaxed) {
+            inner.queue.close();
+            inner.set_state(HealthState::Disabled, None);
+            return;
+        }
         match store::Writer::open(&inner.dir, &inner.run_id, inner.counters.clone()) {
-            Ok(pair) => pair,
+            Ok(pair) => break pair,
+            Err(failure)
+                if matches!(
+                    failure.kind,
+                    Some(rusqlite::ErrorCode::DatabaseBusy | rusqlite::ErrorCode::DatabaseLocked)
+                ) =>
+            {
+                // HTTP readiness precedes SQLite startup. A competing lock
+                // must not disable collection for this process's lifetime.
+                // Keep admission closed until initialization actually succeeds.
+                inner.set_state(
+                    HealthState::Migrating,
+                    Some("stats_storage_busy".to_owned()),
+                );
+                match control.recv_timeout(Duration::from_millis(250)) {
+                    Ok(message) => {
+                        if matches!(message.kind, ControlKind::Shutdown) {
+                            if let Some(reply) = message.reply {
+                                let _ = reply.send(Ok("stopped".into()));
+                            }
+                            inner.queue.close();
+                            inner.set_state(HealthState::Disabled, None);
+                            return;
+                        }
+                        if let Some(reply) = message.reply {
+                            let _ = reply.send(Err(error(ERR_UNAVAILABLE, "stats_storage_busy")));
+                        }
+                    }
+                    Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => {
+                        inner.queue.close();
+                        inner.set_state(HealthState::Disabled, None);
+                        return;
+                    }
+                    Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {}
+                }
+            }
             Err(failure) => {
                 // The health payload is public: it carries a fixed code plus a
                 // short hint, never the raw driver text (which for a failed
@@ -1573,7 +1613,8 @@ fn writer_thread(
                 drain_control_without_writer(&inner, &control);
                 return;
             }
-        };
+        }
+    };
     inner
         .unclean_exit
         .store(recovery.unclean_detected, Ordering::Relaxed);
@@ -2624,6 +2665,74 @@ mod tests {
             std::thread::sleep(Duration::from_millis(10));
         }
         false
+    }
+
+    #[test]
+    fn startup_database_lock_recovers_without_restarting_or_duplicate_intervals() {
+        let tmp = temporary_dir();
+        let seed = StatsHandle::start(tmp.path().to_path_buf());
+        assert!(wait_ready(&seed));
+        seed.shutdown();
+        assert!(seed.is_stopped());
+        let db = rusqlite::Connection::open(tmp.path().join("usage.sqlite3")).unwrap();
+        db.execute_batch("BEGIN EXCLUSIVE").unwrap();
+        let handle = StatsHandle::start(tmp.path().to_path_buf());
+        let deadline = Instant::now() + Duration::from_secs(2);
+        while handle.inner.error_code.lock().unwrap().is_none() && Instant::now() < deadline {
+            std::thread::sleep(Duration::from_millis(10));
+        }
+        let locked_state = handle.state();
+        let locked_error = handle.inner.error_code.lock().unwrap().clone();
+        db.execute_batch("ROLLBACK").unwrap();
+        let recovered = wait_ready(&handle);
+        // Stop even when the regression fails, before checking the outcome.
+        handle.shutdown();
+        assert_eq!(locked_state, HealthState::Migrating, "{locked_error:?}");
+        assert_eq!(locked_error.as_deref(), Some("stats_storage_busy"));
+        assert!(recovered, "startup lock disabled statistics permanently");
+        assert!(!handle.inner.unclean_exit.load(Ordering::Relaxed));
+        assert_eq!(
+            db.query_row("SELECT COUNT(*) FROM stats_runs", [], |r| r
+                .get::<_, i64>(0))
+                .unwrap(),
+            2
+        );
+        assert_eq!(
+            db.query_row(
+                "SELECT COUNT(*) FROM stats_collection_intervals WHERE run_id=?1",
+                [&handle.inner.run_id],
+                |r| r.get::<_, i64>(0)
+            )
+            .unwrap(),
+            1
+        );
+    }
+
+    #[test]
+    fn shutdown_interrupts_startup_lock_retries_without_creating_a_run() {
+        let tmp = temporary_dir();
+        let seed = StatsHandle::start(tmp.path().to_path_buf());
+        assert!(wait_ready(&seed));
+        seed.shutdown();
+        let db = rusqlite::Connection::open(tmp.path().join("usage.sqlite3")).unwrap();
+        db.execute_batch("BEGIN EXCLUSIVE").unwrap();
+        let handle = StatsHandle::start(tmp.path().to_path_buf());
+        let deadline = Instant::now() + Duration::from_secs(2);
+        while handle.inner.error_code.lock().unwrap().is_none() && Instant::now() < deadline {
+            std::thread::sleep(Duration::from_millis(10));
+        }
+        let started = Instant::now();
+        handle.shutdown();
+        let stopped = handle.is_stopped();
+        db.execute_batch("ROLLBACK").unwrap();
+        assert!(stopped, "startup retry ignored shutdown");
+        assert!(started.elapsed() < Duration::from_secs(2));
+        assert_eq!(
+            db.query_row("SELECT COUNT(*) FROM stats_runs", [], |r| r
+                .get::<_, i64>(0))
+                .unwrap(),
+            1
+        );
     }
 
     fn spec(id: &str) -> RequestSpec {
