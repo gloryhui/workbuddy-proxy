@@ -53,5 +53,6 @@
     "benchmarks/r01-states/component-call-sites.json",
     "benchmarks/r01-states/final-native.json",
     "benchmarks/r01-states/cleanup.json"
-  ]
+  ],
+  "code_commit": "5fae93d52e3c802a76693f5e298e3abcfe3bc61d"
 }

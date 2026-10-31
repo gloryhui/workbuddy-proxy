@@ -4,7 +4,7 @@
 
 ## 最新进展（QA77）
 
-- 最终候选SHA256 `490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5`；fmt、207pass/2既有ignore、strict Clippy、Intel all-targets check、arm64 Release通过。新增具名选择项、模型行完整身份/选择文字、Dialog名称与modal元数据。[总结](benchmarks/r01-states/summary.json)。
+- 代码与证据提交 `5fae93d`；最终候选SHA256 `490530ddf1d8f4aa964dddd86de963924c01fcd9ea12bd807b13a68ae8cc9db5`；fmt、207pass/2既有ignore、strict Clippy、Intel all-targets check、arm64 Release通过。新增具名选择项、模型行完整身份/选择文字、Dialog名称与modal元数据。[总结](benchmarks/r01-states/summary.json)。
 - 36wrapper/118限定调用点、10适用状态族只形成明确矩阵，未签收全状态/实际slot。native selected对Row受macOS adapter限制；菜单selected是cursor而非committed checked证明，close为Dialog body兄弟，真实AT仍待。禁止旁白/系统辅助功能/切源。
 - 旧首边界drag实际Time列固定；本轮正确provider/model边界两点drag仍无变化。能力未变不重复；刷新/resize保持仍未验证。Tooltip实际文本未截断；长按期间截图被工具串行到释放后，均不标通过。
 - 本轮Core配置字节、14请求/成本逐字段保持，写命令0；三UI关闭，Core/驱动0。`studio-v2-r01-states.jfke8w09`58临时文件约253MiB已精确清理，临时保留0，不再启动已删除bundle；共享缓存/旧基准Core保留。

@@ -46,5 +46,6 @@
     "Current IME/real AT and R02-R04 remain; no VoiceOver/accessibility/input-source changes or public release",
     "No final matched performance, no broad settings/prices/full DB equality inferred"
   ],
-  "next": "Continue remaining applicable-state/slot/focus/IME/AT gaps, preserve eligible-drag tool limitation; do not repeat failed equivalent drag or pressed attempts without changed input capabilities."
+  "next": "Continue remaining applicable-state/slot/focus/IME/AT gaps, preserve eligible-drag tool limitation; do not repeat failed equivalent drag or pressed attempts without changed input capabilities.",
+  "code_commit": "5fae93d52e3c802a76693f5e298e3abcfe3bc61d"
 }
