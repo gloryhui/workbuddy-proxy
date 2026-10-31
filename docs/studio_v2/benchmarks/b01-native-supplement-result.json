@@ -1,0 +1,13 @@
+{
+  "exit_code": 0,
+  "fixture_pid": 25717,
+  "terminal": {
+    "ui_exit_before_cleanup": null,
+    "ui_pid_gone_before_cleanup": true,
+    "ui_exit_code_note": "CUA owns UI; fixture can observe PID disappearance but cannot reap exit code",
+    "core_exit_before_cleanup": null,
+    "ui_exit_after_cleanup": null,
+    "ui_pid_gone_after_cleanup": true,
+    "core_exit_after_cleanup": 0
+  }
+}

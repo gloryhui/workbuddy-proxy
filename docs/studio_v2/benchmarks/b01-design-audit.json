@@ -1,0 +1,221 @@
+{
+  "at": "2026-10-31T13:24:47.069671+08:00",
+  "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
+  "page": "51:2",
+  "official_session": "6d24ec7a-953b-4833-b100-483953cd51ae",
+  "inventory40_unchanged": true,
+  "full_contexts": [
+    {
+      "node": "54:2",
+      "context_sha256": "04d8652a102ada093c4adc7dc7e93589ce1ea8adafe846cb0961e068a1ec7db9",
+      "screenshot_sha256": "b55cb451d2a53289d4852072e0f2ac5c69045b87039375356b1d2ea817968840",
+      "chars": 52230
+    },
+    {
+      "node": "66:320",
+      "context_sha256": "264df35c8044f03647725f1380acae2b60ce7068a5acbf3baa6aae0f6d8d399d",
+      "screenshot_sha256": "82c78790fcbe8bfc9265e3e77276c8d379182a7222777772fb80d299ac648ddb",
+      "chars": 55830
+    },
+    {
+      "node": "66:538",
+      "context_sha256": "b9c60db8478baff086f0689b2e45d34515a4bf0f031e17e8ee2f6f4e8a047f40",
+      "screenshot_sha256": "8e55d2362f6c162249286a41f2a775d6e063f59b62576c055ea48b1a020f81a1",
+      "chars": 56850
+    },
+    {
+      "node": "66:760",
+      "context_sha256": "82d53b0b3149b3439b2c8728dd54e24c4a77af925056b38fc2df7ff273685778",
+      "screenshot_sha256": "31e81f22954adf8f754b7a7792a13cfe817115508bc1e65b3b7b7f14a523c116",
+      "chars": 52595
+    },
+    {
+      "node": "67:338",
+      "context_sha256": "e2d1f991d57e42edcfab50a19c783ad66032386b266583a0b882a351ee007a60",
+      "screenshot_sha256": "55884a43ce6d203f191c76fa1325798fc3cb7d1ab7a72f00d5c55e88ccbd0c00",
+      "chars": 48197
+    },
+    {
+      "node": "67:548",
+      "context_sha256": "8814b597f9635c69ec54b79b6e53f14957ecebdc0fc655328ba6dafe6df1b754",
+      "screenshot_sha256": "c4551e94e40636783cd716245927439ebd7e950d409c903bd5c0269072e74604",
+      "chars": 55985
+    },
+    {
+      "node": "78:364",
+      "context_sha256": "590ecb0ee5b188d52b3124ee58960d979eee9b30e8ccf755e09c4ade3f33a187",
+      "screenshot_sha256": "184c0123bab13153f46a7ea2caa8b844f067f442b6f6cead49fa52d6d8949078",
+      "chars": 47526
+    },
+    {
+      "node": "78:605",
+      "context_sha256": "61c150a2e4f0825fa82dfb7c13794da3f8139907545bb0b3feed5e6c0c00884c",
+      "screenshot_sha256": "84147f2dc5c3e5c3586b4099dcd56c62475865a1e49c0d05cdd56afcddc7896c",
+      "chars": 52987
+    },
+    {
+      "node": "78:843",
+      "context_sha256": "342124deabde17ae20cffdeb6f9200733b97f5fd6ba5400c578dbf3c60e0979f",
+      "screenshot_sha256": "5ab8751e1417d586eb507d56e1f448ca6b55ce744bb65a1001427e8bfd3c103d",
+      "chars": 52826
+    },
+    {
+      "node": "78:1080",
+      "context_sha256": "6412729d376fa4d81dceeb19fbd6824d3b3abe665936cf6d0f8dadfd8a443069",
+      "screenshot_sha256": "b56369e907cc0f4e1685576dcd8048f291a200d591c0cbdd4a6dfa8f73e8135e",
+      "chars": 56390
+    },
+    {
+      "node": "78:1325",
+      "context_sha256": "8248dae6e05cfc7931cba2e14d2b9da98c3a0b8445e4b7e5d59373af0eb0bb3a",
+      "screenshot_sha256": "94908dc2853ecfadd920e86ac6e8536b2f37999bc6c1fce00b9ee2cc85d038fb",
+      "chars": 117926
+    },
+    {
+      "node": "78:1804",
+      "context_sha256": "344e846185fb81cfaa65ddef31764a2e5b1216ce425986cf1fa35c9a7e75ae2d",
+      "screenshot_sha256": "4f882b3af4d1d40714fd676ceb93997e2d6102df2841140c82f1d54c292500d0",
+      "chars": 47691
+    },
+    {
+      "node": "79:400",
+      "context_sha256": "0a7932fa22fcf5e3de0e81510700d0da379299532b7ee17f4dc481135699fdd3",
+      "screenshot_sha256": "bf67bfb09170f1ac5df63892627716a431f762a973a2bdfb9fad1164e730b805",
+      "chars": 51156
+    },
+    {
+      "node": "79:885",
+      "context_sha256": "a62618425cdbed521e9a68d658085606046938230047bfffaebec6c4736a1f40",
+      "screenshot_sha256": "b1d0ba759a3b8385eb7e995c15e6cd47713c382e1f053c989960a09e5be6c92b",
+      "chars": 48474
+    },
+    {
+      "node": "79:1102",
+      "context_sha256": "0bdd77a5c34b475a3111f96ea2f14760447db68d5a0aaf86ebd8a0d4ebc35ade",
+      "screenshot_sha256": "3f32f5821dd56aed2fe9163e1773b94328696526937af0f8fbc2c4efff9d3a53",
+      "chars": 54003
+    },
+    {
+      "node": "80:418",
+      "context_sha256": "97c6130e9bf04f84211937bd5c7ae4a292b0c46e3462c7f151e56a25224fe510",
+      "screenshot_sha256": "d26d8249c8bc955294bf15fe7cc3f70570b69a141157b0e559720e2e944fd98f",
+      "chars": 51184
+    },
+    {
+      "node": "80:646",
+      "context_sha256": "1a77c4c0cbf3b262242a9bdf8e6d64dfca30514d7e7ec5a92c67dc848b23dbbd",
+      "screenshot_sha256": "f52e34ed779461eebdb36c827e2f6ccef43f0d175380ce150acc980269fe2283",
+      "chars": 48848
+    },
+    {
+      "node": "80:864",
+      "context_sha256": "15a085147553cdae76cb2bb013f681aa914412df44d631ee17cc5fe97bce09c7",
+      "screenshot_sha256": "6ac2ebe3ebac192e3c52760d00488b1ec605b0ac78eef51ad82bea996ebd436b",
+      "chars": 56321
+    },
+    {
+      "node": "80:1114",
+      "context_sha256": "62c527b97431bc1242ef2a86560c6f9688ada435f9aefad7af5842df059a926b",
+      "screenshot_sha256": "3688da205cab28a5d879b6b806e7e39b15e23357f78e13430f7dade57cc9a4e8",
+      "chars": 51858
+    }
+  ],
+  "reference_size": [
+    1024,
+    640
+  ],
+  "reference_scope": "Official tool default PNG, full contexts declare1440x900; default reference PNG is not a native capture.",
+  "candidate_sha256": "2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d",
+  "rust_scope": [
+    "gpui/src/ui/provider_choices.rs",
+    "gpui/src/ui/sidebar.rs",
+    "gpui/src/assets.rs",
+    "gpui/assets/studio/supplier-add-disabled.svg"
+  ],
+  "changes": [
+    "Studio preset below-trigger offset6→42,13px/19 search type,border/radius9,headerMedium,8px row radius and inherited native hover ink.",
+    "Studio effort nativeBottomLeft/offset-30 opens above original34px trigger; native viewport fitting retained.",
+    "Disabled supplierAdd uses exact original16px muted SVG/ink#929bb0/groupOpacity0.48. Existing event/list delegates/state unchanged; other skin branches retain former behavior."
+  ],
+  "asset_counts": {
+    "unique_downloaded": 31,
+    "byte_exact": 26,
+    "clip_id_only_equivalent": 2,
+    "native_os_decorations": 3
+  },
+  "declared_geometry": {
+    "main_connection": [
+      288,
+      222,
+      755,
+      338
+    ],
+    "main_models": [
+      288,
+      572,
+      755,
+      253
+    ],
+    "runtime": [
+      1060,
+      222,
+      348,
+      279
+    ],
+    "logs": [
+      1060,
+      516,
+      348,
+      309
+    ],
+    "preset_popup": [
+      308,
+      406,
+      436,
+      377
+    ],
+    "effort_popup": [
+      379,
+      558,
+      232,
+      258
+    ],
+    "protocol_popup": [
+      308,
+      558,
+      361,
+      233
+    ]
+  },
+  "runtime_review": "All19 official references inspected against both native sizes by delegated CUA reviewer; primary native main/preset/effort/delete/new/copy/capacity images additionally inspected by root. Major vertical popup displacement corrected. Declared geometry above is Figma context, not an automated every-pixel native measurement.",
+  "preserved_dynamic_differences": [
+    "Actual local ports, names, counts,models and request/token state remain live; Figma static variants contain inconsistent provider counts/names. No fake success receipt or static logs.",
+    "Saved fresh/copy objects remain Untested until actually tested; saved status is separate from connection status.",
+    "Native OS controls, extra diagnostic/actions,source model metadata and actual endpoint hint retained.",
+    "Long provider header may elide while full value is reachable in field/sidebar; small content uses real separate scrolling, not forced same-screen shrink.",
+    "Native ICC/AA and font raster differences are documented, no font-version/full-RGB equality gate."
+  ],
+  "native_observation_limits": [
+    "No explicit activate/raise; actual foreground not independently measured.",
+    "CUA interface actions; own PID onscreen layer0 native screenshots, PNGs unchanged; window screenshots contain synthetic loopback information only.",
+    "No sync, reboot, real login item, external link or user data.",
+    "No IME composition or full assistive technology coverage claimed.",
+    "Small provider screenshots show top state; supplemental bottom images show model/footer after scrolling, not simultaneous visibility. In four-row small bottom screenshots the fourth row is clipped at table viewport; no separate internal table scroll to last row was exercised.",
+    "78-364-wide has native hover tooltip near New; 66-760-small has native eye tooltip; 80-646 header truncates long B01 name while full value remains visible in field/sidebar.",
+    "Window screenshots include native extra OS row: wide 1440x901; small 1100x701.",
+    "Preset/effort actual selection in edit was optional and not done; new draft setValue used for Unicode, not an IME test."
+  ],
+  "supplemental_table_and_menu_proof": "Frozen2a12 supplementary actual4-model native small window internally scrolled to complete row4 name/ID/edit action. Four matched performance observations additionally verify native64 table last63→first0 and currentPreset/effortLow→Follow. Original clipped screenshots remain unmodified; not all content is simultaneous.",
+  "global_gates": "FullIME/AX/all-state/theme/platform/HiDPI/long-term performance/CI/install/signing are independently tracked in R01-R04; this design audit does not mark them passed.",
+  "copy_key_semantics": "Existing provider_new.rs begin_provider_draft clones the current source Draft including key. A blank key remains blank; nonempty key is retained. Native copy screenshot is masked, not proof of blank. No new key-clearing logic or requirement introduced.",
+  "remaining_global_state_gap": "Busy visual captured, but CUA -10005 prevented a verified during-busy click. Supplement coordinate retry occurred after busy ended and legitimately triggered a second isolated Test. Final supplement16 total=14 original+2Test; historical14 request/cost all fields preserved. Full disabled-click matrix remains R01, not marked passed.",
+  "supplemental_lifecycle": {
+    "ui_pid": 25947,
+    "core_pid": 25718,
+    "fixture_pid": 25717,
+    "all_gone": true,
+    "nonprovider_config_exactly_preserved": true,
+    "total_requests": 16,
+    "original_history_rows": 14
+  }
+}

@@ -1,0 +1,22 @@
+from pathlib import Path
+import os,sys,subprocess,time,json,hashlib,datetime
+r=Path(__file__).resolve().parent;repo=Path.cwd();core=Path('/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-round46.wyah2h0f/baseline-core');ui=r/'candidate-ui';env=dict(os.environ,PYTHONPATH=str(repo/'scripts'),TMPDIR=str(r/'tmp'),TMP=str(r/'tmp'),TEMP=str(r/'tmp'));results=[]
+for label,flags in [('main',[]),('delete-b',[]),('capacity',['--full-providers'])]:
+ f=r/('b01-eb6ifznc-'+label+'-final');log=(r/('native-'+label+'.log')).open('wb');p=subprocess.Popen([sys.executable,'-u',str(r/'fixture-background.py'),'--exe',str(core),'--gpui',str(ui),'--output',str(f),'--keep-core-after-ui-exit',*flags],env=env,stdout=log,stderr=log)
+ try:
+  for _ in range(2400):
+   if (f/'cua-launch-ready.json').exists():break
+   if p.poll() is not None:raise RuntimeError((label,'fixture early exit',p.returncode))
+   time.sleep(.1)
+  else:raise RuntimeError('fixture initial readiness deadline')
+  guard=subprocess.run([sys.executable,str(r/'preflight-seed.py'),str(f),*(['no-seed'] if label=='capacity' else [])],env=env,capture_output=True,text=True);assert guard.returncode==0,guard.stderr
+  assert hashlib.sha256((Path(json.loads((f/'cua-launch-ready.json').read_text())['bundle'])/'Contents/MacOS/workbuddy-proxy-gpui').read_bytes()).hexdigest()==hashlib.sha256(ui.read_bytes()).hexdigest()
+  cfg=json.loads((f/'config/config.json').read_text());(f/'native-test-inputs.json').write_text(json.dumps({'local_upstream':cfg['providers'][0]['upstream'],'synthetic_key':'fixture-upstream-key','new_name':'演示新供应商','edited_name':'sub2api B01','copy_name':'sub2api 副本'},ensure_ascii=False)+'\n')
+  pending={'label':label,'folder':str(f),'ready_file':str(f/'cua-launch-ready.json'),'ui_sha256':hashlib.sha256(ui.read_bytes()).hexdigest(),'guard_passed':True};(r/'pending-native.json').write_text(json.dumps(pending)+'\n');print('ready '+label,flush=True)
+  code=p.wait();assert code==0,(label,code)
+  terminal=json.loads((f/'terminal-status.json').read_text());assert terminal['ui_pid_gone_after_cleanup'] and terminal['core_exit_after_cleanup']==0
+  results.append({'label':label,'fixture_pid':p.pid,'exit_code':code,'terminal':terminal,'folder':str(f)});(r/'native-driver-results.json').write_text(json.dumps(results,indent=2)+'\n');print('finished '+label,flush=True)
+ finally:
+  if p.poll() is None:p.terminate();p.wait(timeout=10)
+  log.close()
+print('B01 three native phases complete',flush=True)

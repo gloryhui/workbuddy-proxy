@@ -1,0 +1,55 @@
+{
+  "candidate_sha256": "2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d",
+  "ui_pid": 25947,
+  "core_pid": 25718,
+  "window_id": 7349,
+  "four_rows": {
+    "result": "pass",
+    "actions": [
+      "open Providers and A",
+      "resize to 1100x700",
+      "scroll outer content to model card and footer",
+      "scroll inside the four-row model table to the bottom"
+    ],
+    "last_row": "claude-opus-4.7; name, upstream ID and edit button fully visible",
+    "screenshot": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc/b01-supplement-final/supplement-four-row-small.png",
+    "pixels": [
+      1100,
+      701
+    ],
+    "sha256": "f40a8f2e765ea5cfade900245d2ccc430e4a8dbaf22570676afe262b3a76bb61"
+  },
+  "busy": {
+    "result": "unverified",
+    "events": [
+      "set private mock delay 8 seconds",
+      "click Test once; fresh CUA snapshot showed testing",
+      "click fresh element index 15 returned Computer Use server error -10005 element ID no longer valid",
+      "coordinate retry happened after first test completed: preset opened; following Test coordinate inadvertently started a second local test",
+      "both local tests completed 200, mock restored success"
+    ],
+    "scope": "No evidence that a busy-state click was blocked or accepted; do not interpret later enabled click as busy failure. Two actual tests, not one."
+  },
+  "data": {
+    "initial_providers": 2,
+    "initial_models": 5,
+    "initial_requests": 14,
+    "final_providers": 2,
+    "final_models": 5,
+    "final_requests": 16,
+    "observer_original_fields_pass": true,
+    "history_scope": "14 original records distinct from two new test records"
+  },
+  "lifecycle": {
+    "ui_native_close": true,
+    "ui_pid_gone": true,
+    "closed_observer_passed": true,
+    "driver_terminal": "parent to verify"
+  },
+  "limitations": [
+    "No explicit activate/raise; actual foreground unverified.",
+    "No external AX/CGEvent input/bounds.",
+    "Native PNG original 1100x701 includes OS row, not scaled or cropped.",
+    "Full busy action matrix and accessibility/IME remain R01."
+  ]
+}

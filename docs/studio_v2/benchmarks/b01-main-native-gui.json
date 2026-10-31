@@ -1,0 +1,439 @@
+{
+  "candidate_sha256": "2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d",
+  "label": "main",
+  "ui_pid": 11246,
+  "core_pid": 11022,
+  "window_id": 6655,
+  "base_frames": [
+    "54-2",
+    "66-320",
+    "66-538",
+    "66-760",
+    "67-338",
+    "67-548",
+    "78-1080",
+    "78-1804",
+    "78-364",
+    "78-605",
+    "78-843",
+    "79-885",
+    "79-1102",
+    "80-418",
+    "80-646"
+  ],
+  "images": [
+    {
+      "file": "54-2-small-bottom.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "0ff1287d3d72f3cae8423db0158cad8878cd3004052317e33e246ba26cc9028b",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "54-2-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "4811c06d053a7c842f7fdb15913b36155720e508262910f1e326001cd336df16",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "54-2-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "d05fe96ce5f02f9a15772f9c57f892b55b9b5a5500fdf660c7dd7ac0d1f517bb",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "66-320-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "313fde8f68b66c26676248c38a44861a8bb1e9a9de65e888bb661e937863c03b",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "66-320-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "dc168bcb6fe586946c52139527cf861ef8cfaf68a7c8fd7dcdcc597b9431dddf",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "66-538-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "ed9d2f586b075f3f5e9612d9c1be7499bc3bace0c57256f3f12b83e8b69b5824",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "66-538-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "cb6c5b72e5655606d0760ab2e31ada470ff99c330a766f1f3b1181f911e49514",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "66-760-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "b8ef8c01ef65d29a7776fdf53e176c910127ee8764c3c3e88e96aa5acf37405a",
+      "window_id": 6655,
+      "synthetic_key_visible": true
+    },
+    {
+      "file": "66-760-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "e9e16f2b654a4d26e10e89efef617513878e0a099de21523440139d4ec2bc8da",
+      "window_id": 6655,
+      "synthetic_key_visible": true
+    },
+    {
+      "file": "67-338-small-bottom.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "96f1541543e2f3dc348f3c446fa18f8a5bad6d1d18555b3fcc9c1168995b2893",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "67-338-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "b34d7700a9d2a9bee3dfa30c1d6a89a9ab72222fe92f32836c7616263d0da508",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "67-338-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "72a4288e50f8ec6f3e5143f4ba9f57c0ba190daad61932f4fb6aa9372c3575ae",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "67-548-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "7d27bfc44b51f51cf23e612f1d4d2cbaca5e25db98091ef6a3ff5da786f920dd",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "67-548-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "210a1dedf61f86e8855f3c495d2892211674fe6a7bb53b2ff74bd48807cf3dbd",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-1080-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "fc06cdcd83ee98d33fa8d9b52d4a4d99eb0ce679a2b37a63ea3cb09a23619172",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-1080-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "e6ee65f94f71debcfcc5f5099800c5721c28786e4d71ab9ce026a4aed624c851",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-1804-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "7dfb48740533be878db55646ea31e1dddc4d1af1e3339f3e50ae4f9850144f8f",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-1804-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "dc626c3cf906086e42747329e140504b1941a876f7fb07b45bd5f2f17a2d670f",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-364-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "ee94785b0d87a1a56b59e1c865bdd12a43bc005f24a1789f571224a92e832923",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-364-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "aaf56357fb9c9c67d972305dc2c43aec7440597bf8d6ea5dce64fad85c1e6a03",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-605-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "82ed03484cf9f38d870945576cc910d77853cfbd84a025beae7f04009521ef4f",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-605-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "6d591643bf83866616105941501855a98b540be3bb4924ecf83fe55ee547ac04",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-843-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "78b0af0d7afed0842f44535fbf1c6db2e81d9119be1e52c09b864465720d0d8e",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-843-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "cedcd39a7869ffb00714dc0abcd06ab01a847096da58f2453b6a7b32e8e7eecc",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-1102-small-bottom.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "300381dc2c3711b6ca0a970400ff928184a99f4d06b3cfa28896de9e203cba9a",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-1102-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "4fbf9cca2167958ec256e3e62e5a10d84142d276822a4a3a5b0a4524d1c93a2b",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-1102-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "0861f474a1f3c543d74dafcda3dfabaebef14bd3e5d6fa14d721becf6fa57500",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-885-small-bottom.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "8a5d7cc8f2aa955a50aff6ac7f956288a759395259fbb3687ebf5a1c9af1dbe5",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-885-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "56bc2eac833d118b50081e5c0fd0b4431774e1f139a77f9bf2cc1ef4536b8a9a",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-885-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "6019a1f97c7ced54080dfd5a91c5005f8ddae12e189beca43e889fd4a569e607",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "80-418-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "f72191016f25568103e983b5ff5f96b8a368631470ba8af7645c7d5abf801c74",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "80-418-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "496b92ba54d594e7ceea3aad61ae538da13aadd7b81279eb7869727af044dd97",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "80-646-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "8c1a9a98c4b62f48471833977eddc21ca12662109708e8a9d38d15d642b04510",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "80-646-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "d125d7f44fa6cc72b8f195a2bc8a6618e09fe6be3f81a01b147c377deec80a6b",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "candidate-6655.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "d05fe96ce5f02f9a15772f9c57f892b55b9b5a5500fdf660c7dd7ac0d1f517bb",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "empty-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "e0273673c46564f53c31629af8f422c0e47ff00407c06561a844adb4479ac329",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "new-invalid-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "83dc534f9d9dfa0261298d6e359e46bc0213a62e68511f5afa24ba9dc574b19d",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "test-busy-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "9785c4f9c641c5af887b61b2f416e7424ec92c665c3e9ceedfdd86b1d410bafb",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "test-failure-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "55dfc96e8fb3a882a6861f5e11a0995cb4456b67a66f92ce61bfbdaf8036b403",
+      "window_id": 6655,
+      "synthetic_key_visible": false
+    }
+  ],
+  "actions_and_results": [
+    "A and B one connection test each: visible 200; observer test_success and menus pass; counts 2/5 and initial 14 history; total after all tests 18 (17x200 1x503).",
+    "Protocol opened in each size and Escape closed; Bedrock search and Down highlight on both sizes; clear by closing menu, re-open default; no preset selected.",
+    "Effort menu in both sizes visually above anchor with all six entries visible; Escape closed; actual effort selection not exercised.",
+    "Synthetic key reveal in both sizes then mask restored; 66-760 PNGs contain only synthetic test key and must remain private fixture evidence.",
+    "B and A edited names then Cancel restored, independent edit_cancel passed. A name saved, B-to-A readback, restored and saved; observer edit_saved/edit_restored passed.",
+    "New draft cancel; invalid URL visibly rejected and observer new_invalid passed; loopback valid save observer 3/5; new object deleted and 2/5 restored.",
+    "Copy draft cancel and repeat save with synthetic key; observer 3/9 and original fields passed, followed deletion restoring 2/5. Blank copy-key status not established by masked screenshot.",
+    "Mock failure one test returned 503; delay one test visibly busy, screenshot shows disabled style and after 200; attempted preset click returned CUA -10005 stale element, so blocked action/repeated click not verified.",
+    "A deletion Cancel and X closed; an Escape attempt after erroneous minimize-index click left dialog open, focus uncertain; later independent B Escape passed. Overlay click at small-screen language toolbar location did not show language menu. A deleted to B then B deleted to empty; empty new/cancel; closed UI."
+  ],
+  "limitations": [
+    "No explicit activate/raise; actual foreground not independently measured.",
+    "CUA interface actions; own PID onscreen layer0 native screenshots, PNGs unchanged; window screenshots contain synthetic loopback information only.",
+    "No sync, reboot, real login item, external link or user data.",
+    "No IME composition or full assistive technology coverage claimed.",
+    "Small provider screenshots show top state; supplemental bottom images show model/footer after scrolling, not simultaneous visibility. In four-row small bottom screenshots the fourth row is clipped at table viewport; no separate internal table scroll to last row was exercised.",
+    "78-364-wide has native hover tooltip near New; 66-760-small has native eye tooltip; 80-646 header truncates long B01 name while full value remains visible in field/sidebar.",
+    "Window screenshots include native extra OS row: wide 1440x901; small 1100x701.",
+    "Preset/effort actual selection in edit was optional and not done; new draft setValue used for Unicode, not an IME test."
+  ],
+  "ui_closed_pid_gone": true,
+  "core_closed_by_driver": "parent independently confirms terminal"
+}

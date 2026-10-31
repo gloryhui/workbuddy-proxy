@@ -80,8 +80,19 @@ enum SupplierAction {
 }
 
 fn action(kind: SupplierAction, label: &'static str, disabled: bool, cx: &App) -> Button {
+    let studio_disabled_add = disabled
+        && matches!(kind, SupplierAction::Add)
+        && crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
     let (id, icon, width) = match kind {
-        SupplierAction::Add => ("provider-add", "studio/supplier-add.svg", 79.),
+        SupplierAction::Add => (
+            "provider-add",
+            if studio_disabled_add {
+                "studio/supplier-add-disabled.svg"
+            } else {
+                "studio/supplier-add.svg"
+            },
+            79.,
+        ),
         SupplierAction::Copy => ("provider-copy", "studio/supplier-copy.svg", 65.),
         SupplierAction::Delete => ("provider-delete", "studio/supplier-delete.svg", 68.),
     };
@@ -110,7 +121,7 @@ fn action(kind: SupplierAction, label: &'static str, disabled: bool, cx: &App) -
             button
                 .bg(rgb(color::SIDEBAR_HOVER))
                 .text_color(rgb(ink))
-                .opacity(0.45)
+                .opacity(if studio_disabled_add { 0.48 } else { 0.45 })
         })
         .child(
             div()
@@ -122,7 +133,11 @@ fn action(kind: SupplierAction, label: &'static str, disabled: bool, cx: &App) -
                     Icon::default()
                         .path(icon)
                         .with_size(px(16.))
-                        .text_color(rgb(ink)),
+                        .text_color(rgb(if studio_disabled_add {
+                            color::SIDEBAR_MUTED
+                        } else {
+                            ink
+                        })),
                 )
                 .child(Label::new(label).text_size(px(12.)).text_color(rgb(ink))),
         )

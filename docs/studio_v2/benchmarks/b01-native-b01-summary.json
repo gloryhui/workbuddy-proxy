@@ -1,0 +1,57 @@
+{
+  "candidate_sha256": "2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d",
+  "frame_count": 19,
+  "base_image_count": 38,
+  "frames_by_fixture": {
+    "main": [
+      "54-2",
+      "66-320",
+      "66-538",
+      "66-760",
+      "67-338",
+      "67-548",
+      "78-1080",
+      "78-1804",
+      "78-364",
+      "78-605",
+      "78-843",
+      "79-885",
+      "79-1102",
+      "80-418",
+      "80-646"
+    ],
+    "delete-b": [
+      "80-864",
+      "80-1114"
+    ],
+    "capacity": [
+      "78-1325",
+      "79-400"
+    ]
+  },
+  "fixture_reports": {
+    "main": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc/b01-eb6ifznc-main-final/native-gui.json",
+    "delete-b": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc/b01-eb6ifznc-delete-b-final/native-gui.json",
+    "capacity": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc/b01-eb6ifznc-capacity-final/native-gui.json"
+  },
+  "key_findings": [
+    "Above-anchor effort menu fully visible in wide and small screenshots; older state-bar overlap corrected in this observed scenario.",
+    "New/copy/edit/delete and local HTTP200/503 paths independently observed; capacity limit 64 preserved.",
+    "Four-row model table in small bottom screenshots clips row 4; separate internal scroll to row 4 not independently tested.",
+    "Long edited B name is truncated in header despite full text in field/sidebar.",
+    "Screenshot 78-364-wide includes hover tooltip, 66-760-small includes eye tooltip; these are real capture states.",
+    "Busy disabled visual shown; attempted action used stale CUA ID and was not verified.",
+    "Delete-B fresh Escape closed; default Return left dialog open and did not delete. Main A Escape observation was inconclusive after an erroneous minimize-index click."
+  ],
+  "limitations": [
+    "No explicit activate/raise; actual foreground not independently measured.",
+    "CUA interface actions; own PID onscreen layer0 native screenshots, PNGs unchanged; window screenshots contain synthetic loopback information only.",
+    "No sync, reboot, real login item, external link or user data.",
+    "No IME composition or full assistive technology coverage claimed.",
+    "Small provider screenshots show top state; supplemental bottom images show model/footer after scrolling, not simultaneous visibility. In four-row small bottom screenshots the fourth row is clipped at table viewport; no separate internal table scroll to last row was exercised.",
+    "78-364-wide has native hover tooltip near New; 66-760-small has native eye tooltip; 80-646 header truncates long B01 name while full value remains visible in field/sidebar.",
+    "Window screenshots include native extra OS row: wide 1440x901; small 1100x701.",
+    "Preset/effort actual selection in edit was optional and not done; new draft setValue used for Unicode, not an IME test."
+  ],
+  "full_release_or_all_frame_acceptance": false
+}

@@ -1,0 +1,88 @@
+{
+  "candidate_sha256": "2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d",
+  "label": "capacity",
+  "ui_pid": 17494,
+  "core_pid": 17314,
+  "window_id": 7016,
+  "base_frames": [
+    "78-1325",
+    "79-400"
+  ],
+  "images": [
+    {
+      "file": "78-1325-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "5a8a58d799127eb7629ff82337c9dce4769c7171b7e2d514f994b4debb324450",
+      "window_id": 7016,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "78-1325-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "46c2c126aac4a72d7c8c1f79f4d1d6e7df279e3e9ada9e4fc744d4a2acce3456",
+      "window_id": 7016,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-400-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "4fd7488f0ab11aeae7c2b271f284ab9b434d7b27e94f52d540ef742d210fcb82",
+      "window_id": 7016,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "79-400-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "dadaa32791cc1b3c002d932813c95ac718baf09d897fe837a3fdc32cd9cf247c",
+      "window_id": 7016,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "candidate-7016.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "46c2c126aac4a72d7c8c1f79f4d1d6e7df279e3e9ada9e4fc744d4a2acce3456",
+      "window_id": 7016,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "capacity-tail-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "296d45ea9e194c56536966681d58011a19603ed376e14e533317cb5211bd4367",
+      "window_id": 7016,
+      "synthetic_key_visible": false
+    }
+  ],
+  "actions_and_results": [
+    "64/5/0 verified; disabled New and Copy clicked without opening drafts, observer unchanged. Search 27, 64, no-match and clear; scroll own sidebar to 64, select and shrink; after nine seconds selected 64 still visible. UI closed."
+  ],
+  "limitations": [
+    "No explicit activate/raise; actual foreground not independently measured.",
+    "CUA interface actions; own PID onscreen layer0 native screenshots, PNGs unchanged; window screenshots contain synthetic loopback information only.",
+    "No sync, reboot, real login item, external link or user data.",
+    "No IME composition or full assistive technology coverage claimed.",
+    "Small provider screenshots show top state; supplemental bottom images show model/footer after scrolling, not simultaneous visibility. In four-row small bottom screenshots the fourth row is clipped at table viewport; no separate internal table scroll to last row was exercised.",
+    "78-364-wide has native hover tooltip near New; 66-760-small has native eye tooltip; 80-646 header truncates long B01 name while full value remains visible in field/sidebar.",
+    "Window screenshots include native extra OS row: wide 1440x901; small 1100x701.",
+    "Preset/effort actual selection in edit was optional and not done; new draft setValue used for Unicode, not an IME test."
+  ],
+  "ui_closed_pid_gone": true,
+  "core_closed_by_driver": "parent independently confirms terminal"
+}

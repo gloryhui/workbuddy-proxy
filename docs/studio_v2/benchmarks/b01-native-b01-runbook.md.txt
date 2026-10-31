@@ -1,0 +1,40 @@
+# B01 同一候选整批验收
+
+候选SHA2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d。读取pending-native.json取当前label/folder和ready_file里的精确bundle。只操作该bundle；Core内核防护已通过，GUI仅隔离环境，不宣称GUI内核沙盒。不要显式activate/raise；不访问Codex/真实WorkBuddy；不要外链、开机启动、系统设置、同步/重启或真实用户文件。所有测试输入见每个fixture的native-test-inputs.json，只有合成本地Key和loopback上游。
+
+每个下列Frame须原生1440×900与1100×700各一张：<frame-id用短横线>-wide.png / -small.png。CUA resize，原始截图按ownPID→onscreen layer0 windowID，不裁切/缩放，OS额外行如实记录。小窗相关下方内容不可见时内滚并补-small-bottom.png（至少主页面、新保存空模型、复制保存模型、OpenCode单模型），不能冒称同屏。宽窗返回时恢复滚到顶部。保持图像、操作与候选SHA一致。
+
+独立证明命令：python3 ROOT/observe-b01.py FOLDER STAGE（ROOT为本文件所在目录，FOLDER精确当前fixture绝对目录）。只读Core健康/持久配置/SQL，允许写本轮证明；出现断言失败立即报告，不静默跳过。只有UI可以写业务数据。辅助Mock命令python3 ROOT/set-b01-mock.py FOLDER success|failure|delay；只控制本地合成上游。delay为8秒人为延迟，不当性能。结束须先CUA原生Close，确认该UI PID消失，再observe closed；该命令会核对关UI前后配置不变及Core健康，写结束marker，driver自动停Core并顺序准备下一fixture。
+
+## main（2供应商5模型，14真实HTTP种子/7700Token）
+
+1. 绑定精确bundle、核对gpui.json PID，observe initial。成功Test A一次，等真实完成/绿徽章，observe test_success。拍54:2主页面（含小窗下方补图）。
+2. 打开上游协议菜单，拍66:320，两尺寸；Esc，不改变协议。
+3. 打开预设菜单，搜索bedrock、方向键移动到结果项，拍66:538，两尺寸；清查询/Esc。真实结果不同于静态示例不得伪称逐行相同。
+4. 打开思考菜单，拍67:548，两尺寸；检查浮层上移后不压状态栏、所有选项可达，Esc。实际选择需走下面的编辑/取消保护。
+5. API Key眼睛显示（仅合成Key），拍66:760两尺寸，立即恢复遮罩。
+6. 选OpenCode Go，成功Test B一次；拍67:338两尺寸及小窗单模型区域补图。不要把连接正常静态稿替代真实测试结果。
+7. 选择A，侧栏搜索OpenCode，A详情应保持而列表过滤为B，拍80:418两尺寸；无匹配→清空→恢复2条。observe menus。
+8. 选择B→编辑资料→改名称为OpenCode Go B01（只改草稿），拍80:646两尺寸；取消修改，observe edit_cancel。
+9. 选择A→编辑资料→名称sub2api B01，拍78:605两尺寸；可试预设Mistral/思考Low在草稿中真实应用，然后取消修改，确保原字段恢复、无真实网络/保存。observe edit_cancel。
+10. 再编辑A名称sub2api B01→保存配置，observe edit_saved，切B再切A确认读回；再编辑恢复sub2api→保存，observe edit_restored。其他原字段不能改。
+11. 新增空白草稿，拍78:364两尺寸；取消新增，observe new_cancel。再次新增，名称演示新供应商、合成Key、URL先not-a-url，保存应拒绝，observe new_invalid，可补错误图。改为native-test-inputs.json的loopback local_upstream后保存，observe new_saved（Core3供应商/5模型，新对象0模型）；拍79:885两尺寸和小窗空模型补图。删除此新对象并确认，observe new_deleted（回到原2）。
+12. 选择A→复制，副本名sub2api 副本、Key应留空；拍78:843两尺寸。取消复制，observe copy_cancel。再复制、填合成Key、保留原loopback URL→保存，observe copy_saved（3供应商/9模型，原2不变，复制4个模型非身份字段继承）；拍79:1102两尺寸及小窗模型补图。删除副本并确认，observe copy_deleted。
+13. 选择A；Mock failure→点击Test，等真实503/红失败，observe test_failure，补失败图。Mock delay→点击Test，预先准备好截图/操作，在8秒等待内抓busy图并只试点击预设和Test（应不重复），等完成，Mock success，observe test_recovered；如miss busy不要冒称通过，报告实际结果。追加Test请求应有日志证明，不能把人为延迟当性能。
+14. 选A→删除，确认目标sub2api/4模型；用Cancel、Esc、X分别取消核对不删；重开拍78:1080两尺寸，尝试遮罩后工具栏不穿透；显式确认删除，observe after_delete_a（仅B和原字段保持）。拍78:1804两尺寸。
+15. 再删除剩B到空列表，observe empty并补空态图；新增→取消仍为空可恢复入口。CUA原生Close，PID消失后observe closed；driver自动进入delete-b。
+
+## delete-b（独立同版2供应商5模型/14种子，避免伪造A/B分支）
+
+observe initial；选B，必要时成功Test后再开删除；拍80:864两尺寸，取消一次不删，再显式确认。observe after_delete_b应仅A、原A全字段保持；拍80:1114两尺寸。原生Close后observe closed。
+
+## capacity（独立同版64供应商、5模型、0请求）
+
+observe capacity；拍78:1325两尺寸，验证供应商列表独立滚动/操作栏固定；试点禁用新增和复制，Core仍64，observe capacity_disabled。搜索演示供应商 27，拍79:400两尺寸；再试尾项64和无匹配，清空，滚到底选64，缩窗后选中可见、不被后台轮询抢滚动（观察至少8秒），可补尾部图。observe capacity_search与capacity_clear（Core全64原字段保持）。原生Close后observe closed。
+
+## 交付
+
+每个fixture写native-gui.json：候选SHA、UI/Core PID、窗口ID、每张图的原始像素/SHA/对应Frame和状态、实际操作结果、没完成/失败项、前台未测/无IME或全AX声明。汇总ROOT/native-b01-summary.json覆盖19个唯一Frame和38基础图＋必要补图。逐项查看原图与figma对应reference.png，合并一份真实问题列表；不因单像素来回拆轮。若发现阻断/候选错误，保留当前现场和证明并报告；不重写源码、不擅自重建程序。
+
+
+Post-run source clarification: the Copy action clones the existing source Draft including its key. Empty keys remain empty; nonempty keys are retained. The earlier blank-copy-key assumption was not a product requirement and was not used to change behavior. Native masked screenshots do not establish a blank key.

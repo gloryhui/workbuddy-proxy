@@ -1,0 +1,8 @@
+{
+  "ui_pid_gone": true,
+  "ui_pid": 98596,
+  "core_pid": 97999,
+  "core_health": "ready",
+  "core_config_sha256_unchanged": true,
+  "scope": "After CUA baseline UI close, original fixture Core remains healthy; no GUI save/Test/CRUD occurred."
+}

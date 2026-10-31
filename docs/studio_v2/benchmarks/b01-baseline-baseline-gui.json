@@ -1,0 +1,93 @@
+{
+  "candidate": "baseline e25a27455acaecab3762a7791e9e33a5caf11fcc8656aa2bf2600b37c0fbe67c",
+  "ui_pid": 98596,
+  "core_pid": 97999,
+  "window_id": 6578,
+  "images": [
+    {
+      "file": "baseline-main-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "e7db676f8a51af23b54b23e81fab8e04c0eb46d898d90c642b264a4ef6fc36ff",
+      "window_id": 6578
+    },
+    {
+      "file": "baseline-protocol-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "13bf53d9f595f6cac5ef80e974b1ed103fa53237f98d35068502edcfa733aed0",
+      "window_id": 6578
+    },
+    {
+      "file": "baseline-preset-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "327e7c961dfc6a48fbe9a8780f0d309487323357c14a2f0e2705a028cd5de8f1",
+      "window_id": 6578
+    },
+    {
+      "file": "baseline-effort-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "8c7418069cea0f8478188ac0a0a2fedfbe44354f840b59580d0b956e158eedd4",
+      "window_id": 6578
+    },
+    {
+      "file": "baseline-main-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "25fccdc11f8fedc9fc318945b3b1d167100659c664b03b9274df5c39686cd11f",
+      "window_id": 6578
+    },
+    {
+      "file": "baseline-preset-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "87eca41f97fee9d8558c4db42be6c21652177b52bda51512e81735313ded6a49",
+      "window_id": 6578
+    }
+  ],
+  "operations": [
+    "CUA getApp exact isolated path; Providers/sub2api",
+    "Open protocol; Escape",
+    "Open preset; type bedrock; screenshot; select all/backspace and Escape without selection",
+    "Open effort; Escape without selection",
+    "CUA native corner drag 1440x900 to 1100x700; open preset, search bedrock, screenshot, clear and Escape",
+    "CUA corner drag back to 1440x900; native window close"
+  ],
+  "visual_review": {
+    "reference": [
+      "54-2-reference.png",
+      "66-320-reference.png",
+      "66-538-reference.png",
+      "67-548-reference.png"
+    ],
+    "findings": [
+      "Thinking effort menu appears substantially lower than the reference when scaled to the same 1440x900 canvas and reaches the status bar area; all six entries visible in the screenshot.",
+      "Protocol menu retains four visible choices and selection, with placement broadly corresponding to reference; native border/shadow and font rasterization may differ.",
+      "Preset search shows Bedrock matches at both sizes; the reference shows an unfiltered list, so row-by-row content and list height cannot be directly compared. Small popup overlays the lower status-bar region.",
+      "At 1100x700 the lower model table and footer are below the visible content area; this single initial screenshot does not establish scrolling reachability.",
+      "Main reference depicts a successful prior test and mock sample log, whereas this isolated zero-request session correctly says untested; fixture values and model names differ and are not design defects.",
+      "Buttons, connection and model cards, runtime and log sections are present on the wide image. Full 19-state design audit and exact pixel comparison remain pending."
+    ]
+  },
+  "limitations": [
+    "GUI isolated by unique app and LSEnvironment; no GUI kernel sandbox asserted.",
+    "Own PID onscreen layer-0 native screencapture, original PNG without scaling or cropping.",
+    "Background getApp; no explicit activate/raise; actual foreground state was not measured.",
+    "No save, Test, CRUD, external link, clipboard or system setting action; opening/searching/closing menus only.",
+    "Native close clicked; ps confirmed UI PID absent and Core PID still running at time of check."
+  ]
+}

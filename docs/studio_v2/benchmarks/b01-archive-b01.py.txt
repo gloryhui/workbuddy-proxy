@@ -1,0 +1,63 @@
+from pathlib import Path
+import json,hashlib,shutil,datetime
+
+r=Path(__file__).resolve().parent
+docs=Path.cwd()/'docs/studio_v2'
+bench=docs/'benchmarks';shots=docs/'screenshots'
+native=json.loads((r/'native-consolidated.json').read_text())
+performance=json.loads((r/'benchmark-driver-results.json').read_text())
+assert len(performance)==4 and all(x['exit_code']==0 for x in performance)
+entries=[]
+def copy(source,destination):
+    raw=source.read_bytes()
+    if destination.exists():assert destination.read_bytes()==raw,('archive collision',destination)
+    else:shutil.copy2(source,destination)
+    assert hashlib.sha256(destination.read_bytes()).digest()==hashlib.sha256(raw).digest()
+    entries.append({'source':str(source),'destination':str(destination.relative_to(docs)),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'byte_exact':True})
+def envelope(source,destination):
+    raw=source.read_bytes();data={'original_bytes':len(raw),'original_sha256':hashlib.sha256(raw).hexdigest(),'text':raw.decode(),'scope':'Full original UTF8, preserved inside JSON to avoid changing diagnostic whitespace.'}
+    destination.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+    entries.append({'source':str(source),'destination':str(destination.relative_to(docs)),'bytes':destination.stat().st_size,'sha256':hashlib.sha256(destination.read_bytes()).hexdigest(),'byte_exact':False,'original_bytes':len(raw),'original_sha256':data['original_sha256'],'full_original_text_preserved':True})
+for name in ['build.json','source-scope.json','p00-design-baseline.json','design-audit.json','asset-download-audit.json','asset-binding-audit.json','provider-contracts.json','b01-offline-review.json','native-consolidated.json','native-b01-summary.json','native-supplement-gui.json','native-supplement-result.json','native-driver-results.json','benchmark-driver-results.json','benchmark-driver-initial-results.json','benchmark-driver-initial2-results.json','benchmark-precondition-failure.json','benchmark-precondition-failure2.json','benchmark-preparation.json','performance-summary.json','performance-b01-cua.json','build-246d-initial.json']:
+    source=r/name
+    assert source.exists(),name
+    copy(source,bench/('b01-'+name.removeprefix('b01-')))
+copy(r/'b01-eb6ifznc-main/gui-lock-failure.json',bench/'b01-gui-lock-failure.json')
+for name in ['native-b01-runbook.md','native-driver.py','fixture-background.py','benchmark-b01.py','benchmark-b01-initial.py','benchmark-b01-observer-hook-only.py','benchmark-driver-b01.py','observe-b01.py','set-b01-mock.py','preflight-seed.py','consolidate-native.py','summarize-performance.py','archive-b01.py']:
+    copy(r/name,bench/('b01-'+name+'.txt'))
+for entry in native['images']:
+    copy(Path(entry['source']),shots/('b01-'+entry['name']))
+for entry in json.loads((r/'p00-design-baseline.json').read_text())['b01_full_contexts']:
+    name=entry['node'].replace(':','-')+'-reference.png'
+    copy(r/'figma'/name,shots/('b01-figma-'+name))
+copy(r/'figma/inventory.json',bench/'b01-figma-inventory.json')
+for result in json.loads((r/'native-driver-results.json').read_text()):
+    folder=Path(result['folder']);label=result['label']
+    for name in ['fixture.json','native-gui.json','terminal-status.json','pre-gui-proof.json']:
+        copy(folder/name,bench/('b01-'+label+'-'+name))
+    for source in sorted((folder/'stage-proofs').glob('*.json')):
+        copy(source,bench/('b01-'+label+'-proof-'+source.name))
+folder=r/'b01-supplement-final'
+for name in ['fixture.json','terminal-status.json','pre-gui-proof.json']:
+    copy(folder/name,bench/('b01-supplement-'+name))
+for source in sorted((folder/'stage-proofs').glob('*.json')):
+    copy(source,bench/('b01-supplement-proof-'+source.name))
+for source in sorted(folder.glob('supplement-*.png')):
+    copy(source,shots/('b01-'+source.name))
+for name in ['baseline-gui.json','terminal-status.json','post-gui-proof.json']:
+    copy(r/'b01-baseline'/name,bench/('b01-baseline-'+name))
+for source in sorted((r/'b01-baseline').glob('baseline-*.png')):
+    copy(source,shots/('b01-'+source.name))
+for result in performance:
+    label=result['label'];folder=r/('bench-b01-'+label)
+    copy(r/('performance-'+label+'.json'),bench/('b01-performance-'+label+'.json'))
+    for name in ['seed-proof.json','preui-models.json','models-ready.json','providers-observed.json','matched-condition.json','resource-samples.json','terminal.json']:
+        copy(folder/name,bench/('b01-performance-'+label+'-'+name))
+    for phase in ['before','after']:
+        envelope(folder/('vmmap-'+phase+'.txt'),bench/('b01-performance-'+label+'-vmmap-'+phase+'.json'))
+    copy(folder/'performance-window.png',shots/('b01-performance-'+label+'.png'))
+    for source in sorted(folder.glob('performance-*.png')):
+        if source.name!='performance-window.png':copy(source,shots/('b01-performance-'+label+'-'+source.name.removeprefix('performance-')))
+manifest={'at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'scope':'B01 frozen candidate19-state native and fixed-workload performance evidence. Raw PNGs are copied without cropping/resizing. Historical local paths are provenance, not shared machine configuration. Figma default reference renders are1024x640; native screenshots preserve actual1x/2x pixels and system extra row. No raw config, credentials, SQLite, temporary asset URLs or executable copies exported.','entries':entries,'files':len(entries),'bytes':sum(x['bytes'] for x in entries)}
+(bench/'b01-artifacts.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'files':len(entries),'MiB':round(manifest['bytes']/1024**2,3)}))

@@ -3,7 +3,7 @@
   "figma": {
     "file_key": "zxDfIQ4lhNcTXrFT7qk8QZ",
     "page_id": "51:2",
-    "inventory_source": "Official Figma MCP page metadata refreshed 2026-10-31; exactly40 matching state frames",
+    "inventory_source": "Official Figma MCP51:2 refreshed2026-10-31; same40 nodes; all19 B01 full contexts and default references frozen in b01-design-audit.",
     "high_fidelity_context_read": [
       "59:484",
       "59:279",
@@ -29,7 +29,22 @@
       "69:359",
       "62:308",
       "64:335",
-      "66:320"
+      "66:320",
+      "66:538",
+      "66:760",
+      "67:338",
+      "67:548",
+      "78:364",
+      "78:605",
+      "78:843",
+      "78:1325",
+      "78:1804",
+      "79:400",
+      "79:885",
+      "79:1102",
+      "80:418",
+      "80:646",
+      "80:1114"
     ]
   },
   "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone.",
@@ -82,24 +97,22 @@
     {
       "id": "54:2",
       "name": "02 / STUDIO V2 · 供应商管理",
-      "review_status": "reviewed_with_differences",
-      "scope": "UI58供应商整帧几何/30资产首审，UI59连接徽章，UI60默认输入/触发器样式，UI61最终63f焦点/眼睛/清晰选区、两尺寸、受控busy与原负载留证；保留明确差异，未整帧最终通过。",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "最终ec7e原始1x宽窗的摘要[288,166,1120,44]、连接[288,222,755,338]、模型[288,572,755,253]、运行[1060,222,348,279]、日志[1060,516,348,309]四直边已核对；原4模型/底栏完整，小窗中心/右栏/表体各自可滚。错误提示允许卡片增高，不硬裁掉真实状态。",
-        "colors": "默认输入/触发器body#4c566d、fill#f3f5fa、line#e7eaf2已测；UI61三输入焦点采用原语义#655cf4，名称选区从近似底色改为22%强调填充、实拍#d4d3f9。busy八项视觉置灰但仅预设实际点击，普通按钮完整状态/全帧AA未终验。",
-        "typography": "Provider28/41与96px流区别于统计27/39与97px。原Noto Sans SC/Inter按连接/摘要/模型/运行角色使用；若干标题/表头墨迹框和首行编辑图标已对齐，供应商标题下缘/日志/AA和精确字体版本仍不同或未证明。",
-        "assets": "30个官方原资产：25本地字节一致，2完整XML仅本地clipPath ID及引用重命名，3装饰trafficlights使用真实OS系统控件。首行编辑墨迹[979,669,991,681]对齐，原28px热区/处理器保留；其余状态槽位尚未全验。",
-        "states": "默认2供应商5模型与单模型帮助区；实际草稿删4→3后Cancel恢复4。最终Test各一次200/SSE与503，独立SQLite确认14relay200+1test200+1test503。容量2供应商256模型、A255/B1、Add点击无效。UI58当时未实现徽章；当前见UI59记录。 UI59按实际TestReport绑定供应商/配置，五状态、编辑取消/失败替换、复制继承、新ID、重开清空及Core控制故障恢复已分版本实测。",
-        "interaction": "模型/端口/协议/获取5候选/新增取消、中英恢复、Mono→Studio、选中显示Remove、宽窄滚动已验。256容量End到fill-250并编辑核ID后Esc，未Save/Test/Sync/删除。主夹具Test原先保存再测试语义保持、所有原字段递归一致；序列化新增默认值导致字节SHA不同。完整键盘/IME/AX未验。 UI60最终名称修改Cancel、Key显隐再遮罩、预设/协议Esc、两尺寸/语言及Mono恢复、一次Test200/SSE留证；未捕获busy，禁用未验。 UI61最终63f Name→Tab Key→Tab眼睛/Return Space显隐回遮罩、URL不串框、Cmd+A+Backspace清空/Cancel、两尺寸/Mono恢复，以及受控busy中预设点击无菜单、200后恢复与直连恢复均留证；未逐个点击其余disabled控件，不等于完整IME/AX。",
-        "native_1440": "最终ec7e原始1440×901/目标1440×900/native1x，默认四行/底栏/运行/日志、Test200及503、256满载分别留原图；没有裁掉原生额外1行。",
-        "native_1100": "最终ec7e原始1100×701/目标1100×700/native1x，默认/中心滚动/单模型/英文/失败/256末行和底栏均有原图。失败需右栏外滚和日志内滚，Runtime标题/错误/完整日志不可同时显示。"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：默认A及真实连接200，2供应商5模型；四行小窗末行已独立补验。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "默认A及真实连接200，2供应商5模型；四行小窗末行已独立补验。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-54-2-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-54-2-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
       "differences": [
-        "UI59已实现92×27独立连接徽章，原生字形上缘AA仍差1px；仅为显式单模型/被测配置历史结果，非持续上游健康。最终53f重开/故障自然刷新已验，普通编辑/语言路径为明确标注的eec3证据。",
-        "UI61已解决输入焦点浅、眼睛左5px和近似底色选区；眼睛x边界/垂直中心匹配，仍有上下各1px AA，圆角栅格/日志标题/表头边框及字体版本等余差。busy图中编辑资料文字仍呈强调色，普通操作按钮完整hover/focus/disabled状态继续；八项禁用只做视觉与预设点击，其他处理器未逐个实测。",
-        "保留真实URL动态说明、原有日志复制清空、手动模型元数据/额外业务按钮与实际计数；不写死参考的端口、名称、请求0或上游连接正常。",
-        "小窗默认下部内容通过中心内滚取回；错误态右栏可滚且日志保留内滚，不能把截图当作完整键盘/IME/AX或全状态通过。",
-        "首帧模型宽度估算补齐两层边框并与预绘制宽度相符；尚无首帧闪动/输入延迟/FPS录制。Windows/Intel硬件/HiDPI及全部状态未终验。"
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
       ],
       "evidence": [
         "benchmarks/provider-frame-source-audit.json",
@@ -148,7 +161,13 @@
         "benchmarks/provider-focus-performance-summary.json",
         "screenshots/provider-focus-final-selection-name-wide.png",
         "screenshots/provider-focus-final-selection-name-small.png",
-        "screenshots/provider-focus-final-busy-wide.png"
+        "screenshots/provider-focus-final-busy-wide.png",
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-54-2-wide.png",
+        "screenshots/b01-54-2-small.png"
       ]
     },
     {
@@ -706,21 +725,22 @@
     {
       "id": "66:320",
       "name": "17 / STUDIO V2 · 上游协议下拉",
-      "review_status": "reviewed_with_differences",
-      "scope": "UI65完整官方上下文、原资源与两尺寸整帧首审完成；Rust设置/菜单布局收敛及最终e6abd实拍保留。明确区分c301失败、c2eb真实写入与e6abd最终呈现；不记整帧最终通过。",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "assets": "UI65官方5个完整上下文与1440原图，36唯一/140实例资源：31逐字节一致、2仅局部clip ID等价、3装饰窗控使用真实OS。六22px色块新增显式Assets路由；最终宽窗六原色像素盒与参考同坐标，AA覆盖339/344不同保留。",
-        "native_1440": "最终e6abd全新原生1440×901/逻辑1440×900，实际14条本地Mock请求与3手工USD规则；图片不裁剪缩放重绘。",
-        "native_1100": "最终e6abd全新原生1100×701/逻辑1100×700；菜单在窗内、设置下方可真实滚动取回；不代表全部键盘/IME/AX/平台终验。",
-        "layout": "原NativePopover361×233，四行53px+2px间隔保持；Studio协议偏移改44px匹配宽窗稿，小窗由同一native positioner限制在视口内。其他菜单与旧皮肤仍6px。",
-        "typography": "Studio协议未选项Medium、选中Bold13/19，hint11/16 Regular，勾13 Bold；原虚拟List与事件协议保留。",
-        "colors": "选中/游标/hover使用ACCENT_TINT；原palette.dark与hint MUTED保持。",
-        "states": "最终原Chat→Responses显示未保存→显式选回Chat，没有主配置Save；4原选项/说明保留。",
-        "interaction": "c2eb Down/Return选Responses，B→A保留未保存草稿，随后选回Chat，Core配置SHA不变；e6abd方向/Return选回路径、Esc和两尺寸复验。"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：四协议下拉，两尺寸打开/Esc；未改原选择处理器。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "四协议下拉，两尺寸打开/Esc；未改原选择处理器。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-66-320-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-66-320-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
       "differences": [
-        "原生Kit描边/阴影、glyph/AA及背景供应商全帧仍有既有差异；未对所有四协议/全部鼠标键盘状态作本版重复验收。",
-        "小窗浮层可覆盖页面/状态栏区域但保持窗内，完整键盘/IME/AX及跨平台仍待。"
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
       ],
       "evidence": [
         "benchmarks/settings-menu-design-audit.json",
@@ -729,80 +749,130 @@
         "benchmarks/settings-menu-final-gui-validation.json",
         "benchmarks/settings-menu-price-and-retention-data-proof.json",
         "benchmarks/settings-menu-final-data-proof.json",
-        "benchmarks/settings-menu-swatch-pixels.json"
+        "benchmarks/settings-menu-swatch-pixels.json",
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-66-320-wide.png",
+        "screenshots/b01-66-320-small.png"
       ]
     },
     {
       "id": "66:538",
       "name": "18 / STUDIO V2 · 供应商预设搜索",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：预设Bedrock搜索、方向高亮及关闭重开；原项确认另有同候选实测。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "预设Bedrock搜索、方向高亮及关闭重开；原项确认另有同候选实测。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-66-538-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-66-538-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-66-538-wide.png",
+        "screenshots/b01-66-538-small.png"
+      ]
     },
     {
       "id": "66:760",
       "name": "19 / STUDIO V2 · API Key 显示演示",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：仅合成Key两尺寸显隐，随后恢复遮罩。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "仅合成Key两尺寸显隐，随后恢复遮罩。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-66-760-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-66-760-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-66-760-wide.png",
+        "screenshots/b01-66-760-small.png"
+      ]
     },
     {
       "id": "67:338",
       "name": "20 / STUDIO V2 · OpenCode Go 供应商",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：B单模型与真实200，两尺寸及小窗下方帮助/底栏可达。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "B单模型与真实200，两尺寸及小窗下方帮助/底栏可达。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-67-338-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-67-338-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-67-338-wide.png",
+        "screenshots/b01-67-338-small.png"
+      ]
     },
     {
       "id": "67:548",
       "name": "21 / STUDIO V2 · 思考强度菜单",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：思考菜单上方锚定，两尺寸完整；Low→Follow实际切换另有同候选证明。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "思考菜单上方锚定，两尺寸完整；Low→Follow实际切换另有同候选证明。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-67-548-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-67-548-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-67-548-wide.png",
+        "screenshots/b01-67-548-small.png"
+      ]
     },
     {
       "id": "68:350",
@@ -865,256 +935,389 @@
     {
       "id": "78:364",
       "name": "24 / STUDIO V2 · 新增供应商草稿",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：新增草稿取消，非法URL拒绝，合法本地保存与后续删除。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "新增草稿取消，非法URL拒绝，合法本地保存与后续删除。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-78-364-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-78-364-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-78-364-wide.png",
+        "screenshots/b01-78-364-small.png"
+      ]
     },
     {
       "id": "78:605",
       "name": "25 / STUDIO V2 · 编辑供应商资料",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：A编辑/取消，实际改名保存、切换读回与还原。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "A编辑/取消，实际改名保存、切换读回与还原。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-78-605-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-78-605-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-78-605-wide.png",
+        "screenshots/b01-78-605-small.png"
+      ]
     },
     {
       "id": "78:843",
       "name": "26 / STUDIO V2 · 复制供应商草稿",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：复制独立草稿、取消、保存；原Key继承逻辑保持，不从遮罩推断为空。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "复制独立草稿、取消、保存；原Key继承逻辑保持，不从遮罩推断为空。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-78-843-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-78-843-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-78-843-wide.png",
+        "screenshots/b01-78-843-small.png"
+      ]
     },
     {
       "id": "78:1080",
       "name": "27 / STUDIO V2 · 删除供应商确认",
-      "review_status": "reviewed_with_differences",
-      "scope": "UI64 official full high-fidelity context/reference and baseline two-size native captures read. Shared close/scrim candidate compiled; final native interaction and full-frame comparison still underway. No final acceptance. UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "完整画板壳/层级与54:2共用背景核对；526×318取消同步及532×322删除壳白色填充框实拍与参考相同，最小窗按钮可见；静态样例数据不写死。",
-        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-        "assets": "本帧30个资源全部按官方curl下载，原生槽位沿用已审54:2；逐字节或仅一致clipID/ref重命名等价，3窗口装饰保留真实OS控件。完整有效几何仍随全量终验。",
-        "states": "隔离真实Mock两供应商/5模型（A4/B1）/14请求7700Token；取消不删除、不移除、不重启。动态日志/未测试连接状态保真。",
-        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-delete-a-wide.png",
-        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-delete-a-small.png"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：删除A确认及取消/X，遮罩阻断工具栏，明确确认后仅删A。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "删除A确认及取消/X，遮罩阻断工具栏，明确确认后仅删A。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-78-1080-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-78-1080-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
       "differences": [
-        "共用背景/真实端口、14条日志和连接未测试状态与静态稿不同，保持真实语义。",
-        "×墨迹1-2px、原生阴影及警告背景约1通道颜色差异仍保留；不能以声明RGBA相同当作全像素相同。",
-        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
       ],
       "evidence": [
         "benchmarks/modal-chrome-design-audit.json",
         "benchmarks/modal-chrome-final-gui-validation.json",
         "benchmarks/modal-chrome-artifacts.json",
         "benchmarks/modal-chrome-shell-pixels.json",
-        "benchmarks/modal-chrome-isolation-data-proof.json"
+        "benchmarks/modal-chrome-isolation-data-proof.json",
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-78-1080-wide.png",
+        "screenshots/b01-78-1080-small.png"
       ]
     },
     {
       "id": "78:1325",
       "name": "28 / STUDIO V2 · 供应商满载滚动 (64)",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：64家真实满载，新增/复制禁用点击不产生草稿。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "64家真实满载，新增/复制禁用点击不产生草稿。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-78-1325-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-78-1325-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-78-1325-wide.png",
+        "screenshots/b01-78-1325-small.png"
+      ]
     },
     {
       "id": "78:1804",
       "name": "29 / STUDIO V2 · 删除后仅剩 OpenCode Go",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：删除A后B独立保留，原字段/模型保持。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "删除A后B独立保留，原字段/模型保持。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-78-1804-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-78-1804-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-78-1804-wide.png",
+        "screenshots/b01-78-1804-small.png"
+      ]
     },
     {
       "id": "79:400",
       "name": "30 / STUDIO V2 · 64 个供应商搜索",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：64家搜索27/64/无匹配/清空，末项选择及小窗保持。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "64家搜索27/64/无匹配/清空，末项选择及小窗保持。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-79-400-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-79-400-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-79-400-wide.png",
+        "screenshots/b01-79-400-small.png"
+      ]
     },
     {
       "id": "79:885",
       "name": "31 / STUDIO V2 · 新供应商保存完成",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：新增保存后真实3家5模型，新家0模型与成功上下文。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "新增保存后真实3家5模型，新家0模型与成功上下文。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-79-885-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-79-885-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-79-885-wide.png",
+        "screenshots/b01-79-885-small.png"
+      ]
     },
     {
       "id": "79:1102",
       "name": "32 / STUDIO V2 · 供应商复制完成",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：复制保存后真实3家9模型，原供应商与复制模型非身份字段保持。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "复制保存后真实3家9模型，原供应商与复制模型非身份字段保持。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-79-1102-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-79-1102-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-79-1102-wide.png",
+        "screenshots/b01-79-1102-small.png"
+      ]
     },
     {
       "id": "80:418",
       "name": "33 / STUDIO V2 · 供应商搜索（2个）",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：两家列表搜索OpenCode与无匹配/清空，选择身份保持。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "两家列表搜索OpenCode与无匹配/清空，选择身份保持。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-80-418-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-80-418-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-80-418-wide.png",
+        "screenshots/b01-80-418-small.png"
+      ]
     },
     {
       "id": "80:646",
       "name": "34 / STUDIO V2 · 编辑 OpenCode Go",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：B编辑改名与取消恢复，完整值可从字段/侧栏读取。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "B编辑改名与取消恢复，完整值可从字段/侧栏读取。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-80-646-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-80-646-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-80-646-wide.png",
+        "screenshots/b01-80-646-small.png"
+      ]
     },
     {
       "id": "80:864",
       "name": "35 / STUDIO V2 · 删除 OpenCode Go 确认",
-      "review_status": "reviewed_with_differences",
-      "scope": "UI64 official full high-fidelity context/reference and baseline two-size native captures read. Shared close/scrim candidate compiled; final native interaction and full-frame comparison still underway. No final acceptance. UI64官方完整画板/资产核对、5c63两尺寸及共用关闭/遮罩实测完成；保留已记录差异，未整帧终验。",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "完整画板壳/层级与54:2共用背景核对；526×318取消同步及532×322删除壳白色填充框实拍与参考相同，最小窗按钮可见；静态样例数据不写死。",
-        "colors": "UI64普通Studio遮罩rgba(19,23,46,.48)，删除保留rgba(18,23,43,.49)，六旧皮肤原值保留。平坦普通画布/侧栏采样对齐；警告画布和阴影区仍有约1通道/原生阴影差异，不作全帧颜色一致声明。",
-        "typography": "UI64关闭使用Figma文字节点×的Noto Regular18/19/20与对应行高；原始墨迹框仍有1-2px差异，未证明字体版本/AA完全相同。其余既有审查结论保留。",
-        "assets": "本帧30个资源全部按官方curl下载，原生槽位沿用已审54:2；逐字节或仅一致clipID/ref重命名等价，3窗口装饰保留真实OS控件。完整有效几何仍随全量终验。",
-        "states": "隔离真实Mock两供应商/5模型（A4/B1）/14请求7700Token；取消不删除、不移除、不重启。动态日志/未测试连接状态保真。",
-        "interaction": "UI64同一BaseDialogClose/Cancel引擎；逐类鼠标X，Sync可见X焦点后Return/Space关闭，草稿/备注取消、遮罩阻挡、详情More两层关闭通过。删除/同步业务确认本轮未执行；旧功能证据保留。",
-        "native_1440": "UI64最终5c63原始1440×901，目标逻辑1440×900，不裁剪缩放；screenshots/modal-chrome-final-delete-b-wide.png",
-        "native_1100": "UI64最终5c63原始1100×701，目标逻辑1100×700，不裁剪缩放；screenshots/modal-chrome-final-delete-b-small.png"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：删除B确认，Esc/默认Return/Cancel与显式确认分别留证。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "删除B确认，Esc/默认Return/Cancel与显式确认分别留证。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-80-864-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-80-864-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
       "differences": [
-        "共用背景/真实端口、14条日志和连接未测试状态与静态稿不同，保持真实语义。",
-        "×墨迹1-2px、原生阴影及警告背景约1通道颜色差异仍保留；不能以声明RGBA相同当作全像素相同。",
-        "完整键盘、IME/AX、六旧皮肤全部状态、HiDPI、Windows/Intel实机及长期性能仍待全局终验；本轮不授予整帧最终通过。"
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
       ],
       "evidence": [
         "benchmarks/modal-chrome-design-audit.json",
         "benchmarks/modal-chrome-final-gui-validation.json",
         "benchmarks/modal-chrome-artifacts.json",
         "benchmarks/modal-chrome-shell-pixels.json",
-        "benchmarks/modal-chrome-isolation-data-proof.json"
+        "benchmarks/modal-chrome-isolation-data-proof.json",
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-80-864-wide.png",
+        "screenshots/b01-80-864-small.png"
       ]
     },
     {
       "id": "80:1114",
       "name": "36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api",
-      "review_status": "not_reviewed",
-      "scope": "Pending full-frame review",
+      "review_status": "reviewed",
+      "scope": "B01 / QA68完整界面批次签收；冻结2a12，最新官方完整设计和真实两尺寸路径。R01–R04全局门禁单列，未宣称正式版通过。",
       "checks": {
-        "layout": "not_checked",
-        "colors": "not_checked",
-        "typography": "not_checked",
-        "assets": "not_checked",
-        "states": "not_checked",
-        "interaction": "not_checked",
-        "native_1440": "not_checked",
-        "native_1100": "not_checked"
+        "layout": "主连接/模型/运行/日志与标题位置保持；预设offset42、思考BottomLeft/-30、原生窄窗适配。当前帧：删除B后A及4模型原字段保持。",
+        "colors": "31唯一原资产26字节相同/2仅clipID等价/3真实OS控件；满载新增采用原16px muted SVG与48%组透明度。默认/聚焦沿原语义色，完整共享状态矩阵在R01。",
+        "typography": "原Noto/Inter角色保持，预设搜索13/19与Medium标题/hover墨色集中修正；接受合理原生ICC/AA，不设字体版本或全RGB字节相同门禁。",
+        "assets": "原资源与显式Assets路由/根尺寸核对，来源见b01-asset-binding-audit；声明尺寸不冒称每个槽位的自动像素测量。",
+        "states": "删除B后A及4模型原字段保持。",
+        "interaction": "19态真实CRUD/取消/保存读回/200与503/满载搜索；原14请求与cost全字段保持。忙态点击因工具失效未验证，明确留R01，不从禁用外观推断。",
+        "native_1440": "b01-80-1114-wide.png，原始1440×901，对应1440×900逻辑窗口；未经裁切或缩放。",
+        "native_1100": "b01-80-1114-small.png，原始1100×701，对应1100×700；下方内容另有真实滚动图，4行表末行有同候选独立补验。"
       },
-      "differences": [],
-      "evidence": []
+      "differences": [
+        "实际本地端口、供应商/模型/请求计数、日志与连接回执保持真实；Figma静态变体中不一致的名称/计数不照抄。",
+        "原生OS控件、必要额外诊断/元数据入口与合理ICC/AA差异作为接受说明保留；长名可省略，完整字段仍可读。",
+        "小窗正文与表体独立滚动，原图不冒称所有内容同屏；完整全状态/键盘IME/AX/主题/平台及最终性能为R01–R04门禁。"
+      ],
+      "evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "screenshots/b01-80-1114-wide.png",
+        "screenshots/b01-80-1114-small.png"
+      ]
     },
     {
       "id": "104:1378",

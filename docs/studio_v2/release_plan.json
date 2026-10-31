@@ -2,16 +2,16 @@
   "version": 2,
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-10-31",
-  "state": "paused_for_figma",
-  "current_batch": "P00",
+  "state": "active",
+  "current_batch": "B02",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 67,
+  "historical_tasks": 68,
   "prerequisite": {
     "id": "P00",
-    "title": "等待Figma连接并冻结最新设计基线",
-    "status": "waiting",
-    "reason": "用户说明另一个帐号正在更新画板，要求必须连接Figma时先暂停；当前Goal已paused。",
+    "title": "最新 Figma 基线核对",
+    "status": "passed",
+    "reason": "2026-10-31官方Figma连接已恢复；最新51:2仍为同组40节点，B01的19份完整高保真上下文/截图已读取并建立基线。用户已恢复Goal并要求按B01整批推进。",
     "steps": [
       "用户完成Figma连接并明确继续后，读取最新51:2全画板清单/高保真上下文和截图。",
       "比较本计划40个节点与最新画板，新增/删除/变更单列；按共享组件一次审查资产及可复用范围。",
@@ -46,7 +46,7 @@
       "id": "B01",
       "title": "供应商管理完整旅程",
       "kind": "feature",
-      "status": "planned",
+      "status": "passed",
       "frames": [
         "54:2",
         "66:320",
@@ -71,113 +71,147 @@
       "depends_on": [
         "P00"
       ],
-      "completed_summary": "CRUD、草稿保护、64容量/搜索、连接测试、Key显隐及主要输入状态已有macOS分项实测。",
+      "completed_summary": "冻结2a12：最新19份完整设计、38张两尺寸主图及补图；供应商完整CRUD/取消/读回/容量/搜索/连接200与503、独立字段和历史保护通过。四轮原负载0，内存与启动标记增量明确保留R03。",
       "delivery": "一次收口19个状态画板：从列表→新增→保存→编辑→复制→删除→满载搜索完整走通；不再拆成单个输入框回合。",
       "tasks": [
         {
           "id": "B01.1",
           "title": "列表、选中、容量与搜索",
-          "acceptance": "pending",
-          "completed": "0/1/2/20/64供应商、尾行可见、无匹配/清空及手动滚动已有证据。",
-          "remaining": "集中比对主页面、64满载/搜索、2个供应商搜索与幸存供应商画板；修正同批侧栏差异。",
+          "acceptance": "passed",
+          "completed": "本批真实0/1/2/64状态、27/64/无匹配/清空、尾项小窗选中保持；64时实际点新增/复制不产生草稿，Core字段不变。",
+          "remaining": "本功能批次已收口；全局输入/全部控件状态/平台/最终性能与安装发行按R01–R04独立验收。",
           "acceptance_check": "两个尺寸依次验证0/1/2/64、搜索首尾/无匹配、清空、选中可见；64时新增/复制禁用，既有数据不变。",
           "history_tasks": [
             4,
             29,
             32,
             48,
-            58
+            58,
+            68
           ]
         },
         {
           "id": "B01.2",
           "title": "新增草稿到保存完成",
-          "acceptance": "pending",
-          "completed": "独立新增草稿、取消恢复、保存后的上下文完成徽标已实现并实测。",
-          "remaining": "把新增前、编辑中、保存后3个状态连成一次验收；复核名称/预设/协议/地址/Key与错误信息。",
+          "acceptance": "passed",
+          "completed": "同候选新增取消、非法URL拒绝、合法loopback保存只增1家/0模型、保存态两尺寸、删除恢复2/5；Core契约补失败与重试边界。",
+          "remaining": "本功能批次已收口；全局输入/全部控件状态/平台/最终性能与安装发行按R01–R04独立验收。",
           "acceptance_check": "取消不写Core；合法保存只新增一次；失败留草稿；重开读回原字段，已有供应商不变。",
           "history_tasks": [
             26,
             27,
             28,
-            30
+            30,
+            68
           ]
         },
         {
           "id": "B01.3",
           "title": "编辑资料与未保存保护",
-          "acceptance": "pending",
-          "completed": "原位编辑/取消、切换草稿保护与名称Unicode冷载入已有证据。",
-          "remaining": "集中验收普通供应商及OpenCode Go编辑帧，长名称、错误输入、切换/重开与焦点。",
+          "acceptance": "passed",
+          "completed": "A/B改名取消恢复，A实际保存、切B回A读回并还原；原始目标字段与14历史保持，长标题省略但字段/侧栏完整可读。",
+          "remaining": "本功能批次已收口；全局输入/全部控件状态/平台/最终性能与安装发行按R01–R04独立验收。",
           "acceptance_check": "编辑→取消读回不变；编辑→保存只改目标；切换不静默丢草稿；Key不写入截图或日志。",
           "history_tasks": [
             26,
             39,
             46,
             60,
-            61
+            61,
+            68
           ]
         },
         {
           "id": "B01.4",
           "title": "复制草稿到复制完成",
-          "acceptance": "pending",
-          "completed": "新副本独立草稿、空Key、能力/混合effort继承、目标ID重绑定已验证。",
-          "remaining": "补全复制前/草稿/保存后三态的整帧核对及取消后恢复。",
+          "acceptance": "passed",
+          "completed": "复制取消与保存三态两尺寸通过：3家9模型且源2家全字段保持，复制4模型非身份字段保持；沿用原草稿Key继承语义（空仍为空），没有新增清空逻辑。",
+          "remaining": "本功能批次已收口；全局输入/全部控件状态/平台/最终性能与安装发行按R01–R04独立验收。",
           "acceptance_check": "只在确认保存时新增副本；原供应商与模型全部字段保持；复制后连接徽章不借用源对象。",
           "history_tasks": [
             27,
             28,
             30,
-            59
+            59,
+            68
           ]
         },
         {
           "id": "B01.5",
           "title": "删除两家供应商与失败恢复",
-          "acceptance": "pending",
-          "completed": "二次确认、默认Return不删、取消、失败重试、A/B删除后幸存与空列表均有专项。",
-          "remaining": "将两张删除弹窗与两张删除后页面统一验收；核对遮罩、键盘和dirty说明。",
+          "acceptance": "passed",
+          "completed": "A/B确认框两尺寸、Cancel/X、新鲜B弹窗Esc、默认Return不误删；分别删除后幸存对象原字段保持，再至空态；遮罩阻断语言入口。删除故障恢复沿用UI32/33未改处理器，R01统一最终故障矩阵。",
+          "remaining": "本功能批次已收口；全局输入/全部控件状态/平台/最终性能与安装发行按R01–R04独立验收。",
           "acceptance_check": "Cancel/X/Esc不删；显式确认仅删目标；失败后与Core对齐且保留其他草稿；无隐式同步/重启。",
           "history_tasks": [
             25,
             32,
             33,
-            64
+            64,
+            68
           ]
         },
         {
           "id": "B01.6",
           "title": "协议/预设/思考菜单与Key显隐",
-          "acceptance": "pending",
-          "completed": "原生菜单、预设搜索、协议草稿、Key键盘显隐及焦点/选区已实现。",
-          "remaining": "补齐4张尚未整帧首审的预设/Key/OpenCode/思考状态，集中修复菜单共同偏差。",
+          "acceptance": "passed",
+          "completed": "协议/预设Bedrock搜索与方向高亮/Key显隐/思考菜单两尺寸完成整帧首审；四轮同序实际预设原项确认、Low→Follow显示变化。原MenuState/选择delegate/回调字节保持；完整键盘/IME/AX仍属R01。",
+          "remaining": "本功能批次已收口；全局输入/全部控件状态/平台/最终性能与安装发行按R01–R04独立验收。",
           "acceptance_check": "真实选择/搜索/清空/无匹配、Esc/外点、Enter/Space、窄窗可达；显隐切回遮罩，事件语义不变。",
           "history_tasks": [
             31,
             39,
             60,
             61,
-            65
+            65,
+            68
           ]
         },
         {
           "id": "B01.7",
           "title": "连接测试状态及整批版式",
-          "acceptance": "pending",
-          "completed": "成功200/SSE、失败503、配置/供应商身份绑定、busy和失联恢复已有实测。",
-          "remaining": "统一默认/聚焦/禁用/等待/成功/失败；19帧两尺寸集中拍照后一次修正可见差异。",
+          "acceptance": "passed",
+          "completed": "真实本地200/SSE、503失败与恢复；38张主图+9补图，同候选四行小窗表内滚到完整末行另有原图。四轮原负载均0；busy视觉已验，但CUA失效引用导致点击拦截未实证，明确留R01，未虚报通过。",
+          "remaining": "本功能批次已收口；全局输入/全部控件状态/平台/最终性能与安装发行按R01–R04独立验收。",
           "acceptance_check": "正确对象才显示有效成功；改字段隐藏旧结果；测试失败不变绿；19帧共38张实际运行原图及Core字段证明。",
           "history_tasks": [
             58,
             59,
             60,
-            61
+            61,
+            68
           ]
         }
       ],
-      "accepted_frames": [],
-      "acceptance_evidence": []
+      "accepted_frames": [
+        "54:2",
+        "66:320",
+        "66:538",
+        "66:760",
+        "67:338",
+        "67:548",
+        "78:364",
+        "78:605",
+        "78:843",
+        "78:1080",
+        "78:1325",
+        "78:1804",
+        "79:400",
+        "79:885",
+        "79:1102",
+        "80:418",
+        "80:646",
+        "80:864",
+        "80:1114"
+      ],
+      "acceptance_evidence": [
+        "benchmarks/b01-design-audit.json",
+        "benchmarks/b01-native-consolidated.json",
+        "benchmarks/b01-native-supplement-gui.json",
+        "benchmarks/b01-performance-summary.json",
+        "benchmarks/b01-provider-contracts.json",
+        "benchmarks/b01-artifacts.json"
+      ]
     },
     {
       "id": "B02",
@@ -628,7 +662,7 @@
           "title": "共享状态与层级矩阵",
           "acceptance": "pending",
           "completed": "部分输入/按钮的default/hover/focus/disabled/busy/error/success已有实拍。",
-          "remaining": "按唯一组件一次测全状态，并抽查各布局实例；消除穿透、不可读与误导状态。",
+          "remaining": "按唯一组件一次测全状态，并抽查各布局实例；消除穿透、不可读与误导状态。 B01 busy视觉有原图，但CUA -10005后坐标点击已在恢复期并触发第二次隔离Test；最终候选的忙态点击矩阵仍须真实复验。旧版benchmark外部save64后活动表保留1行的刷新/草稿边界也需核清，不能只读运行卡计数。",
           "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
           "history_tasks": [
             41,
@@ -805,7 +839,7 @@
           "title": "峰值差异诊断与最终结论",
           "acceptance": "pending",
           "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。",
-          "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。",
+          "remaining": "复测分进程峰值和Footprint/私有堆/IOSurface，区分系统调度/驻留与实际增长；若明显退化修复后复验。 B01同原负载P/C/C/P各n2：空闲合计+3.91MiB、峰值+8.505MiB、进程到记录标记+117.53ms，保留成本与原始样本；不宣称优化/等价或正式性能门禁通过。",
           "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
           "history_tasks": [
             67

@@ -1,0 +1,26 @@
+{
+  "reason": "Original save64 completed before observation; actual old UI model table retained its initial1-model snapshot while runtimeCore64. No observed ack, workload, metric output or sampling. Kept failure instead of misreporting visible64.",
+  "original_wrapper_sha256": "4344aa033b716380d2a33234a55f6a8d6a41575d9249da8707e800929dae1b3b",
+  "corrected_wrapper_sha256": "e954faa03a93c6870de2ed74d5dab860b239610fc9b9be23351c9d158d3c80b3",
+  "retained_fixture": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc/bench-b01-precondition-failure2-previous1",
+  "terminal": {
+    "children": [
+      {
+        "kind": "mock",
+        "pid": 20990,
+        "exit_code": -15,
+        "waited": true
+      },
+      {
+        "kind": "core",
+        "pid": 20991,
+        "exit_code": 0,
+        "waited": true
+      }
+    ],
+    "ui_pid": 21182,
+    "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+    "ui_pid_gone": true
+  },
+  "correction": "Identical isolatedCore save64 before every nativeUI startup, after22 seed rows; original benchmark then still performs its own save64/1000small/80large/concurrency4 unmodified. Observation remains after original save and before RSS/load."
+}

@@ -1,0 +1,54 @@
+from pathlib import Path
+import json,hashlib,struct,os,datetime
+
+r=Path(__file__).resolve().parent
+repo=Path.cwd()
+plan=json.loads((repo/'docs/studio_v2/release_plan.json').read_text())
+frames=plan['batches'][0]['frames']
+results=json.loads((r/'native-driver-results.json').read_text())
+assert [x['label'] for x in results]==['main','delete-b','capacity']
+assert all(x['exit_code']==0 for x in results)
+build=json.loads((r/'build.json').read_text())
+for name,sha in build['source_sha256'].items():
+    assert hashlib.sha256((repo/name).read_bytes()).hexdigest()==sha
+images=[];fixtures=[];seen={}
+for result in results:
+    f=Path(result['folder']);meta=json.loads((f/'fixture.json').read_text())
+    assert meta['binary_sha256']['ui']==build['release_sha256']
+    original=json.loads((f/'config-before.json').read_text())
+    final=json.loads((f/'config/config.json').read_text())
+    before={k:v for k,v in original.items() if k!='providers'}
+    after={k:v for k,v in final.items() if k!='providers'}
+    assert before==after,('nonprovider config changed',f.name)
+    pid_checks=[]
+    for role in ['ui_pid','core_pid','fixture_pid']:
+        pid=meta[role]
+        try:os.kill(pid,0)
+        except ProcessLookupError:pid_checks.append({'role':role,'pid':pid,'gone':True})
+        else:raise AssertionError(('native child still live',role,pid))
+    stages=[]
+    for path in sorted((f/'stage-proofs').glob('*.json')):
+        proof=json.loads(path.read_text())
+        assert proof['core_health']=='ready'
+        assert all(v['preserved'] for v in proof['historical_records'].values())
+        stages.append({'name':path.name,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'providers':proof['providers'],'models':proof['models'],'request_counts':proof['request_counts'],'historical_records':proof['historical_records']})
+    assert 'closed.json' in [x['name'] for x in stages]
+    fixtures.append({'label':result['label'],'binary_sha256':meta['binary_sha256'],'processes':pid_checks,'nonprovider_config_exactly_preserved':True,'nonprovider_config_keys':sorted(before),'stages':stages,'terminal':result['terminal']})
+    for path in sorted(f.glob('*.png')):
+        if path.name.startswith('candidate-'):continue
+        raw=path.read_bytes();assert raw[:8]==b'\x89PNG\r\n\x1a\n'
+        pixels=list(struct.unpack('>II',raw[16:24]))
+        logical=[1440,900] if '-wide' in path.name else [1100,700]
+        scale=pixels[0]/logical[0]
+        assert scale in [1,2] and pixels[1]==(logical[1]+1)*scale,(path.name,pixels)
+        entry={'fixture':result['label'],'name':path.name,'pixels':pixels,'logical_size':logical,'scale':scale,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'raw_unmodified':True,'source':str(path)}
+        images.append(entry)
+        for node in frames:
+            for size in ['wide','small']:
+                if path.name==node.replace(':','-')+'-'+size+'.png':
+                    assert (node,size) not in seen
+                    seen[node,size]=entry
+assert len(seen)==len(frames)*2,('incomplete frame images',len(seen))
+out={'at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'candidate_sha256':build['release_sha256'],'frame_count':len(frames),'required_frame_size_pairs':len(seen),'frames':[{'node':node,'wide':seen[node,'wide']['name'],'small':seen[node,'small']['name']} for node in frames],'fixtures':fixtures,'images':images,'scope':'Frozen native candidate, all19 state pairs, actual raw PNG dimensions and independently observed persisted data. GUI process owned by CUA; disappearance only, no invented exit code. Real interaction and visual verdict are in native-b01-summary.json. Does not certify R01-R04 or first paint/FPS.'}
+(r/'native-consolidated.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'frame_pairs':len(seen),'images':len(images),'fixtures':len(fixtures),'source_hashes_match':True}))

@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-31T12:55:09.050630+08:00",
+  "stage": "test_success",
+  "core_pid": 11022,
+  "core_health": "ready",
+  "core_config_sha256": "102674381ad18d2a5d007e2dadfe79139224067f27a19e6ed8855caa1b62a191",
+  "providers": 2,
+  "models": 5,
+  "surviving_original_providers_all_fields_preserved": {
+    "review-provider": true,
+    "review-provider-b": true
+  },
+  "explicitly_removed_original_ids": [],
+  "copied_nonidentity_model_fields_preserved": null,
+  "new_provider_names": [],
+  "request_counts": [
+    15,
+    7500,
+    750,
+    8250
+  ],
+  "http_status_counts": [
+    [
+      200,
+      15
+    ]
+  ],
+  "mock_posts": 15,
+  "historical_records": {
+    "requests": {
+      "rows": 14,
+      "all_fields_sha256": "0754335b7f5e9e27f8f92bd4c2c6940296422d762e86b85a66ee98aa51f63343",
+      "preserved": true
+    },
+    "costs": {
+      "rows": 14,
+      "all_fields_sha256": "8d7fe41b4a994e28c7e4651261ac45ab31bf594d165d77e280af0758d1747071",
+      "preserved": true
+    }
+  },
+  "scope": "Independent live Core health, persisted config subset/identity checks and read-only SQL; only explicit native GUI actions may write business data."
+}

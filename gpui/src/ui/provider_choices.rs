@@ -243,6 +243,7 @@ impl MenuState {
     fn popup(&self, window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
         let kind = self.choices.kind;
         let zh = self.choices.zh;
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let height = px(kind.height()).min(window.viewport_size().height - px(16.));
         let panel = div()
             .id("provider-choice-content")
@@ -270,18 +271,28 @@ impl MenuState {
                 p.pt(px(10.)).pb(px(11.)).pl(px(6.)).pr(px(8.))
             })
             .when(kind == MenuKind::Preset, |p| {
-                p.pt(px(11.)).pb(px(12.)).pl(px(10.)).pr(px(12.))
+                p.pt(px(11.))
+                    .pb(px(12.))
+                    .pl(px(if studio { 11. } else { 10. }))
+                    .pr(px(12.))
             })
             .when(kind == MenuKind::Preset, |p| {
                 p.child(
                     div()
                         .px(px(2.))
-                        .pr(px(3.))
+                        .pr(px(if studio { 2. } else { 3. }))
                         .mb(px(12.))
                         .flex_shrink_0()
                         .child(
                             Styled::h(Input::new(&self.query).large(), px(41.))
                                 .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
+                                .when(studio, |input| {
+                                    input
+                                        .text_size(px(13.))
+                                        .line_height(px(19.))
+                                        .border_color(rgb(crate::theme::color::BORDER))
+                                        .rounded(px(9.))
+                                })
                                 .prefix(Label::new("⌕").text_size(px(13.)))
                                 .aria_label(if zh {
                                     "搜索供应商预设"
@@ -307,6 +318,7 @@ impl MenuState {
                             })
                             .text_size(px(12.))
                             .line_height(px(17.))
+                            .when(studio, |label| label.font_weight(FontWeight::MEDIUM))
                             .text_color(rgb(MUTED)),
                         ),
                 )
@@ -329,8 +341,8 @@ pub(super) fn control(
     cx: &App,
 ) -> AnyElement {
     let menu = state.read(cx);
-    let studio_field = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo
-        && menu.choices.kind != MenuKind::Effort;
+    let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
+    let studio_field = studio && menu.choices.kind != MenuKind::Effort;
     let title = menu
         .selected
         .as_ref()
@@ -418,13 +430,18 @@ pub(super) fn control(
     };
     Popover::new(("provider-menu-popup", state.entity_id()))
         .open(menu.open)
-        .offset(px(
-            if studio_field && menu.choices.kind == MenuKind::Protocol {
-                44.
-            } else {
-                6.
-            },
-        ))
+        // Use the native above-trigger anchor for the footer menu instead of
+        // letting a below-trigger popup clamp against the window's bottom.
+        .when(studio && menu.choices.kind == MenuKind::Effort, |popup| {
+            popup.anchor(Anchor::BottomLeft)
+        })
+        .offset(px(match (studio, menu.choices.kind) {
+            (true, MenuKind::Protocol) => 44.,
+            (true, MenuKind::Preset) => 42.,
+            // Figma67:752 ends4px before the34px trigger's lower edge.
+            (true, MenuKind::Effort) => -30.,
+            _ => 6.,
+        }))
         .track_focus(&focus)
         .trigger_style(StyleRefinement {
             size: gpui_kit::SizeRefinement {
@@ -541,19 +558,65 @@ impl Selectable for MenuRow {
 }
 impl RenderOnce for MenuRow {
     fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
-        let studio_protocol = self.kind == MenuKind::Protocol
-            && crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
+        let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
+        let studio_protocol = studio && self.kind == MenuKind::Protocol;
+        let studio_preset = studio && self.kind == MenuKind::Preset;
         let tint = if studio_protocol {
             crate::theme::color::ACCENT_TINT
+        } else if studio_preset && !self.checked {
+            crate::theme::color::BG_NOTICE
         } else {
             crate::theme::palette().tint
         };
-        let ink = if self.checked {
+        let ink = if self.checked || studio_preset && self.cursor {
             crate::theme::palette().dark
         } else if self.kind == MenuKind::Effort {
             crate::theme::color::TEXT_2
         } else {
             INK
+        };
+        let title = if studio_preset {
+            // Native text inherits the row's hover style; Label installs its
+            // own foreground and would hide the original preset hover ink.
+            div()
+                .text_size(px(13.))
+                .line_height(px(19.))
+                .font_weight(if self.checked {
+                    FontWeight::BOLD
+                } else if self.cursor {
+                    FontWeight::MEDIUM
+                } else {
+                    FontWeight::NORMAL
+                })
+                .text_color(rgb(ink))
+                .group_hover("provider-preset-row", |style| {
+                    style
+                        .text_color(rgb(crate::theme::palette().dark))
+                        .font_weight(FontWeight::MEDIUM)
+                })
+                .child(self.item.title)
+                .into_any_element()
+        } else {
+            Label::new(self.item.title)
+                .text_size(px(if self.kind == MenuKind::Effort {
+                    12.
+                } else {
+                    13.
+                }))
+                .line_height(px(if self.kind == MenuKind::Effort {
+                    17.
+                } else {
+                    19.
+                }))
+                .font_weight(if self.checked {
+                    FontWeight::BOLD
+                } else if studio_protocol {
+                    FontWeight::MEDIUM
+                } else {
+                    FontWeight::NORMAL
+                })
+                .text_color(rgb(ink))
+                .into_any_element()
         };
         let text = div()
             .flex()
@@ -561,27 +624,7 @@ impl RenderOnce for MenuRow {
             .min_w_0()
             .flex_1()
             .gap(px(4.))
-            .child(
-                Label::new(self.item.title)
-                    .text_size(px(if self.kind == MenuKind::Effort {
-                        12.
-                    } else {
-                        13.
-                    }))
-                    .line_height(px(if self.kind == MenuKind::Effort {
-                        17.
-                    } else {
-                        19.
-                    }))
-                    .font_weight(if self.checked {
-                        FontWeight::BOLD
-                    } else if studio_protocol {
-                        FontWeight::MEDIUM
-                    } else {
-                        FontWeight::NORMAL
-                    })
-                    .text_color(rgb(ink)),
-            )
+            .child(title)
             .when(self.kind == MenuKind::Protocol, |r| {
                 r.child(
                     Label::new(self.hint)
@@ -592,6 +635,7 @@ impl RenderOnce for MenuRow {
                 )
             });
         let row = div()
+            .when(studio_preset, |row| row.group("provider-preset-row"))
             .flex()
             .items_center()
             .justify_between()
@@ -602,7 +646,11 @@ impl RenderOnce for MenuRow {
             } else {
                 13.
             }))
-            .rounded(px(9.))
+            .rounded(px(if studio && self.kind != MenuKind::Protocol {
+                8.
+            } else {
+                9.
+            }))
             .when(self.checked || self.cursor, |r| r.bg(rgb(tint)))
             .hover(|r| r.bg(rgb(tint)))
             .child(text)

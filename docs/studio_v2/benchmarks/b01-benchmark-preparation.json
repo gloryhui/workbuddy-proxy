@@ -1,0 +1,31 @@
+{
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "load": {
+    "small_requests": 1000,
+    "models": 64,
+    "large_requests": 80,
+    "large_mib": 1,
+    "concurrency": 4
+  },
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "scope": "Prepared only; no native/performance pass claimed. Execution waits for Mac unlock and completed native B01 phases. Separate per-PID peak samples supplement unchanged original metrics; never replace them.",
+  "help": {
+    "command": [
+      "python3",
+      "scripts/benchmark.py",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: benchmark.py [-h] --exe EXE --output OUTPUT [--requests REQUESTS]\n                    [--models MODELS] [--gui]\n\noptions:\n  -h, --help           show this help message and exit\n  --exe EXE\n  --output OUTPUT\n  --requests REQUESTS\n  --models MODELS\n  --gui\n"
+  },
+  "orchestration_deadline_seconds": 600,
+  "orchestration_deadline_scope": "CUA launch/ack only, before original metric sampling; no benchmark load, timing definition or acceptance threshold changed.",
+  "matched_history": "1100to1440;model table tail then head;preset choose currentCustom closes;effortLow thenFollow;noSave/Test",
+  "observation_gate": "Original settings_pid starts/bindsUI; original benchmark saves64 models; measured_pids hook verifies64, waits native evidence and10s dwell, then returns original measured PID list before unchanged idle/workload.",
+  "preui_model_initialization": "One identical fixtureCore save64 after22 seeds and before native process; original benchmark save64 also retained. Both versions thus initially render64 without relying on external config/draft refresh."
+}

@@ -1,13 +1,13 @@
 # Studio V2 设计映射
 
-官方 Figma MCP 于 2026-10-28 读取文件 `zxDfIQ4lhNcTXrFT7qk8QZ`、页面 `51:2`（WorkBuddy Proxy · Studio V2 · Rust GPUI）。以下 40 张 1440×900 状态画板直接来自 page metadata；未验收表示尚未逐画板进行运行与视觉对照。Rust 落点均相对于 `gpui/src/`。
+官方 Figma MCP 于 2026-10-31 刷新40节点清单并完整读取B01的19份高保真上下文和原图，文件 `zxDfIQ4lhNcTXrFT7qk8QZ`、页面 `51:2`（WorkBuddy Proxy · Studio V2 · Rust GPUI）。以下 40 张 1440×900 状态画板直接来自 page metadata；未验收表示尚未逐画板进行运行与视觉对照。Rust 落点均相对于 `gpui/src/`。
 
-批次计划v2起，下面“已验收”指该帧的最新设计、完整路径和两尺寸界面签收；全局输入、平台、性能与安装发行在 `release_plan.json` 的 R01–R04 独立记录。正式版须两者同时通过，不能把界面签收等同发布。此处现有40帧状态未因重排计划自动升级。
+批次计划v2起，下面“已验收”指该帧的最新设计、完整路径和两尺寸界面签收；全局输入、平台、性能与安装发行在 `release_plan.json` 的 R01–R04 独立记录。正式版须两者同时通过，不能把界面签收等同发布。B01按真实证据签收19帧，剩余21帧；不是因重排计划自动升级。
 
 | Frame | 设计状态 | Rust 落点 | 验收 |
 | --- | --- | --- | --- |
 | 52:2 | 01 / STUDIO V2 · 使用概览 | statistics/overview.rs, trends.rs, recent.rs, layout.rs, usage_chart.rs | 部分：UI66主布局＋UI67最近28px标签/行位修复，同版自然0→22→23/12100/95.7%、筛选/币种/指标/详情、方向键/焦点和两尺寸通过；图表拖动真实点已验。匹配短测空闲合计+0.58MiB/峰值+12.63MiB保留；完整状态/无按键hover/IME/AX/六皮肤及平台终验仍待 |
-| 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 部分：UI58官方30资产/整帧首审留差异，五主要区域几何和Studio模型列宽对齐；两尺寸/单模型/256末行/编辑取消/200SSE与503/原字段保留/四轮负载已验。UI59连接徽章已完成身份/配置绑定、复制继承、两尺寸/故障恢复与原负载；UI60默认输入/触发器颜色边框圆角与两尺寸/原负载已验；UI61焦点/选区可见、眼睛位置与受控busy/恢复已实拍；普通按钮完整状态、AA及完整无障碍/跨平台待续 |
+| 54:2 | 02 / STUDIO V2 · 供应商管理 | ui/sidebar.rs, ui/providers.rs, ui/relay.rs, state.rs, model_table.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；默认A及真实连接200，2供应商5模型；四行小窗末行已独立补验。 全局R01–R04不在此签收内。 |
 | 56:8 | 03 / STUDIO V2 · 用量明细 | statistics/*, usage_table.rs | 部分：八列/来源筛选/分页/详情/窄窗首末列已验；UI56/57最终候选两尺寸、14/22真实记录与原负载已验，a51表头top364/outer39；UI58共享标题墨迹修正。完整视觉/键盘/IME/AX/跨平台待终验 |
 | 57:8 | 04 / STUDIO V2 · 汇总分析 | statistics/analysis.rs, layout.rs, usage_table.rs | 部分：UI56/57最终两尺寸与原负载已验，汇总2供应商5模型/22条12100Token范围浮层、小窗右列下卡可滚；标题列/314px切换区与表头top363/38已实拍。UI58共享标题实现修正，本轮未重拍Summary，完整状态/视觉待终验 |
 | 58:8 | 05 / STUDIO V2 · 统计设置 | statistics/settings_layout.rs, settings_capture.rs, layout.rs, import_controls.rs | 部分：UI65完成官方整帧首审与设置布局/48px价格表/保留期等宽、两尺寸及窄窗下方可达；搜索3→1→3、价格2→2.5→2/保留180→90→180及历史14行不变有独立证据；原分页/额外操作保留，精细视觉和全量状态待收口 |
@@ -22,26 +22,26 @@
 | 61:1111 | 11 / STUDIO V2 · 协议选项 · Gemini | ui/protocol_dialog.rs, protocol_options.rs, ui/providers.rs, ui.rs, main.rs | 部分：UI62完整四画板首审；db899标签几何/原生白色选中态、徽章/映射Inter/字段色已改，四协议两尺寸原图、八tab键与九Core快照、非法映射/预算校验、四Apply→显式Save及原负载四轮留证；保留Select/标题光学、X/scrim、完整键盘/IME/AX/平台差异，未终验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
 | 62:308 | 13 / STUDIO V2 · 黑白主题示例 | ui.rs, ui/skin_controls.rs, model_table.rs, assets.rs, theme.rs | 部分：UI65完整首审及Mono两尺寸/恢复Studio；旧27272a与键/默认/字体分支保留，和Figma字体示例差异明确列出；六皮肤全量状态及精细视觉待收口 |
 | 64:335 | 14 / STUDIO V2 · 外观与主题 | ui/skin_controls.rs, theme/skin.rs, ui_components.rs | 部分：UI65完整首审，Studio350px菜单/六个原22pxSVG显式路由与原色像素盒对齐，保留Studio第七入口；两尺寸/换肤落盘/Esc与外点关闭通过，旧主题分支/选中样式与全量状态待收口 |
-| 66:320 | 17 / STUDIO V2 · 上游协议下拉 | ui/provider_choices.rs, ui/providers.rs, ui.rs | 部分：UI65完整首审，原361×233/53px四行及事件保持，Studio44px偏移匹配宽窗/小窗原生限制；Responses草稿跨供应商保留、显式回Chat/Core不变及两尺寸通过；原生阴影/字形和全量状态待收口 |
-| 66:538 | 18 / STUDIO V2 · 供应商预设搜索 | ui/provider_choices.rs, ui.rs, presets.rs | 部分：原生436×377/41px内嵌搜索/36px行、地区/Azure/空结果与Enter守卫、清除/取消/重开、真实预设草稿及loopback显式保存、两尺寸已验；完整IME/无障碍/跨平台待续 |
-| 66:760 | 19 / STUDIO V2 · API Key 显示演示 | ui/providers.rs, ui_components.rs, ui.rs | 部分：17px设计眼睛SVG、原toggle_masked、鼠标/Tab Enter/Space显隐、中英名称及secure AX无值、仅合成Key两尺寸实拍已验；完整IME/无障碍/跨平台待续 |
-| 67:338 | 20 / STUDIO V2 · OpenCode Go 供应商 | ui/providers.rs, ui.rs, ui/provider_feedback.rs | 部分：真实B单模型、664×50原生提示/英文小窗换行、1→2→1草稿切换/无Core保存与两尺寸已验；完整精细视觉/IME/无障碍/跨平台待续 |
-| 67:548 | 21 / STUDIO V2 · 思考强度菜单 | ui/provider_choices.rs, ui.rs | 部分：原生232×258/33px行与2px间隔、六档原值、鼠标/方向Enter及Low真实保存、长英文/语言切换保值、两尺寸已验；完整IME/无障碍/跨平台待续 |
+| 66:320 | 17 / STUDIO V2 · 上游协议下拉 | ui/provider_choices.rs, ui/providers.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；四协议下拉，两尺寸打开/Esc；未改原选择处理器。 全局R01–R04不在此签收内。 |
+| 66:538 | 18 / STUDIO V2 · 供应商预设搜索 | ui/provider_choices.rs, ui.rs, presets.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；预设Bedrock搜索、方向高亮及关闭重开；原项确认另有同候选实测。 全局R01–R04不在此签收内。 |
+| 66:760 | 19 / STUDIO V2 · API Key 显示演示 | ui/providers.rs, ui_components.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；仅合成Key两尺寸显隐，随后恢复遮罩。 全局R01–R04不在此签收内。 |
+| 67:338 | 20 / STUDIO V2 · OpenCode Go 供应商 | ui/providers.rs, ui.rs, ui/provider_feedback.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；B单模型与真实200，两尺寸及小窗下方帮助/底栏可达。 全局R01–R04不在此签收内。 |
+| 67:548 | 21 / STUDIO V2 · 思考强度菜单 | ui/provider_choices.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；思考菜单上方锚定，两尺寸完整；Low→Follow实际切换另有同候选证明。 全局R01–R04不在此签收内。 |
 | 68:350 | 22 / STUDIO V2 · 取消同步确认 | ui/sync_dialog.rs, ui.rs, backend.rs, workbuddy_restart.rs | 部分：原生确认/两尺寸、取消/仅移除、保留providers与草稿/恢复原条目、守卫下移除后重启失败反馈已验；真实WorkBuddy重启与完整busy/无障碍/跨平台未验；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
 | 69:359 | 23 / STUDIO V2 · 编辑模型价格 | statistics/price_layout.rs, stats_controller.rs, stats_backend.rs | 部分：UI65完整首审，最终e6abd两尺寸gpt-6 USD2/10检查/X取消；c2eb真实编辑保存/恢复revision3且旧14行全字段摘要不变；原身份锁定/缓存0保持，精细阴影/文字与全量状态待收口 |
-| 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui/provider_new.rs, ui/providers.rs, provider_create.rs, draft_discovery.rs, state.rs | 部分：独立pending/取消/切换恢复/重开、零供应商真实发现/自动能力及小窗Save、最终两尺寸已验，精细视觉/IME/无障碍待续 |
-| 78:605 | 25 / STUDIO V2 · 编辑供应商资料 | ui/provider_edit.rs, ui/providers.rs, ui.rs, state.rs, main.rs | 部分：原位编辑/取消完整草稿与选择、A/B独立、保存边界、重开草稿、两尺寸已验；整帧精细审计及IME/无障碍待续 |
-| 78:843 | 26 / STUDIO V2 · 复制供应商草稿 | ui/provider_new.rs, provider_create.rs, ui/sidebar.rs, ui/providers.rs | 部分：来源dirty先保存/副本本地取消、显式Save/Test真实新目标/新路由和混合effort已验；最终两尺寸及Cancel补验、四轮性能及1000请求复核已验，完整审计待续 |
-| 78:1080 | 27 / STUDIO V2 · 删除供应商确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs, main.rs | 部分：532原生删除确认/保存目标与dirty/取消键盘/失败重试/无自动同步、两尺寸与合法长名实拍及四轮性能已验；完整视觉/无障碍待续；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
-| 78:1325 | 28 / STUDIO V2 · 供应商满载滚动 (64) | ui/sidebar.rs, ui.rs, provider_filter.rs | 部分：最新高保真已读、native选中行/缩窗自动可见、手动9秒不回跳、固定CRUD/64容量与两尺寸已验；通用header差异已在小功能30修正，整帧/键盘/无障碍待续 |
-| 78:1804 | 29 / STUDIO V2 · 删除后仅剩 OpenCode Go | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 部分：真实删A只剩B1、ID集合验证/绑定幸存者的会话Deleted1、dirty/edit/Save/重开、两尺寸与计数已验；失败后可信配置对齐/原错误、dirty与Cancel/重开、异常文件守卫及恢复重试、两尺寸已验；Core-unresponsive与完整审计待续 |
-| 79:400 | 30 / STUDIO V2 · 64 个供应商搜索 | ui.rs, provider_filter.rs | 部分：最新高保真已读、64末行1/64与无结果0/64、清除恢复选中行/保持草稿/两尺寸与容量已验；独立搜索态实拍及完整键盘/无障碍待续 |
-| 79:885 | 31 / STUDIO V2 · 新供应商保存完成 | ui/providers.rs, ui/provider_new.rs, ui.rs | 部分：真实Save与绿色完成徽标、dirty/失败/Cancel及两尺寸实拍、四轮性能已验；精细整帧/IME/无障碍/跨平台待续 |
-| 79:1102 | 32 / STUDIO V2 · 供应商复制完成 | ui/providers.rs, ui/provider_new.rs, ui.rs | 部分：成功copy真实ID的会话徽标、dirty/Cancel/切换不串标/重开genericSaved、两尺寸与四轮性能已验；精细整帧/IME/无障碍/跨平台待续 |
-| 80:418 | 33 / STUDIO V2 · 供应商搜索（2个） | ui.rs, provider_filter.rs | 部分：过滤/草稿保护通过，最终侧栏视觉待续 |
-| 80:646 | 34 / STUDIO V2 · 编辑 OpenCode Go | ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, model_table.rs, ui.rs | 部分：B原位编辑/取消恢复已有未保存名称和模型、A独立草稿/仅B显式保存、单模型白行/Studio交替行与原生选中边线、两尺寸四图/遮罩/重开及四轮性能已验；完整精细视觉/键盘/IME/无障碍及跨平台仍待专项 |
-| 80:864 | 35 / STUDIO V2 · 删除 OpenCode Go 确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs | 部分：高保真已读，同一动态目标/模型数的原生确认；真实B键盘Space删除/小窗长名与两尺寸已验，整帧最终审计待续；UI64共用原生关闭/Enter取消及48%普通/49%删除遮罩、两尺寸专项已验，保留精细差异待整帧终验 |
-| 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 部分：真实删B只剩A4、会话Deleted1/两尺寸/小窗第4行内部滚动与Save可达/重开generic已验；失败后只读配置对齐/幸存dirty与异常文件守卫已验；完整视觉/IME/无障碍/跨平台与Core-unresponsive待续 |
+| 78:364 | 24 / STUDIO V2 · 新增供应商草稿 | ui/provider_new.rs, ui/providers.rs, provider_create.rs, draft_discovery.rs, state.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；新增草稿取消，非法URL拒绝，合法本地保存与后续删除。 全局R01–R04不在此签收内。 |
+| 78:605 | 25 / STUDIO V2 · 编辑供应商资料 | ui/provider_edit.rs, ui/providers.rs, ui.rs, state.rs, main.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；A编辑/取消，实际改名保存、切换读回与还原。 全局R01–R04不在此签收内。 |
+| 78:843 | 26 / STUDIO V2 · 复制供应商草稿 | ui/provider_new.rs, provider_create.rs, ui/sidebar.rs, ui/providers.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；复制独立草稿、取消、保存；原Key继承逻辑保持，不从遮罩推断为空。 全局R01–R04不在此签收内。 |
+| 78:1080 | 27 / STUDIO V2 · 删除供应商确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs, main.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；删除A确认及取消/X，遮罩阻断工具栏，明确确认后仅删A。 全局R01–R04不在此签收内。 |
+| 78:1325 | 28 / STUDIO V2 · 供应商满载滚动 (64) | ui/sidebar.rs, ui.rs, provider_filter.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；64家真实满载，新增/复制禁用点击不产生草稿。 全局R01–R04不在此签收内。 |
+| 78:1804 | 29 / STUDIO V2 · 删除后仅剩 OpenCode Go | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；删除A后B独立保留，原字段/模型保持。 全局R01–R04不在此签收内。 |
+| 79:400 | 30 / STUDIO V2 · 64 个供应商搜索 | ui.rs, provider_filter.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；64家搜索27/64/无匹配/清空，末项选择及小窗保持。 全局R01–R04不在此签收内。 |
+| 79:885 | 31 / STUDIO V2 · 新供应商保存完成 | ui/providers.rs, ui/provider_new.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；新增保存后真实3家5模型，新家0模型与成功上下文。 全局R01–R04不在此签收内。 |
+| 79:1102 | 32 / STUDIO V2 · 供应商复制完成 | ui/providers.rs, ui/provider_new.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；复制保存后真实3家9模型，原供应商与复制模型非身份字段保持。 全局R01–R04不在此签收内。 |
+| 80:418 | 33 / STUDIO V2 · 供应商搜索（2个） | ui.rs, provider_filter.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；两家列表搜索OpenCode与无匹配/清空，选择身份保持。 全局R01–R04不在此签收内。 |
+| 80:646 | 34 / STUDIO V2 · 编辑 OpenCode Go | ui/provider_edit.rs, ui/providers.rs, ui/sidebar.rs, model_table.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；B编辑改名与取消恢复，完整值可从字段/侧栏读取。 全局R01–R04不在此签收内。 |
+| 80:864 | 35 / STUDIO V2 · 删除 OpenCode Go 确认 | ui/provider_delete.rs, ui/sidebar.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；删除B确认，Esc/默认Return/Cancel与显式确认分别留证。 全局R01–R04不在此签收内。 |
+| 80:1114 | 36 / STUDIO V2 · 删除 OpenCode Go 后剩 sub2api | ui/provider_feedback.rs, ui/providers.rs, ui/provider_delete.rs, ui.rs | 已验收：B01 / QA68，最新设计＋冻结2a12完整路径和两尺寸原图；删除B后A及4模型原字段保持。 全局R01–R04不在此签收内。 |
 | 104:1378 | 37 / STUDIO V2 · 开机启动已开启（原型） | ui/autostart_notice.rs, ui.rs, assets.rs, theme.rs | 部分：原生提示/实际开关与隔离plist、分候选失败回滚/重试和Pending关闭、动态Tooltip实时刷新、遮罩/两尺寸与四轮性能已验；初始Tab/完整键盘/IME/无障碍及跨平台待续 |
 | 104:1605 | 38 / STUDIO V2 · 检查更新交互（原型） | ui/update_notice.rs, ui.rs | 部分：299×113原生等待/实际HTTP403与重试、关闭不回包重开、Esc/X/外部/缩窗、草稿筛选/遮罩/两尺寸与六轮性能已验；公网成功/完整键盘/IME/无障碍及跨平台待续 |
 | 104:1823 | 39 / STUDIO V2 · 语言切换菜单 | ui/language_menu.rs, ui.rs | 部分：原241×184/三模式保存与重复不写/取消/草稿筛选/重开等证据保留；最终0892 Studio工具焦点/Enter与Space打开/Esc返回/复开及Tab接续已验，菜单30s CPU样本已留；长期CPU/完整IME/读屏/原生AX及跨平台待续 |

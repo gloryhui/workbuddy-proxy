@@ -1,0 +1,78 @@
+{
+  "candidate_sha256": "2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d",
+  "label": "delete-b",
+  "ui_pid": 16457,
+  "core_pid": 16319,
+  "window_id": 6965,
+  "base_frames": [
+    "80-864",
+    "80-1114"
+  ],
+  "images": [
+    {
+      "file": "80-1114-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "ff0883b0dd1691e5f0ad3a5d6d202c8406c26c00235eb66e233d54afcf42062e",
+      "window_id": 6965,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "80-1114-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "864a44689864e39974786494dc51226ff2fa18c183aa5af9be502b60c1bcd46b",
+      "window_id": 6965,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "80-864-small.png",
+      "pixels": [
+        1100,
+        701
+      ],
+      "sha256": "c06cba5a10799fcc625f2e5d1ff698d4d12bb21868ce33913ca1c4d79d9540df",
+      "window_id": 6965,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "80-864-wide.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "081a365994e5eb23cd31e92445943d3427bae2c24a4342b86275d6ae14ff7bb5",
+      "window_id": 6965,
+      "synthetic_key_visible": false
+    },
+    {
+      "file": "candidate-6965.png",
+      "pixels": [
+        1440,
+        901
+      ],
+      "sha256": "081a365994e5eb23cd31e92445943d3427bae2c24a4342b86275d6ae14ff7bb5",
+      "window_id": 6965,
+      "synthetic_key_visible": false
+    }
+  ],
+  "actions_and_results": [
+    "Fresh B dialog Escape closed; reopened Return left dialog open with B still selected; Cancel then explicit deletion; independent A 1/4 original fields and 14 seeded history preserved. UI closed."
+  ],
+  "limitations": [
+    "No explicit activate/raise; actual foreground not independently measured.",
+    "CUA interface actions; own PID onscreen layer0 native screenshots, PNGs unchanged; window screenshots contain synthetic loopback information only.",
+    "No sync, reboot, real login item, external link or user data.",
+    "No IME composition or full assistive technology coverage claimed.",
+    "Small provider screenshots show top state; supplemental bottom images show model/footer after scrolling, not simultaneous visibility. In four-row small bottom screenshots the fourth row is clipped at table viewport; no separate internal table scroll to last row was exercised.",
+    "78-364-wide has native hover tooltip near New; 66-760-small has native eye tooltip; 80-646 header truncates long B01 name while full value remains visible in field/sidebar.",
+    "Window screenshots include native extra OS row: wide 1440x901; small 1100x701.",
+    "Preset/effort actual selection in edit was optional and not done; new draft setValue used for Unicode, not an IME test."
+  ],
+  "ui_closed_pid_gone": true,
+  "core_closed_by_driver": "parent independently confirms terminal"
+}

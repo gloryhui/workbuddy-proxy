@@ -1,0 +1,187 @@
+# -*- coding: utf-8 -*-
+"""Isolated GUI fixture. No real profiles, credentials or upstream endpoints."""
+import argparse, atexit, hashlib, json, os, pathlib, plistlib, shutil, signal, socket, sqlite3, subprocess, tempfile, threading, time, urllib.request
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from workbuddy_import_test import real_user_home
+from workbuddy_import_macho import verify_code_identity
+from workbuddy_import_ui_sandbox import bootstrap_environment, command as sandbox_command, write_profile
+args=argparse.ArgumentParser(description=__doc__)
+args.add_argument('--copy-inheritance',action='store_true',help='Synthetic mixed legacy effort and explicit source capability for copy tests')
+args.add_argument('--full-providers',action='store_true',help='B01 original2 plus62 empty synthetic providers')
+args.add_argument('--full-models',action='store_true',help='255 A plus1 B, total256 synthetic models')
+args.add_argument('--guard-gui',action='store_true',help='Diagnostic native sandbox bootstrap; current CUA cannot bind that sandboxed AppKit process')
+args.add_argument('--sign-bundle',action='store_true',help='Ad-hoc sign the complete unique QA bundle and prove stripped code matches the input')
+args.add_argument('--output',type=pathlib.Path,help='Evidence/fixture folder; defaults to configured TMPDIR')
+args.add_argument('--exe',type=pathlib.Path,help='Explicit core under test')
+args.add_argument('--gpui',type=pathlib.Path,help='Explicit GPUI under test')
+args.add_argument('--keep-core-after-ui-exit',action='store_true',help='Keep the isolated core for close/reopen checks until native-acceptance-finished is created')
+options=args.parse_args()
+ROOT=pathlib.Path('/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy')
+review=pathlib.Path(__file__).resolve().parent/'review';review.mkdir(exist_ok=True)
+folder=options.output.resolve() if options.output else pathlib.Path(tempfile.gettempdir())/('ui-release-'+str(time.time_ns()))
+config=folder/'config'; home=folder/'home'; project=home/'.workbuddy/projects/demo'
+config.mkdir(parents=True); project.mkdir(parents=True)
+class Mock(BaseHTTPRequestHandler):
+    def log_message(self,*args): pass
+    def do_GET(self):
+        if self.path.split('?')[0].endswith('/models'):
+            data=json.dumps({'data':[{'id':m['model']} for provider in cfg['providers'] for m in provider['models']]}).encode();self.send_response(200);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
+        else:self.send_error(404)
+    def do_POST(self):
+        body=json.loads(self.rfile.read(int(self.headers.get('Content-Length',0))) or b'{}')
+        mode_file=folder/'mock-mode.json'
+        mode_info=json.loads(mode_file.read_text()) if mode_file.exists() else {};mode=mode_info.get('mode','success')
+        if body.get('stream') and mode_info.get('delay_seconds'):time.sleep(min(float(mode_info['delay_seconds']),10))
+        if mode=='failure':
+            data=b'{"error":{"message":"Synthetic upstream failure"}}';status=503;kind='application/json'
+        elif body.get('stream'):
+            frames=[{'id':'synthetic-response','object':'chat.completion.chunk','model':body.get('model','mock-model'),'choices':[{'index':0,'delta':{'role':'assistant','content':'OK'},'finish_reason':None}]},{'id':'synthetic-response','object':'chat.completion.chunk','model':body.get('model','mock-model'),'choices':[{'index':0,'delta':{},'finish_reason':'stop'}],'usage':{'prompt_tokens':500,'completion_tokens':50,'total_tokens':550}}]
+            data=(''.join('data: '+json.dumps(x)+'\n\n' for x in frames)+'data: [DONE]\n\n').encode();status=200;kind='text/event-stream'
+        else:
+            data=json.dumps({'id':'synthetic-response','object':'chat.completion','model':body.get('model','mock-model'),'choices':[{'index':0,'message':{'role':'assistant','content':'synthetic'},'finish_reason':'stop'}],'usage':{'prompt_tokens':500,'completion_tokens':50,'total_tokens':550}}).encode();status=200;kind='application/json'
+        with (folder/'mock-posts.jsonl').open('a') as audit:audit.write(json.dumps({'model':body.get('model'),'stream':bool(body.get('stream')),'status':status,'mode':mode})+'\n')
+        self.send_response(status);self.send_header('Content-Type',kind);self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
+server=ThreadingHTTPServer(('127.0.0.1',0),Mock)
+threading.Thread(target=server.serve_forever,daemon=True).start()
+with socket.socket() as socket_: socket_.bind(('127.0.0.1',0)); port=socket_.getsockname()[1]
+cfg={'local_key':'fixture-local-key','language':'zh','port':port,'autostart':False,'providers':[{'id':'review-provider','name':'Review','upstream':'http://127.0.0.1:%d/v1'%server.server_port,
+    'api_key':'fixture-upstream-key','models':[{'id':'proxy-route','alias':'Review/mock-model','name':'mock-model','model':'mock-model','reasoning_effort':'default'}]}],'installed':[]}
+cfg['providers'][0].update(id='review-provider',name='sub2api')
+cfg['providers'][0]['models']=[{'id':i,'alias':'sub2api/'+n,'name':n,'model':n,'reasoning_effort':'default'} for i,n in [('proxy-route','deepseek-v4.1-flash'),('model-a-2','gpt-6'),('model-a-3','gpt-6.1'),('model-a-4','claude-opus-4.7')]]
+cfg['providers'].append({'id':'review-provider-b','name':'OpenCode Go','upstream':'http://127.0.0.1:%d/v1'%server.server_port,'api_key':'fixture-upstream-key','models':[{'id':'model-b-1','alias':'OpenCode Go/model-b-1','name':'model-b','model':'model-b-1','reasoning_effort':'default'}]})
+if options.copy_inheritance:
+    for model,effort in zip(cfg['providers'][0]['models'],['high','low','default','max']):model['reasoning_effort']=effort
+    cfg['providers'][0]['models'][0]['capabilities']={'maxOutputTokens':8192}
+if options.full_models:
+    cfg['providers'][0]['models'].extend({'id':f'fill-{i:03d}','alias':f'sub2api/fill-{i:03d}','name':f'fill-{i:03d}','model':f'fill-{i:03d}','reasoning_effort':'default'} for i in range(251))
+if options.full_providers:
+    cfg['providers'].extend({'id':f'review-provider-{i:02d}','name':f'演示供应商 {i:02d}','upstream':f'http://127.0.0.1:{server.server_port}/v1','api_key':'fixture-upstream-key','models':[]} for i in range(3,65))
+(config/'appearance.json').write_text(json.dumps({'version':1,'skin':'studio_indigo'}))
+(config/'config.json').write_text(json.dumps(cfg));os.chmod(config/'config.json',0o600)
+(home/'.workbuddy/models.json').write_text('[]')
+at=int(time.time()*1000)
+profile_paths={'HOME':home,'USERPROFILE':home,'APPDATA':folder/'appdata',
+    'LOCALAPPDATA':folder/'localappdata','XDG_CONFIG_HOME':folder/'xdg-config',
+    'XDG_DATA_HOME':folder/'xdg-data','XDG_CACHE_HOME':folder/'xdg-cache',
+    'XDG_STATE_HOME':folder/'xdg-state','TMPDIR':folder/'tmp','TMP':folder/'tmp','TEMP':folder/'tmp'}
+for path in profile_paths.values():path.mkdir(parents=True,exist_ok=True)
+env=dict(os.environ,**{name:str(path) for name,path in profile_paths.items()},
+    WORKBUDDY_PROXY_CONFIG_DIR=str(config),WORKBUDDY_PROXY_UI_EVENT_METRICS='1',WORKBUDDY_PROXY_CATALOG_TEST_URL='http://127.0.0.1:1/catalog')
+# Native app lookup may launch a duplicate without CLI arguments. Keep that
+# LaunchServices path inside this same fixture instead of the default profile.
+launch_environment={name:env[name] for name in [*profile_paths,
+    'WORKBUDDY_PROXY_CONFIG_DIR','WORKBUDDY_PROXY_CATALOG_TEST_URL','WORKBUDDY_PROXY_UI_EVENT_METRICS']}
+log=(folder/'core.log').open('wb')
+shutil.copy2(options.exe or ROOT/'target/release/workbuddy-proxy', folder/'review-core')
+policy=write_profile(folder/'source-protection.sb',real_user_home())
+from workbuddy_import_ui_sandbox import profile_text,protected_locations
+policy.write_text(profile_text([*protected_locations(real_user_home()).values(),pathlib.Path(real_user_home())/'Library/LaunchAgents']))
+core=subprocess.Popen(sandbox_command(policy,folder/'review-core',['--headless','--config-dir',str(config),'--port',str(port)]),env=env,stdout=log,stderr=log)
+ui=None
+def cleanup():
+    if ui is not None and ui.poll() is None:
+        ui.terminate()
+        try: ui.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            ui.kill(); ui.wait(timeout=5)
+    if core.poll() is None:
+        try:
+            if not globals().get('key'):
+                raise RuntimeError('core key not ready')
+            request=urllib.request.Request('http://127.0.0.1:%d/_control/stop'%port,
+                data=b'{}',headers={'Content-Type':'application/json','Authorization':'Bearer '+key})
+            opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+            with opener.open(request,timeout=3) as response:response.read()
+            core.wait(timeout=5)
+        except (OSError,RuntimeError,subprocess.TimeoutExpired):
+            core.terminate()
+            try: core.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                core.kill(); core.wait(timeout=5)
+def stop_fixture(signum, frame):
+    raise SystemExit(128+signum)
+atexit.register(cleanup)
+signal.signal(signal.SIGTERM,stop_fixture)
+key=None
+for _ in range(1200):
+    if core.poll() is not None: raise RuntimeError('isolated core exited; inspect scoped core.log')
+    try: key=json.loads((config/'instance.json').read_text())['management_key'];break
+    except (OSError,KeyError,ValueError): time.sleep(.05)
+
+if not key:
+    core.terminate()
+    raise AssertionError('isolated core readiness timed out')
+
+def command(payload):
+    request=urllib.request.Request('http://127.0.0.1:%d/_control/action'%port,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+key})
+    with urllib.request.urlopen(request,timeout=10) as response: result=json.loads(response.read())
+    return json.loads(result['message'])
+for _ in range(1200):
+    try:
+        if command({'command':'stats_health'})['state']=='ready':break
+    except (OSError,ValueError,KeyError):pass
+    time.sleep(.05)
+bundle=folder/'WorkBuddy Proxy Review.app'; macos=bundle/'Contents/MacOS';macos.mkdir(parents=True)
+shutil.copy2(options.gpui or ROOT/'gpui/target/release/workbuddy-proxy-gpui',macos/'workbuddy-proxy-gpui')
+ui_env=bootstrap_environment(folder,policy,env) if options.guard_gui else env
+if options.guard_gui:
+    launch_environment.update({name:ui_env[name] for name in [
+        'DYLD_INSERT_LIBRARIES','WORKBUDDY_PROXY_QA_POLICY','WORKBUDDY_PROXY_QA_PROOF_DIR']})
+with (bundle/'Contents/Info.plist').open('wb') as file:
+    plistlib.dump({'CFBundleExecutable':'workbuddy-proxy-gpui','CFBundleIdentifier':'com.workbuddy.proxy.codexreview.t'+folder.name.removeprefix('ui-release-'),'CFBundleName':'WorkBuddy Proxy Review','CFBundleDisplayName':'WorkBuddy Proxy Review','CFBundlePackageType':'APPL','NSHighResolutionCapable':True,'LSEnvironment':launch_environment},file)
+ui_code=macos/'workbuddy-proxy-gpui'
+signature_identity=None
+if options.sign_bundle:
+    subprocess.run(['codesign','--force','--sign','-',str(bundle)],check=True)
+    subprocess.run(['codesign','--verify','--strict',str(bundle)],check=True)
+    signature_identity=verify_code_identity(options.gpui or ROOT/'gpui/target/release/workbuddy-proxy-gpui',ui_code)
+    (folder/'signature-identity.json').write_text(json.dumps(signature_identity,indent=2)+'\n')
+ui_log=(folder/'gpui.log').open('wb')
+# Launch is delegated to CUA getApp, documented to start macOS apps in the background.
+# This fixture owns the Core child; CUA owns the UI child, so UI exit code cannot
+# be reaped here. Never report the missing PID sentinel as an actual exit code.
+(folder/'cua-launch-ready.json').write_text(json.dumps({'bundle':str(bundle),'bundle_id':'com.workbuddy.proxy.codexreview.t'+folder.name.removeprefix('ui-release-'),'core_pid':core.pid,'port':port}))
+print(json.dumps({'cua_launch_ready':str(folder/'cua-launch-ready.json'),'core_pid':core.pid,'bundle':str(bundle)}),flush=True)
+for _ in range(6000):
+    if core.poll() is not None:raise RuntimeError('Core exited before CUA launch')
+    if (config/'gpui.json').exists():break
+    time.sleep(.1)
+else:raise RuntimeError('CUA launch timeout')
+class CuaOwnedUI:
+    def __init__(self,pid):self.pid=pid
+    def poll(self):
+        try:os.kill(self.pid,0);return None
+        except ProcessLookupError:return -10000
+    def wait(self,timeout=5):
+        deadline=time.monotonic()+timeout
+        while self.poll() is None:
+            if time.monotonic()>deadline:raise subprocess.TimeoutExpired('CUA-owned UI',timeout)
+            time.sleep(.05)
+        return -10000
+    def terminate(self):
+        if self.poll() is None:os.kill(self.pid,signal.SIGTERM)
+    def kill(self):
+        if self.poll() is None:os.kill(self.pid,signal.SIGKILL)
+ui=CuaOwnedUI(json.loads((config/'gpui.json').read_text())['pid'])
+proof=folder/'source-guard-proofs'/('%d.enforced'%ui.pid)
+for _ in range(1200):
+    if ui.poll() is not None:raise RuntimeError('protected GUI exited before readiness')
+    if (not options.guard_gui or proof.exists()) and (config/'gpui.json').exists():break
+    time.sleep(.05)
+else:raise RuntimeError('native GUI source protection was not verified')
+manifest={'folder':str(folder),'bundle':str(bundle),'core_pid':core.pid,'ui_pid':ui.pid,'fixture_pid':os.getpid(),'port':port,'bundle_id':'com.workbuddy.proxy.codexreview.t'+folder.name.removeprefix('ui-release-'),'runtime_ui_binary':str(ui_code.relative_to(folder)),'sandbox_policy_sha256':hashlib.sha256(policy.read_bytes()).hexdigest(),'source_guard_library_sha256':hashlib.sha256((folder/'source-guard.dylib').read_bytes()).hexdigest() if options.guard_gui else None,'sandbox_ui_pid':ui.pid,'gui_kernel_guard':options.guard_gui,'native_binding_rule':'Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.','binary_sha256':{'core':hashlib.sha256((folder/'review-core').read_bytes()).hexdigest(),'ui':hashlib.sha256(ui_code.read_bytes()).hexdigest()},'synthetic_initial':{'providers':64 if options.full_providers else 2,'models':256 if options.full_models else 5,'requests':0}}
+manifest.update(copy_inheritance_fixture=options.copy_inheritance,complete_bundle_signed=options.sign_bundle,signature_identity=signature_identity)
+(folder/'fixture.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+(review/'ui-live-current.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+print(json.dumps(manifest,ensure_ascii=False),flush=True)
+try:
+    while core.poll() is None:
+        if (folder/'native-acceptance-finished').exists():break
+        if ui.poll() is not None and not options.keep_core_after_ui_exit:break
+        time.sleep(.1)
+finally:
+    terminal={'ui_exit_before_cleanup':None,'ui_pid_gone_before_cleanup':ui.poll() is not None,'ui_exit_code_note':'CUA owns UI; fixture can observe PID disappearance but cannot reap exit code','core_exit_before_cleanup':core.poll()}
+    cleanup()
+    server.shutdown()
+    terminal.update(ui_exit_after_cleanup=None,ui_pid_gone_after_cleanup=ui.poll() is not None,core_exit_after_cleanup=core.poll())
+    (folder/'terminal-status.json').write_text(json.dumps(terminal,indent=2)+'\n')

@@ -1,0 +1,28 @@
+{
+  "reason": "Native observer expected64 models before original benchmark had executed its save64. No observed ack, metric samples, workload or performance output. Deliberately SIGINT verified wrapper; original finally and wrapper finally completed.",
+  "original_wrapper_sha256": "139775505335078d505667c7829dea24cf80d7c7741f285890fbd07c16be3c5e",
+  "corrected_wrapper_sha256": "4344aa033b716380d2a33234a55f6a8d6a41575d9249da8707e800929dae1b3b",
+  "original_benchmark_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "original_fixture_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc/bench-b01-previous1",
+  "retained_fixture": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-b01.eb6ifznc/bench-b01-precondition-failure-previous1",
+  "terminal": {
+    "children": [
+      {
+        "kind": "mock",
+        "pid": 19951,
+        "exit_code": -15,
+        "waited": true
+      },
+      {
+        "kind": "core",
+        "pid": 19952,
+        "exit_code": 0,
+        "waited": true
+      }
+    ],
+    "ui_pid": 20180,
+    "ui_child_owned_by": "CUA service, not fixture; exit code unavailable",
+    "ui_pid_gone": true
+  },
+  "correction": "Move observer gate into measured_pids hook, after original save64 and before original idle RSS and unchanged workload. No extra Core mutation and no request/model/concurrency changes."
+}

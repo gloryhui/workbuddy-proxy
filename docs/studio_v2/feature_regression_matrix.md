@@ -89,3 +89,6 @@ UI66使用概览：仅overview/trends/recent原生布局，保留原2处理器�
 
 
 UI67使用概览同版收口：仅recent原生margin/gap/28px模型标签，原详情listener与渲染方法外字节保持。冻结e25a全门禁0/204pass2ignore；完整真实0→22→23、模型5/供应商2/来源循环、日期/清筛选/侧栏搜索、来源方向键→Tab焦点/Return/Esc/ShiftTab、币种/费用趋势/七指标内滚/200详情及503失败、两尺寸十原图通过。CUA图表真实点拖动显示22/22/22与11000/1100/—，不冒称无按键hover；模型下拉无文本搜索框，空态详情仅视觉置灰。原22请求/22费用快照/设置/价格及Core配置SHA保持，27测试PID退出。原负载八轮保留最初v2空闲差异；统一尺寸/操作后空闲合计+0.58MiB，组合峰值+12.63MiB仍记成本，current2直连和代理同慢，短轮不作优化/等价/长时性能结论。详见QA67和overview-recent-closure证据。已知最近结构差异收口，完整状态/hover/键盘IME/AX/六皮肤与平台专项继续；剩余最终40，后续56:8整帧核对。时间线待较大完整功能节点统一刷新。
+
+
+B01 / QA68完整批次：最新19份官方完整设计与同一2a12，38主图/9补图+四行定向补验、两尺寸CRUD/取消/保存读回/删除幸存/空态/64搜索与禁用通过；原14请求/费用全字段和非providers根配置保持。原状态/选择delegate/动作处理器保持，Core与配置逻辑不改；复制Key按原Draft继承，不新增清空行为。206常规测试204pass2ignore，另外真实Core发现/创建契约实际通过；四轮原负载均0，合计RSS+3.91MiB/峰+8.505MiB/marker+117.53ms成本留R03。忙态点击CUA失效、补验恢复后多一次Test如实记录，未冒称禁用拦截通过，R01统一复验。19/40界面签收、剩21；R01–R04未通过。详见b01-design-audit/native-consolidated/native-supplement-gui/performance-summary及artifacts。

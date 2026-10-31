@@ -1,0 +1,74 @@
+from pathlib import Path
+import sys,json,hashlib,urllib.request,sqlite3,datetime,time,os
+ROOT=Path(__file__).resolve().parent
+f=Path(sys.argv[1]).resolve();stage=sys.argv[2]
+assert f.is_relative_to(ROOT) and f.parent==ROOT
+ready=json.loads((f/'cua-launch-ready.json').read_text());instance=json.loads((f/'config/instance.json').read_text())
+req=urllib.request.Request(f"http://127.0.0.1:{ready['port']}/_control/action",data=b'{"command":"stats_health"}',headers={'Content-Type':'application/json','Authorization':'Bearer '+instance['management_key']})
+with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(req,timeout=10) as response:health=json.loads(json.loads(response.read())['message'])
+assert health['state']=='ready'
+original=json.loads((f/'config-before.json').read_text());expected={'initial':2,'menus':2,'edit_cancel':2,'edit_saved':2,'edit_restored':2,'new_cancel':2,'new_invalid':2,'new_saved':3,'new_deleted':2,'copy_cancel':2,'copy_saved':3,'copy_deleted':2,'before_delete':2,'after_delete_a':1,'after_delete_b':1,'empty':0,'capacity':64,'capacity_disabled':64,'capacity_search':64,'capacity_clear':64}
+# Wait only for the explicit asynchronous GUI action, never mutate Core here.
+for _ in range(100):
+ cfg=json.loads((f/'config/config.json').read_text())
+ if stage not in expected or len(cfg['providers'])==expected[stage]:
+  if stage=='edit_saved' and not any(p['name']=='sub2api B01' for p in cfg['providers']):time.sleep(.1);continue
+  if stage=='edit_restored' and not any(p['id']=='review-provider' and p['name']=='sub2api' for p in cfg['providers']):time.sleep(.1);continue
+  break
+ time.sleep(.1)
+assert stage not in expected or len(cfg['providers'])==expected[stage],('provider count',stage,len(cfg['providers']))
+def differences(old,new,path=()):
+ if isinstance(old,dict):
+  if not isinstance(new,dict):return ['.'.join(path)]
+  out=[]
+  for k,v in old.items():out+=differences(v,new.get(k),path+(str(k),))
+  return out
+ if isinstance(old,list):
+  if not isinstance(new,list) or len(old)!=len(new):return ['.'.join(path)]
+  return sum((differences(a,b,path+(str(i),)) for i,(a,b) in enumerate(zip(old,new))),[])
+ return [] if old==new else ['.'.join(path)]
+by={p['id']:p for p in cfg['providers']};survivors={};removed=[]
+for p in original['providers']:
+ if p['id'] not in by:removed.append(p['id']);continue
+ diff=differences(p,by[p['id']])
+ if stage=='edit_saved' and p['id']=='review-provider':diff=[x for x in diff if x!='name'];assert by[p['id']]['name']=='sub2api B01'
+ assert not diff,('original fields changed',p['id'],diff)
+ survivors[p['id']]=True
+if stage=='after_delete_a':assert removed==['review-provider']
+elif stage=='after_delete_b':assert removed==['review-provider-b']
+elif stage=='empty':assert len(removed)==2
+elif stage!='closed':assert not removed,removed
+extras=[p for p in cfg['providers'] if p['id'] not in {x['id'] for x in original['providers']}]
+if stage=='new_saved':assert len(extras)==1 and extras[0]['name']=='演示新供应商' and extras[0]['models']==[]
+copy_ok=None
+if stage=='copy_saved':
+ assert len(extras)==1 and extras[0]['name']=='sub2api 副本'
+ def model_values(m):return {k:v for k,v in m.items() if k not in {'id','alias'}}
+ source=by['review-provider']['models'];copied=extras[0]['models'];assert len(source)==len(copied)==4
+ for old,new in zip(source,copied):assert not differences(model_values(old),model_values(new))
+ copy_ok=True
+c=sqlite3.connect('file:'+str(f/'config/usage.sqlite3')+'?mode=ro',uri=True)
+counts=c.execute('SELECT COUNT(*),COALESCE(SUM(input_tokens),0),COALESCE(SUM(output_tokens),0),COALESCE(SUM(total_tokens),0) FROM usage_requests').fetchone();statuses=c.execute('SELECT http_status,COUNT(*) FROM usage_requests GROUP BY http_status').fetchall();
+request_columns=[x[1] for x in c.execute('PRAGMA table_info(usage_requests)')];request_rows=c.execute('SELECT * FROM usage_requests ORDER BY request_id').fetchall();cost_columns=[x[1] for x in c.execute('PRAGMA table_info(usage_costs)')];cost_rows=c.execute('SELECT * FROM usage_costs ORDER BY request_id').fetchall();c.close()
+private=f/'historical-rows-private.json'
+if not private.exists():
+ assert stage in ['initial','capacity'];private.write_text(json.dumps({'requests':request_rows,'costs':cost_rows})+'\n');os.chmod(private,0o600)
+historical=json.loads(private.read_text())
+history_hashes={}
+for table,rows,columns in [('requests',request_rows,request_columns),('costs',cost_rows,cost_columns)]:
+ index=columns.index('request_id');current={row[index]:list(row) for row in rows};old=historical[table]
+ assert all(current.get(row[index])==row for row in old),(stage,table,'historical fields changed')
+ history_hashes[table]={'rows':len(old),'all_fields_sha256':hashlib.sha256(json.dumps(old,separators=(',',':'),ensure_ascii=False).encode()).hexdigest(),'preserved':True}
+posts=[json.loads(x) for x in (f/'mock-posts.jsonl').read_text().splitlines()] if (f/'mock-posts.jsonl').exists() else []
+out={'at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'stage':stage,'core_pid':ready['core_pid'],'core_health':'ready','core_config_sha256':hashlib.sha256((f/'config/config.json').read_bytes()).hexdigest(),'providers':len(cfg['providers']),'models':sum(len(p['models']) for p in cfg['providers']),'surviving_original_providers_all_fields_preserved':survivors,'explicitly_removed_original_ids':removed,'copied_nonidentity_model_fields_preserved':copy_ok,'new_provider_names':[p['name'] for p in extras],'request_counts':list(counts),'http_status_counts':statuses,'mock_posts':len(posts),'historical_records':history_hashes,'scope':'Independent live Core health, persisted config subset/identity checks and read-only SQL; only explicit native GUI actions may write business data.'}
+folder=f/'stage-proofs';folder.mkdir(exist_ok=True);(folder/(stage+'.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'stage':stage,'providers':out['providers'],'models':out['models'],'original_fields_pass':True,'requests':counts[0]},ensure_ascii=False))
+if stage=='closed':
+ previous=[p for p in folder.glob('*.json') if p.name!='closed.json'];assert previous
+ latest=json.loads(max(previous,key=lambda p:p.stat().st_mtime_ns).read_text());assert latest['core_config_sha256']==out['core_config_sha256'],'close changed Core config'
+ gpui=json.loads((f/'config/gpui.json').read_text()) if (f/'config/gpui.json').exists() else None
+ if gpui:
+  try:os.kill(gpui['pid'],0)
+  except ProcessLookupError:pass
+  else:raise AssertionError('UI still alive')
+ (f/'native-acceptance-finished').write_text('B01 native phase complete\n')

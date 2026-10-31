@@ -1,0 +1,6 @@
+{
+  "original_bytes": 174,
+  "original_sha256": "ca55106bd11ceceecdccdd32ced499fac683b92bdacb063058124d517810ead4",
+  "text": "vmmap[22563]: vmmap cannot examine process 21904 (with name like '21904') because it no longer appears to be running.\nvmmap[22563]: [fatal] mach port for process 0 not valid\n",
+  "scope": "Full original UTF8, preserved inside JSON to avoid changing diagnostic whitespace."
+}

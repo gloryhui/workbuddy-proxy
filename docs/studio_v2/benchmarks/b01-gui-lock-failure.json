@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-31T12:40:51.324850+08:00",
+  "stage": "before native app binding",
+  "source": "Delegated mac_ui CUA getApp exact candidate bundle",
+  "tool_message": "The Mac is locked and automatic unlock could not unlock it. Ask the user to unlock the Mac manually before continuing.",
+  "candidate_ui_sha256": "246d90353a4174676700f91a1b5c44f235df0bb0a3bd275ff69281baf89dbfe5",
+  "ui_launched": false,
+  "initial_core_data_proof": "stage-proofs/initial.json",
+  "fixture_pid": 4327,
+  "core_pid": 4333,
+  "action": "Stop this waiting fixture cleanly; no automatic relaunch or lock bypass. Resume native phases only after actual unlock. Source build and offline checks continue.",
+  "owned_host_and_core_pids_gone": [
+    4327,
+    4333
+  ],
+  "driver_exit_code": 1,
+  "fixture_exit_code": 143,
+  "exit_reason": "Deliberate SIGTERM before native UI launch after confirmed Mac lock; not a product failure or completed native acceptance."
+}

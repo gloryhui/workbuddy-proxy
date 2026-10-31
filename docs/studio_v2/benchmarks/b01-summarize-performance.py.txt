@@ -1,0 +1,37 @@
+from pathlib import Path
+import json,statistics,hashlib,datetime
+
+r=Path(__file__).resolve().parent
+results=json.loads((r/'benchmark-driver-results.json').read_text())
+assert [x['label'] for x in results]==['previous1','current1','current2','previous2']
+assert all(x['exit_code']==0 for x in results)
+runs={x['label']:json.loads((r/('performance-'+x['label']+'.json')).read_text()) for x in results}
+for label,d in runs.items():
+    assert d['small_request_count']==1000 and d['configured_models']==64
+    assert d['large_requests']==80 and d['large_request_size_mib']==1 and d['large_concurrency']==4
+    assert d['measured_process_count']==2 and d['mode']=='native GUI'
+    assert d['core_sandbox_proof']['enforced'] and d['terminal']['ui_pid_gone']
+    assert d['benchmark_script_sha256']=='bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2'
+    assert d['core_sha256']=='25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5'
+    folder=r/('bench-b01-'+label)
+    seed=json.loads((folder/'seed-proof.json').read_text())
+    assert seed['sql_usage_rows_before_ui']==seed['real_http_seed_requests']==22
+    condition=json.loads((folder/'matched-condition.json').read_text())
+    assert condition['dwell_seconds']==10 and condition['observed']['logical_size']==[1440,900]
+    assert condition['observed']['tail_name']=='bench-model-63'
+    assert condition['observed']['history']==json.loads((r/'bench-b01-previous1/providers-observed.json').read_text())['history']
+    bundles=list(folder.glob('*.app'));assert len(bundles)==1
+    assert hashlib.sha256((bundles[0]/'Contents/MacOS/workbuddy-proxy-gpui').read_bytes()).hexdigest()==d['ui_sha256']
+    assert condition['pixels']==json.loads((r/'performance-window-pixels.json').read_text())
+fields={'core_rss_mib':lambda d:d['core_idle_rss_mib'],'ui_rss_mib':lambda d:d['ui_idle_rss_mib'],'combined_rss_mib':lambda d:d['idle_rss_mib'],'sampled_peak_mib':lambda d:d['sampled_peak_rss_mib'],'core_ready_ms':lambda d:d['core_ready_ms'],'process_to_marker_ms':lambda d:d['native_ui_process_to_record_ms'],'direct_p50_ms':lambda d:d['direct_loopback_ms']['p50'],'direct_p95_ms':lambda d:d['direct_loopback_ms']['p95'],'proxy_p50_ms':lambda d:d['proxied_loopback_ms']['p50'],'proxy_p95_ms':lambda d:d['proxied_loopback_ms']['p95'],'large_seconds':lambda d:d['large_seconds']}
+for name in ['core_rss_mib','ui_rss_mib','combined_rss_mib']:
+    fields['diagnostic_peak_'+name]=lambda d,n=name:d['separate_peak_rss_mib'][n]
+metrics={}
+for name,read in fields.items():
+    previous=[read(runs[k]) for k in ['previous1','previous2']]
+    current=[read(runs[k]) for k in ['current1','current2']]
+    a=statistics.median(previous);b=statistics.median(current)
+    metrics[name]={'previous':{'samples':previous,'median':a,'range':[min(previous),max(previous)]},'current':{'samples':current,'median':b,'range':[min(current),max(current)]},'delta':round(b-a,6),'percent':round((b/a-1)*100,3) if a else None}
+out={'at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'sequence':list(runs),'n_each':2,'candidate_ui_sha256':runs['current1']['ui_sha256'],'baseline_ui_sha256':runs['previous1']['ui_sha256'],'core_sha256':runs['previous1']['core_sha256'],'benchmark_script_sha256':runs['previous1']['benchmark_script_sha256'],'metrics':metrics,'condition':'Same machine arm64 release/Studio; after22 real seeds identical extra fixture save64 before native launch; original benchmark save64 still retained. Actual native provider1/model64 page; same1100→1440/tableTail→Head/presetCurrent/effortLow→Follow history, raw PNG pixels/SHA match,10s settle. Original1000small+80x1MiB/concurrency4 unchanged.','limits':['n2 each is a short diagnostic comparison, not statistical equivalence or long-term leak/FPS/input-latency proof.','RSS can double-count shared pages, excludes mock/client. Original peak sampling and added100ms per-PID diagnostic sample can miss peaks; vmmap footprint/IOSurface/heap are different metrics.','Original ui_record_ready_ms includes CUA wait and is not compared. Native process-to-record marker is not first paint/interactivity.','R03 final platform/performance/Core gates remain pending; earlierUI67 peak cost is not erased by this batch.','Post-load vmmap attempts occur after original benchmark has already stopped the UI; process-gone diagnostics are preserved, not valid post-load footprint measurements. Only pre-load successful vmmap is used for heap/IOSurface/footprint comparisons.'],'raw_evidence':['b01-performance-'+k+'.json' for k in runs]}
+(r/'performance-summary.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps(metrics,ensure_ascii=False,indent=2))

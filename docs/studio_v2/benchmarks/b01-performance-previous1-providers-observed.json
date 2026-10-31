@@ -1,0 +1,26 @@
+{
+  "ui_pid": 21904,
+  "providers_visible": true,
+  "logical_size": [
+    1440,
+    900
+  ],
+  "screenshot": "performance-window.png",
+  "pixels": [
+    1440,
+    901
+  ],
+  "screenshot_sha256": "e155ffb6834c7548804f71fe6c67a39e2b179d7405cd9a4f1f4a643c84f2c311",
+  "history": [
+    "Providers",
+    "resize 1100x700",
+    "table scroll to bench-model-63",
+    "table scroll to bench-model-0",
+    "resize 1440x900",
+    "preset select current custom",
+    "effort Low then Follow"
+  ],
+  "window_id": 7145,
+  "tail_image": "performance-model-tail-small.png",
+  "tail_name": "bench-model-63"
+}

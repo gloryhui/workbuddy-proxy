@@ -1,0 +1,421 @@
+{
+  "at": "2026-10-31T13:41:02.438013+08:00",
+  "sequence": [
+    "previous1",
+    "current1",
+    "current2",
+    "previous2"
+  ],
+  "n_each": 2,
+  "candidate_ui_sha256": "2a12c8153f77dff2cc148c6bbcc4906451b8d483dcac16834588685bd9168c4d",
+  "baseline_ui_sha256": "e25a27455acaecab3762a7791e9e33a5caf11fcc8656aa2bf2600b37c0fbe67c",
+  "core_sha256": "25f24ad66cfee622d8340ea6bd72bb846a8f0eda827599f1b58e1db34b85a7b5",
+  "benchmark_script_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
+  "metrics": {
+    "core_rss_mib": {
+      "previous": {
+        "samples": [
+          11.05,
+          11.34
+        ],
+        "median": 11.195,
+        "range": [
+          11.05,
+          11.34
+        ]
+      },
+      "current": {
+        "samples": [
+          11.52,
+          11.33
+        ],
+        "median": 11.425,
+        "range": [
+          11.33,
+          11.52
+        ]
+      },
+      "delta": 0.23,
+      "percent": 2.054
+    },
+    "ui_rss_mib": {
+      "previous": {
+        "samples": [
+          99.62,
+          106.58
+        ],
+        "median": 103.1,
+        "range": [
+          99.62,
+          106.58
+        ]
+      },
+      "current": {
+        "samples": [
+          108.31,
+          105.25
+        ],
+        "median": 106.78,
+        "range": [
+          105.25,
+          108.31
+        ]
+      },
+      "delta": 3.68,
+      "percent": 3.569
+    },
+    "combined_rss_mib": {
+      "previous": {
+        "samples": [
+          110.67,
+          117.92
+        ],
+        "median": 114.295,
+        "range": [
+          110.67,
+          117.92
+        ]
+      },
+      "current": {
+        "samples": [
+          119.83,
+          116.58
+        ],
+        "median": 118.205,
+        "range": [
+          116.58,
+          119.83
+        ]
+      },
+      "delta": 3.91,
+      "percent": 3.421
+    },
+    "sampled_peak_mib": {
+      "previous": {
+        "samples": [
+          155.36,
+          165.03
+        ],
+        "median": 160.195,
+        "range": [
+          155.36,
+          165.03
+        ]
+      },
+      "current": {
+        "samples": [
+          172.45,
+          164.95
+        ],
+        "median": 168.7,
+        "range": [
+          164.95,
+          172.45
+        ]
+      },
+      "delta": 8.505,
+      "percent": 5.309
+    },
+    "core_ready_ms": {
+      "previous": {
+        "samples": [
+          43.577,
+          48.949
+        ],
+        "median": 46.263,
+        "range": [
+          43.577,
+          48.949
+        ]
+      },
+      "current": {
+        "samples": [
+          43.308,
+          47.926
+        ],
+        "median": 45.617000000000004,
+        "range": [
+          43.308,
+          47.926
+        ]
+      },
+      "delta": -0.646,
+      "percent": -1.396
+    },
+    "process_to_marker_ms": {
+      "previous": {
+        "samples": [
+          698.549,
+          837.099
+        ],
+        "median": 767.8240000000001,
+        "range": [
+          698.549,
+          837.099
+        ]
+      },
+      "current": {
+        "samples": [
+          947.395,
+          823.313
+        ],
+        "median": 885.354,
+        "range": [
+          823.313,
+          947.395
+        ]
+      },
+      "delta": 117.53,
+      "percent": 15.307
+    },
+    "direct_p50_ms": {
+      "previous": {
+        "samples": [
+          0.148,
+          0.147
+        ],
+        "median": 0.1475,
+        "range": [
+          0.147,
+          0.148
+        ]
+      },
+      "current": {
+        "samples": [
+          0.147,
+          0.148
+        ],
+        "median": 0.1475,
+        "range": [
+          0.147,
+          0.148
+        ]
+      },
+      "delta": 0.0,
+      "percent": 0.0
+    },
+    "direct_p95_ms": {
+      "previous": {
+        "samples": [
+          0.318,
+          0.281
+        ],
+        "median": 0.2995,
+        "range": [
+          0.281,
+          0.318
+        ]
+      },
+      "current": {
+        "samples": [
+          0.187,
+          0.283
+        ],
+        "median": 0.235,
+        "range": [
+          0.187,
+          0.283
+        ]
+      },
+      "delta": -0.0645,
+      "percent": -21.536
+    },
+    "proxy_p50_ms": {
+      "previous": {
+        "samples": [
+          0.171,
+          0.15
+        ],
+        "median": 0.1605,
+        "range": [
+          0.15,
+          0.171
+        ]
+      },
+      "current": {
+        "samples": [
+          0.143,
+          0.144
+        ],
+        "median": 0.1435,
+        "range": [
+          0.143,
+          0.144
+        ]
+      },
+      "delta": -0.017,
+      "percent": -10.592
+    },
+    "proxy_p95_ms": {
+      "previous": {
+        "samples": [
+          0.291,
+          0.192
+        ],
+        "median": 0.2415,
+        "range": [
+          0.192,
+          0.291
+        ]
+      },
+      "current": {
+        "samples": [
+          0.187,
+          0.194
+        ],
+        "median": 0.1905,
+        "range": [
+          0.187,
+          0.194
+        ]
+      },
+      "delta": -0.051,
+      "percent": -21.118
+    },
+    "large_seconds": {
+      "previous": {
+        "samples": [
+          0.092,
+          0.094
+        ],
+        "median": 0.093,
+        "range": [
+          0.092,
+          0.094
+        ]
+      },
+      "current": {
+        "samples": [
+          0.094,
+          0.088
+        ],
+        "median": 0.091,
+        "range": [
+          0.088,
+          0.094
+        ]
+      },
+      "delta": -0.002,
+      "percent": -2.151
+    },
+    "diagnostic_peak_core_rss_mib": {
+      "previous": {
+        "samples": [
+          55.203,
+          58.453
+        ],
+        "median": 56.828,
+        "range": [
+          55.203,
+          58.453
+        ]
+      },
+      "current": {
+        "samples": [
+          63.953,
+          59.531
+        ],
+        "median": 61.742000000000004,
+        "range": [
+          59.531,
+          63.953
+        ]
+      },
+      "delta": 4.914,
+      "percent": 8.647
+    },
+    "diagnostic_peak_ui_rss_mib": {
+      "previous": {
+        "samples": [
+          100.156,
+          106.578
+        ],
+        "median": 103.367,
+        "range": [
+          100.156,
+          106.578
+        ]
+      },
+      "current": {
+        "samples": [
+          108.5,
+          105.422
+        ],
+        "median": 106.961,
+        "range": [
+          105.422,
+          108.5
+        ]
+      },
+      "delta": 3.594,
+      "percent": 3.477
+    },
+    "diagnostic_peak_combined_rss_mib": {
+      "previous": {
+        "samples": [
+          155.359,
+          165.031
+        ],
+        "median": 160.195,
+        "range": [
+          155.359,
+          165.031
+        ]
+      },
+      "current": {
+        "samples": [
+          172.453,
+          164.953
+        ],
+        "median": 168.703,
+        "range": [
+          164.953,
+          172.453
+        ]
+      },
+      "delta": 8.508,
+      "percent": 5.311
+    }
+  },
+  "condition": "Same machine arm64 release/Studio; after22 real seeds identical extra fixture save64 before native launch; original benchmark save64 still retained. Actual native provider1/model64 page; same1100→1440/tableTail→Head/presetCurrent/effortLow→Follow history, raw PNG pixels/SHA match,10s settle. Original1000small+80x1MiB/concurrency4 unchanged.",
+  "limits": [
+    "n2 each is a short diagnostic comparison, not statistical equivalence or long-term leak/FPS/input-latency proof.",
+    "RSS can double-count shared pages, excludes mock/client. Original peak sampling and added100ms per-PID diagnostic sample can miss peaks; vmmap footprint/IOSurface/heap are different metrics.",
+    "Original ui_record_ready_ms includes CUA wait and is not compared. Native process-to-record marker is not first paint/interactivity.",
+    "R03 final platform/performance/Core gates remain pending; earlierUI67 peak cost is not erased by this batch.",
+    "Post-load vmmap attempts occur after original benchmark has already stopped the UI; process-gone diagnostics are preserved, not valid post-load footprint measurements. Only pre-load successful vmmap is used for heap/IOSurface/footprint comparisons."
+  ],
+  "raw_evidence": [
+    "b01-performance-previous1.json",
+    "b01-performance-current1.json",
+    "b01-performance-current2.json",
+    "b01-performance-previous2.json"
+  ],
+  "preload_vmmap_diagnostics": {
+    "previous1": {
+      "physical_footprint_M": 70.1,
+      "malloc_zone_TOTAL_original_line": "TOTAL                                        1.4G      33.9M      33.4M      2352K      54612      19.8M      15.9M     45%      50",
+      "post_load_vmmap_valid": false,
+      "post_load_note": "Original benchmark has already stopped native UI; raw vmmap process-gone output retained."
+    },
+    "current1": {
+      "physical_footprint_M": 70.8,
+      "malloc_zone_TOTAL_original_line": "TOTAL                                        1.4G      40.1M      36.5M         0K      54209      19.7M      16.8M     46%      50",
+      "post_load_vmmap_valid": false,
+      "post_load_note": "Original benchmark has already stopped native UI; raw vmmap process-gone output retained."
+    },
+    "current2": {
+      "physical_footprint_M": 69.5,
+      "malloc_zone_TOTAL_original_line": "TOTAL                                        1.4G      38.0M      34.5M       624K      54227      19.6M      15.5M     45%      50",
+      "post_load_vmmap_valid": false,
+      "post_load_note": "Original benchmark has already stopped native UI; raw vmmap process-gone output retained."
+    },
+    "previous2": {
+      "physical_footprint_M": 69.1,
+      "malloc_zone_TOTAL_original_line": "TOTAL                                        1.4G      38.8M      34.7M         0K      54179      19.6M      15.1M     44%      49",
+      "post_load_vmmap_valid": false,
+      "post_load_note": "Original benchmark has already stopped native UI; raw vmmap process-gone output retained."
+    }
+  },
+  "batch_assessment": "All four unchanged-request workloads completed0 under matched native conditions. Short-run HTTP correctness/latency comparison accepted with measured costs: idle combined+3.91MiB, sampled peak+8.505MiB, process-to-record marker+117.53ms. No claim of optimization/equivalence, unchanged memory/startup or full-release performance pass. R03 retains these and earlierUI67 costs for final platform/long-term diagnosis."
+}

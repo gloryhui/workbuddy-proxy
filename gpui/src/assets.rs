@@ -41,6 +41,9 @@ impl AssetSource for Assets {
                 Some(include_bytes!("../assets/studio/supplier-default.svg"))
             }
             "studio/supplier-add.svg" => Some(include_bytes!("../assets/studio/supplier-add.svg")),
+            "studio/supplier-add-disabled.svg" => {
+                Some(include_bytes!("../assets/studio/supplier-add-disabled.svg"))
+            }
             "studio/supplier-copy.svg" => {
                 Some(include_bytes!("../assets/studio/supplier-copy.svg"))
             }

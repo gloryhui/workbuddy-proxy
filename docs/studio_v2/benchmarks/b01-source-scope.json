@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-31T12:44:32.525098+08:00",
+  "base_head": "24bd2d7e92381e0de224717b80b91e707ffc5e61",
+  "files": {
+    "gpui/src/ui/provider_choices.rs": {
+      "source_sha256": "37f9eb6671df99fa0dd522c04a1bcd0b2ade86fd1f87bbad0411c888c29619d2",
+      "menu_state_query_filter_confirm_prefix_byte_identical": true,
+      "native_list_delegate_and_selection_byte_identical": true,
+      "existing_open_change_callback_byte_identical": true
+    },
+    "gpui/src/ui/sidebar.rs": {
+      "source_sha256": "4fba021fee9a25484363463058ff53ca9fb2e43ddba3f68e50ea2fdda85637f2",
+      "outside_stateless_action_style_helper_byte_identical": true
+    },
+    "gpui/src/assets.rs": {
+      "source_sha256": "89a4af5cbac2f50679d4230f554f387d81029a9e7f988ed9cef43bd4e1c5bb0e",
+      "only_exact_new_asset_route_added": true
+    }
+  },
+  "core_config_schema_dependency_lock_workflow_diff": [],
+  "scope": "Rendering and original asset binding only; original data/query/filter/confirm callbacks are byte-identical in stated ranges. Does not replace native interaction or runtime geometry evidence."
+}
