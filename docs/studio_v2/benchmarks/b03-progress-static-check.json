@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-31T18:04:41.882779+08:00",
+  "embedded_json_exact": true,
+  "counts": {
+    "pending": 0,
+    "partial": 8,
+    "reused": 0,
+    "verified": 32
+  },
+  "remaining": 8,
+  "recorded_tasks": 70,
+  "next_batch": "B04",
+  "source_code_head": "108b081de95144fa4fb52b0b1c8c43bc49fc31a1",
+  "release_plan_source_exact_after_removing_only_derived_fields": true,
+  "local_href_count": 5,
+  "inline_js": [
+    {
+      "syntax_exit": 0,
+      "bytes": 229
+    },
+    {
+      "syntax_exit": 0,
+      "bytes": 11163
+    }
+  ],
+  "scope": "Offline checks only, no browser rendered claim. Earlier file-page browser access rejected, no bypass."
+}
