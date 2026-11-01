@@ -8,12 +8,13 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
+from release_version import release_version
 
 USER_DOCS = (
     'DESKTOP.md', 'GPUI-NOTICES.md', 'LICENSE-APACHE-GPUI.txt',
     'third-party/magpie-LICENSE.txt', 'MODEL-CAPABILITIES.md',
     'PROVIDER-PRESETS.md', 'protocol-compat/USAGE.md',
-    'protocol-compat/CONTRACTS.md',
+    'protocol-compat/CONTRACTS.md', 'studio_v2/UPGRADE_ROLLBACK.md',
 )
 
 
@@ -25,7 +26,11 @@ def copy_user_docs(destination):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--platform',choices=['macos-arm64','macos-x64','windows-x64'],required=True);p.add_argument('--output',default='dist');p.add_argument('--version',default='0.5.7');p.add_argument('--gpui',required=True);p.add_argument('--variant',default='');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--exe',required=True);p.add_argument('--platform',choices=['macos-arm64','macos-x64','windows-x64'],required=True);p.add_argument('--output',default='dist');p.add_argument('--version',help='Must match the Core/UI Cargo package version');p.add_argument('--gpui',required=True);p.add_argument('--variant',default='');args=p.parse_args()
+    try:
+        args.version=release_version(args.version)
+    except ValueError as error:
+        p.error(str(error))
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     name=f'workbuddy-proxy-{args.version}'+(f'-{args.variant}' if args.variant else '')+f'-{args.platform}'
     app_name='WorkBuddy Proxy.app'

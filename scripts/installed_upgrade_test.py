@@ -298,7 +298,7 @@ $result | ConvertTo-Json -Compress
 
 
 def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schema, report,
-                 rollback=False):
+                 candidate_version, rollback=False):
     assert os.environ.get('GITHUB_ACTIONS') == 'true', 'Installer test only on disposable CI'
     assert registration() is None, 'Existing installation: refuse to overwrite'
     assert_no_startup()
@@ -335,14 +335,14 @@ def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schem
     def replace(directory, result):
         assert len(upgrade.snapshot(directory, cold=True)['tables']['usage_requests']['rows']) == 12
         entry = install_setup(candidate_setup, 'candidate')
-        assert entry['DisplayVersion'] == '0.5.7'
+        assert entry['DisplayVersion'] == candidate_version
         for name, checksum in expected.items():
             assert sha(install / name) == checksum, ('Installed package differs', name)
         assert not (install / 'workbuddy-proxy-gpui.exe').exists()
         for path in (exe, install / 'internal/workbuddy-settings.exe'):
             architecture(path, 'windows-x64')
             assert subprocess.check_output([str(path), '--version'], env=clean_environment(),
-                                           text=True).strip() == '0.5.7'
+                                           text=True).strip() == candidate_version
         result['replacement'] = {'method': 'Real old Inno setup → candidate Inno setup same directory',
                                   'legacy_12_rows_existed_before_setup': True,
                                   'candidate_all_portable_files_match': len(expected),
@@ -394,7 +394,7 @@ def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schem
         old_files = {str(p.relative_to(install)): sha(p) for p in install.rglob('*')
                      if p.is_file() and not p.name.startswith('unins000.')}
         args = SimpleNamespace(directory=directory, old_exe=exe, candidate_exe=exe,
-                               old_version=version, old_schema=schema, candidate_version='0.5.7')
+                               old_version=version, old_schema=schema, candidate_version=candidate_version)
         upgrade.run(args, report, replace, installed_lifecycle, restore if rollback else None)
     finally:
         uninstaller = install / 'unins000.exe'
@@ -405,7 +405,7 @@ def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schem
 
 
 def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, local,
-             rollback=False):
+             candidate_version, rollback=False):
     install = root / '自选路径 with spaces' / 'WorkBuddy Proxy.app'
     install.parent.mkdir()
     directory = root / 'private-data'
@@ -418,7 +418,7 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
     candidate_app = root / 'candidate-staged.app'
     with mounted_app(candidate_dmg, root / 'candidate-volume') as source:
         subprocess.run(['ditto', str(source), str(candidate_app)], check=True)
-    report['candidate_package'] = mac_metadata(candidate_app, '0.5.7', target)
+    report['candidate_package'] = mac_metadata(candidate_app, candidate_version, target)
     candidate_tree = tree_identity(candidate_app)
 
     def replace(directory, result):
@@ -428,7 +428,7 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
         install.rename(previous)
         subprocess.run(['ditto', str(candidate_app), str(install)], check=True)
         assert tree_identity(install) == candidate_tree
-        mac_metadata(install, '0.5.7', target)
+        mac_metadata(install, candidate_version, target)
         result['replacement'] = {'method': 'Actual DMG app bundle replaced at identical install path',
                                   'previous_app_renamed_as_owned_backup': True,
                                   'legacy_12_rows_existed_before_replacement': True,
@@ -451,7 +451,7 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
 
     exe = install / 'Contents/MacOS/workbuddy-proxy'
     args = SimpleNamespace(directory=directory, old_exe=exe, candidate_exe=exe,
-                           old_version=version, old_schema=schema, candidate_version='0.5.7')
+                           old_version=version, old_schema=schema, candidate_version=candidate_version)
     upgrade.run(args, report, replace, None if local else installed_lifecycle,
                 restore if rollback else None)
     if local:
@@ -639,11 +639,12 @@ def main():
                 if target.startswith('macos'):
                     mac_case(case_root, old_package, next(packages.glob('*.dmg')), version,
                              6 if version == '0.5.6' else 11, target, case,
-                             args.local_headless_only, args.verify_rollback)
+                             args.local_headless_only, manifest['candidate_version'], args.verify_rollback)
                 else:
                     windows_case(case_root, old_package, next(packages.glob('*-setup.exe')),
                                  next(packages.glob('*.zip')), version,
-                                 6 if version == '0.5.6' else 11, case, args.verify_rollback)
+                                 6 if version == '0.5.6' else 11, case, manifest['candidate_version'],
+                                 args.verify_rollback)
                 case['result'] = 'PASS'
             finally:
                 (output / (release['tag'] + '.json')).write_text(json.dumps(case, indent=2) + '\n')

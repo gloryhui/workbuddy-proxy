@@ -1087,9 +1087,9 @@
         {
           "id": "R04.2",
           "title": "DMG/ZIP/EXE安装升级卸载",
-          "acceptance": "passed",
-          "completed": "QA82真实三平台旧包安装/覆盖升级/卸载签收：测试源码0a355、运行时仍957；官方v056(schema6)/v057(schema11)先通过真实旧Core写12有价行/手工价/731天/OBSERVE/Unicode与配置Key，再关闭旧Core、实际Windows旧setup→候选setup同一Unicode自选目录覆盖或Mac只读DMG app同路径整体替换（不是Finder拖动）。安装本身保持旧DBschema/业务字段/配置字节，候选schema11新录第13有价行；已安装host/Core/GPUI真实打开、关闭留同Core、重开新UI、正常退出，之后全13业务字段与配置字节仍同。Windows包全部portable文件SHA/版本/x64/注册/快捷方式正确；卸载移除文件/注册/快捷方式且不启用登录启动，外部数据保持。Mac所有资源/链接一致、两bundle strict签名和架构/版本正确，移除已装app而外部数据保持。原run41254168866 Intel124693699432/ARM124693699544/Windows124693699610均首轮success；6例原报告与3ZIP digest核验，三remotefixture清理0。直接CLI Core0/waited，nativehost0，host拥有的Core/UI退出码未知但OSPIDgone与3normal run已证。限冷升级/隔离自选外部profile，不当热更新、FinderTrash/Gatekeeper/SmartScreen/像素键盘/物理设备验收；回滚与最终分发仍R04.4/.5。旧sameversion stub/lifecycle及QA81冷交接按原scope保留，不替代本轮真实安装步骤。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained.",
-          "remaining": "",
+          "acceptance": "pending",
+          "completed": "QA82真实三平台旧包安装/覆盖升级/卸载签收：测试源码0a355、运行时仍957；官方v056(schema6)/v057(schema11)先通过真实旧Core写12有价行/手工价/731天/OBSERVE/Unicode与配置Key，再关闭旧Core、实际Windows旧setup→候选setup同一Unicode自选目录覆盖或Mac只读DMG app同路径整体替换（不是Finder拖动）。安装本身保持旧DBschema/业务字段/配置字节，候选schema11新录第13有价行；已安装host/Core/GPUI真实打开、关闭留同Core、重开新UI、正常退出，之后全13业务字段与配置字节仍同。Windows包全部portable文件SHA/版本/x64/注册/快捷方式正确；卸载移除文件/注册/快捷方式且不启用登录启动，外部数据保持。Mac所有资源/链接一致、两bundle strict签名和架构/版本正确，移除已装app而外部数据保持。原run41254168866 Intel124693699432/ARM124693699544/Windows124693699610均首轮success；6例原报告与3ZIP digest核验，三remotefixture清理0。直接CLI Core0/waited，nativehost0，host拥有的Core/UI退出码未知但OSPIDgone与3normal run已证。限冷升级/隔离自选外部profile，不当热更新、FinderTrash/Gatekeeper/SmartScreen/像素键盘/物理设备验收；回滚与最终分发仍R04.4/.5。旧sameversion stub/lifecycle及QA81冷交接按原scope保留，不替代本轮真实安装步骤。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained. 0.6.0新候选版本准备中，旧957/0.5.7安装升级回滚证据保留原来源；新候选产物/版本/安装与旧版替换尚需绑定验证，暂重新pending。",
+          "remaining": "0.6.0候选须核对新DMG/ZIP/EXE的版本/签名/实际安装生命周期与v0.5.6/v0.5.7冷升级回滚。历史957/0.5.7六例通过不重标新包；待本次实际新包复核后恢复签收。",
           "acceptance_check": "包内Core/UI架构/版本/资源一致；旧配置/Key/用量数据按既有约定保留；无残留在用进程。",
           "history_tasks": [
             78,

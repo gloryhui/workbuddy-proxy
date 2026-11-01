@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
+from release_version import release_version
 
 
 def compiler():
@@ -31,9 +32,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--zip', required=True)
     parser.add_argument('--output', default='dist')
-    parser.add_argument('--display-version', default='0.5.7')
+    parser.add_argument('--display-version', help='Must match the Core/UI Cargo package version')
     args = parser.parse_args()
+    try:
+        args.display_version = release_version(args.display_version)
+    except ValueError as error:
+        parser.error(str(error))
     archive = Path(args.zip).resolve()
+    if not archive.stem.startswith(f'workbuddy-proxy-{args.display_version}-'):
+        parser.error('ZIP filename version does not match the Core/UI Cargo package version')
     out = Path(args.output).resolve()
     out.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='workbuddy-installer-build-') as temp:

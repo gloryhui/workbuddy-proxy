@@ -1,6 +1,6 @@
 # Studio V2 升级备份与冷回滚
 
-> 发布准备文档。候选运行时代码为 `9570451`，仍使用测试版本字符串 `0.5.7`，与公开 v0.5.7 包内容不同，必须按来源与 SHA256 区分。正式版本、签名信任及全部发布门禁尚待签收，本页不构成发布声明。
+> 发布准备文档。Studio V2 新候选按 `0.6.0` 准备；完整发布门禁尚待签收，本页不构成发布声明。历史冷升级／回滚证据使用 runtime `9570451`、测试版本字符串 `0.5.7`，与公开 v0.5.7 包内容不同，不重标为新候选。所有程序均按来源与 SHA256 区分。
 
 ## 升级前保留什么
 
@@ -21,13 +21,13 @@
 
 ## 包来源与校验
 
-六个旧包的完整 URL、大小与 SHA256 固定在 [`release_upgrade_sources.json`](../../scripts/release_upgrade_sources.json) 的 `official_releases` 中，分别来自公开 [v0.5.6](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.5.6) 和 [v0.5.7](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.5.7)。下载后以 `shasum -a 256 "包路径"`（macOS）或 `Get-FileHash -Algorithm SHA256 -LiteralPath '包路径'`（PowerShell）核对清单。校验失败即停止。
+六个旧包的完整 URL、大小与 SHA256 固定在仓库的 [`release_upgrade_sources.json`](https://github.com/gloryhui/workbuddy-proxy/blob/feat/studio_v2_gpui/scripts/release_upgrade_sources.json) 的 `official_releases` 中，分别来自公开 [v0.5.6](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.5.6) 和 [v0.5.7](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.5.7)。下载后以 `shasum -a 256 "包路径"`（macOS）或 `Get-FileHash -Algorithm SHA256 -LiteralPath '包路径'`（PowerShell）核对对应清单。校验失败即停止。
 
-候选使用同一清单绑定 runtime `9570451` / CI `41246381635` 的三份 artifact。测试分别核对下载来源、大小、SHA 和实际安装文件。CI artifact 有保留期限；正式 RC 仍需固定可获取的原包、候选包和校验清单，不能把临时 artifact 当长期公开分发。
+同一清单的候选记录绑定具体版本、runtime、CI 和三份 artifact，不能只按“候选”名称推断内容。历史已验证记录为 runtime `9570451` / CI `41246381635`；新候选须在新包验收后更新记录。CI artifact 有保留期限；正式分发仍需固定可获取的原包、候选包和校验清单，不能把临时 artifact 当长期公开下载。
 
 ## 自动化验收与范围
 
-从仓库根目录，在一次性 GitHub Actions runner 上运行：
+以下是开发者在仓库中的验证命令，安装包不包含这些测试脚本。只在一次性 GitHub Actions runner 上运行：
 
 ```text
 python scripts/installed_upgrade_test.py --platform PLATFORM --directory NEW_FIXTURE --output-dir REPORTS --verify-rollback
@@ -39,6 +39,6 @@ python scripts/installed_upgrade_test.py --platform PLATFORM --directory NEW_FIX
 
 每例用真实旧 Core 写 12 条有价记录与非默认设置，完整备份，实际升级并新写第 13 条。回滚恢复原程序及完整目录：启动前文件树字节一致、schema 为原值，旧版能再写一条有价记录，原 12 条保持；候选第 13 条只在保留目录中，保留目录字节不变。报告不包含配置、Key 或数据库。
 
-本机 SQLite 的冷只读 WAL 打开诊断见 [原始记录](benchmarks/cold-rollback/readonly-wal-diagnostic.json)。仅已停止且 WAL 无未检查点内容时使用 immutable 读取，运行中保持普通只读，不跳过有内容的 WAL；其条件依据 [SQLite 官方说明](https://sqlite.org/wal.html#read_only_databases)。
+本机 SQLite 的冷只读 WAL 打开诊断见 [历史原始记录](https://github.com/gloryhui/workbuddy-proxy/blob/feat/studio_v2_gpui/docs/studio_v2/benchmarks/cold-rollback/readonly-wal-diagnostic.json)。仅已停止且 WAL 无未检查点内容时使用 immutable 读取，运行中保持普通只读，不跳过有内容的 WAL；其条件依据 [SQLite 官方说明](https://sqlite.org/wal.html#read_only_databases)。
 
 旧版 GUI、物理键鼠、热升级、默认路径所有历史变体、WorkBuddy 会话、真实系统登录、数据库历史自动合并不在本项证明中。正式版本、公开截图及最终发布结论仍由 R04.4 / R04.5 单独验收。
