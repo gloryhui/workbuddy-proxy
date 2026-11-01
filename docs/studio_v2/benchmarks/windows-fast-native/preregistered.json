@@ -1,0 +1,35 @@
+{
+  "batch": "QA87",
+  "planned_at": "2026-11-01T04:23:35.335685+00:00",
+  "runtime_ui_source": "5681103e5b05fb88c73f8ea4a32bafd11cbc3380",
+  "frozen_core_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "scope": [
+    "No compilation or Core suite",
+    "Verify both CI archives byte size and SHA256, source and successful run",
+    "GDI representative 1440x900 and 1100x700 logical client",
+    "Existing single-instance, UI-close/reopen, draft isolation and normal Core lifecycle",
+    "Temporary display resolution restore and exact owned fixture cleanup"
+  ],
+  "excluded": [
+    "Physical input/IME/AT",
+    "System HiDPI changes",
+    "All 40 frames or theme/language combinations",
+    "Installer/upgrade/rollback",
+    "Full final RC or public release"
+  ],
+  "failure_policy": "One actual dispatch; preserve first failure. No unchanged rerun to green. Resume missing evidence reads only.",
+  "local_checks": {
+    "python_syntax": "passed",
+    "yaml_syntax": "passed",
+    "source_drift_guards": "passed both Core and UI",
+    "artifact_live_metadata": "both unexpired; size/digest/source/run match pins",
+    "provenance_checks": "valid metadata and exact ZIP member accepted; 12 wrong/expired/ambiguous cases rejected without extraction",
+    "portability": "5 passed",
+    "git_diff_check": "passed"
+  },
+  "sources": {
+    "scripts/windows_frozen_native.py": "26f68bbb8dc8ce468cfb8b3ae961d6ba69111aa80bbb2b8f1a077709490c4f08",
+    ".github/workflows/windows-native.yml": "8937615a87c8e3a3fe998d1680e928a52500dc7bedd37e6f6372b3d4fb25118d",
+    ".github/workflows/desktop.yml": "562675cb3c342e6214d708e2f8228972fbd334db2d6b80572c0e2f7e79224b37"
+  }
+}

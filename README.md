@@ -520,6 +520,8 @@ Cargo 默认复用当前仓库的 `target/`、`gpui/target/`；如需共享 work
 
 仅修改 GPUI 时，可使用 Desktop workflow 的 `ui_only=true` 手动入口，在 Windows、macOS ARM 和 Intel 上检查 GPUI 格式、Clippy、单元测试、Release 构建及 `--version`。例如将 `BRANCH` 替换为待验证分支后执行 `gh workflow run desktop.yml --ref BRANCH -f ui_only=true`。此模式不运行 Core、安装器或迁移测试，也不生成正式安装包；默认完整流程保留，最终 RC 仍需完整发布门禁。已通过且未受改动影响的检查无需在每次小调整后重复运行。
 
+已构建 UI 的 Windows 原生复核可单独使用 `windows_native_only=true`，另外两个手动开关保持 false。此入口复用 `scripts/windows_frozen_native.py` 中明确固定的已通过 CI 产物，核对来源、下载大小和 SHA256，仅组合两个程序供现有 GDI 两尺寸截图与生命周期测试使用，不构建、不安装、不发布。Core/UI 源码漂移或产物过期会失败，需先完成对应新构建再更新固定来源；不可将测试目录当作正式安装包。截图和生命周期报告不能替代物理键盘、IME、HiDPI 或最终 RC 验收。
+
 ```sh
 python3 scripts/path_portability_test.py
 cargo test --locked

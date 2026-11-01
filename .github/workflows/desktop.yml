@@ -12,11 +12,15 @@ on:
         description: Check only GPUI on all three platforms; no Core, installer or migration tests
         type: boolean
         default: false
+      windows_native_only:
+        description: Capture the pinned checked Windows UI with the frozen Core; no builds
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   desktop:
-    if: ${{ github.event_name != 'workflow_dispatch' || (!inputs.upgrade_only && !inputs.ui_only) }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (!inputs.upgrade_only && !inputs.ui_only && !inputs.windows_native_only) }}
     strategy:
       fail-fast: false
       matrix:
@@ -170,3 +174,9 @@ jobs:
   ui-checks:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.ui_only }}
     uses: ./.github/workflows/ui-checks.yml
+  windows-native:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.windows_native_only }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/windows-native.yml
