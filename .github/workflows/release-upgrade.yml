@@ -22,6 +22,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify cold WAL snapshot integrity
+        run: python scripts/release_upgrade_snapshot_test.py
       - name: Upgrade real packages and restore the original cold backup
         env:
           GH_TOKEN: ${{ github.token }}

@@ -21,6 +21,7 @@ import socket
 import sqlite3
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 import urllib.request
@@ -54,11 +55,47 @@ def snapshot(directory, *, cold=False):
         assert not any((directory / name).exists()
                        for name in ('instance.json', 'gpui.json', 'frontend.json'))
         wal = directory / 'usage.sqlite3-wal'
-        assert not wal.exists() or wal.stat().st_size == 0, 'Cold DB has uncheckpointed WAL'
+        if wal.exists() and wal.stat().st_size:
+            # PASSIVE checkpoint need not truncate WAL. A nonempty WAL can
+            # also hold committed rows, so immutable/main-only reads are unsafe.
+            # Read a disposable DB+WAL copy; never recover/checkpoint the source.
+            sources = [directory / 'usage.sqlite3', wal]
+            assert all(p.is_file() and not p.is_symlink() for p in sources)
+            before = {p: p.read_bytes() for p in sources}
+            with tempfile.TemporaryDirectory(
+                    prefix='studio-cold-snapshot-',
+                    dir=Path(tempfile.gettempdir()).resolve()) as temporary:
+                root = Path(temporary)
+                try:
+                    for source, blob in before.items():
+                        (root / source.name).write_bytes(blob)
+                    # SQLite builds its own SHM in the copy. A writable open is
+                    # needed for WAL recovery, but SQL below remains query-only.
+                    result = database_snapshot((root / 'usage.sqlite3').as_uri() + '?mode=rw')
+                finally:
+                    files = list(root.iterdir())
+                    assert root.resolve() == root and not root.is_symlink()
+                    assert all(p.is_file() and not p.is_symlink() and not os.path.ismount(p)
+                               for p in files)
+                    if hasattr(os, 'getuid'):
+                        assert all(p.stat().st_uid == os.getuid() for p in [root, *files])
+                    print('CLEANUP_PLAN:', json.dumps({
+                        'target': str(root), 'type': 'fresh stopped DB+WAL snapshot copy',
+                        'project': str(Path(__file__).resolve().parents[1]),
+                        'files': len(files), 'bytes': sum(p.stat().st_size for p in files),
+                        'regenerable': 'Source bytes retained; no child and SQLite connection closed'}))
+            assert not root.exists()
+            assert all(p.read_bytes() == blob for p, blob in before.items())
+            return result
         # Darwin's bundled SQLite can refuse a read-only WAL DB without
         # sidecars. Only a proven stopped, checkpointed DB is immutable here.
         uri += '&immutable=1'
+    return database_snapshot(uri)
+
+
+def database_snapshot(uri):
     with closing(sqlite3.connect(uri, uri=True)) as db:
+        db.execute('PRAGMA query_only=ON')
         db.row_factory = sqlite3.Row
         tables = {}
         for table in BUSINESS_TABLES:
