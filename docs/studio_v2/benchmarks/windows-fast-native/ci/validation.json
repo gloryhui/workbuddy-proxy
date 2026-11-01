@@ -1,0 +1,95 @@
+{
+  "result": "passed",
+  "run_id": 41272932710,
+  "source": "67eaff3fd6a4e709f9836421c1c6d2b6621660d0",
+  "attempt": 1,
+  "job_id": 124749239785,
+  "job_seconds": 43,
+  "skipped_jobs": [
+    "desktop",
+    "ui-checks",
+    "released-upgrades"
+  ],
+  "artifact": {
+    "id": 13070162370,
+    "bytes": 154989,
+    "sha256": "e9aba3cadbbedd94bcd2c3c2de68762e8f6b242301e524695ebac27434573ae6",
+    "server_digest_matches": true
+  },
+  "runtime": {
+    "ui_source": "5681103e5b05fb88c73f8ea4a32bafd11cbc3380",
+    "ui_sha256": "cd1a266c3e892a72ddf5e922b697155020c69fff5641e993940cce3859663d90",
+    "core_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+    "core_sha256": "880016c6b5c3cf8c0b269e4ed5a74ab6bfaa6026a888b52850b19048a31590e6",
+    "note": "Windows binary hashes; Mac hashes differ. Two-executable temporary test layout, not released package."
+  },
+  "script_binding": {
+    "git_lf_sha256": "26f68bbb8dc8ce468cfb8b3ae961d6ba69111aa80bbb2b8f1a077709490c4f08",
+    "runner_crlf_sha256": "cf9115000ca2b3f752ca4d82a8ec085c7e0d9b92d5fb91148667b608a1189b6a",
+    "exact_lf_to_crlf_matches": true,
+    "initial_validator_failure": "Compared raw LF Git file to Windows checked-out CRLF file; assertion failed. Exact CRLF expansion matches runner hash; no product or CI rerun, original reports unchanged."
+  },
+  "exit": {
+    "capture_returncode": 0,
+    "harness_returncode": 0,
+    "lifecycle_report": "passed",
+    "normal_quit_stats_checks": true,
+    "ui_exit_code": "Not exposed by host-owned UI; no invented zero"
+  },
+  "display": {
+    "dpi": 96,
+    "original": [
+      1024,
+      768
+    ],
+    "temporary": [
+      1920,
+      1080
+    ],
+    "restored": true
+  },
+  "cleanup": {
+    "outer": {
+      "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\studio-windows-frozen-uf0nukmz",
+      "type": "session-owned CI downloads and two-binary test layout",
+      "project": "D:\\a\\workbuddy-proxy\\workbuddy-proxy",
+      "files": 5,
+      "bytes": 145389864,
+      "regenerable_from": {
+        "core": {
+          "id": 13060545088,
+          "run_id": 41246381635,
+          "source": "9570451e5006e25118cb2cafa6b3da69353836da",
+          "name": "workbuddy-proxy-windows-x64",
+          "bytes": 60734196,
+          "sha256": "8aba173b7b087c4add1832aa96220129b47f7c855d97afb7b506ac59f56c226f"
+        },
+        "ui": {
+          "id": 13069217005,
+          "run_id": 41270728784,
+          "source": "5681103e5b05fb88c73f8ea4a32bafd11cbc3380",
+          "name": "studio-ui-check-windows-x64",
+          "bytes": 29808660,
+          "sha256": "e5f5ad012349d2d5081716c86fb82da8f0526d851df340d5b618696db20f7a33"
+        }
+      },
+      "process_references": [],
+      "free_before_bytes": 32538791936,
+      "status": "removed",
+      "temporary_bytes_remaining": 0,
+      "free_after_bytes": 32684191744
+    },
+    "inner": {
+      "status": "removed",
+      "bytes": 59996132,
+      "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\workbuddy-ci-capture-oedz3twx"
+    },
+    "total_logical_bytes": 205385996,
+    "runner_fixture_temporary_remaining_bytes": 0,
+    "local_new_temporary_roots_created": 0,
+    "local_system_free_bytes": 38397714432
+  },
+  "local_checks": "../preregistered.json",
+  "images": "../visual-review.json",
+  "limit": "15 pending release tasks remain. No physical input/IME/AT/HiDPI, install or final RC acceptance."
+}

@@ -1,0 +1,40 @@
+{
+  "result": "passed scoped representative visual review",
+  "images": [
+    {
+      "path": "ci/artifact/native/windows-ci-1440x900.png",
+      "bytes": 78805,
+      "dimensions": [
+        1442,
+        901
+      ],
+      "sha256": "588e3acd392aff5070cafd145ac851c6e2485d615be58936c0c61a59b178440d",
+      "parent_viewed_original": true
+    },
+    {
+      "path": "ci/artifact/native/windows-ci-1100x700.png",
+      "bytes": 74271,
+      "dimensions": [
+        1102,
+        701
+      ],
+      "sha256": "4c08d7ff57dd05280bbf0e20e60548ed7f779a749a0cd3bce89d205f385c2787",
+      "parent_viewed_original": true
+    }
+  ],
+  "findings": [
+    "Caption controls in top native row; business icons below, no visible overlap in either image",
+    "Default English Usage records page, one synthetic provider/64 models, zero requests",
+    "At 1100 client width model filters wrap; page controls remain visible",
+    "Narrow table Status column outside current horizontal viewport; no horizontal scroll interaction tested",
+    "No private provider/key/profile content visible; synthetic fixture and loopback only",
+    "Original PNG bytes retained, without crop/resize/repaint/format conversion"
+  ],
+  "not_proven": [
+    "Caption/control clicks",
+    "Physical keyboard/IME/AT",
+    "Tray clicking/system login/HiDPI/multi-monitor",
+    "All application states or modals",
+    "Installer/final RC"
+  ]
+}

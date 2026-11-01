@@ -1,0 +1,19 @@
+{
+  "source": "67eaff3fd6a4e709f9836421c1c6d2b6621660d0",
+  "workflow_id": 384265872,
+  "run_id": 41272932710,
+  "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41272932710",
+  "actual_dispatches": 1,
+  "dispatch_transport_exit": 0,
+  "inputs": {
+    "windows_native_only": true,
+    "ui_only": false,
+    "upgrade_only": false
+  },
+  "preflight": {
+    "remote_equals_local": true,
+    "source_runs_before_dispatch": 0,
+    "workflow_active": true
+  },
+  "recorded_at": "2026-11-01T04:24:20.804946+00:00"
+}

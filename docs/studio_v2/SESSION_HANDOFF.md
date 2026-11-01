@@ -2,7 +2,15 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA86）
+## 最新进展（QA87）
+
+- 测试精简入口`67eaff3`已推：`windows_native_only=true`复用原成功CI的UI568/Windows `cd1a266c`与冻结957/Core `880016c6`，源码漂移、过期、run/source/下载大小SHA不匹配即失败。仅组合两程序临时布局跑既有两尺寸GDI/生命周期，无构建/安装或分发包。Mac UI仍3c19/Core1146，Windows hash不能混用。[预注册](benchmarks/windows-fast-native/preregistered.json)。
+- 唯一[run41272932710](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41272932710)绑定67eaff3/attempt1，job124749239785首次43秒成功，Desktop/UI构建/旧升级三job skipped；artifact13070162370、154,989B ZIP大小SHA与所有原报告/PNG均独立核对。[CI来源/清理](benchmarks/windows-fast-native/ci/validation.json)。
+- 原PNG1442×901/1102×701已逐图查看，实际client1440×900/1100×700、DPI96，caption和toolbar无可见重叠，小窗筛选正常换行。仅英文1供应商/64模型/0请求，未验caption/托盘点击、键盘/IME/HiDPI/弹窗；Status列在小窗横向视口外，未验横滚。harness单实例、关设置留同Core、重开/草稿隔离、正常退出和统计run通过，harness/capture0，UI退出码未知。[原图](benchmarks/windows-fast-native/visual-review.json)。
+- 临时显示1920×1080恢复1024×768校验通过，DPI未改。两精确自有runner临时根已清理205,385,996B约195.87MiB，runner专用临时0；本机未新建临时根，保留两必要基线共97.14MiB及共享缓存，系统盘约35.76GiB。无本机应用窗口/新后台进程；不要重开QA86已删bundle。首归档GET EOF只补读；初validator将GitLF对WindowsCRLF误判，精确展开hash一致，未改原报告/重跑CI。[QA87](benchmarks/rc-round87-summary.json)。
+- **40帧剩0，发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active。禁止自动开启旁白/系统辅助功能/切输入源，未公开发布。** QA87证据提交后时间线统一生成一次；不要重复相同验证。下一步优先R01可支持的真实缺口与R03有效前台/启动慢样本/最终长时证据；前台API条件此前未建立，不重复要求用户点击同一旧窗口，不把后台CPU结果当最终前台门禁。最终完整RC留实际候选冻结后统一执行。
+
+## 上一轮进展（QA86）
 
 - 运行时代码已推`5681103`：UI SHA256 `3c19fb96dd345c7e0a3287ee58eb523e5c959a5f555d57b888d51ec062893bbb`，Core仍`1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e`，Core源码未改。Kit仍0.7.3，仅启用可选Fast并精确pin引擎0.1.7；实际macro为0.1.12，Cocoa0.26.1→0.26.0、unicode-properties0.1.4→0.1.3为约束所需，详见锁图。实际registry包校验`35cb4c01...`且重要源文件逐字节等于原档，未改registry。缓存回放节点/焦点关系/动作，`retained_gpui::Window`编译期约束避免切回缺回放后端。[源码/范围](benchmarks/dependency-review/delivered-scope.json)。
 - 试验首UI32beb发现Cancel清内容后留下白壳/遮罩，原图/AX/代码补丁保留。将`manage_dialog`从Proxy.render移到weak owner-state observe_in，F1/3c19同4096负载一次Cancel后无壳，统计1015可达。模型空ID错误保留modal、协议Esc、删除/同步/取消同步/端口Cancel均通过；StartupSync/pendingPort未触发，不签全状态。小图实际1100×701，恢复末图1440×900；蓝白→Studio、zh→en→zh通过。[红绿](benchmarks/dependency-review/modal-regression.json)、[F1原生](benchmarks/dependency-review/F1-native-final.json)。

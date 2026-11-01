@@ -1,0 +1,7 @@
+[
+  {
+    "operation": "GET run metadata",
+    "error": "EOF",
+    "outcome": "No CI dispatch or test rerun; resume missing evidence reads only"
+  }
+]

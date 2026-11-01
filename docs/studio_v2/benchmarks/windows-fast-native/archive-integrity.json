@@ -1,0 +1,65 @@
+{
+  "files": {
+    "ci/artifact/frozen-native.json": {
+      "bytes": 37477,
+      "sha256": "bd067deb88e3b336b4a73e9789f896da6d85e48cec1e9ebe8d5a2998d0236383"
+    },
+    "ci/artifact/native/windows-ci-1100x700.png": {
+      "bytes": 74271,
+      "sha256": "4c08d7ff57dd05280bbf0e20e60548ed7f779a749a0cd3bce89d205f385c2787"
+    },
+    "ci/artifact/native/windows-ci-1440x900.png": {
+      "bytes": 78805,
+      "sha256": "588e3acd392aff5070cafd145ac851c6e2485d615be58936c0c61a59b178440d"
+    },
+    "ci/artifact/native/windows-ci-lifecycle.json": {
+      "bytes": 1100,
+      "sha256": "614da622eb26e32fefb8e4c826ccb0403e197a745147826ed1d297931316f67c"
+    },
+    "ci/artifact/native/windows-ci-screenshot.json": {
+      "bytes": 13626,
+      "sha256": "68b00ee7c4aca66d27599c7d380412d06b6d10bfc4032de83394aef6ad6a35fd"
+    },
+    "ci/artifact.zip": {
+      "bytes": 154989,
+      "sha256": "e9aba3cadbbedd94bcd2c3c2de68762e8f6b242301e524695ebac27434573ae6"
+    },
+    "ci/artifacts.json": {
+      "bytes": 744,
+      "sha256": "92d2df80285c29c6418aa95a89ed5ddf71049faa6ae81e19970db7877e8874cc"
+    },
+    "ci/jobs.json": {
+      "bytes": 5159,
+      "sha256": "68e4bef530dc0ef99d3e924527128b2ccc6a1c7264b92b1ef09cecccd8179a8b"
+    },
+    "ci/read-transport-failures.json": {
+      "bytes": 151,
+      "sha256": "5712bcde9617063693c5b3257bd6a3198a64626723024556b2c295e0be8c8c99"
+    },
+    "ci/run.json": {
+      "bytes": 13369,
+      "sha256": "2139d1242e0e45d639c0969ce2035768f34b7b83853ef0f72bdd167f413e4b20"
+    },
+    "ci/run.log.txt": {
+      "bytes": 35424,
+      "sha256": "3404ce1ff2e4f12c7132d2b131a9dee144fbc6ee613f53d7f61c2a5dfb8486ee"
+    },
+    "ci/validation.json": {
+      "bytes": 3372,
+      "sha256": "ba63a4a4438c20450887b3848bb37bf11d7a409c611d157fa7de3a60b7497057"
+    },
+    "dispatch.json": {
+      "bytes": 525,
+      "sha256": "c943a79d20e20c47ee585bbe5520f6d86c0dcc30ac8b41818fb2c05d3ac71420"
+    },
+    "preregistered.json": {
+      "bytes": 1670,
+      "sha256": "e2776bd143b18ab6fa9c0177e54f26f2ee2ecbb6c70742c96ecde86d5c9458db"
+    },
+    "visual-review.json": {
+      "bytes": 1402,
+      "sha256": "fd07feabc68071de6f9c7600768bee0a0b6ad49b8f2d82033aa2a23871c1c130"
+    }
+  },
+  "summary_sha256": "763daf4567608939c843c8cacefb75499e1ede292dfef02541e59203c2877d07"
+}
