@@ -1,0 +1,8 @@
+{
+  "job": 124817029712,
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "Rust_summaries": [
+    "2026-11-01T10:12:59.0060012Z test result: ok. 580 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 163.11s",
+    "2026-11-01T10:23:06.7416215Z test result: ok. 215 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.49s"
+  ]
+}

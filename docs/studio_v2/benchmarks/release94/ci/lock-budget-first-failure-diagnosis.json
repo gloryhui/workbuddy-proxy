@@ -1,0 +1,32 @@
+{
+  "failed_job": 124817029896,
+  "failed_test": "stats::store::tests::a_held_lock_fails_one_batch_within_the_budget",
+  "original_elapsed_seconds": 2.350372875,
+  "bound_seconds": 2.25,
+  "original_results": {
+    "passed": 579,
+    "failed": 1
+  },
+  "unchanged_Core_since_QA91_verified_by_git_diff": true,
+  "same_source_other_platforms_passed_this_test": [
+    "Linux current full Core success",
+    "Windows Core test step success",
+    "Intel Core test step success"
+  ],
+  "local_single_test": {
+    "command": "cargo test --locked stats::store::tests::a_held_lock_fails_one_batch_within_the_budget -- --exact --nocapture",
+    "passed": 1,
+    "failed": 0,
+    "filtered_out": 579,
+    "harness_elapsed_seconds": 1.1,
+    "tool_exit": 0
+  },
+  "cause_assessment": "Elapsed-only outlier consistent with scheduling/lock-wait variability; exact runner scheduling cause not instrumented or proven. No semantic/data-integrity assertion failed.",
+  "next_action": "One targeted failed-job retry only, preserve first failure; do not widen timing budget, ignore tests, rerun successful jobs, or retry indefinitely.",
+  "recorded_at": "2026-11-01T10:21:25.521551+00:00",
+  "retry_request_status": {
+    "CLI": "job124817029896cannotbererun",
+    "formal_API": "POST /actions/jobs/124817029896/rerun returned HTTP403: The workflow run containing this job is already running",
+    "action": "No actual retry started. Await original workflow terminal, then one eligible retry of failed Mac job only. No change in auth, assertions, source, or success-job executions."
+  }
+}

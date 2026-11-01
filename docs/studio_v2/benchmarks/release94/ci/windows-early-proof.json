@@ -1,0 +1,175 @@
+{
+  "artifact": {
+    "id": 13080133278,
+    "node_id": "MDg6QXJ0aWZhY3QxMzA4MDEzMzI3OA==",
+    "name": "workbuddy-proxy-windows-x64",
+    "size_in_bytes": 61367328,
+    "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13080133278",
+    "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13080133278/zip",
+    "expired": false,
+    "digest": "sha256:4afc8b653424dcdd47a628829498d70177071afc1879a31239553556ac0be793",
+    "created_at": "2026-11-01T10:35:48Z",
+    "updated_at": "2026-11-01T10:35:48Z",
+    "expires_at": "2027-01-30T10:07:19Z",
+    "workflow_run": {
+      "id": 41296054505,
+      "repository_id": 1416761973,
+      "head_repository_id": 1416761973,
+      "head_branch": "main",
+      "head_sha": "763f2aefb5e644d84250590aaa3bdc96a90b6e11"
+    }
+  },
+  "download_sha256": "4afc8b653424dcdd47a628829498d70177071afc1879a31239553556ac0be793",
+  "archive_reused_for_final_collection": true,
+  "reports": [
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/core-windows-x64.json",
+      "keys": [
+        "platform",
+        "architecture",
+        "mode",
+        "configured_providers",
+        "configured_models",
+        "alias_rewrite",
+        "binary_bytes",
+        "idle_rss_mib",
+        "core_idle_rss_mib",
+        "measured_process_count",
+        "ui_idle_rss_mib",
+        "tray_idle_rss_mib",
+        "core_ready_ms",
+        "ui_record_ready_ms",
+        "sampled_peak_rss_mib",
+        "post_load_rss_mib",
+        "small_request_count",
+        "direct_loopback_ms",
+        "proxied_loopback_ms",
+        "median_proxy_overhead_ms",
+        "large_request_size_mib",
+        "large_concurrency",
+        "large_requests",
+        "large_seconds",
+        "notes"
+      ],
+      "result": null
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/gpui-windows-x64.json",
+      "keys": [
+        "platform",
+        "architecture",
+        "processes_with_settings",
+        "core_rss_mib",
+        "tray_rss_mib",
+        "gpui_rss_mib",
+        "model_count",
+        "note",
+        "settings_open_rss_mib",
+        "settings_closed_rss_mib",
+        "processes_after_close",
+        "checks",
+        "hold_mode",
+        "result"
+      ],
+      "result": "passed"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-installer.json",
+      "keys": [
+        "platform",
+        "architecture",
+        "processes_with_settings",
+        "core_rss_mib",
+        "tray_rss_mib",
+        "gpui_rss_mib",
+        "model_count",
+        "note",
+        "settings_open_rss_mib",
+        "settings_closed_rss_mib",
+        "processes_after_close",
+        "checks",
+        "hold_mode",
+        "result",
+        "installer_checks"
+      ],
+      "result": "passed"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-lifecycle.json",
+      "keys": [
+        "platform",
+        "architecture",
+        "processes_with_settings",
+        "core_rss_mib",
+        "tray_rss_mib",
+        "gpui_rss_mib",
+        "model_count",
+        "note",
+        "settings_open_rss_mib",
+        "settings_closed_rss_mib",
+        "processes_after_close",
+        "checks",
+        "hold_mode",
+        "result"
+      ],
+      "result": "passed"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-screenshot.json",
+      "keys": [
+        "result",
+        "capture_backend",
+        "captures",
+        "helper_attempts",
+        "window_attempts",
+        "display",
+        "hold_mode_limit",
+        "cleanup",
+        "package_manifest_sha256",
+        "package_files_sha256",
+        "core_sha256",
+        "ui_sha256",
+        "capture_helper_sha256",
+        "harness_sha256",
+        "temporary_directory",
+        "source_exe",
+        "harness_pid",
+        "host_pid",
+        "core_pid",
+        "ui_pid",
+        "hold_marker",
+        "harness_returncode",
+        "lifecycle_report"
+      ],
+      "result": "passed"
+    }
+  ],
+  "native_images": [
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-1100x700.png",
+      "sha256": "a0f30c8dbb39511d6c0a3a088b23a944f0aa0ba5437f2318f1463c9e2e129ac1",
+      "size": [
+        1102,
+        701
+      ]
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-1440x900.png",
+      "sha256": "35bcc07d67944d3cbb4671f9dac36fba993e933b8b9d207a61b4523a83deecea",
+      "size": [
+        1442,
+        901
+      ]
+    }
+  ],
+  "packages_seen": [
+    {
+      "name": "workbuddy-proxy-0.6.0-windows-x64-setup.exe",
+      "bytes": 27940726
+    },
+    {
+      "name": "workbuddy-proxy-0.6.0-windows-x64.zip",
+      "bytes": 33827484
+    }
+  ]
+}

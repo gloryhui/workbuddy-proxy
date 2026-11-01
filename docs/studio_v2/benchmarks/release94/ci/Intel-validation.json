@@ -1,0 +1,24 @@
+{
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "original_job": 124817029958,
+  "artifact": 13080189314,
+  "artifact_server_digest_verified": true,
+  "lifecycle_checks": [
+    "separate lightweight core/tray/GPUI processes",
+    "repeated launch reuses the existing application instance",
+    "closing settings releases GPUI without stopping the core",
+    "tray reopens settings using the same core",
+    "private unsaved drafts survive reopening without changing config.json",
+    "real loopback streaming diagnostic with selected model",
+    "ordered core log clear",
+    "exactly one statistics run owned by the core",
+    "opening settings never recovers a live core",
+    "normal quit flushes the run and stops the core",
+    "reopening after normal quit has no unclean-exit warning"
+  ],
+  "import_checks": {
+    "passed": 158,
+    "failed": 0
+  },
+  "scope": "CI native Intel DMG lifecycle/installation evidence; physical Intel GUI/tray/matched performance remains deferred."
+}

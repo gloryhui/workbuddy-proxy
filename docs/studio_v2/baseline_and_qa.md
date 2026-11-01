@@ -1884,3 +1884,13 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 原生close后UI PIDgone/退出码未知，Core与原driver句柄均0。config/models整份字节及5业务表全字段冷核相同，2真实请求/2成本保持；1362管理命令仅原save403，native仅guard_installed，无open/terminate。Core kernel保护，GUI隔离环境/deny-onlyguard。元数据缺PIL和首次cold-read收集错误均留痕，未安装依赖、重跑产品测试或改数据。[数据](benchmarks/qingjian-fields/final-data-proof.json)、[说明](benchmarks/qingjian-fields/collection-notes.json)。
 - 自有QA93根经完整及即时边界/owner/库存hash/lsof0/ps0核实后精确非强制清理41文件/19子目录52,946,528B约50.49MiB；本轮临时0，APFS观测可用增加53,178,368B，系统盘约34.43GiB。必要baseline/原RC包/共享cache与全部报告保留，不再开已删窗口。[清理](benchmarks/qingjian-fields/cleanup.json)。
 - 40帧剩0，发布待验仍15=R01 4/R02 4/R03 3/R04 4，Goal active。本轮代表安全行为通过，不扩称所有特殊提交/关闭字段、整R01/真实AT/跨平台或最终性能验收。先源码归并剩余不同handler，仅补缺口；不开旁白/AT、不切源/缩放、不公开发布；证据提交后--task93一次更新时间线。[QA93](benchmarks/rc-round93-summary.json)。
+
+## 小功能 94：Studio V2 v0.6.0正式发布与main/README更新（2026-11-01）
+
+- 用户明确快速推进并直接发布、更新README与main。按快速清单延后全状态/输入焦点穷举、真实AT、额外硬件/缩放和长前台性能，不将未测试项标通过。40帧签收保持，原完整12专项保留未验证状态。R04.1/4/5按本次授权交付签收。[清单](FAST_RELEASE_CHECKLIST.md)。
+- main从e96快进763f2ae，保留原output/、无强推/改历史。README改为0.6.0下载与7皮肤，5张当前UI855/0.6原生1440×901JPEG均独立合成配置实拍/Key掩码，GitHub main逐图hash一致。截图阶段只导航，不重复已过人工交互；首skin因隔离只读查询漏放而重拍这一张，旧原图/21次403保留，不归为产品失败。[拍摄](benchmarks/release94/native-capture.json)。
+- 同一冻结763的唯一自动Core41296054368与Desktop41296054505最终success。Linux579，Win580/GPUI215，Intel580/216，ARM580/216，三UI各2既有ignore。ARM原首轮held-lock2.350s超2.25（579pass/1fail）保留；本机单项1.10s对照，Core源码无变，原run终态后只失败ARM补一次/attempt2成功，无放宽/忽略/成功任务重跑。初始请求被GitHub因run仍运行拒绝，没有新test执行。[诊断](benchmarks/release94/ci/lock-budget-first-failure-diagnosis.json)、[终态](benchmarks/release94/ci/terminal-runs.json)。
+- 3artifact服务器SHA/ZIPCRC、4新包SHA核验；3平台各11包生命周期和158导入、Linux15故障全过；Windows安装器10项与2原生GDI图复核，画面UI/Coresha等实际ZIP，96DPI与分辨率恢复如实记录。不是物理IME/Intel完整GUI/HiDPI/长期前台性能验收。[包检查](benchmarks/release94/final-package-validation.json)。
+- 已于2026-11-01T11:35:34Z发布[v0.6.0](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.0)，为latest stable，tag/main=763；4长期包140,897,937B+420B SHA清单，5服务器digest等本地。匿名SHA全文与4包range GET通过，未重复完整下载二进制；沿用ad-hoc未公证/Windows未签名分发，延后专项在公开说明披露。旧QA91四包/6升级按原来源保留，不重标新包。[公开验证](benchmarks/release94/published-release-verification.json)。
+- 自有截图/Core/辅助bridge正常退出，GUI原生close后PIDgone/退出码未知；config/models及5表全字段、12请求成本保持。两专用根经完整及即时边界/owner/hash/lsof/ps核实精确非强制清理194,727,487B约185.71MiB，本轮临时0。新包134.37MiB/旧包134.37MiB/基线97.14MiB及共享Cargo保留，系统盘约34.46GiB。API EOF/reset仅补读原资源，原失败保留，无TLS或权限绕过。[数据](benchmarks/release94/final-data-proof.json)、[清理](benchmarks/release94/artifact-cleanup.json)。
+- QA94交付与证据提交后显式--task94一次更新时间线，区分“已发布”与“专项延期未验证”；随后完成Goal最终状态。禁止重开已删临时App、重跑已过测试或自动开启旁白/AT/输入源/缩放。[总结](benchmarks/rc-round94-summary.json)。

@@ -1,12 +1,16 @@
 # Studio V2 会话交接与恢复状态（2026-11-01）
 
-此前用户要求暂停并换会话；2026-11-01按明确请求恢复Goal并从R01推进。QA91软件RC批次完成后，同一外部环境阻塞连续三个Goal回合未变，其后用户提供当前Mac人工操作条件并恢复Goal；QA92已完成Mac人工补验、全屏背景修复及三平台UI/WindowsGDI检查，已清理；其后用户跳过第二输入法并再次恢复Goal，QA93已按精简范围完成青简字段与搜索/数字代表补证并清理，详见下节。禁止自动开启旁白；各旧轮证据保留原来源。
+此前用户要求暂停并换会话；2026-11-01按明确请求恢复Goal并从R01推进。QA91软件RC批次完成后，同一外部环境阻塞连续三个Goal回合未变，其后用户提供当前Mac人工操作条件并恢复Goal；QA92已完成Mac人工补验、全屏背景修复及三平台UI/WindowsGDI检查，已清理；其后用户跳过第二输入法并再次恢复Goal，QA93完成青简代表补证后，用户要求快速发布；QA94已发布v0.6.0、更新main/README并清理，详见下节。禁止自动开启旁白；各旧轮证据保留原来源。
 
-## 当前进行中（QA94，精简发布、README与main更新）
+## 最近完成进展（QA94，v0.6.0发布、main与README更新）
 
-- 用户先要求“有些不用测试，快速推进”，随后明确：“后续直接更新release，然后把REAME更新一下，使用最新版的v2截图，把主分支代码更新为v2的新版。”**已授权发布v0.6.0与更新main，无需再次询问。** 执行[快速发布清单](FAST_RELEASE_CHECKLIST.md)，不再补穷举输入/状态/焦点、真实AT/额外硬件/缩放/长前台性能；这些保留未验证说明，原完整15门禁不伪造通过。
-- README改用当前0.6.0/UI855的5张macOS原生JPEG，Key掩码、隔离合成12请求；旧V2画板截图版本标v0.5.7，未当新程序图片。自有截图根/进程/收尾实时状态见[预注册](benchmarks/release94/preregistered.json)，绝不重开已删QA93。只做截图导航，无输入测试或业务保存/同步。
-- main当前e96已是feature祖先（0/193），主工作树仅未跟踪output/必须保留。准备把V2与README快进到main，利用其自动唯一Core+Desktop完整工作流集中核对，不重复手动dispatch。通过后绑定4新包及校验值发布；旧dd9包与6升级仍按原来源。
+- 用户明确要求“有些不用测试，快速推进”，并授权直接更新Release、README最新V2截图和main。已按[快速发布清单](FAST_RELEASE_CHECKLIST.md)交付，[v0.6.0已公开](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.0)，2026-11-01 19:35:34北京时间发布，latest stable/非draft/非prerelease；无需再请求发布授权。[总结](benchmarks/rc-round94-summary.json)。
+- main已从e96快进到`763f2aefb5e644d84250590aaa3bdc96a90b6e11`，与v0.6.0 tag完全一致；原未跟踪output/保留、无force/历史改写。README版本/下载/7皮肤说明和5张当前0.6.0/UI855原生JPEG已更新并从GitHub main逐张hash核对；掩码演示Key、隔离12请求，旧0.5.7画板图未冒充最新。[图源](../screenshots/README.md)。
+- 唯一自动Core41296054368 success（Linux579tests、158导入/15故障全过）；Desktop41296054505最终attempt2 success。Win580/GPUI215、Intel580/216、ARM580/216，三UI各2既有ignore。ARM首轮held-lock时限2.350s超2.25、579pass/1fail原log保留；Core源码与dd9无变化，本机仅该项1.10s对照。原run终态后仅失败ARM job补一次通过，不改时限/忽略/成功任务。早期API403明确run仍在运行，并未执行额外重跑。[最终包检查](benchmarks/release94/final-package-validation.json)、[首次诊断](benchmarks/release94/ci/lock-budget-first-failure-diagnosis.json)。
+- 3实际CI artifact服务器digest/ZIPCRC校验，4新包140,897,937B与420B SHA聚合清单已长期附在Release；5资产服务器SHA匹配本地，公开校验文件全文GET和4二进制rangeGET通过，不称再次完整下载二进制。3平台各11真实包生命周期、Windows10安装器检查/两原GDI图已审且程序sha等实际ZIP，显示恢复成功；每平台158导入检查全过。[公开/tag/main/资产](benchmarks/release94/published-release-verification.json)。
+- 截图fixture只导航，无保存/同步/真实WorkBuddy操作，config/models字节及5业务表全字段/12请求成本保持。初始QA bridge漏放只读stats_breakdown的21条403与首skin原图保留，确认read路径后只加该项，不改产品/注入响应。Core kernel保护已验，GUI仅隔离环境/deny-onlyguard配置，不称GUIkernel。[数据](benchmarks/release94/final-data-proof.json)。
+- 两个QA94本地专用根均已全量/即时owner父链/无symlink/mount/库存hash/lsof/ps核实并精确非强制删除，共194,727,487B约185.71MiB；本轮临时0。新正式包134.37MiB、旧QA91包134.37MiB、2基线97.14MiB和共享Cargo保留，清理时系统盘约34.46GiB。网络EOF/reset仅补读同一资源、保留0B失败下载，不绕TLS、不重派CI。所有驱动/下载/原生UI已终态，**不得重开或重跑已删root及finish-ci/collect脚本**。[清理](benchmarks/release94/artifact-cleanup.json)。
+- **40帧签收/剩0；本次精简发布必需项已完成。原完整12专项明确延期未验证，不计通过、不阻塞用户授权的已发布版本。** R04.1/4/5按本次交付签收，R01/R02/R03和R04.3原未验项保留；不再自动补穷举、真实AT/额外设备/缩放/长前台性能，严格不自动旁白/切源/改系统缩放。当前收尾只需归档QA94证据、一次更新时间线与Goal最终状态，不能再问发布授权。
 
 ## 最近完成进展（QA93，青简字段补验与代表输入收尾）
 

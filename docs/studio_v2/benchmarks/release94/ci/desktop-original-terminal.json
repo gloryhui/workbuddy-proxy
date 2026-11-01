@@ -1,0 +1,1153 @@
+{
+  "attempt": 1,
+  "conclusion": "failure",
+  "databaseId": 41296054505,
+  "headSha": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "jobs": [
+    {
+      "completedAt": "2026-11-01T10:37:46Z",
+      "conclusion": "success",
+      "databaseId": 124817029712,
+      "name": "desktop (windows-latest, windows-x64, target/release/workbuddy-proxy.exe, gpui/target/release/wor...",
+      "startedAt": "2026-11-01T10:07:21Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T10:07:25Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T10:07:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:45Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-11-01T10:07:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:51Z",
+          "conclusion": "success",
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "number": 3,
+          "startedAt": "2026-11-01T10:07:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:51Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-11-01T10:07:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:53Z",
+          "conclusion": "success",
+          "name": "Verify one Core/UI package version",
+          "number": 5,
+          "startedAt": "2026-11-01T10:07:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:57Z",
+          "conclusion": "success",
+          "name": "Run Swatinem/rust-cache@v2",
+          "number": 6,
+          "startedAt": "2026-11-01T10:07:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:59Z",
+          "conclusion": "success",
+          "name": "Run python scripts/path_portability_test.py",
+          "number": 7,
+          "startedAt": "2026-11-01T10:07:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:02Z",
+          "conclusion": "success",
+          "name": "Run cargo fmt --check",
+          "number": 8,
+          "startedAt": "2026-11-01T10:07:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:09:15Z",
+          "conclusion": "success",
+          "name": "Run cargo clippy --locked --all-targets -- -D warnings",
+          "number": 9,
+          "startedAt": "2026-11-01T10:08:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:12:59Z",
+          "conclusion": "success",
+          "name": "Run cargo test --locked",
+          "number": 10,
+          "startedAt": "2026-11-01T10:09:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:16:41Z",
+          "conclusion": "success",
+          "name": "Run cargo build --release --locked",
+          "number": 11,
+          "startedAt": "2026-11-01T10:12:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:16:43Z",
+          "conclusion": "success",
+          "name": "Run cargo fmt --manifest-path gpui/Cargo.toml --check",
+          "number": 12,
+          "startedAt": "2026-11-01T10:16:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:19:54Z",
+          "conclusion": "success",
+          "name": "Run cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings",
+          "number": 13,
+          "startedAt": "2026-11-01T10:16:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:23:06Z",
+          "conclusion": "success",
+          "name": "Run cargo test --manifest-path gpui/Cargo.toml --locked",
+          "number": 14,
+          "startedAt": "2026-11-01T10:19:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:35Z",
+          "conclusion": "success",
+          "name": "Run cargo build --manifest-path gpui/Cargo.toml --release --locked",
+          "number": 15,
+          "startedAt": "2026-11-01T10:23:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:37Z",
+          "conclusion": "success",
+          "name": "Core streaming and cancellation checks",
+          "number": 16,
+          "startedAt": "2026-11-01T10:31:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:41Z",
+          "conclusion": "success",
+          "name": "Model discovery and locale checks",
+          "number": 17,
+          "startedAt": "2026-11-01T10:31:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:43Z",
+          "conclusion": "success",
+          "name": "Automatic model capabilities and offline cache",
+          "number": 18,
+          "startedAt": "2026-11-01T10:31:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:47Z",
+          "conclusion": "success",
+          "name": "Connection diagnostic checks",
+          "number": 19,
+          "startedAt": "2026-11-01T10:31:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:51Z",
+          "conclusion": "success",
+          "name": "Live port and WorkBuddy migration checks",
+          "number": 20,
+          "startedAt": "2026-11-01T10:31:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:54Z",
+          "conclusion": "success",
+          "name": "Startup WorkBuddy endpoint check",
+          "number": 21,
+          "startedAt": "2026-11-01T10:31:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:56Z",
+          "conclusion": "success",
+          "name": "Native protocol forwarding",
+          "number": 22,
+          "startedAt": "2026-11-01T10:31:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:31:58Z",
+          "conclusion": "success",
+          "name": "Anthropic and Azure API-key providers",
+          "number": 23,
+          "startedAt": "2026-11-01T10:31:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:00Z",
+          "conclusion": "success",
+          "name": "Native model discovery",
+          "number": 24,
+          "startedAt": "2026-11-01T10:31:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:13Z",
+          "conclusion": "success",
+          "name": "Statistics and price snapshots",
+          "number": 25,
+          "startedAt": "2026-11-01T10:32:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:17Z",
+          "conclusion": "success",
+          "name": "Statistics pagination",
+          "number": 26,
+          "startedAt": "2026-11-01T10:32:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:20Z",
+          "conclusion": "success",
+          "name": "Daily model price catalog",
+          "number": 27,
+          "startedAt": "2026-11-01T10:32:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:29Z",
+          "conclusion": "success",
+          "name": "Core memory and forwarding benchmark",
+          "number": 28,
+          "startedAt": "2026-11-01T10:32:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:33Z",
+          "conclusion": "success",
+          "name": "Test core routing and model isolation",
+          "number": 29,
+          "startedAt": "2026-11-01T10:32:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:37Z",
+          "conclusion": "success",
+          "name": "Multimodal forwarding and WorkBuddy capability sync",
+          "number": 30,
+          "startedAt": "2026-11-01T10:32:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:37Z",
+          "conclusion": "skipped",
+          "name": "Install DMG build-only tools",
+          "number": 31,
+          "startedAt": "2026-11-01T10:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:41Z",
+          "conclusion": "success",
+          "name": "Install Windows GDI screenshot tools",
+          "number": 32,
+          "startedAt": "2026-11-01T10:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:32:45Z",
+          "conclusion": "success",
+          "name": "Package both executables without publishing a Release",
+          "number": 33,
+          "startedAt": "2026-11-01T10:32:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:34:33Z",
+          "conclusion": "success",
+          "name": "WorkBuddy JSONL import integration checks",
+          "number": 34,
+          "startedAt": "2026-11-01T10:32:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:34:59Z",
+          "conclusion": "success",
+          "name": "Test extracted Windows package and measure open/closed memory",
+          "number": 35,
+          "startedAt": "2026-11-01T10:34:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:35:08Z",
+          "conclusion": "success",
+          "name": "Capture packaged Windows caption and toolbar layout using GDI",
+          "number": 36,
+          "startedAt": "2026-11-01T10:34:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:35:27Z",
+          "conclusion": "success",
+          "name": "Build Windows EXE installer",
+          "number": 37,
+          "startedAt": "2026-11-01T10:35:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:35:44Z",
+          "conclusion": "success",
+          "name": "Test Windows installer custom path, shortcuts, reinstall and uninstall",
+          "number": 38,
+          "startedAt": "2026-11-01T10:35:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:35:44Z",
+          "conclusion": "success",
+          "name": "Require Windows native capture and lifecycle evidence",
+          "number": 39,
+          "startedAt": "2026-11-01T10:35:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:35:44Z",
+          "conclusion": "skipped",
+          "name": "Test copied Mac DMG application and measure open/closed memory",
+          "number": 40,
+          "startedAt": "2026-11-01T10:35:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:35:49Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 41,
+          "startedAt": "2026-11-01T10:35:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:37:41Z",
+          "conclusion": "success",
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "number": 80,
+          "startedAt": "2026-11-01T10:35:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:37:41Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 81,
+          "startedAt": "2026-11-01T10:37:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:37:43Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 82,
+          "startedAt": "2026-11-01T10:37:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:37:43Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 83,
+          "startedAt": "2026-11-01T10:37:43Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41296054505/job/124817029712"
+    },
+    {
+      "completedAt": "2026-11-01T10:14:14Z",
+      "conclusion": "failure",
+      "databaseId": 124817029896,
+      "name": "desktop (macos-latest, macos-arm64, target/release/workbuddy-proxy, gpui/target/release/workbuddy...",
+      "startedAt": "2026-11-01T10:07:22Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T10:07:25Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T10:07:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:54Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-11-01T10:07:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:57Z",
+          "conclusion": "success",
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "number": 3,
+          "startedAt": "2026-11-01T10:07:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:57Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-11-01T10:07:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:58Z",
+          "conclusion": "success",
+          "name": "Verify one Core/UI package version",
+          "number": 5,
+          "startedAt": "2026-11-01T10:07:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:00Z",
+          "conclusion": "success",
+          "name": "Run Swatinem/rust-cache@v2",
+          "number": 6,
+          "startedAt": "2026-11-01T10:07:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:01Z",
+          "conclusion": "success",
+          "name": "Run python scripts/path_portability_test.py",
+          "number": 7,
+          "startedAt": "2026-11-01T10:08:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:02Z",
+          "conclusion": "success",
+          "name": "Run cargo fmt --check",
+          "number": 8,
+          "startedAt": "2026-11-01T10:08:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:09:16Z",
+          "conclusion": "success",
+          "name": "Run cargo clippy --locked --all-targets -- -D warnings",
+          "number": 9,
+          "startedAt": "2026-11-01T10:08:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "failure",
+          "name": "Run cargo test --locked",
+          "number": 10,
+          "startedAt": "2026-11-01T10:09:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Run cargo build --release --locked",
+          "number": 11,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Run cargo fmt --manifest-path gpui/Cargo.toml --check",
+          "number": 12,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Run cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings",
+          "number": 13,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Run cargo test --manifest-path gpui/Cargo.toml --locked",
+          "number": 14,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Run cargo build --manifest-path gpui/Cargo.toml --release --locked",
+          "number": 15,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Core streaming and cancellation checks",
+          "number": 16,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Model discovery and locale checks",
+          "number": 17,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Automatic model capabilities and offline cache",
+          "number": 18,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Connection diagnostic checks",
+          "number": 19,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Live port and WorkBuddy migration checks",
+          "number": 20,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Startup WorkBuddy endpoint check",
+          "number": 21,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Native protocol forwarding",
+          "number": 22,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Anthropic and Azure API-key providers",
+          "number": 23,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Native model discovery",
+          "number": 24,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Statistics and price snapshots",
+          "number": 25,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Statistics pagination",
+          "number": 26,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Daily model price catalog",
+          "number": 27,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Core memory and forwarding benchmark",
+          "number": 28,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Test core routing and model isolation",
+          "number": 29,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Multimodal forwarding and WorkBuddy capability sync",
+          "number": 30,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Install DMG build-only tools",
+          "number": 31,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Install Windows GDI screenshot tools",
+          "number": 32,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Package both executables without publishing a Release",
+          "number": 33,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "WorkBuddy JSONL import integration checks",
+          "number": 34,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Test extracted Windows package and measure open/closed memory",
+          "number": 35,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Capture packaged Windows caption and toolbar layout using GDI",
+          "number": 36,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Build Windows EXE installer",
+          "number": 37,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Test Windows installer custom path, shortcuts, reinstall and uninstall",
+          "number": 38,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Require Windows native capture and lifecycle evidence",
+          "number": 39,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:08Z",
+          "conclusion": "skipped",
+          "name": "Test copied Mac DMG application and measure open/closed memory",
+          "number": 40,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:10Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 41,
+          "startedAt": "2026-11-01T10:13:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:14:03Z",
+          "conclusion": "success",
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "number": 80,
+          "startedAt": "2026-11-01T10:13:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:14:03Z",
+          "conclusion": "skipped",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 81,
+          "startedAt": "2026-11-01T10:14:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:14:05Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 82,
+          "startedAt": "2026-11-01T10:14:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:14:11Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 83,
+          "startedAt": "2026-11-01T10:14:05Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41296054505/job/124817029896"
+    },
+    {
+      "completedAt": "2026-11-01T11:03:41Z",
+      "conclusion": "success",
+      "databaseId": 124817029958,
+      "name": "desktop (macos-15-intel, macos-x64, target/release/workbuddy-proxy, gpui/target/release/workbuddy...",
+      "startedAt": "2026-11-01T10:07:21Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T10:07:25Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T10:07:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:07:49Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-11-01T10:07:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:04Z",
+          "conclusion": "success",
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "number": 3,
+          "startedAt": "2026-11-01T10:07:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:04Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-11-01T10:08:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:05Z",
+          "conclusion": "success",
+          "name": "Verify one Core/UI package version",
+          "number": 5,
+          "startedAt": "2026-11-01T10:08:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:07Z",
+          "conclusion": "success",
+          "name": "Run Swatinem/rust-cache@v2",
+          "number": 6,
+          "startedAt": "2026-11-01T10:08:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:08Z",
+          "conclusion": "success",
+          "name": "Run python scripts/path_portability_test.py",
+          "number": 7,
+          "startedAt": "2026-11-01T10:08:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:08:09Z",
+          "conclusion": "success",
+          "name": "Run cargo fmt --check",
+          "number": 8,
+          "startedAt": "2026-11-01T10:08:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:09:34Z",
+          "conclusion": "success",
+          "name": "Run cargo clippy --locked --all-targets -- -D warnings",
+          "number": 9,
+          "startedAt": "2026-11-01T10:08:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:13:26Z",
+          "conclusion": "success",
+          "name": "Run cargo test --locked",
+          "number": 10,
+          "startedAt": "2026-11-01T10:09:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:19:01Z",
+          "conclusion": "success",
+          "name": "Run cargo build --release --locked",
+          "number": 11,
+          "startedAt": "2026-11-01T10:13:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:19:04Z",
+          "conclusion": "success",
+          "name": "Run cargo fmt --manifest-path gpui/Cargo.toml --check",
+          "number": 12,
+          "startedAt": "2026-11-01T10:19:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:24:14Z",
+          "conclusion": "success",
+          "name": "Run cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings",
+          "number": 13,
+          "startedAt": "2026-11-01T10:19:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:29:06Z",
+          "conclusion": "success",
+          "name": "Run cargo test --manifest-path gpui/Cargo.toml --locked",
+          "number": 14,
+          "startedAt": "2026-11-01T10:24:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:42:49Z",
+          "conclusion": "success",
+          "name": "Run cargo build --manifest-path gpui/Cargo.toml --release --locked",
+          "number": 15,
+          "startedAt": "2026-11-01T10:29:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:43:27Z",
+          "conclusion": "success",
+          "name": "Core streaming and cancellation checks",
+          "number": 16,
+          "startedAt": "2026-11-01T10:42:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:44:06Z",
+          "conclusion": "success",
+          "name": "Model discovery and locale checks",
+          "number": 17,
+          "startedAt": "2026-11-01T10:43:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:44:44Z",
+          "conclusion": "success",
+          "name": "Automatic model capabilities and offline cache",
+          "number": 18,
+          "startedAt": "2026-11-01T10:44:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:45:21Z",
+          "conclusion": "success",
+          "name": "Connection diagnostic checks",
+          "number": 19,
+          "startedAt": "2026-11-01T10:44:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:45:58Z",
+          "conclusion": "success",
+          "name": "Live port and WorkBuddy migration checks",
+          "number": 20,
+          "startedAt": "2026-11-01T10:45:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:46:34Z",
+          "conclusion": "success",
+          "name": "Startup WorkBuddy endpoint check",
+          "number": 21,
+          "startedAt": "2026-11-01T10:45:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:47:11Z",
+          "conclusion": "success",
+          "name": "Native protocol forwarding",
+          "number": 22,
+          "startedAt": "2026-11-01T10:46:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:47:47Z",
+          "conclusion": "success",
+          "name": "Anthropic and Azure API-key providers",
+          "number": 23,
+          "startedAt": "2026-11-01T10:47:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:48:23Z",
+          "conclusion": "success",
+          "name": "Native model discovery",
+          "number": 24,
+          "startedAt": "2026-11-01T10:47:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:49:10Z",
+          "conclusion": "success",
+          "name": "Statistics and price snapshots",
+          "number": 25,
+          "startedAt": "2026-11-01T10:48:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:49:51Z",
+          "conclusion": "success",
+          "name": "Statistics pagination",
+          "number": 26,
+          "startedAt": "2026-11-01T10:49:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:50:28Z",
+          "conclusion": "success",
+          "name": "Daily model price catalog",
+          "number": 27,
+          "startedAt": "2026-11-01T10:49:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:51:10Z",
+          "conclusion": "success",
+          "name": "Core memory and forwarding benchmark",
+          "number": 28,
+          "startedAt": "2026-11-01T10:50:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:51:47Z",
+          "conclusion": "success",
+          "name": "Test core routing and model isolation",
+          "number": 29,
+          "startedAt": "2026-11-01T10:51:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:52:23Z",
+          "conclusion": "success",
+          "name": "Multimodal forwarding and WorkBuddy capability sync",
+          "number": 30,
+          "startedAt": "2026-11-01T10:51:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:52:27Z",
+          "conclusion": "success",
+          "name": "Install DMG build-only tools",
+          "number": 31,
+          "startedAt": "2026-11-01T10:52:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:52:27Z",
+          "conclusion": "skipped",
+          "name": "Install Windows GDI screenshot tools",
+          "number": 32,
+          "startedAt": "2026-11-01T10:52:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:53:46Z",
+          "conclusion": "success",
+          "name": "Package both executables without publishing a Release",
+          "number": 33,
+          "startedAt": "2026-11-01T10:52:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:56:10Z",
+          "conclusion": "success",
+          "name": "WorkBuddy JSONL import integration checks",
+          "number": 34,
+          "startedAt": "2026-11-01T10:53:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:56:10Z",
+          "conclusion": "skipped",
+          "name": "Test extracted Windows package and measure open/closed memory",
+          "number": 35,
+          "startedAt": "2026-11-01T10:56:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:56:10Z",
+          "conclusion": "skipped",
+          "name": "Capture packaged Windows caption and toolbar layout using GDI",
+          "number": 36,
+          "startedAt": "2026-11-01T10:56:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:56:10Z",
+          "conclusion": "skipped",
+          "name": "Build Windows EXE installer",
+          "number": 37,
+          "startedAt": "2026-11-01T10:56:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:56:10Z",
+          "conclusion": "skipped",
+          "name": "Test Windows installer custom path, shortcuts, reinstall and uninstall",
+          "number": 38,
+          "startedAt": "2026-11-01T10:56:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:56:10Z",
+          "conclusion": "skipped",
+          "name": "Require Windows native capture and lifecycle evidence",
+          "number": 39,
+          "startedAt": "2026-11-01T10:56:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:59:01Z",
+          "conclusion": "success",
+          "name": "Test copied Mac DMG application and measure open/closed memory",
+          "number": 40,
+          "startedAt": "2026-11-01T10:56:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T10:59:06Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 41,
+          "startedAt": "2026-11-01T10:59:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T11:03:37Z",
+          "conclusion": "success",
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "number": 80,
+          "startedAt": "2026-11-01T10:59:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T11:03:37Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 81,
+          "startedAt": "2026-11-01T11:03:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T11:03:38Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 82,
+          "startedAt": "2026-11-01T11:03:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T11:03:39Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 83,
+          "startedAt": "2026-11-01T11:03:38Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41296054505/job/124817029958"
+    },
+    {
+      "completedAt": "2026-11-01T10:07:19Z",
+      "conclusion": "skipped",
+      "databaseId": 124817030639,
+      "name": "windows-native",
+      "startedAt": "2026-11-01T10:07:19Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41296054505/job/124817030639"
+    },
+    {
+      "completedAt": "2026-11-01T10:07:19Z",
+      "conclusion": "skipped",
+      "databaseId": 124817030702,
+      "name": "ui-checks",
+      "startedAt": "2026-11-01T10:07:19Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41296054505/job/124817030702"
+    },
+    {
+      "completedAt": "2026-11-01T10:07:19Z",
+      "conclusion": "skipped",
+      "databaseId": 124817030707,
+      "name": "released-upgrades",
+      "startedAt": "2026-11-01T10:07:19Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41296054505/job/124817030707"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41296054505"
+}

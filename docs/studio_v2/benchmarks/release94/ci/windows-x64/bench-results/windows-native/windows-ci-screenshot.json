@@ -1,0 +1,535 @@
+{
+  "result": "passed",
+  "capture_backend": "Windows GDI via existing windows_screenshot.py",
+  "captures": [
+    {
+      "helper_pid": 1900,
+      "geometry": {
+        "requested_logical_client": [
+          1440,
+          900
+        ],
+        "dpi": 96,
+        "measured_nonclient_physical": [
+          16,
+          8
+        ],
+        "requested_physical_client": [
+          1440,
+          900
+        ],
+        "actual_physical_client": [
+          1440,
+          900
+        ],
+        "actual_logical_client": [
+          1440.0,
+          900.0
+        ],
+        "client_origin_screen": [
+          8,
+          0
+        ],
+        "window_rect": [
+          0,
+          0,
+          1456,
+          908
+        ],
+        "dwm_frame": [
+          7,
+          0,
+          1449,
+          901
+        ],
+        "monitor": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "monitor_work_area": [
+          0,
+          0,
+          1920,
+          1032
+        ]
+      },
+      "file": "D:\\a\\workbuddy-proxy\\workbuddy-proxy\\bench-results\\windows-native\\windows-ci-1440x900.png",
+      "pid": 6960,
+      "hwnd": 1638736,
+      "rectangle": [
+        7,
+        0,
+        1449,
+        901
+      ],
+      "size": [
+        1442,
+        901
+      ],
+      "capture_backend": "Windows GDI via Pillow ImageGrab",
+      "sha256": "35bcc07d67944d3cbb4671f9dac36fba993e933b8b9d207a61b4523a83deecea"
+    },
+    {
+      "helper_pid": 2264,
+      "geometry": {
+        "requested_logical_client": [
+          1100,
+          700
+        ],
+        "dpi": 96,
+        "measured_nonclient_physical": [
+          16,
+          8
+        ],
+        "requested_physical_client": [
+          1100,
+          700
+        ],
+        "actual_physical_client": [
+          1100,
+          700
+        ],
+        "actual_logical_client": [
+          1100.0,
+          700.0
+        ],
+        "client_origin_screen": [
+          8,
+          0
+        ],
+        "window_rect": [
+          0,
+          0,
+          1116,
+          708
+        ],
+        "dwm_frame": [
+          7,
+          0,
+          1109,
+          701
+        ],
+        "monitor": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "monitor_work_area": [
+          0,
+          0,
+          1920,
+          1032
+        ]
+      },
+      "file": "D:\\a\\workbuddy-proxy\\workbuddy-proxy\\bench-results\\windows-native\\windows-ci-1100x700.png",
+      "pid": 6960,
+      "hwnd": 1638736,
+      "rectangle": [
+        7,
+        0,
+        1109,
+        701
+      ],
+      "size": [
+        1102,
+        701
+      ],
+      "capture_backend": "Windows GDI via Pillow ImageGrab",
+      "sha256": "a0f30c8dbb39511d6c0a3a088b23a944f0aa0ba5437f2318f1463c9e2e129ac1"
+    }
+  ],
+  "helper_attempts": [
+    {
+      "pid": 1900,
+      "output": "D:\\a\\workbuddy-proxy\\workbuddy-proxy\\bench-results\\windows-native\\windows-ci-1440x900.png",
+      "requested_logical_client": [
+        1440,
+        900
+      ],
+      "returncode": 0
+    },
+    {
+      "pid": 2264,
+      "output": "D:\\a\\workbuddy-proxy\\workbuddy-proxy\\bench-results\\windows-native\\windows-ci-1100x700.png",
+      "requested_logical_client": [
+        1100,
+        700
+      ],
+      "returncode": 0
+    }
+  ],
+  "window_attempts": [
+    {
+      "requested_logical_client": [
+        1440,
+        900
+      ],
+      "dpi": 96,
+      "monitor": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "monitor_work_area": [
+        0,
+        0,
+        1920,
+        1032
+      ],
+      "requested_physical_client": [
+        1440,
+        900
+      ],
+      "measured_nonclient_physical": [
+        16,
+        8
+      ],
+      "requested_outer_physical": [
+        1456,
+        908
+      ]
+    },
+    {
+      "requested_logical_client": [
+        1100,
+        700
+      ],
+      "dpi": 96,
+      "requested_physical_client": [
+        1100,
+        700
+      ],
+      "monitor": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "monitor_work_area": [
+        0,
+        0,
+        1920,
+        1032
+      ],
+      "measured_nonclient_physical": [
+        16,
+        8
+      ],
+      "requested_outer_physical": [
+        1116,
+        708
+      ]
+    }
+  ],
+  "display": {
+    "requested": "1920x1080",
+    "change_policy": "disabled by default",
+    "original_environment": {
+      "device": "\\\\.\\DISPLAY1",
+      "monitor": [
+        0,
+        0,
+        1024,
+        768
+      ],
+      "work_area": [
+        0,
+        0,
+        1024,
+        720
+      ],
+      "dpi": [
+        96,
+        96
+      ]
+    },
+    "original_mode": {
+      "width": 1024,
+      "height": 768,
+      "bpp": 32,
+      "orientation": 0,
+      "frequency": 64,
+      "position": [
+        0,
+        0
+      ],
+      "fields": 544997536,
+      "display_flags": 0,
+      "driver_extra": 0,
+      "public_devmode_hex": "4300440044000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001040104dc000000a0007c20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600020000000000400000003000000000000400000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "available_modes": [
+      {
+        "index": 0,
+        "width": 640,
+        "height": 480,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 1,
+        "width": 800,
+        "height": 600,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 2,
+        "width": 1024,
+        "height": 768,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 3,
+        "width": 1152,
+        "height": 864,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 4,
+        "width": 1280,
+        "height": 720,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 5,
+        "width": 1280,
+        "height": 800,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 6,
+        "width": 1280,
+        "height": 1024,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 7,
+        "width": 1366,
+        "height": 768,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 8,
+        "width": 1440,
+        "height": 900,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 9,
+        "width": 1600,
+        "height": 900,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 10,
+        "width": 1600,
+        "height": 1200,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 11,
+        "width": 1680,
+        "height": 1050,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      },
+      {
+        "index": 12,
+        "width": 1920,
+        "height": 1080,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "fields": 8126592
+      }
+    ],
+    "available_matching_modes": [
+      {
+        "width": 1920,
+        "height": 1080,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "position": [
+          0,
+          0
+        ],
+        "fields": 8126592,
+        "display_flags": 0,
+        "driver_extra": 0,
+        "public_devmode_hex": "6300640064000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001040104dc00000080007c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000800700003804000000000000400000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
+    "test": 0,
+    "apply": 0,
+    "restore": {
+      "return_code": 0,
+      "actual_mode": {
+        "width": 1024,
+        "height": 768,
+        "bpp": 32,
+        "orientation": 0,
+        "frequency": 64,
+        "position": [
+          0,
+          0
+        ],
+        "fields": 544997536,
+        "display_flags": 0,
+        "driver_extra": 0,
+        "public_devmode_hex": "4300440044000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001040104dc000000a0007c20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600020000000000400000003000000000000400000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "environment": {
+        "device": "\\\\.\\DISPLAY1",
+        "monitor": [
+          0,
+          0,
+          1024,
+          768
+        ],
+        "work_area": [
+          0,
+          0,
+          1024,
+          720
+        ],
+        "dpi": [
+          96,
+          96
+        ]
+      },
+      "verified": true
+    },
+    "prechange_required_outer_physical": [
+      1456,
+      908
+    ],
+    "selected_mode": {
+      "width": 1920,
+      "height": 1080,
+      "bpp": 32,
+      "orientation": 0,
+      "frequency": 64,
+      "position": [
+        0,
+        0
+      ],
+      "fields": 8126592,
+      "display_flags": 0,
+      "driver_extra": 0,
+      "public_devmode_hex": "6300640064000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001040104dc00000080007c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000800700003804000000000000400000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "selected_orientation_basis": "explicit DEVMODE field",
+    "actual_mode": {
+      "width": 1920,
+      "height": 1080,
+      "bpp": 32,
+      "orientation": 0,
+      "frequency": 64,
+      "position": [
+        0,
+        0
+      ],
+      "fields": 544997536,
+      "display_flags": 0,
+      "driver_extra": 0,
+      "public_devmode_hex": "4300440044000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001040104dc000000a0007c20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600020000000800700003804000000000000400000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "actual_environment": {
+      "device": "\\\\.\\DISPLAY1",
+      "monitor": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "work_area": [
+        0,
+        0,
+        1920,
+        1032
+      ],
+      "dpi": [
+        96,
+        96
+      ]
+    }
+  },
+  "hold_mode_limit": "Hold skips harness non-hold log-clear and selected-model diagnostic branch.",
+  "cleanup": {
+    "status": "removed",
+    "bytes": 55273802,
+    "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\workbuddy-ci-capture-vncpr2ai"
+  },
+  "package_manifest_sha256": "ba47b9ee81259084f8425378eb16ac55963597df3445a64502bab36c92ef31e2",
+  "package_files_sha256": {
+    "assets/icon-128.png": "37af8bb26207972be1fa5f8e75beaa66860386c50a5dea0e3517313949b7945d",
+    "CHANGELOG.md": "6048400670aa5518e08d7e530409486389c45d8600b799ed8217b2cf336903b6",
+    "DESKTOP.md": "cb8e21cdaccd633b1282ae39c7a11c57e6ac4ae28cb4baecc895bb9af5e9a246",
+    "Diagnose.cmd": "153c49c16b2f12a55bb77c925741ce037d16deb551b055b874f6dc2190b2f82c",
+    "docs/DESKTOP.md": "cb8e21cdaccd633b1282ae39c7a11c57e6ac4ae28cb4baecc895bb9af5e9a246",
+    "docs/GPUI-NOTICES.md": "22500d141360b69d6fe58c1342724957c5caa42063e2b5834617d1fba0aac354",
+    "docs/LICENSE-APACHE-GPUI.txt": "79effc462cb6155d6582ad3da0a961ce15a6860a341fed8431e328f8deb90004",
+    "docs/MODEL-CAPABILITIES.md": "fb7f0294be4ba9a0850d735a689623f429e22803f82fb353e97726a0be3d9968",
+    "docs/protocol-compat/CONTRACTS.md": "5567f6c5b1a0e051e94106ad19cc5a7bb8755b5cdd568cdd45a03bf286df4174",
+    "docs/protocol-compat/USAGE.md": "078e615d90bed49e8437ff77d39e8d0758aab1ed71e255d4763605290a33c164",
+    "docs/PROVIDER-PRESETS.md": "25cc835833bc670be3703de4c3f4c0497514bc0f5a10a1dfd96bffd7ffec209d",
+    "docs/studio_v2/UPGRADE_ROLLBACK.md": "2157d2287bc6badc663e8b8a9285ecf73d3a907170ef8f7a41ae9d1c26a0cb11",
+    "docs/third-party/magpie-LICENSE.txt": "5f1c506829e4a534b54a2e8c8b6780316fd462d842830b35570e70252cdc6cee",
+    "internal/workbuddy-settings.exe": "d0841706e15d0bbee3e0eed73d5ccad42a204eea7194d3ccfe60c1a8a8091d45",
+    "LICENSE": "545f5ae4b428554e1ed66d3e367d88925d2d596549c5ce4703ccb6af92e6374d",
+    "README.md": "6995ffb420ec6f7353e1b9e87ee50cd59f5abbf62d517fe4fea0ae3ac98d8550",
+    "workbuddy-proxy.exe": "9cb85491e019290dbd50816f3542cc3a0652cef121f62726ee2c245d9b2497e4"
+  },
+  "core_sha256": "9cb85491e019290dbd50816f3542cc3a0652cef121f62726ee2c245d9b2497e4",
+  "ui_sha256": "d0841706e15d0bbee3e0eed73d5ccad42a204eea7194d3ccfe60c1a8a8091d45",
+  "capture_helper_sha256": "ee80fc00b9716c230133ecbdb64d60b9308ff6659ff9a9dabc832efd91e95d88",
+  "harness_sha256": "1fa63a449d5c96f54dd4921ca1bf7905fd6aee60829b14a456ec53fde4f7f7c2",
+  "temporary_directory": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\workbuddy-ci-capture-vncpr2ai",
+  "source_exe": "D:\\a\\_temp\\workbuddy-gpui-package\\workbuddy-proxy-0.6.0-windows-x64\\workbuddy-proxy.exe",
+  "harness_pid": 6884,
+  "host_pid": 9084,
+  "core_pid": 3608,
+  "ui_pid": 6960,
+  "hold_marker": "READY plus qa-info.json verified",
+  "harness_returncode": 0,
+  "lifecycle_report": "D:\\a\\workbuddy-proxy\\workbuddy-proxy\\bench-results\\windows-native\\windows-ci-lifecycle.json"
+}

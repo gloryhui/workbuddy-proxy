@@ -1,0 +1,563 @@
+{
+  "scope": "QA94 publication evidence before final Goal housekeeping",
+  "files": [
+    {
+      "path": "docs/studio_v2/benchmarks/release94/UI-ready-data-proof.json",
+      "bytes": 466,
+      "sha256": "109301b1a25dd642fac02698fb307477fa96bad2afae44aebfc428985c4cad9e"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/app-before-close.ax.txt",
+      "bytes": 2697,
+      "sha256": "e5b946ec43362fcedac5067612f46107d175903050c712016cd9ef8fa1a4f6cc"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/app-before-close.jpg",
+      "bytes": 138286,
+      "sha256": "95e5d5f4a6f982ca0f224ab3525b5cfad142964217fdea810004c355e5ef0c61"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/artifact-cleanup-immediate.json",
+      "bytes": 242,
+      "sha256": "51ba4019389849da5175f4bb672a7b785e0852d8b73caa1b97760919e82cdcc3"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/artifact-cleanup-preflight.json",
+      "bytes": 3222,
+      "sha256": "430e1e8ff435f7d1a2dd5bf49a9f1229c5df633226cd14a54bbacd4a08c0336d"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/artifact-cleanup.json",
+      "bytes": 821,
+      "sha256": "781e020072710617d3e103d47a28a008b239b42bebfa61a6ea68688dd80d3014"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/artifact-workspace.json",
+      "bytes": 450,
+      "sha256": "d7463c668ae1fe84a4003671620079540f30384b01b4beb0a56636bc89604a5c"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/bridge2-management-audit.jsonl",
+      "bytes": 15884,
+      "sha256": "776538945281024dcce50834c985812495f6389d4e2eee5e57aaab515223692f"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/bridge2-ready.json",
+      "bytes": 117,
+      "sha256": "c2316006418a6fb96e63baf990e59f3b4679d57c855eb10c990770606461cea8"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/bridge2-terminal.json",
+      "bytes": 35,
+      "sha256": "8f866f488ddacb79a588414077bd74d1a55a76f35ea9093791ca8bc7ede1311a"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/13080189314-download-observations.json",
+      "bytes": 345,
+      "sha256": "73dc3f23c76a8903a2ad3358e6e29b4807d7439cfc762ccfee837ee6659b30de"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/13081762284-download-observations.json",
+      "bytes": 345,
+      "sha256": "3623430543b13f2b19cc718da97490d6ecfd0454c122a6d21e85f8ea01eff983"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/41296054368-latest.json",
+      "bytes": 9692,
+      "sha256": "5d462783e386cf3195696516b7291fe82e082bee5dd703d20d6811f49ab3ae3b"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/41296054505-latest.json",
+      "bytes": 38778,
+      "sha256": "306eab9eecf709c2c778c0bfb349fb0fc1b54f92144d44216094c122fbe497b3"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/41296054505-original-observer-snapshot.json",
+      "bytes": 38762,
+      "sha256": "120e45f14479dfdfdf67b12f8fee497dabd6dde4a167da954b12b984425f3bfc"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/ARM64-retry-validation.json",
+      "bytes": 464,
+      "sha256": "e8514cfccea5f8f75b17903d6d859ae35b01b854133a0157a710a67cff341c7e"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Core-artifact-proof.json",
+      "bytes": 1795,
+      "sha256": "cf8e4867b465e4f28b0aa437844534ac168778b522f0670010b6bffb230a1674"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Core-import-reports-validation.json",
+      "bytes": 388,
+      "sha256": "8c1bedbff55927559ab74c1f68d0255324a98dd9550f7d0f8f8b90a744601a91"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Core-validation.json",
+      "bytes": 471,
+      "sha256": "89ed946b85cc4179d475f08ce63ea6808175ffbe9f6770e24930f70ceb0f8f5f"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Intel-download-first-EOF.json",
+      "bytes": 529,
+      "sha256": "9dd26195c279e1f2bcb29c2f1528b4dc0cfb94473c66fa922d4d4fdc1df22fb8"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Intel-early-proof.json",
+      "bytes": 1917,
+      "sha256": "1f6e9d813448dd191bc834cb892a074868500cf0118c5513c9cb6c4a93081ba9"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Intel-test-counts.json",
+      "bytes": 351,
+      "sha256": "7a7217810c508e1eb9b2fcb209179e83442cc5be0b9252af9c09a25d728c52d5"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Intel-validation.json",
+      "bytes": 998,
+      "sha256": "539ccd0a43200ecf5e15bd959a8b162fb2ad7a37119bef333f9086a2f23cc11b"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Windows-test-counts.json",
+      "bytes": 374,
+      "sha256": "d064b80ce2105f3ff993d2fc1f93e82150b70b0511579f4db1602caec68425c3"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/Windows-validation.json",
+      "bytes": 1642,
+      "sha256": "50d16d23a94ce518b6af48371618f50ec637eeae45112e46873ed6ced134f61b"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/arm64-retry-final-raw.log",
+      "bytes": 312715,
+      "sha256": "7a93ac4e4c248aecf15653f36d0e487ab965250be8d80727af35f8a349db90d2"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/artifacts.json",
+      "bytes": 2649,
+      "sha256": "ad5875dc044a2a5e3883c3e55158acfa101695c08c25886bdba575c59befdbcc"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/core-final-raw.log",
+      "bytes": 214305,
+      "sha256": "9431aa0ea31b47f045e89ae341f4df1cc4f21a45d10a113b9c7df5faf32f9e49"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/core-reports/os-faults/report.json",
+      "bytes": 3242,
+      "sha256": "4bf971a2f5b7dc72a76a82f5f46c4537f5d236a07d99aea6af7a50a33ba19b83"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/core-reports/workbuddy_import_test.json/report.json",
+      "bytes": 22415,
+      "sha256": "cbfd61b93a1ae93465355c8aa12a5830778636d5bb2315bdeb102d8d2fd289bd"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/core-terminal.json",
+      "bytes": 9692,
+      "sha256": "5d462783e386cf3195696516b7291fe82e082bee5dd703d20d6811f49ab3ae3b"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/desktop-before-single-failed-job-retry.json",
+      "bytes": 37704,
+      "sha256": "1ad593c906c0f34cb3e0da21a018b23da03e5497153891e9d172cdb8552d2f93"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/desktop-original-terminal.json",
+      "bytes": 38778,
+      "sha256": "eca0d8ab7f168629566fc6cba33a24e85bd76430c1fdb78f11cfd570dc2d92f2"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/desktop-success-before-collection.json",
+      "bytes": 38778,
+      "sha256": "306eab9eecf709c2c778c0bfb349fb0fc1b54f92144d44216094c122fbe497b3"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/intel-final-raw.log",
+      "bytes": 380190,
+      "sha256": "efe7b1b6ddb0cbcff512bdb946b64edaa751c8108179243201e7d39de04e7a29"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/lock-budget-first-failure-diagnosis.json",
+      "bytes": 1569,
+      "sha256": "edd66716499b0e98a1b63d40e5e99f05266182bcf85f83b053dc3f0397fed666"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-arm64/bench-results/core-macos-arm64.json",
+      "bytes": 1219,
+      "sha256": "99cd44dbfdb4b712eed5bc029e82116d2fa3b68b945229d9cf51c8791052f0e4"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-arm64/bench-results/gpui-macos-arm64.json",
+      "bytes": 1163,
+      "sha256": "7e5c8ea8eff0945b773bebdc8b84f38acba9b9016593bcdc808c8ba1a8166e17"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-arm64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 24192,
+      "sha256": "1b1be4e13d534c906235020ec558c9bc7326c026c18aa14543f69dad0a3313e2"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-arm64-first-failure-raw.log",
+      "bytes": 159030,
+      "sha256": "e785f4389d329c2fbda399aa18c4c6c98cb416e37ae8e5911334394c9bc91a9f"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-arm64-first-failure.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-x64/bench-results/core-macos-x64.json",
+      "bytes": 1216,
+      "sha256": "697aed96fe7c522b89e6c0f1a834953daaeea29787fedae458404c5b58c3a9d5"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-x64/bench-results/gpui-macos-x64.json",
+      "bytes": 1163,
+      "sha256": "13d11a499e86911646f9945df1d5a1f27748c2d00500d6b9820e2d1055d29c40"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 24192,
+      "sha256": "f755aeef9268d5274907cfc65be8219ae4354e01a533d6f11b82b834e73bfe59"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/metadata-read-transport.jsonl",
+      "bytes": 361,
+      "sha256": "9171780ab0468fdf2db54baae1c0c8fe2db8055be0255b057a5de9177d38cc90"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/observations.jsonl",
+      "bytes": 32954,
+      "sha256": "6e894dbf0ef201279ddf4bfbb816e4c841839b1aea459d066ed5c9242a11ee78"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/retry-controller-latest.json",
+      "bytes": 38778,
+      "sha256": "306eab9eecf709c2c778c0bfb349fb0fc1b54f92144d44216094c122fbe497b3"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/retry-controller-observation-error.json",
+      "bytes": 157,
+      "sha256": "1be8c6cddf7b4dd21f05fa907a9cffc72e6472b93973d4cd4d4009423467e726"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/single-eligible-retry.json",
+      "bytes": 254,
+      "sha256": "b2c0684d56a2833d28cc5f5591c69b114db8d860d0af78f02ad036c6a9baf378"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/terminal-runs.json",
+      "bytes": 51315,
+      "sha256": "b10754c470007d9997b4c3db8d9f567e6bee99d195ec3a236394437e947df75c"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/core-windows-x64.json",
+      "bytes": 1264,
+      "sha256": "d4f2175fe8c336b3a38e68f994ea5bb0626cedadb5b7183301319f5573aa420e"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/gpui-windows-x64.json",
+      "bytes": 1194,
+      "sha256": "da223e908073958665841ae8b090893afe1320c9ba38b998c94fa25fae839c08"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-installer.json",
+      "bytes": 1776,
+      "sha256": "0bc5d7fc394e6c764fccdf309fe626795563802de894e5760bed9e3f092593af"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-1100x700.png",
+      "bytes": 74528,
+      "sha256": "a0f30c8dbb39511d6c0a3a088b23a944f0aa0ba5437f2318f1463c9e2e129ac1"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-1440x900.png",
+      "bytes": 79042,
+      "sha256": "35bcc07d67944d3cbb4671f9dac36fba993e933b8b9d207a61b4523a83deecea"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-lifecycle.json",
+      "bytes": 1098,
+      "sha256": "72828ccd06dc38e98c3ce27d8fda0043c24687b71b2fd78be5b486961a5f69b0"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-screenshot.json",
+      "bytes": 15010,
+      "sha256": "8074a19777811ff53767cc3dd78df1aa158c039b8134f5c1f338b91563d2bd32"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early-proof.json",
+      "bytes": 4984,
+      "sha256": "ba51a9803633a1a7bd22180a45bc00934f7f5e0ae551a82a7890205e84a29f81"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-final-raw.log",
+      "bytes": 386659,
+      "sha256": "14c6e26a50dbe6e4d910e7afde7a06eed39f57d108f084587f244c4bef0c3786"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/core-windows-x64.json",
+      "bytes": 1264,
+      "sha256": "d4f2175fe8c336b3a38e68f994ea5bb0626cedadb5b7183301319f5573aa420e"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/gpui-windows-x64.json",
+      "bytes": 1194,
+      "sha256": "da223e908073958665841ae8b090893afe1320c9ba38b998c94fa25fae839c08"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-installer.json",
+      "bytes": 1776,
+      "sha256": "0bc5d7fc394e6c764fccdf309fe626795563802de894e5760bed9e3f092593af"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-native/windows-ci-1100x700.png",
+      "bytes": 74528,
+      "sha256": "a0f30c8dbb39511d6c0a3a088b23a944f0aa0ba5437f2318f1463c9e2e129ac1"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-native/windows-ci-1440x900.png",
+      "bytes": 79042,
+      "sha256": "35bcc07d67944d3cbb4671f9dac36fba993e933b8b9d207a61b4523a83deecea"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-native/windows-ci-lifecycle.json",
+      "bytes": 1098,
+      "sha256": "72828ccd06dc38e98c3ce27d8fda0043c24687b71b2fd78be5b486961a5f69b0"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-native/windows-ci-screenshot.json",
+      "bytes": 15010,
+      "sha256": "8074a19777811ff53767cc3dd78df1aa158c039b8134f5c1f338b91563d2bd32"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 23296,
+      "sha256": "ee677461e6d7de5d91c6485fa1d86bcd64bfba4f2546ba5a940e43c9383bf5f5"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/cleanup-immediate-check.json",
+      "bytes": 262,
+      "sha256": "66ecc8e32315cbdbeb04a024e6e685013af776a6ff9cb2e03633620f5ae7badf"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/cleanup-inventory.json",
+      "bytes": 15593,
+      "sha256": "a21993a4d3859792b26387ce2a592edb0628418ca7bf53dbae06d842a1d14f2a"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/cleanup-preflight.json",
+      "bytes": 1395,
+      "sha256": "5ca30c73d446f65c6e5b88c7e81b56df7ced72edbf6a191dec8bae35ca8e3757"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/cleanup.json",
+      "bytes": 647,
+      "sha256": "a223d01bcf19f0feee08a16ec94a4d33a0b332bb8264108ee024983482d5a65f"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/collect-artifacts.py",
+      "bytes": 8699,
+      "sha256": "01ebddb5883bfc32d237db63c58dc5b048bf9faea5384e0188fb16d1f6dc0ec4"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/collection-notes.json",
+      "bytes": 569,
+      "sha256": "7b4df00cd274863b68678b66dda2da3c5539f84fca0ca0361c720ec5425aa57b"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/core-protection.json",
+      "bytes": 1467,
+      "sha256": "08c57def8e3003ff85b21a1e1e1fc2fd7b27d60ca6fc7c365c6dc833cfdf3ec8"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/delivery-ownership.json",
+      "bytes": 218,
+      "sha256": "5f66d1feaf8e2e9b6652bdffa6f7eaa365689db9e83822279f014902da97381c"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/draft-release.json",
+      "bytes": 265,
+      "sha256": "b0e918879b4bd423771f37bf2da53b9fcc6ed79003d0dc679bacb35b05843a7b"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/final-data-proof.json",
+      "bytes": 1380,
+      "sha256": "f0007dcd3a75498406593b52189199bbf703a4b66e6801e16dea33737c3dca37"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/final-package-validation.json",
+      "bytes": 2300,
+      "sha256": "cc6a280bb8f8ac1d1eadbff7ef9ff970be9179ea4b9db570e7df36689a902b88"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/final-packages.json",
+      "bytes": 10726,
+      "sha256": "6f776ae3d3543195c14faa074880acb62cfb36fb89141a5aafca1e82106990d4"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/finish-ci.py",
+      "bytes": 3895,
+      "sha256": "4f5333aa8979433cfaba85f107a70d328626352b738afbc02c5905affafdc8d4"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/fixture.py.txt",
+      "bytes": 21996,
+      "sha256": "c05d7a48d0bbd584a02f57a0e5a5e52b8a8e09109f7e2e694f5bdc1ef5d66299"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/initial-summary-bridge-rejections.json",
+      "bytes": 2329,
+      "sha256": "fe3a454262523e08aa26b57e06e31437c27bf06abe33ebd13590c201190df779"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/live-release-driver.json",
+      "bytes": 732,
+      "sha256": "cd9f4a4a9d80ab03baa2cf6446aa0ed5392c2f1d52d867851f612d0d9efc396e"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/main-and-CI-binding.json",
+      "bytes": 1261,
+      "sha256": "5fc321ca0ccac890da7d622bc16fedfb2e2b57f872d0d8ad3af49cfc8f9c2f85"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/management-audit.jsonl",
+      "bytes": 36276,
+      "sha256": "12fd1ea3084c26192b433d4ff979831d2ee829ab6422d3d4e026208810214885"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/native-capture.json",
+      "bytes": 2347,
+      "sha256": "9d5ace9640aadf76c6bd233be91d05d633b6aee843440cb45f4f486696a3ad80"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/overview.ax.txt",
+      "bytes": 2391,
+      "sha256": "96892c4a6458404d5b001ad7bcc216d1b1307f830d32db1053602b3506ee8293"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/preregistered.json",
+      "bytes": 1265,
+      "sha256": "dff1bb457717a06ed3a4a9a5fd6384d8659537fe3f193e2f7140873b347bf777"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/process-start.c.txt",
+      "bytes": 339,
+      "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/providers.ax.txt",
+      "bytes": 3356,
+      "sha256": "71dd3bca8667cc3768cced5d0d8c75bb6d6c111ee85beb12fd3332c1be47eca0"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/public-images.json",
+      "bytes": 1381,
+      "sha256": "6f0bb4c5c2d69d908c2eb05f63ad63d7f7b305ea5283d98f3fde7c0638e95786"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/published-release-verification.json",
+      "bytes": 16071,
+      "sha256": "f991564b441b14a4a7e7c714f11833ad24b89e24c26b818d7505c28af3f057e1"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/readonly-bridge2.py.txt",
+      "bytes": 3076,
+      "sha256": "c124b093908411512357fa58a952f60103761191dc584d6d0697b1d2ea7c4a34"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/release-before-publish.json",
+      "bytes": 14838,
+      "sha256": "d3f9e7ba3b1ee42df3088614f8128ce8579c09ba477771b310fc216cec68091a"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/restart-identity-guard.m.txt",
+      "bytes": 6090,
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/retained-reference-files.json",
+      "bytes": 865,
+      "sha256": "2d245b5cc5ac1687f68e6c2cc4e956eadfa18e299aaa9e91184d9c52e9ccece8"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/screenshot-preflight.json",
+      "bytes": 678,
+      "sha256": "cd1f552cd8d1ad461d57bb73312592c5cc90dfa1a946752b30902b2723db4062"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/signature-identity.json",
+      "bytes": 1450,
+      "sha256": "682fd6e3023d8276f0bddac78908a1ef28f32f1a48b5d48ee611a0051c7182d8"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/signed-runtime-identity.json",
+      "bytes": 1450,
+      "sha256": "682fd6e3023d8276f0bddac78908a1ef28f32f1a48b5d48ee611a0051c7182d8"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/skins-before-read-allowlist-fix.jpg",
+      "bytes": 147159,
+      "sha256": "6a29aa78b5cdd676044ed42373f915137718140e92ffe253561c181e55f34503"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/skins.ax.txt",
+      "bytes": 3128,
+      "sha256": "9103de6dfe48bace0424bcd59a5be2ef687dca2e16162bd94809d8a023f6712e"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/summary-bridge-correction.json",
+      "bytes": 463,
+      "sha256": "e6f81024fc13548aeef02988e0ffb25bb4828eb85747362c598fcf0f534be052"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/summary.ax.txt",
+      "bytes": 2697,
+      "sha256": "e5b946ec43362fcedac5067612f46107d175903050c712016cd9ef8fa1a4f6cc"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/usage.ax.txt",
+      "bytes": 9082,
+      "sha256": "7d58a43f09434d199cc64d919589febeec59c2cdaa8f8a4c4de4ae6f20e8a85d"
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/rc-round94-summary.json",
+      "bytes": 4383,
+      "sha256": "798b584a01c8a6f8e9fd1145306187e5afc856df4615604544b8e8e9d11a76d5"
+    },
+    {
+      "path": "docs/screenshots/studio-v2-overview-20261101.jpg",
+      "bytes": 147391,
+      "sha256": "9939538b0cfc28db017ba9cb386f8ad729a8dce1698d1004256c864fead2a820"
+    },
+    {
+      "path": "docs/screenshots/studio-v2-providers-20261101.jpg",
+      "bytes": 181173,
+      "sha256": "5da7300088d446aa6e8ad9949c2383ac43fd6acb3c7e3de7cb0c865fe58fbab3"
+    },
+    {
+      "path": "docs/screenshots/studio-v2-skins-20261101.jpg",
+      "bytes": 148854,
+      "sha256": "da8f7309932f8cfa7859f44be4bbb19f378284ad1a9877a5148478b947056573"
+    },
+    {
+      "path": "docs/screenshots/studio-v2-summary-20261101.jpg",
+      "bytes": 138286,
+      "sha256": "95e5d5f4a6f982ca0f224ab3525b5cfad142964217fdea810004c355e5ef0c61"
+    },
+    {
+      "path": "docs/screenshots/studio-v2-usage-20261101.jpg",
+      "bytes": 170644,
+      "sha256": "ec08ea4f47a9bb3a1b6ddc9667a487289ade43e3a965eece4b37d1317ab584aa"
+    }
+  ],
+  "byte_exact_raw_logs_and_AX_preserved": true,
+  "editable_source_whitespace_checked_separately_from_byte_exact_records": true,
+  "raw_private_config_database_keys_archived": false
+}

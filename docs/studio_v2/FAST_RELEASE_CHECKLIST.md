@@ -12,3 +12,7 @@
 - 检查真实包安装/启动、Windows GDI、Mac DMG 生命周期及数据保护报告；旧版六例升级结果按原包来源保留，不重标新包。
 - 四个正式包、SHA256SUMS、下载完整性及当前版本一致；沿用 ad-hoc/未公证及 Windows 未签名分发方案，明确说明。
 - 直接发布 v0.6.0，Release 绑定通过检查的 main 源码，披露未验证专项。收尾后归档证据并更新时间线。
+
+## 已交付
+
+2026-11-01已公开[v0.6.0](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.0)，tag与main均为`763f2aefb5e644d84250590aaa3bdc96a90b6e11`。本清单保留项已核实，延期专项未计为通过。[实际发布与下载验证](benchmarks/release94/published-release-verification.json)。

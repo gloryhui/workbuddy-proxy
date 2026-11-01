@@ -1,0 +1,8 @@
+{
+  "artifact": 13080189314,
+  "source_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx/13080189314.zip",
+  "preserved_path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx/13080189314-first-EOF.zip",
+  "bytes": 0,
+  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "error": "gh API download returned EOF; workflow not rerun, no TLS bypass. Preserve incomplete download and retry read of same artifact only."
+}

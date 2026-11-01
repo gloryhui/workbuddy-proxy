@@ -1,6 +1,6 @@
-# Studio V2 0.6.0 候选审查
+# Studio V2 0.6.0 发布与历史候选记录
 
-2026-11-01用户已明确要求快速推进，直接更新 Release、README 最新 V2 截图及 main。当前按 0.6.0 执行[快速发布清单](FAST_RELEASE_CHECKLIST.md)，冻结最终源码后利用 main 自动 CI 生成并核对最终包，再更新公开 Release。下述 QA91 原包只保留原来源，不冒充包含 UI855 修复的新包。
+2026-11-01已按用户授权的[快速发布清单](FAST_RELEASE_CHECKLIST.md)公开[v0.6.0](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.0)。tag/main冻结为`763f2aefb5e644d84250590aaa3bdc96a90b6e11`，4新包及SHA清单、5当前V2截图和最终CI已核实；延期专项列为未验证。下述QA91原包只保留原来源，不冒充包含UI855修复的新最终包；当前包见[最终清单](benchmarks/release94/final-packages.json)。
 
 ## 候选内容
 

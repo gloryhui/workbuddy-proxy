@@ -1,0 +1,16 @@
+[
+  {
+    "attempt": 1,
+    "returncode": 1,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "verified": false
+  },
+  {
+    "attempt": 2,
+    "returncode": 0,
+    "bytes": 38786838,
+    "sha256": "8b5910e032af0f4849d7f9869843946a5ee409209f0ec29f1b8212bd6d98765a",
+    "verified": true
+  }
+]

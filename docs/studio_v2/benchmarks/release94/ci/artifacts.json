@@ -1,0 +1,65 @@
+{
+  "total_count": 3,
+  "artifacts": [
+    {
+      "id": 13081762284,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA4MTc2MjI4NA==",
+      "name": "workbuddy-proxy-macos-arm64",
+      "size_in_bytes": 38786838,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13081762284",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13081762284/zip",
+      "expired": false,
+      "digest": "sha256:8b5910e032af0f4849d7f9869843946a5ee409209f0ec29f1b8212bd6d98765a",
+      "created_at": "2026-11-01T11:26:54Z",
+      "updated_at": "2026-11-01T11:26:54Z",
+      "expires_at": "2027-01-30T11:04:16Z",
+      "workflow_run": {
+        "id": 41296054505,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "main",
+        "head_sha": "763f2aefb5e644d84250590aaa3bdc96a90b6e11"
+      }
+    },
+    {
+      "id": 13080189314,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA4MDE4OTMxNA==",
+      "name": "workbuddy-proxy-macos-x64",
+      "size_in_bytes": 40179769,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13080189314",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13080189314/zip",
+      "expired": false,
+      "digest": "sha256:2ff6bcd8d62f04dda8e724ebd364b6996eb51b7d0a6dfcc9618e2ed306532387",
+      "created_at": "2026-11-01T10:59:06Z",
+      "updated_at": "2026-11-01T10:59:06Z",
+      "expires_at": "2027-01-30T10:07:19Z",
+      "workflow_run": {
+        "id": 41296054505,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "main",
+        "head_sha": "763f2aefb5e644d84250590aaa3bdc96a90b6e11"
+      }
+    },
+    {
+      "id": 13080133278,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA4MDEzMzI3OA==",
+      "name": "workbuddy-proxy-windows-x64",
+      "size_in_bytes": 61367328,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13080133278",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13080133278/zip",
+      "expired": false,
+      "digest": "sha256:4afc8b653424dcdd47a628829498d70177071afc1879a31239553556ac0be793",
+      "created_at": "2026-11-01T10:35:48Z",
+      "updated_at": "2026-11-01T10:35:48Z",
+      "expires_at": "2027-01-30T10:07:19Z",
+      "workflow_run": {
+        "id": 41296054505,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "main",
+        "head_sha": "763f2aefb5e644d84250590aaa3bdc96a90b6e11"
+      }
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "targets": [
+    {
+      "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx",
+      "type": "owned downloaded CI artifact cache",
+      "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+      "owner": 501,
+      "reproducible_basis": "All published packages, source/report/ZIP identities and reports preserved outside target; cache derived from collector source",
+      "files": 8,
+      "directories": 0,
+      "file_bytes": 140339038,
+      "inventory": [
+        {
+          "path": "13079831013.zip",
+          "type": "file",
+          "bytes": 4766,
+          "uid": 501,
+          "inode": 165436235,
+          "mtime_ns": 1793529318325073689,
+          "sha256": "e63d5ed850f681cd16cb4f4d2239c4d9e8574fcb7a4385c68238ef5a395d93f0"
+        },
+        {
+          "path": "13080133278.zip",
+          "type": "file",
+          "bytes": 61367328,
+          "uid": 501,
+          "inode": 165436444,
+          "mtime_ns": 1793529543548676120,
+          "sha256": "4afc8b653424dcdd47a628829498d70177071afc1879a31239553556ac0be793"
+        },
+        {
+          "path": "13080189314-1793531287491450000.partial",
+          "type": "file",
+          "bytes": 0,
+          "uid": 501,
+          "inode": 165438476,
+          "mtime_ns": 1793531287491631382,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "13080189314-first-EOF.zip",
+          "type": "file",
+          "bytes": 0,
+          "uid": 501,
+          "inode": 165437979,
+          "mtime_ns": 1793530848819932996,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "13080189314.zip",
+          "type": "file",
+          "bytes": 40179769,
+          "uid": 501,
+          "inode": 165438480,
+          "mtime_ns": 1793531328711810289,
+          "sha256": "2ff6bcd8d62f04dda8e724ebd364b6996eb51b7d0a6dfcc9618e2ed306532387"
+        },
+        {
+          "path": "13081762284-1793532458179172000.partial",
+          "type": "file",
+          "bytes": 0,
+          "uid": 501,
+          "inode": 165439909,
+          "mtime_ns": 1793532458179228650,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "13081762284.zip",
+          "type": "file",
+          "bytes": 38786838,
+          "uid": 501,
+          "inode": 165439921,
+          "mtime_ns": 1793532480214825290,
+          "sha256": "8b5910e032af0f4849d7f9869843946a5ee409209f0ec29f1b8212bd6d98765a"
+        },
+        {
+          "path": "ownership.json",
+          "type": "file",
+          "bytes": 337,
+          "uid": 501,
+          "inode": 165434197,
+          "mtime_ns": 1793528012612147332,
+          "sha256": "5ad74bdb6560269689a8f3540a8c27e1dd54018b46241736801b545a2ca2bdc7"
+        }
+      ],
+      "lsof_no_refs": true,
+      "parent_chain_no_symlink": true
+    }
+  ],
+  "all_task_readers_and_controllers_exited": true,
+  "other_process_refs": [],
+  "system_free_before_bytes": 36856942592,
+  "retained_release_packages_bytes": 140897937,
+  "prior_screenshot_cleanup_bytes": 54388449
+}

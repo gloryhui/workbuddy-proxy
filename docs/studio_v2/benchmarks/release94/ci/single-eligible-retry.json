@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-01T11:04:14.809202+00:00",
+  "original_job": 124817029896,
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "assertion_unchanged": true,
+  "successful_jobs_not_rerun": true
+}

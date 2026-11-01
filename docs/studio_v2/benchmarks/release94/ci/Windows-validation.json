@@ -1,0 +1,47 @@
+{
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "job": 124817029712,
+  "artifact": 13080133278,
+  "artifact_digest_verified": true,
+  "captured_binaries_match_actual_portable_package": {
+    "core": "9cb85491e019290dbd50816f3542cc3a0652cef121f62726ee2c245d9b2497e4",
+    "UI": "d0841706e15d0bbee3e0eed73d5ccad42a204eea7194d3ccfe60c1a8a8091d45"
+  },
+  "lifecycle_checks": 11,
+  "installer_checks": 10,
+  "two_native_GDI_images_reviewed": [
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-1100x700.png",
+      "sha256": "a0f30c8dbb39511d6c0a3a088b23a944f0aa0ba5437f2318f1463c9e2e129ac1",
+      "size": [
+        1102,
+        701
+      ]
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-early/bench-results/windows-native/windows-ci-1440x900.png",
+      "sha256": "35bcc07d67944d3cbb4671f9dac36fba993e933b8b9d207a61b4523a83deecea",
+      "size": [
+        1442,
+        901
+      ]
+    }
+  ],
+  "visual_findings": [
+    "Actual0.6.0,English,synthetic1provider64models0requests",
+    "Native caption row separated from toolbar; sidebar background aligned",
+    "Small window filters wrap; Status column outside horizontal viewport, Rightmost control remains visible"
+  ],
+  "display_restored_verified": true,
+  "harness_returncode": 0,
+  "cleanup": {
+    "status": "removed",
+    "bytes": 55273802,
+    "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\workbuddy-ci-capture-vncpr2ai"
+  },
+  "not_claimed": [
+    "physical Windows IME/keyboard/tray",
+    "HiDPI or multi-monitor",
+    "all40frame visual acceptance from these2images"
+  ]
+}

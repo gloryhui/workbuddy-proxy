@@ -1,0 +1,12 @@
+{
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx",
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "Core_run": 41296054368,
+  "Desktop_run": 41296054505,
+  "release": "v0.6.0",
+  "permanent_delivery": "dist/studio-v2-release/0.6.0-763f2ae",
+  "system_free_bytes": 37018243072,
+  "state": "removed_after_publication",
+  "cleanup_record": "artifact-cleanup.json",
+  "do_not_restart": true
+}

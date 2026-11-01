@@ -1,0 +1,59 @@
+{
+  "artifact": {
+    "id": 13079831013,
+    "node_id": "MDg6QXJ0aWZhY3QxMzA3OTgzMTAxMw==",
+    "name": "workbuddy-import-core-reports",
+    "size_in_bytes": 4766,
+    "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13079831013",
+    "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13079831013/zip",
+    "expired": false,
+    "digest": "sha256:e63d5ed850f681cd16cb4f4d2239c4d9e8574fcb7a4385c68238ef5a395d93f0",
+    "created_at": "2026-11-01T10:15:02Z",
+    "updated_at": "2026-11-01T10:15:02Z",
+    "expires_at": "2027-01-30T10:07:19Z",
+    "workflow_run": {
+      "id": 41296054368,
+      "repository_id": 1416761973,
+      "head_repository_id": 1416761973,
+      "head_branch": "main",
+      "head_sha": "763f2aefb5e644d84250590aaa3bdc96a90b6e11"
+    }
+  },
+  "download_sha256": "e63d5ed850f681cd16cb4f4d2239c4d9e8574fcb7a4385c68238ef5a395d93f0",
+  "reports": [
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/core-reports/os-faults/report.json",
+      "sha256": "4bf971a2f5b7dc72a76a82f5f46c4537f5d236a07d99aea6af7a50a33ba19b83",
+      "keys": [
+        "checks",
+        "error",
+        "exe",
+        "failed",
+        "isolation",
+        "passed",
+        "result",
+        "script",
+        "started_at",
+        "task"
+      ],
+      "status": null
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/core-reports/workbuddy_import_test.json/report.json",
+      "sha256": "cbfd61b93a1ae93465355c8aa12a5830778636d5bb2315bdeb102d8d2fd289bd",
+      "keys": [
+        "checks",
+        "error",
+        "exe",
+        "failed",
+        "isolation",
+        "passed",
+        "result",
+        "script",
+        "started_at",
+        "task"
+      ],
+      "status": null
+    }
+  ]
+}

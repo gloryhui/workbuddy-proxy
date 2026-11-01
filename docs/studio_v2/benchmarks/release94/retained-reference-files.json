@@ -1,0 +1,33 @@
+{
+  "baseline_kits": [
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/studio-v2-baselines/9570451-arm64-release-46585f86",
+      "bytes": 50954403
+    },
+    {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/studio-v2-baselines/a6e9618-arm64-release-ba525f80d2a1",
+      "bytes": 50905007
+    }
+  ],
+  "baseline_kit_bytes": 101859410,
+  "QA91_packages": [
+    {
+      "file": "workbuddy-proxy-0.6.0-windows-x64.zip",
+      "bytes": 33827421
+    },
+    {
+      "file": "workbuddy-proxy-0.6.0-macos-arm64.dmg",
+      "bytes": 38865378
+    },
+    {
+      "file": "workbuddy-proxy-0.6.0-macos-x64.dmg",
+      "bytes": 40262989
+    },
+    {
+      "file": "workbuddy-proxy-0.6.0-windows-x64-setup.exe",
+      "bytes": 27940526
+    }
+  ],
+  "QA91_package_bytes": 140896314,
+  "all_preserved_without_modification": true
+}

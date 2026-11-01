@@ -1,0 +1,6 @@
+{
+  "exact_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx",
+  "inventory_owner_hashes_chain_unchanged": true,
+  "lsof_no_refs": true,
+  "command": "rm -r -- exact literal absolute owned root"
+}

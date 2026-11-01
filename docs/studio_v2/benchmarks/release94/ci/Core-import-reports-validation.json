@@ -1,0 +1,21 @@
+{
+  "reports": [
+    {
+      "script": "workbuddy_import_faults.py",
+      "result": "PASS",
+      "passed": 15,
+      "failed": 0,
+      "error": "",
+      "checks_count": 15
+    },
+    {
+      "script": "workbuddy_import_test.py",
+      "result": "PASS",
+      "passed": 158,
+      "failed": 0,
+      "error": "",
+      "checks_count": 158
+    }
+  ],
+  "all_failed_counts_zero": true
+}

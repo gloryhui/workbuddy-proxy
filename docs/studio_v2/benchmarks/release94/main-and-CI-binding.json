@@ -1,0 +1,36 @@
+{
+  "main_sha": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "images_verified_from_main": [
+    {
+      "file": "docs/screenshots/studio-v2-overview-20261101.jpg",
+      "GitHub_blob_sha": "3580cc4898ed679bc2df567c242590a9d3202f74",
+      "sha256_equal": true
+    },
+    {
+      "file": "docs/screenshots/studio-v2-providers-20261101.jpg",
+      "GitHub_blob_sha": "e3ba4ac07f22c1fff6d8fcbd4c47be3e1e75fc1c",
+      "sha256_equal": true
+    },
+    {
+      "file": "docs/screenshots/studio-v2-skins-20261101.jpg",
+      "GitHub_blob_sha": "2d62783d1adc0f959ec8bd3946163a240b5a851a",
+      "sha256_equal": true
+    },
+    {
+      "file": "docs/screenshots/studio-v2-summary-20261101.jpg",
+      "GitHub_blob_sha": "47ef2bbdc379915507efc7856151b5d27cdfb6d2",
+      "sha256_equal": true
+    },
+    {
+      "file": "docs/screenshots/studio-v2-usage-20261101.jpg",
+      "GitHub_blob_sha": "2da7cff8423c530fe562f20fb656265dfb092c8d",
+      "sha256_equal": true
+    }
+  ],
+  "main_previous": "e96f5a867946a63504b6ec7d9ce4a78762434e32",
+  "main_update": "Fast-forward preserving history and untracked output/",
+  "Core_run": 41296054368,
+  "Desktop_run": 41296054505,
+  "trigger": "single automatic main push, no manual dispatch",
+  "public_release_authorized": true
+}

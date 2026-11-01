@@ -1,0 +1,74 @@
+{
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "all_terminal_workflows_success": true,
+  "server_artifact_digests_verified": 3,
+  "package_hashes_verified": 4,
+  "report_results": [
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-arm64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "checks": 158,
+      "passed": 158,
+      "failed": 0
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-arm64/bench-results/gpui-macos-arm64.json",
+      "result": "passed",
+      "checks": 11,
+      "passed": null,
+      "failed": null
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "checks": 158,
+      "passed": 158,
+      "failed": 0
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/macos-x64/bench-results/gpui-macos-x64.json",
+      "result": "passed",
+      "checks": 11,
+      "passed": null,
+      "failed": null
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "checks": 158,
+      "passed": 158,
+      "failed": 0
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/gpui-windows-x64.json",
+      "result": "passed",
+      "checks": 11,
+      "passed": null,
+      "failed": null
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-installer.json",
+      "result": "passed",
+      "checks": 11,
+      "passed": null,
+      "failed": null
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-native/windows-ci-lifecycle.json",
+      "result": "passed",
+      "checks": 9,
+      "passed": null,
+      "failed": null
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/release94/ci/windows-x64/bench-results/windows-native/windows-ci-screenshot.json",
+      "result": "passed",
+      "checks": 0,
+      "passed": null,
+      "failed": null
+    }
+  ],
+  "delivery_bytes": 140897937,
+  "public_release_authorized": true,
+  "deferred_specialized_validation_preserved": true
+}

@@ -1,0 +1,18 @@
+{
+  "removed_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx",
+  "removed_files": 8,
+  "removed_bytes": 140339038,
+  "screenshot_round_removed_bytes": 54388449,
+  "round_total_removed_bytes": 194727487,
+  "this_round_temporary_bytes_retained": 0,
+  "public_packages_retained_bytes": 140897937,
+  "checksum_file_retained_bytes": 420,
+  "prior_baseline_kits_retained_bytes": 101859410,
+  "prior_QA91_RC_retained_bytes": 140896314,
+  "system_free_before_bytes": 36856942592,
+  "system_free_after_bytes": 36998131712,
+  "observed_APFS_free_delta_bytes": 141189120,
+  "delta_note": "Concurrent system activity means observed APFS delta is not an exclusive physical allocation claim.",
+  "shared_Cargo_cache_and_main_output_preserved": true,
+  "reference_sizes_rechecked": true
+}

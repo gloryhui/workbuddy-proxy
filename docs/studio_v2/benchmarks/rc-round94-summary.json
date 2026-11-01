@@ -1,0 +1,114 @@
+{
+  "batch": 94,
+  "result": "v0.6.0 published under user-authorized accelerated scope; not full original specialized validation",
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "UI_production_head": "85540e1256842a5e6553bffd9749088af545084e",
+  "Core_unchanged_since": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "release": {
+    "URL": "https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.0",
+    "id": 430497408,
+    "published_at": "2026-11-01T11:35:34Z",
+    "latest_stable": true,
+    "main_and_tag_match": true,
+    "assets": 5
+  },
+  "main": {
+    "previous": "e96f5a867946a63504b6ec7d9ce4a78762434e32",
+    "current": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+    "method": "fast-forward, no force/history rewrite",
+    "untracked_output_preserved": true
+  },
+  "README": {
+    "current_native_0_6_images": 5,
+    "format": "originalJPEG1440x901",
+    "GitHub_main_hashes_verified": true,
+    "masked_synthetic_Key_only": true
+  },
+  "CI": {
+    "Core": 41296054368,
+    "Desktop": 41296054505,
+    "Desktop_final_attempt": 2,
+    "first_Mac_failure_preserved": true,
+    "exactly_one_failed_Mac_job_retry": true,
+    "successful_Win_Intel_not_rerun": true,
+    "assertions_unchanged": true,
+    "all_final_terminal_success": true
+  },
+  "packages": [
+    {
+      "path": "dist/studio-v2-release/0.6.0-763f2ae/workbuddy-proxy-0.6.0-macos-arm64.dmg",
+      "bytes": 38865857,
+      "sha256": "93e333e8cb986454ec384b986c020c3cfae85f09c8a171c3a4e5806b6b2a1776",
+      "archive_member": "dist/workbuddy-proxy-0.6.0-macos-arm64.dmg"
+    },
+    {
+      "path": "dist/studio-v2-release/0.6.0-763f2ae/workbuddy-proxy-0.6.0-macos-x64.dmg",
+      "bytes": 40263870,
+      "sha256": "ba17a1689706740967bf1ce7ab01d19f0155780cf4736eb13343ae859fc874c9",
+      "archive_member": "dist/workbuddy-proxy-0.6.0-macos-x64.dmg"
+    },
+    {
+      "path": "dist/studio-v2-release/0.6.0-763f2ae/workbuddy-proxy-0.6.0-windows-x64-setup.exe",
+      "bytes": 27940726,
+      "sha256": "14ac5b65f84cd110bc79f7899fcfa70ba608e295a3309dff2bb11f8e69819e79",
+      "archive_member": "dist/workbuddy-proxy-0.6.0-windows-x64-setup.exe"
+    },
+    {
+      "path": "dist/studio-v2-release/0.6.0-763f2ae/workbuddy-proxy-0.6.0-windows-x64.zip",
+      "bytes": 33827484,
+      "sha256": "1286907f01f19a2697db3dc1501158d37367cf4c405dbcfa75499bc6a351965e",
+      "archive_member": "dist/workbuddy-proxy-0.6.0-windows-x64.zip"
+    }
+  ],
+  "checksums": "dist/studio-v2-release/0.6.0-763f2ae/SHA256SUMS.txt",
+  "validation": {
+    "three_platform_lifecycle_checks_each": 11,
+    "Windows_installer_checks": 10,
+    "Windows_GDI_original_images": 2,
+    "Core_Linux_import_checks": 158,
+    "Core_Linux_fault_checks": 15,
+    "each_platform_import_checks": 158,
+    "public_full_file_digests_match_local": 5,
+    "anonymous_public_check": "Full420BchecksumGET plus4rangeGETs; not a redundant full binary download",
+    "screenshot_fixture_config_models_five_tables_12requests_costs_unchanged": true
+  },
+  "cleanup": {
+    "removed_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx",
+    "removed_files": 8,
+    "removed_bytes": 140339038,
+    "screenshot_round_removed_bytes": 54388449,
+    "round_total_removed_bytes": 194727487,
+    "this_round_temporary_bytes_retained": 0,
+    "public_packages_retained_bytes": 140897937,
+    "checksum_file_retained_bytes": 420,
+    "prior_baseline_kits_retained_bytes": 101859410,
+    "prior_QA91_RC_retained_bytes": 140896314,
+    "system_free_before_bytes": 36856942592,
+    "system_free_after_bytes": 36998131712,
+    "observed_APFS_free_delta_bytes": 141189120,
+    "delta_note": "Concurrent system activity means observed APFS delta is not an exclusive physical allocation claim.",
+    "shared_Cargo_cache_and_main_output_preserved": true,
+    "reference_sizes_rechecked": true
+  },
+  "frames": {
+    "accepted": 40,
+    "remaining": 0
+  },
+  "deferred_unverified_full_profile_tasks": [
+    "R01.1",
+    "R01.2",
+    "R01.3",
+    "R01.4",
+    "R02.1",
+    "R02.2",
+    "R02.3",
+    "R02.4",
+    "R03.2",
+    "R03.3",
+    "R03.5",
+    "R04.3"
+  ],
+  "deferred_tasks_not_falsely_passed": true,
+  "voiceover_input_source_scale_automatically_changed": false,
+  "next": "Archive QA94 and update timeline once; after completion audit mark Goal complete. Do not reopen deleted screenshot or artifact roots."
+}

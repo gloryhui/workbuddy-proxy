@@ -1,0 +1,15 @@
+{
+  "source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "Core_run": 41296054368,
+  "Desktop_run": 41296054505,
+  "finish_ci_tool_session": 98705,
+  "old_readonly_observer_session": 8727,
+  "scope": "Wait current jobs, one eligible diagnosed Mac ARM retry only, then collect strict hash-bound artifacts; never auto-upload or publish before parent review",
+  "stop_file": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-delivery94-df2dzuzx/stop-release-driver",
+  "state": "completed",
+  "finish_ci_exit": 0,
+  "old_readonly_observer_exit": 1,
+  "old_observer_note": "Stopped on preserved original attempt1 failure, before successful attempt2",
+  "do_not_restart": true,
+  "artifact_workspace_removed": true
+}

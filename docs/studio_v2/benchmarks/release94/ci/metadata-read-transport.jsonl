@@ -1,0 +1,3 @@
+{"args": ["api", "repos/gloryhui/workbuddy-proxy/git/ref/heads/main"], "attempt": 1, "returncode": 1, "transient": true}
+{"args": ["api", "repos/gloryhui/workbuddy-proxy/releases/latest"], "attempt": 1, "returncode": 1, "transient": true}
+{"args": ["api", "repos/gloryhui/workbuddy-proxy/git/ref/tags/v0.6.0"], "attempt": 1, "returncode": 1, "transient": true}

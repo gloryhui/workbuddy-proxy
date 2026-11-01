@@ -204,6 +204,10 @@ def plan_markdown(plan):
              "## P00：" + plan["prerequisite"]["title"], "", plan["prerequisite"]["reason"], "",
              *[str(index) + ". " + step for index, step in enumerate(plan["prerequisite"]["steps"], 1)], "",
              "通过标准：" + plan["prerequisite"]["exit"], ""]
+    policy = plan.get("fast_release_policy", {})
+    if policy.get("delivery_status") == "published":
+        lines[4:4] = ["**" + policy["version"] + " 已发布**：" + policy["URL"] + "。", "",
+                      "已按用户精简范围交付；原完整验收中延期的专项仍标未验证，不计为测试通过。", ""]
     for batch in plan["batches"]:
         lines += ["## " + batch["id"] + "：" + batch["title"], "",
                   "覆盖画板：" + ("、".join(batch["frames"]) or "全局发布门禁，不新增画板计数") + "。", "",
@@ -269,7 +273,9 @@ def main():
                                "src/config.rs", "src/capabilities.rs", "src/diagnostic.rs",
                                "src/i18n.rs", "src/stats/dto.rs", "src/protocol/config.rs",
                                "src/workbuddy_status.rs", "native/workbuddy_restart.m"),
-              "phase": ("正式版批次规划 · 等待Figma连接" if plan["goal_status"] == "paused" and plan["prerequisite"]["status"] == "waiting"
+              "phase": (plan["fast_release_policy"]["version"] + " 已发布 · 延期专项未计通过"
+                        if plan.get("fast_release_policy", {}).get("delivery_status") == "published"
+                        else "正式版批次规划 · 等待Figma连接" if plan["goal_status"] == "paused" and plan["prerequisite"]["status"] == "waiting"
                         else "界面终验记录齐备 · 总体验收待核对" if counts["verified"] == len(frames)
                         else "批次推进 · " + plan["current_batch"] if plan["goal_status"] == "active"
                         else "专项验收与差异修复 · 全量逐帧终验未完成"),

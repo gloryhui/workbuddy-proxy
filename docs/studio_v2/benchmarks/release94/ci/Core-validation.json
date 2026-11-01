@@ -1,0 +1,9 @@
+{
+  "run": 41296054368,
+  "head": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "success": true,
+  "Rust_summaries": [
+    "2026-11-01T10:10:20.5445455Z test result: ok. 579 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 102.58s"
+  ],
+  "first_Mac_retry_request": "gh run rerun --job reported job cannot be rerun while original Desktop run remains active; no new test execution. Wait for actual workflow terminal state before one eligible retry."
+}
