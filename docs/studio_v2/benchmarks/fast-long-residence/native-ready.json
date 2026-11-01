@@ -1,0 +1,35 @@
+{
+  "ui_pid": 98521,
+  "core_pid": 98204,
+  "query": "long-discovery-",
+  "count": 4096,
+  "checked": 0,
+  "focus_proof": "actual_keypress_edit_and_backspace",
+  "observed_load_requests": 1014,
+  "operations": [
+    "后台绑定隔离应用",
+    "供应商管理 sub2api → 获取模型",
+    "输入 long-discovery-",
+    "真实按键 z 后匹配0",
+    "BackSpace 后恢复4096及选中0"
+  ],
+  "evidence": {
+    "z_image": "native-key-z.jpg",
+    "z_ax": "native-key-z.ax.txt",
+    "ready_image": "native-ready.jpg",
+    "ready_ax": "native-ready.ax.txt",
+    "ready_sha256": "eb1d296d413d7e194d5fe7b7edb0cd94e78b386fc5d227e26400956696564e3b",
+    "pixels": [
+      1440,
+      901
+    ],
+    "format": "CUA 原始 JPEG"
+  },
+  "limitations": [
+    "AX 报告窗口焦点，未断言精确焦点；真实按键更改并恢复查询",
+    "未主动 Raise/activate",
+    "此处不断言采样或前台状态",
+    "非输入法组合测试"
+  ],
+  "created_at": "2026-11-01T04:33:51.884Z"
+}

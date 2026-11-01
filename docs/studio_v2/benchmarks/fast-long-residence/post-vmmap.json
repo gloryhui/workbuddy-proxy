@@ -1,0 +1,24 @@
+{
+  "scope": "Exploratory post-timing vmmap point. Its OS-reported lifetime peak includes preparation/startup, not a bounded timed peak; no matched baseline/causal comparison. RSS kept separate.",
+  "at": "2026-11-01T12:49:39.377130+08:00",
+  "processes": {
+    "ui": {
+      "pid": 98521,
+      "returncode": 0,
+      "raw_report": "ui-post-vmmap.txt",
+      "physical_footprint_lines": [
+        "Physical footprint:         129.9M",
+        "Physical footprint (peak):  130.0M"
+      ]
+    },
+    "core": {
+      "pid": 98204,
+      "returncode": 0,
+      "raw_report": "core-post-vmmap.txt",
+      "physical_footprint_lines": [
+        "Physical footprint:         15.2M",
+        "Physical footprint (peak):  16.1M"
+      ]
+    }
+  }
+}

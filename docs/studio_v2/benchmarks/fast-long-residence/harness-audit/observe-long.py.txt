@@ -1,0 +1,91 @@
+from pathlib import Path
+import datetime, hashlib, json, signal, statistics, subprocess, time
+
+root = Path(__file__).resolve().parent
+out = Path.cwd() / 'docs/studio_v2/benchmarks/fast-long-residence'
+ack = json.loads((out / 'native-ready.json').read_text())
+fixture = root / 'fixture'
+ui = json.loads((fixture / 'config/gpui.json').read_text())['pid']
+assert ui == ack['ui_pid']
+assert (ack['query'], ack['count'], ack['checked']) == ('long-discovery-', 4096, 0)
+assert ack['focus_proof'] == 'actual_keypress_edit_and_backspace'
+pids = {'ui': ui, 'core': json.loads((fixture / 'cua-launch-ready.json').read_text())['core_pid']}
+birth = {k: subprocess.check_output([str(root / 'process-start'), str(pid)], text=True).strip()
+         for k, pid in pids.items()}
+config_sha = hashlib.sha256((fixture / 'config/config.json').read_bytes()).hexdigest()
+assert config_sha == json.loads((out / 'load-preflight.json').read_text())['config_sha256']
+duration, interval, warmup = 900, 15, 10
+rows, complete, error, front = [], False, None, None
+source_sha = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+def cpu(value):
+    day, sep, rest = value.partition('-')
+    return (int(day) * 86400 if sep else 0) + sum(
+        float(v) * 60**i for i, v in enumerate(reversed((rest if sep else value).split(':'))))
+def observe(pid):
+    fields = subprocess.check_output(['ps', '-p', str(pid), '-o', 'rss=,time=,%cpu='], text=True).split()
+    assert len(fields) == 3
+    return {'rss_kib': int(fields[0]), 'cpu_seconds': cpu(fields[1]), 'ps_cpu_percent': float(fields[2])}
+def activity():
+    return json.loads(subprocess.check_output([str(root / 'activity-probe'), str(ui)], text=True))
+def store():
+    (out / 'long-resources.json').write_text(json.dumps({
+        'pids': pids, 'birth_us': birth, 'duration_seconds': duration, 'interval_seconds': interval,
+        'warmup_seconds': warmup, 'complete': complete, 'error': error, 'frontmost_pid_required': front,
+        'samples': rows, 'sampler_sha256': source_sha,
+        'scope': 'One current-candidate background 900s residence; no input/screenshots/profiler/compiler '
+                 'during timing. RSS is not footprint/leak-free proof; not foreground/final R03 acceptance.'}, indent=2) + '\n')
+def interrupted(signum, frame):
+    raise RuntimeError(f'Owned sampler interrupted by signal {signum}')
+signal.signal(signal.SIGTERM, interrupted)
+try:
+    initial = activity()
+    assert initial['target_found'] and initial['target_is_active'] is False and not initial['frontmost_is_target']
+    front = initial['frontmost_pid']
+    time.sleep(warmup)
+    start = time.monotonic()
+    while True:
+        elapsed = time.monotonic() - start
+        for k, pid in pids.items():
+            assert subprocess.check_output([str(root / 'process-start'), str(pid)], text=True).strip() == birth[k]
+        state = activity()
+        rows.append({'elapsed': round(elapsed, 3), 'at': datetime.datetime.now().astimezone().isoformat(),
+                     'activity': state, **{k: observe(pid) for k, pid in pids.items()}})
+        store()
+        if not (state['target_found'] and state['target_is_active'] is False and
+                not state['frontmost_is_target'] and state['frontmost_pid'] == front):
+            raise RuntimeError('Activity condition lost; preserve samples, no automatic retry')
+        if len(rows) == 1 or elapsed >= duration or len(rows) % 4 == 1:
+            print(json.dumps({'elapsed': round(elapsed, 3), 'samples': len(rows),
+                              'ui_rss_mib': rows[-1]['ui']['rss_kib'] / 1024,
+                              'target_inactive': True}), flush=True)
+        if elapsed >= duration:
+            complete = True
+            break
+        time.sleep(min(interval, max(0, duration - (time.monotonic() - start))))
+except Exception as failure:
+    error = f'{type(failure).__name__}: {failure}'
+    raise
+finally:
+    store()
+if complete:
+    summary = {}
+    for kind in pids:
+        span = rows[-1]['elapsed'] - rows[0]['elapsed']
+        rss = [point[kind]['rss_kib'] / 1024 for point in rows]
+        first = [point[kind]['rss_kib'] / 1024 for point in rows if point['elapsed'] <= 60]
+        last = [point[kind]['rss_kib'] / 1024 for point in rows if point['elapsed'] >= duration - 60]
+        x = [point['elapsed'] / 60 for point in rows]
+        xm, ym = statistics.mean(x), statistics.mean(rss)
+        slope = sum((a-xm)*(b-ym) for a,b in zip(x,rss)) / sum((a-xm)**2 for a in x)
+        summary[kind] = {'cpu_percent_one_core': 100*(rows[-1][kind]['cpu_seconds']-rows[0][kind]['cpu_seconds'])/span,
+                         'rss_first_mib': rss[0], 'rss_last_mib': rss[-1],
+                         'rss_min_mib': min(rss), 'rss_max_mib': max(rss),
+                         'rss_first_minute_median_mib': statistics.median(first),
+                         'rss_last_minute_median_mib': statistics.median(last),
+                         'rss_first_last_minute_delta_mib': statistics.median(last)-statistics.median(first),
+                         'rss_ols_slope_mib_per_minute': slope,
+                         'first_minute_points': len(first), 'last_minute_points': len(last)}
+    (out / 'long-summary.json').write_text(json.dumps({'complete': True, 'samples': len(rows),
+        'span_seconds': span, 'processes': summary, 'limits': 'Preregistered n1 background only; '
+        'no matched old candidate long pair, foreground/peak/footprint/leak-free or final performance proof.'}, indent=2) + '\n')
+    print(json.dumps(summary), flush=True)

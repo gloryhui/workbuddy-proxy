@@ -1,0 +1,166 @@
+{
+  "files": {
+    "cleanup-inventory.json": {
+      "bytes": 3511,
+      "sha256": "f00ac59aa0e475d49d11fbcacf16ea33d4ff43f99e5850b92a828bf92eab1708"
+    },
+    "cleanup-preflight-full.json": {
+      "bytes": 1921,
+      "sha256": "4acaf1fe975021fb53dcee137914b7e7b50910d1f53d04e0840fad65487632b2"
+    },
+    "cleanup-preflight-immediate.json": {
+      "bytes": 1921,
+      "sha256": "79d01c6e88c03747393b9c31ff6cbf47f623aa8b6fdc02ef8f2ac1fef1486181"
+    },
+    "cleanup-preflight.json": {
+      "bytes": 1921,
+      "sha256": "79d01c6e88c03747393b9c31ff6cbf47f623aa8b6fdc02ef8f2ac1fef1486181"
+    },
+    "cleanup.json": {
+      "bytes": 2349,
+      "sha256": "5d5b08493502b9e89a22421e2dcd719b3fb78d494f44cbc0783961856da4be45"
+    },
+    "core-post-vmmap.txt": {
+      "bytes": 5398,
+      "sha256": "61d95e8a1c9fad10f37b92b0819563161824e7d433f37f82ba462b9facd82d9e"
+    },
+    "core-protection.json": {
+      "bytes": 1468,
+      "sha256": "129918cf8165fa44726722bc1074cbc0cd79644f7b385e034ca9d1c4b85c8477"
+    },
+    "core.log.txt": {
+      "bytes": 41,
+      "sha256": "ad236885371cae8ca38219694cbf1049550f0613c623853e51b9b4a4c564f1a2"
+    },
+    "data-proof.json": {
+      "bytes": 1074,
+      "sha256": "05e09b0c184a9b64f96784ca6c286b6f2693232de76ba35e3278afc00a935573"
+    },
+    "final-checks.json": {
+      "bytes": 692,
+      "sha256": "83bf7c23f77c1ebcdb97865c5208fb8fee19a32bfb31d9e468b4ec8cb4aa41c6"
+    },
+    "fixture-manifest.json": {
+      "bytes": 3066,
+      "sha256": "fd53e3287e195987a7e31b7fa6e17b73f69c1388eb14fb5ff0d2164298dab636"
+    },
+    "harness-audit/activity-probe.m.txt": {
+      "bytes": 1207,
+      "sha256": "9c980505af166e340a9256435638614151c0a2d99a03ac05b2b3d4c6cb9ec57f"
+    },
+    "harness-audit/cleanup-preflight.py.txt": {
+      "bytes": 2940,
+      "sha256": "96d7b1990e291116d3db700fe96d45b2fa43c4b90b72fddfbaea73be17c517df"
+    },
+    "harness-audit/fixture.py.txt": {
+      "bytes": 24116,
+      "sha256": "9782b537473358c2cf334938295168525bbd42df1637b5f917f275fedc201225"
+    },
+    "harness-audit/observe-long.py.txt": {
+      "bytes": 5544,
+      "sha256": "e692e81ef373dd24e1aac973990e73d8df7aebc4ce6f609ff32bbb17bf6ad675"
+    },
+    "harness-audit/process-start.c.txt": {
+      "bytes": 339,
+      "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a"
+    },
+    "harness-audit/restart-identity-guard.m.txt": {
+      "bytes": 6090,
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1"
+    },
+    "image-manifest.json": {
+      "bytes": 1018,
+      "sha256": "961c38c07e67cd9fb5bcd96369bdff9091bf7f8d5912ae7c93af6b84826d5a9a"
+    },
+    "load-preflight.json": {
+      "bytes": 473,
+      "sha256": "368f75ddc4a776fa210b5775546fe07f68e38bb9a96b218b721f5bc9896ea3ea"
+    },
+    "long-resources.json": {
+      "bytes": 33483,
+      "sha256": "1def721b78902f29ed0b71cf8c9dae13b2342896e78123058c4dafcdadde18b2"
+    },
+    "long-summary.json": {
+      "bytes": 1180,
+      "sha256": "68dc16249149ad962cc87746956819f611efbde1e9df98fe2913091a4cb3479c"
+    },
+    "management-arrivals.jsonl": {
+      "bytes": 53733,
+      "sha256": "308781ec1a109aeb8b4bc11cbd49691b21d7293dcf3adab8d97ba07840337b76"
+    },
+    "management-audit.jsonl": {
+      "bytes": 80152,
+      "sha256": "db64b2cc0739749f0dd86d94cb8f91a63be850439d940b8c9f52d12b0b2cae4d"
+    },
+    "native-final-close.json": {
+      "bytes": 339,
+      "sha256": "d0b29041dbbce01628519495c1d594cdd7374171ae72f1290bb9fdc57bb1f187"
+    },
+    "native-key-z.ax.txt": {
+      "bytes": 8114,
+      "sha256": "ea68d65a73adcc50c3d26f402db2bb44e4fedd732ce2b412f1d35b8306628a02"
+    },
+    "native-key-z.jpg": {
+      "bytes": 144406,
+      "sha256": "08c49510de2ef215e04128d724d741af3d0771a18ef54ea167d397e8633339b8"
+    },
+    "native-post-key-restored.ax.txt": {
+      "bytes": 9721,
+      "sha256": "8d5226310e1b3a9e48e55e26b713cc4d91cd6cd3e2cd4ac7167dd1dba47b63d4"
+    },
+    "native-post-key-z.ax.txt": {
+      "bytes": 8114,
+      "sha256": "ea68d65a73adcc50c3d26f402db2bb44e4fedd732ce2b412f1d35b8306628a02"
+    },
+    "native-post-key-z.jpg": {
+      "bytes": 144899,
+      "sha256": "6175d3165a23a073de0237a62b74d82d69630d13855072d027a9b4d47ad911fc"
+    },
+    "native-post-key.json": {
+      "bytes": 541,
+      "sha256": "780377c6c3eb7fe0bcc39dce45246945ee8958d503961b794a205016e4a67539"
+    },
+    "native-ready.ax.txt": {
+      "bytes": 9721,
+      "sha256": "8d5226310e1b3a9e48e55e26b713cc4d91cd6cd3e2cd4ac7167dd1dba47b63d4"
+    },
+    "native-ready.jpg": {
+      "bytes": 169314,
+      "sha256": "eb1d296d413d7e194d5fe7b7edb0cd94e78b386fc5d227e26400956696564e3b"
+    },
+    "native-ready.json": {
+      "bytes": 999,
+      "sha256": "5e8b8dc53ccdf6a544bd7780adb611f37361b4c367c03333547bec65aa2d5811"
+    },
+    "post-vmmap.json": {
+      "bytes": 741,
+      "sha256": "d642ea493f88248f5805f08b54ce12971a9dac5e66ac7ebc85e88459823d50f5"
+    },
+    "preregistered.json": {
+      "bytes": 1999,
+      "sha256": "2295e031186f603385824c7e95267c2e2e508c41c95f0818e8cff0e4519f7e87"
+    },
+    "r01-capability-review.json": {
+      "bytes": 1652,
+      "sha256": "0ab7832b28a4ed46c246a8be2e5bcc04a72f1c127bceb6e23d4e8df116274468"
+    },
+    "restart-audit.jsonl": {
+      "bytes": 300,
+      "sha256": "a1dd7fececa85aa698ed117676a3a5629a30905ff6c5d5d374dbd4bd90097ca0"
+    },
+    "signed-runtime-identity.json": {
+      "bytes": 1450,
+      "sha256": "d445626566982858877583bfbf3030ad62a11eb6e47d723d4b7e15cd87a51a2b"
+    },
+    "terminal-status.json": {
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    "ui-post-vmmap.txt": {
+      "bytes": 7656,
+      "sha256": "77d859c2f8e88612525d2cf2c72ce23a72fece47a506e62a7e44a6a25e8609ed"
+    }
+  },
+  "summary_sha256": "4f7b5c89a3bd83d8ef4704544ec24a2c54dc65a6304adfdfb5e7e0e912ee17fb",
+  "scope": "Original source/captures/samples/logs preserved. No private config/database/environment/generated management key archived."
+}

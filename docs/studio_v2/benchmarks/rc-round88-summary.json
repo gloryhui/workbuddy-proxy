@@ -1,0 +1,71 @@
+{
+  "batch": "QA88",
+  "evidence_source_head": "a21570c7122fbcd4bbca6c90ae2b835dbca0b404",
+  "runtime_ui_source": "5681103e5b05fb88c73f8ea4a32bafd11cbc3380",
+  "runtime_input_ui_sha256": "3c19fb96dd345c7e0a3287ee58eb523e5c959a5f555d57b888d51ec062893bbb",
+  "runtime_signed_ui_sha256": "190af5af72aaae39410c463ad80a8263be9777bb724d56cd7c8a1666cef59c54",
+  "signature_binding": "All nonsignature bytes normalized equal; code_mutation_detected is the comparator synthetic self-test, not a real runtime mutation.",
+  "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+  "scope": "Current Fast candidate 900s background residence, explicit limited gate evidence. No source edits or new CI.",
+  "metrics": {
+    "complete": true,
+    "samples": 61,
+    "span_seconds": 900.01,
+    "processes": {
+      "ui": {
+        "cpu_percent_one_core": 2.7244141731758535,
+        "rss_first_mib": 114.140625,
+        "rss_last_mib": 109.40625,
+        "rss_min_mib": 109.109375,
+        "rss_max_mib": 114.140625,
+        "rss_first_minute_median_mib": 112.8671875,
+        "rss_last_minute_median_mib": 109.40625,
+        "rss_first_last_minute_delta_mib": -3.4609375,
+        "rss_ols_slope_mib_per_minute": -0.2091842239637913,
+        "first_minute_points": 4,
+        "last_minute_points": 5
+      },
+      "core": {
+        "cpu_percent_one_core": 0.15444272841412873,
+        "rss_first_mib": 21.28125,
+        "rss_last_mib": 17.859375,
+        "rss_min_mib": 17.765625,
+        "rss_max_mib": 21.359375,
+        "rss_first_minute_median_mib": 21.28125,
+        "rss_last_minute_median_mib": 17.859375,
+        "rss_first_last_minute_delta_mib": -3.421875,
+        "rss_ols_slope_mib_per_minute": -0.13616615246318572,
+        "first_minute_points": 4,
+        "last_minute_points": 5
+      }
+    },
+    "limits": "Preregistered n1 background only; no matched old candidate long pair, foreground/peak/footprint/leak-free or final performance proof."
+  },
+  "data": "All 1014 request/cost fields and config bytes identical after timing and after normal Core stop. Core/driver actual0; host-owned UI exit unknown, PIDgone.",
+  "r01": "CUA capabilities unchanged; no hover/multi-point/pressed trial repeated. Pre/post real z/Backspace routing and Cancel/close passed. Per-engine IME/AT untouched and pending.",
+  "footprint": "Post-timing vmmap raw retained: UI129.9M/OS lifetime peak130.0M; Core15.2M/16.1M. Not timed-bound peak or matched comparison; RSS decrease can include paging/compression and does not prove heap shrink/leak-free.",
+  "cleanup": {
+    "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-fast-long-hsi8d7mg",
+    "logical_bytes_removed": 55017151,
+    "session_temporary_bytes_remaining": 0,
+    "necessary_baseline_reference_bytes_retained": 101859410,
+    "system_disk_free_after_bytes": 38324592640
+  },
+  "release_pending": 15,
+  "pending_by_batch": {
+    "R01": 4,
+    "R02": 4,
+    "R03": 3,
+    "R04": 4
+  },
+  "frames_remaining": 0,
+  "goal": "active",
+  "manual_verification_availability": "One asynchronous availability question remains unanswered; no authorization inferred for system changes.",
+  "no_automatic_voiceover_AT_input_source_changes": true,
+  "public_release": false,
+  "limits": [
+    "No matched old 900s run in this batch",
+    "No foreground CPU/startup/latency/FPS/physical input/IME/AT or final performance acceptance",
+    "No whole release task newly passed; no 40-frame/theme/Core/installer rerun"
+  ]
+}

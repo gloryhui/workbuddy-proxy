@@ -1,0 +1,10 @@
+{
+  "ui_pid": 98521,
+  "ui_pid_gone": true,
+  "core_pid": 98204,
+  "core_present_at_check": true,
+  "observed": "点击取消一次，实时图无白壳遮罩且AX无dialog；点击原生close，随后只读ps确认UI退出",
+  "exit_code": "unavailable",
+  "post_key": "native-post-key.json",
+  "created_at": "2026-11-01T04:50:50.883Z"
+}

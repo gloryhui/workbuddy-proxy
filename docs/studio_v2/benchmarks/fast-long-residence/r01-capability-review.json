@@ -1,0 +1,27 @@
+{
+  "batch": "QA88",
+  "CUA_capability": "Existing delegated studio_cua re-read current documentation; no hover/mouseMove, no separate mouseDown/up, no multi-point/duration drag. click durationMs does not guarantee capture while held; no new UI attempt.",
+  "product_source_review": [
+    "UsageRows.column enables resize except fixed Time; TableState remains col_resizable default true",
+    "ColumnWidthsChanged subscription records actual changed widths in custom_widths then refreshes table; viewport sizing uses these widths",
+    "Model/usage cell tooltips are wired to real native hover; a normal click/AX full label is not evidence that a tooltip appeared",
+    "No confirmed product bug from source alone; do not change product spec to bypass unavailable native evidence"
+  ],
+  "remaining": "R01 hover/pressed/slot, actual drag+refresh/resize, per-engine IME and real AT remain pending. Do not repeat unchanged unsupported trials.",
+  "sources": {
+    "gpui/src/usage_table.rs": {
+      "sha256": "dfb2900eb4301261e2a6197bdb6a9ad7d5e82ec0a847ed15d158a20c24fd233c"
+    },
+    "gpui/src/statistics.rs": {
+      "sha256": "fd892e9086d9453a951f58726d5e378270c1064ac9f87466c6c1e6b8278e213a"
+    },
+    "gpui/src/model_table.rs": {
+      "sha256": "895c152a39f5602818272493f328244016c4d19735c9aa0e831d198c8f7c9266"
+    },
+    "gpui/src/ui_components.rs": {
+      "sha256": "8489e8a2a62f464ef2b9ff0699b3cca7ad2d0b456202da181f573bb9825c8665"
+    }
+  },
+  "next_safe_action": "One already preregistered 900s background native current Fast long residence; explicitly not foreground acceptance",
+  "no_app_or_system_change_in_capability_review": true
+}

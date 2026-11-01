@@ -1,0 +1,68 @@
+{
+  "at": "2026-11-01T12:52:17.557840+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-fast-long-hsi8d7mg",
+  "type": "owned dedicated temporary directory",
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "uid": 501,
+  "parents": [
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-fast-long-hsi8d7mg",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    }
+  ],
+  "files": 50,
+  "subdirectories": 19,
+  "logical_bytes": 55017151,
+  "inventory_sha256": "f00ac59aa0e475d49d11fbcacf16ea33d4ff43f99e5850b92a828bf92eab1708",
+  "no_symlinks_or_nested_mounts": true,
+  "all_owned_local_children_and_mounts_finished": true,
+  "open_handles": 0,
+  "process_references_excluding_preflight_ancestors": 0,
+  "regenerable": "Session-created verified downloads/package copies/synthetic profiles. OriginalCI/localreports/diagnostics/manifests retained inrepo, sharedCargo/baselinekit outside root.",
+  "delete_executed": false,
+  "system_disk_free_before_bytes": 38268686336
+}

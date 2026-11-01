@@ -1,0 +1,14 @@
+{
+  "core_pid": 98204,
+  "real_http_200_requests": 1014,
+  "max_workers": 4,
+  "setup_seconds": 0.355,
+  "requests": 1014,
+  "costs": 1014,
+  "providers": 64,
+  "models": 256,
+  "config_sha256": "bdd048bba2f83c0c23dd81e20b4a59386ce952f33a5aa80be9cf65c83c54c126",
+  "business_sha256": "21bf3e155fef7dc694b3701a16a745813fbebb417375591fc330370df53d5c05",
+  "database_writes": "Only actual Core HTTP forwarding; observer SQL read-only, no inserts",
+  "native_started": false
+}

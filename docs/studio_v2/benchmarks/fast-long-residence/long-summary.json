@@ -1,0 +1,34 @@
+{
+  "complete": true,
+  "samples": 61,
+  "span_seconds": 900.01,
+  "processes": {
+    "ui": {
+      "cpu_percent_one_core": 2.7244141731758535,
+      "rss_first_mib": 114.140625,
+      "rss_last_mib": 109.40625,
+      "rss_min_mib": 109.109375,
+      "rss_max_mib": 114.140625,
+      "rss_first_minute_median_mib": 112.8671875,
+      "rss_last_minute_median_mib": 109.40625,
+      "rss_first_last_minute_delta_mib": -3.4609375,
+      "rss_ols_slope_mib_per_minute": -0.2091842239637913,
+      "first_minute_points": 4,
+      "last_minute_points": 5
+    },
+    "core": {
+      "cpu_percent_one_core": 0.15444272841412873,
+      "rss_first_mib": 21.28125,
+      "rss_last_mib": 17.859375,
+      "rss_min_mib": 17.765625,
+      "rss_max_mib": 21.359375,
+      "rss_first_minute_median_mib": 21.28125,
+      "rss_last_minute_median_mib": 17.859375,
+      "rss_first_last_minute_delta_mib": -3.421875,
+      "rss_ols_slope_mib_per_minute": -0.13616615246318572,
+      "first_minute_points": 4,
+      "last_minute_points": 5
+    }
+  },
+  "limits": "Preregistered n1 background only; no matched old candidate long pair, foreground/peak/footprint/leak-free or final performance proof."
+}

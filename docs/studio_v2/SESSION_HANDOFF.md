@@ -2,7 +2,16 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA87）
+## 最新进展（QA88）
+
+- 当前运行时代码仍568/UI3c19/Core1146，本轮只补现有Fast最终候选后台长期驻留，没有新构建或CI。R01 CUA文档能力未变，hover/mouseMove、分步按下/松开、多点drag仍缺；静态接线未证明产品故障，不重复原失败尝试。已异步询问一次人工验收环境，未收到回答；不得推定允许改系统设置。[R01审查](benchmarks/fast-long-residence/r01-capability-review.json)。
+- 新隔离App，64供应商/256模型/1014真实HTTP请求与成本/4096候选/搜索前缀/选0，10秒warmup后900.010秒61点全inactive、前台同96217、PIDbirth逐点一致，计时内无输入/截图/分析器/构建。UI CPU单核2.7244%，RSS首尾分钟中位112.867→109.406MiB（−3.461）；Core.1544%、21.281→17.859MiB。n1后台未见持续RSS增长，不签无泄漏/前台/最终性能，RSS下降可含paging/compression。[协议/原样本](benchmarks/fast-long-residence/preregistered.json)、[汇总](benchmarks/fast-long-residence/long-summary.json)。
+- 结束后独立vmmap：UI footprint129.9M/OS生命周期peak130.0M，Core15.2M/16.1M；生命周期峰值含准备，非计时区间peak/匹配基线。signedUI190af5af对input3c19全非签名字节相同，code_mutation_detected为比较器自测；Corekernel保护已验，GUI只有隔离环境和deny-only真实WorkBuddy guard，不虚称kernel沙盒。[签名](benchmarks/fast-long-residence/signed-runtime-identity.json)。
+- 前后无先行点击实际z→0/Backspace恢复4096/0，后置Cancel一次无白壳，原生close后UIgone；三原JPEG均1440×901及AX保留。所有配置字节、1014请求/成本全字段退出后保持，stats normal/1014admitted/0drop/0writefailure；Core/driver0，UI退出码未知。[数据](benchmarks/fast-long-residence/data-proof.json)。
+- 专用`studio-v2-fast-long-hsi8d7mg`经完整及即时预检精确清理50文件/19子目录、55,017,151B约52.47MiB，专用临时0，所有本轮进程结束。必要两基线共97.14MiB和共享缓存保留，系统盘约35.69GiB；其他历史目录未动。**不要重开已删bundle。**[清理](benchmarks/fast-long-residence/cleanup.json)。
+- **40帧剩0，发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active。禁止自动开启旁白/系统辅助功能/切输入源，未公开发布。** 本轮证据提交后显式`--task 88`统一生成一次时间线。下一步不要再跑相同后台90/900秒；先取得人工/真实设备条件补R01/R02、有效前台与启动慢marker/最终峰值结论；最终全RC在实际候选冻结后集中执行。[QA88](benchmarks/rc-round88-summary.json)。
+
+## 上一轮进展（QA87）
 
 - 测试精简入口`67eaff3`已推：`windows_native_only=true`复用原成功CI的UI568/Windows `cd1a266c`与冻结957/Core `880016c6`，源码漂移、过期、run/source/下载大小SHA不匹配即失败。仅组合两程序临时布局跑既有两尺寸GDI/生命周期，无构建/安装或分发包。Mac UI仍3c19/Core1146，Windows hash不能混用。[预注册](benchmarks/windows-fast-native/preregistered.json)。
 - 唯一[run41272932710](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41272932710)绑定67eaff3/attempt1，job124749239785首次43秒成功，Desktop/UI构建/旧升级三job skipped；artifact13070162370、154,989B ZIP大小SHA与所有原报告/PNG均独立核对。[CI来源/清理](benchmarks/windows-fast-native/ci/validation.json)。
