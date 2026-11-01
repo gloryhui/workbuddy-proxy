@@ -1,0 +1,11 @@
+{
+  "committed_evidence_hashes_verified": 14,
+  "original_AX_whitespace_paths": [
+    "docs/studio_v2/benchmarks/manual-mac-rc060/awaiting-manual.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/initial.ax.txt"
+  ],
+  "scope": "Raw AX retains synthetic longname trailing spaces; do not trim original evidence. Editablehandoff/source clean.",
+  "shell_orchestration_error": "Combined shell did not stop on whitespace-report assertion; evidence commit proceeded. Verified committed bytes/hash and limited rawAX whitespace afterwards, no historyrewrite or hookbypass.",
+  "gate_count": 14,
+  "new_acceptances": 0
+}
