@@ -10,7 +10,7 @@
 - CUA唯一操作者studio_cua逐键搜索和最大输出tokens一个数字代表：预编辑`ni'hao`经Esc整串消失；数字原JPEG有下划线，Enter实际落ASCII`nihao`、modal保持，再取消恢复原模型/ID/已保存。搜索清空后2供应商恢复。未用typeText/paste冒充IME，候选窗口未直接捕获，不称中文候选提交通过，也不重做已过显示名称/三字段/全屏/hover/拖列/40帧/21主题/后台90或900秒。[代表矩阵](benchmarks/qingjian-fields/streamlined-matrix.json)、[观察](benchmarks/qingjian-fields/cua-observations.json)、[16原JPEG](benchmarks/qingjian-fields/image-manifest.json)。
 - UI95207原生close后PIDgone，退出码未知；Core94928与driver94926/原句柄18530均正常0。退出后只读冷核config与合成models整份字节、5业务表全字段均同基准，2真实请求/2成本保持。1362管理命令仅原save403，native只guard_installed、无open/terminate。Corekernel保护；GUI为独立环境+deny-onlyguard，不称GUIkernel。[最终数据](benchmarks/qingjian-fields/final-data-proof.json)。
 - 专用根`/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-input93-0ysfef9j`已完整/即时owner父链无symlink/mount、库存hash、lsof/ps预检后精确非强制清理：41文件/19子目录52,946,528B约50.49MiB，本轮临时保留0，APFS观测可用增加53,178,368B，系统盘约34.43GiB；必要baseline/原RC/共享cache保留。**不可重开已删QA93/92/86窗口。** 元数据收集缺PIL、首次冷mode=ro查询错误与安全immutable冷读处理另留记录，未重跑产品测试或隐藏首异常。[清理](benchmarks/qingjian-fields/cleanup.json)、[收集说明](benchmarks/qingjian-fields/collection-notes.json)。
-- **40帧签收/剩0；发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active，未公开发布。** 下一步先按源码审计其余特殊输入的提交/关闭处理并合并等价路径，只补差异；本轮代表不扩为所有输入框或整个R01通过。真实AT/平台/有效前台性能和最终RC门禁仍依各项保留。禁止自动旁白/AT/切源/改系统缩放。QA93证据提交后显式--task93一次同步时间线。
+- **40帧签收/剩0；发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active，未公开发布。** 下一步先按源码审计其余特殊输入的提交/关闭处理并合并等价路径，只补差异；本轮代表不扩为所有输入框或整个R01通过。真实AT/平台/有效前台性能和最终RC门禁仍依各项保留。禁止自动旁白/AT/切源/改系统缩放。QA93证据be61421提交后已显式--task93一次同步时间线，嵌入JSON相等、两段未改JS语法与61份已提交证据hash已核验，见[时间线核验](benchmarks/rc-round93-timeline-validation.json)。
 
 ## 最近完成进展（QA92，人工Mac验收与全屏背景修复）
 
