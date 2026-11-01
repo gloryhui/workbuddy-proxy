@@ -2,7 +2,16 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA89）
+## 最新进展（QA90）
+
+- 当前运行时仍b617/UI3c0e/Core1146，无新产品代码/构建/CI/性能轮次。本轮实测关闭R01.1此前明确的StartupSync/pendingPort两个子缺口，不再列“未触发”。隔离HOME种1managed旧地址+1unrelated合成条目，实际Core检查expected127.0.0.1:61270/1of1 mismatch/192.0.2.1:61271，非响应注入、未install；1真实HTTP与成本后冻结基准。[前置](benchmarks/modal-remaining/native-preflight.json)。
+- 两确认各有1440×901与1100×701原JPEG/AX，父代理四图查看/hash核对，地址/计数/警告/按钮可读。中性Return后两提示均保持；StartupCancel无壳/遮罩，pendingPort从61270拟改61393仅进入确认后Escape，无壳且重开编辑器仍61270；然后正常close。编辑器“应用端口”只调用prepare_port，不是业务set_port确认。未点两个restart按钮。AX仅window，非精确子焦点/完整键盘/IME/AT签收。[原生](benchmarks/modal-remaining/native-result.json)、[四原图](benchmarks/modal-remaining/image-manifest.json)。
+- UI只读allowlist，install/set_port/native restart动作0。配置字节、整个合成WorkBuddy models.json（含unrelated）字节、1请求/成本全字段退出后保持，stats normal/1admitted/0drop/0writefailure。Core/driver0，UI仅PIDgone、退出码未知。签名只有signature差异；mutation flag是比较器自测；Corekernel已验，GUI不虚称kernel沙盒。[数据](benchmarks/modal-remaining/data-proof.json)。
+- 当前HostARM Mac16,10、Rosetta probe translated1只是可用性，不当Intel硬件/GUI验收。只读DeveloperIDApplication计数0；现有README已经选择Mac ad-hoc未公证/Winunsigned，计数0不单独构成该方案mandatory blocker，真实下载Gatekeeper/SmartScreen仍待。禁止自动开旁白/辅助功能/切输入源/改系统缩放。[环境/待验审计](benchmarks/modal-remaining/remaining-gate-audit.json)。
+- 所有本轮进程结束，自有gqbmccz6经完整/即时预检精确清理47文件/19目录、52,824,674B约50.38MiB，专用临时0；必要两基线97.14MiB/共享缓存保留，系统盘约35.67GiB。**禁止重开已删bundle。**[清理](benchmarks/modal-remaining/cleanup.json)。
+- **40帧剩0，发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active，未公开发布。** QA90证据提交后显式--task90统一生成一次时间线。不重复本轮两modal/已有后台90与900秒/未变工具能力的hover、pressed、drag；下一步先核对人工环境答复及剩余真实输入/设备/前台条件，并将尚可安全准备的RC版本、说明和包级核对具体化；最终全RC只对实际冻结候选集中跑，不能用编译/模拟或Rosetta冒充硬件/真实辅助技术。[QA90](benchmarks/rc-round90-summary.json)。
+
+## 上一轮进展（QA89）
 
 - 当前运行时`b617049`，Mac input UI **3c0eb8c75fb905fa3e4c08295e7400e9ad9e2e251b01ede1415a0c1223aab00d**（43,810,848B），Core仍1146。将main参数解析/--version前4组纯契约断言完整移到cfg(test)的4个单元测试，原body字节不变；仅兼容契约API/dummy MappingFlow存储cfg(test)，未加dead_code豁免。实际页面/handler/持久化schema、Kit/Fast/lock未改。初Clippy16组死代码错误保留，修正test-only边界后最终fmt/strictClippy/216pass+2ignore/Intelcheck/ARMrelease/CLI通过。[交付范围](benchmarks/startup-contracts/final-scope.json)。
 - 唯一[run41275489271](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41275489271)绑定b617/attempt1，ARM124756717668/Intel124756717805/Win124756717921首轮全部success，Desktop/旧升级/Windowsnative三job skipped；Win215pass/2ignore、两Mac216/2ignore，真实host/各检查原log核对。三UI artifact仅服务器元数据，未下载ZIP/不当分发包。Windowsnative未来入口pin同步newWin artifact13071258074/sourceb617，Core冻结957不变；本轮未重新派发GDI。[CI](benchmarks/startup-contracts/ci/validation.json)。

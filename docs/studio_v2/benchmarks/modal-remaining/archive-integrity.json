@@ -1,0 +1,142 @@
+{
+  "files": {
+    "cleanup-inventory.json": {
+      "bytes": 3347,
+      "sha256": "c68ef131263021fa19fe3aefcf3f7be4465e2aa2104faa6cbc9dc6bf026b1cef"
+    },
+    "cleanup-preflight-full.json": {
+      "bytes": 1933,
+      "sha256": "dda3a652fc5f931b090aeac10ded93aab3c031030a38005954eb9ae7256e6336"
+    },
+    "cleanup-preflight-immediate.json": {
+      "bytes": 1933,
+      "sha256": "60d7090708344963762e6838d478843a318d9d41063eadd26a70c697e3db9763"
+    },
+    "cleanup-preflight.json": {
+      "bytes": 1933,
+      "sha256": "60d7090708344963762e6838d478843a318d9d41063eadd26a70c697e3db9763"
+    },
+    "cleanup.json": {
+      "bytes": 2153,
+      "sha256": "abbab8e7603a204a5f49b292832461b8d171deac11ad65b8b5a0e002f32401a8"
+    },
+    "core-protection.json": {
+      "bytes": 1468,
+      "sha256": "526c6bdee37c79e561da051380e78d59cb11f3d27e8b0472a0bdf2dba5d5b08f"
+    },
+    "core.log.txt": {
+      "bytes": 41,
+      "sha256": "db3349d5b0d3f77446cba6fda1955fefd71f8b8af2e74b97e9670b187064ea09"
+    },
+    "data-proof.json": {
+      "bytes": 1246,
+      "sha256": "61ac4f76473f18cdc4e9598c5e0721e905da46b8910fe831685b0e2189c8c94b"
+    },
+    "environment-audit.json": {
+      "bytes": 689,
+      "sha256": "bc19f7df9706aac4858d33ecfc5d67e46000601276dc2c42404028061fb65862"
+    },
+    "final-checks.json": {
+      "bytes": 778,
+      "sha256": "9b20fcb7755ef9c500ece54c09355dee3496304d8916f21b650f4a36bdc42f2d"
+    },
+    "fixture-manifest.json": {
+      "bytes": 3087,
+      "sha256": "a9914d8dc6d8a21e54eff90707ebd21f7e8bd1cd8a5660ea68a70eb6e61d208f"
+    },
+    "harness-audit/cleanup-preflight.py.txt": {
+      "bytes": 2936,
+      "sha256": "8016ea783aaf4ef3e8fa85b2a2e6b27cf5370e460ae063f726b0586a0b55d12e"
+    },
+    "harness-audit/fixture.py.txt": {
+      "bytes": 24128,
+      "sha256": "5d8ae46a52171aaeaee5f33806ae8784550db4b2e905e2f7d347d2c7e7a4a529"
+    },
+    "harness-audit/process-start.c.txt": {
+      "bytes": 339,
+      "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a"
+    },
+    "harness-audit/restart-identity-guard.m.txt": {
+      "bytes": 6090,
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1"
+    },
+    "image-manifest.json": {
+      "bytes": 1606,
+      "sha256": "8ed88121b52da382bf0f97741b41087b11bcd717363c815d29c1bbe9b5cce18d"
+    },
+    "management-arrivals.jsonl": {
+      "bytes": 15750,
+      "sha256": "2fc60f448f76a3dfca20f8d6ce582b259636ac091fc236868d4baa7ca1b48563"
+    },
+    "management-audit.jsonl": {
+      "bytes": 23121,
+      "sha256": "130ece15e09fb0c892bf43f35349c80e79872b16bd951327fec5a2b989be68cf"
+    },
+    "native-preflight.json": {
+      "bytes": 982,
+      "sha256": "a0a407eb88fc48458d713db5f51363a424c76201464d8b4ea534ea73c6eafe5e"
+    },
+    "native-result.json": {
+      "bytes": 1879,
+      "sha256": "f5c799b4b3ba7bc611af61f1c55363850524e1713dbafe5c5c6ba8358d014cc1"
+    },
+    "pending-small.ax.txt": {
+      "bytes": 3053,
+      "sha256": "f7ae121486492a8a501f865101f4006c0bd74c4dcb14e744abcfe606a440c292"
+    },
+    "pending-small.jpg": {
+      "bytes": 105112,
+      "sha256": "0f39c3002c329bfd426bf5b807d9edf0de4115143f9daaa25cd8e129dbd4a2a7"
+    },
+    "pending-wide.ax.txt": {
+      "bytes": 3053,
+      "sha256": "f7ae121486492a8a501f865101f4006c0bd74c4dcb14e744abcfe606a440c292"
+    },
+    "pending-wide.jpg": {
+      "bytes": 150397,
+      "sha256": "fd04dbeb8cca6a1cd626e13cd5a0dfda86101ede7cf7623cefd70c1535f0f2cf"
+    },
+    "preregistered.json": {
+      "bytes": 2111,
+      "sha256": "9e13fab85c4722f6b1be18256618a2cb2fa140abbabda27a9ba7641a6644e6f4"
+    },
+    "remaining-gate-audit.json": {
+      "bytes": 2051,
+      "sha256": "8f7128ca9ce46d484cecfbf1f9a200a84f453ee2adfce81985123c52550120eb"
+    },
+    "restart-audit.jsonl": {
+      "bytes": 306,
+      "sha256": "1086f61384160d5477a489cb1564cf9adc52541ab5127ce4889e7697f3a12ae0"
+    },
+    "signed-runtime-identity.json": {
+      "bytes": 1450,
+      "sha256": "4cf14650ccbf0701a9258bb159eae1d62a9a23fe8b21ac338359fcdd6a386d79"
+    },
+    "signing-availability-count.json": {
+      "bytes": 400,
+      "sha256": "e85f68a86fe3c0e8eb2756a78a09e78dbdff27afd699a98daf4a10c421f8f075"
+    },
+    "startup-initial.ax.txt": {
+      "bytes": 3298,
+      "sha256": "e7db9bb177cea9f6bdf1afe5f41cb0ef40f112c27b3e4d032b9881f3bb4e253d"
+    },
+    "startup-initial.jpg": {
+      "bytes": 113321,
+      "sha256": "7814d98230231798beaf24f14bf86b5e707d0b986aac1ce41fb3bf223bfc2ae3"
+    },
+    "startup-small.ax.txt": {
+      "bytes": 3298,
+      "sha256": "e7db9bb177cea9f6bdf1afe5f41cb0ef40f112c27b3e4d032b9881f3bb4e253d"
+    },
+    "startup-small.jpg": {
+      "bytes": 94594,
+      "sha256": "3a2f317d18e68930aa5501670239ac5e65b387db169d8067ff38b1ad48646a74"
+    },
+    "terminal-status.json": {
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    }
+  },
+  "summary_sha256": "a5dd52b89226622f68fb52ed187e682ed261b0c003242fed95f75125c610dee0",
+  "scope": "Original JPEG/AX/logs/source and reports; no private config/DB/model file/env or generated management key archived."
+}

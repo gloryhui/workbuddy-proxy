@@ -1,0 +1,53 @@
+{
+  "batch": "QA90",
+  "runtime_source": "b61704990587338213271e56ae2cfdacccb59ec5",
+  "input_ui_sha256": "3c0eb8c75fb905fa3e4c08295e7400e9ad9e2e251b01ede1415a0c1223aab00d",
+  "runtime_signed_ui_sha256": "0dd6fafc56ab089ecbf665f505a024d099774feca46a11785ea69ff8ddd64351",
+  "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+  "actual_scope": "Two formerly missing StartupSync/pendingPort native modal branches, both actual window sizes, neutral Return retained each modal, Cancel/Escape and port restore passed. Real immutable Core workbuddy_check of isolated managed mismatch, no injected result.",
+  "new_product_code": false,
+  "product_builds": 0,
+  "CI_dispatches": 0,
+  "performance_repeats": 0,
+  "frames_repeated": 0,
+  "compiled_helpers": "Two existing owned deny/liveness helpers only",
+  "native_result": "modal-remaining/native-result.json",
+  "data_proof": "modal-remaining/data-proof.json",
+  "pictures": 4,
+  "data_preserved": "Config bytes, entire synthetic WorkBuddy model file including unrelated entry, all1request/cost fields after normal Core stop",
+  "mutation_audit": {
+    "all_UI_commands_explicit_read_allowlist": true,
+    "install": 0,
+    "set_port": 0,
+    "native_restart_actions": 0
+  },
+  "exits": {
+    "core": 0,
+    "driver": 0,
+    "UI": "CUA-owned exit code unknown; PIDgone"
+  },
+  "identity_note": "Signed runtime nonsignature bytes equal; code_mutation_detected is comparator self-test, not real mutation",
+  "environment": "ARM Mac16,10; translated Rosetta probe1 only, no Intel hardware/GUI acceptance. DeveloperIDApplication0 read-only count, existing ad-hoc/unsigned scheme explicit; real download policy checks still pending.",
+  "cleanup": {
+    "logical_bytes_removed": 52824674,
+    "session_temporary_remaining": 0,
+    "necessary_baseline_bytes_retained": 101859410,
+    "system_disk_free_after_bytes": 38305394688
+  },
+  "release_pending": 15,
+  "pending_by_batch": {
+    "R01": 4,
+    "R02": 4,
+    "R03": 3,
+    "R04": 4
+  },
+  "frames_remaining": 0,
+  "goal": "active",
+  "no_automatic_VoiceOver_AT_input_source_system_scale_changes": true,
+  "public_release": false,
+  "limits": [
+    "Only these two subgaps closed, not all shared states/slot/hover/pressed/Tooltip",
+    "AX focused window, not exact child; no full keyboard/IME/AT acceptance",
+    "No native Intel/Windows physical input/system-login/multimonitor or foreground performance conclusion"
+  ]
+}

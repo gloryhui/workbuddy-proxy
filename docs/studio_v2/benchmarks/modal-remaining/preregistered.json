@@ -1,0 +1,31 @@
+{
+  "batch": "QA90",
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-modal-remaining-gqbmccz6",
+  "source_head": "f723f6af4dc86da56eb290084aaaefa6b7c47bb6",
+  "runtime_source": "b61704990587338213271e56ae2cfdacccb59ec5",
+  "binaries": {
+    "ui": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+      "sha256": "3c0eb8c75fb905fa3e4c08295e7400e9ad9e2e251b01ede1415a0c1223aab00d"
+    },
+    "core": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy",
+      "sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e"
+    }
+  },
+  "scope": "Only two explicit remaining R01 modal states on current candidate; no code/build/CI/performance/40frames/theme repeats.",
+  "setup": "Write two synthetic WorkBuddy entries in owned HOME: one managed endpoint mismatch and one unrelated synthetic entry. Real immutable Core workbuddy_check must detect1mismatch. One real HTTP request/cost, then freeze bytes and fields. No real user profile access.",
+  "native_cases": [
+    "StartupSync mismatch appears, inspect full address/count, Cancel once removes modal and main controls usable",
+    "Port editor with new valid port shows pendingPort restart confirmation; Escape cancels, no set_port/restart; reopen editor shows original port",
+    "Both modal surfaces reviewed at1440/1100 logical windows if supported ordinary window resize; no table drag/hover/pressed attempt"
+  ],
+  "forbidden": [
+    "No install/set_port/apply/save/delete or WorkBuddy restart",
+    "No VoiceOver/AT/input-source/system-scale change",
+    "No repeated unsupported drag/hover attempts"
+  ],
+  "data_proof": "Config bytes, entire synthetic WorkBuddy models.json bytes and all request/cost fields equal through UI/Core exit; audit zero mutating commands and zero native restart actions",
+  "guard": "Core kernel source protection, unique GUI identity/LSEnvironment and deny-only restart interposer; no GUI kernel claim",
+  "failure_policy": "Record first failure, no unchanged restart/retry to green"
+}

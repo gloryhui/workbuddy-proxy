@@ -1,0 +1,34 @@
+{
+  "host_arch": {
+    "argv": [
+      "uname",
+      "-m"
+    ],
+    "exit_code": 0,
+    "stdout": "arm64",
+    "stderr": ""
+  },
+  "host_model": {
+    "argv": [
+      "sysctl",
+      "-n",
+      "hw.model"
+    ],
+    "exit_code": 0,
+    "stdout": "Mac16,10",
+    "stderr": ""
+  },
+  "rosetta_probe": {
+    "argv": [
+      "/usr/bin/arch",
+      "-x86_64",
+      "/usr/sbin/sysctl",
+      "-n",
+      "sysctl.proc_translated"
+    ],
+    "exit_code": 0,
+    "stdout": "1",
+    "stderr": ""
+  },
+  "scope": "Read-only execution availability only. Rosetta, even available, is not native Intel hardware/GPU/window/tray/performance acceptance. No Rosetta install or system setting changes."
+}

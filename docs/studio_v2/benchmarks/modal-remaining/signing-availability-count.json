@@ -1,0 +1,7 @@
+{
+  "scope": "Read-only count only, no identity names/IDs/private key export/unlock/sign/notarization/upload",
+  "exit_code": 0,
+  "developer_id_application_count": 0,
+  "notarization_credentials": "Not read; no upload attempted",
+  "distribution_source": "Existing repository packaging/README remains authoritative for ad-hoc/unsigned scheme, real downloaded-package policy checks remain pending"
+}

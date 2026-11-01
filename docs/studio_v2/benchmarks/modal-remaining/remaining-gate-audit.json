@@ -1,0 +1,26 @@
+{
+  "review_source_head": "f723f6af4dc86da56eb290084aaaefa6b7c47bb6",
+  "runtime_source": "b61704990587338213271e56ae2cfdacccb59ec5",
+  "remaining_gate_tasks": 15,
+  "automatic_paths_this_batch": [
+    "R01.1 actual StartupSync/pendingPort surfaces and cancellation",
+    "R01.2 default neutral Enter does not confirm dangerous actions, Escape restore if reachable"
+  ],
+  "external_conditions": {
+    "R01": "Hover/held state/multi-point table drag unsupported by current CUA; per-engine composition and real AT require human operation, no automatic input-source/VoiceOver changes",
+    "R02": "Current host ARM Mac16,10. Rosetta probe translated1; not Intel native GPU/hardware. Windows CI GDI/default100% already recorded, physical Ctrl/IME/tray/caption and scaling/multimonitor/login still missing",
+    "R03": "Foreground condition failed to establish in prior rendezvous; existing background90/900 not substitute. No repeated foreground questions, no firstpaint inference from gpui.json",
+    "R04": "Existing README explicitly adopts Mac ad-hoc/unnotarized and Windows unsigned distribution. DeveloperID0 is an observed availability count, not by itself a mandatory signing blocker under that scheme. Actual downloaded-package Gatekeeper/SmartScreen checks, concrete final version/package/checksums/fullRC and separate public-release authorization remain pending."
+  },
+  "not_run": [
+    "No translated UI claimed as Intel hardware",
+    "No new Core/CI/GDI/performance/frame/theme repeats"
+  ],
+  "question_state": "QA88 manual verification availability question not answered; no new system-change authorization inferred",
+  "files": {
+    "gpui/src/ui.rs": "e4c8d16fb4848f1d588ae19f8b69e458d30ecbf09727767fb7e62999034a4d86",
+    "gpui/src/ui/relay.rs": "2831e5e1b3e0114bb95188e2697f96d8bc438cf26b444d41b017e9ff3ff79575",
+    "scripts/workbuddy_endpoint_check_test.py": "30da61d8f196cb7958a8fbd24fbb410aeead0d6552b4b932f392d44209f1f801",
+    "src/workbuddy_status.rs": "b84a2ea51c6453cc9772cf3c93a9152120dbb9437581d2a060803b1241546c26"
+  }
+}

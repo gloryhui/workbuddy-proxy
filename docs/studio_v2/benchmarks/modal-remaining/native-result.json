@@ -1,0 +1,67 @@
+{
+  "ui_pid": 16533,
+  "core_pid": 16101,
+  "source_commit": "b617049",
+  "cases": [
+    {
+      "name": "StartupSync",
+      "observed": "启动后异步出现连接地址不一致；当前 http://127.0.0.1:61270，1/1 不一致地址 http://192.0.2.1:61271；中性窗口焦点 Return 后提示仍存在；点击取消一次后主页面无白壳/遮罩，并成功进入供应商管理",
+      "evidence": [
+        "startup-initial.jpg",
+        "startup-initial.ax.txt",
+        "startup-small.jpg",
+        "startup-small.ax.txt"
+      ]
+    },
+    {
+      "name": "pendingPort",
+      "observed": "编辑器61270改61393，点击应用端口进入二次确认；提示 61270/v1 → 61393，中性窗口焦点 Return 后确认仍存在；Escape 后主页面无白壳/遮罩，重新打开编辑器仍为61270，点击取消退出",
+      "evidence": [
+        "pending-small.jpg",
+        "pending-small.ax.txt",
+        "pending-wide.jpg",
+        "pending-wide.ax.txt"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "path": "startup-initial.jpg",
+      "pixels": [
+        1440,
+        901
+      ]
+    },
+    {
+      "path": "startup-small.jpg",
+      "pixels": [
+        1100,
+        701
+      ]
+    },
+    {
+      "path": "pending-small.jpg",
+      "pixels": [
+        1100,
+        701
+      ]
+    },
+    {
+      "path": "pending-wide.jpg",
+      "pixels": [
+        1440,
+        901
+      ]
+    }
+  ],
+  "ui_pid_gone": true,
+  "core_present_at_close": true,
+  "exit_code": "unavailable",
+  "limits": [
+    "未点击同步并重启或同意并重启；未保存供应商或进行业务更改",
+    "核心命令与数据保持由主代理独立核验",
+    "实时观察取消后的界面与恢复端口，按四图上限未另存这些状态截图",
+    "AX焦点报告标准窗口，未声明精确子控件焦点"
+  ],
+  "created_at": "2026-11-01T05:30:04.965Z"
+}
