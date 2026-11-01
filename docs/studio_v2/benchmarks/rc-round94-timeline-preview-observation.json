@@ -1,0 +1,10 @@
+{
+  "purpose": "One optional read-only preview of updated report, not a product retest",
+  "browser_attempt": "createBrowserTab(iab,fileURL,visible:false)",
+  "result": "Browser is not available: iab",
+  "render_verified": false,
+  "screenshot_created": false,
+  "fallback_or_server_started": false,
+  "not_blocking_published_delivery": true,
+  "static_checks": "Embedded JSON equality, actual release/source facts, two JS syntax checks and unchanged CSS separately verified"
+}

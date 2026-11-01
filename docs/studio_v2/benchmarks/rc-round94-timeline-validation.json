@@ -1,0 +1,32 @@
+{
+  "task": 94,
+  "evidence_commit": "97ea48db182cc1e77ac4015097b9fa046167e192",
+  "release_source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "phase": "v0.6.0 已发布 · 延期专项未计通过",
+  "HTML_embedded_JSON_equal": true,
+  "JS_syntax_blocks_pass": 2,
+  "generation_preserved_updated_JS": true,
+  "styles_unchanged": true,
+  "frames_verified": 40,
+  "remaining_frames": 0,
+  "deferred_unverified_tasks": [
+    "R01.1",
+    "R01.2",
+    "R01.3",
+    "R01.4",
+    "R02.1",
+    "R02.2",
+    "R02.3",
+    "R02.4",
+    "R03.2",
+    "R03.3",
+    "R03.5",
+    "R04.3"
+  ],
+  "current_fast_release_required_items_complete": true,
+  "original_deferred_tasks_not_falsely_passed": true,
+  "committed_evidence_hashes_verified": 111,
+  "generated_once_after_QA94_evidence_commit": true,
+  "Goal_snapshot_at_generation": "active",
+  "system_free_bytes": 36999532544
+}
