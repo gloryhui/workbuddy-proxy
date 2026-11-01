@@ -1,0 +1,28 @@
+from pathlib import Path
+import sys,json,subprocess,time,statistics,hashlib,datetime
+r=Path(__file__).resolve().parent;repo=Path.cwd();out=repo/'docs/studio_v2/benchmarks/dependency-review';phase=sys.argv[1];assert phase in ['P1','C1'];f=r/'fixture';ack=json.loads((out/(phase+'-ready.json')).read_text());live=json.loads((f/'config/gpui.json').read_text());assert live['pid']==ack['ui_pid'];core=json.loads((f/'cua-launch-ready.json').read_text())['core_pid'];pids={'ui':live['pid'],'core':core};birth={k:subprocess.check_output([str(r/'process-start'),str(pid)],text=True).strip() for k,pid in pids.items()};rows=[];start=time.monotonic();duration=90;complete=False;condition_lost=False
+assert ack['count']==4096 and ack['checked']==0 and ack['query']=='long-discovery-';assert ack['focus_proof']=='actual_keypress_edit_and_backspace'
+assert hashlib.sha256((f/'config/config.json').read_bytes()).hexdigest()==json.loads((out/'preflight.json').read_text())['config_sha256']
+def cpu(value):
+ day,sep,rest=value.partition('-');parts=(rest if sep else value).split(':');return (int(day)*86400 if sep else 0)+sum(float(v)*60**i for i,v in enumerate(reversed(parts)))
+def observe(pid):
+ t=subprocess.check_output(['ps','-p',str(pid),'-o','rss=,time=,%cpu='],text=True).split();assert len(t)==3;return {'rss_kib':int(t[0]),'cpu_seconds':cpu(t[1]),'ps_cpu_percent':float(t[2])}
+def store():
+ (out/(phase+'-resources.json')).write_text(json.dumps({'phase':phase,'pids':pids,'birth_us':birth,'ack':ack,'duration':duration,'interval':5,'complete':complete,'condition_lost':condition_lost,'samples':rows,'sampler_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'scope':'Preregistered90s P1/C1 sameCore/freshUI Fast0.1.7 comparison. Fixed order n1 each, not full R03 acceptance. No UIinput/screenshots/profilers during each phase. cumulativeCPU100%=onecore; RSSnotfootprint/FPS/inputlatency.'},indent=2)+'\n')
+try:
+ time.sleep(10)
+ start=time.monotonic()
+ while True:
+  elapsed=time.monotonic()-start
+  for k,pid in pids.items():assert subprocess.check_output([str(r/'process-start'),str(pid)],text=True).strip()==birth[k]
+  activity=json.loads(subprocess.check_output([str(r/'activity-probe-generic'),str(pids['ui'])],text=True))
+  rows.append({'elapsed':round(elapsed,3),'at':datetime.datetime.now().astimezone().isoformat(),'activity':activity,**{k:observe(pid) for k,pid in pids.items()}});store()
+  if not(activity['target_found'] and activity['target_is_active'] and activity['frontmost_is_target']):
+   condition_lost=True;store();raise SystemExit('Activity condition lost; samples retained, no automatic retry')
+  if elapsed>=duration:complete=True;break
+  time.sleep(min(5,max(0,duration-(time.monotonic()-start))))
+finally:store()
+summary={}
+for k in pids:
+ span=rows[-1]['elapsed']-rows[0]['elapsed'];values=[x[k]['rss_kib']/1024 for x in rows];delta=rows[-1][k]['cpu_seconds']-rows[0][k]['cpu_seconds'];summary[k]={'cumulativeCPU_delta_seconds':delta,'average_CPU_percent_onecore':100*delta/span,'RSS_first_MiB':values[0],'RSS_last_MiB':values[-1],'RSS_min_MiB':min(values),'RSS_max_MiB':max(values)}
+(out/(phase+'-summary.json')).write_text(json.dumps({'phase':phase,'complete':complete,'span':span,'processes':summary},indent=2)+'\n');print(json.dumps(summary),flush=True)

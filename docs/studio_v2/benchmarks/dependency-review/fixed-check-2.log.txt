@@ -1,0 +1,15 @@
+   Compiling workbuddy-proxy-gpui v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/gpui)
+error[E0433]: cannot find module or crate `gpui_fast` in this scope
+  --> src/main.rs:66:34
+   |
+66 |     fn render(&mut self, _: &mut gpui_fast::Window, _: &mut Context<Self>) -> impl IntoElement {
+   |                                  ^^^^^^^^^ use of unresolved module or unlinked crate `gpui_fast`
+   |
+help: there is a crate or module with a similar name
+   |
+66 -     fn render(&mut self, _: &mut gpui_fast::Window, _: &mut Context<Self>) -> impl IntoElement {
+66 +     fn render(&mut self, _: &mut gpui_kit::Window, _: &mut Context<Self>) -> impl IntoElement {
+   |
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `workbuddy-proxy-gpui` (bin "workbuddy-proxy-gpui" test) due to 1 previous error

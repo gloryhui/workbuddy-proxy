@@ -1,0 +1,17 @@
+{
+  "exit_code": 0,
+  "command": [
+    "python3",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-dependency-review.jy_z2w91/fixture.py",
+    "--full-providers",
+    "--full-models",
+    "--sign-bundle",
+    "--keep-core-after-ui-exit",
+    "--output",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-dependency-review.jy_z2w91/fixture",
+    "--exe",
+    "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy",
+    "--gpui",
+    "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-dependency-review.jy_z2w91/original-ui"
+  ]
+}

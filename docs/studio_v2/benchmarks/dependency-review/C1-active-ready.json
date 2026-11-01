@@ -1,0 +1,30 @@
+{
+  "ui_pid": 60692,
+  "core_pid": 56285,
+  "count": 4096,
+  "checked": 0,
+  "query": "long-discovery-",
+  "focus_proof": "actual_keypress_edit_and_backspace",
+  "evidence": {
+    "screenshot": "native/C1-key-restored.jpg",
+    "ax": "native/C1-key-restored.ax.txt",
+    "before_backspace_screenshot": "native/C1-key-z.jpg",
+    "before_backspace_ax": "native/C1-key-z.ax.txt",
+    "screenshot_sha256": "196859dc9c770f70f1372708f7e8834d2d5a8f229909dd7bf4eeb5ba63531d0b",
+    "pixels": [
+      1440,
+      901
+    ]
+  },
+  "operations": [
+    "click search",
+    "End",
+    "z: query long-discovery-z matched 0",
+    "BackSpace: query long-discovery- matched 4096 selected 0"
+  ],
+  "limitations": [
+    "AX focus reports standard window rather than exact text field",
+    "No active/frontmost assertion; user to bring existing window forward"
+  ],
+  "created_at": "2026-11-01T02:36:37.999Z"
+}

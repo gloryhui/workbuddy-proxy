@@ -1,0 +1,31 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.813,
+      "log": "fixed-check-1.log.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked"
+      ],
+      "exit_code": 101,
+      "seconds": 3.726,
+      "log": "fixed-check-2.log.txt",
+      "sha256": "161b2f019ec52b07ad7074f6aef0eaa8d64b290484e52619e93f07a0c6517437"
+    }
+  ],
+  "state": "failed"
+}

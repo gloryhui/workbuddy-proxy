@@ -1,0 +1,121 @@
+{
+  "version": {
+    "id": 3607818,
+    "crate": "gpui-pre",
+    "num": "0.3.10",
+    "dl_path": "/api/v1/crates/gpui-pre/0.3.10/download",
+    "readme_path": "/api/v1/crates/gpui-pre/0.3.10/readme",
+    "updated_at": "2026-10-26T00:38:24.157635Z",
+    "created_at": "2026-10-26T00:38:24.157635Z",
+    "downloads": 16579,
+    "features": {
+      "bench": [
+        "bench-support"
+      ],
+      "bench-support": [
+        "profiler",
+        "dep:criterion",
+        "dep:bench_metrics"
+      ],
+      "default": [
+        "font-kit",
+        "wayland",
+        "x11",
+        "windows-manifest"
+      ],
+      "font-kit": [],
+      "hot-reload": [
+        "dep:async-tungstenite",
+        "dep:dioxus-cli-config",
+        "dep:dioxus-devtools-types",
+        "dep:smol",
+        "dep:subsecond"
+      ],
+      "inspector": [
+        "gpui_macros/inspector"
+      ],
+      "leak-detection": [],
+      "profiler": [
+        "dep:hdrhistogram"
+      ],
+      "screen-capture": [
+        "scap"
+      ],
+      "stacker": [
+        "dep:stacksafe"
+      ],
+      "test-support": [
+        "collections/test-support",
+        "http_client/test-support",
+        "wayland",
+        "x11",
+        "proptest",
+        "dep:futures-concurrency",
+        "dep:postage",
+        "dep:web-time"
+      ],
+      "wayland": [],
+      "windows-manifest": [
+        "dep:embed-resource"
+      ],
+      "x11": [
+        "scap?/x11"
+      ]
+    },
+    "yanked": false,
+    "yank_message": null,
+    "lib_links": null,
+    "license": "Apache-2.0",
+    "links": {
+      "dependencies": "/api/v1/crates/gpui-pre/0.3.10/dependencies",
+      "version_downloads": "/api/v1/crates/gpui-pre/0.3.10/downloads",
+      "authors": "/api/v1/crates/gpui-pre/0.3.10/authors"
+    },
+    "crate_size": 5384703,
+    "published_by": {
+      "id": 90689,
+      "login": "huacnlee",
+      "name": "Jason Lee",
+      "avatar": "https://avatars.githubusercontent.com/u/5518?v=4",
+      "url": "https://github.com/huacnlee",
+      "github_username_matches": true,
+      "created_at": "2008-04-07T05:44:36Z"
+    },
+    "audit_actions": [
+      {
+        "action": "publish",
+        "user": {
+          "id": 90689,
+          "login": "huacnlee",
+          "name": "Jason Lee",
+          "avatar": "https://avatars.githubusercontent.com/u/5518?v=4",
+          "url": "https://github.com/huacnlee",
+          "github_username_matches": true,
+          "created_at": "2008-04-07T05:44:36Z"
+        },
+        "time": "2026-10-26T00:38:24.157635Z"
+      }
+    ],
+    "checksum": "df4b5f8d0c278308df2f11e0bfe0212dd77d7848ce1bdc4b9d513334414396f6",
+    "rust_version": null,
+    "has_lib": true,
+    "bin_names": [],
+    "edition": "2024",
+    "description": "Zed's GPU-accelerated UI framework (gpui-pre snapshot of zed@08cbb88)",
+    "homepage": "https://gpui.rs",
+    "documentation": null,
+    "repository": "https://github.com/zed-industries/zed",
+    "trustpub_data": null,
+    "linecounts": {
+      "languages": {
+        "Rust": {
+          "code_lines": 68867,
+          "comment_lines": 1505,
+          "files": 92
+        }
+      },
+      "total_code_lines": 68867,
+      "total_comment_lines": 1505
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "first_candidate_ui_sha256": "32bebf9062e0013366f936556c4a341caf2bb92fd891dd3a07a0168535f28b3e",
+  "first_observation": "Cancel cleared content but modal shell/backdrop remained; raw nativeC1-cancel-observed retained. No manual workaround.",
+  "fixed_candidate_ui_sha256": "3c19fb96dd345c7e0a3287ee58eb523e5c959a5f555d57b888d51ec062893bbb",
+  "change": "Move manage_dialog from Proxy::render to weak owner-state observer in the window, so modal lifecycle is reconciled outside a cached render. Bind cache Window type to explicitly pinned retained backend.",
+  "native_fixed_result": "passed single Cancel after same4096load; no shell/backdrop/dialog, then Statistics1015 reachable.",
+  "causality_limit": "Suspected render-time layer update; do not claim unique renderer-internal rootcause before native red/green verification.",
+  "performance_samples_completed": 0,
+  "fixed_actor_report": "F1-cancel-regression.json",
+  "fixed_UI_PID": 67581,
+  "Core_PID": 56285,
+  "scope": "Native red\u2192green supports the render-driven modal lifecycle failure path. It does not uniquely prove internal renderer dirty-bit mechanics or overall screen-reader/performance acceptance."
+}

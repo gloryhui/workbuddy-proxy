@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--manifest-path",
+    "gpui/Cargo.toml",
+    "--all-targets"
+  ],
+  "exit_code": 0,
+  "seconds": 24.868,
+  "scope": "Exact fast0.1.7 pin added for resolver; no broad Kit upgrade, no cache-wrapper or performance acceptance."
+}

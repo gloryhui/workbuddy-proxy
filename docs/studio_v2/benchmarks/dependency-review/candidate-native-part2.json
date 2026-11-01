@@ -1,0 +1,26 @@
+{
+  "ui_pid": 60692,
+  "core_pid": 56285,
+  "observed": [
+    "真实loopback新请求后，发现弹窗仍 long-discovery- / 匹配4096 / 已选0，背景运行卡由1014自动更新为1015，日志显示1015；未手动刷新",
+    "点击发现弹窗取消一次，候选内容消失但白色模态壳与遮罩仍留屏，右上关闭按钮存在；紧接两次观察一致，现场保留"
+  ],
+  "evidence": [
+    "native/C1-background-refresh.jpg",
+    "native/C1-background-refresh.ax.txt",
+    "native/C1-cancel-observed.jpg",
+    "native/C1-cancel-observed.ax.txt"
+  ],
+  "not_completed": [
+    "模态关闭后背景动作验证",
+    "统计与供应商页面往返",
+    "1100×700及恢复尺寸",
+    "主题、语言往返"
+  ],
+  "limitations": [
+    "白壳原因未确认，未试图刷新或通过关闭按钮绕过",
+    "未点击模型添加或供应商保存",
+    "未进行性能采样或断言窗口前台"
+  ],
+  "created_at": "2026-11-01T02:43:32.548Z"
+}

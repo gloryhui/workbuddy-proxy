@@ -1,0 +1,35 @@
+{
+  "label": "BGC1",
+  "ui_pid": 75756,
+  "core_pid": 56285,
+  "load_requests": 1015,
+  "count": 4096,
+  "checked": 0,
+  "query": "long-discovery-",
+  "focus_proof": "actual_keypress_edit_and_backspace",
+  "operations": [
+    "后台 getApp 新F1进程",
+    "进入供应商管理与 sub2api 获取模型",
+    "输入 long-discovery-",
+    "真实按键 z 后匹配0",
+    "BackSpace 后恢复4096和0选中"
+  ],
+  "evidence": {
+    "z_image": "native/BGC1-key-z.jpg",
+    "z_ax": "native/BGC1-key-z.ax.txt",
+    "screenshot": "native/BGC1-key-restored.jpg",
+    "ax": "native/BGC1-key-restored.ax.txt",
+    "sha256": "707c0a9e95f2be49d10e6651c4ee25b11979f43d4c4e17c8c14bfa2374a6d2bd",
+    "pixels": [
+      1440,
+      901
+    ]
+  },
+  "limitations": [
+    "未主动 Raise 或 activate",
+    "AX 焦点只报告窗口；按键改变并恢复实际搜索内容",
+    "活动状态以独立 Cocoa 采样核验",
+    "非真实 IME"
+  ],
+  "created_at": "2026-11-01T03:23:27.595Z"
+}

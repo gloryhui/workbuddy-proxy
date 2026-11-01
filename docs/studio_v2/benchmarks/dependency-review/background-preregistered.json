@@ -1,0 +1,31 @@
+{
+  "created_at": "2026-11-01T11:14:40.769872+08:00",
+  "reason": "Foreground conditions could not be established. Investigate the separate background-focused path; do not substitute this for foreground/finalperformance acceptance. InputState.on_focus starts BlinkCursor, while show_cursor additionally gates windowactive; no cursor/source behavior modified.",
+  "phases": [
+    "BGP1",
+    "BGC1"
+  ],
+  "seconds_each": 90,
+  "warmup_seconds": 10,
+  "interval_seconds": 5,
+  "fresh_UI_each_phase": true,
+  "same_Core_and_profile": true,
+  "load": {
+    "providers": 64,
+    "models": 256,
+    "requests": 1015,
+    "costs": 1015,
+    "discovery": 4096,
+    "query": "long-discovery-",
+    "checked": 0
+  },
+  "focus_proof": "Actual z\u21920match and Backspace\u21924096 before eachphase, no input/screenshots/activation/profilers during samples. Recheck input route after eachsample. Exact AX focused widget unavailable.",
+  "required_activity": "Target exists, NSRunningApplication inactive and NSWorkspace frontmost is the same hostPID96217 throughout both samples. Stop onconditionloss; no automatic retries or forcing inactive/active.",
+  "limits": [
+    "Fixedorder n1 each, no randomizedcrossover.",
+    "No foreground performance, FPS, latency, footprint/peak or longresidence acceptance.",
+    "Window occlusion and internalGPUI windowactive flag not directly measured; backgroundroute only."
+  ],
+  "no_foreground_user_intervention_required": true,
+  "no_VoiceOver_AT_input_source_change": true
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "update",
+    "--manifest-path",
+    "gpui/Cargo.toml",
+    "--offline"
+  ],
+  "exit_code": 101,
+  "seconds": 0.234,
+  "reason": "Exact fast backend constraints also pin Cocoa0.26.0. Resolve all constraints once, then inspect resulting lock scope before any build or adoption."
+}

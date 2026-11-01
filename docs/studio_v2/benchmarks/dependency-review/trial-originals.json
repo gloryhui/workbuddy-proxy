@@ -1,0 +1,20 @@
+{
+  "source_head": "7f04beb881f422b3f1f1034e8cc7db673942a56c",
+  "files": {
+    "gpui/Cargo.toml": {
+      "bytes": 756,
+      "sha256": "95c8728027af68c6946f709e831ba60300c3b5b7f89dc7be756cc789f40c8f6b"
+    },
+    "gpui/Cargo.lock": {
+      "bytes": 208412,
+      "sha256": "88cb4109289282c4ea63eef2a8644cfba6768eb4a6a193186cdad3fd71283d62"
+    },
+    "gpui/src/main.rs": {
+      "bytes": 14824,
+      "sha256": "b3bb4812ea5df88d21795c75c73a3e3cfbb21399452635e1fc555f67140185d0"
+    }
+  },
+  "original_ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+  "original_ui_bytes": 42525408,
+  "trial": "Kit0.7.3 optional gpui-fast backend, using offline cached dependency resolution; no Kit upgrade or cache-wrapper yet."
+}

@@ -1,0 +1,44 @@
+{
+  "task": 86,
+  "base_UI": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+  "candidate": "Pinned Fast0.1.7 withcachedProxy sibling; hash afterbuild",
+  "core": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+  "phases": [
+    "C1-active",
+    "P1-active"
+  ],
+  "seconds_each": 90,
+  "warmup_seconds": 10,
+  "load": {
+    "providers": 64,
+    "models": 256,
+    "requests": 1014,
+    "costs": 1014,
+    "discovery": 4096,
+    "query": "long-discovery-",
+    "checked": 0
+  },
+  "activity": "Active/frontmost/PIDbirth checks every5s remain mandatory. No Raise, inputs, screenshots or activation during timed samples; stop onlostconditions. No automatic timed-phase retries.",
+  "focus": "Actual z insertion and Backspace restoration to4096 beforeack; retain nativeAX/screenshots.",
+  "functional": "AftertimedC1 only: selection/invert/clear, cachedbackgroundAX/actions, one intentional receipt1014to1015 withdialogopen, resize/theme/language/page checks. No provider/model saves.",
+  "scope": "Two fresh UI processes, sameCore/profile/data, fixedP1→C1 order; n1 each, not randomizedcrossover/fullR03acceptance. No profiling/screenshots/inputs during samples.",
+  "user_foreground_permission_received": true,
+  "not_repeated": [
+    "40frames",
+    "21theme-languagecombinations",
+    "Corefullsuite",
+    "installer/oldmigration",
+    "900slongresidence"
+  ],
+  "no_VoiceOver_AT_input_source_change": true,
+  "amended_at": "2026-11-01T10:37:12.663300+08:00",
+  "initial_attempt": {
+    "phase": "P1",
+    "samples": 1,
+    "complete": false,
+    "reason": "Initial t0 Cocoa target inactive and not frontmost; stopped immediately. No performance conclusion; original resources and observer exit retained."
+  },
+  "preparation": "User replied ready/manual-foreground. Candidate is currentwindow; before any validtiming update orderto C1→P1. Wait up to30s for independentlyobserved realactive/frontmost window, no automatic activation. Eachphase still10swarmup/90s, 5sactivity/PID checks, no automatic reruns.",
+  "same_process_note": "Original baseline PID may be retained after its t0 inactive sample; elapsed process age and actual sample times retained. Fixed-order n1 pair only, not final matched multi-round R03 acceptance.",
+  "order_reason": "InitialP1 t0inactive invalid; documentedRaise also notactive. Baseline wasclosed beforelateuserready, candidate60692 nowready. No validCPUrate/performancecomparison observed before thisorderchange. Onecandidate/onebaseline sample only; fixed order and histories remainlimitations."
+}

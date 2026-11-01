@@ -1,0 +1,10 @@
+{
+  "ui_pid": 75756,
+  "ui_pid_gone": true,
+  "core_pid": 56285,
+  "core_pid_present": true,
+  "method": "CUA 原生 close button，之后仅只读 ps",
+  "post_key_evidence": "BGC1-post-key.json",
+  "no_reopen": true,
+  "created_at": "2026-11-01T03:31:01.048Z"
+}

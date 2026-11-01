@@ -1,0 +1,15 @@
+{
+  "text_files_scanned": 147,
+  "secret_pattern_matches": [],
+  "raw_whitespace_files": [
+    {
+      "file": "candidate-check-2.log.txt",
+      "sha256": "0671b36c581cad43f4786a622429da1d86652359a89a22062b068103ec92104c"
+    },
+    {
+      "file": "final-check-2.log.txt",
+      "sha256": "495ddfc4faad54a43f6d768cfa223dddb5b673480cc91c4b7cabe617e371b325"
+    }
+  ],
+  "scope": "Pre-CI-terminal audit; generatedmanagementkey separately checkedbeforetemporaryroot deletion. Not proof of absence of every possible secret."
+}

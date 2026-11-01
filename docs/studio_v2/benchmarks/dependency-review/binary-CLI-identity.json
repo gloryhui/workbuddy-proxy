@@ -1,0 +1,16 @@
+[
+  {
+    "binary": "original-ui",
+    "exit_code": 0,
+    "stdout": "0.5.7\n",
+    "stderr": "",
+    "sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4"
+  },
+  {
+    "binary": "candidate-ui",
+    "exit_code": 0,
+    "stdout": "0.5.7\n",
+    "stderr": "",
+    "sha256": "32bebf9062e0013366f936556c4a341caf2bb92fd891dd3a07a0168535f28b3e"
+  }
+]

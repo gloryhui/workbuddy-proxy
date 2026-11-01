@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--manifest-path",
+    "gpui/Cargo.toml",
+    "--offline",
+    "--all-targets"
+  ],
+  "exit_code": 101,
+  "seconds": 0.261,
+  "scope": "Backend-only trial; product acceptance and performance not established."
+}

@@ -1,0 +1,15 @@
+{
+  "ui_pid": 73558,
+  "no_prior_click": true,
+  "operations": [
+    "直接按 z，查询变 long-discovery-z，截图显示匹配0",
+    "直接按 BackSpace，恢复 long-discovery-、匹配4096、选中0"
+  ],
+  "evidence": [
+    "native/BGP1-post-key-z.jpg",
+    "native/BGP1-post-key-z.ax.txt",
+    "native/BGP1-post-key-restored.jpg",
+    "native/BGP1-post-key-restored.ax.txt"
+  ],
+  "created_at": "2026-11-01T03:22:03.512Z"
+}

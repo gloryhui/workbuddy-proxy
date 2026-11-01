@@ -1,0 +1,107 @@
+{
+  "run_id": 41270728784,
+  "attempt": 1,
+  "source": "5681103e5b05fb88c73f8ea4a32bafd11cbc3380",
+  "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41270728784",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 124742782786,
+      "name": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124742782891,
+      "name": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124742782929,
+      "name": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124742783547,
+      "name": "released-upgrades",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 124742807658,
+      "name": "desktop",
+      "conclusion": "skipped"
+    }
+  ],
+  "all_required_steps_success": true,
+  "full_desktop_and_upgrade_jobs_skipped": true,
+  "artifacts": [
+    {
+      "id": 13069217005,
+      "name": "studio-ui-check-windows-x64",
+      "bytes": 29808660,
+      "digest": "sha256:e5f5ad012349d2d5081716c86fb82da8f0526d851df340d5b618696db20f7a33",
+      "expires_at": "2026-11-08T03:59:30Z"
+    },
+    {
+      "id": 13069104066,
+      "name": "studio-ui-check-macos-x64",
+      "bytes": 29957062,
+      "digest": "sha256:a16c7d68ffd8b673d1d9e9a3d2bcc80de97733a4e3b611ca540a3e27f78141f5",
+      "expires_at": "2026-11-08T04:03:33Z"
+    },
+    {
+      "id": 13068719827,
+      "name": "studio-ui-check-macos-arm64",
+      "bytes": 29803256,
+      "digest": "sha256:908a5b50fe868a8e6e5fbbfa144a6a0774f2fdb31bd47acb2b20ff289d0f10af",
+      "expires_at": "2026-11-08T03:56:46Z"
+    }
+  ],
+  "artifacts_downloaded": false,
+  "artifact_validation": "Onlyservermetadata/names/positive sizes/expiry/digestsyntax; ZIPbytesnotdownloadedorindependentlyhashed. UIexecutableonly, notdistributionpackages.",
+  "raw_log": {
+    "file": "run.log.txt",
+    "bytes": 503830,
+    "sha256": "cc51666a8a2ba36ec01da928930b55e480f63fcb06f4affe8edee79ec3208f2d",
+    "method": "gh run view --log stdoutretainedbyte-for-byte"
+  },
+  "scope": "ThreehostedUI-only checks/builds/CLI. No newCore/fullRC/installer/nativehardware/IME/AT acceptance; R04.1remainspending.",
+  "actual_runs_created_for_source": 1,
+  "test_reruns": 0,
+  "dispatch_transport_failures": "Two filenameGET failures beforePOST; APIabsencechecked thenverifiedIDPOST. No failedtestjob rerun.",
+  "unit_results": [
+    {
+      "job": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)",
+      "passed": 213,
+      "failed": 0,
+      "ignored": 2
+    },
+    {
+      "job": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)",
+      "passed": 213,
+      "failed": 0,
+      "ignored": 2
+    },
+    {
+      "job": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)",
+      "passed": 212,
+      "failed": 0,
+      "ignored": 2
+    }
+  ],
+  "toolchain_hosts": [
+    {
+      "job": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)",
+      "host": "x86_64-apple-darwin"
+    },
+    {
+      "job": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)",
+      "host": "aarch64-apple-darwin"
+    },
+    {
+      "job": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)",
+      "host": "x86_64-pc-windows-msvc"
+    }
+  ],
+  "host_scope": "Compiler hosts verified from rawlogs; not physicaldevice/IME/AT evidence."
+}

@@ -2,7 +2,19 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA85）
+## 最新进展（QA86）
+
+- 运行时代码已推`5681103`：UI SHA256 `3c19fb96dd345c7e0a3287ee58eb523e5c959a5f555d57b888d51ec062893bbb`，Core仍`1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e`，Core源码未改。Kit仍0.7.3，仅启用可选Fast并精确pin引擎0.1.7；实际macro为0.1.12，Cocoa0.26.1→0.26.0、unicode-properties0.1.4→0.1.3为约束所需，详见锁图。实际registry包校验`35cb4c01...`且重要源文件逐字节等于原档，未改registry。缓存回放节点/焦点关系/动作，`retained_gpui::Window`编译期约束避免切回缺回放后端。[源码/范围](benchmarks/dependency-review/delivered-scope.json)。
+- 试验首UI32beb发现Cancel清内容后留下白壳/遮罩，原图/AX/代码补丁保留。将`manage_dialog`从Proxy.render移到weak owner-state observe_in，F1/3c19同4096负载一次Cancel后无壳，统计1015可达。模型空ID错误保留modal、协议Esc、删除/同步/取消同步/端口Cancel均通过；StartupSync/pendingPort未触发，不签全状态。小图实际1100×701，恢复末图1440×900；蓝白→Studio、zh→en→zh通过。[红绿](benchmarks/dependency-review/modal-regression.json)、[F1原生](benchmarks/dependency-review/F1-native-final.json)。
+- fmt、GPUI213pass/2既有ignore、strictClippy、Intelcheck、ARMrelease及最终CLI0。两个ignore的真实Core19发现/10创建沿用QA85未变业务源码证据，本轮未重复。最初离线依赖冲突、网络元数据失败、后端crate名称编译错误均保留，不把计时前错误当产品测试重跑到绿。
+- 原前台P1在t0独立Cocoa发现inactive而停止，只有1点；C1-active只做前置等待，0计时。getApp后台启动、一次明确AX Raise也不让NSRunningApplication变active，用户手动就绪回复后仍观测前台ChatGPT；不反推原因/不伪造active、不重复询问同一前置确认。本轮已明确告诉用户不再要求保持前台，前台门禁仍缺。
+- 单独预注册后台BGP1/BGC1，fresh UI73558/75756、同Core56285、64供应商/256模型/1015请求成本/4096候选/q前缀/选0；各90.005秒/19点全inactive、前台同宿主96217，前后实际z/Backspace无先行点击仍路由搜索。UI单核CPU6.6996→2.8221%，约降57.88%，Core均0.1555%。固定顺序n1，内部windowactive/遮挡未直接测，RSS不是footprint/峰值/泄漏；不签前台、启动或长期驻留。500ms光标与负载未改。[原样本/对照](benchmarks/dependency-review/background-comparison.json)。
+- 首32beb弹窗保持4096/0时真实单条HTTP使后台1014→1015自动刷新，无手动Refresh；这条证据不重标为F1。原1014及新增后全1015请求/成本退出后逐字段保持，Core run normal/1015 admitted/0drop/0writefailure。语言往返补384既有typeddefaults（64protocol、64完整settings、256capsnull），所有原字段保持，配置字节不同。Core/driver0，CUA拥有UI退出码未知只证PIDgone。[数据](benchmarks/dependency-review/data-proof.json)。
+- 本轮专用`studio-v2-dependency-review.jy_z2w91`已按完整和即时父链/uid/realpath/无symlink/mount/库存/lsof0/ps0预检精确非强制清理，76文件/44子目录、276,250,288B约263.45MiB，本轮专用临时0、系统盘约35.66GiB。新增必要旧957 UI4658/Core1146参考`gpui/target/studio-v2-baselines/9570451-arm64-release-46585f86`约48.59MiB，连原a6e参考合计101,859,410B约97.14MiB；共享缓存保留。旧QA84边界外Chrome socket未动，未重测当前大小。**不要重开已删除bundle；禁止自动开启旁白/系统辅助功能或切输入源。**[清理](benchmarks/dependency-review/cleanup.json)。
+- 新UI实际改动，R04.1按最终候选重新pending，历史957全CI与原安装测试保持其来源；当前发布待验**15项=R01 4/R02 4/R03 3/R04 4**，40帧仍签收/剩0，Goal active，未公开发布。新阶段CI仅UI-only，绝不当最终Core/打包全矩阵。
+- **CI先追原状态，不重复派发。** Source5681103首次workflow派发在GET workflow时EOF；之后API已确认同source无run，才补一次派发。**已确认唯一run41270728784绑定5681103/attempt1，Win/ARM/Intel三UI job首轮全部success，Desktop和旧升级skipped；[原log/元数据/逐项验收](benchmarks/dependency-review/ci/validation.json)已归档，Win212pass/2ignore、两Mac213pass/2ignore，三真实toolchain host分别x64Windows/ARM/x64Mac，UI artifact只核服务器元数据未下载ZIP。** 最终首次成功的是已核对workflow ID的普通POST；此前两次仅GET解析EOF，逐次API确认无run，未创建重复run。当前具体run/退出码见`benchmarks/dependency-review/dispatch.json`；网络进程句柄需按实时工具输出，不能仅凭文件当活着。本轮唯一run终态/原log/metadata已核对；统一生成QA86时间线一次（当前写交接时尚未运行updater）。下一步仅补实际缺口，新增渲染后的Windows原生GDI代表页可复用既有脚本集中验证，最终全RC留正式候选，不重跑未变Core全套。R01未支持的旧drag/hover/pressed/逐引擎IME/真实AT仍缺，不重复能力未变的尝试。
+
+## 上一轮进展（QA85）
 
 - 用户要求精简测试，已落实`desktop.yml`手动`ui_only=true`入口与独立三平台GPUI reusable workflow，提交`3e257fd`：格式/Clippy/单元/Release/版本CLI，跳过Core、安装器、旧版迁移；默认完整流程保留，README说明范围。只派发一次run`41262088104`绑定3e257fd，实际Windows/ARM/Intel三UI job首轮全部success、完整Desktop/旧升级skipped；[原run/steps/产物元数据及原日志](benchmarks/render-boundary/ci/validation.json)已归档，UI artifact仅核对服务端元数据，未下载/独立哈希，不是分发包。**这不是新的全Core/RC矩阵，运行时仍957/UI4658/Core1146，14项发布待验不变。**
 - 宽范围`WindowContent`缓存试验82f已撤回，当前产品源与957一致、共享平面release恢复并核验4658。依赖`gpui-pre0.3.9`锁定原档检查：a11y每帧清空nodes，cached reuse_prepaint/reuse_paint不回放a11y节点/动作；试验中有短暂AX空树/失效ID，不能唯一归因但不交付这个风险。候选补丁/构建/原图全部保留，不能把82f原图当当前957新验收。

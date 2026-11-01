@@ -1,0 +1,49 @@
+{
+  "all_original1014_business_fields_preserved": true,
+  "intentional_new_receipts": 1,
+  "all_after_pulse1015_fields_preserved_after_all_UI_sessions": true,
+  "config_original_fields_all_equal": true,
+  "config_byte_equal": false,
+  "allowed_locale_writes": [
+    "en",
+    "zh"
+  ],
+  "final_language": "zh",
+  "added_default_field_counts": {
+    "protocol": 64,
+    "protocol_settings": 64,
+    "capabilities": 256
+  },
+  "total_added_fields": 384,
+  "expected_protocol_settings_default": {
+    "anthropic_version": "2023-06-01",
+    "authentication": "protocol_default",
+    "default_max_output_tokens": 4096,
+    "reasoning_profile": {
+      "budgets": {},
+      "levels": {},
+      "mode": "none"
+    },
+    "responses_efforts": {}
+  },
+  "config_same_for_both_background_phases": true,
+  "source": "Core1146/profile actualread-only SQLite snapshot; no provider/model saves or database mutation by proof script.",
+  "after_Core_stop1015_fields_equal": true,
+  "Core_exit": 0,
+  "fixture_driver_exit": 0,
+  "UI_exit_codes": "CUA-owned processes: PIDgone only; exitcodes unknown",
+  "wal_after_stop_bytes": null,
+  "stopped_readonly_mode": "immutable only after owned Coregone and WALempty/absent",
+  "stats_runs": [
+    {
+      "run_id": "af5128b0489f9194f7878e047ab5ee0212d9eb6a6a902de4",
+      "started_at_ms": 1793499609452,
+      "stopped_at_ms": 1793504103597,
+      "stop_reason": "normal",
+      "admitted_requests": 1015,
+      "dropped_requests": 0,
+      "write_failures": 0,
+      "last_persisted_at_ms": 1793504103597
+    }
+  ]
+}

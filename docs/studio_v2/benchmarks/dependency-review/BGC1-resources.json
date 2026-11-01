@@ -1,0 +1,472 @@
+{
+  "phase": "BGC1",
+  "pids": {
+    "ui": 75756,
+    "core": 56285
+  },
+  "birth_us": {
+    "ui": "1793503342889660",
+    "core": "1793499608860215"
+  },
+  "ack": {
+    "label": "BGC1",
+    "ui_pid": 75756,
+    "core_pid": 56285,
+    "load_requests": 1015,
+    "count": 4096,
+    "checked": 0,
+    "query": "long-discovery-",
+    "focus_proof": "actual_keypress_edit_and_backspace",
+    "operations": [
+      "\u540e\u53f0 getApp \u65b0F1\u8fdb\u7a0b",
+      "\u8fdb\u5165\u4f9b\u5e94\u5546\u7ba1\u7406\u4e0e sub2api \u83b7\u53d6\u6a21\u578b",
+      "\u8f93\u5165 long-discovery-",
+      "\u771f\u5b9e\u6309\u952e z \u540e\u5339\u914d0",
+      "BackSpace \u540e\u6062\u590d4096\u548c0\u9009\u4e2d"
+    ],
+    "evidence": {
+      "z_image": "native/BGC1-key-z.jpg",
+      "z_ax": "native/BGC1-key-z.ax.txt",
+      "screenshot": "native/BGC1-key-restored.jpg",
+      "ax": "native/BGC1-key-restored.ax.txt",
+      "sha256": "707c0a9e95f2be49d10e6651c4ee25b11979f43d4c4e17c8c14bfa2374a6d2bd",
+      "pixels": [
+        1440,
+        901
+      ]
+    },
+    "limitations": [
+      "\u672a\u4e3b\u52a8 Raise \u6216 activate",
+      "AX \u7126\u70b9\u53ea\u62a5\u544a\u7a97\u53e3\uff1b\u6309\u952e\u6539\u53d8\u5e76\u6062\u590d\u5b9e\u9645\u641c\u7d22\u5185\u5bb9",
+      "\u6d3b\u52a8\u72b6\u6001\u4ee5\u72ec\u7acb Cocoa \u91c7\u6837\u6838\u9a8c",
+      "\u975e\u771f\u5b9e IME"
+    ],
+    "created_at": "2026-11-01T03:23:27.595Z"
+  },
+  "duration": 90,
+  "interval": 5,
+  "complete": true,
+  "condition_lost": false,
+  "samples": [
+    {
+      "elapsed": 0.0,
+      "at": "2026-11-01T11:23:59.745332+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:23:59Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119184,
+        "cpu_seconds": 3.65,
+        "ps_cpu_percent": 1.4
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.08,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 5.043,
+      "at": "2026-11-01T11:24:04.779704+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:04Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119200,
+        "cpu_seconds": 3.79,
+        "ps_cpu_percent": 2.2
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.08,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 10.072,
+      "at": "2026-11-01T11:24:09.818264+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:09Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119200,
+        "cpu_seconds": 3.93,
+        "ps_cpu_percent": 2.5
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.09,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 15.115,
+      "at": "2026-11-01T11:24:14.860810+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:14Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119248,
+        "cpu_seconds": 4.07,
+        "ps_cpu_percent": 3.4
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.1,
+        "ps_cpu_percent": 0.1
+      }
+    },
+    {
+      "elapsed": 20.159,
+      "at": "2026-11-01T11:24:19.903311+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:19Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 4.2,
+        "ps_cpu_percent": 3.4
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.11,
+        "ps_cpu_percent": 0.1
+      }
+    },
+    {
+      "elapsed": 25.202,
+      "at": "2026-11-01T11:24:24.949307+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:24Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119344,
+        "cpu_seconds": 4.34,
+        "ps_cpu_percent": 2.0
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.12,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 30.246,
+      "at": "2026-11-01T11:24:29.983753+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:29Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119344,
+        "cpu_seconds": 4.47,
+        "ps_cpu_percent": 1.7
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.12,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 35.28,
+      "at": "2026-11-01T11:24:35.024862+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:35Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119360,
+        "cpu_seconds": 4.62,
+        "ps_cpu_percent": 3.7
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.13,
+        "ps_cpu_percent": 0.1
+      }
+    },
+    {
+      "elapsed": 40.323,
+      "at": "2026-11-01T11:24:40.059950+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:40Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 4.76,
+        "ps_cpu_percent": 2.1
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.14,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 45.352,
+      "at": "2026-11-01T11:24:45.096586+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:45Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 4.9,
+        "ps_cpu_percent": 2.4
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.15,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 50.392,
+      "at": "2026-11-01T11:24:50.137080+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:50Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 5.05,
+        "ps_cpu_percent": 2.7
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.16,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 55.433,
+      "at": "2026-11-01T11:24:55.175310+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:24:55Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 5.2,
+        "ps_cpu_percent": 4.9
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.16,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 60.472,
+      "at": "2026-11-01T11:25:00.213638+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:25:00Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 5.34,
+        "ps_cpu_percent": 1.7
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.17,
+        "ps_cpu_percent": 0.1
+      }
+    },
+    {
+      "elapsed": 65.508,
+      "at": "2026-11-01T11:25:05.252491+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:25:05Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 5.49,
+        "ps_cpu_percent": 2.8
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.18,
+        "ps_cpu_percent": 0.1
+      }
+    },
+    {
+      "elapsed": 70.55,
+      "at": "2026-11-01T11:25:10.294367+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:25:10Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119328,
+        "cpu_seconds": 5.64,
+        "ps_cpu_percent": 2.7
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.19,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 75.59,
+      "at": "2026-11-01T11:25:15.335586+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:25:15Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119360,
+        "cpu_seconds": 5.78,
+        "ps_cpu_percent": 1.5
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.2,
+        "ps_cpu_percent": 0.1
+      }
+    },
+    {
+      "elapsed": 80.634,
+      "at": "2026-11-01T11:25:20.379918+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:25:20Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119360,
+        "cpu_seconds": 5.92,
+        "ps_cpu_percent": 2.9
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.21,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 85.677,
+      "at": "2026-11-01T11:25:25.423973+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:25:25Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119360,
+        "cpu_seconds": 6.06,
+        "ps_cpu_percent": 1.8
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.21,
+        "ps_cpu_percent": 0.0
+      }
+    },
+    {
+      "elapsed": 90.005,
+      "at": "2026-11-01T11:25:29.748982+08:00",
+      "activity": {
+        "frontmost_is_target": 0,
+        "timestamp_utc": "2026-11-01T03:25:29Z",
+        "target_found": 1,
+        "target_is_active": false,
+        "target_pid": 75756,
+        "frontmost_pid": 96217
+      },
+      "ui": {
+        "rss_kib": 119440,
+        "cpu_seconds": 6.19,
+        "ps_cpu_percent": 1.3
+      },
+      "core": {
+        "rss_kib": 25792,
+        "cpu_seconds": 7.22,
+        "ps_cpu_percent": 0.0
+      }
+    }
+  ],
+  "sampler_sha256": "3fc26f55d7efe8f3aa2c6bb8c17df0a35957d04442d28f8eb2d9ef6d3461949c",
+  "scope": "Preregistered90s BGP1/BGC1 background-focused comparison; targetinactive/frontmosthost96217. Fixedorder n1, no foreground/fullR03 acceptance. No UIinput/screenshots/profilers during each phase. cumulativeCPU100%=onecore; RSSnotfootprint/FPS/inputlatency."
+}

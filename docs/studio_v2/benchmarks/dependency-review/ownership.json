@@ -1,0 +1,8 @@
+{
+  "created_by": "QA86 current goal turn",
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-dependency-review.jy_z2w91",
+  "uid": 501,
+  "created_at": "2026-11-01T02:05:16.521385+00:00",
+  "purpose": "Read-only audit of published dependency source archives; no executing archive contents or changing product dependencies. Native isolated P1/C1 trial, two90s activity-gated samples and one post-sample functional session.",
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy"
+}

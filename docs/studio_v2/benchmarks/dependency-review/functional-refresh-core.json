@@ -1,0 +1,15 @@
+{
+  "candidate_UI_PID": 60692,
+  "Core_PID": 56285,
+  "candidate_UI_sha256": "32bebf9062e0013366f936556c4a341caf2bb92fd891dd3a07a0168535f28b3e",
+  "HTTP": 200,
+  "intentional_added_loopback_receipts": 1,
+  "sql_counts": {
+    "usage_costs": 1015,
+    "usage_requests": 1015
+  },
+  "all_original1014_request_and_cost_fields_equal": true,
+  "after_pulse_business_sha256": "a34ae44a32a5dc81fed2f04345fb4c183070c517b03338cdfe64bb35a4ab04dd",
+  "config_byte_equal_before_locale_tests": true,
+  "scope": "Functional invalidation test after timing cancellation; no valid timedCPU phases completed, not part of performance load."
+}

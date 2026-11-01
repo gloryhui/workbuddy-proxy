@@ -1,0 +1,76 @@
+{
+  "candidate_ui_sha_prefix": "3c19fb96",
+  "ui_pid": 67581,
+  "core_pid": 56285,
+  "operations": [
+    {
+      "case": "模型 ID 必填",
+      "result": "清空上游模型 ID 点击确认修改，显示请填写模型 ID 且编辑弹窗保留；点击取消回主页面，模型未保存",
+      "evidence": [
+        "native/F1-model-validation.jpg",
+        "native/F1-model-validation.ax.txt"
+      ]
+    },
+    {
+      "case": "协议选项",
+      "result": "打开协议选项，Escape 关闭，主页面恢复；未应用草稿"
+    },
+    {
+      "case": "删除供应商",
+      "result": "打开确认，点击取消，主页面恢复；未点击删除确认"
+    },
+    {
+      "case": "同步 WorkBuddy",
+      "result": "打开确认并取消，主页面恢复；未同步或重启"
+    },
+    {
+      "case": "取消同步 WorkBuddy",
+      "result": "打开确认并取消，主页面恢复；未移除或重启"
+    },
+    {
+      "case": "端口设置",
+      "result": "显示60630，未修改，点击取消回主页面；未应用或重启",
+      "evidence": [
+        "native/F1-after-modal-matrix.jpg",
+        "native/F1-after-modal-matrix.ax.txt"
+      ]
+    },
+    {
+      "case": "尺寸与滚动",
+      "result": "窗口角原生拖动，小窗原图1100×701，向下滚动可见模型区域及保存按钮；恢复提示1440×900逻辑像素，恢复后原图1440×900",
+      "evidence": [
+        "native/F1-small.jpg",
+        "native/F1-small.ax.txt",
+        "native/F1-small-scrolled.jpg",
+        "native/F1-small-scrolled.ax.txt",
+        "native/F1-restored-zh.jpg"
+      ]
+    },
+    {
+      "case": "皮肤",
+      "result": "蓝白显示选中并刷新，再选 Studio 靛蓝显示选中恢复",
+      "evidence": [
+        "native/F1-bluewhite.jpg",
+        "native/F1-bluewhite.ax.txt"
+      ]
+    },
+    {
+      "case": "语言",
+      "result": "中文→English→简体中文，标题和控件相应刷新，最后停供应商页；日志显示两次语言已保存",
+      "evidence": [
+        "native/F1-english.jpg",
+        "native/F1-english.ax.txt",
+        "native/F1-restored-zh.jpg",
+        "native/F1-restored-zh.ax.txt"
+      ]
+    }
+  ],
+  "other_evidence": "F1-cancel-regression.json",
+  "limits": [
+    "每次取消后现场观察主页面无白壳或遮罩，随后控件打开证明对应背景动作可用；未为每一弹窗单独保存原图",
+    "未触发 StartupSync 或 pendingPort，不能签收相关路径",
+    "未做性能采样，不声明前台状态",
+    "只允许语言偏好写入；无供应商/模型 Save、Add、Delete 确认，未变更端口"
+  ],
+  "created_at": "2026-11-01T03:03:37.089Z"
+}

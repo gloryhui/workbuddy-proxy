@@ -1,0 +1,26 @@
+{
+  "candidate_ui_sha_prefix": "3c19fb96",
+  "ui_pid": 67581,
+  "core_pid": 56285,
+  "previous_c1_pid": 60692,
+  "previous_c1_gone": true,
+  "observed": [
+    "sub2api 获取模型，搜索 long-discovery-，截图显示匹配4096、选中0",
+    "点击取消一次；随后的截图显示主页面完整，无模态白壳或遮罩，AX不再有选择模型dialog",
+    "点击截图可见的数据统计导航，成功显示用量明细及1015条请求"
+  ],
+  "evidence": [
+    "native/F1-before-cancel.jpg",
+    "native/F1-before-cancel.ax.txt",
+    "native/F1-after-cancel.jpg",
+    "native/F1-after-cancel.ax.txt",
+    "native/F1-statistics.jpg",
+    "native/F1-statistics.ax.txt"
+  ],
+  "limitations": [
+    "本次仅验证发现弹窗取消与统计入口，其他弹窗未测",
+    "未点击模型添加或供应商保存",
+    "未运行性能采样、未主动Raise或activate"
+  ],
+  "created_at": "2026-11-01T02:57:19.036Z"
+}

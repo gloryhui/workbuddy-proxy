@@ -1,0 +1,64 @@
+{
+  "source": {
+    "sha256": "1359a67e19244bebe6ba82062bb6efb3b7d55a0c12a847e926e192fd14b3b6e8",
+    "load_commands_end": 4616,
+    "signature_offset": 43504160,
+    "signature_bytes": 340064,
+    "signature_command": 4600,
+    "normalized_bytes": 43504158,
+    "masked_fields": [
+      [
+        2432,
+        8
+      ],
+      [
+        2448,
+        8
+      ],
+      [
+        16,
+        8
+      ],
+      [
+        4600,
+        16
+      ]
+    ],
+    "code_probe_offset": 4696
+  },
+  "runtime": {
+    "sha256": "1359a67e19244bebe6ba82062bb6efb3b7d55a0c12a847e926e192fd14b3b6e8",
+    "load_commands_end": 4616,
+    "signature_offset": 43504160,
+    "signature_bytes": 358192,
+    "signature_command": 4600,
+    "normalized_bytes": 43504158,
+    "masked_fields": [
+      [
+        2432,
+        8
+      ],
+      [
+        2448,
+        8
+      ],
+      [
+        16,
+        8
+      ],
+      [
+        4600,
+        16
+      ]
+    ],
+    "code_probe_offset": 4696
+  },
+  "normalized_code_equal": true,
+  "code_mutation_detected": true,
+  "signature_only_mutation_ignored": true,
+  "input_ui_sha256": "3c19fb96dd345c7e0a3287ee58eb523e5c959a5f555d57b888d51ec062893bbb",
+  "runtime_ui_sha256": "49ddf8e6a5b43efefe2b0b7547781c2c316a0a8be62ff79810c8b39ba482445f",
+  "comparison_copies_created": false,
+  "comparison_copies_removed": true,
+  "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+}

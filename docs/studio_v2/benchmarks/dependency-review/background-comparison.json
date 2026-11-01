@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-01T11:33:13.666179+08:00",
+  "phases": [
+    {
+      "phase": "BGP1",
+      "ui_pid": 73558,
+      "core_pid": 56285,
+      "span": 90.005,
+      "samples": 19,
+      "processes": {
+        "ui": {
+          "cumulativeCPU_delta_seconds": 6.030000000000001,
+          "average_CPU_percent_onecore": 6.699627798455643,
+          "RSS_first_MiB": 123.125,
+          "RSS_last_MiB": 123.109375,
+          "RSS_min_MiB": 123.03125,
+          "RSS_max_MiB": 123.203125
+        },
+        "core": {
+          "cumulativeCPU_delta_seconds": 0.13999999999999968,
+          "average_CPU_percent_onecore": 0.15554691406032964,
+          "RSS_first_MiB": 22.59375,
+          "RSS_last_MiB": 22.59375,
+          "RSS_min_MiB": 22.59375,
+          "RSS_max_MiB": 22.59375
+        }
+      },
+      "raw_sha256": "8bc9be5a60df64429845d593e6c1ee02443cdb0d355e2a6e6802100dfcc5987b"
+    },
+    {
+      "phase": "BGC1",
+      "ui_pid": 75756,
+      "core_pid": 56285,
+      "span": 90.005,
+      "samples": 19,
+      "processes": {
+        "ui": {
+          "cumulativeCPU_delta_seconds": 2.5400000000000005,
+          "average_CPU_percent_onecore": 2.822065440808845,
+          "RSS_first_MiB": 116.390625,
+          "RSS_last_MiB": 116.640625,
+          "RSS_min_MiB": 116.390625,
+          "RSS_max_MiB": 116.640625
+        },
+        "core": {
+          "cumulativeCPU_delta_seconds": 0.13999999999999968,
+          "average_CPU_percent_onecore": 0.15554691406032964,
+          "RSS_first_MiB": 25.1875,
+          "RSS_last_MiB": 25.1875,
+          "RSS_min_MiB": 25.1875,
+          "RSS_max_MiB": 25.1875
+        }
+      },
+      "raw_sha256": "fd64ef0450b606a7de77d67444601633cb1ff0961af6062ec04a00422486298a"
+    }
+  ],
+  "UI_CPU_percent_single_core_before": 6.699627798455643,
+  "UI_CPU_percent_single_core_after": 2.822065440808845,
+  "UI_CPU_relative_change_percent": -57.87728026533996,
+  "UI_CPU_reduction_percent": 57.87728026533996,
+  "Core_PID_same": true,
+  "source": {
+    "baseline_UI": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+    "candidate_UI": "3c19fb96dd345c7e0a3287ee58eb523e5c959a5f555d57b888d51ec062893bbb",
+    "Core": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e"
+  },
+  "scope": "One fixed-order pair of90s background-focused samples, sameCore/profile/64providers/256models/1015requests&costs/4096candidates/query/0selected. Both inactive and sameforegroundhost atall5spoints. Actualkeypress route before&after; no UIinput/screenshots/profilers duringtime.",
+  "limitations": [
+    "n1 pervariant, fixedorder and process histories; no crossover/statisticalgeneralization.",
+    "InternalGPUI windowactive and occlusion not directlymeasured. ExactAXfocusedwidget unavailable.",
+    "RSS is process RSS, not peak/footprint/GPUheap/leakproof. CoreRSS differed acrossphase starts.",
+    "Foreground performance, startup, peak and longresidence gates remainpending.",
+    "Initial active-prerequisiteP1 sample stoppedatt0, and activeC1 prep neverstartedsampling; preserve these, do notrelabel aspassed."
+  ]
+}

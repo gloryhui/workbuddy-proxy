@@ -1,0 +1,24 @@
+{
+  "initial_HTTP200_receipts": 1014,
+  "seed_workers": 4,
+  "method": "POST /v1/chat/completions against owned realCore; Mock upstream from archivedfixture.py returns actualusage500input/50output/cache400. No SQL inserts.",
+  "model_alias": "sub2api/deepseek-v4.1-flash",
+  "payload_template": {
+    "model": "sub2api/deepseek-v4.1-flash",
+    "messages": [
+      {
+        "role": "user",
+        "content": "synthetic QA86 performance record {index}"
+      }
+    ],
+    "stream": false
+  },
+  "indices": [
+    0,
+    1013
+  ],
+  "intentional_invalidation_receipts": 1,
+  "final_receipts_and_costs": 1015,
+  "catalog": "Loopback /catalog synthetic prices from fixture, no external upstream credentials.",
+  "private_snapshots": "Compared allbusinessfields in-memory/readonly SQLite; raw DB/config/env were deleted with dedicatedroot; only hashes/boolean proofs archived."
+}

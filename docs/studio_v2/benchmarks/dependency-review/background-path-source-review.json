@@ -1,0 +1,43 @@
+{
+  "package": "gpui-base0.7.3",
+  "files": [
+    {
+      "path": "src/input/base/blink_cursor.rs",
+      "sha256": "7abc8f62bc3d4823986a25155a13bc57ef57b12f96ae163938ef353a4c6f487a",
+      "locations": {
+        "fn start": [
+          38
+        ],
+        "fn stop": [
+          44,
+          202,
+          228
+        ],
+        "from_millis(500)": [
+          4
+        ]
+      }
+    },
+    {
+      "path": "src/input/base/state.rs",
+      "sha256": "a9641aaf0c107351af892e89bf7af06b5a3c3d52290346769b7983fe6353f539",
+      "locations": {
+        "cx.observe_window_activation": [
+          786
+        ],
+        "fn show_cursor": [
+          3544
+        ],
+        "fn on_focus": [
+          3551
+        ],
+        "fn on_blur": [
+          3558
+        ]
+      }
+    }
+  ],
+  "observations": "Input focus starts blink. Window-active observer can start it when activated; show_cursor requires windowactive. An inactive app is not proof of no scheduled blink work; actual background CPU must be measured. Internalfocus/occlusion limits remain.",
+  "registry_sources_modified": false,
+  "cursor_interval_or_load_reduced": false
+}

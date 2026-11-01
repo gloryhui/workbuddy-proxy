@@ -1,0 +1,42 @@
+[
+  {
+    "tag": "v0.1.7",
+    "path": "crates/gpui/src/fast/a11y.rs",
+    "blob": "59d1f5551578290ff5cb497b65b110bf40bbf391",
+    "bytes": 19604,
+    "sha256": "67cd7377e909f1ecb9c7ea2557a101f4fe41ec4165a6afb7955772df69c2321f"
+  },
+  {
+    "tag": "v0.1.7",
+    "path": "Cargo.toml",
+    "error": "Get \"https://api.github.com/repos/longbridge/gpui-fast/contents/Cargo.toml?ref=v0.1.7\": EOF\n"
+  },
+  {
+    "tag": "v0.1.7",
+    "path": "crates/gpui/Cargo.toml",
+    "blob": "a60264152c6f334b4b398f401034dde4792660b9",
+    "bytes": 7540,
+    "sha256": "99ae5e0e0993935f4b9597e5d0db0c689567eace049a461e1c1f1dec1c43fb60"
+  },
+  {
+    "tag": "v0.1.12",
+    "path": "crates/gpui/src/fast/a11y.rs",
+    "blob": "59d1f5551578290ff5cb497b65b110bf40bbf391",
+    "bytes": 19604,
+    "sha256": "67cd7377e909f1ecb9c7ea2557a101f4fe41ec4165a6afb7955772df69c2321f"
+  },
+  {
+    "tag": "v0.1.12",
+    "path": "Cargo.toml",
+    "blob": "f3350e2eb833ecd636028a1f259402363ddb4b0a",
+    "bytes": 16700,
+    "sha256": "8a50212db08c603dfe75af68ad34628d78c5d4a213764cfe681b0d1c20d99ef0"
+  },
+  {
+    "tag": "v0.1.12",
+    "path": "crates/gpui/Cargo.toml",
+    "blob": "46f52c3b4b5b34e256856ce1fa4e7de0d2ba407c",
+    "bytes": 8133,
+    "sha256": "ae86e9f0e09506fcff6dcdc3dd734806952716f71e92fe803857ac309f2e8b4c"
+  }
+]

@@ -1,0 +1,79 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.607,
+      "log": "final-check-1.log.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "seconds": 4.701,
+      "log": "final-check-2.log.txt",
+      "sha256": "495ddfc4faad54a43f6d768cfa223dddb5b673480cc91c4b7cabe617e371b325"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "seconds": 3.978,
+      "log": "final-check-3.log.txt",
+      "sha256": "5c4c56130dd737f29bc57a9e40eb75fceafd6e0483bcec725457a0a30fe3a71e"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--target",
+        "x86_64-apple-darwin",
+        "--all-targets"
+      ],
+      "exit_code": 0,
+      "seconds": 2.286,
+      "log": "final-check-4.log.txt",
+      "sha256": "9817ba7795e687ef8c6724d3d90a079bce7f5d6ae2cfbec147f6379f4e3fa83c"
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "seconds": 45.286,
+      "log": "final-check-5.log.txt",
+      "sha256": "2daabd330f0594098f92d253c26563ba34f83fd8edee8454a62a7e6fbc6f7ea8"
+    }
+  ],
+  "state": "passed",
+  "previous_attempt": "fixed-checks.json: compile failed on direct crate lib name; explicit retained-gpui dependency alias corrects type-check guard, not a product runtime test failure."
+}

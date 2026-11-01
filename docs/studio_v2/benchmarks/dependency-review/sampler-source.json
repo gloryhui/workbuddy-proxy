@@ -1,0 +1,8 @@
+{
+  "file": "harness-audit/observe.py.txt",
+  "sha256": "b0dfa7ccc79674db1b1a4e9d3eac04c11fafda398560e147909444d4403281f9",
+  "activity_interval_seconds": 5,
+  "same_PIDbirth_and_config_preflight": true,
+  "stop_on_activity_loss": true,
+  "automatic_retry_or_activation": false
+}
