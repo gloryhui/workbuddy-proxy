@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T13:20:21+08:00",
+  "updated_at": "2026-11-01T13:35:47+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "b61704990587338213271e56ae2cfdacccb59ec5",
@@ -13,7 +13,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 89,
+  "recorded_tasks": 90,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -26,26 +26,33 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 89,
-    "title": "启动契约移入测试与新候选复核",
+    "id": 90,
+    "title": "两种剩余重启确认的原生取消验收",
     "status": "recorded",
-    "description": "交付运行时b617049，UI3c0eb8c7（43,810,848B），Core1146未改。移出main在参数解析/--version前每次执行的4组纯契约断言，逐字节保留原body为4个具名单元测试；只被它们使用的兼容模型API与dummy MappingFlow存储限定cfg(test)，不加allow(dead_code)。实际渲染/输入handler、持久化schema、Kit/Fast与锁档未改。完整范围/源码hash、补"
+    "description": "当前运行时仍b617/UI3c0e/Core1146，没有产品代码/构建、CI或性能复跑。R01审计找到StartupSync与pendingPort两个此前明确未触发分支，改为本轮集中补验；不重复hover/pressed/表头drag或已通过40帧/主题。预定范围、剩余门禁。"
   },
   "latest_task": {
-    "id": 89,
-    "title": "启动契约移入测试与新候选复核",
+    "id": 90,
+    "title": "两种剩余重启确认的原生取消验收",
     "status": "recorded",
-    "summary": "交付运行时b617049，UI3c0eb8c7（43,810,848B），Core1146未改。移出main在参数解析/--version前每次执行的4组纯契约断言，逐字节保留原body为4个具名单元测试；只被它们使用的兼容模型API与dummy MappingFlow存储限定cfg(test)，不加allow(dead_code)。实际渲染/输入handler、持久化schema、Kit/Fast与锁档未改。完整范围/源码hash、补",
+    "summary": "当前运行时仍b617/UI3c0e/Core1146，没有产品代码/构建、CI或性能复跑。R01审计找到StartupSync与pendingPort两个此前明确未触发分支，改为本轮集中补验；不重复hover/pressed/表头drag或已通过40帧/主题。预定范围、剩余门禁。",
     "highlights": [
-      "交付运行时b617049，UI3c0eb8c7（43,810,848B），Core1146未改。移出main在参数解析/--version前每次执行的4组纯契约断言，逐字节保留原body为4个具名单元测试；只被它们使用的兼容模型API与dummy MappingFlow存储限定cfg(test)，不加allow(dead_code)。实际渲染/输入handler、持久化schema、Kit/Fast与锁档未改。完整范围/源码hash、补丁。",
-      "初次strictClippy暴露16组test-only API死代码错误，原日志保留，明确改源码后重验；最终fmt、strictClippy、GPUI216pass/2既有ignore、Intelall-targetscheck、ARMrelease和CLI通过。4原body哈希一致；两个ignore相关业务源未变，沿用既有真实Core补验而不重复。初次、最终。",
-      "唯一UI-only run41275489271绑定b617/attempt1，ARM1m57、Windows5m13、Intel9m29首轮success；完整Desktop/旧升级/Windowsnative三job skipped。Win215/2ignore、两Mac216/2ignore，3真实host与fmt/Clippy/test/release/CLI/upload逐项原日志核对。三UI artifact仅服务器元数据/digest语法/source核对，ZIP未下载、不当安装包/硬件/全RC。CI。未来Windowsnative入口pin同步到新Win artifact13071258074，Core pin不变，不额外派发GDI。"
+      "当前运行时仍b617/UI3c0e/Core1146，没有产品代码/构建、CI或性能复跑。R01审计找到StartupSync与pendingPort两个此前明确未触发分支，改为本轮集中补验；不重复hover/pressed/表头drag或已通过40帧/主题。预定范围、剩余门禁。",
+      "隔离HOME手工种1个受管旧地址及1个unrelated合成模型，真实Core workbuddy_check读出expected127.0.0.1:61270、checked1/mismatch1、实际192.0.2.1:61271；没有UI/Core响应注入或install预处理。1条真实HTTP及成本后冻结config/models/business基准。Corekernel保护已验，GUI唯一身份/环境隔离+deny-only真实WorkBuddy guard，不声称GUIkernel沙盒。前置。",
+      "StartupSync自动出现，中性Return后提示保持；宽1440×901/小1100×701原图地址、1/1、警告与两按钮可读。点Cancel一次无壳/遮罩并进入Providers。端口编辑器填61393，编辑器“应用端口”只开pendingPort二次确认；Return后确认保持，两尺寸原图可读，Escape取消，重开编辑器仍61270，再取消/原生close。未点“同步并重启”或“同意并重启”。AX只报window，未断言精确子焦点；取消后状态为现场观察，四图上限不另存恢复图。原生结果、四原图审查。"
     ],
-    "limits": [],
-    "evidence": [],
-    "commit": "f5b963a2ce2ce101868fc63957bd7627e1f488f6",
-    "date": "2026-11-01T13:20:20+08:00",
-    "commit_subject": "docs(studio): record startup contract validation",
+    "limits": [
+      "环境只读核对ARM Mac16,10、Rosetta translated probe1；不跑translated GUI冒充Intel原生。DeveloperIDApplication0计数未输出身份/key/解锁或上传；README已明确Mac ad-hoc未公证/Windows unsigned，证书0不单独作为该方案mandatory blocker，实际下载Gatekeeper/SmartScreen仍待。环境、签名可用性。"
+    ],
+    "evidence": [
+      {
+        "label": "QA90",
+        "href": "benchmarks/rc-round90-summary.json"
+      }
+    ],
+    "commit": "201971f6aee641dfd6bee4a7145ce9da21c6c62e",
+    "date": "2026-11-01T13:35:46+08:00",
+    "commit_subject": "docs(studio): verify remaining restart modal cancellations",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2265,7 +2272,7 @@
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 89,
+    "historical_tasks": 90,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3249,8 +3256,8 @@
             "id": "R01.1",
             "title": "共享状态与层级矩阵",
             "acceptance": "pending",
-            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。 QA81实际旧版数据读回补自定义731天（5个预设未误高亮）、OBSERVE、手工USD2/8、持久13条/第2页3条两尺寸与滚动状态。原图外框1440×901/1100×701，不裁剪重标为900/700；没有全slot/pressed/hover证明。 QA84 actualsearch0match/restoration, invert4096overlimitwarning/restoration0 in64/256/1014 fixture captured; a state subset, notwholeapplicablematrix/slot acceptance. QA86新候选5681103/UI3c19：Fast0.1.7回放缓存a11y树/动作，32beb首次Cancel仅清body留下白壳，改为owner状态observe_in处理modal生命周期后，F1发现/编辑校验/协议Esc/删除/同步/取消同步/端口取消均回主页面，无残壳；StartupSync/pendingPort未触发，不签全状态/slot。",
-            "remaining": "此前真实Tooltip仍未取得；QA86未重试能力未变的hover/pressed/拖列。新候选已补七类modal取消/校验与代表尺寸/偏好，完整适用状态、StartupSync/pendingPort及实际slot仍待，不把缓存/AX/编译当全矩阵签收。",
+            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。 QA81实际旧版数据读回补自定义731天（5个预设未误高亮）、OBSERVE、手工USD2/8、持久13条/第2页3条两尺寸与滚动状态。原图外框1440×901/1100×701，不裁剪重标为900/700；没有全slot/pressed/hover证明。 QA84 actualsearch0match/restoration, invert4096overlimitwarning/restoration0 in64/256/1014 fixture captured; a state subset, notwholeapplicablematrix/slot acceptance. QA86新候选5681103/UI3c19：Fast0.1.7回放缓存a11y树/动作，32beb首次Cancel仅清body留下白壳，改为owner状态observe_in处理modal生命周期后，F1发现/编辑校验/协议Esc/删除/同步/取消同步/端口取消均回主页面，无残壳；StartupSync/pendingPort未触发，不签全状态/slot。 QA90当前b617/UI3c0e补齐StartupSync与pendingPort两个此前未验分支：隔离HOME受管旧地址由真实Core检查1/1 mismatch，原端口61270/拟61393确认均在1440×901与1100×701原图可读；中性Return后两提示仍在，Startup点击Cancel、pending按Escape均无壳/遮罩，重开编辑器仍61270。配置/整份合成models.json（含unrelated）/1请求成本退出后不变，UI只读allowlist、install/set_port/nativeRestart均0。",
+            "remaining": "真实Tooltip、hover/pressed及完整适用状态/实际slot仍待。QA90已补StartupSync/pendingPort两尺寸与取消，不再将它们列为未触发；其余不把缓存/AX/编译当全状态签收，不重复未变工具能力的尝试。",
             "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
             "history_tasks": [
               41,
@@ -3265,14 +3272,15 @@
               80,
               81,
               84,
-              86
+              86,
+              90
             ]
           },
           {
             "id": "R01.2",
             "title": "完整键盘与焦点恢复",
             "acceptance": "pending",
-            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。 QA84 realTabx2/Space inpicker toggles0to4096to0 twice, query/4096preserved; exactnativeAXfocusedwidget still unavailable butnontextkeyboardrouting proved. FinalCancel/windowclose actual, no apply/save. Columnwidthdrag gap unchanged. QA86新候选F1模型ID空值Apply显示错误且modal保留，Cancel关闭；协议Esc及五类确认取消后后台控件可用。两后台样本前后无需重新点击，实际z/Backspace仍路由搜索；不等于完整物理键盘/IME或精确AX焦点身份。 QA88同Fast3c19/4096弹窗后台900秒后，无先行点击实际z→0、Backspace恢复4096/选0，Cancel一次无白壳/遮罩，正常close；不是完整键盘/IME、精确AX焦点或拖列验收。",
+            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。 QA84 realTabx2/Space inpicker toggles0to4096to0 twice, query/4096preserved; exactnativeAXfocusedwidget still unavailable butnontextkeyboardrouting proved. FinalCancel/windowclose actual, no apply/save. Columnwidthdrag gap unchanged. QA86新候选F1模型ID空值Apply显示错误且modal保留，Cancel关闭；协议Esc及五类确认取消后后台控件可用。两后台样本前后无需重新点击，实际z/Backspace仍路由搜索；不等于完整物理键盘/IME或精确AX焦点身份。 QA88同Fast3c19/4096弹窗后台900秒后，无先行点击实际z→0、Backspace恢复4096/选0，Cancel一次无白壳/遮罩，正常close；不是完整键盘/IME、精确AX焦点或拖列验收。 QA90两危险重启确认在窗口AX焦点下Return后保持，Cancel/Escape关闭且端口恢复原值，独立audit无install/set_port/重启；AX不能确认精确子控件焦点，不作完整焦点/键盘门禁通过。",
             "remaining": "真实可拖列拖宽及刷新/resize保持仍待。旧x444第一边界是刻意固定的时间列，不能作可拖列失败证据；QA77改试provider/model右边界仍无可见变化，当前CUA只支持两点drag，未辨明工具投递与产品原因。能力未变不重复同类尝试；其余完整焦点回归仍按缺口收口。",
             "acceptance_check": "无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。",
             "history_tasks": [
@@ -3288,7 +3296,8 @@
               77,
               84,
               86,
-              88
+              88,
+              90
             ]
           },
           {
@@ -3411,14 +3420,15 @@
             "id": "R02.3",
             "title": "Intel原生发行包与硬件",
             "acceptance": "pending",
-            "completed": "x86_64编译/链接、thin测试及Rosetta真实运行已完成。 QA78 b167在macos-15-intel原生x86_64 runner实际构建并完成DMG包启动/关闭/重开/正常退出，包报告和artifact digest均保留；尚缺原生截图/完整主流程、托盘及匹配性能，不以Rosetta或PID记录签收整项。 QA79核对2da Intel原run124627179928最终success及artifact13054867223 digest，仍只是包/现有harness证据。771 Intel Corecredit测试失败保留，7bec原run继续核验。 QA82macos-15-intel原runner实际旧DMG应用替换/架构版本签名/新Core数据迁移/原生host与GPUI生命周期/卸载保持数据通过，未作用户物理设备/系统输入场景签收。",
+            "completed": "x86_64编译/链接、thin测试及Rosetta真实运行已完成。 QA78 b167在macos-15-intel原生x86_64 runner实际构建并完成DMG包启动/关闭/重开/正常退出，包报告和artifact digest均保留；尚缺原生截图/完整主流程、托盘及匹配性能，不以Rosetta或PID记录签收整项。 QA79核对2da Intel原run124627179928最终success及artifact13054867223 digest，仍只是包/现有harness证据。771 Intel Corecredit测试失败保留，7bec原run继续核验。 QA82macos-15-intel原runner实际旧DMG应用替换/架构版本签名/新Core数据迁移/原生host与GPUI生命周期/卸载保持数据通过，未作用户物理设备/系统输入场景签收。 QA90只读环境核对为ARM Mac16,10，arch-x86_64 sysctl.proc_translated返回1；仅证明Rosetta可用，未运行translated GUI、不当Intel原生GPU/窗口/托盘/性能验收。",
             "remaining": "使用Intel硬件或可验证原生执行环境跑安装/启动/主流程/窗口/托盘/性能；缺环境则阻塞本门禁。 原生Intel完整GUI/托盘/匹配性能仍缺；不能凭CI构建或生命周期报告签收。",
             "acceptance_check": "产物架构正确，原生GPU/窗口运行通过；Rosetta证据单列，不冒称Intel实机。",
             "history_tasks": [
               52,
               78,
               79,
-              82
+              82,
+              90
             ]
           },
           {
@@ -3586,7 +3596,7 @@
             "title": "最终提交CI全矩阵",
             "acceptance": "pending",
             "completed": "QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained. QA85 adds ui_only dispatch forGPUIchecks onWin/ARM/Intel withoutCore/installer/migration. Defaultfullworkflow preserved; runtime owns957unchanged, priorfullmatrixsameowningsource evidence retained. ScopedUIrun41262088104 isnotnewfinalCore/fullRCacceptance. QA85精简入口首次运行41262088104绑定3e257fd，Windows/ARM/Intel三UI job全部success，完整Desktop/旧升级skipped；原日志与产物元数据归档，UI artifact未下载，不代替最终全矩阵或硬件/安装验收。 QA86运行时UI实质变更为5681103/3c19，Core1146未变；因此本项按新候选重新pending，旧957完整矩阵原证据不撤销也不重标。新UI-only阶段检查不替代最终Core/三平台/打包全矩阵。 QA86阶段UI-only run41270728784绑定5681103，Win/ARM/Intel三job首轮success，Win212/2ignore、两Mac213/2ignore；完整Desktop/旧升级skipped，原log/产物元数据归档，未下载ZIP，不替代最终全RC矩阵。 QA87新增windows_native_only入口复用已通过的UI568与Core957固定产物，校验source/run/归档大小SHA后只跑两尺寸GDI及既有生命周期；唯一run41272932710 attempt1成功，完整Desktop/UI构建/旧升级三job skipped。非最终全矩阵/正式包，R04.1继续pending。 QA89 runtimeb617/UI3c0e纯契约移出生产入口；唯一run41275489271 attempt1三平台UI-only首轮成功（ARM124756717668/Intel124756717805/Win124756717921），完整Desktop/旧升级/Windowsnative三job skipped。原日志/三artifact服务器元数据保留，未下载ZIP、不作全RC或硬件验收；未来Windowsnative固定UI来源同步到13071258074，Core冻结不变，未重跑GDI。",
-            "remaining": "5681103新渲染候选需最终全矩阵绑定；阶段UI-only通过也不能签本项。旧957四job通过证据保留原来源，待最终候选集中一次完整RC验证。",
+            "remaining": "当前b617049候选（含568新渲染及QA89契约清理）仍需最终全矩阵绑定；阶段UI-only通过不能签本项。旧957四job按原来源保留，待实际最终候选集中一次完整RC验证，不重复未改Core阶段套件。",
             "acceptance_check": "Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。",
             "history_tasks": [
               78,
@@ -3621,11 +3631,12 @@
             "id": "R04.3",
             "title": "签名、公证与可运行性",
             "acceptance": "pending",
-            "completed": "目前不能把本地ad-hoc测试签名视为正式发行签名/公证通过。 QA78核对README现行分发为Mac ad-hoc未公证/Windows无Authenticode，源脚本与声明一致。本机只读查到Developer ID Application0；未读取/导出私钥或尝试签名上传。实际下载隔离属性/Gatekeeper/SmartScreen完整行为仍未验，不能凭包进程记录签收。",
+            "completed": "目前不能把本地ad-hoc测试签名视为正式发行签名/公证通过。 QA78核对README现行分发为Mac ad-hoc未公证/Windows无Authenticode，源脚本与声明一致。本机只读查到Developer ID Application0；未读取/导出私钥或尝试签名上传。实际下载隔离属性/Gatekeeper/SmartScreen完整行为仍未验，不能凭包进程记录签收。 QA90只读find-identity核对本机DeveloperIDApplication仍0，未输出身份/导出key/解锁或上传。README现有Mac ad-hoc未公证/Windows unsigned方案明确，证书0不单独作为该方案mandatory blocker；真实下载后的Gatekeeper/SmartScreen行为仍待。",
             "remaining": "按项目正式分发方案核对macOS签名/公证/Gatekeeper、Windows签名/SmartScreen与可用凭据；缺条件显式标记。",
             "acceptance_check": "从真实下载/挂载或解压的候选包启动；签名链/公证或项目明确采用的分发方式有可审查记录；不在日志暴露密钥。",
             "history_tasks": [
-              78
+              78,
+              90
             ]
           },
           {
@@ -7687,6 +7698,30 @@
       "date": "2026-11-01T13:20:20+08:00",
       "commit_subject": "docs(studio): record startup contract validation",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 90,
+      "title": "两种剩余重启确认的原生取消验收",
+      "status": "recorded",
+      "summary": "当前运行时仍b617/UI3c0e/Core1146，没有产品代码/构建、CI或性能复跑。R01审计找到StartupSync与pendingPort两个此前明确未触发分支，改为本轮集中补验；不重复hover/pressed/表头drag或已通过40帧/主题。预定范围、剩余门禁。",
+      "highlights": [
+        "当前运行时仍b617/UI3c0e/Core1146，没有产品代码/构建、CI或性能复跑。R01审计找到StartupSync与pendingPort两个此前明确未触发分支，改为本轮集中补验；不重复hover/pressed/表头drag或已通过40帧/主题。预定范围、剩余门禁。",
+        "隔离HOME手工种1个受管旧地址及1个unrelated合成模型，真实Core workbuddy_check读出expected127.0.0.1:61270、checked1/mismatch1、实际192.0.2.1:61271；没有UI/Core响应注入或install预处理。1条真实HTTP及成本后冻结config/models/business基准。Corekernel保护已验，GUI唯一身份/环境隔离+deny-only真实WorkBuddy guard，不声称GUIkernel沙盒。前置。",
+        "StartupSync自动出现，中性Return后提示保持；宽1440×901/小1100×701原图地址、1/1、警告与两按钮可读。点Cancel一次无壳/遮罩并进入Providers。端口编辑器填61393，编辑器“应用端口”只开pendingPort二次确认；Return后确认保持，两尺寸原图可读，Escape取消，重开编辑器仍61270，再取消/原生close。未点“同步并重启”或“同意并重启”。AX只报window，未断言精确子焦点；取消后状态为现场观察，四图上限不另存恢复图。原生结果、四原图审查。"
+      ],
+      "limits": [
+        "环境只读核对ARM Mac16,10、Rosetta translated probe1；不跑translated GUI冒充Intel原生。DeveloperIDApplication0计数未输出身份/key/解锁或上传；README已明确Mac ad-hoc未公证/Windows unsigned，证书0不单独作为该方案mandatory blocker，实际下载Gatekeeper/SmartScreen仍待。环境、签名可用性。"
+      ],
+      "evidence": [
+        {
+          "label": "QA90",
+          "href": "benchmarks/rc-round90-summary.json"
+        }
+      ],
+      "commit": "201971f6aee641dfd6bee4a7145ce9da21c6c62e",
+      "date": "2026-11-01T13:35:46+08:00",
+      "commit_subject": "docs(studio): verify remaining restart modal cancellations",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -9148,6 +9183,21 @@
     {
       "date": "2026-11-01T13:20:21+08:00",
       "note": "QA89：4组契约断言移出生产启动入口，216项本机测试、一次原生启动关闭与三平台UI-only CI首轮通过；历史慢marker保留，发布仍15项待验。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T13:35:47+08:00",
+      "note": "QA90：StartupSync与pendingPort两种剩余modal的双尺寸、Return保持、Cancel/Escape取消及端口恢复通过；配置/models/请求成本保持、0业务写/重启。仍15项发布待验。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
