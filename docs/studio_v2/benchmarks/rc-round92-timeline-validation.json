@@ -1,0 +1,19 @@
+{
+  "task": 92,
+  "evidence_commit": "f5f8cbd1dfcfbbad17797a94fcb6781aaa7228d4",
+  "code_head": "85540e1256842a5e6553bffd9749088af545084e",
+  "updated_at": "2026-11-01T16:52:33+08:00",
+  "HTML_embedded_JSON_equal": true,
+  "unchanged_JS_blocks_node_syntax_pass": 2,
+  "frames_verified": 40,
+  "remaining_frames": 0,
+  "release_pending": 15,
+  "pending_by_batch": {
+    "R01": 4,
+    "R02": 4,
+    "R03": 3,
+    "R04": 4
+  },
+  "goal_status": "active",
+  "generated_once_after_completed_QA92_evidence_commit": true
+}
