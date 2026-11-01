@@ -1,0 +1,61 @@
+{
+  "artifacts": [
+    {
+      "id": 13073457487,
+      "name": "installed-upgrade-windows-x64",
+      "size_in_bytes": 31643,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073457487",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073457487/zip",
+      "expired": false,
+      "created_at": "2026-11-01T06:37:53Z",
+      "expires_at": "2027-01-30T06:36:50Z",
+      "updated_at": "2026-11-01T06:37:53Z",
+      "digest": "sha256:f92c712668e300e419e31029a34f5e320b7142a6a0a778a5a8ba413aee780569",
+      "workflow_run": {
+        "id": 41281534447,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "feat/studio_v2_gpui",
+        "head_sha": "21dea55a30ab08a76e118412300f673729719d43"
+      }
+    },
+    {
+      "id": 13073228985,
+      "name": "installed-upgrade-macos-x64",
+      "size_in_bytes": 4808,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073228985",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073228985/zip",
+      "expired": false,
+      "created_at": "2026-11-01T06:38:31Z",
+      "expires_at": "2027-01-30T06:36:50Z",
+      "updated_at": "2026-11-01T06:38:31Z",
+      "digest": "sha256:b031e6aad6a2f68c769ce55bf8a83a3dd66b3a00039d0a2092af7e2de4ccc039",
+      "workflow_run": {
+        "id": 41281534447,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "feat/studio_v2_gpui",
+        "head_sha": "21dea55a30ab08a76e118412300f673729719d43"
+      }
+    },
+    {
+      "id": 13073164246,
+      "name": "installed-upgrade-macos-arm64",
+      "size_in_bytes": 11323,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073164246",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073164246/zip",
+      "expired": false,
+      "created_at": "2026-11-01T06:38:29Z",
+      "expires_at": "2027-01-30T06:36:50Z",
+      "updated_at": "2026-11-01T06:38:29Z",
+      "digest": "sha256:cca73524c3d811b2039f575aaf9454602877da93818e76235b7064c02c2eddf7",
+      "workflow_run": {
+        "id": 41281534447,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "feat/studio_v2_gpui",
+        "head_sha": "21dea55a30ab08a76e118412300f673729719d43"
+      }
+    }
+  ]
+}

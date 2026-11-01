@@ -1,0 +1,329 @@
+﻿2026-11-01T06:47:53.6238400Z Current runner version: '2.338.2'
+2026-11-01T06:47:53.6280510Z ##[group]Runner Image Provisioner
+2026-11-01T06:47:53.6281780Z Hosted Compute Agent
+2026-11-01T06:47:53.6282760Z Version: 20260819.586
+2026-11-01T06:47:53.6283640Z Commit: 3cc4a88dfa507ef76119ad1bb3eccc6378bb2b76
+2026-11-01T06:47:53.6284910Z Build Date: 2026-08-18T23:20:18Z
+2026-11-01T06:47:53.6286120Z Worker ID: {1c6f40c5-e78e-4c56-b86c-53a45e95e52c}
+2026-11-01T06:47:53.6287510Z Azure Region: westus
+2026-11-01T06:47:53.6288350Z ##[endgroup]
+2026-11-01T06:47:53.6290910Z ##[group]Operating System
+2026-11-01T06:47:53.6291800Z macOS
+2026-11-01T06:47:53.6292790Z 15.7.9
+2026-11-01T06:47:53.6293500Z 24G830
+2026-11-01T06:47:53.6294220Z ##[endgroup]
+2026-11-01T06:47:53.6294990Z ##[group]Runner Image
+2026-11-01T06:47:53.6295820Z Image: macos-15
+2026-11-01T06:47:53.6296600Z Version: 20260824.0482.1
+2026-11-01T06:47:53.6298580Z Included Software: https://github.com/actions/runner-images/blob/macos-15/20260824.0482/images/macos/macos-15-Readme.md
+2026-11-01T06:47:53.6301120Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15%2F20260824.0482
+2026-11-01T06:47:53.6302720Z ##[endgroup]
+2026-11-01T06:47:53.6304630Z ##[group]GITHUB_TOKEN Permissions
+2026-11-01T06:47:53.6307860Z Actions: read
+2026-11-01T06:47:53.6308690Z Contents: read
+2026-11-01T06:47:53.6309540Z Metadata: read
+2026-11-01T06:47:53.6310580Z ##[endgroup]
+2026-11-01T06:47:53.6315050Z Secret source: Actions
+2026-11-01T06:47:53.6316560Z Cache mode: write
+2026-11-01T06:47:53.6318270Z Prepare workflow directory
+2026-11-01T06:47:53.6829200Z Prepare all required actions
+2026-11-01T06:47:53.6900250Z Getting action download info
+2026-11-01T06:47:53.8760410Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-01T06:47:54.2020180Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-01T06:47:54.4916150Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-01T06:47:54.9548370Z Uses: gloryhui/workbuddy-proxy/.github/workflows/release-upgrade.yml@refs/heads/feat/studio_v2_gpui (c435b5c6aa7b7610c93aa24b19150137de92f6c3)
+2026-11-01T06:47:54.9556250Z ##[group] Inputs
+2026-11-01T06:47:54.9557850Z   upgrade_only: true
+2026-11-01T06:47:54.9558680Z   ui_only: false
+2026-11-01T06:47:54.9559480Z   windows_native_only: false
+2026-11-01T06:47:54.9560360Z ##[endgroup]
+2026-11-01T06:47:54.9561470Z Complete job name: released-upgrades / upgrade (macos-15-intel, macos-x64)
+2026-11-01T06:47:55.0649850Z ##[group]Run actions/checkout@v4
+2026-11-01T06:47:55.0651330Z with:
+2026-11-01T06:47:55.0652110Z   repository: gloryhui/workbuddy-proxy
+2026-11-01T06:47:55.0658920Z   token: ***
+2026-11-01T06:47:55.0659650Z   ssh-strict: true
+2026-11-01T06:47:55.0660380Z   ssh-user: git
+2026-11-01T06:47:55.0661130Z   persist-credentials: true
+2026-11-01T06:47:55.0661960Z   clean: true
+2026-11-01T06:47:55.0662710Z   sparse-checkout-cone-mode: true
+2026-11-01T06:47:55.0663710Z   fetch-depth: 1
+2026-11-01T06:47:55.0664450Z   fetch-tags: false
+2026-11-01T06:47:55.0665200Z   show-progress: true
+2026-11-01T06:47:55.0665970Z   lfs: false
+2026-11-01T06:47:55.0666670Z   submodules: false
+2026-11-01T06:47:55.0667430Z   set-safe-directory: true
+2026-11-01T06:47:55.0668300Z   allow-unsafe-pr-checkout: false
+2026-11-01T06:47:55.0669610Z ##[endgroup]
+2026-11-01T06:47:55.5628250Z Syncing repository: gloryhui/workbuddy-proxy
+2026-11-01T06:47:55.5631300Z ##[group]Getting Git version info
+2026-11-01T06:47:55.5634200Z Working directory is '/Users/runner/work/workbuddy-proxy/workbuddy-proxy'
+2026-11-01T06:47:55.5636550Z [command]/usr/local/bin/git version
+2026-11-01T06:47:55.6012550Z git version 2.55.0
+2026-11-01T06:47:55.6055640Z ##[endgroup]
+2026-11-01T06:47:55.6073910Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/5ab0fe77-a1a6-4d76-b38b-c35ef648ac4e/.gitconfig'
+2026-11-01T06:47:55.6094700Z Temporarily overriding HOME='/Users/runner/work/_temp/5ab0fe77-a1a6-4d76-b38b-c35ef648ac4e' before making global git config changes
+2026-11-01T06:47:55.6098780Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-01T06:47:55.6104010Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/workbuddy-proxy/workbuddy-proxy
+2026-11-01T06:47:55.6271660Z Deleting the contents of '/Users/runner/work/workbuddy-proxy/workbuddy-proxy'
+2026-11-01T06:47:55.6282460Z ##[group]Initializing the repository
+2026-11-01T06:47:55.6290880Z [command]/usr/local/bin/git init /Users/runner/work/workbuddy-proxy/workbuddy-proxy
+2026-11-01T06:47:55.6757080Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-01T06:47:55.6772680Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-01T06:47:55.6776190Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-01T06:47:55.6781220Z hint: call:
+2026-11-01T06:47:55.6783230Z hint:
+2026-11-01T06:47:55.6784510Z hint: 	git config --global init.defaultBranch <name>
+2026-11-01T06:47:55.6787030Z hint:
+2026-11-01T06:47:55.6789730Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-01T06:47:55.6792870Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-01T06:47:55.6797100Z hint:
+2026-11-01T06:47:55.6799210Z hint: 	git branch -m <name>
+2026-11-01T06:47:55.6806070Z hint:
+2026-11-01T06:47:55.6808610Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-01T06:47:55.6812200Z Initialized empty Git repository in /Users/runner/work/workbuddy-proxy/workbuddy-proxy/.git/
+2026-11-01T06:47:55.6820220Z [command]/usr/local/bin/git remote add origin https://github.com/gloryhui/workbuddy-proxy
+2026-11-01T06:47:55.6929750Z ##[endgroup]
+2026-11-01T06:47:55.6934540Z ##[group]Disabling automatic garbage collection
+2026-11-01T06:47:55.6938010Z [command]/usr/local/bin/git config --local gc.auto 0
+2026-11-01T06:47:55.7074270Z ##[endgroup]
+2026-11-01T06:47:55.7077680Z ##[group]Setting up auth
+2026-11-01T06:47:55.7084590Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-01T06:47:55.7199570Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-01T06:47:55.8813770Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-01T06:47:55.8933360Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-01T06:47:56.0896000Z [command]/usr/local/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-01T06:47:56.0921800Z [command]/usr/local/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-01T06:47:56.2267720Z [command]/usr/local/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-01T06:47:56.2389930Z ##[endgroup]
+2026-11-01T06:47:56.2391600Z ##[group]Fetching the repository
+2026-11-01T06:47:56.2402080Z [command]/usr/local/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c435b5c6aa7b7610c93aa24b19150137de92f6c3:refs/remotes/origin/feat/studio_v2_gpui
+2026-11-01T06:48:12.2921490Z From https://github.com/gloryhui/workbuddy-proxy
+2026-11-01T06:48:12.2924560Z  * [new ref]         c435b5c6aa7b7610c93aa24b19150137de92f6c3 -> origin/feat/studio_v2_gpui
+2026-11-01T06:48:12.2935120Z ##[endgroup]
+2026-11-01T06:48:12.2936580Z ##[group]Determining the checkout info
+2026-11-01T06:48:12.2940240Z ##[endgroup]
+2026-11-01T06:48:12.2951660Z [command]/usr/local/bin/git sparse-checkout disable
+2026-11-01T06:48:12.3090870Z [command]/usr/local/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-01T06:48:12.3225830Z ##[group]Checking out the ref
+2026-11-01T06:48:12.3243100Z [command]/usr/local/bin/git checkout --progress --force -B feat/studio_v2_gpui refs/remotes/origin/feat/studio_v2_gpui
+2026-11-01T06:48:13.4859460Z Updating files:  11% (773/6654)
+2026-11-01T06:48:13.5113310Z Updating files:  12% (799/6654)
+2026-11-01T06:48:13.5720680Z Updating files:  13% (866/6654)
+2026-11-01T06:48:13.6124450Z Updating files:  14% (932/6654)
+2026-11-01T06:48:13.7140590Z Updating files:  15% (999/6654)
+2026-11-01T06:48:13.9087040Z Updating files:  16% (1065/6654)
+2026-11-01T06:48:13.9976320Z Updating files:  17% (1132/6654)
+2026-11-01T06:48:14.0444640Z Updating files:  18% (1198/6654)
+2026-11-01T06:48:14.1038190Z Updating files:  19% (1265/6654)
+2026-11-01T06:48:14.2120360Z Updating files:  20% (1331/6654)
+2026-11-01T06:48:14.4209310Z Updating files:  21% (1398/6654)
+2026-11-01T06:48:14.5224580Z Updating files:  22% (1464/6654)
+2026-11-01T06:48:15.0478530Z Updating files:  22% (1465/6654)
+2026-11-01T06:48:15.1881550Z Updating files:  23% (1531/6654)
+2026-11-01T06:48:15.2767090Z Updating files:  24% (1597/6654)
+2026-11-01T06:48:15.5312620Z Updating files:  25% (1664/6654)
+2026-11-01T06:48:15.5531330Z Updating files:  25% (1693/6654)
+2026-11-01T06:48:15.5679080Z Updating files:  26% (1731/6654)
+2026-11-01T06:48:15.6781470Z Updating files:  27% (1797/6654)
+2026-11-01T06:48:15.7787010Z Updating files:  28% (1864/6654)
+2026-11-01T06:48:15.8790820Z Updating files:  29% (1930/6654)
+2026-11-01T06:48:15.9480020Z Updating files:  30% (1997/6654)
+2026-11-01T06:48:15.9483820Z Updating files:  31% (2063/6654)
+2026-11-01T06:48:15.9485920Z Updating files:  32% (2130/6654)
+2026-11-01T06:48:15.9487650Z Updating files:  33% (2196/6654)
+2026-11-01T06:48:15.9489320Z Updating files:  34% (2263/6654)
+2026-11-01T06:48:15.9491010Z Updating files:  35% (2329/6654)
+2026-11-01T06:48:16.1679080Z Updating files:  36% (2396/6654)
+2026-11-01T06:48:16.2204660Z Updating files:  37% (2462/6654)
+2026-11-01T06:48:16.2592950Z Updating files:  38% (2529/6654)
+2026-11-01T06:48:16.2927020Z Updating files:  39% (2596/6654)
+2026-11-01T06:48:16.3509160Z Updating files:  40% (2662/6654)
+2026-11-01T06:48:16.3722300Z Updating files:  40% (2716/6654)
+2026-11-01T06:48:16.4091300Z Updating files:  41% (2729/6654)
+2026-11-01T06:48:16.5413860Z Updating files:  42% (2795/6654)
+2026-11-01T06:48:16.8084750Z Updating files:  43% (2862/6654)
+2026-11-01T06:48:16.9091350Z Updating files:  44% (2928/6654)
+2026-11-01T06:48:17.0098720Z Updating files:  45% (2995/6654)
+2026-11-01T06:48:17.1105210Z Updating files:  46% (3061/6654)
+2026-11-01T06:48:17.1611320Z Updating files:  47% (3128/6654)
+2026-11-01T06:48:17.1924340Z Updating files:  48% (3194/6654)
+2026-11-01T06:48:17.2018700Z Updating files:  49% (3261/6654)
+2026-11-01T06:48:17.2069550Z Updating files:  50% (3327/6654)
+2026-11-01T06:48:17.2124600Z Updating files:  51% (3394/6654)
+2026-11-01T06:48:17.2151930Z Updating files:  52% (3461/6654)
+2026-11-01T06:48:17.2163980Z Updating files:  53% (3527/6654)
+2026-11-01T06:48:17.2204360Z Updating files:  54% (3594/6654)
+2026-11-01T06:48:17.4878160Z Updating files:  55% (3660/6654)
+2026-11-01T06:48:18.3939970Z Updating files:  55% (3670/6654)
+2026-11-01T06:48:18.4644200Z Updating files:  55% (3713/6654)
+2026-11-01T06:48:18.6737780Z Updating files:  56% (3727/6654)
+2026-11-01T06:48:19.1260780Z Updating files:  57% (3793/6654)
+2026-11-01T06:48:19.4071940Z Updating files:  58% (3860/6654)
+2026-11-01T06:48:19.8216750Z Updating files:  58% (3865/6654)
+2026-11-01T06:48:19.8811110Z Updating files:  59% (3926/6654)
+2026-11-01T06:48:19.9555770Z Updating files:  60% (3993/6654)
+2026-11-01T06:48:20.0685800Z Updating files:  61% (4059/6654)
+2026-11-01T06:48:20.2019710Z Updating files:  62% (4126/6654)
+2026-11-01T06:48:20.2721470Z Updating files:  63% (4193/6654)
+2026-11-01T06:48:20.2944260Z Updating files:  64% (4259/6654)
+2026-11-01T06:48:20.3162020Z Updating files:  65% (4326/6654)
+2026-11-01T06:48:20.3370950Z Updating files:  66% (4392/6654)
+2026-11-01T06:48:20.3545030Z Updating files:  67% (4459/6654)
+2026-11-01T06:48:20.3602810Z Updating files:  67% (4508/6654)
+2026-11-01T06:48:20.3842830Z Updating files:  68% (4525/6654)
+2026-11-01T06:48:20.4065990Z Updating files:  69% (4592/6654)
+2026-11-01T06:48:20.4371860Z Updating files:  70% (4658/6654)
+2026-11-01T06:48:20.5009850Z Updating files:  71% (4725/6654)
+2026-11-01T06:48:20.5637680Z Updating files:  72% (4791/6654)
+2026-11-01T06:48:20.6368940Z Updating files:  73% (4858/6654)
+2026-11-01T06:48:20.6539920Z Updating files:  74% (4924/6654)
+2026-11-01T06:48:20.6852380Z Updating files:  75% (4991/6654)
+2026-11-01T06:48:20.7325650Z Updating files:  76% (5058/6654)
+2026-11-01T06:48:20.9870220Z Updating files:  77% (5124/6654)
+2026-11-01T06:48:21.2803570Z Updating files:  78% (5191/6654)
+2026-11-01T06:48:21.3633170Z Updating files:  79% (5257/6654)
+2026-11-01T06:48:21.3732970Z Updating files:  79% (5317/6654)
+2026-11-01T06:48:21.5764040Z Updating files:  80% (5324/6654)
+2026-11-01T06:48:22.0238560Z Updating files:  81% (5390/6654)
+2026-11-01T06:48:22.3189660Z Updating files:  82% (5457/6654)
+2026-11-01T06:48:22.3576930Z Updating files:  83% (5523/6654)
+2026-11-01T06:48:22.8113230Z Updating files:  83% (5535/6654)
+2026-11-01T06:48:23.2032850Z Updating files:  84% (5590/6654)
+2026-11-01T06:48:23.3569310Z Updating files:  85% (5656/6654)
+2026-11-01T06:48:23.4587950Z Updating files:  85% (5697/6654)
+2026-11-01T06:48:24.3886720Z Updating files:  86% (5723/6654)
+2026-11-01T06:48:24.4578620Z Updating files:  86% (5783/6654)
+2026-11-01T06:48:24.7418520Z Updating files:  87% (5789/6654)
+2026-11-01T06:48:24.9380700Z Updating files:  88% (5856/6654)
+2026-11-01T06:48:25.0613160Z Updating files:  89% (5923/6654)
+2026-11-01T06:48:25.3574540Z Updating files:  90% (5989/6654)
+2026-11-01T06:48:25.3637740Z Updating files:  90% (6054/6654)
+2026-11-01T06:48:26.2687500Z Updating files:  91% (6056/6654)
+2026-11-01T06:48:26.3319760Z Updating files:  92% (6122/6654)
+2026-11-01T06:48:26.3662660Z Updating files:  93% (6189/6654)
+2026-11-01T06:48:26.4387030Z Updating files:  93% (6213/6654)
+2026-11-01T06:48:26.4841650Z Updating files:  94% (6255/6654)
+2026-11-01T06:48:27.4234730Z Updating files:  95% (6322/6654)
+2026-11-01T06:48:27.5331760Z Updating files:  96% (6388/6654)
+2026-11-01T06:48:27.5565800Z Updating files:  96% (6390/6654)
+2026-11-01T06:48:27.6548870Z Updating files:  97% (6455/6654)
+2026-11-01T06:48:27.7706860Z Updating files:  98% (6521/6654)
+2026-11-01T06:48:27.8244330Z Updating files:  99% (6588/6654)
+2026-11-01T06:48:27.8245740Z Updating files: 100% (6654/6654)
+2026-11-01T06:48:27.8249950Z Updating files: 100% (6654/6654), done.
+2026-11-01T06:48:27.8619700Z Switched to a new branch 'feat/studio_v2_gpui'
+2026-11-01T06:48:27.8663750Z branch 'feat/studio_v2_gpui' set up to track 'origin/feat/studio_v2_gpui'.
+2026-11-01T06:48:27.8965620Z ##[endgroup]
+2026-11-01T06:48:27.9445780Z [command]/usr/local/bin/git log -1 --format=%H
+2026-11-01T06:48:27.9681570Z c435b5c6aa7b7610c93aa24b19150137de92f6c3
+2026-11-01T06:48:28.0720530Z ##[group]Run actions/setup-python@v5
+2026-11-01T06:48:28.0721360Z with:
+2026-11-01T06:48:28.0722100Z   python-version: 3.12
+2026-11-01T06:48:28.0722780Z   check-latest: false
+2026-11-01T06:48:28.0730980Z   token: ***
+2026-11-01T06:48:28.0731630Z   update-environment: true
+2026-11-01T06:48:28.0732340Z   allow-prereleases: false
+2026-11-01T06:48:28.0733510Z   freethreaded: false
+2026-11-01T06:48:28.0735250Z ##[endgroup]
+2026-11-01T06:48:28.5107850Z (node:6679) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-01T06:48:28.5331720Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-01T06:48:28.5338040Z ##[group]Installed versions
+2026-11-01T06:48:28.5355720Z Successfully set up CPython (3.12.10)
+2026-11-01T06:48:28.5357070Z ##[endgroup]
+2026-11-01T06:48:28.5537320Z ##[group]Run python scripts/release_upgrade_snapshot_test.py
+2026-11-01T06:48:28.5538430Z [36;1mpython scripts/release_upgrade_snapshot_test.py[0m
+2026-11-01T06:48:28.5652230Z shell: /bin/bash -e {0}
+2026-11-01T06:48:28.5653530Z env:
+2026-11-01T06:48:28.5654400Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:28.5655810Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-11-01T06:48:28.5657140Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:28.5658180Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:28.5659200Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:28.5660030Z ##[endgroup]
+2026-11-01T06:48:29.8027680Z ...
+2026-11-01T06:48:29.8030430Z ----------------------------------------------------------------------
+2026-11-01T06:48:29.8035400Z CLEANUP_PLAN: {"target": "/private/var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/studio-cold-snapshot-test-n50tku8m", "type": "fresh synthetic SQLite regression fixture", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "files": 6, "bytes": 77982, "regenerable": "Created by this test; child waited and connections closed"}
+2026-11-01T06:48:29.8042850Z Ran 3 tests in 0.368s
+2026-11-01T06:48:29.8047140Z CLEANUP_PLAN: {"target": "/private/var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/studio-cold-snapshot-tnw03q1w", "type": "fresh stopped DB+WAL snapshot copy", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "files": 1, "bytes": 24576, "regenerable": "Source bytes retained; no child and SQLite connection closed"}
+2026-11-01T06:48:29.8053470Z 
+2026-11-01T06:48:29.8056300Z CLEANUP_PLAN: {"target": "/private/var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/studio-cold-snapshot-test-eg_wib_v", "type": "fresh synthetic SQLite regression fixture", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "files": 3, "bytes": 77976, "regenerable": "Created by this test; child waited and connections closed"}
+2026-11-01T06:48:29.8061070Z OK
+2026-11-01T06:48:29.8066080Z CLEANUP_PLAN: {"target": "/private/var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/studio-cold-snapshot-rnkj2buo", "type": "fresh stopped DB+WAL snapshot copy", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "files": 1, "bytes": 24576, "regenerable": "Source bytes retained; no child and SQLite connection closed"}
+2026-11-01T06:48:29.8080070Z CLEANUP_PLAN: {"target": "/private/var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/studio-cold-snapshot-test-wa_xme86", "type": "fresh synthetic SQLite regression fixture", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "files": 3, "bytes": 77976, "regenerable": "Created by this test; child waited and connections closed"}
+2026-11-01T06:48:29.8463300Z ##[group]Run python scripts/installed_upgrade_test.py --platform "macos-x64" --directory "/Users/runner/work/_temp/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade" --verify-rollback
+2026-11-01T06:48:29.8467470Z [36;1mpython scripts/installed_upgrade_test.py --platform "macos-x64" --directory "/Users/runner/work/_temp/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade" --verify-rollback[0m
+2026-11-01T06:48:29.8571390Z shell: /bin/bash -e {0}
+2026-11-01T06:48:29.8572560Z env:
+2026-11-01T06:48:29.8573610Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:29.8575030Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-11-01T06:48:29.8576380Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:29.8577850Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:29.8579440Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:48:29.8586180Z   GH_TOKEN: ***
+2026-11-01T06:48:29.8586750Z ##[endgroup]
+2026-11-01T06:49:31.6560180Z UNINSTALL_PLAN: {"target": "/Users/runner/work/_temp/studio-v2-installed-upgrade/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app", "type": "owned copied app bundle", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "regenerable": "Verified source DMG; profile is outside app"}
+2026-11-01T06:49:31.7273170Z PASS: macos-x64 v0.5.6 actual installed package/data upgrade
+2026-11-01T06:49:47.8138620Z UNINSTALL_PLAN: {"target": "/Users/runner/work/_temp/studio-v2-installed-upgrade/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app", "type": "owned copied app bundle", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "regenerable": "Verified source DMG; profile is outside app"}
+2026-11-01T06:49:47.8289380Z PASS: macos-x64 v0.5.7 actual installed package/data upgrade
+2026-11-01T06:49:47.9276170Z ##[group]Run python scripts/installed_upgrade_test.py --platform "macos-x64" --directory "/Users/runner/work/_temp/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade" --cleanup-only
+2026-11-01T06:49:47.9281540Z [36;1mpython scripts/installed_upgrade_test.py --platform "macos-x64" --directory "/Users/runner/work/_temp/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade" --cleanup-only[0m
+2026-11-01T06:49:47.9386460Z shell: /bin/bash -e {0}
+2026-11-01T06:49:47.9387190Z env:
+2026-11-01T06:49:47.9388140Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:47.9389400Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-11-01T06:49:47.9390630Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:47.9391910Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:47.9393560Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:47.9394490Z ##[endgroup]
+2026-11-01T06:49:48.5799140Z CLEANUP_PLAN: {"target": "/Users/runner/work/_temp/studio-v2-installed-upgrade", "type": "owned dedicated CI test directory", "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy", "files": 146, "logical_bytes": 349504013, "all_mounts_and_processes_finished": true, "regenerable": "Verified package downloads/copies/synthetic profiles only; reports retained outside fixture", "free_before_bytes": 114655227904}
+2026-11-01T06:49:48.6775530Z ##[group]Run actions/upload-artifact@v4
+2026-11-01T06:49:48.6776210Z with:
+2026-11-01T06:49:48.6776680Z   name: installed-upgrade-macos-x64
+2026-11-01T06:49:48.6777350Z   path: bench-results/installed-upgrade/
+2026-11-01T06:49:48.6778020Z   if-no-files-found: warn
+2026-11-01T06:49:48.6778560Z   compression-level: 6
+2026-11-01T06:49:48.6779580Z   overwrite: false
+2026-11-01T06:49:48.6780130Z   include-hidden-files: false
+2026-11-01T06:49:48.6780890Z env:
+2026-11-01T06:49:48.6781560Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:48.6782780Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-11-01T06:49:48.6783980Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:48.6785050Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:48.6786150Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-11-01T06:49:48.6787140Z ##[endgroup]
+2026-11-01T06:49:48.9497370Z (node:8014) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-01T06:49:48.9499140Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-01T06:49:48.9678270Z With the provided path, there will be 14 files uploaded
+2026-11-01T06:49:48.9684870Z Artifact name is valid!
+2026-11-01T06:49:48.9685510Z Root directory input is valid!
+2026-11-01T06:49:49.2058400Z Beginning upload of artifact content to blob storage
+2026-11-01T06:49:49.2801150Z (node:8014) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-01T06:49:49.3281990Z Uploaded bytes 11333
+2026-11-01T06:49:49.3499410Z Finished uploading artifact content to blob storage!
+2026-11-01T06:49:49.3501900Z SHA256 digest of uploaded artifact zip is 6cca577c7423624b8aae52a5fa693290507e86519d9dc3d95fd59a51027edde0
+2026-11-01T06:49:49.3503670Z Finalizing artifact upload
+2026-11-01T06:49:49.7687770Z Artifact installed-upgrade-macos-x64.zip successfully finalized. Artifact ID 13073458878
+2026-11-01T06:49:49.7689660Z Artifact installed-upgrade-macos-x64 has been successfully uploaded! Final size is 11333 bytes. Artifact ID is 13073458878
+2026-11-01T06:49:49.7700820Z Artifact download URL: https://github.com/gloryhui/workbuddy-proxy/actions/runs/41282248853/artifacts/13073458878
+2026-11-01T06:49:49.7995370Z Post job cleanup.
+2026-11-01T06:49:50.0031680Z (node:8019) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-01T06:49:50.0033900Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-01T06:49:50.0329370Z Post job cleanup.
+2026-11-01T06:49:50.2252070Z [command]/usr/local/bin/git version
+2026-11-01T06:49:50.2411040Z git version 2.55.0
+2026-11-01T06:49:50.2471330Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/531327ed-98f4-49ac-9e18-e4f235bb669c/.gitconfig'
+2026-11-01T06:49:50.2495660Z Temporarily overriding HOME='/Users/runner/work/_temp/531327ed-98f4-49ac-9e18-e4f235bb669c' before making global git config changes
+2026-11-01T06:49:50.2498650Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-01T06:49:50.2506970Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/workbuddy-proxy/workbuddy-proxy
+2026-11-01T06:49:50.2658180Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-01T06:49:50.2804080Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-01T06:49:50.4661440Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-01T06:49:50.4765910Z http.https://github.com/.extraheader
+2026-11-01T06:49:50.4785210Z [command]/usr/local/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-01T06:49:50.4908650Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-01T06:49:50.6408590Z [command]/usr/local/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-01T06:49:50.6526860Z [command]/usr/local/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-01T06:49:50.8243340Z Cleaning up orphan processes
+2026-11-01T06:49:50.9802100Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

@@ -1,0 +1,28 @@
+{
+  "result": "passed",
+  "scope": "Retained candidate ZIP/setup companion digests; packaged changelog/notices/rollback guide; no benchmark archive or Git metadata. Actual executable version/installer/lifecycle tested by original runner, not executed on localMac.",
+  "checks": {
+    "workbuddy-proxy-0.6.0-windows-x64.zip": {
+      "bytes": 33827421,
+      "sha256": "8f625cf0b5a6d0cd7d9407db9c917ad424e6f676dd19b47f23657f08c64a7ab9",
+      "companion_valid": true
+    },
+    "workbuddy-proxy-0.6.0-windows-x64-setup.exe": {
+      "bytes": 27940526,
+      "sha256": "52c051bb7bd0265f8dad88c30e12e7348bb3f0c701ae00dc86fe39b7fe4b6ddd",
+      "companion_valid": true
+    },
+    "workbuddy-proxy-0.6.0-windows-x64/CHANGELOG.md": {
+      "bytes": 11087,
+      "sha256": "b24992d9332c806043278d9899fd7d5c2e08810211bbba2e838f05f7fa351478"
+    },
+    "workbuddy-proxy-0.6.0-windows-x64/docs/GPUI-NOTICES.md": {
+      "bytes": 732,
+      "sha256": "22500d141360b69d6fe58c1342724957c5caa42063e2b5834617d1fba0aac354"
+    },
+    "workbuddy-proxy-0.6.0-windows-x64/docs/studio_v2/UPGRADE_ROLLBACK.md": {
+      "bytes": 6366,
+      "sha256": "2157d2287bc6badc663e8b8a9285ecf73d3a907170ef8f7a41ae9d1c26a0cb11"
+    }
+  }
+}

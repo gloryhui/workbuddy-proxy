@@ -1,0 +1,30 @@
+{
+  "source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "preflight": {
+    "local_remote_equal": true,
+    "exact_source_runs_before_dispatch": 0,
+    "workflow_ids_active": [
+      383026331,
+      384265872
+    ]
+  },
+  "actual_dispatches": {
+    "core": 1,
+    "desktop": 1
+  },
+  "transport_exit_codes": [
+    0,
+    0
+  ],
+  "runs": {
+    "core": 41278921019,
+    "desktop": 41278929532
+  },
+  "desktop_inputs": {
+    "upgrade_only": false,
+    "ui_only": false,
+    "windows_native_only": false
+  },
+  "poll_notes": "First immediate listing showed onlyCore, later exact-source read showed both originalruns. No re-dispatch based on temporary absence.",
+  "scope": "One full RC matrix, not publicRelease; latestRelease GraphQL read EOF used REST fallback, confirmedv0.5.7"
+}

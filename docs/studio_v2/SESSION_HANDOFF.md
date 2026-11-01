@@ -2,7 +2,18 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA90）
+## 当前进展（QA91，0.6.0 RC）
+
+- **运行／打包冻结源`dd9debade83e91b0d11c6b28f18f97edb227abbd`，版本0.6.0候选，未公开tag/Release。** 按此前已说明的默认0.6准备；业务／渲染`src`/`gpui/src`相对b617/13c未变，依赖图未更新。版本统一、打包标签拒绝漂移、回滚指南随包、Fast许可说明和CHANGELOG已准备；7版本+5路径测试、两metadata、两Release/CLI通过，没有重复本机全套。[候选审查](RC_CANDIDATE.md)。
+- 本机ARM Core SHA `b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff`、UI `f5fa721fa5f4d314badbdcc70621e9e91ae24feb1532681449f8eb5138139db5`，最终复核仍同。**唯一Core41278921019与Desktop41278929532，source均dd9/attempt1，四job正式success，watch均0并关闭。** Linux579/桌面各580Core，Win215/两Mac216UI且各2既有ignore，完整集成/安装器/生命周期/GDI通过。Core158导入/15故障、三Desktop各158导入、4ZIP来源/大小/SHA及原报告独立核验；R04.1已签收。[完整CI](benchmarks/rc-060/ci/desktop/validation.json)。
+- 4个实际候选包（Win ZIP/setup、ARM/Intel DMG）和各校验文件保留于忽略的`dist/studio-v2-rc/0.6.0`，共140,896,314B约134.37MiB；不是临时垃圾，不删除或提交大二进制。原始Win PNG实际1442×901/1102×701、96DPI，父代理逐图核对0.6footer/caption分离/合成数据；未替换README图片或签物理输入/IME/HiDPI。[包清单](benchmarks/rc-060/candidate-packages.json)、[两原图](benchmarks/rc-060/windows-visual-review.json)。
+- 测试/manifest提交`21dea55`绑定新包，原升级run41281534447：Win/ARM4例PASS，Intel v056在candidateCore waited0后、GUI之前被非空WAL冷读断言拒绝；Intelv057未运行。原metadata/独立ZIP/失败日志和报告保留。初本地日志/metadata GET EOF后用GitHub连接器补读，没有重派发原source。[首失败](benchmarks/rc-060/ci/upgrades-first/validation.json)。
+- 测试源`c435b5c`：确定性用例证明PASSIVE已全部checkpoint仍可有非空WAL；另证明main-only immutable会遗漏WAL-only提交。红3/2fail、绿3pass；仅将cold非空WAL的读取改为一次性DB+WAL副本上的query-onlySQLite，原文件字节不变，活动标记/13行/全部字段/正常退出/全目录回滚断言保持。没有在原DBcheckpoint/截断，也未改产品。原WAL随原runner安全清理，不能确定当时frames状态或唯一残留原因，不宣称业务丢数。[诊断](benchmarks/rc-060/cold-snapshot-diagnosis.json)。
+- **唯一新版升级run41282248853/sourcec435/attempt1正式success，三平台×v056/v057六例真实冷升级/原包+完整profile回滚通过，R04.2恢复签收。** 各平台3WAL回归也过；产物/包大小SHA及脚本LF/精确WinCRLF身份独立核对。只跑upgrade_only，完整Desktop/UI/GDI故意skipped；运行产物始终dd9。watch90774因本地API EOF退出1，不是CI失败；已由原run metadata与连接器job终态补证。所有本轮工具进程已终态，无需再watch或派发这几run。[六例](benchmarks/rc-060/ci/upgrades-final/validation.json)。
+- 本机专用`/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-rc060-iwcpielt`经完整/即时预检精确非强制删除4文件140,332,817B；另8个自有回归/快照根582,556B均确认移除，本机专用临时0，必要baseline97.14MiB与共享Cargo缓存保留，系统盘约35.69GiB。首升级3runner fixture及最终3runner fixture/15额外快照回归根全部移除，原报告留在仓库证据内。**禁止重开已删QA86/QA91目录，当前不需要用户前置旧窗口。**[清理](benchmarks/rc-060/cleanup.json)。
+- **40帧签收/剩0；发布待验14=R01 4/R02 4/R03 3/R04 3，Goal active。** 不自动开旁白/AT/切源/改系统缩放；未公开发布。下一步先核对人工环境可用答复，只补真实R01/R02及有效前台/启动/峰值性能缺口；不重复40帧、21主题、后台90/900秒或能力未变的hover/pressed/drag。最终公开代表图/长期分发/下载信任与全门禁及另行发布授权仍待。QA91证据提交后显式--task91统一生成时间线一次。[QA91](benchmarks/rc-round91-summary.json)。
+
+## 上一轮进展（QA90）
 
 - 当前运行时仍b617/UI3c0e/Core1146，无新产品代码/构建/CI/性能轮次。本轮实测关闭R01.1此前明确的StartupSync/pendingPort两个子缺口，不再列“未触发”。隔离HOME种1managed旧地址+1unrelated合成条目，实际Core检查expected127.0.0.1:61270/1of1 mismatch/192.0.2.1:61271，非响应注入、未install；1真实HTTP与成本后冻结基准。[前置](benchmarks/modal-remaining/native-preflight.json)。
 - 两确认各有1440×901与1100×701原JPEG/AX，父代理四图查看/hash核对，地址/计数/警告/按钮可读。中性Return后两提示均保持；StartupCancel无壳/遮罩，pendingPort从61270拟改61393仅进入确认后Escape，无壳且重开编辑器仍61270；然后正常close。编辑器“应用端口”只调用prepare_port，不是业务set_port确认。未点两个restart按钮。AX仅window，非精确子焦点/完整键盘/IME/AT签收。[原生](benchmarks/modal-remaining/native-result.json)、[四原图](benchmarks/modal-remaining/image-manifest.json)。

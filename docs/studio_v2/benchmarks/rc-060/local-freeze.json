@@ -1,0 +1,25 @@
+{
+  "candidate_version": "0.6.0",
+  "checks": 8,
+  "version_guard_tests": 7,
+  "path_portability_tests": 5,
+  "actual_rust_logic_sources_unchanged_since": "b617049/13c4998",
+  "dependency_locks": "Only root package version records changed, no dependency additions/updates",
+  "binaries": {
+    "core": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy",
+      "sha256": "b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff",
+      "bytes": 8428112,
+      "version": "0.6.0"
+    },
+    "ui": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+      "sha256": "f5fa721fa5f4d314badbdcc70621e9e91ae24feb1532681449f8eb5138139db5",
+      "bytes": 43810848,
+      "version": "0.6.0"
+    }
+  },
+  "old_0_5_7_results": "Historical SHA1146/3c0e results stay bound to old binaries; not relabeled0.6.0",
+  "next": "Freeze exact Git source; dispatch one Core and one Desktop full matrix; no tag/Release",
+  "runtime_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd"
+}

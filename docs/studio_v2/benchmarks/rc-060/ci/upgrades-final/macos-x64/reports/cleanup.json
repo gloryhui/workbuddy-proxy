@@ -1,0 +1,13 @@
+{
+  "target": "/Users/runner/work/_temp/studio-v2-installed-upgrade",
+  "type": "owned dedicated CI test directory",
+  "project": "/Users/runner/work/workbuddy-proxy/workbuddy-proxy",
+  "files": 146,
+  "logical_bytes": 349504013,
+  "all_mounts_and_processes_finished": true,
+  "regenerable": "Verified package downloads/copies/synthetic profiles only; reports retained outside fixture",
+  "free_before_bytes": 114655227904,
+  "removed": true,
+  "session_fixture_bytes_remaining": 0,
+  "free_after_bytes": 115005923328
+}

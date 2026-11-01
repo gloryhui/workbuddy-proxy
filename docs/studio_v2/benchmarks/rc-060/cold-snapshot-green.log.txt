@@ -1,0 +1,10 @@
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.079s
+
+OK
+CLEANUP_PLAN: {"target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-cold-snapshot-test-r_hgfm9b", "type": "fresh synthetic SQLite regression fixture", "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy", "files": 6, "bytes": 77982, "regenerable": "Created by this test; child waited and connections closed"}
+CLEANUP_PLAN: {"target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-cold-snapshot-27nqkx0z", "type": "fresh stopped DB+WAL snapshot copy", "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy", "files": 3, "bytes": 57344, "regenerable": "Source bytes retained; no child and SQLite connection closed"}
+CLEANUP_PLAN: {"target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-cold-snapshot-test-vo2apgkz", "type": "fresh synthetic SQLite regression fixture", "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy", "files": 3, "bytes": 77976, "regenerable": "Created by this test; child waited and connections closed"}
+CLEANUP_PLAN: {"target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-cold-snapshot-cdfzn7sp", "type": "fresh stopped DB+WAL snapshot copy", "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy", "files": 3, "bytes": 57344, "regenerable": "Source bytes retained; no child and SQLite connection closed"}
+CLEANUP_PLAN: {"target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-cold-snapshot-test-5b10k1p1", "type": "fresh synthetic SQLite regression fixture", "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy", "files": 3, "bytes": 77976, "regenerable": "Created by this test; child waited and connections closed"}

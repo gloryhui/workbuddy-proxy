@@ -1,0 +1,28 @@
+{
+  "source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "run": 41278929532,
+  "artifact": 13072713023,
+  "images": [
+    {
+      "path": "docs/studio_v2/benchmarks/rc-060/ci/desktop/reports/windows-x64/bench-results/windows-native/windows-ci-1440x900.png",
+      "dimensions": [
+        1442,
+        901
+      ],
+      "bytes": 78973,
+      "sha256": "d2f46bc64118dd5fc04538a16b6084dc7fe5a3045490f321ec2917b03487187e",
+      "review": "Viewed original PNG; 0.6.0 footer, caption above toolbar with no visible overlap; synthetic1provider64models0requests, no credentials; small filters wrap; Status beyond small viewport, no horizontal-scroll test."
+    },
+    {
+      "path": "docs/studio_v2/benchmarks/rc-060/ci/desktop/reports/windows-x64/bench-results/windows-native/windows-ci-1100x700.png",
+      "dimensions": [
+        1102,
+        701
+      ],
+      "bytes": 74351,
+      "sha256": "a8fbf0f44c52cd2a552703d087dc1580f1d8e253dc977252a300c2a49ced1522",
+      "review": "Viewed original PNG; 0.6.0 footer, caption above toolbar with no visible overlap; synthetic1provider64models0requests, no credentials; small filters wrap; Status beyond small viewport, no horizontal-scroll test."
+    }
+  ],
+  "scope": "Two96DPI runner GDI views, not physical caption/tray/keyboard/IME/HiDPI or whole40frames. No crop/relabel; README not automatically replaced."
+}

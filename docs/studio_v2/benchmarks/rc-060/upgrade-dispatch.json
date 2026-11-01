@@ -1,0 +1,23 @@
+{
+  "test_source": "21dea55a30ab08a76e118412300f673729719d43",
+  "runtime_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "preflight": {
+    "remote_equal": true,
+    "same_source_runs": 0,
+    "workflow": 384265872,
+    "workflow_active": true
+  },
+  "actual_dispatches": 1,
+  "inputs": {
+    "upgrade_only": true,
+    "ui_only": false,
+    "windows_native_only": false
+  },
+  "scope": "Only6actualpackageupgrade/rollback cases; fullDesktop/UI/native jobs intentionally skipped",
+  "transport_exit": 0,
+  "transport_stderr": "",
+  "run_id": 41281534447,
+  "run_url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41281534447",
+  "observed_status": "in_progress",
+  "watch_note": "Observe original41281534447 only; no rebuild/re-dispatch if read/transport interruption."
+}

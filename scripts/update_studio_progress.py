@@ -262,7 +262,13 @@ def main():
                         **counts, "remaining_final": len(frames) - counts["verified"],
                         "visual_review": review["counts"]})
     report = {"version": 2, "updated_at": now, "project": "WorkBuddy Studio V2",
-              "branch": git("branch", "--show-current"), "code_head": git("log", "-1", "--format=%H", "--", "gpui/src", "gpui/assets"),
+              "branch": git("branch", "--show-current"),
+              # Cargo version/features and shared source modules are compiled
+              # into the UI too. Do not label a new binary with an old src-only head.
+              "code_head": git("log", "-1", "--format=%H", "--", "gpui", "assets",
+                               "src/config.rs", "src/capabilities.rs", "src/diagnostic.rs",
+                               "src/i18n.rs", "src/stats/dto.rs", "src/protocol/config.rs",
+                               "src/workbuddy_status.rs", "native/workbuddy_restart.m"),
               "phase": ("正式版批次规划 · 等待Figma连接" if plan["goal_status"] == "paused" and plan["prerequisite"]["status"] == "waiting"
                         else "界面终验记录齐备 · 总体验收待核对" if counts["verified"] == len(frames)
                         else "批次推进 · " + plan["current_batch"] if plan["goal_status"] == "active"

@@ -1,0 +1,24 @@
+{
+  "frozen_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "all": 17,
+  "hashes": {
+    ".github/workflows/desktop.yml": "1bf751236d776ecf57506b95a5e775157e1d820079b8a7677ae72520f756bc04",
+    "CHANGELOG.md": "b923dbbd256139990894636ae9fcf140cb0fdd3c3e748fe02468a40195b7d1b9",
+    "Cargo.lock": "bed9a83a47e694fdc6d6984309026ae114ee3c040681e90f989d7b2376783295",
+    "Cargo.toml": "dd11428af7a7e9a993f289efa95b7e90d7ed5da54e8f47522b49bf7fe4919592",
+    "docs/DESKTOP.md": "6029d343210807f8b8b786e74ff37b3888b3cf976704c026078c685eb74414e7",
+    "docs/GPUI-NOTICES.md": "5a685ab9f53b9c48346f5fb0e667fd58de1e10d66cbac288cf42da0cf62410bd",
+    "docs/studio_v2/RC_CANDIDATE.md": "423b7b9372438cf8bb4c02945df3fb39ab54dd87ff65fc3815ce098fad28021c",
+    "docs/studio_v2/UPGRADE_ROLLBACK.md": "3ebf1db94225f8c08a067679664ec4cf6805809bb8b32a54011b3a19905e475e",
+    "docs/studio_v2/release_plan.json": "e958c15af51e0efacc9ebe97da16686c7b6c512b36cb654f9a6dde3bad0052e5",
+    "gpui/Cargo.lock": "ac904f8517d79e907763fc2db2e882a6b67d90fdcd74fcec1576cb94534861c4",
+    "gpui/Cargo.toml": "bc47aa2cdf41e79f1d453f248ef029ee5bec8e510e7c6a74ee9068227af337fd",
+    "packaging/windows/workbuddy-proxy.iss": "c6840a4fb897ccd5f5e50d67d051d32366cc327fc90c877f7e8b59feab9dac21",
+    "scripts/installed_upgrade_test.py": "7003c43c76642b8e952ed94be2d52d1ba259d2b9e6d9806cf7a5c22498d3ae3c",
+    "scripts/package.py": "9d10414af7cdbf57db09d61065a21c78c1341767dd2320af4ecc55f0b603bd12",
+    "scripts/release_version.py": "14bd5f1bf012f8f622888b01160cff49e58a6462b83a34b1619f4ca73f5c401a",
+    "scripts/release_version_test.py": "979737b4f6b87ccbb59ba1f0de77588427071285ccd06949d3a101334040812c",
+    "scripts/windows_installer.py": "2a8a8ef16c15ab442b9eedde3af19f1a9fcfded0c6b22b34c6c6af54e160ae2a"
+  },
+  "note": "Compared to owning commit bytes, not mutable progress documents."
+}

@@ -1,0 +1,121 @@
+{
+  "test_source": "c435b5c6aa7b7610c93aa24b19150137de92f6c3",
+  "runtime_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "candidate_version": "0.6.0",
+  "run": 41282248853,
+  "attempt": 1,
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 124776360903,
+      "name": "released-upgrades / upgrade (macos-15-intel, macos-x64)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124776360972,
+      "name": "released-upgrades / upgrade (macos-latest, macos-arm64)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124776361038,
+      "name": "released-upgrades / upgrade (windows-latest, windows-x64)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124776361406,
+      "name": "ui-checks",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 124776361510,
+      "name": "desktop",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 124776392247,
+      "name": "windows-native",
+      "conclusion": "skipped"
+    }
+  ],
+  "cases": [
+    {
+      "platform": "macos-x64",
+      "old_version": "0.5.6",
+      "result": "PASS",
+      "schema_restored": 6,
+      "original_rows": 12,
+      "candidate_rows": 13,
+      "whole_profile_restore": true,
+      "candidate_profile_retained": true,
+      "actual_package_restore": true
+    },
+    {
+      "platform": "macos-x64",
+      "old_version": "0.5.7",
+      "result": "PASS",
+      "schema_restored": 11,
+      "original_rows": 12,
+      "candidate_rows": 13,
+      "whole_profile_restore": true,
+      "candidate_profile_retained": true,
+      "actual_package_restore": true
+    },
+    {
+      "platform": "macos-arm64",
+      "old_version": "0.5.6",
+      "result": "PASS",
+      "schema_restored": 6,
+      "original_rows": 12,
+      "candidate_rows": 13,
+      "whole_profile_restore": true,
+      "candidate_profile_retained": true,
+      "actual_package_restore": true
+    },
+    {
+      "platform": "macos-arm64",
+      "old_version": "0.5.7",
+      "result": "PASS",
+      "schema_restored": 11,
+      "original_rows": 12,
+      "candidate_rows": 13,
+      "whole_profile_restore": true,
+      "candidate_profile_retained": true,
+      "actual_package_restore": true
+    },
+    {
+      "platform": "windows-x64",
+      "old_version": "0.5.6",
+      "result": "PASS",
+      "schema_restored": 6,
+      "original_rows": 12,
+      "candidate_rows": 13,
+      "whole_profile_restore": true,
+      "candidate_profile_retained": true,
+      "actual_package_restore": true
+    },
+    {
+      "platform": "windows-x64",
+      "old_version": "0.5.7",
+      "result": "PASS",
+      "schema_restored": 11,
+      "original_rows": 12,
+      "candidate_rows": 13,
+      "whole_profile_restore": true,
+      "candidate_profile_retained": true,
+      "actual_package_restore": true
+    }
+  ],
+  "all3artifact_downloads_verified": true,
+  "all_candidate_package_hashes_equal_retained_deliverables": true,
+  "harness_source_hashes_match_LF_or_exact_Windows_CRLF": true,
+  "regression_tests_per_platform": 3,
+  "first_failure_retained_at": "../upgrades-first/validation.json",
+  "watch_transport": "watch90774 exited1 due localAPI EOF; independent originalrun metadata and connector job terminal states prove success; no test rerun",
+  "cleanup": {
+    "remote_fixture_bytes_removed": 829553004,
+    "additional_regression_snapshot_bytes_removed": 849258,
+    "additional_temp_roots_removed": 15,
+    "remote_temporary_remaining": 0
+  },
+  "scope": "Six real released-package cold upgrades and fullprofile/originalpackage rollback. No hot downgrade/history merge/oldGUI/physical input/trust signing/publicRelease."
+}

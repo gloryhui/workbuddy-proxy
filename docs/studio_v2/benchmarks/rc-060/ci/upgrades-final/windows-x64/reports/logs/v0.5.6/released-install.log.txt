@@ -1,0 +1,1313 @@
+﻿2026-11-01 06:48:27.374   Log opened. (Time zone: UTC+00:00)
+2026-11-01 06:48:27.374   Setup version: Inno Setup version 6.7.1
+2026-11-01 06:48:27.374   Original Setup EXE: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\workbuddy-proxy-0.5.6-windows-x64-setup.exe
+2026-11-01 06:48:27.374   Setup command line: /SL5="$3017E,9431575,992768,D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\workbuddy-proxy-0.5.6-windows-x64-setup.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- "/DIR=D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy" /LOG=D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\released-install.log
+2026-11-01 06:48:27.374   Windows version: 10.0.26100
+2026-11-01 06:48:27.374   Windows architecture: x64 (64-bit)
+2026-11-01 06:48:27.374   Machine types supported by system: x86 x64
+2026-11-01 06:48:27.374   User privileges: Administrative
+2026-11-01 06:48:27.378   Administrative install mode: No
+2026-11-01 06:48:27.378   Install mode root key: HKEY_CURRENT_USER
+2026-11-01 06:48:27.378   64-bit install mode: Yes
+2026-11-01 06:48:27.379   RedirectionGuard status for current process: Enabled in enforcing mode
+2026-11-01 06:48:27.380   Created protected temporary directory: C:\Users\RUNNER~1\AppData\Local\Temp\is-D1UJ0EK9JN.tmp
+2026-11-01 06:48:28.807   Found 2 files to register with RestartManager.
+2026-11-01 06:48:28.807   Calling RestartManager's RmGetList.
+2026-11-01 06:48:28.812   RmGetList finished successfully.
+2026-11-01 06:48:28.812   RestartManager found no applications using one of our files.
+2026-11-01 06:48:28.816   Installer language: chinesesimplified
+2026-11-01 06:48:28.816   Desktop task label: 创建桌面快捷方式(&D)
+2026-11-01 06:48:28.816   Desktop shortcut selected: yes
+2026-11-01 06:48:28.816   Starting the installation process.
+2026-11-01 06:48:28.818   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces
+2026-11-01 06:48:28.818   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy
+2026-11-01 06:48:28.818   Directory for uninstall files: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy
+2026-11-01 06:48:28.818   Creating new uninstall log: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\unins000.dat
+2026-11-01 06:48:28.907   -- File entry --
+2026-11-01 06:48:28.909   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\unins000.exe
+2026-11-01 06:48:28.909   Non-default bitness: 32-bit
+2026-11-01 06:48:29.038   Time stamp of our file: 2026-11-01 06:48:26.905
+2026-11-01 06:48:29.038   Installing the file.
+2026-11-01 06:48:29.056   Successfully installed the file.
+2026-11-01 06:48:29.056   -- File entry --
+2026-11-01 06:48:29.056   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\CHANGELOG.md
+2026-11-01 06:48:29.056   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.056   Installing the file.
+2026-11-01 06:48:29.056   Successfully installed the file.
+2026-11-01 06:48:29.058   -- File entry --
+2026-11-01 06:48:29.058   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\DESKTOP.md
+2026-11-01 06:48:29.058   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.058   Installing the file.
+2026-11-01 06:48:29.058   Successfully installed the file.
+2026-11-01 06:48:29.058   -- File entry --
+2026-11-01 06:48:29.058   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\Diagnose.cmd
+2026-11-01 06:48:29.058   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.058   Installing the file.
+2026-11-01 06:48:29.059   Successfully installed the file.
+2026-11-01 06:48:29.059   -- File entry --
+2026-11-01 06:48:29.059   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\LICENSE
+2026-11-01 06:48:29.059   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.059   Installing the file.
+2026-11-01 06:48:29.059   Successfully installed the file.
+2026-11-01 06:48:29.059   -- File entry --
+2026-11-01 06:48:29.059   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\README.md
+2026-11-01 06:48:29.059   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.059   Installing the file.
+2026-11-01 06:48:29.061   Successfully installed the file.
+2026-11-01 06:48:29.061   -- File entry --
+2026-11-01 06:48:29.061   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\workbuddy-proxy.exe
+2026-11-01 06:48:29.061   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.061   Installing the file.
+2026-11-01 06:48:29.329   Successfully installed the file.
+2026-11-01 06:48:29.329   -- File entry --
+2026-11-01 06:48:29.329   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\assets\icon-128.png
+2026-11-01 06:48:29.329   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.329   Installing the file.
+2026-11-01 06:48:29.329   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\assets
+2026-11-01 06:48:29.331   Successfully installed the file.
+2026-11-01 06:48:29.331   -- File entry --
+2026-11-01 06:48:29.331   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\ARCHITECTURE.md
+2026-11-01 06:48:29.331   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.331   Installing the file.
+2026-11-01 06:48:29.331   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs
+2026-11-01 06:48:29.331   Successfully installed the file.
+2026-11-01 06:48:29.331   -- File entry --
+2026-11-01 06:48:29.331   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\DESKTOP.md
+2026-11-01 06:48:29.331   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.331   Installing the file.
+2026-11-01 06:48:29.333   Successfully installed the file.
+2026-11-01 06:48:29.333   -- File entry --
+2026-11-01 06:48:29.333   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\GPUI-NOTICES.md
+2026-11-01 06:48:29.333   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.333   Installing the file.
+2026-11-01 06:48:29.333   Successfully installed the file.
+2026-11-01 06:48:29.333   -- File entry --
+2026-11-01 06:48:29.333   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\LICENSE-APACHE-GPUI.txt
+2026-11-01 06:48:29.333   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.333   Installing the file.
+2026-11-01 06:48:29.335   Successfully installed the file.
+2026-11-01 06:48:29.335   -- File entry --
+2026-11-01 06:48:29.335   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\MODEL-CAPABILITIES.md
+2026-11-01 06:48:29.335   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.335   Installing the file.
+2026-11-01 06:48:29.335   Successfully installed the file.
+2026-11-01 06:48:29.335   -- File entry --
+2026-11-01 06:48:29.335   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\PERFORMANCE.md
+2026-11-01 06:48:29.335   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.335   Installing the file.
+2026-11-01 06:48:29.337   Successfully installed the file.
+2026-11-01 06:48:29.337   -- File entry --
+2026-11-01 06:48:29.337   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\PROVIDER-PRESETS.md
+2026-11-01 06:48:29.337   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.337   Installing the file.
+2026-11-01 06:48:29.337   Successfully installed the file.
+2026-11-01 06:48:29.337   -- File entry --
+2026-11-01 06:48:29.337   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\SESSION-HANDOFF.md
+2026-11-01 06:48:29.337   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.337   Installing the file.
+2026-11-01 06:48:29.339   Successfully installed the file.
+2026-11-01 06:48:29.339   -- File entry --
+2026-11-01 06:48:29.339   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\STATISTICS-EXIT-FIX.md
+2026-11-01 06:48:29.339   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.339   Installing the file.
+2026-11-01 06:48:29.339   Successfully installed the file.
+2026-11-01 06:48:29.339   -- File entry --
+2026-11-01 06:48:29.339   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\WORKBUDDY-MODEL-REFRESH.md
+2026-11-01 06:48:29.339   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.339   Installing the file.
+2026-11-01 06:48:29.341   Successfully installed the file.
+2026-11-01 06:48:29.341   -- File entry --
+2026-11-01 06:48:29.341   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\ci-58cb754-windows-x64-native.json
+2026-11-01 06:48:29.341   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.341   Installing the file.
+2026-11-01 06:48:29.341   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks
+2026-11-01 06:48:29.341   Successfully installed the file.
+2026-11-01 06:48:29.341   -- File entry --
+2026-11-01 06:48:29.343   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\ci-58cb754-windows-x64.json
+2026-11-01 06:48:29.343   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.343   Installing the file.
+2026-11-01 06:48:29.343   Successfully installed the file.
+2026-11-01 06:48:29.343   -- File entry --
+2026-11-01 06:48:29.343   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\local-macos-arm64-headless.json
+2026-11-01 06:48:29.343   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.343   Installing the file.
+2026-11-01 06:48:29.343   Successfully installed the file.
+2026-11-01 06:48:29.343   -- File entry --
+2026-11-01 06:48:29.345   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\local-macos-arm64-native.json
+2026-11-01 06:48:29.345   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.345   Installing the file.
+2026-11-01 06:48:29.345   Successfully installed the file.
+2026-11-01 06:48:29.345   -- File entry --
+2026-11-01 06:48:29.345   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.0\core-macos-arm64.json
+2026-11-01 06:48:29.345   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.345   Installing the file.
+2026-11-01 06:48:29.345   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.0
+2026-11-01 06:48:29.345   Successfully installed the file.
+2026-11-01 06:48:29.345   -- File entry --
+2026-11-01 06:48:29.347   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.0\core-macos-x64.json
+2026-11-01 06:48:29.347   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.347   Installing the file.
+2026-11-01 06:48:29.347   Successfully installed the file.
+2026-11-01 06:48:29.347   -- File entry --
+2026-11-01 06:48:29.347   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.0\core-windows-x64.json
+2026-11-01 06:48:29.347   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.347   Installing the file.
+2026-11-01 06:48:29.347   Successfully installed the file.
+2026-11-01 06:48:29.347   -- File entry --
+2026-11-01 06:48:29.347   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.0\gpui-macos-arm64.json
+2026-11-01 06:48:29.347   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.347   Installing the file.
+2026-11-01 06:48:29.349   Successfully installed the file.
+2026-11-01 06:48:29.349   -- File entry --
+2026-11-01 06:48:29.349   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.0\gpui-macos-x64.json
+2026-11-01 06:48:29.349   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.349   Installing the file.
+2026-11-01 06:48:29.349   Successfully installed the file.
+2026-11-01 06:48:29.349   -- File entry --
+2026-11-01 06:48:29.349   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.0\gpui-windows-x64.json
+2026-11-01 06:48:29.349   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.349   Installing the file.
+2026-11-01 06:48:29.351   Successfully installed the file.
+2026-11-01 06:48:29.351   -- File entry --
+2026-11-01 06:48:29.351   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2\core-macos-arm64.json
+2026-11-01 06:48:29.351   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.351   Installing the file.
+2026-11-01 06:48:29.351   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2
+2026-11-01 06:48:29.351   Successfully installed the file.
+2026-11-01 06:48:29.351   -- File entry --
+2026-11-01 06:48:29.351   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2\core-macos-x64.json
+2026-11-01 06:48:29.353   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.353   Installing the file.
+2026-11-01 06:48:29.353   Successfully installed the file.
+2026-11-01 06:48:29.353   -- File entry --
+2026-11-01 06:48:29.353   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2\core-windows-x64.json
+2026-11-01 06:48:29.353   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.353   Installing the file.
+2026-11-01 06:48:29.353   Successfully installed the file.
+2026-11-01 06:48:29.353   -- File entry --
+2026-11-01 06:48:29.353   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2\gpui-macos-arm64.json
+2026-11-01 06:48:29.353   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.353   Installing the file.
+2026-11-01 06:48:29.355   Successfully installed the file.
+2026-11-01 06:48:29.355   -- File entry --
+2026-11-01 06:48:29.355   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2\gpui-macos-x64.json
+2026-11-01 06:48:29.355   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.355   Installing the file.
+2026-11-01 06:48:29.355   Successfully installed the file.
+2026-11-01 06:48:29.355   -- File entry --
+2026-11-01 06:48:29.355   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2\gpui-windows-x64.json
+2026-11-01 06:48:29.355   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.355   Installing the file.
+2026-11-01 06:48:29.355   Successfully installed the file.
+2026-11-01 06:48:29.355   -- File entry --
+2026-11-01 06:48:29.357   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\benchmarks\v0.5.2\windows-installer.json
+2026-11-01 06:48:29.357   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.357   Installing the file.
+2026-11-01 06:48:29.357   Successfully installed the file.
+2026-11-01 06:48:29.357   -- File entry --
+2026-11-01 06:48:29.357   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\acceptance.json
+2026-11-01 06:48:29.357   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.357   Installing the file.
+2026-11-01 06:48:29.357   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat
+2026-11-01 06:48:29.359   Successfully installed the file.
+2026-11-01 06:48:29.359   -- File entry --
+2026-11-01 06:48:29.359   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\ARCHITECTURE.md
+2026-11-01 06:48:29.359   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.359   Installing the file.
+2026-11-01 06:48:29.360   Successfully installed the file.
+2026-11-01 06:48:29.360   -- File entry --
+2026-11-01 06:48:29.360   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\CONTRACTS.md
+2026-11-01 06:48:29.360   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.360   Installing the file.
+2026-11-01 06:48:29.362   Successfully installed the file.
+2026-11-01 06:48:29.362   -- File entry --
+2026-11-01 06:48:29.362   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\FINAL-VALIDATION.md
+2026-11-01 06:48:29.362   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.362   Installing the file.
+2026-11-01 06:48:29.362   Successfully installed the file.
+2026-11-01 06:48:29.362   -- File entry --
+2026-11-01 06:48:29.362   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\IMPLEMENTATION-STATUS.md
+2026-11-01 06:48:29.362   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.362   Installing the file.
+2026-11-01 06:48:29.364   Successfully installed the file.
+2026-11-01 06:48:29.364   -- File entry --
+2026-11-01 06:48:29.365   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\PARALLEL-WORK.md
+2026-11-01 06:48:29.365   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.365   Installing the file.
+2026-11-01 06:48:29.365   Successfully installed the file.
+2026-11-01 06:48:29.365   -- File entry --
+2026-11-01 06:48:29.365   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\README.md
+2026-11-01 06:48:29.366   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.366   Installing the file.
+2026-11-01 06:48:29.367   Successfully installed the file.
+2026-11-01 06:48:29.367   -- File entry --
+2026-11-01 06:48:29.367   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\REQUIREMENTS.md
+2026-11-01 06:48:29.367   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.367   Installing the file.
+2026-11-01 06:48:29.367   Successfully installed the file.
+2026-11-01 06:48:29.367   -- File entry --
+2026-11-01 06:48:29.367   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\SOURCES.md
+2026-11-01 06:48:29.367   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.367   Installing the file.
+2026-11-01 06:48:29.368   Successfully installed the file.
+2026-11-01 06:48:29.369   -- File entry --
+2026-11-01 06:48:29.369   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\USAGE.md
+2026-11-01 06:48:29.369   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.369   Installing the file.
+2026-11-01 06:48:29.369   Successfully installed the file.
+2026-11-01 06:48:29.369   -- File entry --
+2026-11-01 06:48:29.369   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\benchmark-before-fix-isolated.json
+2026-11-01 06:48:29.370   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.370   Installing the file.
+2026-11-01 06:48:29.370   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16
+2026-11-01 06:48:29.371   Successfully installed the file.
+2026-11-01 06:48:29.371   -- File entry --
+2026-11-01 06:48:29.371   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\benchmark-before-fix-isolated.txt
+2026-11-01 06:48:29.371   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.371   Installing the file.
+2026-11-01 06:48:29.371   Successfully installed the file.
+2026-11-01 06:48:29.371   -- File entry --
+2026-11-01 06:48:29.372   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\benchmark-fixed.json
+2026-11-01 06:48:29.372   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.372   Installing the file.
+2026-11-01 06:48:29.373   Successfully installed the file.
+2026-11-01 06:48:29.373   -- File entry --
+2026-11-01 06:48:29.373   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\benchmark-fixed.txt
+2026-11-01 06:48:29.373   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.373   Installing the file.
+2026-11-01 06:48:29.373   Successfully installed the file.
+2026-11-01 06:48:29.373   -- File entry --
+2026-11-01 06:48:29.374   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\benchmark-offline-diagnostic.json
+2026-11-01 06:48:29.374   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.374   Installing the file.
+2026-11-01 06:48:29.375   Successfully installed the file.
+2026-11-01 06:48:29.375   -- File entry --
+2026-11-01 06:48:29.376   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\benchmark-offline-diagnostic.txt
+2026-11-01 06:48:29.376   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.376   Installing the file.
+2026-11-01 06:48:29.377   Successfully installed the file.
+2026-11-01 06:48:29.377   -- File entry --
+2026-11-01 06:48:29.377   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-autostart_test.txt
+2026-11-01 06:48:29.377   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.377   Installing the file.
+2026-11-01 06:48:29.377   Successfully installed the file.
+2026-11-01 06:48:29.377   -- File entry --
+2026-11-01 06:48:29.377   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-connection_test.txt
+2026-11-01 06:48:29.377   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.377   Installing the file.
+2026-11-01 06:48:29.379   Successfully installed the file.
+2026-11-01 06:48:29.379   -- File entry --
+2026-11-01 06:48:29.379   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-core-clippy.txt
+2026-11-01 06:48:29.380   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.380   Installing the file.
+2026-11-01 06:48:29.380   Successfully installed the file.
+2026-11-01 06:48:29.380   -- File entry --
+2026-11-01 06:48:29.380   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-core-release.txt
+2026-11-01 06:48:29.380   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.380   Installing the file.
+2026-11-01 06:48:29.381   Successfully installed the file.
+2026-11-01 06:48:29.381   -- File entry --
+2026-11-01 06:48:29.381   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-core-tests.txt
+2026-11-01 06:48:29.381   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.381   Installing the file.
+2026-11-01 06:48:29.382   Successfully installed the file.
+2026-11-01 06:48:29.382   -- File entry --
+2026-11-01 06:48:29.382   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-core_compatibility.txt
+2026-11-01 06:48:29.382   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.382   Installing the file.
+2026-11-01 06:48:29.382   Successfully installed the file.
+2026-11-01 06:48:29.382   -- File entry --
+2026-11-01 06:48:29.383   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-gpui-clippy.txt
+2026-11-01 06:48:29.383   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.383   Installing the file.
+2026-11-01 06:48:29.384   Successfully installed the file.
+2026-11-01 06:48:29.384   -- File entry --
+2026-11-01 06:48:29.384   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-gpui-lifecycle.json
+2026-11-01 06:48:29.384   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.384   Installing the file.
+2026-11-01 06:48:29.384   Successfully installed the file.
+2026-11-01 06:48:29.384   -- File entry --
+2026-11-01 06:48:29.385   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-gpui-release.txt
+2026-11-01 06:48:29.385   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.385   Installing the file.
+2026-11-01 06:48:29.386   Successfully installed the file.
+2026-11-01 06:48:29.386   -- File entry --
+2026-11-01 06:48:29.386   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-gpui-tests.txt
+2026-11-01 06:48:29.386   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.386   Installing the file.
+2026-11-01 06:48:29.386   Successfully installed the file.
+2026-11-01 06:48:29.386   -- File entry --
+2026-11-01 06:48:29.387   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-gpui_package_test.txt
+2026-11-01 06:48:29.387   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.387   Installing the file.
+2026-11-01 06:48:29.387   Successfully installed the file.
+2026-11-01 06:48:29.387   -- File entry --
+2026-11-01 06:48:29.388   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-model_capabilities_test.txt
+2026-11-01 06:48:29.388   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.388   Installing the file.
+2026-11-01 06:48:29.388   Successfully installed the file.
+2026-11-01 06:48:29.388   -- File entry --
+2026-11-01 06:48:29.389   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-model_discovery.txt
+2026-11-01 06:48:29.389   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.389   Installing the file.
+2026-11-01 06:48:29.389   Successfully installed the file.
+2026-11-01 06:48:29.389   -- File entry --
+2026-11-01 06:48:29.390   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-multimodal_test.txt
+2026-11-01 06:48:29.390   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.390   Installing the file.
+2026-11-01 06:48:29.390   Successfully installed the file.
+2026-11-01 06:48:29.390   -- File entry --
+2026-11-01 06:48:29.391   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-multi_routing.txt
+2026-11-01 06:48:29.391   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.391   Installing the file.
+2026-11-01 06:48:29.391   Successfully installed the file.
+2026-11-01 06:48:29.391   -- File entry --
+2026-11-01 06:48:29.392   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-native_discovery_test.txt
+2026-11-01 06:48:29.392   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.392   Installing the file.
+2026-11-01 06:48:29.392   Successfully installed the file.
+2026-11-01 06:48:29.392   -- File entry --
+2026-11-01 06:48:29.392   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-native_protocol_test.txt
+2026-11-01 06:48:29.392   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.392   Installing the file.
+2026-11-01 06:48:29.392   Successfully installed the file.
+2026-11-01 06:48:29.392   -- File entry --
+2026-11-01 06:48:29.394   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-native_resource_test.txt
+2026-11-01 06:48:29.394   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.394   Installing the file.
+2026-11-01 06:48:29.394   Successfully installed the file.
+2026-11-01 06:48:29.394   -- File entry --
+2026-11-01 06:48:29.394   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-port_change.txt
+2026-11-01 06:48:29.394   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.394   Installing the file.
+2026-11-01 06:48:29.394   Successfully installed the file.
+2026-11-01 06:48:29.394   -- File entry --
+2026-11-01 06:48:29.396   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-regression.json
+2026-11-01 06:48:29.396   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.396   Installing the file.
+2026-11-01 06:48:29.396   Successfully installed the file.
+2026-11-01 06:48:29.396   -- File entry --
+2026-11-01 06:48:29.396   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-smoke.txt
+2026-11-01 06:48:29.396   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.396   Installing the file.
+2026-11-01 06:48:29.396   Successfully installed the file.
+2026-11-01 06:48:29.396   -- File entry --
+2026-11-01 06:48:29.398   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-static-checks.json
+2026-11-01 06:48:29.398   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.398   Installing the file.
+2026-11-01 06:48:29.398   Successfully installed the file.
+2026-11-01 06:48:29.398   -- File entry --
+2026-11-01 06:48:29.398   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-statistics_pagination_test.txt
+2026-11-01 06:48:29.398   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.398   Installing the file.
+2026-11-01 06:48:29.398   Successfully installed the file.
+2026-11-01 06:48:29.398   -- File entry --
+2026-11-01 06:48:29.400   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\final-statistics_test.txt
+2026-11-01 06:48:29.400   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.400   Installing the file.
+2026-11-01 06:48:29.400   Successfully installed the file.
+2026-11-01 06:48:29.400   -- File entry --
+2026-11-01 06:48:29.400   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\output-all-tests.txt
+2026-11-01 06:48:29.400   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.400   Installing the file.
+2026-11-01 06:48:29.402   Successfully installed the file.
+2026-11-01 06:48:29.402   -- File entry --
+2026-11-01 06:48:29.402   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\recovery-counter-repeat.txt
+2026-11-01 06:48:29.402   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.402   Installing the file.
+2026-11-01 06:48:29.402   Successfully installed the file.
+2026-11-01 06:48:29.402   -- File entry --
+2026-11-01 06:48:29.403   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\standard-history-test.txt
+2026-11-01 06:48:29.403   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.403   Installing the file.
+2026-11-01 06:48:29.404   Successfully installed the file.
+2026-11-01 06:48:29.404   -- File entry --
+2026-11-01 06:48:29.404   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\stream-clippy.txt
+2026-11-01 06:48:29.404   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.404   Installing the file.
+2026-11-01 06:48:29.404   Successfully installed the file.
+2026-11-01 06:48:29.404   -- File entry --
+2026-11-01 06:48:29.405   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\ui-1100x700.png
+2026-11-01 06:48:29.405   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.405   Installing the file.
+2026-11-01 06:48:29.410   Successfully installed the file.
+2026-11-01 06:48:29.410   -- File entry --
+2026-11-01 06:48:29.412   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\validation-2026-10-16\ui-protocols.png
+2026-11-01 06:48:29.412   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.412   Installing the file.
+2026-11-01 06:48:29.416   Successfully installed the file.
+2026-11-01 06:48:29.416   -- File entry --
+2026-11-01 06:48:29.416   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\screenshots\macos-en-v0.5.5.jpg
+2026-11-01 06:48:29.416   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.416   Installing the file.
+2026-11-01 06:48:29.416   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\screenshots
+2026-11-01 06:48:29.439   Successfully installed the file.
+2026-11-01 06:48:29.439   -- File entry --
+2026-11-01 06:48:29.439   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\screenshots\macos-zh-v0.5.5.jpg
+2026-11-01 06:48:29.439   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.439   Installing the file.
+2026-11-01 06:48:29.455   Successfully installed the file.
+2026-11-01 06:48:29.455   -- File entry --
+2026-11-01 06:48:29.455   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\screenshots\model-discovery-zh-v0.5.5.jpg
+2026-11-01 06:48:29.455   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.455   Installing the file.
+2026-11-01 06:48:29.479   Successfully installed the file.
+2026-11-01 06:48:29.479   -- File entry --
+2026-11-01 06:48:29.479   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\screenshots\README.md
+2026-11-01 06:48:29.481   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.481   Installing the file.
+2026-11-01 06:48:29.481   Successfully installed the file.
+2026-11-01 06:48:29.481   -- File entry --
+2026-11-01 06:48:29.481   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\screenshots\request-log-zh-v0.5.5.jpg
+2026-11-01 06:48:29.481   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.481   Installing the file.
+2026-11-01 06:48:29.513   Successfully installed the file.
+2026-11-01 06:48:29.513   -- File entry --
+2026-11-01 06:48:29.513   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\screenshots\statistics-zh-v0.5.5.jpg
+2026-11-01 06:48:29.513   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.513   Installing the file.
+2026-11-01 06:48:29.528   Successfully installed the file.
+2026-11-01 06:48:29.528   -- File entry --
+2026-11-01 06:48:29.528   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\API.md
+2026-11-01 06:48:29.528   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.528   Installing the file.
+2026-11-01 06:48:29.528   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics
+2026-11-01 06:48:29.530   Successfully installed the file.
+2026-11-01 06:48:29.530   -- File entry --
+2026-11-01 06:48:29.530   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\DEVELOPMENT.md
+2026-11-01 06:48:29.530   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.530   Installing the file.
+2026-11-01 06:48:29.532   Successfully installed the file.
+2026-11-01 06:48:29.532   -- File entry --
+2026-11-01 06:48:29.532   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\IMPLEMENTATION-PROMPT.md
+2026-11-01 06:48:29.532   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.532   Installing the file.
+2026-11-01 06:48:29.534   Successfully installed the file.
+2026-11-01 06:48:29.534   -- File entry --
+2026-11-01 06:48:29.534   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\IMPLEMENTATION-STATUS.md
+2026-11-01 06:48:29.534   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.534   Installing the file.
+2026-11-01 06:48:29.534   Successfully installed the file.
+2026-11-01 06:48:29.534   -- File entry --
+2026-11-01 06:48:29.536   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\NEXT-ITERATION-COMBINED-PROMPT.md
+2026-11-01 06:48:29.536   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.536   Installing the file.
+2026-11-01 06:48:29.536   Successfully installed the file.
+2026-11-01 06:48:29.536   -- File entry --
+2026-11-01 06:48:29.536   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\NEXT-ITERATION-PROMPT.md
+2026-11-01 06:48:29.536   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.536   Installing the file.
+2026-11-01 06:48:29.538   Successfully installed the file.
+2026-11-01 06:48:29.538   -- File entry --
+2026-11-01 06:48:29.538   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\PRICING-CHANGE-PROMPT.md
+2026-11-01 06:48:29.538   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.538   Installing the file.
+2026-11-01 06:48:29.538   Successfully installed the file.
+2026-11-01 06:48:29.538   -- File entry --
+2026-11-01 06:48:29.540   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\PRICING-DECISION.md
+2026-11-01 06:48:29.540   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.540   Installing the file.
+2026-11-01 06:48:29.540   Successfully installed the file.
+2026-11-01 06:48:29.540   -- File entry --
+2026-11-01 06:48:29.540   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\README.md
+2026-11-01 06:48:29.540   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.540   Installing the file.
+2026-11-01 06:48:29.540   Successfully installed the file.
+2026-11-01 06:48:29.540   -- File entry --
+2026-11-01 06:48:29.540   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REQUIREMENTS.md
+2026-11-01 06:48:29.542   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.542   Installing the file.
+2026-11-01 06:48:29.543   Successfully installed the file.
+2026-11-01 06:48:29.543   -- File entry --
+2026-11-01 06:48:29.543   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-2026-10-15.md
+2026-11-01 06:48:29.543   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.543   Installing the file.
+2026-11-01 06:48:29.544   Successfully installed the file.
+2026-11-01 06:48:29.544   -- File entry --
+2026-11-01 06:48:29.544   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-ROUND2-2026-10-15.md
+2026-11-01 06:48:29.544   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.544   Installing the file.
+2026-11-01 06:48:29.545   Successfully installed the file.
+2026-11-01 06:48:29.545   -- File entry --
+2026-11-01 06:48:29.545   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-ROUND3-2026-10-15.md
+2026-11-01 06:48:29.545   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.545   Installing the file.
+2026-11-01 06:48:29.546   Successfully installed the file.
+2026-11-01 06:48:29.546   -- File entry --
+2026-11-01 06:48:29.547   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-ROUND4-2026-10-15.md
+2026-11-01 06:48:29.547   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.547   Installing the file.
+2026-11-01 06:48:29.547   Successfully installed the file.
+2026-11-01 06:48:29.547   -- File entry --
+2026-11-01 06:48:29.548   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-ROUND5-2026-10-15.md
+2026-11-01 06:48:29.548   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.548   Installing the file.
+2026-11-01 06:48:29.549   Successfully installed the file.
+2026-11-01 06:48:29.549   -- File entry --
+2026-11-01 06:48:29.549   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-ROUND6-2026-10-15.md
+2026-11-01 06:48:29.549   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.549   Installing the file.
+2026-11-01 06:48:29.550   Successfully installed the file.
+2026-11-01 06:48:29.550   -- File entry --
+2026-11-01 06:48:29.550   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-ROUND7-2026-10-15.md
+2026-11-01 06:48:29.550   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.550   Installing the file.
+2026-11-01 06:48:29.550   Successfully installed the file.
+2026-11-01 06:48:29.550   -- File entry --
+2026-11-01 06:48:29.552   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\REVIEW-ROUND8-2026-10-15.md
+2026-11-01 06:48:29.552   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.552   Installing the file.
+2026-11-01 06:48:29.552   Successfully installed the file.
+2026-11-01 06:48:29.552   -- File entry --
+2026-11-01 06:48:29.552   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\schema.sql
+2026-11-01 06:48:29.552   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.552   Installing the file.
+2026-11-01 06:48:29.552   Successfully installed the file.
+2026-11-01 06:48:29.552   -- File entry --
+2026-11-01 06:48:29.554   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\UI-WIREFRAME.svg
+2026-11-01 06:48:29.554   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.554   Installing the file.
+2026-11-01 06:48:29.554   Successfully installed the file.
+2026-11-01 06:48:29.554   -- File entry --
+2026-11-01 06:48:29.554   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validate_design.py
+2026-11-01 06:48:29.554   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.554   Installing the file.
+2026-11-01 06:48:29.554   Successfully installed the file.
+2026-11-01 06:48:29.554   -- File entry --
+2026-11-01 06:48:29.556   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-2026-10-15\collector-probe-output.txt
+2026-11-01 06:48:29.556   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.556   Installing the file.
+2026-11-01 06:48:29.556   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-2026-10-15
+2026-11-01 06:48:29.556   Successfully installed the file.
+2026-11-01 06:48:29.556   -- File entry --
+2026-11-01 06:48:29.556   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-2026-10-15\repro-results.json
+2026-11-01 06:48:29.556   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.556   Installing the file.
+2026-11-01 06:48:29.558   Successfully installed the file.
+2026-11-01 06:48:29.558   -- File entry --
+2026-11-01 06:48:29.558   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-2026-10-15\repro.py
+2026-11-01 06:48:29.558   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.558   Installing the file.
+2026-11-01 06:48:29.558   Successfully installed the file.
+2026-11-01 06:48:29.558   -- File entry --
+2026-11-01 06:48:29.558   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\api-results.json
+2026-11-01 06:48:29.558   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.558   Installing the file.
+2026-11-01 06:48:29.558   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15
+2026-11-01 06:48:29.560   Successfully installed the file.
+2026-11-01 06:48:29.560   -- File entry --
+2026-11-01 06:48:29.560   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\api_probe.py
+2026-11-01 06:48:29.560   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.560   Installing the file.
+2026-11-01 06:48:29.560   Successfully installed the file.
+2026-11-01 06:48:29.560   -- File entry --
+2026-11-01 06:48:29.560   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\group-results.json
+2026-11-01 06:48:29.560   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.560   Installing the file.
+2026-11-01 06:48:29.562   Successfully installed the file.
+2026-11-01 06:48:29.562   -- File entry --
+2026-11-01 06:48:29.562   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\group_probe.py
+2026-11-01 06:48:29.562   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.562   Installing the file.
+2026-11-01 06:48:29.562   Successfully installed the file.
+2026-11-01 06:48:29.562   -- File entry --
+2026-11-01 06:48:29.562   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\helper.py
+2026-11-01 06:48:29.562   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.562   Installing the file.
+2026-11-01 06:48:29.564   Successfully installed the file.
+2026-11-01 06:48:29.564   -- File entry --
+2026-11-01 06:48:29.564   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\probe-observations.txt
+2026-11-01 06:48:29.564   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.564   Installing the file.
+2026-11-01 06:48:29.564   Successfully installed the file.
+2026-11-01 06:48:29.564   -- File entry --
+2026-11-01 06:48:29.566   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\README.md
+2026-11-01 06:48:29.566   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.566   Installing the file.
+2026-11-01 06:48:29.566   Successfully installed the file.
+2026-11-01 06:48:29.566   -- File entry --
+2026-11-01 06:48:29.566   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\source-sha256.json
+2026-11-01 06:48:29.566   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.566   Installing the file.
+2026-11-01 06:48:29.566   Successfully installed the file.
+2026-11-01 06:48:29.566   -- File entry --
+2026-11-01 06:48:29.568   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\collector-probe\Cargo.lock
+2026-11-01 06:48:29.568   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.568   Installing the file.
+2026-11-01 06:48:29.568   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\collector-probe
+2026-11-01 06:48:29.568   Successfully installed the file.
+2026-11-01 06:48:29.568   -- File entry --
+2026-11-01 06:48:29.568   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\collector-probe\Cargo.toml
+2026-11-01 06:48:29.568   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.568   Installing the file.
+2026-11-01 06:48:29.570   Successfully installed the file.
+2026-11-01 06:48:29.570   -- File entry --
+2026-11-01 06:48:29.570   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\collector-probe\src\main.rs
+2026-11-01 06:48:29.570   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.570   Installing the file.
+2026-11-01 06:48:29.570   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\collector-probe\src
+2026-11-01 06:48:29.570   Successfully installed the file.
+2026-11-01 06:48:29.570   -- File entry --
+2026-11-01 06:48:29.570   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\scheduler-probe\Cargo.lock
+2026-11-01 06:48:29.570   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.570   Installing the file.
+2026-11-01 06:48:29.570   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\scheduler-probe
+2026-11-01 06:48:29.572   Successfully installed the file.
+2026-11-01 06:48:29.572   -- File entry --
+2026-11-01 06:48:29.572   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\scheduler-probe\Cargo.toml
+2026-11-01 06:48:29.572   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.572   Installing the file.
+2026-11-01 06:48:29.572   Successfully installed the file.
+2026-11-01 06:48:29.572   -- File entry --
+2026-11-01 06:48:29.572   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\scheduler-probe\src\main.rs
+2026-11-01 06:48:29.574   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.574   Installing the file.
+2026-11-01 06:48:29.574   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\scheduler-probe\src
+2026-11-01 06:48:29.574   Successfully installed the file.
+2026-11-01 06:48:29.574   -- File entry --
+2026-11-01 06:48:29.574   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\store-probe\Cargo.lock
+2026-11-01 06:48:29.574   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.574   Installing the file.
+2026-11-01 06:48:29.574   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\store-probe
+2026-11-01 06:48:29.576   Successfully installed the file.
+2026-11-01 06:48:29.576   -- File entry --
+2026-11-01 06:48:29.576   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\store-probe\Cargo.toml
+2026-11-01 06:48:29.576   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.576   Installing the file.
+2026-11-01 06:48:29.576   Successfully installed the file.
+2026-11-01 06:48:29.576   -- File entry --
+2026-11-01 06:48:29.578   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\store-probe\src\main.rs
+2026-11-01 06:48:29.578   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.578   Installing the file.
+2026-11-01 06:48:29.578   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round2-2026-10-15\store-probe\src
+2026-11-01 06:48:29.578   Successfully installed the file.
+2026-11-01 06:48:29.578   -- File entry --
+2026-11-01 06:48:29.578   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\api-output.txt
+2026-11-01 06:48:29.578   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.578   Installing the file.
+2026-11-01 06:48:29.578   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15
+2026-11-01 06:48:29.580   Successfully installed the file.
+2026-11-01 06:48:29.580   -- File entry --
+2026-11-01 06:48:29.580   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\api-results.json
+2026-11-01 06:48:29.581   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.581   Installing the file.
+2026-11-01 06:48:29.581   Successfully installed the file.
+2026-11-01 06:48:29.581   -- File entry --
+2026-11-01 06:48:29.582   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\api_probe.py
+2026-11-01 06:48:29.582   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.582   Installing the file.
+2026-11-01 06:48:29.582   Successfully installed the file.
+2026-11-01 06:48:29.582   -- File entry --
+2026-11-01 06:48:29.582   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\helper.py
+2026-11-01 06:48:29.582   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.582   Installing the file.
+2026-11-01 06:48:29.582   Successfully installed the file.
+2026-11-01 06:48:29.582   -- File entry --
+2026-11-01 06:48:29.584   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\README.md
+2026-11-01 06:48:29.584   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.584   Installing the file.
+2026-11-01 06:48:29.584   Successfully installed the file.
+2026-11-01 06:48:29.584   -- File entry --
+2026-11-01 06:48:29.584   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\regression-results.json
+2026-11-01 06:48:29.584   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.584   Installing the file.
+2026-11-01 06:48:29.584   Successfully installed the file.
+2026-11-01 06:48:29.586   -- File entry --
+2026-11-01 06:48:29.586   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\source-sha256.json
+2026-11-01 06:48:29.586   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.586   Installing the file.
+2026-11-01 06:48:29.586   Successfully installed the file.
+2026-11-01 06:48:29.586   -- File entry --
+2026-11-01 06:48:29.586   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\store-results.json
+2026-11-01 06:48:29.586   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.586   Installing the file.
+2026-11-01 06:48:29.586   Successfully installed the file.
+2026-11-01 06:48:29.586   -- File entry --
+2026-11-01 06:48:29.588   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\store-probe\Cargo.lock
+2026-11-01 06:48:29.588   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.588   Installing the file.
+2026-11-01 06:48:29.588   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\store-probe
+2026-11-01 06:48:29.588   Successfully installed the file.
+2026-11-01 06:48:29.588   -- File entry --
+2026-11-01 06:48:29.588   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\store-probe\Cargo.toml
+2026-11-01 06:48:29.588   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.588   Installing the file.
+2026-11-01 06:48:29.590   Successfully installed the file.
+2026-11-01 06:48:29.590   -- File entry --
+2026-11-01 06:48:29.590   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\store-probe\src\main.rs
+2026-11-01 06:48:29.590   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.590   Installing the file.
+2026-11-01 06:48:29.590   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round3-2026-10-15\store-probe\src
+2026-11-01 06:48:29.590   Successfully installed the file.
+2026-11-01 06:48:29.590   -- File entry --
+2026-11-01 06:48:29.590   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\api-output.txt
+2026-11-01 06:48:29.590   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.590   Installing the file.
+2026-11-01 06:48:29.592   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15
+2026-11-01 06:48:29.592   Successfully installed the file.
+2026-11-01 06:48:29.592   -- File entry --
+2026-11-01 06:48:29.592   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\api-results.json
+2026-11-01 06:48:29.592   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.592   Installing the file.
+2026-11-01 06:48:29.592   Successfully installed the file.
+2026-11-01 06:48:29.592   -- File entry --
+2026-11-01 06:48:29.594   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\api_probe.py
+2026-11-01 06:48:29.594   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.594   Installing the file.
+2026-11-01 06:48:29.594   Successfully installed the file.
+2026-11-01 06:48:29.594   -- File entry --
+2026-11-01 06:48:29.594   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\helper.py
+2026-11-01 06:48:29.594   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.594   Installing the file.
+2026-11-01 06:48:29.594   Successfully installed the file.
+2026-11-01 06:48:29.594   -- File entry --
+2026-11-01 06:48:29.596   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\orphan-output.txt
+2026-11-01 06:48:29.596   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.596   Installing the file.
+2026-11-01 06:48:29.596   Successfully installed the file.
+2026-11-01 06:48:29.596   -- File entry --
+2026-11-01 06:48:29.596   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\orphan-results.json
+2026-11-01 06:48:29.596   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.596   Installing the file.
+2026-11-01 06:48:29.598   Successfully installed the file.
+2026-11-01 06:48:29.598   -- File entry --
+2026-11-01 06:48:29.598   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\orphan_probe.py
+2026-11-01 06:48:29.598   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.598   Installing the file.
+2026-11-01 06:48:29.598   Successfully installed the file.
+2026-11-01 06:48:29.598   -- File entry --
+2026-11-01 06:48:29.598   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\paging-output.txt
+2026-11-01 06:48:29.600   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.600   Installing the file.
+2026-11-01 06:48:29.600   Successfully installed the file.
+2026-11-01 06:48:29.600   -- File entry --
+2026-11-01 06:48:29.600   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\paging-results.json
+2026-11-01 06:48:29.600   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.600   Installing the file.
+2026-11-01 06:48:29.600   Successfully installed the file.
+2026-11-01 06:48:29.600   -- File entry --
+2026-11-01 06:48:29.600   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\paging_probe.py
+2026-11-01 06:48:29.600   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.602   Installing the file.
+2026-11-01 06:48:29.602   Successfully installed the file.
+2026-11-01 06:48:29.602   -- File entry --
+2026-11-01 06:48:29.602   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\README.md
+2026-11-01 06:48:29.602   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.602   Installing the file.
+2026-11-01 06:48:29.602   Successfully installed the file.
+2026-11-01 06:48:29.602   -- File entry --
+2026-11-01 06:48:29.602   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\source-sha256.json
+2026-11-01 06:48:29.602   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.602   Installing the file.
+2026-11-01 06:48:29.604   Successfully installed the file.
+2026-11-01 06:48:29.604   -- File entry --
+2026-11-01 06:48:29.604   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\store-output.txt
+2026-11-01 06:48:29.604   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.604   Installing the file.
+2026-11-01 06:48:29.604   Successfully installed the file.
+2026-11-01 06:48:29.604   -- File entry --
+2026-11-01 06:48:29.604   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\store-results.json
+2026-11-01 06:48:29.604   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.604   Installing the file.
+2026-11-01 06:48:29.606   Successfully installed the file.
+2026-11-01 06:48:29.606   -- File entry --
+2026-11-01 06:48:29.606   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\store-probe\Cargo.lock
+2026-11-01 06:48:29.606   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.606   Installing the file.
+2026-11-01 06:48:29.606   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\store-probe
+2026-11-01 06:48:29.606   Successfully installed the file.
+2026-11-01 06:48:29.606   -- File entry --
+2026-11-01 06:48:29.606   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\store-probe\Cargo.toml
+2026-11-01 06:48:29.606   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.608   Installing the file.
+2026-11-01 06:48:29.608   Successfully installed the file.
+2026-11-01 06:48:29.608   -- File entry --
+2026-11-01 06:48:29.608   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\store-probe\src\main.rs
+2026-11-01 06:48:29.608   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.608   Installing the file.
+2026-11-01 06:48:29.608   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round4-2026-10-15\store-probe\src
+2026-11-01 06:48:29.608   Successfully installed the file.
+2026-11-01 06:48:29.608   -- File entry --
+2026-11-01 06:48:29.610   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\api-output.txt
+2026-11-01 06:48:29.610   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.610   Installing the file.
+2026-11-01 06:48:29.610   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15
+2026-11-01 06:48:29.610   Successfully installed the file.
+2026-11-01 06:48:29.610   -- File entry --
+2026-11-01 06:48:29.610   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\api-results.json
+2026-11-01 06:48:29.610   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.610   Installing the file.
+2026-11-01 06:48:29.610   Successfully installed the file.
+2026-11-01 06:48:29.610   -- File entry --
+2026-11-01 06:48:29.612   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\api_probe.py
+2026-11-01 06:48:29.612   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.612   Installing the file.
+2026-11-01 06:48:29.612   Successfully installed the file.
+2026-11-01 06:48:29.612   -- File entry --
+2026-11-01 06:48:29.612   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\helper.py
+2026-11-01 06:48:29.612   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.612   Installing the file.
+2026-11-01 06:48:29.612   Successfully installed the file.
+2026-11-01 06:48:29.612   -- File entry --
+2026-11-01 06:48:29.613   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\orphan-output.txt
+2026-11-01 06:48:29.613   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.613   Installing the file.
+2026-11-01 06:48:29.613   Successfully installed the file.
+2026-11-01 06:48:29.613   -- File entry --
+2026-11-01 06:48:29.613   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\orphan-results.json
+2026-11-01 06:48:29.613   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.613   Installing the file.
+2026-11-01 06:48:29.615   Successfully installed the file.
+2026-11-01 06:48:29.615   -- File entry --
+2026-11-01 06:48:29.615   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\orphan_probe.py
+2026-11-01 06:48:29.615   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.615   Installing the file.
+2026-11-01 06:48:29.616   Successfully installed the file.
+2026-11-01 06:48:29.616   -- File entry --
+2026-11-01 06:48:29.616   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\paging-output.txt
+2026-11-01 06:48:29.616   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.616   Installing the file.
+2026-11-01 06:48:29.617   Successfully installed the file.
+2026-11-01 06:48:29.617   -- File entry --
+2026-11-01 06:48:29.617   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\paging-results.json
+2026-11-01 06:48:29.617   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.617   Installing the file.
+2026-11-01 06:48:29.618   Successfully installed the file.
+2026-11-01 06:48:29.618   -- File entry --
+2026-11-01 06:48:29.618   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\paging_probe.py
+2026-11-01 06:48:29.618   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.618   Installing the file.
+2026-11-01 06:48:29.618   Successfully installed the file.
+2026-11-01 06:48:29.619   -- File entry --
+2026-11-01 06:48:29.619   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\price-edge-output.txt
+2026-11-01 06:48:29.619   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.619   Installing the file.
+2026-11-01 06:48:29.620   Successfully installed the file.
+2026-11-01 06:48:29.620   -- File entry --
+2026-11-01 06:48:29.620   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\price-edge-results.json
+2026-11-01 06:48:29.620   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.620   Installing the file.
+2026-11-01 06:48:29.620   Successfully installed the file.
+2026-11-01 06:48:29.620   -- File entry --
+2026-11-01 06:48:29.621   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\price_edges.py
+2026-11-01 06:48:29.621   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.621   Installing the file.
+2026-11-01 06:48:29.622   Successfully installed the file.
+2026-11-01 06:48:29.622   -- File entry --
+2026-11-01 06:48:29.622   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\README.md
+2026-11-01 06:48:29.622   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.622   Installing the file.
+2026-11-01 06:48:29.622   Successfully installed the file.
+2026-11-01 06:48:29.622   -- File entry --
+2026-11-01 06:48:29.623   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\source-sha256.json
+2026-11-01 06:48:29.623   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.623   Installing the file.
+2026-11-01 06:48:29.623   Successfully installed the file.
+2026-11-01 06:48:29.624   -- File entry --
+2026-11-01 06:48:29.624   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\store-output.txt
+2026-11-01 06:48:29.624   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.624   Installing the file.
+2026-11-01 06:48:29.624   Successfully installed the file.
+2026-11-01 06:48:29.624   -- File entry --
+2026-11-01 06:48:29.626   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\store-results.json
+2026-11-01 06:48:29.626   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.626   Installing the file.
+2026-11-01 06:48:29.626   Successfully installed the file.
+2026-11-01 06:48:29.626   -- File entry --
+2026-11-01 06:48:29.626   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\store-probe\Cargo.lock
+2026-11-01 06:48:29.626   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.626   Installing the file.
+2026-11-01 06:48:29.626   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\store-probe
+2026-11-01 06:48:29.628   Successfully installed the file.
+2026-11-01 06:48:29.628   -- File entry --
+2026-11-01 06:48:29.628   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\store-probe\Cargo.toml
+2026-11-01 06:48:29.628   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.628   Installing the file.
+2026-11-01 06:48:29.628   Successfully installed the file.
+2026-11-01 06:48:29.628   -- File entry --
+2026-11-01 06:48:29.628   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\store-probe\src\main.rs
+2026-11-01 06:48:29.628   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.628   Installing the file.
+2026-11-01 06:48:29.629   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round5-2026-10-15\store-probe\src
+2026-11-01 06:48:29.629   Successfully installed the file.
+2026-11-01 06:48:29.629   -- File entry --
+2026-11-01 06:48:29.629   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\gpui-rechecks.json
+2026-11-01 06:48:29.629   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.629   Installing the file.
+2026-11-01 06:48:29.629   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15
+2026-11-01 06:48:29.629   Successfully installed the file.
+2026-11-01 06:48:29.629   -- File entry --
+2026-11-01 06:48:29.631   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\helper.py
+2026-11-01 06:48:29.631   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.631   Installing the file.
+2026-11-01 06:48:29.631   Successfully installed the file.
+2026-11-01 06:48:29.631   -- File entry --
+2026-11-01 06:48:29.631   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\missing-start-output.txt
+2026-11-01 06:48:29.631   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.631   Installing the file.
+2026-11-01 06:48:29.631   Successfully installed the file.
+2026-11-01 06:48:29.631   -- File entry --
+2026-11-01 06:48:29.633   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\missing-start-results.json
+2026-11-01 06:48:29.633   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.633   Installing the file.
+2026-11-01 06:48:29.633   Successfully installed the file.
+2026-11-01 06:48:29.633   -- File entry --
+2026-11-01 06:48:29.633   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\missing_start_probe.py
+2026-11-01 06:48:29.633   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.633   Installing the file.
+2026-11-01 06:48:29.633   Successfully installed the file.
+2026-11-01 06:48:29.633   -- File entry --
+2026-11-01 06:48:29.635   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\orphan-output.txt
+2026-11-01 06:48:29.635   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.635   Installing the file.
+2026-11-01 06:48:29.635   Successfully installed the file.
+2026-11-01 06:48:29.635   -- File entry --
+2026-11-01 06:48:29.635   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\orphan-results.json
+2026-11-01 06:48:29.635   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.635   Installing the file.
+2026-11-01 06:48:29.635   Successfully installed the file.
+2026-11-01 06:48:29.637   -- File entry --
+2026-11-01 06:48:29.637   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\orphan_probe.py
+2026-11-01 06:48:29.637   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.637   Installing the file.
+2026-11-01 06:48:29.637   Successfully installed the file.
+2026-11-01 06:48:29.637   -- File entry --
+2026-11-01 06:48:29.637   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\paging_probe.py
+2026-11-01 06:48:29.637   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.637   Installing the file.
+2026-11-01 06:48:29.637   Successfully installed the file.
+2026-11-01 06:48:29.637   -- File entry --
+2026-11-01 06:48:29.639   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\price-edge-output.txt
+2026-11-01 06:48:29.639   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.639   Installing the file.
+2026-11-01 06:48:29.639   Successfully installed the file.
+2026-11-01 06:48:29.639   -- File entry --
+2026-11-01 06:48:29.639   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\price-edge-results.json
+2026-11-01 06:48:29.639   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.639   Installing the file.
+2026-11-01 06:48:29.639   Successfully installed the file.
+2026-11-01 06:48:29.639   -- File entry --
+2026-11-01 06:48:29.641   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\price_edges.py
+2026-11-01 06:48:29.641   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.641   Installing the file.
+2026-11-01 06:48:29.641   Successfully installed the file.
+2026-11-01 06:48:29.641   -- File entry --
+2026-11-01 06:48:29.641   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\README.md
+2026-11-01 06:48:29.641   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.641   Installing the file.
+2026-11-01 06:48:29.641   Successfully installed the file.
+2026-11-01 06:48:29.641   -- File entry --
+2026-11-01 06:48:29.643   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\recovery-output.txt
+2026-11-01 06:48:29.643   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.643   Installing the file.
+2026-11-01 06:48:29.643   Successfully installed the file.
+2026-11-01 06:48:29.644   -- File entry --
+2026-11-01 06:48:29.644   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\recovery-results.json
+2026-11-01 06:48:29.644   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.644   Installing the file.
+2026-11-01 06:48:29.645   Successfully installed the file.
+2026-11-01 06:48:29.645   -- File entry --
+2026-11-01 06:48:29.645   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\recovery_probe.py
+2026-11-01 06:48:29.645   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.645   Installing the file.
+2026-11-01 06:48:29.645   Successfully installed the file.
+2026-11-01 06:48:29.645   -- File entry --
+2026-11-01 06:48:29.647   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\source-sha256.json
+2026-11-01 06:48:29.647   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.647   Installing the file.
+2026-11-01 06:48:29.647   Successfully installed the file.
+2026-11-01 06:48:29.647   -- File entry --
+2026-11-01 06:48:29.647   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\store-output.txt
+2026-11-01 06:48:29.647   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.647   Installing the file.
+2026-11-01 06:48:29.647   Successfully installed the file.
+2026-11-01 06:48:29.647   -- File entry --
+2026-11-01 06:48:29.649   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\store-results.json
+2026-11-01 06:48:29.649   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.649   Installing the file.
+2026-11-01 06:48:29.649   Successfully installed the file.
+2026-11-01 06:48:29.649   -- File entry --
+2026-11-01 06:48:29.649   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\store-probe\Cargo.lock
+2026-11-01 06:48:29.649   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.649   Installing the file.
+2026-11-01 06:48:29.649   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\store-probe
+2026-11-01 06:48:29.649   Successfully installed the file.
+2026-11-01 06:48:29.651   -- File entry --
+2026-11-01 06:48:29.651   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\store-probe\Cargo.toml
+2026-11-01 06:48:29.651   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.651   Installing the file.
+2026-11-01 06:48:29.651   Successfully installed the file.
+2026-11-01 06:48:29.651   -- File entry --
+2026-11-01 06:48:29.651   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\store-probe\src\main.rs
+2026-11-01 06:48:29.651   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.651   Installing the file.
+2026-11-01 06:48:29.651   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round6-2026-10-15\store-probe\src
+2026-11-01 06:48:29.653   Successfully installed the file.
+2026-11-01 06:48:29.653   -- File entry --
+2026-11-01 06:48:29.653   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\helper.py
+2026-11-01 06:48:29.653   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.653   Installing the file.
+2026-11-01 06:48:29.653   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15
+2026-11-01 06:48:29.653   Successfully installed the file.
+2026-11-01 06:48:29.653   -- File entry --
+2026-11-01 06:48:29.653   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\missing-start-output.txt
+2026-11-01 06:48:29.653   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.653   Installing the file.
+2026-11-01 06:48:29.655   Successfully installed the file.
+2026-11-01 06:48:29.655   -- File entry --
+2026-11-01 06:48:29.655   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\missing-start-results.json
+2026-11-01 06:48:29.655   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.655   Installing the file.
+2026-11-01 06:48:29.655   Successfully installed the file.
+2026-11-01 06:48:29.655   -- File entry --
+2026-11-01 06:48:29.655   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\missing_start_probe.py
+2026-11-01 06:48:29.655   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.655   Installing the file.
+2026-11-01 06:48:29.655   Successfully installed the file.
+2026-11-01 06:48:29.657   -- File entry --
+2026-11-01 06:48:29.657   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\orphan_probe.py
+2026-11-01 06:48:29.657   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.657   Installing the file.
+2026-11-01 06:48:29.657   Successfully installed the file.
+2026-11-01 06:48:29.657   -- File entry --
+2026-11-01 06:48:29.657   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\README.md
+2026-11-01 06:48:29.657   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.657   Installing the file.
+2026-11-01 06:48:29.659   Successfully installed the file.
+2026-11-01 06:48:29.659   -- File entry --
+2026-11-01 06:48:29.659   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\recovery-1200-output.txt
+2026-11-01 06:48:29.659   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.659   Installing the file.
+2026-11-01 06:48:29.659   Successfully installed the file.
+2026-11-01 06:48:29.659   -- File entry --
+2026-11-01 06:48:29.659   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\recovery-1200-results.json
+2026-11-01 06:48:29.661   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.661   Installing the file.
+2026-11-01 06:48:29.661   Successfully installed the file.
+2026-11-01 06:48:29.661   -- File entry --
+2026-11-01 06:48:29.661   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\recovery-20000-output.txt
+2026-11-01 06:48:29.661   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.661   Installing the file.
+2026-11-01 06:48:29.661   Successfully installed the file.
+2026-11-01 06:48:29.661   -- File entry --
+2026-11-01 06:48:29.661   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\recovery-20000-results.json
+2026-11-01 06:48:29.661   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.663   Installing the file.
+2026-11-01 06:48:29.663   Successfully installed the file.
+2026-11-01 06:48:29.663   -- File entry --
+2026-11-01 06:48:29.663   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\recovery_probe.py
+2026-11-01 06:48:29.663   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.663   Installing the file.
+2026-11-01 06:48:29.663   Successfully installed the file.
+2026-11-01 06:48:29.663   -- File entry --
+2026-11-01 06:48:29.663   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round7-2026-10-15\source-sha256.json
+2026-11-01 06:48:29.663   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.663   Installing the file.
+2026-11-01 06:48:29.665   Successfully installed the file.
+2026-11-01 06:48:29.665   -- File entry --
+2026-11-01 06:48:29.665   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\helper.py
+2026-11-01 06:48:29.665   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.665   Installing the file.
+2026-11-01 06:48:29.665   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15
+2026-11-01 06:48:29.665   Successfully installed the file.
+2026-11-01 06:48:29.665   -- File entry --
+2026-11-01 06:48:29.665   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\integration-output.txt
+2026-11-01 06:48:29.665   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.665   Installing the file.
+2026-11-01 06:48:29.667   Successfully installed the file.
+2026-11-01 06:48:29.667   -- File entry --
+2026-11-01 06:48:29.667   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\missing-start-output.txt
+2026-11-01 06:48:29.667   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.667   Installing the file.
+2026-11-01 06:48:29.667   Successfully installed the file.
+2026-11-01 06:48:29.667   -- File entry --
+2026-11-01 06:48:29.667   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\missing-start-results.json
+2026-11-01 06:48:29.667   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.667   Installing the file.
+2026-11-01 06:48:29.669   Successfully installed the file.
+2026-11-01 06:48:29.669   -- File entry --
+2026-11-01 06:48:29.669   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\missing_start_probe.py
+2026-11-01 06:48:29.669   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.669   Installing the file.
+2026-11-01 06:48:29.669   Successfully installed the file.
+2026-11-01 06:48:29.669   -- File entry --
+2026-11-01 06:48:29.669   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\README.md
+2026-11-01 06:48:29.669   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.669   Installing the file.
+2026-11-01 06:48:29.671   Successfully installed the file.
+2026-11-01 06:48:29.671   -- File entry --
+2026-11-01 06:48:29.671   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\runtime-scan-output.txt
+2026-11-01 06:48:29.671   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.671   Installing the file.
+2026-11-01 06:48:29.671   Successfully installed the file.
+2026-11-01 06:48:29.671   -- File entry --
+2026-11-01 06:48:29.671   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\runtime-scan-results.json
+2026-11-01 06:48:29.671   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.671   Installing the file.
+2026-11-01 06:48:29.673   Successfully installed the file.
+2026-11-01 06:48:29.673   -- File entry --
+2026-11-01 06:48:29.673   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\runtime_scan_probe.py
+2026-11-01 06:48:29.673   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.673   Installing the file.
+2026-11-01 06:48:29.673   Successfully installed the file.
+2026-11-01 06:48:29.673   -- File entry --
+2026-11-01 06:48:29.673   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\scan-failure-output.txt
+2026-11-01 06:48:29.673   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.673   Installing the file.
+2026-11-01 06:48:29.675   Successfully installed the file.
+2026-11-01 06:48:29.675   -- File entry --
+2026-11-01 06:48:29.675   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\source-sha256.json
+2026-11-01 06:48:29.675   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.675   Installing the file.
+2026-11-01 06:48:29.675   Successfully installed the file.
+2026-11-01 06:48:29.675   -- File entry --
+2026-11-01 06:48:29.675   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\startup-failure-output.txt
+2026-11-01 06:48:29.675   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.675   Installing the file.
+2026-11-01 06:48:29.677   Successfully installed the file.
+2026-11-01 06:48:29.677   -- File entry --
+2026-11-01 06:48:29.677   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\startup-failure-results.json
+2026-11-01 06:48:29.677   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.677   Installing the file.
+2026-11-01 06:48:29.677   Successfully installed the file.
+2026-11-01 06:48:29.677   -- File entry --
+2026-11-01 06:48:29.677   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\startup_failure_probe.py
+2026-11-01 06:48:29.677   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.677   Installing the file.
+2026-11-01 06:48:29.679   Successfully installed the file.
+2026-11-01 06:48:29.679   -- File entry --
+2026-11-01 06:48:29.680   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\verification-summary.json
+2026-11-01 06:48:29.680   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.680   Installing the file.
+2026-11-01 06:48:29.680   Successfully installed the file.
+2026-11-01 06:48:29.680   -- File entry --
+2026-11-01 06:48:29.680   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\store-probe\Cargo.lock
+2026-11-01 06:48:29.680   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.680   Installing the file.
+2026-11-01 06:48:29.680   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\store-probe
+2026-11-01 06:48:29.681   Successfully installed the file.
+2026-11-01 06:48:29.681   -- File entry --
+2026-11-01 06:48:29.682   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\store-probe\Cargo.toml
+2026-11-01 06:48:29.682   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.682   Installing the file.
+2026-11-01 06:48:29.682   Successfully installed the file.
+2026-11-01 06:48:29.682   -- File entry --
+2026-11-01 06:48:29.682   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\store-probe\src\main.rs
+2026-11-01 06:48:29.683   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.683   Installing the file.
+2026-11-01 06:48:29.683   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\review-round8-2026-10-15\store-probe\src
+2026-11-01 06:48:29.683   Successfully installed the file.
+2026-11-01 06:48:29.683   -- File entry --
+2026-11-01 06:48:29.684   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\bench-mixed.json
+2026-11-01 06:48:29.684   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.684   Installing the file.
+2026-11-01 06:48:29.684   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16
+2026-11-01 06:48:29.684   Successfully installed the file.
+2026-11-01 06:48:29.685   -- File entry --
+2026-11-01 06:48:29.685   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\bench-mixed.txt
+2026-11-01 06:48:29.685   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.685   Installing the file.
+2026-11-01 06:48:29.686   Successfully installed the file.
+2026-11-01 06:48:29.686   -- File entry --
+2026-11-01 06:48:29.686   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\bench-priced.json
+2026-11-01 06:48:29.686   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.686   Installing the file.
+2026-11-01 06:48:29.687   Successfully installed the file.
+2026-11-01 06:48:29.687   -- File entry --
+2026-11-01 06:48:29.687   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\bench-priced.txt
+2026-11-01 06:48:29.687   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.687   Installing the file.
+2026-11-01 06:48:29.688   Successfully installed the file.
+2026-11-01 06:48:29.688   -- File entry --
+2026-11-01 06:48:29.688   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\bench-zero.json
+2026-11-01 06:48:29.688   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.688   Installing the file.
+2026-11-01 06:48:29.689   Successfully installed the file.
+2026-11-01 06:48:29.689   -- File entry --
+2026-11-01 06:48:29.689   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\bench-zero.txt
+2026-11-01 06:48:29.689   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.689   Installing the file.
+2026-11-01 06:48:29.690   Successfully installed the file.
+2026-11-01 06:48:29.690   -- File entry --
+2026-11-01 06:48:29.691   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\compatibility.txt
+2026-11-01 06:48:29.691   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.691   Installing the file.
+2026-11-01 06:48:29.691   Successfully installed the file.
+2026-11-01 06:48:29.691   -- File entry --
+2026-11-01 06:48:29.692   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\core-tests.txt
+2026-11-01 06:48:29.692   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.692   Installing the file.
+2026-11-01 06:48:29.692   Successfully installed the file.
+2026-11-01 06:48:29.692   -- File entry --
+2026-11-01 06:48:29.693   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\fixed-pagination.txt
+2026-11-01 06:48:29.693   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.693   Installing the file.
+2026-11-01 06:48:29.693   Successfully installed the file.
+2026-11-01 06:48:29.693   -- File entry --
+2026-11-01 06:48:29.693   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\gpui-clippy.txt
+2026-11-01 06:48:29.693   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.693   Installing the file.
+2026-11-01 06:48:29.693   Successfully installed the file.
+2026-11-01 06:48:29.693   -- File entry --
+2026-11-01 06:48:29.695   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\gpui-tests.txt
+2026-11-01 06:48:29.695   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.695   Installing the file.
+2026-11-01 06:48:29.695   Successfully installed the file.
+2026-11-01 06:48:29.695   -- File entry --
+2026-11-01 06:48:29.695   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\integration.txt
+2026-11-01 06:48:29.695   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.695   Installing the file.
+2026-11-01 06:48:29.695   Successfully installed the file.
+2026-11-01 06:48:29.695   -- File entry --
+2026-11-01 06:48:29.697   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\pagination.txt
+2026-11-01 06:48:29.697   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.697   Installing the file.
+2026-11-01 06:48:29.697   Successfully installed the file.
+2026-11-01 06:48:29.697   -- File entry --
+2026-11-01 06:48:29.697   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\README.md
+2026-11-01 06:48:29.697   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.697   Installing the file.
+2026-11-01 06:48:29.697   Successfully installed the file.
+2026-11-01 06:48:29.697   -- File entry --
+2026-11-01 06:48:29.699   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\statistics\validation-2026-10-16\smoke.txt
+2026-11-01 06:48:29.699   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.699   Installing the file.
+2026-11-01 06:48:29.699   Successfully installed the file.
+2026-11-01 06:48:29.699   -- File entry --
+2026-11-01 06:48:29.699   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\third-party\magpie-LICENSE.txt
+2026-11-01 06:48:29.699   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.699   Installing the file.
+2026-11-01 06:48:29.699   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\third-party
+2026-11-01 06:48:29.699   Successfully installed the file.
+2026-11-01 06:48:29.699   -- File entry --
+2026-11-01 06:48:29.699   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\internal\workbuddy-settings.exe
+2026-11-01 06:48:29.701   Time stamp of our file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:29.701   Installing the file.
+2026-11-01 06:48:29.701   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\internal
+2026-11-01 06:48:30.097   Successfully installed the file.
+2026-11-01 06:48:30.097   -- Icon entry --
+2026-11-01 06:48:30.097   Dest filename: C:\Users\runneradmin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\WorkBuddy Proxy\WorkBuddy Proxy.lnk
+2026-11-01 06:48:30.097   Creating directory: C:\Users\runneradmin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\WorkBuddy Proxy
+2026-11-01 06:48:30.139   Creating the icon.
+2026-11-01 06:48:30.579   Successfully created the icon.
+2026-11-01 06:48:30.585   -- Icon entry --
+2026-11-01 06:48:30.587   Dest filename: C:\Users\runneradmin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\WorkBuddy Proxy\卸载 WorkBuddy Proxy.lnk
+2026-11-01 06:48:30.587   Creating the icon.
+2026-11-01 06:48:30.597   Successfully created the icon.
+2026-11-01 06:48:30.601   -- Icon entry --
+2026-11-01 06:48:30.601   Dest filename: C:\Users\runneradmin\Desktop\WorkBuddy Proxy.lnk
+2026-11-01 06:48:30.603   Creating the icon.
+2026-11-01 06:48:30.605   Successfully created the icon.
+2026-11-01 06:48:30.615   -- Registry entry --
+2026-11-01 06:48:30.615   Key: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+2026-11-01 06:48:30.615   Value name: WorkBuddyProxy
+2026-11-01 06:48:30.615   Not creating the key or a value, skipping the key and only updating uninstall log.
+2026-11-01 06:48:30.617   Saving uninstall information.
+2026-11-01 06:48:30.617   Creating new uninstall key: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\WorkBuddyProxy_is1
+2026-11-01 06:48:30.617   Writing uninstall key values.
+2026-11-01 06:48:30.617   Detected previous administrative 64-bit install? No
+2026-11-01 06:48:30.617   Detected previous administrative 32-bit install? No
+2026-11-01 06:48:30.620   Installation process succeeded.
+2026-11-01 06:48:30.620   Need to restart Windows? No
+2026-11-01 06:48:30.641   Deinitializing Setup.
+2026-11-01 06:48:30.672   Log closed.

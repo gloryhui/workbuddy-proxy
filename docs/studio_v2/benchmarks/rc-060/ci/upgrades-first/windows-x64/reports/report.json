@@ -1,0 +1,296 @@
+{
+  "result": "PASS",
+  "platform": "windows-x64",
+  "runtime_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "candidate_run_id": 41278929532,
+  "artifact_id": 13072713023,
+  "script_sha256": "e7e17aba632afa46306bb91ee9b95325f0acc751165162044d3e5d3b379785a5",
+  "data_script_sha256": "7fb40e0b7f561e63379a19b5c56f5335f6cd94130fb6c4a3b7ed786e77633343",
+  "verify_rollback": true,
+  "fixture": "D:\\a\\_temp\\studio-v2-installed-upgrade",
+  "cases": [
+    {
+      "old_version": "0.5.6",
+      "old_package_sha256": "a24a7df999555d3c2657b9fa101d431dc0220b956641a72bc743941e3b4aa24f",
+      "old_package_size": 10792145,
+      "result": "PASS",
+      "old_exe_sha256": "5c769901e1e228c9edf863c4f682d734b6829808e211a4c08642c6e2a1756022",
+      "health": {
+        "released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 10,
+          "ready": true,
+          "version": "0.5.6"
+        },
+        "candidate": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.6.0"
+        },
+        "rollback-released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 10,
+          "ready": true,
+          "version": "0.5.6"
+        }
+      },
+      "children": [
+        {
+          "label": "released",
+          "pid": 5468,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "candidate",
+          "pid": 7032,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "rollback-released",
+          "pid": 5056,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        }
+      ],
+      "replacement": {
+        "method": "Real old Inno setup \u2192 candidate Inno setup same directory",
+        "legacy_12_rows_existed_before_setup": true,
+        "candidate_all_portable_files_match": 17,
+        "same_registration_and_shortcuts": true
+      },
+      "installation_preserved_legacy_data_before_candidate_start": true,
+      "candidate_exe_sha256": "ed1d6440180db79d5fe940488161aa2d84cb97c30682beceb9a545f37ab4640e",
+      "old_schema": 6,
+      "candidate_schema": 11,
+      "preserved_tables": {
+        "usage_requests": 12,
+        "usage_costs": 12,
+        "stats_model_prices": 1,
+        "stats_settings": 1,
+        "stats_provider_settings": 1
+      },
+      "candidate_new_columns": {
+        "usage_requests": [
+          "record_origin",
+          "time_basis",
+          "total_tokens_derived",
+          "workbuddy_credit_nanos"
+        ],
+        "usage_costs": [],
+        "stats_model_prices": [],
+        "stats_settings": [
+          "workbuddy_import_enabled",
+          "workbuddy_last_full_scan_ms",
+          "workbuddy_mapping_revision",
+          "workbuddy_namespace_id"
+        ],
+        "stats_provider_settings": []
+      },
+      "all_legacy_business_fields_equal": true,
+      "config_byte_equal": true,
+      "config_sha256": "02e0476e0a84fac67a9b27ad553316fbe3cdb2d025ceaccea2dc899043b49f19",
+      "legacy_snapshot_sha256": "3654ed105a8c7f5314ad946f9c699ce9008388a42f1d098fd30cef3b0c19b249",
+      "legacy_cost_per_request_nanos": 2800000,
+      "candidate_new_request_priced": true,
+      "installed_lifecycle": {
+        "host_pid": 756,
+        "core_pid": 6156,
+        "ui_pids": [
+          3984,
+          1168
+        ],
+        "settings_close_kept_same_core": true,
+        "settings_reopened_new_pid": true,
+        "input_sent": false,
+        "host_exit_code": 0,
+        "all_pids_gone": true,
+        "three_runs_stopped_normally": true
+      },
+      "all_13_rows_equal_after_installed_lifecycle": true,
+      "package_rollback": {
+        "method": "Candidate uninstaller then verified original setup at identical path",
+        "old_package_files_equal": 244,
+        "version": "0.5.6",
+        "registration_and_shortcuts_restored": true,
+        "startup_remained_disabled": true
+      },
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 6,
+        "backup_bytes": 263197,
+        "backup_tree_sha256": "1926a9b5d403b1161fe59e36a4bd354bb16c13d442927538901d20309ee62d88",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 6,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "candidate_recorded_new_request": true,
+      "legacy_rows_equal_after_candidate_shutdown": true,
+      "scope": "Real released Core schema/data \u2192 candidate Core, cold handover in same isolated profile. Optional package/lifecycle/backup-restoration callbacks are separately reported. No live-upgrade, database downgrade/history merge, or universal compatibility claim.",
+      "uninstall": {
+        "removed_files_registration_and_desktop_shortcut": true,
+        "external_config_bytes_and_all_business_fields_preserved": true
+      }
+    },
+    {
+      "old_version": "0.5.7",
+      "old_package_sha256": "8e07efb2f11300b2c0887889b61afcee8e4dd69fb30a9c091044809a3b5cb47b",
+      "old_package_size": 9343104,
+      "result": "PASS",
+      "old_exe_sha256": "1b0c87efcdf1465672fbaa4382319a2e0edbf2ed122a25c786fe1981230fe405",
+      "health": {
+        "released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.5.7"
+        },
+        "candidate": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.6.0"
+        },
+        "rollback-released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.5.7"
+        }
+      },
+      "children": [
+        {
+          "label": "released",
+          "pid": 3680,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "candidate",
+          "pid": 6716,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "rollback-released",
+          "pid": 1396,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        }
+      ],
+      "replacement": {
+        "method": "Real old Inno setup \u2192 candidate Inno setup same directory",
+        "legacy_12_rows_existed_before_setup": true,
+        "candidate_all_portable_files_match": 17,
+        "same_registration_and_shortcuts": true
+      },
+      "installation_preserved_legacy_data_before_candidate_start": true,
+      "candidate_exe_sha256": "ed1d6440180db79d5fe940488161aa2d84cb97c30682beceb9a545f37ab4640e",
+      "old_schema": 11,
+      "candidate_schema": 11,
+      "preserved_tables": {
+        "usage_requests": 12,
+        "usage_costs": 12,
+        "stats_model_prices": 1,
+        "stats_settings": 1,
+        "stats_provider_settings": 1
+      },
+      "candidate_new_columns": {
+        "usage_requests": [],
+        "usage_costs": [],
+        "stats_model_prices": [],
+        "stats_settings": [],
+        "stats_provider_settings": []
+      },
+      "all_legacy_business_fields_equal": true,
+      "config_byte_equal": true,
+      "config_sha256": "6ad845f907a785ba0f766763a40f3b9f4776145459cf5d5f0dfd1347bac6b80d",
+      "legacy_snapshot_sha256": "751bfd6d85f5ef92f9c47aa2a27c3ef65be1423b06f69b8b767df9b76ed3e828",
+      "legacy_cost_per_request_nanos": 2800000,
+      "candidate_new_request_priced": true,
+      "installed_lifecycle": {
+        "host_pid": 5864,
+        "core_pid": 1076,
+        "ui_pids": [
+          2968,
+          6100
+        ],
+        "settings_close_kept_same_core": true,
+        "settings_reopened_new_pid": true,
+        "input_sent": false,
+        "host_exit_code": 0,
+        "all_pids_gone": true,
+        "three_runs_stopped_normally": true
+      },
+      "all_13_rows_equal_after_installed_lifecycle": true,
+      "package_rollback": {
+        "method": "Candidate uninstaller then verified original setup at identical path",
+        "old_package_files_equal": 16,
+        "version": "0.5.7",
+        "registration_and_shortcuts_restored": true,
+        "startup_remained_disabled": true
+      },
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 6,
+        "backup_bytes": 476189,
+        "backup_tree_sha256": "d54e47bcf730d38039dde9d7fd7892fd554a3c27008d58f13c2630c0e5bad28c",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 11,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "candidate_recorded_new_request": true,
+      "legacy_rows_equal_after_candidate_shutdown": true,
+      "scope": "Real released Core schema/data \u2192 candidate Core, cold handover in same isolated profile. Optional package/lifecycle/backup-restoration callbacks are separately reported. No live-upgrade, database downgrade/history merge, or universal compatibility claim.",
+      "uninstall": {
+        "removed_files_registration_and_desktop_shortcut": true,
+        "external_config_bytes_and_all_business_fields_preserved": true
+      }
+    }
+  ],
+  "candidate_archive_verified": {
+    "platform": "windows-x64",
+    "id": 13072713023,
+    "bytes": 61366295,
+    "sha256": "88631e907155d2e4329221fabd61006fec73e4fee6cbabd77c5a0f2863fb29c4"
+  },
+  "candidate_packages": [
+    {
+      "name": "workbuddy-proxy-0.6.0-windows-x64-setup.exe",
+      "sha256": "52c051bb7bd0265f8dad88c30e12e7348bb3f0c701ae00dc86fe39b7fe4b6ddd",
+      "bytes": 27940526
+    },
+    {
+      "name": "workbuddy-proxy-0.6.0-windows-x64.zip",
+      "sha256": "8f625cf0b5a6d0cd7d9407db9c917ad424e6f676dd19b47f23657f08c64a7ab9",
+      "bytes": 33827421
+    }
+  ],
+  "fixture_bytes_before_cleanup": 146011836
+}

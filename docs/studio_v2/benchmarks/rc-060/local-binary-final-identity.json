@@ -1,0 +1,10 @@
+{
+  "result": "passed",
+  "input_sha256": {
+    "core": "b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff",
+    "ui": "f5fa721fa5f4d314badbdcc70621e9e91ae24feb1532681449f8eb5138139db5"
+  },
+  "source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "no_new_build": true,
+  "no_local_gui_launched": true
+}

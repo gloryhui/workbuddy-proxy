@@ -1,0 +1,178 @@
+﻿2026-11-01 06:48:32.123   Log opened. (Time zone: UTC+00:00)
+2026-11-01 06:48:32.123   Setup version: Inno Setup version 6.7.1
+2026-11-01 06:48:32.124   Original Setup EXE: D:\a\_temp\studio-v2-installed-upgrade\candidate-packages\workbuddy-proxy-0.6.0-windows-x64-setup.exe
+2026-11-01 06:48:32.124   Setup command line: /SL5="$5017E,26590289,992768,D:\a\_temp\studio-v2-installed-upgrade\candidate-packages\workbuddy-proxy-0.6.0-windows-x64-setup.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- "/DIR=D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy" /LOG=D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\candidate-install.log
+2026-11-01 06:48:32.124   Windows version: 10.0.26100
+2026-11-01 06:48:32.124   Windows architecture: x64 (64-bit)
+2026-11-01 06:48:32.124   Machine types supported by system: x86 x64
+2026-11-01 06:48:32.124   User privileges: Administrative
+2026-11-01 06:48:32.127   Administrative install mode: No
+2026-11-01 06:48:32.127   Install mode root key: HKEY_CURRENT_USER
+2026-11-01 06:48:32.128   64-bit install mode: Yes
+2026-11-01 06:48:32.128   RedirectionGuard status for current process: Enabled in enforcing mode
+2026-11-01 06:48:32.129   Created protected temporary directory: C:\Users\RUNNER~1\AppData\Local\Temp\is-TBJWMJMPM7.tmp
+2026-11-01 06:48:32.234   Found 2 files to register with RestartManager.
+2026-11-01 06:48:32.234   Calling RestartManager's RmGetList.
+2026-11-01 06:48:32.248   RmGetList finished successfully.
+2026-11-01 06:48:32.248   RestartManager found no applications using one of our files.
+2026-11-01 06:48:32.250   Installer language: chinesesimplified
+2026-11-01 06:48:32.250   Desktop task label: 创建桌面快捷方式(&D)
+2026-11-01 06:48:32.250   Desktop shortcut selected: yes
+2026-11-01 06:48:32.250   Starting the installation process.
+2026-11-01 06:48:32.252   Directory for uninstall files: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy
+2026-11-01 06:48:32.252   Will append to existing uninstall log: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\unins000.dat
+2026-11-01 06:48:32.254   -- File entry --
+2026-11-01 06:48:32.254   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\unins000.exe
+2026-11-01 06:48:32.254   Non-default bitness: 32-bit
+2026-11-01 06:48:32.256   Time stamp of our file: 2026-11-01 06:48:32.052
+2026-11-01 06:48:32.256   Dest file exists.
+2026-11-01 06:48:32.256   Time stamp of existing file: 2026-11-01 06:48:26.905
+2026-11-01 06:48:32.256   Version of our file: 51.1054.0.0
+2026-11-01 06:48:32.256   Version of existing file: 51.1054.0.0
+2026-11-01 06:48:32.256   Installing the file.
+2026-11-01 06:48:32.266   Leaving temporary file in place for now.
+2026-11-01 06:48:32.266   -- File entry --
+2026-11-01 06:48:32.266   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\CHANGELOG.md
+2026-11-01 06:48:32.266   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.266   Dest file exists.
+2026-11-01 06:48:32.268   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.268   Installing the file.
+2026-11-01 06:48:32.268   Successfully installed the file.
+2026-11-01 06:48:32.268   -- File entry --
+2026-11-01 06:48:32.268   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\DESKTOP.md
+2026-11-01 06:48:32.268   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.268   Dest file exists.
+2026-11-01 06:48:32.268   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.268   Installing the file.
+2026-11-01 06:48:32.270   Successfully installed the file.
+2026-11-01 06:48:32.270   -- File entry --
+2026-11-01 06:48:32.270   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\Diagnose.cmd
+2026-11-01 06:48:32.270   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.270   Dest file exists.
+2026-11-01 06:48:32.270   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.270   Installing the file.
+2026-11-01 06:48:32.270   Successfully installed the file.
+2026-11-01 06:48:32.270   -- File entry --
+2026-11-01 06:48:32.270   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\LICENSE
+2026-11-01 06:48:32.270   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.270   Dest file exists.
+2026-11-01 06:48:32.270   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.270   Installing the file.
+2026-11-01 06:48:32.272   Successfully installed the file.
+2026-11-01 06:48:32.272   -- File entry --
+2026-11-01 06:48:32.272   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\README.md
+2026-11-01 06:48:32.272   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.272   Dest file exists.
+2026-11-01 06:48:32.272   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.272   Installing the file.
+2026-11-01 06:48:32.274   Successfully installed the file.
+2026-11-01 06:48:32.274   -- File entry --
+2026-11-01 06:48:32.274   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\workbuddy-proxy.exe
+2026-11-01 06:48:32.274   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.274   Dest file exists.
+2026-11-01 06:48:32.274   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.274   Installing the file.
+2026-11-01 06:48:32.565   Successfully installed the file.
+2026-11-01 06:48:32.565   -- File entry --
+2026-11-01 06:48:32.565   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\assets\icon-128.png
+2026-11-01 06:48:32.565   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.565   Dest file exists.
+2026-11-01 06:48:32.567   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.567   Installing the file.
+2026-11-01 06:48:32.567   Successfully installed the file.
+2026-11-01 06:48:32.567   -- File entry --
+2026-11-01 06:48:32.567   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\DESKTOP.md
+2026-11-01 06:48:32.567   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.567   Dest file exists.
+2026-11-01 06:48:32.567   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.567   Installing the file.
+2026-11-01 06:48:32.569   Successfully installed the file.
+2026-11-01 06:48:32.569   -- File entry --
+2026-11-01 06:48:32.569   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\GPUI-NOTICES.md
+2026-11-01 06:48:32.569   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.569   Dest file exists.
+2026-11-01 06:48:32.569   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.569   Installing the file.
+2026-11-01 06:48:32.569   Successfully installed the file.
+2026-11-01 06:48:32.569   -- File entry --
+2026-11-01 06:48:32.569   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\LICENSE-APACHE-GPUI.txt
+2026-11-01 06:48:32.569   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.569   Dest file exists.
+2026-11-01 06:48:32.569   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.569   Installing the file.
+2026-11-01 06:48:32.571   Successfully installed the file.
+2026-11-01 06:48:32.571   -- File entry --
+2026-11-01 06:48:32.571   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\MODEL-CAPABILITIES.md
+2026-11-01 06:48:32.571   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.571   Dest file exists.
+2026-11-01 06:48:32.571   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.571   Installing the file.
+2026-11-01 06:48:32.571   Successfully installed the file.
+2026-11-01 06:48:32.571   -- File entry --
+2026-11-01 06:48:32.573   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\PROVIDER-PRESETS.md
+2026-11-01 06:48:32.573   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.573   Dest file exists.
+2026-11-01 06:48:32.573   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.573   Installing the file.
+2026-11-01 06:48:32.574   Successfully installed the file.
+2026-11-01 06:48:32.574   -- File entry --
+2026-11-01 06:48:32.574   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\CONTRACTS.md
+2026-11-01 06:48:32.574   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.574   Dest file exists.
+2026-11-01 06:48:32.574   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.574   Installing the file.
+2026-11-01 06:48:32.575   Successfully installed the file.
+2026-11-01 06:48:32.575   -- File entry --
+2026-11-01 06:48:32.576   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\protocol-compat\USAGE.md
+2026-11-01 06:48:32.576   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.576   Dest file exists.
+2026-11-01 06:48:32.576   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.576   Installing the file.
+2026-11-01 06:48:32.577   Successfully installed the file.
+2026-11-01 06:48:32.577   -- File entry --
+2026-11-01 06:48:32.577   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\studio_v2\UPGRADE_ROLLBACK.md
+2026-11-01 06:48:32.577   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.577   Installing the file.
+2026-11-01 06:48:32.577   Creating directory: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\studio_v2
+2026-11-01 06:48:32.577   Successfully installed the file.
+2026-11-01 06:48:32.577   -- File entry --
+2026-11-01 06:48:32.577   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\docs\third-party\magpie-LICENSE.txt
+2026-11-01 06:48:32.577   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.577   Dest file exists.
+2026-11-01 06:48:32.577   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.577   Installing the file.
+2026-11-01 06:48:32.579   Successfully installed the file.
+2026-11-01 06:48:32.579   -- File entry --
+2026-11-01 06:48:32.579   Dest filename: D:\a\_temp\studio-v2-installed-upgrade\v0.5.6\自选路径 with spaces\WorkBuddy Proxy\internal\workbuddy-settings.exe
+2026-11-01 06:48:32.579   Time stamp of our file: 2026-11-01 06:19:46.000
+2026-11-01 06:48:32.579   Dest file exists.
+2026-11-01 06:48:32.579   Time stamp of existing file: 2026-10-16 08:45:46.000
+2026-11-01 06:48:32.579   Installing the file.
+2026-11-01 06:48:34.425   Successfully installed the file.
+2026-11-01 06:48:34.425   -- Icon entry --
+2026-11-01 06:48:34.427   Dest filename: C:\Users\runneradmin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\WorkBuddy Proxy\WorkBuddy Proxy.lnk
+2026-11-01 06:48:34.427   Creating the icon.
+2026-11-01 06:48:34.462   Successfully created the icon.
+2026-11-01 06:48:34.472   -- Icon entry --
+2026-11-01 06:48:34.472   Dest filename: C:\Users\runneradmin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\WorkBuddy Proxy\卸载 WorkBuddy Proxy.lnk
+2026-11-01 06:48:34.472   Creating the icon.
+2026-11-01 06:48:34.475   Successfully created the icon.
+2026-11-01 06:48:34.481   -- Icon entry --
+2026-11-01 06:48:34.481   Dest filename: C:\Users\runneradmin\Desktop\WorkBuddy Proxy.lnk
+2026-11-01 06:48:34.481   Creating the icon.
+2026-11-01 06:48:34.484   Successfully created the icon.
+2026-11-01 06:48:34.491   -- Registry entry --
+2026-11-01 06:48:34.491   Key: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+2026-11-01 06:48:34.491   Value name: WorkBuddyProxy
+2026-11-01 06:48:34.491   Not creating the key or a value, skipping the key and only updating uninstall log.
+2026-11-01 06:48:34.491   Saving uninstall information.
+2026-11-01 06:48:34.491   Renaming uninstaller.
+2026-11-01 06:48:34.491   Deleting uninstall key left over from previous non administrative install.
+2026-11-01 06:48:34.491   Creating new uninstall key: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\WorkBuddyProxy_is1
+2026-11-01 06:48:34.491   Writing uninstall key values.
+2026-11-01 06:48:34.491   Detected previous administrative 64-bit install? No
+2026-11-01 06:48:34.491   Detected previous administrative 32-bit install? No
+2026-11-01 06:48:34.493   Installation process succeeded.
+2026-11-01 06:48:34.493   Need to restart Windows? No
+2026-11-01 06:48:34.497   Deinitializing Setup.
+2026-11-01 06:48:34.505   Log closed.

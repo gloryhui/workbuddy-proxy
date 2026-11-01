@@ -1,0 +1,915 @@
+{
+  "files": [
+    {
+      "path": "candidate-change.patch.txt",
+      "bytes": 35391,
+      "sha256": "a337db0498154c78f8a16a61d13b4ea06e3ae52c64e867c747ba4b1ab580bc94"
+    },
+    {
+      "path": "candidate-packages.json",
+      "bytes": 1208,
+      "sha256": "238106b8708630224763cfc6e918cad4b6e1d74ba088449d0683a55d9c4715b8"
+    },
+    {
+      "path": "ci/core/artifact-validation.json",
+      "bytes": 1406,
+      "sha256": "520a55a54b637fd90332e8aca280f9da1c0341d6f0e7adeb29c5cbb0020fcc18"
+    },
+    {
+      "path": "ci/core/artifact.zip",
+      "bytes": 4758,
+      "sha256": "5f919950d8982b1ce3b98ae1200ffcb257504ebd7ec822074d6b7cd8355beb80"
+    },
+    {
+      "path": "ci/core/artifacts.json",
+      "bytes": 750,
+      "sha256": "692e2c5b3e634a53015cf79195b465aecec247b0ba72c94ac6c9ad0660ae2f7e"
+    },
+    {
+      "path": "ci/core/jobs.json",
+      "bytes": 7213,
+      "sha256": "173d78d9d1f4edeca94f13ca5f95e1a2d893d4c81188036b0596781a26ea8e14"
+    },
+    {
+      "path": "ci/core/read-errors.json",
+      "bytes": 198,
+      "sha256": "bc51a18773d54410df72f92269762cb3f624666cf961396ed5af797f267aecf2"
+    },
+    {
+      "path": "ci/core/reports/os-faults/report.json",
+      "bytes": 3241,
+      "sha256": "7af518370bafbcd9390a58912eab0d14c7b1f304fc07ec97b00e6c2c144d6049"
+    },
+    {
+      "path": "ci/core/reports/workbuddy_import_test.json/report.json",
+      "bytes": 22413,
+      "sha256": "762ab50d543f54605e94c0df32fa15ce78544f0c1b1bfb4703a8083c09f008e2"
+    },
+    {
+      "path": "ci/core/run.json",
+      "bytes": 12743,
+      "sha256": "e257df24aa106ef419956a789f7d53a3069a9362e15a21e7cd532a080d859b27"
+    },
+    {
+      "path": "ci/core/run.log.txt",
+      "bytes": 328727,
+      "sha256": "6f67638f83f72fe5ed5b6b208bdfb7c711b5b7cbd5a35af79b2d1a0b81e87b1e"
+    },
+    {
+      "path": "ci/desktop/artifacts-in-progress-2.json",
+      "bytes": 1810,
+      "sha256": "435e8cb0960df402edb28a50eb7b12ffdc8c9969090e0f8e0d6589c5c1b3a845"
+    },
+    {
+      "path": "ci/desktop/artifacts-in-progress.json",
+      "bytes": 928,
+      "sha256": "c5feb9d07bfbb72ab1f92efd4bbca1dad3acf0d001783851f03f3a497d7c0db9"
+    },
+    {
+      "path": "ci/desktop/artifacts.json",
+      "bytes": 2694,
+      "sha256": "9c3d141d4c0acfbd3d4e51f9b4560ef9b5c8f6920a97ff8cce9d78727b6c1515"
+    },
+    {
+      "path": "ci/desktop/jobs-in-progress.json",
+      "bytes": 43111,
+      "sha256": "89d3ec9145cf02062462f0419f33c6c25d06ca40edc683ee2e8e33b97ecc42b0"
+    },
+    {
+      "path": "ci/desktop/jobs.json",
+      "bytes": 43397,
+      "sha256": "b695f7d37f6abf305b50cfc9e49c435d35bc22592775acdb42717db480923e35"
+    },
+    {
+      "path": "ci/desktop/macos-arm64-artifact-validation.json",
+      "bytes": 2529,
+      "sha256": "d8f8d2ec258d32d94243c4670c7593cd3c01cf301b0dfbc6fe29dbf04c29ad95"
+    },
+    {
+      "path": "ci/desktop/macos-x64-artifact-validation.json",
+      "bytes": 2505,
+      "sha256": "805837e4558a13d84a25db27d11e47b99a7a1e9762b61e5c6b08cafebf9446b4"
+    },
+    {
+      "path": "ci/desktop/reports/macos-arm64/bench-results/core-macos-arm64.json",
+      "bytes": 1219,
+      "sha256": "ca6bad15f4ff99c236a4ac611116ec8f00523239bfa5d6aa9a950964ea8560df"
+    },
+    {
+      "path": "ci/desktop/reports/macos-arm64/bench-results/gpui-macos-arm64.json",
+      "bytes": 1163,
+      "sha256": "7d94d36ae91540cd18dbfb540d66b268d65356836c9576961206d0c7f7295cf4"
+    },
+    {
+      "path": "ci/desktop/reports/macos-arm64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 24191,
+      "sha256": "09570fe844b68ba4e338a7f1a28cf34cfbf60843f6fa10b1c700450831bd6213"
+    },
+    {
+      "path": "ci/desktop/reports/macos-x64/bench-results/core-macos-x64.json",
+      "bytes": 1221,
+      "sha256": "4486cb3049062c431d6ae3f508685e8b76ffceda590a4b5756c569d4c2202978"
+    },
+    {
+      "path": "ci/desktop/reports/macos-x64/bench-results/gpui-macos-x64.json",
+      "bytes": 1164,
+      "sha256": "29865eeecce69ee44f992cfea9d7b374a2b049699161e63ae966a8b1a0a5b9d3"
+    },
+    {
+      "path": "ci/desktop/reports/macos-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 24192,
+      "sha256": "dea7e9a3bb029e5336dd81ea40134ae4f8697f1e2eaeb3d5e6d7087a8576f817"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/bench-results/core-windows-x64.json",
+      "bytes": 1263,
+      "sha256": "99f32747911069387f68a42dcc58fb6ef23bd6acd37eaf979149ced48d4df944"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/bench-results/gpui-windows-x64.json",
+      "bytes": 1194,
+      "sha256": "87352928a85dc601d280dd6539836a2525b64beebbcc81923d2df3dfebf5c2cb"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/bench-results/windows-installer.json",
+      "bytes": 1775,
+      "sha256": "4e1f4dfcd42d79315fd0afd3e12300f0f462a16f4a13fc464ed442278fa84864"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/bench-results/windows-native/windows-ci-1100x700.png",
+      "bytes": 74351,
+      "sha256": "a8fbf0f44c52cd2a552703d087dc1580f1d8e253dc977252a300c2a49ced1522"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/bench-results/windows-native/windows-ci-1440x900.png",
+      "bytes": 78973,
+      "sha256": "d2f46bc64118dd5fc04538a16b6084dc7fe5a3045490f321ec2917b03487187e"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/bench-results/windows-native/windows-ci-lifecycle.json",
+      "bytes": 1098,
+      "sha256": "e37d3557141922b2178dc4219fe6f34463ea7777960ad5b96273fbd15edb1b57"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/bench-results/windows-native/windows-ci-screenshot.json",
+      "bytes": 15009,
+      "sha256": "9c229b7a3cb54bb6158b9ef08eaff29c74f649f041e8617046fb04a36893905c"
+    },
+    {
+      "path": "ci/desktop/reports/windows-x64/dist/workbuddy-import-validation/workbuddy_import_test.json/report.json",
+      "bytes": 23298,
+      "sha256": "4a6119e6ae7932cad87719362386ce073668b81a7b9ca5af98809e29da150030"
+    },
+    {
+      "path": "ci/desktop/run-in-progress.json",
+      "bytes": 15035,
+      "sha256": "600e28aa6fe4357076c96bf659e2b10345a17e8ac0df8a4a08161e826fda0dda"
+    },
+    {
+      "path": "ci/desktop/run.json",
+      "bytes": 15038,
+      "sha256": "d290a3f6237bdcb36f22bd43c4930db470d320011f31ecf8bb175a644d47882a"
+    },
+    {
+      "path": "ci/desktop/run.log.txt",
+      "bytes": 1902240,
+      "sha256": "c814546e259445d567e1834282e6354cbbaf00def5760bce584ccdebf02235ce"
+    },
+    {
+      "path": "ci/desktop/validation.json",
+      "bytes": 3303,
+      "sha256": "b7de48fa85fd0a15e49dc5d19a72895367ec13a7c2f1f317da5ed73465a061bc"
+    },
+    {
+      "path": "ci/desktop/windows-artifact-validation.json",
+      "bytes": 5314,
+      "sha256": "f838d9480b068f5405b389ed9ce5cec8dc5ee6815698e959a7e638a0fa5dc74a"
+    },
+    {
+      "path": "ci/upgrades-final/artifacts.json",
+      "bytes": 2512,
+      "sha256": "ceba336437c038ba74f579f302c3221acf2227459f7ea18e267920e9326dd159"
+    },
+    {
+      "path": "ci/upgrades-final/job-124776360903.log.txt",
+      "bytes": 27818,
+      "sha256": "076abcd7434b570c7570cb10123dfdcba68d91653993705a82f7bba05788ca46"
+    },
+    {
+      "path": "ci/upgrades-final/job-124776360972.log.txt",
+      "bytes": 25169,
+      "sha256": "1eff3cb8df101d3c0d82a49e89924f7a10542fe17238a8d04a75176b9b82e257"
+    },
+    {
+      "path": "ci/upgrades-final/job-124776361038.log.txt",
+      "bytes": 24937,
+      "sha256": "81fb410ebe394c88f48b92c5b49a410d339999da87e2cce4eb8bb21b2988f294"
+    },
+    {
+      "path": "ci/upgrades-final/jobs.json",
+      "bytes": 6249,
+      "sha256": "333fe187b58114e0ef696365b5a27e110a4ef18b96537834241a73e7ce01efe8"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/artifact.zip",
+      "bytes": 11342,
+      "sha256": "5c6634e309bd4b60072404c7866be394741385b8b4928f2aeba08a62891254df"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/cleanup.json",
+      "bytes": 520,
+      "sha256": "b06270fe137b040c7689b5155b5301ba0ffe8ff4faa5935841ede67774c5c652"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.6/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "a8a457e9189cee4aec24a7e14afafeb3e08ce8094c643bf3e4c949d32eab56db"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.6/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "cd70ea351c42ac140455a13fc8de1c3a310ceb80710b80b005e2792685b73652"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "cd70ea351c42ac140455a13fc8de1c3a310ceb80710b80b005e2792685b73652"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "cd70ea351c42ac140455a13fc8de1c3a310ceb80710b80b005e2792685b73652"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.6/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "cd70ea351c42ac140455a13fc8de1c3a310ceb80710b80b005e2792685b73652"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.7/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "03405f398ae314ecb29b6f99e8f406b6472bd67de8f6febf71085b74153844a4"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.7/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "fa5b5e97bd8ce688601c343b0c826a161241614384117dc63667d7c1344b4a46"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.7/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "fa5b5e97bd8ce688601c343b0c826a161241614384117dc63667d7c1344b4a46"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "fa5b5e97bd8ce688601c343b0c826a161241614384117dc63667d7c1344b4a46"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/logs/v0.5.7/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "fa5b5e97bd8ce688601c343b0c826a161241614384117dc63667d7c1344b4a46"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/report.json",
+      "bytes": 25801,
+      "sha256": "2fee13ebeb59a695dabc087e9fd0a1ca1be7c5a17295987a51a75d6ba7183b33"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/v0.5.6.json",
+      "bytes": 10856,
+      "sha256": "2d24fa9d4140f1347874e073f4f3bffe2dffc877ba98e8ef2f300efe2b473868"
+    },
+    {
+      "path": "ci/upgrades-final/macos-arm64/reports/v0.5.7.json",
+      "bytes": 10606,
+      "sha256": "594c8a450276044ea715949fb275b944bb7bf3302d3ff07886500905bda79066"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/artifact.zip",
+      "bytes": 11333,
+      "sha256": "6cca577c7423624b8aae52a5fa693290507e86519d9dc3d95fd59a51027edde0"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/cleanup.json",
+      "bytes": 520,
+      "sha256": "9e84cf7d94557e1cc8f5404e2ab5a457483cbc63a95f430e770385c88452059e"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.6/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "4cccccac56c105b0ef703c0a09d44340b7d23b7ac9b79b4aeec7eb50c11ab806"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.6/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "2505c4ecb60662a7316ecd5b65ea3fc4ea1fe76420202691d8937171c2591761"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "2505c4ecb60662a7316ecd5b65ea3fc4ea1fe76420202691d8937171c2591761"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "2505c4ecb60662a7316ecd5b65ea3fc4ea1fe76420202691d8937171c2591761"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.6/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "2505c4ecb60662a7316ecd5b65ea3fc4ea1fe76420202691d8937171c2591761"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.7/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "cbc8f1487c3cdc3b10f174bca0b89bfe6020097e6f712d7b1a9ef31fbdd2d8fe"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.7/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "7820023ee144f50d68fc3bc42d5d7378dc4bea850c633426a60c79318a009527"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.7/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "7820023ee144f50d68fc3bc42d5d7378dc4bea850c633426a60c79318a009527"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "7820023ee144f50d68fc3bc42d5d7378dc4bea850c633426a60c79318a009527"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/logs/v0.5.7/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "7820023ee144f50d68fc3bc42d5d7378dc4bea850c633426a60c79318a009527"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/report.json",
+      "bytes": 25787,
+      "sha256": "656d79b765efc5067680713b7b1aa4f8de728173c9264af53c7eb803e0c447a2"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/v0.5.6.json",
+      "bytes": 10852,
+      "sha256": "574b8a8dd95d587adb864e8c510bae55435957c37d8f4d5f5b756d05c974c171"
+    },
+    {
+      "path": "ci/upgrades-final/macos-x64/reports/v0.5.7.json",
+      "bytes": 10602,
+      "sha256": "e5013adeb7618e6ad5babccbda04921d6a3aae712891d3ac22780218a9500cc4"
+    },
+    {
+      "path": "ci/upgrades-final/run.json",
+      "bytes": 154,
+      "sha256": "2e9f82fceab0231e7d8c590a9a2309621f89a913fbd88630a09424521bc0f0ef"
+    },
+    {
+      "path": "ci/upgrades-final/validation.json",
+      "bytes": 3590,
+      "sha256": "d110dabfd0311eef987395218bc9c7a77187092ecf6115b8c6223f6533114513"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/artifact.zip",
+      "bytes": 31821,
+      "sha256": "30ede2f494ce58c9e14230a4f3aad6b104da171576f29402d0ed87265957b114"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/cleanup.json",
+      "bytes": 510,
+      "sha256": "50984260d1544f9fdb2baec158969d3d88e39bed8ff1a9265a4d8ddba3630669"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/candidate-install.log.txt",
+      "bytes": 13362,
+      "sha256": "46a0c132545e99f027e12989c864ff8921689a8f0f5243c00071de135ccc6c64"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "9ed271c7dda4fc64076219d1dc9cee27e4a13c6d4bb94306bb1b2bbf4a861a14"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "bf3489193745eb1fc0818f1811cafb0a009e85b69fafe0fd2446e4a28a51c6a5"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "bf3489193745eb1fc0818f1811cafb0a009e85b69fafe0fd2446e4a28a51c6a5"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "bf3489193745eb1fc0818f1811cafb0a009e85b69fafe0fd2446e4a28a51c6a5"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/private-data/rollback-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "bf3489193745eb1fc0818f1811cafb0a009e85b69fafe0fd2446e4a28a51c6a5"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/released-install.log.txt",
+      "bytes": 110972,
+      "sha256": "847e233f312ed9a22e9e40f131e67051b8816377e83c7f33ce094df6e31fda21"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.6/rollback-released-install.log.txt",
+      "bytes": 110981,
+      "sha256": "e357fbc785ed34611dbcaa543902913edc60962bef4a5dd048a1f40cc5229b13"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/candidate-install.log.txt",
+      "bytes": 13362,
+      "sha256": "8ca34f13385047b28629a1e3f91e615935c05f2a6cff80cd56971a147e677087"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "4b48c1b8e0156746518431ae451022123eceb5439d03b9bae486150fc0cecdd3"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "ae2ade8e97dae6b3424c4dce6f4408b0d2daac504008945d9a70ffdfba166289"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "ae2ade8e97dae6b3424c4dce6f4408b0d2daac504008945d9a70ffdfba166289"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "ae2ade8e97dae6b3424c4dce6f4408b0d2daac504008945d9a70ffdfba166289"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/private-data/rollback-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "ae2ade8e97dae6b3424c4dce6f4408b0d2daac504008945d9a70ffdfba166289"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/released-install.log.txt",
+      "bytes": 11495,
+      "sha256": "cf245d76bdeb0d5c41da4c32b0e08fcb20f0fc59bf8f3bc937e14a85b76f7157"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/logs/v0.5.7/rollback-released-install.log.txt",
+      "bytes": 11505,
+      "sha256": "18d0fd5123e996b842a98666c407bb0ae2ba2f646debe0f362a673119ee379cf"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/report.json",
+      "bytes": 11276,
+      "sha256": "5b113441e267aa5f57e24a0b2262b174b0608103d02de274474a0042eb427f5e"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/v0.5.6.json",
+      "bytes": 4678,
+      "sha256": "e8f64f1f34ac74f772f8c3bfc2162d2af98a7e74fd64f04132b2df796ce455ca"
+    },
+    {
+      "path": "ci/upgrades-final/windows-x64/reports/v0.5.7.json",
+      "bytes": 4416,
+      "sha256": "6617ec41fd3c8fb81612f0db35c00470a5e372e22e2a8f21032d4cafcb0c8017"
+    },
+    {
+      "path": "ci/upgrades-first/connector-artifacts.json",
+      "bytes": 2511,
+      "sha256": "bf4a27b2cadd62cc8a07abdc4b00cdcaab9b2778675521cec14d5947e070ae36"
+    },
+    {
+      "path": "ci/upgrades-first/intel-job.log.txt",
+      "bytes": 24985,
+      "sha256": "14341e79f97e47fa76f1f3e75d1b4466ed02dec4bbe3e58d50b83b702588adf5"
+    },
+    {
+      "path": "ci/upgrades-first/jobs.json",
+      "bytes": 13842,
+      "sha256": "95a73810447b0494284c8ef12534eb356d049f0ff32318569cca5721939cf4ae"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/artifact.zip",
+      "bytes": 11323,
+      "sha256": "cca73524c3d811b2039f575aaf9454602877da93818e76235b7064c02c2eddf7"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/cleanup.json",
+      "bytes": 520,
+      "sha256": "cccbba2fdc71afbaa9cf6f2f7a6b0be8b09641c60800b7b3fc8c65dce5e4a095"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.6/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "46d67222a9385b2b02eff3f76aa9065d1bf756641a0e8e861b91d3f87f1a7022"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.6/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "4c7ee58863ebf8b8122417c8a28cb6d7227607ea9ca6d952a509923d3bc1808b"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "4c7ee58863ebf8b8122417c8a28cb6d7227607ea9ca6d952a509923d3bc1808b"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "4c7ee58863ebf8b8122417c8a28cb6d7227607ea9ca6d952a509923d3bc1808b"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.6/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "4c7ee58863ebf8b8122417c8a28cb6d7227607ea9ca6d952a509923d3bc1808b"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.7/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b8caacac3dfbd569be76f61ce5f6bf33bf1900361e4cbb8e7532130e6492712f"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.7/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "a540b8a442a69218f4a72dc819ee5cc148d77e2e404c13bc19e1f68b201bc120"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.7/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "a540b8a442a69218f4a72dc819ee5cc148d77e2e404c13bc19e1f68b201bc120"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "a540b8a442a69218f4a72dc819ee5cc148d77e2e404c13bc19e1f68b201bc120"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/logs/v0.5.7/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "a540b8a442a69218f4a72dc819ee5cc148d77e2e404c13bc19e1f68b201bc120"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/report.json",
+      "bytes": 25801,
+      "sha256": "b296fb99b4c8c5f8773b4a941ab9541006bba914af9e4b24b9b671ee7065c6af"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/v0.5.6.json",
+      "bytes": 10856,
+      "sha256": "f5b3c3b7f8d0455048b60c7c5f0a89d0e4f6cb9c4fb50606a6ec62689ebec5c1"
+    },
+    {
+      "path": "ci/upgrades-first/macos-arm64/reports/v0.5.7.json",
+      "bytes": 10606,
+      "sha256": "f5c45ed38216fd5a62a138efbb2275fa4268f3a5ed48c717447dce8c31dbf307"
+    },
+    {
+      "path": "ci/upgrades-first/macos-x64/artifact.zip",
+      "bytes": 4808,
+      "sha256": "b031e6aad6a2f68c769ce55bf8a83a3dd66b3a00039d0a2092af7e2de4ccc039"
+    },
+    {
+      "path": "ci/upgrades-first/macos-x64/reports/cleanup.json",
+      "bytes": 520,
+      "sha256": "d0ff6e2967e2033a17a9bf287af0733bec5b93fab08dd8c1ac60bd031de1a09a"
+    },
+    {
+      "path": "ci/upgrades-first/macos-x64/reports/logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "ba225668f7d14793ba66783a7fe3a3db57a029c1ca8d614f6cbbfbd90c9b43a6"
+    },
+    {
+      "path": "ci/upgrades-first/macos-x64/reports/logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "36e3db961823378e1d427fce155bed9acf58059c37777b1ba8c4337adc87c953"
+    },
+    {
+      "path": "ci/upgrades-first/macos-x64/reports/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "ba225668f7d14793ba66783a7fe3a3db57a029c1ca8d614f6cbbfbd90c9b43a6"
+    },
+    {
+      "path": "ci/upgrades-first/macos-x64/reports/report.json",
+      "bytes": 8612,
+      "sha256": "0a11c4f565a6a56199dd50f5ee5385cb56f72621d80a586a9b9496fad5dc0d61"
+    },
+    {
+      "path": "ci/upgrades-first/macos-x64/reports/v0.5.6.json",
+      "bytes": 6527,
+      "sha256": "2c27c67c1b066396b2f55b6372da7df2c606f42e7c51c47aa145b9179ba8ffad"
+    },
+    {
+      "path": "ci/upgrades-first/read-errors-2.json",
+      "bytes": 315,
+      "sha256": "70dc15b295bbb091a3a88cdc757f2d42eb7b246ea7030dcee36141d39d301bab"
+    },
+    {
+      "path": "ci/upgrades-first/read-errors-3.json",
+      "bytes": 397,
+      "sha256": "1e8ba247352792d0096832d547177f6f4144bae18c5cbca5b2511ee2b8eedd0f"
+    },
+    {
+      "path": "ci/upgrades-first/read-errors.json",
+      "bytes": 634,
+      "sha256": "f0c30e4ad1020c95900046451ec5ae44f843bcd00e0fe6be5ed3eae60a5837f2"
+    },
+    {
+      "path": "ci/upgrades-first/run.json",
+      "bytes": 15193,
+      "sha256": "9a9d80e5a64bb0398dc0ff32b292128a1e1feab59caa61f11a24e75846662038"
+    },
+    {
+      "path": "ci/upgrades-first/validation.json",
+      "bytes": 1884,
+      "sha256": "85adf06d8be767a319d91e8a451667c94970c36c5ce5afee8f79519cb0c81805"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/artifact.zip",
+      "bytes": 31643,
+      "sha256": "f92c712668e300e419e31029a34f5e320b7142a6a0a778a5a8ba413aee780569"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/cleanup.json",
+      "bytes": 510,
+      "sha256": "ddae27272e94149f97231495869b68697296a4a13aa609043f595f68f8e8c0ec"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/candidate-install.log.txt",
+      "bytes": 13362,
+      "sha256": "a10d2fcabdff17359afbab92075a9524f760868e1de68839f36c8fe60c31663c"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "88b5542818e7d7e5fcf5130b4317024ab5b484ce669f4b8fb927815f3c47f727"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "a8c554ef4853b1f2cb7b2e0968cd7bee9e0e44248460dd8c6f7acd412d50f7fe"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "a8c554ef4853b1f2cb7b2e0968cd7bee9e0e44248460dd8c6f7acd412d50f7fe"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "a8c554ef4853b1f2cb7b2e0968cd7bee9e0e44248460dd8c6f7acd412d50f7fe"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/private-data/rollback-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "a8c554ef4853b1f2cb7b2e0968cd7bee9e0e44248460dd8c6f7acd412d50f7fe"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/released-install.log.txt",
+      "bytes": 110972,
+      "sha256": "b12ca37b5d2e2543fb68737d8a61b84cafec4da14249c2be203a5168949c0ff3"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.6/rollback-released-install.log.txt",
+      "bytes": 110981,
+      "sha256": "43b742599c0ea4169d84f5157d4daab823feb859a5b5b49f395f82e3912e9800"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/candidate-install.log.txt",
+      "bytes": 13362,
+      "sha256": "d6829745c7207b5b8fe632c9bdea43149c66f65060700dab502a901d370afd67"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "63467f27f029865eb9d4ebb9ffc4eae030a64a53ff9decd2654e685c248a79ec"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "052ed18abc42160fcd0c088d9c4a051a0e85ff45c1ec4b633b5927bcc5bd18b2"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "052ed18abc42160fcd0c088d9c4a051a0e85ff45c1ec4b633b5927bcc5bd18b2"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "052ed18abc42160fcd0c088d9c4a051a0e85ff45c1ec4b633b5927bcc5bd18b2"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/private-data/rollback-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "052ed18abc42160fcd0c088d9c4a051a0e85ff45c1ec4b633b5927bcc5bd18b2"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/released-install.log.txt",
+      "bytes": 11495,
+      "sha256": "1defdbd82ccb095ef974079a426b3e1c75620e733a06e0c4b521b319d66ba654"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/logs/v0.5.7/rollback-released-install.log.txt",
+      "bytes": 11505,
+      "sha256": "79ca3f523516775e501898826cb858d3d9b15b5f1e008805b632617fc6083edb"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/report.json",
+      "bytes": 11275,
+      "sha256": "62546496096389833cb754fb4421ac0d96d6c10fa49c34eeff26258f14bea350"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/v0.5.6.json",
+      "bytes": 4677,
+      "sha256": "9bc1f7145082854ad0ddd74ca5a132e3b98df59849db1ff6be40f107c06546a7"
+    },
+    {
+      "path": "ci/upgrades-first/windows-x64/reports/v0.5.7.json",
+      "bytes": 4416,
+      "sha256": "35f30d0f8962ff2a48c5ee3070911bd13bac983a5e6f3c98d9b94c84709ea8bb"
+    },
+    {
+      "path": "cleanup-immediate-preflight.json",
+      "bytes": 265,
+      "sha256": "61ccde7172a3dfb26cc992c4037c0f2fbe9ec68c50f15f83d3cd7114a6b5a91f"
+    },
+    {
+      "path": "cleanup-preflight.json",
+      "bytes": 2626,
+      "sha256": "e548a87f6d8214fa434f6b14f6c3909606fb63763ade1791ef074c9eb306e796"
+    },
+    {
+      "path": "cleanup.json",
+      "bytes": 6792,
+      "sha256": "706f75910e37456369f342cef92766c28acddea1b6d5423672321f09bf7c9200"
+    },
+    {
+      "path": "cold-snapshot-change.patch.txt",
+      "bytes": 8178,
+      "sha256": "0675730b3d9ed17b010b11482639d14e2c13412753d5f1038e385872dc027a3a"
+    },
+    {
+      "path": "cold-snapshot-diagnosis.json",
+      "bytes": 1350,
+      "sha256": "43b4849398aa6d35546e0fbe91fe18f22d153504012f756413a833432eb6ca55"
+    },
+    {
+      "path": "cold-snapshot-green.log.txt",
+      "bytes": 1838,
+      "sha256": "f31ac3adc068355128580c3d4ccdb03803a49f4d1f1f54562956276d12a46f14"
+    },
+    {
+      "path": "cold-snapshot-red.log.txt",
+      "bytes": 2942,
+      "sha256": "1982af99b99c33e93b57cf12223fe520b3d82a3751690c2266572a803262f4b2"
+    },
+    {
+      "path": "collection-errors.json",
+      "bytes": 419,
+      "sha256": "899130fbd601a3dd9b508e92fbc9a93951e6e02d4507e3b571e9883e3387675f"
+    },
+    {
+      "path": "core-metadata.log.txt",
+      "bytes": 5174,
+      "sha256": "594312264cf9ef77e4d9e83d4abfd61af3ba1a11f0e5fbe23ce372d39cbac333"
+    },
+    {
+      "path": "core-release.log.txt",
+      "bytes": 161,
+      "sha256": "b256c93512775da4adc5405307adc5217d0f44bf557fe0b1081404869d1a53c5"
+    },
+    {
+      "path": "core-version.log.txt",
+      "bytes": 6,
+      "sha256": "97a5d6e540a6120d09c39ddb667e0e8e2bac7fcc2ffef813b82e08fd60365bce"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 784,
+      "sha256": "942ff6534efba286952a03d6ddb9cfbf5f84014c33c457ba853fedb98fc2d3aa"
+    },
+    {
+      "path": "frozen-native-extraction.json",
+      "bytes": 619,
+      "sha256": "ee23aadb2ca2a27946e9c31f97ba40bc8396aa0169201221b681913a6d38eb43"
+    },
+    {
+      "path": "frozen-source-validation.json",
+      "bytes": 1862,
+      "sha256": "c59d2836471300d1bbc09f3888846666341621f62c271d79c2e27f1d712db3f2"
+    },
+    {
+      "path": "local-binary-final-identity.json",
+      "bytes": 320,
+      "sha256": "d207116be1b74b6e14dc796fb619c5af8a93d9628bfdd1f124bb34c8f6fb2879"
+    },
+    {
+      "path": "local-checks.json",
+      "bytes": 2421,
+      "sha256": "6c651a9001983ab8c8869da5474334af59abfbb7c47a80510b99fc3e293a4f2c"
+    },
+    {
+      "path": "local-freeze.json",
+      "bytes": 1063,
+      "sha256": "fbca5f16585f2e08ce04b897909f4554bfc4394888bea992ba2ede807daa9896"
+    },
+    {
+      "path": "portability.log.txt",
+      "bytes": 103,
+      "sha256": "6299c61ecefc2c6e262ba2dccd92b35e4ade4e41b723fe2eac602dbd7b324b98"
+    },
+    {
+      "path": "post-freeze-scope.json",
+      "bytes": 362,
+      "sha256": "d782e07abdc7fdc82fc33e7c51983d8cd71378f1a108db0cf67c10603d837356"
+    },
+    {
+      "path": "preregistered.json",
+      "bytes": 1691,
+      "sha256": "5d338c5a00b6ae48df5a0f99df15fd654eafdaf53ca01d3174ad87f02c9b5aca"
+    },
+    {
+      "path": "source-hashes.json",
+      "bytes": 1656,
+      "sha256": "a633f19a2540a8db3579e5c4beea705bf6fe0899847ce6a7b15ff430725bb4a0"
+    },
+    {
+      "path": "timeline-before.json",
+      "bytes": 348,
+      "sha256": "860e3f333363ff251bac24291c268a632dd84b7f974f76702a9c7aef199b0e57"
+    },
+    {
+      "path": "timeline-source-binding.json",
+      "bytes": 547,
+      "sha256": "617e375b9ef6ed6733d8f1ae524b72e4d7a801f03ff7a0c7acf28ceed4d44e82"
+    },
+    {
+      "path": "ui-metadata.log.txt",
+      "bytes": 5027,
+      "sha256": "a8296149a523116818235982b8b905ff01298634f04aa520381d20bbccb5e9f7"
+    },
+    {
+      "path": "ui-release.log.txt",
+      "bytes": 414,
+      "sha256": "9e3c63bbde5d6bda7dea2841ea5e92b75a8e5a3a7f4e69cf1739a198e74f1f11"
+    },
+    {
+      "path": "ui-version.log.txt",
+      "bytes": 6,
+      "sha256": "97a5d6e540a6120d09c39ddb667e0e8e2bac7fcc2ffef813b82e08fd60365bce"
+    },
+    {
+      "path": "upgrade-dispatch-cold-fix.json",
+      "bytes": 690,
+      "sha256": "cb590e5e1678635478eef299ff2063a5f8ab9a207068cf85a8b01f977777969a"
+    },
+    {
+      "path": "upgrade-dispatch.json",
+      "bytes": 792,
+      "sha256": "892474d574cc69e0711e015b25961d5e2238710c527bff073b3aed848205c5d6"
+    },
+    {
+      "path": "upgrade-manifest-binding.json",
+      "bytes": 497,
+      "sha256": "5ed84d644d8fc3458de5f74de03df42b7733ae0c98869f3c227af86a25313c9b"
+    },
+    {
+      "path": "upgrade-preregistered.json",
+      "bytes": 1619,
+      "sha256": "0a4dd31415014ab3998faaffa75ac4acb67f214ada3175322a4ef87045ebef93"
+    },
+    {
+      "path": "version-tests.log.txt",
+      "bytes": 105,
+      "sha256": "e953b76b93474ce3b380d27070d22d5ff990a94288e5c6ed4d45b5b967b4677d"
+    },
+    {
+      "path": "windows-package-audit.json",
+      "bytes": 1208,
+      "sha256": "f13a87730a3531a4b6624613224eb1b21850b02b11121b2a691b476201f92ebf"
+    },
+    {
+      "path": "windows-visual-review.json",
+      "bytes": 1362,
+      "sha256": "9e05c493112d1997b30d908e110df2e224ab6a5c3fbb8c564837037a55d07a2b"
+    },
+    {
+      "path": "whitespace-validation.json",
+      "bytes": 3662,
+      "sha256": "3e182001b133764451bcc4a3649533783353c58fb7a09086e7272b2a9ce2f2ce"
+    }
+  ],
+  "file_count": 180,
+  "logical_bytes": 3763914,
+  "json_parse": "allpassed",
+  "private_key_token_pattern_hits": [],
+  "product_and_shipped_docs_equal_dd9": true,
+  "commit_trailers": {
+    "dd9deba": "exactlyoneCodextrailer, author/committer unchanged",
+    "21dea55": "exactlyoneCodextrailer, author/committer unchanged",
+    "c435b5c": "exactlyoneCodextrailer, author/committer unchanged"
+  },
+  "scope": "Artifact archives/reports are exact downloaded bytes; connector joblogs are decoded text; no userprivateconfig/DB/privatekey retained. Firstfailures and readerrors retained."
+}

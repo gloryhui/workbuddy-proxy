@@ -1,0 +1,10 @@
+[
+  {
+    "file": "artifacts.json",
+    "error": "Get \"https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/runs/41281534447/artifacts\": EOF"
+  },
+  {
+    "file": "intel-job.log.txt",
+    "error": "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway"
+  }
+]

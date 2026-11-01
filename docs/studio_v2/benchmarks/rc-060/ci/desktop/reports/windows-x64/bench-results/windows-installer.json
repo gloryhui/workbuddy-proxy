@@ -1,0 +1,40 @@
+{
+  "platform": "Windows-2025Server-10.0.26100-SP0",
+  "architecture": "AMD64",
+  "processes_with_settings": 3,
+  "core_rss_mib": 17.48,
+  "tray_rss_mib": 13.39,
+  "gpui_rss_mib": 60.89,
+  "model_count": 64,
+  "note": "RSS sums process working sets; shared pages can be counted more than once. GPU/driver allocations are not separately measured. Mock/client processes are excluded.",
+  "settings_open_rss_mib": 91.76,
+  "settings_closed_rss_mib": 31.1,
+  "processes_after_close": 2,
+  "checks": [
+    "separate lightweight core/tray/GPUI processes",
+    "repeated launch reuses the existing application instance",
+    "closing settings releases GPUI without stopping the core",
+    "tray reopens settings using the same core",
+    "private unsaved drafts survive reopening without changing config.json",
+    "real loopback streaming diagnostic with selected model",
+    "ordered core log clear",
+    "exactly one statistics run owned by the core",
+    "opening settings never recovers a live core",
+    "normal quit flushes the run and stops the core",
+    "reopening after normal quit has no unclean-exit warning"
+  ],
+  "hold_mode": false,
+  "result": "passed",
+  "installer_checks": [
+    "custom Unicode/space installation directory",
+    "per-user HKCU uninstall registration",
+    "Simplified Chinese installer language and task text",
+    "desktop shortcut created by default without TASKS override",
+    "only one root entry point; renamed internal helper",
+    "repeat install to same directory",
+    "main-only Start Menu and desktop shortcuts",
+    "installed bytes match portable package",
+    "installed app real relay/settings lifecycle",
+    "uninstall removes binaries/registration and preserves external config"
+  ]
+}

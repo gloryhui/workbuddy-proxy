@@ -1,0 +1,40 @@
+{
+  "artifact": {
+    "id": 13073025326,
+    "node_id": "MDg6QXJ0aWZhY3QxMzA3MzAyNTMyNg==",
+    "name": "workbuddy-import-core-reports",
+    "size_in_bytes": 4758,
+    "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073025326",
+    "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13073025326/zip",
+    "expired": false,
+    "digest": "sha256:5f919950d8982b1ce3b98ae1200ffcb257504ebd7ec822074d6b7cd8355beb80",
+    "created_at": "2026-11-01T06:06:00Z",
+    "updated_at": "2026-11-01T06:06:00Z",
+    "expires_at": "2027-01-30T05:58:11Z",
+    "workflow_run": {
+      "id": 41278921019,
+      "repository_id": 1416761973,
+      "head_repository_id": 1416761973,
+      "head_branch": "feat/studio_v2_gpui",
+      "head_sha": "dd9debade83e91b0d11c6b28f18f97edb227abbd"
+    }
+  },
+  "independent_zip_sha256": "5f919950d8982b1ce3b98ae1200ffcb257504ebd7ec822074d6b7cd8355beb80",
+  "zip_size": 4758,
+  "reports": [
+    {
+      "path": "os-faults/report.json",
+      "result": "PASS",
+      "passed": 15,
+      "failed": 0,
+      "sha256": "7af518370bafbcd9390a58912eab0d14c7b1f304fc07ec97b00e6c2c144d6049"
+    },
+    {
+      "path": "workbuddy_import_test.json/report.json",
+      "result": "PASS",
+      "passed": 158,
+      "failed": 0,
+      "sha256": "762ab50d543f54605e94c0df32fa15ce78544f0c1b1bfb4703a8083c09f008e2"
+    }
+  ]
+}

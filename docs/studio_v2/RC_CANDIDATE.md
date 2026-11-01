@@ -20,3 +20,11 @@
 [release_plan.json](release_plan.json) 是逐项状态来源。R01 的真实悬停／按下／拖列、逐引擎输入法和辅助技术，R02 的真实设备、系统交互与缩放，R03 的有效前台、启动、峰值及最终性能结论均继续保留。编译、版本 CLI、后台样本、Rosetta 或自动化生命周期不能替代这些证据。
 
 40 帧签收保持。只有全部要求实际通过、最终包与说明可审查后，才请求并执行单独授权的公开发布动作。
+
+## 当前可审查候选
+
+冻结运行／打包源为 `dd9debade83e91b0d11c6b28f18f97edb227abbd`。唯一 [Core 检查](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41278921019) 与[三平台完整 Desktop](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41278929532) 均首轮成功，原始报告和产物来源见[矩阵核验](benchmarks/rc-060/ci/desktop/validation.json)。这不替代前述人工、硬件与性能门禁。
+
+实际下载校验后的 Windows ZIP／setup、Mac ARM／Intel DMG 及各自校验文件保留于本地仓库的 `dist/studio-v2-rc/0.6.0`，四包共 140,896,314 字节。[候选清单](benchmarks/rc-060/candidate-packages.json)记录每包大小与 SHA256；该目录是审查交付物，不提交大二进制，也不当临时文件删除。CI artifact 和本地保留包均不冒称公开 Release 下载。
+
+Windows 原生两尺寸[原图审查](benchmarks/rc-060/windows-visual-review.json)确认版本与标题栏分离，均为隔离合成数据；尚未替换公开 README 图片。首次测试源 `21dea55` 的[升级 run](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41281534447)在 Intel 冷快照因非空 WAL 断言失败，原证据保留。修正测试快照读取后，新测试源 `c435b5c` 的[升级／回滚 run](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41282248853)三平台首轮通过；[六例核验](benchmarks/rc-060/ci/upgrades-final/validation.json)确认原包和完整冷备份恢复、候选新记录独立保留。[WAL 诊断](benchmarks/rc-060/cold-snapshot-diagnosis.json)说明守卫红绿与范围；产品程序没有为此重建。

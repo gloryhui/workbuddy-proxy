@@ -1,0 +1,9 @@
+{
+  "runtime_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "candidate_run": 41278929532,
+  "candidate_version": "0.6.0",
+  "all3artifact_downloads_verified": true,
+  "official_releases_unchanged": true,
+  "new_manifest_sha256": "a35165c47d3b1273cf54620d45abe4062af40ad81fa655ae068a2de56d485b16",
+  "native_helper_repin": "Same real fullWindowsartifact supplies Core/UI; download cached byartifactID; exact nestedmember/PE/hash/stalelabel checked locally; no redundant native dispatch."
+}

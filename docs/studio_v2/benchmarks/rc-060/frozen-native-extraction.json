@@ -1,0 +1,17 @@
+{
+  "result": "passed",
+  "scope": "Real downloaded full0.6 Windows artifact exact-member extraction, both binary hash/PE identity and stale layout rejection; no native GDI repeat",
+  "checks": {
+    "workbuddy-proxy.exe": {
+      "sha256": "ed1d6440180db79d5fe940488161aa2d84cb97c30682beceb9a545f37ab4640e",
+      "bytes": 10761216,
+      "architecture": "windows-x64"
+    },
+    "internal/workbuddy-settings.exe": {
+      "sha256": "62ad6dfb03e5fba62133db1fb1c859ce8a414cd8fbdf098f9286de4787d471f9",
+      "bytes": 44076544,
+      "architecture": "windows-x64"
+    },
+    "stale_package_version_rejected": true
+  }
+}
